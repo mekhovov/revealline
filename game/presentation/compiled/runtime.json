@@ -702,26 +702,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.capture.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit capture pulse for slot effect.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.capture. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.capture.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "effect.failure": {
         "description": "failure feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -735,26 +732,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.failure.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit failure feedback for slot effect.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.failure. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.feedback.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "effect.pickup": {
         "description": "pickup feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -768,26 +762,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.pickup.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit pickup feedback for slot effect.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.pickup. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.feedback.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "effect.pressure": {
         "description": "pressure feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -801,26 +792,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.pressure.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit pressure feedback for slot effect.pressure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.pressure. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.feedback.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "effect.respawn": {
         "description": "respawn feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -834,26 +822,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.respawn.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit respawn feedback for slot effect.respawn. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.respawn. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.feedback.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "effect.shield": {
         "description": "shield feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -867,26 +852,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.shield.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit shield feedback for slot effect.shield. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.shield. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.feedback.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "effect.victory": {
         "description": "victory feedback: existing bounded component with Field Kit tokens and state styling.",
@@ -900,26 +882,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "effect.victory.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit victory feedback for slot effect.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#effect.victory. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "effect.feedback.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "enemy.border-patrol": {
         "description": "Coral patrol quad with broad angular center armor and four static motor hubs. The engine draws its movement and threat cues separately.",
@@ -8586,27 +8565,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.bomber.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit bomber rotor recipe for slot player.bomber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.bomber.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "player.carrier.compact": {
         "description": "Six explicit motors around a tall cargo cage. Amber side rails and three cross straps retain the heavier green pack.",
@@ -8814,27 +8789,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.carrier.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit carrier rotor recipe for slot player.carrier.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.carrier.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "player.fiber.compact": {
         "description": "Rear cyan cable reel with dark flanges, separate from the amber battery. Compact drawings keep the reel as one readable horizontal cluster.",
@@ -9018,27 +8989,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.fiber.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit fiber rotor recipe for slot player.fiber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.fiber.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "player.impact.compact": {
         "description": "Pale front armor around a protected cyan camera and a short rear battery. The broad nose gives a distinct contact-oriented silhouette.",
@@ -9222,27 +9189,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.impact.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit impact rotor recipe for slot player.impact.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.impact.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "player.interceptor.compact": {
         "description": "Swept angular center frame, narrow battery and amber rear chevron. The sharp waist distinguishes the fast class without changing its motor locations.",
@@ -9426,27 +9389,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.interceptor.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit interceptor rotor recipe for slot player.interceptor.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.interceptor.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "player.scout.compact": {
         "description": "Slim X frame with one strapped amber battery and a front camera. The narrow fuselage keeps the reference scout silhouette light.",
@@ -9630,27 +9589,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.scout.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit scout rotor recipe for slot player.scout.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.scout.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "player.trapper.compact": {
         "description": "Two long side equipment rails and split amber battery clusters around a cyan middle connector. The cage remains legible without baked cables or propellers.",
@@ -9834,27 +9789,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "player.trapper.rotors.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit trapper rotor recipe for slot player.trapper.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66"
+          "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#player.trapper.rotors. Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
-            "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
-            "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.",
+            "game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.",
+            "Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "actor.rotors.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "reward.bronze": {
         "description": "Ribbon medal with one cut rank mark: bronze award.",
@@ -10825,26 +10776,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "trail.active.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit active trail for slot trail.active. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#trail.active. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "trail.signal.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "trail.head": {
         "description": "head trail: existing bounded component with Field Kit tokens and state styling.",
@@ -10858,26 +10806,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "trail.head.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit head trail for slot trail.head. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#trail.head. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "trail.signal.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "trail.secured": {
         "description": "secured trail: existing bounded component with Field Kit tokens and state styling.",
@@ -10891,26 +10836,23 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "trail.secured.field-kit",
-            "revision": 2
+            "revision": 4
           },
           "prompt": "Create one original FPV Field Kit secured trail for slot trail.secured. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015"
+          "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#trail.secured. Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
-            "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
-            "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
-            "docs/verification/fpv-redesign/phase7/first-signal-result.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.",
+            "game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.",
+            "Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval."
           ],
           "stage": "reviewed"
         },
         "recipe": {
           "id": "trail.signal.v1"
         },
-        "revision": 3
+        "revision": 5
       },
       "ui.button.chip": {
         "description": "chip button: existing bounded component with Field Kit tokens and state styling.",
@@ -11916,31 +11858,31 @@
       },
       "effect.capture": {
         "id": "effect.capture.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "effect.failure": {
         "id": "effect.failure.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "effect.pickup": {
         "id": "effect.pickup.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "effect.pressure": {
         "id": "effect.pressure.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "effect.respawn": {
         "id": "effect.respawn.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "effect.shield": {
         "id": "effect.shield.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "effect.victory": {
         "id": "effect.victory.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "enemy.border-patrol": {
         "id": "enemy.border-patrol.field-kit",
@@ -12640,7 +12582,7 @@
       },
       "player.bomber.rotors": {
         "id": "player.bomber.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "player.carrier.compact": {
         "id": "player.carrier.compact.field-kit",
@@ -12652,7 +12594,7 @@
       },
       "player.carrier.rotors": {
         "id": "player.carrier.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "player.fiber.compact": {
         "id": "player.fiber.compact.field-kit",
@@ -12664,7 +12606,7 @@
       },
       "player.fiber.rotors": {
         "id": "player.fiber.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "player.impact.compact": {
         "id": "player.impact.compact.field-kit",
@@ -12676,7 +12618,7 @@
       },
       "player.impact.rotors": {
         "id": "player.impact.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "player.interceptor.compact": {
         "id": "player.interceptor.compact.field-kit",
@@ -12688,7 +12630,7 @@
       },
       "player.interceptor.rotors": {
         "id": "player.interceptor.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "player.scout.compact": {
         "id": "player.scout.compact.field-kit",
@@ -12700,7 +12642,7 @@
       },
       "player.scout.rotors": {
         "id": "player.scout.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "player.trapper.compact": {
         "id": "player.trapper.compact.field-kit",
@@ -12712,7 +12654,7 @@
       },
       "player.trapper.rotors": {
         "id": "player.trapper.rotors.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "reward.bronze": {
         "id": "reward.bronze.field-kit",
@@ -12792,15 +12734,15 @@
       },
       "trail.active": {
         "id": "trail.active.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "trail.head": {
         "id": "trail.head.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "trail.secured": {
         "id": "trail.secured.field-kit",
-        "revision": 3
+        "revision": 5
       },
       "ui.button.chip": {
         "id": "ui.button.chip.field-kit",
@@ -12903,7 +12845,7 @@
     "theme": {
       "id": "fpv",
       "name": "FPV Field Kit",
-      "revision": 15
+      "revision": 17
     },
     "tokens": {
       "amber": "#f4bf62",
@@ -12934,7 +12876,7 @@
   },
   "source": {
     "id": "field-kit",
-    "revision": 15
+    "revision": 17
   },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
