@@ -1,0 +1,15 @@
+{
+  "format": "revealline-public-binding-review.v1",
+  "status": "PASS",
+  "bindingSha256": "836a66783993976b1fbe3eff351e78dbfa69d7e1a8541559c6afa5678ec24a7d",
+  "reviewer": "root",
+  "checks": [
+    "Nine input byte lengths and hashes",
+    "Five original/source inputs match Git at actual controller",
+    "Successful linked run34942712768 and deployment6454057759",
+    "Complete2306-file inventory totaling635438917bytes",
+    "Frozen game sourceacc/tree824 and controllerda4459b/tree08e6 remain separate"
+  ],
+  "scope": "Authorizes complete HTTP audit; does not report HTTP or browser acceptance",
+  "recordedAt": "2026-09-15T07:44:44.527411+00:00"
+}

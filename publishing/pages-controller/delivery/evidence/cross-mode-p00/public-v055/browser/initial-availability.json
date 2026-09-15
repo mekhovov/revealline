@@ -1,0 +1,8 @@
+{
+  "observedAt": "2026-09-15T07:41:05.732216+00:00",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.55.0/site/build-info.json",
+  "httpStatus": 404,
+  "tool": "curl --fail",
+  "result": "Wrong-path probe: /site/build-info.json is not in the frozen manifest. No CDN failure inferred.",
+  "nextAction": "Use manifest-declared /site/game/build-info.json; verify its exact hash."
+}
