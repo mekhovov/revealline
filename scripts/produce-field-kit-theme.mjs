@@ -29,6 +29,40 @@ const sources = {
   effects: 'game/ui/classic-view.mjs; game/ui/event-feedback.mjs',
   audio: 'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs',
 };
+
+// A recipe stays unreviewed whenever one of its source inputs changes. These
+// are deliberate, source-pinned approvals for the v0.54 renderer-call repair:
+// changing either digest creates a new source-stage revision and re-opens the
+// release readiness gate rather than silently inheriting this review.
+const REVIEWED_RECIPE_INPUTS = {
+  motion: {
+    sha256: '7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b',
+    evidence: [
+      'Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.',
+      'game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.',
+      'Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval.',
+    ],
+  },
+  effects: {
+    sha256: 'e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4',
+    evidence: [
+      'Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.',
+      'game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.',
+      'Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval.',
+    ],
+  },
+};
+
+function recipeQuality(group, source) {
+  const review = REVIEWED_RECIPE_INPUTS[group];
+  if (review && source.endsWith(`sha256:${review.sha256}`))
+    return { stage: 'reviewed', evidence: review.evidence };
+  return {
+    stage: 'source',
+    evidence: ['Connected runtime recipe; screen and state review remains required.'],
+  };
+}
+
 export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
   const json = async (relative) => JSON.parse(await read(relative));
@@ -86,10 +120,7 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         prompt: slot.prompt,
         parent: { id: `${slot.id}.default`, revision: 1 },
       },
-      quality: {
-        stage: 'source',
-        evidence: ['Connected runtime recipe; screen and state review remains required.'],
-      },
+      quality: recipeQuality(slot.group, recipeSources[slot.group]),
     });
   }
   const sprites = await json('game/assets/field-kit/sprites/sprites.json');
