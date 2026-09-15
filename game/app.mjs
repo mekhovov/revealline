@@ -1382,13 +1382,19 @@ try {
     if (!started) return `ready:${campaign.id}:${run?.levelId}`;
     return paused ? 'paused' : 'flight';
   }
+  const availableFocusTarget = (element) =>
+    !!element?.isConnected &&
+    !element.disabled &&
+    !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
+    element.getClientRects().length > 0 &&
+    document.defaultView?.getComputedStyle(element).visibility !== 'hidden';
   function controllerFocus() {
     const dialog = controllerDialog();
     if (dialog) {
       if (dialog.id === 'hangar-dialog') return $('switch-class-select');
       if (dialog.id === 'collection-dialog')
         return $('gallery-grid').querySelector('button') || $('gallery-search');
-      return dialog.querySelector('button:not(:disabled),select:not(:disabled),summary');
+      return [...dialog.querySelectorAll('button,select,summary')].find(availableFocusTarget);
     }
     const scope = controllerScope();
     if (scope === 'celebration' || scope === 'defeat-presentation') return $('skip-celebration');
@@ -5319,6 +5325,7 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
+    initialFocus: false, // The boot guard still hides the title until ready().
     onFeatured: () => activatePack('fpv-arcade-r5', { campaignId: 'fpv-pressure-lines' }),
     onWorlds: () => optionalWorlds.open(),
   });
@@ -5355,7 +5362,16 @@ try {
     $('boot-status').hidden = true;
   }
   controllerReading?.refresh();
-  controllerFocus()?.focus({ preventScroll: true });
+  // Boot removes the visibility guard synchronously. Do not refocus a hidden
+  // placeholder or replace a deliberate choice made during that handoff.
+  if (
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (document.activeElement === document.body || !availableFocusTarget(document.activeElement))
+  ) {
+    const target = controllerFocus();
+    if (availableFocusTarget(target)) target.focus({ preventScroll: true });
+  }
 } catch (error) {
   globalThis.RevealLineBoot?.fail(error);
   $('overlay-title').textContent = 'The game could not load.';

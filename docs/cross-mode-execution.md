@@ -78,6 +78,12 @@ Existing Solo and Versus Team links now declare a code-owned return context. Tea
 
 This candidate does not accept all P03: native/public qualification, entry redesign, integrated lobby, departure confirmations and broader progression remain separate work. Root-reported follow-ups include confirming replacement of an unfinished Solo flight and preserving a meaningful focus target when a story ends and Pause becomes Replay; neither behavior is changed here. Existing direct-flight dialog openers and explicit flight starts keep their current behavior.
 
+## P03-B initial-focus candidate
+
+The Solo title's initial focus handoff waits until boot has revealed the game, chooses a visible enabled control, and preserves an already meaningful focus choice. A saved flight exposes Continue without loading or resuming it. Hidden lesson controls stay hidden; a disabled primary action falls back to the next available menu control. Background pages do not claim focus. Native qualification remains pending for this candidate.
+
+Exact cross-document Missions/opener restoration and unfinished-flight departure confirmation remain separate work; P03-A's code-owned Solo/Versus destination does not preserve the old document's menu state.
+
 ## Player flow and feedback contract
 
 - Title offers Single player, Couch Versus (separate-board race) and Couch Team (shared arena). Solo starts/continues in one activation. Ready Couch players choose a mode and Start from one integrated lobby. Future online/Deathmatch remain deferred, without nonfunctional menu choices.

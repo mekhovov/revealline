@@ -8,6 +8,7 @@ export function attachGameShell({
   pause,
   canContinue,
   initial = true,
+  initialFocus = true,
   training = false,
   onFeatured,
   onWorlds,
@@ -78,7 +79,7 @@ export function attachGameShell({
     syncPreparation();
     if (!focusMissions?.()) $('pack-select').focus();
   };
-  const openHome = () => {
+  const openHome = ({ focus = true } = {}) => {
     pause(true);
     if (missions.open) missions.close();
     restoreMissionView();
@@ -103,12 +104,13 @@ export function attachGameShell({
         status.hidden = true;
       home.showModal();
     }
-    (training
-      ? $('shell-course-return')
-      : canContinue()
-        ? $('shell-continue')
-        : $('shell-featured') || $('shell-play')
-    ).focus();
+    if (focus)
+      (training
+        ? $('shell-course-return')
+        : canContinue()
+          ? $('shell-continue')
+          : $('shell-featured') || $('shell-play')
+      ).focus();
   };
   const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
@@ -315,7 +317,7 @@ export function attachGameShell({
     event.preventDefault();
   };
   doc.addEventListener('keydown', keydown);
-  if (initial) openHome();
+  if (initial) openHome({ focus: initialFocus });
   return {
     openHome,
     openMissions,
