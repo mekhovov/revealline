@@ -1,0 +1,48 @@
+{
+  "source": "e2d1f6878d9b276cc1f4c86c567467040f346767",
+  "run": "https://github.com/mekhovov/revealline/actions/runs/34911062059",
+  "preflight": "passed",
+  "build": "skipped after test failure",
+  "shards": [
+    {
+      "shard": 1,
+      "tests": 928,
+      "passed": 925,
+      "failed": 3,
+      "logBytes": 384037,
+      "logSha256": "fbc84006e7c654223886e961633f86b24aa9345bf908017be6dcfcb9ffb3cdd4",
+      "localLog": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p5-fpv-source-integration/.cache/pr35-ci-e2d1/shard1-direct.log"
+    },
+    {
+      "shard": 2,
+      "tests": 1005,
+      "passed": 1003,
+      "failed": 2,
+      "logBytes": 417470,
+      "logSha256": "748b0f3151f6939459e6d01352fc310d0f4425307a35b41641af1ce2126c2c21",
+      "localLog": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p5-fpv-source-integration/.cache/pr35-ci-e2d1/shard2-direct.log"
+    },
+    {
+      "shard": 3,
+      "tests": 1001,
+      "passed": 1000,
+      "failed": 1,
+      "logBytes": 412985,
+      "logSha256": "a0a9566ff8da031a5fe72a5d2e611efa7c138e056ec5edfa2acf203392f391a0",
+      "localLog": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p5-fpv-source-integration/.cache/pr35-ci-e2d1/shard3-direct.log"
+    },
+    {
+      "shard": 4,
+      "tests": 916,
+      "passed": 916,
+      "failed": 0,
+      "logBytes": 375706,
+      "logSha256": "8018bb52d751986f7732faf1fac8afa077af8194b148fb1d535ab16ecbd37828",
+      "localLog": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p5-fpv-source-integration/.cache/pr35-ci-e2d1/shard4-direct.log"
+    }
+  ],
+  "total": 3850,
+  "passed": 3844,
+  "failed": 6,
+  "note": "Failures preserved. Successor qualification must run on its exact source; corrected focused tests do not relabel this run."
+}
