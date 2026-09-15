@@ -128,7 +128,8 @@
       "id": "archive-12",
       "repository": "mekhovov/revealline-archive-12",
       "versions": [
-        "v0.52.0"
+        "v0.52.0",
+        "v0.56.0"
       ]
     },
     {
