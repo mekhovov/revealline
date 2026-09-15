@@ -1,6 +1,8 @@
 # RevealLine delivery plan
 
-Updated 15 September 2026. This is the current priority register. The [detailed history](current-delivery-plan.md) retains earlier attempts and evidence; this page distinguishes playable releases, source work and remaining acceptance gates.
+Updated 15 September 2026. The active priority and acceptance register is now [cross-mode execution](cross-mode-execution.md), implementing the approved P00–P18 plan. P00 integration/inventory is in progress; later phases are not accepted. The integration cutoff is main `5595b632` (v0.53 source), while the latest published stable observed at integration is v0.52.0. v0.54 is reserved by a concurrent candidate; choose the next unused number before freezing this work.
+
+The material below is retained historical status and earlier content accounting, not a claim that its “next release” remains current. The [detailed history](current-delivery-plan.md) retains its attempts and evidence. The new register preserves those records and makes complete existing Team map parity a dedicated P08-A release gate.
 
 ## Current delivery
 
