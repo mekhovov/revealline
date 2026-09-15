@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:38:16.185124+00:00",
+  "completedAt": "2026-09-15T01:38:16.382764+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({url:location.href,online:navigator.onLine,text:document.body.innerText,focus:document.activeElement.id,canvases:[...document.querySelectorAll(\"canvas\")].map(c=>({width:c.width,height:c.height,rect:{width:c.getBoundingClientRect().width,height:c.getBoundingClientRect().height}}))})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"url\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/couch/\\\",\\\"online\\\":false,\\\"text\\\":\\\"REVEAL LINE / LOCAL TWO PLAYER\\\\n\\\\nRound complete.\\\\n\\\\nSkyline wins the round. First clear.\\\\n\\\\nFirst Signal \u00b7 First Signal \u00b7 Tactical \u00b7 FPV Front \u00b7 Immediate turns \u00b7 90 seconds\\\\n\\\\nPLAYER 1\\\\nSunflower\\\\n\\\\nW A S D\\\\n\\\\n0.0% \u00b7 3 lives \u00b7 0 points \u00b7 0 round wins\\\\n\\\\nPLAYER 2\\\\nSkyline\\\\n\\\\nArrow keys\\\\n\\\\n52.2% \u00b7 3 lives \u00b7 8160 points \u00b7 1 round wins\\\\n\\\\nNext round \u2197\\\\nNew match \u00b7 setup\\\\nOptions\\\\nHow to play\\\\nView both boards\\\\nReturn to solo\\\\n\\\\nFirst to two rounds. Couch races do not change your solo progress.\\\\n\\\\nConnect a controller and use it while this page is visible. Keyboard and touch remain available.\\\",\\\"focus\\\":\\\"race-start\\\",\\\"canvases\\\":[{\\\"width\\\":768,\\\"height\\\":576,\\\"rect\\\":{\\\"width\\\":0,\\\"height\\\":0}},{\\\"width\\\":768,\\\"height\\\":576,\\\"rect\\\":{\\\"width\\\":0,\\\"height\\\":0}}]}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

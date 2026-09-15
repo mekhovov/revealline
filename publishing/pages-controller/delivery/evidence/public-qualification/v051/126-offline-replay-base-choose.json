@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-09-15T01:43:31.477557+00:00",
+  "completedAt": "2026-09-15T01:43:32.006744+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "batch",
+    "--bail",
+    "press Escape",
+    "click #shell-play",
+    "click .mission[data-level=\"0\"]",
+    "click #shell-deploy"
+  ],
+  "returncode": 1,
+  "stdout": "\u2713 Done\n\n\u2713 Done\n\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n\u2717 Element not found. Verify the selector is correct and the element exists in the DOM.\n"
+}

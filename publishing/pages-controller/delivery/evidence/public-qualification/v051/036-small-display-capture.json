@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-09-15T01:16:12.116012+00:00",
+  "completedAt": "2026-09-15T01:16:12.685505+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51",
+    "screenshot",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/v051/settings-large-640x316-focused.png"
+  ],
+  "returncode": 0,
+  "stdout": "\u2713 Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/v051/settings-large-640x316-focused.png\n",
+  "stderr": ""
+}

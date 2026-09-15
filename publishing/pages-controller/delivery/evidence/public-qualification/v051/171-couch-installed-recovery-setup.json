@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-09-15T01:53:36.177115+00:00",
+  "completedAt": "2026-09-15T01:53:36.416508+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "batch",
+    "--bail",
+    "tab t2",
+    "click #race-focus"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n\u2717 Tab t2 not found; run `agent-browser tab` to list open tabs\n"
+}

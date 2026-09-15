@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:36:15.288466+00:00",
+  "completedAt": "2026-09-15T01:36:18.760613+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({text:document.querySelector(\"#gallery-view-dialog\")?.innerText,focus:document.activeElement.id,dialogs:[...document.querySelectorAll(\"dialog[open]\")].map(e=>e.id)})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"text\\\":\\\"\u00d7\\\\n\\\\nFPV Front \u00b7 Standard \u00b7 Best picture score: 7,820 points \u00b7 BRONZE \u00b7 226.01s \u00b7 Level best medal: BRONZE\\\\n\\\\nFirst Signal\\\\nPlay celebration \u2197\\\\nReplay mission\\\\nBack to collection\\\",\\\"focus\\\":\\\"\\\",\\\"dialogs\\\":[\\\"gallery-view-dialog\\\"]}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

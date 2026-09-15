@@ -1,0 +1,97 @@
+{
+  "format": "revealline-main-public-byte-admission.v1",
+  "status": "PASS",
+  "verifiedAt": "2026-09-15T02:09:14.809Z",
+  "controllerCommit": "2b8521b0a118df8663f93de5500e14da11741407",
+  "controllerTree": "5dcd633d3cb1ba69e7a66fe5d2074239c9b33071",
+  "gameSourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "runId": 34918140908,
+  "deploymentId": 6449937007,
+  "files": 2170,
+  "bytes": 656572716,
+  "retries": 1,
+  "comparisonOnlyVersions": [],
+  "method": "Fresh complete final-deployment HTTP audit",
+  "freshWholeInventoryHTTP": true,
+  "completeByteAcceptance": true,
+  "nativeAcceptance": false,
+  "fullyAdmittedSuccessorControllerPending": false,
+  "evidence": [
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/audit-main.mjs",
+      "bytes": 20311,
+      "sha256": "70b628c4e2b68fa5c9fe3999cbe39db8f9a07e29191dcb261cba280862d9193c"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/binding.json",
+      "bytes": 2046,
+      "sha256": "ac63f868131ff7e54065cb6b9654cfedd2b9c737e60181322e9bc82cc8923a24"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/artifact-receipt.json",
+      "bytes": 417726,
+      "sha256": "cdb4ab9af7a530dec1eb60271cfde9f8ee7957929d9377a89a23a94c5a4f439f"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/deployment.json",
+      "bytes": 4656,
+      "sha256": "8d2e2dcd2f74b35c141c9129c859346be81f8346d7755a6e2fb6c0d7b4bc077d"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/deployment-statuses.json",
+      "bytes": 8221,
+      "sha256": "c9a6ab9a654fb530a0b47ec01985d21cf13206fe6e03cb52da155dd74dbb36d0"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/run.json",
+      "bytes": 12220,
+      "sha256": "843ac5a9ead372cbffa2aa401d7e85c9981ad70d867a7f11cfbb64b253aabdd8"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/manifest.json",
+      "bytes": 113770,
+      "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/release.json",
+      "bytes": 465,
+      "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/source-qualification.json",
+      "bytes": 21221,
+      "sha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/catalog.json",
+      "bytes": 25464,
+      "sha256": "ea9d39ac3271d41354bd17ab12c75f4aef8910b3c45e5c21f7bb79386060cea5"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/inputs/2b8521b0a118df8663f93de5500e14da11741407/publication.json",
+      "bytes": 17782,
+      "sha256": "405b4cd9769fc9840da3733e4246c78b70e66302289d45f406d83e9ec61f06b1"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/runs/main2b8521-complete-1/report.json",
+      "bytes": 3230,
+      "sha256": "f64cf04f5991efd5197cd743765f0f5e98644b1a083bdb544426805a693fac1e"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/runs/main2b8521-complete-1/results.jsonl",
+      "bytes": 1413996,
+      "sha256": "ccfedfcab96225e783f38285c5f825507e9ee8d48ae7fc8b4ea7fe41d79c42dc"
+    },
+    {
+      "path": ".cache/fpv-redesign/final-main-public-audit/runs/main2b8521-complete-1/attempts.jsonl",
+      "bytes": 1414606,
+      "sha256": "fa50a7b4677a6e6644e4ae6a4819a6071c8576217009e151ad8748d3fa7b6675"
+    }
+  ],
+  "scope": "All final2b public paths, actual MIME and decoded bytes independently reconciled to pinned authority; final51 native/offline acceptance remains separate."
+}

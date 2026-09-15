@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-09-15T01:53:20.812598+00:00",
+  "completedAt": "2026-09-15T01:53:27.690859+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "batch",
+    "--bail",
+    "click #start-button",
+    "press ArrowRight",
+    "wait 1000",
+    "press p"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n\u2717 CDP response channel closed\n"
+}
