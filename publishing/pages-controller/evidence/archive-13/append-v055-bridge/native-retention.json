@@ -1,0 +1,53 @@
+{
+  "format": "revealline-native-evidence-retention.v1",
+  "sourceDirectory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root",
+  "copiedTextOnly": true,
+  "receipt": "native/bridge-native-completion.json",
+  "receiptSha256": "a7df0365a5c31acf671c179b5e72d6f375ff999797dfaae4dc77eca251e8b7e1",
+  "originalReceiptRelativePathsResolveAgainst": "sourceDirectory; copied matching text files are also present under native/",
+  "retainedScreenshotPointers": [
+    {
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root/capture-paused.png",
+      "file": "capture-paused.png",
+      "bytes": 48400,
+      "sha256": "94c8bc42afc54e47f1288bc7fd7753663282438578f7c065353823d27836ac48",
+      "reviewerAction": "Size observed only; SHA retained verbatim from root native receipt. No body read or copy."
+    },
+    {
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root/restored-flight.png",
+      "file": "restored-flight.png",
+      "bytes": 116523,
+      "sha256": "46192a07eaaad04ce59968b86289531d067f457a51823b89681dd3e8d9847da5",
+      "reviewerAction": "Size observed only; SHA retained verbatim from root native receipt. No body read or copy."
+    },
+    {
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root/restored-paused.png",
+      "file": "restored-paused.png",
+      "bytes": 48400,
+      "sha256": "94c8bc42afc54e47f1288bc7fd7753663282438578f7c065353823d27836ac48",
+      "reviewerAction": "Size observed only; SHA retained verbatim from root native receipt. No body read or copy."
+    },
+    {
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root/v054-release-explorer.png",
+      "file": "v054-release-explorer.png",
+      "bytes": 46640,
+      "sha256": "6732c86c5fdef6579b1b899146746fec56729cd1ab81397b116cba1c349b2216",
+      "reviewerAction": "Size observed only; SHA retained verbatim from root native receipt. No body read or copy."
+    },
+    {
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root/v054-title-return.png",
+      "file": "v054-title-return.png",
+      "bytes": 120913,
+      "sha256": "d1677b263262f48fe533e6dc2d8cdbdd0c6b7d0fbefdc189563cc6a866702059",
+      "reviewerAction": "Size observed only; SHA retained verbatim from root native receipt. No body read or copy."
+    },
+    {
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-v055-native-root/v055-release-explorer.png",
+      "file": "v055-release-explorer.png",
+      "bytes": 46640,
+      "sha256": "6732c86c5fdef6579b1b899146746fec56729cd1ab81397b116cba1c349b2216",
+      "reviewerAction": "Size observed only; SHA retained verbatim from root native receipt. No body read or copy."
+    }
+  ],
+  "scope": "Root performed native observations. This preparation authenticates copied metadata only and does not claim independent screenshot decode, browser execution or image hash verification."
+}

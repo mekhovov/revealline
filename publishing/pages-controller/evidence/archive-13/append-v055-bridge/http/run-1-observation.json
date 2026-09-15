@@ -1,0 +1,15 @@
+{
+  "command": [
+    "gh",
+    "run",
+    "view",
+    "34947667008",
+    "--repo",
+    "mekhovov/revealline-archive-13",
+    "--json",
+    "databaseId,headSha,status,conclusion,jobs,createdAt,updatedAt,url,event"
+  ],
+  "startedAt": "2026-09-15T08:36:05.789814+00:00",
+  "finishedAt": "2026-09-15T08:36:07.433799+00:00",
+  "stderr": ""
+}
