@@ -1,0 +1,242 @@
+{
+  "format": "p03a-navigation-scoped-verification.v1",
+  "createdAt": "2026-09-15T15:31:14.367993+00:00",
+  "base": "a2794f954467fd97c1b89af9c6848da6b7a630e6",
+  "status": "source-tests-passed-native-pending",
+  "source": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 98576,
+      "sha256": "6635bee5f749317176e643fb06cb21f2192b82e11754cf1dab54cfa711c0ca02"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 31205,
+      "sha256": "2333f625eadc7254df367c9a7103d2eb6218650f156bcb379a95248ea0a583c8"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 215688,
+      "sha256": "38ad47f16fa77dbc73e17c22aa1287b959e215eeade178eef7521140751acc08"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 15228,
+      "sha256": "9af28eea9e6dcf94b1a0f7dca5cc2797431009d08932aafbe47eb30b87ad8e6d"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 23632,
+      "sha256": "01e08644b6d69916165d4051b8d6cdb8f7326966289551dbd8ff19b68e81bacb"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 68776,
+      "sha256": "806691b7c27b46ad8b6444b3bcbb90b965224f64fe33406726dd5fbfb26b8553"
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "bytes": 26154,
+      "sha256": "4157229baa9c63a23a065c6fd3f0eb3029789fef2c9d7ca60d75c30e625bacbf"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16393,
+      "sha256": "cfbb69f93f79bc9869ab4f5b1e7de98e1e9f4418a3afdb27de5190746dc3309b"
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "bytes": 36955,
+      "sha256": "c5c0548a87d48e10850a31b8132f855cdc2399a70839a2861d3bed83ddcf5770"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 13140,
+      "sha256": "3045c49ca00e5037fc31689e4e67f96611d1418ccb57cdf7e66c9af7f9a5a111"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 50599,
+      "sha256": "756064dd96b33e119af1c84ea799a0bbb929afaa95092ed3bf1337ef89dfe4ac"
+    }
+  ],
+  "tests": [
+    {
+      "runtime": "v22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-markup.test.mjs"
+      ],
+      "counts": {
+        "tests": 92,
+        "pass": 92,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durationMs": 30647.9035,
+      "log": {
+        "path": "node22-complete.log",
+        "bytes": 22307,
+        "sha256": "d01a79dea9cd09af344e283741b07f71ab514f44e5d9a5e837f944d89f51d261"
+      }
+    },
+    {
+      "runtime": "v20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-markup.test.mjs"
+      ],
+      "counts": {
+        "tests": 92,
+        "pass": 92,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durationMs": 37376.8495,
+      "log": {
+        "path": "node20-complete.log",
+        "bytes": 20912,
+        "sha256": "8584cc8405cfe5f6e2f04fa709933c49125fc38e95b469a141d1c0c9695a0f5b"
+      }
+    }
+  ],
+  "staticChecks": {
+    "prettier": "eleven changed files passed",
+    "eslint": "seven changed mjs files, zero warnings",
+    "nodeSyntax": "seven changed mjs files passed on Node22",
+    "gitDiffCheck": "passed"
+  },
+  "retainedEvidence": [
+    {
+      "path": "baseline-node22.log",
+      "bytes": 16541,
+      "sha256": "d9781d1fbaa0b6612ba64d3e83c515d6fcfdbae6bfa64f4621454864adee9954"
+    },
+    {
+      "path": "baseline-ready-node22.log",
+      "bytes": 6988,
+      "sha256": "2ccbcd2dd528fa7583480d3b1d5450478c7e9016196d7673840b35404bab5bb0"
+    },
+    {
+      "path": "explicit-restore-before-node22.log",
+      "bytes": 1990,
+      "sha256": "bf6926b5d4757f984f4960e378c72b6bea892f2f3b01cd1fd2fdc93f7811bcdf"
+    },
+    {
+      "path": "explicit-selection-before-node22.log",
+      "bytes": 2004,
+      "sha256": "5c6ec83804b76137a2da7528d4e43db226f68405a46c7e5f6f04aefd0ee255a7"
+    },
+    {
+      "path": "hydration.json",
+      "bytes": 38489,
+      "sha256": "5a32e3f63ee98a5c3e2788bd944df28472ed5b23c69102ec2858e71289d2c075"
+    },
+    {
+      "path": "node20-complete.log",
+      "bytes": 20912,
+      "sha256": "8584cc8405cfe5f6e2f04fa709933c49125fc38e95b469a141d1c0c9695a0f5b"
+    },
+    {
+      "path": "node20-final.log",
+      "bytes": 20051,
+      "sha256": "9bbdae61fc1eccdf562a4deac8e494c9c25334701b69bb934d3ddb87cb0c5b8c"
+    },
+    {
+      "path": "node20-successor.log",
+      "bytes": 20503,
+      "sha256": "5929a4484fa810f450ca8fd67e2655903b31904eab64b3c10a2138d15ed0fa19"
+    },
+    {
+      "path": "node22-01.log",
+      "bytes": 14797,
+      "sha256": "b9827ebab1b2d04c6dd9face1e674179a2860b552e6ff18307d4793e036d4df0"
+    },
+    {
+      "path": "node22-complete.log",
+      "bytes": 22307,
+      "sha256": "d01a79dea9cd09af344e283741b07f71ab514f44e5d9a5e837f944d89f51d261"
+    },
+    {
+      "path": "node22-final.log",
+      "bytes": 21380,
+      "sha256": "07c5c5410d9d3c25c5fc846b6cd15ab639c0d58274616965ec4d40081ac56414"
+    },
+    {
+      "path": "node22-successor.log",
+      "bytes": 21852,
+      "sha256": "8f4ebb46e2494c360f7ef33c2272b49f971f20f5e2e0b46a593f48dbdb63c48b"
+    },
+    {
+      "path": "preparation-complete.json",
+      "bytes": 2024,
+      "sha256": "06d8ad40d283b547118d6220d982d3a06fa808b76be207f2ab27dfd1afc2ff88"
+    },
+    {
+      "path": "preparation-successor.json",
+      "bytes": 1815,
+      "sha256": "9a4ac3806451da8f8a2f31c7d8fef12b29b717e24a4662428f302947b5e95117"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 1601,
+      "sha256": "fc71ee4073161469d06ae9c8ed2d763577925a077051d171fe454cbc047263d5"
+    },
+    {
+      "path": "source-complete.diff",
+      "bytes": 22489,
+      "sha256": "e9a0bdbd0ad05ea64c3f856eb9798b4c707f5bda1d4710098163085c38ad9ea6"
+    },
+    {
+      "path": "source-successor.diff",
+      "bytes": 19857,
+      "sha256": "65c299a50fb70cc724675eef77dd3a042bb2e6a197af1bc55b08013b06ff9950"
+    },
+    {
+      "path": "source.diff",
+      "bytes": 17222,
+      "sha256": "7d139dcf228977827f217a60fa9ef794cc613f4fb0abc3fc641ea451c36c7449"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 5944,
+      "sha256": "c324f3627a93a33d749021570f5aaf016593d0e85f8dbf035030b2f3a3600068"
+    }
+  ],
+  "baselineQualification": "Initial attempt exposed missing finite catalog inputs and controller join setup; corrected unchanged-base run passed four fallback cases and failed six required source behaviors (two Team return declarations/destination and four Workshop parents). Initial failures retained. Peer discovered explicit field handoff left retained Workshop open; Title/paused challenge cases failed2/2 before app handoff fix. Actual saved load/import then failed2/2 before successful restore used that handoff. Both retained; 88/90-case intermediate passes are historical, final92 supersedes.",
+  "scope": [
+    "Title and actual paused cut Workshop Library/Help close via button, native-cancel model and controller Back; actual opener focus, authoritative checkpoint and storage bytes unchanged",
+    "Team explicit native anchor, keyboard and controller lobby Back use code-owned Solo/Versus destination; direct, URL-like or duplicate inputs fall back to Versus",
+    "Team paused Back preserves paused clock/coverage and focuses Resume; existing full host suite covers controller disconnect, nested tools and import cancellation",
+    "Existing Versus entry, Field Kit entry/Continue/Missions and shared audio host checks remain included",
+    "Explicit challenge selection from Title or a real paused cut closes retained parents and focuses the chosen ready flight; Load suspended attempt and actual session JSON import restore the exact checkpoint/saved bytes, close retained parents, focus Resume and stay paused."
+  ],
+  "limitations": [
+    "DOM/Canvas/device boundaries are modeled; no native/browser/public acceptance",
+    "Cross-document navigation target verified, not previous document menu/focus restoration",
+    "No entry redesign, departure confirmation, version, build, archive, media or release changes"
+  ],
+  "capacity": {
+    "hydratedSourceBytes": 14724845,
+    "ownedRegularBytesBeforeReceipt": 15015912,
+    "additionalGitAndReceiptAllowanceBytes": 1048576,
+    "ceilingBytes": 31457280,
+    "freeBytes": 908959744
+  }
+}

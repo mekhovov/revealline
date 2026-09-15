@@ -1,0 +1,25 @@
+Browser tab: 431, Title: "Relay Rescue · RevealLine", URL: "http://127.0.0.1:60366/game/couch/relay-rescue.html?return=versus".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 6, 13, 18-19, 34-35, 37, 40, 47-48, 56-61
++			56 text RELAY YARD
++			57 text Start with a small loop. Cover each other, then meet to join a larger cut.
++						58 First Connection · territory challenge
++						59 (selected) Relay Yard · stronghold challenge
++			60 text Captures recharge both players’ Support and can rescue a downed partner.
++			61 text One open field. Bait a Hunter, cover the crossing, then take the anchors together.
+~			36 button Start together →, ID: coop-start
++			62 text Two players · one screen · a shared victory
++			63 container Description: Help and options, ID: coop-tools
++				64 button (collapsed) How to play and controls, ID: coop-help-toggle, Secondary Actions: Expand
++					65 text How to play and controls
++				66 button (collapsed) Options, ID: coop-options-toggle, Secondary Actions: Expand
++					67 text Options
++			68 text TAKE THE STRONGHOLD TOGETHER
++					69 text Join when ready.
++					70 text Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.
++				71 container coop-stronghold-help
++					72 AXListMarker 5.
++					73 text Open both approaches.
++					74 text Capture anchors A and B to expose the core. Then make a new cut that captures the core itself. The shield blocks entry. Bait the Hunter’s warning and cut during recovery; banking its cell clears it.
++			75 text Capture both anchors, then the exposed core
+The focused UI element is 1 AXWebArea Relay Rescue · RevealLine, URL: 127.0.0.1:60366/game/couch/relay-rescue.html?return=versus

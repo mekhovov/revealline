@@ -1,0 +1,178 @@
+{
+  "format": "revealline.p03a-native-candidate.v1",
+  "sourceCommit": "09861a9c445728b0ee007d536309faee44d6279c",
+  "preview": "http://127.0.0.1:60366/game/",
+  "status": "SCOPED_NATIVE_KEYBOARD_CANDIDATE_NOT_RELEASED",
+  "phaseComplete": false,
+  "publicAccepted": false,
+  "receipts": [
+    {
+      "path": "native/explicit-resume-then-pause.txt",
+      "source": ".cache/p03a-browser/explicit-resume-then-pause.txt",
+      "originalBytes": 1541,
+      "originalSha256": "9a9032fc23a0daacc25dd0258801ca94589daed6c7d3e762115305c36947940e",
+      "bytes": 1541,
+      "sha256": "24db9df0dded34390002d40bb578237c1399c7d13cb3cd74e0087ae4498ad773",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/help-back-workshop.txt",
+      "source": ".cache/p03a-browser/help-back-workshop.txt",
+      "originalBytes": 1651,
+      "originalSha256": "a41ae24f72a682beebe17a1471531704672137bada4710ace4d3071da626a33d",
+      "bytes": 1652,
+      "sha256": "8492276ec81a7f52ef124b5df1cac525335093b57e77d8ecc442afb9e240b8e8",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/library-back-workshop.txt",
+      "source": ".cache/p03a-browser/library-back-workshop.txt",
+      "originalBytes": 1657,
+      "originalSha256": "9b6958e8fb016b5fde2f7d15f1871f573d3c57b43bd0f7e24ac94b8faca84c6e",
+      "bytes": 1658,
+      "sha256": "6b349817265d3129ec7a16576a9acd2f41eb4a0734bcfeaebf9ac1bc835ac6fb",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/library-from-workshop.txt",
+      "source": ".cache/p03a-browser/library-from-workshop.txt",
+      "originalBytes": 989,
+      "originalSha256": "f1f4d66f4551d2918c55b959126b132f2bfdeb0f665e375001ef3e2ab1cafbb8",
+      "bytes": 990,
+      "sha256": "0009203cd949656e49ee4659ef9b3dec9cb2f3177f43274b14bc5fb6d5a8305d",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/paused-flight-start.txt",
+      "source": ".cache/p03a-browser/paused-flight-start.txt",
+      "originalBytes": 545,
+      "originalSha256": "28827fb5b64e42330987b9445f9e396a93c693c1c14211819dbae408065f3eae",
+      "bytes": 546,
+      "sha256": "f966e31a8923e4697989b614c8c84e3e32c07f00b0bed6dc6943ca5e6d6b3af9",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/paused-help-back.txt",
+      "source": ".cache/p03a-browser/paused-help-back.txt",
+      "originalBytes": 194,
+      "originalSha256": "0efe481221109f6c11165b3429906720e367f80434bdf1d731371a94968c9f12",
+      "bytes": 195,
+      "sha256": "1762bfa93cc5d99ff2ef456fcdd7e10937167d98155153cd2154701bb1368fb8",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/paused-library-back.txt",
+      "source": ".cache/p03a-browser/paused-library-back.txt",
+      "originalBytes": 1657,
+      "originalSha256": "9b6958e8fb016b5fde2f7d15f1871f573d3c57b43bd0f7e24ac94b8faca84c6e",
+      "bytes": 1658,
+      "sha256": "6b349817265d3129ec7a16576a9acd2f41eb4a0734bcfeaebf9ac1bc835ac6fb",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/paused-return-still-paused.txt",
+      "source": ".cache/p03a-browser/paused-return-still-paused.txt",
+      "originalBytes": 1551,
+      "originalSha256": "09dab0c9136ee558cfe1e7ab67c86555b694ef139b3cad734ccda73e24a0fae6",
+      "bytes": 1551,
+      "sha256": "a52498533d430717cdf9992b8b1659fe883f3cc3f83fda3f3d6b0e2cd0273b2c",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/paused-workshop-library.txt",
+      "source": ".cache/p03a-browser/paused-workshop-library.txt",
+      "originalBytes": 989,
+      "originalSha256": "f1f4d66f4551d2918c55b959126b132f2bfdeb0f665e375001ef3e2ab1cafbb8",
+      "bytes": 990,
+      "sha256": "0009203cd949656e49ee4659ef9b3dec9cb2f3177f43274b14bc5fb6d5a8305d",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/team-back-solo.txt",
+      "source": ".cache/p03a-browser/team-back-solo.txt",
+      "originalBytes": 1025,
+      "originalSha256": "9858df4ced53b3ef1fa61a90ac01fcd654c5a745a9e0fc89f72aa8f8551c7051",
+      "bytes": 1026,
+      "sha256": "5f488e8fb7b629add67c6864c6f123f198a61103cfe0f3daa6bee85978fb82ea",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/team-back-versus-ready.txt",
+      "source": ".cache/p03a-browser/team-back-versus-ready.txt",
+      "originalBytes": 978,
+      "originalSha256": "36dd1a10ef12cdbe1e57dd0b1e94156fc2f0a1feadf77fab2c91745a57c71189",
+      "bytes": 979,
+      "sha256": "a2ca0f138fabf0bbde99cc111265f400f109f8a784669cf72a1fac92ca2879d8",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/team-back-versus.txt",
+      "source": ".cache/p03a-browser/team-back-versus.txt",
+      "originalBytes": 1517,
+      "originalSha256": "5fa13febfe03478c67cf11c5bcec4db6ad4b63415c57d1aec9bf09615dd2c240",
+      "bytes": 1518,
+      "sha256": "3ae0b298647394f493f4b416a5f6317c87a6cd5cb49cc69280292df6a0c6a6e0",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/team-from-solo.txt",
+      "source": ".cache/p03a-browser/team-from-solo.txt",
+      "originalBytes": 486,
+      "originalSha256": "92be65144079b8914239cf332a8feb1a79e793941666060c193ab84acec65959",
+      "bytes": 487,
+      "sha256": "82f1668ad883688f83547c20ca9a68c97e4973cc791a212d53c5df2795d1c32f",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/team-from-versus.txt",
+      "source": ".cache/p03a-browser/team-from-versus.txt",
+      "originalBytes": 1881,
+      "originalSha256": "fa8cba1cf900f49b6615081cc28911fc9be9df8eb3ed549d7ce427b45b5e18cc",
+      "bytes": 1881,
+      "sha256": "7f5bd8f07cff3a8d4a5c320e571341c7e912aab7d10cd661640ba1f1ac1d846f",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "native/workshop-back-title.txt",
+      "source": ".cache/p03a-browser/workshop-back-title.txt",
+      "originalBytes": 982,
+      "originalSha256": "4f71817789236ba31ee98b4e3a1494384792414b8db7e6ed88310363c53bcd60",
+      "bytes": 983,
+      "sha256": "7bea8dc794dfb910c92284ba51d4a629d8791cc057eb2917fddfbcc9aa985085",
+      "normalization": "Trim trailing whitespace and blank end lines; one final LF. AX get responses may be incremental diffs."
+    },
+    {
+      "path": "tests/verification-complete.json",
+      "source": ".cache/p03a-navigation/verification-complete.json",
+      "bytes": 8888,
+      "sha256": "521da546a804b05bd6fb0a8a5f584212ef53ea71f4de104edb9808f0d1392213",
+      "byteExact": true
+    },
+    {
+      "path": "tests/node20-complete.txt",
+      "source": ".cache/p03a-navigation/node20-complete.log",
+      "bytes": 20912,
+      "sha256": "8584cc8405cfe5f6e2f04fa709933c49125fc38e95b469a141d1c0c9695a0f5b",
+      "byteExact": true
+    },
+    {
+      "path": "tests/node22-complete.txt",
+      "source": ".cache/p03a-navigation/node22-complete.log",
+      "bytes": 22307,
+      "sha256": "d01a79dea9cd09af344e283741b07f71ab514f44e5d9a5e837f944d89f51d261",
+      "byteExact": true
+    }
+  ],
+  "observations": [
+    "Keyboard Title\u2192Workshop\u2192Scores & saves\u2192Escape restores Scores & saves focus; How to play\u2192Escape restores How to play; Workshop\u2192Escape restores title Workshop focus.",
+    "Paused Orchard Crossing retained 0%/three lives/score0/2:54 through Workshop\u2192Library/Help and Back. Continue returned to paused Resume; explicit Resume advanced to2:53 and LIVE LINE/EXPOSED.",
+    "Solo Missions Mode\u2192Team uses return=solo; Team Escape returns Solo with Continue for Orchard Crossing. Versus Team link uses return=versus; Team Escape returns ready Versus lobby."
+  ],
+  "remaining": [
+    "Source-overlay browser evidence, not ordinary build/frozen/public release.",
+    "Physical controller, touch, mobile geometry and complete player journeys remain unqualified.",
+    "Team Back returns the correct host; exact origin menu/focus restoration is not yet provided. Returned Solo and Versus focus AXWebArea.",
+    "Native challenge selection and saved-load/import handoff were not exercised in this run; actual-host tests cover them.",
+    "P01/P02-A final integration and accepted release remain prerequisites."
+  ]
+}

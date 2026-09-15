@@ -1,0 +1,39 @@
+Browser tab: 431, Title: "Reveal / Line", URL: "http://127.0.0.1:60366/game/".
+1 AXWebArea Reveal / Line, URL: 127.0.0.1:60366/game/
+	2 button Description: Game menu, ID: shell-menu
+		3 text  ◩
+		4 text REVEAL / LINE
+	25 text ARCADE EDITION
+	6 checkbox Description: Enter fullscreen, Value: 0, ID: shell-fullscreen
+	26 button Missions, ID: shell-packs
+	27 button Collection, ID: shell-collection
+	28 button Description: Game settings, ID: shell-settings
+		29 text Settings
+	11 container Game
+		12 container
+			13 text REVEALED
+			14 container coverage
+				30 text 1.5 %
+			31 text TARGET 68%
+		17 text LIVES
+		18 container Description: 3 lives, ID: lives
+			32 text ◆ ◆ ◆
+		20 text TIME
+		21 container time
+			33 text 2:51
+		23 text SCORE
+		24 container score
+			34 text 00340
+		35 container arena-shell
+			36 container ID: game-canvas, Description: Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again.
+			37 container overlay-reading-unit
+				38 text PAUSED
+				39 button Resume →, ID: start-button
+				40 button Restart mission, ID: overlay-restart
+				41 button Mission brief, ID: overlay-brief
+				42 button Main menu, ID: overlay-menu
+		43 text Paused
+		44 text Close a line to reveal the picture
+		45 text Line secured. 1.5% revealed. Tap a direction to fly again.
+
+The focused UI element is 39 button Resume →, ID: start-button

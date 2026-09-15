@@ -1,0 +1,26 @@
+Browser tab: 431, Title: "Reveal / Line", URL: "http://127.0.0.1:60366/game/".
+1 AXWebArea Reveal / Line, URL: 127.0.0.1:60366/game/
+	2 container Make it yours, ID: shell-workshop-dialog
+		3 container
+			4 text FIELD KIT / WORKSHOP
+			5 heading Make it yours, Value: 2, ID: shell-workshop-title
+				6 text Make it yours
+			7 button Back
+		8 text Build a world, tune your kit, or practice the next move.
+		9 container Workshop destinations
+			10 link Description: Asset Studio Art, themes & generation prompts, Value: 127.0.0.1:60366/authoring/asset-studio/
+			11 link Description: Mission playground Build and test a flight, Value: 127.0.0.1:60366/game/playground/
+			12 link Description: Enemy workshop Characters & behaviors, Value: 127.0.0.1:60366/authoring/enemy-catalog/
+			13 link Description: Motion lab, Value: 127.0.0.1:60366/authoring/motion-lab/
+			14 link Description: Pictures & stories, Value: 127.0.0.1:60366/authoring/still-media/
+			15 link Description: Video poster workshop, Value: 127.0.0.1:60366/authoring/video-poster/
+			16 link Description: Design atlas, Value: 127.0.0.1:60366/authoring/design-atlas/
+			17 link Description: Replay Theater Review a recorded flight, Value: 127.0.0.1:60366/game/replay-theater/
+			18 link Description: Controller practice Check your controls, Value: 127.0.0.1:60366/game/controller-lab/
+			19 button Field guide & practice, ID: shell-guide
+			20 button Scores & saves, ID: shell-library
+			21 button How to play, ID: shell-help
+		22 button (collapsed) Sound & game extras, Secondary Actions: Expand
+			23 text Sound & game extras
+
+The focused UI element is 20 button Scores & saves, ID: shell-library
