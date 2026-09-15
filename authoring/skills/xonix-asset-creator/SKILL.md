@@ -5,6 +5,8 @@ description: 'Create, edit, vary, and prepare Xonix game artwork: reveal backgro
 
 # Xonix Asset Creator
 
+Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
+
 Current FPV production uses [the Field Kit pipeline](../../../docs/field-kit-production.md): original native sprite/glyph recipes, unchanged image-generation originals, explicit exact-frame scene derivatives, and compiled release/studio assets. Use the selected revision's actual frame, pivot, hubs and production palette in copied prompts. Record nearest-grid/palette preparation honestly; it is not proof of hand-authored native pixel art. Keep source originals and historical picture pins, and review real component/board placement before recording a reviewed revision.
 
 Create the requested art and a traceable handoff. Use the available image-generation/editing tool for imagery; follow its instructions. Do not silently replace image generation with programmatic drawing or invoke a paid API/CLI fallback without the user's authorization for that route.
@@ -20,12 +22,6 @@ For supplied-image imports, optional styling and replaceable object skins, use [
 For moving sprites, rotors, trails, capture effects or UI transitions, consult [Animation Director](../xonix-animation-director/SKILL.md). Separate replaceable components, define state timing and cancellation, and play the assembled result before claiming animation readiness. Measure occupied avatar pixels at play scale; shrinking the transparent canvas is not shrinking the silhouette. Art and motion never change colliders or movement rules.
 
 For applying art to selectable or earned characters, use [Character Collection](../xonix-character-collection/SKILL.md) to preserve stable IDs, component bindings and eligibility. Inspect the actual switched visual after loading; a contact sheet or registered filename does not establish that the intended character paints correctly in the preview.
-
-## Count reserve artwork separately
-
-The reserve picture cohorts contain eight distinct source illustrations: four at `ec052af43a53354e3b8df5733448adcbb0b020b1` under `authoring/library/reserve-illustrations-wave-1`, and four selected works at `2bdb1d890202ec74f3b13fab1f7b3c7de286e508` under `authoring/library/reserve-illustrations-wave-2`. Each wave covers FPV Front, Ukraine Atlas, 1994 Forever and fictional Spend. Wave 2 also retains two initial cleanup variants; six tool outputs still represent only four selected works. These cohorts are not included in the combined `485903` runtime tree and do not establish eight maps, packs, reward assignments or animation rigs. Resolve their exact committed provenance before reuse; do not assume a nearby worktree or a generated-file count establishes adoption.
-
-Preserve full prompts, tool outputs and every original. Inspect whole images and actual game-scale display; state crop, emblem, alpha/palette and fine-detail limits honestly. A browser image measured at a phone-sized viewport is browser layout evidence, not physical touch/controller or device qualification. To ship art, separately bind the exact source and runtime derivative through the existing presentation compiler or the already-supported fallback record; do not create a second registry or overwrite earned originals.
 
 ## Locate inputs
 
@@ -62,7 +58,7 @@ For this Workshop picture-only edition, preserve the exact old pack, change only
 
 For the isolated [still-picture identity foundation](../../../docs/media-presentation.md), use [these prose requests](../../prompts/media-presentation.md). Prepare original PNG/JPEG bytes with bounded headers, successful real decoding and SHA-256, then bind explicit map/theme tuples through the verified execution catalog. Keep immutable asset IDs and presentation revisions outside level/campaign/profile/replay data. A validated record is not installed artwork: host adoption, storage migration, complete bundles and production/browser checks are separate. Current presentations require `story:null`; preserve final-frame/full-story intent as a future contract, not invented fields. No generated source folder is automatically included in the runtime.
 
-For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. Follow the active task’s existing scope and authorization throughout that sequence. Update [Delivery priorities](../../../docs/delivery-priorities.md) with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
 
 For registered enemy roles, optional travelling line impacts and theme-specific pickup/defeat feedback, read [enemy catalog](../../../docs/enemy-catalog.md) and [the R3 edition](../../library/fpv-arcade-r3/README.md). The [enemy workflow prompts](../../prompts/enemy-workflows.json) use actual interfaces. Preserve old identities, explicit authoring activation, local artwork provenance and measured input/visual evidence.
 
@@ -105,3 +101,17 @@ For a complete replacement, test against the retained production ledger plus its
 Recipe-only rotor, trail and effect slots request a reviewable change to registered source code or supported theme tokens and related body anchors. They do not accept PNG uploads or executable content in `.rltheme` bundles. Recipe metadata stores only a registered ID; new behavior or a new recipe requires implementation and review. Keep prior source/revisions and validate the actual runtime, pause and reduced-motion behavior. All three copy actions retain the current custom production brief.
 
 Studio Context must use the runtime geometry adapter. Complete picture-owner metadata stays authoritative even offline; never replace an unavailable owner with a different mission. Player rotor/body previews require presets and selected asset bytes, not a download of an unrelated chapter. Generic inspection fixtures may use the same code-owned level metadata when an optional pack is unavailable and must remain labelled isolated fixtures.
+
+## Reserve illustration cohorts
+
+The [ten-wave reserve series](../../library/reserve-illustrations-wave-10/README.md) contains forty selected source illustrations, ten per theme. Use its cumulative metadata inventory to locate existing originals before commissioning another scene. Selected works and all retained tool outputs are separate counts: earlier unselected variants remain preserved. These counts do not establish playable levels, runtime adoption, animation or offline inclusion.
+
+Retain exact effective prompts, returned originals, actual dimensions and hashes, and requested-versus-observed differences. Respect the current task's explicit disk admission and total-copy budget; account for tool files, workspace copies, Git additions and reports without assuming clone sharing is exclusive free space. Reuse prior originals read-only for comparison.
+
+Record full-original visual review, PNG structural/decode checks and native target-size review separately. A configured 320x160 comparison page is not evidence that it was viewed. If the browser is unavailable, record source-only acceptance and leave the native review gate open; do not label it a native or gameplay pass. Wave10 was accepted by the owner after full-size local review; its native 320x160 comparison remains unverified. Preserve generic marks and uncertain equipment geometry honestly rather than claiming brand absence or engineering authenticity beyond observation.
+
+Use the [read-only cumulative reserve catalog](../../library/reserve-illustrations-catalog/README.md) to browse all forty selections by theme, download an unchanged original, and read its generation/cleanup prompts and provenance. Its sparse Git-backed server loads only the selected image; do not hydrate or preload the full collection just to browse it. The two preserved unselected outputs stay outside the chooser.
+
+Copyable request: “Open the reserve illustration catalog, filter to THEME, and compare existing source choices one at a time. Link the selected original, its exact prompt(s), provenance and wave limitations. Keep this an authoring selection; do not install it, award a picture or imply a released level. If I later request adoption, preserve the original and use the existing picture-authoring contract with separate validation.”
+
+The cumulative catalog has a scoped native select/Previous/Next and exact-original download check. That does not replace the individual waves’ small-view limits or establish exhaustive keyboard, physical-device, gameplay or runtime-adoption qualification.

@@ -1,0 +1,62 @@
+{
+  "format": "revealline-reserve-illustrations.v1",
+  "wave": 10,
+  "basedOn": "d1aa183ed7e094d386e0dce51f11461e7a0e72cb",
+  "selectedWorks": 4,
+  "sourceOnly": true,
+  "entries": [
+    {
+      "id": "fpv-sunflower-workbench",
+      "themeId": "fpv",
+      "theme": "FPV Front",
+      "title": "Sunflower Workbench",
+      "prompt": "prompts/fpv-sunflower-workbench.txt",
+      "file": "originals/fpv-sunflower-workbench.png",
+      "bytes": 2142888,
+      "sha256": "5b5997e3f867fa6e8522a437f7917346566ad6e53e794fe2809108206e407ba2",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "ukraine-tidal-mosaic-observatory",
+      "themeId": "ukraine",
+      "theme": "Ukraine Atlas",
+      "title": "Tidal Mosaic Observatory",
+      "prompt": "prompts/ukraine-tidal-mosaic-observatory.txt",
+      "file": "originals/ukraine-tidal-mosaic-observatory.png",
+      "bytes": 2350777,
+      "sha256": "63005624f666329d77b2fee035f9163e846df64ab44b4b6002ea59e0d52ed7cc",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "retro-neon-skate-arcade",
+      "themeId": "retro",
+      "theme": "1994 Forever",
+      "title": "Neon Skate Arcade",
+      "prompt": "prompts/retro-neon-skate-arcade.txt",
+      "file": "originals/retro-neon-skate-arcade.png",
+      "bytes": 1956188,
+      "sha256": "6fcd9f1c294ab1b4215998e74b842380748aa9816ede9d18eecd487b649fd691",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "spend-storybook-rail-depot",
+      "themeId": "coupa",
+      "theme": "Spend Network",
+      "title": "Storybook Rail Depot",
+      "prompt": "prompts/spend-storybook-rail-depot.txt",
+      "file": "originals/spend-storybook-rail-depot.png",
+      "bytes": 1803179,
+      "sha256": "f0dd68a9228b140047ca071e9526679cfeea3b29a921b7f0434120f3186e1ba0",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    }
+  ],
+  "selectionProvenance": "provenance/originals.json"
+}

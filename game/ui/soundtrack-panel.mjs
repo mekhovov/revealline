@@ -1034,8 +1034,43 @@ export function attachSoundtrackPanel({
     returnFocus = doc.activeElement;
     if (!dialog.open) dialog.showModal();
     closeButton.focus();
-    if (!saved) await reload();
-    else {
+    if (!saved) {
+      const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;
+      // Remember the initial target; native blur may arrive later during the read.
+      let restoreOpeningFocus = doc.activeElement === closeButton;
+      const relinquish = () => {
+        restoreOpeningFocus = false;
+      };
+      const focusChanged = (event) => {
+        if (event.target !== doc.body && event.target !== dialog) relinquish();
+      };
+      const stopObserving = () => {
+        doc.removeEventListener('focusin', focusChanged);
+        dialog.removeEventListener('close', relinquish);
+      };
+      doc.addEventListener('focusin', focusChanged);
+      dialog.addEventListener('close', relinquish);
+      bindings.push(stopObserving);
+      try {
+        const loading = reload();
+        restoreOpeningFocus = restoreOpeningFocus && closeButton.disabled;
+        await loading;
+      } finally {
+        stopObserving();
+        const bindingIndex = bindings.indexOf(stopObserving);
+        if (bindingIndex >= 0) bindings.splice(bindingIndex, 1);
+        if (
+          restoreOpeningFocus &&
+          !disposed &&
+          !doc.hidden &&
+          dialog.isConnected &&
+          dialog.open &&
+          !closeButton.disabled &&
+          focusIsEmpty()
+        )
+          closeButton.focus({ preventScroll: true });
+      }
+    } else {
       render();
       status.textContent = preparedBackup
         ? 'Your prepared saved-library backup is still available to download. Unsaved draft changes are excluded.'

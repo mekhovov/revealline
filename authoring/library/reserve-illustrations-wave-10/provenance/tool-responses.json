@@ -1,0 +1,18 @@
+[
+  {
+    "key": "wave10-fpv",
+    "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b as /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-64f88091-5c36-4737-a785-6c87e71f4efa.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "key": "wave10-ukraine",
+    "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b as /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-b2871be9-fd16-4adf-9e0a-d3ce992c465d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "key": "wave10-retro",
+    "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b as /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-d67aacab-04a2-485d-875c-dd3b7bc06244.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  {
+    "key": "wave10-spend",
+    "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b as /Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-c7936978-ac31-4aad-bc8a-650809ee82b3.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  }
+]

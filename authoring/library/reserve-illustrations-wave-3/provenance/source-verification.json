@@ -1,0 +1,120 @@
+{
+  "base": "2bdb1d890202ec74f3b13fab1f7b3c7de286e508",
+  "parentMetadata": [
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/README.md",
+      "bytes": 5239,
+      "sha256": "dba680a7ffa2aa53749b8a4440e06d894928becbb39cb8dce93234ab7c814053"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/manifest.json",
+      "bytes": 2201,
+      "sha256": "13a2bd888b7a3168c4b43834ade947246b846edcc0ffbb8f0f5f830a1cab25d3"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/provenance/serve.py",
+      "bytes": 2263,
+      "sha256": "bfbd313152d1415dfd57a995ee0fb516230b2a575153a5ec74593ea119a9e12d"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/provenance/inspection.json",
+      "bytes": 2818,
+      "sha256": "b8a5506c6a986a173f9d4f6ff9e241dfc10f37ac203de6bb073663eeff0dec44"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/prompts/fpv-reedwater-relay.txt",
+      "bytes": 2386,
+      "sha256": "66ce08db8199471d3f783317e127fac673465d2e096d5f3996da1223fae425a7"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/prompts/spend-cloud-cart-exchange-cleanup.txt",
+      "bytes": 538,
+      "sha256": "8c6c7de6b21f9661636fa86b9e882681b8de23f656c33eb847e6ade400ef9c22"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/prompts/ukraine-moonlit-loom.txt",
+      "bytes": 2246,
+      "sha256": "9cb444acda5ceee0770a198282e892934e1dc1c4bd17543f0f6f26ec2dc9f8e0"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/prompts/retro-midnight-disk-station-cleanup.txt",
+      "bytes": 659,
+      "sha256": "634adaea6acaac38d3bc719868be62351b5671940e28c4230ed2fd374f665d0d"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/prompts/spend-cloud-cart-exchange.txt",
+      "bytes": 2335,
+      "sha256": "af7b9acae0dfc51534dca1afb14303f45f1a2f3ac437a288e727b1383d988112"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/prompts/retro-midnight-disk-station.txt",
+      "bytes": 2163,
+      "sha256": "2f809f40a3dbb28886c3d9ca6236bbc1854597ed9e276d8c4a22474ce974ad78"
+    }
+  ],
+  "parentOriginalsCheckedOut": false,
+  "newTextPinsAtReview": [
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/README.md",
+      "bytes": 4611,
+      "sha256": "7fbba5c734f043f6cc507c11373f58e4b866a0511b928276493d708ad3a4d4aa"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/manifest.json",
+      "bytes": 1976,
+      "sha256": "8f6dda0112f7423cbd61c775e9f6285e435edfb2f9c0bce0ef6097af0ae3b527"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/provenance/index.html",
+      "bytes": 4085,
+      "sha256": "564f10ae8179674ae10be23f6d4bd25c2e3f78239820c51b098acff439e6e402"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/provenance/serve.py",
+      "bytes": 2571,
+      "sha256": "b4d72bb2e5f8b7de294c9cc33486b762179a63ecf285f68b6b481c99fe6c8cea"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/provenance/originals.json",
+      "bytes": 14864,
+      "sha256": "1d0816fc07138a16c64d83ca8803f8ec3fdf80d76c6b76591db307aeb409c144"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/provenance/inspect.py",
+      "bytes": 1791,
+      "sha256": "a2da9db68698d5d516c6789c3785d58dfbcc960429c20b4d93d2f5a03c243a9b"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/provenance/inspection.json",
+      "bytes": 2984,
+      "sha256": "c7c33e046b356cef97cc1148cddae4504e23d5c62d7f14dc5622f45be06bc0d7"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/provenance/tool-responses.json",
+      "bytes": 5244,
+      "sha256": "1f3063337dc0a9eb6be46cbfded578f548102c68805d61d21376117d81063f3e"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/prompts/retro-poolside-mixtape.txt",
+      "bytes": 1925,
+      "sha256": "5ecd879196d66b2fa143b3161afdbd63165c3f2d8f2b6d4357ad30cb0587952f"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/prompts/fpv-basalt-beacon.txt",
+      "bytes": 2023,
+      "sha256": "1ba7f75f7f886202756a7cccb67a819dcc1abdae0dfac7f6d20f7acc9c6476a6"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/prompts/ukraine-apricot-glasshouse.txt",
+      "bytes": 2004,
+      "sha256": "abaea3fc60931b6e6432d37080455de4ae601e5145e1ee82fd7bdd1bcb2b4a56"
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-3/prompts/spend-copper-kettle-bazaar.txt",
+      "bytes": 2016,
+      "sha256": "30e04c040fa14958e1cf21751f33af07993691b53f389bf26a9c9c7a5147fce1"
+    }
+  ],
+  "initialPreparationRefusal": "Initial no-checkout index had not been read; preview assembly refused missing old manifest before serving. Initialized exact sparse index with git read-tree -mu HEAD; initial server.log retained; no parent image checkout or source deletion committed.",
+  "scope": "Only new reserve-illustrations-wave-3 paths will be committed."
+}

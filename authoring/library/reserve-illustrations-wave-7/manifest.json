@@ -1,0 +1,62 @@
+{
+  "format": "revealline-reserve-illustrations.v1",
+  "wave": 7,
+  "basedOn": "46bb17bfbbd18f19a7928462393b53c562bf157a",
+  "selectedWorks": 4,
+  "sourceOnly": true,
+  "entries": [
+    {
+      "id": "fpv-bluehour-coastal-relay",
+      "themeId": "fpv",
+      "theme": "FPV Front",
+      "title": "Bluehour Coastal Relay",
+      "prompt": "prompts/fpv-bluehour-coastal-relay.txt",
+      "file": "originals/fpv-bluehour-coastal-relay.png",
+      "bytes": 2250446,
+      "sha256": "3dd09693875c7f8d3a6003436abe3d7f8802958d762a7b51e237eb6dc9a313c3",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "ukraine-highland-embroidered-fair",
+      "themeId": "ukraine",
+      "theme": "Ukraine Atlas",
+      "title": "Highland Embroidered Fair",
+      "prompt": "prompts/ukraine-highland-embroidered-fair.txt",
+      "file": "originals/ukraine-highland-embroidered-fair.png",
+      "bytes": 2744903,
+      "sha256": "47db3da68ab45920e2aa3add1ed833e94a95a680eb10ab9f33a0bb1089fa45ac",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "retro-apricot-cassette-repair",
+      "themeId": "retro",
+      "theme": "1994 Forever",
+      "title": "Apricot Tape Workshop",
+      "prompt": "prompts/retro-apricot-cassette-repair.txt",
+      "file": "originals/retro-apricot-cassette-repair.png",
+      "bytes": 2201019,
+      "sha256": "bcdeeaed20e9b643ae6ad774a8d40f95f7b487342ec3a8aecc3d793e774dea2a",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "spend-citrus-parcel-hub",
+      "themeId": "coupa",
+      "theme": "Spend Network",
+      "title": "Citrus Parcel Hub",
+      "prompt": "prompts/spend-citrus-parcel-hub.txt",
+      "file": "originals/spend-citrus-parcel-hub.png",
+      "bytes": 1916377,
+      "sha256": "a02df60240645d8a010619ae24e994646f71601cfb754db78d15a875bf301c52",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    }
+  ],
+  "selectionProvenance": "provenance/originals.json"
+}

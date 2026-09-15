@@ -1,0 +1,62 @@
+{
+  "format": "revealline-reserve-illustrations.v1",
+  "wave": 3,
+  "basedOn": "2bdb1d890202ec74f3b13fab1f7b3c7de286e508",
+  "selectedWorks": 4,
+  "sourceOnly": true,
+  "entries": [
+    {
+      "id": "fpv-basalt-beacon",
+      "themeId": "fpv",
+      "theme": "FPV Front",
+      "title": "Basalt Beacon",
+      "file": "originals/fpv-basalt-beacon.png",
+      "bytes": 2235880,
+      "sha256": "f47a9bc806289eb2203922569ca88cfd5c8230a3ccead0c589b633d29b8715d6",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/fpv-basalt-beacon.txt",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "ukraine-apricot-glasshouse",
+      "themeId": "ukraine",
+      "theme": "Ukraine Atlas",
+      "title": "Apricot Glasshouse",
+      "file": "originals/ukraine-apricot-glasshouse.png",
+      "bytes": 2704541,
+      "sha256": "710af7d1315ddb8615bcb8f4c12f5544e70a0df8863929bc295688e1d53ac93c",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/ukraine-apricot-glasshouse.txt",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "retro-poolside-mixtape",
+      "themeId": "retro",
+      "theme": "1994 Forever",
+      "title": "Poolside Mixtape",
+      "file": "originals/retro-poolside-mixtape.png",
+      "bytes": 2243333,
+      "sha256": "c56fb59e923ca7bd531f1abaa22d96a2e11a88c38f7e9bf7e9438403995c0948",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/retro-poolside-mixtape.txt",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "spend-copper-kettle-bazaar",
+      "themeId": "coupa",
+      "theme": "Spend Network",
+      "title": "Copper Kettle Bazaar",
+      "file": "originals/spend-copper-kettle-bazaar.png",
+      "bytes": 2175587,
+      "sha256": "6114aefe292f9c5410ad27cfd4c959fb0054a0374cfb8794eb6144a6ba6f9edb",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/spend-copper-kettle-bazaar.txt",
+      "runtimeAdopted": false
+    }
+  ],
+  "selectionProvenance": "provenance/originals.json"
+}
