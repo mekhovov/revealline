@@ -1,0 +1,11 @@
+{
+  "time": "2026-09-15T12:02:27.710873+00:00",
+  "phase": "setup-attempt-2-about-blank",
+  "pid": 24649,
+  "pidExited": true,
+  "cdpPort": 64717,
+  "cdpClosed": true,
+  "cause": "agent-browser documented --args absent from actual OS argv; collector failed strict command-line verification",
+  "publicNavigationOccurred": false,
+  "profileReset": false
+}

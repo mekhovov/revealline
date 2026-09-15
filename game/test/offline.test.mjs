@@ -931,10 +931,30 @@ test('optional pack preparation and verification explicitly distinguish core cac
   assert.match(available.note, /First Light.*install once while online/);
   assert.match(available.note, /Already-installed packs/);
   const messages = [];
-  const result = await prepareOffline({ ...env, onStatus: (s) => messages.push(s.message) });
+  const summaries = [];
+  const result = await prepareOffline({
+    ...env,
+    onStatus: (s) => {
+      messages.push(s.message);
+      summaries.push(s.summary);
+    },
+  });
   assert.equal(result.status, 'ready');
   assert.ok(messages.every((m) => m.includes('install once while online')));
-  assert.match((await checkOffline(env)).message, /install once while online/);
+  assert.ok(summaries.every((summary) => summary && !summary.includes('First Light')));
+  for (let i = 0; i < messages.length; i++)
+    assert.equal(messages[i], `${summaries[i]} ${available.note}`);
+  const checked = await checkOffline(env);
+  assert.match(checked.message, /install once while online/);
+  assert.equal(checked.message, `${checked.summary} ${available.note}`);
+  registration.active = null;
+  registration.waiting = worker;
+  worker.state = 'installed';
+  for (const waiting of [await prepareOffline(env), await checkOffline(env)]) {
+    assert.equal(waiting.status, 'waiting');
+    assert.match(waiting.summary, /^Update saved\. Close all tabs/);
+    assert.equal(waiting.message, `${waiting.summary} ${available.note}`);
+  }
   optionalMarker.optionalPacks = [{ name: 42 }];
   assert.equal(offlineAvailability(env).available, false);
 });

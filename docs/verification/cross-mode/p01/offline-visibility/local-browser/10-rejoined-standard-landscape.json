@@ -1,0 +1,246 @@
+{
+  "at": "2026-09-15T12:14:15.451Z",
+  "bodyState": {
+    "arenaChrome": "full",
+    "effects": "full",
+    "flightState": "briefing",
+    "inputMode": "pointer",
+    "pictureState": "ready",
+    "screenControls": "hidden",
+    "screenSteeringHand": "right",
+    "textFace": "pixel",
+    "textSize": "standard",
+    "touchMode": "stick",
+    "touchSide": "right",
+    "touchSize": "regular"
+  },
+  "boot": "ready",
+  "button": {
+    "disabled": true,
+    "rect": {
+      "bottom": 168.796875,
+      "display": "inline-flex",
+      "fontSize": "16px",
+      "fullyWithinViewport": true,
+      "height": 44,
+      "hidden": false,
+      "left": 51.75,
+      "lineHeight": "21.6px",
+      "right": 241.6875,
+      "top": 124.796875,
+      "visibility": "visible",
+      "width": 189.9375,
+      "x": 51.75,
+      "y": 124.796875
+    },
+    "text": "Check progress"
+  },
+  "cacheNames": [],
+  "details": "No offline check yet.",
+  "dialog": {
+    "open": true,
+    "rect": {
+      "bottom": 390,
+      "display": "block",
+      "fontSize": "18px",
+      "fullyWithinViewport": true,
+      "height": 390,
+      "hidden": false,
+      "left": 16,
+      "lineHeight": "27px",
+      "right": 828,
+      "top": 0,
+      "visibility": "visible",
+      "width": 812,
+      "x": 16,
+      "y": 0
+    }
+  },
+  "documentState": {
+    "bootState": "ready",
+    "buildVersion": "v0.57.1",
+    "presentationTheme": "fpv"
+  },
+  "focus": {
+    "id": "",
+    "tag": "BODY",
+    "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved fligh"
+  },
+  "href": "http://127.0.0.1:64963/game/",
+  "note": {
+    "detailsOpen": false,
+    "insideVerificationDetails": true,
+    "rect": {
+      "bottom": 346.671875,
+      "display": "block",
+      "fontSize": "14px",
+      "fullyWithinViewport": true,
+      "height": 101.484375,
+      "hidden": false,
+      "left": 67.75,
+      "lineHeight": "20.3px",
+      "right": 776.25,
+      "top": 245.1875,
+      "visibility": "visible",
+      "width": 708.5,
+      "x": 67.75,
+      "y": 245.1875
+    },
+    "text": "FPV Front · First Light R2, FPV Front · First Light R3, FPV Front · First Light Arcade R4, FPV Front · Pressure Lines, FPV Front · First Light, FPV Front · Frontier Lines, FPV Front · Illustrated Pressure, Ukraine Atlas · Woven Lines, 1994 Forever · After Hours, Spend Network · Shared Routes, FPV Front · Route Choices — Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup."
+  },
+  "optionalPacks": [
+    {
+      "id": "fpv-arcade-r2",
+      "name": "FPV Front · First Light R2",
+      "path": "game/content/packs/fpv-arcade-r2.json"
+    },
+    {
+      "id": "fpv-arcade-r3",
+      "name": "FPV Front · First Light R3",
+      "path": "game/content/packs/fpv-arcade-r3.json"
+    },
+    {
+      "id": "fpv-arcade-r4",
+      "name": "FPV Front · First Light Arcade R4",
+      "path": "game/content/packs/fpv-arcade-r4.json"
+    },
+    {
+      "id": "fpv-arcade-r5",
+      "name": "FPV Front · Pressure Lines",
+      "path": "game/content/packs/fpv-arcade-r5.json"
+    },
+    {
+      "id": "fpv-arcade",
+      "name": "FPV Front · First Light",
+      "path": "game/content/packs/fpv-arcade.json"
+    },
+    {
+      "id": "fpv-pressure-frontier",
+      "name": "FPV Front · Frontier Lines",
+      "path": "game/content/packs/fpv-pressure-frontier.json"
+    },
+    {
+      "id": "original-fpv-pressure",
+      "name": "FPV Front · Illustrated Pressure",
+      "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json"
+    },
+    {
+      "id": "original-ukraine-atlas",
+      "name": "Ukraine Atlas · Woven Lines",
+      "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+    },
+    {
+      "id": "original-retro-1994",
+      "name": "1994 Forever · After Hours",
+      "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+    },
+    {
+      "id": "original-spend-network",
+      "name": "Spend Network · Shared Routes",
+      "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+    },
+    {
+      "id": "fpv-route-choices",
+      "name": "FPV Front · Route Choices — Tactical",
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+    }
+  ],
+  "preferences": {
+    "face": "pixel",
+    "reduced": false,
+    "size": "standard"
+  },
+  "scroll": {
+    "settings": 499,
+    "x": 0,
+    "y": 0
+  },
+  "status": {
+    "count": {
+      "rect": {
+        "bottom": 103.796875,
+        "display": "block",
+        "fontSize": "14px",
+        "fullyWithinViewport": true,
+        "height": 20.296875,
+        "hidden": false,
+        "left": 666.25,
+        "lineHeight": "20.3px",
+        "right": 792.25,
+        "top": 83.5,
+        "visibility": "visible",
+        "width": 126,
+        "x": 666.25,
+        "y": 83.5
+      },
+      "text": "607 / 608 files"
+    },
+    "progress": {
+      "max": 608,
+      "rect": {
+        "bottom": 97.640625,
+        "display": "block",
+        "fontSize": "14px",
+        "fullyWithinViewport": true,
+        "height": 8,
+        "hidden": false,
+        "left": 414.25,
+        "lineHeight": "20.3px",
+        "right": 654.25,
+        "top": 89.640625,
+        "visibility": "visible",
+        "width": 240,
+        "x": 414.25,
+        "y": 89.640625
+      },
+      "value": 607
+    },
+    "rect": {
+      "bottom": 103.796875,
+      "display": "flex",
+      "fontSize": "14px",
+      "fullyWithinViewport": true,
+      "height": 20.296875,
+      "hidden": false,
+      "left": 51.75,
+      "lineHeight": "20.3px",
+      "right": 792.25,
+      "top": 83.5,
+      "visibility": "visible",
+      "width": 740.5,
+      "x": 51.75,
+      "y": 83.5
+    },
+    "stage": "downloading",
+    "state": "busy",
+    "text": "Downloading and verifying core offline files…607 / 608 files"
+  },
+  "stop": {
+    "rect": {
+      "bottom": 174.59375,
+      "display": "inline-flex",
+      "fontSize": "16px",
+      "fullyWithinViewport": true,
+      "height": 44,
+      "hidden": false,
+      "left": 245.703125,
+      "lineHeight": "21.6px",
+      "right": 373.265625,
+      "top": 130.59375,
+      "visibility": "visible",
+      "width": 127.5625,
+      "x": 245.703125,
+      "y": 130.59375
+    },
+    "text": "Stop waiting"
+  },
+  "viewport": {
+    "height": 390,
+    "width": 844
+  },
+  "worker": {
+    "installing": "installing",
+    "scope": "http://127.0.0.1:64963/",
+    "script": "http://127.0.0.1:64963/service-worker.js"
+  }
+}

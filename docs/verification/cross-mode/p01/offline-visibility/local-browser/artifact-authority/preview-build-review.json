@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "scope": "Working-source ordinary preview artifact; not exact-commit or public qualification",
+  "at": "2026-09-15T12:11:50.004711+00:00",
+  "version": "0.57.1",
+  "sourceRevision": null,
+  "manifestFiles": 654,
+  "manifestBytes": 312379750,
+  "manifestSha256": "79d94ded82b9842c32151895d867de043f2463caa4643c900f88bce110b612ca",
+  "buildId": "39f9ba278274ad326e6d85751711e3b50e682c66389796bb4499608999f0bb1a",
+  "offlineFiles": 608,
+  "offlineBytes": 55383689,
+  "changedRuntime": [
+    {
+      "path": "game/offline.mjs",
+      "sourceBytes": 14552,
+      "sourceSha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f",
+      "buildBytes": 14552,
+      "buildSha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f",
+      "exactCopy": true
+    },
+    {
+      "path": "game/ui/offline-panel.mjs",
+      "sourceBytes": 4414,
+      "sourceSha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf",
+      "buildBytes": 4414,
+      "buildSha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf",
+      "exactCopy": true
+    },
+    {
+      "path": "game/index.html",
+      "sourceBytes": 68550,
+      "sourceSha256": "dd60fa23f3db4b3223d97bc4fd33e537e44db2f729b042255b88a1f827854c94",
+      "buildBytes": 71077,
+      "buildSha256": "60918b4dc5f3c6cfc926b07356fc7e91e49a84ae94a05721225aabd617729819",
+      "exactCopy": false
+    }
+  ]
+}

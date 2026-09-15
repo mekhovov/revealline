@@ -1,0 +1,149 @@
+{
+  "scope": "Exact small source/artifact authorities; no expanded site copy",
+  "files": [
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/manifest.json",
+        "bytes": 121361,
+        "sha256": "79d94ded82b9842c32151895d867de043f2463caa4643c900f88bce110b612ca"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/manifest.json",
+        "bytes": 121361,
+        "sha256": "79d94ded82b9842c32151895d867de043f2463caa4643c900f88bce110b612ca"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/offline-cache.json",
+        "bytes": 114346,
+        "sha256": "b76c0830b8133c2417d1e85db56648873ffeb9f521366d3c5e79d62c739f2bb8"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/offline-cache.json",
+        "bytes": 114346,
+        "sha256": "b76c0830b8133c2417d1e85db56648873ffeb9f521366d3c5e79d62c739f2bb8"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/game/build-info.json",
+        "bytes": 104,
+        "sha256": "06946089163b7b31a90fc181526186387322a8762ae7335d3e8d819547d02482"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/game/build-info.json",
+        "bytes": 104,
+        "sha256": "06946089163b7b31a90fc181526186387322a8762ae7335d3e8d819547d02482"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/service-worker.js",
+        "bytes": 106430,
+        "sha256": "af1ae9e08fba63798bb598acdc3942f124b926a97070d0e9c441239efed3f580"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/service-worker.js",
+        "bytes": 106430,
+        "sha256": "af1ae9e08fba63798bb598acdc3942f124b926a97070d0e9c441239efed3f580"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/game/offline.mjs",
+        "bytes": 14552,
+        "sha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/game/offline.mjs",
+        "bytes": 14552,
+        "sha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/game/ui/offline-panel.mjs",
+        "bytes": 4414,
+        "sha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/game/ui/offline-panel.mjs",
+        "bytes": 4414,
+        "sha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/game/index.html",
+        "bytes": 71077,
+        "sha256": "60918b4dc5f3c6cfc926b07356fc7e91e49a84ae94a05721225aabd617729819"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/game/index.html",
+        "bytes": 71077,
+        "sha256": "60918b4dc5f3c6cfc926b07356fc7e91e49a84ae94a05721225aabd617729819"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build/authoring/asset-studio/operation.mjs",
+        "bytes": 3500,
+        "sha256": "d000d43ce10a6a0dfeacfe0a7122e894a8816a6fa58c790229768fc019568c31"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/authoring/asset-studio/operation.mjs",
+        "bytes": 3500,
+        "sha256": "d000d43ce10a6a0dfeacfe0a7122e894a8816a6fa58c790229768fc019568c31"
+      }
+    },
+    {
+      "original": {
+        "path": "game/offline.mjs",
+        "bytes": 14552,
+        "sha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f"
+      },
+      "retainedCopy": {
+        "path": "source-authority/game/offline.mjs",
+        "bytes": 14552,
+        "sha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f"
+      }
+    },
+    {
+      "original": {
+        "path": "game/ui/offline-panel.mjs",
+        "bytes": 4414,
+        "sha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf"
+      },
+      "retainedCopy": {
+        "path": "source-authority/game/ui/offline-panel.mjs",
+        "bytes": 4414,
+        "sha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf"
+      }
+    },
+    {
+      "original": {
+        "path": "game/index.html",
+        "bytes": 68550,
+        "sha256": "dd60fa23f3db4b3223d97bc4fd33e537e44db2f729b042255b88a1f827854c94"
+      },
+      "retainedCopy": {
+        "path": "source-authority/game/index.html",
+        "bytes": 68550,
+        "sha256": "dd60fa23f3db4b3223d97bc4fd33e537e44db2f729b042255b88a1f827854c94"
+      }
+    },
+    {
+      "original": {
+        "path": ".cache/cross-mode/p01/v0571/preview-build-review.json",
+        "bytes": 1435,
+        "sha256": "95acffa59c98fa112ac4790b50529bc6a26edcdb025555624315be16f6a33383"
+      },
+      "retainedCopy": {
+        "path": "artifact-authority/preview-build-review.json",
+        "bytes": 1435,
+        "sha256": "95acffa59c98fa112ac4790b50529bc6a26edcdb025555624315be16f6a33383"
+      }
+    }
+  ]
+}

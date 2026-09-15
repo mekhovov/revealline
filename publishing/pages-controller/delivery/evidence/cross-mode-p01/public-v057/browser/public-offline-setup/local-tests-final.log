@@ -1,0 +1,9 @@
+test_absolute_http_is_refused_without_upstream_or_secret_log (__main__.RefusalTests.test_absolute_http_is_refused_without_upstream_or_secret_log) ... ok
+test_connect_never_opens_tunnel (__main__.RefusalTests.test_connect_never_opens_tunnel) ... ok
+test_event_log_is_bounded_but_requests_still_refused (__main__.RefusalTests.test_event_log_is_bounded_but_requests_still_refused) ... ok
+test_other_methods_expect_continue_and_head_are_refused (__main__.RefusalTests.test_other_methods_expect_continue_and_head_are_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.074s
+
+OK

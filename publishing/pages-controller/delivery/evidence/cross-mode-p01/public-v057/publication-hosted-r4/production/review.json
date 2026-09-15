@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "observedAt": "2026-09-15T11:59:19.148516+00:00",
+  "runId": 34965929587,
+  "controllerCommit": "74f289510617603c28768bb3f6bfd8e9f7a72cdd",
+  "controllerTree": "8d8173c2f14effcac2e63b8cec22848943d88110",
+  "deploymentId": 6458234240,
+  "deploymentStatus": "success",
+  "environmentURL": "https://mekhovov.github.io/revealline/",
+  "currentVersion": "v0.57.0",
+  "gameSourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+  "qualifiedSourceTree": "7cd40e4ef8bf975e7eb2795cdd2669aa18811a57",
+  "publishable": true,
+  "files": 2373,
+  "bytes": 636426379,
+  "historicalBridges": 61,
+  "admittedArchives": 13,
+  "nodeTestsPassed": 36,
+  "pythonTestsPassed": 4,
+  "authorityPins": [
+    {
+      "path": "run.json",
+      "bytes": 12167,
+      "sha256": "2b1173f333f32a1fc399489882e0370539616efa77e1b26906336ccd5d64e147"
+    },
+    {
+      "path": "artifact-receipt.json",
+      "bytes": 456878,
+      "sha256": "d5dd1b24e699d40145f116525b6397674a4cc957e18f30089ae477852d5eef86"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 3823,
+      "sha256": "1832264e84dd088ed4276fc8fc32553abe8566062a87c95513bf63aed018e055"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 6586,
+      "sha256": "59f7a61387c727034efd112804d136e09dd35c18d33b5a2a559c3c2f16a2af01"
+    }
+  ],
+  "scope": "Completed exact main publication and original hosted receipt authority only. All-body HTTP audit, native-browser qualification, offline checks, and phase acceptance remain separate."
+}
