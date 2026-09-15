@@ -1,0 +1,8 @@
+[
+  "docs/cross-mode-execution.md",
+  "game/build-config.json",
+  "game/test/soundtrack-panel.test.mjs",
+  "game/ui/soundtrack-panel.mjs",
+  "package-lock.json",
+  "package.json"
+]
