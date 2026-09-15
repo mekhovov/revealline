@@ -76,6 +76,12 @@ to that selected source. Generated `.cache` state is initialized before tests; n
 file is patched or replaced. Frozen publication continues to use accepted qualification and
 original distribution bytes rather than scheduling historical source checks.
 
+The [FPV redesign delivery record](../publishing/pages-controller/delivery/README.md) records final
+public byte, play, offline and retained-entry evidence separately from immutable source qualification.
+Changes confined to `publishing/pages-controller/delivery/**` retain pull-request preview checks but
+do not republish Pages when merged. A commit that also changes the selector or another publishing
+input still triggers the normal publisher.
+
 ## Browser installation and offline use
 
 Serving a static game does not by itself verify offline behavior or installation. Browser installation criteria vary; manifest metadata and HTTPS or loopback are relevant, while a service worker provides separately testable caching behavior. Browser and platform installation flows also differ. [MDN installability guidance](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable)

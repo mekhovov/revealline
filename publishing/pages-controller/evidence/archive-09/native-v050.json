@@ -1,0 +1,1120 @@
+{
+  "schema": "revealline-public-browser-qualification.v1",
+  "version": "v0.50.0",
+  "sourceRevision": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-09/releases/v0.50.0/site/game/",
+  "reviewer": "AI agent; observed browser actions and images",
+  "status": "passed for the listed common native-browser journeys, with retained attempts and stated limitations",
+  "completedAt": "2026-09-15T01:11:03.569661+00:00",
+  "browserSession": "field-kit-public09",
+  "browser": "HeadlessChrome 153; macOS; measured CSS viewport 1280x800, DPR1",
+  "publication": {
+    "archiveController": "d07e625649b3a56452a284835d43f5ad3d007f33",
+    "runId": 34911243947,
+    "deploymentId": 6448874089,
+    "independentHTTPAudit": {
+      "files": 1181,
+      "bytes": 618354051,
+      "failures": 0,
+      "retries": 0,
+      "skips": 0,
+      "scope": "Both version archives; separately supplied by system audit, not inferred from these browser screenshots"
+    }
+  },
+  "offlineVerification": {
+    "evidence": "161-offline-after-headroom-progress.json",
+    "status": "ready",
+    "version": "v0.50.0",
+    "buildId": "5ff728d7d9922d18d2068628f42942c01e119010c63544c50eb15e06e3340d4d",
+    "count": 547,
+    "verified": 547,
+    "bytes": 63909811,
+    "missing": [],
+    "corrupt": [],
+    "message": "Offline files verified. This version can open without a connection while the browser retains its storage. FPV Front \u00b7 First Light R2, FPV Front \u00b7 First Light R3, FPV Front \u00b7 First Light Arcade R4, FPV Front \u00b7 First Light, FPV Front \u00b7 Frontier Lines, FPV Front \u00b7 Illustrated Pressure, Ukraine Atlas \u00b7 Woven Lines, 1994 Forever \u00b7 After Hours, Spend Network \u00b7 Shared Routes, FPV Front \u00b7 Route Choices \u2014 Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup."
+  },
+  "finalCheckpoint": {
+    "evidence": "197-final-online-checkpoint.json",
+    "url": "https://mekhovov.github.io/revealline-archive-09/releases/v0.50.0/site/game/",
+    "online": true,
+    "text": " \u25e9 REVEAL / LINE\nTACTICAL EDITION\n\u26f6\nMissions\nCollection\nSettings\nREVEALED\n50.0%\nTARGET 58%\nLIVES\n\u25c6 \u25c6\nTIME\n1:02\nSCORE\n07820\n\nPAUSED\n\nResume \u2192\nRestart mission\nMission brief\nMain menu\nPaused\nRelay: 0 / 1\n\nSaved flight verified and restored. Press Resume to continue.",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "textSize": "large",
+    "reduced": true,
+    "registrations": [
+      {
+        "scope": "https://mekhovov.github.io/revealline-archive-09/releases/v0.49.0/site/",
+        "active": "activated"
+      },
+      {
+        "scope": "https://mekhovov.github.io/revealline-archive-09/releases/v0.50.0/site/",
+        "active": "activated"
+      }
+    ]
+  },
+  "passed": [
+    "Fresh title/version and base mission selection; hidden pictures remain concealed and later missions locked.",
+    "Ordinary Start/Deploy, Pause, reload, Continue with verified paused restoration, and explicit Resume.",
+    "Natural First Signal win, Gold result, earned Collection entry, and full picture viewer.",
+    "Actual defeat from three ordinary self-crossing inputs; Retry resets lives, score, coverage and attempt time, then runs after picture readiness. Earned best result remains.",
+    "Ordinary offline preparation/retry eventually verifies every declared core body, with no missing or corrupt entries.",
+    "Networking disabled on the actual page: canonical reload and saved flight restoration; ordinary direction input advances play; Pause saves the new checkpoint.",
+    "Fresh document navigation from a verified offline about:blank page to the canonical release; Continue restores the updated saved flight.",
+    "Earned full picture opens while offline; online state restored afterward.",
+    "v0.49 and v0.50 keep distinct saved checkpoints and reduced-effects values while both exact service-worker scopes coexist.",
+    "Settings categories expose only the selected panel; Controls + ArrowRight moves focus and selection to Audio. Large text and reduced effects persist after reload.",
+    "Large Settings Display panel inspected at390x844 DPR1, with readable wrapped categories and native scrolling.",
+    "Collection Flight records opens the nested library without resuming the paused flight; earned gallery retains its score after Couch.",
+    "Couch Mode entry, help, setup, options, match-reset confirmation, shared Pause and explicit Resume.",
+    "Separate Couch rounds: Skyline wins50%/7820 while Sunflower stays0%; then Sunflower wins50%/7820 while Skyline stays0%. Both keyboard layouts act independently.",
+    "Couch Return-to-solo confirmation preserves the solo save. Duplicate-tab protection displays its session-only warning; closing only the owned duplicate and reloading restores the ordinary saving owner."
+  ],
+  "retainedToolFailures": [
+    "125-solo-return-continue.json"
+  ],
+  "limits": [
+    "Native Chromium controls in the isolated agent-browser profile; viewport and network conditions are emulated. This is not a physical phone, physical network disconnect, Safari, gamepad or multitouch qualification.",
+    "Fresh document navigation from about:blank was tested offline; a full browser-process restart and long-term storage retention were not tested.",
+    "Public checks are representative journeys, not a fresh review of every art slot. The separate source art and renderer reviews remain their own evidence.",
+    "No browser storage was injected, cleared, or edited. Only the ordinary game UI wrote this QA profile. Duplicate owned tabs were closed through normal tab controls, preserving storage."
+  ],
+  "files": [
+    {
+      "path": "v050/001-new-page.json",
+      "bytes": 452,
+      "sha256": "49c51686f2fe99c3a86ebadabed1e1325a94aab49196d5a415e6fb55d9f32757"
+    },
+    {
+      "path": "v050/002-page-progress.json",
+      "bytes": 658,
+      "sha256": "37daf5e782a0821bc1c8ee36093d1ab76b702eb34e44b85614f5f7502c165597"
+    },
+    {
+      "path": "v050/003-tabs.json",
+      "bytes": 463,
+      "sha256": "4d912eab9d30fc43322b5c1bb70acac8fc8b4610561eebfafa63461a293df926"
+    },
+    {
+      "path": "v050/004-bootstrap-progress.json",
+      "bytes": 2270,
+      "sha256": "27cd89350df0d28d09211c91fd12f9d5a6e30093201318621d77b2a7564bfa27"
+    },
+    {
+      "path": "v050/005-return-tab.json",
+      "bytes": 366,
+      "sha256": "eae667d0b0f798d30779b2439b77303aedce2879fc0185986e4cba44f7c17285"
+    },
+    {
+      "path": "v050/006-ready-state.json",
+      "bytes": 781,
+      "sha256": "2d4b787fb06672e267006bedabbf957bf4abb796a3b1df3158be54057b777b92"
+    },
+    {
+      "path": "v050/007-bootstrap-resources.json",
+      "bytes": 3109,
+      "sha256": "e19daabdb440ba37281c80788a9bb658a0eb3dc0ce584b2ce7b53417f7de8914"
+    },
+    {
+      "path": "v050/008-errors.json",
+      "bytes": 255,
+      "sha256": "5589d98497551fc1c9fb32b2422d584a7dac55a9ca31b2988a6f7edb596d4af0"
+    },
+    {
+      "path": "v050/009-return-tab.json",
+      "bytes": 366,
+      "sha256": "a36b953791005869f92d9de87fd2fdc8af31a7370ad70fbca1988779120854f0"
+    },
+    {
+      "path": "v050/010-title-ready.json",
+      "bytes": 1636,
+      "sha256": "6de3b62a29f8fab97edcb7460dee5ce37ceab4bb98018097b5b272fbe6bfd0d0"
+    },
+    {
+      "path": "v050/011-title-capture.json",
+      "bytes": 550,
+      "sha256": "dcd0559ed1c5ac420aa56504d3ad259829c5b5fe058fcbc69138cc0a64282056"
+    },
+    {
+      "path": "v050/012-missions-open.json",
+      "bytes": 286,
+      "sha256": "fe1f34b9673aaf9d30952e5b3c1e94441c82146a65e0c3f3d914abd2d04ef778"
+    },
+    {
+      "path": "v050/013-missions-observe.json",
+      "bytes": 1882,
+      "sha256": "3948211988d5a1568898840434019b55495f893238ecadcb8ddc0abe713e9074"
+    },
+    {
+      "path": "v050/014-deploy.json",
+      "bytes": 288,
+      "sha256": "cf515d977e6dac63d03f5a3efbec963a0c0b4fe7bd69c892ce14baf31400de7a"
+    },
+    {
+      "path": "v050/015-running-observe.json",
+      "bytes": 692,
+      "sha256": "fd31a9a7deaab724caba9d306fecb99562c988be9300e537148de5fa306f8528"
+    },
+    {
+      "path": "v050/016-pause.json",
+      "bytes": 276,
+      "sha256": "0e46d841a34f0f497f88a862fed67c15ebcfb0f8e2aa7be6679d974194da7a7d"
+    },
+    {
+      "path": "v050/017-paused-observe.json",
+      "bytes": 830,
+      "sha256": "231aa59cc47d5f676e216217af0fafc2fc4693dd13d5e1555d7c84089cef7777"
+    },
+    {
+      "path": "v050/018-settings-open.json",
+      "bytes": 290,
+      "sha256": "f454fde03e04bc455808aca44280ff39a8c5859df23d95ae15c673b96f98799b"
+    },
+    {
+      "path": "v050/019-settings-observe.json",
+      "bytes": 2588,
+      "sha256": "34475f1754d6d5b6390d7eb0cc6d9a8c154be1d1f882ed80dbd899b35b887807"
+    },
+    {
+      "path": "v050/020-controls-click.json",
+      "bytes": 297,
+      "sha256": "570223acc9807b094bde32d0c60a7a96ba0a32ae1a7a87ba30be613ddc6cb5ce"
+    },
+    {
+      "path": "v050/021-controls-focus.json",
+      "bytes": 297,
+      "sha256": "4eac0ff70372f8bd3c256364f61d27d4dde742b1ae4e9ea6d9f0d73e2fc7cb5c"
+    },
+    {
+      "path": "v050/022-category-arrow.json",
+      "bytes": 285,
+      "sha256": "3ba4c1c3c343c112edbb5df40b034dea13737f68640b71e38f86892bda975826"
+    },
+    {
+      "path": "v050/023-category-keyboard-observe.json",
+      "bytes": 1027,
+      "sha256": "dff599895ba071512c406fd8bbdfb459ee083c1be4d7576d7848874b9514819a"
+    },
+    {
+      "path": "v050/024-display-click.json",
+      "bytes": 296,
+      "sha256": "c078783f43a7e6a73d01eb1e94d386ef8acdfe366f9f44bc97911fd689a05166"
+    },
+    {
+      "path": "v050/025-display-observe.json",
+      "bytes": 1432,
+      "sha256": "e52a8e7466fa403062c50ec640bd25e69f79e81717746d788abe3ccc5a62ed28"
+    },
+    {
+      "path": "v050/026-large-select.json",
+      "bytes": 299,
+      "sha256": "1d241403ade43c2c5a8e78b5d22d824e5ba9b23dc29b42743da23ff93fbb9604"
+    },
+    {
+      "path": "v050/027-reduced-effects.json",
+      "bytes": 300,
+      "sha256": "fd7c2a8e582d63736b0f7890de91762e570efb06cc3fecfad76b0596658a6d35"
+    },
+    {
+      "path": "v050/028-data-click.json",
+      "bytes": 293,
+      "sha256": "81ab79adaad5dd6a5dd0bfe75db3892326406799e0278330ee32dd5dacf8adf0"
+    },
+    {
+      "path": "v050/029-data-observe.json",
+      "bytes": 1565,
+      "sha256": "6c4e8a79435719d6af7bca0c79d66442fd6d56234f8b73bc5ce6c139c283f0a9"
+    },
+    {
+      "path": "v050/030-prepare-offline.json",
+      "bytes": 290,
+      "sha256": "255e0ef5011dff28732e5d6985140e6e84c1b84a21244d3d5d6e9ec24371d8f5"
+    },
+    {
+      "path": "v050/031-offline-preparation-start.json",
+      "bytes": 1094,
+      "sha256": "db37c47e91657b6e481154abc363281226fd6692c4a652db4bf614e92b1657be"
+    },
+    {
+      "path": "v050/032-settings-close.json",
+      "bytes": 281,
+      "sha256": "26ea9432dd5c17e27d08ae7518afa05b2488f61e83ab654e0ecb96f2189b2853"
+    },
+    {
+      "path": "v050/033-reload-save.json",
+      "bytes": 333,
+      "sha256": "db7ed84d76de3c3783863400fa16bdfe188b89d7c3b337d3f1bdb86e616947cc"
+    },
+    {
+      "path": "v050/034-restored-title.json",
+      "bytes": 1659,
+      "sha256": "86ede25e43e05f4c58e1fc04041443effe3974647fa5d318ce5e587365a111e2"
+    },
+    {
+      "path": "v050/035-continue.json",
+      "bytes": 290,
+      "sha256": "48652aa9099e98241806fac0f2972678cdc4cdb0063c0aba291a1c6e7fac5b01"
+    },
+    {
+      "path": "v050/036-continue-verified.json",
+      "bytes": 982,
+      "sha256": "1f8d63a848871b12575a43b865f133b4ba91c308db84110351eec3269d297a24"
+    },
+    {
+      "path": "v050/037-resume.json",
+      "bytes": 288,
+      "sha256": "081bd4b067a356c8d91d0014497b4c8dc5a488fdc615bba195a6863ecf2f122d"
+    },
+    {
+      "path": "v050/038-first-cut.json",
+      "bytes": 284,
+      "sha256": "dc8054c83f94c26ea221c8a630df9670eb8effe6448e983014ba75a292c81b20"
+    },
+    {
+      "path": "v050/039-first-cut-wait.json",
+      "bytes": 278,
+      "sha256": "aae52bcf1993888e52683c8e7edb4c468f0c0569c7f416fcb9b74f34c66dd719"
+    },
+    {
+      "path": "v050/040-natural-result.json",
+      "bytes": 1081,
+      "sha256": "f33c718ada14ed23139764366b2a9d55a581b4700a972c5facd8ba98e49b61e0"
+    },
+    {
+      "path": "v050/041-view-picture.json",
+      "bytes": 288,
+      "sha256": "781f409bb4d43ef42798b10c2ff670b7b589bacd6ba10e48834a4901f83853f1"
+    },
+    {
+      "path": "v050/042-collection-open.json",
+      "bytes": 292,
+      "sha256": "d1040b82cc4dd55b5045cf36392e77a2849389502bd91c8b0783a5b2b44a569b"
+    },
+    {
+      "path": "v050/043-collection-earned.json",
+      "bytes": 3461,
+      "sha256": "e882e5eccda7556a56cce1c2b5f5331c542e3add4d642c52c2934a88f8e1475b"
+    },
+    {
+      "path": "v050/044-collection-capture.json",
+      "bytes": 570,
+      "sha256": "396db31385ca845eb16dcb182e386c73998c1c38f28035998ffc582566950366"
+    },
+    {
+      "path": "v050/045-collection-close.json",
+      "bytes": 281,
+      "sha256": "d4c5b26923a6d63c9a874e66970c4de459ac9c0e27ca9de62cdec336e7a50b2f"
+    },
+    {
+      "path": "v050/046-results-return.json",
+      "bytes": 287,
+      "sha256": "271807faa10074beac1d32de7b6a69d54a8960b7d62afc97da9ae4c75f6de822"
+    },
+    {
+      "path": "v050/047-results-focus.json",
+      "bytes": 1082,
+      "sha256": "8b515c27531bb7f748e82eb509d19b1fed15db032ade47edca7212df1ac33a84"
+    },
+    {
+      "path": "v050/048-replay-for-defeat.json",
+      "bytes": 288,
+      "sha256": "96351d087647216c4e6c6b46b4f7404fd301f2d8a0a7d07821ad6c076e11c67f"
+    },
+    {
+      "path": "v050/049-replay-ready-observe.json",
+      "bytes": 896,
+      "sha256": "4c1ad957ae8a6a42e14537e1edd5619269ef14f3171f0152ff2b892a47ecbc20"
+    },
+    {
+      "path": "v050/050-loss1-down.json",
+      "bytes": 284,
+      "sha256": "793420c7142c5d206581ec42f90b99938419f424e0b6ffd2b60c2150cfcd3996"
+    },
+    {
+      "path": "v050/051-loss1-up.json",
+      "bytes": 282,
+      "sha256": "1356654434e559b665aa8959a23201ba06e247b052c1c7244fca01e1723153b3"
+    },
+    {
+      "path": "v050/052-loss1-wait.json",
+      "bytes": 278,
+      "sha256": "ef6df3897426680962e9b45ece63c8cd23a9d15582ac66c7b440bc6a684afc17"
+    },
+    {
+      "path": "v050/053-loss2-down.json",
+      "bytes": 284,
+      "sha256": "4c6f759b77b845b845859902341ef62b3c19546dd0951386616bcca96c7cb17b"
+    },
+    {
+      "path": "v050/054-loss2-up.json",
+      "bytes": 282,
+      "sha256": "0e5af52a0fe857bb736cd806d7dcfead5548c226a3f6f9dc400c27abf3c05d60"
+    },
+    {
+      "path": "v050/055-loss2-wait.json",
+      "bytes": 278,
+      "sha256": "269d8e08ce883706831e0f4828b687adb4d8b80893820521b2feb19e8607ef73"
+    },
+    {
+      "path": "v050/056-loss3-down.json",
+      "bytes": 284,
+      "sha256": "516e2d8121d54fbd60285ab6225296551dba2a7edf9d187b247db1305ddf211c"
+    },
+    {
+      "path": "v050/057-loss3-up.json",
+      "bytes": 282,
+      "sha256": "42b422ed581327f3690456b23cdcf9b4cb07428ec8df5056d554f1f71f870a25"
+    },
+    {
+      "path": "v050/058-loss3-wait.json",
+      "bytes": 278,
+      "sha256": "5739007a0752aad3a38347ed127b48b455ab4d2ef34592514ffc56d00317a76c"
+    },
+    {
+      "path": "v050/059-defeat-dom.json",
+      "bytes": 1064,
+      "sha256": "f99e44e28f7bdf71538fa257c951fb67f64c7a8ba2f4f535bb5b603e76e3e6be"
+    },
+    {
+      "path": "v050/060-defeat-retry.json",
+      "bytes": 288,
+      "sha256": "356ceb1830c1eb5e015d7b0a1df11f76751e376429da9d9550547f67580c3582"
+    },
+    {
+      "path": "v050/061-retry-ready-wait.json",
+      "bytes": 278,
+      "sha256": "06dc1623eb1d24f900a00a5fc1f5f1cac2d680b98a5ee20df9abb78522609997"
+    },
+    {
+      "path": "v050/062-retry-running.json",
+      "bytes": 634,
+      "sha256": "595379a0d0bd0eac5d8cd9dc1a7106b9f7852d69b96a266d8f2899c608b9c266"
+    },
+    {
+      "path": "v050/063-retry-pause.json",
+      "bytes": 276,
+      "sha256": "a592392c04faf27858bb4ac0acea146626759451c07c3d10430df97b05f4b71c"
+    },
+    {
+      "path": "v050/064-settings-open.json",
+      "bytes": 290,
+      "sha256": "c52cb0cccf614c64f5a0cc60d3fc42faee6d24f53735712bafe9b7b90b28e531"
+    },
+    {
+      "path": "v050/065-offline-status.json",
+      "bytes": 1311,
+      "sha256": "7238b8e3eee2ce416c1e5b091b76de408c3fa93e043dddef732d59652ecb0502"
+    },
+    {
+      "path": "v050/066-data-tab.json",
+      "bytes": 293,
+      "sha256": "3d058e9ddf050c154c3e9c19377c64e0921eacc491fb624fc34a67bb9d698a65"
+    },
+    {
+      "path": "v050/067-prepare-retry.json",
+      "bytes": 290,
+      "sha256": "661651fea0db203905b80082abc2b9085e5f134728a5375473459a4dde4e3ee4"
+    },
+    {
+      "path": "v050/068-prepare-retry-state.json",
+      "bytes": 1094,
+      "sha256": "db2c8944a0fc60f66f469e845fcec3c49d94b8b73eceafc48b47172be5633b86"
+    },
+    {
+      "path": "v050/069-return-tab.json",
+      "bytes": 366,
+      "sha256": "d36523b4f2329dd264a705cd44472bbd933923446ba5077777684732d42725c3"
+    },
+    {
+      "path": "v050/070-close-settings.json",
+      "bytes": 281,
+      "sha256": "bf2aed45067bd4b7c663458129808064777020c7f5b007f89fcf0ad317845a70"
+    },
+    {
+      "path": "v050/071-open-missions.json",
+      "bytes": 287,
+      "sha256": "b5c46164d163c7d2d6427fce4b23e889c1595a2e488d8759c2d7adb51f8c803f"
+    },
+    {
+      "path": "v050/072-mode-observe.json",
+      "bytes": 2420,
+      "sha256": "1e9837e4fa3bf558160fe7ff3dcd56c30202a0135f4a17290ef4ca224be83572"
+    },
+    {
+      "path": "v050/073-mode-open.json",
+      "bytes": 301,
+      "sha256": "e2d12c3d700e0669281142f0e845d4441b2aea551bb921f268dee07baacd9bd5"
+    },
+    {
+      "path": "v050/074-mode-visible.json",
+      "bytes": 976,
+      "sha256": "9960d6bb65df4f42cc4f272bb46136bf5a7cd81fa43b6a072f03d20c2ba1e121"
+    },
+    {
+      "path": "v050/075-couch-new-tab.json",
+      "bytes": 383,
+      "sha256": "be2ab65b779e955dc6e03bc8f76346acb5a62acddf16265e6804282456933a3d"
+    },
+    {
+      "path": "v050/076-tabs-after-couch.json",
+      "bytes": 570,
+      "sha256": "5739e6cc64a77c688735fd84080369cb24e832a376c89c0a6263c2ca1105a155"
+    },
+    {
+      "path": "v050/077-storage-environment.json",
+      "bytes": 1273,
+      "sha256": "b12475f68d05b999bfb37a821dfcec8dd75fb3888587292f3ec336ad7409d32b"
+    },
+    {
+      "path": "v050/078-return-tab.json",
+      "bytes": 366,
+      "sha256": "c7dc26dbbe40031be482fcd5ac2046b16dfecab8bdfe63b2e62bdd38558d2513"
+    },
+    {
+      "path": "v050/079-offline-progress.json",
+      "bytes": 1054,
+      "sha256": "8040927cbebf7544c507d13e55b8ffc7972c36c3abc38e5d5532fa5065aab23c"
+    },
+    {
+      "path": "v050/080-couch-tab.json",
+      "bytes": 386,
+      "sha256": "298c1fa37314859392574ffaa4951ef3be45ea74b3c3655c4c1d1e7bf54f1487"
+    },
+    {
+      "path": "v050/081-couch-ready-observe.json",
+      "bytes": 5296,
+      "sha256": "6daaed7b4913eb56248be404891486874e3379232e8fc0cc0c841e0fca0a85ab"
+    },
+    {
+      "path": "v050/082-couch-help.json",
+      "bytes": 285,
+      "sha256": "d8597ef260ee1bc5fc7e575f6ae5aafadfdd5068a14d40c18a6ea05b2295d966"
+    },
+    {
+      "path": "v050/083-couch-help-observe.json",
+      "bytes": 1668,
+      "sha256": "5f86f330b7a0b4b0c9a0979358a6e91d43ca31a865250736c50c59ab6dc64b3a"
+    },
+    {
+      "path": "v050/084-couch-help-back.json",
+      "bytes": 290,
+      "sha256": "d2157c9b2eab109d3f48422d7515ef7ef5fa655fa88594b66700784a74a6ad5a"
+    },
+    {
+      "path": "v050/085-couch-setup.json",
+      "bytes": 286,
+      "sha256": "4df250785946add8a3f24faa16be2be9a050cdd0cd6ea08bb79f3e3114be5ae7"
+    },
+    {
+      "path": "v050/086-couch-setup-observe.json",
+      "bytes": 2116,
+      "sha256": "a6442643aef0455de28c97117efccb592f2d24da3b8fb2ef94e9424270539b25"
+    },
+    {
+      "path": "v050/087-couch-base-map.json",
+      "bytes": 304,
+      "sha256": "340d0a99037cec151e76cac1a42962c68fd08d9100165401f01ab400fefce0e8"
+    },
+    {
+      "path": "v050/088-couch-round-time.json",
+      "bytes": 296,
+      "sha256": "440418cf62979bc1adb93a0313a0e74d6f0bcf25ac4920d5254799f71ca36cb5"
+    },
+    {
+      "path": "v050/089-couch-setup-done.json",
+      "bytes": 291,
+      "sha256": "ec6f283b9402e2be3532f1ba268511bbbe3dc445c130c8543feb97edc734bbb3"
+    },
+    {
+      "path": "v050/090-couch-options.json",
+      "bytes": 288,
+      "sha256": "d837b3f2953b48c3fc4701d12640b63192e626572ad37db28809c25d457ce2ad"
+    },
+    {
+      "path": "v050/091-couch-options-observe.json",
+      "bytes": 2089,
+      "sha256": "6ddb5b233b70f6ce75db27281fb8cebd02af588cb6416e5e0c5c009c2a204e74"
+    },
+    {
+      "path": "v050/092-couch-options-back.json",
+      "bytes": 293,
+      "sha256": "29fb40acdedf1fd6497a7ccb9d10b711c09878505c0f5919e07aabc65187741f"
+    },
+    {
+      "path": "v050/093-couch-start.json",
+      "bytes": 286,
+      "sha256": "2793e27c3a2af9553ca55ac1ac1d63c367267068c8dfc49c6a6ede0a37849a42"
+    },
+    {
+      "path": "v050/094-couch-p1-down.json",
+      "bytes": 276,
+      "sha256": "e63a07012c26232f0e954997a0d595093d1eeb13b10c4de2cbee0cfd71a920af"
+    },
+    {
+      "path": "v050/095-couch-p2-right.json",
+      "bytes": 285,
+      "sha256": "9ed31f63b619c3d7bdbe0f4035d8a6a6c93dc08ac45d3d362d8d6588714c8caa"
+    },
+    {
+      "path": "v050/096-couch-pause.json",
+      "bytes": 281,
+      "sha256": "9dafdf6c410cb520b68e8ef8128eacba7f9ac42ed8158c14e118b2e083e19187"
+    },
+    {
+      "path": "v050/097-couch-paused-observe.json",
+      "bytes": 2244,
+      "sha256": "a62d61256ff5765be30f56cf904ebbaedd429453339b031de2aa7b9409a7fbce"
+    },
+    {
+      "path": "v050/098-couch-new-setup.json",
+      "bytes": 286,
+      "sha256": "19f70c83f0376f12598306885ba06b578092a112b7db4383eb2eb3d323c7cf44"
+    },
+    {
+      "path": "v050/099-couch-long-round.json",
+      "bytes": 297,
+      "sha256": "ec67b8bceeeb6699326125f9f9046f3f14569e9ae484f64fd7cce8c512e663cd"
+    },
+    {
+      "path": "v050/100-couch-long-ready.json",
+      "bytes": 291,
+      "sha256": "c1e3a1726a6b952beed0b3e94e2ec189f7f79703248bf5c5ce9f42d5a80930af"
+    },
+    {
+      "path": "v050/101-couch-long-start.json",
+      "bytes": 286,
+      "sha256": "e002b2c29f600a3d7c3591c2a91a64fb5e9c79876a66ec55f41258b42c46980a"
+    },
+    {
+      "path": "v050/102-couch-p1-right.json",
+      "bytes": 276,
+      "sha256": "14c57051d7051f93b394bdce593c2f19a2862b5cc26a0f1d918e85f13a34c3c6"
+    },
+    {
+      "path": "v050/103-couch-p2-down.json",
+      "bytes": 284,
+      "sha256": "255ab81a8d3e7e347e05fa2d47b389efcd1d9e3b7e486fbfa1aca90d3f7f0c02"
+    },
+    {
+      "path": "v050/104-couch-movement-observe.json",
+      "bytes": 1115,
+      "sha256": "09816705d837e49f00e58484dba522c7301b742ff68dd4310ba671a8c37d2ac6"
+    },
+    {
+      "path": "v050/105-new-match-confirm-controls.json",
+      "bytes": 1012,
+      "sha256": "d4644e76c7ea1fb44026f72c0f2a711b337c014fd93f41c99cda46b1e0ea7a2f"
+    },
+    {
+      "path": "v050/106-new-match-confirm.json",
+      "bytes": 294,
+      "sha256": "79237560280ea392a2d48ca491bcc65c164494755e79e904b6db47928e7be856"
+    },
+    {
+      "path": "v050/107-setup-confirmed.json",
+      "bytes": 2175,
+      "sha256": "4425af1f766cc88bf2de9f3830af61462b957020e9a00509d387695388dfd620"
+    },
+    {
+      "path": "v050/108-couch-setup-done.json",
+      "bytes": 291,
+      "sha256": "b086a26ec07b257ee70b4e108db778a48b2ae7d782052172faf9a6705fb5ec6f"
+    },
+    {
+      "path": "v050/109-couch-start-three-minutes.json",
+      "bytes": 286,
+      "sha256": "8ca6e651c37bc08c38730d699bd8fd489d37c99129005cae19ffc95ffe3c7b20"
+    },
+    {
+      "path": "v050/110-couch-started.json",
+      "bytes": 888,
+      "sha256": "739b469d657dd77f203a3d08bf36d9b64fef0bb43a6e6281f0a68f5ed921dc95"
+    },
+    {
+      "path": "v050/111-p1-right.json",
+      "bytes": 276,
+      "sha256": "053ff998736728c98d09e33e1db7806f8b700f7302ce7a089a52bc95673a8f36"
+    },
+    {
+      "path": "v050/112-p2-down.json",
+      "bytes": 284,
+      "sha256": "70a4453a90a2101334f81a6ae0886d1f0ffadd70c7bb7cf597de49b0c1b64471"
+    },
+    {
+      "path": "v050/113-couch-pause.json",
+      "bytes": 281,
+      "sha256": "4db16a6e512521890192baad5a44fb2822b5033b5efec337b9998da96b9bebc6"
+    },
+    {
+      "path": "v050/114-couch-pause-observed.json",
+      "bytes": 1445,
+      "sha256": "e540bf2789e15a5395fdcd953df0ab6dd8c97f06de416094e30b5f7b23106c2e"
+    },
+    {
+      "path": "v050/115-couch-resume.json",
+      "bytes": 286,
+      "sha256": "1c0635deaee74c4c19fb2f4d20862c60c6442ea401ab814cfec9706f002904d0"
+    },
+    {
+      "path": "v050/116-couch-new-p2-direction.json",
+      "bytes": 284,
+      "sha256": "c2710bfacea788662c6452def58eae76d3cb823c41bb38b5e41335e072cb6cba"
+    },
+    {
+      "path": "v050/117-couch-two-boards-capture.json",
+      "bytes": 572,
+      "sha256": "fc5d88f879492189964f3e0069850bb49fbc221544f7803a3880e3b0f5941e73"
+    },
+    {
+      "path": "v050/118-couch-state-after-resume.json",
+      "bytes": 1156,
+      "sha256": "cecc6a37ab737dba608dd2c7f11c1587b4c38a2202e53b05f0a2d2bb2c26ebfb"
+    },
+    {
+      "path": "v050/119-couch-next-round.json",
+      "bytes": 286,
+      "sha256": "ad4a40c442ac1cff9ff7a4814fc9661dea93dbccfd1d16a40464f396971052d8"
+    },
+    {
+      "path": "v050/120-couch-p1-down.json",
+      "bytes": 276,
+      "sha256": "4ca8dcb27862cc3163d908d40b17ad619b08ac10a8a6dec5142cd68b90aba073"
+    },
+    {
+      "path": "v050/121-couch-cut-wait.json",
+      "bytes": 278,
+      "sha256": "3a1d7aed5d1acac63343bf0dbd9b5fe66a86b26b4c5b15fb1a5852ad0778fab4"
+    },
+    {
+      "path": "v050/122-couch-p1-win.json",
+      "bytes": 1158,
+      "sha256": "030bd438c66de304ed83bd746d5dc14c2f224fa750b3429f1482a6fbaefa5ca1"
+    },
+    {
+      "path": "v050/123-return-solo.json",
+      "bytes": 292,
+      "sha256": "eb98fe853d89043595150f435ada6bc36337cda82b94199727fbe65ddcccf239"
+    },
+    {
+      "path": "v050/124-solo-return-title.json",
+      "bytes": 840,
+      "sha256": "5563365d4305d54d0941339bf401e9651e0cc5b91ce6103dadd82f1996dd4efe"
+    },
+    {
+      "path": "v050/125-solo-return-continue.json",
+      "bytes": 370,
+      "sha256": "b85b5f2ff63187ce611589f7b3606ae20818b56d838b519836b2c356765f0714"
+    },
+    {
+      "path": "v050/126-solo-return-verified.json",
+      "bytes": 789,
+      "sha256": "1c33aba653d9a82dcddc603fe18bd67e2c3262c1b45cbb6ff0be23040bdd199e"
+    },
+    {
+      "path": "v050/127-leave-confirm-controls.json",
+      "bytes": 697,
+      "sha256": "335f7f5d37e96e16f6f7487d73ecfccce8a43e63ec9627015cf6d67a4f043847"
+    },
+    {
+      "path": "v050/128-return-couch-tab.json",
+      "bytes": 386,
+      "sha256": "b9fb3c090cd898edf1563ce361f18c999394f03f8d9c231730a19e9628827a57"
+    },
+    {
+      "path": "v050/129-confirm-leave-couch.json",
+      "bytes": 286,
+      "sha256": "0bb40b3977ae8d069f886f5f6e5443f4ab2ef262a8336faf0d68aa503f482210"
+    },
+    {
+      "path": "v050/130-solo-return-ready.json",
+      "bytes": 1910,
+      "sha256": "c9330a62ecc09357d641e2e15947b43b77cb243023b0a2b9f51710aae1f584d1"
+    },
+    {
+      "path": "v050/131-close-original-duplicate-tab.json",
+      "bytes": 299,
+      "sha256": "6262e153e2df558fbcec595b002bdb2fd515318e5b93040fb7c852d1d58df416"
+    },
+    {
+      "path": "v050/132-reload-owning-solo.json",
+      "bytes": 333,
+      "sha256": "a02f77e9097e496ccc6e70a7023400c885aee6516a137bd546130ecba14b6174"
+    },
+    {
+      "path": "v050/133-owning-title.json",
+      "bytes": 1610,
+      "sha256": "5a3feb13dbd273a7caa4a00a4db9260c9ea7ab435d78870b9efcf88d97d1eef1"
+    },
+    {
+      "path": "v050/134-solo-preserved-continue.json",
+      "bytes": 290,
+      "sha256": "6edf23173835d8e806bde9f8e59532d3783e4050dfda52ccdd3f5a0e1093a5dd"
+    },
+    {
+      "path": "v050/135-solo-preserved-paused.json",
+      "bytes": 982,
+      "sha256": "896dbdbfddbe6fc4c1d9a1a745b1b0662f065c0c750f582fe14f4b12955d3d7d"
+    },
+    {
+      "path": "v050/136-return-tab.json",
+      "bytes": 364,
+      "sha256": "b6173865239a2ea9f2a41fb76725ca7c9b30fcc1499bcfe5ea826778f87ab10c"
+    },
+    {
+      "path": "v050/137-open-collection-post-couch.json",
+      "bytes": 292,
+      "sha256": "f860308a416df65d737be6baabab56bd965cdb96c2b0ae6d94685101f5e25dab"
+    },
+    {
+      "path": "v050/138-collection-post-couch.json",
+      "bytes": 2270,
+      "sha256": "c108484cd41dbdedd880db3eb36c6379eab9122a3a8f3747a1c06001750fe8b8"
+    },
+    {
+      "path": "v050/139-earned-gallery-open.json",
+      "bytes": 307,
+      "sha256": "6e114fd2a0601802df3cf2eb1d9447cd31f0cdd79bf13fb48896f4f96edf0de4"
+    },
+    {
+      "path": "v050/140-earned-viewer-observe.json",
+      "bytes": 1640,
+      "sha256": "083a83656eba2120659c555edbb1ba3d61475f58370530c59d7b59007c39eca4"
+    },
+    {
+      "path": "v050/141-gallery-close.json",
+      "bytes": 281,
+      "sha256": "d70caed284a1e5a9ab831c1a62db95d55d8832c0816d03acc23de3bde14431ff"
+    },
+    {
+      "path": "v050/142-records-open.json",
+      "bytes": 294,
+      "sha256": "85812fdee87c5c8b1116416678d588e3081f18d4924d2a9fa53769ab44e373f6"
+    },
+    {
+      "path": "v050/143-records-observe.json",
+      "bytes": 2197,
+      "sha256": "07088d4f1416064908252a528e6aa4380753aab83da68045f602525b4edd9993"
+    },
+    {
+      "path": "v050/144-return-tab.json",
+      "bytes": 364,
+      "sha256": "ea07ddcb3b5391e147c9994e0a3e3e384ef60fa0e41b3d029490b01912e48efa"
+    },
+    {
+      "path": "v050/145-records-focus.json",
+      "bytes": 294,
+      "sha256": "16939914d488849b9072758e982cbd8d81bbd984678b442def47a2b5688c24af"
+    },
+    {
+      "path": "v050/146-records-keyboard.json",
+      "bytes": 280,
+      "sha256": "06750cd14ee01c88800f2db8f372194eaabd4b2866ff927fb1b6816933d0c856"
+    },
+    {
+      "path": "v050/147-records-keyboard-observe.json",
+      "bytes": 2736,
+      "sha256": "bcfb4b1a22b8641981fe4ee2f00e35bff5b2841a55151ff11f1b8a1856d06595"
+    },
+    {
+      "path": "v050/148-records-close.json",
+      "bytes": 281,
+      "sha256": "74063aade39bfc4d1ff073b26320e19f3bdd54046094001ed4ae7654cae7425f"
+    },
+    {
+      "path": "v050/149-collection-close.json",
+      "bytes": 281,
+      "sha256": "a87766bd9b36abc230b6085be127b0f3dccb2912198246db56e42edf58d2100a"
+    },
+    {
+      "path": "v050/150-settings-open.json",
+      "bytes": 290,
+      "sha256": "669e5cecbc8f7bc598ec1bd86b03d9591edc370bdd22e2065b6ef69930cbbb64"
+    },
+    {
+      "path": "v050/151-display-panel.json",
+      "bytes": 296,
+      "sha256": "7294c2b38115cfbccb5668e483fba38413d051fc3a9d8b741045b5696a76c66c"
+    },
+    {
+      "path": "v050/152-large-portrait.json",
+      "bytes": 303,
+      "sha256": "8f9a3348cb9849d21dc633d92fe9f710c5c11cbafd0c63370c81605767e6c2cf"
+    },
+    {
+      "path": "v050/153-large-portrait-settings-observe.json",
+      "bytes": 2550,
+      "sha256": "914315d6d8e2b11532c1a508b8099b0e0a01655f4c68c474ee276581dfef0877"
+    },
+    {
+      "path": "v050/154-settings-portrait-capture.json",
+      "bytes": 586,
+      "sha256": "c0932d595d27977010e3bc920e2bb9d514be3859ffe080cbad75a41865032406"
+    },
+    {
+      "path": "v050/155-restore-desktop.json",
+      "bytes": 304,
+      "sha256": "b90802ee6795429dd1a84fa08dcf867c42da09c4199f0d362b29d9629ebe5a15"
+    },
+    {
+      "path": "v050/156-return-tab.json",
+      "bytes": 364,
+      "sha256": "298fe952aee268aea4f0ee6e9c4e0014338b76eac0cf85e45a6de35644434947"
+    },
+    {
+      "path": "v050/157-data-panel.json",
+      "bytes": 293,
+      "sha256": "f4eb95c00a5360f8c240a05330d7505690e27faf513ada04fbaea8973a00396c"
+    },
+    {
+      "path": "v050/158-offline-retry-focus.json",
+      "bytes": 290,
+      "sha256": "a4c9f4151425033a26fb737b5556800cffe415f664ab57f528b77ff8915b7a51"
+    },
+    {
+      "path": "v050/159-offline-retry-after-headroom.json",
+      "bytes": 280,
+      "sha256": "8cdf15fb4b4f827e2a2c862f6e518b1dab58bb6521bc47d76aec2386687b64d5"
+    },
+    {
+      "path": "v050/160-offline-retry-started.json",
+      "bytes": 1365,
+      "sha256": "5d34c35bf01deba2ce009b18b7c19396fa731336a9f8e9cb148f514e05598bd3"
+    },
+    {
+      "path": "v050/161-offline-after-headroom-progress.json",
+      "bytes": 2879,
+      "sha256": "e8644d7aa3227efdb3f170a41a41adf4ec48c069e6910ace63db53d369f34703"
+    },
+    {
+      "path": "v050/162-close-settings.json",
+      "bytes": 281,
+      "sha256": "618453649b7eac86993f79f227f7bd0321a4d289e87e609a5f90527de8a06e1d"
+    },
+    {
+      "path": "v050/163-missions-open.json",
+      "bytes": 287,
+      "sha256": "17ee2a50ed0a10f1742f1b551c1669fb9f23fcb07d9a1d3719eb56a18667c1c1"
+    },
+    {
+      "path": "v050/164-relay-focus.json",
+      "bytes": 301,
+      "sha256": "c03b533071ef1574b63f34e9c64e503fcb83912bd1716a6e45a163d087eacc4c"
+    },
+    {
+      "path": "v050/165-relay-select.json",
+      "bytes": 280,
+      "sha256": "2bffdfd2be0988ded85812ba5a89af3ee0b1b3c404161e6daf73d8a48cb20bfb"
+    },
+    {
+      "path": "v050/166-relay-selected.json",
+      "bytes": 628,
+      "sha256": "4630ad5ef0e26335a85d1058c16cea63758de9a194549c6792d0eeb5dd82e421"
+    },
+    {
+      "path": "v050/167-relay-deploy-focus.json",
+      "bytes": 288,
+      "sha256": "157a533c91e0fb1d57b05dc3dc5b971438439e89e2edc975a104bff5735fce94"
+    },
+    {
+      "path": "v050/168-relay-deploy.json",
+      "bytes": 280,
+      "sha256": "31441bf45011ead9c3e1171a681cc7e27c4b154c333c471cbe892aba06bb3a2a"
+    },
+    {
+      "path": "v050/169-relay-started.json",
+      "bytes": 665,
+      "sha256": "e6d3a56f093f723987c660c38d39a82438cffd75a80457b7fad2784ae987669f"
+    },
+    {
+      "path": "v050/170-relay-cut.json",
+      "bytes": 284,
+      "sha256": "87868ed397f1b6c30fb3df45f870ff0523168c2ef52b5035d9d6168e97f0eeb9"
+    },
+    {
+      "path": "v050/171-relay-cut-wait.json",
+      "bytes": 278,
+      "sha256": "c300aeefb28b2e0941430ebbd3ad60386176ec3caf05dfed96b92719f5d1b49d"
+    },
+    {
+      "path": "v050/172-relay-pause.json",
+      "bytes": 276,
+      "sha256": "415910252f329a95067217b2741a574c777b6336c7d07bfdb6cdadcf44ed9c69"
+    },
+    {
+      "path": "v050/173-relay-saved-before-offline.json",
+      "bytes": 839,
+      "sha256": "aac22780f28604c1b2e06a095d2faaa703d75a4a39942bce0286f4511a619a14"
+    },
+    {
+      "path": "v050/174-network-offline.json",
+      "bytes": 290,
+      "sha256": "ce04ffa96bf3aa6fc34c4c0369e7fdc925018f5b32680139c774b853d836fef0"
+    },
+    {
+      "path": "v050/175-offline-reload.json",
+      "bytes": 333,
+      "sha256": "5ef25bb152b407a87af888263e09255434fe8832610d8917f9af57a7113f6ade"
+    },
+    {
+      "path": "v050/176-offline-title.json",
+      "bytes": 1721,
+      "sha256": "7e3a1205171377acfb625d3d176bc33f8731222ed2ca71ff8aa23de03b6adfe4"
+    },
+    {
+      "path": "v050/177-offline-continue.json",
+      "bytes": 290,
+      "sha256": "a5c0fa7c6a5cde296b1961b4a1655adc374aac9a06f3ae016970c23826cf32ed"
+    },
+    {
+      "path": "v050/178-offline-restored.json",
+      "bytes": 950,
+      "sha256": "33198eeb3e296b95aaea30760ffe1558e73c8fd98a6f9f1999f9c2e6e4bb6d40"
+    },
+    {
+      "path": "v050/179-offline-resume.json",
+      "bytes": 288,
+      "sha256": "2557fc37778c0b8d283cc7186f411450e08001fab948e7dee263315d99f5850d"
+    },
+    {
+      "path": "v050/180-offline-direction.json",
+      "bytes": 284,
+      "sha256": "eeeedab1bd4ee4d910f93008ae4da451c651986cd6a7d4d65d6a10d498a21c38"
+    },
+    {
+      "path": "v050/181-offline-pause.json",
+      "bytes": 276,
+      "sha256": "cabf6328dc6f2b7ee8fcc744338fc0eb45f6bfdb9e3f0b7a880766ae962af148"
+    },
+    {
+      "path": "v050/182-offline-progress-observe.json",
+      "bytes": 852,
+      "sha256": "33cc2b59276c18a9262f851201c92af6b147abab59c99cf4814ba4658734ff6b"
+    },
+    {
+      "path": "v050/183-fresh-blank-document.json",
+      "bytes": 296,
+      "sha256": "2d6ec64e16c165a89c028ea6b6fc7fcd0c0c658d020b44325074b48d099cbba5"
+    },
+    {
+      "path": "v050/184-fresh-document-offline.json",
+      "bytes": 290,
+      "sha256": "e301ecd5600a4989b14f447369b41ba7e760aa28e49a6c5a718f4563b52df921"
+    },
+    {
+      "path": "v050/185-offline-blank-proof.json",
+      "bytes": 456,
+      "sha256": "19bf63d653ef7e52f7a3d23765cc185a4d3842ac68aa98fb74145aebea932f9a"
+    },
+    {
+      "path": "v050/186-fresh-offline-navigation.json",
+      "bytes": 439,
+      "sha256": "45a67f82991c302c7d354fc69c964ed6ff6268d9ce0aa2363070089f403b70ba"
+    },
+    {
+      "path": "v050/187-fresh-offline-title.json",
+      "bytes": 1721,
+      "sha256": "129ecddce7529cffebed9b2c3c5b347bc1215da65cf5d9ee3dba586094f095bf"
+    },
+    {
+      "path": "v050/188-fresh-offline-continue.json",
+      "bytes": 290,
+      "sha256": "b3be1288312e5e011e296d8fc6d84bbbe0f2a561ca6082fa5fcb8e9a2927951d"
+    },
+    {
+      "path": "v050/189-fresh-offline-restored.json",
+      "bytes": 932,
+      "sha256": "fde5d77991889aca365bb5ac4f886882e0cab38e95fcc4edfd7a25c60c6719e2"
+    },
+    {
+      "path": "v050/190-offline-collection-open.json",
+      "bytes": 292,
+      "sha256": "b31cb5411b8d3ef30e1b5323943ba67b1d985070832d516d408a9865627d9f3a"
+    },
+    {
+      "path": "v050/191-offline-earned-picture.json",
+      "bytes": 307,
+      "sha256": "bbb7030016710c6e37bb491c5dee572a8331b08418f5d99d85624b2bd0ba86f0"
+    },
+    {
+      "path": "v050/192-offline-earned-viewer.json",
+      "bytes": 706,
+      "sha256": "aabd67c243baf5ce6d32e3cee7c1238bbd4204c3b754999a748f53a26eda5527"
+    },
+    {
+      "path": "v050/193-offline-earned-capture.json",
+      "bytes": 568,
+      "sha256": "8af3303b41aa1411cbde680ff831a9d43959887e4e099d348edecaa4aea7523f"
+    },
+    {
+      "path": "v050/194-gallery-close.json",
+      "bytes": 281,
+      "sha256": "1ef5af6a7a4c0948f23c5cbd56526ff75dfa4d2a3f9e7639035ff7391dc48831"
+    },
+    {
+      "path": "v050/195-collection-close.json",
+      "bytes": 281,
+      "sha256": "41a9add130dddedf4ffdc20989d00a20e185386754a7cbf488a669f3507a41b0"
+    },
+    {
+      "path": "v050/196-online-restored.json",
+      "bytes": 291,
+      "sha256": "ce369ea493cc2b963500fc615aa3784cc402669bb6624d451a71ce142a7d89ab"
+    },
+    {
+      "path": "v050/197-final-online-checkpoint.json",
+      "bytes": 1594,
+      "sha256": "cc6168d7c308b03877be31d1a33b20a89ab298f8bdd68310e977c7ee93826c46"
+    },
+    {
+      "path": "v050/collection-earned-large.png",
+      "bytes": 113348,
+      "sha256": "967d5c2e5fc3930031e5d86d282068a80dd129047bc4099cf3277b951779f5a7"
+    },
+    {
+      "path": "v050/couch-independent-boards.png",
+      "bytes": 63648,
+      "sha256": "398d597111cb37b53bf3823c84465fddbc56ef40433cc97d2dbd141a7e618d83"
+    },
+    {
+      "path": "v050/offline-earned-gallery.png",
+      "bytes": 100535,
+      "sha256": "a773da1a5a10d08ad0633df8fdc47799a5c8c6160884362c56e579c0aadaa066"
+    },
+    {
+      "path": "v050/settings-display-large-portrait.png",
+      "bytes": 74154,
+      "sha256": "0c4a30917e60702d1e6d02ff28c91053b2ef17b5b20ada309e6a456b5f292474"
+    },
+    {
+      "path": "v050/title-desktop.png",
+      "bytes": 204076,
+      "sha256": "bc4652c1a665cc7156850a496cdb4e4b6f82a183e099a240b20c702a258d0c5b"
+    }
+  ],
+  "firstSignalResult": {
+    "coverage": 52.2,
+    "score": 8160,
+    "timeShown": "0:08",
+    "medal": "Gold",
+    "evidence": "040-natural-result.json"
+  },
+  "responsive": [
+    "Standard desktop and Large390x844 Settings were inspected in this public edition; v0.50 short landscape and native200% zoom were not repeated in this receipt."
+  ],
+  "retainedAttempts": [
+    "Slow bootstrap displays its honest wait state; no page error was observed (001 through010).",
+    "Initial Prepare deliberately precedes the saved-flight reload (030 through034), preserving the interruption. Later preparation timed out (079); post-headroom ordinary retry (159/160) verified all547 files (161). No failed core URL was exposed.",
+    "The first30-second Couch round timed out before input evidence could be established (097); it proves the draw result only. A later confirmed180-second match provides the independent-input and Pause/Resume evidence.",
+    "Couch New match and Return to solo require confirmations; premature offscreen actions and missing selector attempt125 are retained and not counted. Explicit visible confirmations106 and129 were followed.",
+    "The online Relay Orchard cut was caught, leaving two lives (173). The offline restore kept those two lives; another ordinary offline cut reached50%/7820 (182), and fresh offline navigation restored that exact updated checkpoint (189)."
+  ],
+  "independentSupportingJourney": {
+    "path": "public-v050-workshop/receipt.json",
+    "bytes": 6871,
+    "sha256": "be4b5488e4decef59847ade71f41d0a3f4208f235262e8a6473ac0deeef15b0f",
+    "scope": "Root agent separate in-app browser: Workshop, Studio, Design Atlas, About and credits; not evidence of this profile continuation."
+  }
+}
