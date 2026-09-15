@@ -112,6 +112,13 @@ export class Element extends Events {
   get lastElementChild() {
     return this.children.at(-1) ?? null;
   }
+  get textContent() {
+    return (this._text || '') + this.children.map((child) => child.textContent).join('');
+  }
+  set textContent(value) {
+    this._text = String(value ?? '');
+    for (const child of [...this.children]) child.remove();
+  }
   get parentElement() {
     return this.parentNode?.nodeType === 1 ? this.parentNode : null;
   }
@@ -146,6 +153,7 @@ export class Element extends Events {
     }
   }
   replaceChildren(...nodes) {
+    this._text = '';
     for (const child of [...this.children]) child.remove();
     this.value = '';
     this.append(...nodes);

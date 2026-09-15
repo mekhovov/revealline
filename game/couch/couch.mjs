@@ -16,9 +16,33 @@ import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
+import { createOperationStatus } from '../ui/operation-status.mjs';
 const $ = (id) => document.getElementById(id);
+globalThis.RevealLineToolLaunch?.attached();
+document.documentElement.dataset.toolState = 'loading';
+const bootStatus = createOperationStatus($('boot-status'));
+const bootDisplay = bootStatus.begin({ message: 'Preparing both boards…', stage: 'reading' });
+let bootFailed = false;
 const artworkLifetime = new AbortController();
-const presentationPage = mountPresentationPage();
+const presentationFeedback = createOperationStatus($('race-presentation-status'));
+let presentationOperation = null;
+const presentationPage = mountPresentationPage({
+  onStatus(status) {
+    if (status.status === 'preparing') {
+      if (!presentationOperation) presentationOperation = presentationFeedback.begin(status);
+      else presentationOperation.update(status);
+    } else {
+      presentationOperation?.finish({
+        state: status.status === 'error' ? 'error' : 'ready',
+        message:
+          status.status === 'error'
+            ? 'Release artwork is unavailable; the current look is kept.'
+            : '',
+      });
+      presentationOperation = null;
+    }
+  },
+});
 let featured, installed, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
@@ -26,6 +50,7 @@ const releaseArtwork = (event) => {
   publishedAudio?.close();
   publishedPlayer?.dispose();
   presentationPage.close();
+  presentationFeedback.dispose();
   featured?.dispose();
   installed?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
@@ -57,6 +82,7 @@ try {
   let featuredSource,
     featuredStatus = '';
   try {
+    bootDisplay.update({ message: 'Loading the featured chapter…', stage: 'downloading' });
     featuredSource = await json('../content/packs/fpv-arcade-r5.json');
   } catch (error) {
     if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
@@ -64,6 +90,10 @@ try {
       'Featured Pressure Lines download unavailable. Base maps and checked installed maps remain available.';
   }
   if (featuredSource !== undefined) {
+    bootDisplay.update({
+      message: 'Checking featured maps and original pictures…',
+      stage: 'verifying',
+    });
     featured = await prepareCouchChapter(featuredSource, { signal: artworkLifetime.signal });
     const featuredCampaign = featured.resolved.campaign;
     maps.unshift(
@@ -109,7 +139,14 @@ try {
         },
       ],
     });
-    const rows = await installed.refresh({ signal: artworkLifetime.signal });
+    bootDisplay.update({
+      message: 'Checking installed chapters and pictures…',
+      stage: 'verifying',
+    });
+    const rows = await installed.refresh({
+      signal: artworkLifetime.signal,
+      onStatus: (status) => bootDisplay.update(status),
+    });
     maps.push(...rows);
     installedStatus = rows.length
       ? `${rows.length} installed maps available. Choose a map to check its original.`
@@ -193,6 +230,10 @@ try {
     disposed = false,
     frameId = null,
     stopNative = () => {};
+  const preparationStatus = createOperationStatus($('race-preparation'), {
+    isCurrent: () => !disposed,
+  });
+  let preparationDisplay = null;
   let menuRouter, navigation, shell;
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
   $('race-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -229,6 +270,8 @@ try {
   }
   function cancelContent() {
     if (!contentBusy) return;
+    preparationDisplay?.finish({ state: 'cancelled', message: '' });
+    preparationDisplay = null;
     contentController?.abort();
     installed?.clear();
     backdrop = null;
@@ -241,6 +284,8 @@ try {
     updateMenu();
   }
   function prepare() {
+    preparationStatus.clear();
+    preparationDisplay = null;
     contentController?.abort();
     installed?.clear();
     contentController = new AbortController();
@@ -301,12 +346,21 @@ try {
     const selectedRun = match,
       ticket = generation,
       controller = contentController;
+    const current = () =>
+      !disposed && !controller.signal.aborted && match === selectedRun && ticket === generation;
+    const display = preparationStatus.begin({
+      message: 'Checking this chapter and loading its original picture…',
+      stage: 'verifying',
+      isCurrent: current,
+    });
+    preparationDisplay = display;
     return (async () => {
       try {
         const image = await installed.select(entry, {
           themeId: theme.id,
           raceId: ticket,
           signal: controller.signal,
+          onStatus: (status) => display.update(status),
         });
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
@@ -314,12 +368,14 @@ try {
         contentReady = true;
         $('race-message').textContent =
           'Original picture ready for both boards. Start when you are ready.';
+        display.finish({ message: '' });
         return true;
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
         contentError = `This chapter could not load: ${error.message}`;
         $('race-message').textContent = contentError;
+        display.finish({ state: 'error', message: '' });
         return false;
       } finally {
         if (!disposed && controller === contentController && !controller.signal.aborted) {
@@ -364,9 +420,25 @@ try {
     if (match.status === 'ready' && !shippedMaps.includes(entry)) {
       const restoreFocus = actionFocus($('race-start'));
       contentBusy = true;
+      const controller = contentController;
+      const display = preparationStatus.begin({
+        message: 'Confirming the prepared picture before starting…',
+        stage: 'verifying',
+        isCurrent: () =>
+          !disposed &&
+          !controller.signal.aborted &&
+          controller === contentController &&
+          match === selectedRun &&
+          ticket === generation,
+      });
+      preparationDisplay = display;
       updateMenu();
       try {
-        await installed.confirm(entry, { raceId: ticket, signal: contentController.signal });
+        await installed.confirm(entry, {
+          raceId: ticket,
+          signal: controller.signal,
+          onStatus: (status) => display.update(status),
+        });
         if (
           disposed ||
           contentController.signal.aborted ||
@@ -385,10 +457,12 @@ try {
           contentReady = false;
           contentError = `Refresh installed chapters in Race setup before starting: ${error.message}`;
           $('race-message').textContent = contentError;
+          display.finish({ state: 'error', message: '' });
         }
         return;
       } finally {
         if (!disposed && match === selectedRun && ticket === generation) {
+          if (!contentError) display.finish({ message: '' });
           contentBusy = false;
           updateMenu();
         }
@@ -436,9 +510,18 @@ try {
     contentScope = shell.scope();
     if (!shippedMaps.includes(oldEntry)) backdrop = null;
     installedStatus = 'Checking installed chapters…';
+    const display = preparationStatus.begin({
+      message: installedStatus,
+      stage: 'verifying',
+      isCurrent: () => !disposed && !controller.signal.aborted && controller === contentController,
+    });
+    preparationDisplay = display;
     updateMenu();
     try {
-      const rows = await installed.refresh({ signal: controller.signal });
+      const rows = await installed.refresh({
+        signal: controller.signal,
+        onStatus: (status) => display.update(status),
+      });
       if (disposed || controller.signal.aborted || controller !== contentController) return;
       maps.splice(0, maps.length, ...shippedMaps, ...rows);
       // Preserve a missing selection as unavailable; never silently switch its owner.
@@ -456,6 +539,7 @@ try {
       contentError = `Installed chapters unavailable: ${error.message}`;
       installedStatus = contentError;
       $('race-message').textContent = contentError;
+      display.finish({ state: 'error', message: '' });
     } finally {
       if (!disposed && controller === contentController && !controller.signal.aborted) {
         contentBusy = false;
@@ -602,6 +686,8 @@ try {
   function updateMenu() {
     if (!match || disposed) return;
     const running = match.status === 'running';
+    $('race-message').hidden = contentBusy;
+    $('race-installed-status').hidden = contentBusy;
     $('race-start').disabled = running || contentBusy || !contentReady;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
@@ -763,6 +849,7 @@ try {
     if (event.persisted) return;
     contentController?.abort();
     disposed = true;
+    preparationStatus.dispose();
     input.destroy();
     menuRouter.destroy();
     navigation.destroy();
@@ -906,9 +993,14 @@ try {
     updateMenu();
     frameId = requestAnimationFrame(frame);
   }
-  prepare();
+  const initialPreparation = prepare();
   frameId = requestAnimationFrame(frame);
+  await initialPreparation;
+  document.documentElement.dataset.toolState = contentReady ? 'ready' : 'error';
 } catch (error) {
+  document.documentElement.dataset.toolState = 'error';
+  bootFailed = true;
+  bootDisplay.finish({ state: 'error', message: `The race could not load: ${error.message}` });
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
   $('race-message').textContent = `The race could not load: ${error.message}`;
@@ -917,5 +1009,8 @@ try {
     element.inert = false;
     element.removeAttribute('aria-busy');
   });
-  $('boot-status').hidden = true;
+  if (!bootFailed) {
+    bootDisplay.clear();
+    $('boot-return').hidden = true;
+  }
 }

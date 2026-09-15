@@ -129,7 +129,7 @@ test('featured download failure is visible inside the retained title and its but
   const status = page.$('shell-featured-status');
   assert.ok(page.$('shell-home').contains(status));
   assert.equal(status.hidden, false);
-  assert.equal(status.getAttribute('role'), 'status');
+  assert.equal(status.querySelector('.operation-status-label').getAttribute('role'), 'status');
   assert.match(status.textContent, /Pressure Lines/);
   assert.match(status.textContent, /choose this chapter again/);
   assert.equal(requests, 1);
@@ -173,6 +173,44 @@ test('a late failed chapter request cannot replace the status or run from a newe
   assert.equal(page.$('shell-featured-status').textContent, titleMessage);
   assert.equal(page.$('shell-featured-status').hidden, titleHidden);
   assert.doesNotMatch(message, /Chapter download unavailable/);
+  assert.deepEqual(page.errors, []);
+});
+
+test('a successful delayed Deploy leaves a newer Settings visit in place', async (t) => {
+  originalImageBoundary(t);
+  const page = await soloPage(t, { titleScreen: true });
+  let release;
+  chapterFetch(t, (url, request) =>
+    url === 'content/packs/fpv-arcade-r5.json'
+      ? new Promise((resolve) => {
+          release = () => resolve(request());
+        })
+      : request(),
+  );
+  const label = page.$('shell-featured').querySelector('[data-field-kit-copy]');
+  const decoration = page.$('shell-featured').querySelector('[aria-hidden]');
+  page.$('shell-featured').click();
+  await settle(() => !!release);
+  assert.equal(label.textContent, 'Preparing…');
+  assert.equal(page.$('shell-featured').querySelector('[data-field-kit-copy]'), label);
+  assert.equal(decoration.getAttribute('aria-hidden'), 'true');
+  assert.equal(page.$('shell-featured-status').dataset.state, 'busy');
+  page.$('shell-options').click();
+  assert.equal(page.$('settings-dialog').open, true);
+  release();
+  await settle(() => !page.$('shell-featured').disabled);
+  assert.equal(label.textContent, 'Deploy');
+  assert.equal(page.$('shell-featured').querySelector('[data-field-kit-copy]'), label);
+  assert.equal(page.$('shell-featured').querySelector('[aria-hidden]'), decoration);
+  assert.equal(page.$('settings-dialog').open, true);
+  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.$('shell-home').open, true);
+  assert.notEqual(
+    page.$('shell-featured-status').dataset.kind,
+    'error',
+    page.$('shell-featured-status').textContent,
+  );
+  assert.equal(page.$('pack-select').value, featured.id);
   assert.deepEqual(page.errors, []);
 });
 

@@ -83,8 +83,9 @@ const routes = JSON.parse(
 const route = routes.find(
   (r) => r.packId === pilot.prior.id && r.difficulty === 'standard' && r.turnPolicy === 'immediate',
 );
+const PICTURE_READY_TIMEOUT_MS = 30000;
 const settle = (predicate, message = 'Native source host should finish its bounded operation.') =>
-  waitFor(predicate, { timeoutMs: 30000, message });
+  waitFor(predicate, { timeoutMs: PICTURE_READY_TIMEOUT_MS, message });
 // Retained-original verification is bulk work; join the actual action before checking readiness.
 // This test allowance does not change any runtime deadline or storage lease.
 const INVENTORY_TIMEOUT_MS = 180000;
@@ -233,6 +234,7 @@ async function page(t, f = {}) {
     storage: f.storage,
     lockManager: f.locks,
     pictures: { Image: Picture },
+    initialReadyTimeoutMs: PICTURE_READY_TIMEOUT_MS,
     ...f.options,
   });
   const fetchBefore = globalThis.fetch;

@@ -70,6 +70,10 @@ dialog {
 dialog::backdrop {
   background: #030710e8;
 }
+.game-shell .dialog-close {
+  min-width: 44px;
+  min-height: 44px;
+}
 dialog h2,
 dialog h3,
 .eyebrow {
@@ -635,4 +639,7 @@ dialog textarea {
   .game-shell .overlay-footnote {
     display: none;
   }
+}
+.theme-preparation:has(> p[hidden]):has(> button[hidden]) {
+  display: none;
 }

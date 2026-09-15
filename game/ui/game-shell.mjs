@@ -23,7 +23,8 @@ export function attachGameShell({
     workshop = $('shell-workshop-dialog');
   if (!home || !missions) return null;
   let destroyed = false,
-    returnToHome = false;
+    returnToHome = false,
+    homeVisit = 0;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const surfaces = attachFieldKitSurfaces({ document: doc });
@@ -31,6 +32,7 @@ export function attachGameShell({
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
   const closeHome = () => {
+    homeVisit++;
     if (workshop?.open) workshop.close();
     if (home.open) home.close();
   };
@@ -97,7 +99,8 @@ export function attachGameShell({
       // A prior successful chapter selection is not the next title action.
       // Keep errors visible; fresh operation feedback still arrives normally.
       const status = $('shell-featured-status');
-      if (status && status.dataset.kind !== 'error') status.hidden = true;
+      if (status && status.dataset.kind !== 'error' && status.dataset.state !== 'busy')
+        status.hidden = true;
       home.showModal();
     }
     (training
@@ -193,16 +196,28 @@ export function attachGameShell({
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
+  const leaveFeatured = (event) => {
+    if (event.target?.closest?.('button,a,summary') !== featured) homeVisit++;
+  };
+  home.addEventListener('click', leaveFeatured, true);
   if (featured && onFeatured)
     featured.onclick = async () => {
+      if (featured.disabled || destroyed) return;
+      const visit = homeVisit;
+      const labelNode = featured.querySelector('[data-field-kit-copy]') ?? featured;
+      const label = labelNode.textContent;
       pause(true);
       featured.disabled = true;
+      labelNode.textContent = copy('title.preparing');
       try {
-        if (await onFeatured()) {
+        if ((await onFeatured()) && !destroyed && homeVisit === visit && topDialog() === home) {
           openMissions();
         }
       } finally {
-        featured.disabled = false;
+        if (!destroyed) {
+          featured.disabled = false;
+          labelNode.textContent = label;
+        }
       }
     };
   $('shell-briefing').onclick = () => {
@@ -272,10 +287,12 @@ export function attachGameShell({
     for (const element of doc.querySelectorAll('.home-actions a, .shell-tools'))
       element.hidden = true;
   }
-  const cancelHome = () =>
+  const cancelHome = () => {
+    homeVisit++;
     queueMicrotask(() => {
       if (!destroyed && !home.open && !topDialog()) focusGame();
     });
+  };
   home.addEventListener('cancel', cancelHome);
   // Native controls retain their arrow editing semantics. Arrows on game menu
   // actions move focus; Enter/Space and Tab remain browser-standard activation.
@@ -310,6 +327,7 @@ export function attachGameShell({
       if (overlayMenu) overlayMenu.onclick = null;
       if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);
+      home.removeEventListener('click', leaveFeatured, true);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
       surfaces.destroy();

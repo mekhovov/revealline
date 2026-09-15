@@ -505,3 +505,43 @@ test('a generic original uses the same durable new-attempt pins and preserves ma
   assert.equal(restored.current().pin.sha256, pin.sha256);
   for (const flight of [first, manual, restored]) flight.dispose();
 });
+
+test('picture feedback keeps Finishing save through an actual commit and cancellation preserves completed history without adopting pins', async (t) => {
+  const committed = deferred(),
+    release = deferred(),
+    statuses = [];
+  const f = await fixture(t, {
+    commit: async (store, prepared, options) => {
+      assert.equal(statuses.at(-1).stage, 'saving');
+      assert.match(statuses.at(-1).message, /Finishing picture save/);
+      const result = await store.commit(prepared, options);
+      committed.resolve();
+      await release.promise;
+      return result;
+    },
+  });
+  const flight = f.flight(),
+    loading = flight.ensure(undefined, { onStatus: (s) => statuses.push(s) });
+  await committed.promise;
+  const saved = await f.store.read();
+  assert.equal(saved.generation, 1);
+  assert.equal(saved.document.library.assets.length, 1);
+  assert.equal(flight.pins(), undefined);
+  assert.ok(statuses.some((s) => s.stage === 'downloading'));
+  assert.ok(statuses.some((s) => s.stage === 'verifying'));
+  assert.equal(statuses.at(-1).stage, 'saving');
+  flight.cancel();
+  const count = statuses.length;
+  release.resolve();
+  await assert.rejects(loading, { name: 'AbortError' });
+  assert.equal(statuses.length, count);
+  assert.equal(flight.pins(), undefined);
+  assert.equal((await f.store.read()).generation, saved.generation);
+  const retry = f.flight();
+  await retry.ensure();
+  assert.equal(retry.ready('fpv'), true);
+  assert.equal(f.reads(), 1, 'retry reuses the completed original');
+  assert.equal((await f.store.read()).generation, saved.generation);
+  retry.dispose();
+  flight.dispose();
+});

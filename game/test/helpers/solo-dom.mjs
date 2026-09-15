@@ -22,20 +22,20 @@ export class SoloElement extends Element {
     this.textContent = String(value).replace(/<[^>]*>/g, '');
   }
   get firstChild() {
-    if (!this.textContent) return this.children[0] ?? null;
+    if (!this._text) return this.children[0] ?? null;
     const element = this;
     return {
       nodeType: 3,
       get textContent() {
-        return element.textContent;
+        return element._text;
       },
       set textContent(value) {
-        element.textContent = value;
+        element._text = String(value);
       },
     };
   }
   get childNodes() {
-    return this.textContent ? [this.firstChild, ...this.children] : this.children;
+    return this._text ? [this.firstChild, ...this.children] : this.children;
   }
   get lastElementChild() {
     return this.children.at(-1) ?? null;
@@ -80,7 +80,7 @@ function mount(document, html) {
       continue;
     }
     if (!text.startsWith('<')) {
-      stack.at(-1).textContent += text.trim();
+      stack.at(-1)._text += text.trim();
       continue;
     }
     const tag = text.match(/^<([\w-]+)/)[1];

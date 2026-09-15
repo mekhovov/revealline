@@ -16,6 +16,13 @@ import {
 class Element {
   constructor(doc, tag) {
     this.document = doc;
+    this.ownerDocument = doc;
+    this.dataset = {};
+    this.classList = {
+      add: (...names) => {
+        this.className = [this.className || '', ...names].join(' ').trim();
+      },
+    };
     this.tagName = tag.toUpperCase();
     this.children = [];
     this.listeners = new Map();
@@ -29,6 +36,13 @@ class Element {
     this.isConnected = true;
     this.files = [];
     this.paused = true;
+  }
+  set textContent(value) {
+    this._text = String(value ?? '');
+    this.children = [];
+  }
+  get textContent() {
+    return this._text + this.children.map((child) => child.textContent).join('');
   }
   set disabled(value) {
     this._disabled = Boolean(value);
@@ -70,6 +84,7 @@ class Element {
     }
   }
   replaceChildren(...children) {
+    this._text = '';
     this.children = [];
     this.append(...children);
   }
@@ -306,6 +321,9 @@ async function pendingFirstOpen(t, { deferredBlur = false } = {}) {
   app.doc.deferDisabledBlur = deferredBlur;
   const opening = app.panel.open();
   assert.equal(app.node('close').disabled, true);
+  assert.equal(app.node('status').dataset.state, 'busy');
+  assert.match(app.node('status').textContent, /Loading saved music/);
+  assert.equal(app.node('cancel').hidden, false);
   assert.equal(
     app.doc.activeElement === (deferredBlur ? app.node('close') : app.doc.body),
     true,
@@ -331,6 +349,7 @@ test('first Studio read restores displaced Close focus after successful loading'
   assert.equal(app.node('close').disabled, false);
   assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
   assert.match(app.node('status').textContent, /Saved library loaded/);
+  assert.equal(app.node('status').dataset.state, 'ready');
   assert.equal((await app.store.read()).generation, 0, 'Opening does not write music.');
 });
 
@@ -339,6 +358,7 @@ test('first Studio read restores displaced Close focus after a reported storage 
   app.reject(new Error('Storage unavailable for first read'));
   await app.opening;
   assert.match(app.node('status').textContent, /Storage unavailable for first read/);
+  assert.equal(app.node('status').dataset.state, 'error');
   assert.equal(app.node('close').disabled, false);
   assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
   assert.equal(app.panel.close(), true, 'A failed read does not trap the player.');
@@ -402,6 +422,7 @@ test('cached Studio reopening focuses Close without a second store read', async 
   assert.equal(app.node('close').disabled, false);
   assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
   assert.equal(app.node('status').textContent, 'Music library ready.');
+  assert.equal(app.node('status').dataset.state, 'ready');
 });
 
 for (const outcome of ['success', 'failure']) {
@@ -607,6 +628,7 @@ test('cancellation during the browser probe leaves saved bytes and draft untouch
   app.node('dialog').emit('cancel');
   await importing;
   assert.match(app.node('status').textContent, /Operation cancelled/);
+  assert.equal(app.node('status').dataset.state, 'cancelled');
   assert.equal((await app.store.read()).generation, 0);
   assert.match(app.node('draft-state').textContent, /0 custom tracks/);
   assert.equal(app.node('dialog').open, true);
@@ -1003,4 +1025,41 @@ test('native adapter receives prepared bytes synchronously on explicit activatio
   assert.equal(requests[1].filename, 'RevealLine-soundtrack.rlsound');
   assert.match(app.node('status').textContent, /request handed to the host/);
   assert.equal((await app.store.read()).generation, 1);
+});
+
+test('preparation announcements stay separate from the changing music clock', async (t) => {
+  const app = await setup(t);
+  app.state.preparation = { stage: 'reading', message: 'Reading the selected audio original…' };
+  app.panel.update();
+  assert.equal(app.node('loading').dataset.state, 'busy');
+  assert.equal(app.node('loading').textContent, app.state.preparation.message);
+  app.state.positionSeconds += 1;
+  app.panel.update();
+  assert.equal(app.node('now').getAttribute('aria-live'), 'off');
+  assert.equal(app.node('loading').textContent, app.state.preparation.message);
+  app.state.preparation = null;
+  app.panel.update();
+  assert.equal(app.node('loading').hidden, true);
+});
+
+test('pending audition visibly prepares and late playback cannot repopulate a closed/reopened panel', async (t) => {
+  const initial = await fixture(),
+    app = await setup(t, { initial });
+  app.choose('tracks', initial.track.id);
+  let finish;
+  app.node('audition').play = () =>
+    new Promise((resolve) => {
+      finish = resolve;
+    });
+  const playing = app.click('audition-track');
+  assert.equal(app.node('audition-status').dataset.state, 'busy');
+  assert.match(app.node('audition-status').textContent, /Starting audition/);
+  assert.equal(app.panel.close(), true);
+  await app.panel.open();
+  const current = app.node('status').textContent;
+  finish();
+  await playing;
+  assert.equal(app.node('audition-status').hidden, true);
+  assert.equal(app.node('status').textContent, current);
+  assert.equal(app.node('audition').hidden, true);
 });

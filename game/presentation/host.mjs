@@ -365,7 +365,7 @@ export function createPresentationHost({
     },
     /** Original bytes are requested only by a new attempt/install. The still
      * media adapter owns full decoding, durable storage and immutable pins. */
-    async readPicture(slot, { signal, snapshot = current?.snapshot } = {}) {
+    async readPicture(slot, { signal, snapshot = current?.snapshot, onStatus = () => {} } = {}) {
       required(
         !closed && snapshot && snapshot === current?.snapshot,
         'No current picture release.',
@@ -394,13 +394,21 @@ export function createPresentationHost({
       signal?.addEventListener('abort', abort, { once: true });
       if (signal?.aborted) abort();
       pictureReads.add(controller);
+      const report = (stage, message) => {
+        if (closed || controller.signal.aborted || snapshot !== current?.snapshot) return;
+        try {
+          onStatus({ status: 'preparing', stage, message, progress: null });
+        } catch {}
+      };
       try {
+        report('downloading', 'Downloading the published picture original…');
         const bytes = await bytesAt(
           `./assets/${file.sha256}.${extensions[file.mime]}`,
           file.bytes,
           controller.signal,
           file.bytes,
         );
+        report('verifying', 'Verifying the published picture original…');
         required(
           (await hashPresentationBytes(bytes)) === file.sha256,
           'Picture original hash mismatch.',
@@ -421,7 +429,7 @@ export function createPresentationHost({
         pictureReads.delete(controller);
       }
     },
-    async load({ signal } = {}) {
+    async load({ signal, onStatus = () => {} } = {}) {
       required(!closed, 'Presentation host is closed.');
       cancelled(signal);
       pending?.abort();
@@ -444,9 +452,17 @@ export function createPresentationHost({
       };
       // Late codec completion after cancellation still registers its own release.
       const own = (release) => (disposed ? release() : releases.push(release));
+      const report = (stage, message, status = 'preparing') => {
+        if (closed || controller.signal.aborted || pending !== controller) return;
+        try {
+          onStatus({ status, stage, message, progress: null });
+        } catch {}
+      };
       controller.signal.addEventListener('abort', dispose, { once: true });
       try {
+        report('reading', 'Loading release artwork and fonts…');
         const bytes = await bytesAt('runtime.json', LIMITS.manifestBytes, controller.signal);
+        report('verifying', 'Checking the release artwork manifest…');
         const manifest = validateCompiledPresentation(
           new TextDecoder('utf-8', { fatal: true }).decode(bytes),
         );
@@ -478,12 +494,14 @@ export function createPresentationHost({
             hash = file.sha256;
           let blob = sourceBlobs.get(hash);
           if (!blob) {
+            report('downloading', 'Loading release artwork and fonts…');
             const content = await bytesAt(
               manifest.urls[hash],
               file.bytes,
               controller.signal,
               file.bytes,
             );
+            report('verifying', 'Verifying release artwork and fonts…');
             required(
               (await hashPresentationBytes(content)) === hash,
               'Presentation asset hash mismatch.',
@@ -494,6 +512,7 @@ export function createPresentationHost({
           }
           if (asset.kind === 'font') {
             if (fonts.some((entry) => entry.family === `RLAsset-${hash}`)) continue;
+            report('decoding', 'Opening release fonts…');
             const face = fontFactory(
               `RLAsset-${hash}`,
               await blob.arrayBuffer(),
@@ -506,6 +525,7 @@ export function createPresentationHost({
           }
           let original = decoded.get(hash);
           if (!original) {
+            report('decoding', 'Opening release artwork…');
             const header = inspectImageDataUrl(
               dataURL(new Uint8Array(await blob.arrayBuffer()), file.mime),
             );
@@ -527,6 +547,7 @@ export function createPresentationHost({
           let image = original,
             visualBlob = blob;
           if (frame.x || frame.y || frame.width !== file.width || frame.height !== file.height) {
+            report('decoding', 'Preparing release artwork frames…');
             image = await cropImage(original, frame, { signal: controller.signal });
             own(() => image.close?.());
             cancelled(controller.signal);
@@ -563,8 +584,11 @@ export function createPresentationHost({
         audioBlobs.clear();
         current = { snapshot, dispose, images, cssImages };
         prior?.dispose();
+        report('ready', 'Release artwork and fonts are ready.', 'ready');
         return snapshot;
       } catch (error) {
+        if (error.name !== 'AbortError')
+          report('error', `Release artwork unavailable: ${error.message}`, 'error');
         dispose();
         throw error;
       } finally {

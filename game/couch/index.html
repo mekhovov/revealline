@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-tool-state="loading">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -14,9 +14,19 @@
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
+    <link rel="stylesheet" href="../ui/operation-status.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
-    <p id="boot-status" role="status">Preparing both boards…</p>
+    <p id="boot-status" class="operation-status" data-state="busy" role="status">
+      <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+        ><i
+          style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+        ></i></span
+      ><span>Preparing both boards…</span>
+    </p>
+    <a id="boot-return" href="../">Back to the game</a>
     <main id="couch-app" data-boot-inert inert aria-busy="true">
       <div id="race-hud" class="race-hud" hidden>
         <button id="race-pause" type="button" disabled>Pause</button>
@@ -113,6 +123,8 @@
         </section>
       </div>
       <div id="race-shell" class="race-shell">
+        <p id="race-preparation" hidden></p>
+        <p id="race-presentation-status" hidden></p>
         <section id="race-main" class="race-screen" aria-labelledby="race-title">
           <p class="race-kicker">REVEAL LINE / LOCAL TWO PLAYER</p>
           <h1 class="field-kit-display" id="race-title">Two boards.<br />One race.</h1>
@@ -310,6 +322,11 @@
         <p id="race-menu-status" class="race-menu-status" role="status"></p>
       </div>
     </main>
-    <script type="module" src="couch.mjs"></script>
+    <script
+      defer
+      src="../ui/direct-tool-launch.js"
+      data-module="./couch.mjs"
+      data-status="boot-status"
+    ></script>
   </body>
 </html>

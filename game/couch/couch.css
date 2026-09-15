@@ -4,6 +4,15 @@ body {
   padding: 0;
   min-width: 280px;
 }
+#boot-return {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+}
+#boot-return[hidden] {
+  display: none;
+}
 #couch-app {
   max-width: none;
   margin: 0;
@@ -59,9 +68,18 @@ body.race-focus #couch-app {
     max(16px, env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left));
   background: radial-gradient(ellipse at 95% 5%, #142743, transparent 65%), #070b18;
 }
-.race-screen {
+.race-screen,
+#race-preparation,
+#race-presentation-status {
   width: min(900px, 100%);
   margin: 0 auto;
+}
+#race-preparation,
+#race-message {
+  position: sticky;
+  top: max(0px, env(safe-area-inset-top));
+  z-index: 2;
+  background: #070b18;
 }
 .race-screen h1 {
   font-size: clamp(38px, 6.6vw, 78px);

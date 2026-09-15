@@ -1,22 +1,30 @@
+import { createOperationStatus } from './ui/operation-status.mjs';
 import { createProfileChannelReader } from './profile-channel-reader.mjs';
 import { attachProfileRecoveryView } from './ui/profile-recovery.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import { loadProfileRecoveryCatalogs } from './profile-recovery-catalogs.mjs';
 
+const presenter = createOperationStatus(document.getElementById('profile-recovery-status'));
 let cleanup = null,
   epoch = 0;
 document.getElementById('profile-recovery-back').onclick = () => location.assign('./index.html');
 async function start() {
   const generation = ++epoch;
+  const lease = presenter.begin({
+    message: 'Loading release information…',
+    isCurrent: () => generation === epoch,
+  });
   await cleanup?.();
   if (generation !== epoch) return;
   const controller = new AbortController();
   cleanup = async () => controller.abort();
   const timer = setTimeout(() => {
     if (generation === epoch)
-      document.getElementById('profile-recovery-status').textContent =
-        'Release information timed out. Use Back and try recovery again.';
+      lease.finish({
+        message: 'Release information timed out. Use Back and try recovery again.',
+        state: 'error',
+      });
     controller.abort();
   }, 10000);
   try {
@@ -41,6 +49,7 @@ async function start() {
       10000,
     );
     try {
+      lease.update({ message: 'Loading trusted historical catalogs…', stage: 'verifying' });
       recoveryCatalogs = await loadProfileRecoveryCatalogs(info.version, {
         signal: catalogController.signal,
       });
@@ -55,6 +64,7 @@ async function start() {
     const root = document.getElementById('profile-recovery-root');
     const view = attachProfileRecoveryView({
       reader,
+      presenter,
       supportedChannels: recoveryCatalogs.map((entry) => entry.channelId),
       catalogIssue,
       onBack: () => location.assign('./index.html'),
@@ -91,7 +101,7 @@ async function start() {
     };
   } catch (error) {
     if (generation === epoch && !controller.signal.aborted)
-      document.getElementById('profile-recovery-status').textContent = error.message;
+      lease.finish({ message: error.message, state: 'error' });
   } finally {
     clearTimeout(timer);
   }

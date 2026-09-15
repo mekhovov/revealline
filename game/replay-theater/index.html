@@ -10,7 +10,12 @@
     />
     <title>Replay Theater · Reveal Line</title>
     <link rel="stylesheet" href="./theater.css" />
-    <script type="module" src="./app.mjs"></script>
+    <script
+      defer
+      src="../ui/direct-tool-launch.js"
+      data-module="./app.mjs"
+      data-status="boot-status"
+    ></script>
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
@@ -18,6 +23,7 @@
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
+    <link rel="stylesheet" href="../ui/operation-status.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="replay">
     <header class="page-head">
@@ -28,7 +34,20 @@
       <p class="notice">Read-only playback · No rewards, scores or player progress are saved.</p>
       <a href="#playback">Jump to playback ↓</a>
     </header>
-    <p id="boot-status" role="status">Preparing the theater…</p>
+    <p id="boot-status" class="operation-status" data-state="busy" role="status">
+      <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+        ><i
+          style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+        ></i></span
+      ><span>Preparing the theater…</span>
+    </p>
+    <div class="load-status">
+      <p id="import-status" role="status" aria-live="polite" hidden></p>
+      <button id="cancel-load" type="button" hidden>Cancel load</button>
+      <p id="presentation-status" hidden></p>
+    </div>
     <main inert aria-busy="true" data-boot-inert>
       <section id="playback" class="watch" aria-labelledby="recording-name">
         <div class="recording-head">
@@ -130,10 +149,6 @@
             ></textarea>
             <button id="load-text" type="button">Verify and load JSON</button>
           </details>
-          <div class="load-status">
-            <p id="import-status" role="status" aria-live="polite">Loading the first example…</p>
-            <button id="cancel-load" type="button" hidden>Cancel load</button>
-          </div>
         </section>
         <section class="panel" aria-labelledby="look-heading">
           <h2 id="look-heading">A different atmosphere.</h2>

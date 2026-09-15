@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { openVideoPosterSource } from '../video-poster.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
 import { createControllerRouter } from './controller-router.mjs';
@@ -20,6 +21,14 @@ export function attachVideoPosterWorkshop({
     previewURL = null,
     result = null,
     frame = null;
+
+  const feedback = createOperationStatus(status);
+  let activity = null;
+  function setStatus(message, state = 'ready') {
+    if (activity) activity.update({ message, progress: null });
+    else feedback.begin({ message }).finish({ message, state });
+  }
+  setStatus('Choose a local video to inspect. No game or media storage is opened by this page.');
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
   const navigation = attachControllerNavigation({
     document: doc,
@@ -55,6 +64,8 @@ export function attachVideoPosterWorkshop({
     $('evidence').textContent = '';
   }
   function stopTask() {
+    feedback.clear();
+    activity = null;
     serial++;
     task?.controller.abort();
     task = null;
@@ -63,9 +74,12 @@ export function attachVideoPosterWorkshop({
   function cancel() {
     if (!task) return false;
     stopTask();
-    status.textContent = source
-      ? 'Capture cancelled. The inspected source and any previous poster remain available.'
-      : 'Inspection cancelled. Choose the source again when ready.';
+    setStatus(
+      source
+        ? 'Capture cancelled. The inspected source and any previous poster remain available.'
+        : 'Inspection cancelled. Choose the source again when ready.',
+      'cancelled',
+    );
     controls();
     (source ? $('capture') : $('file')).focus();
     return true;
@@ -78,7 +92,7 @@ export function attachVideoPosterWorkshop({
     $('file').value = '';
     $('metadata').textContent = 'No video inspected.';
     $('time').value = $('range').value = '0';
-    status.textContent = 'Source and preview cleared. No game data or media storage was changed.';
+    setStatus('Source and preview cleared. No game data or media storage was changed.');
     controls();
     if (focus && !disposed) $('file').focus();
   }
@@ -86,7 +100,11 @@ export function attachVideoPosterWorkshop({
     stopTask();
     const current = { id: serial, controller: new AbortController() };
     task = current;
-    status.textContent = label;
+    activity = feedback.begin({
+      message: label,
+      stage: source ? 'decoding' : 'reading',
+      isCurrent: () => !disposed && task?.id === current.id,
+    });
     controls();
     return {
       ...current,
@@ -117,8 +135,11 @@ export function attachVideoPosterWorkshop({
       $('time').min = $('range').min = '0';
       $('time').max = $('range').max = String(info.durationSeconds);
       $('time').value = $('range').value = '0';
-      status.textContent =
-        'Video inspected. Choose a time, then Capture poster. Nothing is saved to the game.';
+      setStatus(
+        'Video inspected. Choose a time, then Capture poster. Nothing is saved to the game.',
+      );
+      activity?.finish({ message: status.textContent });
+      activity = null;
       task = null;
       controls();
       $('time').focus();
@@ -127,7 +148,8 @@ export function attachVideoPosterWorkshop({
       staged?.dispose();
       if (!current.current()) return false;
       $('metadata').textContent = 'Video could not be inspected.';
-      status.textContent = message(error);
+      activity?.finish({ message: message(error), state: 'error' });
+      activity = null;
       task = null;
       controls();
       $('file').focus();
@@ -144,7 +166,7 @@ export function attachVideoPosterWorkshop({
       requested < 0 ||
       requested > source.info.durationSeconds
     ) {
-      status.textContent = 'Enter a time within this video’s duration. Values are never clamped.';
+      setStatus('Enter a time within this video’s duration. Values are never clamped.');
       $('time').focus();
       return false;
     }
@@ -193,8 +215,11 @@ export function attachVideoPosterWorkshop({
       $('download').download = `RevealLine-poster-${String(requested).replace('.', '-')}.png`;
       $('download').hidden = false;
       $('preview').hidden = false;
-      status.textContent =
-        'Poster captured. Inspect it, then explicitly Download PNG. The exact prepared bytes remain available to retry.';
+      setStatus(
+        'Poster captured. Inspect it, then explicitly Download PNG. The exact prepared bytes remain available to retry.',
+      );
+      activity?.finish({ message: status.textContent });
+      activity = null;
       task = null;
       controls();
       $('download').focus();
@@ -202,7 +227,9 @@ export function attachVideoPosterWorkshop({
     } catch (error) {
       if (url) URLImpl.revokeObjectURL(url);
       if (!current.current()) return false;
-      status.textContent = `${message(error)}${result ? ' The previous captured poster is unchanged.' : ''}`;
+      setStatus(`${message(error)}${result ? ' The previous captured poster is unchanged.' : ''}`);
+      activity?.finish({ message: status.textContent, state: 'error' });
+      activity = null;
       task = null;
       controls();
       $('capture').focus();
@@ -222,8 +249,9 @@ export function attachVideoPosterWorkshop({
       $('range').value = String(value);
   };
   $('download').onclick = () => {
-    status.textContent =
-      'PNG download requested. Confirm the destination in your browser; the prepared bytes remain available to retry.';
+    setStatus(
+      'PNG download requested. Confirm the destination in your browser; the prepared bytes remain available to retry.',
+    );
   };
   function poll(now) {
     if (disposed) return;
@@ -253,6 +281,7 @@ export function attachVideoPosterWorkshop({
     if (disposed) return;
     disposed = true;
     clear({ focus: false });
+    feedback.dispose();
     win.cancelAnimationFrame(frame);
     navigation.destroy();
     router.destroy();
@@ -270,6 +299,7 @@ export function attachVideoPosterWorkshop({
   doc.addEventListener('visibilitychange', visibility);
   controls();
   frame = win.requestAnimationFrame(poll);
-  $('file').focus();
+  if (!doc.hidden && doc.hasFocus() && (!doc.activeElement || doc.activeElement === doc.body))
+    $('file').focus();
   return Object.freeze({ inspect, capture, cancel, clear, dispose, navigation, router });
 }

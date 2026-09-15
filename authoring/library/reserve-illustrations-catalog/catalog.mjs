@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import { createOperationStatus } from '../../../game/ui/operation-status.mjs';
 const $ = (id) => document.getElementById(id);
 const base = new URL('.', import.meta.url);
 let entries = [];
@@ -5,6 +7,9 @@ let visible = [];
 let current = null;
 let themes = {};
 let imageRequest = 0;
+const catalogStatus = createOperationStatus($('catalog-status')),
+  imageStatus = createOperationStatus($('image-status'));
+const catalogLease = catalogStatus.begin({ message: 'Loading the reserve catalog…' });
 
 function link(pin) {
   if (
@@ -40,6 +45,10 @@ function show(entry) {
   $('blob').textContent = entry.original.gitBlob;
   $('path').textContent = entry.original.path;
   const request = ++imageRequest;
+  const lease = imageStatus.begin({
+    message: `Loading ${entry.title}…`,
+    isCurrent: () => request === imageRequest,
+  });
   const old = $('image-slot').querySelector('img');
   old?.removeAttribute('src');
   const image = document.createElement('img');
@@ -49,16 +58,17 @@ function show(entry) {
   image.decoding = 'async';
   image.onload = () => {
     if (request === imageRequest)
-      $('image-status').textContent =
-        'Complete original shown; fitted to this page without cropping.';
+      lease.finish({ message: 'Complete original shown; fitted to this page without cropping.' });
   };
   image.onerror = () => {
     if (request === imageRequest)
-      $('image-status').textContent =
-        'This original could not load. Check the local server and retry the selection; the source links remain available.';
+      lease.finish({
+        state: 'error',
+        message:
+          'This original could not load. Check the local server and retry the selection; the source links remain available.',
+      });
   };
   $('image-slot').replaceChildren(image);
-  $('image-status').textContent = `Loading ${entry.title}…`;
   // This is the sole image request. Lists and links contain no thumbnails or preloads.
   image.src = link(entry.original);
 }
@@ -107,11 +117,14 @@ try {
     show(visible[Math.min(visible.length - 1, visible.indexOf(current) + 1)]),
   );
   $('catalog').hidden = false;
-  $('catalog-status').textContent =
-    '40 selected originals. Choose a theme or illustration; only that image loads.';
+  catalogLease.finish({
+    message: '40 selected originals. Choose a theme or illustration; only that image loads.',
+  });
   filter();
 } catch (error) {
   $('catalog').hidden = true;
-  $('catalog-status').textContent =
-    `${error.message} Serve the authoring catalog over HTTP using the command in its README.`;
+  catalogLease.finish({
+    state: 'error',
+    message: `${error.message} Reload to retry. Serve the authoring catalog over HTTP using the command in its README.`,
+  });
 }

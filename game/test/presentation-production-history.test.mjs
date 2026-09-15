@@ -5,6 +5,9 @@ import { resolvePresentation, validateThemeBundle } from '../presentation/model.
 import { reviseStudioTheme, adoptStudioBundle } from '../presentation/studio-session.mjs';
 import { retainProductionHistory } from '../../scripts/presentation-production-history.mjs';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
 import { createFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
 
@@ -101,6 +104,65 @@ test('the current source-pinned motion and feedback recipe reviews remain select
     const asset = resolved.assets[slotId];
     assert.equal(asset.quality.stage, 'reviewed', slotId);
     assert.ok(asset.quality.evidence.some((entry) => entry.includes('Scoped v0.54 source review')));
+  }
+});
+
+test('P01 UI and audio reviews cover exact inputs and changed loading sources reopen review', async (t) => {
+  const production = await createFieldKitProduction();
+  const resolved = resolvePresentation(production.document);
+  const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
+  assert.equal(reviewed.length, 32);
+  for (const slot of reviewed) {
+    const asset = resolved.assets[slot.id];
+    assert.equal(asset.quality.stage, 'reviewed', slot.id);
+    assert.ok(asset.quality.evidence.some((entry) => entry.includes('Scoped P01 source review')));
+    if (slot.group === 'ui') {
+      assert.match(asset.provenance.source, /game\/ui\/operation-status\.css/);
+      assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
+    }
+  }
+
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'p01-recipe-review-'));
+  t.after(() => fs.rm(fixture, { recursive: true, force: true }));
+  const inputs = ['operation-status.css', 'operation-status.mjs', 'soundtrack-player.mjs'];
+  // Read unchanged inputs through links; only these three fixture files are writable.
+  await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
+  for (const entry of ['authoring', 'site'])
+    await fs.symlink(path.join(root, entry), path.join(fixture, entry));
+  for (const entry of await fs.readdir(path.join(root, 'game')))
+    if (entry !== 'ui')
+      await fs.symlink(path.join(root, 'game', entry), path.join(fixture, 'game', entry));
+  for (const entry of await fs.readdir(path.join(root, 'game', 'ui'))) {
+    const source = path.join(root, 'game', 'ui', entry);
+    const target = path.join(fixture, 'game', 'ui', entry);
+    if (inputs.includes(entry)) await fs.copyFile(source, target);
+    else await fs.symlink(source, target);
+  }
+  for (const input of inputs) {
+    const target = path.join(fixture, 'game', 'ui', input);
+    const original = await fs.readFile(target);
+    await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
+    const changed = await createFieldKitProduction({ projectRoot: fixture });
+    const next = retainProductionHistory(changed.document, production.document);
+    validateThemeBundle(next, { previous: production.document });
+    const assets = resolvePresentation(next).assets;
+    const group = input === 'soundtrack-player.mjs' ? 'audio' : 'ui';
+    for (const slot of reviewed) {
+      assert.equal(assets[slot.id].quality.stage, slot.group === group ? 'source' : 'reviewed');
+      if (slot.group === group) {
+        assert.notEqual(
+          assets[slot.id].provenance.source,
+          resolved.assets[slot.id].provenance.source,
+        );
+        assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
+      }
+    }
+    assert.deepEqual(
+      next.assets.slice(0, production.document.assets.length),
+      production.document.assets,
+    );
+    await fs.writeFile(target, original);
   }
 });
 

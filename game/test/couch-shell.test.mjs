@@ -25,6 +25,7 @@ const press = (f, key, target = f.doc.activeElement, extra = {}) =>
 
 test('lobby, setup and children use reachable native controls and Back restores the actual opener', async (t) => {
   const f = await couchPage(t);
+  assert.equal(f.doc.documentElement.dataset.toolState, 'ready');
   assert.equal(f.$('race-main').hidden, false);
   assert.equal(f.$('race-boards').hidden, true);
   assert.equal(f.$('race-setup').inert, true);
@@ -56,6 +57,34 @@ test('lobby, setup and children use reachable native controls and Back restores 
     assert.equal(f.$(screen).inert, true);
   }
   assert.equal(f.tick(), 0);
+});
+
+test('an embedded Couch route stays loading until its actual setup is prepared', async (t) => {
+  let began, finish;
+  const requested = new Promise((resolve) => {
+    began = resolve;
+  });
+  const pending = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const opening = couchPage(t, {
+    async fetchResponse(path) {
+      if (path === '../content/campaign.json') {
+        began();
+        await pending;
+      }
+    },
+  });
+  await requested;
+  const doc = globalThis.document;
+  assert.equal(doc.documentElement.dataset.toolState, 'loading');
+  assert.equal(doc.getElementById('boot-return').hidden, false);
+  assert.equal(doc.getElementById('boot-return').closest('[inert]'), null);
+  finish();
+  const f = await opening;
+  assert.equal(f.doc.documentElement.dataset.toolState, 'ready');
+  assert.equal(f.tick(), 0);
+  assert.equal(f.$('race-start').disabled, false);
 });
 
 test('pause children and cancelled new match preserve two different continuations; reset is explicit', async (t) => {

@@ -29,7 +29,7 @@ const deferred = () => {
 };
 const text = (n) => [n.textContent, ...n.children.map(text)].join(' ');
 const findButton = (root, name) => {
-  const b = root.querySelectorAll('button').find((n) => n.textContent === name);
+  const b = root.querySelectorAll('button').find((n) => n._text === name);
   assert(b, name);
   return b;
 };
@@ -128,6 +128,12 @@ test('explicit preview cancellation prevents late row completion, disposes URLs 
   row.click();
   findButton(h.root, 'Preview original').click();
   assert.equal(requests, 1);
+  assert.equal(
+    h.root.querySelectorAll('.operation-status').find((node) => node.dataset.state === 'busy')
+      .hidden,
+    false,
+  );
+  assert.match(text(h.root), /Checking the selected source and decoding/);
   findButton(h.root, 'Back to slots').click();
   assert.equal(signal.aborted, true);
   assert.equal(h.doc.activeElement, row);
@@ -382,4 +388,25 @@ test('inspected reserves use their terminal checklist and reused production pict
   assert.match(text(reserveCard), /39 unbound · 1 inspected/);
   assert.match(text(h.root), /0 unique reserves · 1 selected-picture reuse excluded/);
   assert.match(text(h.root), /1 unique story/);
+});
+
+test('register timeout stops activity even when the underlying reader settles late', async (t) => {
+  const waiting = deferred(),
+    callbacks = new Map();
+  let count = 0;
+  t.mock.method(globalThis, 'setTimeout', (fn) => {
+    callbacks.set(++count, fn);
+    return count;
+  });
+  t.mock.method(globalThis, 'clearTimeout', (id) => callbacks.delete(id));
+  const h = await host(t, { loadRegister: () => waiting.promise });
+  const status = h.root.querySelector('.operation-status');
+  assert.equal(status.dataset.state, 'busy');
+  [...callbacks.values()][0]();
+  assert.equal(status.dataset.state, 'error');
+  assert.match(status.textContent, /timed out/);
+  waiting.resolve(seed);
+  await settle();
+  assert.equal(status.dataset.state, 'error');
+  assert.equal(h.root.querySelector('tbody').children.length, 0);
 });

@@ -1,3 +1,4 @@
+globalThis.RevealLineToolLaunch?.attached();
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
   FORMATS,
@@ -26,6 +27,8 @@ import { inspectImageDataUrl } from '../../game/content.mjs';
 import { centerCrop, checkedCrop, pixelBounds, matchingSlots } from './helpers.mjs';
 import { drawAssetPreview } from './preview.mjs';
 import { mountSpritePanel } from './sprite-panel.mjs';
+import { createStudioOperations } from './operation.mjs';
+import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '') => {
   const el = document.createElement(tag);
@@ -38,8 +41,7 @@ const store = createStudioStore();
 let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
-  storageReady = false,
-  busy = false;
+  storageReady = false;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
@@ -49,28 +51,42 @@ const collectionSlots = new Set();
 let previewGeneration = 0;
 const currentSlot = () => working.document.slots.find((slot) => slot.id === selected);
 const resolved = () => resolvePresentation(working.document);
-function status(message, kind = '') {
-  $('studio-status').textContent = message;
-  $('studio-status').dataset.kind = kind;
-}
-const report = (error) => status(error.message || String(error), 'error');
-async function operation(fn) {
-  if (busy) return;
-  busy = true;
-  document
-    .querySelectorAll('.studio-layout,.workspace-actions,.workspace-state')
-    .forEach((el) => (el.inert = true));
-  try {
-    await fn();
-  } catch (error) {
-    report(error);
-  } finally {
-    busy = false;
+// Static controls stay disabled until this host owns their handlers and lock.
+document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) => {
+  control.disabled = false;
+  control.removeAttribute('data-studio-startup-disabled');
+});
+let operationFocus = null;
+const operations = createStudioOperations({
+  target: $('studio-status'),
+  cancelButton: $('cancel-studio-operation'),
+  setBusy(value) {
+    if (value) operationFocus = document.activeElement;
+    // Escape and preview observation controls stay outside these mutation regions.
     document
-      .querySelectorAll('.studio-layout,.workspace-actions,.workspace-state')
-      .forEach((el) => (el.inert = false));
-  }
-}
+      .querySelectorAll(
+        '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
+      )
+      .forEach((el) => {
+        el.inert = value;
+        el.setAttribute('aria-busy', String(value));
+      });
+    if (
+      !value &&
+      document.hasFocus() &&
+      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
+      operationFocus?.isConnected &&
+      !operationFocus.disabled
+    )
+      operationFocus.focus();
+  },
+});
+const status = (message, kind = '') => operations.message(message, kind);
+const report = (error) => status(error.message || String(error), 'error');
+const operation = (label, fn) => operations.run(label, fn);
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && operations.cancel()) event.preventDefault();
+});
 function requireSettled(allowPixels = false) {
   if (!allowPixels && sprite.hasEdits())
     throw new Error(
@@ -282,22 +298,22 @@ async function refreshPreviews() {
     motion: $('preview-motion').value,
     state: $('preview-state').value,
   };
-  const results = await Promise.allSettled([
-    drawAssetPreview(
-      $('current-preview'),
-      slot,
-      current.assets[slot.id],
-      current,
-      saved.assets,
-      options,
+  await Promise.allSettled(
+    [
+      ['current', current.assets[slot.id], current, saved.assets],
+      ['draft', candidate, view, map],
+    ].map(([id, asset, presentation, bytes]) =>
+      drawAssetPreview($(`${id}-preview`), slot, asset, presentation, bytes, {
+        ...options,
+        statusTarget: $(`${id}-preview-status`),
+        cancelButton: $(`${id}-preview-cancel`),
+        label: id === 'current' ? 'Saved preview' : 'Draft preview',
+        isCurrent: () => requestedPreview === previewGeneration,
+      }),
     ),
-    drawAssetPreview($('draft-preview'), slot, candidate, view, map, options),
-  ]);
-  if (requestedPreview !== previewGeneration) return;
-  results.forEach((result) => {
-    if (result.status === 'rejected') report(result.reason);
-  });
+  );
 }
+
 function refreshPrompt() {
   const view = resolved(),
     slot = currentSlot();
@@ -363,7 +379,7 @@ function refreshHistory() {
       button.type = 'button';
       button.disabled = item.id === asset?.id && item.revision === asset?.revision;
       button.onclick = () =>
-        operation(async () => {
+        operation('Preparing workspace change…', () => {
           requireSettled();
           stage(
             reviseStudioTheme(working.document, { bindings: { [selected]: ref(item) } }),
@@ -447,22 +463,42 @@ function download(blob, filename) {
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-async function fileMetadata(blob, dimensions = null) {
+async function fileMetadata(blob, dimensions, task) {
+  task.update('Reading asset bytes for verification…', 'reading');
+  const bytes = new Uint8Array(await blob.arrayBuffer());
+  task.update('Hashing the original asset bytes…', 'verifying');
+  const sha256 = await hashPresentationBytes(bytes);
+  task.check();
   return {
-    sha256: await hashPresentationBytes(new Uint8Array(await blob.arrayBuffer())),
+    sha256,
     bytes: blob.size,
     mime: blob.type,
     width: dimensions?.width ?? null,
     height: dimensions?.height ?? null,
   };
 }
-async function decodeImage(blob) {
+async function decodeImage(blob, task) {
+  task.update('Reading the image header…', 'reading');
   const dataURL = await new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(reader.error);
+    const cleanup = () => task.signal.removeEventListener('abort', cancel);
+    const cancel = () => {
+      reader.abort();
+      cleanup();
+      reject(new DOMException('Image read cancelled.', 'AbortError'));
+    };
+    reader.onload = () => {
+      cleanup();
+      resolve(reader.result);
+    };
+    reader.onerror = () => {
+      cleanup();
+      reject(reader.error);
+    };
+    task.signal.addEventListener('abort', cancel, { once: true });
     reader.readAsDataURL(blob);
   });
+  task.update('Validating image dimensions…', 'verifying');
   const info = inspectImageDataUrl(dataURL);
   if (!info.valid) throw new Error(info.errors.join(' '));
   if (
@@ -473,12 +509,17 @@ async function decodeImage(blob) {
     throw new Error(
       `Studio images must fit ${LIMITS.imageSide} px per side and ${LIMITS.imagePixels.toLocaleString()} total pixels. Resize externally, retaining your original.`,
     );
+  task.update('Decoding the original image…', 'decoding');
   const bitmap = await createImageBitmap(blob);
-  if (bitmap.width !== info.width || bitmap.height !== info.height) {
+  try {
+    task.check();
+    if (bitmap.width !== info.width || bitmap.height !== info.height)
+      throw new Error('Decoded image dimensions do not match its header.');
+    return bitmap;
+  } catch (error) {
     bitmap.close();
-    throw new Error('Decoded image dimensions do not match its header.');
+    throw error;
   }
-  return bitmap;
 }
 function imageGeometry(canvas, slot = null) {
   const measured = pixelBounds(
@@ -499,7 +540,7 @@ function imageCanvas(bitmap) {
   canvas.getContext('2d').drawImage(bitmap, 0, 0);
   return canvas;
 }
-async function startUpload(file, fromSprite = false) {
+async function startUpload(file, fromSprite = false, task) {
   requireSettled(fromSprite);
   const slot = currentSlot(),
     mime = fileMime(file),
@@ -527,39 +568,53 @@ async function startUpload(file, fromSprite = false) {
     geometry: null,
     quality: { stage: 'produced', evidence: [] },
   };
-  const bitmap = kind === 'image' ? await decodeImage(blob) : null;
-  record.file = await fileMetadata(blob, bitmap);
-  record.geometry = bitmap ? imageGeometry(imageCanvas(bitmap)) : null;
-  const original = bitmap
-    ? {
-        ...structuredClone(record),
-        id: `${revision.id}.source`,
-        description: `${slot.label} original source`,
-      }
-    : null;
-  pending = {
-    blob,
-    bitmap,
-    original,
-    candidate: bitmap ? null : record,
-    candidateBlob: bitmap ? null : blob,
-    template: record,
-  };
-  if (fromSprite) sprite.acceptSnapshot();
-  $('discard-asset').disabled = false;
-  $('asset-source').value = file.name || 'Local pixel editor';
-  $('asset-description').value = slot.label;
-  $('upload-summary').textContent =
-    `${file.name || 'Local sprite'} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`;
-  $('image-preparation').hidden = !bitmap;
-  if (bitmap) {
-    setCrop(centerCrop(bitmap.width, bitmap.height, slot.dimensions.width, slot.dimensions.height));
-    await prepareCrop();
-  } else {
+  let bitmap = null;
+  let adopted = false;
+  try {
+    bitmap = kind === 'image' ? await decodeImage(blob, task) : null;
+    record.file = await fileMetadata(blob, bitmap, task);
+    record.geometry = bitmap ? imageGeometry(imageCanvas(bitmap)) : null;
+    const original = bitmap
+      ? {
+          ...structuredClone(record),
+          id: `${revision.id}.source`,
+          description: `${slot.label} original source`,
+        }
+      : null;
+    const preparation = {
+      blob,
+      bitmap,
+      original,
+      candidate: bitmap ? null : record,
+      candidateBlob: bitmap ? null : blob,
+      template: record,
+    };
+    const crop = bitmap
+      ? centerCrop(bitmap.width, bitmap.height, slot.dimensions.width, slot.dimensions.height)
+      : null;
+    if (bitmap) Object.assign(preparation, await cropCandidate(preparation, slot, crop, task));
+    task.check();
+    pending = preparation;
+    adopted = true;
+    if (fromSprite) sprite.acceptSnapshot();
+    $('discard-asset').disabled = false;
+    $('asset-source').value = file.name || 'Local pixel editor';
+    $('asset-description').value = slot.label;
+    $('upload-summary').textContent =
+      `${file.name || 'Local sprite'} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`;
+    $('image-preparation').hidden = !bitmap;
+    if (crop) setCrop(crop);
+    populateGeometry();
     $('stage-asset').disabled = false;
     refreshPreviews();
+    status(
+      'Replacement prepared. Check geometry and enter actual creator, source, and rights before staging.',
+    );
+  } finally {
+    if (!adopted) bitmap?.close();
   }
 }
+
 function setCrop(crop) {
   for (const [key, value] of Object.entries(crop)) $(`crop-${key}`).value = value;
   drawSource();
@@ -590,17 +645,15 @@ function drawSource() {
     /* Keep the source visible while a numeric field is incomplete. */
   }
 }
-async function prepareCrop() {
-  if (!pending?.bitmap) throw new Error('Choose an image first.');
-  const slot = currentSlot(),
-    crop = getCrop(),
-    canvas = document.createElement('canvas');
+async function cropCandidate(preparation, slot, crop, task) {
+  task.update('Encoding the crop at the slot frame size…', 'encoding');
+  const canvas = document.createElement('canvas');
   canvas.width = slot.dimensions.width;
   canvas.height = slot.dimensions.height;
   const ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = slot.sampling !== 'nearest';
   ctx.drawImage(
-    pending.bitmap,
+    preparation.bitmap,
     crop.x,
     crop.y,
     crop.width,
@@ -611,21 +664,29 @@ async function prepareCrop() {
     canvas.height,
   );
   const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+  task.check();
   if (!blob) throw new Error('The browser could not encode this crop.');
-  const asset = structuredClone(pending.template);
-  asset.file = await fileMetadata(blob, canvas);
+  const asset = structuredClone(preparation.template);
+  asset.file = await fileMetadata(blob, canvas, task);
   asset.geometry = imageGeometry(canvas, slot);
-  asset.provenance.parent = ref(pending.original);
-  pending.candidate = asset;
-  pending.candidateBlob = blob;
+  asset.provenance.parent = ref(preparation.original);
+  return { candidate: asset, candidateBlob: blob };
+}
+async function prepareCrop(task) {
+  if (!pending?.bitmap) throw new Error('Choose an image first.');
+  const preparation = pending;
+  const candidate = await cropCandidate(preparation, currentSlot(), getCrop(), task);
+  task.check();
+  Object.assign(preparation, candidate);
   populateGeometry();
   $('stage-asset').disabled = false;
   drawSource();
-  await refreshPreviews();
+  refreshPreviews();
   status(
     'Derivative prepared. Check geometry and enter actual creator, source, and rights before staging.',
   );
 }
+
 function populateGeometry() {
   const geometry = pending?.candidate?.geometry;
   $('geometry-panel').hidden = !geometry;
@@ -651,7 +712,7 @@ function editedGeometry() {
     nineSlice: JSON.parse($('nine-slice').value),
   };
 }
-async function validatePending(geometryOnly = false) {
+async function validatePending(geometryOnly = false, task) {
   if (!pending?.candidate) throw new Error('Prepare an image crop or choose media first.');
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
@@ -683,13 +744,20 @@ async function validatePending(geometryOnly = false) {
   });
   if (geometryOnly) {
     pending.candidate = asset;
-    await refreshPreviews();
+    refreshPreviews();
+    status('Geometry checked and applied to the draft preview.');
     return;
   }
   if (asset.kind === 'image') {
+    task.update('Decoding and checking transparency…', 'decoding');
     const bitmap = await createImageBitmap(pending.candidateBlob),
       frame = asset.geometry.frame,
       canvas = document.createElement('canvas');
+    if (task.signal.aborted) {
+      bitmap.close();
+      task.check();
+    }
+    task.check();
     canvas.width = frame.width;
     canvas.height = frame.height;
     const context = canvas.getContext('2d');
@@ -713,9 +781,15 @@ async function validatePending(geometryOnly = false) {
     if (!measured.occupiedBounds)
       throw new Error('The candidate is entirely transparent. Paint or import a visible asset.');
   }
-  if (asset.kind === 'font')
-    await new FontFace('RLStudioValidation', await pending.candidateBlob.arrayBuffer()).load();
-  const verified = await verifyThemeAssets(next, bytes);
+  if (asset.kind === 'font') {
+    task.update('Reading and decoding the candidate font…', 'decoding');
+    const fontBytes = await pending.candidateBlob.arrayBuffer();
+    task.check();
+    await new FontFace('RLStudioValidation', fontBytes).load();
+  }
+  task.update('Verifying original bytes and replacement history…', 'verifying');
+  const verified = await verifyThemeAssets(next, bytes, { signal: task.signal });
+  task.check();
   discardPreparation();
   stage(
     next,
@@ -728,7 +802,7 @@ editGeometry.type = 'button';
 editGeometry.id = 'edit-geometry';
 $('asset-upload-label').after(editGeometry);
 editGeometry.onclick = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     const asset = resolved().assets[selected];
     if (asset.kind !== 'image') throw new Error('Choose a raster asset first.');
@@ -755,8 +829,9 @@ editGeometry.onclick = () =>
   });
 const sprite = mountSpritePanel({
   onError: report,
-  onPrepare: (blob) =>
-    operation(() => startUpload(new File([blob], 'local-sprite.png', { type: 'image/png' }), true)),
+  runOperation: operation,
+  onPrepare: (blob, task) =>
+    startUpload(new File([blob], 'local-sprite.png', { type: 'image/png' }), true, task),
 });
 const discardPixels = node('button', 'Discard pixel edits');
 discardPixels.type = 'button';
@@ -775,11 +850,16 @@ $('new-sprite').onclick = () => {
   }
 };
 $('edit-current').onclick = () =>
-  operation(async () => {
+  operation('Decoding the current sprite…', async (task) => {
     requireSettled();
     const asset = resolved().assets[selected],
       bitmap = await createImageBitmap(working.assets.get(asset.file.sha256)),
       frame = asset.geometry.frame;
+    if (task.signal.aborted) {
+      bitmap.close();
+      task.check();
+    }
+    task.check();
     const canvas = document.createElement('canvas');
     canvas.width = frame.width;
     canvas.height = frame.height;
@@ -797,12 +877,13 @@ $('edit-current').onclick = () =>
     );
     bitmap.close();
     sprite.open(frame.width, frame.height, ctx.getImageData(0, 0, frame.width, frame.height).data);
+    status('Current raster loaded in the pixel editor.');
   });
 $('asset-upload').onchange = () => {
   const file = $('asset-upload').files[0];
-  if (file) operation(() => startUpload(file));
+  if (file) operation('Reading replacement file…', (task) => startUpload(file, false, task));
 };
-$('prepare-crop').onclick = () => operation(prepareCrop);
+$('prepare-crop').onclick = () => operation('Preparing crop derivative…', prepareCrop);
 $('fit-crop').onclick = () => {
   if (pending?.bitmap)
     setCrop(
@@ -817,8 +898,10 @@ $('fit-crop').onclick = () => {
 ['x', 'y', 'width', 'height'].forEach((key) => ($(`crop-${key}`).oninput = drawSource));
 $('download-original').onclick = () =>
   download(pending?.blob, `original-${selected}.${extension(pending?.blob?.type)}`);
-$('apply-geometry').onclick = () => operation(() => validatePending(true));
-$('stage-asset').onclick = () => operation(() => validatePending());
+$('apply-geometry').onclick = () =>
+  operation('Checking preview geometry…', (task) => validatePending(true, task));
+$('stage-asset').onclick = () =>
+  operation('Validating replacement…', (task) => validatePending(false, task));
 $('discard-asset').onclick = () => {
   discardPreparation();
   refreshInspector();
@@ -826,7 +909,7 @@ $('discard-asset').onclick = () => {
 };
 $('token-form').onsubmit = (event) => {
   event.preventDefault();
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     const tokens = Object.fromEntries(
       [...new FormData(event.currentTarget)].map(([key, value]) => [
@@ -841,7 +924,7 @@ $('token-form').onsubmit = (event) => {
   $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', refreshInventory),
 );
 $('filter-theme').onchange = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     try {
       requireSettled();
       const previous = working.document,
@@ -877,7 +960,7 @@ $('clear-collection').onclick = () => {
   refreshPrompt();
 };
 $('stage-collection').onclick = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     if (!collectionSlots.size) throw new Error('Select at least one slot to build a collection.');
     const view = resolved(),
@@ -903,21 +986,33 @@ for (const button of document.querySelectorAll('[data-prompt-action]'))
   button.onclick = () => {
     promptAction = button.dataset.promptAction;
     refreshPrompt();
-    $('prompt-status').textContent = `${button.textContent} brief ready.`;
+    copyRequest++;
+    const message = `${button.textContent} brief ready.`;
+    promptStatus.begin({ message }).finish({ message });
   };
+const promptStatus = createOperationStatus($('prompt-status'));
+let copyRequest = 0;
 $('copy-generated-prompt').onclick = async () => {
+  const request = ++copyRequest;
+  const button = $('copy-generated-prompt');
+  const lease = promptStatus.begin({ message: 'Copying the complete prompt…' });
   try {
     await navigator.clipboard.writeText($('generated-prompt').value);
-    $('prompt-status').textContent = 'Complete prompt copied.';
+    lease.finish({ message: 'Complete prompt copied.' });
   } catch {
-    $('generated-prompt').focus();
-    $('generated-prompt').select();
-    $('prompt-status').textContent =
-      'Clipboard unavailable. The full prompt is selected; press Ctrl/Cmd+C.';
+    if (request !== copyRequest) return;
+    if (document.hasFocus() && document.activeElement === button) {
+      $('generated-prompt').focus();
+      $('generated-prompt').select();
+    }
+    lease.finish({
+      message: 'Clipboard unavailable. Select the full prompt and press Ctrl/Cmd+C.',
+      state: 'error',
+    });
   }
 };
 $('undo-draft').onclick = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     if (!undo.length) return;
     redo.push(working);
@@ -926,7 +1021,7 @@ $('undo-draft').onclick = () =>
     status('Draft change undone. Saved history is intact.');
   });
 $('redo-draft').onclick = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     if (!redo.length) return;
     undo.push(working);
@@ -935,7 +1030,7 @@ $('redo-draft').onclick = () =>
     status('Draft change restored.');
   });
 $('reset-draft').onclick = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     working = saved;
     undo = [];
@@ -945,7 +1040,7 @@ $('reset-draft').onclick = () =>
     status('Returned to the last saved workspace.');
   });
 $('record-review').onclick = () =>
-  operation(async () => {
+  operation('Preparing workspace change…', () => {
     requireSettled();
     const evidence = [
       ...new Set(
@@ -976,15 +1071,17 @@ $('record-review').onclick = () =>
     $('review-evidence').value = '';
   });
 $('save-workspace').onclick = () =>
-  operation(async () => {
+  operation('Preparing a local revision…', async (task) => {
     requireSettled();
     if (!storageReady)
       throw new Error(
         'Local storage has not loaded successfully. Export your work, then use Reload saved to retry.',
       );
+    task.commit();
     const result = await store.save(working.document, working.assets, {
       expectedGeneration: generation,
     });
+    task.check();
     generation = result.generation;
     working = { document: result.document, assets: result.assets };
     saved = working;
@@ -994,37 +1091,45 @@ $('save-workspace').onclick = () =>
     status('Local revision saved atomically. Player saves are untouched.', 'success');
   });
 $('export-workspace').onclick = () =>
-  operation(async () => {
+  operation('Verifying original bytes for export…', async (task) => {
     requireSettled();
-    const bundle = await exportThemeBundle(working.document, working.assets);
+    const bundle = await exportThemeBundle(working.document, working.assets, {
+      signal: task.signal,
+    });
+    task.check();
     download(bundle, `revealline-${resolved().theme.id}-r${working.document.revision}.rltheme`);
-    status('Theme exported with all source files and immutable revisions.', 'success');
+    status('Theme download requested with all source files and immutable revisions.', 'success');
   });
 $('import-workspace').onchange = () => {
   const file = $('import-workspace').files[0];
   if (!file) return;
-  operation(async () => {
+  $('import-workspace').value = '';
+  operation('Reading and validating the imported bundle…', async (task) => {
     requireSettled();
-    status('Validating bundle, hashes, decoded images, and collection…');
-    const incoming = await importThemeBundle(file),
-      next = adoptStudioBundle(working.document, incoming.document),
+    const incoming = await importThemeBundle(file, { signal: task.signal });
+    task.update('Verifying merged assets and immutable revisions…', 'verifying');
+    const next = adoptStudioBundle(working.document, incoming.document),
       merged = new Map([...working.assets, ...incoming.assets]);
-    const bytes = await verifyThemeAssets(next, merged);
+    const bytes = await verifyThemeAssets(next, merged, { signal: task.signal });
+    task.check();
     stage(
       next,
       bytes,
       'Verified collection staged atomically. Current and imported source files are retained. Save to persist.',
     );
-  }).finally(() => ($('import-workspace').value = ''));
+  });
 };
-async function loadWorkspace() {
+async function loadWorkspace(task) {
   requireSettled();
   if (working !== saved)
     throw new Error('Export or save the staged workspace, or Reset to saved, before reloading.');
   const result = await store.load();
+  task.check();
+  if (!result) task.update('Loading and verifying the current release collection…', 'downloading');
+  const published = result ? null : await loadPublishedStudio({ signal: task.signal });
+  task.check();
   storageReady = true;
   generation = result?.generation || 0;
-  const published = result ? null : await loadPublishedStudio();
   working = result
     ? { document: result.document, assets: result.assets }
     : (published ?? { document: createDefaultThemeBundle(), assets: new Map() });
@@ -1043,20 +1148,41 @@ async function loadWorkspace() {
         : 'Source registry loaded. A compiled release collection is not present.',
   );
 }
-$('reload-workspace').onclick = () => operation(loadWorkspace);
+$('reload-workspace').onclick = () => operation('Loading saved Studio workspace…', loadWorkspace);
 $('load-release').onclick = () =>
-  operation(async () => {
+  operation('Loading and verifying the release collection…', async (task) => {
     requireSettled();
-    const published = await loadPublishedStudio();
+    const published = await loadPublishedStudio({ signal: task.signal });
+    task.update('Verifying merged release assets…', 'verifying');
     if (!published) throw new Error('This source checkout has no compiled release collection.');
     const next = adoptStudioBundle(working.document, published.document);
-    const assets = await verifyThemeAssets(next, new Map([...working.assets, ...published.assets]));
+    const assets = await verifyThemeAssets(
+      next,
+      new Map([...working.assets, ...published.assets]),
+      { signal: task.signal },
+    );
+    task.check();
     stage(
       next,
       assets,
       'Release collection staged. Existing local history is retained; save or undo this change.',
     );
   });
+window.addEventListener('pagehide', (event) => {
+  copyRequest++;
+  if (event.persisted) {
+    operations.cancel();
+    promptStatus.clear();
+  } else {
+    operations.dispose();
+    promptStatus.dispose();
+    pending?.bitmap?.close();
+  }
+  for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
+});
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) refreshPreviews();
+});
 window.addEventListener('beforeunload', (event) => {
   if (working !== saved || pending || sprite.hasEdits()) {
     event.preventDefault();
@@ -1075,4 +1201,4 @@ for (const [id, values] of [
     }),
   );
 refresh();
-operation(loadWorkspace);
+operation('Loading saved Studio workspace…', loadWorkspace);

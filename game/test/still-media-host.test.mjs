@@ -294,3 +294,33 @@ test('actual shared router prevents held Confirm across modal close and native p
   const tab = h.doc.emit('keydown', { key: 'Tab', target: h.doc.activeElement });
   assert.equal(tab.defaultPrevented, false, 'Native modal Tab default is left to the browser.');
 });
+
+test('opening announces the held catalogue read and Close fences its late failure', async (t) => {
+  const pending = deferred();
+  const h = await setup(t, { host: { readBase: () => pending.promise } });
+  const opening = h.host.open();
+  assert.equal(h.$('still-host-status').dataset.state, 'busy');
+  assert.equal(h.$('still-host-status').dataset.stage, 'reading');
+  assert.match(h.$('still-host-status').textContent, /Opening the picture workshop/);
+  assert.equal(h.$('still-host-close').disabled, false);
+  h.$('still-host-close').onclick();
+  const closed = h.$('still-host-status').textContent;
+  pending.reject(new Error('Late catalogue failure'));
+  assert.equal(await opening, false);
+  assert.equal(h.$('still-host-status').textContent, closed);
+  assert.equal(h.$('still-host-status').dataset.state, 'ready');
+  assert.equal(h.host.panel, null);
+});
+
+test('classic picture workshop exposes loading and Back before storage explanation', async () => {
+  const html = await readFile(
+    new URL('../../authoring/still-media/index.html', import.meta.url),
+    'utf8',
+  );
+  const title = html.indexOf('</h1>'),
+    status = html.indexOf('id="still-host-status"'),
+    back = html.indexOf('class="still-host-navigation"'),
+    explanation = html.indexOf('Upload an original');
+  assert.ok(title < status && status < back && back < explanation);
+  assert.match(html.slice(status, back), /data-state="busy"[\s\S]*Loading the picture workshop/);
+});

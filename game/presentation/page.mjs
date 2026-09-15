@@ -9,6 +9,7 @@ export function mountPresentationPage({
   window: win = doc?.defaultView ?? globalThis.window,
   createHost = createPresentationHost,
   onError = () => {},
+  onStatus = () => {},
 } = {}) {
   if (!doc?.documentElement) throw new TypeError('Presentation needs a page document.');
   let page = pages.get(doc);
@@ -17,6 +18,12 @@ export function mountPresentationPage({
       host: null,
       snapshot: null,
       error: null,
+      status: {
+        status: 'preparing',
+        stage: 'reading',
+        progress: null,
+        message: 'Loading release artwork and fonts…',
+      },
       closed: false,
       leases: new Set(),
       painters: new Map(),
@@ -27,6 +34,11 @@ export function mountPresentationPage({
         painter.setPresentation(page.snapshot);
     };
     page.applyPainter = applyPainter;
+    page.report = (status) => {
+      if (page.closed) return;
+      page.status = status;
+      for (const lease of page.leases) lease.report(status);
+    };
     page.dispose = () => {
       if (page.closed) return;
       page.closed = true;
@@ -45,13 +57,24 @@ export function mountPresentationPage({
       .then(() => {
         if (page.closed) return null;
         page.host = createHost({ document: doc });
-        return page.host.load();
+        return page.host.load({
+          onStatus: (status) => {
+            // Page readiness additionally includes applying the accepted snapshot.
+            if (status.status !== 'ready' && status.status !== 'error') page.report(status);
+          },
+        });
       })
       .then((snapshot) => {
         if (page.closed || !snapshot) return null;
         page.host.apply(doc.documentElement);
         page.snapshot = snapshot;
         for (const [painter, binding] of page.painters) applyPainter(painter, binding);
+        page.report({
+          status: 'ready',
+          stage: 'ready',
+          progress: null,
+          message: 'Release artwork and fonts are ready.',
+        });
         return snapshot;
       })
       .catch((error) => {
@@ -63,6 +86,12 @@ export function mountPresentationPage({
         page.host?.close();
         page.host = null;
         page.error = error;
+        page.report({
+          status: 'error',
+          stage: 'error',
+          progress: null,
+          message: `Release artwork unavailable: ${error.message}`,
+        });
         for (const lease of page.leases) lease.notify(error);
         return null;
       });
@@ -71,6 +100,12 @@ export function mountPresentationPage({
   const bindings = new Set();
   const lease = {
     ready: page.ready,
+    report(status) {
+      if (closed || page.closed) return;
+      try {
+        onStatus(status);
+      } catch {}
+    },
     readAudio(slot, options) {
       if (closed || page.closed || !page.host)
         return Promise.reject(new Error('Presentation page is closed.'));
@@ -118,6 +153,7 @@ export function mountPresentationPage({
     },
   };
   page.leases.add(lease);
+  lease.report(page.status);
   if (page.error) lease.notify(page.error);
   return Object.freeze(lease);
 }

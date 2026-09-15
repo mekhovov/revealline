@@ -1,0 +1,82 @@
+{
+  "scope": "Bounded ordinary source-browser G4/G5 and A04 check; not phase/release qualification",
+  "status": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "recordedAt": "2026-09-15T08:46:42.106203+00:00",
+  "origin": "http://127.0.0.1:50630",
+  "session": "p01-g45",
+  "engine": "Desktop Chrome 153.0.8010.37 headless, native media/IndexedDB",
+  "viewports": [
+    [
+      1280,
+      800
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ]
+  ],
+  "inputs": "Visible controls; agent-browser file picker adapter with absolute existing fixture paths; focused native Enter activation. Not a keyboard-only navigation proof.",
+  "checks": [
+    {
+      "id": "G4-library-read",
+      "result": "PASS",
+      "detail": "Actual native read of 40,556-byte classic-lab.json held 8.732 s after real bytes; immediate status and Cancel; cancellation preserved observed profile and prevented catalogue adoption; restored native File.text and retry installed once."
+    },
+    {
+      "id": "G4-backup-preparation",
+      "result": "OBSERVED_ONLY",
+      "detail": "Ordinary backup reached actual hashing-music preparation with reachable Cancel. Navigated away; no completed download/restore claim."
+    },
+    {
+      "id": "G5-still-story-native",
+      "result": "PASS",
+      "detail": "Explicit source workshop opened real v4 storage, inspected unchanged owned MP4 and captured native 640×360 frame at requested/observed/playhead 2 s. Missing provenance validation surfaced and corrected via controls. Draft only; no assignment or story save."
+    },
+    {
+      "id": "A04-auxiliary-cosmetics",
+      "result": "PASS",
+      "detail": "Real runtime.json held 9.619 s then intentional 503; separate notice near h1; one stylesheet; local Open remained enabled; existing cosmetic warning visible. Successful routes subsequently resumed with hold/failure configuration cleared."
+    },
+    {
+      "id": "G5-poster-native-cancel",
+      "result": "PASS",
+      "detail": "Native 3 s PNG encoding produced 32,092 unchanged bytes behind held callback. Cancel preserved 2 s previous PNG 42,937 B / hash 4dd29af01b42684788af11915c1501d25cb4bcd900b679b85e845f9502c0714b. Native encoder restored; retry produced 3 s PNG / hash 3e4c3ef245931f107c8f9b28ec676f9562e1a581bc429eff1028dc5798128c76."
+    },
+    {
+      "id": "G5-poster-status-visibility",
+      "result": "FIXED_AND_RETESTED",
+      "detail": "Initial busy status at y=-444 was outside scrolled desktop viewport. Owned CSS now keeps existing notice sticky below Back at 72 px. Repeated real encode held at all three viewports; status wholly visible, and focused Cancel visible together at 844×390."
+    }
+  ],
+  "sourceCorrection": {
+    "path": "authoring/video-poster/workshop.css",
+    "change": "Three CSS declarations on existing status: position sticky; top 72 px; z-index1."
+  },
+  "focusedTests": {
+    "file": "final-focused-tests.log",
+    "passed": 31,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 747.804542
+  },
+  "cleanup": {
+    "nativeAPIWrappersRestored": true,
+    "requestGatesCleared": true,
+    "browserSessionClosed": true,
+    "ownedServerStopped": true,
+    "newProductionAssignment": false,
+    "sourceOriginalsRehashedUnchanged": true
+  },
+  "limits": [
+    "No physical-device, touch-only or controller-only claim; these are viewport-emulated native desktop browser observations.",
+    "No complete backup download/restore, saved-story playback, or assignment publication in this sample.",
+    "No full suite, ordinary build, Git/version or release action by this owner.",
+    "Two initial pointer activations did not open Still Workshop; focused Enter did. Related broader automation anomaly remained unproven and is not labeled a product defect or passing pointer test.",
+    "CLI relative-upload path error, wait-selector process stop, initial capture provenance rejection and pre-fix visibility evidence remain preserved."
+  ]
+}

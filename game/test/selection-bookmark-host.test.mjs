@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 30000, message });
+const PICTURE_READY_TIMEOUT_MS = 30000;
+const settle = (predicate, message) =>
+  waitFor(predicate, { timeoutMs: PICTURE_READY_TIMEOUT_MS, message });
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -89,6 +91,8 @@ test('actual chapter selection survives reload while the other saved flight stay
     'reload opens the selected chapter without automatically loading or flying',
     async (t) => {
       const p = await soloPage(t, {
+        // Retained embedded originals use the same allowance as picture settle().
+        initialReadyTimeoutMs: PICTURE_READY_TIMEOUT_MS,
         campaign,
         storage,
         titleScreen: true,

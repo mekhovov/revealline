@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import {
   ENEMY_CATALOG,
   ENEMY_THEMES,
@@ -23,6 +24,7 @@ export function attachEnemyCatalogPanel({
   let saved = validateEnemyCatalogDraft(initialDraft),
     draft = structuredClone(saved),
     busy = false,
+    operation = null,
     disposed = false,
     returnFocus = null,
     time = 0;
@@ -61,7 +63,9 @@ export function attachEnemyCatalogPanel({
       'These choices configure future authoring. Existing maps, saves and rated runs are never changed.',
     ),
     status = node('p', 'status');
-  status.setAttribute('role', 'status');
+  const presenter = createOperationStatus(status);
+  const report = (message, state = 'ready') =>
+    presenter.begin({ message }).finish({ message, state });
   const role = select(
     'role',
     'Role',
@@ -120,7 +124,7 @@ export function attachEnemyCatalogPanel({
     update(0);
   }
   function changed() {
-    status.textContent = 'Draft changed. Apply saves only this authoring catalog.';
+    report('Draft changed. Apply saves only this authoring catalog.');
     render();
   }
   role.el.onchange = () => {
@@ -140,54 +144,80 @@ export function attachEnemyCatalogPanel({
     current().enabled = enabled.checked;
     changed();
   };
-  async function perform(action, message) {
+  async function perform(action, message, preparing, committing = false) {
     if (busy || disposed) return false;
+    const owner = { controller: new AbortController(), committing };
+    operation = owner;
     busy = true;
+    const lease = presenter.begin({
+      message: preparing,
+      isCurrent: () => operation === owner && !disposed,
+    });
+    owner.lease = lease;
     syncBusy();
+    const context = {
+      signal: owner.controller.signal,
+      isCurrent: () => operation === owner && !disposed && !owner.controller.signal.aborted,
+      check() {
+        if (!this.isCurrent()) throw new DOMException('Catalog operation cancelled.', 'AbortError');
+      },
+    };
     try {
-      await action();
-      if (disposed) return false;
-      status.textContent = message;
+      await action(context);
+      if (!context.isCurrent()) return false;
+      lease.finish({ message });
       return true;
     } catch (error) {
-      if (!disposed) {
-        status.textContent = error.message;
+      if (context.isCurrent()) {
+        lease.finish({ message: error.message, state: 'error' });
         onError(error);
       }
       return false;
     } finally {
-      busy = false;
-      if (!disposed) {
-        syncBusy();
-        render();
+      if (operation === owner) {
+        operation = null;
+        busy = false;
+        if (!disposed) {
+          syncBusy();
+          render();
+        }
       }
     }
   }
   const apply = button('apply', 'Apply authoring choices', () =>
-    perform(async () => {
-      const next = validateEnemyCatalogDraft(draft);
-      await onApplyDraft(next);
-      saved = next;
-      draft = structuredClone(next);
-    }, 'Authoring choices saved. Existing games remain unchanged.'),
+    perform(
+      async (context) => {
+        const next = validateEnemyCatalogDraft(draft);
+        await onApplyDraft(next, context);
+        context.check();
+        saved = next;
+        draft = structuredClone(next);
+      },
+      'Authoring choices saved. Existing games remain unchanged.',
+      'Saving authoring choices…',
+      true,
+    ),
   );
   const undo = button('undo', 'Reload saved choices', () => {
     if (!busy) {
       draft = structuredClone(saved);
-      status.textContent = 'Saved authoring choices restored.';
+      report('Saved authoring choices restored.');
       render();
     }
   });
   const play = button('play', 'Try selected role', () =>
     perform(
-      () => onPreview(role.el.value, validateEnemyCatalogDraft(draft)),
-      'Practice opened with the selected role and theme. It cannot award campaign progress.',
+      (context) => onPreview(role.el.value, validateEnemyCatalogDraft(draft), context),
+      'Practice prepared with the selected role and theme. The child game will report its own loading state.',
+      'Preparing the selected role for practice…',
     ),
   );
   const exportButton = button('export', 'Export catalog JSON', () =>
     perform(
-      () => onExport(validateEnemyCatalogDraft(draft)),
+      (context) => onExport(validateEnemyCatalogDraft(draft), context),
       'Catalog choices prepared for download. This file contains choices, not custom image bytes.',
+      'Preparing the catalog download…',
+      true,
     ),
   );
   const upload = node('input', 'import');
@@ -195,12 +225,18 @@ export function attachEnemyCatalogPanel({
   upload.accept = '.json,application/json';
   upload.setAttribute('aria-label', 'Import catalog choices JSON');
   upload.onchange = () =>
-    perform(async () => {
-      const file = upload.files?.[0];
-      if (!file) throw new Error('Choose a catalog JSON file.');
-      if (file.size > 65536) throw new Error('Catalog choices are limited to 64 KiB.');
-      draft = structuredClone(validateEnemyCatalogDraft(JSON.parse(await file.text())));
-    }, 'Imported into the draft. Apply when ready.');
+    perform(
+      async (context) => {
+        const file = upload.files?.[0];
+        if (!file) throw new Error('Choose a catalog JSON file.');
+        if (file.size > 65536) throw new Error('Catalog choices are limited to 64 KiB.');
+        const candidate = validateEnemyCatalogDraft(JSON.parse(await file.text()));
+        context.check();
+        draft = structuredClone(candidate);
+      },
+      'Imported into the draft. Apply when ready.',
+      'Reading and validating catalog choices…',
+    );
   const back = button('back', 'Back', close),
     actions = node('div');
   actions.className = 'enemy-catalog-actions';
@@ -208,11 +244,17 @@ export function attachEnemyCatalogPanel({
   dialog.append(title, note, fields, preview, read, reading, status, actions);
   doc.body.append(dialog);
   function syncBusy() {
-    for (const el of dialog.querySelectorAll('button,input,select')) el.disabled = busy;
+    for (const el of dialog.querySelectorAll('button,input,select'))
+      el.disabled = busy && el !== back;
+    back.textContent = busy
+      ? operation?.committing
+        ? 'Stop waiting'
+        : 'Cancel operation'
+      : 'Back';
   }
   const cancel = (event) => {
     event.preventDefault();
-    if (!busy) close();
+    close();
   };
   dialog.addEventListener('cancel', cancel);
   listeners.push(() => dialog.removeEventListener('cancel', cancel));
@@ -270,7 +312,22 @@ export function attachEnemyCatalogPanel({
     return true;
   }
   function close() {
-    if (disposed || busy) return false;
+    if (disposed) return false;
+    if (operation?.committing) {
+      operation.lease.finish({
+        message:
+          'Stopped waiting. The authoring operation is still finishing; editing stays locked until its result is known.',
+        state: 'detached',
+      });
+      return true;
+    }
+    if (operation) {
+      operation.controller.abort();
+      operation = null;
+      busy = false;
+      report('Preparation cancelled. Your draft is unchanged.', 'cancelled');
+      syncBusy();
+    }
     if (dialog.open) dialog.close();
     if (returnFocus?.isConnected) returnFocus.focus();
     onClose();
@@ -284,6 +341,8 @@ export function attachEnemyCatalogPanel({
     snapshot: () => validateEnemyCatalogDraft(draft),
     dispose() {
       disposed = true;
+      operation?.controller.abort();
+      presenter.dispose();
       listeners.forEach((off) => off());
       dialog.remove();
     },

@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { prepareBackupSet } from '../backup-set.mjs';
 
 const PURPOSES = {
@@ -47,6 +48,12 @@ export function attachBackupSetPanel({
   filenames.open = false;
   filenames.append(filenameSummary, filenameList);
   root.append(prepare, cancelButton, status, list, filenames);
+  const presenter = createOperationStatus(status);
+  const showStatus = (message, state = 'ready') =>
+    presenter.begin({ message }).finish({ message, state });
+  showStatus(
+    'Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.',
+  );
   let operation = null,
     prepared = null;
   const urls = new Set();
@@ -60,13 +67,15 @@ export function attachBackupSetPanel({
     filenames.hidden = true;
   }
   function finish(op) {
-    if (operation !== op) return;
+    if (operation !== op) return false;
+    const hadCancelFocus = document.activeElement === cancelButton;
     operation = null;
     cancelButton.hidden = true;
     for (const [element, disabled] of op.controls)
       if (element.isConnected) element.disabled = disabled;
     setBusy(false);
     refresh();
+    return hadCancelFocus;
   }
   function cancel({
     focus = true,
@@ -79,7 +88,7 @@ export function attachBackupSetPanel({
       op.restoreFocus = focus;
     }
     release();
-    status.textContent = message;
+    showStatus(message, op ? 'cancelled' : 'ready');
     if (!op && focus && dialog.open && !document.hidden) prepare.focus({ preventScroll: true });
     return true;
   }
@@ -102,6 +111,10 @@ export function attachBackupSetPanel({
       ]),
     };
     operation = op;
+    op.lease = presenter.begin({
+      message: 'Reading saved inventories for the backup set…',
+      isCurrent: () => operation === op && !op.controller.signal.aborted,
+    });
     setBusy(true);
     for (const [element] of op.controls) {
       // The existing Close button stays usable while asynchronous reads settle.
@@ -114,7 +127,7 @@ export function attachBackupSetPanel({
       const result = await prepareBackupSet(source, {
         signal: op.controller.signal,
         onProgress: (text) => {
-          if (operation === op) status.textContent = text;
+          op.lease.update({ message: text });
         },
       });
       if (operation !== op || !dialog.open || op.controller.signal.aborted) return false;
@@ -143,8 +156,9 @@ export function attachBackupSetPanel({
             return false;
           }
           state.textContent = `Download requested · ${file.bytes} bytes`;
-          status.textContent =
-            'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.';
+          showStatus(
+            'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.',
+          );
           return true; // Native default action, no async or synthetic click.
         };
         row.append(link, state);
@@ -155,22 +169,31 @@ export function attachBackupSetPanel({
         );
       }
       filenames.hidden = false;
-      status.textContent = result.coverage.detachedStories.length
-        ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
-        : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.';
-      finish(op);
-      list.querySelector('a')?.focus({ preventScroll: true });
+      showStatus(
+        result.coverage.detachedStories.length
+          ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
+          : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.',
+      );
+      const hadCancelFocus = finish(op);
+      if (!document.hidden && document.hasFocus?.() !== false && hadCancelFocus)
+        list.querySelector('a')?.focus({ preventScroll: true });
       return true;
     } catch (error) {
       if (operation === op && !op.controller.signal.aborted) {
         release();
-        status.textContent = `Backup set was not prepared: ${error.message}`;
+        showStatus(`Backup set was not prepared: ${error.message}`, 'error');
       }
       return false;
     } finally {
       if (operation === op) {
-        finish(op);
-        if (op.restoreFocus !== false && dialog.open && !document.hidden)
+        const hadCancelFocus = finish(op);
+        if (
+          op.restoreFocus !== false &&
+          dialog.open &&
+          !document.hidden &&
+          document.hasFocus?.() !== false &&
+          hadCancelFocus
+        )
           prepare.focus({ preventScroll: true });
       }
     }

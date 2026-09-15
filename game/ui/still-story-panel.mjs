@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { openVideoPosterSource } from '../video-poster.mjs';
 import { VICTORY_STORY_FORMAT } from '../victory-story.mjs';
@@ -57,6 +58,15 @@ export function createStillStoryPanel({
     fields = node('div', 'fields'),
     actions = node('div', 'actions');
   status.setAttribute('role', 'status');
+  const initialStatus = status.textContent;
+  const feedback = createOperationStatus(status);
+  let activity = null;
+  function setStatus(message, state = 'ready') {
+    if (activity) activity.update({ message, progress: null });
+    else feedback.begin({ message }).finish({ message, state });
+  }
+  setStatus(initialStatus);
+
   const control = (tag, id, label, attrs = {}, parent = fields) => {
       const wrapper = node('label', `${id}-label`, label),
         n = node(tag, id);
@@ -229,6 +239,8 @@ export function createStillStoryPanel({
     download.removeAttribute('download');
   }
   function invalidate() {
+    feedback.clear();
+    activity = null;
     ++serial;
     releasePrepared();
     releaseReview();
@@ -306,6 +318,11 @@ export function createStillStoryPanel({
     const id = serial;
     let key = selectionKey(getSelection());
     return work(text, async (signal, parentCheck) => {
+      const lease = feedback.begin({
+        message: text,
+        isCurrent: () => !disposed && id === serial && !signal.aborted,
+      });
+      activity = lease;
       const check = () => {
         parentCheck();
         if (disposed || id !== serial || key !== selectionKey(getSelection()))
@@ -321,10 +338,13 @@ export function createStillStoryPanel({
       try {
         await action(signal, check);
         check();
+        lease.finish({ message: status.textContent });
       } catch (error) {
         check();
-        status.textContent = message(error);
+        lease.finish({ message: message(error), state: 'error' });
         throw error;
+      } finally {
+        if (activity === lease) activity = null;
       }
     });
   }
@@ -334,11 +354,11 @@ export function createStillStoryPanel({
       const next = await storyStore.readMetadata({ signal });
       check();
       metadata = next;
-      status.textContent = 'Story history loaded. Preparation does not save a binding.';
+      setStatus('Story history loaded. Preparation does not save a binding.');
     } catch (error) {
       check();
       metadata = null;
-      status.textContent = `Story history unavailable: ${message(error)}`;
+      setStatus(`Story history unavailable: ${message(error)}`, 'error');
     }
     sync();
   }
@@ -364,7 +384,7 @@ export function createStillStoryPanel({
           range.value = numberField.value;
         }
         sourceFacts.textContent = `${video.info.width} × ${video.info.height} · ${video.info.durationSeconds} seconds · ${video.info.bytes} original bytes`;
-        status.textContent = 'Video inspected. Choose a segment and prepare an optional story.';
+        setStatus('Video inspected. Choose a segment and prepare an optional story.');
       } finally {
         next?.dispose();
       }
@@ -402,8 +422,9 @@ export function createStillStoryPanel({
         image.hidden = false;
         const facts = captured.capture;
         frameFacts.textContent = `Requested ${facts.requestedTime}s · ${facts.observedMediaTime === null ? 'observed timestamp unavailable' : `observed ${facts.observedMediaTime}s`} · playhead ${facts.playheadTime}s (${facts.timingEvidence}).`;
-        status.textContent =
-          'Captured picture draft. Save its assignment, then prepare its story. The original video is retained in this workshop.';
+        setStatus(
+          'Captured picture draft. Save its assignment, then prepare its story. The original video is retained in this workshop.',
+        );
       } finally {
         if (url !== null) URLImpl.revokeObjectURL(url);
       }
@@ -466,7 +487,7 @@ export function createStillStoryPanel({
         );
         prepared = { review, selection: selectionKey(s), ticket: s.ticket };
         review = null;
-        status.textContent = `Ready to save for ${s.caption}. No binding has changed.`;
+        setStatus(`Ready to save for ${s.caption}. No binding has changed.`);
         saveButton.disabled = false;
         saveButton.focus();
       } finally {
@@ -477,12 +498,12 @@ export function createStillStoryPanel({
   async function notified(result, check) {
     check();
     metadata = result;
-    status.textContent = 'Story binding saved. Existing flights and earned pictures are unchanged.';
+    setStatus('Story binding saved. Existing flights and earned pictures are unchanged.');
     try {
       await onSaved(result);
     } catch (error) {
       check();
-      status.textContent = `Story saved; notification failed: ${message(error)}. Reload to verify.`;
+      setStatus(`Story saved; notification failed: ${message(error)}. Reload to verify.`);
     }
   }
   async function save() {
@@ -540,6 +561,7 @@ export function createStillStoryPanel({
       const inventory = await storyStore.exportInventory({ signal }),
         still = await store.readMetadata({ signal });
       check();
+      activity?.update({ message: 'Verifying and packing story originals…', stage: 'exporting' });
       const blob = await exportStoryBundle(inventory.document, inventory.assets, {
         still: still.document,
         signal,
@@ -555,7 +577,7 @@ export function createStillStoryPanel({
         download.href = downloadURL;
         download.download = 'RevealLine-stories.rlstory';
         download.hidden = false;
-        status.textContent = `Story backup prepared (${blob.size} bytes). Choose Download story originals.`;
+        setStatus(`Story backup prepared (${blob.size} bytes). Choose Download story originals.`);
         download.focus();
       } finally {
         if (url !== null) URLImpl.revokeObjectURL(url);
@@ -567,8 +589,9 @@ export function createStillStoryPanel({
       event?.preventDefault();
       return false;
     }
-    status.textContent =
-      'Download requested. Check your browser destination; this copy stays available to retry.';
+    setStatus(
+      'Download requested. Check your browser destination; this copy stays available to retry.',
+    );
     if (requestDownload) {
       event?.preventDefault();
       const own = downloadBlob,
@@ -576,11 +599,10 @@ export function createStillStoryPanel({
       try {
         const result = requestDownload({ blob: own, filename: 'RevealLine-stories.rlstory' });
         Promise.resolve(result).catch((error) => {
-          if (!disposed && id === serial)
-            status.textContent = `Download request failed: ${message(error)}`;
+          if (!disposed && id === serial) setStatus(`Download request failed: ${message(error)}`);
         });
       } catch (error) {
-        status.textContent = `Download request failed: ${message(error)}`;
+        setStatus(`Download request failed: ${message(error)}`);
       }
     }
   };
@@ -607,8 +629,7 @@ export function createStillStoryPanel({
         reviewText.textContent = `${reviewed.review.originals} available originals · ${reviewed.review.document.stories.length} retained stories. ${restore ? 'Incoming bindings will be restored.' : 'Current bindings will be kept.'} Nothing restored yet.`;
         bundleRestore.disabled = false;
         bundleRestore.focus();
-        status.textContent =
-          'Review complete. Restore explicitly to save this generation and policy.';
+        setStatus('Review complete. Restore explicitly to save this generation and policy.');
       } finally {
         if (review) await cancelStoryBundleRestore(review);
       }
@@ -687,6 +708,7 @@ export function createStillStoryPanel({
       video?.dispose();
       video = null;
       releaseFrame();
+      feedback.dispose();
       section.remove();
     },
     snapshot() {

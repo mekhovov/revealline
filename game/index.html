@@ -24,12 +24,67 @@
       }
       #boot-screen {
         min-height: 100vh;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
         box-sizing: border-box;
         padding: 24px;
         font:
           18px/1.5 'Field Kit UI',
           system-ui,
           sans-serif;
+      }
+      #boot-screen .launch-card {
+        width: min(100%, 620px);
+        box-sizing: border-box;
+        padding: 24px;
+        background: #101923;
+        border: 2px solid #425563;
+      }
+      #boot-screen .launch-signal {
+        display: flex;
+        gap: 6px;
+      }
+      #boot-screen .launch-signal i {
+        width: 8px;
+        height: 12px;
+        background: #78dce8;
+      }
+      html[data-boot-state='loading'] #boot-screen .launch-signal i {
+        animation: boot-signal 900ms steps(2, end) infinite;
+      }
+      #boot-screen .launch-signal i:nth-child(2) {
+        animation-delay: 150ms;
+      }
+      #boot-screen .launch-signal i:nth-child(3) {
+        animation-delay: 300ms;
+      }
+      @keyframes boot-signal {
+        50% {
+          transform: scaleY(1.5);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html[data-boot-state='loading'] #boot-screen .launch-signal i {
+          animation: none;
+        }
+      }
+      #boot-screen .launch-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      #boot-screen .launch-action,
+      #boot-screen summary {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 8px;
+      }
+      #boot-screen a:focus-visible,
+      #boot-screen summary:focus-visible {
+        outline: 3px solid #78dce8;
+        outline-offset: 3px;
       }
       #boot-screen a {
         color: #68d9fa;
@@ -38,28 +93,30 @@
         display: none !important;
       }
     </style>
-    <link rel="stylesheet" href="boot.css" />
-    <!-- This is intentionally a classic script: the file:// explanation must not depend on modules. -->
-    <script src="boot.mjs"></script>
+    <link rel="stylesheet" data-boot-href="boot.css" />
+    <!-- Deferred classic scripts leave the static launch screen visible during downloads.
+         Styles are requested by boot after error listeners are installed. -->
+    <script src="boot.mjs" defer></script>
 
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="ui/controller-settings.css" />
-    <link rel="stylesheet" href="ui/game-shell.css" />
-    <link rel="stylesheet" href="ui/pixel-theme.css" />
-    <link rel="stylesheet" href="ui/mission-picker.css" />
-    <link rel="stylesheet" href="ui/mission-brief.css" />
-    <link rel="stylesheet" href="ui/enemy-guide.css" />
-    <link rel="stylesheet" href="ui/story-dialog.css" />
-    <link rel="stylesheet" href="ui/optional-chapters-panel.css" />
-    <link rel="stylesheet" href="ui/device-controls.css" />
-    <link rel="stylesheet" href="ui/field-kit-fonts.css" />
-    <link rel="stylesheet" href="ui/field-kit-tokens.css" />
-    <link rel="stylesheet" href="ui/field-kit-components.css" />
-    <link rel="stylesheet" href="ui/field-kit-flow.css" />
-    <link rel="stylesheet" href="ui/field-kit-surfaces.css" />
-    <link rel="stylesheet" href="ui/field-kit-compiled.css" />
-    <link rel="stylesheet" href="ui/profile-recovery-dialog.css" />
-    <link rel="stylesheet" href="ui/backup-set.css" />
+    <link rel="stylesheet" data-boot-href="style.css" />
+    <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
+    <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
+    <link rel="stylesheet" data-boot-href="ui/mission-picker.css" />
+    <link rel="stylesheet" data-boot-href="ui/mission-brief.css" />
+    <link rel="stylesheet" data-boot-href="ui/enemy-guide.css" />
+    <link rel="stylesheet" data-boot-href="ui/story-dialog.css" />
+    <link rel="stylesheet" data-boot-href="ui/optional-chapters-panel.css" />
+    <link rel="stylesheet" data-boot-href="ui/device-controls.css" />
+    <link rel="stylesheet" data-boot-href="ui/field-kit-fonts.css" />
+    <link rel="stylesheet" data-boot-href="ui/field-kit-tokens.css" />
+    <link rel="stylesheet" data-boot-href="ui/field-kit-components.css" />
+    <link rel="stylesheet" data-boot-href="ui/field-kit-flow.css" />
+    <link rel="stylesheet" data-boot-href="ui/field-kit-surfaces.css" />
+    <link rel="stylesheet" data-boot-href="ui/field-kit-compiled.css" />
+    <link rel="stylesheet" data-boot-href="ui/profile-recovery-dialog.css" />
+    <link rel="stylesheet" data-boot-href="ui/backup-set.css" />
+    <link rel="stylesheet" data-boot-href="ui/operation-status.css" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
@@ -249,7 +306,11 @@
                     Read without starting or resuming.
                   </p>
                 </div>
+                <p id="flight-preparation-status" hidden></p>
                 <div class="overlay-actions">
+                  <button id="flight-preparation-cancel" class="button secondary" hidden>
+                    Cancel preparation
+                  </button>
                   <button
                     id="continue-saved"
                     class="button secondary"
@@ -395,6 +456,8 @@
           ></p>
           <p id="controller-ui-hint" class="micro-note controller-hint" role="status" hidden></p>
           <p id="asset-warning" class="warning" role="status" hidden></p>
+          <p id="craft-preparation-status" class="micro-note" hidden></p>
+          <p id="presentation-preparation-status" class="micro-note" hidden></p>
         </section>
         <aside class="flight-deck" aria-label="Mission and loadout">
           <div class="deck-heading">
@@ -464,6 +527,12 @@
             Choose any included pack. It installs on this device when selected.
           </p>
           <label class="field" data-course-hide>World<select id="theme-select"></select></label>
+          <div class="theme-preparation" data-course-hide>
+            <p id="theme-preparation-status" hidden></p>
+            <button id="theme-preparation-cancel" class="button secondary" hidden>
+              Cancel world preparation
+            </button>
+          </div>
           <label class="field" data-course-hide
             >Campaign<select id="campaign-select"></select
           ></label>
@@ -653,6 +722,7 @@
           placeholder="Level name or world"
           autocomplete="off"
       /></label>
+      <p id="gallery-load-status" role="status" hidden></p>
       <div id="gallery-grid" class="gallery-grid"></div>
       <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages" hidden></nav>
       <details id="collection-progress">
@@ -1084,6 +1154,7 @@
           >iPhone runtime checks</a
         >
         <button id="offline-button" class="button secondary" hidden>Prepare offline play</button>
+        <button id="offline-stop" class="button secondary" hidden>Stop waiting</button>
         <details>
           <summary>Offline verification details</summary>
           <pre id="offline-details">No offline check yet.</pre>
@@ -1169,6 +1240,9 @@
       <button class="dialog-close" data-close="library-dialog" aria-label="Close library">×</button>
       <p class="eyebrow">THE THINGS YOU KEEP</p>
       <h2 id="library-title" data-field-kit-copy="library.title">Flight library.</h2>
+      <button id="library-operation-cancel" class="button secondary" type="button" hidden disabled>
+        Cancel operation
+      </button>
       <div class="library-tabs" role="group" aria-label="Library sections">
         <button
           data-library-panel="scores"
@@ -1292,6 +1366,10 @@
         <button id="download-replay" class="button primary">Download JSON</button
         ><button class="button" data-close="replay-dialog">Close</button>
       </div>
+      <p id="replay-operation-status" class="micro-note" hidden></p>
+      <p class="micro-note">
+        Closing this panel leaves an already requested download to your browser.
+      </p>
     </dialog>
     <dialog
       id="restart-dialog"
@@ -1324,6 +1402,7 @@
         <p class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find your line.<br />Bring the picture home.</p>
+        <p id="shell-featured-status" class="home-status" role="status" hidden></p>
         <nav class="home-actions" aria-label="Main menu">
           <button id="shell-course-return" type="button" class="button primary" hidden>
             Back to lesson
@@ -1377,7 +1456,6 @@
           >
         </nav>
         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
-        <p id="shell-featured-status" class="home-status" role="status" hidden></p>
         <p class="home-hint">Choose a flight. Trace a path. Close the line.</p>
         <p id="landing-version" class="landing-version" aria-label="Game version">
           Version __REVEALLINE_VERSION__
@@ -1515,7 +1593,7 @@
         </div>
       </div>
     </dialog>
-    <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>
+    <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js" defer></script>
     <p id="controller-connection-hint" class="controller-connection-hint" role="status" hidden></p>
   </body>
 </html>

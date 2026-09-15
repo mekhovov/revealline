@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import { createOperationStatus } from '../ui/operation-status.mjs';
 import {
   CONTROLLER_PREVIEW_FORMAT,
   parseControllerPreviewStatus,
@@ -26,10 +28,13 @@ let connected = false,
   revision = 0,
   pendingStick = null,
   disposed = false;
-const status = (message, error = false) => {
-  $('load-status').textContent = message;
+const presenter = createOperationStatus($('load-status'));
+const status = (message, error = false, busy = false) => {
+  const lease = presenter.begin({ message });
+  if (!busy) lease.finish({ message, state: error ? 'error' : 'ready' });
   $('load-status').classList.toggle('error', error);
 };
+status('Loading validated game content…', false, true);
 function focusGame() {
   if (!loaded) return;
   frame.focus({ preventScroll: true });
@@ -231,7 +236,7 @@ async function loadPractice() {
   if (!choice) return;
   const ticket = ++loadEpoch;
   $('load').disabled = true;
-  status('Validating practice before opening the real game…');
+  status('Validating practice before opening the real game…', false, true);
   try {
     const candidate = choice.courseId
       ? createLessonScenario(choice.courseId, {
@@ -267,7 +272,9 @@ async function loadPractice() {
     $('pad-status').textContent = 'Not joined';
     frame.src = destination;
     status(
-      `${choice.label} prepared. Connect the virtual pad when the game appears.${warnings.length ? ` ${warnings.join(' ')}` : ''}`,
+      `${choice.label} prepared. Loading the child game; the virtual pad stays disconnected until it reports ready.${warnings.length ? ` ${warnings.join(' ')}` : ''}`,
+      false,
+      true,
     );
   } catch (error) {
     if (ticket === loadEpoch && !disposed)
@@ -281,10 +288,8 @@ $('mission').addEventListener('change', refreshClasses);
 $('viewport').addEventListener('change', resize);
 frame.addEventListener('load', () => {
   if (!frame.getAttribute('src')) return;
-  loaded = true;
-  statusSequence = -1;
-  connected = false;
-  releaseAll();
+  if (!loaded)
+    status('Game document loaded. Waiting for the practice controls to report ready…', false, true);
   resize();
 });
 function receiveStatus(event) {
@@ -292,6 +297,12 @@ function receiveStatus(event) {
   const value = parseControllerPreviewStatus(event.data);
   if (!value || value.session !== session || value.sequence <= statusSequence) return;
   statusSequence = value.sequence;
+  if (!loaded) {
+    loaded = true;
+    connected = false;
+    releaseAll();
+    status('Practice controls are ready. Connect the virtual pad to begin.');
+  }
   $('scope').textContent = value.scope || 'No active scope';
   $('focused').textContent = value.focusedLabel || value.focusedId || 'Game canvas / document';
   $('pad-status').textContent = `${value.assigned ? 'Joined' : 'Not joined'} · ${value.message}`;
@@ -362,6 +373,7 @@ try {
     ['Reading practice', './reading-practice.json'],
   ]) {
     try {
+      status(`Loading and validating ${name} practice…`, false, true);
       const { pack } = await preparePack(await json(path));
       for (const campaign of pack.campaigns) {
         const entry = resolvePackCampaign(pack, campaign.id);
@@ -385,8 +397,9 @@ try {
     refreshClasses();
     $('load').disabled = false;
     await loadPractice();
-    if (packNotes.length) status(`${$('load-status').textContent} ${packNotes.join(' ')}`);
+    if (packNotes.length)
+      status(`${$('load-status').textContent} ${packNotes.join(' ')}`, false, !loaded);
   }
 } catch (error) {
-  status(error.message, true);
+  status(`${error.message} Reload this page to retry.`, true);
 }

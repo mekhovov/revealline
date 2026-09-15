@@ -2,7 +2,14 @@ import { discoverProfileTransfers, prepareProfileTransfer } from '../profile-tra
 
 /** Explicit same-origin release copy. Source validation is read-only; all target
  * mutations use the library panel's existing complete-backup transaction. */
-export function attachProfileTransferPanel({ api, container, backupOptions, task, applyPrepared }) {
+export function attachProfileTransferPanel({
+  api,
+  container,
+  backupOptions,
+  task,
+  applyPrepared,
+  setStatus,
+}) {
   if (!api.profileTransfer) return null;
   const node = (tag, text, attrs = {}) => {
     const element = document.createElement(tag);
@@ -43,9 +50,15 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
   );
   details.append(summary, explanation, source, review, copy, cancel, preview, status, fallback);
   container.append(details);
+  const report =
+    setStatus ||
+    ((message) => {
+      status.textContent = message;
+    });
   let reviewed = null,
     checking = false,
-    controller = null;
+    controller = null,
+    checkSerial = 0;
 
   function showPreview(value) {
     const p = value.preview;
@@ -74,33 +87,41 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
       source.disabled = review.disabled = !candidates.length;
       copy.disabled = !reviewed;
       if (!candidates.length)
-        status.textContent =
-          'No compatible earlier collection was found at this address. Use a game-data backup file to transfer from another location.';
+        report(
+          'No compatible earlier collection was found at this address. Use a game-data backup file to transfer from another location.',
+        );
     } catch (error) {
       source.disabled = review.disabled = copy.disabled = true;
-      status.textContent = error.message;
+      report(error.message, 'error');
     }
   }
   source.onchange = () => {
     reviewed = null;
     preview.textContent = '';
-    status.textContent = 'Review this source before copying.';
+    report('Review this source before copying.');
     copy.disabled = true;
   };
-  cancel.onclick = () => controller?.abort();
+  cancel.onclick = () => {
+    controller?.abort();
+    report('Check cancelled. Waiting for its current read to settle…', 'cancelled');
+  };
   async function check(andCopy) {
-    await task('transfer-status', async () => {
+    await task('transfer-status', async (operation) => {
+      const request = ++checkSerial;
       checking = true;
-      controller = new AbortController();
+      controller = operation.controller;
       cancel.hidden = false;
       cancel.disabled = false;
-      status.textContent = 'Checking the earlier collection, images and saved flight…';
+      operation.phase('Checking the earlier collection, images and saved flight…');
       try {
+        const options = await backupOptions();
+        operation.check();
         const fresh = await prepareProfileTransfer(source.value, {
           ...api.profileTransfer,
-          ...(await backupOptions()),
+          ...options,
           signal: controller.signal,
         });
+        operation.check();
         const unchanged =
           reviewed &&
           reviewed.source.id === fresh.source.id &&
@@ -108,23 +129,30 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
         reviewed = fresh;
         showPreview(fresh);
         if (!andCopy || !unchanged) {
-          status.textContent = andCopy
-            ? 'The source changed since your review. The summary is updated; review it before choosing Copy again. This release has not changed.'
-            : 'Verified. Copy replaces this release’s collection with the reviewed source. Undo is offered when the current collection can be verified.';
+          report(
+            andCopy
+              ? 'The source changed since your review. The summary is updated; review it before choosing Copy again. This release has not changed.'
+              : 'Verified. Copy replaces this release’s collection with the reviewed source. Undo is offered when the current collection can be verified.',
+          );
           return;
         }
         controller = null;
         cancel.disabled = true;
         cancel.hidden = true;
-        status.textContent = 'Copying the verified collection…';
-        const result = await applyPrepared(fresh.prepared);
-        status.textContent = `Copied from ${fresh.source.version}. ${result.undo ? 'Undo game-data import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`;
+        operation.phase('Preparing the verified collection copy…');
+        const result = await applyPrepared(fresh.prepared, operation);
+        operation.check();
+        report(
+          `Copied from ${fresh.source.version}. ${result.undo ? 'Undo game-data import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`,
+        );
         reviewed = null;
       } finally {
-        controller = null;
-        cancel.hidden = true;
-        cancel.disabled = true;
-        checking = false;
+        if (request === checkSerial) {
+          controller = null;
+          cancel.hidden = true;
+          cancel.disabled = true;
+          checking = false;
+        }
       }
     });
   }

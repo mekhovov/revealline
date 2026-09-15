@@ -56,8 +56,18 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
               ? copy('missions.earned')
               : button.dataset.pictureState === 'unavailable'
                 ? copy('missions.unavailable')
-                : copy('missions.concealed'),
+                : button.dataset.pictureState === 'loading'
+                  ? copy('missions.loading')
+                  : copy('missions.concealed'),
         );
+      if (!button.disabled && button.dataset.pictureState === 'loading') {
+        const signal = make('span', 'operation-status-signal');
+        signal.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 3; i++) signal.append(make('i', ''));
+        label.append(signal);
+        label.classList.add('operation-status');
+        label.dataset.state = 'busy';
+      }
       tile.setAttribute('aria-hidden', 'true');
       tile.dataset.scene = String(index % 3);
       if (
