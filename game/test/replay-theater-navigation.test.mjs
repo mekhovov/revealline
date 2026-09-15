@@ -6,16 +6,13 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const html = readFileSync(new URL('../replay-theater/index.html', import.meta.url), 'utf8');
 let serial = 0;
 async function until(predicate, label) {
-  for (let i = 0; i < 100; i++) {
-    if (predicate()) return;
-    await setImmediate();
-  }
-  assert.fail(label);
+  await waitFor(predicate, { message: label });
 }
 function recording(turnPolicy = 'immediate', classic = false) {
   const level = {
@@ -55,7 +52,8 @@ function mount(doc) {
       continue;
     }
     if (!token.startsWith('<')) {
-      stack.at(-1).textContent += token.trim();
+      const parent = stack.at(-1);
+      parent._text = (parent._text || '') + token.trim();
       continue;
     }
     const tag = token.match(/^<([\w-]+)/)[1],
@@ -310,11 +308,17 @@ test('Back cancels a deferred import without adoption; native text editing and f
   $('replay-file').emit('change');
   await until(() => !!finish, 'file read began');
   assert.equal($('playback-phase').textContent, 'Verifying');
+  assert.equal($('import-status').dataset.state, 'busy');
+  assert.equal($('import-status').dataset.stage, 'reading');
+  assert.equal($('cancel-load').hidden, false);
   key($('replay-file'), 'Escape');
   assert.match($('import-status').textContent, /cancelled/);
+  assert.equal($('import-status').dataset.state, 'cancelled');
+  const cancelled = $('import-status').textContent;
   finish(JSON.stringify(recording('grid-center', true)));
   for (let i = 0; i < 5; i++) await setImmediate();
   assert.deepEqual(tick().checkpoint, before);
+  assert.equal($('import-status').textContent, cancelled);
   assert.equal($('recording-name').textContent, 'Navigation recording');
   h.loadText({ version: 'wrong' });
   await until(
@@ -367,6 +371,52 @@ test('blur, controller loss and page disposal pause exact playback and reject a 
   tick(100);
   assert.equal(h.snapshots.length, count);
   assert.equal($('recording-name').textContent, 'Navigation recording');
+});
+
+test('real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate', async (t) => {
+  const { $, tick, loadText } = await harness(t);
+  const before = tick().checkpoint;
+  const candidate = recording('grid-center', true);
+  const meter = $('import-status').querySelector('progress');
+  const measured = [];
+  let value = meter.value;
+  Object.defineProperty(meter, 'value', {
+    configurable: true,
+    get: () => value,
+    set(next) {
+      value = next;
+      measured.push({ completed: next, total: meter.max });
+    },
+  });
+  let finish;
+  t.mock.method(
+    BoardPainter.prototype,
+    'setLook',
+    () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  );
+  loadText(candidate);
+  await until(() => finish, 'verified candidate reached artwork decoding');
+  assert.deepEqual(measured.at(-1), { completed: candidate.ticks, total: candidate.ticks });
+  assert.equal($('import-status').dataset.stage, 'decoding');
+  assert.equal(meter.hidden, true, 'artwork has no invented tick progress');
+  assert.equal($('cancel-load').hidden, false);
+  $('cancel-load').click();
+  assert.equal($('import-status').dataset.state, 'cancelled');
+  finish();
+  for (let i = 0; i < 5; i++) await setImmediate();
+  assert.equal($('recording-name').textContent, 'Navigation recording');
+  assert.deepEqual(tick().checkpoint, before);
+  t.mock.method(BoardPainter.prototype, 'setLook', async () => {});
+  loadText(candidate);
+  await until(
+    () => $('recording-name').textContent === 'Classic recording',
+    'retry loaded verified candidate',
+  );
+  assert.equal($('import-status').dataset.state, 'ready');
+  assert.equal($('playback-phase').textContent, 'paused');
 });
 
 test('Classic replay import stays paused and controller completion checks the exact v6 checkpoint', async (t) => {

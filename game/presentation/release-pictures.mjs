@@ -25,6 +25,12 @@ const abort = (signal) => {
     throw new DOMException('Picture default preparation cancelled.', 'AbortError');
 };
 const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
+const notice = (onStatus, signal, stage, message) => {
+  if (signal?.aborted) return;
+  try {
+    onStatus?.({ status: 'preparing', stage, message, progress: null });
+  } catch {}
+};
 const baselines = new Map(CURRENT_PICTURE_BASELINES.map((row) => [row.id, row]));
 
 /** Same gameplay identity does not prove the embedded picture is still the
@@ -169,17 +175,27 @@ export function createReleasePictureDefaults({
       typeof readMedia === 'function',
     'Release pictures need the current host and still catalog.',
   );
-  async function source(signal) {
+  async function source(signal, onStatus) {
     abort(signal);
+    notice(onStatus, signal, 'preparing', 'Preparing the published picture choices…');
     await ready();
     abort(signal);
     const host = getHost(),
       snapshot = host?.current();
     return { host, snapshot };
   }
-  async function materialize({ media, choices, host, snapshot, signal, persistBindings = false }) {
+  async function materialize({
+    media,
+    choices,
+    host,
+    snapshot,
+    signal,
+    onStatus,
+    persistBindings = false,
+  }) {
     abort(signal);
     if (!choices.length) return { media, library: media.metadata.document.library };
+    notice(onStatus, signal, 'verifying', 'Checking the exact published picture identities…');
     const previous = media.metadata.document.library,
       additions = await Promise.all(choices.map((choice) => records(choice, previous))),
       library = {
@@ -202,6 +218,7 @@ export function createReleasePictureDefaults({
     }
     if (!same(library, previous)) {
       const blobs = new Map();
+      notice(onStatus, signal, 'reading', 'Reading retained picture originals…');
       for (const hash of storedStillHashes(media.metadata.document)) {
         abort(signal);
         const blob = await media.store.readBlob(hash, { signal });
@@ -213,7 +230,8 @@ export function createReleasePictureDefaults({
       }
       for (const row of additions) {
         if (blobs.has(row.asset.sha256)) continue;
-        const original = await host.readPicture(row.choice.slotId, { snapshot, signal });
+        notice(onStatus, signal, 'downloading', 'Downloading the published picture original…');
+        const original = await host.readPicture(row.choice.slotId, { snapshot, signal, onStatus });
         abort(signal);
         required(
           same(original.asset, row.choice.asset),
@@ -221,6 +239,7 @@ export function createReleasePictureDefaults({
         );
         blobs.set(row.asset.sha256, { sha256: row.asset.sha256, blob: original.blob });
       }
+      notice(onStatus, signal, 'verifying', 'Verifying picture originals before storage…');
       const prepared = await media.store.prepare(library, [...blobs.values()], {
         executionCatalog: executionCatalog(),
         previous: media.metadata.document,
@@ -229,9 +248,11 @@ export function createReleasePictureDefaults({
       abort(signal);
       required(host.current() === snapshot, 'Release picture changed before storage.');
       const expectedGeneration = media.metadata.generation;
+      notice(onStatus, signal, 'saving', 'Finishing picture save…');
       await commit(media.store, prepared, { expectedGeneration, signal });
       // Durable completion is not rollback: cancellation may leave unused history,
       // but the attempt checks ownership before adopting any new pin.
+      notice(onStatus, signal, 'verifying', 'Confirming the saved picture choices…');
       media = await readMedia({ signal });
       required(
         media.metadata.generation === expectedGeneration + 1,
@@ -257,7 +278,7 @@ export function createReleasePictureDefaults({
     };
   }
   return Object.freeze({
-    async prepareSelection({ media, selection, signal, authoredBackground = null }) {
+    async prepareSelection({ media, selection, signal, onStatus, authoredBackground = null }) {
       const identities = selection.themeIds
         .map((themeId) =>
           selection.identityCatalog.resolve({
@@ -275,25 +296,33 @@ export function createReleasePictureDefaults({
             ),
         );
       if (!identities.length) return { media, library: selection.library };
+      notice(onStatus, signal, 'verifying', 'Checking the original picture’s release identity…');
       const eligible = [];
       for (const identity of identities)
         if (await matchesReleasePictureBaseline(identity, authoredBackground, { signal }))
           eligible.push(identity);
       if (!eligible.length) return { media, library: selection.library };
-      const { host, snapshot } = await source(signal);
+      const { host, snapshot } = await source(signal, onStatus);
       const choices = eligible
         .map((identity) => releasePictureForIdentity(snapshot, identity))
         .filter(Boolean)
         .map((choice) => ({ ...choice, identityCatalog: selection.identityCatalog }));
-      return materialize({ media, choices, host, snapshot, signal });
+      return materialize({ media, choices, host, snapshot, signal, onStatus });
     },
     /** Invoke only after a fresh successful install, never recovery/import. The
      * install's exact generation fences manual changes and unrelated writers. */
-    async assignFreshChapter({ descriptor: candidate, mediaGeneration, identityCatalog, signal }) {
+    async assignFreshChapter({
+      descriptor: candidate,
+      mediaGeneration,
+      identityCatalog,
+      signal,
+      onStatus,
+    }) {
       const descriptor = validateExternalChapter(candidate);
       if (descriptor.themeId !== 'fpv') return false;
-      const { host, snapshot } = await source(signal);
+      const { host, snapshot } = await source(signal, onStatus);
       if (!snapshot) return false;
+      notice(onStatus, signal, 'reading', 'Reading the installed chapter’s picture choices…');
       const media = await readMedia({ signal });
       required(
         media.metadata.generation === mediaGeneration,
@@ -318,7 +347,15 @@ export function createReleasePictureDefaults({
         if (choice) choices.push({ ...choice, identityCatalog });
       }
       if (!choices.length) return false;
-      await materialize({ media, choices, host, snapshot, signal, persistBindings: true });
+      await materialize({
+        media,
+        choices,
+        host,
+        snapshot,
+        signal,
+        onStatus,
+        persistBindings: true,
+      });
       return true;
     },
   });

@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import {
   BUILTIN_SOUNDTRACK_PLAYLISTS,
   BUILTIN_SOUNDTRACK_TRACKS,
@@ -108,6 +109,15 @@ export function attachSoundtrackPanel({
     role: 'status',
     'aria-live': 'polite',
   });
+
+  const initialStatus = status.textContent;
+  const feedback = createOperationStatus(status);
+  let activity = null;
+  function setStatus(message, state = 'ready') {
+    if (activity) activity.update({ message, progress: null });
+    else feedback.begin({ message }).finish({ message, state });
+  }
+  setStatus(initialStatus);
   const availability = node(
     'p',
     'availability',
@@ -117,7 +127,7 @@ export function attachSoundtrackPanel({
   const closeButton = button('close', 'Close studio', () => close());
   const cancelButton = button('cancel', 'Cancel operation', () => {
     controller?.abort();
-    status.textContent = 'Cancellation requested…';
+    setStatus('Cancellation requested…');
   });
   cancelButton.hidden = true;
   const saveButton = button('save', 'Save all changes', () =>
@@ -130,11 +140,15 @@ export function attachSoundtrackPanel({
     assets = [...saved.assets];
     dirty = false;
     render();
-    status.textContent = 'Restored the saved library. Playback is unchanged.';
+    setStatus('Restored the saved library. Playback is unchanged.');
   });
   const reloadButton = button('reload', 'Reload latest saved', () => reload());
   const stateLine = node('p', 'draft-state', '', { class: 'micro-note' });
   const now = node('p', 'now', 'Music is ready.', { role: 'status', 'aria-live': 'off' });
+  const transportStatus = node('p', 'loading');
+  const transportFeedback = createOperationStatus(transportStatus);
+  let transportActivity = null,
+    auditionActivity = null;
   const seek = input('seek', 'Track position', { type: 'range', min: '0', max: '0', step: '0.1' });
   const volume = input('volume', 'Music volume', {
     type: 'range',
@@ -154,13 +168,13 @@ export function attachSoundtrackPanel({
       wakeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
       await notifyPlayback();
-      status.textContent =
-        committed.warning || 'Playlist selected. Choose Play music if it is paused.';
+      setStatus(committed.warning || 'Playlist selected. Choose Play music if it is paused.');
     });
   });
   const transport = section(
     'Now playing',
     now,
+    transportStatus,
     row(
       button('previous', 'Previous', () => controlMusic(() => player.previous())),
       button('play', 'Play music', () => controlMusic(() => player.play(), true)),
@@ -209,7 +223,7 @@ export function attachSoundtrackPanel({
         });
       });
       render();
-      status.textContent = 'Track details added to the draft. Save all changes to keep them.';
+      setStatus('Track details added to the draft. Save all changes to keep them.');
     }),
   );
   const deleteTrack = button('delete-track', 'Remove track from draft', () =>
@@ -227,8 +241,7 @@ export function attachSoundtrackPanel({
       });
       pruneAssets();
       render();
-      status.textContent =
-        'Track removed from the draft; the saved library is unchanged until Save.';
+      setStatus('Track removed from the draft; the saved library is unchanged until Save.');
     }),
   );
   const audition = node('audio', 'audition', null, {
@@ -259,20 +272,34 @@ export function attachSoundtrackPanel({
     playback(async () => {
       if (!auditionURL || disposed || busy) return;
       const token = auditionToken;
-      if (!audition.paused) audition.pause();
-      else {
+      if (!audition.paused) {
+        auditionActivity?.clear();
+        auditionActivity = null;
+        audition.pause();
+      } else {
         wakeAudio();
         if (disposed || token !== auditionToken || !auditionURL) return;
+        const lease = auditionFeedback.begin({
+          message: 'Resuming audition…',
+          stage: 'playing',
+          isCurrent: () => !disposed && dialog.open && token === auditionToken,
+        });
+        auditionActivity = lease;
         try {
           await audition.play();
+          lease.finish({ message: 'Audition playing.' });
         } catch (error) {
+          lease.finish({ message: message(error), state: 'error' });
           if (token === auditionToken) throw error;
         }
       }
     }),
   );
+  const auditionStatus = node('p', 'audition-status');
+  const auditionFeedback = createOperationStatus(auditionStatus);
   const auditionControls = section(
     'Audition controls',
+    auditionStatus,
     row(toggleAudition),
     auditionSeek.field,
     auditionVolume.field,
@@ -329,8 +356,7 @@ export function attachSoundtrackPanel({
         }),
       );
       render({ playlistId: id });
-      status.textContent =
-        'New playlist added to the draft. Edit its title, order and entries, then Save.';
+      setStatus('New playlist added to the draft. Edit its title, order and entries, then Save.');
     }),
   );
   const clonePlaylist = button('clone-playlist', 'Clone selected playlist', () =>
@@ -341,7 +367,7 @@ export function attachSoundtrackPanel({
         value.playlists.push({ ...copy(source), id, title: `${source.title.slice(0, 113)} copy` }),
       );
       render({ playlistId: id });
-      status.textContent = 'Playlist cloned. The draft copy is editable.';
+      setStatus('Playlist cloned. The draft copy is editable.');
     }),
   );
   const applyPlaylist = button('apply-playlist', 'Apply playlist details to draft', () =>
@@ -354,8 +380,9 @@ export function attachSoundtrackPanel({
         }),
       );
       render();
-      status.textContent =
-        'Playlist details added to the draft. The current song will finish normally after Save.';
+      setStatus(
+        'Playlist details added to the draft. The current song will finish normally after Save.',
+      );
     }),
   );
   const appendEntry = button('add-entry', 'Add selected track', () =>
@@ -411,7 +438,7 @@ export function attachSoundtrackPanel({
         value.playlists = value.playlists.filter((item) => item.id !== id);
       });
       render();
-      status.textContent = 'Playlist removed from the draft.';
+      setStatus('Playlist removed from the draft.');
     }),
   );
   const playlistSection = section(
@@ -451,8 +478,9 @@ export function attachSoundtrackPanel({
       });
       renderAssignments();
       dirtyState();
-      status.textContent =
-        'Assignment added to the draft. Automatic playback uses map, campaign, theme, then global; explicit selection overrides these.';
+      setStatus(
+        'Assignment added to the draft. Automatic playback uses map, campaign, theme, then global; explicit selection overrides these.',
+      );
     }),
   );
   const unassign = button('unassign', 'Remove selected assignment', () =>
@@ -496,7 +524,9 @@ export function attachSoundtrackPanel({
       assets = [...prepared.assets];
       dirty = true;
       render();
-      status.textContent = `Backup verified: ${draft.tracks.length} custom tracks, ${draft.playlists.length} custom playlists. Save all changes replaces the local library; Undo keeps the saved library.`;
+      setStatus(
+        `Backup verified: ${draft.tracks.length} custom tracks, ${draft.playlists.length} custom playlists. Save all changes replaces the local library; Undo keeps the saved library.`,
+      );
       bundleInput.element.value = '';
     }),
   );
@@ -509,6 +539,10 @@ export function attachSoundtrackPanel({
         async (signal) => {
           if (!saved) throw new Error('Load the saved music library first.');
           invalidateBackup();
+          activity?.update({
+            message: 'Verifying and packing soundtrack originals…',
+            stage: 'exporting',
+          });
           const blob = await exportSoundtrackBundle(saved.library, saved.assets, { signal });
           throwIfSoundtrackAborted(signal);
           if (disposed) return;
@@ -518,8 +552,9 @@ export function attachSoundtrackPanel({
             generation: saved.generation,
             url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
           };
-          status.textContent =
-            'Backup prepared. Choose Download prepared backup to request the file. Unsaved draft changes are excluded.';
+          setStatus(
+            'Backup prepared. Choose Download prepared backup to request the file. Unsaved draft changes are excluded.',
+          );
         },
       );
       if (complete && preparedBackup && dialog.open && !disposed) bundleDownload.focus();
@@ -545,12 +580,14 @@ export function attachSoundtrackPanel({
       return task('Requesting the prepared backup from the download adapter…', async (signal) => {
         await download(prepared.blob, prepared.filename, { signal });
         if (!disposed && preparedBackup === prepared)
-          status.textContent =
-            'Download request handed to the host. Confirm the destination there; the prepared backup is available to retry.';
+          setStatus(
+            'Download request handed to the host. Confirm the destination there; the prepared backup is available to retry.',
+          );
       });
     }
-    status.textContent =
-      'Download requested. Confirm it in your browser. If no file appears, choose Download prepared backup again.';
+    setStatus(
+      'Download requested. Confirm it in your browser. If no file appears, choose Download prepared backup again.',
+    );
     // No async work, synthetic click or automatic navigation here. The visible
     // anchor's default action uses the already prepared, retained Blob URL.
     return true;
@@ -558,8 +595,9 @@ export function attachSoundtrackPanel({
   const discardBackup = button('discard-backup', 'Discard prepared copy', () => {
     if (busy || disposed) return;
     invalidateBackup();
-    status.textContent =
-      'Prepared copy discarded. Saved music is unchanged; the browser controls any download already requested.';
+    setStatus(
+      'Prepared copy discarded. Saved music is unchanged; the browser controls any download already requested.',
+    );
   });
   const backupInfo = node('p', 'backup-info', '', { class: 'micro-note' });
   const backupReady = node('div', 'backup-ready', null, { class: 'soundtrack-backup-ready' });
@@ -579,18 +617,17 @@ export function attachSoundtrackPanel({
   );
   const columns = node('div', null, null, { class: 'soundtrack-columns' });
   columns.append(tracksSection, playlistSection, assignmentSection, transferSection);
+  const operationRow = node('div', 'operation');
+  operationRow.append(status, cancelButton);
   dialog.append(
     row(heading, closeButton),
     availability,
+    operationRow,
     transport,
     columns,
     node('div', null, null, { class: 'soundtrack-footer' }),
   );
-  dialog.lastElementChild.append(
-    stateLine,
-    status,
-    row(saveButton, undoButton, reloadButton, cancelButton),
-  );
+  dialog.lastElementChild.append(stateLine, row(saveButton, undoButton, reloadButton));
   const style = doc.createElement('link');
   style.rel = 'stylesheet';
   style.href = new URL('./soundtrack-panel.css', import.meta.url).href;
@@ -604,10 +641,11 @@ export function attachSoundtrackPanel({
     return [...BUILTIN_SOUNDTRACK_PLAYLISTS, ...draft.playlists];
   }
   function report(error) {
-    status.textContent =
+    setStatus(
       error?.name === 'AbortError'
         ? 'Operation cancelled. The saved library was not changed by this cancelled operation.'
-        : message(error);
+        : message(error),
+    );
     if (error?.name !== 'AbortError') {
       try {
         onError(error);
@@ -799,15 +837,27 @@ export function attachSoundtrackPanel({
     busy = true;
     controller = new AbortController();
     const signal = controller.signal;
-    status.textContent = label;
+    const lease = feedback.begin({
+      message: label,
+      isCurrent: () => !disposed && controller?.signal === signal,
+    });
+    activity = lease;
     render();
     try {
-      await work(signal);
+      await work(signal, lease);
+      lease.finish({ message: status.textContent });
       return true;
     } catch (error) {
-      if (!disposed) report(error);
+      if (!disposed) {
+        report(error);
+        lease.finish({
+          message: status.textContent,
+          state: error?.name === 'AbortError' ? 'cancelled' : 'error',
+        });
+      }
       return false;
     } finally {
+      if (activity === lease) activity = null;
       busy = false;
       controller = null;
       if (!disposed) render();
@@ -824,8 +874,9 @@ export function attachSoundtrackPanel({
       dirty = false;
       player.setLibrary(draft);
       const warning = await notifyLibrary(value);
-      status.textContent =
-        warning || 'Saved library loaded. Imports and edits remain drafts until Save all changes.';
+      setStatus(
+        warning || 'Saved library loaded. Imports and edits remain drafts until Save all changes.',
+      );
     });
   }
   async function notifyLibrary(value) {
@@ -843,9 +894,11 @@ export function attachSoundtrackPanel({
     if (!saved) throw new Error('Load the local library before saving.');
     invalidateBackup();
     pruneAssets();
+    activity?.update({ message: 'Decoding and verifying the music library…', stage: 'verifying' });
     const prepared = await prepareSoundtrackLibrary(draft, assets, { signal, probeMedia });
     const usage =
       typeof otherManagedBytes === 'function' ? await otherManagedBytes() : otherManagedBytes;
+    activity?.update({ message: 'Saving the verified music library…', stage: 'saving' });
     const result = await store.commit(prepared, {
       signal,
       expectedGeneration: saved.generation,
@@ -858,13 +911,14 @@ export function attachSoundtrackPanel({
     dirty = false;
     player.setLibrary(draft);
     const warning = await notifyLibrary(saved);
-    status.textContent =
+    setStatus(
       warning ||
-      'Music library saved atomically. The current song continues; edited queues and automatic assignments apply at a song boundary.';
+        'Music library saved atomically. The current song continues; edited queues and automatic assignments apply at a song boundary.',
+    );
     return { ...saved, warning };
   }
   async function importMP3Files() {
-    return task('Inspecting selected MP3 files…', async (signal) => {
+    return task('Inspecting selected MP3 files…', async (signal, progress) => {
       if (!saved) throw new Error('Load the local library before importing.');
       const files = [...(fileInput.element.files ?? [])];
       if (!files.length) throw new Error('Choose one or more MP3 files first.');
@@ -880,7 +934,11 @@ export function attachSoundtrackPanel({
       let latest;
       for (let index = 0; index < files.length; index++) {
         const file = files[index];
-        status.textContent = `Inspecting ${index + 1}/${files.length}: ${file.name || 'MP3 audio'}…`;
+        progress.update({
+          message: `Inspecting ${file.name || 'MP3 audio'}…`,
+          stage: 'verifying',
+          progress: { completed: index, total: files.length, unit: 'tracks' },
+        });
         const imported = await prepareMP3Import(
           file,
           {
@@ -916,10 +974,14 @@ export function attachSoundtrackPanel({
       dirty = true;
       render({ trackId: latest });
       fileInput.element.value = '';
-      status.textContent = `${files.length} MP3 file${files.length === 1 ? '' : 's'} verified and added to the draft. Edit details or audition, then Save all changes.`;
+      setStatus(
+        `${files.length} MP3 file${files.length === 1 ? '' : 's'} verified and added to the draft. Edit details or audition, then Save all changes.`,
+      );
     });
   }
   async function stopAudition(restore = false) {
+    auditionActivity?.clear();
+    auditionActivity = null;
     auditionToken++;
     audition.pause();
     audition.removeAttribute('src');
@@ -949,6 +1011,12 @@ export function attachSoundtrackPanel({
     restoreMusic = previous;
     player.pause();
     const token = ++auditionToken;
+    const lease = auditionFeedback.begin({
+      message: `Starting audition: ${track.title}…`,
+      stage: 'playing',
+      isCurrent: () => !disposed && dialog.open && token === auditionToken,
+    });
+    auditionActivity = lease;
     try {
       auditionURL = URLImpl.createObjectURL(asset.blob);
       audition.src = auditionURL;
@@ -958,10 +1026,13 @@ export function attachSoundtrackPanel({
       await stopping;
       if (token === auditionToken) {
         await onAudioEnabled();
-        status.textContent = `Auditioning ${track.title}. Finish audition returns to the previous music state.`;
+        lease.finish({
+          message: `Auditioning ${track.title}. Finish audition returns to the previous music state.`,
+        });
       }
     } catch (error) {
-      if (token === auditionToken) await stopAudition(true);
+      if (token !== auditionToken || disposed) return false;
+      await stopAudition(true);
       throw error;
     }
   }
@@ -1020,6 +1091,13 @@ export function attachSoundtrackPanel({
   function update(snapshot = player.snapshot()) {
     if (disposed) return;
     now.textContent = `${snapshot.track?.title ?? 'No track selected'}${snapshot.track?.artist ? ` · ${snapshot.track.artist}` : ''} · ${snapshot.status} · ${seconds(snapshot.positionSeconds)} / ${seconds(snapshot.durationSeconds)}${snapshot.pendingPlaylistId ? ' · playlist update queued' : ''}${snapshot.notice ? ` · ${snapshot.notice}` : ''}${snapshot.error ? ` · ${snapshot.error}` : ''}`;
+    if (snapshot.preparation) {
+      transportActivity ??= transportFeedback.begin(snapshot.preparation);
+      transportActivity.update(snapshot.preparation);
+    } else {
+      transportActivity?.finish();
+      transportActivity = null;
+    }
     seek.element.max = String(snapshot.durationSeconds || 0);
     if (doc.activeElement !== seek.element)
       seek.element.value = String(snapshot.positionSeconds || 0);
@@ -1072,11 +1150,13 @@ export function attachSoundtrackPanel({
       }
     } else {
       render();
-      status.textContent = preparedBackup
-        ? 'Your prepared saved-library backup is still available to download. Unsaved draft changes are excluded.'
-        : dirty
-          ? 'Your unsaved draft is still here.'
-          : 'Music library ready.';
+      setStatus(
+        preparedBackup
+          ? 'Your prepared saved-library backup is still available to download. Unsaved draft changes are excluded.'
+          : dirty
+            ? 'Your unsaved draft is still here.'
+            : 'Music library ready.',
+      );
     }
   }
   function close() {
@@ -1091,8 +1171,7 @@ export function attachSoundtrackPanel({
     event.preventDefault();
     if (busy) {
       controller?.abort();
-      status.textContent =
-        'Cancellation requested. Wait for the operation to finish before leaving.';
+      setStatus('Cancellation requested. Wait for the operation to finish before leaving.');
     } else close();
   });
   listen(dialog, 'keydown', (event) => {
@@ -1182,6 +1261,9 @@ export function attachSoundtrackPanel({
     if (disposed) return;
     controller?.abort();
     disposed = true;
+    feedback.dispose();
+    transportFeedback.dispose();
+    auditionFeedback.dispose();
     void stopAudition(false);
     for (const unbind of bindings) unbind();
     invalidateBackup();

@@ -32,6 +32,7 @@ export function createCouchInstalledChapters({
     generation = 0,
     pending = null,
     executingSignal = null,
+    executingStatus = null,
     snapshot = null,
     choices = new WeakMap(),
     binding = null,
@@ -91,6 +92,7 @@ export function createCouchInstalledChapters({
       image = null;
     try {
       check(signal);
+      executingStatus?.('decoding', 'Checking installed picture decoding…');
       if (typeof source !== 'string') {
         url = URLImpl.createObjectURL(source);
         source = url;
@@ -126,7 +128,12 @@ export function createCouchInstalledChapters({
     pending?.controller.abort();
     clearBinding();
   }
-  function operation(signal, work) {
+  function operation(
+    signal,
+    work,
+    onStatus = () => {},
+    message = 'Checking installed chapters and pictures…',
+  ) {
     check(signal);
     const ticket = ++generation,
       previous = pending,
@@ -137,6 +144,13 @@ export function createCouchInstalledChapters({
     if (signal?.aborted) abort();
     const item = { controller, promise: null };
     pending = item;
+    const report = (stage, message, status = 'preparing') => {
+      if (disposed || controller.signal.aborted || ticket !== generation) return;
+      try {
+        onStatus({ status, stage, message, progress: null });
+      } catch {}
+    };
+    report('verifying', message);
     item.promise = (async () => {
       // Join cancelled authority work before entering its single-operation lock.
       if (previous) await previous.promise.catch(() => {});
@@ -146,13 +160,26 @@ export function createCouchInstalledChapters({
       // caller. Bind that decoder to the work actually executing, never to a
       // newer queued operation that is still waiting for this one to unwind.
       executingSignal = controller.signal;
+      executingStatus = report;
       try {
-        return await work(controller.signal, () => {
-          check(controller.signal);
-          requireValue(ticket === generation, 'The selected couch chapter changed.');
-        });
+        const result = await work(
+          controller.signal,
+          () => {
+            check(controller.signal);
+            requireValue(ticket === generation, 'The selected couch chapter changed.');
+          },
+          report,
+        );
+        report('ready', 'Installed content is ready.', 'ready');
+        return result;
+      } catch (error) {
+        if (error.name !== 'AbortError') report('error', error.message, 'error');
+        throw error;
       } finally {
-        if (executingSignal === controller.signal) executingSignal = null;
+        if (executingSignal === controller.signal) {
+          executingSignal = null;
+          executingStatus = null;
+        }
       }
     })().finally(() => {
       signal?.removeEventListener('abort', abort);
@@ -160,49 +187,56 @@ export function createCouchInstalledChapters({
     });
     return item.promise;
   }
-  async function refresh({ signal } = {}) {
+  async function refresh({ signal, onStatus } = {}) {
     clearBinding();
     snapshot = null;
     choices = new WeakMap();
-    return operation(signal, async (s, current) => {
-      const next = await host.inspect({ signal: s });
-      current();
-      requireValue(
-        next.status === 'checked',
-        'Installed chapters need recovery in solo More worlds before racing.',
-      );
-      const rows = [];
-      for (const entry of next.executionCatalog.entries) {
-        if (!entry.sourcePackId || entry.difficulty !== 'standard') continue;
-        const external = next.index.chapters.some((item) => item.id === entry.sourcePackId);
-        for (const level of entry.campaign.levels) {
-          const visuals = {
-            ...entry.visualOverrides,
-            ...entry.levelVisuals.find((item) => item.levelId === level.id)?.visualOverrides,
-          };
-          const row = Object.freeze({
-            key: `installed/${entry.executionKey}/${level.id}`,
-            chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
-            level,
-            classes: entry.classRecipes,
-            themes: entry.themes,
-            defaultThemeId: level.themeId || entry.campaign.themeId,
-            track:
-              entry.music.find((track) => track.id === (level.musicId || entry.campaign.musicId)) ||
-              null,
-            visualOverrides: Object.freeze(
-              Object.fromEntries(Object.entries(visuals).filter(([role]) => role !== 'background')),
-            ),
-            external,
-          });
-          choices.set(row, { snapshot: next, entry, background: visuals.background, external });
-          rows.push(row);
+    return operation(
+      signal,
+      async (s, current) => {
+        const next = await host.inspect({ signal: s });
+        current();
+        requireValue(
+          next.status === 'checked',
+          'Installed chapters need recovery in solo More worlds before racing.',
+        );
+        const rows = [];
+        for (const entry of next.executionCatalog.entries) {
+          if (!entry.sourcePackId || entry.difficulty !== 'standard') continue;
+          const external = next.index.chapters.some((item) => item.id === entry.sourcePackId);
+          for (const level of entry.campaign.levels) {
+            const visuals = {
+              ...entry.visualOverrides,
+              ...entry.levelVisuals.find((item) => item.levelId === level.id)?.visualOverrides,
+            };
+            const row = Object.freeze({
+              key: `installed/${entry.executionKey}/${level.id}`,
+              chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
+              level,
+              classes: entry.classRecipes,
+              themes: entry.themes,
+              defaultThemeId: level.themeId || entry.campaign.themeId,
+              track:
+                entry.music.find(
+                  (track) => track.id === (level.musicId || entry.campaign.musicId),
+                ) || null,
+              visualOverrides: Object.freeze(
+                Object.fromEntries(
+                  Object.entries(visuals).filter(([role]) => role !== 'background'),
+                ),
+              ),
+              external,
+            });
+            choices.set(row, { snapshot: next, entry, background: visuals.background, external });
+            rows.push(row);
+          }
         }
-      }
-      current();
-      snapshot = next;
-      return Object.freeze(rows);
-    });
+        current();
+        snapshot = next;
+        return Object.freeze(rows);
+      },
+      onStatus,
+    );
   }
   function stateFor(row, themeId) {
     const state = choices.get(row);
@@ -229,68 +263,81 @@ export function createCouchInstalledChapters({
       { signal },
     );
   }
-  async function select(row, { themeId = row.defaultThemeId, raceId, signal } = {}) {
+  async function select(row, { themeId = row.defaultThemeId, raceId, signal, onStatus } = {}) {
     const state = stateFor(row, themeId);
     requireValue(Number.isSafeInteger(raceId) && raceId >= 0, 'Use a new in-memory race identity.');
     clearBinding();
-    return operation(signal, async (s, current) => {
-      let candidate = null,
-        proof = null;
-      try {
-        if (state.external) {
-          proof = await host.authoredPicture(
-            state.snapshot,
-            {
-              executionKey: state.entry.executionKey,
-              levelId: row.level.id,
-              levelRevision: row.level.revision,
-              themeId,
-            },
-            { signal: s },
-          );
+    return operation(
+      signal,
+      async (s, current, report) => {
+        let candidate = null,
+          proof = null;
+        try {
+          if (state.external) {
+            proof = await host.authoredPicture(
+              state.snapshot,
+              {
+                executionKey: state.entry.executionKey,
+                levelId: row.level.id,
+                levelRevision: row.level.revision,
+                themeId,
+              },
+              { signal: s },
+            );
+            current();
+            report('decoding', 'Opening the original picture for both boards…');
+            candidate = await acquirePresentationImage(proof, { signal: s, ImageClass, URLImpl });
+            requireValue(candidate?.image, 'The installed authored original is unavailable.');
+          } else if (state.background) {
+            const header = inspectImageDataUrl(state.background.dataUrl);
+            requireValue(header.valid, 'The installed embedded original is invalid.');
+            report('decoding', 'Opening the original picture for both boards…');
+            const image = await decode(state.background.dataUrl, s);
+            candidate = Object.freeze({
+              image,
+              fit: state.background.fit || 'cover',
+              sampling: 'nearest',
+              release: () => releaseImage(image),
+            });
+            requireValue(
+              image.naturalWidth === header.width && image.naturalHeight === header.height,
+              'The installed original decoded to different dimensions.',
+            );
+          }
           current();
-          candidate = await acquirePresentationImage(proof, { signal: s, ImageClass, URLImpl });
-          requireValue(candidate?.image, 'The installed authored original is unavailable.');
-        } else if (state.background) {
-          const header = inspectImageDataUrl(state.background.dataUrl);
-          requireValue(header.valid, 'The installed embedded original is invalid.');
-          const image = await decode(state.background.dataUrl, s);
-          candidate = Object.freeze({
-            image,
-            fit: state.background.fit || 'cover',
-            sampling: 'nearest',
-            release: () => releaseImage(image),
-          });
-          requireValue(
-            image.naturalWidth === header.width && image.naturalHeight === header.height,
-            'The installed original decoded to different dimensions.',
-          );
+          report('verifying', 'Confirming the selected chapter and picture…');
+          await verifyCurrent(state, proof, s);
+          current();
+          requireValue(state === stateFor(row, themeId), 'The selected installed owner changed.');
+          binding = candidate;
+          candidate = null;
+          selection = { row, themeId, raceId, state, proof };
+          return binding;
+        } finally {
+          candidate?.release();
         }
-        current();
-        await verifyCurrent(state, proof, s);
-        current();
-        requireValue(state === stateFor(row, themeId), 'The selected installed owner changed.');
-        binding = candidate;
-        candidate = null;
-        selection = { row, themeId, raceId, state, proof };
-        return binding;
-      } finally {
-        candidate?.release();
-      }
-    });
+      },
+      onStatus,
+      'Checking the selected chapter’s exact picture…',
+    );
   }
-  async function confirm(row, { raceId, signal } = {}) {
+  async function confirm(row, { raceId, signal, onStatus } = {}) {
     const selected = selection;
     requireValue(
       selected?.row === row && selected.raceId === raceId,
       'Load the selected original before starting.',
     );
-    return operation(signal, async (s, current) => {
-      await verifyCurrent(selected.state, selected.proof, s);
-      current();
-      requireValue(selection === selected, 'The prepared race changed.');
-      return binding;
-    });
+    return operation(
+      signal,
+      async (s, current) => {
+        await verifyCurrent(selected.state, selected.proof, s);
+        current();
+        requireValue(selection === selected, 'The prepared race changed.');
+        return binding;
+      },
+      onStatus,
+      'Confirming the prepared picture before starting…',
+    );
   }
   function dispose() {
     if (disposed) return;

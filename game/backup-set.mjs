@@ -38,13 +38,16 @@ export async function prepareBackupSet(
     Number.isSafeInteger(maxBytes) && maxBytes > 0 && maxBytes <= BACKUP_SET_MAX_BYTES,
     'Invalid backup-set byte budget.',
   );
+  onProgress('Reading saved original inventories…');
   const gameIdentity = source.gameIdentity(),
     savedAt = new Date().toISOString(),
     // One prefix for this observed snapshot, independent of browser rename rules.
     filenamePrefix = `RevealLine-backup-${savedAt.replace(/[^0-9TZ]/g, '')}-${crypto.randomUUID().replace(/-/g, '')}`,
     metadata = await source.readMetadata({ signal }),
-    generationIdentity = generations(metadata),
-    game = await source.readGame({ savedAt, signal });
+    generationIdentity = generations(metadata);
+  abort(signal);
+  onProgress('Reading game data and the saved flight…');
+  const game = await source.readGame({ savedAt, signal });
   abort(signal);
   const gameContents = canonicalJSON(game.contents);
   const assertGameCurrent = () => {
@@ -60,6 +63,9 @@ export async function prepareBackupSet(
     abort(signal);
     total += blob.size;
     required(total <= maxBytes, 'Backup set exceeds its bounded preparation budget.');
+    onProgress(
+      `Hashing the ${id === 'coverage' ? 'coverage report' : id === 'audio' ? 'music backup' : id === 'media' ? 'picture backup' : id === 'story' ? 'story backup' : 'game-data backup'}…`,
+    );
     const sha256 = await digest(blob, signal);
     assertGameCurrent();
     files.push(Object.freeze({ id, filename, blob, bytes: blob.size, sha256 }));
@@ -105,6 +111,7 @@ export async function prepareBackupSet(
   const detachedStories = story.document.stories
     .filter((row) => !story.document.originals.includes(row.source.sha256))
     .map((row) => ({ id: row.id, sha256: row.source.sha256 }));
+  onProgress('Hashing inventory metadata for the coverage report…');
   const coverage = Object.freeze({
     report: 'RevealLine backup set coverage',
     reportVersion: 1,
@@ -160,11 +167,13 @@ export async function prepareBackupSet(
   );
   // Re-read full game metadata with the SAME export timestamp. A newly generated
   // savedAt must not mask a changed replay or falsely invalidate an idle flight.
+  onProgress('Rechecking game data for a consistent backup set…');
   const finalGame = await source.readGame({ savedAt, signal });
   required(
     canonicalJSON(finalGame.contents) === gameContents,
     'Game data changed. Prepare the backup set again.',
   );
+  onProgress('Rechecking saved original inventories…');
   required(
     generations(await source.readMetadata({ signal })) === generationIdentity,
     'Originals changed. Prepare the backup set again.',

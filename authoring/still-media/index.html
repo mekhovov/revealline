@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>RevealLine — still picture workshop</title>
     <link rel="stylesheet" href="../../game/ui/still-media-panel.css" />
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
@@ -14,6 +15,11 @@
   <body class="still-media-host field-kit field-kit-support">
     <main>
       <h1 class="field-kit-display">Still picture workshop</h1>
+      <p id="still-host-status" role="status" class="operation-status" data-state="busy">
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Loading the picture workshop… No local media has been opened.</span>
+      </p>
+      <nav class="still-host-navigation"><a href="../../game/">Back to this edition’s game</a></nav>
       <p>
         Upload an original, choose an exact map and world, then save and preview its assignment.
       </p>
@@ -30,11 +36,9 @@
         Original MP3 and image bytes are retained; no downgrade or automatic deletion is provided.
       </p>
       <div class="still-host-actions">
-        <button id="still-host-open" type="button">Open local media</button>
+        <button id="still-host-open" type="button" disabled>Open local media</button>
         <button id="still-host-close" type="button">Close local connections</button>
-        <a href="../../game/">This edition’s game</a>
       </div>
-      <p id="still-host-status" role="status">No media database has been opened by this page.</p>
       <h2>Try Dawn Signal</h2>
       <p>
         An optional eight-second silent story for the base game’s First Signal mission in FPV Front.

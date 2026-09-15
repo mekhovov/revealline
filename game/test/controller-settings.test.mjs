@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import assert from 'node:assert/strict';
 import { attachControllerSettings } from '../ui/controller-settings.mjs';
 import {
@@ -7,8 +8,9 @@ import {
   validateControllerBindings,
 } from '../controller-bindings.mjs';
 
-class Element {
+class Element extends DOMElement {
   constructor(tag, owner) {
+    super(owner, tag);
     this.tagName = tag.toUpperCase();
     this.owner = owner;
     this.listeners = new Map();
@@ -24,14 +26,18 @@ class Element {
   set innerHTML(_value) {
     throw new Error('Use text-only DOM.');
   }
+  set options(_value) {}
+  removeAttribute(key) {
+    delete this.attributes[key];
+  }
   get options() {
     return this.tagName === 'SELECT' ? this.children : undefined;
   }
   append(...children) {
-    this.children.push(...children);
+    super.append(...children);
   }
   replaceChildren(...children) {
-    this.children = children;
+    super.replaceChildren(...children);
   }
   setAttribute(key, value) {
     this.attributes[key] = String(value);

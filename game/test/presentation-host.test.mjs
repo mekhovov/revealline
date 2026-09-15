@@ -146,7 +146,12 @@ test('loading is lazy, hash-pinned, and owns decoded assets until close without 
     e = environment(f);
   assert.equal(e.host.current(), null);
   assert.equal(e.requests.length, 0);
-  const snapshot = await e.host.load();
+  const statuses = [];
+  const loading = e.host.load({ onStatus: (status) => statuses.push(status) });
+  assert.equal(statuses[0].stage, 'reading');
+  const snapshot = await loading;
+  assert.ok(statuses.some((status) => status.stage === 'decoding'));
+  assert.equal(statuses.at(-1).status, 'ready');
   assert.equal(snapshot.image('player.scout.compact').image, e.decoded[0]);
   assert.equal(snapshot.image('scene.reveal.wide'), null);
   assert.equal(snapshot.picturePolicy, 'durable-defaults-for-new-attempts');
@@ -226,7 +231,9 @@ test('a failed replacement leaves the previous accepted snapshot and its assets 
   });
   const before = await e.host.load();
   fail = true;
-  await assert.rejects(e.host.load(), /Truncated/);
+  const failed = [];
+  await assert.rejects(e.host.load({ onStatus: (status) => failed.push(status) }), /Truncated/);
+  assert.equal(failed.at(-1).status, 'error');
   assert.equal(e.host.current(), before);
   assert.equal(e.decoded[0].closes, 0);
   e.host.close();
@@ -313,12 +320,17 @@ test('superseded late image decoding is disposed and cannot release the newer ac
       return fresh;
     },
   });
-  const first = e.host.load();
+  const oldStatus = [],
+    nextStatus = [];
+  const first = e.host.load({ onStatus: (status) => oldStatus.push(status) });
   while (!release) await tick();
   const rejected = assert.rejects(first, { name: 'AbortError' });
-  const second = await e.host.load();
+  const oldCount = oldStatus.length;
+  const second = await e.host.load({ onStatus: (status) => nextStatus.push(status) });
   release(stale);
   await rejected;
+  assert.equal(oldStatus.length, oldCount);
+  assert.equal(nextStatus.at(-1).status, 'ready');
   assert.equal(stale.closes, 1);
   assert.equal(fresh.closes, 0);
   assert.equal(e.host.current(), second);

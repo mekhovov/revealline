@@ -80,9 +80,14 @@ test('preparing a local MP3 keeps playback silent, then a gesture wake starts it
   const waking = h.player.wake();
   const playing = h.player.play();
   assert.equal(h.media.plays, 1);
+  assert.deepEqual(h.player.snapshot().preparation, {
+    stage: 'playing',
+    message: 'Starting music playback…',
+  });
   finish();
   assert.equal(await waking, true);
   assert.equal(await playing, true);
+  assert.equal(h.player.snapshot().preparation, null);
   h.player.dispose();
 });
 test('synth song boundary signals once at actual audio deadline and does not schedule the next song early', async () => {
@@ -474,7 +479,9 @@ test('a delayed media play promise cannot restore playing status after transport
   };
   const pending = h.player.play();
   await settleUntil(() => !!release);
+  assert.ok(h.player.snapshot().preparation);
   h.player.pause();
+  assert.equal(h.player.snapshot().preparation, null);
   release();
   assert.equal(await pending, false);
   assert.equal(h.player.snapshot().status, 'paused');
@@ -542,4 +549,57 @@ test('restoring inactive listening intent after an audition never starts audio u
   await h.player.resume();
   assert.equal(h.player.snapshot().playing, true);
   h.player.dispose();
+});
+
+test('silent audio preparation reports a delayed read and stale completion cannot reclaim its status', async (t) => {
+  let finish;
+  const waiting = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const h = setup({
+    library: {
+      ...original.library,
+      playlists: [{ ...original.library.playlists[0], trackIds: [original.track.id] }],
+      selection: { playlistId: 'qa.mix' },
+    },
+    readAsset: () => waiting,
+  });
+  t.after(() => h.player.dispose());
+  const preparing = h.player.prepare();
+  assert.deepEqual(h.player.snapshot().preparation, {
+    stage: 'reading',
+    message: 'Reading the selected audio original…',
+  });
+  assert.equal(h.media.plays, 0);
+  h.player.pause();
+  assert.equal(h.player.snapshot().preparation, null);
+  finish(original.blob);
+  assert.equal(await preparing, false);
+  assert.equal(h.player.snapshot().preparation, null);
+  assert.equal(h.player.snapshot().status, 'paused');
+  assert.equal(h.media.plays, 0);
+});
+
+test('earlier cached play settlement cannot clear a newer play preparation observer', async (t) => {
+  const h = setup({
+    library: {
+      ...original.library,
+      playlists: [{ ...original.library.playlists[0], trackIds: [original.track.id] }],
+      selection: { playlistId: 'qa.mix' },
+    },
+  });
+  t.after(() => h.player.dispose());
+  await h.player.prepare();
+  const pending = [];
+  h.media.play = () => new Promise((resolve) => pending.push(resolve));
+  const first = h.player.play(),
+    second = h.player.play();
+  assert.equal(pending.length, 2);
+  assert.equal(h.player.snapshot().preparation.stage, 'playing');
+  pending[0]();
+  await first;
+  assert.equal(h.player.snapshot().preparation.stage, 'playing');
+  pending[1]();
+  await second;
+  assert.equal(h.player.snapshot().preparation, null);
 });

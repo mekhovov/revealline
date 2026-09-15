@@ -1,3 +1,4 @@
+import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
 import {
@@ -22,360 +23,426 @@ const text = (tag, value, className = '') => {
   node.className = className;
   return node;
 };
-export async function drawAssetPreview(
-  surface,
-  slot,
-  asset,
-  resolved,
-  blobs,
-  { mode, background, geometry, motion = 'paused', state = 'default' },
-) {
+export async function drawAssetPreview(surface, slot, asset, resolved, blobs, settings) {
+  const {
+    mode,
+    background,
+    geometry,
+    motion = 'paused',
+    state = 'default',
+    statusTarget,
+    cancelButton,
+    label = 'Asset preview',
+    isCurrent: hostCurrent = () => true,
+  } = settings;
+  surface.previewCleanup?.();
   const marker = {};
   surface.previewMarker = marker;
-  surface.previewCleanup?.();
+  const isCurrent = () => surface.previewMarker === marker && hostCurrent();
+  const presenter = statusTarget ? createOperationStatus(statusTarget, { isCurrent }) : null;
+  const lease = presenter?.begin({ message: `${label}: preparing ${slot.label}…` });
+  const phase = (message, stage = 'preparing') =>
+    lease?.update({ message: `${label}: ${message}`, stage });
+  let failed = false;
+  surface.setAttribute('aria-busy', 'true');
   surface.replaceChildren();
   surface.dataset.background = background;
   const urls = [];
   const unapply = applyPresentation(surface, resolved);
   const cleanups = [];
-  const own = (cleanup) => (surface.previewMarker === marker ? cleanups.push(cleanup) : cleanup());
-  const options = { mode, motion, state, isCurrent: () => surface.previewMarker === marker };
-  surface.previewCleanup = () => {
+  const own = (cleanup) => (isCurrent() ? cleanups.push(cleanup) : cleanup());
+  const options = { mode, motion, state, isCurrent, onStatus: phase };
+  let cleaned = false;
+  surface.previewCleanup = (preserveStatus = false) => {
+    if (cleaned) {
+      if (!preserveStatus) presenter?.dispose();
+      return;
+    }
+    cleaned = true;
+    if (surface.previewMarker === marker) {
+      surface.previewMarker = null;
+      surface.setAttribute('aria-busy', 'false');
+    }
     urls.forEach(URL.revokeObjectURL);
     cleanups.forEach((cleanup) => cleanup());
     unapply();
+    if (!preserveStatus) presenter?.dispose();
   };
-  if (!asset) {
-    surface.append(text('p', 'No binding. Upload a candidate for this slot.'));
-    return;
+  if (cancelButton) {
+    cancelButton.hidden = false;
+    cancelButton.textContent = 'Stop waiting';
+    cancelButton.onclick = () => {
+      if (!isCurrent()) return;
+      lease?.finish({ message: `${label}: stopped waiting.`, state: 'detached' });
+      // A decoder or shared fixture fetch may finish, but cannot draw after this fence.
+      surface.previewCleanup(true);
+      cancelButton.textContent = 'Retry preview';
+      cancelButton.onclick = () =>
+        drawAssetPreview(surface, slot, asset, resolved, blobs, settings);
+    };
   }
-  for (const id of ['font.display', 'font.ui', 'font.numeric']) {
-    const fontAsset = resolved.assets[id];
-    if (fontAsset?.kind !== 'font') continue;
-    const family = `RLAsset-${fontAsset.file.sha256}`,
-      fontBlob = blobs.get(fontAsset.file.sha256);
-    if (!fontBlob) throw new Error(`Missing bytes for ${id}. Re-import the complete theme bundle.`);
-    if (!fonts.has(family))
-      fonts.set(
-        family,
-        new FontFace(
-          family,
-          await fontBlob.arrayBuffer(),
-          presentationFontDescriptors(resolved, fontAsset.file.sha256),
-        )
-          .load()
-          .then((font) => {
-            document.fonts.add(font);
-            return font;
-          }),
-      );
-    await fonts.get(family);
-    if (surface.previewMarker !== marker) return;
-  }
-  const blob = asset.file && blobs.get(asset.file.sha256);
-  if (asset.file && !blob) {
-    surface.append(text('p', 'File bytes are unavailable. Re-import the complete bundle.'));
-    return;
-  }
-  if (asset.kind === 'audio') {
-    const audio = document.createElement('audio');
-    const url = URL.createObjectURL(blob);
-    urls.push(url);
-    audio.src = url;
-    audio.controls = true;
-    audio.preload = 'metadata';
-    surface.append(audio);
-    return;
-  }
-  if (asset.kind === 'font') {
-    const family = `RLAsset-${asset.file.sha256}`;
-    if (!fonts.has(family))
-      fonts.set(
-        family,
-        new FontFace(
-          family,
-          await blob.arrayBuffer(),
-          presentationFontDescriptors(resolved, asset.file.sha256),
-        )
-          .load()
-          .then((font) => {
-            document.fonts.add(font);
-            return font;
-          }),
-      );
-    await fonts.get(family);
-    if (surface.previewMarker !== marker) return;
-    const sample = text(
-      'div',
-      'Лінія зв’язку · ПОЛІТ\nҐґ Єє Іі Її Йй Щщ\nEnglish · 0123456789 ₴',
-      'font-file-sample',
-    );
-    sample.style.fontFamily = family;
-    surface.append(sample);
-    return;
-  }
-  const palette = canvasPresentation(resolved).palette;
-  if (asset.kind === 'recipe' && slot.group === 'pictures') {
-    const loader = createCurrentArtPreview();
-    own(() => loader.close());
-    surface.append(text('p', 'Loading exact current picture…'));
-    try {
-      const source = await loader.load(slot.id);
-      if (surface.previewMarker !== marker) return;
-      surface.replaceChildren();
-      if (mode === 'context') {
-        await boardContextPreview(
-          surface,
-          slot,
-          asset,
-          resolved,
-          blobs,
-          { ...options, sourcePicture: source },
-          own,
-        );
-      } else {
-        const canvas = document.createElement('canvas');
-        canvas.setAttribute('role', 'img');
-        canvas.setAttribute(
-          'aria-label',
-          `${source.descriptor.label} — exact current source preview`,
-        );
-        canvas.width = source.image.width;
-        canvas.height = source.image.height;
-        const ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(source.image, 0, 0);
-        if (mode === 'alpha') {
-          const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          for (let at = 0; at < pixels.data.length; at += 4) {
-            const alpha = pixels.data[at + 3];
-            pixels.data[at] = alpha;
-            pixels.data[at + 1] = alpha;
-            pixels.data[at + 2] = alpha;
-            pixels.data[at + 3] = 255;
-          }
-          ctx.putImageData(pixels, 0, 0);
-        }
-        if (mode === 'native') {
-          canvas.style.width = `${canvas.width}px`;
-          canvas.style.maxWidth = 'none';
-        }
-        surface.append(canvas);
-      }
-      if (surface.previewMarker === marker)
-        surface.append(
-          text(
-            'small',
-            `${source.descriptor.label} · ${source.origin.label} · ${source.fit} · source stage`,
-            'bounded-label',
-          ),
-        );
-    } catch (error) {
-      if (surface.previewMarker !== marker) return;
-      surface.replaceChildren(text('p', error.message));
-      const retry = text('button', 'Retry exact source');
-      retry.type = 'button';
-      retry.onclick = () =>
-        drawAssetPreview(surface, slot, asset, resolved, blobs, {
-          mode,
-          background,
-          geometry,
-          motion,
-          state,
-        });
-      surface.append(retry);
-    }
-    return;
-  }
-
-  if (
-    mode === 'context' &&
-    ['players', 'motion', 'enemies', 'terrain', 'pickups', 'effects', 'pictures'].includes(
-      slot.group,
-    )
-  ) {
-    if (slot.group === 'pictures') {
-      const controller = new AbortController();
-      own(() => controller.abort());
-      try {
-        options.pictureOwner = await pictureOwnerContext(slot.id, { signal: controller.signal });
-      } catch (error) {
-        if (surface.previewMarker === marker) surface.replaceChildren(text('p', error.message));
-        return;
-      }
-      if (surface.previewMarker !== marker) return;
-    }
-    await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
-    return;
-  }
-  if (asset.kind === 'recipe' && slot.id.startsWith('player.')) {
-    await playerRecipePreview(surface, slot, resolved, blobs, options, own);
-    return;
-  }
-  if (asset.kind === 'recipe' && slot.group === 'audio') {
-    audioRecipePreview(surface, slot, own);
-    return;
-  }
-  if (asset.kind === 'recipe' && slot.group === 'effects') {
-    effectRecipePreview(surface, slot, resolved, options, own);
-    return;
-  }
-  if (asset.kind === 'recipe' && slot.id === 'terrain.wall') {
-    await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
-    return;
-  }
-  if (
-    mode === 'context' &&
-    (['screens', 'ui', 'icons'].includes(slot.group) || /^(hud|reward|control)\./.test(slot.id))
-  ) {
-    let url = null;
-    if (blob) {
-      const bitmap = await createImageBitmap(blob),
-        frame = asset.geometry.frame,
-        canvas = document.createElement('canvas');
-      canvas.width = frame.width;
-      canvas.height = frame.height;
-      canvas
-        .getContext('2d')
-        .drawImage(
-          bitmap,
-          frame.x,
-          frame.y,
-          frame.width,
-          frame.height,
-          0,
-          0,
-          frame.width,
-          frame.height,
-        );
-      bitmap.close();
-      url = canvas.toDataURL('image/png');
-      if (surface.previewMarker !== marker) return;
-    }
-    componentPreview(
-      surface,
-      slot,
-      { ...options, assetGeometry: asset.geometry, tokens: resolved.tokens },
-      url,
-    );
-    return;
-  }
-  if (asset.kind === 'image') {
-    const bitmap = await createImageBitmap(blob);
-    if (surface.previewMarker !== marker) {
-      bitmap.close();
+  try {
+    if (!asset) {
+      surface.append(text('p', 'No binding. Upload a candidate for this slot.'));
       return;
     }
-    const frame = asset.geometry.frame,
-      canvas = document.createElement('canvas');
-    const contextual = mode === 'context';
-    canvas.width = contextual ? 320 : frame.width;
-    canvas.height = contextual ? 200 : frame.height;
-    canvas.setAttribute('aria-label', `${slot.label} ${mode} preview`);
-    const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = slot.sampling !== 'nearest';
-    const scale = contextual ? Math.min(1, 140 / frame.width, 120 / frame.height) : 1;
-    const x = contextual ? (320 - frame.width * scale) / 2 : 0,
-      y = contextual ? (200 - frame.height * scale) / 2 : 0;
-    if (contextual) field(ctx, palette);
-    ctx.drawImage(
-      bitmap,
-      frame.x,
-      frame.y,
-      frame.width,
-      frame.height,
-      x,
-      y,
-      frame.width * scale,
-      frame.height * scale,
-    );
-    bitmap.close();
-    if (mode === 'alpha') {
-      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      for (let at = 0; at < pixels.data.length; at += 4) {
-        const a = pixels.data[at + 3];
-        pixels.data[at] = a;
-        pixels.data[at + 1] = a;
-        pixels.data[at + 2] = a;
-        pixels.data[at + 3] = 255;
-      }
-      ctx.putImageData(pixels, 0, 0);
+    for (const id of ['font.display', 'font.ui', 'font.numeric']) {
+      const fontAsset = resolved.assets[id];
+      if (fontAsset?.kind !== 'font') continue;
+      const fontBlob = blobs.get(fontAsset.file.sha256);
+      if (!fontBlob)
+        throw new Error(`Missing bytes for ${id}. Re-import the complete theme bundle.`);
+      phase(`reading and decoding ${id}…`, 'decoding');
+      await prepareFont(fontAsset, fontBlob, resolved);
+      if (!isCurrent()) return;
     }
-    if (geometry) drawGeometry(ctx, asset.geometry, x, y, scale);
-    if (!contextual) {
-      const displayScale =
-        mode === 'native'
-          ? 1
-          : Math.max(1, Math.min(8, Math.floor(260 / Math.max(frame.width, frame.height))));
-      canvas.style.width = `${frame.width * displayScale}px`;
-      canvas.style.maxWidth = mode === 'native' ? 'none' : '100%';
+    const blob = asset.file && blobs.get(asset.file.sha256);
+    if (asset.file && !blob) {
+      throw new Error('File bytes are unavailable. Re-import the complete bundle.');
     }
-    surface.append(canvas);
-    return;
-  }
-  if (slot.group === 'fonts') {
-    const sample = text('div', '', 'recipe-sample');
-    sample.append(
-      text('p', 'Flight ready · Політ готовий', `font-${slot.id.split('.')[1]}`),
-      text('p', 'Ґґ Єє Іі Її · 0123456789 ₴'),
-      text('small', 'Bundled production font / source recipe', 'bounded-label'),
-    );
-    surface.append(sample);
-    return;
-  }
-  if (
-    slot.id.startsWith('enemy.') ||
-    slot.id.startsWith('terrain.') ||
-    slot.id.startsWith('pickup.')
-  ) {
-    const canvas = document.createElement('canvas');
-    canvas.width = 320;
-    canvas.height = 200;
-    const ctx = canvas.getContext('2d');
-    field(ctx, palette);
-    if (slot.id.startsWith('enemy.')) {
-      const type = slot.id.slice(6),
-        frames = createActorPresentation().sample(
-          [{ id: 'preview', type, x: 10, y: 6, vx: 0, vy: 0 }],
-          { paused: true, reduced: true, themeId: 'fpv' },
-        );
-      drawPresentedActor(ctx, frames.get('preview'), palette);
+    if (asset.kind === 'audio') {
+      phase('loading audio metadata…', 'decoding');
+      const audio = document.createElement('audio');
+      const url = URL.createObjectURL(blob);
+      urls.push(url);
+      audio.controls = true;
+      audio.preload = 'metadata';
+      await new Promise((resolve, reject) => {
+        const clear = () => {
+          audio.removeEventListener('loadedmetadata', ready);
+          audio.removeEventListener('error', error);
+        };
+        const ready = () => {
+          clear();
+          resolve();
+        };
+        const error = () => {
+          clear();
+          reject(new Error('Audio metadata could not be decoded.'));
+        };
+        own(() => {
+          clear();
+          audio.pause();
+          audio.removeAttribute('src');
+          audio.load();
+          reject(new DOMException('Audio preview closed.', 'AbortError'));
+        });
+        audio.addEventListener('loadedmetadata', ready);
+        audio.addEventListener('error', error);
+        audio.src = url;
+        surface.append(audio);
+        if (audio.readyState >= 1) ready();
+      });
+      return;
     }
-    if (slot.id.startsWith('terrain.')) {
-      const kind = slot.id.endsWith('slow') ? 'slow' : 'lethal';
-      drawClassicTerrain(
-        ctx,
-        {
-          terrain: Array.from({ length: 8 }, (_, i) => ({
-            x: 7 + (i % 4),
-            y: 5 + Math.floor(i / 4),
-            kind,
-          })),
-        },
-        palette,
+    if (asset.kind === 'font') {
+      const family = `RLAsset-${asset.file.sha256}`;
+      phase('reading and decoding the font…', 'decoding');
+      await prepareFont(asset, blob, resolved);
+      if (!isCurrent()) return;
+      const sample = text(
+        'div',
+        'Лінія зв’язку · ПОЛІТ\nҐґ Єє Іі Її Йй Щщ\nEnglish · 0123456789 ₴',
+        'font-file-sample',
       );
+      sample.style.fontFamily = family;
+      surface.append(sample);
+      return;
     }
-    if (slot.id.startsWith('pickup.')) {
-      ctx.translate(160, 100);
-      ctx.scale(3, 3);
-      ctx.fillStyle = palette.accent;
-      const kind = pickupKinds[slot.id.slice(7)];
-      if (kind) drawPickupIcon(ctx, kind);
-      else {
-        ctx.strokeStyle = palette.accent;
-        ctx.lineWidth = 1;
-        ctx.strokeRect(-6, -6, 12, 12);
-        ctx.fillRect(-1, -4, 2, 8);
-        ctx.fillRect(-4, -1, 8, 2);
+    const palette = canvasPresentation(resolved).palette;
+    if (asset.kind === 'recipe' && slot.group === 'pictures') {
+      const loader = createCurrentArtPreview();
+      own(() => loader.close());
+      phase('loading the exact current picture…', 'downloading');
+      try {
+        const source = await loader.load(slot.id);
+        if (!isCurrent()) return;
+        surface.replaceChildren();
+        if (mode === 'context') {
+          phase('preparing the exact picture scene…');
+          await boardContextPreview(
+            surface,
+            slot,
+            asset,
+            resolved,
+            blobs,
+            { ...options, sourcePicture: source },
+            own,
+          );
+        } else {
+          const canvas = document.createElement('canvas');
+          canvas.setAttribute('role', 'img');
+          canvas.setAttribute(
+            'aria-label',
+            `${source.descriptor.label} — exact current source preview`,
+          );
+          canvas.width = source.image.width;
+          canvas.height = source.image.height;
+          const ctx = canvas.getContext('2d');
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(source.image, 0, 0);
+          if (mode === 'alpha') {
+            const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            for (let at = 0; at < pixels.data.length; at += 4) {
+              const alpha = pixels.data[at + 3];
+              pixels.data[at] = alpha;
+              pixels.data[at + 1] = alpha;
+              pixels.data[at + 2] = alpha;
+              pixels.data[at + 3] = 255;
+            }
+            ctx.putImageData(pixels, 0, 0);
+          }
+          if (mode === 'native') {
+            canvas.style.width = `${canvas.width}px`;
+            canvas.style.maxWidth = 'none';
+          }
+          surface.append(canvas);
+        }
+        if (isCurrent())
+          surface.append(
+            text(
+              'small',
+              `${source.descriptor.label} · ${source.origin.label} · ${source.fit} · source stage`,
+              'bounded-label',
+            ),
+          );
+      } catch (error) {
+        if (!isCurrent()) return;
+        throw error;
+      }
+      return;
+    }
+
+    if (
+      mode === 'context' &&
+      ['players', 'motion', 'enemies', 'terrain', 'pickups', 'effects', 'pictures'].includes(
+        slot.group,
+      )
+    ) {
+      if (slot.group === 'pictures') {
+        const controller = new AbortController();
+        own(() => controller.abort());
+        try {
+          phase('loading exact picture owner metadata…', 'downloading');
+          options.pictureOwner = await pictureOwnerContext(slot.id, { signal: controller.signal });
+        } catch (error) {
+          if (!isCurrent()) return;
+          throw error;
+        }
+        if (!isCurrent()) return;
+      }
+      await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
+      return;
+    }
+    if (asset.kind === 'recipe' && slot.id.startsWith('player.')) {
+      await playerRecipePreview(surface, slot, resolved, blobs, options, own);
+      return;
+    }
+    if (asset.kind === 'recipe' && slot.group === 'audio') {
+      audioRecipePreview(surface, slot, own);
+      return;
+    }
+    if (asset.kind === 'recipe' && slot.group === 'effects') {
+      effectRecipePreview(surface, slot, resolved, options, own);
+      return;
+    }
+    if (asset.kind === 'recipe' && slot.id === 'terrain.wall') {
+      await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
+      return;
+    }
+    if (
+      mode === 'context' &&
+      (['screens', 'ui', 'icons'].includes(slot.group) || /^(hud|reward|control)\./.test(slot.id))
+    ) {
+      let url = null;
+      if (blob) {
+        phase('decoding the component artwork…', 'decoding');
+        const bitmap = await createImageBitmap(blob),
+          frame = asset.geometry.frame,
+          canvas = document.createElement('canvas');
+        canvas.width = frame.width;
+        canvas.height = frame.height;
+        canvas
+          .getContext('2d')
+          .drawImage(
+            bitmap,
+            frame.x,
+            frame.y,
+            frame.width,
+            frame.height,
+            0,
+            0,
+            frame.width,
+            frame.height,
+          );
+        bitmap.close();
+        url = canvas.toDataURL('image/png');
+        if (!isCurrent()) return;
+      }
+      componentPreview(
+        surface,
+        slot,
+        { ...options, assetGeometry: asset.geometry, tokens: resolved.tokens },
+        url,
+      );
+      return;
+    }
+    if (asset.kind === 'image') {
+      phase('decoding the asset image…', 'decoding');
+      const bitmap = await createImageBitmap(blob);
+      if (!isCurrent()) {
+        bitmap.close();
+        return;
+      }
+      const frame = asset.geometry.frame,
+        canvas = document.createElement('canvas');
+      const contextual = mode === 'context';
+      canvas.width = contextual ? 320 : frame.width;
+      canvas.height = contextual ? 200 : frame.height;
+      canvas.setAttribute('aria-label', `${slot.label} ${mode} preview`);
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = slot.sampling !== 'nearest';
+      const scale = contextual ? Math.min(1, 140 / frame.width, 120 / frame.height) : 1;
+      const x = contextual ? (320 - frame.width * scale) / 2 : 0,
+        y = contextual ? (200 - frame.height * scale) / 2 : 0;
+      if (contextual) field(ctx, palette);
+      ctx.drawImage(
+        bitmap,
+        frame.x,
+        frame.y,
+        frame.width,
+        frame.height,
+        x,
+        y,
+        frame.width * scale,
+        frame.height * scale,
+      );
+      bitmap.close();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for (let at = 0; at < pixels.data.length; at += 4) {
+          const a = pixels.data[at + 3];
+          pixels.data[at] = a;
+          pixels.data[at + 1] = a;
+          pixels.data[at + 2] = a;
+          pixels.data[at + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      if (geometry) drawGeometry(ctx, asset.geometry, x, y, scale);
+      if (!contextual) {
+        const displayScale =
+          mode === 'native'
+            ? 1
+            : Math.max(1, Math.min(8, Math.floor(260 / Math.max(frame.width, frame.height))));
+        canvas.style.width = `${frame.width * displayScale}px`;
+        canvas.style.maxWidth = mode === 'native' ? 'none' : '100%';
+      }
+      surface.append(canvas);
+      return;
+    }
+    if (slot.group === 'fonts') {
+      const sample = text('div', '', 'recipe-sample');
+      sample.append(
+        text('p', 'Flight ready · Політ готовий', `font-${slot.id.split('.')[1]}`),
+        text('p', 'Ґґ Єє Іі Її · 0123456789 ₴'),
+        text('small', 'Bundled production font / source recipe', 'bounded-label'),
+      );
+      surface.append(sample);
+      return;
+    }
+    if (
+      slot.id.startsWith('enemy.') ||
+      slot.id.startsWith('terrain.') ||
+      slot.id.startsWith('pickup.')
+    ) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 320;
+      canvas.height = 200;
+      const ctx = canvas.getContext('2d');
+      field(ctx, palette);
+      if (slot.id.startsWith('enemy.')) {
+        const type = slot.id.slice(6),
+          frames = createActorPresentation().sample(
+            [{ id: 'preview', type, x: 10, y: 6, vx: 0, vy: 0 }],
+            { paused: true, reduced: true, themeId: 'fpv' },
+          );
+        drawPresentedActor(ctx, frames.get('preview'), palette);
+      }
+      if (slot.id.startsWith('terrain.')) {
+        const kind = slot.id.endsWith('slow') ? 'slow' : 'lethal';
+        drawClassicTerrain(
+          ctx,
+          {
+            terrain: Array.from({ length: 8 }, (_, i) => ({
+              x: 7 + (i % 4),
+              y: 5 + Math.floor(i / 4),
+              kind,
+            })),
+          },
+          palette,
+        );
+      }
+      if (slot.id.startsWith('pickup.')) {
+        ctx.translate(160, 100);
+        ctx.scale(3, 3);
+        ctx.fillStyle = palette.accent;
+        const kind = pickupKinds[slot.id.slice(7)];
+        if (kind) drawPickupIcon(ctx, kind);
+        else {
+          ctx.strokeStyle = palette.accent;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(-6, -6, 12, 12);
+          ctx.fillRect(-1, -4, 2, 8);
+          ctx.fillRect(-4, -1, 8, 2);
+        }
+      }
+      surface.append(
+        canvas,
+        text('small', 'Bounded sample · actual game drawing helper', 'bounded-label'),
+      );
+      return;
+    }
+    componentPreview(surface, slot, options);
+  } catch (error) {
+    if (!isCurrent()) return;
+    failed = true;
+    lease?.finish({ message: `${label}: ${error.message || error}`, state: 'error' });
+    surface.replaceChildren(text('p', error.message || String(error)));
+    if (cancelButton) {
+      cancelButton.textContent = 'Retry preview';
+      cancelButton.onclick = () =>
+        drawAssetPreview(surface, slot, asset, resolved, blobs, settings);
+    }
+  } finally {
+    if (isCurrent()) {
+      surface.setAttribute('aria-busy', 'false');
+      if (!failed) {
+        lease?.finish({ message: `${label}: ${asset ? 'ready.' : 'no asset bound.'}` });
+        if (cancelButton) cancelButton.hidden = true;
       }
     }
-    surface.append(
-      canvas,
-      text('small', 'Bounded sample · actual game drawing helper', 'bounded-label'),
-    );
-    return;
   }
-  componentPreview(surface, slot, options);
+}
+function prepareFont(asset, blob, resolved) {
+  const family = `RLAsset-${asset.file.sha256}`;
+  if (!fonts.has(family)) {
+    const pending = (async () => {
+      const face = new FontFace(
+        family,
+        await blob.arrayBuffer(),
+        presentationFontDescriptors(resolved, asset.file.sha256),
+      );
+      const font = await face.load();
+      document.fonts.add(font);
+      return font;
+    })().catch((error) => {
+      if (fonts.get(family) === pending) fonts.delete(family);
+      throw error;
+    });
+    fonts.set(family, pending);
+  }
+  return fonts.get(family);
 }
 function field(ctx, palette) {
   ctx.fillStyle = palette.field;

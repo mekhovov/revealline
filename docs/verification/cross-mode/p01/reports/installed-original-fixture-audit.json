@@ -1,0 +1,549 @@
+{
+  "format": "revealline-test-initial-readiness-audit.v1",
+  "sourceRevision": "c5bf0bd0f4ae82aac370adde0bff5d12d9e63501",
+  "baseRevision": "02364d4ad8832a4693e184f6d36c46dfabd58ef6",
+  "scope": "Static pinned-source call-site inventory plus already completed R3 logs; no test execution, network calls, source edits, or new runtime findings. Root concurrent uncommitted corrections are excluded.",
+  "helperDefault": {
+    "path": "game/test/helpers/solo-dom.mjs",
+    "line": 168,
+    "timeoutMs": 5000,
+    "pictureWaitLines": [433, 437],
+    "titleScreenStillWaits": true,
+    "unchangedTimeoutContractSinceBase": true,
+    "p01Diff": "Fake DOM text semantics only; no timeout changes."
+  },
+  "testFileCount": 53,
+  "allCallsiteFiles": [
+    {
+      "path": "game/test/backup-set-host.test.mjs",
+      "sha256": "1a1f35ffc9237ef64a00657802ec1ee1b132df0316b542320518df45dde7f84d",
+      "changedSinceBase": false,
+      "callLines": [161, 208, 288],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/boot-host.test.mjs",
+      "sha256": "14d5c8d6b8814b372d0952500966da24471311f6933e7e0442aa643b5ff3eddc",
+      "changedSinceBase": false,
+      "callLines": [9, 33],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/chapter-download-host.test.mjs",
+      "sha256": "9fc45f773a8857761e07ddb2f932c8e4d487c315d6b5cc99839269b4090e336b",
+      "changedSinceBase": true,
+      "callLines": [48, 109, 148, 181, 219],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/classic-host.test.mjs",
+      "sha256": "e92cb591b64771db785fe1e1dd72f69bddbc0f01dbeddc70c27fa4a1fc72178c",
+      "changedSinceBase": false,
+      "callLines": [14],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/collection-context-host.test.mjs",
+      "sha256": "09e8e1ea7b532438b70c5e7a460eedc7be4d25a4fbb6c2bc947a23344cf58ab3",
+      "changedSinceBase": false,
+      "callLines": [118],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/continuous-host.test.mjs",
+      "sha256": "275649ee157bce4f800348bb2fc9cab0bf3bf500614e5fcc646634a823264746",
+      "changedSinceBase": false,
+      "callLines": [32, 105, 124, 152],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/countercurrent-chapter-host.test.mjs",
+      "sha256": "f144b7ba2cc6a4bfa3343adc1127da402fb1d9f3081e0e3a9ff9d84c730d0b06",
+      "changedSinceBase": false,
+      "callLines": [168],
+      "explicitReadinessLines": [
+        {
+          "line": 169,
+          "text": "initialReadyTimeoutMs: INVENTORY_TIMEOUT_MS,"
+        }
+      ]
+    },
+    {
+      "path": "game/test/course-pause-host.test.mjs",
+      "sha256": "be80233e913f17a244f3cbd8793bd4d8a6d9876f399f4ec47a05f6c92cdb92c6",
+      "changedSinceBase": false,
+      "callLines": [18],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/creator-tools-scope-host.test.mjs",
+      "sha256": "4a0321922ecc6a22a21d99af4cf66de350dd0c91bbcf05f86dedfdeb1516e739",
+      "changedSinceBase": false,
+      "callLines": [18],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/defeat-presentation-host.test.mjs",
+      "sha256": "0344d3e63534ac3159bf96ac6ee7ce1bf4225ee6c65775047f8d0c85337c19ff",
+      "changedSinceBase": false,
+      "callLines": [66],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/device-controls-host.test.mjs",
+      "sha256": "ff666784208a753dfbbfd934340b1480971cf87cbbf1fd99bf558d4de6bb7e6b",
+      "changedSinceBase": false,
+      "callLines": [92, 110, 156, 184, 227, 292, 418, 490, 500, 520, 550, 577, 593],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/difficulty-host.test.mjs",
+      "sha256": "0e3a95ec72d4bb6f63c79125ac7ea95286d0246c9b586280e0fb2665d95e1b2d",
+      "changedSinceBase": false,
+      "callLines": [124, 181, 226, 263, 293, 367, 478],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/enemy-guide-host.test.mjs",
+      "sha256": "9c9a5f3ef58b1de4cce879a8a027332abdf741b63e57a7acecffdc141b46df2c",
+      "changedSinceBase": false,
+      "callLines": [146, 243],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/enemy-guide-panel.test.mjs",
+      "sha256": "0996e7009406a33ef79d1fa01c2f76497c5b6ce1d7182655a8a3220fc4c9b2eb",
+      "changedSinceBase": false,
+      "callLines": [579],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/enemy-workshop-return.test.mjs",
+      "sha256": "5f44f166339c467b9cb78b5b7c82cd5156485594fddab7f49119980d6805b316",
+      "changedSinceBase": false,
+      "callLines": [169, 225],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/equipment-help-host.test.mjs",
+      "sha256": "1bcacbf46957d82cb113bd56de688740e0471af26ac9ec377bcfd7001e0a00fb",
+      "changedSinceBase": false,
+      "callLines": [15, 68],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/external-backup-host.test.mjs",
+      "sha256": "b9867272edea804a11be5b97c582a3b36aaee91530cfd0ee538e55e875146227",
+      "changedSinceBase": true,
+      "callLines": [141],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/external-chapter-app.test.mjs",
+      "sha256": "d22bbac8638d36326a3908ebc0335252ba7363ed497f9fa9d9b2feb96db170e3",
+      "changedSinceBase": true,
+      "callLines": [230],
+      "explicitReadinessLines": [
+        {
+          "line": 416,
+          "text": "options: { ...f.options, initialReadyTimeoutMs: 30000 },"
+        }
+      ]
+    },
+    {
+      "path": "game/test/featured-chapter.test.mjs",
+      "sha256": "8ff6422ea0ac934fd0a0596e5562ca5d74ad72c14a4c18b7f5fd93d7ad8513b5",
+      "changedSinceBase": false,
+      "callLines": [73, 136],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "sha256": "c2c296e264c1ddc413752c8dd5af9b276477631590e12361572826eede80dd90",
+      "changedSinceBase": false,
+      "callLines": [13, 52, 82, 114, 139, 210, 231],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/field-kit-surfaces.test.mjs",
+      "sha256": "f82d497068f46221919182b01f1f5aee7b73ac875120902654d8414430e6f8e9",
+      "changedSinceBase": false,
+      "callLines": [40, 70, 84, 98],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/first-light-playthrough.test.mjs",
+      "sha256": "ec290f45613b36147a9ff2ff17fdec3de11862da201631245607408bc1a1c696",
+      "changedSinceBase": false,
+      "callLines": [46],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "sha256": "a47e489f748df01200b9300c80df9fd289505abea5e3552157919059785707c4",
+      "changedSinceBase": true,
+      "callLines": [109, 304],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/fpv-role-host.test.mjs",
+      "sha256": "f9467c5ea6f74a1c71e13237663eb15f073b0846d28e9b3306bba134637bdffb",
+      "changedSinceBase": false,
+      "callLines": [54, 89, 113, 137, 155, 169],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/fracture-chapter-host.test.mjs",
+      "sha256": "e03a5a1376691a0afe18dd73467b858864299b43a2d6cb5383c71713e5f75ea3",
+      "changedSinceBase": false,
+      "callLines": [170],
+      "explicitReadinessLines": [
+        {
+          "line": 171,
+          "text": "initialReadyTimeoutMs: INVENTORY_TIMEOUT_MS,"
+        }
+      ]
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "sha256": "73e2569016955531d6d5673b0766fcacf516d3885ab73e0e5bd02677bc84fc4d",
+      "changedSinceBase": true,
+      "callLines": [149],
+      "explicitReadinessLines": [
+        {
+          "line": 168,
+          "text": "initialReadyTimeoutMs = 5000,"
+        },
+        {
+          "line": 173,
+          "text": "Number.isInteger(initialReadyTimeoutMs) &&"
+        },
+        {
+          "line": 174,
+          "text": "initialReadyTimeoutMs > 0 &&"
+        },
+        {
+          "line": 175,
+          "text": "initialReadyTimeoutMs <= 180000,"
+        },
+        {
+          "line": 410,
+          "text": "await waitFor(predicate, { message: phase, timeoutMs: initialReadyTimeoutMs });"
+        },
+        {
+          "line": 414,
+          "text": "timeoutMs: initialReadyTimeoutMs,"
+        }
+      ]
+    },
+    {
+      "path": "game/test/host-presentation-size.test.mjs",
+      "sha256": "b88bfd08a9104968ca9a58b7c3bbee2cc9eefe076ba2fd00f604e3f8fa11c0d2",
+      "changedSinceBase": false,
+      "callLines": [98],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/hud-status-cues.test.mjs",
+      "sha256": "501e0e8263895d1eaf4c81f51c8660e34b0140ce78955ade318bdb8a7be2e7e1",
+      "changedSinceBase": false,
+      "callLines": [30, 127],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/main-menu-collection-host.test.mjs",
+      "sha256": "f16860d7be42a621fba7a8c283afbf168e65814c3aadd01391f3f97288f34a88",
+      "changedSinceBase": false,
+      "callLines": [140],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/mission-picker-older.test.mjs",
+      "sha256": "b680aa4d85ac4b5839c585ed834dca6c647790e36d0e4d63b1ebe7d6d2c45249",
+      "changedSinceBase": false,
+      "callLines": [117, 149, 231, 267, 340, 461, 471],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/mission-picker.test.mjs",
+      "sha256": "c5e6b63cb9847867e182643a3f9ba611c2851b37d43108ce8895cdb5e84d9ca4",
+      "changedSinceBase": false,
+      "callLines": [12, 20, 203],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "sha256": "1a0cefbe9243c4e8d0ab45a267115f1176ebbde89ebadae76a1df9c22bfb017c",
+      "changedSinceBase": false,
+      "callLines": [164, 250, 280, 318, 357, 429, 457, 481, 530, 616, 700, 718],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/nonmodal-header-navigation.test.mjs",
+      "sha256": "42b0ecf7d63f174ec3e990fe35938e7447fb35b818b4e976240081fd5a03e118",
+      "changedSinceBase": false,
+      "callLines": [88],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/optional-chapter-descriptions.test.mjs",
+      "sha256": "2e985705f0eda0c1ff02fffd1f17235d3ce5017b0bf3071774c7e1481c693499",
+      "changedSinceBase": true,
+      "callLines": [80, 156],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/optional-chapters-host.test.mjs",
+      "sha256": "48f4252d5b8a7a99b5dbb7f32ca1311598c0366b1a5ccaeeebc2be0370e779ba",
+      "changedSinceBase": false,
+      "callLines": [66, 118, 165, 218, 242, 360, 389, 409, 456],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/pause-menu-host.test.mjs",
+      "sha256": "ff07d0fb557b29eb441ddd804c49294896a22a080138d6e2409df9da05a264b1",
+      "changedSinceBase": false,
+      "callLines": [13, 63],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/picture-ready-status.test.mjs",
+      "sha256": "23f50354ca5d2c5945a33c780d5edfa8081e2423231fe55f529ef73530f1c957",
+      "changedSinceBase": false,
+      "callLines": [74],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/practice-brief-host.test.mjs",
+      "sha256": "dc890ca65e65b7a30530c83802c1ef1dda610190f41508e3f310e54e293e5895",
+      "changedSinceBase": false,
+      "callLines": [71, 326, 331, 351],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/practice-media-v3-host.test.mjs",
+      "sha256": "073ef1afca1c2c0cd6e3789b7674152bec9487dd9ecb9dbf707829b8d4591b16",
+      "changedSinceBase": false,
+      "callLines": [104],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/practice-retry.test.mjs",
+      "sha256": "427b34bc7cbe32ba166a1e83bbf824c93cd99824661de3a4b85b4d967c6cbcaa",
+      "changedSinceBase": true,
+      "callLines": [13, 46],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/profile-recovery-settings-host.test.mjs",
+      "sha256": "fd872fb890ec82dc1b6a9dc64c37757f1ea7ab31670725632205936759e4555b",
+      "changedSinceBase": false,
+      "callLines": [53, 117, 192],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/route-worlds-host.test.mjs",
+      "sha256": "3aeff68f0e05da1d6b29b7930db2b4c27b0b1831fdb1cc5ed7fb424152723ccc",
+      "changedSinceBase": false,
+      "callLines": [175],
+      "explicitReadinessLines": [
+        {
+          "line": 176,
+          "text": "initialReadyTimeoutMs: INVENTORY_TIMEOUT_MS,"
+        }
+      ]
+    },
+    {
+      "path": "game/test/selection-bookmark-host.test.mjs",
+      "sha256": "aaf1d8faf561b23a32ee81cddc0a4b9142aaa1e315edf2321ebb718cfb7c9441",
+      "changedSinceBase": false,
+      "callLines": [44, 91],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/sentinel-theme-host.test.mjs",
+      "sha256": "5df7d1224b73ecb074808e491fffcbaa0abf76c3ae6dc0d1422504ad25d8e54e",
+      "changedSinceBase": false,
+      "callLines": [168],
+      "explicitReadinessLines": [
+        {
+          "line": 169,
+          "text": "initialReadyTimeoutMs: INVENTORY_TIMEOUT_MS,"
+        }
+      ]
+    },
+    {
+      "path": "game/test/settings-assists-host.test.mjs",
+      "sha256": "23f85bb342ef46805e4074b4fe25e237c28a75640272611aad27195d0a77082c",
+      "changedSinceBase": false,
+      "callLines": [25, 116],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "sha256": "37039dc6372c7b52d6d31b4dd37599df616e4e41818e766039f57c00aebec38b",
+      "changedSinceBase": false,
+      "callLines": [73],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/storage-retention-host.test.mjs",
+      "sha256": "b36d9a015043cf485d4f3d40d23468b4d43dbbc9949d520e1377e54112a0bc59",
+      "changedSinceBase": false,
+      "callLines": [10],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/story-flight-host.test.mjs",
+      "sha256": "a47a71bb031fb5e89c21dece345fca37d8377ed53fcc3f723d4568177be2cfaa",
+      "changedSinceBase": false,
+      "callLines": [166],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/terminal-navigation.test.mjs",
+      "sha256": "7d6928633ad7b109bc51d77666411b7604a9b92b75d5e213fe2e8c0c90e0c29b",
+      "changedSinceBase": false,
+      "callLines": [30, 164, 332, 350, 377],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/text-face-host.test.mjs",
+      "sha256": "0e45b9bd23a41d15e390bf9b653bce4fd9ed50811544ac46072f9b8a1fe9c0ac",
+      "changedSinceBase": false,
+      "callLines": [25, 75],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/text-size-host.test.mjs",
+      "sha256": "e52f885fe5d126c836189c9838125aa8df4f89718cee1154bcc6c6072c7cbc78",
+      "changedSinceBase": false,
+      "callLines": [78, 94, 103, 165, 190, 218],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/title-operation-status-host.test.mjs",
+      "sha256": "195e41dbe7a2bf8e271322bd41beef8e44d7d3b01efdd2911a718702d4611e3c",
+      "changedSinceBase": false,
+      "callLines": [35],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "sha256": "642b8af7cbc11e7c0c44bb89382ef2720cee8a6ba1645aaa88be3495da4c3eb5",
+      "changedSinceBase": false,
+      "callLines": [22],
+      "explicitReadinessLines": []
+    },
+    {
+      "path": "game/test/ukraine-role-host.test.mjs",
+      "sha256": "6de7d47f5b8ccf4e4f03ca0258d92ee1a48ae459cb1001a99a1f51132b27ce83",
+      "changedSinceBase": false,
+      "callLines": [57, 93, 117, 141, 160, 175],
+      "explicitReadinessLines": []
+    }
+  ],
+  "realOriginalInventoryReview": [
+    {
+      "file": "countercurrent-chapter-host.test.mjs",
+      "classification": "explicit-bulk-allowance",
+      "initialReadyTimeoutMs": 180000,
+      "evidence": "Four real built theme editions; shared page wrapper declares INVENTORY_TIMEOUT_MS at line 169; local picture settle is 90000."
+    },
+    {
+      "file": "fracture-chapter-host.test.mjs",
+      "classification": "explicit-bulk-allowance",
+      "initialReadyTimeoutMs": 180000,
+      "evidence": "Real FPV plus three theme editions; shared page wrapper declares INVENTORY_TIMEOUT_MS at line 171; local picture settle is 90000."
+    },
+    {
+      "file": "route-worlds-host.test.mjs",
+      "classification": "explicit-bulk-allowance",
+      "initialReadyTimeoutMs": 180000,
+      "evidence": "Three real route editions plus external pilot/sentinel; shared wrapper declares INVENTORY_TIMEOUT_MS at line 176; local picture settle is 30000."
+    },
+    {
+      "file": "sentinel-theme-host.test.mjs",
+      "classification": "explicit-bulk-allowance",
+      "initialReadyTimeoutMs": 180000,
+      "evidence": "Three real built theme editions; shared page wrapper declares INVENTORY_TIMEOUT_MS at line 169; local picture settle is 90000."
+    },
+    {
+      "file": "external-chapter-app.test.mjs",
+      "classification": "known-reproduced-mismatch-root-correcting",
+      "initialReadyTimeoutMs": "default 5000 except fresh-import call override 30000",
+      "evidence": "Wrapper soloPage at line 230 shares retained original media and installation metadata; only line 416 overrides the allowance. Existing settle is 30000. R3 restored attempt at line 881 exhausted initial picture 5000ms; root owns scoped wrapper correction."
+    },
+    {
+      "file": "selection-bookmark-host.test.mjs",
+      "classification": "additional-existing-retained-original-bootstrap-candidate-no-reproduced-failure",
+      "initialReadyTimeoutMs": 5000,
+      "evidence": "Lines 58\u201369 install/select real embedded FPV Front \u00b7 Pressure Lines (fpv-arcade-r5). Reload lines 91\u201396 reuses storage/asset DB, restores that bookmark with titleScreen true and modeled decoding of actual embedded bytes. Local settle line 6 is 30000. This test file is unchanged since base; shared P01 startup/picture flow is affected. Both R3 source families passed.",
+      "workAtRestoredPage": {
+        "packPath": "game/content/packs/fpv-arcade-r5.json",
+        "packBytes": 11708176,
+        "packSha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
+        "embeddedPngBytes": [3172117, 2809420, 2785110],
+        "embeddedDimensions": [1774, 887],
+        "startupBeforePredicate": "Retained pack is parsed/validated and the chapter bookmark is restored before soloPage begins initialReady.",
+        "picturePredicateWork": "warmPicture \u2192 releasePictures.prepareSelection reads picture metadata and hashes the real selected authored background against the release baseline.",
+        "compiledReleaseArt": "Not loaded by this fixture: default fetch has JSON only, while presentation host requires a bounded body stream; existing source-art fallback applies.",
+        "externalDescriptorOriginals": false,
+        "nativeDecode": "Modeled Image dimensions and callbacks; no native pixel decoding certified."
+      }
+    },
+    {
+      "file": "external-backup-host.test.mjs",
+      "classification": "default-but-no-current-valid-original-bootstrap-mismatch",
+      "initialReadyTimeoutMs": 5000,
+      "evidence": "Wrapper line 141 defaults; page calls start empty, or retain media only while metadata/storage are fresh (lines 257\u2013258, 325, 343); backup adoption/Continue happens after startup with separate bounded waits. Journal startups line 531 roll back to empty or refuse adoption (line 550 selected pack empty). P01 cancellation test change at line 403 does not add a valid original bootstrap."
+    }
+  ],
+  "excludedFixtureClasses": {
+    "synthetic-small-originals": [
+      "flight-pictures-host.test.mjs",
+      "picture-ready-status.test.mjs",
+      "practice-media-v3-host.test.mjs",
+      "story-flight-host.test.mjs"
+    ],
+    "real-install-or-selection-after-initial-startup": [
+      "first-light-playthrough.test.mjs",
+      "featured-chapter.test.mjs",
+      "chapter-download-host.test.mjs",
+      "optional-chapters-host.test.mjs",
+      "mission-picker-older.test.mjs"
+    ],
+    "procedural-or-metadata-role-fixtures": [
+      "fpv-role-host.test.mjs",
+      "ukraine-role-host.test.mjs",
+      "collection-context-host.test.mjs",
+      "enemy-guide-host.test.mjs",
+      "profile-recovery-settings-host.test.mjs"
+    ]
+  },
+  "completedLogObservations": [
+    {
+      "family": "manual",
+      "path": ".cache/cross-mode/p01/hosted-r3-c5bf0bd/manual/job-104341804974.log",
+      "sha256": "4b01ca420eb05890363cde2455b4abd4aaf428c1b2d8383738522bc2500cd14d",
+      "lines": [4708, 4722],
+      "selectionBookmarkResult": "pass",
+      "initialReadyDuration": "not separately observed",
+      "caution": "TAP subtest duration includes subsequent saved-flight Continue and is not a measurement of the initialReady predicate."
+    },
+    {
+      "family": "pr-source",
+      "path": ".cache/cross-mode/p01/hosted-r3-c5bf0bd/pr-source/job-104342407334.log",
+      "sha256": "be2883afaabbf130fbdd0b8e99cba8197ea57dda374489ca3332020a5e9eb14b",
+      "lines": [4584, 4598],
+      "selectionBookmarkResult": "pass",
+      "initialReadyDuration": "not separately observed",
+      "caution": "TAP subtest duration includes subsequent saved-flight Continue and is not a measurement of the initialReady predicate."
+    }
+  ],
+  "recommendation": "Keep global default and unrelated fixtures unchanged. Root-owned external-chapter-app shared wrapper correction addresses reproduced failures. Consider only selection-bookmark retained-installed reload for matching its already-declared 30000ms local settle; classify as preventative fixture consistency, not a reproduced P01 defect. No second demonstrated default-5000 external-blob-inventory startup mismatch was found.",
+  "newTestRuns": 0,
+  "networkCalls": 0,
+  "sourceEdits": 0,
+  "releaseAccepted": false
+}

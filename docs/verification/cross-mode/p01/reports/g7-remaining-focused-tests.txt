@@ -1,0 +1,132 @@
+TAP version 13
+# (node:49590) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a missing static dependency reports module failure and leaves a same-page Reload link
+ok 1 - a missing static dependency reports module failure and leaves a same-page Reload link
+  ---
+  duration_ms: 19.93725
+  ...
+# Subtest: slow module observation is truthful and cannot overwrite a later attached host
+ok 2 - slow module observation is truthful and cannot overwrite a later attached host
+  ---
+  duration_ms: 7.429959
+  ...
+# Subtest: reserve catalog labels delayed metadata and fences stale selected image completion
+ok 3 - reserve catalog labels delayed metadata and fences stale selected image completion
+  ---
+  duration_ms: 17.332459
+  ...
+# Subtest: atlas font, optional reference and clipboard waits remain independently scoped
+ok 4 - atlas font, optional reference and clipboard waits remain independently scoped
+  ---
+  duration_ms: 8.571792
+  ...
+# Subtest: motion study reports initial dependency wait and a retryable startup failure
+ok 5 - motion study reports initial dependency wait and a retryable startup failure
+  ---
+  duration_ms: 14.079125
+  ...
+# Subtest: actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+ok 6 - actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+  ---
+  duration_ms: 4.053958
+  ...
+# Subtest: failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+ok 7 - failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+  ---
+  duration_ms: 6.3365
+  ...
+# Subtest: cancelled catalog file reads cannot replace a draft or unlock a newer operation
+ok 8 - cancelled catalog file reads cannot replace a draft or unlock a newer operation
+  ---
+  duration_ms: 2.0805
+  ...
+# Subtest: Stop waiting keeps an authoring save locked and reconciles its actual outcome
+ok 9 - Stop waiting keeps an authoring save locked and reconciles its actual outcome
+  ---
+  duration_ms: 0.600417
+  ...
+# Subtest: shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+ok 10 - shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+  ---
+  duration_ms: 39.414625
+  ...
+# Subtest: workshop native input clears held D-pad repeats until neutral and a fresh press
+ok 11 - workshop native input clears held D-pad repeats until neutral and a fresh press
+  ---
+  duration_ms: 6.178709
+  ...
+# Subtest: workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+ok 12 - workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+  ---
+  duration_ms: 6.171042
+  ...
+# Subtest: role detail reader stays controller scrollable and Back returns to its own button
+ok 13 - role detail reader stays controller scrollable and Back returns to its own button
+  ---
+  duration_ms: 1.746
+  ...
+# Subtest: one pure inventory preserves exact inspection and filters missing Sentinel themes without inflating rigs
+ok 14 - one pure inventory preserves exact inspection and filters missing Sentinel themes without inflating rigs
+  ---
+  duration_ms: 30.43525
+  ...
+# Subtest: actual panel uses metadata only; native filters and Back retain focus, source text stays inert
+ok 15 - actual panel uses metadata only; native filters and Back retain focus, source text stays inert
+  ---
+  duration_ms: 37.429916
+  ...
+# Subtest: explicit preview cancellation prevents late row completion, disposes URLs and never steals focus
+ok 16 - explicit preview cancellation prevents late row completion, disposes URLs and never steals focus
+  ---
+  duration_ms: 34.830667
+  ...
+# Subtest: preview failure is visible; filter, reload and lifecycle cancel current requests without approvals
+ok 17 - preview failure is visible; filter, reload and lifecycle cancel current requests without approvals
+  ---
+  duration_ms: 46.589583
+  ...
+# Subtest: late reload and invalid register preserve the current valid view and active filter
+ok 18 - late reload and invalid register preserve the current valid view and active filter
+  ---
+  duration_ms: 24.79
+  ...
+# Subtest: preview source URL rejects unsafe or remote roots before any body fetch
+ok 19 - preview source URL rejects unsafe or remote roots before any body fetch
+  ---
+  duration_ms: 0.575584
+  ...
+# Subtest: real PNG byte identity admits native decode once; mismatch and decode failure cannot leave a URL
+ok 20 - real PNG byte identity admits native decode once; mismatch and decode failure cannot leave a URL
+  ---
+  duration_ms: 32.95675
+  ...
+# Subtest: bounded reader rejects redirect/oversized stream and cancellation before decode disposes its URL
+ok 21 - bounded reader rejects redirect/oversized stream and cancellation before decode disposes its URL
+  ---
+  duration_ms: 7.122208
+  ...
+# Subtest: shared project workflow reaches all thirteen skills without duplicating or executing intake templates
+ok 22 - shared project workflow reaches all thirteen skills without duplicating or executing intake templates
+  ---
+  duration_ms: 9.920208
+  ...
+# Subtest: inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals
+ok 23 - inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals
+  ---
+  duration_ms: 28.063625
+  ...
+# Subtest: register timeout stops activity even when the underlying reader settles late
+ok 24 - register timeout stops activity even when the underlying reader settles late
+  ---
+  duration_ms: 4.747917
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 344.965666

@@ -160,3 +160,57 @@ test('returning to ready A cancels pending B and releases its late image', async
   owner.dispose();
   assert.equal(releases, 2);
 });
+
+test('picture status precedes real reads and decode, preserves cached readiness, and never revives a cancelled owner', async () => {
+  const { options } = setup(),
+    read = deferred(),
+    decode = deferred(),
+    statuses = [];
+  let reads = 0,
+    decodes = 0;
+  const owner = createFlightPictures({
+    ...options,
+    readMedia: async () => {
+      reads++;
+      await read.promise;
+      return options.readMedia();
+    },
+    acquire: async () => {
+      decodes++;
+      await decode.promise;
+      return { image: {}, release() {} };
+    },
+  });
+  const pending = owner.ensure(undefined, { onStatus: (s) => statuses.push(s) });
+  assert.equal(reads, 1);
+  assert.equal(statuses.at(-1).stage, 'reading');
+  read.resolve();
+  while (!decodes) await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(statuses.at(-1).stage, 'decoding');
+  assert.equal(owner.ready('fpv'), false);
+  decode.resolve();
+  await pending;
+  assert.equal(statuses.at(-1).status, 'ready');
+  const count = statuses.length;
+  await owner.ensure(undefined, { onStatus: (s) => statuses.push(s) });
+  assert.equal(reads, 1);
+  assert.equal(decodes, 1);
+  assert.equal(statuses.length, count);
+  owner.dispose();
+
+  const gate = deferred(),
+    stale = [];
+  const closed = createFlightPictures({
+    ...options,
+    readMedia: async () => {
+      await gate.promise;
+      return options.readMedia();
+    },
+  });
+  const loading = closed.ensure(undefined, { onStatus: (s) => stale.push(s) });
+  closed.dispose();
+  const before = stale.length;
+  gate.resolve();
+  await assert.rejects(loading, { name: 'AbortError' });
+  assert.equal(stale.length, before);
+});

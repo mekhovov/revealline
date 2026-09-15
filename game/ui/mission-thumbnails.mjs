@@ -16,10 +16,15 @@ export function createMissionPictureThumbnails({
   onUpdate = () => {},
 } = {}) {
   let active = null,
-    closed = false;
+    closed = false,
+    pendingButtons = [];
   function cancel() {
     active?.abort();
     active = null;
+    for (const button of pendingButtons)
+      if (button.dataset.pictureState === 'loading') button.dataset.pictureState = 'unavailable';
+    if (pendingButtons.length) onUpdate();
+    pendingButtons = [];
   }
   return Object.freeze({
     async refresh({ library, entries, entry, themeId, targets }) {
@@ -56,6 +61,8 @@ export function createMissionPictureThumbnails({
         const item = matching.find((row) => row.campaignKey === executionKey) ?? matching[0];
         if (item) jobs.push({ button, item, receipt: receipts.get(item.key) ?? null });
       }
+      pendingButtons = jobs.map((job) => job.button);
+      for (const button of pendingButtons) button.dataset.pictureState = 'loading';
       onUpdate();
       try {
         const needsMedia = jobs.some((job) => job.receipt?.presentationPin.kind === 'still');
@@ -99,12 +106,27 @@ export function createMissionPictureThumbnails({
             // source image when the exact earned original cannot be decoded.
           } finally {
             result?.release();
+            if (
+              active === controller &&
+              job.button.isConnected &&
+              job.button.dataset.pictureState === 'loading'
+            ) {
+              job.button.dataset.pictureState = 'unavailable';
+              onUpdate();
+            }
           }
         }
       } catch (error) {
         if (error.name !== 'AbortError') throw error;
       } finally {
-        if (active === controller) active = null;
+        if (active === controller) {
+          for (const button of pendingButtons)
+            if (button.dataset.pictureState === 'loading')
+              button.dataset.pictureState = 'unavailable';
+          if (pendingButtons.length) onUpdate();
+          active = null;
+          pendingButtons = [];
+        }
       }
     },
     cancel,

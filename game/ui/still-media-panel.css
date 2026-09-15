@@ -125,3 +125,26 @@
     grid-template-columns: 1fr;
   }
 }
+
+#still-media-operations {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+  background: #0a141e;
+}
+#still-media-operations > .operation-status {
+  flex: 1 1 240px;
+  min-width: 0;
+  margin: 0;
+}
+
+.still-host-navigation a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

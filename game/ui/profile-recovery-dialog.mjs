@@ -1,3 +1,5 @@
+import { createOperationStatus } from './operation-status.mjs';
+
 // The ordinary host keeps its existing modal stack and controller/input loop.
 const loadRuntime = async () => {
   const [reader, view] = await Promise.all([
@@ -44,6 +46,7 @@ export function attachProfileRecoveryDialog({
     back = doc.getElementById('profile-recovery-back'),
     status = doc.getElementById('profile-recovery-status'),
     entryStatus = doc.getElementById('profile-recovery-entry-status');
+  const presenter = createOperationStatus(status);
   let operation = null,
     closing = null;
   const current = (value) => operation === value && !value.controller.signal.aborted;
@@ -58,14 +61,17 @@ export function attachProfileRecoveryDialog({
     if (!active) return Promise.resolve(true);
     active.controller.abort(new DOMException('Profile recovery closed.', 'AbortError'));
     active.view?.cancel();
-    status.textContent = 'Closing recovery and releasing its reads…';
+    const closingLease = presenter.begin({ message: 'Closing recovery and releasing its reads…' });
     closing = (async () => {
       await active.ready;
       try {
         if (active.view) await active.view.close();
         else await active.reader?.close();
       } catch (error) {
-        status.textContent = `Recovery cleanup did not finish: ${error.message}`;
+        closingLease.finish({
+          message: `Recovery cleanup did not finish: ${error.message}`,
+          state: 'error',
+        });
         return false;
       }
       if (operation !== active) return false;
@@ -73,7 +79,12 @@ export function attachProfileRecoveryDialog({
       closing = null;
       refresh();
       dialog.close();
-      if (doc.getElementById('settings-dialog').open && !opener.disabled)
+      if (
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        doc.getElementById('settings-dialog').open &&
+        !opener.disabled
+      )
         opener.focus({ preventScroll: true });
       return true;
     })().finally(() => {
@@ -91,7 +102,10 @@ export function attachProfileRecoveryDialog({
     operation = active;
     // Prior view handlers remain closed until a fresh reader is ready.
     back.onclick = close;
-    status.textContent = 'Loading stored profile recovery…';
+    active.lease = presenter.begin({
+      message: 'Loading stored profile recovery…',
+      isCurrent: () => operation === active && !closing,
+    });
     dialog.showModal();
     back.focus({ preventScroll: true });
     refresh();
@@ -106,6 +120,7 @@ export function attachProfileRecoveryDialog({
         const version = packaged
           ? currentVersion
           : await untilCancelled(signal, resolveSourceVersion);
+        active.lease.update({ message: 'Loading recovery tools…' });
         const runtime = await untilCancelled(signal, load);
         if (!current(active)) return;
         let recoveryCatalogs = [],
@@ -124,6 +139,10 @@ export function attachProfileRecoveryDialog({
           // The module deadline ends here; catalog failure still permits raw diagnostics.
           clearTimeout(timer);
           try {
+            active.lease.update({
+              message: 'Loading trusted historical catalogs…',
+              stage: 'verifying',
+            });
             recoveryCatalogs = await untilCancelled(catalogController.signal, () =>
               runtime.loadCatalogs(version, { signal: catalogController.signal }),
             );
@@ -139,6 +158,7 @@ export function attachProfileRecoveryDialog({
         active.reader = runtime.createReader({ currentVersion: version, recoveryCatalogs });
         active.view = runtime.attachView({
           document: doc,
+          presenter,
           reader: active.reader,
           supportedChannels: recoveryCatalogs.map((entry) => entry.channelId),
           catalogIssue,
@@ -146,7 +166,10 @@ export function attachProfileRecoveryDialog({
         });
       } catch (error) {
         if (operation === active && dialog.open)
-          status.textContent = `${error.message} Use Back to return to Settings.`;
+          active.lease.finish({
+            message: `${error.message} Use Back to return to Settings.`,
+            state: signal.aborted && signal.reason?.name === 'AbortError' ? 'cancelled' : 'error',
+          });
       } finally {
         clearTimeout(timer);
       }

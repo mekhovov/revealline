@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
@@ -6,8 +7,9 @@ import {
   CONTROLLER_PREVIEW_STATUS_FORMAT,
 } from '../ui/controller-preview.mjs';
 
-class Element {
+class Element extends DOMElement {
   constructor(id = '') {
+    super(null, 'div');
     this.id = id;
     this.listeners = new Map();
     this.children = [];
@@ -18,7 +20,6 @@ class Element {
     this.textContent = '';
     this.disabled = false;
     this.clientWidth = 900;
-    this.classList = { toggle() {} };
   }
   addEventListener(type, fn) {
     this.listeners.set(type, [...(this.listeners.get(type) ?? []), fn]);
@@ -32,16 +33,19 @@ class Element {
   async emit(type, data = {}) {
     for (const fn of this.listeners.get(type) ?? []) await fn(data);
   }
-  append(node) {
-    this.children.push(node);
-    if (!this.value) this.value = node.value;
+  append(...nodes) {
+    super.append(...nodes);
+    if (!this.value) this.value = nodes[0]?.value;
   }
-  replaceChildren() {
-    this.children = [];
+  replaceChildren(...nodes) {
+    super.replaceChildren(...nodes);
     this.value = '';
   }
   setAttribute(key, value) {
     this.attributes[key] = value;
+  }
+  removeAttribute(key) {
+    delete this.attributes[key];
   }
   getAttribute(key) {
     return key === 'src' ? this.src : this.attributes[key];
@@ -105,7 +109,12 @@ test('practice page keeps virtual holds, releases and import failures isolated f
   elements.viewport.value = '1280x720';
   doc.getElementById = (id) => elements[id];
   doc.querySelectorAll = () => pads;
-  doc.createElement = () => new Element();
+  for (const element of Object.values(elements)) element.ownerDocument = doc;
+  doc.createElement = () => {
+    const element = new Element();
+    element.ownerDocument = doc;
+    return element;
+  };
   doc.hidden = false;
   const globals = {
     window: host,
@@ -286,6 +295,32 @@ test('practice page keeps virtual holds, releases and import failures isolated f
     );
     await elements['game-frame'].emit('load');
     await t.test(
+      'iframe load does not enable controls before a matching child readiness report',
+      async () => {
+        assert.equal(elements.connect.disabled, true);
+        const session = new URL(
+          elements['game-frame'].src,
+          'http://localhost:8767/game/controller-lab/',
+        ).searchParams.get('controller-session');
+        const data = {
+          format: CONTROLLER_PREVIEW_STATUS_FORMAT,
+          session,
+          sequence: 0,
+          readSequence: -1,
+          scope: 'flight',
+          focusedId: '',
+          focusedLabel: '',
+          assigned: false,
+          message: 'Ready',
+        };
+        await host.emit('message', { source: {}, origin: host.location.origin, data });
+        assert.equal(elements.connect.disabled, true);
+        await host.emit('message', { source: child, origin: host.location.origin, data });
+        assert.equal(elements.connect.disabled, false);
+        assert.match(elements['load-status'].textContent, /controls are ready/);
+      },
+    );
+    await t.test(
       'connect focuses the iframe and sends neutral before any deliberate button',
       async () => {
         await click('connect');
@@ -342,9 +377,9 @@ test('practice page keeps virtual holds, releases and import failures isolated f
           message: 'Ready',
         };
         await host.emit('message', { source: {}, origin: host.location.origin, data });
-        assert.equal(elements.focused.textContent, '—');
+        assert.equal(elements.focused.textContent, 'Game canvas / document');
         await host.emit('message', { source: child, origin: 'https://wrong.test', data });
-        assert.equal(elements.focused.textContent, '—');
+        assert.equal(elements.focused.textContent, 'Game canvas / document');
         await host.emit('message', { source: child, origin: host.location.origin, data });
         assert.equal(elements.focused.textContent, '<img onerror=bad>');
         await host.emit('message', {
@@ -510,7 +545,10 @@ test('practice page keeps virtual holds, releases and import failures isolated f
         const oldSession = latest().session;
         await click('load');
         await elements['game-frame'].emit('load');
-        const currentSession = latest().session;
+        const currentSession = new URL(
+          elements['game-frame'].src,
+          'http://localhost:8767/game/controller-lab/',
+        ).searchParams.get('controller-session');
         assert.match(currentSession, /^[a-f0-9]{32}$/);
         assert.notEqual(currentSession, oldSession);
         assert.ok(elements['game-frame'].src.includes(`controller-session=${currentSession}`));

@@ -1,3 +1,4 @@
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -13,8 +14,9 @@ import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
 
 // A DOM lifecycle adapter: removing cards really detaches them, and focusing a
 // stale or disabled node fails. Painting and browser image decoding are separate.
-class Element {
+class Element extends DOMElement {
   constructor(owner, tagName = 'div', connected = false) {
+    super(owner, tagName);
     this.owner = owner;
     this.tagName = tagName;
     this.rootConnected = connected;
@@ -475,11 +477,16 @@ test('a new picture hides the previous artwork and blocks actions until its own 
   assert.equal(canvas.width, 768);
   assert.equal(canvas.height, 576);
   assert.equal(canvas.attributes.get('aria-hidden'), 'true');
-  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'true');
-  assert.equal(h.node('gallery-view-meta').attributes.get('role'), 'status');
+  assert.equal(h.node('gallery-canvas').attributes.get('aria-busy'), 'true');
+  assert.equal(
+    h.node('gallery-view-dialog').attributes.has('aria-busy'),
+    false,
+    'The live status stays outside the busy canvas.',
+  );
+  assert.equal(h.node('gallery-view-meta').children[1].attributes.get('role'), 'status');
   assert.match(
     h.node('gallery-view-meta').textContent,
-    /FPV Front · Standard · Best picture score: 100 points · GOLD.*Loading/,
+    /FPV Front · Standard · Best picture score: 100 points · GOLD.*Decoding the exact picture artwork/,
   );
   assert.equal(h.node('gallery-replay').disabled, true);
   assert.equal(h.node('gallery-animate').disabled, true);
@@ -493,7 +500,7 @@ test('a new picture hides the previous artwork and blocks actions until its own 
   assert.equal(fullPaints().at(-1).level.id, 'picture-1');
   assert.equal(canvas.style.visibility, '');
   assert.equal(canvas.attributes.get('aria-hidden'), 'false');
-  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'false');
+  assert.equal(h.node('gallery-canvas').attributes.get('aria-busy'), 'false');
   assert.equal(
     h.node('gallery-view-meta').textContent,
     'FPV Front · Standard · Best picture score: 100 points · GOLD',
@@ -518,7 +525,7 @@ test('an older decode completing during rapid navigation cannot reveal or enable
   assert.equal(h.node('gallery-view-title').textContent, 'Picture 01');
   assert.equal(h.node('gallery-canvas').style.visibility, 'hidden');
   assert.equal(h.node('gallery-replay').disabled, true);
-  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'true');
+  assert.equal(h.node('gallery-canvas').attributes.get('aria-busy'), 'true');
   assert.equal(h.paints.filter((paint) => paint.width === 768).length, 0);
   finishSecond();
   await second;
@@ -562,7 +569,7 @@ test('a failed selected decode keeps stale pixels hidden and can be closed and r
   h.decodeJobs.at(-1).reject(new Error('Selected image decode failed'));
   await loading;
   assert.equal(h.node('gallery-canvas').style.visibility, 'hidden');
-  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'false');
+  assert.equal(h.node('gallery-canvas').attributes.get('aria-busy'), 'false');
   assert.match(h.node('gallery-view-meta').textContent, /Picture could not load.*Selected image/);
   assert.equal(h.node('gallery-replay').disabled, true);
   assert.equal(h.node('gallery-animate').disabled, true);
@@ -1148,9 +1155,8 @@ test('Collection retains an earned original after its pack is removed without of
 
 test('an unavailable original never silently falls back to current authored artwork', async (t) => {
   const h = await managedGallery(t, { metadataFailure: true });
-  await flushGallery(() =>
-    h.cards()[0].children[2].textContent.includes('Original picture unavailable'),
-  );
+  await flushGallery(() => h.cards()[0].dataset.pictureState === 'unavailable');
+  assert.match(h.cards()[0].children[4].textContent, /Original picture unavailable/);
   await h.cards()[0].onclick();
   assert.equal(h.paints.length, 0);
   assert.match(h.node('gallery-view-meta').textContent, /Restore its originals/);

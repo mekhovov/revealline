@@ -62,7 +62,7 @@ export function createFlightPictures({
     pending?.abort();
     pending = null;
   }
-  async function ensure(themeId = ownContext.themeId, { signal } = {}) {
+  async function ensure(themeId = ownContext.themeId, { signal, onStatus = () => {} } = {}) {
     if (disposed) throw new Error('This picture attempt is closed.');
     if (signal?.aborted) throw new DOMException('Picture preparation cancelled.', 'AbortError');
     cancel();
@@ -78,6 +78,12 @@ export function createFlightPictures({
       if (disposed || controller.signal.aborted || ticket !== generation)
         throw new DOMException('Picture preparation cancelled.', 'AbortError');
     };
+    const report = (value) => {
+      if (disposed || controller.signal.aborted || ticket !== generation) return;
+      try {
+        onStatus({ status: 'preparing', progress: null, ...value });
+      } catch {}
+    };
     try {
       check();
       if (legacy) {
@@ -86,6 +92,7 @@ export function createFlightPictures({
       }
       let media;
       if (!pins) {
+        report({ stage: 'reading', message: 'Reading this flight’s picture choices…' });
         media = await readMedia({ signal: controller.signal });
         check();
         let selection = {
@@ -97,11 +104,18 @@ export function createFlightPictures({
           themeIds: worlds,
         };
         if (prepareSelection && !explicitLegacy) {
-          const prepared = await prepareSelection({ media, selection, signal: controller.signal });
+          report({ stage: 'preparing', message: 'Preparing this flight’s original picture…' });
+          const prepared = await prepareSelection({
+            media,
+            selection,
+            signal: controller.signal,
+            onStatus: report,
+          });
           check();
           media = prepared.media;
           selection = { ...selection, library: prepared.library };
         }
+        report({ stage: 'verifying', message: 'Checking this flight’s exact picture binding…' });
         const selected = selectPins
           ? await selectPins({ media, selection, explicitLegacy, signal: controller.signal })
           : media.story
@@ -129,11 +143,13 @@ export function createFlightPictures({
       );
       if (!pin) throw new Error('This saved attempt has no picture choice for that world.');
       if (pin.kind === 'still') {
+        report({ stage: 'reading', message: 'Reading the saved picture original…' });
         media ??= await readMedia({ signal: controller.signal });
         check();
         candidate = createPresentationImageSlot(acquire ? { acquire } : {});
         const next = { ...ownContext, themeId };
         candidate.setContext(next);
+        report({ stage: 'decoding', message: 'Opening this flight’s original picture…' });
         await candidate.load(
           { pin, metadata: media.metadata, store: media.store },
           { context: next, signal: controller.signal },
@@ -145,7 +161,16 @@ export function createFlightPictures({
       candidate = null;
       readyTheme = themeId;
       prior?.dispose();
+      report({ status: 'ready', stage: 'ready', message: 'This flight’s picture is ready.' });
       return true;
+    } catch (error) {
+      if (error.name !== 'AbortError')
+        report({
+          status: 'error',
+          stage: 'error',
+          message: `Picture unavailable: ${error.message}`,
+        });
+      throw error;
     } finally {
       signal?.removeEventListener('abort', abort);
       candidate?.dispose();

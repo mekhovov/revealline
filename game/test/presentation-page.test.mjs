@@ -155,3 +155,42 @@ test('missing or rejected release resources preserve source look and notify with
   assert.equal(await invalid.ready, null);
   invalid.close();
 });
+
+test('cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease', async () => {
+  const f = pageFixture(),
+    firstStatus = [],
+    secondStatus = [];
+  let report;
+  const createHost = (options) => {
+    const host = f.createHost(options),
+      load = host.load;
+    host.load = ({ onStatus }) => {
+      report = onStatus;
+      return load();
+    };
+    return host;
+  };
+  const first = mountPresentationPage({ ...f, createHost, onStatus: (s) => firstStatus.push(s) });
+  assert.equal(firstStatus[0].stage, 'reading');
+  assert.equal(f.calls.loads, 0, 'status is present before deferred cosmetic loading');
+  const second = mountPresentationPage({ ...f, createHost, onStatus: (s) => secondStatus.push(s) });
+  await Promise.resolve();
+  report({
+    status: 'preparing',
+    stage: 'decoding',
+    message: 'Opening release artwork…',
+    progress: null,
+  });
+  first.close();
+  const count = firstStatus.length;
+  f.resolve({ release: true });
+  await second.ready;
+  assert.equal(firstStatus.length, count);
+  assert.equal(secondStatus.at(-1).status, 'ready');
+  const cached = [];
+  const third = mountPresentationPage({ ...f, createHost, onStatus: (s) => cached.push(s) });
+  assert.equal(cached[0].status, 'ready');
+  assert.equal(f.calls.loads, 1);
+  second.close();
+  third.close();
+});

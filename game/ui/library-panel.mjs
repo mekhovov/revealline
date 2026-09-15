@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { attachBackupSetPanel } from './backup-set-panel.mjs';
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
 import { importLibrary, exportLibrary, libraryCapacity } from '../library.mjs';
@@ -29,8 +30,19 @@ const button = (label, fn) => {
   b.onclick = fn;
   return b;
 };
-const status = (id, error) =>
-  ($(id).textContent = error instanceof Error ? error.message : String(error));
+const presenters = new WeakMap();
+const status = (id, value, state = 'ready') => {
+  const target = $(id),
+    message = value instanceof Error ? value.message : String(value);
+  let presenter = presenters.get(target);
+  if (!presenter) {
+    presenter = createOperationStatus(target);
+    presenters.set(target, presenter);
+  }
+  const lease = presenter.begin({ message });
+  if (state !== 'busy') lease.finish({ message, state: value instanceof Error ? 'error' : state });
+  return lease;
+};
 const fileText = async (file, max = 32 * 1024 * 1024) => {
   if (!file) throw new Error('Choose a JSON file.');
   if (file.size > max) throw new Error('This file exceeds the import budget.');
@@ -46,6 +58,7 @@ export function attachLibraryPanel(api) {
   };
   let transferPanel = null;
   let attemptExport = null;
+  let libraryTask = null;
   let backupSetPanel = null;
   let previousLibrary = null,
     previousBackup = null,
@@ -255,8 +268,10 @@ export function attachLibraryPanel(api) {
         );
       row.append(
         button('Remove from device', () =>
-          task('pack-status', async () => {
+          task('pack-status', async (operation) => {
+            operation.commit('Removing the installed pack…');
             await api.setPacks(removePack(api.get().packs, pack.id));
+            operation.check();
             refresh();
             status(
               'pack-status',
@@ -267,19 +282,29 @@ export function attachLibraryPanel(api) {
       );
       $('installed-packs').append(row);
     }
+    if (libraryTask) {
+      for (const control of $('library-dialog').querySelectorAll('button,input,select,textarea'))
+        if (!control.hasAttribute('data-close'))
+          control.disabled = control !== $('library-operation-cancel');
+    }
     if (attemptExport) {
       for (const control of $('library-dialog').querySelectorAll('button,input,select,textarea'))
-        control.disabled =
-          control !== $('cancel-attempt-export') || attemptExport.phase !== 'verifying';
+        control.disabled = control !== $('cancel-attempt-export') || !!attemptExport.detached;
     }
   }
   $('library-dialog').addEventListener('cancel', (e) => {
     if (cancelAttemptExport() || busy) e.preventDefault();
   });
   $('library-dialog').addEventListener('close', () => {
-    if (!$('library-dialog').open) endAttemptExport(false);
+    if (!$('library-dialog').open) {
+      endAttemptExport(false);
+      cancelLibraryTask(false);
+    }
   });
-  globalThis.addEventListener?.('pagehide', () => endAttemptExport(false));
+  globalThis.addEventListener?.('pagehide', () => {
+    endAttemptExport(false);
+    cancelLibraryTask(false);
+  });
 
   function currentAttemptExport(operation) {
     return (
@@ -299,19 +324,37 @@ export function attachLibraryPanel(api) {
     $('cancel-attempt-export').hidden = true;
     $('cancel-attempt-export').disabled = true;
     refresh();
-    if (restoreFocus && $('library-dialog').open && !document.hidden) {
+    if (
+      restoreFocus &&
+      $('library-dialog').open &&
+      !document.hidden &&
+      document.hasFocus?.() !== false
+    ) {
       const target = $('export-session').disabled ? $('export-library') : $('export-session');
       target.focus({ preventScroll: true });
     }
   }
   function cancelAttemptExport() {
     if (backupSetPanel?.cancel()) return true;
-    if (!attemptExport || attemptExport.phase !== 'verifying') return false;
+    if (libraryTask) return cancelLibraryTask();
+    if (!attemptExport) return false;
+    if (attemptExport.phase === 'download') {
+      attemptExport.detached = true;
+      status(
+        'save-status',
+        'Stopped waiting. The requested download is still finishing; the verified copy remains available below.',
+        'detached',
+      );
+      $('cancel-attempt-export').hidden = true;
+      $('cancel-attempt-export').disabled = true;
+      return true;
+    }
     endAttemptExport(true);
     status('save-status', 'Export cancelled. The previous copy is unchanged.');
     return true;
   }
   $('cancel-attempt-export').onclick = cancelAttemptExport;
+  $('library-operation-cancel').onclick = () => cancelLibraryTask();
 
   async function exportAttempt() {
     if (busy || !$('library-dialog').open) return;
@@ -330,19 +373,23 @@ export function attachLibraryPanel(api) {
     attemptExport = operation;
     busy = true;
     for (const { element } of operation.controls) element.disabled = true;
+    $('cancel-attempt-export').textContent = 'Cancel export';
     $('cancel-attempt-export').hidden = false;
     $('cancel-attempt-export').disabled = false;
     $('cancel-attempt-export').focus({ preventScroll: true });
     status(
       'save-status',
       `Checking the ${source.source === 'stored' ? 'saved' : 'current'} attempt…`,
+      'busy',
     );
     try {
       const prepared = await api.prepareAttemptFile({
         signal: operation.controller.signal,
         onProgress: ({ ticks, total }) => {
           if (currentAttemptExport(operation))
-            status('save-status', `Checking flight inputs: ${ticks} / ${total} ticks…`);
+            status('save-status', 'Checking flight inputs…', 'busy').update({
+              progress: total > 0 ? { completed: ticks, total, unit: 'ticks' } : null,
+            });
         },
       });
       if (!currentAttemptExport(operation)) return;
@@ -350,9 +397,9 @@ export function attachLibraryPanel(api) {
       prepared.assertCurrent();
       if (!currentAttemptExport(operation)) return;
       operation.phase = 'download';
-      $('cancel-attempt-export').hidden = true;
-      $('cancel-attempt-export').disabled = true;
+      $('cancel-attempt-export').textContent = 'Stop waiting';
       $('save-json').value = text;
+      status('save-status', 'Preparing the verified attempt download…', 'busy');
       const exported = await downloadJSON(prepared.session, 'revealline-suspended-flight.json');
       if (!currentAttemptExport(operation)) return;
       const session = prepared.session;
@@ -393,47 +440,135 @@ export function attachLibraryPanel(api) {
     const { library, packs } = api.get();
     return { library, packs, session: api.currentSession() };
   }
-  async function task(id, fn) {
+  function releaseTask(owner, restoreFocus = true) {
+    if (libraryTask !== owner) return;
+    const hadCancelFocus = document.activeElement === $('library-operation-cancel');
+    libraryTask = null;
+    busy = false;
+    for (const { element, disabled } of owner.controls)
+      if (element.isConnected) element.disabled = disabled;
+    const cancel = $('library-operation-cancel');
+    cancel.hidden = true;
+    cancel.disabled = true;
+    refresh();
+    if (
+      restoreFocus &&
+      $('library-dialog').open &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      hadCancelFocus &&
+      owner.opener?.isConnected &&
+      !owner.opener.disabled
+    )
+      owner.opener.focus({ preventScroll: true });
+  }
+  function cancelLibraryTask(restoreFocus = true) {
+    const owner = libraryTask;
+    if (!owner) return false;
+    if (owner.committing) {
+      owner.detached = true;
+      status(
+        owner.id,
+        'Stopped waiting. This operation is still finishing; Library changes remain locked until its result is known.',
+        'detached',
+      );
+      $('library-operation-cancel').hidden = true;
+    } else {
+      owner.controller.abort();
+      status(
+        owner.id,
+        'Cancelled. The current collection and saved flight are unchanged.',
+        'cancelled',
+      );
+      releaseTask(owner, restoreFocus);
+    }
+    return true;
+  }
+  async function task(id, fn, label = 'Preparing Library operation…') {
     if (busy) return;
+    const owner = {
+      id,
+      controller: new AbortController(),
+      committing: false,
+      detached: false,
+      opener: document.activeElement,
+      controls: [...$('library-dialog').querySelectorAll('button,input,select,textarea')].map(
+        (element) => ({ element, disabled: element.disabled }),
+      ),
+    };
+    libraryTask = owner;
     busy = true;
-    const controls = [...$('library-dialog').querySelectorAll('button,input,select,textarea')].map(
-      (element) => ({ element, disabled: element.disabled }),
-    );
-    for (const { element } of controls) element.disabled = true;
-    status(id, 'Checking…');
+    status(id, label, 'busy');
+    for (const { element } of owner.controls)
+      if (!element.hasAttribute('data-close')) element.disabled = true;
+    const cancel = $('library-operation-cancel');
+    cancel.textContent = 'Cancel operation';
+    cancel.hidden = false;
+    cancel.disabled = false;
+    const check = () => {
+      if (libraryTask !== owner || owner.controller.signal.aborted)
+        throw new DOMException('Library operation cancelled.', 'AbortError');
+    };
+    const context = {
+      controller: owner.controller,
+      signal: owner.controller.signal,
+      check,
+      phase(message) {
+        check();
+        if (!owner.detached) status(id, message, 'busy');
+      },
+      commit(message) {
+        check();
+        owner.committing = true;
+        status(id, message, 'busy');
+        cancel.textContent = 'Stop waiting';
+      },
+    };
     try {
-      await fn();
-    } catch (e) {
-      status(id, e);
+      await fn(context);
+      check();
+      if (['busy', 'detached'].includes($(id).dataset.state))
+        status(id, 'Library operation complete.');
+    } catch (error) {
+      if (libraryTask === owner)
+        status(
+          id,
+          error.name === 'AbortError' ? 'Cancelled. The current collection is unchanged.' : error,
+          error.name === 'AbortError' ? 'cancelled' : 'error',
+        );
     } finally {
-      busy = false;
-      for (const { element, disabled } of controls)
-        if (element.isConnected) element.disabled = disabled;
-      refresh();
+      releaseTask(owner);
     }
   }
-  async function install(candidate) {
-    await task('pack-status', async () => {
+  async function install(candidate, context = null) {
+    const work = async (operation) => {
+      operation.phase('Validating pack content and original images…');
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
       const before = api.get().packs;
       let next;
-      if (parsed.format === 'xonix-pack-library.v1') next = await importPackLibrary(parsed);
+      if (parsed.format === 'xonix-pack-library.v1')
+        next = await importPackLibrary(parsed, { signal: operation.signal });
       else {
-        const prepared = await preparePack(parsed, { library: before });
+        const prepared = await preparePack(parsed, { library: before, signal: operation.signal });
         next = installPack(before, prepared.pack);
       }
+      operation.check();
       if (api.get().packs !== before)
         throw new Error('Installed content changed; prepare this pack again.');
+      operation.commit('Saving the verified installed pack…');
       await api.setPacks(next);
+      operation.check();
       refresh();
       status(
         'pack-status',
         'Validated and installed. Choose Play above or use the Campaign selector.',
       );
-    });
+    };
+    return context ? work(context) : task('pack-status', work, 'Validating the selected pack…');
   }
-  async function importSave(candidate) {
-    await task('save-status', async () => {
+  async function importSave(candidate, context = null) {
+    const work = async (operation) => {
+      operation.phase('Reading and validating imported game data…');
       if (
         typeof candidate === 'string' &&
         new TextEncoder().encode(candidate).byteLength > MAX_BACKUP_BYTES
@@ -441,8 +576,11 @@ export function attachLibraryPanel(api) {
         throw new Error('This backup exceeds the import budget.');
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
       if (['xonix-backup.v1', 'xonix-backup.v2'].includes(parsed.format)) {
-        const prepared = await prepareBackup(parsed, await backupOptions());
-        const applied = await applyPrepared(prepared);
+        const options = await backupOptions();
+        operation.check();
+        const prepared = await prepareBackup(parsed, { ...options, signal: operation.signal });
+        operation.check();
+        const applied = await applyPrepared(prepared, operation);
         status(
           'save-status',
           `Game data restored. ${prepared.session ? 'Your saved flight is ready to load.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
@@ -454,11 +592,14 @@ export function attachLibraryPanel(api) {
           parsed.format,
         )
       ) {
+        operation.commit('Restoring the verified saved flight…');
         await api.restore(parsed);
+        operation.check();
         $('library-dialog').close();
         return;
       }
       const next = importLibrary(parsed, { campaigns: executionEntries().map((c) => c.campaign) });
+      operation.commit('Saving the imported player library…');
       api.beforeProfileReplacement?.();
       previousLibrary = api.get().library;
       const result = api.setLibrary(next);
@@ -470,9 +611,11 @@ export function attachLibraryPanel(api) {
           ? 'Player library loaded. Previous library is available with Undo.'
           : result.warning,
       );
-    });
+    };
+    return context ? work(context) : task('save-status', work, 'Validating imported game data…');
   }
-  async function applyPrepared(prepared) {
+  async function applyPrepared(prepared, operation) {
+    operation?.phase('Preparing an undo copy of the current collection…');
     api.beforeProfileReplacement?.();
     let old = null;
     try {
@@ -490,7 +633,10 @@ export function attachLibraryPanel(api) {
         );
       }
     } catch {}
+    operation?.check();
+    operation?.commit('Saving the verified collection and saved flight…');
     const applied = await api.applyBackup(prepared);
+    operation?.check();
     previousBackup = old;
     previousLibrary = null;
     refresh();
@@ -501,6 +647,7 @@ export function attachLibraryPanel(api) {
     container: $('library-saves'),
     backupOptions,
     task,
+    setStatus: (message, state) => status('transfer-status', message, state),
     applyPrepared,
   });
   $('library-button').onclick = () => open();
@@ -525,10 +672,16 @@ export function attachLibraryPanel(api) {
       refresh,
     });
   $('export-backup').onclick = () =>
-    task('save-status', async () => {
+    task('save-status', async (operation) => {
+      operation.phase('Reading saved game data and original references…');
       const options = await backupOptions();
-      const text = await exportBackup(await backupContents(), options);
+      operation.check();
+      const contents = await backupContents();
+      operation.phase('Verifying the game-data backup…');
+      const text = await exportBackup(contents, { ...options, signal: operation.signal });
+      operation.check();
       $('save-json').value = text;
+      operation.commit('Preparing the requested download…');
       const exported = await downloadJSON(JSON.parse(text), 'revealline-complete-backup.json');
       status(
         'save-status',
@@ -536,9 +689,11 @@ export function attachLibraryPanel(api) {
       );
     });
   $('undo-backup').onclick = () =>
-    task('save-status', async () => {
+    task('save-status', async (operation) => {
       if (!previousBackup) return;
+      operation.commit('Restoring the previous collection and saved flight…');
       await api.applyBackup(previousBackup);
+      operation.check();
       previousBackup = null;
       previousLibrary = null;
       $('undo-backup').disabled = true;
@@ -547,9 +702,10 @@ export function attachLibraryPanel(api) {
       status('save-status', 'Previous collection, packs and saved flight restored.');
     });
   $('export-library').onclick = () =>
-    task('save-status', async () => {
+    task('save-status', async (operation) => {
       const text = exportLibrary(api.get().library);
       $('save-json').value = text;
+      operation.commit('Preparing the requested download…');
       const exported = await downloadJSON(JSON.parse(text), 'revealline-player-library.json');
       status(
         'save-status',
@@ -561,10 +717,11 @@ export function attachLibraryPanel(api) {
     const file = $('save-file').files[0];
     $('save-file').value = '';
     if (!file) return;
-    return task('save-status', async () => {
+    return task('save-status', async (operation) => {
+      operation.phase('Reading the selected game-data file…');
       const text = await fileText(file, MAX_BACKUP_BYTES);
-      busy = false;
-      await importSave(text);
+      operation.check();
+      await importSave(text, operation);
     });
   };
   $('undo-library').onclick = () => {
@@ -582,8 +739,10 @@ export function attachLibraryPanel(api) {
     }
   };
   $('resume-save').onclick = () =>
-    task('save-status', async () => {
+    task('save-status', async (operation) => {
+      operation.commit('Preparing the saved flight to resume paused…');
       await api.restore(api.saved());
+      operation.check();
       $('library-dialog').close();
     });
   $('export-session').onclick = exportAttempt;
@@ -592,17 +751,21 @@ export function attachLibraryPanel(api) {
     const file = $('pack-file').files[0];
     $('pack-file').value = '';
     if (!file) return;
-    return task('pack-status', async () => {
+    return task('pack-status', async (operation) => {
+      operation.phase('Reading the selected pack file…');
       const text = await fileText(file, 64 * 1024 * 1024);
-      busy = false;
-      await install(text);
+      operation.check();
+      await install(text, operation);
     });
   };
   $('export-packs').onclick = () =>
-    task('pack-status', async () => {
+    task('pack-status', async (operation) => {
+      operation.phase('Checking installed packs for export…');
       await api.assertExternalBackupSupported?.({ kind: 'packs' });
+      operation.check();
       const text = exportPackLibrary(api.get().packs);
       $('pack-json').value = text;
+      operation.commit('Preparing the requested download…');
       const exported = await downloadJSON(JSON.parse(text), 'revealline-expansion-packs.json');
       status(
         'pack-status',
@@ -624,29 +787,35 @@ export function attachLibraryPanel(api) {
       status('challenge-status', e);
     }
   };
+  const exampleStatus = document.createElement('p');
+  $('builtin-packs').append(exampleStatus);
+  const examples = createOperationStatus(exampleStatus);
+  const examplesLease = examples.begin({ message: 'Loading example packs…' });
   fetch('content/packs/index.json')
     .then((r) => {
       if (!r.ok) throw new Error('Example packs could not load.');
       return r.json();
     })
     .then((index) => {
+      examplesLease.finish({ message: '' });
       for (const pack of index.packs) {
         $('builtin-packs').append(
           button(`Install ${pack.id.replaceAll('-', ' ')}`, async () => {
-            await task('pack-status', async () => {
-              const r = await fetch(`content/packs/${pack.path}`);
+            await task('pack-status', async (operation) => {
+              operation.phase('Downloading the example pack…');
+              const r = await fetch(`content/packs/${pack.path}`, { signal: operation.signal });
               if (!r.ok) throw new Error('Example pack is unavailable.');
               const data = await r.json();
-              busy = false;
-              await install(data);
+              operation.check();
+              await install(data, operation);
             });
           }),
         );
       }
     })
-    .catch((e) => status('pack-status', e));
+    .catch((e) => examplesLease.finish({ message: e.message, state: 'error' }));
 
-  async function drawPicture(canvas, picture, accept = () => true) {
+  async function drawPicture(canvas, picture, accept = () => true, onPhase = () => {}) {
     const size = boardPaintSizeForLevel(picture.level);
     const width = canvas === $('gallery-canvas') ? size.width : 320;
     const height = (width * size.height) / size.width;
@@ -666,6 +835,7 @@ export function attachLibraryPanel(api) {
       if (picture.mediaError) throw picture.mediaError;
       if (picture.receipt?.presentationPin.kind === 'still') {
         if (!picture.media) throw new Error('Restore the original picture media before viewing.');
+        onPhase('Reading and decoding the exact earned original…');
         backdrop = await acquirePresentationImage({
           pin: picture.receipt.presentationPin,
           metadata: picture.media.metadata,
@@ -674,6 +844,7 @@ export function attachLibraryPanel(api) {
         args.image = backdrop.image;
         args.fit = backdrop.fit;
       } else if (picture.visualOverrides.background) {
+        onPhase('Decoding the exact picture artwork…');
         const image = new Image();
         image.src = picture.visualOverrides.background.dataUrl;
         await image.decode();
@@ -749,6 +920,7 @@ export function attachLibraryPanel(api) {
       library.pictureReceipts?.some((receipt) => receipt.presentationPin.kind === 'still') &&
       api.pictureMedia
     ) {
+      status('gallery-load-status', 'Reading earned-picture original metadata…', 'busy');
       return api.pictureMedia().then(
         (media) => {
           if (generation === galleryPopulation && library === api.get().library)
@@ -766,6 +938,14 @@ export function attachLibraryPanel(api) {
     if (!$('collection-dialog').open) galleryPopulation++;
   });
   function renderGallery(media) {
+    const population = galleryPopulation;
+    status(
+      'gallery-load-status',
+      media?.error
+        ? 'Some original metadata is unavailable; restore the exact picture originals to view them.'
+        : '',
+      media?.error ? 'error' : 'ready',
+    );
     galleryCards.clear();
     gallerySealSlots.clear();
     $('gallery-grid').replaceChildren();
@@ -840,13 +1020,30 @@ export function attachLibraryPanel(api) {
       $('gallery-grid').append(card);
       galleryCards.set(item.key, card);
       for (const variant of group.variants) galleryCards.set(variant.item.key, card);
-      if (picture)
-        drawPicture(canvas, picture).catch(() => {
-          copy.textContent =
-            picture.receipt?.presentationPin.kind === 'still'
-              ? 'Original picture unavailable. Restore its .rlmedia originals.'
-              : 'Picture could not decode. Reinstall its pack.';
-        });
+      if (picture) {
+        const pictureState = document.createElement('span');
+        pictureState.className = 'gallery-picture-state';
+        pictureState.textContent = 'Loading picture…';
+        card.append(pictureState);
+        card.dataset.pictureState = 'loading';
+        drawPicture(canvas, picture, () => card.isConnected && population === galleryPopulation)
+          .then((drawn) => {
+            if (!card.isConnected) return;
+            if (drawn) {
+              card.dataset.pictureState = 'ready';
+              pictureState.textContent = '';
+              pictureState.hidden = true;
+            }
+          })
+          .catch(() => {
+            if (!card.isConnected) return;
+            card.dataset.pictureState = 'unavailable';
+            pictureState.textContent =
+              picture.receipt?.presentationPin.kind === 'still'
+                ? 'Original picture unavailable. Restore its .rlmedia originals.'
+                : 'Picture could not decode. Reinstall its pack.';
+          });
+      }
     }
     if (!items.length)
       $('gallery-grid').textContent = api.get().library.gallery.length
@@ -872,7 +1069,7 @@ export function attachLibraryPanel(api) {
         .library.storyReceipts?.some(
           (row) => row.galleryKey === view?.item.key && row.storyPin !== null,
         );
-    $('gallery-view-dialog').setAttribute('aria-busy', String(loading));
+    $('gallery-canvas').setAttribute('aria-busy', String(loading));
   }
   async function openPicture(picture, { variants = [picture], switching = false } = {}) {
     if (
@@ -913,21 +1110,26 @@ export function attachLibraryPanel(api) {
       generation === viewGeneration && view === picture && $('gallery-view-dialog').open;
     $('gallery-view-title').textContent = picture.level.name;
     $('gallery-view-meta').setAttribute('role', 'status');
-    $('gallery-view-meta').textContent = `${meta} · Loading picture…`;
+    status('gallery-view-meta', `${meta} · Loading picture…`, 'busy');
     refreshPictureMasteries(picture, api.get().library.masteries);
     // Keep Collection and its original opener underneath this child picture.
     if (!switching) $('gallery-view-dialog').showModal();
     try {
-      const drawn = await drawPicture($('gallery-canvas'), picture, current);
+      const drawn = await drawPicture($('gallery-canvas'), picture, current, (message) => {
+        if (current()) status('gallery-view-meta', `${meta} · ${message}`, 'busy');
+      });
       if (drawn && current()) {
         pictureReady(true);
-        $('gallery-view-meta').textContent = meta;
+        status('gallery-view-meta', meta);
       }
     } catch (e) {
       if (current()) {
         pictureReady(false);
-        $('gallery-view-meta').textContent =
-          `${meta} · Picture could not load. Restore its originals or exact pack, then reopen this view. ${e instanceof Error ? e.message : ''}`;
+        status(
+          'gallery-view-meta',
+          `${meta} · Picture could not load. Restore its originals or exact pack, then reopen this view. ${e instanceof Error ? e.message : ''}`,
+          'error',
+        );
       }
     }
   }
@@ -943,8 +1145,11 @@ export function attachLibraryPanel(api) {
       const installed = difficulties().picture(view.item);
       if (!installed) {
         pictureReady(false);
-        $('gallery-view-meta').textContent =
-          'Archived picture · reinstall its exact pack before replaying.';
+        status(
+          'gallery-view-meta',
+          'Archived picture · reinstall its exact pack before replaying.',
+          'error',
+        );
         return;
       }
       returnToCollection = false;
@@ -965,6 +1170,7 @@ export function attachLibraryPanel(api) {
     const picture = view,
       generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
+    status('gallery-view-meta', `${pictureMeta(picture)} · Preparing celebration artwork…`, 'busy');
     try {
       const visuals = { ...picture.visualOverrides };
       if (viewBackdrop) delete visuals.background;
@@ -973,12 +1179,15 @@ export function attachLibraryPanel(api) {
         throw new Error('The picture artwork is unavailable for celebration.');
     } catch (e) {
       if (generation === viewGeneration && view === picture && $('gallery-view-dialog').open)
-        $('gallery-view-meta').textContent =
-          `${pictureMeta(picture)} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`;
+        status(
+          'gallery-view-meta',
+          `${pictureMeta(picture)} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`,
+          'error',
+        );
       return;
     }
     if (generation !== viewGeneration || view !== picture || !$('gallery-view-dialog').open) return;
-    $('gallery-view-meta').textContent = pictureMeta(picture);
+    status('gallery-view-meta', pictureMeta(picture));
     galleryPainter.setLevel?.(picture.level, { seed: picture.item.seed ?? 1 });
     galleryPainter.startCelebration?.({
       levelId: picture.level.id,

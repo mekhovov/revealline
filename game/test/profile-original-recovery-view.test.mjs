@@ -1,3 +1,4 @@
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -34,23 +35,16 @@ const deferred = () => {
   return { promise, resolve, reject };
 };
 
-class Element {
-  constructor(doc, attributes = '') {
+class Element extends DOMElement {
+  constructor(doc, attributes = '', tag = 'span') {
+    super(doc, tag);
     this.doc = doc;
-    this.children = [];
-    this.value = '';
     this.hidden = /\bhidden\b/.test(attributes);
     this.disabled = /\bdisabled\b/.test(attributes);
-    this.textContent = '';
     this.clicks = 0;
   }
-  append(child) {
-    this.children.push(child);
-  }
-  replaceChildren() {
-    this.children = [];
-  }
   removeAttribute(name) {
+    super.removeAttribute(name);
     delete this[name];
   }
   focus() {
@@ -64,7 +58,7 @@ class Element {
 
 function fixture(options = {}) {
   const doc = { activeElement: null };
-  doc.createElement = () => new Element(doc);
+  doc.createElement = (tag) => new Element(doc, '', tag);
   const elements = new Map();
   for (const match of markup.matchAll(/<[^>]+\bid="(profile-recovery-[^"]+)"[^>]*>/g))
     elements.set(match[1], new Element(doc, match[0]));
@@ -166,6 +160,7 @@ async function prepare(f) {
   await f.$('originals-review').onclick();
   await f.$('original-verify').onclick();
   await f.$('original-file').onclick();
+  f.$('original-report').focus();
   await f.$('original-report').onclick();
 }
 

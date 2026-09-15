@@ -1,12 +1,15 @@
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachLibraryPanel } from '../ui/library-panel.mjs';
-import { emptyLibrary } from '../library.mjs';
+import { emptyLibrary, exportLibrary } from '../library.mjs';
 
 // Only DOM lifecycle and the browser's download boundary are adapted. The real
 // panel, downloadJSON and web platform adapter execute for every export.
-class Element {
+class Element extends DOMElement {
   constructor(document, tagName = 'div') {
+    super(document, tagName);
+    Object.defineProperty(this, 'isConnected', { value: true, writable: true });
     Object.assign(this, {
       document,
       tagName,
@@ -105,6 +108,7 @@ function setup(t, options = {}) {
   for (const id of [
     'export-session',
     'cancel-attempt-export',
+    'library-operation-cancel',
     'export-backup',
     'undo-backup',
     'export-library',
@@ -223,6 +227,8 @@ test('one stored export verifies, rechecks authority, copies before the real web
   h.panel.refresh();
   assert.equal(h.node('resume-save').disabled, true);
   assert.equal(h.node('cancel-attempt-export').disabled, false);
+  h.requests[0].onProgress({ ticks: 0, total: 0 });
+  assert.equal(h.node('save-status').querySelector('progress').hidden, true);
   h.requests[0].onProgress({ ticks: 120, total: 240 });
   assert.match(h.node('save-status').textContent, /120 \/ 240/);
   let checked = false;
@@ -354,16 +360,37 @@ test('adapter failure retains the already verified copy and reports the real err
   assert.equal(h.node('export-session').disabled, false);
 });
 
-test('ordinary library transactions retain their protected cancellation behavior', async (t) => {
+test('Stop waiting keeps a requested download protected until the platform returns', async (t) => {
   const h = setup(t),
     pending = h.node('export-library').onclick();
-  assert.equal(h.panel.cancelAttemptExport(), false);
+  assert.equal(h.node('library-operation-cancel').textContent, 'Stop waiting');
+  assert.equal(h.panel.cancelAttemptExport(), true);
+  assert.equal(h.node('save-status').dataset.state, 'detached');
   assert.equal(h.dialog.requestClose().defaultPrevented, true);
   assert.equal(h.dialog.open, true);
-  assert.equal(h.node('cancel-attempt-export').hidden, true);
+  assert.equal(h.node('library-operation-cancel').hidden, true);
   await pending;
   assert.equal(h.dialog.requestClose().defaultPrevented, false);
   assert.equal(h.dialog.open, false);
+});
+
+test('verified attempt download offers Stop waiting and reports the actual platform result afterward', async (t) => {
+  const h = setup(t),
+    pending = h.start();
+  h.state.beforeDownload = () => {
+    assert.equal(h.node('cancel-attempt-export').textContent, 'Stop waiting');
+    assert.equal(h.node('cancel-attempt-export').disabled, false);
+    assert.equal(h.panel.cancelAttemptExport(), true);
+    assert.equal(h.node('save-status').dataset.state, 'detached');
+    assert.equal(h.node('export-library').disabled, true);
+    assert.equal(h.dialog.requestClose().defaultPrevented, true);
+  };
+  h.requests[0].resolve(h.prepared());
+  await pending;
+  assert.equal(h.node('save-status').dataset.state, 'ready');
+  assert.match(h.node('save-status').textContent, /Download requested/);
+  assert.equal(h.node('export-library').disabled, false);
+  assert.equal(h.downloads.length, 1);
 });
 
 for (const action of ['export-backup', 'export-packs', 'import-save']) {
@@ -394,3 +421,33 @@ for (const action of ['export-backup', 'export-packs', 'import-save']) {
     );
   });
 }
+
+test('a cancelled Library file read cannot install or unlock a newer read', async (t) => {
+  const applied = [];
+  const h = setup(t, {
+    setLibrary: (value) => {
+      applied.push(value);
+      return { ok: true };
+    },
+  });
+  const first = deferred(),
+    second = deferred();
+  h.node('save-file').files = [{ size: 1, text: () => first.promise }];
+  const older = h.node('save-file').onchange();
+  assert.match(h.node('save-status').textContent, /Reading the selected game-data file/);
+  assert.equal(h.node('library-operation-cancel').hidden, false);
+  h.panel.cancelAttemptExport();
+  h.node('save-file').files = [{ size: 1, text: () => second.promise }];
+  const newer = h.node('save-file').onchange();
+  first.resolve(exportLibrary(emptyLibrary()));
+  await older;
+  assert.equal(applied.length, 0);
+  assert.equal(h.node('export-library').disabled, true);
+  assert.equal(h.node('library-operation-cancel').hidden, false);
+  assert.match(h.node('save-status').textContent, /Reading the selected game-data file/);
+  second.resolve(exportLibrary(emptyLibrary()));
+  await newer;
+  assert.equal(applied.length, 1);
+  assert.match(h.node('save-status').textContent, /Player library loaded/);
+  assert.equal(h.node('export-library').disabled, false);
+});

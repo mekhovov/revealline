@@ -175,6 +175,7 @@ const microtasks = async () => {
 test('exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs', async (t) => {
   const h = await setup(t);
   assert.equal(h.player.snapshot().state, 'preparing');
+  assert.equal(h.player.element.querySelector('.operation-status').dataset.state, 'busy');
   assert.equal(h.poster.hidden, false);
   assert.equal(h.video.playCalls, 0);
   assert.equal(h.video.muted, true);
@@ -182,6 +183,7 @@ test('exact poster stays visible through silent preparation; explicit native act
   h.ready();
   assert.equal(h.video.currentTime, 2);
   assert.equal(h.player.snapshot().state, 'poster');
+  assert.equal(h.player.element.querySelector('.operation-status').dataset.state, 'ready');
   h.button('Play').emit('pointerdown');
   assert.equal(h.video.playCalls, 0);
   h.button('Play').click();
@@ -309,7 +311,7 @@ test('reduced motion stays opt-in, and enabling it during playback returns to th
   h.ready();
   assert.equal(h.video.playCalls, 0);
   assert.match(
-    [...h.player.element.querySelectorAll('p')].find(
+    [...h.player.element.querySelectorAll('span')].find(
       (node) => node.getAttribute('role') === 'status',
     ).textContent,
     /Reduced motion/,

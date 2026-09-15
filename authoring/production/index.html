@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
   </head>
   <body class="field-kit field-kit-support">
     <header>
@@ -29,7 +30,10 @@
       </nav>
     </header>
     <main id="production-panel" aria-label="Production register">
-      <p role="status">Loading the register…</p>
+      <p class="operation-status" data-state="busy">
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+        ><span class="operation-status-label" role="status">Loading the register…</span>
+      </p>
     </main>
     <footer>
       <a href="./README.md">Register and CLI guide</a>
@@ -38,6 +42,11 @@
     <noscript
       >Serve this repository on localhost and enable JavaScript to inspect the register.</noscript
     >
-    <script type="module" src="./browser.mjs"></script>
+    <script
+      defer
+      src="../../game/ui/direct-tool-launch.js"
+      data-module="./browser.mjs"
+      data-status="production-panel"
+    ></script>
   </body>
 </html>

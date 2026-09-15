@@ -6,6 +6,7 @@ import { attachEnemyCatalogPanel } from '../ui/enemy-catalog-panel.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { createEnemyCatalogInput } from '../ui/enemy-catalog-input.mjs';
+import { deferred } from './helpers/media-fixtures.mjs';
 
 function setup(t, options = {}) {
   const doc = new Document();
@@ -109,6 +110,45 @@ test('failed Apply retains the last saved draft; malformed or oversize imports c
     h.panel.snapshot().entries.every((entry) => entry.enabled),
     true,
   );
+});
+test('cancelled catalog file reads cannot replace a draft or unlock a newer operation', async (t) => {
+  const h = setup(t),
+    first = deferred(),
+    second = deferred();
+  const before = h.panel.snapshot();
+  h.$('import').files = [{ size: 100, text: () => first.promise }];
+  const older = h.$('import').onchange();
+  assert.match(h.$('status').textContent, /Reading and validating/);
+  assert.equal(h.$('status').dataset.state, 'busy');
+  assert.equal(h.$('back').disabled, false);
+  h.panel.close();
+  h.panel.open();
+  h.$('import').files = [{ size: 100, text: () => second.promise }];
+  const newer = h.$('import').onchange();
+  first.resolve(JSON.stringify(before));
+  await older;
+  assert.equal(h.$('apply').disabled, true);
+  assert.equal(h.$('status').dataset.state, 'busy');
+  second.reject(new Error('Read failed'));
+  await newer;
+  assert.equal(h.$('apply').disabled, false);
+  assert.equal(h.$('status').dataset.state, 'error');
+  assert.deepEqual(h.panel.snapshot(), before);
+});
+test('Stop waiting keeps an authoring save locked and reconciles its actual outcome', async (t) => {
+  const gate = deferred(),
+    h = setup(t, { onApplyDraft: () => gate.promise });
+  const saving = h.$('apply').onclick();
+  assert.match(h.$('status').textContent, /Saving authoring choices/);
+  h.panel.close();
+  assert.equal(h.panel.dialog.open, true);
+  assert.equal(h.$('status').dataset.state, 'detached');
+  assert.equal(h.$('apply').disabled, true);
+  gate.resolve();
+  await saving;
+  assert.equal(h.$('status').dataset.state, 'ready');
+  assert.match(h.$('status').textContent, /Authoring choices saved/);
+  assert.equal(h.$('apply').disabled, false);
 });
 test('shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing', async (t) => {
   const h = setup(t);

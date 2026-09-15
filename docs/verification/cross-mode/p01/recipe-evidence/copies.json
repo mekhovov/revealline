@@ -1,0 +1,98 @@
+[
+  {
+    "source": ".cache/cross-mode/p01/browser/deploy-large-plain-portrait.png",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/deploy-large-plain-portrait.png",
+    "bytes": 147787,
+    "sha256": "17f1659b19221819719fc25c8c1f5bac2ec222a5602c24752144651bed3b760f"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser/deploy-large-plain-landscape.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/deploy-large-plain-landscape.json",
+    "bytes": 522,
+    "sha256": "265ebc34f09b398d880bfa392badcab347cfce7fad3e83e96436dcd3e17a9463"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser/music-held-mp3-current-landscape.png",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/music-held-mp3-current-landscape.png",
+    "bytes": 53665,
+    "sha256": "3b0b65a01f3b29f54e97710ffb0e65e5bae94c86510e33dc72c972374bbb9191"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser/music-held-mp3-current-portrait.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/music-held-mp3-current-portrait.json",
+    "bytes": 444,
+    "sha256": "530f92b833b26f9699bf383323f061f44cedf2d9022f2086f315075676e35376"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser/music-cancel-after-read-settles.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/music-cancel-after-read-settles.json",
+    "bytes": 171,
+    "sha256": "99f6b9d16af291ba20eff654d09466bca2fa666d82ff54def640a6f5421a4e55"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser/music-retry-draft-ready.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/music-retry-draft-ready.json",
+    "bytes": 148,
+    "sha256": "0e9ff96e65f1f3bc8727e16a0dcda018349d17a4788816350596d5c4027dc1a5"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser-g6/couch-cosmetic-held-portrait.png",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/couch-cosmetic-held-portrait.png",
+    "bytes": 54652,
+    "sha256": "a65dbe6a171837762eecf0db95ea51a5cb0f32c58e2d6859bab3b772af7eebbc"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser-g6/couch-cosmetic-held-landscape.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/couch-cosmetic-held-landscape.json",
+    "bytes": 281,
+    "sha256": "28da5645cff8865f4e54ba93473e2c4e1150f2e6f0d0f454faf1cfcab811d781"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser-g6/couch-cosmetic-released.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/couch-cosmetic-released.json",
+    "bytes": 136,
+    "sha256": "1a583ae1aeda3fe389a0e300017acbf20d399a6df8d82614a07e0f5c0bad7f7c"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser-g6/replay-held-landscape-fixed.png",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/replay-held-landscape-fixed.png",
+    "bytes": 33384,
+    "sha256": "721bf3c22624070ebf9732332244c154fa6fe2d930cb858943f7861fd5863b97"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser-g6/replay-held-portrait-fixed.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/replay-held-portrait-fixed.json",
+    "bytes": 463,
+    "sha256": "cd93d00b38c881360ae12b6d8cc9c4686fce22f0a25ddc61f69f79f884ad2839"
+  },
+  {
+    "source": ".cache/cross-mode/p01/browser-g6/replay-held-landscape-fixed.json",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/replay-held-landscape-fixed.json",
+    "bytes": 480,
+    "sha256": "19641d7b70150b55f3adc793d367df4dab1d36b69175c89a073b88bdf9b06c60"
+  },
+  {
+    "source": ".cache/cross-mode/p01/recipe-source-tests.log",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/recipe-source-tests.log",
+    "bytes": 15559,
+    "sha256": "e76b2a36873b6e72dc05a1f5d062d9febdfa8a9314fa267f9d4a3d1f05325e1b"
+  },
+  {
+    "source": ".cache/cross-mode/p01/recipe-approval-tests.log",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/recipe-approval-tests.log",
+    "bytes": 2582,
+    "sha256": "0200b4c39341391f063cffe97d12de31fe59109fe1b15cad2d231c23c31cf680"
+  },
+  {
+    "source": ".cache/cross-mode/p01/recipe-production-write.log",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/recipe-production-write.log",
+    "bytes": 245,
+    "sha256": "4d277bf33be1d706151c0532edab79e85a0273c68fab7499ab64b7cda37bb3bc"
+  },
+  {
+    "source": ".cache/cross-mode/p01/recipe-production-check.log",
+    "path": "docs/verification/cross-mode/p01/recipe-evidence/recipe-production-check.log",
+    "bytes": 245,
+    "sha256": "4d277bf33be1d706151c0532edab79e85a0273c68fab7499ab64b7cda37bb3bc"
+  }
+]

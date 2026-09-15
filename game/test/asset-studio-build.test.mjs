@@ -19,6 +19,8 @@ test('the release allowlist includes the Studio and its complete static module g
     'game/ui/field-kit-fonts.css',
     'game/ui/field-kit-tokens.css',
     'game/ui/field-kit-components.css',
+    'game/ui/operation-status.css',
+    'game/ui/direct-tool-launch.js',
     'authoring/motion-lab/presets.json',
     'game/content/packs/fpv-arcade-r5.json',
   ])

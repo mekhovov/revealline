@@ -256,7 +256,12 @@ test('cancelled late inspection is disposed and cannot enable capture', async (t
     },
   });
   const opening = h.inspect();
+  assert.equal(h.$('status').dataset.state, 'busy');
+  assert.match(h.$('status').textContent, /Inspecting video metadata/);
+  assert.equal(h.$('cancel').disabled, false);
   h.host.cancel();
+  const cancelledText = h.$('status').textContent;
+  assert.equal(h.$('status').dataset.state, 'cancelled');
   assert.equal(signal.aborted, true);
   const source = {
     disposeCount: 0,
@@ -266,6 +271,7 @@ test('cancelled late inspection is disposed and cannot enable capture', async (t
   };
   late.resolve(source);
   assert.equal(await opening, false);
+  assert.equal(h.$('status').textContent, cancelledText);
   assert.equal(source.disposeCount, 1);
   assert.equal(h.$('capture').disabled, true);
   assert.equal(h.urls.size, 0);
@@ -292,12 +298,16 @@ test('older inspection completion cannot replace a newer successfully inspected 
     dispose() {},
   });
   assert.equal(await next, true);
+  const newerText = h.$('status').textContent;
+  assert.equal(h.$('status').dataset.state, 'ready');
   first.resolve({
     dispose() {
       oldDisposed++;
     },
   });
   assert.equal(await old, false);
+  assert.equal(h.$('status').textContent, newerText);
+  assert.equal(h.$('status').dataset.state, 'ready');
   assert.equal(oldDisposed, 1);
   assert.match(h.$('metadata').textContent, /2 × 1.*4 s/);
   assert.equal(h.$('time').max, '4');
@@ -503,4 +513,14 @@ test('disposal revokes prepared PNG and late callbacks cannot restart the standa
   h.win.emit('pageshow', { persisted: true });
   assert.equal(h.frames.size, 0);
   assert.equal(await h.host.capture(), false);
+});
+
+test('classic video workshop exposes loading immediately after its title', async () => {
+  const html = await readFile(
+    new URL('../../authoring/video-poster/index.html', import.meta.url),
+    'utf8',
+  );
+  assert.ok(html.indexOf('id="video-poster-back"') < html.indexOf('</h1>'));
+  assert.ok(html.indexOf('</h1>') < html.indexOf('id="video-poster-status"'));
+  assert.ok(html.indexOf('id="video-poster-status"') < html.indexOf('Inspect your own video'));
 });

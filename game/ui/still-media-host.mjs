@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createStoryMediaStore } from '../story-media-store.mjs';
@@ -95,6 +96,16 @@ export function attachStillMediaHost({
     sourceChannel = channel ?? 'dev',
     openSerial = 0,
     openController = null;
+
+  const feedback = createOperationStatus(status);
+  let activity = null;
+  function setStatus(message, state = 'ready') {
+    if (activity) activity.update({ message, progress: null });
+    else feedback.begin({ message }).finish({ message, state });
+  }
+  setStatus(
+    'Choose Open local media to read this edition’s pictures and stories. No media database has been opened.',
+  );
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
   const navigation = attachControllerNavigation({
     document: doc,
@@ -105,7 +116,7 @@ export function attachStillMediaHost({
     onBack: () => panel?.back(),
     onNativeInput: () => router.clear(),
     onHint: (text) => {
-      status.textContent = text;
+      setStatus(text);
     },
   });
   const explain = (error) =>
@@ -115,6 +126,10 @@ export function attachStillMediaHost({
         ? error.message
         : String(error);
   function discardAudio() {
+    if (audioTask) {
+      activity?.clear();
+      activity = null;
+    }
     audioTask?.abort();
     audioTask = null;
     if (audioURL) URLImpl.revokeObjectURL(audioURL);
@@ -127,6 +142,8 @@ export function attachStillMediaHost({
     openController?.abort();
     openController = null;
     opening = false;
+    feedback.clear();
+    activity = null;
     if (!disposed) $('still-host-open').disabled = false;
   }
   function closeStorage() {
@@ -145,14 +162,19 @@ export function attachStillMediaHost({
   async function open() {
     if (disposed || opening) return false;
     if (!['http:', 'https:'].includes(win.location.protocol)) {
-      status.textContent =
-        'Use localhost or HTTPS. File URLs cannot safely open this same-origin workshop.';
+      setStatus('Use localhost or HTTPS. File URLs cannot safely open this same-origin workshop.');
       return false;
     }
     opening = true;
     $('still-host-open').disabled = true;
     const ticket = ++openSerial;
     openController = new AbortController();
+    const lease = feedback.begin({
+      message: 'Opening the picture workshop and installed map catalogue…',
+      stage: 'reading',
+      isCurrent: () => !disposed && ticket === openSerial,
+    });
+    activity = lease;
     try {
       if (!panel) {
         const source = await readBase({ signal: openController.signal });
@@ -188,21 +210,29 @@ export function attachStillMediaHost({
         });
         $('still-host-export-audio').disabled = false;
       }
+      lease.update({
+        message: 'Opening and verifying local picture and story originals…',
+        stage: 'verifying',
+      });
       const result = await panel.open();
       if (!disposed && ticket === openSerial) {
         router.clear();
         navigation.sync();
-        status.textContent = result
-          ? `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`
-          : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.';
+        setStatus(
+          result
+            ? `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`
+            : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.',
+        );
       }
+      lease.finish({ message: status.textContent, state: result ? 'ready' : 'error' });
       return result;
     } catch (error) {
       if (ticket !== openSerial) return false;
       closeStorage();
-      if (!disposed) status.textContent = explain(error);
+      if (!disposed) setStatus(explain(error), 'error');
       return false;
     } finally {
+      if (activity === lease) activity = null;
       if (ticket === openSerial) {
         opening = false;
         openController = null;
@@ -216,9 +246,15 @@ export function attachStillMediaHost({
     const own = new AbortController();
     audioTask = own;
     $('still-host-export-audio').disabled = true;
-    status.textContent = 'Reading and verifying the complete saved soundtrack…';
+    const lease = feedback.begin({
+      message: 'Reading and verifying the complete saved soundtrack…',
+      stage: 'reading',
+      isCurrent: () => !disposed && audioTask === own,
+    });
+    activity = lease;
     try {
       const saved = await audio.read({ signal: own.signal });
+      lease.update({ message: 'Preparing the verified soundtrack backup…', stage: 'exporting' });
       const blob = await exportSoundtrackBundle(saved.library, saved.assets, {
         signal: own.signal,
       });
@@ -228,13 +264,17 @@ export function attachStillMediaHost({
       link.href = audioURL;
       link.download = 'RevealLine-soundtrack.rlsound';
       link.hidden = false;
-      status.textContent = `Soundtrack backup prepared (${blob.size} bytes). Choose Download soundtrack; this file does not contain still images.`;
+      setStatus(
+        `Soundtrack backup prepared (${blob.size} bytes). Choose Download soundtrack; this file does not contain still images.`,
+      );
+      lease.finish({ message: status.textContent });
       link.focus();
       return true;
     } catch (error) {
-      if (!disposed && audioTask === own) status.textContent = explain(error);
+      if (!disposed && audioTask === own) lease.finish({ message: explain(error), state: 'error' });
       return false;
     } finally {
+      if (activity === lease) activity = null;
       if (audioTask === own) {
         audioTask = null;
         $('still-host-export-audio').disabled = !audio;
@@ -245,13 +285,15 @@ export function attachStillMediaHost({
   $('still-host-export-audio').onclick = prepareAudio;
   $('still-host-export-audio').disabled = true;
   $('still-host-download-audio').onclick = () => {
-    status.textContent =
-      'Download requested. Confirm the destination in your browser; the prepared copy remains available to retry.';
+    setStatus(
+      'Download requested. Confirm the destination in your browser; the prepared copy remains available to retry.',
+    );
   };
   $('still-host-close').onclick = () => {
     closeStorage();
-    status.textContent =
-      'Local connections closed. Saved originals remain; the database version was not downgraded.';
+    setStatus(
+      'Local connections closed. Saved originals remain; the database version was not downgraded.',
+    );
     $('still-host-open').focus();
   };
   function poll(now) {
@@ -291,6 +333,7 @@ export function attachStillMediaHost({
     if (disposed) return;
     disposed = true;
     closeStorage();
+    feedback.dispose();
     win.cancelAnimationFrame(frame);
     navigation.destroy();
     router.destroy();

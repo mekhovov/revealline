@@ -22,7 +22,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
 const sources = {
-  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs',
+  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs',
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
@@ -31,10 +31,26 @@ const sources = {
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These
-// are deliberate, source-pinned approvals for the v0.54 renderer-call repair:
-// changing either digest creates a new source-stage revision and re-opens the
+// are deliberate, source-pinned approvals for scoped renderer and loading reviews:
+// changing a digest creates a new source-stage revision and re-opens the
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
+  ui: {
+    sha256: 'e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450',
+    evidence: [
+      'Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.',
+      'game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.',
+      'Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance.',
+    ],
+  },
+  audio: {
+    sha256: '998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95',
+    evidence: [
+      'Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.',
+      'game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.',
+      'Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim.',
+    ],
+  },
   motion: {
     sha256: '7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b',
     evidence: [

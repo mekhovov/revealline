@@ -12,6 +12,8 @@ import { planCurrentEntries } from '../../scripts/pages-current-entry.mjs';
 const sourceRoot = fileURLToPath(new URL('../../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fieldKitFiles = [
+  'game/ui/operation-status.css',
+  'game/ui/operation-status.mjs',
   'game/ui/field-kit-fonts.css',
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',

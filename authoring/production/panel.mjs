@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import {
   listProductionSlots,
   summarizeProduction,
@@ -52,6 +54,17 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
     return n;
   };
   const status = make('p', 'Loading the register…', { role: 'status', 'aria-live': 'polite' });
+  const presenters = new WeakMap();
+  const report = (target, message, state = 'ready') => {
+    let presenter = presenters.get(target);
+    if (!presenter) {
+      presenter = createOperationStatus(target);
+      presenters.set(target, presenter);
+    }
+    const lease = presenter.begin({ message });
+    if (state !== 'busy') lease.finish({ message, state });
+    return lease;
+  };
   const reload = button('Reload register', () => void refresh());
   const toolbar = make('div', '', { class: 'toolbar' });
   toolbar.append(status, reload);
@@ -269,7 +282,7 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
           button(`Preview ${entry.role}`, () => void previewEntry(entry, output, container)),
           button('Clear preview', () => {
             cancelPreview();
-            output.textContent = 'Preview cleared.';
+            report(output, 'Preview cleared.', 'cancelled');
           }),
         );
       }
@@ -287,8 +300,15 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
     const generation = previewGeneration,
       controller = new AbortController();
     previewController = controller;
-    const timer = setTimeout(() => controller.abort(), 20000);
-    output.textContent = 'Checking the selected source and decoding its image…';
+    const lease = report(output, 'Checking the selected source and decoding its image…', 'busy');
+    const timer = setTimeout(() => {
+      controller.abort();
+      if (!disposed && generation === previewGeneration)
+        lease.finish({
+          message: 'Preview timed out. Choose Preview to try again.',
+          state: 'error',
+        });
+    }, 20000);
     try {
       const result = await loadPreview(entry, { signal: controller.signal });
       if (disposed || controller.signal.aborted || generation !== previewGeneration) {
@@ -297,12 +317,17 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
       }
       previewValue = result;
       container.replaceChildren(result.image);
-      output.textContent = `Exact source decoded: ${entry.width} × ${entry.height} · ${entry.file.bytes} bytes. No assessment was added.`;
+      lease.finish({
+        message: `Exact source decoded: ${entry.width} × ${entry.height} · ${entry.file.bytes} bytes. No assessment was added.`,
+      });
     } catch (error) {
       if (!disposed && generation === previewGeneration)
-        output.textContent = controller.signal.aborted
-          ? 'Preview cancelled or timed out. Choose Preview to try again.'
-          : `Preview unavailable: ${error.message}`;
+        lease.finish({
+          state: 'error',
+          message: controller.signal.aborted
+            ? 'Preview cancelled or timed out. Choose Preview to try again.'
+            : `Preview unavailable: ${error.message}`,
+        });
     } finally {
       clearTimeout(timer);
       if (previewController === controller) previewController = null;
@@ -314,10 +339,19 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
     reloadController?.abort();
     const controller = new AbortController();
     reloadController = controller;
-    const timer = setTimeout(() => controller.abort(), 20000);
-    status.textContent = register
-      ? 'Reloading; the previous register remains visible.'
-      : 'Loading the register…';
+    const lease = report(
+      status,
+      register ? 'Reloading; the previous register remains visible.' : 'Loading the register…',
+      'busy',
+    );
+    const timer = setTimeout(() => {
+      controller.abort();
+      if (!disposed && reloadController === controller)
+        lease.finish({
+          message: `Register request timed out. ${register ? 'Previous view retained.' : ''} Reload to retry.`,
+          state: 'error',
+        });
+    }, 20000);
     try {
       const loaded = validateProductionRegister(await loadRegister({ signal: controller.signal }));
       if (disposed || controller.signal.aborted || reloadController !== controller) return;
@@ -342,11 +376,16 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
         coverage.append(card);
       }
       context.textContent = `${summary.uniquePictureWorks} unique pictures · ${summary.maps.proposed} proposed / ${summary.maps.approved} approved layout families · ${summary.sharedPresentationWorks} shared rigs for 56 handles · ${summary.recipeTracks} synth recipes. ${summary.uniqueReserveWorks} unique reserves · ${summary.reserveOverlap} selected-picture reuse excluded. ${summary.uniqueStoryWorks} unique story works. Historical delivery: ${summary.historicalDelivery.pictures} pictures and ${summary.historicalDelivery.stories} story. ${summary.enemyHandles} enemy handles are a separate inventory.`;
-      status.textContent = `Register revision ${register.revision}. Source metadata is declared here; use the CLI to verify all source files.`;
+      lease.finish({
+        message: `Register revision ${register.revision}. Source metadata is declared here; use the CLI to verify all source files.`,
+      });
       renderList();
     } catch (error) {
       if (!disposed && reloadController === controller)
-        status.textContent = `Register unavailable: ${controller.signal.aborted ? 'request cancelled or timed out' : error.message}. ${register ? 'Previous view retained.' : 'Reload to retry.'}`;
+        lease.finish({
+          state: 'error',
+          message: `Register unavailable: ${controller.signal.aborted ? 'request cancelled or timed out' : error.message}. ${register ? 'Previous view retained.' : 'Reload to retry.'}`,
+        });
     } finally {
       clearTimeout(timer);
       if (reloadController === controller) reloadController = null;
@@ -369,7 +408,8 @@ export function attachProductionPanel({ root, rootURL, loadRegister, loadPreview
     cancel() {
       reloadController?.abort();
       cancelPreview();
-      if (previewStatus) previewStatus.textContent = 'Preview cleared.';
+      if (previewStatus) report(previewStatus, 'Preview cleared.', 'cancelled');
+      report(status, 'Register loading cancelled. Reload to retry.', 'cancelled');
     },
     dispose() {
       disposed = true;

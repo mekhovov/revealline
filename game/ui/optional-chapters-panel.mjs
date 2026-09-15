@@ -6,6 +6,7 @@ import {
 import { PACK_LIMITS } from '../packs.mjs';
 import { EXTERNAL_CHAPTER_LIMITS } from '../external-chapter.mjs';
 import { required } from '../data-json.mjs';
+import { createOperationStatus } from './operation-status.mjs';
 import {
   browseWorlds,
   installedWorldMode,
@@ -41,6 +42,7 @@ export function attachOptionalChaptersPanel({
     generation = 0,
     pending = null,
     pendingFocus = null,
+    pendingStatus = null,
     busy = false,
     page = 0,
     pinned = null;
@@ -77,6 +79,7 @@ export function attachOptionalChaptersPanel({
   cards.className = 'optional-worlds-cards';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
+  const presentation = createOperationStatus(status, { isCurrent: () => !disposed && dialog.open });
   const reload = action('reload', 'Refresh available worlds', () => reloadCatalog()),
     manage = action('manage', 'Manage packs & backups', () => {
       close(false);
@@ -85,7 +88,7 @@ export function attachOptionalChaptersPanel({
     read = action('read', 'Read about worlds', () =>
       onRead({ region: summary, origin: read, label: 'More worlds' }),
     ),
-    cancel = action('cancel', 'Cancel download', cancelPending),
+    cancel = action('cancel', 'Cancel operation', cancelPending),
     back = action('back', 'Back to main menu', () => close()),
     topBack = action('top-back', 'Back', () => close()),
     top = node('div'),
@@ -220,19 +223,21 @@ export function attachOptionalChaptersPanel({
     };
     row.install = action(`${prefix}-install`, 'Install / recover exact pair', () =>
       run(
-        async (signal, current) => {
+        async (signal, current, report) => {
           const packFile = pack.files?.[0],
             mediaFile = media.files?.[0];
           if (!packFile || !mediaFile)
             throw new Error('Choose both exact chapter files before installing.');
-          status.textContent = 'Checking gameplay and original pictures…';
-          await chapter.install({ pack: packFile, media: mediaFile }, { signal });
+          report('Checking gameplay and original pictures…', 'verifying');
+          await chapter.install({ pack: packFile, media: mediaFile }, { signal, onStatus: report });
           if (!current()) return;
+          report('Checking the installed original pair…', 'verifying');
           const next = await chapter.inspect({ signal });
           if (current()) {
             row.result = next;
-            status.textContent =
-              'Exact original pair committed. Your paused flight is kept. Choose the chapter separately; reload after recovery to restore the saved profile.';
+            report(
+              'Exact original pair committed. Your paused flight is kept. Choose the chapter separately; reload after recovery to restore the saved profile.',
+            );
           }
         },
         { origin: row.install, next: row.choose, fallback: recoverySummary },
@@ -240,8 +245,9 @@ export function attachOptionalChaptersPanel({
     );
     row.choose = action(`${prefix}-choose`, 'Choose chapter', () =>
       run(
-        async (signal, current) => {
-          await chapter.choose({ signal });
+        async (signal, current, report) => {
+          report(`Preparing ${chapter.name}…`, 'preparing');
+          await chapter.choose({ signal, onStatus: report });
           if (current()) {
             close(false);
             onChosen();
@@ -256,15 +262,17 @@ export function attachOptionalChaptersPanel({
         `Download & install · ${(chapter.bytes / 1048576).toFixed(1)} MiB`,
         () =>
           run(
-            async (signal, current) => {
-              status.textContent = `Downloading and checking ${chapter.name}…`;
-              await chapter.download({ signal });
+            async (signal, current, report) => {
+              report(`Downloading and checking ${chapter.name}…`, 'downloading');
+              await chapter.download({ signal, onStatus: report });
               if (!current()) return;
+              report('Checking the installed original pair…', 'verifying');
               const next = await chapter.inspect({ signal });
               if (current()) {
                 row.result = next;
-                status.textContent =
-                  'Exact original pair committed. Your paused flight is kept. Choose the chapter separately.';
+                report(
+                  'Exact original pair committed. Your paused flight is kept. Choose the chapter separately.',
+                );
               }
             },
             { origin: row.download, next: row.choose, fallback: recoverySummary },
@@ -276,9 +284,14 @@ export function attachOptionalChaptersPanel({
     card.append(row.choose, state, recovery);
     return row;
   });
-  async function inspectSource(signal, current) {
+  async function inspectSource(signal, current, report) {
     if (!sourceRows.length) return;
-    if (current()) status.textContent = 'Checking installed pictures…';
+    let completed = 0;
+    report('Checking installed pictures…', 'verifying', {
+      completed,
+      total: sourceRows.length,
+      unit: 'chapters',
+    });
     for (const row of sourceRows) {
       if (!current()) return;
       let next;
@@ -288,7 +301,14 @@ export function attachOptionalChaptersPanel({
         if (error.name === 'AbortError') throw error;
         next = { status: 'unavailable', message: error.message };
       }
-      if (current()) row.result = next;
+      if (current()) {
+        row.result = next;
+        report('Checking installed pictures…', 'verifying', {
+          completed: ++completed,
+          total: sourceRows.length,
+          unit: 'chapters',
+        });
+      }
     }
   }
   let measuredLibrary = null,
@@ -478,8 +498,9 @@ export function attachOptionalChaptersPanel({
         row = { key: `installed:${pack.id}`, pack, card };
         row.choose = action(`installed-choose-${pack.id}`, 'Choose installed chapter', () =>
           run(
-            async (signal, current) => {
-              const selected = await chooseInstalled(pack, { signal });
+            async (signal, current, report) => {
+              report(`Preparing ${pack.name}…`, 'preparing');
+              const selected = await chooseInstalled(pack, { signal, onStatus: report });
               if (current() && selected !== false) {
                 close(false);
                 onChosen();
@@ -534,13 +555,17 @@ export function attachOptionalChaptersPanel({
     const focusPlan = pendingFocus,
       fromCancel = doc.activeElement === cancel;
     pendingFocus = null;
+    if (wasBusy)
+      pendingStatus?.finish({
+        state: 'cancelled',
+        message:
+          'Cancellation requested. Completed installs remain available; your flight is kept.',
+      });
+    pendingStatus = null;
     ++generation;
     pending?.abort();
     pending = null;
     busy = false;
-    if (wasBusy)
-      status.textContent =
-        'Pending download cancelled. Completed installs remain available; your flight is kept.';
     refresh();
     if (restoreFocus && wasBusy) returnFocus(focusPlan, false, fromCancel);
   }
@@ -552,7 +577,9 @@ export function attachOptionalChaptersPanel({
       origin !== doc.body && doc.activeElement === origin && dialog.contains(origin)
         ? { origin, next, fallback, moved: false }
         : null;
-    let succeeded = false;
+    let succeeded = false,
+      finalMessage = 'Checking the selected chapter…',
+      outcome = 'ready';
     pendingFocus = focusPlan;
     pending = controller;
     busy = true;
@@ -560,17 +587,34 @@ export function attachOptionalChaptersPanel({
     if (held) pinned = held.key;
     refresh();
     const current = () => !disposed && dialog.open && ticket === generation;
+    const display = presentation.begin({
+      message: finalMessage,
+      stage: 'checking',
+      isCurrent: current,
+    });
+    pendingStatus = display;
+    const report = (value, stage = 'checking', progress = null) => {
+      if (!current()) return;
+      const update = typeof value === 'string' ? { message: value, stage, progress } : value;
+      finalMessage = update.message ?? finalMessage;
+      display.update(update);
+    };
     try {
-      await fn(controller.signal, current);
+      await fn(controller.signal, current, report);
       succeeded = true;
     } catch (error) {
-      if (current())
-        status.textContent =
+      if (current()) {
+        outcome = error?.name === 'AbortError' ? 'cancelled' : 'error';
+        report(
           error?.name === 'AbortError'
-            ? 'Download cancelled. Your installed chapters are kept.'
-            : `${error.message || error} Nothing was removed. Use Refresh or Install to retry.`;
+            ? 'Operation cancelled. Completed installs remain available; your flight is kept.'
+            : `${error.message || error} Completed installs remain available. Use Refresh or Install to retry.`,
+        );
+      }
     } finally {
       if (current()) {
+        display.finish({ message: finalMessage, state: outcome });
+        pendingStatus = null;
         pending = null;
         pendingFocus = null;
         busy = false;
@@ -580,13 +624,13 @@ export function attachOptionalChaptersPanel({
     }
   }
   async function reloadCatalog() {
-    return run(async (signal, current) => {
-      status.textContent = 'Checking installed chapters…';
+    return run(async (signal, current, report) => {
+      report('Checking installed chapters…', 'verifying');
       if (catalog) await inspectInstalled(signal, catalog);
-      await inspectSource(signal, current);
+      await inspectSource(signal, current, report);
       if (!current()) return;
       refresh();
-      status.textContent = 'Reading the optional chapter list…';
+      report('Reading the optional chapter list…', 'reading');
       let next = catalog,
         failure = null;
       try {
@@ -596,24 +640,32 @@ export function attachOptionalChaptersPanel({
         failure = error;
       }
       if (!current()) return;
-      if (next) await inspectInstalled(signal, next);
+      if (next) {
+        report('Checking installed chapters…', 'verifying');
+        await inspectInstalled(signal, next);
+      }
       if (!current()) return;
       catalog = next;
       render();
-      status.textContent = failure
-        ? `Online list unavailable: ${failure.message || failure}. Installed and previously loaded chapters remain available. Refresh to retry.`
-        : 'Installation keeps your current flight. Choose chapter changes the selected mission.';
+      report(
+        failure
+          ? `Online list unavailable: ${failure.message || failure}. Installed and previously loaded chapters remain available. Refresh to retry.`
+          : 'Installation keeps your current flight. Choose chapter changes the selected mission.',
+      );
     });
   }
   async function installItem(item) {
     await run(
-      async (signal, current) => {
-        status.textContent = `Downloading and checking ${item.name}…`;
-        await install(item, { signal });
+      async (signal, current, report) => {
+        report(`Downloading and checking ${item.name}…`, 'downloading');
+        await install(item, { signal, onStatus: report });
+        report('Checking the installed chapter…', 'verifying');
         await inspectInstalled(signal);
         if (current()) {
           refresh();
-          status.textContent = `${item.name} installed. Your paused flight is kept. Choose chapter when ready to change missions.`;
+          report(
+            `${item.name} installed. Your paused flight is kept. Choose chapter when ready to change missions.`,
+          );
         }
       },
       { origin: rows.get(item.id)?.install, next: rows.get(item.id)?.choose },
@@ -622,8 +674,9 @@ export function attachOptionalChaptersPanel({
   async function chooseItem(item) {
     if (busy || disposed || !installed(item)) return;
     await run(
-      async (signal, current) => {
-        const result = await choose(item, { signal });
+      async (signal, current, report) => {
+        report(`Preparing ${item.name}…`, 'preparing');
+        const result = await choose(item, { signal, onStatus: report });
         if (!current()) return;
         if (result !== false) {
           close(false);
@@ -641,15 +694,15 @@ export function attachOptionalChaptersPanel({
     topBack.focus();
     if (!catalog) await reloadCatalog();
     else
-      await run(async (signal, current) => {
-        if (sourceRows.length) status.textContent = 'Checking installed pictures…';
+      await run(async (signal, current, report) => {
+        report('Checking installed chapters and pictures…', 'verifying');
         if (catalog) await inspectInstalled(signal);
-        await inspectSource(signal, current);
+        await inspectSource(signal, current, report);
         if (!current()) return;
         refresh();
-        if (sourceRows.length)
-          status.textContent =
-            'Choose a world to install. Installation keeps your current flight; Choose chapter changes the selected mission.';
+        report(
+          'Choose a world to install. Installation keeps your current flight; Choose chapter changes the selected mission.',
+        );
       });
   }
   function close(notify = true) {
@@ -669,6 +722,8 @@ export function attachOptionalChaptersPanel({
   function dispose() {
     if (disposed) return;
     disposed = true;
+    presentation.dispose();
+    pendingStatus = null;
     ++generation;
     pending?.abort();
     pending = null;

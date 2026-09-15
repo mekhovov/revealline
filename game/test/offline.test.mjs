@@ -6,7 +6,9 @@ import { webcrypto, createHash } from 'node:crypto';
 import { MessageChannel } from 'node:worker_threads';
 import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
+import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
   new URL('../offline/service-worker.template.js', import.meta.url),
   'utf8',
@@ -57,7 +59,10 @@ function host(configPatch = {}, storage = new Map(), options = {}) {
       const data = storage.get(key);
       return {
         async match(url) {
-          return data.get(typeof url === 'string' ? url : url.url)?.clone();
+          await options.beforeMatch?.({ key, url });
+          const entry = data.get(typeof url === 'string' ? url : url.url);
+          assert.ok(!entry?.bodyUsed, `Cached response was consumed: ${url}`);
+          return entry?.clone();
         },
         async put(url, response) {
           const keyURL = typeof url === 'string' ? url : url.url;
@@ -101,6 +106,8 @@ function host(configPatch = {}, storage = new Map(), options = {}) {
     Headers,
     AbortController,
     Uint8Array,
+    setTimeout: (...args) => setTimeout(...args),
+    clearTimeout: (...args) => clearTimeout(...args),
     console,
     fetch: async (request) => {
       const url = typeof request === 'string' ? request : request.url;
@@ -338,7 +345,9 @@ test('explicit preparation and later verification expose a bounded worker report
   assert.equal(result.status, 'waiting');
   assert.deepEqual(statuses, ['preparing', 'waiting']);
   assert.equal(registrations, 1);
-  assert.equal((await checkOffline(env)).status, 'ready');
+  const checked = await checkOffline(env);
+  assert.equal(checked.status, 'waiting');
+  assert.match(checked.message, /Close all tabs/);
   assert.equal(registrations, 1);
   assert.equal(checks, 2);
   assert.doesNotMatch(template, /self\.skipWaiting\s*\(/);
@@ -541,7 +550,8 @@ test('actual illustrated Workshop bytes survive both install and missing-file re
   assert.equal(digest(await repaired.arrayBuffer()), digest(bytes));
   assert.equal(digest(await cache.get(url).clone().arrayBuffer()), digest(bytes));
   assert.equal(responses, 2);
-  assert.equal((await h.report()).status, 'ready');
+  const report = await h.report();
+  assert.equal(report.status, 'ready', report.message);
 });
 
 test('native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy', async () => {
@@ -927,4 +937,496 @@ test('optional pack preparation and verification explicitly distinguish core cac
   assert.match((await checkOffline(env)).message, /install once while online/);
   optionalMarker.optionalPacks = [{ name: 42 }];
   assert.equal(offlineAvailability(env).available, false);
+});
+
+const PROTOCOL = 'revealline.offline-progress.v1';
+function deferred() {
+  let resolve;
+  const promise = new Promise((done) => {
+    resolve = done;
+  });
+  return { promise, resolve };
+}
+const until = (predicate) =>
+  waitFor(predicate, { message: 'Expected asynchronous observation did not arrive' });
+function observedHost(h, state = 'activated') {
+  const listeners = new Set(),
+    pending = [],
+    requests = [];
+  const worker = {
+    state,
+    scriptURL: `${scope}service-worker.js`,
+    addEventListener(_type, listener) {
+      listeners.add(listener);
+    },
+    removeEventListener(_type, listener) {
+      listeners.delete(listener);
+    },
+    postMessage(data, ports) {
+      requests.push(data);
+      pending.push(
+        h.dispatch('message', {
+          data,
+          ports: structuredClone(ports, { transfer: ports }),
+          source: { url: locationRef.href },
+        }),
+      );
+    },
+  };
+  const registration = {
+    scope,
+    active: state === 'activated' ? worker : null,
+    waiting: state === 'installed' ? worker : null,
+    installing: state === 'installing' ? worker : null,
+  };
+  const env = {
+    documentRef,
+    locationRef,
+    secure: true,
+    MessageChannelImpl: MessageChannel,
+    navigatorRef: {
+      serviceWorker: {
+        register: async () => registration,
+        getRegistration: async () => registration,
+      },
+    },
+  };
+  function change(next) {
+    worker.state = next;
+    registration.installing = next === 'installing' ? worker : null;
+    registration.waiting = next === 'installed' ? worker : null;
+    registration.active = next === 'activated' ? worker : null;
+    for (const listener of listeners) listener();
+  }
+  return { worker, registration, env, listeners, pending, requests, change };
+}
+
+test('a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const entries = [
+      ['game/first', 'first'],
+      ['game/second', 'second'],
+      ['game/third', 'third'],
+    ],
+    release = entries.map(deferred),
+    h = host({}, new Map(), {
+      entries,
+      async fetch(request) {
+        const i = entries.findIndex(([path]) => request.url === `${scope}${path}`);
+        await release[i].promise;
+        return new Response(entries[i][1]);
+      },
+    }),
+    observed = observedHost(h, 'installing'),
+    statuses = [];
+  const installing = h.dispatch('install').then(() => observed.change('installed'));
+  let ended = false;
+  const preparing = prepareOffline({ ...observed.env, onStatus: (s) => statuses.push(s) }).finally(
+    () => {
+      ended = true;
+    },
+  );
+  await until(() => statuses.some((s) => s.stage === 'downloading'));
+  for (let i = 0; i < entries.length; i++) {
+    t.mock.timers.tick(40000);
+    assert.equal(ended, false, 'a progressing installation must not hit the old total deadline');
+    release[i].resolve();
+    await until(() =>
+      statuses.some((s) => s.stage === 'downloading' && s.progress?.completed === i + 1),
+    );
+  }
+  await installing;
+  const result = await preparing;
+  assert.equal(result.status, 'waiting');
+  assert.match(result.message, /Close all tabs/);
+  for (const s of statuses.filter((s) => s.stage === 'downloading')) {
+    assert.equal(s.progress.completed, s.downloadVerified);
+    assert.equal(s.downloaded >= s.downloadVerified, true);
+    assert.equal(s.saved, 0);
+    assert.equal(s.progress.total, entries.length);
+  }
+  const saved = statuses.find(
+    (s) => s.stage === 'saving' && s.progress.completed === entries.length,
+  );
+  assert.equal(saved.saved, entries.length);
+  assert.equal(saved.downloadVerified, entries.length);
+  assert.ok(
+    statuses.some((s) => s.stage === 'verifying' && s.progress.completed === entries.length),
+  );
+  assert.equal(h.writes.at(-1).url, `${scope}.offline-ready`);
+  assert.equal(h.calls.length, entries.length);
+  assert.equal(observed.listeners.size, 0);
+  await Promise.all(observed.pending);
+});
+
+test('an installation observation timeout is recoverable; reopening and two tabs rejoin the same download', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const release = deferred(),
+    h = oneFile('shared body', {
+      async fetch() {
+        await release.promise;
+        return new Response('shared body');
+      },
+    }),
+    observed = observedHost(h, 'installing'),
+    firstStatuses = [];
+  const installing = h.dispatch('install').then(() => observed.change('activated'));
+  const first = prepareOffline({ ...observed.env, onStatus: (s) => firstStatuses.push(s) });
+  await until(() => firstStatuses.some((s) => s.stage === 'downloading'));
+  t.mock.timers.tick(60001);
+  assert.equal((await first).status, 'still-running');
+  assert.equal(observed.listeners.size, 0);
+  const firstCount = firstStatuses.length,
+    nextStatuses = [];
+  const second = prepareOffline({ ...observed.env, onStatus: (s) => nextStatuses.push(s) });
+  const third = checkOffline(observed.env);
+  await until(() => nextStatuses.some((s) => s.stage === 'downloading'));
+  assert.equal(h.calls.length, 1);
+  release.resolve();
+  await installing;
+  for (const report of await Promise.all([second, third])) assert.equal(report.status, 'ready');
+  assert.equal(
+    firstStatuses.length,
+    firstCount,
+    'late completion must not revive the detached caller',
+  );
+  assert.equal(h.calls.length, 1);
+  assert.equal(h.writes.filter((w) => w.url.endsWith('.offline-ready')).length, 1);
+  await Promise.all(observed.pending);
+});
+
+test('closing an observer aborts only that caller; background installation completes and cached reopening does not fetch', async () => {
+  const release = deferred(),
+    h = oneFile('kept', {
+      async fetch(request) {
+        await release.promise;
+        assert.equal(request.signal.aborted, false);
+        return new Response('kept');
+      },
+    }),
+    observed = observedHost(h, 'installing'),
+    controller = new AbortController(),
+    statuses = [];
+  const installing = h.dispatch('install').then(() => observed.change('activated'));
+  const first = prepareOffline({
+    ...observed.env,
+    signal: controller.signal,
+    onStatus: (s) => statuses.push(s),
+  });
+  await until(() => statuses.some((s) => s.stage === 'downloading'));
+  const rejection = assert.rejects(first, { name: 'AbortError' });
+  controller.abort();
+  await rejection;
+  const count = statuses.length;
+  assert.equal(observed.listeners.size, 0);
+  release.resolve();
+  await installing;
+  await Promise.all(observed.pending);
+  const cache = currentCache(h);
+  assert.equal(await cache.get(`${scope}game/data.bin`).clone().text(), 'kept');
+  const writes = h.writes.length;
+  assert.equal((await prepareOffline(observed.env)).status, 'ready');
+  assert.equal((await checkOffline(observed.env)).status, 'ready');
+  assert.equal(h.calls.length, 1);
+  assert.equal(h.writes.length, writes);
+  assert.equal(statuses.length, count);
+});
+
+test('separate report timeout and cancellation during cached verification preserve storage and do not start preparation', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let block = false;
+  const release = deferred(),
+    reached = deferred(),
+    h = host({}, new Map(), {
+      async beforeMatch() {
+        if (block) {
+          reached.resolve();
+          await release.promise;
+        }
+      },
+    });
+  await h.dispatch('install');
+  const observed = observedHost(h),
+    writes = h.writes.length,
+    calls = h.calls.length;
+  block = true;
+  const statuses = [],
+    first = checkOffline({ ...observed.env, timeout: 30000, onStatus: (s) => statuses.push(s) });
+  await reached.promise;
+  await until(() => statuses.length > 1);
+  t.mock.timers.tick(30001);
+  assert.equal((await first).status, 'unconfirmed');
+  const controller = new AbortController(),
+    second = checkOffline({ ...observed.env, signal: controller.signal });
+  await until(() => observed.requests.length === 2);
+  const rejected = assert.rejects(second, { name: 'AbortError' });
+  controller.abort();
+  await rejected;
+  release.resolve();
+  await Promise.all(observed.pending);
+  block = false;
+  assert.equal((await checkOffline(observed.env)).status, 'ready');
+  assert.equal(h.writes.length, writes);
+  assert.equal(h.calls.length, calls);
+  assert.ok(observed.requests.every((r) => r.type === 'revealline.offline-check'));
+});
+
+test('a historical terminal-only worker remains compatible while a silent old install times out truthfully', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const h = host(),
+    observed = observedHost(h, 'installing');
+  let port;
+  observed.worker.postMessage = (_request, ports) => {
+    port = ports[0];
+  };
+  const first = prepareOffline(observed.env);
+  await until(() => port);
+  t.mock.timers.tick(60001);
+  assert.equal((await first).status, 'still-running');
+  observed.change('activated');
+  observed.worker.postMessage = (_request, ports) => {
+    ports[0].postMessage({ status: 'ready', buildId: marker.buildId, verified: 3 });
+    ports[0].close();
+  };
+  assert.equal((await prepareOffline(observed.env)).status, 'ready');
+  assert.equal((await checkOffline(observed.env)).status, 'ready');
+});
+
+test('versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion', async () => {
+  for (const patch of [{ buildId: 'b'.repeat(64) }, { scope: `${scope}sibling/` }]) {
+    const h = host(),
+      messages = [],
+      port = { postMessage: (r) => messages.push(r), close() {} };
+    await h.dispatch('message', {
+      data: {
+        type: 'revealline.offline-prepare',
+        protocol: PROTOCOL,
+        requestId: 'mismatch',
+        buildId: marker.buildId,
+        scope,
+        ...patch,
+      },
+      source: { url: locationRef.href },
+      ports: [port],
+    });
+    assert.equal(messages.length, 1);
+    assert.equal(messages[0].kind, 'terminal');
+    assert.equal(messages[0].status, 'not-ready');
+    assert.equal(h.calls.length, 0);
+    assert.equal(h.storage.size, 0);
+  }
+  const observed = observedHost(host()),
+    statuses = [];
+  let complete;
+  observed.worker.postMessage = (request, ports) => {
+    const envelope = {
+      format: PROTOCOL,
+      requestId: request.requestId,
+      scope,
+      buildId: marker.buildId,
+    };
+    ports[0].postMessage({
+      ...envelope,
+      requestId: 'older-request',
+      kind: 'terminal',
+      status: 'ready',
+    });
+    ports[0].postMessage({
+      ...envelope,
+      kind: 'progress',
+      stage: 'saving',
+      progress: { completed: 2, total: 1, unit: 'files' },
+    });
+    complete = () => {
+      ports[0].postMessage({ ...envelope, kind: 'terminal', status: 'ready', verified: 3 });
+      ports[0].close();
+    };
+  };
+  let ended = false;
+  const preparing = prepareOffline({ ...observed.env, onStatus: (s) => statuses.push(s) }).finally(
+    () => {
+      ended = true;
+    },
+  );
+  await until(() => statuses.length === 2);
+  assert.equal(statuses[1].progress, null, 'invalid measured progress is never rendered');
+  assert.equal(ended, false, 'an earlier request cannot complete a newer observer');
+  complete();
+  assert.equal((await preparing).status, 'ready');
+  observed.worker.postMessage = (request, ports) => {
+    ports[0].postMessage({
+      format: PROTOCOL,
+      requestId: request.requestId,
+      scope,
+      buildId: 'b'.repeat(64),
+      kind: 'terminal',
+      status: 'ready',
+    });
+    ports[0].close();
+  };
+  await assert.rejects(prepareOffline(observed.env), /different build/);
+  assert.equal((await checkOffline(observed.env)).status, 'not-ready');
+});
+
+test('a changed or redundant worker cannot publish success to an old observation', async () => {
+  for (const change of ['superseded', 'redundant', 'wrong-script']) {
+    const observed = observedHost(host());
+    let complete;
+    observed.worker.postMessage = (request, ports) => {
+      complete = () => {
+        ports[0].postMessage({
+          format: PROTOCOL,
+          requestId: request.requestId,
+          scope,
+          buildId: marker.buildId,
+          kind: 'terminal',
+          status: 'ready',
+        });
+        ports[0].close();
+      };
+    };
+    const pending = prepareOffline(observed.env);
+    await until(() => complete);
+    const rejected = assert.rejects(pending, /worker changed|download failed|does not match/i);
+    if (change === 'superseded') observed.registration.installing = { state: 'installing' };
+    if (change === 'redundant') observed.change('redundant');
+    if (change === 'wrong-script') observed.worker.scriptURL = `${scope}other-worker.js`;
+    complete();
+    await rejected;
+    assert.equal(observed.listeners.size, 0);
+  }
+});
+
+test('streamed integrity, missing-file and quota failures remain real failures with no ready claim', async () => {
+  for (const fault of ['integrity', 'quota']) {
+    const old = `revealline-offline:${encodeURIComponent(scope)}:previous`,
+      storage = new Map([[old, new Map([['kept', new Response('old')]])]]),
+      h = host({}, storage, {
+        entries: [['game/data.bin', 'valid']],
+        fetch: async () => new Response(fault === 'integrity' ? 'wrong' : 'valid'),
+        beforePut() {
+          if (fault === 'quota')
+            throw new DOMException('Storage quota exceeded', 'QuotaExceededError');
+        },
+      }),
+      observed = observedHost(h),
+      statuses = [];
+    await assert.rejects(
+      prepareOffline({ ...observed.env, onStatus: (s) => statuses.push(s) }),
+      /integrity|quota/,
+    );
+    assert.ok(statuses.every((s) => !['ready', 'waiting'].includes(s.status)));
+    assert.deepEqual(await h.caches.keys(), [old]);
+    assert.equal(await storage.get(old).get('kept').clone().text(), 'old');
+  }
+  const h = host();
+  await h.dispatch('install');
+  currentCache(h).delete(`${scope}game/app.mjs`);
+  currentCache(h).set(`${scope}game/index.html`, new Response('corrupt'));
+  const result = await checkOffline(observedHost(h).env);
+  assert.equal(result.status, 'not-ready');
+  assert.deepEqual([...result.missing], ['game/app.mjs']);
+  assert.deepEqual([...result.corrupt], ['game/index.html']);
+  assert.equal(h.calls.length, 3);
+});
+
+test('versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const release = deferred(),
+    h = oneFile('body', {
+      async fetch() {
+        await release.promise;
+        return new Response('body');
+      },
+    });
+  const records = [];
+  const subscribe = (id, protocol = PROTOCOL) => {
+    const record = { id, messages: [], closed: false };
+    const port = {
+      postMessage(r) {
+        record.messages.push(r);
+      },
+      close() {
+        record.closed = true;
+      },
+    };
+    record.port = port;
+    record.done = h.dispatch('message', {
+      data: {
+        type: 'revealline.offline-prepare',
+        protocol,
+        requestId: id,
+        scope,
+        buildId: marker.buildId,
+      },
+      source: { url: locationRef.href },
+      ports: [port],
+    });
+    records.push(record);
+    return record;
+  };
+  const first = subscribe('first'),
+    terminalOnly = subscribe('legacy', null);
+  await until(() => first.messages.some((s) => s.stage === 'downloading'));
+  first.port.onmessage({ data: { type: 'revealline.offline-detach', requestId: 'first' } });
+  const firstCount = first.messages.length;
+  for (let i = 0; i < 65; i++) subscribe(`tab-${i}`);
+  assert.equal(records.find((r) => r.id === 'tab-0').closed, true);
+  t.mock.timers.tick(5 * 60 * 1000 + 1);
+  assert.ok(records.filter((r) => r !== terminalOnly).every((r) => r.closed));
+  assert.equal(h.calls.length, 1);
+  assert.equal(h.writes.length, 0);
+  release.resolve();
+  await Promise.all(records.map((r) => r.done));
+  assert.equal(first.messages.length, firstCount);
+  assert.equal(terminalOnly.messages.length, 1);
+  assert.equal(terminalOnly.messages[0].status, 'ready');
+  assert.equal(terminalOnly.messages[0].kind, undefined);
+  assert.equal((await h.report()).status, 'ready');
+});
+
+test('aborting while registration is pending detaches promptly and never unregisters the eventual worker', async () => {
+  const observed = observedHost(host()),
+    registration = deferred(),
+    controller = new AbortController();
+  observed.env.navigatorRef.serviceWorker.register = () => registration.promise;
+  const first = prepareOffline({ ...observed.env, signal: controller.signal });
+  const rejected = assert.rejects(first, { name: 'AbortError' });
+  controller.abort();
+  await rejected;
+  registration.resolve(observed.registration);
+  await nextTurn();
+  assert.equal(observed.requests.length, 0);
+  assert.equal(observed.listeners.size, 0);
+});
+
+test('prepare joins a pending cached inspection before repair and final verification uses the repaired bytes', async () => {
+  const release = deferred(),
+    reached = deferred();
+  let pause = false,
+    matched = 0;
+  const h = host({}, new Map(), {
+    async beforeMatch({ url }) {
+      if (pause && url === `${scope}game/index.html`) {
+        matched++;
+        reached.resolve();
+        await release.promise;
+      }
+    },
+  });
+  await h.dispatch('install');
+  currentCache(h).delete(`${scope}game/app.mjs`);
+  const observed = observedHost(h);
+  pause = true;
+  const checking = checkOffline(observed.env);
+  await reached.promise;
+  const preparing = prepareOffline(observed.env);
+  await until(() => observed.requests.length === 2);
+  assert.equal(matched, 1, 'preparation must join the already-running inspection');
+  pause = false;
+  release.resolve();
+  assert.equal((await checking).status, 'not-ready');
+  assert.equal((await preparing).status, 'ready');
+  assert.equal(h.calls.length, 6);
+  assert.equal((await h.report()).status, 'ready');
 });

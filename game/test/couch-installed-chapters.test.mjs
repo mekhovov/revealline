@@ -308,22 +308,44 @@ test('cancelled decode is joined before replacement and cannot publish a late im
     before = f.writes();
   let decodes = 0,
     finish;
+  const firstStatus = [],
+    nextStatus = [];
   f.model.onDecode = async () => {
     if (++decodes === 4)
       await new Promise((resolve) => {
         finish = resolve;
       });
   };
-  const pending = f.reader.select(rows[0], { raceId: 1 });
+  const pending = f.reader.select(rows[0], {
+    raceId: 1,
+    onStatus: (status) => firstStatus.push(status),
+  });
+  assert.equal(firstStatus[0].stage, 'verifying');
   const rejected = assert.rejects(pending, { name: 'AbortError' });
   await settle(() => finish, 'fourth actual original decode never started');
-  const next = f.reader.select(rows[1], { raceId: 2 });
+  assert.equal(firstStatus.at(-1).stage, 'decoding');
+  const next = f.reader.select(rows[1], {
+    raceId: 2,
+    onStatus: (status) => nextStatus.push(status),
+  });
+  assert.equal(nextStatus[0].stage, 'verifying');
   await rejected;
+  const detachedCount = firstStatus.length;
   finish();
   const binding = await next;
   assert.equal(binding.pin.identity.levelId, rows[1].level.id);
   assert.equal(f.reader.current(), binding);
   assert.equal(f.model.urls.size, 1);
+  assert.equal(
+    firstStatus.length,
+    detachedCount,
+    'cancelled decoding cannot publish late readiness',
+  );
+  assert.equal(nextStatus.at(-1).status, 'ready');
+  assert.ok(
+    nextStatus.every((status) => status.progress === null),
+    'authentication has no invented file denominator',
+  );
   assert.deepEqual(f.writes(), before);
 });
 
@@ -490,9 +512,15 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   page.$('race-level').value = installed[1].value;
   await action(page.$('race-level'), 'change');
   await settle(() => finish, 'pending map original was not read');
+  assert.equal(page.$('race-preparation').dataset.state, 'busy');
+  assert.equal(page.$('race-preparation').dataset.stage, 'decoding');
+  assert.equal(page.$('race-preparation').closest('[hidden]'), null);
+  assert.equal(page.$('race-preparation').closest('[inert]'), null);
+  assert.equal(page.$('race-setup-back').disabled, false);
   page.$('race-setup-back').click();
   assert.equal(page.$('race-start').disabled, true);
   assert.match(page.$('race-message').textContent, /cancelled/);
+  assert.equal(page.$('race-preparation').hidden, true);
   finish();
   f.model.onDecode = null;
   const retry = page.$('race-chapter-retry');

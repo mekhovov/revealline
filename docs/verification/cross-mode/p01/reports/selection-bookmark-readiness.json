@@ -1,0 +1,74 @@
+{
+  "format": "revealline-focused-fixture-correction.v1",
+  "status": "PASS",
+  "baseSourceRevision": "c5bf0bd0f4ae82aac370adde0bff5d12d9e63501",
+  "sourceMode": "Uncommitted two-hunk test-only correction on c5 source; no exact follow-up source or hosted qualification claim.",
+  "ownedFile": "game/test/selection-bookmark-host.test.mjs",
+  "beforeSha256": "aaf1d8faf561b23a32ee81cddc0a4b9142aaa1e315edf2321ebb718cfb7c9441",
+  "afterSha256": "7015c7ef452c2a7ecb2c898515b519d18b8ff00420a8d58b80b3531caad1f277",
+  "commands": [
+    {
+      "command": "node --test game/test/selection-bookmark-host.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "./node_modules/.bin/prettier --check game/test/selection-bookmark-host.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check -- game/test/selection-bookmark-host.test.mjs",
+      "exitCode": 0
+    }
+  ],
+  "tap": {
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 6830.981958,
+    "scope": "Two child scenarios plus their parent test; this is not an assertion count."
+  },
+  "nodeVersion": "v20.19.5",
+  "selfReview": {
+    "exactApprovedDiffReconstructed": true,
+    "onlyExisting30000ConstantNamed": true,
+    "onlyRetainedInstalledReloadUsesInitialOverride": true,
+    "initialTinyCampaignKeepsDefault5000": true,
+    "titleScreenAndAllAssertionsPreservedByteForByte": true,
+    "globalDefaultUnchanged": true,
+    "runtimeUnchangedByThisCorrection": true,
+    "reproducedFailureClaim": false
+  },
+  "files": [
+    {
+      "path": ".cache/cross-mode/p01/selection-bookmark-readiness-fix/full-file.log",
+      "bytes": 818,
+      "sha256": "60faf49c95fe23f75f3e80c84386ee717d2f02e72331938a2bbf530082374744"
+    },
+    {
+      "path": ".cache/cross-mode/p01/selection-bookmark-readiness-fix/format-check.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/cross-mode/p01/selection-bookmark-readiness-fix/change.diff",
+      "bytes": 1281,
+      "sha256": "605e6bdd6186c0b1f121e1b063c8eb511cf14387e6d4fbb247ec082b653445c2"
+    }
+  ],
+  "frozenAuditPins": [
+    {
+      "path": ".cache/cross-mode/p01/initial-ready-inventory-audit.json",
+      "bytes": 23749,
+      "sha256": "cf3e19fba3bc014b644716932f1f11b5064bd046efc2b8275519dc6b882f814b"
+    },
+    {
+      "path": ".cache/cross-mode/p01/initial-ready-inventory-audit.md",
+      "bytes": 3689,
+      "sha256": "c59666668bf14f1f990f01a5ca99c5f1b087939b09264c7bf773449859e25871"
+    }
+  ],
+  "releaseAccepted": false
+}

@@ -185,6 +185,10 @@ test('pending decoded original blocks every fixed tick; background return never 
   p.$('start-button').click();
   p.key('ArrowDown');
   ticks(p, 30);
+  await new Promise((resolve) => setTimeout(resolve, 10));
+  assert.equal(decoding, 1, 'Start observes the existing prewarm instead of decoding again.');
+  assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
+  assert.equal(p.$('flight-preparation-cancel').hidden, false);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
   p.doc.hidden = true;
   p.doc.emit('visibilitychange');
@@ -201,6 +205,69 @@ test('pending decoded original blocks every fixed tick; background return never 
   assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
   assert.equal(p.rendered.run.tick, 0);
   assert.deepEqual(p.errors, []);
+});
+
+test('a failed picture prewarm can be retried without reusing its rejected promise', async (t) => {
+  const f = await setup(t),
+    gate = deferred();
+  let decoding = 0;
+  class RetryPicture extends Picture {
+    decode() {
+      decoding++;
+      return decoding === 1 ? gate.promise : Promise.resolve();
+    }
+  }
+  const p = await pageFor(t, f, { pictures: { Image: RetryPicture }, waitForPictures: false });
+  await settle(() => decoding === 1);
+  p.$('start-button').click();
+  const before = authoritativeCheckpoint(p.rendered.run);
+  gate.reject(new Error('Decoder temporarily unavailable'));
+  await settle(() => p.$('flight-preparation-status').dataset.state === 'error');
+  assert.match(p.$('flight-preparation-status').textContent, /Decoder temporarily unavailable/);
+  ticks(p, 10);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+  p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.frame(0);
+  assert.equal(decoding, 2);
+  assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
+  assert.deepEqual(p.errors, []);
+});
+
+test('cancelling picture preparation restores keyboard focus before native hiding drops it', async (t) => {
+  const f = await setup(t),
+    gate = deferred();
+  let decoding = 0;
+  class HeldPicture extends Picture {
+    decode() {
+      decoding++;
+      return gate.promise;
+    }
+  }
+  const p = await pageFor(t, f, { pictures: { Image: HeldPicture }, waitForPictures: false });
+  await settle(() => decoding === 1);
+  p.$('start-button').click();
+  const before = authoritativeCheckpoint(p.rendered.run),
+    cancel = p.$('flight-preparation-cancel');
+  let hidden = cancel.hidden;
+  Object.defineProperty(cancel, 'hidden', {
+    configurable: true,
+    get: () => hidden,
+    set(value) {
+      hidden = value;
+      // A browser drops focus when its current action becomes display:none.
+      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
+    },
+  });
+  cancel.focus();
+  cancel.click();
+  assert.equal(p.doc.activeElement, p.$('start-button'));
+  assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
+  gate.resolve();
+  await new Promise((resolve) => setTimeout(resolve, 10));
+  ticks(p, 10);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+  assert.equal(p.doc.activeElement, p.$('start-button'));
 });
 
 test('old v2 saved flight remains legacy even when a current managed assignment exists', async (t) => {

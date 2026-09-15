@@ -10,9 +10,14 @@
       content="Source-only review atlas for the RevealLine FPV redesign: screen studies, bilingual type, visual rules and reference evidence."
     />
     <link rel="stylesheet" href="./atlas.css" />
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to design atlas</a>
+    <p id="font-status" class="operation-status" data-state="busy">
+      <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+      ><span class="operation-status-label" role="status">Checking local font availability…</span>
+    </p>
     <header class="atlas-header">
       <a class="atlas-brand" href="../../game/" aria-label="Open the current RevealLine game">
         <span class="brand-mark" aria-hidden="true">↗</span> REVEAL<span>LINE</span>
@@ -196,7 +201,6 @@
         <p class="glyph-check" lang="uk">
           АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ · абвгґдеєжзиіїйклмнопрстуфхцчшщьюя · ’ ʼ ь ґ є і ї
         </p>
-        <p id="font-status" class="small-note" role="status">Checking local font availability…</p>
         <div class="palette" id="palette" aria-label="Proposed Field Kit palette"></div>
         <p class="small-note">
           Accent colors identify roles together with shapes and labels. Do not use cyan, amber or
@@ -540,6 +544,11 @@ Return the sprite or coordinated sheet with all required states, an unchanged sl
       </p>
       <a href="#main">Back to the signal ↑</a>
     </footer>
-    <script type="module" src="./atlas.mjs"></script>
+    <script
+      defer
+      src="../../game/ui/direct-tool-launch.js"
+      data-module="./atlas.mjs"
+      data-status="font-status"
+    ></script>
   </body>
 </html>

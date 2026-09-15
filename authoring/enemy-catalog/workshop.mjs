@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createEnemyCatalogInput } from '../../game/ui/enemy-catalog-input.mjs';
 import { attachEnemyWorkshopReturnHost } from '../../game/ui/enemy-workshop-return.mjs';
 import { attachEnemyCatalogPanel } from '../../game/ui/enemy-catalog-panel.mjs';
@@ -10,6 +12,11 @@ import { prepareScenario } from '../../game/imports.mjs';
 const key = 'revealline.authoring.enemy-catalog.v1',
   status = document.getElementById('catalog-host-status'),
   frame = document.getElementById('catalog-practice');
+const presenter = createOperationStatus(status);
+const report = (message, state = 'ready') => {
+  const lease = presenter.begin({ message });
+  if (state !== 'busy') lease.finish({ message, state });
+};
 let panel = null,
   navigation = null,
   router = null,
@@ -17,6 +24,7 @@ let panel = null,
   raf = null,
   last = 0;
 async function start() {
+  report('Loading registered themes…', 'busy');
   const response = await fetch('../../game/content/themes.json');
   if (!response.ok) throw new Error('Registered themes could not be loaded.');
   const { themes } = await response.json();
@@ -27,7 +35,7 @@ async function start() {
       document.getElementById('open-catalog').focus();
       panel.open();
       navigation.sync();
-      status.textContent = 'Returned to the same workshop draft. Practice has ended.';
+      report('Returned to the same workshop draft. Practice has ended.');
     },
   });
   let initial = emptyEnemyCatalogDraft();
@@ -35,17 +43,17 @@ async function start() {
     const text = localStorage.getItem(key);
     if (text) initial = validateEnemyCatalogDraft(JSON.parse(text));
   } catch {
-    status.textContent = 'Saved choices unavailable; using the default authoring catalog.';
+    report('Saved choices unavailable; using the default authoring catalog.');
   }
   panel = attachEnemyCatalogPanel({
     initialDraft: initial,
     onRead: (request) => navigation.beginReading(request),
     onError: (error) => {
-      status.textContent = error.message;
+      report(error.message, 'error');
     },
     onApplyDraft: (draft) => {
       localStorage.setItem(key, JSON.stringify(draft));
-      status.textContent = 'Future authoring choices saved locally.';
+      report('Future authoring choices saved locally.');
     },
     onExport: (draft) => {
       const blob = new Blob([JSON.stringify(draft, null, 2)], { type: 'application/json' }),
@@ -58,18 +66,21 @@ async function start() {
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     },
-    onPreview: async (type, draft) => {
+    onPreview: async (type, draft, operation) => {
       const prepared = await prepareScenario(createEnemyCatalogScenario(type, draft, themes));
+      operation.check();
       sessionStorage.setItem('revealline.playground.current', JSON.stringify(prepared.scenario));
       frame.src = practiceReturn.launchURL();
       frame.hidden = false;
       // Close after the panel's async operation has released its busy guard.
       setTimeout(() => {
+        if (operation.signal.aborted) return;
         panel.close();
-        frame.focus();
+        if (!document.hidden && document.hasFocus?.() !== false) frame.focus();
       }, 0);
-      status.textContent =
-        'Separate practice loaded. Pause and choose Return to workshop to keep editing this draft. Campaign progress is untouched.';
+      report(
+        'Practice prepared. Loading the child game; its loading screen reports when play is available. Pause and choose Return to workshop to keep editing this draft.',
+      );
     },
   });
   router = createControllerRouter();
@@ -82,7 +93,7 @@ async function start() {
     keyboard: true,
     onNativeInput: () => menuInput?.clear(),
     onHint: (text) => {
-      status.textContent = text;
+      if (!panel?.dialog.querySelector('.operation-status[data-state="busy"]')) report(text);
     },
   });
   menuInput = createEnemyCatalogInput({
@@ -92,6 +103,7 @@ async function start() {
     navigation,
     getScope: () => (panel.dialog.open ? 'enemy-catalog' : 'catalog-page'),
   });
+  document.getElementById('open-catalog').disabled = false;
   document.getElementById('open-catalog').onclick = () => {
     panel.open();
     navigation.sync();
@@ -126,10 +138,10 @@ async function start() {
       raf = requestAnimationFrame(loop);
     }
   });
-  status.textContent = 'Seven behavior roles and four original presentation families ready.';
+  report('Seven behavior roles and four original presentation families ready.');
   panel.open();
   raf = requestAnimationFrame(loop);
 }
 start().catch((error) => {
-  status.textContent = `Workshop unavailable: ${error.message}`;
+  report(`Workshop unavailable: ${error.message}. Reload this page to retry.`, 'error');
 });

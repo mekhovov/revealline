@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createMediaIdentityCatalog, MEDIA_PRESENTATION_FORMAT } from '../media-library.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
@@ -48,6 +49,15 @@ export function attachStillMediaPanel({
     'Open to verify saved originals and the source game’s installed packs.',
   );
   status.setAttribute('role', 'status');
+  const initialStatus = status.textContent;
+  const feedback = createOperationStatus(status);
+  let activity = null;
+  function setStatus(message, state = 'ready') {
+    if (activity) activity.update({ message, progress: null });
+    else feedback.begin({ message }).finish({ message, state });
+  }
+  setStatus(initialStatus);
+
   const stats = node('p', 'stats');
   const fields = node('div', 'fields');
   const control = (tag, id, label, attrs = {}, parent = fields) => {
@@ -86,12 +96,14 @@ export function attachStillMediaPanel({
     type: 'text',
     maxlength: '2048',
   });
+  const operations = node('div', 'operations');
+  operations.append(status);
   const actions = node('div', 'actions');
-  const button = (id, text, fn) => {
+  const button = (id, text, fn, parent = actions) => {
     const item = node('button', id, text);
     item.type = 'button';
     item.onclick = fn;
-    actions.append(item);
+    parent.append(item);
     return item;
   };
   const inspect = button('preview', 'Preview chosen file', () => upload());
@@ -107,8 +119,8 @@ export function attachStillMediaPanel({
     return savedPreview(true);
   });
   const reload = button('reload', 'Reload saved media and installed maps', () => load());
-  const cancel = button('cancel', 'Cancel pending work', () => cancelWork());
-  const close = button('close', 'Close workshop', () => closePanel());
+  const cancel = button('cancel', 'Cancel pending work', () => cancelWork(), operations);
+  const close = button('close', 'Close workshop', () => closePanel(), operations);
   const bundleSection = node('section', 'bundles'),
     bundleTitle = node('h3', 'bundle-title', 'Original picture files'),
     bundleNote = node(
@@ -172,7 +184,7 @@ export function attachStillMediaPanel({
   const canvas = preview.canvas;
   canvas.id = 'still-media-preview-canvas';
   canvas.setAttribute('aria-label', 'Isolated still picture preview; no gameplay or rewards');
-  dialog.append(title, note, stats, fields, canvas, actions, bundleSection, status);
+  dialog.append(title, operations, note, stats, fields, canvas, actions, bundleSection);
   doc.body.append(dialog);
   let saved = null,
     context = null,
@@ -195,7 +207,7 @@ export function attachStillMediaPanel({
           work(text, async (signal, check) => {
             await action(signal, check);
             check();
-            status.textContent = story.statusText();
+            setStatus(story.statusText());
           }),
         cancelWork,
         getSelection: storySelection,
@@ -257,8 +269,7 @@ export function attachStillMediaPanel({
       identity: selected.identity,
       description: selected.description,
     };
-    status.textContent =
-      'Captured original PNG is a picture draft. Choose Save assignment to retain it.';
+    setStatus('Captured original PNG is a picture draft. Choose Save assignment to retain it.');
     // The child deliberately adopts this one verified selection transition only
     // after its stale guard has passed; ordinary changes still cancel it.
     return storySelection();
@@ -276,14 +287,18 @@ export function attachStillMediaPanel({
     return error instanceof Error ? error.message : String(error);
   }
   function cancelWork() {
+    feedback.clear();
+    activity = null;
     if (task) ready = false;
     ++serial;
     task?.abort();
     task = null;
     discardBundles();
     story?.cancel();
-    status.textContent =
-      'Pending work cancelled. Any completed save stays saved; reload to verify.';
+    setStatus(
+      'Pending work cancelled. Any completed save stays saved; reload to verify.',
+      'cancelled',
+    );
     sync();
   }
   function sync() {
@@ -374,8 +389,7 @@ export function attachStillMediaPanel({
       ]),
       assignment ? JSON.stringify([assignment.presentationId, assignment.revision]) : '',
     );
-    status.textContent =
-      'Exact map/world selected. Preview an original or a saved revision before saving.';
+    setStatus('Exact map/world selected. Preview an original or a saved revision before saving.');
     sync();
   }
   campaign.onchange = () => {
@@ -413,20 +427,27 @@ export function attachStillMediaPanel({
     const own = new AbortController(),
       id = ++serial;
     task = own;
-    status.textContent = text;
+    const lease = feedback.begin({ message: text, isCurrent: () => !disposed && id === serial });
+    activity = lease;
     sync();
     const check = () => {
       if (disposed || id !== serial || own.signal.aborted)
         throw new DOMException('Work cancelled.', 'AbortError');
     };
     try {
-      await action(own.signal, check);
+      await action(own.signal, check, lease);
       check();
+      lease.finish({ message: status.textContent });
       return true;
     } catch (error) {
-      if (!disposed && id === serial) status.textContent = message(error);
+      if (!disposed && id === serial)
+        lease.finish({
+          message: message(error),
+          state: error?.name === 'AbortError' ? 'cancelled' : 'error',
+        });
       return false;
     } finally {
+      if (activity === lease) activity = null;
       if (id === serial) {
         task = null;
         sync();
@@ -436,28 +457,39 @@ export function attachStillMediaPanel({
   async function load() {
     if (task) return false;
     discardBundles();
-    return work('Verifying saved originals and installed maps…', async (signal, check) => {
-      ready = false;
-      const nextContext = await catalog.read({ signal });
-      check();
-      const next = await store.read({ signal });
-      check();
-      context = nextContext;
-      saved = next;
-      draft = null;
-      identityCatalog = createMediaIdentityCatalog(context.executionCatalog);
-      entries = context.executionCatalog.entries.filter((e) => e.difficulty === 'standard');
-      options(
-        campaign,
-        entries.map((e) => [e.baseCampaignKey, e.campaign.title ?? e.campaign.id]),
-        campaign.value,
-      );
-      ready = true;
-      contexts();
-      if (story) await story.load({ signal, check });
-      status.textContent =
-        'Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision.';
-    });
+    return work(
+      'Verifying saved originals and installed maps…',
+      async (signal, check, progress) => {
+        ready = false;
+        const nextContext = await catalog.read({ signal });
+        check();
+        progress.update({
+          message: 'Reading and verifying saved picture originals…',
+          stage: 'verifying',
+        });
+        const next = await store.read({ signal });
+        check();
+        context = nextContext;
+        saved = next;
+        draft = null;
+        identityCatalog = createMediaIdentityCatalog(context.executionCatalog);
+        entries = context.executionCatalog.entries.filter((e) => e.difficulty === 'standard');
+        options(
+          campaign,
+          entries.map((e) => [e.baseCampaignKey, e.campaign.title ?? e.campaign.id]),
+          campaign.value,
+        );
+        ready = true;
+        contexts();
+        if (story) {
+          progress.update({ message: 'Reading optional story history…', stage: 'reading' });
+          await story.load({ signal, check });
+        }
+        setStatus(
+          'Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision.',
+        );
+      },
+    );
   }
   const view = (selected, asset, blob) => ({
     theme: selected.world,
@@ -492,11 +524,14 @@ export function attachStillMediaPanel({
           );
         if (!caption?.trim() || caption.length > 2048)
           throw new Error('Add a picture description before previewing.');
+        activity?.update({ message: 'Decoding the verified picture preview…', stage: 'decoding' });
         const shown = await preview.show(view(selected, prepared.asset, prepared.blob), { signal });
         check();
         if (!shown) throw new Error('Preview cancelled. The prior picture is kept.');
         draft = { ...prepared, identity: selected.identity, description: caption };
-        status.textContent = `${prepared.asset.width} × ${prepared.asset.height} · ${prepared.asset.bytes} original bytes verified. Preview only; choose Save assignment to retain them.`;
+        setStatus(
+          `${prepared.asset.width} × ${prepared.asset.height} · ${prepared.asset.bytes} original bytes verified. Preview only; choose Save assignment to retain them.`,
+        );
       },
     );
   }
@@ -520,9 +555,11 @@ export function attachStillMediaPanel({
       check();
       if (!shown) throw new Error('Preview cancelled.');
       draft = p ? { existing: p, identity: selected.identity } : null;
-      status.textContent = p
-        ? `Saved revision ${p.revision} previewed. Save assignment to select it.`
-        : 'Authored picture previewed. Use authored picture removes only the assignment, keeping originals.';
+      setStatus(
+        p
+          ? `Saved revision ${p.revision} previewed. Save assignment to select it.`
+          : 'Authored picture previewed. Use authored picture removes only the assignment, keeping originals.',
+      );
     });
   }
   async function commit(remove) {
@@ -572,6 +609,7 @@ export function attachStillMediaPanel({
         signal,
       });
       check();
+      activity?.update({ message: 'Saving the verified picture assignment…', stage: 'saving' });
       const result = await catalog.withCurrent(
         ticket,
         () => store.commit(prepared, { expectedGeneration: baseline.generation, signal }),
@@ -584,13 +622,17 @@ export function attachStillMediaPanel({
       draft = null;
       ready = true;
       changeContext(true);
-      status.textContent = remove
-        ? 'Assignment removed; originals and history retained. Choose Preview authored picture to inspect the fallback. Game data was not changed.'
-        : 'Assignment saved in local media. Originals retained. Flights, scores, saves and Collection were not changed.';
+      setStatus(
+        remove
+          ? 'Assignment removed; originals and history retained. Choose Preview authored picture to inspect the fallback. Game data was not changed.'
+          : 'Assignment saved in local media. Originals retained. Flights, scores, saves and Collection were not changed.',
+      );
       try {
         onSaved(saved);
       } catch (error) {
-        status.textContent = `Assignment saved, but its notification failed: ${message(error)}. Reload to verify the saved state.`;
+        setStatus(
+          `Assignment saved, but its notification failed: ${message(error)}. Reload to verify the saved state.`,
+        );
       }
     });
   }
@@ -607,15 +649,16 @@ export function attachStillMediaPanel({
     if (task) return cancelWork();
     discardBundles();
     sync();
-    status.textContent = 'Review this file and policy before restoring. Saved data is unchanged.';
+    setStatus('Review this file and policy before restoring. Saved data is unchanged.');
   };
   downloadOriginals.onclick = (event) => {
     if (!bundleURL || task || disposed) {
       event?.preventDefault();
       return false;
     }
-    status.textContent =
-      'Originals download requested. Confirm the destination in your browser; this prepared copy remains available to retry.';
+    setStatus(
+      'Originals download requested. Confirm the destination in your browser; this prepared copy remains available to retry.',
+    );
   };
   async function prepareDownload() {
     if (!ready || task) return false;
@@ -623,6 +666,7 @@ export function attachStillMediaPanel({
     return work('Verifying all retained originals for download…', async (signal, check) => {
       const latest = await store.read({ signal });
       check();
+      activity?.update({ message: 'Verifying and packing picture originals…', stage: 'exporting' });
       const blob = await exportMediaBundle(latest.document, latest.assets, { signal, decodeImage });
       check();
       let candidate = null;
@@ -637,7 +681,9 @@ export function attachStillMediaPanel({
       downloadOriginals.href = bundleURL;
       downloadOriginals.download = 'RevealLine-originals.rlmedia';
       downloadOriginals.hidden = false;
-      status.textContent = `Originals backup prepared from generation ${latest.generation} (${blob.size} bytes, ${latest.assets.length} distinct originals). Choose Download originals. Preparation has not saved a file to disk.`;
+      setStatus(
+        `Originals backup prepared from generation ${latest.generation} (${blob.size} bytes, ${latest.assets.length} distinct originals). Choose Download originals. Preparation has not saved a file to disk.`,
+      );
       downloadOriginals.focus();
     });
   }
@@ -660,8 +706,9 @@ export function attachStillMediaPanel({
         check();
         reviewedBundle = { review, context, file, assignmentMode };
         bundleReview.textContent = `Reviewed target generation ${review.expectedGeneration}: ${review.originals} distinct retained originals, ${review.originalBytes} bytes, ${review.document.owners.length} exact historical owners, ${review.document.library.presentations.length} immutable picture revisions, ${review.document.library.assignments.length} resulting assignments. ${assignmentMode === 'restore' ? 'The file’s complete assignment set will be selected.' : 'Current assignments win; missing bindings are added.'} No data has been restored yet.`;
-        status.textContent =
-          'Review complete. Choose Restore reviewed originals to commit this exact policy and target generation.';
+        setStatus(
+          'Review complete. Choose Restore reviewed originals to commit this exact policy and target generation.',
+        );
         restoreOriginals.disabled = false;
         restoreOriginals.focus();
       },
@@ -677,7 +724,7 @@ export function attachStillMediaPanel({
     ) {
       discardBundles();
       sync();
-      status.textContent = 'The reviewed file, policy or installed context changed. Review again.';
+      setStatus('The reviewed file, policy or installed context changed. Review again.');
       return false;
     }
     reviewedBundle = null;
@@ -693,8 +740,9 @@ export function attachStillMediaPanel({
       discardBundles();
       draft = null;
       ready = false;
-      status.textContent =
-        'Originals and the reviewed assignments were restored. Retained history was preserved. Reload saved media and installed maps to verify; game progress and flights were not imported.';
+      setStatus(
+        'Originals and the reviewed assignments were restored. Retained history was preserved. Reload saved media and installed maps to verify; game progress and flights were not imported.',
+      );
       reload.disabled = false;
       reload.focus();
     });
@@ -727,8 +775,7 @@ export function attachStillMediaPanel({
       draft = null;
       preview.clear();
       sync();
-      status.textContent =
-        'Installed context may have changed. Reload saved media and maps before editing.';
+      setStatus('Installed context may have changed. Reload saved media and maps before editing.');
     },
     snapshot() {
       return Object.freeze({
@@ -742,6 +789,7 @@ export function attachStillMediaPanel({
       if (disposed) return;
       closePanel();
       disposed = true;
+      feedback.dispose();
       preview.dispose();
       story?.dispose();
       dialog.remove();

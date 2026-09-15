@@ -82,6 +82,11 @@ a {
   color: #90e7df;
   text-underline-offset: 3px;
 }
+.return-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
 :focus-visible {
   outline: 3px solid #f5ce74;
   outline-offset: 3px;

@@ -117,6 +117,9 @@ input:disabled {
   cursor: default;
 }
 #video-poster-status {
+  position: sticky;
+  top: 72px;
+  z-index: 1;
   padding: 12px;
   border-left: 4px solid #8ddceb;
   background: #122337;
