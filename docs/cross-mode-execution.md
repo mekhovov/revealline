@@ -284,3 +284,9 @@ The [minimal adaptation and evidence](verification/cross-mode/p03-r5-adaptation/
 ### P03 common Couch mode-row candidate
 
 The [shared mode presenter](common-couch-lobby.md) places Solo, Versus and Team in the same order using the existing guarded destination anchors; the current mode is a static label. Team moves that same row between lobby and active pause/results panel and hides it during play. [Scoped evidence](verification/cross-mode/p03-lobby/README.md) retains 261/261 in seven complete files on each Node runtime, 14 desktop keyboard observations, final computed card styles and the earlier sparse-input/Tab-order failures. This candidate starts at A2/R3 `1f53e82`; R5, Title mode entry, wider Team P05/P08 presentation, composition and device/public qualification remain separate. It does not close the phase or allocate a version.
+
+## P03-M — Title three-mode entry candidate
+
+The [Title mode contract](title-mode-entry.md) adds a current Solo label and real Versus/Team links through the existing checked departure owner. Title uses fixed `return=solo` destinations without a return hint; Back opens Title, while Missions v1/v2 exact-selection returns remain unchanged. Pending Title Start/Continue is cancelled before departure; busy restore cleanup remains authoritative. Unfinished attempts retain checked-save/Stay/explicit-Leave behavior, actual-opener focus and no automatic Resume. The shared presenter comes from P03-L; M owns only Solo host/shell/markup and the necessary foreground guard in generic modal restoration.
+
+This is an internal P03 work package from `5aceb1b`, not a public phase or version. [M evidence](verification/cross-mode/p03-m/README.md) separates eleven-file 366/366 passes on each Node runtime from root’s 19 desktop keyboard observations and six original PNGs. The full combined-source, P05/P08, responsive, public/offline and physical-device gates remain open. The First Signal default is unchanged.

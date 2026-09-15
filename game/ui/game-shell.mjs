@@ -1,6 +1,7 @@
 import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
 import { fieldKitCopy } from './field-kit-copy.mjs';
+import { mountModeChoices } from './mode-choice.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -14,6 +15,7 @@ export function attachGameShell({
   onTitleStart,
   onTitleContinue,
   onTitleCancel,
+  onModeDeparture,
   titleDestination,
   onWorlds,
   getTopDialog,
@@ -29,7 +31,8 @@ export function attachGameShell({
   if (!home || !missions) return null;
   let destroyed = false,
     returnToHome = false,
-    homeVisit = 0;
+    homeVisit = 0,
+    titleModeIntent = null;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const surfaces = attachFieldKitSurfaces({ document: doc });
@@ -37,6 +40,7 @@ export function attachGameShell({
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
   const closeHome = () => {
+    titleModeIntent = null;
     cancelTitle();
     homeVisit++;
     if (workshop?.open) workshop.close();
@@ -85,6 +89,7 @@ export function attachGameShell({
     if (!focusMissions?.()) $('pack-select').focus();
   };
   const openHome = ({ focus = true } = {}) => {
+    titleModeIntent = null;
     pause(true);
     if (missions.open) missions.close();
     restoreMissionView();
@@ -269,11 +274,59 @@ export function attachGameShell({
     }
   };
   const leaveFeatured = (event) => {
+    titleModeIntent = null;
     const target = event.target?.closest?.('button,a,summary');
     if (target !== titleAction?.button && target !== titleCancel) cancelTitle();
     if (target !== featured) homeVisit++;
   };
   home.addEventListener('click', leaveFeatured, true);
+  const titleModes = $('shell-title-modes');
+  if (titleModes) {
+    mountModeChoices({
+      root: titleModes,
+      current: 'solo',
+      actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
+    });
+    titleModes.hidden = training || !onModeDeparture;
+    for (const kind of ['versus', 'team']) {
+      const opener = $(`shell-title-${kind}`);
+      opener.onclick = (event) => {
+        if (
+          event.defaultPrevented ||
+          event.ctrlKey ||
+          event.metaKey ||
+          event.altKey ||
+          event.shiftKey ||
+          (event.button !== undefined && event.button !== 0)
+        )
+          return;
+        if (destroyed || training || !onModeDeparture || topDialog() !== home) {
+          event.preventDefault();
+          return;
+        }
+        // Native click capture has already retired any previous Title action.
+        // Keep this explicit too for callers invoking the owned handler directly.
+        cancelTitle();
+        const intent = { visit: homeVisit };
+        titleModeIntent = intent;
+        return onModeDeparture(kind, event, opener, {
+          origin: 'solo-title',
+          isCurrent: () => {
+            const top = topDialog();
+            return (
+              !destroyed &&
+              titleModeIntent === intent &&
+              homeVisit === intent.visit &&
+              home.open &&
+              !doc.hidden &&
+              doc.hasFocus?.() !== false &&
+              (top === home || top === $('mode-leave-dialog'))
+            );
+          },
+        });
+      };
+    }
+  }
   if (featured && onFeatured)
     featured.onclick = async () => {
       if (featured.disabled || destroyed) return;
@@ -365,6 +418,7 @@ export function attachGameShell({
       element.hidden = true;
   }
   const cancelHome = () => {
+    titleModeIntent = null;
     cancelTitle();
     homeVisit++;
     queueMicrotask(() => {
@@ -372,12 +426,15 @@ export function attachGameShell({
     });
   };
   home.addEventListener('cancel', cancelHome);
-  const suspendedTitle = () => cancelTitle();
+  const suspendedTitle = () => {
+    titleModeIntent = null;
+    cancelTitle();
+  };
   const hiddenTitle = () => {
-    if (doc.hidden) cancelTitle();
+    if (doc.hidden) suspendedTitle();
   };
   const titleClosed = () => {
-    if (!home.open) cancelTitle();
+    if (!home.open) suspendedTitle();
   };
   const titleWindow =
     typeof doc.defaultView?.addEventListener === 'function' ? doc.defaultView : globalThis.window;
@@ -412,7 +469,12 @@ export function attachGameShell({
     openMissions,
     destroy() {
       destroyed = true;
+      titleModeIntent = null;
       cancelTitle();
+      for (const kind of ['versus', 'team']) {
+        const opener = $(`shell-title-${kind}`);
+        if (opener) opener.onclick = null;
+      }
       titleWindow?.removeEventListener('blur', suspendedTitle);
       titleWindow?.removeEventListener('pagehide', suspendedTitle);
       doc.removeEventListener('visibilitychange', hiddenTitle);

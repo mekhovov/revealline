@@ -62,9 +62,9 @@ export function attachModalNavigation({ document: doc = globalThis.document } = 
     if (!isDialog(event.target) || event.target.open) return;
     const wasTop = stack.at(-1)?.dialog === event.target;
     const entry = remove(event.target);
-    if (!wasTop || !entry?.origin) return;
+    if (!wasTop || !entry?.origin || doc.hidden || doc.hasFocus?.() === false) return;
     queueMicrotask(() => {
-      if (destroyed || event.target.open) return;
+      if (destroyed || event.target.open || doc.hidden || doc.hasFocus?.() === false) return;
       const top = topDialog(),
         origin = entry.origin;
       if (

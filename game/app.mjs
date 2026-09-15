@@ -2042,6 +2042,7 @@ try {
     if (close && $('mode-leave-dialog').open) $('mode-leave-dialog').close();
     if (
       restore &&
+      (ticket.origin !== 'solo-title' || ticket.isCurrent()) &&
       !document.hidden &&
       document.hasFocus?.() !== false &&
       availableFocusTarget(ticket.opener)
@@ -2062,6 +2063,7 @@ try {
       document.hasFocus?.() === false ||
       modeDeparture !== ticket ||
       ticket.controller.signal.aborted ||
+      (ticket.origin === 'solo-title' && !ticket.isCurrent()) ||
       run !== ticket.run ||
       recorder !== ticket.recorder ||
       runId !== ticket.runId ||
@@ -2080,9 +2082,11 @@ try {
         ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
-      ticket.fallback
-        ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-        : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
+      ticket.origin === 'solo-title'
+        ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
+        : ticket.fallback
+          ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
+          : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
     }`;
   }
   function unfinishedFlight() {
@@ -2132,7 +2136,12 @@ try {
     ticket.savedRaw = raw;
     lastOwnedAttempt = raw;
   }
-  async function requestModeDeparture(kind, event, opener) {
+  async function requestModeDeparture(
+    kind,
+    event,
+    opener,
+    { origin = 'solo-missions', isCurrent = null } = {},
+  ) {
     if (
       event.defaultPrevented ||
       event.ctrlKey ||
@@ -2144,6 +2153,11 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
+    if (
+      !['solo-title', 'solo-missions'].includes(origin) ||
+      (origin === 'solo-title' && (typeof isCurrent !== 'function' || !isCurrent()))
+    )
+      return;
     if (
       document.hidden ||
       document.hasFocus?.() === false ||
@@ -2163,6 +2177,8 @@ try {
     }
     const ticket = {
       kind,
+      origin,
+      isCurrent,
       opener,
       dialogShown: false,
       controller: new AbortController(),
@@ -2178,6 +2194,16 @@ try {
       pending: true,
     };
     modeDeparture = ticket;
+    if (origin === 'solo-title' && !ticket.unfinished) {
+      try {
+        modeDepartureCurrent(ticket);
+        location.href = new URL(modeDestinations[kind], location.href).href;
+      } catch (error) {
+        cancelModeDeparture({ restore: true });
+        warning(`${modeLabel(kind)} could not open. Your flight remains here. ${error.message}`);
+      }
+      return;
+    }
     if (!ticket.unfinished) {
       let prepared;
       try {
@@ -2264,7 +2290,7 @@ try {
         }
       }
       let destination = new URL(modeDestinations[ticket.kind], location.href).href;
-      if (!ticket.fallback) {
+      if (ticket.origin === 'solo-missions' && !ticket.fallback) {
         try {
           const prepared = prepareModeHint(ticket);
           ticket.token = prepared.token;
@@ -6411,6 +6437,7 @@ try {
     onTitleStart: (options) => launchTitleFlight('start', options),
     onTitleContinue: (options) => launchTitleFlight('continue', options),
     onTitleCancel: cancelTitleFlight,
+    onModeDeparture: requestModeDeparture,
     onWorlds: () => optionalWorlds.open(),
   });
   attachFullscreen($('shell-fullscreen'));
