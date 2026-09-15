@@ -2,7 +2,7 @@
   "format": "revealline-pages-controller.v1",
   "currentVersion": "v0.52.0",
   "catalogSha256": "b73317990d37b9bd16a35aecb12ba1672c56a8b9e71f934a0ca8323de1d2dabe",
-  "allocationSha256": "4f374018e1a8137ae99a256d25e0f11f038bfd19d00cf2c4cb1b91d5ceec889a",
+  "allocationSha256": "8f8620bb2d1f2664842fbd3f9d063408a84cf757b4db316df1f0f4f56f1eff23",
   "admissions": [
     {
       "id": "archive-01",
@@ -822,6 +822,63 @@
         {
           "path": "evidence/archive-11/browser-admission.json",
           "sha256": "5eb71d38dda2350031ab8daa7d0b64c4ca82051da9e5f4f3e07a231caf536cc7",
+          "kind": "browser"
+        }
+      ]
+    },
+    {
+      "id": "archive-12",
+      "infrastructureCommit": "d81a6d4b9fb767309b60114e65453841f20bd30c",
+      "deploymentId": 6451864424,
+      "evidence": [
+        {
+          "path": "evidence/archive-12/http-report.json",
+          "sha256": "9096d9fd73e04dd07a4dbc0b85c6642f28ac5daaf5f0c2b6485362b97884960c",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-12/expected-inventory.json",
+          "sha256": "760c1ae7ea7b34505fb5f40a436cabf389f2bacbaa2e08205a5a448425dcca21",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-12/source-lock.json",
+          "sha256": "7e06c595575ad4b128592058edf7e4161bc476e007072cb829dc1b3e448a1085",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/deployment-snapshot.json",
+          "sha256": "5100e2ccc0c6498b6e02dab5e31ed4dfee0ad8a2e0d8d0d8376644384ab2ddfe",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/hosted-receipt.json",
+          "sha256": "9cafc2a69aeb5c89009aaf51d0eb06fea4466a915ca7be9204be68b21eed5e16",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/hosted-zip-receipt.json",
+          "sha256": "7e09817f5d2f6c4f130a1d806c10d59c4eb315525b6342b284a37fac5d58fb5e",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/browser-smoke.json",
+          "sha256": "5c9400001beed0211b21127babae65eed0afd1036fc15e3c7e55ca0785d4fa6a",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/mission-selection.png",
+          "sha256": "c84e3c4f82dbc616534297289ee0c36c16914a9c2c1c24e7b0988b35ec9dd95d",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/active-game.png",
+          "sha256": "7d2a122dbf601f2fc6aacfb5d02452ffd007aa18231e225d6aa506d841e6ab7e",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-12/browser-admission.json",
+          "sha256": "15a6daa75839f344e78b30ff5e8b116453b1b8b00c0a3b1bb6fd1b3880925412",
           "kind": "browser"
         }
       ]

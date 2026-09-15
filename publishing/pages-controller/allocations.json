@@ -123,6 +123,13 @@
       "versions": [
         "v0.51.0"
       ]
+    },
+    {
+      "id": "archive-12",
+      "repository": "mekhovov/revealline-archive-12",
+      "versions": [
+        "v0.52.0"
+      ]
     }
   ]
 }
