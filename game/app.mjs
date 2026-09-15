@@ -1155,10 +1155,21 @@ try {
       !!run?.supplies?.length
     );
   }
+  function craftSwitchAvailable() {
+    return (
+      !courseSession &&
+      !courseEntry &&
+      !campaignOverview &&
+      !!run &&
+      !['won', 'lost'].includes(run.status) &&
+      run.classRecipes.length > 1 &&
+      run.hangars.length > 0
+    );
+  }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
     const actions = arcadeActionCapabilities(run?.level);
-    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${actions.manualPickup ? (manualSupplyAvailable() ? `${b.pickup}: supply · ` : '') : `${b.pickup}: field guide · `}${b.hangar}: ${actions.manualAbility && run?.hangars?.length ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
+    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${actions.manualPickup ? (manualSupplyAvailable() ? `${b.pickup}: supply · ` : '') : `${b.pickup}: field guide · `}${b.hangar}: ${craftSwitchAvailable() ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
   }
   function refreshControllerPrompts() {
     controllerDeviceId = controllerFrame?.assigned?.id ?? controllerDeviceId;
@@ -1489,7 +1500,7 @@ try {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
     const actions = arcadeActionCapabilities(run?.level);
-    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${manualSupplyAvailable() ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${run?.hangars?.length ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${manualSupplyAvailable() ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${craftSwitchAvailable() ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -2928,10 +2939,10 @@ try {
     }
   };
   $('hangar-button').onclick = () => {
-    if (courseSession || courseEntry) return;
+    if (!craftSwitchAvailable()) return;
     pause(true);
     $('switch-class-select').replaceChildren(
-      ...(scenario?.classRecipes || classRegistry).map((c) => new Option(c.label, c.id)),
+      ...run.classRecipes.map((c) => new Option(c.label, c.id)),
     );
     $('switch-class-select').value = run.activeClassId || classId;
     $('switch-description').textContent = run.classRecipe.description;
@@ -2940,11 +2951,10 @@ try {
   };
   $('switch-class-select').onchange = () => {
     $('switch-description').textContent =
-      (scenario?.classRecipes || classRegistry).find((c) => c.id === $('switch-class-select').value)
-        ?.description || '';
+      run.classRecipes.find((c) => c.id === $('switch-class-select').value)?.description || '';
   };
   $('switch-class-button').onclick = () => {
-    if (courseSession || courseEntry) return;
+    if (!craftSwitchAvailable()) return;
     const next = $('switch-class-select').value;
     $('hangar-dialog').close();
     resume();
@@ -2953,6 +2963,7 @@ try {
   document.addEventListener('keydown', (e) => {
     if (
       actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), e) === 'hangar' &&
+      craftSwitchAvailable() &&
       !e.repeat &&
       !e.ctrlKey &&
       !e.metaKey &&
@@ -3961,8 +3972,12 @@ try {
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
     $('ability-state').textContent =
       `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`;
-    $('hangar-button').disabled =
-      courseSession || !!courseEntry || campaignOverview || ['won', 'lost'].includes(run.status);
+    const canSwitchCraft = craftSwitchAvailable();
+    $('hangar-button').disabled = !canSwitchCraft;
+    show('hangar-button', canSwitchCraft);
+    $('loadout-note').textContent =
+      'Starting class changes begin a fresh attempt.' +
+      (canSwitchCraft ? ' Use a hangar to switch during flight.' : '');
     $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
     $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
     refreshInputPresentation();
@@ -3978,7 +3993,7 @@ try {
         ? run.signal.resistant
           ? 'Fiber link · signal zone bypassed; line remains vulnerable.'
           : 'Signal interference · slower movement or disabled equipment.'
-        : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
+        : `${run.classRecipe.label}${canSwitchCraft ? (near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft') : ''}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
     const encounter = encounterView(run),
@@ -4175,13 +4190,7 @@ try {
         $('shell-guide').click();
         clearInput();
       } else if (flight.hangar) {
-        if (
-          capabilities.manualAbility &&
-          run?.hangars?.length &&
-          !$('hangar-button').hidden &&
-          !$('hangar-button').disabled
-        )
-          $('hangar-button').click();
+        if (craftSwitchAvailable()) $('hangar-button').click();
         else {
           pause(true);
           $('shell-packs').click();
