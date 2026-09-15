@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hasCompactArcadeArena } from '../input-presentation.mjs';
+import { hasCompactArcadeArena, hasFlightWarnings } from '../input-presentation.mjs';
 
 // Small presentation fixtures represent an already validated original level.
 // No phase, caller preference, current actor list, command or save is authority here.
@@ -55,4 +55,21 @@ test('warning transitions and removal of a live enemy cannot release its authore
     pressure.enemies[0].pressure.phase = phase;
     assert.equal(hasCompactArcadeArena(pressure.level), true);
   }
+});
+
+test('manual abilities do not reserve a warning row unless the authored mission can warn', () => {
+  const manual = arcade();
+  delete manual.classic.arcadeActions;
+  assert.equal(hasCompactArcadeArena(manual), false);
+  assert.equal(hasFlightWarnings(manual), false);
+  assert.equal(
+    hasFlightWarnings({ enemies: [{ type: 'bouncer' }] }),
+    false,
+    'Legacy maps omit the optional encounter',
+  );
+  for (const type of ['claimed-rover', 'eroder', 'lane-boss', 'relay-sentinel', 'future-role']) {
+    assert.equal(hasFlightWarnings(arcade([type])), true);
+  }
+  assert.equal(hasFlightWarnings({ ...arcade(), encounter: {} }), true);
+  assert.equal(hasFlightWarnings(undefined), true);
 });

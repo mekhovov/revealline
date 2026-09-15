@@ -9,8 +9,10 @@ export function fitFlightLayout({
   railSide = 'left',
   portraitControlHeight = 0,
   taskHeight = 0,
+  warnings = false,
+  steeringWidth = 0,
 }) {
-  if (!(width > 0 && height > 0 && aspect > 0 && Number.isFinite(aspect))) return null;
+  if (![width, height, aspect].every((value) => Number.isFinite(value) && value > 0)) return null;
   const fit = (x, y, w, h) => {
     const boardWidth = Math.max(0, Math.min(w, h * aspect));
     const boardHeight = boardWidth / aspect;
@@ -22,7 +24,8 @@ export function fitFlightLayout({
     };
   };
   if (width <= height) {
-    const stripHeight = (largeText ? 144 : 120) + taskHeight;
+    const stripHeight =
+      (largeText ? 116 : 100) + taskHeight + (warnings ? (largeText ? 64 : 48) : 0);
     const board = fit(
       0,
       stripHeight,
@@ -32,11 +35,21 @@ export function fitFlightLayout({
     board.y = stripHeight;
     return { mode: 'portrait', board, chromeX: 0, railWidth: 0, stripHeight };
   }
-  const stripHeight = (largeText ? 88 : 72) + taskHeight;
+  const stripHeight = (largeText ? 68 : 56) + taskHeight + (warnings ? (largeText ? 64 : 48) : 0);
   const railWidth = largeText ? 132 : 112;
-  const strip = fit(0, stripHeight, width, height - stripHeight);
-  const rail = fit(railSide === 'right' ? 0 : railWidth + 8, 0, width - railWidth - 8, height);
-  const useRail = !taskHeight && height >= (largeText ? 340 : 304) && rail.width >= strip.width;
+  // Fixed D-pad buttons need their own column; floating steering may share
+  // unused corners. The steering hand is always opposite the telemetry rail.
+  const steeringLeft = railSide === 'right' ? steeringWidth : 0;
+  const availableWidth = Math.max(0, width - steeringWidth);
+  const strip = fit(steeringLeft, stripHeight, availableWidth, height - stripHeight);
+  const rail = fit(
+    steeringLeft + (railSide === 'right' ? 0 : railWidth + 8),
+    0,
+    availableWidth - railWidth - 8,
+    height,
+  );
+  const railMinHeight = (largeText ? 264 : 232) + (warnings ? (largeText ? 160 : 128) : 0);
+  const useRail = !taskHeight && height >= railMinHeight && rail.width >= strip.width;
   return {
     mode: useRail ? 'rail' : 'strip',
     board: useRail ? rail : strip,
@@ -68,9 +81,7 @@ export function attachFlightLayout({
   probe.className = 'flight-viewport';
   probe.setAttribute('aria-hidden', 'true');
   body.append(probe);
-  const compact = win.matchMedia(
-    '(orientation: landscape) and (max-height: 600px), (orientation: landscape) and (any-pointer: coarse)',
-  );
+  const compact = win.matchMedia('(max-width: 1024px), (max-height: 820px), (any-pointer: coarse)');
   const compactMenus = win.matchMedia('(max-width: 680px), (max-height: 600px)');
   const displayMode = win.matchMedia('(display-mode: fullscreen), (display-mode: standalone)');
   let frame = 0;
@@ -106,7 +117,11 @@ export function attachFlightLayout({
       body.dataset.screenControls === 'shown'
         ? (body.dataset.touchSize === 'large' ? 192 : 156) + 36
         : 0;
-    const baseStrip = width <= height ? (largeText ? 144 : 120) : largeText ? 88 : 72;
+    const warnings =
+      body.dataset.flightWarnings === 'true' && !body.classList.contains('first-flight-session');
+    const baseStrip =
+      (width <= height ? (largeText ? 116 : 100) : largeText ? 68 : 56) +
+      (warnings ? (largeText ? 64 : 48) : 0);
     // Long lesson/respawn instructions can wrap after text or viewport changes.
     // Keep a visible board even if the instruction itself needs to scroll.
     const taskBudget = Math.max(
@@ -120,9 +135,18 @@ export function attachFlightLayout({
       largeText,
       railSide: body.dataset.touchSide === 'left' ? 'right' : 'left',
       taskHeight: body.classList.contains('first-flight-session')
-        ? Math.min(taskBudget, Math.max(largeText ? 72 : 48, courseTask?.scrollHeight || 0))
+        ? Math.min(
+            taskBudget,
+            largeText ? 96 : 72,
+            Math.max(largeText ? 72 : 48, courseTask?.scrollHeight || 0),
+          )
         : 0,
       portraitControlHeight,
+      warnings,
+      steeringWidth:
+        body.dataset.screenControls === 'shown' && body.dataset.touchMode === 'dpad'
+          ? (body.dataset.touchSize === 'large' ? 192 : 156) + 24
+          : 0,
     });
     if (!layout) return;
     body.dataset.flightLayout = layout.mode;
@@ -137,6 +161,16 @@ export function attachFlightLayout({
       'usable-height': height,
       'rail-width': layout.railWidth,
       'strip-height': layout.stripHeight,
+      'base-strip': baseStrip,
+      'warning-height': warnings
+        ? layout.mode === 'rail'
+          ? largeText
+            ? 160
+            : 128
+          : largeText
+            ? 64
+            : 48
+        : 0,
     };
     for (const [key, value] of Object.entries(values))
       body.style.setProperty(`--flight-${key}`, `${value}px`);
@@ -160,6 +194,8 @@ export function attachFlightLayout({
       'data-touch-side',
       'data-screen-controls',
       'data-touch-size',
+      'data-touch-mode',
+      'data-flight-warnings',
     ],
   });
   if (courseTask)
@@ -168,6 +204,8 @@ export function attachFlightLayout({
   compactMenus.addEventListener('change', schedule);
   displayMode.addEventListener('change', schedule);
   doc.addEventListener('fullscreenchange', schedule);
+  win.visualViewport?.addEventListener('resize', schedule);
+  win.addEventListener?.('resize', schedule);
   update();
   return () => {
     resize.disconnect();
@@ -176,6 +214,8 @@ export function attachFlightLayout({
     compactMenus.removeEventListener('change', schedule);
     displayMode.removeEventListener('change', schedule);
     doc.removeEventListener('fullscreenchange', schedule);
+    win.visualViewport?.removeEventListener('resize', schedule);
+    win.removeEventListener?.('resize', schedule);
     if (frame) win.cancelAnimationFrame(frame);
     probe.remove();
     restoreCourse();

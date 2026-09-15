@@ -48,3 +48,16 @@ export function hasCompactArcadeArena(level) {
     )
   );
 }
+
+/** Only authored warning-capable roles need a permanent live warning slot.
+ * Manual action buttons alone must not consume vertical playground space. */
+export function hasFlightWarnings(level) {
+  return (
+    !level ||
+    level.encounter != null ||
+    !Array.isArray(level?.enemies) ||
+    level.enemies.some(
+      (enemy) => !['bouncer', 'border-patrol', 'contour-patrol'].includes(enemy.type),
+    )
+  );
+}
