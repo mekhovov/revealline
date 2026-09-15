@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "observedAt": "2026-09-15T12:25:32.617717+00:00",
+  "runId": 34968588810,
+  "infrastructureCommit": "740878b685b08edb40db5494f7ebbe71536b523a",
+  "infrastructureTree": "5d99c2243bb194bf24db5c8acb751f9f9c47800b",
+  "deploymentId": 6458702842,
+  "deploymentState": "success",
+  "environmentURL": "https://mekhovov.github.io/revealline-archive-14/",
+  "sourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+  "version": "v0.57.0",
+  "tagObject": "c3fd6145392491748c4578eef15b51983af84f9e",
+  "expectedFiles": 662,
+  "expectedBytes": 312553884,
+  "expectedInventorySha256": "f24adf62b38808725c834d92ea7b1e2475a6318eb0294051313e06f54fab5c27",
+  "originalArtifact": {
+    "id": 10396222847,
+    "bytes": 35385,
+    "sha256": "2abadffb7d5be66e198277c390480a488d6da7da4584f181a02923e0c3b7ea7b"
+  },
+  "sourceRebuilt": false,
+  "localPayloadDownloaded": false,
+  "scope": "Actual successful archive publication and original tiny receipt; public HTTP/native admission pending."
+}

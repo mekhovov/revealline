@@ -1,6 +1,6 @@
 # P01 — loading feedback
 
-**v0.57.0 is published; P01 remains unaccepted pending a visibility correction in v0.57.1.** Its public file audit passed. The portrait browser check found that the complete optional-pack list expands active offline status and displaces the count/Stop action. The existing release remains immutable; the patch needs its own source and public verification. P02 remains queued. This report is publishing evidence outside the immutable v0.57.0 game source.
+**v0.57.1 is published on GitHub; Pages selection and public verification are pending. P01 remains unaccepted.** The patch corrects the offline progress label that displaced count/Stop on portrait phones. A separate native check also confirmed that Library export status is below the viewport, with Cancel above it in short landscape; that requires another P01 correction. Existing releases remain immutable and P02 remains queued. This report is publishing evidence outside the frozen game sources.
 
 [Play v0.57.0](https://mekhovov.github.io/revealline/releases/v0.57.0/site/game/) · [Frozen release and original evidence](https://github.com/mekhovov/revealline/releases/tag/v0.57.0)
 
@@ -12,25 +12,33 @@ Cancellation follows the operation's actual ownership. Cancelling an uncommitted
 
 The [56-entry loading inventory](../../../../../docs/verification/cross-mode/p01/inventory.json), [implementation report](../../../../../docs/verification/cross-mode/p01/implementation.md) and [loading contract](../../../../../docs/presentation-loading.md) define the owners and regression requirements. Runtime-maintainer and release skills, production recipe evidence and copyable prompts were updated with this contract. Team map artwork and layout parity remain P03/P08-A work.
 
-## Source and publication
+## Initial v0.57.0 source and publication
 
-| Identity | Value |
-| --- | --- |
-| Game source | `b7db0134d4ede3452dc90b5d3f7ffb1491a0579b` |
-| Game tree | `7cd40e4ef8bf975e7eb2795cdd2669aa18811a57` |
-| Source PR | [#55](https://github.com/mekhovov/revealline/pull/55) |
-| Source qualification and freeze | [34960629043](https://github.com/mekhovov/revealline/actions/runs/34960629043) |
-| Independent PR source gates | [34960633645](https://github.com/mekhovov/revealline/actions/runs/34960633645) |
-| Publishing PR | [#58](https://github.com/mekhovov/revealline/pull/58) |
-| Publishing revision | `74f289510617603c28768bb3f6bfd8e9f7a72cdd` |
-| Publishing tree | `8d8173c2f14effcac2e63b8cec22848943d88110` |
-| Publishing run / deployment | [34965929587](https://github.com/mekhovov/revealline/actions/runs/34965929587) / `6458234240` |
+| Identity                        | Value                                                                                         |
+| ------------------------------- | --------------------------------------------------------------------------------------------- |
+| Game source                     | `b7db0134d4ede3452dc90b5d3f7ffb1491a0579b`                                                    |
+| Game tree                       | `7cd40e4ef8bf975e7eb2795cdd2669aa18811a57`                                                    |
+| Source PR                       | [#55](https://github.com/mekhovov/revealline/pull/55)                                         |
+| Source qualification and freeze | [34960629043](https://github.com/mekhovov/revealline/actions/runs/34960629043)                |
+| Independent PR source gates     | [34960633645](https://github.com/mekhovov/revealline/actions/runs/34960633645)                |
+| Publishing PR                   | [#58](https://github.com/mekhovov/revealline/pull/58)                                         |
+| Publishing revision             | `74f289510617603c28768bb3f6bfd8e9f7a72cdd`                                                    |
+| Publishing tree                 | `8d8173c2f14effcac2e63b8cec22848943d88110`                                                    |
+| Publishing run / deployment     | [34965929587](https://github.com/mekhovov/revealline/actions/runs/34965929587) / `6458234240` |
 
 All six exact-source gates passed. Both hosted suites and the complete local suite passed **4,185 tests across 375 files**, without failures, cancellations, skips or TODOs. Production reproduction, committed readiness and the ordinary build passed. The publishing controller separately passed 36 Node and four Python checks, a clean-checkout verification, hosted preview, assembly and independent artifact reread.
 
 The frozen source TAR matches all 4,382 Git files and their modes. Every one of the distribution's 654 manifest files was independently read and hashed. The original distribution contains 312,379,448 manifest bytes; its ZIP is 312,615,996 bytes, SHA-256 `1727711a87b914d88ea5769915b17907ac001965c23dc036a8865bfd5ac1c31d`. All ten release attachments match their verified original sizes and GitHub digests. Existing tags, released bytes, 61 historical catalogue entries and 13 archive admissions were preserved.
 
 The released offline inventory is **608 files / 55,383,385 bytes**, build `8b7ab11efc3be749f519b50f4d4299dc2a203a61d4fd970bd3a62278bda7402b`. Its frozen version is `v0.57.0`, so the runtime save channel is `release-v0.57.0`. These differ from the ordinary local build's version spelling and generated offline identity; the checks use the actual released values.
+
+## v0.57.1 offline-progress correction
+
+[Source PR #59](https://github.com/mekhovov/revealline/pull/59) provides exact source `4c85277ac7393eeeabab035387d4d4ae8734aba1`, tree `d3549d0efd15529f71f4cff9a940bdda5e84f3a6`. All six local source gates and both hosted suites passed 4,187 tests. The frozen archive matches all 4,884 tracked files and modes; every one of its 654 game files matches the original manifest. All nine [release attachments](https://github.com/mekhovov/revealline/releases/tag/v0.57.1) were verified. The [delivery record](release-v0571/delivery.json) and original server/inspection receipts preserve these distinct identities.
+
+The patch keeps the active offline label concise and moves the full optional-pack explanation into verification details. Its actual frozen offline identity is `2cb26c9e82fad6384b497699af2f1333bc0556bb1dc8beaadb3a08428f6aa62f`, with 608 files / 55,383,737 bytes. Public correction and cold-start verification remain pending; ordinary local browser evidence does not replace them.
+
+The [separate native Library reproduction](library-placement-v057/reproduction.md) preserves the new placement finding at 390×844 and 844×390. Its Library implementation is byte-identical in v0.57.0 and v0.57.1. Exports completed successfully, but status was offscreen in both layouts and Cancel was also offscreen in landscape. Short busy phases were captured as actual DOM observations, not claimed screenshot frames. P01 remains open for that correction and bounded remaining native loading checks.
 
 ## Evidence boundaries and retained corrections
 

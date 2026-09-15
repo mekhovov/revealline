@@ -1,0 +1,1 @@
+The unchanged copied close-owned-browser.mjs refused the Library profile before CDP connection because its explicit guard permits only public-browser-preparation/run/profile. No browser action occurred. close-library-browser.mjs changes only that exact owned-profile suffix for this task.

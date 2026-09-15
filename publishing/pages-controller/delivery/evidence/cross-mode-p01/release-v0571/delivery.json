@@ -1,0 +1,14 @@
+{
+  "phase": "P01",
+  "version": "v0.57.1",
+  "sourceRevision": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "sourceTree": "d3549d0efd15529f71f4cff9a940bdda5e84f3a6",
+  "sourcePR": "https://github.com/mekhovov/revealline/pull/59",
+  "release": "https://github.com/mekhovov/revealline/releases/tag/v0.57.1",
+  "qualifiedTests": 4187,
+  "frozenFiles": 654,
+  "sourceFiles": 4884,
+  "status": "published on GitHub; Pages selection and public verification pending",
+  "phaseAccepted": false,
+  "requiredFollowup": "Library feedback and active Cancel can both be outside the viewport; retain original native evidence and correct within P01."
+}

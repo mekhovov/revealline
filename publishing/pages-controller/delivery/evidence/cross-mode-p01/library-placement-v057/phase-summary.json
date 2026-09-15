@@ -1,0 +1,806 @@
+[
+  {
+    "at": "2026-09-15T13:12:29.500Z",
+    "performanceNow": 55434.200000047684,
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "reason": "native-click-start",
+    "active": {
+      "id": "export-backup",
+      "tag": "BUTTON",
+      "text": "Export game data"
+    },
+    "isTrusted": true,
+    "dialogScrollTop": 0,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 563.1875,
+          "width": 207.421875,
+          "height": 44,
+          "top": 563.1875,
+          "right": 231.421875,
+          "bottom": 607.1875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 1625.375,
+          "width": 342,
+          "height": 0,
+          "top": 1625.375,
+          "right": 366,
+          "bottom": 1625.375,
+          "left": 24
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "\n        Cancel operation\n      ",
+        "hidden": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:29.501Z",
+    "performanceNow": 55435.5,
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "export-backup",
+      "tag": "BUTTON",
+      "text": "Export game data"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 0,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 627.1875,
+          "width": 207.421875,
+          "height": 44,
+          "top": 627.1875,
+          "right": 231.421875,
+          "bottom": 671.1875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Reading saved game data and original references\u2026",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 1689.375,
+          "width": 342,
+          "height": 54,
+          "top": 1689.375,
+          "right": 366,
+          "bottom": 1743.375,
+          "left": 24
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Cancel operation",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 111.296875,
+          "width": 159.046875,
+          "height": 44,
+          "top": 111.296875,
+          "right": 183.046875,
+          "bottom": 155.296875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:29.629Z",
+    "performanceNow": 55563.39999985695,
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 0,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 627.1875,
+          "width": 207.421875,
+          "height": 44,
+          "top": 627.1875,
+          "right": 231.421875,
+          "bottom": 671.1875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Verifying the game-data backup\u2026",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 1689.375,
+          "width": 342,
+          "height": 27,
+          "top": 1689.375,
+          "right": 366,
+          "bottom": 1716.375,
+          "left": 24
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Cancel operation",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 111.296875,
+          "width": 159.046875,
+          "height": 44,
+          "top": 111.296875,
+          "right": 183.046875,
+          "bottom": 155.296875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:29.643Z",
+    "performanceNow": 55577.700000047684,
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 0,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 627.1875,
+          "width": 207.421875,
+          "height": 44,
+          "top": 627.1875,
+          "right": 231.421875,
+          "bottom": 671.1875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Preparing the requested download\u2026",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 1689.375,
+          "width": 342,
+          "height": 27,
+          "top": 1689.375,
+          "right": 366,
+          "bottom": 1716.375,
+          "left": 24
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 111.296875,
+          "width": 127.5625,
+          "height": 44,
+          "top": 111.296875,
+          "right": 151.5625,
+          "bottom": 155.296875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:29.644Z",
+    "performanceNow": 55578.5,
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 0,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 627.1875,
+          "width": 207.421875,
+          "height": 44,
+          "top": 627.1875,
+          "right": 231.421875,
+          "bottom": 671.1875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 1689.375,
+          "width": 342,
+          "height": 216,
+          "top": 1689.375,
+          "right": 366,
+          "bottom": 1905.375,
+          "left": 24
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 111.296875,
+          "width": 127.5625,
+          "height": 44,
+          "top": 111.296875,
+          "right": 151.5625,
+          "bottom": 155.296875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:29.648Z",
+    "performanceNow": 55582.59999990463,
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 0,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 563.1875,
+          "width": 207.421875,
+          "height": 44,
+          "top": 563.1875,
+          "right": 231.421875,
+          "bottom": 607.1875,
+          "left": 24
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+        "hidden": false,
+        "rect": {
+          "x": 24,
+          "y": 1625.375,
+          "width": 342,
+          "height": 216,
+          "top": 1625.375,
+          "right": 366,
+          "bottom": 1841.375,
+          "left": 24
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:55.407Z",
+    "performanceNow": 81341.39999985695,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1
+    },
+    "reason": "native-click-start",
+    "active": {
+      "id": "export-backup",
+      "tag": "BUTTON",
+      "text": "Export game data"
+    },
+    "isTrusted": true,
+    "dialogScrollTop": 250,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 172.640625,
+          "width": 207.421875,
+          "height": 44,
+          "top": 172.640625,
+          "right": 259.171875,
+          "bottom": 216.640625,
+          "left": 51.75
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 945.828125,
+          "width": 740.5,
+          "height": 108,
+          "top": 945.828125,
+          "right": 792.25,
+          "bottom": 1053.828125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:55.408Z",
+    "performanceNow": 81342.29999995232,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "export-backup",
+      "tag": "BUTTON",
+      "text": "Export game data"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 314,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 172.640625,
+          "width": 207.421875,
+          "height": 44,
+          "top": 172.640625,
+          "right": 259.171875,
+          "bottom": 216.640625,
+          "left": 51.75
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Reading saved game data and original references\u2026",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 945.828125,
+          "width": 740.5,
+          "height": 27,
+          "top": 945.828125,
+          "right": 792.25,
+          "bottom": 972.828125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Cancel operation",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": -189.953125,
+          "width": 159.046875,
+          "height": 44,
+          "top": -189.953125,
+          "right": 210.796875,
+          "bottom": -145.953125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:55.528Z",
+    "performanceNow": 81462.09999990463,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 314,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 172.640625,
+          "width": 207.421875,
+          "height": 44,
+          "top": 172.640625,
+          "right": 259.171875,
+          "bottom": 216.640625,
+          "left": 51.75
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Verifying the game-data backup\u2026",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 945.828125,
+          "width": 740.5,
+          "height": 27,
+          "top": 945.828125,
+          "right": 792.25,
+          "bottom": 972.828125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Cancel operation",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": -189.953125,
+          "width": 159.046875,
+          "height": 44,
+          "top": -189.953125,
+          "right": 210.796875,
+          "bottom": -145.953125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:55.544Z",
+    "performanceNow": 81479,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 314,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 172.640625,
+          "width": 207.421875,
+          "height": 44,
+          "top": 172.640625,
+          "right": 259.171875,
+          "bottom": 216.640625,
+          "left": 51.75
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Preparing the requested download\u2026",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 945.828125,
+          "width": 740.5,
+          "height": 27,
+          "top": 945.828125,
+          "right": 792.25,
+          "bottom": 972.828125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": -189.953125,
+          "width": 127.5625,
+          "height": 44,
+          "top": -189.953125,
+          "right": 179.3125,
+          "bottom": -145.953125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:55.545Z",
+    "performanceNow": 81479.79999995232,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 314,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 172.640625,
+          "width": 207.421875,
+          "height": 44,
+          "top": 172.640625,
+          "right": 259.171875,
+          "bottom": 216.640625,
+          "left": 51.75
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 945.828125,
+          "width": 740.5,
+          "height": 108,
+          "top": 945.828125,
+          "right": 792.25,
+          "bottom": 1053.828125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": -189.953125,
+          "width": 127.5625,
+          "height": 44,
+          "top": -189.953125,
+          "right": 179.3125,
+          "bottom": -145.953125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T13:12:55.549Z",
+    "performanceNow": 81483.79999995232,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1
+    },
+    "reason": "status-mutation",
+    "active": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved flight and installed chap"
+    },
+    "isTrusted": null,
+    "dialogScrollTop": 250,
+    "elements": [
+      {
+        "id": "export-backup",
+        "text": "Export game data",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 172.640625,
+          "width": 207.421875,
+          "height": 44,
+          "top": 172.640625,
+          "right": 259.171875,
+          "bottom": 216.640625,
+          "left": 51.75
+        },
+        "fullyInViewport": true
+      },
+      {
+        "id": "save-status",
+        "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+        "hidden": false,
+        "rect": {
+          "x": 51.75,
+          "y": 945.828125,
+          "width": 740.5,
+          "height": 108,
+          "top": 945.828125,
+          "right": 792.25,
+          "bottom": 1053.828125,
+          "left": 51.75
+        },
+        "fullyInViewport": false
+      },
+      {
+        "id": "library-operation-cancel",
+        "text": "Stop waiting",
+        "hidden": true,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "fullyInViewport": false
+      }
+    ]
+  }
+]
