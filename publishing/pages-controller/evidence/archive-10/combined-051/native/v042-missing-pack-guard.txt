@@ -1,0 +1,32 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: TACTICAL EDITION
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 0.0%
+    - emphasis: TARGET 45%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:00
+    - generic: SCORE
+    - strong: "00000"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving."
+    - region "Mission details":
+      - paragraph: MISSION 01
+      - heading "Clear a path. Reveal a world." [level=1]
+      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.
+      - paragraph: Standard difficulty.
+    - button "Load saved flight →"
+    - button "Start mission ↗"
+    - button "Learn by playing"
+    - button "Mission brief"
+    - button "Main menu"
+    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.
+    - strong: Ready for launch
+    - generic: Close a line to reveal the picture
+    - status: "Saved flight was not loaded: Install the matching campaign pack before loading this flight."
+    - status
