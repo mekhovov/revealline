@@ -1,0 +1,11 @@
+{
+  "status": "PRESERVED_INITIAL_PREPARATION_FAILURE",
+  "candidatePinsSha256": "027b2838151a3cc9fc97678b0b179ae9d89f6eacc5bdf6c7c56b2ae5b394c1d8",
+  "log": "evidence/infrastructure-tests.log",
+  "logSha256": "b1d8041674312900bf7029eeb54bfcebd0cb5cf05a0d7d740fdfee3578e930a8",
+  "tests": 20,
+  "failures": 1,
+  "errors": 1,
+  "cause": "Unchanged committed-metadata fixture still expected v0.57.1/662 rows and old Q. New runtime tools correctly derived v0.57.2/663 rows; fixture expectations were stale.",
+  "correction": "Only exact release/version/tag/source/Q/byte/count constants and path rebound; no runtime or validation weakening. All original failed bytes retained."
+}
