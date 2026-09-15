@@ -1,0 +1,20 @@
+{
+  "status": "PASS_SCOPED_SOURCE_BROWSER_RECOVERY_LAYOUT",
+  "source": "0b368297567c9fd6ede5254ab2be21033c0a2bfb",
+  "screenInputSha256": "dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0",
+  "standard": "R5: at 390×844 and 844×390 the full message and recovery actions are visible and hit-testable. Export → Library → Escape preserves the terminal reason and Export focus.",
+  "large": "R6: native Settings selection applies Large; both 390×844 and 844×390 show the full reason and recovery actions without manual scrolling.",
+  "reload": "Product Reload creates a new document and the saved Orchard Continue screen. No resumed flight after Reload is claimed.",
+  "data": "Raw player storage and observed IDB row/blob digests are unchanged across R5 post-Back → Choose → Library Escape and R6 post-Back → Large → Reload. Earlier ordinary departure save-timestamp changes are separate.",
+  "limits": [
+    "Desktop Chromium viewport and native-input evidence, not physical devices.",
+    "R5 Settings guard refuses the existing 1.3-pixel header overshoot; retain as a P05 finding.",
+    "R6 End/ArrowDown did not apply Large; one authorized native letter l succeeded. Originals are retained.",
+    "No whole-phase, public, final-source gate or production-retention approval is inferred."
+  ],
+  "zip": {
+    "bytes": 953526,
+    "sha256": "84fac83bea2659e2a8bd160787b2444e58cf4d52c066b2aa16f381d1840e8e2e"
+  },
+  "originals": 281
+}
