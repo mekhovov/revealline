@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-15T14:16:28.680927+00:00",
+  "commit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "tree": "9881cab9459e1d2dc6f093c8e002468973406829",
+  "parents": [
+    "f13c1d9b436e6afc35bee5b4f38643f234087e76",
+    "45d856314155205777f680691ebe7805507ebced"
+  ],
+  "candidateCommit": "45d856314155205777f680691ebe7805507ebced",
+  "all16CandidatePinsMatch": true,
+  "clean": true
+}

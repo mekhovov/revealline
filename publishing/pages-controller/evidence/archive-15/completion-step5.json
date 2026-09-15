@@ -1,0 +1,105 @@
+{
+  "status": "PASS_STEPS_1_TO_5",
+  "completedAt": "2026-09-15T14:20:30.864392+00:00",
+  "scope": "Archive15 infrastructure and actual hosted plus full HTTP verification only. Native step6 and controller admission remain pending; P01 unaccepted.",
+  "version": "v0.57.1",
+  "sourceRevision": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "sourceTree": "d3549d0efd15529f71f4cff9a940bdda5e84f3a6",
+  "tagObject": "8b2c1106606ab42d3246b1bc836c4e6b1ad1cb3f",
+  "infrastructureCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "infrastructureTree": "9881cab9459e1d2dc6f093c8e002468973406829",
+  "workflowRunId": 34980491924,
+  "deploymentId": 6460910463,
+  "files": 662,
+  "bytes": 312555435,
+  "actualHTTPAttempts": 662,
+  "actualHTTPFailedAttempts": 0,
+  "retriedFiles": 0,
+  "publicBase": "https://mekhovov.github.io/revealline-archive-15/",
+  "noPayloadFilesPersisted": true,
+  "candidateFilePins": 16,
+  "tests": {
+    "candidateInfrastructure": 20,
+    "exactCommittedInfrastructure": 20,
+    "pinnedExtractor": 4,
+    "httpTool": 15,
+    "hostedInfrastructure": 20,
+    "hostedExtractor": 4
+  },
+  "preservedPreparationFailures": [
+    "evidence/infrastructure-tests-initial.log",
+    "evidence/initial-fixture-correction.json",
+    "remote/016-http-tool-tests.json",
+    "evidence/http-test-pin-correction.json",
+    "evidence/http-initial-directory-failure.json"
+  ],
+  "actualPublicFailuresPreserved": [],
+  "originalsUnchanged": true,
+  "otherArchivesOrMainModified": false,
+  "nativeBrowserComplete": false,
+  "controllerAdmissionComplete": false,
+  "phaseAccepted": false,
+  "observerClosed": "Hosted observer exited0 after actual success; full HTTP process completed. No browser launched.",
+  "knownHistoricalDefects": [
+    "Library progress/controls placement in immutable v0.57.1",
+    "Craft loading status behind Missions modal in immutable v0.57.1"
+  ],
+  "nextNativePlan": "After separate foreground GO and512MiB+100MiB capacity guard, fresh exact named profile for Archive15 only: title\u2192Deploy\u2192ordinary capture\u2192pause, release explorer\u2192Back, bounded portrait route sample; retain visibility/identity/error observations and known defects, close owned browser. No fixture import/offline build/state injection or claims of corrective behavior.",
+  "keyPins": [
+    {
+      "path": "candidate-pins.json",
+      "bytes": 3184,
+      "sha256": "b4f984ce4ec34b99513c165e4597016e06b0061b0027932adee5030e8aa96f03"
+    },
+    {
+      "path": "prepublication-review.json",
+      "bytes": 2674,
+      "sha256": "f43770c551d56df3d87bbcdcf59eeb994164f8a6762afbbff6b44df62eb5c35a"
+    },
+    {
+      "path": "committed-candidate.json",
+      "bytes": 4660,
+      "sha256": "849ca89fc89a9a554034545c2d36e13ca341ac7845d31ce0fb202ed1874ff009"
+    },
+    {
+      "path": "merged-commit.json",
+      "bytes": 389,
+      "sha256": "b60e72ab3210c307b2fb74c66987dd94338fd662515280514e31871d1f82acf8"
+    },
+    {
+      "path": "hosted/review.json",
+      "bytes": 4715,
+      "sha256": "5d0ce202dd3b82e3a2524291f2a2a747d5855abb10904cb08d7d1cdba45a2e6a"
+    },
+    {
+      "path": "hosted/original-receipts.zip",
+      "bytes": 35358,
+      "sha256": "5a1f73e1bf29fe2c55592b5fc4ca12230ab5fefa1ea4e59ea6478529ab4d0eb0"
+    },
+    {
+      "path": "hosted/receipt.json",
+      "bytes": 1088,
+      "sha256": "4942ba5995131febca00a935cba093e65aa35a13f05973d1cdec7b1def27bfa5"
+    },
+    {
+      "path": "http/http-20260915T141905Z-4c092b47/http-report.json",
+      "bytes": 898,
+      "sha256": "64134680e50d37799c6e492afa65cc88e83d43cdc88a173637ae279e317e9573"
+    },
+    {
+      "path": "http/http-20260915T141905Z-4c092b47/http-results.jsonl",
+      "bytes": 526303,
+      "sha256": "d50dc479dd33fffc89a3d3ed4e0d7c73f120d32f55f597cd2bbadf5e5267543d"
+    },
+    {
+      "path": "http/http-20260915T141905Z-4c092b47/http-attempts.jsonl",
+      "bytes": 526303,
+      "sha256": "d50dc479dd33fffc89a3d3ed4e0d7c73f120d32f55f597cd2bbadf5e5267543d"
+    },
+    {
+      "path": "post-http/review.json",
+      "bytes": 1148,
+      "sha256": "8f3488f1ed09168adf2033df03991a80e7e6f863b206b60249c2b019308c9b22"
+    }
+  ]
+}
