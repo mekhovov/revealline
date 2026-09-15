@@ -5,6 +5,7 @@ import { deferred } from './helpers/media-fixtures.mjs';
 import { prepareStoryFixture } from './helpers/victory-story-fixture.mjs';
 import { createStoryMusicDucker, createVictoryStoryPresentation } from '../ui/victory-story.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 
 class Node extends Element {
   get hidden() {
@@ -820,4 +821,43 @@ test('master mute survives pending story Play and owned cleanup releases only th
   audioMaster.setVolume(1);
   assert.equal(h.video.muted, true, 'Released media stays muted after a later shared change');
   assert.equal(h.video.volume, 0.35);
+});
+
+test('actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  const dialog = h.doc.createElement('dialog'),
+    close = h.doc.createElement('button');
+  dialog.open = true;
+  dialog.setAttribute('open', '');
+  close.id = 'close-story';
+  dialog.append(close, h.container);
+  h.doc.body.append(dialog);
+  h.win.getComputedStyle = (element) => ({
+    display: element.style.display || 'block',
+    visibility: element.style.visibility || 'visible',
+  });
+  const navigation = attachControllerNavigation({
+    document: h.doc,
+    keyboard: true,
+    getRoot: () => dialog,
+    getScope: () => 'modal:story',
+  });
+  t.after(() => navigation.destroy());
+  const play = h.button('Play'),
+    volume = h.player.element.querySelector('input');
+  assert.equal(volume.type, 'range');
+  const before = h.player.snapshot();
+  close.focus();
+  const first = close.emit('keydown', { key: 'Tab' });
+  assert.equal(first.defaultPrevented, false); // Browser owns interior movement.
+  play.focus();
+  assert.equal(play.emit('keydown', { key: 'Tab' }).defaultPrevented, false);
+  volume.focus();
+  assert.equal(volume.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
+  assert.equal(h.doc.activeElement === close, true);
+  assert.equal(close.emit('keydown', { key: 'Tab', shiftKey: true }).defaultPrevented, true);
+  assert.equal(h.doc.activeElement === volume, true);
+  assert.equal(h.video.playCalls, 0);
+  assert.deepEqual(h.player.snapshot(), before);
 });

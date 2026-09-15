@@ -70,7 +70,7 @@ Statuses are `queued`, `implementing`, `reviewing`, `qualifying`, `deployed`, `a
 
 Queued means phase acceptance is outstanding; it does not erase delivered foundations. The audited baseline retains partial saves/scores/Collection/backups, 15 of 29 map families (60 of 116 pictures), one of twelve stories, incomplete animated presentation sets, five synthesized runtime recipes, thirteen authoring skills, and partial Versus/Team play. Forty reserve originals are accepted as source art, not installed missions. Another three picture families and the 24-track album are candidates. The 132 new Solo missions remain a production backlog; bulk production follows the three-level gameplay benchmark.
 
-P03-A, P03-B, P03-C, P03-D and P03-E are internal work packages within approved **P03**, not separately accepted public phases. This branch retains scoped desktop keyboard evidence for A/B/C/E. P03-D's story-focus work is a separate commit awaiting integration here; E is the Team initial-focus candidate below. The public baseline remains v0.57.1. P03 stays implementing until combined-source, public and device gates close.
+P03-A, P03-B, P03-C, P03-D, P03-E and P03-F are internal work packages within approved **P03**, not separately accepted public phases. This branch retains scoped desktop keyboard evidence for A/B/C/D/E/F. P03-D's story-focus work is integrated here after E; F is the modal Tab-boundary candidate below. The public baseline remains v0.57.1. P03 stays implementing until combined-source, public and device gates close.
 
 ## P03-A actual-opener candidate
 
@@ -97,6 +97,10 @@ Ready and finished attempts keep direct Team entry when the return record is ava
 ## P03-E Team initial-focus candidate
 
 After Team enables Start and reports ready, an untouched foreground page chooses its visible enabled default through the shared navigation filter. This is a one-shot keyboard focus handoff, without enabling controller ownership or starting play. A deliberate preload or late focus choice, loader recovery control, background page or failed boot prevents automatic focus. Hidden, disabled, inert and closed-disclosure controls cannot be selected; later frames and focus returns do not retry the handoff. Existing lobby, pause, Back and Resume behavior is preserved. [Scoped desktop keyboard evidence](verification/cross-mode/p03-e/README.md) records fresh Start focus, explicit play, Escape to Resume and Change setup focus. Preload/error/background cases remain host-test evidence; physical controller/touch and integrated qualification are still open.
+
+## P03-F modal Tab-boundary candidate
+
+The active modal keeps Tab inside its visible eligible first/last boundary in both directions. Interior movement stays with native controls, including file inputs and reading regions; negative tab indices, hidden controls and inactive nested parents are excluded. This change does not activate controls, commit drafts or resume play. Source-host tests cover actual story controls and nested Collection/picture return. [Scoped native evidence](verification/cross-mode/p03-f/README.md) now covers both boundaries in Collection, picture and story, unchanged interior controls and nested Escape returns. Root's earlier BODY-focus failure remains retained separately. Integrated release and physical-device qualification are still open.
 
 ## Player flow and feedback contract
 
