@@ -251,8 +251,9 @@ test('a comparison-only tag is listed with its dedicated playable archive route'
     comparison.canonicalPlay,
     'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/game/',
   );
-  await assert.rejects(
-    fs.access(path.join(f.outputDirectory, 'releases/v0.1.0/site/game/index.html')),
+  assert.match(
+    await fs.readFile(path.join(f.outputDirectory, 'releases/v0.1.0/site/game/index.html'), 'utf8'),
+    /revealline-archive-01\/releases\/v0\.1\.0\/site\/game\/index\.html/,
   );
 });
 
