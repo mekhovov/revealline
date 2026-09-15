@@ -1,0 +1,237 @@
+{
+  "format": "revealline-evidence-zip-record.v1",
+  "status": "PASS",
+  "file": "native-evidence.zip",
+  "bytes": 2211748,
+  "sha256": "a769895636429a8b54ca9eaedba2e856fbb2aaa345bb2292c0f13feff7e3e071",
+  "innerFiles": 47,
+  "originalObservationFiles": 45,
+  "allMembersRereadAgainstOriginals": true,
+  "files": [
+    {
+      "path": "native/archive-root-index.json",
+      "bytes": 1652,
+      "sha256": "b731d54e13e26d5624c5d055c18382cdfe9e29f657e1709330e6716dd435b93a"
+    },
+    {
+      "path": "native/cdp-url.txt",
+      "bytes": 75,
+      "sha256": "2199607039f8980e9033eed69285e35d9ad2e94255c2016a788863e0f479dff7"
+    },
+    {
+      "path": "native/cdp.mjs",
+      "bytes": 3466,
+      "sha256": "cb85759ac5feecaf844b22ac46b4cb030f980a41f287d5d0e4311ffbea7e6307"
+    },
+    {
+      "path": "native/final-console.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/final-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/initial-owned-blank.json",
+      "bytes": 782,
+      "sha256": "e8068f929ba23560e98a3fe131c9d69f9077ccdca52482e841ef25d82e8d3370"
+    },
+    {
+      "path": "native/target-identity.json",
+      "bytes": 439,
+      "sha256": "bb5a4a2257f20a761f5187e18cdcd69861913139bddabd364fa97f17817673ae"
+    },
+    {
+      "path": "native/v052-active-capture.png",
+      "bytes": 65924,
+      "sha256": "f98354156555aea93c5c5c680d16e62c0a294683bbe79d1fff75d29df407887b"
+    },
+    {
+      "path": "native/v052-console.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/v052-down-cut.json",
+      "bytes": 3192,
+      "sha256": "8feec31841524d26cd3fb24364ba80956ddb1e536e3e0ccd1452ecb5ef5370bf"
+    },
+    {
+      "path": "native/v052-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/v052-explorer-back.json",
+      "bytes": 4978,
+      "sha256": "2b4dd76b08c1a3dcd91b636601113f1260f12ae503ac6e44475c1492ae3b1273"
+    },
+    {
+      "path": "native/v052-left-boundary.json",
+      "bytes": 3233,
+      "sha256": "6e14c7dc625e28ec6a0146acca3993d6ca6ecf4665c943ea7a56f03a7dd1ba63"
+    },
+    {
+      "path": "native/v052-positive-capture-paused.json",
+      "bytes": 3420,
+      "sha256": "fa18f378e6f5da88bdb922264f07bf6d7de56a053346013cc8af2813ede88f74"
+    },
+    {
+      "path": "native/v052-positive-capture-paused.png",
+      "bytes": 282369,
+      "sha256": "6206e24e8d127179f2b1542c89b98b18b3c0063bc211a16f20b0ba94984969f5"
+    },
+    {
+      "path": "native/v052-release-explorer.json",
+      "bytes": 20542,
+      "sha256": "f5e34da9754d24e89b3a8376533f1e9b0cdddda462bd177605f1e4f00fb08071"
+    },
+    {
+      "path": "native/v052-title-retained.json",
+      "bytes": 103248,
+      "sha256": "6989f2361cd6c5b7e54dae152e4599e9c92669b275e4ce14c1a71fd1291888cf"
+    },
+    {
+      "path": "native/v052-title-retained.png",
+      "bytes": 212151,
+      "sha256": "d5a8a4bb141ebd6a2773271091546acbbde19700ae986fc13d0c3a297c2407f1"
+    },
+    {
+      "path": "native/v056-active-capture.png",
+      "bytes": 64946,
+      "sha256": "84834506f842fe6e2040d489b5427fe9833426950af9ec2ba4fa557d947e32c4"
+    },
+    {
+      "path": "native/v056-after-deploy.json",
+      "bytes": 7744,
+      "sha256": "3a7f40680452a1d4f928637bbb17e70f3d73172360a84d41224992b22334bd3d"
+    },
+    {
+      "path": "native/v056-back-continue-remains-paused.json",
+      "bytes": 3522,
+      "sha256": "71c8993b4394b5719b9139920cc3f99b9858552a35bd1a2aa37a473b50bd027a"
+    },
+    {
+      "path": "native/v056-back-continue-remains-paused.png",
+      "bytes": 282954,
+      "sha256": "1ad8edd2b576ed161d5990099088980ee632e5894d020b5515003896730e06fb"
+    },
+    {
+      "path": "native/v056-base-down-cut.json",
+      "bytes": 3062,
+      "sha256": "f884930dd638bd1f6f9c33e7b58f8b23dd76d6682f6f04c535dcfafddccdc7e1"
+    },
+    {
+      "path": "native/v056-base-left-boundary.json",
+      "bytes": 3103,
+      "sha256": "0f811c3ed40ffa848dc92cde4293b4db72ad4cf81f13695818b7055b7190c2ff"
+    },
+    {
+      "path": "native/v056-base-positive-capture-paused.json",
+      "bytes": 3192,
+      "sha256": "2253ecc62cd52d474f3068ef5cbecbe0ddb7ef30d4836b12f68a3ac46dee495d"
+    },
+    {
+      "path": "native/v056-base-positive-capture-paused.png",
+      "bytes": 282369,
+      "sha256": "6206e24e8d127179f2b1542c89b98b18b3c0063bc211a16f20b0ba94984969f5"
+    },
+    {
+      "path": "native/v056-capture-paused.json",
+      "bytes": 3236,
+      "sha256": "7419eac9efd66c198af1858cdd2b4db9dbe28eb1c258d6afaeb81ac8ff522d93"
+    },
+    {
+      "path": "native/v056-capture-paused.png",
+      "bytes": 282420,
+      "sha256": "e4f19dc2c5047dfb70ad035b5d3e46f5d01f28a59b06679d91a7daa86886ffaf"
+    },
+    {
+      "path": "native/v056-console.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/v056-deploy-flight.png",
+      "bytes": 53285,
+      "sha256": "06e5b5a2b8954d7bf288fe3bd83c1aa19d26140211e902c52d6c38c544c7a16d"
+    },
+    {
+      "path": "native/v056-deploy-wait.png",
+      "bytes": 100642,
+      "sha256": "2c24770af6e24c23f3f055157c2266525df086b6c63263b5f64195f24e3f32b9"
+    },
+    {
+      "path": "native/v056-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/v056-explorer-back-title.json",
+      "bytes": 4794,
+      "sha256": "d7ee889508a61f583dd4dd251417f81e6a5d27e2132c6be78d34eb572558d10b"
+    },
+    {
+      "path": "native/v056-explorer-link.json",
+      "bytes": 110,
+      "sha256": "541b8d8c6466243a7babfda4449e509973c9415034981e908a4e5b31cf0a2a0f"
+    },
+    {
+      "path": "native/v056-keyboard-cut.json",
+      "bytes": 2988,
+      "sha256": "304e84048b612f5b99e6f49072b4cc661ac23fe6220c02fcc4449ba92fb8e4c3"
+    },
+    {
+      "path": "native/v056-partial-capture-paused.json",
+      "bytes": 3236,
+      "sha256": "5c77d5abaecf8450f0b315a054fff2e0062009152e6b269932f66eeb5b985639"
+    },
+    {
+      "path": "native/v056-partial-capture-paused.png",
+      "bytes": 282041,
+      "sha256": "80b1f8dbd67588180f439e641f44754336efea9d1d58b039e0d426b39bdcb74b"
+    },
+    {
+      "path": "native/v056-release-explorer.json",
+      "bytes": 20314,
+      "sha256": "569834b7afca3d10abee4bde6ffb13e78a9ee7c9b05e1a61898208b692c25e39"
+    },
+    {
+      "path": "native/v056-release-explorer.png",
+      "bytes": 49440,
+      "sha256": "8bce75439ffbfa8efe92d74a1258ae630573bfbd0b6c727b4b2e91e83ebe8c81"
+    },
+    {
+      "path": "native/v056-restored-active.json",
+      "bytes": 3150,
+      "sha256": "096ffed2b8b0cca546438234158b29cbb6dd73ab6ccf2ce1a6cac45b5dab7239"
+    },
+    {
+      "path": "native/v056-restored-after-v052.json",
+      "bytes": 3484,
+      "sha256": "2a6ed817ac40077ee3208d4fa50d6d8e2f6a4c5459d41a83dbc05b1667fca811"
+    },
+    {
+      "path": "native/v056-resume-straight-cut.json",
+      "bytes": 3029,
+      "sha256": "0834e2148095db9fce5dd14d19c20cfbb781360f0734639ed3f4c4fab9e72e35"
+    },
+    {
+      "path": "native/v056-retry-straight-cut.json",
+      "bytes": 3566,
+      "sha256": "cabd6b7e2da51383857651494e1a1126dd85f76e31ae5a14afc6dd4c629e0a0f"
+    },
+    {
+      "path": "native/v056-title.json",
+      "bytes": 107852,
+      "sha256": "b684df27935d501f2fc182a9c7dd0c99a54d6db60e2c93156725f7ae138131ea"
+    },
+    {
+      "path": "native/v056-title.png",
+      "bytes": 212193,
+      "sha256": "10fdda186b9caebde9ac060e22f22c9e4ead7907d32b5e761e14db7f56d56a97"
+    }
+  ]
+}

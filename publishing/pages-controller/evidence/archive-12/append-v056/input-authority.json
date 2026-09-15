@@ -1,0 +1,77 @@
+{
+  "format": "revealline-archive-append-authority.v1",
+  "archiveBaseCommit": "d81a6d4b9fb767309b60114e65453841f20bd30c",
+  "templateCommit": "58b21ebeff3c2d8e8ca37d5b7764f8203b8824ed",
+  "metadataRepository": "mekhovov/revealline",
+  "metadataCommit": "02364d4ad8832a4693e184f6d36c46dfabd58ef6",
+  "catalogSha256": "405e397691d8fd37bbf3bc13b2b013eba9f2af64fb1c5a245260e2202e8f5abd",
+  "catalogRow": {
+    "version": "v0.56.0",
+    "sourceRevision": "20f017963e6f3875ce6388a198a6fb601e0aea40",
+    "tagObject": "c67e765633f293132901a4b14f8af62784254546",
+    "recordSha256": "a3d3f7c09a1c464629c7bc40349fecd0a7536b90e017ba6256e1902657f434b3",
+    "manifestSha256": "e64c601809366ad5122ecc09d02dc597af410f934e81f75da86b0c75876b0de5",
+    "checksumSha256": "23b7640611f1df718be2967c070d3f00e356df24097fe611412f6b2960cc2495"
+  },
+  "metadata": [
+    {
+      "path": "publishing/pages-controller/metadata/v0.56.0/release.json",
+      "bytes": 465,
+      "sha256": "a3d3f7c09a1c464629c7bc40349fecd0a7536b90e017ba6256e1902657f434b3",
+      "gitBlob": "05987a1715f55d3486e1d8f3a36b39a937c7742d",
+      "releaseAssetId": 565317480
+    },
+    {
+      "path": "publishing/pages-controller/metadata/v0.56.0/manifest.json",
+      "bytes": 120574,
+      "sha256": "e64c601809366ad5122ecc09d02dc597af410f934e81f75da86b0c75876b0de5",
+      "gitBlob": "8c669563e10fb38d0f17cd24c99d3ec7bef5cca4",
+      "releaseAssetId": 565317704
+    },
+    {
+      "path": "publishing/pages-controller/metadata/v0.56.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "23b7640611f1df718be2967c070d3f00e356df24097fe611412f6b2960cc2495",
+      "gitBlob": "810c5aad758bae94cf7956bbe9622a5bede09d4c",
+      "releaseAssetId": 565318016
+    }
+  ],
+  "publishedRelease": {
+    "id": 388964588,
+    "version": "v0.56.0",
+    "publishedAt": "2026-09-15T09:00:50Z",
+    "apiObservationSha256": "1e513b1e0c33fdd00e2152841e261ba584599318253c0c2c0f2308e82763ea2b",
+    "distributionAsset": {
+      "id": 565313894,
+      "name": "distribution.zip",
+      "size": 312356794,
+      "digest": "sha256:e4a8997bf9203e038e6b43ee29393dec1413a482e048206ffe861f0945c20f30",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.56.0/distribution.zip"
+    }
+  },
+  "preservation": {
+    "canonicalV052Rows": 632,
+    "canonicalV052Bytes": 323191549,
+    "unchangedBaselineRows": 633,
+    "baselineFiles": 634,
+    "changedInfrastructureRows": [
+      "index.html"
+    ],
+    "unchangedMetadataFiles": 3
+  },
+  "capacity": {
+    "files": 1288,
+    "bytes": 635435625,
+    "budgetBytes": 800000000,
+    "hostedMinimumFreeBytes": 3221225472,
+    "localBulkExecution": false
+  },
+  "bridge": {
+    "path": "releases/index.html",
+    "bytes": 571,
+    "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0",
+    "destination": "https://mekhovov.github.io/revealline/releases/"
+  },
+  "recordedAt": "2026-09-15T09:22:38.677390+00:00",
+  "scope": "Authenticated small release assets are byte-identical to pinned published metadata; canonical expectations derive from original manifests. Hosted original ZIP extraction/full inventory/public HTTP/native checks remain separate."
+}
