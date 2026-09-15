@@ -417,6 +417,7 @@ test('built poster/still links and teaching requests retain their edition and wo
       },
       caches,
       crypto: webcrypto,
+      AbortController,
       URL,
       Request,
       Response,

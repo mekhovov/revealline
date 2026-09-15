@@ -92,7 +92,12 @@ async function openStudio(page) {
 const musicMedia = (page) => page.audioElements[0];
 async function playStudio(page) {
   page.$('soundtrack-play').click();
-  await waitFor(() => musicMedia(page).paused === false, page.$('soundtrack-now').textContent);
+  // Prepared media starts within the click task. These persistence journeys
+  // wait for its listening intent to settle before issuing the next gesture.
+  await waitFor(
+    () => musicMedia(page).paused === false && preferences(page).musicEnabled,
+    'Studio playback and persisted listening intent settle before the next gesture',
+  );
 }
 function leaveStudio(page) {
   page.$('soundtrack-close').click();
