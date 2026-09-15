@@ -1,0 +1,71 @@
+{
+  "format": "archive10-combined-hosted-completion.v1",
+  "reviewedAt": "2026-09-15T02:41:10.617824+00:00",
+  "sourceCommit": "bd6839c500b09213159eccea92407724ef668056",
+  "infrastructureCommit": "55019541f8210ccef70f09cc04885f0debf1c4a7",
+  "tree": "5427f5bdcf07dbae1219e10c2dc0217ce16026f9",
+  "pullRequest": 1,
+  "workflowRun": 34921439329,
+  "deploymentId": 6450531920,
+  "deployedAt": "2026-09-15T02:36:26Z",
+  "base": "https://mekhovov.github.io/revealline-archive-10/",
+  "status": "PASS",
+  "fileCount": 976,
+  "totalBytes": 633532427,
+  "expectedInventorySha256": "98e50fd1c31d9b3b50bbff006c651c63320335b075c29e5a48e605323d18241a",
+  "selectedVersions": [
+    "v0.42.0",
+    "v0.51.0"
+  ],
+  "all58TagsUnchanged": true,
+  "hostedInventoryExactPreparedBytes": true,
+  "bothCanonicalUnionsExact": true,
+  "qualification": "Hosted archived-CLI reconstruction matched original source TAR/Git/modes and frozen metadata manifest/ZIP/loose byte identities. Existing local frozen tree comparison was not requested: frozenByteEquality and selectedFrozenTreesUnchanged are false for that unused comparison mode, not failed guards. No original local artifacts were modified. Public HTTP and actual native acceptance are separate.",
+  "metadataInputs": [
+    {
+      "path": "run-final.json",
+      "bytes": 3721,
+      "sha256": "0ff7423a326d9b392c3a350028de62afc2016141c0ea7ab05043da603d48aaf0"
+    },
+    {
+      "path": "deployments.json",
+      "bytes": 7715,
+      "sha256": "dba3da34d57115ce48582dae5b4a4b889856156bb6fc9d8214a468ebb3d725d3"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 6817,
+      "sha256": "d994fec7fdfd1a7f1c6cea46b93bf7609d81d5bca5c7e74f0a3dec8a4c796e39"
+    },
+    {
+      "path": "hosted-receipt-intake.json",
+      "bytes": 2590,
+      "sha256": "715f729aecd9c40a0b41052db06f5fae1f4c14e78403aee47583a9f7f76e0e06"
+    },
+    {
+      "path": "hosted-receipts/receipt.json",
+      "bytes": 2542,
+      "sha256": "8189cf0419f8431ab0eeeadb07abe04d5760271194eb9b920e3760a29aa9b908"
+    },
+    {
+      "path": "hosted-receipts/inventory.json",
+      "bytes": 196644,
+      "sha256": "98e50fd1c31d9b3b50bbff006c651c63320335b075c29e5a48e605323d18241a"
+    },
+    {
+      "path": "hosted-receipts/build.json",
+      "bytes": 335,
+      "sha256": "efb3481afbcd2bf5f489929eece2e2ac97392c37270f68695050d79404cbffd7"
+    },
+    {
+      "path": "hosted-receipts/tags-before.json",
+      "bytes": 4118,
+      "sha256": "87e18c9d81d668d766753b57b43641509fa44303a84de7dd1f10de28f6330860"
+    },
+    {
+      "path": "hosted-receipts/tags-after.json",
+      "bytes": 4118,
+      "sha256": "87e18c9d81d668d766753b57b43641509fa44303a84de7dd1f10de28f6330860"
+    }
+  ]
+}
