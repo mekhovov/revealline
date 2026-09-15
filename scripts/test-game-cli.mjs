@@ -269,6 +269,26 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'index.html',
     'index.json',
   ]);
+
+  // This is read after the TAR transfer but before publishing the new label.
+  const broken = path.join(root, 'releases/broken');
+  await fs.mkdir(broken);
+  await fs.writeFile(path.join(broken, 'release.json'), '{');
+  const failureCode = `import assert from 'node:assert/strict'; import { releaseSnapshot } from ${JSON.stringify(cliUrl)}; await assert.rejects(releaseSnapshot(${JSON.stringify({ ...options, version: 'fixture-failure' })}), SyntaxError);`;
+  run(process.execPath, ['--input-type=module', '--eval', failureCode], childEnvironment);
+  assert.deepEqual(await fs.readdir(tempRoot), []);
+  assert.deepEqual((await fs.readdir(path.join(root, 'releases'))).sort(), [
+    'broken',
+    'fixture-v1',
+    'index.html',
+    'index.json',
+  ]);
+  assert.equal(await fs.readFile(path.join(broken, 'release.json'), 'utf8'), '{');
+  assert.deepEqual(await fs.readFile(path.join(destination, 'source.tar')), archive);
+  assert.deepEqual(await fs.readFile(path.join(destination, 'release.json')), releaseBytes);
+  assert.deepEqual(await fs.readFile(path.join(site, 'distribution.zip')), zip);
+  assert.deepEqual(JSON.parse(await fs.readFile(path.join(root, 'releases/index.json'))), index);
+  assert.equal(git('status', '--porcelain'), statusBefore);
 });
 
 test('build is byte-reproducible and each manifest checksum covers exact output bytes', async (t) => {
