@@ -29,6 +29,9 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.$('race-boards').hidden, true);
   assert.equal(f.$('race-setup').inert, true);
   press(f, 'Tab', f.doc.body);
+  assert.equal(f.doc.activeElement.id, 'race-coop');
+  assert.equal(f.doc.activeElement.getAttribute('href'), 'relay-rescue.html');
+  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-focus');
