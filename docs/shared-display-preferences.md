@@ -159,6 +159,27 @@ Tab wrapping, Escape opener restoration and the flight still paused. The
 original 44px observation is retained. Portrait, short landscape, zoom and
 physical-input checks remain open; this does not complete P05.
 
+## Narrow Team HUD checkpoint
+
+At widths up to 600 CSS pixels, Team places the two players in equal columns,
+with each number beside its name and status text using the full player column.
+The shared territory summary follows underneath. Keep the existing semantic font
+sizes, actor/arena geometry and input owners; improve space allocation before
+shrinking text. This independent checkpoint uses Team host source `d3ff0bc` and
+does not include the separate actor-readability correction.
+
+The [retained HUD evidence](verification/cross-mode/p05-team-hud/README.md)
+records six final native observations, including keyboard Options/Back/Resume,
+and six visually inspected JPEGs. The observed
+320/390-pixel layouts fit both full names and the complete arena in the tested
+Theme/Plain and Standard/Large combinations. At 320 pixels with Large text, the
+HUD height decreased from 227.08 to 178.48 CSS pixels without reducing fonts.
+These observations are narrower than complete responsive or accessibility
+qualification: the unchanged 844×390 layout still requires vertical scrolling
+and leaves Pause lower on the page. Actor cues, 200% zoom, physical input and
+whole-phase acceptance remain separate. Retain the earlier banded captures as
+inconclusive capture diagnostics; fresh-tab recovery is not a runtime fix.
+
 ## Reusable bounded journey
 
 “Pause an unfinished cut, select Plain and Large, then enable Reduced effects.
