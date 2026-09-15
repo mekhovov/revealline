@@ -36,11 +36,11 @@ const sources = {
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: '47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6',
+    sha256: 'dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0',
     evidence: [
-      'Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.',
-      'Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.',
-      'game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases.',
+      'Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.',
+      'Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.',
+      'This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval.',
     ],
   },
   ui: {

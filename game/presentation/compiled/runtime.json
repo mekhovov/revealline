@@ -8101,20 +8101,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.collection.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.collection.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.couch.background": {
         "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8126,20 +8126,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.couch.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.couch.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.hangar.background": {
         "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8151,20 +8151,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.hangar.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.hangar.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.missions.background": {
         "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8176,20 +8176,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.missions.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.missions.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.results.background": {
         "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8201,20 +8201,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.results.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.results.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.settings.background": {
         "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8226,20 +8226,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.settings.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.settings.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.studio.background": {
         "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8251,20 +8251,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.studio.background.field-kit", "revision": 10 },
+          "parent": { "id": "screen.studio.background.field-kit", "revision": 11 },
           "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.",
-            "Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.",
-            "game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases."
+            "Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.",
+            "Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.",
+            "This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 11
+        "revision": 12
       },
       "screen.title.background": {
         "description": "title backdrop",
@@ -9873,20 +9873,20 @@
       "scene.reveal.wide": { "id": "scene.reveal.wide.field-kit", "revision": 2 },
       "screen.collection.background": {
         "id": "screen.collection.background.field-kit",
-        "revision": 11
+        "revision": 12
       },
-      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 11 },
-      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 11 },
+      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 12 },
+      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 12 },
       "screen.missions.background": {
         "id": "screen.missions.background.field-kit",
-        "revision": 11
+        "revision": 12
       },
-      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 11 },
+      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 12 },
       "screen.settings.background": {
         "id": "screen.settings.background.field-kit",
-        "revision": 11
+        "revision": 12
       },
-      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 11 },
+      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 12 },
       "screen.title.background": { "id": "screen.title.background.field-kit-scene", "revision": 3 },
       "screen.title.portrait": { "id": "screen.title.portrait.field-kit-scene", "revision": 3 },
       "terrain.lethal": { "id": "terrain.lethal.field-kit", "revision": 2 },
@@ -9921,7 +9921,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 9 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 22 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 23 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -9949,7 +9949,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 22 },
+  "source": { "id": "field-kit", "revision": 23 },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
     "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65": "./assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",

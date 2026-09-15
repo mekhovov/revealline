@@ -1,0 +1,19 @@
+{
+  "status": "REQUIRED_LANDSCAPE_FAILURE_PRESERVED",
+  "source": "78fbd14044f840f44dc8f6050685b472737ab0bb",
+  "originals": 99,
+  "originalBytes": 1344417,
+  "screenshotsReviewed": [
+    "01-inline-recovery-portrait.png",
+    "02-inline-export-return-portrait.png",
+    "03-inline-recovery-short-landscape.png"
+  ],
+  "portrait": "Complete message, Export/Reload and return focus visible.",
+  "landscape": "844x390: Export/Reload bottom418.891 exceeds viewport390; centers obstructed by game-overlay.",
+  "directReload": "Not attempted after required failure.",
+  "correction": "Scoped shared-surface CSS; native retest and production recipe approval pending.",
+  "bundle": {
+    "bytes": 348668,
+    "sha256": "9ed520c61ba02e10930f314d2880013ffcf1ae16b55c8f7671eff3c4736d9a8d"
+  }
+}
