@@ -1,0 +1,51 @@
+{
+  "results": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "audit-main.mjs"
+      ],
+      "startedAt": "2026-09-15T08:11:24.208042+00:00",
+      "finishedAt": "2026-09-15T08:11:24.502609+00:00",
+      "exitCode": 0,
+      "raw": {
+        "path": "preparation-check-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "http-engine.mjs"
+      ],
+      "startedAt": "2026-09-15T08:11:24.502719+00:00",
+      "finishedAt": "2026-09-15T08:11:24.793663+00:00",
+      "exitCode": 0,
+      "raw": {
+        "path": "preparation-check-2.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "self-check.mjs"
+      ],
+      "startedAt": "2026-09-15T08:11:24.793732+00:00",
+      "finishedAt": "2026-09-15T08:11:25.123504+00:00",
+      "exitCode": 0,
+      "raw": {
+        "path": "preparation-check-3.log",
+        "bytes": 258,
+        "sha256": "d642c63a3f64f4f2f6f8ba8ff093e7e41a477ff7efb166c565214917df2a93e5"
+      }
+    }
+  ],
+  "realNetworkRequests": 0,
+  "productionBindingsCreated": 0,
+  "publicAcceptance": false
+}

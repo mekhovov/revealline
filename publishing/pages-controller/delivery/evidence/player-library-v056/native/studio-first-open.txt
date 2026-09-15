@@ -1,0 +1,174 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: ARCADE EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 50.0%
+    - emphasis: TARGET 68%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 2:25
+    - generic: SCORE
+    - strong: "11720"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - status: Paused
+    - text: ◆
+    - button "Resume →"
+    - text: ◆ ◆ ◆ ◆ ◆
+    - button "Restart mission"
+    - button "Mission brief"
+    - button "Main menu"
+    - strong: Paused
+    - generic: Close a line to reveal the picture
+    - status: Saved flight verified and restored. Press Resume to continue.
+    - status
+- dialog "REVEAL / LINE":
+  - paragraph: FPV FIELD KIT / FLIGHT READY
+  - heading "REVEAL / LINE" [level=1]:
+    - text: REVEAL
+    - generic: / LINE
+  - navigation "Main menu":
+    - button "Continue":
+      - generic: Continue
+      - generic: →
+    - button "Missions"
+    - button "Collection"
+    - button "Settings"
+    - button "Workshop"
+    - link "Release explorer Play another edition":
+      - /url: https://mekhovov.github.io/revealline/releases/
+      - text: Release explorer
+      - generic: Play another edition
+  - paragraph: Continue · Orchard Crossing
+  - paragraph: Choose a flight. Trace a path. Close the line.
+  - paragraph: Version v0.56.0
+  - paragraph:
+    - text: HANGAR 01
+    - generic: FIRST LIGHT
+- dialog "SOUND / STUDIO":
+  - heading "SOUND / STUDIO" [level=2]
+  - button "Close studio" [active]
+  - paragraph: Custom music stays in this browser. Export a .rlsound file to keep its original bytes.
+  - heading "Now playing" [level=3]
+  - status: Orchard Circuit · Authored game soundtrack · paused · 0:00 / 1:11 · playlist update queued
+  - button "Previous"
+  - button "Play music"
+  - button "Pause music"
+  - button "Next"
+  - generic: Track position
+  - slider "Track position": "0"
+  - generic: Music volume
+  - slider "Music volume": "0.45"
+  - generic: Playback playlist
+  - combobox "Playback playlist":
+    - option "Automatic — follow map / campaign / theme" [selected]
+    - option "RevealLine synth collection"
+    - 'option "Synthwave: Signal Afterglow"'
+    - 'option "Chiptune: Pocket Constellation"'
+    - 'option "Arcade rock: Copper Highway"'
+    - 'option "Metal: Iron Comet"'
+    - 'option "Ambient: Quiet Orchard"'
+  - button "Save & use playlist"
+  - heading "Music library" [level=3]
+  - paragraph: Batch import keeps original MP3 bytes. Each file must be at most 32 MiB and 12 minutes. New imports start as personal local uploads; edit the declaration before publishing.
+  - generic: Add MP3 files
+  - button "Add MP3 files"
+  - button "Import selected MP3s"
+  - generic: Tracks
+  - listbox "Tracks":
+    - option "Built-in · Signal Afterglow" [selected]
+    - option "Built-in · Pocket Constellation"
+    - option "Built-in · Copper Highway"
+    - option "Built-in · Iron Comet"
+    - option "Built-in · Quiet Orchard"
+  - paragraph: Built-in procedural synth recipe. Use the playback playlist to listen; original finished albums are a separate content milestone.
+  - generic: Track title
+  - textbox "Track title" [disabled]: Signal Afterglow
+  - generic: Artist
+  - textbox "Artist" [disabled]: RevealLine
+  - generic: Source declaration
+  - combobox "Source declaration" [disabled]:
+    - option "Personal local upload"
+    - option "Original work" [selected]
+    - option "Licensed work"
+  - generic: Credit
+  - textbox "Credit" [disabled]: RevealLine
+  - generic: License / permission
+  - textbox "License / permission" [disabled]
+  - generic: Source / provenance
+  - textbox "Source / provenance" [disabled]
+  - button "Apply track details to draft" [disabled]
+  - button "Remove track from draft" [disabled]
+  - button "Audition MP3" [disabled]
+  - button "Finish audition" [disabled]
+  - heading "Playlist editor" [level=3]
+  - generic: Playlists
+  - listbox "Playlists":
+    - option "Built-in · RevealLine synth collection" [selected]
+    - 'option "Built-in · Synthwave: Signal Afterglow"'
+    - 'option "Built-in · Chiptune: Pocket Constellation"'
+    - 'option "Built-in · Arcade rock: Copper Highway"'
+    - 'option "Built-in · Metal: Iron Comet"'
+    - 'option "Built-in · Ambient: Quiet Orchard"'
+  - button "New playlist with selected track"
+  - button "Clone selected playlist"
+  - generic: Playlist title
+  - textbox "Playlist title" [disabled]: RevealLine synth collection
+  - generic: Playback order
+  - combobox "Playback order" [disabled]:
+    - option "In order" [selected]
+    - option "Shuffle without repeats until every entry played"
+  - generic: Repeat
+  - combobox "Repeat" [disabled]:
+    - option "Repeat all" [selected]
+    - option "Repeat one"
+    - option "Stop at the end"
+  - button "Apply playlist details to draft" [disabled]
+  - generic: Playlist entries
+  - listbox "Playlist entries":
+    - option "1. Signal Afterglow" [selected]
+    - option "2. Pocket Constellation"
+    - option "3. Copper Highway"
+    - option "4. Iron Comet"
+    - option "5. Quiet Orchard"
+  - button "Move entry up" [disabled]
+  - button "Move entry down" [disabled]
+  - button "Remove selected entry" [disabled]
+  - generic: Track to add
+  - combobox "Track to add":
+    - option "Signal Afterglow" [selected]
+    - option "Pocket Constellation"
+    - option "Copper Highway"
+    - option "Iron Comet"
+    - option "Quiet Orchard"
+  - button "Add selected track" [disabled]
+  - button "Remove playlist from draft" [disabled]
+  - heading "Authored music" [level=3]
+  - paragraph: These exact edition keys come from the game. Choose Automatic in Playback playlist to follow authored assignments.
+  - generic: Assign selected playlist to
+  - combobox "Assign selected playlist to":
+    - option "Whole game" [selected]
+    - option "Current theme"
+    - option "Current campaign edition"
+    - option "Current map edition"
+  - paragraph: Global fallback for the whole game
+  - button "Assign playlist to this context"
+  - generic: Saved / drafted assignments
+  - listbox "Saved / drafted assignments"
+  - button "Remove selected assignment" [disabled]
+  - heading "Local files & backup" [level=3]
+  - paragraph: This separate soundtrack file contains original MP3 bytes. A normal game JSON backup does not include this audio. Local storage availability is not a guarantee that this browser retains files indefinitely.
+  - button "Prepare saved-library backup (.rlsound)"
+  - generic: Complete soundtrack backup (.rlsound)
+  - button "Complete soundtrack backup (.rlsound)"
+  - button "Review backup as replacement draft"
+  - paragraph: Saved · generation 0 · 0 custom tracks · 0 custom playlists · 0.0 MiB original audio
+  - status: Saved library loaded. Imports and edits remain drafts until Save all changes.
+  - button "Save all changes" [disabled]
+  - button "Undo unsaved changes" [disabled]
+  - button "Reload latest saved"

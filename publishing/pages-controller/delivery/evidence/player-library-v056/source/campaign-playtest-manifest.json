@@ -1,0 +1,178 @@
+{
+  "format": "revealline-native-campaign-evidence-manifest.v1",
+  "sourceRevision": "f63939e77cef4208f6fd54c2fc0684928744a2ed",
+  "runtimeAlsoAt": "20f017963e6f3875ce6388a198a6fb601e0aea40",
+  "previewUrl": "http://127.0.0.1:58524/game/",
+  "gameRuntimeGitDeltaEmpty": true,
+  "authority": "Root agent supplied and performed the native keyboard observations. Dewey read the retained observation JSON and hashed the existing files; no independent browser or image-pixel review was performed for this manifest.",
+  "campaign": "Pressure Lines",
+  "mode": {
+    "difficulty": "Standard",
+    "turnPolicy": "Immediate",
+    "input": "Keyboard"
+  },
+  "reportedOutcomes": [
+    {
+      "mission": "Orchard Crossing",
+      "coveragePercent": 69.3,
+      "lives": 2,
+      "score": 16250,
+      "medal": "bronze"
+    },
+    {
+      "mission": "Courtyard Exits",
+      "coveragePercent": 75.7,
+      "lives": 2,
+      "score": 17500,
+      "medal": "silver"
+    },
+    {
+      "mission": "Night Crossfire",
+      "coveragePercent": 81.5,
+      "lives": 2,
+      "score": 18980,
+      "medal": "bronze"
+    }
+  ],
+  "reportedCompletion": {
+    "campaignCompletedMissions": 3,
+    "campaignTotalMissions": 3,
+    "allThreeCollectionCardsVisible": true
+  },
+  "retainedObservations": [
+    "Courtyard: freeze pickup contact activated the three-second freeze; the retained observation includes Enemies frozen1.1s and active terrain/clock.",
+    "Night: extra-life contact raised lives2\u21923, then a later failed crossing lost one life.",
+    "Orchard earned picture opened from Collection; in-place Play celebration returned through Escape to the Orchard card with result metadata unchanged in the observed DOM.",
+    "Several failed crossings and missed pickup approaches remain in the original observations and screenshots.",
+    "A screenshot taken before Pause may precede the final DOM by a few ticks; do not treat screen coordinates or timing as an exact synchronized state export."
+  ],
+  "remainingPresentationGap": "Legacy pale simplified objective/obstacle presentation remains in victory and Collection celebration. Preserve it explicitly as future P08-A parity/P08-B reward-polish work; the playthrough does not close that gap.",
+  "limits": [
+    "No source changes, state injection or additional tests in this evidence-sealing task.",
+    "Inspection pauses, route planning and unpaused delays prevent using elapsed time as a speed, difficulty or fairness benchmark.",
+    "No physical-device/controller, authored-video/audio audition, restored-save or offline certification.",
+    "Screenshots and observer notes do not constitute continuous video or an independent duplicate-reward storage audit.",
+    "This source-preview playthrough does not itself establish a frozen distribution, artifact-byte audit or public deployment."
+  ],
+  "retainedFiles": [
+    {
+      "path": "earned-collection-f63939e/celebration-after.jpg",
+      "bytes": 144962,
+      "sha256": "a3c6e2aed66dca5ee98be2e59c745ce13ff1811c2af02e9d8356c5c8c127e3ec"
+    },
+    {
+      "path": "earned-collection-f63939e/celebration-start.jpg",
+      "bytes": 56566,
+      "sha256": "c2a6047b99b0d0bf7379b88913b476ab9e574005c95cfecdf3a84a965885a383"
+    },
+    {
+      "path": "earned-collection-f63939e/observation.json",
+      "bytes": 1291,
+      "sha256": "f77f2545f89d18a29f7bc915060a13c765e76fcd05a285849c324eedfff14ec9"
+    },
+    {
+      "path": "earned-collection-f63939e/picture.jpg",
+      "bytes": 143869,
+      "sha256": "23e07da854a50742d45d715cbe11109e6aa42d7ef99466afbb6fb45f28fbb484"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/chase.jpg",
+      "bytes": 60185,
+      "sha256": "56848fb28b86e9681cd73fb7cf558e54fb7b994c5027af135530a904261ab8d5"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/freeze.jpg",
+      "bytes": 94060,
+      "sha256": "37f1dc4a1cc6749753535f7712197b55b383a2c584f79848d75ef5a21e98bdda"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/initial.jpg",
+      "bytes": 54769,
+      "sha256": "0037a669f177a8039a714fc14343060b9044396fcb18a3bea3f895c08d5de364"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/loss.jpg",
+      "bytes": 56730,
+      "sha256": "f902d0f2e53a770da16f25585b486d37403a55182c17547c242185a44a325fb6"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/observation.json",
+      "bytes": 1510,
+      "sha256": "a08cff2ea4ba18366ded7d657b862b1eb1c8e5924b5d3dd332930d4fa5d7f826"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/result.jpg",
+      "bytes": 69995,
+      "sha256": "20d9e20e0bab782e1cb31da7c0baf07c39ccdaa13838b2cda039a3b3cbc30fa9"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/struck-escape.jpg",
+      "bytes": 96982,
+      "sha256": "4917f851cd661f85ff5967daff93342f4c4ebe03d2377392dfc8cdde7ec807fd"
+    },
+    {
+      "path": "courtyard-playtest-f63939e/victory.jpg",
+      "bytes": 115242,
+      "sha256": "4bad8c993a175ccad490790e2b32777474c9863b620ada993b47d61f023a060b"
+    },
+    {
+      "path": "night-playtest-f63939e/collection.jpg",
+      "bytes": 49559,
+      "sha256": "2671e4dd41055e9afa6fdbfe1dd56f8c07250b3ec2a5ca3bdce59a1d5a02fa78"
+    },
+    {
+      "path": "night-playtest-f63939e/first-cut.jpg",
+      "bytes": 77708,
+      "sha256": "6c71428c2f757c74179e86db227dd94a00fa710a51eb61682e7e3b4d84036200"
+    },
+    {
+      "path": "night-playtest-f63939e/initial.jpg",
+      "bytes": 54273,
+      "sha256": "1d008fcd2a1d59ce4a52ce2a42c426edd36f08a127dcc1620cf50dbbd075f560"
+    },
+    {
+      "path": "night-playtest-f63939e/lane.jpg",
+      "bytes": 91955,
+      "sha256": "12585406dd846cf4e166eef8f2bf6c0d45997755247b67530d2400aaab52c3e4"
+    },
+    {
+      "path": "night-playtest-f63939e/life-contact.jpg",
+      "bytes": 91324,
+      "sha256": "e0d36f7f20dbce2e62d30312fd907a6f810c077a331e27f5a9e73019b6da5e60"
+    },
+    {
+      "path": "night-playtest-f63939e/loss.jpg",
+      "bytes": 94235,
+      "sha256": "cb8d26794b54553fbdf0c93ba100ae910444bc5be01d776a6939df3495b961a5"
+    },
+    {
+      "path": "night-playtest-f63939e/observation.json",
+      "bytes": 1321,
+      "sha256": "93d30e23e3c0280b544a0dd2b3d7bda1c858ab4545ebe495acb3d583ac007374"
+    },
+    {
+      "path": "night-playtest-f63939e/result.jpg",
+      "bytes": 67890,
+      "sha256": "868cc30d08104e1ebdde96d33d022e8f2f183d6fc6b9a3d72760a3764604e0d4"
+    },
+    {
+      "path": "night-playtest-f63939e/right-pocket.jpg",
+      "bytes": 94530,
+      "sha256": "ea858fd7951127be63660baecb18f4ffcb18e2ef835dc72fdb6a01c27f61d3cd"
+    },
+    {
+      "path": "night-playtest-f63939e/win.jpg",
+      "bytes": 101644,
+      "sha256": "1b8ea5ca561291fb251031a157f08a2fc45ba969013e5cc832954f334eceb014"
+    }
+  ],
+  "retainedFileCount": 22,
+  "retainedScreenshotCount": 19,
+  "retainedBytesByDirectory": {
+    "earned-collection-f63939e": 346688,
+    "courtyard-playtest-f63939e": 549473,
+    "night-playtest-f63939e": 724439
+  },
+  "retainedTotalBytes": 1620600,
+  "productionChanged": false
+}

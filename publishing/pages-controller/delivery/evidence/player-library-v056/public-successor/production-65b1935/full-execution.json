@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v056-public-audit-archive12-successor/audit-main.mjs",
+    "--binding",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v056-public-audit-archive12-successor/inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/binding.json",
+    "--binding-sha",
+    "c9c329fd19deddc8401ca423ad3da0303a6578a058c0a1d9d5abaf3287fe3fa8",
+    "--out",
+    "complete-65b1935-1"
+  ],
+  "nodeVersion": "v20.19.5",
+  "startedAt": "2026-09-15T09:56:07.779862+00:00",
+  "finishedAt": "2026-09-15T09:58:04.012242+00:00",
+  "elapsedSeconds": 116.23253654199652,
+  "exitCode": 0
+}
