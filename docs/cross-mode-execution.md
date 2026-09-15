@@ -76,12 +76,12 @@ P03-A through P03-I are internal work packages within approved **P03**, not sepa
 
 This is a status snapshot, not another acceptance register. The phase table above remains authoritative; historical receipts below are immutable.
 
-| Phase | Committed source candidates | Remaining before phase acceptance |
-| --- | --- | --- |
-| P02-A | `ac644a9`, draft PR #62; shared master controls, scoped browser/output checks and exact-source hosted qualification. | Integrate required P01 corrections, qualify the final source again, freeze and complete public release checks. |
-| P03 | A–I integrated at `dae2d4e`; Solo retained-selection/setup, nested focus and Team discard/retry corrections. | Workshop Restart, outgoing mode-departure parity, Library launch decisions, course lesson replacement, Versus initial focus, integrated mode entry, full current input journeys and device/public qualification. |
-| P05 | `5d3560e` on `codex/p05a-display-preferences`: shared display settings, glyph inspection, compact confirmations and correct disabled Couch styling. | Integrated Team typography/layout, cross-screen contrast, responsive/zoom and actual-device qualification. Desktop evidence alone does not close this phase. |
-| P08-A | `1da77ee` on `codex/p08a-static-pictures`: exact static Solo/Versus artwork bindings, cancellation and input/focus ownership; 116/116 affected tests on each Node runtime. | Team painter/artwork/actor parity, approved edition variants, imports, actual-size/arena consistency and final production/public qualification. Read-only Team adapter work is underway separately. |
+| Phase | Committed source candidates                                                                                                                                                | Remaining before phase acceptance                                                                                                                                                                                |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P02-A | `ac644a9`, draft PR #62; shared master controls, scoped browser/output checks and exact-source hosted qualification.                                                       | Integrate required P01 corrections, qualify the final source again, freeze and complete public release checks.                                                                                                   |
+| P03   | A–I integrated at `dae2d4e`; Solo retained-selection/setup, nested focus and Team discard/retry corrections.                                                               | Workshop Restart, outgoing mode-departure parity, Library launch decisions, course lesson replacement, Versus initial focus, integrated mode entry, full current input journeys and device/public qualification. |
+| P05   | `5d3560e` on `codex/p05a-display-preferences`: shared display settings, glyph inspection, compact confirmations and correct disabled Couch styling.                        | Integrated Team typography/layout, cross-screen contrast, responsive/zoom and actual-device qualification. Desktop evidence alone does not close this phase.                                                     |
+| P08-A | `1da77ee` on `codex/p08a-static-pictures`: exact static Solo/Versus artwork bindings, cancellation and input/focus ownership; 116/116 affected tests on each Node runtime. | Team painter/artwork/actor parity, approved edition variants, imports, actual-size/arena consistency and final production/public qualification. Read-only Team adapter work is underway separately.              |
 
 The latest P03 source audit identifies five concrete transition gaps. Workshop Restart is also reproduced in the native browser: a real paused 0:11 flight resets to 0:00 without a decision, while Workshop continues covering the ready field. Its bounded correction is underway. Team's paused header links also need equivalent in-panel keyboard/controller destinations; the I confirmation does not itself solve that hierarchy. These remaining items must not be described as completed menu accessibility.
 
@@ -146,6 +146,22 @@ confirmation. Paused header keyboard access remains a documented gap requiring
 in-panel destination actions. This is an internal P03 work package, not phase or
 release acceptance. The isolated branch starts at P03-G and does not include the
 separate P03-H starting-setup implementation.
+
+## P03 mode-departure A1 candidate
+
+The isolated [A1 mode-departure work](mode-departure.md) shares Versus's existing
+Stay/discard screen across the fixed Solo and Team routes, binding the decision
+to the actual match and generation. Team gains Solo/Versus actions inside its
+active paused/results panel using I's existing owner, without widening the
+navigation root or adding saved Team state. Ready/terminal links stay direct;
+Stay never resumes. This source candidate is based on integrated H/I at `f61a249`.
+Seven complete affected files pass 211/211 on each Node runtime. The
+[scoped desktop native record](verification/cross-mode/p03-mode-a1/README.md)
+checks Versus → Team and both Team in-panel keyboard destinations, paused Stay
+and explicit discard; it does not certify physical devices or all return/fault
+paths. Initial Versus focus remains R5. This work does not yet include the separate
+P08 picture host, Solo outgoing retention, title Start/Continue or integrated
+Couch lobby work, and does not accept P03 as a phase or release.
 
 ## Player flow and feedback contract
 

@@ -15,6 +15,7 @@ const SCREENS = Object.freeze({
   confirm: ['race-confirm', 'race-confirm-back'],
   leave: ['race-leave-panel', 'race-leave-back'],
 });
+const DESTINATIONS = Object.freeze({ solo: '../', team: 'relay-rescue.html?return=versus' });
 /** Display capabilities come from the actual authored level and equipped recipe. */
 export function couchEquipment(run) {
   const actions = arcadeActionCapabilities(run.level),
@@ -36,6 +37,8 @@ export function createCouchShell({
   coarse = false,
   onTransition = () => {},
   onNewMatch = () => {},
+  getDepartureState = () => null,
+  onLeaveRequest = () => {},
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     pads = [...doc.querySelectorAll('.race-pad')],
@@ -46,6 +49,7 @@ export function createCouchShell({
   let screen = 'main',
     status = null,
     opener = null,
+    departure = null,
     destroyed = false,
     equipment = [];
   const setText = (id, text) => {
@@ -118,7 +122,7 @@ export function createCouchShell({
       }
     }
   }
-  function show(next, { restore = null, remember = false } = {}) {
+  function show(next, { restore = null, remember = false, restoreFocus = true } = {}) {
     if (destroyed || status === 'running' || (!Object.hasOwn(SCREENS, next) && next !== 'review'))
       return;
     if (remember) opener = remember === true ? doc.activeElement : remember;
@@ -126,9 +130,10 @@ export function createCouchShell({
     screen = next;
     renderScreens();
     renderPads();
-    focus(restore || primary());
+    if (restoreFocus) focus(restore || primary());
   }
   function back() {
+    departure = null;
     if (screen === 'main') {
       onTransition({ from: screen, to: screen, back: true });
       return focus();
@@ -139,6 +144,70 @@ export function createCouchShell({
   }
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
+  }
+  const foreground = () => !doc.hidden && doc.hasFocus?.() !== false;
+  function departureCurrent(ticket) {
+    const current = getDepartureState();
+    return (
+      !destroyed &&
+      departure === ticket &&
+      current?.match === ticket.match &&
+      current.generation === ticket.generation &&
+      current.match.status === 'paused'
+    );
+  }
+  function cancelDeparture({ restore = false } = {}) {
+    if (!departure) return;
+    const target = departure.opener;
+    departure = null;
+    opener = null;
+    if (screen === 'leave')
+      show('main', { restore: target, restoreFocus: restore && foreground() });
+  }
+  function requestLeave(kind, element, event) {
+    if (
+      event.defaultPrevented ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.shiftKey ||
+      (event.button !== undefined && event.button !== 0)
+    )
+      return;
+    // Fixed routes are owned here; no target is accepted from a URL or control.
+    element.setAttribute('href', DESTINATIONS[kind]);
+    const before = getDepartureState();
+    if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
+      event.preventDefault();
+      return;
+    }
+    if (['ready', 'finished'].includes(before.match.status)) return;
+    event.preventDefault();
+    if (!['running', 'paused'].includes(before.match.status)) return;
+    onLeaveRequest(); // The host owns pause and normal physical-input release.
+    const current = getDepartureState();
+    if (
+      destroyed ||
+      !foreground() ||
+      current?.match !== before.match ||
+      current.generation !== before.generation ||
+      current.match.status !== 'paused'
+    )
+      return;
+    const ticket = { kind, opener: element, match: current.match, generation: current.generation };
+    departure = ticket;
+    setText('race-leave-title', kind === 'team' ? 'Go to Couch Team?' : 'Return to Solo?');
+    setText(
+      'race-leave-copy',
+      'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.',
+    );
+    setText(
+      'race-leave',
+      kind === 'team' ? 'Discard and go to Team' : 'Discard and return to Solo',
+    );
+    $('race-leave').setAttribute('href', DESTINATIONS[kind]);
+    show('leave', { remember: element });
+    if (!departureCurrent(ticket)) cancelDeparture();
   }
   listen($('race-focus'), 'click', setup);
   listen($('race-review'), 'click', () => {
@@ -160,9 +229,21 @@ export function createCouchShell({
     opener = $('race-focus');
     show('setup');
   });
-  listen($('race-solo-return'), 'click', (event) => {
-    event.preventDefault();
-    show('leave', { remember: $('race-solo-return') });
+  for (const [id, kind] of [
+    ['race-solo-return', 'solo'],
+    ['race-coop', 'team'],
+  ])
+    listen($(id), 'click', (event) => requestLeave(kind, $(id), event));
+  listen($('race-leave'), 'click', (event) => {
+    const ticket = departure;
+    if (!ticket || screen !== 'leave' || !foreground() || !departureCurrent(ticket)) {
+      event.preventDefault();
+      cancelDeparture();
+      return;
+    }
+    $('race-leave').setAttribute('href', DESTINATIONS[ticket.kind]);
+    // Preserve native anchor activation. If the browser cannot leave, the
+    // original paused attempt stays intact and another decision remains explicit.
   });
   for (let i = 0; i < 2; i++)
     listen($(`race-touch-${i}`), 'change', () => {
@@ -200,6 +281,7 @@ export function createCouchShell({
     if (destroyed) return;
     const previous = status;
     status = match.status;
+    if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
     if (status !== previous) {
       if (status !== 'ready' || previous === null) screen = 'main';
@@ -264,7 +346,9 @@ export function createCouchShell({
     focus,
     scope: () => screen,
     controllerHint: () => $('race-controller-help').textContent,
+    cancelDeparture,
     destroy() {
+      departure = null;
       destroyed = true;
       for (const remove of removers) remove();
     },

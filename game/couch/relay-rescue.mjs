@@ -60,6 +60,7 @@ export function bootCoop() {
   const returnHref = () => teamReturnHref({ href: location.href, storage: returnStorage });
   $('coop-race').setAttribute('href', returnHref());
   $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
+  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : '../');
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({
     audioMaster,
@@ -408,6 +409,7 @@ export function bootCoop() {
     retry: 'Discard and retry',
     return: 'Discard and leave',
     home: 'Discard and leave',
+    versus: 'Discard and go to Versus',
   };
   function visibleAction(element) {
     return (
@@ -489,7 +491,9 @@ export function bootCoop() {
           ? new URL(returnHref(), location.href).href
           : ticket.kind === 'home'
             ? new URL('../', location.href).href
-            : null;
+            : ticket.kind === 'versus'
+              ? new URL('./', location.href).href
+              : null;
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
@@ -517,6 +521,8 @@ export function bootCoop() {
   for (const [id, kind] of [
     ['coop-race', 'return'],
     ['coop-home', 'home'],
+    ['coop-solo', fromSolo ? 'return' : 'home'],
+    ['coop-versus', 'versus'],
   ])
     $(id).addEventListener('click', (event) => {
       if (
@@ -528,7 +534,10 @@ export function bootCoop() {
         (event.button !== undefined && event.button !== 0)
       )
         return;
-      if (kind === 'return') $(id).setAttribute('href', returnHref());
+      $(id).setAttribute(
+        'href',
+        kind === 'return' ? returnHref() : kind === 'versus' ? './' : '../',
+      );
       if (departure) {
         event.preventDefault();
         return;

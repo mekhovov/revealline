@@ -621,6 +621,8 @@ try {
   });
   shell = createCouchShell({
     coarse: matchMedia('(pointer: coarse)').matches,
+    getDepartureState: () => ({ match, generation }),
+    onLeaveRequest: pause,
     onTransition: ({ to, back = false } = {}) => {
       clear();
       if (back || to !== contentScope) cancelContent();
@@ -797,6 +799,7 @@ try {
         ? 'Release controller buttons and the movement stick to continue.'
         : '';
     if (result.disconnected) {
+      shell.cancelDeparture();
       clear();
       if (!released) menuStatus = result.status.message;
       updateMenu();
@@ -809,6 +812,7 @@ try {
         ? 'This controller has no standard mapping.'
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
+      shell.cancelDeparture();
       clear();
       updateMenu();
       return;
@@ -827,6 +831,7 @@ try {
   }
   function suspend() {
     if (disposed) return;
+    shell?.cancelDeparture();
     pause();
     sound.suspend();
     publishedPlayer?.suspend();

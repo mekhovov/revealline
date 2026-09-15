@@ -1,0 +1,258 @@
+[
+  {
+    "label": "Fresh prepared Versus lobby has no initial focused action; separate R5 remains",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "First Tab reaches the Team link, ahead of Start round",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\" [active]:\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-coop",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Explicit Start and two direction commands begin the Versus attempt",
+    "snapshot": "- main:\n  - button \"Pause\"\n  - generic: SUNFLOWER\n  - strong: \"0 : 0\"\n  - generic: SKYLINE\n  - strong: 1:30\n  - generic \"Two separate race boards\":\n    - 'region \"Player 1: Sunflower\"':\n      - heading \"Sunflower\" [level=2]\n      - generic: running\n      - img \"Player 1 race board\" [active]\n      - paragraph: 0.0% · 3 lives · 0 points\n      - paragraph: W A S D · Pause for options\n    - 'region \"Player 2: Skyline\"':\n      - heading \"Skyline\" [level=2]\n      - generic: running\n      - img \"Player 2 race board\"\n      - paragraph: 0.0% · 3 lives · 0 points\n      - paragraph: Arrow keys · Pause for options",
+    "dom": {
+      "active": "race-canvas-0",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Explicit Escape pauses the two-board attempt",
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Resume round →\" [active]\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-start",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Paused Tab traversal reaches Team",
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\" [active]:\n      - /url: relay-rescue.html?return=versus\n    - button \"Resume round →\"\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-coop",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Versus Team departure opens Stay by default",
+    "snapshot": "- main:\n  - region \"Go to Couch Team?\":\n    - heading \"Go to Couch Team?\" [level=1]\n    - paragraph: This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.\n    - button \"Stay here\" [active]\n    - link \"Discard and go to Team\":\n      - /url: relay-rescue.html?return=versus\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-leave-back",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Versus decision Tab reaches its fixed Team destination",
+    "snapshot": "- main:\n  - region \"Go to Couch Team?\":\n    - heading \"Go to Couch Team?\" [level=1]\n    - paragraph: This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.\n    - button \"Stay here\"\n    - link \"Discard and go to Team\" [active]:\n      - /url: relay-rescue.html?return=versus\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-leave",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Versus decision Tab wraps to Stay",
+    "snapshot": "- main:\n  - region \"Go to Couch Team?\":\n    - heading \"Go to Couch Team?\" [level=1]\n    - paragraph: This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.\n    - button \"Stay here\" [active]\n    - link \"Discard and go to Team\":\n      - /url: relay-rescue.html?return=versus\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-leave-back",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Versus Escape returns to Team link while still paused",
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\" [active]:\n      - /url: relay-rescue.html?return=versus\n    - button \"Resume round →\"\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-coop",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Versus explicit Stay also restores the Team link",
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\" [active]:\n      - /url: relay-rescue.html?return=versus\n    - button \"Resume round →\"\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "active": "race-coop",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Confirmed Versus departure follows the fixed Team URL",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: FIRST CONNECTION\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Find your common ground.\":\n    - paragraph: ONE ARENA. TWO PARTNERS.\n    - heading \"Find your common ground.\" [level=1]:\n      - text: Find your\n      - emphasis: common ground.\n    - paragraph: Start with a small loop. Cover each other, then meet to join a larger cut.\n    - text: Arena\n    - combobox \"Arena\":\n      - option \"First Connection · territory challenge\"\n      - option \"Relay Yard · stronghold challenge\" [selected]\n    - text: Play style\n    - combobox \"Play style\":\n      - option \"Full teamwork\" [selected]\n      - option \"Joint Cuts + ordinary cover\"\n      - option \"Individual cuts + ordinary cover\"\n    - text: Challenge\n    - combobox \"Challenge\":\n      - option \"Gentle\"\n      - option \"Standard\" [selected]\n      - option \"Expert\"\n    - paragraph: Captures recharge both players’ Support and can rescue a downed partner.\n    - paragraph: One open field. Bait a Hunter, cover the crossing, then take the anchors together.\n    - button \"Preparing arena…\" [disabled]\n    - status: Loading Relay Rescue.\n    - generic \"Play a created co-op pack\"\n    - paragraph: YOUR FIRST CONNECTION\n    - list:\n      - strong: Start small.\n      - text: Draw a short loop back to safe ground to claim it. Banking stops your craft; steer again for your next cut.\n      - strong: Join when ready.\n      - text: Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.\n      - strong: Watch the red shapes.\n      - text: Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.\n      - strong: Cover each other.\n      - text: Tap Support to slow nearby enemies and intercept sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed partner for one second to rescue them for free.\n    - paragraph:\n      - text: TEAM OBJECTIVE\n      - strong: Reveal 65% of the field\n  - complementary \"Help and options\":\n    - generic \"How to play and controls\"\n    - generic \"Options\"\n    - option \"Auto · touch players without a controller\" [selected]\n    - option \"Show both players\"\n    - option \"Hide touch controls\"",
+    "dom": {
+      "active": "",
+      "dialogs": [],
+      "teamClock": "0:00",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team arrives ready with Start together focused",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Find your common ground.\":\n    - paragraph: ONE ARENA. TWO PARTNERS.\n    - heading \"Find your common ground.\" [level=1]:\n      - text: Find your\n      - emphasis: common ground.\n    - paragraph: Start with a small loop. Cover each other, then meet to join a larger cut.\n    - text: Arena\n    - combobox \"Arena\":\n      - option \"First Connection · territory challenge\"\n      - option \"Relay Yard · stronghold challenge\" [selected]\n    - text: Play style\n    - combobox \"Play style\":\n      - option \"Full teamwork\" [selected]\n      - option \"Joint Cuts + ordinary cover\"\n      - option \"Individual cuts + ordinary cover\"\n    - text: Challenge\n    - combobox \"Challenge\":\n      - option \"Gentle\"\n      - option \"Standard\" [selected]\n      - option \"Expert\"\n    - paragraph: Captures recharge both players’ Support and can rescue a downed partner.\n    - paragraph: One open field. Bait a Hunter, cover the crossing, then take the anchors together.\n    - button \"Start together →\" [active]\n    - paragraph:\n      - status: Two players · one screen · a shared victory\n    - generic \"Play a created co-op pack\"\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - paragraph: TAKE THE STRONGHOLD TOGETHER\n    - list:\n      - strong: Start small.\n      - text: Draw a short loop back to safe ground to claim it. Banking stops your craft; steer again for your next cut.\n      - strong: Join when ready.\n      - text: Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.\n      - strong: Watch the red shapes.\n      - text: Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.\n      - strong: Cover each other.\n      - text: Tap Support to slow nearby enemies and intercept sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed partner for one second to rescue them for free.\n      - strong: Open both approaches.\n      - text: Capture anchors A and B to expose the core. Then make a new cut that captures the core itself. The shield blocks entry. Bait the Hunter’s warning and cut during recovery; banking its cell clears it.\n    - paragraph:\n      - text: TEAM OBJECTIVE\n      - strong: Capture both anchors, then the exposed core",
+    "dom": {
+      "active": "coop-start",
+      "dialogs": [],
+      "teamClock": "0:00",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Explicit Team Start and two player directions begin Relay Yard",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\" [active]\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:00\n    - button \"Pause\"",
+    "dom": {
+      "active": "coop-canvas",
+      "dialogs": [],
+      "teamClock": "0:00",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team pause exposes both mode destinations inside its active panel",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\" [active]\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\":\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]",
+    "dom": {
+      "active": "coop-resume",
+      "dialogs": [],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team paused Tab reaches Return to Solo inside the panel",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\" [active]:\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]",
+    "dom": {
+      "active": "coop-solo",
+      "dialogs": [],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team Solo departure opens its session-only decision",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\":\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]\n  - alertdialog \"Discard this Team attempt?\":\n    - heading \"Discard this Team attempt?\" [level=2]\n    - paragraph: Team progress is only kept on this page; this attempt is not saved. Stay keeps both players paused. Resume together remains a separate action. Discard and leave returns to the linked mode and loses this Team attempt.\n    - button \"Stay\" [active]\n    - button \"Discard and leave\"",
+    "dom": {
+      "active": "coop-discard-stay",
+      "dialogs": [
+        "coop-discard-dialog"
+      ],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team Escape preserves exposed lines and restores the in-panel Solo link",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\" [active]:\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]",
+    "dom": {
+      "active": "coop-solo",
+      "dialogs": [],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team explicit Stay returns to Solo link without resuming",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\" [active]:\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]",
+    "dom": {
+      "active": "coop-solo",
+      "dialogs": [],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team Versus link opens the same owned decision",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\":\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]\n  - alertdialog \"Discard this Team attempt?\":\n    - heading \"Discard this Team attempt?\" [level=2]\n    - paragraph: Team progress is only kept on this page; this attempt is not saved. Stay keeps both players paused. Resume together remains a separate action. Discard and leave returns to the linked mode and loses this Team attempt.\n    - button \"Stay\" [active]\n    - button \"Discard and go to Versus\"",
+    "dom": {
+      "active": "coop-discard-stay",
+      "dialogs": [
+        "coop-discard-dialog"
+      ],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team Back restores Versus link at unchanged four-second pause",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\":\n        - /url: ../\n      - link \"Go to Versus\" [active]:\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]",
+    "dom": {
+      "active": "coop-versus",
+      "dialogs": [],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Team explicit discard is separately focusable",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\":\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:04\n    - button \"Pause\" [disabled]\n  - alertdialog \"Discard this Team attempt?\":\n    - heading \"Discard this Team attempt?\" [level=2]\n    - paragraph: Team progress is only kept on this page; this attempt is not saved. Stay keeps both players paused. Resume together remains a separate action. Discard and leave returns to the linked mode and loses this Team attempt.\n    - button \"Stay\"\n    - button \"Discard and go to Versus\" [active]",
+    "dom": {
+      "active": "coop-discard-confirm",
+      "dialogs": [
+        "coop-discard-dialog"
+      ],
+      "teamClock": "0:04",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Confirmed Team departure follows the fixed Versus URL",
+    "snapshot": "- status: Preparing both boards…\n- link \"Back to the game\":\n  - /url: ../\n- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]:\n      - text: Two boards.\n      - text: One race.\n    - status: Both boards use the same map, class and seed.\n    - paragraph\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status",
+    "dom": {
+      "active": "",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/couch/"
+    }
+  },
+  {
+    "label": "Ready Versus Team link stays direct with no unfinished attempt",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: FIRST CONNECTION\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Find your common ground.\":\n    - paragraph: ONE ARENA. TWO PARTNERS.\n    - heading \"Find your common ground.\" [level=1]:\n      - text: Find your\n      - emphasis: common ground.\n    - paragraph: Start with a small loop. Cover each other, then meet to join a larger cut.\n    - text: Arena\n    - combobox \"Arena\":\n      - option \"First Connection · territory challenge\"\n      - option \"Relay Yard · stronghold challenge\" [selected]\n    - text: Play style\n    - combobox \"Play style\":\n      - option \"Full teamwork\" [selected]\n      - option \"Joint Cuts + ordinary cover\"\n      - option \"Individual cuts + ordinary cover\"\n    - text: Challenge\n    - combobox \"Challenge\":\n      - option \"Gentle\"\n      - option \"Standard\" [selected]\n      - option \"Expert\"\n    - paragraph: Captures recharge both players’ Support and can rescue a downed partner.\n    - paragraph: One open field. Bait a Hunter, cover the crossing, then take the anchors together.\n    - button \"Preparing arena…\" [disabled]\n    - status: Loading Relay Rescue.\n    - generic \"Play a created co-op pack\"\n    - paragraph: YOUR FIRST CONNECTION\n    - list:\n      - strong: Start small.\n      - text: Draw a short loop back to safe ground to claim it. Banking stops your craft; steer again for your next cut.\n      - strong: Join when ready.\n      - text: Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.\n      - strong: Watch the red shapes.\n      - text: Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.\n      - strong: Cover each other.\n      - text: Tap Support to slow nearby enemies and intercept sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed partner for one second to rescue them for free.\n    - paragraph:\n      - text: TEAM OBJECTIVE\n      - strong: Reveal 65% of the field\n  - complementary \"Help and options\":\n    - generic \"How to play and controls\"\n    - generic \"Options\"\n    - option \"Auto · touch players without a controller\" [selected]\n    - option \"Show both players\"\n    - option \"Hide touch controls\"",
+    "dom": {
+      "active": "",
+      "dialogs": [],
+      "teamClock": "0:00",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "A second Team attempt starts only after explicit Start",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\" [active]\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:00\n    - button \"Pause\"",
+    "dom": {
+      "active": "coop-canvas",
+      "dialogs": [],
+      "teamClock": "0:00",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Fresh Solo discard confirmation is required in the second Team attempt",
+    "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: Line exposed\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: Line exposed\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\"\n    - paragraph: PAUSED\n    - heading \"Both players paused\" [level=2]\n    - paragraph: Release your controls, then choose Resume together.\n    - button \"Resume together\"\n    - button \"Retry same arena\"\n    - button \"Change setup\"\n    - navigation \"Other game modes\":\n      - link \"Return to Solo\":\n        - /url: ../\n      - link \"Go to Versus\":\n        - /url: ./\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:07\n    - button \"Pause\" [disabled]\n  - alertdialog \"Discard this Team attempt?\":\n    - heading \"Discard this Team attempt?\" [level=2]\n    - paragraph: Team progress is only kept on this page; this attempt is not saved. Stay keeps both players paused. Resume together remains a separate action. Discard and leave returns to the linked mode and loses this Team attempt.\n    - button \"Stay\"\n    - button \"Discard and leave\" [active]",
+    "dom": {
+      "active": "coop-discard-confirm",
+      "dialogs": [
+        "coop-discard-dialog"
+      ],
+      "teamClock": "0:07",
+      "url": "http://127.0.0.1:58731/game/couch/relay-rescue.html?return=versus"
+    }
+  },
+  {
+    "label": "Confirmed Team Solo action reaches the ordinary game URL",
+    "snapshot": "- region \"Find your line.\":\n  - paragraph: REVEAL / LINE\n  - heading \"Find your line.\" [level=1]\n  - status: Preparing your arcade. If this screen stays here, reload or open the online game.\n  - navigation \"Launch options\":\n    - link \"Reload game\":\n      - /url: \"\"\n    - link \"Play online\":\n      - /url: https://mekhovov.github.io/revealline/game/\n  - generic \"Playing a downloaded copy?\"",
+    "dom": {
+      "active": "",
+      "dialogs": [],
+      "url": "http://127.0.0.1:58731/game/"
+    }
+  }
+]

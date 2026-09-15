@@ -1,0 +1,125 @@
+{
+  "base": "f61a249277944a5fdd50cf7d545cbb18dbd0eaf8",
+  "checkedAt": "2026-09-15T18:24:17.051435+00:00",
+  "status": "PASS: complete Team host file on both runtimes; source tests only.",
+  "ownership": "Only game/test/coop-host.test.mjs changed by this lane; production remains owner-held.",
+  "source": [
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 33266,
+      "sha256": "e67e22afd7da53113a32299ce23c239c7e0956ce6919be3ec56bd4fe1e9b12b3"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15166,
+      "sha256": "7d65375b24aa80947021f7c3d61d3b5711ffd2cdf07720f36c81aaaff7a776c6"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 15595,
+      "sha256": "f5cd2a3018b7924d6deebaabd8bfac19bea2dbf9ee93048679466c28c1848807"
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "bytes": 59670,
+      "sha256": "562c29c06cf313a7bc24854328bfd28719bfe4967e90a07397592226ccd0bc35"
+    }
+  ],
+  "results": [
+    {
+      "node": "22.22.2",
+      "tests": 72,
+      "pass": 72,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 12619.824125,
+      "raw": {
+        "path": ".cache/p03a1-team-tests-dewey/node22-successor.log",
+        "bytes": 17144,
+        "sha256": "725320b113098dbf7dee2a4c95591d81426879d743e4d45b92076d851a855709"
+      }
+    },
+    {
+      "node": "20.19.5",
+      "tests": 72,
+      "pass": 72,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 17453.06525,
+      "raw": {
+        "path": ".cache/p03a1-team-tests-dewey/node20-final.log",
+        "bytes": 16052,
+        "sha256": "9e03a64071e2ba90d8072cc56944bf786e2003c670e4963526c922d447f8631c"
+      }
+    }
+  ],
+  "coverage": {
+    "existing": 61,
+    "added": 11,
+    "observedThrough": "Actual Team markup, runtime modules, controller router/navigation and event propagation; finite DOM and Canvas command host. Native anchor/interior Tab defaults modeled only after unprevented actual handlers.",
+    "cases": [
+      "Both in-panel destinations reached by Tab and Enter from healthy pause and stopped fault; Stay/Escape exact anchor and unchanged HUD/paint/no Resume.",
+      "Actual South adoption/release then D-pad navigation reaches both anchors; confirmation and Back remain separate.",
+      "Solo return uses existing one-use same-tab token and leaves exact stored record untouched.",
+      "Real self-crossing terminal outcome follows refreshed code-owned native routes directly; changed href cannot redirect.",
+      "Navigation failure retains the paused attempt; losing foreground cancels the old discard intent."
+    ]
+  },
+  "predecessor": {
+    "raw": {
+      "path": ".cache/p03a1-team-tests-dewey/node22-initial.log",
+      "bytes": 23552,
+      "sha256": "6de4c5bce4528bb887134569a43fec14565b58062d35eeb9256d957646767ad6"
+    },
+    "pass": 64,
+    "tests": 72,
+    "fail": 8,
+    "reason": "Test fixture lacked unprevented native interior dialog Tab, and controller test used D-pad as a join button instead of a supported South/release. Existing61 passed; no production correction.",
+    "reconstruction": {
+      "path": ".cache/p03a1-team-tests-dewey/initial-test-source-reconstruction.json",
+      "bytes": 463,
+      "sha256": "851c3fd16a0e8251e4add6d1821cc5773d6461d03193900b55ef85c1c02538ab"
+    }
+  },
+  "static": {
+    "eslint": "PASS",
+    "prettier": "PASS",
+    "gitDiffCheck": "PASS"
+  },
+  "peer": "Parfit reported complete delta source read: no blocker; no duplicate test execution.",
+  "limits": [
+    "No browser, physical controller/touch, pixel readability, public acceptance or full phase completion.",
+    "No Solo/Couch production ownership or extra UI/saved schema introduced by these tests.",
+    "Native anchor default and geometry are finite test models, not observed browser results."
+  ],
+  "inputs": [
+    {
+      "path": ".cache/p03a1-team-tests-dewey/held-01.json",
+      "bytes": 758,
+      "sha256": "6fbaf86885d1287e182d70a829f3d5a2d2cfb2aedfd322988942abf63ca18b21"
+    },
+    {
+      "path": ".cache/p03a1-team-tests-dewey/held-02.json",
+      "bytes": 865,
+      "sha256": "acdd60d29574e89652f608c433422cc6ffb67738e2d446ccc6a16b99ece1e59e"
+    },
+    {
+      "path": ".cache/p03a1-team-tests-dewey/test-final.diff",
+      "bytes": 9480,
+      "sha256": "9297ef3853fa016da60de524f8a4379c86994ad6acf6dc0104e710aed2afbee4"
+    },
+    {
+      "path": ".cache/p03a1-team-tests-dewey/initial-test-source.mjs.gz",
+      "bytes": 12985,
+      "sha256": "cbdff5a1ea99a9f29721d2f0910586d3faf6b546d01fcb96010c441e8548ace4"
+    },
+    {
+      "path": ".cache/p03a1-team-tests-dewey/initial-test-source-reconstruction.json",
+      "bytes": 463,
+      "sha256": "851c3fd16a0e8251e4add6d1821cc5773d6461d03193900b55ef85c1c02538ab"
+    }
+  ],
+  "freeBytes": 942563328
+}
