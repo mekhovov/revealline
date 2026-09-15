@@ -813,3 +813,15 @@
   overflow-wrap: normal;
   white-space: normal;
 }
+
+/* A large pad plus the action column fits even a 320px portrait viewport.
+   Keep both thumbs in the reserved lower row instead of wrapping onto the board. */
+:root body.game-shell[data-flight-layout='portrait'] .play-controls {
+  left: max(4px, var(--safe-left));
+  right: max(4px, var(--safe-right));
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+:root body.game-shell[data-flight-layout='portrait'] .play-controls .ability-buttons {
+  flex: 0 0 88px;
+}
