@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 class Element extends DOMElement {
   constructor(doc, attributes = '', tag = 'span') {
@@ -263,8 +264,9 @@ test('successful built-version bootstrap only enables explicit discovery and clo
     assert.equal(String(url).endsWith('/game/build-info.json'), true);
     return new Response(JSON.stringify({ version: 'v0.40.0' }));
   });
-  for (let i = 0; i < 100 && f.$('find').disabled; i++)
-    await new Promise((resolve) => setTimeout(resolve, 5));
+  await waitFor(() => !f.$('find').disabled, {
+    message: 'Built-version recovery catalog bootstrap did not enable explicit discovery.',
+  });
   assert.equal(f.$('find').disabled, false);
   assert.match(
     f.$('catalog-status').textContent,

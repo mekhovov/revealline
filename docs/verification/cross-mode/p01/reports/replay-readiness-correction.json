@@ -1,0 +1,145 @@
+{
+  "format": "revealline-p01-replay-readiness-correction.v1",
+  "scope": "Test fixture timing correction and bounded modeled host checks; not real browser, full-source or public qualification.",
+  "investigatedRevision": "a03f62169b3ef8e3e24b3a36a578cb58d9ddbdc1",
+  "sourceTree": "564dc8b320747929300d1ab322a9da14d73a431b",
+  "nodeVersion": "v20.19.5",
+  "hostedFailure": {
+    "runId": 34954620765,
+    "jobId": 104333928034,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/34954620765/job/104333928034",
+    "log": {
+      "path": ".cache/cross-mode/p01/hosted-final-a03f621/manual/job-104333928034.log",
+      "bytes": 464762,
+      "sha256": "44fe9e8fe6af692dfe41e16315faea7fbe12d26ddab7071701a5d455ee89f42c"
+    },
+    "failure": "verified candidate reached artwork decoding",
+    "caseDurationMs": 33.101145,
+    "boundary": "The 100-setImmediate test loop exhausted before mocked setLook was called. The candidate had not reached artwork decoding. The duration covers the whole test, not a measured wait interval."
+  },
+  "cause": "verifyReplayAsync yields with setTimeout(0) before work and between bounded simulation chunks. A fixed number of immediate callbacks can be exhausted before those timers run.",
+  "correction": {
+    "file": "game/test/replay-theater-navigation.test.mjs",
+    "beforeSha256": "012cae37654a30451b6880bf464271dd959213ac0161153675fa1903594a2573",
+    "afterSha256": "20eca5d4976cc37ed5efc880f7caed624a58e805007b3e3095672c8e7899d93b",
+    "change": "Import existing waitFor; until(predicate,label) awaits waitFor(predicate,{message:label}) using unchanged default 5000 ms.",
+    "positiveReadinessPredicatesPreserved": 7,
+    "postResolutionFiveImmediateDrainsPreserved": 3,
+    "assertionsRemoved": 0,
+    "testsDisabled": 0,
+    "runtimeChanges": false,
+    "sharedTimeoutChanged": false
+  },
+  "otherFixedTurnWaits": [
+    {
+      "originalLine": 322,
+      "boundary": "Explicit file.text deferred promise resolved after Back; existing current-generation guard immediately returns after the source await."
+    },
+    {
+      "originalLine": 372,
+      "boundary": "Explicit file.text deferred promise resolved after pagehide; disposed/generation guard immediately returns after the source await."
+    },
+    {
+      "originalLine": 412,
+      "boundary": "Explicit setLook deferred promise resolved after Cancel; current-generation guard immediately returns before adopting nextPlayer/nextPainter."
+    }
+  ],
+  "postResolutionAssessment": "These three drains follow controlled promise resolutions whose production continuations and stale guards are microtask-only. They are not the real timer-driven verification readiness waits and remain unchanged, with their old-run/candidate/disposal assertions.",
+  "controlledReproduction": {
+    "preloader": {
+      "path": ".cache/cross-mode/p01/replay-readiness-investigation/candidate-timer-delay.mjs",
+      "bytes": 917,
+      "sha256": "09ba4f21b92d5f49540a79f5cd0ead732111bab3c9df3dc405d837534d1a3e5f"
+    },
+    "delayMs": 20,
+    "boundary": "Only existing zero-delay timers while Navigation recording is loaded and candidate stage is verifying; no source transformation. The same preloader bytes were used before/after the test-only correction.",
+    "apiCleanup": "Each isolated Node process restores global setTimeout on exit.",
+    "limitation": "This controlled timer delay demonstrates the readiness-loop flaw; it does not claim to reproduce the precise hosted scheduler."
+  },
+  "runs": {
+    "unchangedFocused": {
+      "command": "node --test --test-name-pattern='real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate' game/test/replay-theater-navigation.test.mjs",
+      "exitCode": 0,
+      "counts": {
+        "tests": 7,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 6,
+        "todo": 0,
+        "durationMs": 637.585417
+      },
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-readiness-investigation/focused-original.log",
+        "bytes": 2085,
+        "sha256": "d73c61540e5d7ee1e57728afae5e3ffc78d982e254965ddeab5aa3506dce8787"
+      }
+    },
+    "unchangedControlledTimer": {
+      "command": "node --import ./.cache/cross-mode/p01/replay-readiness-investigation/candidate-timer-delay.mjs --test --test-name-pattern='real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate' game/test/replay-theater-navigation.test.mjs",
+      "exitCode": 1,
+      "counts": {
+        "tests": 7,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 6,
+        "todo": 0,
+        "durationMs": 108.418125
+      },
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-readiness-investigation/focused-controlled-timer.log",
+        "bytes": 2914,
+        "sha256": "fe31509ed0723995f197ee76e16d3cb647a691f67bab476ad7475f60820425a9"
+      }
+    },
+    "correctedFullFile": {
+      "command": "node --test game/test/replay-theater-navigation.test.mjs",
+      "exitCode": 0,
+      "counts": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "durationMs": 642.700292
+      },
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-readiness-investigation/full-corrected.log",
+        "bytes": 1845,
+        "sha256": "2dbf0c90e9ff886ed7c4f0b058e0ee164577fccd38d2427361ae20e5a111457e"
+      }
+    },
+    "correctedControlledTimer": {
+      "command": "node --import ./.cache/cross-mode/p01/replay-readiness-investigation/candidate-timer-delay.mjs --test --test-name-pattern='real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate' game/test/replay-theater-navigation.test.mjs",
+      "exitCode": 0,
+      "counts": {
+        "tests": 7,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 6,
+        "todo": 0,
+        "durationMs": 180.593708
+      },
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-readiness-investigation/focused-controlled-corrected.log",
+        "bytes": 2194,
+        "sha256": "11a7fcf5adecb095906d4042e0647c582b5c49850fe3f8db1243470c736bf075"
+      }
+    }
+  },
+  "unchangedRuntimeAndSharedHelperSha256": {
+    "game/test/helpers/wait-for.mjs": "64a49cd79aa3911096efb2554413a34ca862dcfe7ed5be40ed231343c4f187a3",
+    "game/replay-theater/app.mjs": "6e410caa5a512f2361c143b90447259fc6ee796b6a69aea1d2f7611d956a852b",
+    "game/replay.mjs": "4ff829ba1e0998adf003e7991a29daea466ac7d6a2177e2115301020a3247b7b"
+  },
+  "checks": {
+    "prettierWrite": "unchanged",
+    "prettierCheck": "passed",
+    "singleFileEslint": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "sourceFreeze": "Tracked source remained unchanged during the initial inspection and unchanged/controlled runs. Parent authorized this single-file edit after ending its blocked local full run. No full-suite success is claimed for that interrupted run."
+}

@@ -7,6 +7,7 @@ import { pathToFileURL } from 'node:url';
 import { Script, createContext, constants } from 'node:vm';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const source = await readFile(new URL('../ui/direct-tool-launch.js', import.meta.url), 'utf8');
 const settle = async () => {
@@ -57,7 +58,9 @@ async function fixture(t, moduleSource) {
 test('a missing static dependency reports module failure and leaves a same-page Reload link', async (t) => {
   const h = await fixture(t, "import './missing-dependency.mjs';\n");
   h.run();
-  for (let i = 0; i < 100 && h.status.dataset.state !== 'error'; i++) await settle();
+  await waitFor(() => h.status.dataset.state === 'error', {
+    message: 'Missing tool dependency did not report its module failure.',
+  });
   assert.equal(h.status.dataset.state, 'error');
   assert.equal(h.doc.documentElement.dataset.toolState, 'error');
   assert.match(h.label.textContent, /could not start.*missing-dependency/s);

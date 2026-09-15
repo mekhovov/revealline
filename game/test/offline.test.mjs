@@ -8,6 +8,7 @@ import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
   new URL('../offline/service-worker.template.js', import.meta.url),
   'utf8',
@@ -946,13 +947,8 @@ function deferred() {
   });
   return { promise, resolve };
 }
-async function until(predicate) {
-  for (let i = 0; i < 1000; i++) {
-    if (predicate()) return;
-    await nextTurn();
-  }
-  assert.fail('Expected asynchronous observation did not arrive');
-}
+const until = (predicate) =>
+  waitFor(predicate, { message: 'Expected asynchronous observation did not arrive' });
 function observedHost(h, state = 'activated') {
   const listeners = new Set(),
     pending = [],
