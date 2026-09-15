@@ -205,6 +205,41 @@ h1 em {
   color: var(--muted);
   font-size: 0.8rem;
 }
+.field-kit dialog.coop-confirm-dialog {
+  box-sizing: border-box;
+  inset: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  width: min(
+    520px,
+    calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 32px)
+  );
+  max-height: calc(
+    100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px
+  );
+  margin: auto;
+  padding: clamp(20px, 4vw, 32px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--fk-text);
+  background: var(--fk-panel);
+  border: 2px solid var(--fk-control-line);
+}
+.coop-confirm-dialog h2 {
+  margin-top: 0;
+}
+.coop-confirm-dialog p {
+  overflow-wrap: anywhere;
+  line-height: var(--fk-leading-body);
+}
+.coop-confirm-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.field-kit .coop-confirm-dialog .coop-confirm-actions button {
+  min-block-size: 50px;
+  width: 100%;
+}
 .primary {
   background: var(--sun);
   color: #172426;

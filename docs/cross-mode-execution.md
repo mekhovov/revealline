@@ -118,6 +118,22 @@ Ordinary attempts reuse the checked retention/readback and changed-slot reconfir
 
 This is internal P03 source work: eight complete files passed 132/132 on Node 22 and 132/132 on Node 20, including 26 new starting-setup host cases. [Scoped native evidence](verification/cross-mode/p03-h/README.md) covers ordinary class/steering Stay and Prepare, exact focus, saved-flight restore and real course return. It used the separately reviewed P05 compact CSS overlay; that stylesheet is not part of H. Integrated release and physical-device qualification remain pending. This does not accept the overall phase. Course selection/Skip/Retry, Library scenario launch and Team Change setup remain distinct departure journeys. No core, replay schema, saved format, content, audio or producer change is included.
 
+## P03-I Team departure candidate
+
+The isolated [Team departure work](team-departure.md) adds an explicit Stay /
+discard choice before Change setup, Retry or either same-tab header departure
+can replace an unfinished Team attempt. Team progress remains in this page only;
+this does not add a saved Team format. Stay preserves the normal paused-input
+boundary, and terminal/no-attempt actions retain their direct paths. Native
+dialog Escape is handled locally so the existing flight listener cannot prevent
+the dialog's cancellation. Four complete affected test files pass 152/152 on each
+Node runtime; the [scoped desktop native record](verification/cross-mode/p03-i/README.md)
+checks Stay, Retry, setup, 50px actions and header pointer requests with keyboard
+confirmation. Paused header keyboard access remains a documented gap requiring
+in-panel destination actions. This is an internal P03 work package, not phase or
+release acceptance. The isolated branch starts at P03-G and does not include the
+separate P03-H starting-setup implementation.
+
 ## Player flow and feedback contract
 
 - Title offers Single player, Couch Versus (separate-board race) and Couch Team (shared arena). Solo starts/continues in one activation. Ready Couch players choose a mode and Start from one integrated lobby. Future online/Deathmatch remain deferred, without nonfunctional menu choices.

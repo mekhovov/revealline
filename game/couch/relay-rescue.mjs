@@ -57,10 +57,8 @@ export function bootCoop() {
   } catch {
     /* Fixed title fallback remains available. */
   }
-  $('coop-race').setAttribute(
-    'href',
-    teamReturnHref({ href: location.href, storage: returnStorage }),
-  );
+  const returnHref = () => teamReturnHref({ href: location.href, storage: returnStorage });
+  $('coop-race').setAttribute('href', returnHref());
   $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({
@@ -88,11 +86,15 @@ export function bootCoop() {
   const batch = createCoopCommandBatch();
   let loopStopped = false;
   let run = null,
+    attemptLevel = null,
     accumulator = 0,
     last = null,
     framePads = [],
     frame = null,
-    disposed = false;
+    disposed = false,
+    generation = 0,
+    departure = null;
+  const departureDialog = $('coop-discard-dialog');
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let importRequest = 0;
@@ -149,6 +151,10 @@ export function bootCoop() {
     showTouch();
   }
   function back() {
+    if (departure) {
+      cancelDeparture();
+      return;
+    }
     if (importDisplay) {
       stopWaiting();
       return;
@@ -158,18 +164,21 @@ export function bootCoop() {
     if (details?.open && tools.contains(details)) {
       details.open = false;
       details.querySelector('summary')?.focus({ preventScroll: true });
-    } else if (run?.status === 'paused') $('coop-resume').focus({ preventScroll: true });
+    } else if (run?.status === 'paused') primary().focus({ preventScroll: true });
     else if (run) lobby();
     else $('coop-race').click();
   }
   const running = () => run?.status === 'running';
-  const scope = () => (running() ? 'flight' : run ? `coop-${run.status}` : 'coop-lobby');
+  const scope = () =>
+    departure ? 'coop-discard' : running() ? 'flight' : run ? `coop-${run.status}` : 'coop-lobby';
   const primary = () =>
-    !run
-      ? $('coop-start')
-      : run.status === 'paused' && !loopStopped
-        ? $('coop-resume')
-        : $('coop-retry');
+    departure
+      ? $('coop-discard-stay')
+      : !run
+        ? $('coop-start')
+        : run.status === 'paused' && !loopStopped
+          ? $('coop-resume')
+          : $('coop-retry');
   input = attachCouchInput({
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),
@@ -187,13 +196,13 @@ export function bootCoop() {
   const router = createControllerRouter({ readPads: () => framePads });
   const navigation = attachControllerNavigation({
     getScope: scope,
-    getRoot: () => (run ? $('coop-overlay') : $('coop-app')),
+    getRoot: () => (departure ? departureDialog : run ? $('coop-overlay') : $('coop-app')),
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
     onBack: back,
     onMenu: () => {
-      if (run?.status === 'paused') back();
+      if (departure || run?.status === 'paused') back();
     },
     onHint: (message) => {
       menuHint = message;
@@ -210,7 +219,7 @@ export function bootCoop() {
   function message(text) {
     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
   }
-  function overlay() {
+  function overlay({ focus = true } = {}) {
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
@@ -234,7 +243,7 @@ export function bootCoop() {
       : lost
         ? coopRetryFeedback(run, knockdowns.filter(Boolean))
         : 'Release your controls, then choose Resume together.';
-    primary().focus({ preventScroll: true });
+    if (focus) primary().focus({ preventScroll: true });
   }
   function render() {
     if (!run) return;
@@ -281,21 +290,41 @@ export function bootCoop() {
             : 'Support ready · tap to cover, hold nearby to rescue';
     }
   }
-  function start() {
+  function currentRecipe() {
+    if (run)
+      return {
+        level: structuredClone(attemptLevel),
+        options: { seed: run.seed, difficulty: run.difficulty, ...run.config },
+      };
+    const experiment = selectedConfiguration();
+    return {
+      level: selectedLevel(),
+      options: {
+        seed: 17,
+        difficulty: $('coop-difficulty').value,
+        jointCuts: experiment.jointCuts,
+        assistCaptures: experiment.assistCaptures,
+        advancedCooperation: experiment.advancedCooperation,
+      },
+    };
+  }
+  function start(recipe = currentRecipe(), prepared = null) {
+    if (disposed || departure) return;
+    // Validate a fresh core before releasing the old reference. A failed retry
+    // must leave the paused/stopped attempt available on this page.
+    // The core's live level shares enemy objects with its mutable threat state.
+    // Keep the validated starting level separately for an exact fresh Retry.
+    const startingLevel = structuredClone(recipe.level);
+    const next = prepared || createCoop(startingLevel, recipe.options);
     cancelImport();
     importRequest++;
     $('coop-pack-file').value = '';
-    const experiment = selectedConfiguration();
     clear();
     knockdowns = [null, null];
-    const level = selectedLevel();
-    run = createCoop(level, {
-      seed: 17,
-      difficulty: $('coop-difficulty').value,
-      jointCuts: experiment.jointCuts,
-      assistCaptures: experiment.assistCaptures,
-      advancedCooperation: experiment.advancedCooperation,
-    });
+    const level = next.level;
+    run = next;
+    attemptLevel = startingLevel;
+    generation++;
     startCoop(run);
     document.body.classList.add('playing');
     $('coop-menu').hidden = true;
@@ -303,27 +332,54 @@ export function bootCoop() {
     $('coop-stage').textContent = level.name.toUpperCase();
     $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
     message(
-      experiment.jointCuts
+      run.config.jointCuts
         ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
         : 'Comparison: head meetings do not join lines. Find a route back to safe ground.',
     );
     overlay();
-    render();
+    try {
+      render();
+    } catch (error) {
+      stopArena(error);
+      return;
+    }
     input.focus();
     if (loopStopped) {
       loopStopped = false;
       last = null;
     }
   }
-  function pause() {
+  function pause({ focus = true } = {}) {
     if (!running()) return;
     pauseCoop(run);
     clear();
-    overlay();
-    render();
+    overlay({ focus });
+    try {
+      render();
+    } catch (error) {
+      stopArena(error, { focus });
+    }
+  }
+  function stopArena(error, { focus = true } = {}) {
+    // Never repaint while handling a painter failure. Any destructive decision
+    // is cancelled before showing the stopped attempt's recovery actions.
+    loopStopped = true;
+    if (running()) pauseCoop(run);
+    clear();
+    cancelDeparture({ restore: false });
+    overlay({ focus: false });
+    $('coop-resume').hidden = true;
+    $('coop-overlay-title').textContent = 'The arena needs a fresh start';
+    $('coop-overlay-copy').textContent =
+      'This attempt is stopped and cannot resume. Retry resets it; Change setup keeps your setup choices.';
+    if (focus && !document.hidden && document.hasFocus?.() !== false)
+      primary().focus({ preventScroll: true });
+    $('coop-boot').textContent = `Arena stopped: ${error.message}`;
+    message(`Arena stopped: ${error.message}. Choose Retry or Change setup.`);
+    console.error(error);
   }
   function resume() {
-    if (run?.status !== 'paused' || loopStopped) return;
+    if (departure || run?.status !== 'paused' || loopStopped) return;
     clear();
     resumeCoop(run);
     last = null;
@@ -332,10 +388,13 @@ export function bootCoop() {
     message('Choose fresh directions when you are ready.');
   }
   function lobby() {
+    if (disposed || departure) return;
     cancelImport();
     importRequest++;
     clear();
     run = null;
+    attemptLevel = null;
+    generation++;
     document.body.classList.remove('playing');
     $('coop-play').hidden = true;
     $('coop-menu').hidden = false;
@@ -343,6 +402,150 @@ export function bootCoop() {
     placeTools(false);
     $('coop-start').focus({ preventScroll: true });
   }
+  const unfinished = () => run && ['running', 'paused'].includes(run.status);
+  const departureLabels = {
+    setup: 'Discard and change setup',
+    retry: 'Discard and retry',
+    return: 'Discard and leave',
+    home: 'Discard and leave',
+  };
+  function visibleAction(element) {
+    return (
+      element?.isConnected &&
+      !element.disabled &&
+      !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
+      element.getClientRects().length > 0 &&
+      document.defaultView?.getComputedStyle(element)?.visibility !== 'hidden'
+    );
+  }
+  function closeDeparture(ticket, { restore = true } = {}) {
+    if (!ticket || departure !== ticket) return;
+    departure = null;
+    if (departureDialog.open) departureDialog.close();
+    navigation.clear();
+    if (restore && !disposed && !document.hidden && document.hasFocus?.() !== false) {
+      // Header links are outside the paused navigation root. Return to its safe
+      // primary instead of leaving keyboard focus outside the active panel.
+      const origin = $('coop-overlay').contains(ticket.opener) ? ticket.opener : primary();
+      (visibleAction(origin) ? origin : primary()).focus({ preventScroll: true });
+    }
+  }
+  function cancelDeparture(options) {
+    closeDeparture(departure, options);
+  }
+  function requestDeparture(kind, opener) {
+    if (disposed || departure || !Object.hasOwn(departureLabels, kind)) return;
+    if (!unfinished()) {
+      if (kind === 'setup') lobby();
+      else if (kind === 'retry') start();
+      return;
+    }
+    const ticket = { kind, opener, run, generation, recipe: currentRecipe() };
+    departure = ticket;
+    pause();
+    if (departure !== ticket) return; // A paint fault cancelled this decision.
+    // Already-paused and faulted attempts also shed stale UI/flight input.
+    clear();
+    $('coop-discard-title').textContent = 'Discard this Team attempt?';
+    $('coop-discard-copy').textContent =
+      `Team progress is only kept on this page; this attempt is not saved. ${
+        loopStopped
+          ? 'Stay keeps this stopped attempt on screen. It cannot resume after the arena error.'
+          : 'Stay keeps both players paused. Resume together remains a separate action.'
+      } ${
+        kind === 'retry'
+          ? 'Discard and retry starts this same arena again from the beginning.'
+          : kind === 'setup'
+            ? 'Discard and change setup clears this attempt without starting another.'
+            : 'Discard and leave returns to the linked mode and loses this Team attempt.'
+      }`;
+    $('coop-discard-confirm').textContent = departureLabels[kind];
+    try {
+      departureDialog.showModal();
+      $('coop-discard-stay').focus({ preventScroll: true });
+    } catch (error) {
+      closeDeparture(ticket);
+      message(
+        `Could not open the confirmation. The Team attempt stays ${loopStopped ? 'stopped' : 'paused'}: ${error.message}`,
+      );
+    }
+  }
+  $('coop-discard-stay').onclick = () => cancelDeparture();
+  $('coop-discard-confirm').onclick = () => {
+    const ticket = departure;
+    if (!ticket || disposed || ticket.run !== run || ticket.generation !== generation) return;
+    if (document.hidden || document.hasFocus?.() === false) {
+      cancelDeparture({ restore: false });
+      return;
+    }
+    // Keep creation/validation failure inside the old attempt's confirmation.
+    let prepared;
+    try {
+      if (ticket.kind === 'retry') {
+        prepared = createCoop(ticket.recipe.level, ticket.recipe.options);
+      }
+      const destination =
+        ticket.kind === 'return'
+          ? new URL(returnHref(), location.href).href
+          : ticket.kind === 'home'
+            ? new URL('../', location.href).href
+            : null;
+      closeDeparture(ticket, { restore: false });
+      if (ticket.kind === 'setup') lobby();
+      else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
+      else location.assign(destination);
+    } catch (error) {
+      message(`The Team attempt could not be replaced: ${error.message}`);
+      if (departure === ticket)
+        $('coop-discard-copy').textContent =
+          `The Team attempt is still here and is not saved. ${error.message} Stay keeps it on screen.`;
+      else primary().focus({ preventScroll: true });
+    }
+  };
+  departureDialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    cancelDeparture();
+  });
+  departureDialog.addEventListener('close', () => {
+    if (!departureDialog.open) cancelDeparture();
+  });
+  departureDialog.addEventListener('keydown', (event) => {
+    // Native cancel owns Escape here. The window flight listener would prevent
+    // that default even while paused; keep this exception local to the dialog.
+    if (event.key === 'Escape') event.stopPropagation();
+  });
+  for (const [id, kind] of [
+    ['coop-race', 'return'],
+    ['coop-home', 'home'],
+  ])
+    $(id).addEventListener('click', (event) => {
+      if (
+        event.defaultPrevented ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        event.shiftKey ||
+        (event.button !== undefined && event.button !== 0)
+      )
+        return;
+      if (kind === 'return') $(id).setAttribute('href', returnHref());
+      if (departure) {
+        event.preventDefault();
+        return;
+      }
+      if (!unfinished()) return;
+      event.preventDefault();
+      requestDeparture(kind, $(id));
+    });
+  const suspend = () => {
+    pause({ focus: false });
+    cancelDeparture({ restore: false });
+  };
+  const hidden = () => {
+    if (document.hidden) suspend();
+  };
+  window.addEventListener('blur', suspend);
+  document.addEventListener('visibilitychange', hidden);
   function events() {
     for (const event of run.events) {
       if (event.type === 'cut.closed') {
@@ -438,27 +641,15 @@ export function bootCoop() {
       }
       if (!loopStopped) render();
     } catch (error) {
-      loopStopped = true;
-      if (running()) {
-        pauseCoop(run);
-        clear();
-      }
-      overlay();
-      $('coop-resume').hidden = true;
-      $('coop-overlay-title').textContent = 'The arena needs a fresh start';
-      $('coop-overlay-copy').textContent = 'Retry resets this attempt. Your setup stays the same.';
-      $('coop-retry').focus({ preventScroll: true });
-      $('coop-boot').textContent = `Arena stopped: ${error.message}`;
-      message(`Arena stopped: ${error.message}. Return to setup to retry.`);
-      console.error(error);
+      stopArena(error);
     }
     frame = requestAnimationFrame(update);
   }
-  $('coop-start').onclick = start;
-  $('coop-retry').onclick = start;
+  $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
+  $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
-  $('coop-lobby').onclick = lobby;
+  $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
   function setupNote() {
     const level = selectedLevel();
     const experiment = selectedConfiguration();
@@ -561,6 +752,7 @@ export function bootCoop() {
   };
   packPicker.addEventListener('toggle', pickerToggled);
   $('coop-pack-reset').onclick = () => {
+    if (run || departure || disposed) return;
     cancelImport();
     importRequest++;
     showPack(COOP_STARTER_PACK, RELAY_YARD.id);
@@ -589,13 +781,14 @@ export function bootCoop() {
     if (running()) input.focus();
   };
   let unsubscribeNative = () => {};
-  onNativeInactive(pause)
+  onNativeInactive(suspend)
     .then((unsubscribe) => {
       if (disposed) unsubscribe();
       else unsubscribeNative = unsubscribe;
     })
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
+    cancelDeparture({ restore: false });
     closeAudio();
     importRequest++;
     disposed = true;
@@ -607,11 +800,13 @@ export function bootCoop() {
     router.destroy();
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
+    window.removeEventListener('blur', suspend);
+    document.removeEventListener('visibilitychange', hidden);
     unsubscribeNative();
   };
   window.addEventListener('pagehide', (event) => {
     cancelImport();
-    pause();
+    suspend();
     if (!event.persisted) closeAudio();
   });
   window.addEventListener('pageshow', () => {
