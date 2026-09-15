@@ -69,7 +69,12 @@ export function createProfileChannelReader({
   recoveryCatalogs = [],
   decodeStillImage,
 } = {}) {
-  targetVersion(currentVersion);
+  // A source checkout has no immutable release identity. It may inspect raw
+  // local channels, but it must not receive a trusted historical catalog.
+  // Use a comparison-only ceiling so every released channel remains read-only
+  // historical data and the caller still supplies an empty catalog in dev.
+  const readerVersion = currentVersion === 'dev' ? '9999.9999.9999' : currentVersion;
+  targetVersion(readerVersion);
   if (decodeStillImage !== undefined && typeof decodeStillImage !== 'function')
     throw new TypeError('Expected a trusted still image decoder.');
   if (
@@ -91,7 +96,7 @@ export function createProfileChannelReader({
   if (!Array.isArray(recoveryCatalogs) || recoveryCatalogs.length > PROFILE_READER_LIMITS.channels)
     throw new TypeError('Provide a finite trusted exact-channel recovery registry.');
   for (const entry of recoveryCatalogs) {
-    const channel = recoveryChannel(entry?.channelId, currentVersion);
+    const channel = recoveryChannel(entry?.channelId, readerVersion);
     if (!channel || channel.support === 'protected-unknown' || catalogs.has(channel.id))
       throw new TypeError('Unsupported or duplicate recovery registry channel.');
     if (!Array.isArray(entry.registeredEntries) || !Array.isArray(entry.knownDescriptors))
@@ -381,7 +386,7 @@ export function createProfileChannelReader({
             diagnostics.push(problem('discovery', 'An unsupported storage key was not inspected.'));
             return;
           }
-          const channel = channelFromStorageKey(key, currentVersion);
+          const channel = channelFromStorageKey(key, readerVersion);
           if (channel) {
             byId.set(channel.id, channel);
             if (byId.size > PROFILE_READER_LIMITS.channels)
