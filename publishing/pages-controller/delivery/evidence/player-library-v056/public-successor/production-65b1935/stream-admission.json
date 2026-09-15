@@ -1,0 +1,12 @@
+{
+  "mode": "critical_then_full",
+  "freeBytes": 1892651008,
+  "minimumFreeBytes": 268435456,
+  "existingBytes": 1454330,
+  "reservedAdditionalMetadataBytes": 8388608,
+  "totalMetadataBudgetBytes": 16777216,
+  "runId": 34954644998,
+  "deploymentId": 6456165541,
+  "bindingSha256": "c9c329fd19deddc8401ca423ad3da0303a6578a058c0a1d9d5abaf3287fe3fa8",
+  "independentPeer": "Parfit actual binding/namespace PASS, received before any public body stream; source-only peer."
+}
