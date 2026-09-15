@@ -80,6 +80,7 @@ export async function validateAdmissions({
       'deploymentEnabled',
       'currentSourceQualification',
       'retainedReleasesPerMajor',
+      'testingRoutes',
     ]) ||
     configuration.format !== 'revealline-pages-controller.v1' ||
     typeof configuration.deploymentEnabled !== 'boolean' ||
@@ -91,9 +92,23 @@ export async function validateAdmissions({
     configuration.admissions.length > 64 ||
     !Number.isSafeInteger(configuration.retainedReleasesPerMajor) ||
     configuration.retainedReleasesPerMajor < 1 ||
-    configuration.retainedReleasesPerMajor > 100
+    configuration.retainedReleasesPerMajor > 100 ||
+    !configuration.testingRoutes ||
+    typeof configuration.testingRoutes !== 'object' ||
+    Array.isArray(configuration.testingRoutes) ||
+    Object.keys(configuration.testingRoutes).length > 100
   )
     throw new Error('Invalid Pages controller configuration.');
+  for (const [version, canonicalSite] of Object.entries(configuration.testingRoutes)) {
+    if (
+      version === configuration.currentVersion ||
+      typeof canonicalSite !== 'string' ||
+      !new RegExp(
+        `^https://mekhovov\\.github\\.io/revealline-archive-[0-9]+/releases/${version.replaceAll('.', '\\.')}/site/$`,
+      ).test(canonicalSite)
+    )
+      throw new Error('Invalid development testing route.');
+  }
   if (requireBrowser && !configuration.deploymentEnabled)
     throw new Error('This reviewed controller candidate is not enabled for deployment.');
   const qualificationPin = configuration.currentSourceQualification;
@@ -325,14 +340,28 @@ export async function assemble({
   const { lock, metadata: catalogMetadata, catalogSha256 } = await loadCatalog(directory),
     configuration = parseJSON(await readOrdinary(directory, 'publication.json'));
   if (catalogSha256 !== configuration.catalogSha256) throw new Error('Catalog byte pin mismatch.');
-  const metadata = retainRecentMetadata(catalogMetadata, configuration.retainedReleasesPerMajor),
+  const testingVersions = new Set(Object.keys(configuration.testingRoutes || {})),
+    testingMetadata = new Map(
+      [...catalogMetadata].filter(([version]) => testingVersions.has(version)),
+    ),
+    metadata = retainRecentMetadata(
+      new Map([...catalogMetadata].filter(([version]) => !testingVersions.has(version))),
+      configuration.retainedReleasesPerMajor,
+    ),
+    _testingRoutesExist =
+      testingMetadata.size === testingVersions.size ||
+      (() => {
+        throw new Error('A development testing route has no frozen metadata.');
+      })(),
     { canonicalSites } = await validateAdmissions({
       directory,
       configuration,
       metadata,
       requireBrowser,
     }),
-    current = metadata.get(configuration.currentVersion);
+    current = metadata.get(configuration.currentVersion),
+    publicationMetadata = new Map([...metadata, ...testingMetadata]),
+    publicationSites = { ...canonicalSites, ...configuration.testingRoutes };
   if (!outputDirectory || !currentSite || (await fs.lstat(currentSite)).isSymbolicLink())
     throw new Error('Explicit ordinary current site and output required.');
   const inputRows = await directoryInventory(currentSite);
@@ -376,22 +405,22 @@ export async function assemble({
     if (row.path !== 'distribution.zip.sha256') await writeFile(outputDirectory, row.path, bytes);
   }
   let redirectedHTMLFiles = 0;
-  for (const [version, item] of metadata) {
+  for (const [version, item] of publicationMetadata) {
     await writeFile(outputDirectory, `releases/${version}/release.json`, item.recordBytes);
-    if (version === current.record.version) continue;
-    const files = metadataBridges(item, canonicalSites[version]);
+    if (version === current.record.version || testingMetadata.has(version)) continue;
+    const files = metadataBridges(item, publicationSites[version]);
     for (const [relative, bytes] of files) {
       await writeFile(outputDirectory, `releases/${version}/site/${relative}`, bytes);
       if (relative.endsWith('.html')) redirectedHTMLFiles++;
     }
   }
   const catalogPresentation = await copyCatalogPresentation(currentSite, outputDirectory);
-  const records = [...metadata.values()].map((m) => m.record),
+  const records = [...publicationMetadata.values()].map((m) => m.record),
     index = publishedReleaseIndex(
       records,
       lock.sourceRepository,
       current.record.version,
-      canonicalSites,
+      publicationSites,
       { presentation: Boolean(catalogPresentation) },
     );
   await writeFile(outputDirectory, 'releases/index.json', jsonBytes(index.json));
@@ -406,7 +435,7 @@ export async function assemble({
       formatVersion: 1,
       sourceRepository: lock.sourceRepository,
       target: 'main',
-      canonicalSites,
+      canonicalSites: publicationSites,
       releases: records.map(({ version, sourceRevision, manifestSha256 }) => ({
         version,
         sourceRevision,
@@ -427,6 +456,7 @@ export async function assemble({
     budgetBytes,
     files,
     historicalBridges: metadata.size - 1,
+    testingVersions: testingMetadata.size,
     redirectedHTMLFiles,
     browserAdmissionsRequired: requireBrowser,
     catalogPresentation,

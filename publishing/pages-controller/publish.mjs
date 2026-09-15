@@ -25,7 +25,19 @@ async function verify({ preview = false, remote = false } = {}) {
   const { lock, metadata: catalogMetadata, catalogSha256 } = await loadCatalog(directory),
     configuration = parseJSON(await readOrdinary(directory, 'publication.json'));
   if (configuration.catalogSha256 !== catalogSha256) throw new Error('Frozen catalog changed.');
-  const metadata = retainRecentMetadata(catalogMetadata, configuration.retainedReleasesPerMajor),
+  const testingVersions = new Set(Object.keys(configuration.testingRoutes || {})),
+    testingMetadata = new Map(
+      [...catalogMetadata].filter(([version]) => testingVersions.has(version)),
+    ),
+    metadata = retainRecentMetadata(
+      new Map([...catalogMetadata].filter(([version]) => !testingVersions.has(version))),
+      configuration.retainedReleasesPerMajor,
+    ),
+    _testingRoutesExist =
+      testingMetadata.size === testingVersions.size ||
+      (() => {
+        throw new Error('A development testing route has no frozen metadata.');
+      })(),
     { qualification, admissions } = await validateAdmissions({
       directory,
       configuration,
