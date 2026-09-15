@@ -1241,9 +1241,24 @@
       <button class="dialog-close" data-close="library-dialog" aria-label="Close library">×</button>
       <p class="eyebrow">THE THINGS YOU KEEP</p>
       <h2 id="library-title" data-field-kit-copy="library.title">Flight library.</h2>
-      <button id="library-operation-cancel" class="button secondary" type="button" hidden disabled>
-        Cancel operation
-      </button>
+      <div id="library-operation-rail" hidden>
+        <div
+          id="library-operation-message"
+          tabindex="0"
+          aria-label="Library operation details"
+        ></div>
+        <div id="library-operation-controls">
+          <button
+            id="library-operation-cancel"
+            class="button secondary"
+            type="button"
+            hidden
+            disabled
+          >
+            Cancel operation
+          </button>
+        </div>
+      </div>
       <div class="library-tabs" role="group" aria-label="Library sections">
         <button
           data-library-panel="scores"
@@ -1569,6 +1584,7 @@
         >
           Back
         </button>
+        <div id="shell-craft-feedback"></div>
       </div>
       <details id="shell-mode-choice" class="shell-mode-choice">
         <summary>Mode · Solo flight</summary>

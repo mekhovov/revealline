@@ -334,7 +334,30 @@ export function attachControllerSettings({
       expected = signature(candidate),
       ticket = generation,
       abort = new AbortController();
-    let focusAfterApply = false;
+    let focusAfterApply = false,
+      restoreApplyFocus = container.contains(doc.activeElement);
+    // Disabling the initiating control can natively blur to body. Remember that
+    // ownership, but relinquish it after any later focus or input choice.
+    const relinquishFocus = () => {
+      restoreApplyFocus = false;
+    };
+    const focusChanged = (event) => {
+      if (event.target !== doc.body) relinquishFocus();
+    };
+    const focusListeners = [
+      ['focusin', focusChanged],
+      ['pointerdown', relinquishFocus],
+      ['keydown', relinquishFocus],
+      ['visibilitychange', relinquishFocus],
+    ];
+    const stopObservingFocus = () => {
+      for (const [type, callback] of focusListeners) doc.removeEventListener(type, callback);
+      doc.defaultView?.removeEventListener('blur', relinquishFocus);
+      abort.signal.removeEventListener('abort', stopObservingFocus);
+    };
+    for (const [type, callback] of focusListeners) doc.addEventListener(type, callback);
+    doc.defaultView?.addEventListener('blur', relinquishFocus);
+    abort.signal.addEventListener('abort', stopObservingFocus, { once: true });
     pending = abort;
     busy = true;
     syncBusy();
@@ -380,6 +403,7 @@ export function attachControllerSettings({
         else announce(`Controller settings were not applied. ${error.message}`, 'error');
       }
     } finally {
+      stopObservingFocus();
       if (pending === abort) {
         pending = null;
         busy = false;
@@ -387,10 +411,12 @@ export function attachControllerSettings({
           syncBusy();
           if (
             focusAfterApply &&
+            restoreApplyFocus &&
             generation === ticket &&
             !doc.hidden &&
             doc.hasFocus?.() !== false &&
-            container.contains(doc.activeElement)
+            container.isConnected !== false &&
+            (container.contains(doc.activeElement) || doc.activeElement === doc.body)
           )
             edit.focus({ preventScroll: true });
         }

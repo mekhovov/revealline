@@ -1,0 +1,3614 @@
+{
+  "format": "revealline-loading-placement-evidence-copies.v1",
+  "scope": "Original intermediate failures, corrections and public-interface observations. Their original source/version/browser limits remain authoritative. No final v0.57.2/public/P01 acceptance claim. Profiles and binary source bundles are excluded.",
+  "files": [
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/01-export-portrait-original.json",
+      "path": "r2/01-export-portrait-original.json",
+      "bytes": 799,
+      "sha256": "3ca2d3463c403a61c25dcfd63651ac283304cf58e073bdb42c81a61ed520aae8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/01-standard-portrait-before.json",
+      "path": "r2/01-standard-portrait-before.json",
+      "bytes": 21791,
+      "sha256": "d0e555d010b4c55d65c8460ec6c3846ed72b3a2cc2d008b624ffa2d641ba53ad"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/01-standard-portrait-before.png",
+      "path": "r2/01-standard-portrait-before.png",
+      "bytes": 72070,
+      "sha256": "0a950df33522869383d809f504b0bb609933e8afeac6543c235a89d7d1944956"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/02-export-landscape-original.json",
+      "path": "r2/02-export-landscape-original.json",
+      "bytes": 799,
+      "sha256": "3ca2d3463c403a61c25dcfd63651ac283304cf58e073bdb42c81a61ed520aae8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/02-standard-portrait-terminal.json",
+      "path": "r2/02-standard-portrait-terminal.json",
+      "bytes": 25488,
+      "sha256": "002a671c4ae26d5cec7ae278a2be4ea59591de52721c1b9e14859ff31cbb443c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/02-standard-portrait-terminal.png",
+      "path": "r2/02-standard-portrait-terminal.png",
+      "bytes": 68788,
+      "sha256": "efea1fea270a845bb7788bc085ddf785387594ae215fbeaa4ca232d3d1b61ca1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/02-summary.txt",
+      "path": "r2/02-summary.txt",
+      "bytes": 6776,
+      "sha256": "d6355c65ceb0dc173fcba1fca2fe8be964f5c365b6c9bc54adfca78cac373dc6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/03-export-large-landscape-original.json",
+      "path": "r2/03-export-large-landscape-original.json",
+      "bytes": 799,
+      "sha256": "3ca2d3463c403a61c25dcfd63651ac283304cf58e073bdb42c81a61ed520aae8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/03-standard-landscape-before.json",
+      "path": "r2/03-standard-landscape-before.json",
+      "bytes": 25676,
+      "sha256": "7a273a2afa587b6de8fd464c6bf13be9388194cfc0a8e94d0021824ea84fe22e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/03-standard-landscape-before.png",
+      "path": "r2/03-standard-landscape-before.png",
+      "bytes": 64689,
+      "sha256": "59eda49514d07c0cab469eeb014d659b9031861567a004b3c7f5d1e508f6d8c7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/03-summary.txt",
+      "path": "r2/03-summary.txt",
+      "bytes": 6806,
+      "sha256": "2e68c30d17199f4eb5c7d6ae49d338d0b6e05161960bd7046546e721a763ba89"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/04-export-large-landscape-original.json",
+      "path": "r2/04-export-large-landscape-original.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/04-standard-landscape-terminal.json",
+      "path": "r2/04-standard-landscape-terminal.json",
+      "bytes": 25661,
+      "sha256": "a8ed3a6784d9b28df0bdf6b7269b8e840776410dc6f15af333b56d11752197df"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/04-standard-landscape-terminal.png",
+      "path": "r2/04-standard-landscape-terminal.png",
+      "bytes": 64473,
+      "sha256": "427b4e343654ede1a7e390d0de9c67d83c5508fe860ff4dd31f3f265166296a6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/04-summary.txt",
+      "path": "r2/04-summary.txt",
+      "bytes": 6793,
+      "sha256": "7294714eb0ab8a089b391b7d94efce4392b7fe20fd2c30c2e31c31858db9590f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/05-export-large-portrait-original.json",
+      "path": "r2/05-export-large-portrait-original.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/05-large-landscape-before.json",
+      "path": "r2/05-large-landscape-before.json",
+      "bytes": 23713,
+      "sha256": "21fc98c6f71036d73c506ba0b89e3c522d3af5ad7c293dea08f038550eba505c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/05-large-landscape-before.png",
+      "path": "r2/05-large-landscape-before.png",
+      "bytes": 61900,
+      "sha256": "1c0b50428f9f6920cabc0921ff119c04da128f8de08682a40c42e4d6e5d48adb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/05-summary.txt",
+      "path": "r2/05-summary.txt",
+      "bytes": 5948,
+      "sha256": "6450f9b5de9fb3ce8ded7558c646b9e1e1f66006550e5d49704d301d844b0f4e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/06-large-landscape-terminal.json",
+      "path": "r2/06-large-landscape-terminal.json",
+      "bytes": 23715,
+      "sha256": "609c162f21ba9ef70a516f467e8e6a195729b2160a0849a5cad9888d1f6b79fe"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/06-large-landscape-terminal.png",
+      "path": "r2/06-large-landscape-terminal.png",
+      "bytes": 62009,
+      "sha256": "862c4f925429d50dc33477d448b30ce54f907a9104b7792d959cf1e4333c5a5c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/06-summary.txt",
+      "path": "r2/06-summary.txt",
+      "bytes": 5952,
+      "sha256": "fd35d9cf040d41c07721107a657014b6626464960fa24fe645d958c94b29ceff"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/07-large-landscape-library-before.json",
+      "path": "r2/07-large-landscape-library-before.json",
+      "bytes": 24802,
+      "sha256": "a57af776514c021624ac598072176ad7bafd6de2184470fa931bedfb49794a17"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/07-large-landscape-library-before.png",
+      "path": "r2/07-large-landscape-library-before.png",
+      "bytes": 66777,
+      "sha256": "998e3bec2e21f5c7cd70ea9b269e28ae634f8d75910fbd1afc60caac078c8d12"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/07-summary.txt",
+      "path": "r2/07-summary.txt",
+      "bytes": 6203,
+      "sha256": "c7cf8bc6d64ddded5afffcdba2682aec8c7e891926509f153e01fd5b32979681"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/08-large-landscape-library-terminal.json",
+      "path": "r2/08-large-landscape-library-terminal.json",
+      "bytes": 25593,
+      "sha256": "2e72ab00a3122793564d28024b8cb1f7da1f9693880a83e5bcbab9070f27c298"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/08-large-landscape-library-terminal.png",
+      "path": "r2/08-large-landscape-library-terminal.png",
+      "bytes": 80631,
+      "sha256": "48dd430936bc6658ad9b27619d5699a2c8179863fdeeb8041a72dc925fb00816"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/08-summary.txt",
+      "path": "r2/08-summary.txt",
+      "bytes": 6800,
+      "sha256": "78f0bfa3c26b993fe16a2a17564c0f39384e522176336a2dfe3aa6c822a32d1d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/09-large-landscape-refocused-export.json",
+      "path": "r2/09-large-landscape-refocused-export.json",
+      "bytes": 25608,
+      "sha256": "06af2ada4db032b8869153e53ac335a6a198e43de27e4f2f720f2eb39f1bb09d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/09-large-landscape-refocused-export.png",
+      "path": "r2/09-large-landscape-refocused-export.png",
+      "bytes": 80692,
+      "sha256": "dc3a868c7639d4e3fdc1a30b3211429729d80de2155065957ab3db61bf27673f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/09-summary.txt",
+      "path": "r2/09-summary.txt",
+      "bytes": 6815,
+      "sha256": "70e6e4adb12369df61ddc4e63b59c48242f9ad53cbbce572e7f289f149bec1e5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/10-large-landscape-detail-scrolled.json",
+      "path": "r2/10-large-landscape-detail-scrolled.json",
+      "bytes": 25616,
+      "sha256": "f5181d07d957c9939ea32a9e21d639ae381459e93d938a9157fb5d815af123c5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/10-large-landscape-detail-scrolled.png",
+      "path": "r2/10-large-landscape-detail-scrolled.png",
+      "bytes": 80924,
+      "sha256": "0970f3f8570ac94bb81ed3a029f1fa438fc6c838a6175ea4107aec40099bca2d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/10-summary.txt",
+      "path": "r2/10-summary.txt",
+      "bytes": 6823,
+      "sha256": "69284d4aaae41b800bce0bbf9f161af94e501eb435c407ee051bcc9c28de7dc0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/11-large-landscape-tab-away.json",
+      "path": "r2/11-large-landscape-tab-away.json",
+      "bytes": 25655,
+      "sha256": "4dd190b81331ca06c15bd0190a4d87d6e2b2fb4dd30e1abbb7dd9c0149aada6c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/11-large-landscape-tab-away.png",
+      "path": "r2/11-large-landscape-tab-away.png",
+      "bytes": 63314,
+      "sha256": "222175784976a7f5f1d75918a8b524d4be2d050fae667e8261854b97aad3ac2c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/11-summary.txt",
+      "path": "r2/11-summary.txt",
+      "bytes": 6800,
+      "sha256": "a046bb8e499be77a28d52ccfee5eb5d6c8b26a63ab9fa65d7fd385e4438bb67b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/12-large-portrait-before.json",
+      "path": "r2/12-large-portrait-before.json",
+      "bytes": 25480,
+      "sha256": "744fbf468f44b02d71006de51f5099135f7baf1945e29eb25d125fe19ef2689f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/12-large-portrait-before.png",
+      "path": "r2/12-large-portrait-before.png",
+      "bytes": 108974,
+      "sha256": "1c7498f0499abe5c888a2d6ed81fc579da4b1a97d7dcaf3d3efab65de9313e45"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/12-summary.txt",
+      "path": "r2/12-summary.txt",
+      "bytes": 6736,
+      "sha256": "f22773d864e1af210f665dc6116f83b392f756a1110d48e71443a6ed05e59ff2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/13-large-portrait-terminal.json",
+      "path": "r2/13-large-portrait-terminal.json",
+      "bytes": 25465,
+      "sha256": "e452f299c59396a5dc215b6638ff5480b45c62776388bab738004c9aa36c3b64"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/13-large-portrait-terminal.png",
+      "path": "r2/13-large-portrait-terminal.png",
+      "bytes": 108723,
+      "sha256": "b69fc7bbaa3c1cae7e4d234391a1eca45dccdb2e7287a600ec17844bbf6ea051"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/13-summary.txt",
+      "path": "r2/13-summary.txt",
+      "bytes": 6723,
+      "sha256": "516e621105872a7c55c82b7f8b61323e0f7d494716b82629aeccec527a551100"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/14-native-close.json",
+      "path": "r2/14-native-close.json",
+      "bytes": 24316,
+      "sha256": "f30270837c8b543ba25c7188c85693053a6d9c869cab697683cf4f5de63767ea"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/14-native-close.png",
+      "path": "r2/14-native-close.png",
+      "bytes": 109215,
+      "sha256": "779ce8d7d300d471b9754841a9cc52d5653cc70a9c2ee970ee50eceee554bb60"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/14-summary.txt",
+      "path": "r2/14-summary.txt",
+      "bytes": 6532,
+      "sha256": "6aebe5e57ae40d776bf6c6377f549f00242a17c59f72e232e871dc6c48471846"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/15-native-reopen.json",
+      "path": "r2/15-native-reopen.json",
+      "bytes": 24647,
+      "sha256": "a5a25391dca15ac77c84e01bb361796d06b5efc3a88e9e2b5b1355765888d2b1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/15-native-reopen.png",
+      "path": "r2/15-native-reopen.png",
+      "bytes": 73329,
+      "sha256": "428a9f49722bee062e9cce9824b5bcf903bfa6cb3cdd8f84cb3b166c1118a9ad"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/15-summary.txt",
+      "path": "r2/15-summary.txt",
+      "bytes": 6131,
+      "sha256": "26220435b6489c19a8503e3ed2481c2e6649f4ab30dd9dd5dfed7b559198244e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/capacity.jsonl",
+      "path": "r2/capacity.jsonl",
+      "bytes": 23144,
+      "sha256": "5d73c462c6e90c775d5fb2fa6293fce642a84047581265ac54a50d7811caaacf"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/capture.py",
+      "path": "r2/capture.py",
+      "bytes": 1454,
+      "sha256": "6ce83471d81b170884d9db85461149b66b5a641f62fbb3d4690865c6680af43e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/close.json",
+      "path": "r2/close.json",
+      "bytes": 1435,
+      "sha256": "7cbc3d056972be41a97dcd989979e6e7e02ef8ee79184eec19a8dd2869c69f71"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/downloads/revealline-complete-backup.json",
+      "path": "r2/downloads/revealline-complete-backup.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/exit.json",
+      "path": "r2/exit.json",
+      "bytes": 289,
+      "sha256": "f2db6d9180738e288b518bb9aecc0565bcf14dcb275c66ed46768e17a0b201e8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/launch.json",
+      "path": "r2/launch.json",
+      "bytes": 1801,
+      "sha256": "e0e39d894dc5871b51d8aef6386032689d02503f94ae088b3465e2141cf20445"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/native-events.jsonl",
+      "path": "r2/native-events.jsonl",
+      "bytes": 601610,
+      "sha256": "fde3cd99aaa3c3591b37113ab2db6553a007839aa792448da2f453697db0f3a0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/observed-targets.json",
+      "path": "r2/observed-targets.json",
+      "bytes": 1329,
+      "sha256": "48d30d7f387fb71857a79b6516a864d1eeca196431febf30f43a10f218b729f8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/phase-summary.json",
+      "path": "r2/phase-summary.json",
+      "bytes": 100554,
+      "sha256": "1c87500596593b1e2f8f0a514a0d3f8935afa8e5f42e29523a19580cf642447f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/review.json",
+      "path": "r2/review.json",
+      "bytes": 7989,
+      "sha256": "7c2948e40dd38cd03ceaa634eab8c7a561ab1103025ced3d3c3b44d3f2963cab"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/review.md",
+      "path": "r2/review.md",
+      "bytes": 3329,
+      "sha256": "99c840ccd84489cef9ae46c7f41e2bb62e3eddb72fc2f3ebd9173adeb33b323c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/screenshot-origins.jsonl",
+      "path": "r2/screenshot-origins.jsonl",
+      "bytes": 3549,
+      "sha256": "ceeb51431b53ffd1831c2f13676693bf490357f969e81983b53e7cea27f32a13"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/server.json",
+      "path": "r2/server.json",
+      "bytes": 1489,
+      "sha256": "6a8f81c7c2be37d70004f88bcf40e1f6b46d951e8231cbed6d6375a793b390f1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-native-preparation/run/evidence-manifest.json",
+      "path": "r2/evidence-manifest.json",
+      "bytes": 10413,
+      "sha256": "70a02815c81c3e3f2ff9c61581729efac59c0c0880d63e9b20daa0bb3beb538c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/agent-browser.json",
+      "path": "r3/agent-browser.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/capture.py",
+      "path": "r3/capture.py",
+      "bytes": 1453,
+      "sha256": "39c2cb33766cd6ae3d4d96161b557be19c0bedd41aaedc124833a7d17252ce6f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/close-owned-browser.mjs",
+      "path": "r3/close-owned-browser.mjs",
+      "bytes": 1414,
+      "sha256": "6b8bd16d4cb97141f1bd0505b0561f74aaf2707237cfd91eb43a2edf998aa9f6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/close-with-targets.mjs",
+      "path": "r3/close-with-targets.mjs",
+      "bytes": 1554,
+      "sha256": "a846d8d79a876439d359eeb7475aa203df59b3c6fd26e2273e91901cdc361468"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/config.json",
+      "path": "r3/config.json",
+      "bytes": 1914,
+      "sha256": "1cfcd63f746a596daa4b01857b8625def4359ebde325045d3e4132546a56d686"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/control.py",
+      "path": "r3/control.py",
+      "bytes": 1360,
+      "sha256": "708784f11e7f42636e17c644d07d99b6f6a5f8e02ed4deae25c9079767376194"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/finalize-review.py",
+      "path": "r3/finalize-review.py",
+      "bytes": 9871,
+      "sha256": "6f812b0641437f15470f7446245e5c69bb34bb4072fbf1e530cca6853c1f1f13"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/launch-owned-chrome.py",
+      "path": "r3/launch-owned-chrome.py",
+      "bytes": 3175,
+      "sha256": "394bb92a74e9dc247d35b81da521ee940b48d380795e754b382765bd6c125262"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/measure.js",
+      "path": "r3/measure.js",
+      "bytes": 3051,
+      "sha256": "704b32c00d158f58dd4a77bff0e454f50f5fa555710f9d6c94ec65a36976080b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/native-wheel.mjs",
+      "path": "r3/native-wheel.mjs",
+      "bytes": 1536,
+      "sha256": "6755cf6b159be8188ae25765ec48b5d95a4256ef6bff121d553a547935418beb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/observe-final.mjs",
+      "path": "r3/observe-final.mjs",
+      "bytes": 3954,
+      "sha256": "6559e8cb444c5bc7ef97ea593b826597ada3f0d07e540159909b5d633ab646d8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/observe.mjs",
+      "path": "r3/observe.mjs",
+      "bytes": 3942,
+      "sha256": "dd8d1580aa63712c771108f38a92e70629f324a5d12521deb637e488dcc24fee"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/preparation-manifest.json",
+      "path": "r3/preparation-manifest.json",
+      "bytes": 1501,
+      "sha256": "8e47cabcf47af429e3d7c46e626fa6cedffb8268c443efaf8bedde56477fdac9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/read-only-state.mjs",
+      "path": "r3/read-only-state.mjs",
+      "bytes": 1871,
+      "sha256": "d5c930f6c6e0146d73e7a6e722979617533840b5c4c8df319c175a139421d7a5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/01-large-landscape-before.json",
+      "path": "r3/run/01-large-landscape-before.json",
+      "bytes": 22858,
+      "sha256": "6f3ab52085eaf3ef07b8969490319c3aca97b4c237c7a037b3a0c9b72a44db42"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/01-large-landscape-before.png",
+      "path": "r3/run/01-large-landscape-before.png",
+      "bytes": 67543,
+      "sha256": "3c8e337060ef3831650f7e15c0986560e155e259bc21099750e4440d2c6b50fc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/01-summary.txt",
+      "path": "r3/run/01-summary.txt",
+      "bytes": 5332,
+      "sha256": "dfb1ef7aa0016c4a3c0c6b7c4bfd953182cc129c25791b0c641d14b5d08fd552"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/02-large-landscape-terminal.json",
+      "path": "r3/run/02-large-landscape-terminal.json",
+      "bytes": 26609,
+      "sha256": "12c1dad0aee686adb8381858740f30ae82c56226dd60a015213f8b8f5c150aa7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/02-large-landscape-terminal.png",
+      "path": "r3/run/02-large-landscape-terminal.png",
+      "bytes": 81380,
+      "sha256": "08f469bed10b1272cedbda1fe2605987d4db51948f5f9e5aff79db44f59476ac"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/02-summary.txt",
+      "path": "r3/run/02-summary.txt",
+      "bytes": 6792,
+      "sha256": "a7d8ce632e5062f7e1e7cc64094c32ce88abc1d3963650ad15ca4ba2bdfa474a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/03-large-landscape-refocused.json",
+      "path": "r3/run/03-large-landscape-refocused.json",
+      "bytes": 26624,
+      "sha256": "644dddec932c9d25e28c8156df1566c28b4bf3cf809a2f94a6cf6322942a484f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/03-large-landscape-refocused.png",
+      "path": "r3/run/03-large-landscape-refocused.png",
+      "bytes": 67420,
+      "sha256": "ad186ce883678eba817b24e3d884595114b95bc4eb9ce1ecbccfea566560c493"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/03-summary.txt",
+      "path": "r3/run/03-summary.txt",
+      "bytes": 6810,
+      "sha256": "ac38cdfc23513c4fa973551383e50c29a14915567c4cdfb9de2fe322714d1641"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/04-final-large-landscape-before.json",
+      "path": "r3/run/04-final-large-landscape-before.json",
+      "bytes": 22857,
+      "sha256": "6dbbe117ec2d0c523de9d995863fd78985b57095b88f44866663b3aba525891d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/04-final-large-landscape-before.png",
+      "path": "r3/run/04-final-large-landscape-before.png",
+      "bytes": 67543,
+      "sha256": "3c8e337060ef3831650f7e15c0986560e155e259bc21099750e4440d2c6b50fc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/04-summary.txt",
+      "path": "r3/run/04-summary.txt",
+      "bytes": 5338,
+      "sha256": "5aafa71b13a4e72676d1cc63a76bc1c59f70abbfbc074691fd3d7eb5b8610025"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/05-final-large-landscape-terminal.json",
+      "path": "r3/run/05-final-large-landscape-terminal.json",
+      "bytes": 26609,
+      "sha256": "a4ced5e0352bd970bd3fad590b89d494ef54d8229dd7eb62f7c2d730a09d874e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/05-final-large-landscape-terminal.png",
+      "path": "r3/run/05-final-large-landscape-terminal.png",
+      "bytes": 81380,
+      "sha256": "08f469bed10b1272cedbda1fe2605987d4db51948f5f9e5aff79db44f59476ac"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/05-summary.txt",
+      "path": "r3/run/05-summary.txt",
+      "bytes": 6798,
+      "sha256": "25449fc546ed6553590ce413856870d6027b2dd4da9ba96490d4807c3ba50ba1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/06-final-large-landscape-refocused.json",
+      "path": "r3/run/06-final-large-landscape-refocused.json",
+      "bytes": 26626,
+      "sha256": "8fb34f9a6f89b6e01997b51c461ea3c9da09632e811e814742aebe4da8e8ceb5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/06-final-large-landscape-refocused.png",
+      "path": "r3/run/06-final-large-landscape-refocused.png",
+      "bytes": 67420,
+      "sha256": "ad186ce883678eba817b24e3d884595114b95bc4eb9ce1ecbccfea566560c493"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/06-summary.txt",
+      "path": "r3/run/06-summary.txt",
+      "bytes": 6816,
+      "sha256": "0c94a02bcc79f05f81596ce917288da0a45943e3a5e1f0ce68cc12a0d6d38ace"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/06-whole-target-hit-test.json",
+      "path": "r3/run/06-whole-target-hit-test.json",
+      "bytes": 793,
+      "sha256": "9eb6d1c7933a5400d38d7b218daa80197b68e6332b3f30d2812a2fd75a295af4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/07-final-keyboard-detail-pagedown.json",
+      "path": "r3/run/07-final-keyboard-detail-pagedown.json",
+      "bytes": 26655,
+      "sha256": "9faf425ce64f653db3d0b94db8fc1824c08c75dc92d122282544b0b9034f87ce"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/07-final-keyboard-detail-pagedown.png",
+      "path": "r3/run/07-final-keyboard-detail-pagedown.png",
+      "bytes": 69208,
+      "sha256": "14c56ded69fea48b855cfd0309553e4b35791f875c943ffffee5555b876b21de"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/07-summary.txt",
+      "path": "r3/run/07-summary.txt",
+      "bytes": 6828,
+      "sha256": "7e5d0882f79a754d3f3541573935948e67407ade3b51dbae1b7233b49f056df0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/08-final-keyboard-detail-arrow.json",
+      "path": "r3/run/08-final-keyboard-detail-arrow.json",
+      "bytes": 26702,
+      "sha256": "331d2f450d05e5e2098a230d67a9c3d60deb510e8621fd9616538f60eb359c1a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/08-final-keyboard-detail-arrow.png",
+      "path": "r3/run/08-final-keyboard-detail-arrow.png",
+      "bytes": 54159,
+      "sha256": "e41c807aa2b9e8410459cbb77c078b33df357e0366949196a7cea9a927a185e7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/08-summary.txt",
+      "path": "r3/run/08-summary.txt",
+      "bytes": 6851,
+      "sha256": "ea8e97be309201ecfa5dca57bae8271f99d75c38b974e6a7a8720f0f37803436"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/09-final-resized-large-portrait.json",
+      "path": "r3/run/09-final-resized-large-portrait.json",
+      "bytes": 26452,
+      "sha256": "97c37ac11e0122d538cc7ff3aeb0d23393460e2060a6df0a2d50307fe0bc75db"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/09-final-resized-large-portrait.png",
+      "path": "r3/run/09-final-resized-large-portrait.png",
+      "bytes": 94369,
+      "sha256": "935e804532aa5a945349c4f53f94e4d06229710f4afd59b792e89b8dcb2ae170"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/09-summary.txt",
+      "path": "r3/run/09-summary.txt",
+      "bytes": 6743,
+      "sha256": "4cf6cbecb35222849690ad5cfc5b5a8f061bacc49edd7969ffaa6c1ac29f185a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/10-final-resized-large-landscape.json",
+      "path": "r3/run/10-final-resized-large-landscape.json",
+      "bytes": 26645,
+      "sha256": "3eef28e5005f768f69bdbc6489152b2018941c2af254083ec5880824e9afdadc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/10-final-resized-large-landscape.png",
+      "path": "r3/run/10-final-resized-large-landscape.png",
+      "bytes": 70709,
+      "sha256": "ba10cded2a7883be44cac77bb3ae10e4fd8706e4ef55caad791651c7b3b41e06"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/10-resize-stability-frames.json",
+      "path": "r3/run/10-resize-stability-frames.json",
+      "bytes": 29210,
+      "sha256": "bced545186b7d3119ce13803b1082e981f879f1b290aa9076978c5f793fe13a5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/10-summary.txt",
+      "path": "r3/run/10-summary.txt",
+      "bytes": 6812,
+      "sha256": "fb5b3a1cd80c6c449ea02bacde5a864290e09839413505a5c45464140412cfd4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/11-final-manual-wheel.json",
+      "path": "r3/run/11-final-manual-wheel.json",
+      "bytes": 26675,
+      "sha256": "3c5e4eac79d0b17f8596431717dab7b67a4c25b3bc9567a9183bed42b5f98234"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/11-final-manual-wheel.png",
+      "path": "r3/run/11-final-manual-wheel.png",
+      "bytes": 61855,
+      "sha256": "c3798e8e5aebae992a40c5aee1170532009d1b9348afbb14f7f5a26005995907"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/11-manual-wheel-stability-frames.json",
+      "path": "r3/run/11-manual-wheel-stability-frames.json",
+      "bytes": 7923,
+      "sha256": "9e8db60bd3ac0ba000b70e67cc14ae41beb43170bde2c99ec36f954f19ee2186"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/11-summary.txt",
+      "path": "r3/run/11-summary.txt",
+      "bytes": 6803,
+      "sha256": "7d5480c2dd29ce14cfdd77cdcfd3639c9ffbbeca01ee35638e5940cbd80528ea"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/12-final-native-escape.json",
+      "path": "r3/run/12-final-native-escape.json",
+      "bytes": 24732,
+      "sha256": "1fda71a5eda20162a25df91ebb6a10123d41c7dd639ac89b5b69f73c2da428fb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/12-final-native-escape.png",
+      "path": "r3/run/12-final-native-escape.png",
+      "bytes": 87758,
+      "sha256": "8f7cbac64e615ca38c392f304fff5f524f53af14e91c3c51b2ab2864995a89e6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/12-summary.txt",
+      "path": "r3/run/12-summary.txt",
+      "bytes": 5961,
+      "sha256": "dd6e89ffa80852ca991ec804562b1ac923842570236398b92b9e8734a3e7d4f0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/13-final-native-reopen.json",
+      "path": "r3/run/13-final-native-reopen.json",
+      "bytes": 25769,
+      "sha256": "f81a4e41ca9992fd370e4829cf1fe99e61f16f3be25ef562491f72b6ccc20280"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/13-final-native-reopen.png",
+      "path": "r3/run/13-final-native-reopen.png",
+      "bytes": 47661,
+      "sha256": "4c3d0aff89cf2bd9b496672c63244180f22f1fe03705705d30ebeb586d5744e2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/13-summary.txt",
+      "path": "r3/run/13-summary.txt",
+      "bytes": 6177,
+      "sha256": "46ba67e57b76042fb4495f7d4c7794fdcd6bd03c4183cd4d713519be8e9c532a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/14-final-large-portrait-before.json",
+      "path": "r3/run/14-final-large-portrait-before.json",
+      "bytes": 25663,
+      "sha256": "a8cb6409680c8eaf2988846657324eceddee64c3744b21993e5267078e4b6577"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/14-final-large-portrait-before.png",
+      "path": "r3/run/14-final-large-portrait-before.png",
+      "bytes": 74618,
+      "sha256": "b5baa19f5402ea21093a1d228d0e8716920ea93552c26cd3c1dc6db726f79b3a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/14-summary.txt",
+      "path": "r3/run/14-summary.txt",
+      "bytes": 6158,
+      "sha256": "8ceba60693e6cd978e0352c96ee2f898853cec0e627eb8816bde23308ca98f75"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/15-final-large-portrait-terminal.json",
+      "path": "r3/run/15-final-large-portrait-terminal.json",
+      "bytes": 26619,
+      "sha256": "6983cf7c00f5a327c0b75f954b3d0a943214a9ce913c9f5e1e55f4948cbe5544"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/15-final-large-portrait-terminal.png",
+      "path": "r3/run/15-final-large-portrait-terminal.png",
+      "bytes": 85522,
+      "sha256": "5dd0200058a56ad5458a7a2cc824f89a2348731697569063ce6df53f49859e06"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/15-summary.txt",
+      "path": "r3/run/15-summary.txt",
+      "bytes": 6809,
+      "sha256": "1f21ca71b2dc117fcce50bd7bd38f3bb19b291d5089759ce6359cc9c6cc9ab4b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/16-final-large-portrait-refocused.json",
+      "path": "r3/run/16-final-large-portrait-refocused.json",
+      "bytes": 26432,
+      "sha256": "ee5fe27f3d892b5344c18338e230a84f2ae53478bb3c4640829370ac7f716bfb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/16-final-large-portrait-refocused.png",
+      "path": "r3/run/16-final-large-portrait-refocused.png",
+      "bytes": 97231,
+      "sha256": "db8c4cb1f8c19a5c69471097d87a265aaa8dc8bda9ee3d599a6bd0b0534ba3ed"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/16-summary.txt",
+      "path": "r3/run/16-summary.txt",
+      "bytes": 6745,
+      "sha256": "f9e63cfcb54ef886f18fd9b2e3edd4ad17e08426425cf226d0d0ca3962755f02"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/17-detail-settled.json",
+      "path": "r3/run/17-detail-settled.json",
+      "bytes": 108,
+      "sha256": "5df08e2c421e01c3ecf8e1fb015e5f8338e1a67c1a36c4eaed107a4242a482e6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/17-final-portrait-detail-pagedown.json",
+      "path": "r3/run/17-final-portrait-detail-pagedown.json",
+      "bytes": 26584,
+      "sha256": "505132afb1ddf1a64037fec86afb934fdff4cf34019781a2b4b60d7bcbda6a42"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/17-final-portrait-detail-pagedown.png",
+      "path": "r3/run/17-final-portrait-detail-pagedown.png",
+      "bytes": 84849,
+      "sha256": "bdc7ff3191bc5cd402609c9ab3a3b5de8da830a497918b2a72d8a2503b19021b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/17-summary.txt",
+      "path": "r3/run/17-summary.txt",
+      "bytes": 6831,
+      "sha256": "3682e10dfc31176aaea87e79a19213f9ffe8eb043eeaf34c2e5578a74b47fc16"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/18-direct-read-only-state.json",
+      "path": "r3/run/18-direct-read-only-state.json",
+      "bytes": 564,
+      "sha256": "719047f299dd6c16e03196acf1b90d4e522bf66dedbee1bc6ff52155dd81c502"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/18-portrait-keyboard-reading-frames.json",
+      "path": "r3/run/18-portrait-keyboard-reading-frames.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/capacity.jsonl",
+      "path": "r3/run/capacity.jsonl",
+      "bytes": 17257,
+      "sha256": "6834534e8669f0c03a5928d27d0da568446946c135b6aea18cbc026e3650ef86"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/close.json",
+      "path": "r3/run/close.json",
+      "bytes": 1416,
+      "sha256": "5062f317c34b126a5b1bf795065a3eaeb58dce0c5f1e21d51690227af6169d6f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/closure.json",
+      "path": "r3/run/closure.json",
+      "bytes": 1553,
+      "sha256": "e2847c782945aacc8ec2f97baac52084d2d503c721391b74742db77de6962e53"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/downloads/revealline-complete-backup.json",
+      "path": "r3/run/downloads/revealline-complete-backup.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/exit.json",
+      "path": "r3/run/exit.json",
+      "bytes": 288,
+      "sha256": "6c27a4d6296fa96358c50ab216b5ce06b3e2d5146fd8ed5c395c3d336226dd02"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/final-candidate-library-panel.mjs",
+      "path": "r3/run/final-candidate-library-panel.mjs",
+      "bytes": 55820,
+      "sha256": "9fc7ae8e3bd699cabb17681e4d1fd5203f08fd3beb53db609640635fb1b8b3b5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/final-landscape-export-original.json",
+      "path": "r3/run/final-landscape-export-original.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/final-native-busy-phases.json",
+      "path": "r3/run/final-native-busy-phases.json",
+      "bytes": 14980,
+      "sha256": "6c729d8e12b255c67d0511248e96b537faed7383c12cce0407f9e61936750f9d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/final-native-events.jsonl",
+      "path": "r3/run/final-native-events.jsonl",
+      "bytes": 316357,
+      "sha256": "089c437e4cbaa29e640e050d370b97f755af904a8b34746efd07558e008fed96"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/final-observed-targets.json",
+      "path": "r3/run/final-observed-targets.json",
+      "bytes": 923,
+      "sha256": "f926ab5578d6cf7ee7a3dffff665898ee9d46e587d8369756878981ddbeafd15"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/final-portrait-export-original.json",
+      "path": "r3/run/final-portrait-export-original.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/interrupted-observation-clients.json",
+      "path": "r3/run/interrupted-observation-clients.json",
+      "bytes": 3045,
+      "sha256": "1b0d2b7a6b4db5cf82b06dd90c7a25b5dd3837bf59bf07e1a4dcc3c0286740da"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/launch.json",
+      "path": "r3/run/launch.json",
+      "bytes": 1778,
+      "sha256": "dfcc76c3030008b2071f194a4a7c891ab4f8ea9b64940c433486147f945f68b6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/native-events.jsonl",
+      "path": "r3/run/native-events.jsonl",
+      "bytes": 155211,
+      "sha256": "71f7379417a0f5407ab97e53cbfa296d739f66cda505257416e03278700c34cd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/native-wheel-input.json",
+      "path": "r3/run/native-wheel-input.json",
+      "bytes": 437,
+      "sha256": "4d537dfd35443e9c19c02af7a5c5ca655a1eb5ff8910450a3b33c292a815fff1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/observed-targets.json",
+      "path": "r3/run/observed-targets.json",
+      "bytes": 1665,
+      "sha256": "0832a42dcf3132641045630ff882cddccf94361ce694843e74e244482228d094"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/preliminary-export-original.json",
+      "path": "r3/run/preliminary-export-original.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/review.json",
+      "path": "r3/run/review.json",
+      "bytes": 6854,
+      "sha256": "7239c75f7cc7d62c5052a67c59503dc427b5ad159634a54d8e167da7abb14d0e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/review.md",
+      "path": "r3/run/review.md",
+      "bytes": 1510,
+      "sha256": "596f67362749f32c1c27d0494d337568a4dfa6aa6a5ebfa6414a3e11c2965d67"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/screenshot-origins.jsonl",
+      "path": "r3/run/screenshot-origins.jsonl",
+      "bytes": 4050,
+      "sha256": "7d15d105929f8dffac4937bc4925b7dc96bc4abd7c1c9a2dd53e70ec834009dd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/server.json",
+      "path": "r3/run/server.json",
+      "bytes": 1759,
+      "sha256": "e95a0e129fe5075b453ea94335efc51d0e1b86b6f64e25442dfad23988aa9ee6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/source-transition.json",
+      "path": "r3/run/source-transition.json",
+      "bytes": 434,
+      "sha256": "8c7d25556de1daa2e65db546313f072656d9ffa00708f8a67753cd54d4192f22"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/targets-at-close.json",
+      "path": "r3/run/targets-at-close.json",
+      "bytes": 1211,
+      "sha256": "eab8eec1cfa407ad415d45d401e204796766778bd72ce3fa82576e141eb208be"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/serve-current-source.mjs",
+      "path": "r3/serve-current-source.mjs",
+      "bytes": 1314,
+      "sha256": "1fe898fa4fe0b237b85c041cfd9fda991955b739adcb5de366d0895ac183dbb1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-native/run/evidence-manifest.json",
+      "path": "r3/evidence-manifest.json",
+      "bytes": 15889,
+      "sha256": "1e7dd333f692f6e4722f98aa9616e14c501c96f4903592713ea074c2f89440b9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/PLAN.md",
+      "path": "foreground/PLAN.md",
+      "bytes": 4388,
+      "sha256": "bf6d2d98b527b123d41d922cb765891e228237de0b41fb145a72ee2cda54ffcd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/act.py",
+      "path": "foreground/act.py",
+      "bytes": 505,
+      "sha256": "4aa25413ff7d5772f891872582055544552d404abd83df31b316af5dc5b831f0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/agent-browser.json",
+      "path": "foreground/agent-browser.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/capture.py",
+      "path": "foreground/capture.py",
+      "bytes": 1453,
+      "sha256": "39c2cb33766cd6ae3d4d96161b557be19c0bedd41aaedc124833a7d17252ce6f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/close-owned-browser.mjs",
+      "path": "foreground/close-owned-browser.mjs",
+      "bytes": 1430,
+      "sha256": "b39d45af2c63e789cb6723ad600da8ec62112b4fd5bb16a0045c75680e686e65"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/config.json",
+      "path": "foreground/config.json",
+      "bytes": 3115,
+      "sha256": "a33f3577dd1902365417ba77a889fbb85c5055286b04c3b4b65497088d785088"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/control.py",
+      "path": "foreground/control.py",
+      "bytes": 1960,
+      "sha256": "8c45115c2413952a5f40c1de8cb0a420158ab6585227a4c0716d80441c4f9331"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/finalize-run.py",
+      "path": "foreground/finalize-run.py",
+      "bytes": 8311,
+      "sha256": "7514a278fa6da707e9fe5e93ba088db86f554bf263951a143ca09889cb58767a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/fixture-availability.json",
+      "path": "foreground/fixture-availability.json",
+      "bytes": 2217,
+      "sha256": "91af3d3bfb2f1e1e7873b32f115f759eaab6d4da3f7622c722943c161b7919ec"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/foreground.mjs",
+      "path": "foreground/foreground.mjs",
+      "bytes": 3432,
+      "sha256": "bdd01c38ccb8ad2a09dcb5938991350a08a638c184533bf320253282ce7df273"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/go-source-pins.json",
+      "path": "foreground/go-source-pins.json",
+      "bytes": 2726,
+      "sha256": "679ce7331c36490610f1ff9a952e5e04d87bde4a0ade29165e8488d3cedfde86"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/launch-owned-chrome.py",
+      "path": "foreground/launch-owned-chrome.py",
+      "bytes": 3175,
+      "sha256": "394bb92a74e9dc247d35b81da521ee940b48d380795e754b382765bd6c125262"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/manifest.json",
+      "path": "foreground/manifest.json",
+      "bytes": 2358,
+      "sha256": "743ebfcf096f10746e45d85af47a8b650bec5a269e2f8619f9feeebfde877e3f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/measure.js",
+      "path": "foreground/measure.js",
+      "bytes": 3335,
+      "sha256": "2ed932d809a466029f259888ebc394497c5227f9522ba12bb9fd8debeb3ad0c5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/observe.mjs",
+      "path": "foreground/observe.mjs",
+      "bytes": 4188,
+      "sha256": "bae56d1064dd1382edf4018a0e7bf5172313298c3b40b2aca18b97713e20a955"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/pre-go-manifest.json",
+      "path": "foreground/pre-go-manifest.json",
+      "bytes": 2358,
+      "sha256": "743ebfcf096f10746e45d85af47a8b650bec5a269e2f8619f9feeebfde877e3f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/review.json",
+      "path": "foreground/review.json",
+      "bytes": 1001,
+      "sha256": "45c49adf5443cebbb69119f62cbf907671bf2ca3b074953d8b55d97857d2a4f3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/01-library-portrait-before-summary.txt",
+      "path": "foreground/run/01-library-portrait-before-summary.txt",
+      "bytes": 5302,
+      "sha256": "ac8e72f70df4ea9dad91078415488c257ae50521d0135b01077883eff868a01d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/01-library-portrait-before.json",
+      "path": "foreground/run/01-library-portrait-before.json",
+      "bytes": 38370,
+      "sha256": "eedeb9ddf757fe6bc2880104c29f6f378611ef313b56e2f6afbc298ae42c7325"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/01-library-portrait-before.png",
+      "path": "foreground/run/01-library-portrait-before.png",
+      "bytes": 74638,
+      "sha256": "c7cb2a35a1ef922b15b095a6a3187f0aafe2b6af0bb78eb6e0c6753588c89674"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/02-library-portrait-terminal-summary.txt",
+      "path": "foreground/run/02-library-portrait-terminal-summary.txt",
+      "bytes": 6805,
+      "sha256": "4867c912c3bd19b22151e2867bf90023ccaf3991e44621aee761841090974576"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/02-library-portrait-terminal.json",
+      "path": "foreground/run/02-library-portrait-terminal.json",
+      "bytes": 42273,
+      "sha256": "7dcea93d491954df40e787bcb28b239378941907bd3ee9cc97d2b19507192d9d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/02-library-portrait-terminal.png",
+      "path": "foreground/run/02-library-portrait-terminal.png",
+      "bytes": 85522,
+      "sha256": "5dd0200058a56ad5458a7a2cc824f89a2348731697569063ce6df53f49859e06"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/03-library-detail-focused-summary.txt",
+      "path": "foreground/run/03-library-detail-focused-summary.txt",
+      "bytes": 6826,
+      "sha256": "3bd010d048b8f127b8d1e846b6c93aaa2072fb6d949037596e08b97505855ede"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/03-library-detail-focused.json",
+      "path": "foreground/run/03-library-detail-focused.json",
+      "bytes": 42284,
+      "sha256": "2e66c7a94dc9f70d589ebba52efb79410bbceea9920540f8fbb3950cd6bec367"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/03-library-detail-focused.png",
+      "path": "foreground/run/03-library-detail-focused.png",
+      "bytes": 86164,
+      "sha256": "f1df4f5d43e9908a9b340cd94192e535777b66cb03d52f90172c06fcd24c0715"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/04-library-detail-pagedown-summary.txt",
+      "path": "foreground/run/04-library-detail-pagedown-summary.txt",
+      "bytes": 6828,
+      "sha256": "133b7955e8d0f914ab88ca4c7d0ece22f7f98ae658f0db91158cb6844fefec17"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/04-library-detail-pagedown.json",
+      "path": "foreground/run/04-library-detail-pagedown.json",
+      "bytes": 42298,
+      "sha256": "22d32fee8a33ea3525999aaa80c87e3f3838c6d1d43c046b34ff6b5745ac9d89"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/04-library-detail-pagedown.png",
+      "path": "foreground/run/04-library-detail-pagedown.png",
+      "bytes": 84063,
+      "sha256": "d879e4b8dd8f515d3d92215deeddd096d59e33e331b95f74e3c857d46b632efb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/05-library-keyboard-close-focus.json",
+      "path": "foreground/run/05-library-keyboard-close-focus.json",
+      "bytes": 42269,
+      "sha256": "23e2a21a022595c7be357101cd34105f8834057e7506f527d84b38f0eafc9a03"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/05-library-keyboard-close-focus.png",
+      "path": "foreground/run/05-library-keyboard-close-focus.png",
+      "bytes": 82958,
+      "sha256": "c33002ecc4f07f2c0b8ff6fa11006360fe1027e59c5d2cc76c505e76438e95ca"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/05-summary.txt",
+      "path": "foreground/run/05-summary.txt",
+      "bytes": 6811,
+      "sha256": "4d5bbaacb62b6ae48ac7bbf3f8a3b1aa00f596762580fd38ec1a45cf6c86e64a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/06-library-escaped.json",
+      "path": "foreground/run/06-library-escaped.json",
+      "bytes": 40367,
+      "sha256": "b061d06d0fd3630e7ab49d27b44cda7c64ae5b7955b64d2824c5befbc566d274"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/06-library-escaped.png",
+      "path": "foreground/run/06-library-escaped.png",
+      "bytes": 96181,
+      "sha256": "eaa1f09796c34acd243e67e577af6185b49f6a9ef5f8078c8ae113af3a5eaeb5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/06-summary.txt",
+      "path": "foreground/run/06-summary.txt",
+      "bytes": 5957,
+      "sha256": "c02a5a5954b0c68bed2d605c730f23653fb473f9da72c04935c097b197cbfe2c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/07-library-reopened.json",
+      "path": "foreground/run/07-library-reopened.json",
+      "bytes": 41286,
+      "sha256": "5dbbc6601090dbdea05e43ea84f4241c06d7d46f69b0a64f726d5887a90ef4cc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/07-library-reopened.png",
+      "path": "foreground/run/07-library-reopened.png",
+      "bytes": 74616,
+      "sha256": "e90decfa82fc9f5e6cd84835414b9c27e0283d19f5ba4761c2f7526ea606a8c0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/07-summary.txt",
+      "path": "foreground/run/07-summary.txt",
+      "bytes": 6134,
+      "sha256": "50723685e84d35cf6fe543e78471ac98f0cbea4fc57c76a78148c52e4655096f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/08-craft-large-portrait-setup.json",
+      "path": "foreground/run/08-craft-large-portrait-setup.json",
+      "bytes": 41120,
+      "sha256": "bf7aee93649fa47413ec1659de055f61191139cea1529afd1c6463fa5ff68036"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/08-craft-large-portrait-setup.png",
+      "path": "foreground/run/08-craft-large-portrait-setup.png",
+      "bytes": 43162,
+      "sha256": "f8cd3641f3fdbfe4ebf1b05660d309c06b5c3b8ba9ed77dc6f0a163101ca3b59"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/08-summary.txt",
+      "path": "foreground/run/08-summary.txt",
+      "bytes": 5965,
+      "sha256": "4d3a798a2b2043d86a2ad1f1ba2c653827b77707f0ec989e8a43647f902dda19"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/09-craft-large-portrait-result.json",
+      "path": "foreground/run/09-craft-large-portrait-result.json",
+      "bytes": 41381,
+      "sha256": "096514ae3673716ffe2ba7cede8890e9e06c3eb3930801c146df867be5cf66cf"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/09-craft-large-portrait-result.png",
+      "path": "foreground/run/09-craft-large-portrait-result.png",
+      "bytes": 43232,
+      "sha256": "4a6e735aeb6731f42c02caf9d0e98a8fcd4dbb9ab63ad6ea5e2ca9546f8d93a1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/09-summary.txt",
+      "path": "foreground/run/09-summary.txt",
+      "bytes": 5966,
+      "sha256": "b538280a5e6a8924a248123c0dcfad69fb4df871062d2e7b97ef8d5dafb6197b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/10-craft-large-portrait-setup-focus.json",
+      "path": "foreground/run/10-craft-large-portrait-setup-focus.json",
+      "bytes": 41132,
+      "sha256": "bcb6e273a6fab535eff80ea9509ee32fcc7fb784bc39f9a056148baac22ab9d0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/10-craft-large-portrait-setup-focus.png",
+      "path": "foreground/run/10-craft-large-portrait-setup-focus.png",
+      "bytes": 43232,
+      "sha256": "4a6e735aeb6731f42c02caf9d0e98a8fcd4dbb9ab63ad6ea5e2ca9546f8d93a1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/10-summary.txt",
+      "path": "foreground/run/10-summary.txt",
+      "bytes": 5971,
+      "sha256": "fd2992c04ff62ba324e5fb851abacf5df58de900412eee7de48ba9ada6faa96d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/11-craft-large-landscape-result.json",
+      "path": "foreground/run/11-craft-large-landscape-result.json",
+      "bytes": 41410,
+      "sha256": "28ca02c0997211459c9428c275f02e1e6187edd61b6eaade0abb561f6e4fc571"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/11-craft-large-landscape-result.png",
+      "path": "foreground/run/11-craft-large-landscape-result.png",
+      "bytes": 35766,
+      "sha256": "c8320eff08b7a7b847e64d0660293f4aad37373d8df2b32c3bdb991119062a5d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/11-summary.txt",
+      "path": "foreground/run/11-summary.txt",
+      "bytes": 5967,
+      "sha256": "02003d219242948447c27e6e35ca4713b815ad9e7c4ded9f70322160f5d683ed"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/actions.jsonl",
+      "path": "foreground/run/actions.jsonl",
+      "bytes": 40969,
+      "sha256": "85a6162484febe55fdbab68f24fbcd89842f64209efd06fef831f9915d42d827"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/capacity.jsonl",
+      "path": "foreground/run/capacity.jsonl",
+      "bytes": 12791,
+      "sha256": "2afb9227581ab3bb9c27e5d6f0c27448d12e0fb35ab8aa427d3c456ddad24884"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/close.json",
+      "path": "foreground/run/close.json",
+      "bytes": 1449,
+      "sha256": "1be511cfaa5e7ab556e476198a9dafe3c804eb2e0af2d8692a4d50beec0b12a6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/closure.json",
+      "path": "foreground/run/closure.json",
+      "bytes": 3139,
+      "sha256": "dd6660bcca6a8cb9a2179819e4e9e19f2048f65bd9a83a2dec8fa21b093d50f8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/craft-busy-original-observations.json",
+      "path": "foreground/run/craft-busy-original-observations.json",
+      "bytes": 94644,
+      "sha256": "b341eddbe6f59820cc283c754f1eef1a31faaeabddc04b36ea8a31b894b278e3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/craft-stacking-state.json",
+      "path": "foreground/run/craft-stacking-state.json",
+      "bytes": 638,
+      "sha256": "1c13b5442dca3c2d2758bfd695685104cfe8d896fc3c502f5bd6cde5307df426"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/downloads/revealline-complete-backup.json",
+      "path": "foreground/run/downloads/revealline-complete-backup.json",
+      "bytes": 795,
+      "sha256": "5f43a2696deb2e5968fefa10464acd68faa9c77b6736e7b3e30942f411cd2e07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/exit.json",
+      "path": "foreground/run/exit.json",
+      "bytes": 289,
+      "sha256": "3bc30a46216baae75e314451731872eccb21983acc967505e95d83eeaa7d5f6a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/foreground-checks.jsonl",
+      "path": "foreground/run/foreground-checks.jsonl",
+      "bytes": 162127,
+      "sha256": "78b5a3d1b58591bfef7040fb33a3997515938a9a3ed2dd7b7c733b0a9ecc8503"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/launch.json",
+      "path": "foreground/run/launch.json",
+      "bytes": 1858,
+      "sha256": "4c1aa61ff5861323b6937100c84f5d17cf79733b342b715e78c72e96f4483200"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/library-busy-original-observations.json",
+      "path": "foreground/run/library-busy-original-observations.json",
+      "bytes": 141734,
+      "sha256": "477bdb433ecc735c3c9f35f677ea031fb437351c2f2253d2eb6041e29c71324a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/native-events.jsonl",
+      "path": "foreground/run/native-events.jsonl",
+      "bytes": 484262,
+      "sha256": "47f5d67a13182875e595d299b5c93a1ff131b1f40b52762a40b14db83bdce7eb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/observed-targets.json",
+      "path": "foreground/run/observed-targets.json",
+      "bytes": 1665,
+      "sha256": "d620a21eab727a9519b5cb78c5662f8820a8cc9c0192962c1a48778f91ba0183"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/owned-target.json",
+      "path": "foreground/run/owned-target.json",
+      "bytes": 343,
+      "sha256": "00547811cfbe64114d680154137662ec37fe2d95ba6d8611199bc93612bbccbc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/review.json",
+      "path": "foreground/run/review.json",
+      "bytes": 8341,
+      "sha256": "71b6cb2ac295adbd5139ccfbc9d51c219998702b7c5ab89e0444c148f3511347"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/review.md",
+      "path": "foreground/run/review.md",
+      "bytes": 1345,
+      "sha256": "9c0d0165c9dedf3a394fc82ee75464df7cad49be4543e352a36c160799401246"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/screenshot-origins.jsonl",
+      "path": "foreground/run/screenshot-origins.jsonl",
+      "bytes": 2597,
+      "sha256": "96fb0476eb4d84dc5988e10719478aca27c7a014a34934343b7322c133b54c38"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/server.json",
+      "path": "foreground/run/server.json",
+      "bytes": 2908,
+      "sha256": "c662f0ceb017bbdfdac4fbbc0d617c37109a77883f660d436d59ce7d1d09f2d1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/serve-current-source.mjs",
+      "path": "foreground/serve-current-source.mjs",
+      "bytes": 1314,
+      "sha256": "1fe898fa4fe0b237b85c041cfd9fda991955b739adcb5de366d0895ac183dbb1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/syntax-receipt.json",
+      "path": "foreground/syntax-receipt.json",
+      "bytes": 812,
+      "sha256": "a56b61a1ac19d5b5f80969ce2fbc31e4fab5e8774066a731ab7c17333945e4b3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/transfer-recovery-plan.md",
+      "path": "foreground/transfer-recovery-plan.md",
+      "bytes": 4854,
+      "sha256": "8cc39527525e637584a08a6840bd550d9aaab16fbf0ea01fedd358537266bcda"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/library-rail-r3-foreground-preparation/run/evidence-manifest.json",
+      "path": "foreground/evidence-manifest.json",
+      "bytes": 11839,
+      "sha256": "eeb5e6f48e4314f98c315ca0b4d38a9c6bb1da13ec502744f773809423ea51a6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/001-snapshot.json",
+      "path": "public-interface/001-snapshot.json",
+      "bytes": 561,
+      "sha256": "9d6fb2ca6549c00b9ae9abbe7f2b8885450f8a0f85600e808974c29e2e60e3a3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/002-snapshot.json",
+      "path": "public-interface/002-snapshot.json",
+      "bytes": 557,
+      "sha256": "087af665d5c28dc0cb9051958a4c5854a471c45029ebdf520589419a7ce091b3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/003-title-state.json",
+      "path": "public-interface/003-title-state.json",
+      "bytes": 21938,
+      "sha256": "f164f4ae1f22f24ceeb564870a9d3a6498a239315063e19473fbeb64e6b1b199"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/004-missions.json",
+      "path": "public-interface/004-missions.json",
+      "bytes": 253,
+      "sha256": "f505166da2fad7a9e7fa248c54ac6e66daa12b1f6308633a173bf083a5a06c80"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/005-missions-snapshot.json",
+      "path": "public-interface/005-missions-snapshot.json",
+      "bytes": 1796,
+      "sha256": "49b6f25216cbc5141b4d270df45204c115db6d7a37de664cba49f9ff36e610fa"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/006-desktop.json",
+      "path": "public-interface/006-desktop.json",
+      "bytes": 279,
+      "sha256": "07779b398d633a3f8e25d99c0ff92cf4e281bbabec1d771a50bd261529146e28"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/007-setup.json",
+      "path": "public-interface/007-setup.json",
+      "bytes": 253,
+      "sha256": "c3fb82a365111dd24423b7d723fc886bc14d097f3d0608a03dff81be98129bfd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/008-setup-snapshot.json",
+      "path": "public-interface/008-setup-snapshot.json",
+      "bytes": 6528,
+      "sha256": "c8bb6a9a177b232f1780ec9f4df90139b5f545018f914b28c25e0673a5116a79"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/009-setup-state.json",
+      "path": "public-interface/009-setup-state.json",
+      "bytes": 54318,
+      "sha256": "e8441f13571f461ffc66ab57e3a1246197a172e31c4a971949188b38a14f3dd6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/010-entry-checkpoint.json",
+      "path": "public-interface/010-entry-checkpoint.json",
+      "bytes": 1030,
+      "sha256": "67a9033fafbfe4a53193d0a310215950f8ced26b14509f4764e3cc504833c3fa"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/011-ukraine.json",
+      "path": "public-interface/011-ukraine.json",
+      "bytes": 283,
+      "sha256": "ac580b120627e4154fa8821afe4a3583e724da7d61bcebd60440ffadd03cb708"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/012-ukraine-state.json",
+      "path": "public-interface/012-ukraine-state.json",
+      "bytes": 57025,
+      "sha256": "f13f6d62a0d2f8080abde19dd10cb30d62f2e8ec5f6bb9c6a0cf0f3edbd8a3ce"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/013-ukraine-snapshot.json",
+      "path": "public-interface/013-ukraine-snapshot.json",
+      "bytes": 6528,
+      "sha256": "3a053c155d110008fcfd394513478fc22103f9d7b572da5d362515378d1e1226"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/014-ukraine-value.json",
+      "path": "public-interface/014-ukraine-value.json",
+      "bytes": 270,
+      "sha256": "d2228243a95d31c9675d6b8d05d6c8e757e0428b472be077b634d96b0f32ea3d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/015-world-after.json",
+      "path": "public-interface/015-world-after.json",
+      "bytes": 57058,
+      "sha256": "6deece00a5fb8986b8f37a7fe87366ef3c04ba4c8226c2cdd48d3c52ce1f1a7f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/016-world-shot.json",
+      "path": "public-interface/016-world-shot.json",
+      "bytes": 611,
+      "sha256": "256ee220b2ea53e053197b5586041b67035cb6261646babc577c9d9e90134419"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/016-world.png",
+      "path": "public-interface/016-world.png",
+      "bytes": 58490,
+      "sha256": "7c25f0cc47a499449284c8b28444b5a57c41e31fcea614b2df7be4ae6ca2d3dd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/017-world-snapshot.json",
+      "path": "public-interface/017-world-snapshot.json",
+      "bytes": 6536,
+      "sha256": "cd8d1c41e162235d9d53196db4d4e5b5468946181e4add4fe1b412a8910384df"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/018-class-native-click.json",
+      "path": "public-interface/018-class-native-click.json",
+      "bytes": 254,
+      "sha256": "048a85d18028e46da078855977106d9917d9903b4a55944c799038b908160237"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/019-class-native-escape.json",
+      "path": "public-interface/019-class-native-escape.json",
+      "bytes": 256,
+      "sha256": "d114093001de6b244da56262b56732a2ec15f6aef6d1da0845d96bada7a2df06"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/020-class-value.json",
+      "path": "public-interface/020-class-value.json",
+      "bytes": 274,
+      "sha256": "5bd8e87db7f7bb07598d628bad91f770e747155459141a948c113f75e381f7c3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/021-class-state.json",
+      "path": "public-interface/021-class-state.json",
+      "bytes": 23699,
+      "sha256": "81a327b8eaced504c100f0855514465605c0fedd1a121e657c5c34a717a7d2b3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/022-class-shot.json",
+      "path": "public-interface/022-class-shot.json",
+      "bytes": 611,
+      "sha256": "9e540522031c6d31f0123f1911f19a9452e0f7598fc20a5a59017dd686dbdcfa"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/022-class.png",
+      "path": "public-interface/022-class.png",
+      "bytes": 211954,
+      "sha256": "bfa58b7a93e86d3f9a92fbc8130980f4003de88a307323f03c8c503bd5a28ddc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/023-owned-front.json",
+      "path": "public-interface/023-owned-front.json",
+      "bytes": 454,
+      "sha256": "86b0ed80ca0000248a5c8ab316bcfca7c31bf62a8c17780b7579bba5076cd4de"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/024-visible-home.json",
+      "path": "public-interface/024-visible-home.json",
+      "bytes": 557,
+      "sha256": "a41d923730a6bc45752940bca3fe0ec215c2ba81de09985b250e49f6bf921225"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/025-reopen-missions.json",
+      "path": "public-interface/025-reopen-missions.json",
+      "bytes": 261,
+      "sha256": "ebae5a3eb18927f2d8e748af97f814644fee3ac9c7b9915c7010233fdcc3e9dd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/026-reopen-setup.json",
+      "path": "public-interface/026-reopen-setup.json",
+      "bytes": 264,
+      "sha256": "ce20bfb72ea0115b704361b26f3646293b523ca69eb03632d45c5620244b46e7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/027-select-fpv.json",
+      "path": "public-interface/027-select-fpv.json",
+      "bytes": 275,
+      "sha256": "2c3a866d003066268fec8101ce282751f7e47c73ab04990a98629bc52bfabb82"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/028-scroll-craft.json",
+      "path": "public-interface/028-scroll-craft.json",
+      "bytes": 307,
+      "sha256": "8a0917147029409420efb14857bcd3438ba4c7f1ca591089779cfccaf4ca0328"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/029-visible-craft-state.json",
+      "path": "public-interface/029-visible-craft-state.json",
+      "bytes": 56957,
+      "sha256": "7183e2a6e049f323b38574edb870f3c6b02ff9a29eb32b9a3e66ed6a012d12fe"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/030-scout.json",
+      "path": "public-interface/030-scout.json",
+      "bytes": 277,
+      "sha256": "315e76952be43f7d8a98ffc676d53b0ff8e4d29d0a4e3cc71796e68c38efd7cd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/031-body.json",
+      "path": "public-interface/031-body.json",
+      "bytes": 281,
+      "sha256": "feecbf3e31607c34f7a449493b71a4ab919be8007637b12c1bc215f3e2a52bac"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/032-craft-changed.json",
+      "path": "public-interface/032-craft-changed.json",
+      "bytes": 56868,
+      "sha256": "b31e60f6af8f234436d34622ed367e1393a7f4134917939a1c5ddafb5409aa57"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/033-craft-shot.json",
+      "path": "public-interface/033-craft-shot.json",
+      "bytes": 611,
+      "sha256": "ecb1c85babf45c683f5646b33ea5acdc4ae499bf3d773455ddd29f3c29fe7084"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/033-craft.png",
+      "path": "public-interface/033-craft.png",
+      "bytes": 60090,
+      "sha256": "9ea68d36f77417cf9bd149c9c8f69cc015998882f8610079135c683671702216"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/034-craft-terminal.json",
+      "path": "public-interface/034-craft-terminal.json",
+      "bytes": 56787,
+      "sha256": "e864f58accfb53f6b4d93081990b728c220e8afb48460ff51f99c5d6579e6723"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/035-craft-parent.json",
+      "path": "public-interface/035-craft-parent.json",
+      "bytes": 1352,
+      "sha256": "c748b998012a5c467c92c254d5c33b1431d92b9cc08d871db162492224eb3d04"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/036-setup-back.json",
+      "path": "public-interface/036-setup-back.json",
+      "bytes": 270,
+      "sha256": "7a7f6bb8a746037395e0ed3fd6725492f5b3841a9f705e4614dc3b21b7a00908"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/037-workshop.json",
+      "path": "public-interface/037-workshop.json",
+      "bytes": 265,
+      "sha256": "91efedf2fa250c4a6155b0e5ae6bc5cf71e73456c8b83259626f386c13321b54"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/038-workshop-snapshot.json",
+      "path": "public-interface/038-workshop-snapshot.json",
+      "bytes": 976,
+      "sha256": "8d103f6881a735d4a35b77ba9e12b8e984689813a7b26b6a5f3eb7478b550943"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/039-help.json",
+      "path": "public-interface/039-help.json",
+      "bytes": 254,
+      "sha256": "5c8be7fdb6fae9e401d7fc46a728e003ee8505de472e98316b4837112e017e2a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/040-help-snapshot.json",
+      "path": "public-interface/040-help-snapshot.json",
+      "bytes": 560,
+      "sha256": "945a75fa9dc41dc0734f72044be9bef5789fc9a824c1a5f1158aa73879ad67c4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/041-before-first-flight.json",
+      "path": "public-interface/041-before-first-flight.json",
+      "bytes": 23216,
+      "sha256": "356b9e16f9eb0b0aa1b89d5d8e8aa64ba4daf7c8efdcc00831ebada8968d582f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/042-first-flight-enter.json",
+      "path": "public-interface/042-first-flight-enter.json",
+      "bytes": 417,
+      "sha256": "28d35105aa40c35dbb53aa91fee08085873a35af36d2a92f97b73cff1313dc1f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/043-first-flight-entry.json",
+      "path": "public-interface/043-first-flight-entry.json",
+      "bytes": 10898,
+      "sha256": "d331b731f5a86bfd88b558ffd52a856918751a408db4806a1b393b6ca4f23be6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/044-first-flight-snapshot.json",
+      "path": "public-interface/044-first-flight-snapshot.json",
+      "bytes": 674,
+      "sha256": "63f6e3c0b4c03deb50b6e9e33d4aa9ed87f909a8fc0b28a2a042ff8a1fb67cb2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/045-first-flight-ready.json",
+      "path": "public-interface/045-first-flight-ready.json",
+      "bytes": 1630,
+      "sha256": "c2dffb8b2edfea4f2d50b48e872fbbb4a3c3af27045f9fd02c1790cd20139359"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/046-first-flight-ready-state.json",
+      "path": "public-interface/046-first-flight-ready-state.json",
+      "bytes": 19083,
+      "sha256": "c940407e22db2393565d91c5a779f89eb133bab31faaed3c9849391d4dde7030"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/047-start-lesson.json",
+      "path": "public-interface/047-start-lesson.json",
+      "bytes": 478,
+      "sha256": "e1e09d0bcabcbdd9652a795c07b9d28bff7ea2cc20315743051b9019756972f3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/048-lesson-playing.json",
+      "path": "public-interface/048-lesson-playing.json",
+      "bytes": 19081,
+      "sha256": "3affc91740281701208c8db91551e5bd8b6565bca38fb38e03906ac9f08da195"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/049-lesson-playing-shot.json",
+      "path": "public-interface/049-lesson-playing-shot.json",
+      "bytes": 853,
+      "sha256": "efa2ce3f6bfa371f7f614c33bd504784cd91193584197ddd9980475581f54c94"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/049-lesson-playing.png",
+      "path": "public-interface/049-lesson-playing.png",
+      "bytes": 34897,
+      "sha256": "2f3bddf5cfc72f42c045eadceb479d532db9633423c10e81ce76d9a42849bc8e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/050-return-game.json",
+      "path": "public-interface/050-return-game.json",
+      "bytes": 492,
+      "sha256": "fb412ad9679b5290b98856ce41dc647330b3d40e55697c042297933982dabcfa"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/051-game-return-state.json",
+      "path": "public-interface/051-game-return-state.json",
+      "bytes": 19070,
+      "sha256": "1b439ad2e38958934e6cf37308ea81bed955268a4f012c271363371b73ad9ed1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/052-return-observe.json",
+      "path": "public-interface/052-return-observe.json",
+      "bytes": 1348,
+      "sha256": "99f601c57a7a749b20e9f7ffb03f4dde7ae9337907326c95fc52bad53c7c0765"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/053-course-scroll.json",
+      "path": "public-interface/053-course-scroll.json",
+      "bytes": 490,
+      "sha256": "45afbc5bb4be869e4e95ec8ec8456052d30894822c360d155de30d22c6907065"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/054-course-scroll-state.json",
+      "path": "public-interface/054-course-scroll-state.json",
+      "bytes": 19124,
+      "sha256": "c76d9db0bf2f1ced9b18844886d5b97b6d5a25acae9426224bb2941251f5f605"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/055-course-layout.json",
+      "path": "public-interface/055-course-layout.json",
+      "bytes": 2437,
+      "sha256": "5f48195119dcbccea8f4b910a1f705930e1c4dfe85153dbcef1fec728e5855de"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/056-return-visible.json",
+      "path": "public-interface/056-return-visible.json",
+      "bytes": 492,
+      "sha256": "9108d7e7d3af8d90177b98f68e1e1b77c4c1521778859479af337b399a3f1302"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/057-return-visible-state.json",
+      "path": "public-interface/057-return-visible-state.json",
+      "bytes": 23566,
+      "sha256": "159e18bbebfe1df876e646a2b3800906b31e3b595d20fef534909fd7cebf4b3d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/058-workshop-repeat.json",
+      "path": "public-interface/058-workshop-repeat.json",
+      "bytes": 429,
+      "sha256": "21a485449a6674cda62ca58e2c2638fefcba243fcf192e3ab430fde672b6c06a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/059-workshop-repeat-snapshot.json",
+      "path": "public-interface/059-workshop-repeat-snapshot.json",
+      "bytes": 1140,
+      "sha256": "5612ac5bc8d8e288fc848e6ad6d924b30e59aa880775e6a3b7d889e9d1f1e255"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/060-help-repeat.json",
+      "path": "public-interface/060-help-repeat.json",
+      "bytes": 418,
+      "sha256": "6c65d99e907b58d17556b13958948a7738e6790591fff2782e0e2f406afec311"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/061-help-repeat-snapshot.json",
+      "path": "public-interface/061-help-repeat-snapshot.json",
+      "bytes": 724,
+      "sha256": "d25ad67c2222b2d5f9c1299ab29a116d0ca0976a9fca20938a14f5f07e6f66f2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/062-course-cached.json",
+      "path": "public-interface/062-course-cached.json",
+      "bytes": 417,
+      "sha256": "ac2d8149eada2c9ba5be83dc7168dcb1406efb6318d947ae59553fd6f7792e51"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/063-cached-course-entry.json",
+      "path": "public-interface/063-cached-course-entry.json",
+      "bytes": 10898,
+      "sha256": "5e0d408c8bfbda39615d6f3fc9f6f3eb5aa0d07c1ab0257c56fd6c089213c672"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/064-cached-course-scroll.json",
+      "path": "public-interface/064-cached-course-scroll.json",
+      "bytes": 490,
+      "sha256": "3c83d7d7f3efb8e520a4bc20e0728996a5b8dd05b515c5cd1d3c6f0b74eca237"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/065-cached-exit-visible.json",
+      "path": "public-interface/065-cached-exit-visible.json",
+      "bytes": 19133,
+      "sha256": "e49039a256c890a24382ddc8b3db47ce876d35e591d1c6104871df1ae5a1a3d8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/066-cached-return.json",
+      "path": "public-interface/066-cached-return.json",
+      "bytes": 492,
+      "sha256": "c3a427276812c7b19707d8f18aa6687645b1f90338d53cb7bc7b65441c088879"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/067-cached-return-state.json",
+      "path": "public-interface/067-cached-return-state.json",
+      "bytes": 19121,
+      "sha256": "1d602acd18edc20378fd3213ef36e471a6e7ee3b3ba209fb8cc592c179c9524f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/068-cached-course-scroll-ready.json",
+      "path": "public-interface/068-cached-course-scroll-ready.json",
+      "bytes": 490,
+      "sha256": "ff1d0b03050635164cacb3e683f2f1daf5967489bce845e2fd1ef7435669aa07"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/069-cached-exit-layout.json",
+      "path": "public-interface/069-cached-exit-layout.json",
+      "bytes": 19121,
+      "sha256": "1fd7c4274b2e5847bb4cd0a2bcf938f44e6ea8f74aa05b05a7481b25e13130a8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/070-cached-return-visible.json",
+      "path": "public-interface/070-cached-return-visible.json",
+      "bytes": 492,
+      "sha256": "7b8ad373858fbdfe9ce59ad12629420bdd8ca083c7b3726095b3207dbf3c0c25"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/071-cached-return-final.json",
+      "path": "public-interface/071-cached-return-final.json",
+      "bytes": 19121,
+      "sha256": "7badc8b136278d2df2a100ae1ec9648b2a70f99367fcc1d2285bf6effaee6048"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/072-cached-course-shot.json",
+      "path": "public-interface/072-cached-course-shot.json",
+      "bytes": 851,
+      "sha256": "e8d3797f4e059bf9eae848876444466efd25b854b3e73b35f5f85a41a14eb879"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/072-cached-course.png",
+      "path": "public-interface/072-cached-course.png",
+      "bytes": 34977,
+      "sha256": "d32203391cd4f86197eb4efe73320fd3cad3e24c56c69c7d9b7690049643ba60"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/073-start-cached-lesson.json",
+      "path": "public-interface/073-start-cached-lesson.json",
+      "bytes": 487,
+      "sha256": "cec64c793161ee4e2e52a7a83fb824ad3b2c8b5ebd167a1540dd9a539f39ca3e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/074-cached-playing-exit.json",
+      "path": "public-interface/074-cached-playing-exit.json",
+      "bytes": 19097,
+      "sha256": "234ba8f342650c22892ab80c1fc6ca3b9a1260a871e5a3bb033f50321eabf324"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/075-cached-exit-scroll.json",
+      "path": "public-interface/075-cached-exit-scroll.json",
+      "bytes": 490,
+      "sha256": "339c1fcf71e030be70e7eba643b774f65917ffa50a896c93c73b0d22144f790f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/076-cached-exit-ready.json",
+      "path": "public-interface/076-cached-exit-ready.json",
+      "bytes": 19135,
+      "sha256": "74acde47a1ed4a4450b7fee5d6b4c99042bc2298de6f200677a9e1dfee7e4268"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/077-cached-return-running.json",
+      "path": "public-interface/077-cached-return-running.json",
+      "bytes": 492,
+      "sha256": "1cb820e6fb4880a6af479256628ad5b4dc0089af46880c8df5f7f2aa4f8f5ebb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/078-cached-game-restored.json",
+      "path": "public-interface/078-cached-game-restored.json",
+      "bytes": 10838,
+      "sha256": "edf3be23e51b59efa138176cf9563b575298f7b30ccd17e934a6bd0713f3d9ba"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/079-checkpoint.json",
+      "path": "public-interface/079-checkpoint.json",
+      "bytes": 1034,
+      "sha256": "7cfebb7663e62260bb1a335d970788b463fc9bf0ca5dac21f8e250c12c4a18f1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/080-settings.json",
+      "path": "public-interface/080-settings.json",
+      "bytes": 428,
+      "sha256": "040426ce351e66464f7697401582e57e9613b5fc07c0cda439828d6dec5421e9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/081-game-data.json",
+      "path": "public-interface/081-game-data.json",
+      "bytes": 432,
+      "sha256": "d5b8ce046362f03b13dd2f04ab4b34d7dec85b2b43634df40dbec5b74be22246"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/082-game-data-snapshot.json",
+      "path": "public-interface/082-game-data-snapshot.json",
+      "bytes": 950,
+      "sha256": "f8a8b86dc368435b0d2a2f195fb824a8c624bd8c44faaac2269a1a25ee010749"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/083-retention-request.json",
+      "path": "public-interface/083-retention-request.json",
+      "bytes": 418,
+      "sha256": "facf1fb64aed0b3848efe128325ccf8641b0f7bc25d8153982a23acf7d0b91e2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/084-retention-result.json",
+      "path": "public-interface/084-retention-result.json",
+      "bytes": 30038,
+      "sha256": "1abb1502c406ab93e0714a28e1a41d31effafb68338fb8a41f307c947184195a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/085-retention-shot.json",
+      "path": "public-interface/085-retention-shot.json",
+      "bytes": 783,
+      "sha256": "cadb7bd5024a12ddad759543f6e83d4fafdd30f49cbca339936799538f081a2b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/085-retention.png",
+      "path": "public-interface/085-retention.png",
+      "bytes": 120213,
+      "sha256": "76454aeedad9a7b3a9d83a96ceb2ccf6df3a371dfc75dc063518220fa97a84cf"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/086-audio-settings.json",
+      "path": "public-interface/086-audio-settings.json",
+      "bytes": 433,
+      "sha256": "0f8cbe14abf552c348eab0682bf495e094450c1ac1f53022a2bc853f97a1bad4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/087-audio-snapshot.json",
+      "path": "public-interface/087-audio-snapshot.json",
+      "bytes": 927,
+      "sha256": "76d5b8c8ee1406d2718ff2edd66e1e65243e97008d0a73705dbec1c22eafd2fb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/088-music-play.json",
+      "path": "public-interface/088-music-play.json",
+      "bytes": 417,
+      "sha256": "0b7bb623458cd14f73c4f7d2801c1a8cf4f6f13e23204a58120bb070c3ec22a7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/089-music-immediate.json",
+      "path": "public-interface/089-music-immediate.json",
+      "bytes": 29389,
+      "sha256": "cd86f37d798a3e1aa999582cbef013760f1da761ead4c8e2047b1a9872fee990"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/090-music-current.json",
+      "path": "public-interface/090-music-current.json",
+      "bytes": 923,
+      "sha256": "3a7ae460b3ceca764aac72bc435f88c65736883c628c3273b294b787eafd2228"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/091-music-stop.json",
+      "path": "public-interface/091-music-stop.json",
+      "bytes": 417,
+      "sha256": "412cb494eb3ba9ba057af9b5891ef5c687b1e6b81be82160c34f3c52300dc061"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/092-music-stop-state.json",
+      "path": "public-interface/092-music-stop-state.json",
+      "bytes": 29387,
+      "sha256": "2dcf5680429a42a22a2fd28833145e37651e616ee99ce71e4cdda524dabaeaa4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/093-music-library.json",
+      "path": "public-interface/093-music-library.json",
+      "bytes": 430,
+      "sha256": "3a4b82e53989e469c1dfc0d1ba68cc6c457e1d953b756f96bafa5c7951059f2d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/094-library-snapshot.json",
+      "path": "public-interface/094-library-snapshot.json",
+      "bytes": 5506,
+      "sha256": "87c7ab39466ba9116a6caf81850225d081af2d633c825f21e5797bf49ed27982"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/095-studio-select-observe.json",
+      "path": "public-interface/095-studio-select-observe.json",
+      "bytes": 9362,
+      "sha256": "472ef807a0d0163b36d49974639491dff68bd63591120e0bec1758adcff6777f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/096-playlist-change.json",
+      "path": "public-interface/096-playlist-change.json",
+      "bytes": 465,
+      "sha256": "c2001ef4d69e21e1d18bb8adfec6fa42cd4c26d418a7ced00a12a688083c8888"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/097-playlist-use.json",
+      "path": "public-interface/097-playlist-use.json",
+      "bytes": 418,
+      "sha256": "93184b462f7e24bcac15f535cdde1364e335dfda43489938d7dab90935da87a9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/098-playlist-used-state.json",
+      "path": "public-interface/098-playlist-used-state.json",
+      "bytes": 56469,
+      "sha256": "18e3bd923bf1a7f7d8d38675e920491f3c3b81c6a35201884fc90b0ee1f05bc7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/099-studio-play.json",
+      "path": "public-interface/099-studio-play.json",
+      "bytes": 417,
+      "sha256": "c7c9098cd043deba8b79d7f35bc3a4aaa8d57d3d35a0d252d0bbaa3727ae6a5d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/100-studio-playing.json",
+      "path": "public-interface/100-studio-playing.json",
+      "bytes": 55981,
+      "sha256": "351c92b47712e29b019dfade4747ca28c96a857bc2f2feed81ffa8a479f7ba28"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/101-studio-pause.json",
+      "path": "public-interface/101-studio-pause.json",
+      "bytes": 431,
+      "sha256": "2531b1951f7a2ad44cdd5429c69ede2fbf59786191f86894208c394137a892bb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/102-portrait.json",
+      "path": "public-interface/102-portrait.json",
+      "bytes": 442,
+      "sha256": "7114d6b2c95e8339f5d175603e36752face127701ab84f6c0931762186c5fbe2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/103-studio-top.json",
+      "path": "public-interface/103-studio-top.json",
+      "bytes": 429,
+      "sha256": "7890248707eaf9abea61ec3bb70feff5da3922dd06058cd89ab6286f41a847a7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/104-studio-portrait-shot.json",
+      "path": "public-interface/104-studio-portrait-shot.json",
+      "bytes": 795,
+      "sha256": "af09229d3767a7ce0e6208be067c7cc492cdff8062d08cc22847d342e82ab09c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/104-studio-portrait.png",
+      "path": "public-interface/104-studio-portrait.png",
+      "bytes": 41905,
+      "sha256": "bdad4063cd7e2c9cbf1b003088bc2a1e2b5fa08555f2a69c1e03388d343ebd2d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/105-studio-portrait-state.json",
+      "path": "public-interface/105-studio-portrait-state.json",
+      "bytes": 55553,
+      "sha256": "2f7361fe5a565b1bd0d426d21b06a4e57d496227e63f2cd9c862364a3f172245"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/106-studio-status-observe.json",
+      "path": "public-interface/106-studio-status-observe.json",
+      "bytes": 5691,
+      "sha256": "4a89b2394ff9a91b5e8b6c4655ad30a6d3ac4e04ea95e0f17b94c9bbf49f03ba"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/107-studio-close.json",
+      "path": "public-interface/107-studio-close.json",
+      "bytes": 431,
+      "sha256": "6b1aa7b088f2f75b79ca6272cee46c6f98b589c9078ca482ce9e3fdf8ce4726a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/108-studio-closed.json",
+      "path": "public-interface/108-studio-closed.json",
+      "bytes": 29371,
+      "sha256": "a206f0182a0521d0ccc0b443b22bc47080867810d6549d4bbde406f4731d5a88"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/109-settings-again.json",
+      "path": "public-interface/109-settings-again.json",
+      "bytes": 428,
+      "sha256": "aba1bd07c7956887b21d8009c9ec85e9ff544822ce5c407857aa4efa08e9810d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/110-controls.json",
+      "path": "public-interface/110-controls.json",
+      "bytes": 436,
+      "sha256": "9416d45a265bd6ae8b93db5c49187af11ba5a5d287aa725345943d5046432285"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/111-controls-snapshot.json",
+      "path": "public-interface/111-controls-snapshot.json",
+      "bytes": 2060,
+      "sha256": "c601578c8d05d6542e7cdcbdb3fd5b53c530645ff2d28145eddbf5ffb649c83e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/112-controller-edit.json",
+      "path": "public-interface/112-controller-edit.json",
+      "bytes": 418,
+      "sha256": "2ffc12521f61b6b97131b8f13a5b7c26d6b333d276519e7495d52284e20523e2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/113-controller-draft-snapshot.json",
+      "path": "public-interface/113-controller-draft-snapshot.json",
+      "bytes": 2398,
+      "sha256": "f8ae8f79f8d845d2a10c91e20a0a361eede39a5027475678befa34ccfa112e42"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/114-controller-draft-state.json",
+      "path": "public-interface/114-controller-draft-state.json",
+      "bytes": 107880,
+      "sha256": "db2431a44343f3ed890f68eddea56290c30377db9c6ff9e274318970dd277d1c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/115-controller-label.json",
+      "path": "public-interface/115-controller-label.json",
+      "bytes": 464,
+      "sha256": "7e77cb4ff4e360ea65d4897e8e5b2ba9abbb403910dbc5a6cc7797bfc48cc4a2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/116-controller-scroll.json",
+      "path": "public-interface/116-controller-scroll.json",
+      "bytes": 430,
+      "sha256": "c30890ad65e85f1957bdf8625adb28e64002ad37ebb3f04eb4494894f67d5df2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/117-controller-actions-observe.json",
+      "path": "public-interface/117-controller-actions-observe.json",
+      "bytes": 2225,
+      "sha256": "76c1f3518a676be2ea9348f5e3c7ad53932a75e70fdc6215f0d761d501335986"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/118-controller-dialog-scroll.json",
+      "path": "public-interface/118-controller-dialog-scroll.json",
+      "bytes": 472,
+      "sha256": "b60efaa8f94e690de32f6b45d0c2418ef86cb798a64e82fb640d528d4c8f3ea1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/119-controller-apply-visible.json",
+      "path": "public-interface/119-controller-apply-visible.json",
+      "bytes": 105190,
+      "sha256": "bddd13fc7d793d4fb61af9d2c6d949cf06d87a75241a9415289a626d6d474635"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/120-controller-apply.json",
+      "path": "public-interface/120-controller-apply.json",
+      "bytes": 457,
+      "sha256": "7fcd9f143fa9884ab1f3a634350b565bcb6d003fe63326b9af8209e42611ede4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/121-controller-applied.json",
+      "path": "public-interface/121-controller-applied.json",
+      "bytes": 39873,
+      "sha256": "8f02147d7fdbb2893a0c48f1600cbab468c01701eac8a3493c259a57e7e2d275"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/122-controller-applied-shot.json",
+      "path": "public-interface/122-controller-applied-shot.json",
+      "bytes": 801,
+      "sha256": "39fcd532fcef462efe1ad0958801d0366d3317513660275d36a4d734f870b937"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/122-controller-applied.png",
+      "path": "public-interface/122-controller-applied.png",
+      "bytes": 79888,
+      "sha256": "adef0db345daa210c3db4c6f90f981e8e5d7f47934a58c7034364b1cdb3cd535"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/123-controller-top.json",
+      "path": "public-interface/123-controller-top.json",
+      "bytes": 471,
+      "sha256": "fc6d1f494b593264bb90c34205c81636708de433eb8650ca0afbf928cc617e3e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/124-controller-reedit.json",
+      "path": "public-interface/124-controller-reedit.json",
+      "bytes": 456,
+      "sha256": "63edc35cd5a034121851077daec5a13f5d1d9264c0b2cb32018bad38180ef959"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/125-controller-draft-ps.json",
+      "path": "public-interface/125-controller-draft-ps.json",
+      "bytes": 471,
+      "sha256": "1a9fedf4bb6f09fdbd5f6a9b50bf9c87c252fe08483a81b1d3be8eee96779d14"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/126-short-landscape.json",
+      "path": "public-interface/126-short-landscape.json",
+      "bytes": 442,
+      "sha256": "47596b0ae11440b7ef6f6e54cb9858bc39391df3747e5c24b02ca4892a094b34"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/127-controller-landscape-actions.json",
+      "path": "public-interface/127-controller-landscape-actions.json",
+      "bytes": 2127,
+      "sha256": "19269bb3f83ecfb110528932cf68f24dd214cb6186a24d6c83197bf88a6d88c8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/128-controller-landscape-scroll.json",
+      "path": "public-interface/128-controller-landscape-scroll.json",
+      "bytes": 473,
+      "sha256": "c8822034f0728315bf6932c071dde3bb8a458806a96c71c5b33285eb7beed66d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/129-controller-landscape-before-cancel.json",
+      "path": "public-interface/129-controller-landscape-before-cancel.json",
+      "bytes": 108904,
+      "sha256": "f62129c90c208368fb04dd20b8c81f417eb22e07031ae46ed9decc21c54024d7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/130-controller-cancel.json",
+      "path": "public-interface/130-controller-cancel.json",
+      "bytes": 458,
+      "sha256": "72b68c8e51ab51f8c5587f86863c387642355c98f023cad1564bf42c07cf435c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/131-controller-cancelled.json",
+      "path": "public-interface/131-controller-cancelled.json",
+      "bytes": 40142,
+      "sha256": "39916daf5dc79204afcc9a884d48cfb4cd443c79c71d9d118bec2f5f71f3794b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/132-controller-cancelled-shot.json",
+      "path": "public-interface/132-controller-cancelled-shot.json",
+      "bytes": 805,
+      "sha256": "cd344f5e4b01887a576e224273e8ee7ad8b44a3aabae5c954c95f586bf641972"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/132-controller-cancelled.png",
+      "path": "public-interface/132-controller-cancelled.png",
+      "bytes": 66436,
+      "sha256": "39392fe65a64ec18e76abbe375731037b3266f9e03c1cbfd063a9ac3f86e36a4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/133-controller-scroll-top.json",
+      "path": "public-interface/133-controller-scroll-top.json",
+      "bytes": 471,
+      "sha256": "eba938c7008763d7176d80c7b4972b95c9328acea57989714e927ea97ae9a288"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/134-settings-close-snapshot.json",
+      "path": "public-interface/134-settings-close-snapshot.json",
+      "bytes": 2060,
+      "sha256": "d63976a5a88ea4d62c426653ec3c7d03e3d81245b38eba85c286eb09a2443e13"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/135-settings-close.json",
+      "path": "public-interface/135-settings-close.json",
+      "bytes": 417,
+      "sha256": "d5eb2334bcfb237390d50f9092a696191b8eaa2bba42f181ebc9a620eb32dd4d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/136-final-title.json",
+      "path": "public-interface/136-final-title.json",
+      "bytes": 24358,
+      "sha256": "fa20d746a9918abbbc284e3cd812c37353dcbb2c3f44f5ce94c10cf27c91df65"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/137-final-checkpoint.json",
+      "path": "public-interface/137-final-checkpoint.json",
+      "bytes": 1033,
+      "sha256": "9462334cd680ca98b8cecc91924e2777386103f9e44a79a2ea636fbfdbf2bd8e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/138-browser-close.json",
+      "path": "public-interface/138-browser-close.json",
+      "bytes": 1498,
+      "sha256": "8edf54d340048652eb83fe12ce352b0fafdbb9be7c570ed1c2e57bb93a32c50c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/139-closure-verification.json",
+      "path": "public-interface/139-closure-verification.json",
+      "bytes": 307,
+      "sha256": "cebfeee429410d4f7652995b49023184d4ad0d4b2bc38104b7d6add03747f9c2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/authorization.json",
+      "path": "public-interface/authorization.json",
+      "bytes": 1539,
+      "sha256": "c94e3e132a9cb345d0a1f434b50b95b05ddfd43930521075c63dc1804d80b1d4"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/bring-owned-front.mjs",
+      "path": "public-interface/bring-owned-front.mjs",
+      "bytes": 2139,
+      "sha256": "0042b72241415b099353b9edd8c212e77794f6fe35d6aae49cf2e2ccaface6aa"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/finalize-before-http-observation.py",
+      "path": "public-interface/finalize-before-http-observation.py",
+      "bytes": 11462,
+      "sha256": "4baa8e42e39535d6e9dcc7b20fac9fcfb2ea5385aac48c2b27df52bef4f12792"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/finalize-initial-refusal.json",
+      "path": "public-interface/finalize-initial-refusal.json",
+      "bytes": 973,
+      "sha256": "c9b4c8267c07ce6b93efeec78d54c094719d6dca690c24b58abffa51ea101309"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/finalize-review.py",
+      "path": "public-interface/finalize-review.py",
+      "bytes": 11736,
+      "sha256": "ce494f3c8d757da46a80f257627f0cd308f1aa8169209623ce9cd2a666904085"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/initial-targets.json",
+      "path": "public-interface/initial-targets.json",
+      "bytes": 2535,
+      "sha256": "b57541e9458e61f302a38bfe77ca8b6a2acb43c456fe2db7025ececf3631708f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/isolation-chronology.json",
+      "path": "public-interface/isolation-chronology.json",
+      "bytes": 4738,
+      "sha256": "4cd557e6aba6b35a0961e556f21b757d18a85df902c28af6332ae60bab0865cd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/launch-helper-provenance.json",
+      "path": "public-interface/launch-helper-provenance.json",
+      "bytes": 777,
+      "sha256": "c9166cf36232c736eb69e8a7c29b0b0cd615fc1b83fbd5e2e98096d93a2835d0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/measure-interface-before-visibility.js",
+      "path": "public-interface/measure-interface-before-visibility.js",
+      "bytes": 2531,
+      "sha256": "864385ec82360d6f85d166b518ba138c4cfbf4e9bae690b0eebe397bab4d7246"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/measure-interface.js",
+      "path": "public-interface/measure-interface.js",
+      "bytes": 2601,
+      "sha256": "f2d1f905158323c7af94bf966e60431f5cd8b5e7d92c83be9718408c5de63417"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/measure.py",
+      "path": "public-interface/measure.py",
+      "bytes": 781,
+      "sha256": "8c554d4c231e4c1dcc201aa91aa9be4d41365c5019e3e0923d5583a48bb5c426"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/online-1-capacity.jsonl",
+      "path": "public-interface/online-1-capacity.jsonl",
+      "bytes": 56925,
+      "sha256": "2b2ef4ac0def7272101e77621959f5bef4857e039ea9d68aaa354fcb47cd0098"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/online-1-cdp.jsonl",
+      "path": "public-interface/online-1-cdp.jsonl",
+      "bytes": 1160298,
+      "sha256": "f5e5df0f78f67a7d656d809e312edf03aa0069f8051b1d11b8df193f23ba9b8b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/online-1-cdp.jsonl.health.json",
+      "path": "public-interface/online-1-cdp.jsonl.health.json",
+      "bytes": 579,
+      "sha256": "2f1fcba1cf53062918399620fc5d1b412dc8fabbd0d31071b943f5622518bc58"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/online-1-exit.json",
+      "path": "public-interface/online-1-exit.json",
+      "bytes": 109,
+      "sha256": "aeb23b0a101f3fb5aa8c573efc6dbd3884293f2a50463d93dfea13401a147411"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/online-1-launch.json",
+      "path": "public-interface/online-1-launch.json",
+      "bytes": 2121,
+      "sha256": "82f05ce85ecbf4b19b6f73da4e80e341ffec3c051361c61570766ebfa9e3dee2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/review.json",
+      "path": "public-interface/review.json",
+      "bytes": 11048,
+      "sha256": "d96ecaafe1f65e41d790c0e5b05b80ea43d97a75675ce828f1e267652fa5011d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/review.md",
+      "path": "public-interface/review.md",
+      "bytes": 1635,
+      "sha256": "9e21523c5852f146972af265237456d5b6d6f7e42b7346100a76ca5a431d5f1f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/step-before-path-correction.py",
+      "path": "public-interface/step-before-path-correction.py",
+      "bytes": 830,
+      "sha256": "2a64d3fd9334ccb9a6cfe9782bc682eb50f5561e42d0e5b0c0628951cc12a7b1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/step-before-visible-guard.py",
+      "path": "public-interface/step-before-visible-guard.py",
+      "bytes": 830,
+      "sha256": "e96fb0b9405c45b6015f72168cbdc3b616aa3f02e60b440e6a815ddaa40b89a1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/step.py",
+      "path": "public-interface/step.py",
+      "bytes": 1394,
+      "sha256": "6ff8aaf1a24edf9744f802be4052b3548bfedfb53fd8b6e75563e05dea1d89d8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/manifest.json",
+      "path": "public-interface/manifest.json",
+      "bytes": 53615,
+      "sha256": "33a4bf8c47ebcb4d2b82212cdfb5fe0545b5c116e7eecbd8d33eb334c05be6f0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focused-initial.log",
+      "path": "candidate-checks/focused-initial.log",
+      "bytes": 11997,
+      "sha256": "d2e9600a78d5787c11a71468b8d1d9ff476e28e99d70ff43816b4f846a97b1e7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focused-initial.json",
+      "path": "candidate-checks/focused-initial.json",
+      "bytes": 393,
+      "sha256": "b815f981181bebd180485b3552e6781f3fc57dc0eddddc4c36a3832b1d50688f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/host-regression.log",
+      "path": "candidate-checks/host-regression.log",
+      "bytes": 28059,
+      "sha256": "5cae269100e3bc8bd2f9b8a0592b8477c11aa00be52a60c3310ce3e180bb235a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/host-regression.json",
+      "path": "candidate-checks/host-regression.json",
+      "bytes": 491,
+      "sha256": "01b35df41b0e694e2e5da7138f89ae5a41e386f0f1f0ff047f0684c4c2f5449b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/gallery-fixture-correction.log",
+      "path": "candidate-checks/gallery-fixture-correction.log",
+      "bytes": 9566,
+      "sha256": "e662cfb0675eee33ae1cb345f0ceceb6493e78f1893c6df9c7d4539f13f1046a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/gallery-fixture-correction.json",
+      "path": "candidate-checks/gallery-fixture-correction.json",
+      "bytes": 301,
+      "sha256": "91b0dd0f5938963beb3e734e7e40cf773e11634267dabf5401a03f4946892d32"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/fixture-preservation.json",
+      "path": "candidate-checks/fixture-preservation.json",
+      "bytes": 770,
+      "sha256": "7b54f772b77f69899cad705584dabe8a9e784ade0afb66ac4534b1491094bd18"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-layout-initial.log",
+      "path": "candidate-checks/focus-layout-initial.log",
+      "bytes": 16367,
+      "sha256": "f0c0e10f0f35a93cb6281146dd3122a20f3caac5063be869f78ec504b87fd930"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-layout-initial.json",
+      "path": "candidate-checks/focus-layout-initial.json",
+      "bytes": 348,
+      "sha256": "abea4098c3f8fb2f1ed8f33cc42dcde71289fca7bdedc3faba22f5cad5973ddb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-layout-corrected.log",
+      "path": "candidate-checks/focus-layout-corrected.log",
+      "bytes": 15738,
+      "sha256": "0aff8a961fce5a8a78924f3a9ee42c07b1901876e38647105092b4fa878a3d1f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-layout-corrected.json",
+      "path": "candidate-checks/focus-layout-corrected.json",
+      "bytes": 348,
+      "sha256": "e425472c65294957863a395850a51e5b1ac3fc5c0d5a566acecd4814917b0103"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-layout-clamped.log",
+      "path": "candidate-checks/focus-layout-clamped.log",
+      "bytes": 15982,
+      "sha256": "3fa847cee6a4057a57933472cf49aa8191326ca5bae0ccea2060f898c38f57b7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-layout-clamped.json",
+      "path": "candidate-checks/focus-layout-clamped.json",
+      "bytes": 349,
+      "sha256": "8a5c71aa8baf8698c411104449ef6c4459b81181281a43ad9487d4416cd50f87"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/craft-placement-initial.log",
+      "path": "candidate-checks/craft-placement-initial.log",
+      "bytes": 14170,
+      "sha256": "57a0e8e40eeb39063f1671fea4d740e286af994c7105ac49e0e72d09e9e697bd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/craft-placement-initial.json",
+      "path": "candidate-checks/craft-placement-initial.json",
+      "bytes": 413,
+      "sha256": "246e5e78e8f1241db43be20529dba1e1a587ea2c7febabf1ff558b732ab383eb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/craft-heading-corrected.log",
+      "path": "candidate-checks/craft-heading-corrected.log",
+      "bytes": 14165,
+      "sha256": "26f06b00426bb05f3ee99e56eaa2c55d86bc9a93d663505ea1c653daf71b2403"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/craft-heading-corrected.json",
+      "path": "candidate-checks/craft-heading-corrected.json",
+      "bytes": 413,
+      "sha256": "d6dcaa2ef30b5b90c3196ed3b513b91bef56d7e7df509fccffd74b781c665203"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/candidate-production-checks.json",
+      "path": "candidate-checks/candidate-production-checks.json",
+      "bytes": 799,
+      "sha256": "850098e247471a4db0a3e9031b65f663afbba7b7d5f19c20b7d3cc0d971ca5ea"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-reproduction-candidate.log",
+      "path": "candidate-checks/production-reproduction-candidate.log",
+      "bytes": 78,
+      "sha256": "b70ef2da8610a3b1c5f2431c6e8b5d9897804686d20658c5794160df0a867798"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-readiness-candidate.log",
+      "path": "candidate-checks/production-readiness-candidate.log",
+      "bytes": 673,
+      "sha256": "f1220579d0d08d0402a58566ce3d2c628d0af86e1c3c43f5438f31d5be61a3c0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-adoption.json",
+      "path": "candidate-checks/production-adoption.json",
+      "bytes": 359,
+      "sha256": "dcdae536cb60df247098bd1e079ac53f52bac63e17c6925a683bc1bba903d31a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-adoption.log",
+      "path": "candidate-checks/production-adoption.log",
+      "bytes": 246,
+      "sha256": "c6706871a06f7ed4b645989977018cd0f08a3253091090e6d79a57c734a4f0f1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-history-preservation.json",
+      "path": "candidate-checks/production-history-preservation.json",
+      "bytes": 887,
+      "sha256": "f8e6d2ef32bd467bbc210f476a1fefa3f8cfabdb161447bbe9e4c773466b136f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-heading-adoption.json",
+      "path": "candidate-checks/production-heading-adoption.json",
+      "bytes": 397,
+      "sha256": "e49a6d2731df2c49db4665fd5035ebe59ee5e9d0dfb35cd08d1b6706fcb5bcd5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/production-heading-adoption.log",
+      "path": "candidate-checks/production-heading-adoption.log",
+      "bytes": 246,
+      "sha256": "26c8e31f70c75ab771dd8ea4357a9c9dd974bcb9ee88b17f427d5aab6f2e3f58"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/version-allocation.json",
+      "path": "candidate-checks/version-allocation.json",
+      "bytes": 504,
+      "sha256": "4a0b547ca30fa6b5fb50ae1d444d5267760d2c754918251f06c051df70a6fe49"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/PLAN.md",
+      "path": "craft-heading/PLAN.md",
+      "bytes": 1291,
+      "sha256": "ed39888c902323151fcdf4ddbe4e478e01090145e30492794f24b5832c7b79cf"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/act.py",
+      "path": "craft-heading/act.py",
+      "bytes": 505,
+      "sha256": "4aa25413ff7d5772f891872582055544552d404abd83df31b316af5dc5b831f0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/agent-browser.json",
+      "path": "craft-heading/agent-browser.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/capture.py",
+      "path": "craft-heading/capture.py",
+      "bytes": 1453,
+      "sha256": "39c2cb33766cd6ae3d4d96161b557be19c0bedd41aaedc124833a7d17252ce6f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/close-owned-browser.mjs",
+      "path": "craft-heading/close-owned-browser.mjs",
+      "bytes": 1421,
+      "sha256": "a2aab25639e12667fe5356bda56754b6e99a8478641bf03a64a29db152d55b6c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/config.json",
+      "path": "craft-heading/config.json",
+      "bytes": 3075,
+      "sha256": "652c43e8d2b047834ddcd7a24928bbf1a874bd0ca2bb7625291874da69fa9773"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/control.py",
+      "path": "craft-heading/control.py",
+      "bytes": 1956,
+      "sha256": "68100a3f7c0796b4341640677046fd50053dd11e7bf0c4225f9712f4fe149567"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/finalize-run.py",
+      "path": "craft-heading/finalize-run.py",
+      "bytes": 8773,
+      "sha256": "39418b095b495be2e88ab2f3525d82520a5caaae05c83147aab201920840453d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/foreground.mjs",
+      "path": "craft-heading/foreground.mjs",
+      "bytes": 3432,
+      "sha256": "bdd01c38ccb8ad2a09dcb5938991350a08a638c184533bf320253282ce7df273"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/launch-owned-chrome.py",
+      "path": "craft-heading/launch-owned-chrome.py",
+      "bytes": 3175,
+      "sha256": "394bb92a74e9dc247d35b81da521ee940b48d380795e754b382765bd6c125262"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/measure.js",
+      "path": "craft-heading/measure.js",
+      "bytes": 3732,
+      "sha256": "d441b61f4d0076cfda860ad78f80bb2065aff6d15e9dca1928b42a8669c23042"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/observe.mjs",
+      "path": "craft-heading/observe.mjs",
+      "bytes": 4188,
+      "sha256": "bae56d1064dd1382edf4018a0e7bf5172313298c3b40b2aca18b97713e20a955"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/pre-launch-manifest.json",
+      "path": "craft-heading/pre-launch-manifest.json",
+      "bytes": 2150,
+      "sha256": "00cf1acf70494cdd7638569805f8533d812b9483813314a4ad8be16ce162c746"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/01-standard-portrait-setup-summary.txt",
+      "path": "craft-heading/run/01-standard-portrait-setup-summary.txt",
+      "bytes": 5160,
+      "sha256": "288f56beafcc9e883ade22b83d3e652beaedbf5049552398472c9071bf43b6f0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/01-standard-portrait-setup.json",
+      "path": "craft-heading/run/01-standard-portrait-setup.json",
+      "bytes": 45356,
+      "sha256": "df1f74c5d4acf17af9d1d199332c0cc720c7c9db0655944496d7b9d9545ffb02"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/01-standard-portrait-setup.png",
+      "path": "craft-heading/run/01-standard-portrait-setup.png",
+      "bytes": 35511,
+      "sha256": "a4961dbda7794a5ee3c7380f055516560c4364dfcc19b79bf6b012d6a027c9e3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/02-standard-portrait-completed-summary.txt",
+      "path": "craft-heading/run/02-standard-portrait-completed-summary.txt",
+      "bytes": 5164,
+      "sha256": "054af0cec5293d2c3ba0a1069845ace5a730da5150da1d2e30e9796602c9d54d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/02-standard-portrait-completed.json",
+      "path": "craft-heading/run/02-standard-portrait-completed.json",
+      "bytes": 45381,
+      "sha256": "8a92765df372cac496ad7c3075fd5a5a96e53c89f67621ba57112efee501c15c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/02-standard-portrait-completed.png",
+      "path": "craft-heading/run/02-standard-portrait-completed.png",
+      "bytes": 35269,
+      "sha256": "5c6316ddad4ac633322807c35b63599ac7e93df5544ad303d8174a9ef1a5ec39"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/03-standard-portrait-selector-focus-summary.txt",
+      "path": "craft-heading/run/03-standard-portrait-selector-focus-summary.txt",
+      "bytes": 5169,
+      "sha256": "b46b4292575adfbdbcec8943eaf2310e5b778194880268bea3ba7ba443a62c66"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/03-standard-portrait-selector-focus.json",
+      "path": "craft-heading/run/03-standard-portrait-selector-focus.json",
+      "bytes": 45381,
+      "sha256": "085a4711bfc76493acb7e93eb6a9e7c0596d1e00e93de62613a5bb829da407b6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/03-standard-portrait-selector-focus.png",
+      "path": "craft-heading/run/03-standard-portrait-selector-focus.png",
+      "bytes": 35269,
+      "sha256": "5c6316ddad4ac633322807c35b63599ac7e93df5544ad303d8174a9ef1a5ec39"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/04-standard-landscape-completed-summary.txt",
+      "path": "craft-heading/run/04-standard-landscape-completed-summary.txt",
+      "bytes": 5165,
+      "sha256": "9d76e62d106e3e57cf41313c5d1d26af45a0ae25e59f4225af99835e27d604ac"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/04-standard-landscape-completed.json",
+      "path": "craft-heading/run/04-standard-landscape-completed.json",
+      "bytes": 45385,
+      "sha256": "a81c5e3d65d3963296df3dae5b297a4fd7d9e8e750059466fdbc9dbaf1b6ca1c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/04-standard-landscape-completed.png",
+      "path": "craft-heading/run/04-standard-landscape-completed.png",
+      "bytes": 24408,
+      "sha256": "3ac812eb7f672d73f14f2f8e468ba0e5c3941aa7cc1906f64c9578ded9334548"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/05-standard-landscape-selector-focus-summary.txt",
+      "path": "craft-heading/run/05-standard-landscape-selector-focus-summary.txt",
+      "bytes": 5170,
+      "sha256": "89a0852c0945815987487a4aedae93fd6078d6874b5e1f40f3a17350c2fa8fca"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/05-standard-landscape-selector-focus.json",
+      "path": "craft-heading/run/05-standard-landscape-selector-focus.json",
+      "bytes": 45398,
+      "sha256": "18ad86e5ce750c7583ac7fffa2ca12954325928890351cd1278f9c9251b9a3d9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/05-standard-landscape-selector-focus.png",
+      "path": "craft-heading/run/05-standard-landscape-selector-focus.png",
+      "bytes": 24408,
+      "sha256": "3ac812eb7f672d73f14f2f8e468ba0e5c3941aa7cc1906f64c9578ded9334548"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/06-large-landscape-setup-summary.txt",
+      "path": "craft-heading/run/06-large-landscape-setup-summary.txt",
+      "bytes": 5158,
+      "sha256": "8a4dcf288dd85a47d30a95b49ad05d46e6811badfda7a6dfbaa87a9601dcce90"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/06-large-landscape-setup.json",
+      "path": "craft-heading/run/06-large-landscape-setup.json",
+      "bytes": 45137,
+      "sha256": "2445c46b71667f4bc35f2b7a23341b22de3cc55c5ac6cc8b43fe6a57d24a43ba"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/06-large-landscape-setup.png",
+      "path": "craft-heading/run/06-large-landscape-setup.png",
+      "bytes": 35683,
+      "sha256": "9c1e900bf3022cd93fce64eb2c3f725a7e3b2fa09434032008c5b33cebba5be3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/07-large-landscape-completed-summary.txt",
+      "path": "craft-heading/run/07-large-landscape-completed-summary.txt",
+      "bytes": 5162,
+      "sha256": "8d3a3040b54b80942559f9052d9bdd4338b2e09f5d47647aabbba08b838a9b45"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/07-large-landscape-completed.json",
+      "path": "craft-heading/run/07-large-landscape-completed.json",
+      "bytes": 46483,
+      "sha256": "a7421d3ff9eebca7e0499b245ded15efd21b2876d37ae1f3e03588cd5067054f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/07-large-landscape-completed.png",
+      "path": "craft-heading/run/07-large-landscape-completed.png",
+      "bytes": 37858,
+      "sha256": "a8e11168714d63020a6cbbe2fe2ef10db742a52b89a53e924e7f489507370fe3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/08-large-landscape-selector-focus-summary.txt",
+      "path": "craft-heading/run/08-large-landscape-selector-focus-summary.txt",
+      "bytes": 5167,
+      "sha256": "35587c438fbf1ba401a03317035aa4d9f0ba787e454c7ee8bc6f96c404941b9d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/08-large-landscape-selector-focus.json",
+      "path": "craft-heading/run/08-large-landscape-selector-focus.json",
+      "bytes": 46471,
+      "sha256": "1c6216da3dd9d81fc710ea29161057a20900ad1e6e8f6fa99001bffc6093ea77"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/08-large-landscape-selector-focus.png",
+      "path": "craft-heading/run/08-large-landscape-selector-focus.png",
+      "bytes": 37858,
+      "sha256": "a8e11168714d63020a6cbbe2fe2ef10db742a52b89a53e924e7f489507370fe3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/09-large-portrait-completed-summary.txt",
+      "path": "craft-heading/run/09-large-portrait-completed-summary.txt",
+      "bytes": 5161,
+      "sha256": "56d5c806ebd6a66bf3b70c3bc62da0f10c1b42436fab813c31e71f2768a5eafd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/09-large-portrait-completed.json",
+      "path": "craft-heading/run/09-large-portrait-completed.json",
+      "bytes": 46689,
+      "sha256": "3d48eec65d25617a575362b8a8f08e904294d538f6d4f7d883cd7c7255cf0392"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/09-large-portrait-completed.png",
+      "path": "craft-heading/run/09-large-portrait-completed.png",
+      "bytes": 45589,
+      "sha256": "c47b4fac37ee559e87af28fc11d804a3f67168a5ff7b0946a4c23de984163811"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/10-large-portrait-selector-focus-summary.txt",
+      "path": "craft-heading/run/10-large-portrait-selector-focus-summary.txt",
+      "bytes": 5166,
+      "sha256": "2da590bf0fca6489455e7d68991f5df8454c5a7e541ac1252335fb22e0363326"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/10-large-portrait-selector-focus.json",
+      "path": "craft-heading/run/10-large-portrait-selector-focus.json",
+      "bytes": 46691,
+      "sha256": "7147254f7ae3ecc9a1f59fd860bfe386f59221b8a598f3b98772c068fec5bacd"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/10-large-portrait-selector-focus.png",
+      "path": "craft-heading/run/10-large-portrait-selector-focus.png",
+      "bytes": 45589,
+      "sha256": "c47b4fac37ee559e87af28fc11d804a3f67168a5ff7b0946a4c23de984163811"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/11-large-portrait-cached-return-summary.txt",
+      "path": "craft-heading/run/11-large-portrait-cached-return-summary.txt",
+      "bytes": 5165,
+      "sha256": "5b100aacb9d5236900f76848b5bc07eff3eab69c21940e4ddf6eb48cd80019eb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/11-large-portrait-cached-return.json",
+      "path": "craft-heading/run/11-large-portrait-cached-return.json",
+      "bytes": 46704,
+      "sha256": "f6edcbfaec1e8fe74cbf28f3f14433f4e20c5b07d708a9b5411316208b77f54e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/11-large-portrait-cached-return.png",
+      "path": "craft-heading/run/11-large-portrait-cached-return.png",
+      "bytes": 45589,
+      "sha256": "c47b4fac37ee559e87af28fc11d804a3f67168a5ff7b0946a4c23de984163811"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/actions.jsonl",
+      "path": "craft-heading/run/actions.jsonl",
+      "bytes": 27722,
+      "sha256": "4c8eab3b2dcc1d79a45d594b5c05b27aa86d90b02ff20fc22984c7011bd2f0b5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/busy-geometry-summary.json",
+      "path": "craft-heading/run/busy-geometry-summary.json",
+      "bytes": 27429,
+      "sha256": "570a7f90ef7b791c29f1c9a22249a0bb05c9c6410d8027d3d9b806cf7397771e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/busy-original-observations.json",
+      "path": "craft-heading/run/busy-original-observations.json",
+      "bytes": 268482,
+      "sha256": "25cc1b760d35501fedb086292c8d42c8818441d3eb304a9080f985fa0d1b3f4c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/capacity.jsonl",
+      "path": "craft-heading/run/capacity.jsonl",
+      "bytes": 11979,
+      "sha256": "479825a7e5717a765718019eb5756e29c1bf93c29fc2f81bfbebb565b7a25c7e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/close.json",
+      "path": "craft-heading/run/close.json",
+      "bytes": 1431,
+      "sha256": "1382992fb8b1daf8fdba83efeb130c36ba98d2a328fd5e9e087f02d0b9716a11"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/exit.json",
+      "path": "craft-heading/run/exit.json",
+      "bytes": 289,
+      "sha256": "7220f5750342fe6f4196cf0557a5803dc1cb509bde68113714c0459e275d052b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/foreground-checks.jsonl",
+      "path": "craft-heading/run/foreground-checks.jsonl",
+      "bytes": 151938,
+      "sha256": "296ae37f78816696ec64502dfd26089102d9a3e3df744268612054faca8cfc97"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/launch.json",
+      "path": "craft-heading/run/launch.json",
+      "bytes": 1804,
+      "sha256": "660ec7fa4d944442a17d1e6e39a8c7cfbf8941675a909488730ca06db3d84a69"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/native-events.jsonl",
+      "path": "craft-heading/run/native-events.jsonl",
+      "bytes": 332630,
+      "sha256": "590b182523ff084e00f373ece106a669624b22d87e62698ab4186e63859c0bc1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/observed-targets.json",
+      "path": "craft-heading/run/observed-targets.json",
+      "bytes": 1329,
+      "sha256": "2fd96e82c9907290bee76b86e92fb5556b18237c1fc90084583871be8c602e11"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/owned-target.json",
+      "path": "craft-heading/run/owned-target.json",
+      "bytes": 334,
+      "sha256": "3e37953012f23ebfacdb64e4ab59a170dd0bfbcdfb4d63a3d774a583e95c3413"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/process-closure.json",
+      "path": "craft-heading/run/process-closure.json",
+      "bytes": 355,
+      "sha256": "f113617e5b94d18d62fc0f2341b806fad56fe77f44d2f0fbcf13695485891e8a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/review.json",
+      "path": "craft-heading/run/review.json",
+      "bytes": 8852,
+      "sha256": "f2d5bfe4bf1088e47bd935cb49182c76bfe13ff15cccdba8d223c6d8ffca4657"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/review.md",
+      "path": "craft-heading/run/review.md",
+      "bytes": 1181,
+      "sha256": "b8862e29221615c1a16f384890a16e560e66a919c8e5870f9df871f11a1bdab2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/screenshot-origins.jsonl",
+      "path": "craft-heading/run/screenshot-origins.jsonl",
+      "bytes": 2632,
+      "sha256": "80438dab14ec7e19eee3897741f7ce4c4d14f09720e3ff080e1d4925885f812c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/server.json",
+      "path": "craft-heading/run/server.json",
+      "bytes": 2908,
+      "sha256": "af9cf3a8308b75017f45cf018adc5e13a90ebf71c935a7673bf6af27d4cbdcb7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/source-closure.json",
+      "path": "craft-heading/run/source-closure.json",
+      "bytes": 2851,
+      "sha256": "377b435db58dd7edbc7cfed4a46a508eff76f58e257f2d83a1685359cf5aad22"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/serve-current-source.mjs",
+      "path": "craft-heading/serve-current-source.mjs",
+      "bytes": 1314,
+      "sha256": "1fe898fa4fe0b237b85c041cfd9fda991955b739adcb5de366d0895ac183dbb1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/source-pins.json",
+      "path": "craft-heading/source-pins.json",
+      "bytes": 2772,
+      "sha256": "ed5af411e54e98799bcb74cc28219920acffc82fe5b9d62f7a90c733f176c3f6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/syntax-receipt.json",
+      "path": "craft-heading/syntax-receipt.json",
+      "bytes": 813,
+      "sha256": "9c0794e7b43783737070088878c1d3e86b98823a19b5902e71cb19143272819e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-heading-row-preparation/run/evidence-manifest.json",
+      "path": "craft-heading/evidence-manifest.json",
+      "bytes": 11192,
+      "sha256": "c3db7a6517046edd72db0378b9a290f29babb3c192b104497844c1be3f4b9192"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/native-blur-before.json",
+      "path": "controller-focus/native-blur-before.json",
+      "bytes": 470,
+      "sha256": "224eb560efb739c3d6a96b1fc563206b8faf17fd03e67bd07f039128192a921d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/native-blur-before.log",
+      "path": "controller-focus/native-blur-before.log",
+      "bytes": 5365,
+      "sha256": "b9dd2bf1774418476ab3e657326cf8ba2735fbf0361ba79eb380cf8c168f5cc5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/focused.json",
+      "path": "controller-focus/focused.json",
+      "bytes": 565,
+      "sha256": "818aae8e0e92deeb086c32e928c94ad0baeaaa9e62e81c2896923d959a629ca9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/focused.log",
+      "path": "controller-focus/focused.log",
+      "bytes": 19257,
+      "sha256": "03c67ced4b886bbe0764a3e82e925c7d432ae5aebc81d28b6dda6f85e9aa94fa"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/format.json",
+      "path": "controller-focus/format.json",
+      "bytes": 495,
+      "sha256": "c89b8ffbd17554101d0b0c5499b6a327ac8c905d08493b8be2caff64bc6037ab"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/lint.json",
+      "path": "controller-focus/lint.json",
+      "bytes": 504,
+      "sha256": "22abbdee68bf6dc3dd1aefe061c5747a9d84b4b95b12c69b74caa14263dc3d31"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/controller-focus-correction/receipt.json",
+      "path": "controller-focus/receipt.json",
+      "bytes": 7309,
+      "sha256": "eee11e91f8b502804ae5d3edde9ddf07b174ce1e713e053eddccb7bc71161652"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/focus-clearance-initial.log",
+      "path": "candidate-checks/focus-clearance-initial.log",
+      "bytes": 1772,
+      "sha256": "14e7ed20f028ffa4dc173f24aec3505e2d6f75042ed929131a75ae93adabebd9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/craft-clearance-corrected.log",
+      "path": "candidate-checks/craft-clearance-corrected.log",
+      "bytes": 15831,
+      "sha256": "eeea6cc003fabbdf441ef17b3db72afa5ccd64f590da49c893f3df9daedac29d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/library-followup/craft-clearance-corrected.json",
+      "path": "candidate-checks/craft-clearance-corrected.json",
+      "bytes": 455,
+      "sha256": "328ca3c2fd1de11aef993a51c03dde281db4a49884a58c2d8a046073bb47d6d3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/PLAN.md",
+      "path": "craft-final/PLAN.md",
+      "bytes": 2085,
+      "sha256": "f7ca3445e90b4cc6557cf4fa3ec2567bc9d149d40929b3ea3b0c054b9e15f9d0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/act.py",
+      "path": "craft-final/act.py",
+      "bytes": 505,
+      "sha256": "4aa25413ff7d5772f891872582055544552d404abd83df31b316af5dc5b831f0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/agent-browser.json",
+      "path": "craft-final/agent-browser.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/capture.py",
+      "path": "craft-final/capture.py",
+      "bytes": 1453,
+      "sha256": "39c2cb33766cd6ae3d4d96161b557be19c0bedd41aaedc124833a7d17252ce6f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/close-owned-browser.mjs",
+      "path": "craft-final/close-owned-browser.mjs",
+      "bytes": 1425,
+      "sha256": "8df109b434bc2062e5cbcf8723f142a079da727b41de927622ca74533501e5ee"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/config.json",
+      "path": "craft-final/config.json",
+      "bytes": 3461,
+      "sha256": "a7ff9d56ad23ae4db115afcfb63b281538818d9600c5d5051477b2333705c555"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/control.py",
+      "path": "craft-final/control.py",
+      "bytes": 1960,
+      "sha256": "7d57cbe58e4828f878ae9718dc5515eefbc95ab45a7df3d692713731cc44b239"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/foreground.mjs",
+      "path": "craft-final/foreground.mjs",
+      "bytes": 3432,
+      "sha256": "bdd01c38ccb8ad2a09dcb5938991350a08a638c184533bf320253282ce7df273"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/launch-owned-chrome.py",
+      "path": "craft-final/launch-owned-chrome.py",
+      "bytes": 3175,
+      "sha256": "394bb92a74e9dc247d35b81da521ee940b48d380795e754b382765bd6c125262"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/manifest.json",
+      "path": "craft-final/manifest.json",
+      "bytes": 2056,
+      "sha256": "056cf3a5be0bb4da2dfdf509554bcf63a95b3feb7e460daf7fce3fc95d5bbaa3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/measure-controller.js",
+      "path": "craft-final/measure-controller.js",
+      "bytes": 1269,
+      "sha256": "38a790db9d26c420660158092db78a83a0c2573ab192b32bc134b4ebcbe3927a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/measure.js",
+      "path": "craft-final/measure.js",
+      "bytes": 3751,
+      "sha256": "21229383ad144ed45fc1aeb022228a7c2f7f9ccf60ffed80a620de3bd4af8a1f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/observe.mjs",
+      "path": "craft-final/observe.mjs",
+      "bytes": 4939,
+      "sha256": "0f60670276a2eaf3a47ce3b543e6f668802fa2f143e9e77001c921b6299202fc"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/pre-go-manifest.json",
+      "path": "craft-final/pre-go-manifest.json",
+      "bytes": 2056,
+      "sha256": "056cf3a5be0bb4da2dfdf509554bcf63a95b3feb7e460daf7fce3fc95d5bbaa3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/resource-tree.mjs",
+      "path": "craft-final/resource-tree.mjs",
+      "bytes": 1612,
+      "sha256": "45f19d0af0422eee65d51ab937d1f1426f8427765e0f7b779f5a1479d5cd94f3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/01-standard-portrait-setup-summary.txt",
+      "path": "craft-final/run/01-standard-portrait-setup-summary.txt",
+      "bytes": 5160,
+      "sha256": "47a019b27dce0c8f1a2d55de9c1736e71640366145caa8cc9c9c7918b7a12832"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/01-standard-portrait-setup.json",
+      "path": "craft-final/run/01-standard-portrait-setup.json",
+      "bytes": 46974,
+      "sha256": "51d3c143b6f82d4360f47637a0b2a744a6b6915ad8cc8c13ba55364fbc353996"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/01-standard-portrait-setup.png",
+      "path": "craft-final/run/01-standard-portrait-setup.png",
+      "bytes": 32311,
+      "sha256": "5112ee2a0f081363037caad62ae3037e67bee64658696cff5fd0a94f6301018f"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/02-standard-portrait-completed-summary.txt",
+      "path": "craft-final/run/02-standard-portrait-completed-summary.txt",
+      "bytes": 5164,
+      "sha256": "c5831fa64498495890ce5440b8ca4040ec06c5447b6d72a1393c4e685e80155e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/02-standard-portrait-completed.json",
+      "path": "craft-final/run/02-standard-portrait-completed.json",
+      "bytes": 46986,
+      "sha256": "52a2ec2e64b46b87e515b7869a8684190da1ec0f56909420a4a80e5eef728b2e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/02-standard-portrait-completed.png",
+      "path": "craft-final/run/02-standard-portrait-completed.png",
+      "bytes": 32129,
+      "sha256": "c9890d1c73b76ed0bb0da67a1a67f3c7ecc647bac6c500a6c005fb830afd71c6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/03-standard-portrait-selector-focus-summary.txt",
+      "path": "craft-final/run/03-standard-portrait-selector-focus-summary.txt",
+      "bytes": 5169,
+      "sha256": "677d59d6b5ffcfb6fd7bde4d0feae9380697fc9f66b250df3e2113ef4c81f729"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/03-standard-portrait-selector-focus.json",
+      "path": "craft-final/run/03-standard-portrait-selector-focus.json",
+      "bytes": 46975,
+      "sha256": "8bf34851201e853701706b37885c94b743a497514fe41bea88cf184785d475f9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/03-standard-portrait-selector-focus.png",
+      "path": "craft-final/run/03-standard-portrait-selector-focus.png",
+      "bytes": 32431,
+      "sha256": "db4ce9d158ccca992b05c247f214c6d3a22a6b87b114d75006e79dda9d6dba9d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/04-standard-landscape-completed-summary.txt",
+      "path": "craft-final/run/04-standard-landscape-completed-summary.txt",
+      "bytes": 5165,
+      "sha256": "66ed451eed947d3ac06d4eb11bc2c36c0e8e17684e26e95a25bbc34e4a019c33"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/04-standard-landscape-completed.json",
+      "path": "craft-final/run/04-standard-landscape-completed.json",
+      "bytes": 46825,
+      "sha256": "877db30b6ec96694ba636c98f61c929666e975566e91651ff474247adc0c8343"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/04-standard-landscape-completed.png",
+      "path": "craft-final/run/04-standard-landscape-completed.png",
+      "bytes": 24515,
+      "sha256": "a1f9855c95bf192cb176121856204a19ee08eb35e319137d756b68e7c3e02d0c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/05-standard-landscape-selector-focus-summary.txt",
+      "path": "craft-final/run/05-standard-landscape-selector-focus-summary.txt",
+      "bytes": 5170,
+      "sha256": "724139271fdb317a4f2f8532eb2495fdb0b9050866e094361842a2436bb9720a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/05-standard-landscape-selector-focus.json",
+      "path": "craft-final/run/05-standard-landscape-selector-focus.json",
+      "bytes": 46825,
+      "sha256": "c846a584d96f7a762fa8a50b5c4a6f2eefb0203f91fbb4fc790d52daf02169a7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/05-standard-landscape-selector-focus.png",
+      "path": "craft-final/run/05-standard-landscape-selector-focus.png",
+      "bytes": 24748,
+      "sha256": "2843263394a8cc66625384f9385c3c8efdd6b40b5c97b621e2a8d7903e2b1e16"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/06-large-landscape-setup-summary.txt",
+      "path": "craft-final/run/06-large-landscape-setup-summary.txt",
+      "bytes": 5158,
+      "sha256": "3af71990fd39cf018eb5d0ddc1f21f43359694b006d73074d4da31f94ff18ed9"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/06-large-landscape-setup.json",
+      "path": "craft-final/run/06-large-landscape-setup.json",
+      "bytes": 46669,
+      "sha256": "c3926eadc2a713740401778833d2cb5714c7bf0a73d33dab61fb6e1c0a8f375d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/06-large-landscape-setup.png",
+      "path": "craft-final/run/06-large-landscape-setup.png",
+      "bytes": 35643,
+      "sha256": "4d000abbb521604305a2911708d5479e6ff26276a136c9258bc0589b19677fd1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/07-large-landscape-completed-summary.txt",
+      "path": "craft-final/run/07-large-landscape-completed-summary.txt",
+      "bytes": 5162,
+      "sha256": "75e69f273ba28753d3258a7aa71cd091527dd262522838961d8849247524812b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/07-large-landscape-completed.json",
+      "path": "craft-final/run/07-large-landscape-completed.json",
+      "bytes": 48012,
+      "sha256": "6562334f9f530468919497d9bd8c7958f94c3b6d09b6dd9fafe1981434a14b70"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/07-large-landscape-completed.png",
+      "path": "craft-final/run/07-large-landscape-completed.png",
+      "bytes": 37638,
+      "sha256": "ba3ae16cd26afdf288d76da56bfc316f6e3aa43f265ef06ff4b76cdbf0fd9bbe"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/08-large-landscape-selector-focus-summary.txt",
+      "path": "craft-final/run/08-large-landscape-selector-focus-summary.txt",
+      "bytes": 5167,
+      "sha256": "66deb43b1a27b39b0f2a46ff8dca5da7e579dd820c55a4454493786cca4ab54b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/08-large-landscape-selector-focus.json",
+      "path": "craft-final/run/08-large-landscape-selector-focus.json",
+      "bytes": 48013,
+      "sha256": "5de7c5e8eaad662aae4608ceb660cf450e983cc7ed6367c541b5d3e2147b147a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/08-large-landscape-selector-focus.png",
+      "path": "craft-final/run/08-large-landscape-selector-focus.png",
+      "bytes": 37763,
+      "sha256": "5c5b6a0d070097094f692b244905fc4af814fbc1b69f16a2185a53166b941605"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/09-large-portrait-completed-summary.txt",
+      "path": "craft-final/run/09-large-portrait-completed-summary.txt",
+      "bytes": 5161,
+      "sha256": "33c6a1c8d354dae37a6cecbebd3988b3f3456019e9e14b25c32da6a96b8df309"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/09-large-portrait-completed.json",
+      "path": "craft-final/run/09-large-portrait-completed.json",
+      "bytes": 48146,
+      "sha256": "c7fa395cab77a9408bcfabdbeabb410c1c345244047602a26368986e13ab8d99"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/09-large-portrait-completed.png",
+      "path": "craft-final/run/09-large-portrait-completed.png",
+      "bytes": 45652,
+      "sha256": "a30615e41025f9007f53187987b770dcc03fb7129475c772e6f3ccd4f5c867e8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/10-large-portrait-selector-focus-summary.txt",
+      "path": "craft-final/run/10-large-portrait-selector-focus-summary.txt",
+      "bytes": 5166,
+      "sha256": "49e346170088efcb66d98216f4eb2633ed9f9fdd4139f26fb07edf909a29c718"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/10-large-portrait-selector-focus.json",
+      "path": "craft-final/run/10-large-portrait-selector-focus.json",
+      "bytes": 48145,
+      "sha256": "f929515c4348542589d94d919050acd7d3a8b9f6b48c140be1c979fe66a62bd2"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/10-large-portrait-selector-focus.png",
+      "path": "craft-final/run/10-large-portrait-selector-focus.png",
+      "bytes": 45652,
+      "sha256": "a30615e41025f9007f53187987b770dcc03fb7129475c772e6f3ccd4f5c867e8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/11-large-portrait-return-summary.txt",
+      "path": "craft-final/run/11-large-portrait-return-summary.txt",
+      "bytes": 5158,
+      "sha256": "22551610cc3861be0a204f8e3a5ecd05796033f9eecfdddbfed4ae7010c3470c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/11-large-portrait-return.json",
+      "path": "craft-final/run/11-large-portrait-return.json",
+      "bytes": 48149,
+      "sha256": "d4cdecaeb79c3610755a38424309f6de352d21f88b0bf0a0778ac1c48295dddb"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/11-large-portrait-return.png",
+      "path": "craft-final/run/11-large-portrait-return.png",
+      "bytes": 45652,
+      "sha256": "a30615e41025f9007f53187987b770dcc03fb7129475c772e6f3ccd4f5c867e8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/12-direct-brief-portrait.json",
+      "path": "craft-final/run/12-direct-brief-portrait.json",
+      "bytes": 43310,
+      "sha256": "7e4ab06bdd1aca6fda9fbf62e028288e50332ffa65e2052df4d60b9588aad826"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/12-direct-brief-portrait.png",
+      "path": "craft-final/run/12-direct-brief-portrait.png",
+      "bytes": 49111,
+      "sha256": "3b78cf9ed03519b34aff4468c9d8e3680ce33d06d86c7e476829916321e4020a"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/12-summary.txt",
+      "path": "craft-final/run/12-summary.txt",
+      "bytes": 5165,
+      "sha256": "b48da58684cb8badf7b671df49fb1038d362870383e90518b7407a9091a1dc41"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/13-direct-brief-landscape.json",
+      "path": "craft-final/run/13-direct-brief-landscape.json",
+      "bytes": 42186,
+      "sha256": "5492241c798f190c1e906338f70848cfca64217a693ba890d9a879df17547e61"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/13-direct-brief-landscape.png",
+      "path": "craft-final/run/13-direct-brief-landscape.png",
+      "bytes": 37370,
+      "sha256": "1590e3d894519a60dd99a7d8055cbb619bc8bc27972f9cb733e2aae6b19def59"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/13-summary.txt",
+      "path": "craft-final/run/13-summary.txt",
+      "bytes": 5166,
+      "sha256": "c9f1102ca5e04231a5402d35f05e608b133d119a0c0faafb72c88eb0b43f4211"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/14-controller-before-apply.json",
+      "path": "craft-final/run/14-controller-before-apply.json",
+      "bytes": 1853,
+      "sha256": "5fe6c0cb4f8a9215d1599747d36414f958a6a0350eeefe53bfb953645878e84c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/15-controller-after-apply.json",
+      "path": "craft-final/run/15-controller-after-apply.json",
+      "bytes": 1853,
+      "sha256": "d0db38059508ec884de4b9ed42307628ba30b0586fe6e6ad59d9798474265317"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/15-controller-applied-screen.json",
+      "path": "craft-final/run/15-controller-applied-screen.json",
+      "bytes": 40342,
+      "sha256": "bcbdd082fed47bd8188cd5408c4697fa27a0e023e1011afbc0410881c6930b54"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/15-controller-applied-screen.png",
+      "path": "craft-final/run/15-controller-applied-screen.png",
+      "bytes": 57928,
+      "sha256": "694735f0c0edd26621493cf0b30b3eb877dc82e4a1da9f2f9ef1a1968464ce88"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/15-summary.txt",
+      "path": "craft-final/run/15-summary.txt",
+      "bytes": 5151,
+      "sha256": "b006b407f4ca1d4ef9679bb3cd1a42900e022442d56855c81db0815dd2f72585"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/16-controller-next-tab.json",
+      "path": "craft-final/run/16-controller-next-tab.json",
+      "bytes": 1920,
+      "sha256": "5fab80a917e8350d7801c99aee0469d719cb3a555910e69f9748dded732b3674"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/17-controller-reopened-applied.json",
+      "path": "craft-final/run/17-controller-reopened-applied.json",
+      "bytes": 1930,
+      "sha256": "03a405a0c44ba7671221b18e523da3ad7bb6ac735dd59ada0348f2fdc70848b6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/18-controller-before-cancel.json",
+      "path": "craft-final/run/18-controller-before-cancel.json",
+      "bytes": 1856,
+      "sha256": "4af321f1e2be1ea5ae261ae014954e2a759414ac855947a1c59835eb7eba2309"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/19-controller-after-cancel.json",
+      "path": "craft-final/run/19-controller-after-cancel.json",
+      "bytes": 1891,
+      "sha256": "9e78a4d9514f33c45453ebb2fbc6d2fdf57cc69bbcfb3eb714a57236a4758b2e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/19-controller-cancelled-screen.json",
+      "path": "craft-final/run/19-controller-cancelled-screen.json",
+      "bytes": 40341,
+      "sha256": "b32d06c788e79fac75a014f7ca2c86b4d90a233e409e443cf9796e1800a74e12"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/19-controller-cancelled-screen.png",
+      "path": "craft-final/run/19-controller-cancelled-screen.png",
+      "bytes": 62707,
+      "sha256": "03ee48c8126a6d6c0f64934a29a6b5086489b61b64ff857ed1562d79707f2810"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/19-summary.txt",
+      "path": "craft-final/run/19-summary.txt",
+      "bytes": 5153,
+      "sha256": "0950cbfc39fd28a384c7b039987c541aae9b4b2dfc35a9815d2e2e934bacccce"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/20-controller-reopened-cancel-proof.json",
+      "path": "craft-final/run/20-controller-reopened-cancel-proof.json",
+      "bytes": 1930,
+      "sha256": "147d2ae4e79a880c269e1ec7f7de4e7c6bb299c2422bcbc3442ad8164731fbff"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/actions.jsonl",
+      "path": "craft-final/run/actions.jsonl",
+      "bytes": 1361794,
+      "sha256": "d155876457dc96fb4b175472ef5270830b5e3f70b5735a8073c2f427dae920ca"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/browser-errors.txt",
+      "path": "craft-final/run/browser-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/callback-timeline.json",
+      "path": "craft-final/run/callback-timeline.json",
+      "bytes": 6584,
+      "sha256": "f8a4a316c9b7314717b4ca12a4a2f19f7799e5685188be96e2a8b81d091a3066"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/capacity.jsonl",
+      "path": "craft-final/run/capacity.jsonl",
+      "bytes": 29437,
+      "sha256": "10ba646f3e8e264991a76ad2f7841bcc28f78afc33d4dfc44181ff8a6ace6d5c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/close.json",
+      "path": "craft-final/run/close.json",
+      "bytes": 1439,
+      "sha256": "37c758a767c432d76a1721217dfb986bbc4cac30a1c1cacf77b635981f47df94"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/console-non-observer-lines.json",
+      "path": "craft-final/run/console-non-observer-lines.json",
+      "bytes": 96,
+      "sha256": "187ad663c0799d39f386a8872d787e7a607dc0da89b28070ec269ec93af8c9e0"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/exit.json",
+      "path": "craft-final/run/exit.json",
+      "bytes": 289,
+      "sha256": "d781b6ac341b1903ae3411433be8e42f88cf715dcc104b41795f068b5e826e61"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/foreground-checks.jsonl",
+      "path": "craft-final/run/foreground-checks.jsonl",
+      "bytes": 299718,
+      "sha256": "1e32f9d598b375be9a668d52e0669e2b0b3dc0a156e564a927815f91be69815c"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/frame-probe-followup.json",
+      "path": "craft-final/run/frame-probe-followup.json",
+      "bytes": 101,
+      "sha256": "bcb4d6205a8853f423bdf01c76518336f396c1931ddde49e4d48a8e6c5f5b350"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/frame-probe-scheduled.json",
+      "path": "craft-final/run/frame-probe-scheduled.json",
+      "bytes": 103,
+      "sha256": "3360a3fc36ebd9abebfa32bc6da611ca5dcf4c5d60f4b5665bc1c3a3b70c79c8"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/launch.json",
+      "path": "craft-final/run/launch.json",
+      "bytes": 1829,
+      "sha256": "5166c405c1af49dbd73126726475a1d3a1fe03162ab2882bf6b909e29a2a8ce3"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/native-events.jsonl",
+      "path": "craft-final/run/native-events.jsonl",
+      "bytes": 1565255,
+      "sha256": "c7692b51379ebdf0b869f25491fa6d7d8b6a4a294ac0cb741d406d0f8a6bdeba"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/native-resource-timeline.json",
+      "path": "craft-final/run/native-resource-timeline.json",
+      "bytes": 90887,
+      "sha256": "9bd1ca07d68e3c090674f583c590d892af56b4eeb054a44844e60e81cdacff66"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/native-resource-tree.json",
+      "path": "craft-final/run/native-resource-tree.json",
+      "bytes": 6931,
+      "sha256": "7ace4c4ed005cc808fc35ffdc163eb14763926748106e59de9dcab4675997960"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/observed-targets.json",
+      "path": "craft-final/run/observed-targets.json",
+      "bytes": 1665,
+      "sha256": "fde14621718cde54c45c7125b094556d0606dcd5109c1cc58d1ce1d8d6d09968"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/owned-target.json",
+      "path": "craft-final/run/owned-target.json",
+      "bytes": 338,
+      "sha256": "4b60d3aa2bb5ff806408463d55ce7a4bd732456896334e687a673e9a726b1158"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/process-closure.json",
+      "path": "craft-final/run/process-closure.json",
+      "bytes": 404,
+      "sha256": "a183341791d412b0cba78270e18ffe98d4b07f512836017fd2d38cf462fb56f5"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/review.md",
+      "path": "craft-final/run/review.md",
+      "bytes": 5820,
+      "sha256": "e4d813cb32fc23f327e0a68f8ec4191b2f2c90f4cff5250edb2ca56dfd5384f1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/screenshot-origins.jsonl",
+      "path": "craft-final/run/screenshot-origins.jsonl",
+      "bytes": 3568,
+      "sha256": "2192ccd73597f001b065443cb340f751b9b461a0712d9fb7c87c0f11ac09ef75"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/server.json",
+      "path": "craft-final/run/server.json",
+      "bytes": 3273,
+      "sha256": "acc27883e3834a9e08063d720646fc0119886c4fce511f91a211dbbdcce7d88b"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/source-closure.json",
+      "path": "craft-final/run/source-closure.json",
+      "bytes": 3197,
+      "sha256": "eb3676d84640664631e7d7357cf283826c4d15131bd592859345ca3d66c73e30"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/serve-current-source.mjs",
+      "path": "craft-final/serve-current-source.mjs",
+      "bytes": 1314,
+      "sha256": "1fe898fa4fe0b237b85c041cfd9fda991955b739adcb5de366d0895ac183dbb1"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/syntax-receipt.json",
+      "path": "craft-final/syntax-receipt.json",
+      "bytes": 879,
+      "sha256": "8dca27bb2a357492b62b5978cdd74c911c7a13d539fd09c4c609f1af4757335d"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/craft-focus-clearance-preparation/run/evidence-manifest.json",
+      "path": "craft-final/run/evidence-manifest.json",
+      "bytes": 15333,
+      "sha256": "0a131c33db348b2fb9e4d53c1fc91e234259fd5a723ca39571eee99e615d3351"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/production-review/producer.log",
+      "path": "production-review/producer.log",
+      "bytes": 245,
+      "sha256": "6ad743da10b78475cfaf6d5ae63492b3caf8faeeb66e62e6ec5c4232a5a1b742"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/production-review/preservation.json",
+      "path": "production-review/preservation.json",
+      "bytes": 1334,
+      "sha256": "9d3c2bed0db316bc310b4f66efde3d4997c4f9f74a90ab7bfeecf46d8918dee6"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/production-review/quality-only-review.json",
+      "path": "production-review/quality-only-review.json",
+      "bytes": 1423,
+      "sha256": "25803324a4e47ae84b34fb14103b492514c953bae9c987417fc4a0ccf210e795"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/final-runtime-review/review.json",
+      "path": "final-runtime-review/review.json",
+      "bytes": 14875,
+      "sha256": "e979688a583a593c85184e6164c2a187c3f05cb10e10eb7f506edd5bbbcac25e"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/final-runtime-review/reviewed-source.diff",
+      "path": "final-runtime-review/reviewed-source.diff",
+      "bytes": 56197,
+      "sha256": "ac44e2a2edc1f2330b811b1ad21190a6c8f5ab2ce4f289e2de5946c68581aeb7"
+    },
+    {
+      "source": ".cache/cross-mode/p01/v0572/final-runtime-review/production-boundary.json",
+      "path": "final-runtime-review/production-boundary.json",
+      "bytes": 3263,
+      "sha256": "4c219df389bff2f9ced916888a1c7d60856a65238243f11b85f9156fb5598416"
+    }
+  ],
+  "fileCount": 601,
+  "bytes": 17637464
+}

@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-09-15T13:57:25.667942+00:00",
+  "finishedAt": "2026-09-15T13:57:25.879293+00:00",
+  "session": "p01-public-v0571-interface",
+  "action": [
+    "click",
+    "#shell-missions-back"
+  ],
+  "exitCode": 0,
+  "stdout": "\u2713 Done\n",
+  "stderr": ""
+}

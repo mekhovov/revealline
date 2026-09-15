@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "ledgerSha256": "18ba4800fbff174375e2a0990c07bb8336d70b17a4ca88469516a6965e62ce61",
+  "rows": [
+    {
+      "id": "screen.missions.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    },
+    {
+      "id": "screen.hangar.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    },
+    {
+      "id": "screen.results.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    },
+    {
+      "id": "screen.collection.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    },
+    {
+      "id": "screen.settings.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    },
+    {
+      "id": "screen.couch.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    },
+    {
+      "id": "screen.studio.background.field-kit",
+      "fromRevision": 10,
+      "toRevision": 11,
+      "runtimeContentIdentical": true
+    }
+  ],
+  "scope": "Seven approval successors change only quality, revision and provenance parent. Source-browser r21 geometry applies to unchanged runtime recipe content; new release bytes still require exact-source/public qualification."
+}

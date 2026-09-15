@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:44:37.530431+00:00",
+  "finishedAt": "2026-09-15T13:44:37.784272+00:00",
+  "attempt": "online-1",
+  "pid": 90207,
+  "endpoint": "ws://127.0.0.1:51302/devtools/browser/ae1705ad-71a3-4c87-a4e7-f7367a4334f4",
+  "action": [
+    "screenshot",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/public-browser-preparation/run/014-standard-portrait.png"
+  ],
+  "script": null,
+  "exitCode": 0,
+  "stdout": "\u2713 Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/public-browser-preparation/run/014-standard-portrait.png\n",
+  "stderr": ""
+}

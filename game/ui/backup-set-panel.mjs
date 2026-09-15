@@ -19,6 +19,7 @@ export function attachBackupSetPanel({
   busy,
   setBusy,
   refresh,
+  presentFeedback = () => {},
   URLImpl = URL,
 }) {
   const node = (tag, id, text) => {
@@ -111,6 +112,7 @@ export function attachBackupSetPanel({
       ]),
     };
     operation = op;
+    presentFeedback();
     op.lease = presenter.begin({
       message: 'Reading saved inventories for the backup set…',
       isCurrent: () => operation === op && !op.controller.signal.aborted,
@@ -155,6 +157,7 @@ export function attachBackupSetPanel({
             cancel({ message: error.message });
             return false;
           }
+          presentFeedback();
           state.textContent = `Download requested · ${file.bytes} bytes`;
           showStatus(
             'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.',

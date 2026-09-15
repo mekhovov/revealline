@@ -1,5 +1,5 @@
 import test from 'node:test';
-import { Element as DOMElement } from './helpers/couch-dom.mjs';
+import { Element as DOMElement, Events } from './helpers/couch-dom.mjs';
 import assert from 'node:assert/strict';
 import { attachControllerSettings } from '../ui/controller-settings.mjs';
 import {
@@ -22,6 +22,21 @@ class Element extends DOMElement {
     this.type = '';
     this.disabled = false;
     this.hidden = false;
+  }
+  get disabled() {
+    return this._disabled ?? false;
+  }
+  set disabled(value) {
+    this._disabled = value;
+    if (value && this.ownerDocument.activeElement === this) this.blur();
+  }
+  get hidden() {
+    return this._hidden ?? false;
+  }
+  set hidden(value) {
+    this._hidden = value;
+    if (value && this.contains(this.ownerDocument.activeElement))
+      this.ownerDocument.activeElement.blur();
   }
   set innerHTML(_value) {
     throw new Error('Use text-only DOM.');
@@ -58,18 +73,41 @@ class Element extends DOMElement {
     for (const listener of this.listeners.get(type) ?? []) await listener({ target: this });
   }
   focus() {
-    if (!this.disabled && !this.hidden) this.owner.activeElement = this;
+    if (this.disabled) return;
+    for (let element = this; element?.nodeType === 1; element = element.parentNode)
+      if (element.hidden) return;
+    this.owner.activeElement = this;
+    this.owner.emit('focusin', { target: this });
+  }
+  blur() {
+    if (this.ownerDocument.activeElement !== this) return;
+    this.ownerDocument.blurred.push(this);
+    this.ownerDocument.activeElement = this.ownerDocument.body;
   }
 }
 function fixture(initial = null) {
-  const doc = { activeElement: null },
+  const doc = Object.assign(new Events(), {
+      nodeType: 9,
+      activeElement: null,
+      hidden: false,
+      focused: true,
+      hasFocus() {
+        return this.focused;
+      },
+      defaultView: new Events(),
+      blurred: [],
+    }),
     all = [];
   doc.createElement = (tag) => {
     const element = new Element(tag, doc);
     all.push(element);
     return element;
   };
+  doc.body = doc.createElement('body');
+  doc.body.parentNode = doc;
+  doc.activeElement = doc.body;
   const container = doc.createElement('section');
+  doc.body.append(container);
   container.id = 'controller-settings-root';
   let current = initial,
     before = 0,
@@ -102,7 +140,12 @@ function fixture(initial = null) {
     action,
     field,
     status,
-    click: (value) => action(value).emit('click'),
+    click: async (value) => {
+      const button = action(value);
+      if (button.disabled || button.hidden || button.parentNode?.hidden) return;
+      button.focus();
+      await button.emit('click');
+    },
     set: async (path, value) => {
       const control = field(path);
       if (control.type === 'checkbox') control.checked = value;
@@ -355,6 +398,82 @@ test('async Apply is single-flight and allows its own canonical adoption', async
   assert.equal(f.action('edit').disabled, false);
 });
 
+test('native Apply blur restores the same enabled Edit button and releases focus observers', async () => {
+  const f = fixture(),
+    done = deferred();
+  f.setWriter(async (candidate) => {
+    await done.promise;
+    f.setCurrent(candidate);
+    return { ok: true };
+  });
+  await f.click('edit');
+  const edit = f.action('edit'),
+    applying = f.click('apply');
+  assert.equal(f.doc.blurred.at(-1), f.action('apply'));
+  assert.equal(f.doc.activeElement, f.doc.body, 'Native disabling removes action focus.');
+  assert.ok(f.doc.listeners.get('focusin').size > 0);
+  done.resolve();
+  await applying;
+  assert.equal(f.doc.activeElement, edit);
+  assert.equal(edit.disabled, false);
+  assert.equal(edit.hidden, false);
+  assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
+  assert.ok([...f.doc.defaultView.listeners.values()].every((listeners) => listeners.size === 0));
+});
+
+for (const departure of [
+  'other modal',
+  'other control then blur',
+  'pointer on body',
+  'keyboard navigation',
+  'window blur and return',
+  'hidden page',
+  'hidden page then return',
+])
+  test(`pending Apply does not reclaim focus after ${departure}`, async () => {
+    const f = fixture(),
+      done = deferred(),
+      outside = f.doc.createElement('button');
+    f.doc.body.append(outside);
+    f.setWriter(async (candidate) => {
+      await done.promise;
+      f.setCurrent(candidate);
+      return { ok: true };
+    });
+    await f.click('edit');
+    const applying = f.click('apply');
+    assert.equal(f.doc.activeElement, f.doc.body);
+    if (departure === 'other modal' || departure === 'other control then blur') {
+      outside.focus();
+      if (departure === 'other control then blur') outside.blur();
+    } else if (departure === 'pointer on body') f.doc.emit('pointerdown', { target: f.doc.body });
+    else if (departure === 'keyboard navigation') f.doc.emit('keydown', { key: 'Tab' });
+    else if (departure === 'window blur and return') f.doc.defaultView.emit('blur');
+    else {
+      f.doc.hidden = true;
+      f.doc.emit('visibilitychange');
+      if (departure === 'hidden page then return') {
+        f.doc.hidden = false;
+        f.doc.emit('visibilitychange');
+      }
+    }
+    const intendedFocus = f.doc.activeElement;
+    done.resolve();
+    await applying;
+    assert.equal(f.doc.activeElement, intendedFocus);
+    assert.match(f.status.textContent, /settings applied/);
+    assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
+  });
+
+test('programmatic Apply without initial focus ownership does not claim body focus', async () => {
+  const f = fixture();
+  await f.click('edit');
+  f.field('glyphFamily').blur();
+  await f.action('apply').emit('click');
+  assert.equal(f.doc.activeElement, f.doc.body);
+  assert.match(f.status.textContent, /settings applied/);
+});
+
 test('refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status', async () => {
   const f = fixture(),
     done = deferred();
@@ -369,6 +488,7 @@ test('refresh aborts a pending ticket; a guarded async host cannot adopt it or o
   const message = f.status.textContent;
   assert.equal(f.calls[0].guard.signal.aborted, true);
   assert.equal(f.calls[0].guard.isCurrent(), false);
+  assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
   await f.click('edit');
   assert.equal(f.before, 1);
   done.resolve();
@@ -376,6 +496,7 @@ test('refresh aborts a pending ticket; a guarded async host cannot adopt it or o
   assert.equal(f.current, null);
   assert.equal(f.status.textContent, message);
   assert.equal(f.action('edit').disabled, false);
+  assert.equal(f.doc.activeElement, f.doc.body, 'A refreshed ticket cannot restore old focus.');
 });
 
 test('source changes during asynchronous preparation invalidate the guard without a refresh', async () => {
@@ -396,6 +517,7 @@ test('source changes during asynchronous preparation invalidate the guard withou
   await operation;
   assert.equal(f.current, imported);
   assert.match(f.status.textContent, /changed before this draft/);
+  assert.equal(f.doc.activeElement, f.doc.body, 'Changed source cannot restore old focus.');
 });
 
 test('malformed current data fails visibly and a later valid refresh recovers', async () => {
@@ -427,10 +549,12 @@ test('destroy removes listeners and aborts pending work without late DOM adoptio
   f.api.destroy();
   f.api.destroy();
   assert.equal(f.calls[0].guard.signal.aborted, true);
+  assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
   assert.equal(f.container.children.length, 0);
   assert.ok(f.all.every((node) => [...node.listeners.values()].every((list) => list.length === 0)));
   done.resolve();
   await operation;
   assert.equal(f.current, null);
   assert.equal(f.container.children.length, 0);
+  assert.equal(f.doc.activeElement, f.doc.body, 'Disposal cannot restore detached focus.');
 });
