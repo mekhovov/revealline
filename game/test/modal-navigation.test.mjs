@@ -119,6 +119,53 @@ test('ordered mutation records cover older engines and same-task close/reopen wi
   assert.equal(observer.disconnected, true);
 });
 
+for (const inactive of ['hidden', 'blur'])
+  for (const when of ['at-close', 'after-close'])
+    test(`modal close keeps stack cleanup but does not restore focus ${inactive}/${when}`, async () => {
+      const h = surface(),
+        [earlier, later] = h.dialogs,
+        stack = attachModalNavigation({ document: h.doc });
+      h.open(earlier);
+      earlier.children[1].focus();
+      h.open(later);
+      const background = () => {
+        if (inactive === 'hidden') h.doc.hidden = true;
+        else h.doc.focused = false;
+      };
+      if (when === 'at-close') background();
+      h.close(later);
+      assert.equal(
+        stack.topDialog()?.id,
+        earlier.id,
+        'Inactive close still removes the top entry.',
+      );
+      if (when === 'after-close') background();
+      else {
+        // Returning before the queued turn must not revive an inactive close.
+        h.doc.hidden = false;
+        h.doc.focused = true;
+      }
+      await Promise.resolve();
+      assert.equal(h.doc.activeElement.tagName, 'BODY');
+      h.doc.hidden = false;
+      h.doc.focused = true;
+      h.open(later);
+      h.close(later);
+      h.opener.focus();
+      await Promise.resolve();
+      assert.equal(h.doc.activeElement.id, h.opener.id, 'A deliberate newer focus remains owned.');
+      earlier.children[1].focus();
+      h.open(later);
+      h.close(later);
+      await Promise.resolve();
+      assert.equal(
+        h.doc.activeElement.id,
+        earlier.children[1].id,
+        'A fresh foreground close still restores its opener.',
+      );
+      stack.destroy();
+    });
+
 // Native dialog event/focus behavior only. Actual app, shell, router, navigation,
 // input and simulation run unchanged; this does not model browser top-layer pixels.
 function nativeDialogs(t) {
@@ -877,7 +924,14 @@ for (const origin of ['title', 'paused flight'])
     assert.equal(h.$('shell-workshop-dialog').open, true);
     h.$('launch-challenge').focus();
     h.$('launch-challenge').click();
-    await Promise.resolve();
+    if (origin === 'paused flight') {
+      await settle(
+        () => h.$('mission-replace-dialog').open && !h.$('mission-replace-confirm').disabled,
+      );
+      assert.match(h.$('mission-replace-status').textContent, /saved and verified/);
+      h.$('mission-replace-confirm').click();
+    }
+    await settle(() => !h.$('library-dialog').open);
     h.frame(0);
     for (const id of ['library-dialog', 'shell-workshop-dialog', 'shell-home'])
       assert.equal(h.$(id).open, false, `${id} must not cover the chosen challenge`);

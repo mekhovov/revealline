@@ -1,0 +1,38 @@
+[
+  {
+    "url": "http://127.0.0.1:54230/game/app.mjs",
+    "status": 200,
+    "bytes": 259089,
+    "sha256": "a0d71aa3cac7ef2307766869e141f42d8994eb879304dabc568c9f5f62955d5b"
+  },
+  {
+    "url": "http://127.0.0.1:54230/game/index.html",
+    "status": 200,
+    "bytes": 70883,
+    "sha256": "6bb6ae969591cd87697f966375f3d64e3e65b1b8a3d2a66823a7b9acc05d0178"
+  },
+  {
+    "url": "http://127.0.0.1:54230/game/ui/game-shell.mjs",
+    "status": 200,
+    "bytes": 18766,
+    "sha256": "fe07efe98487bbee60cdb1fe163f4b1374038cfcbaf31de71ebf696d2f713649"
+  },
+  {
+    "url": "http://127.0.0.1:54230/game/ui/modal-navigation.mjs",
+    "status": 200,
+    "bytes": 4082,
+    "sha256": "fd37db206138f733e7a184f1b4b3e26cf8fc594e336542fb16277eddcc01ad3e"
+  },
+  {
+    "url": "http://127.0.0.1:54230/game/ui/mode-choice.mjs",
+    "status": 200,
+    "bytes": 1339,
+    "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+  },
+  {
+    "url": "http://127.0.0.1:54230/game/ui/mode-choice.css",
+    "status": 200,
+    "bytes": 1506,
+    "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+  }
+]
