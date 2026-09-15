@@ -1,0 +1,42 @@
+{
+  "sources": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 235708,
+      "sha256": "20ef09459f865b10d3ecee6d082476800f9ddb7a6e3c2432e325116f117c2aca"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70335,
+      "sha256": "6e2087e9d2f5b4c6f560f2ebb7ea3484cc9f00406813058c55d55f9c834618d5"
+    },
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "bytes": 17766,
+      "sha256": "4b1b73ebce3ed6bc6a012904a0d895370cc1dc95a3d345b8e9c93a7d999ce808"
+    }
+  ],
+  "native": [
+    {
+      "path": ".cache/p03g-mission-replacement/native-root/events-before-copy-fix.json",
+      "bytes": 152170,
+      "sha256": "d883d266a5fd50c5c4f88c6819a4a245072d1cc76f529eaa0b1b2c632082ca26"
+    },
+    {
+      "path": ".cache/p03g-mission-replacement/native-root/events-with-copy-fix.json",
+      "bytes": 170673,
+      "sha256": "dae32e6b93d725a6c7467c7054d5ac646212dcc6cd47181be4c253b003c08e50"
+    },
+    {
+      "path": ".cache/p03g-mission-replacement/native-root/replacement-confirmation.jpg",
+      "bytes": 43235,
+      "sha256": "ca7b01a481da063d717edf3141be801fc49a23f98fcce45b293dbad12f49dae2"
+    },
+    {
+      "path": ".cache/p03g-mission-replacement/native-root/selected-card-status.jpg",
+      "bytes": 130239,
+      "sha256": "6959b53eb99f89ef77692f66054126bb302f7519ea4fe341078461aa75519a02"
+    }
+  ],
+  "scope": "Card-copy successor native checks after complete earlier four-adapter journeys. No full phase/public or physical-device acceptance."
+}

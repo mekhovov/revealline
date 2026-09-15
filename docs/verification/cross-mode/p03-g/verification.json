@@ -1,0 +1,156 @@
+{
+  "format": "revealline-scoped-source-verification.v1",
+  "sourceBase": "b67a739a5acc495f2b7aca0905d1a2de5e91e8a7",
+  "createdAt": "2026-09-15T17:14:54.502469+00:00",
+  "sourceFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 235708,
+      "sha256": "20ef09459f865b10d3ecee6d082476800f9ddb7a6e3c2432e325116f117c2aca"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70335,
+      "sha256": "6e2087e9d2f5b4c6f560f2ebb7ea3484cc9f00406813058c55d55f9c834618d5"
+    },
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "bytes": 17766,
+      "sha256": "4b1b73ebce3ed6bc6a012904a0d895370cc1dc95a3d345b8e9c93a7d999ce808"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 38044,
+      "sha256": "bd21a2d31dd878a7dae96e58e4370fbecb9425fb42b45bb5fd5e17d698a4b99a"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 104377,
+      "sha256": "70eaa3b4becb5f563030ecea57d46cd9599a4f69a053303227cca1303cb5a41d"
+    }
+  ],
+  "wholeTestFiles": [
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "bytes": 17766,
+      "sha256": "4b1b73ebce3ed6bc6a012904a0d895370cc1dc95a3d345b8e9c93a7d999ce808"
+    },
+    {
+      "path": "game/test/mode-return.test.mjs",
+      "bytes": 12021,
+      "sha256": "37476839dd63e435c69c5c8821633d1d712755a68c85a81dffed18e232a4b5fd"
+    },
+    {
+      "path": "game/test/mode-return-host.test.mjs",
+      "bytes": 14172,
+      "sha256": "2ecb8ae59aef3825d7f616c98155184f2c691910aa9cb67be6f64c507cce2215"
+    },
+    {
+      "path": "game/test/first-flight-entry.test.mjs",
+      "bytes": 9194,
+      "sha256": "796eeab6416b279cb6d4862682d636e03400bbf462abe59e2a3bd9aabfbb4aad"
+    },
+    {
+      "path": "game/test/mission-picker.test.mjs",
+      "bytes": 9569,
+      "sha256": "c5e6b63cb9847867e182643a3f9ba611c2851b37d43108ce8895cdb5e84d9ca4"
+    },
+    {
+      "path": "game/test/difficulty-host.test.mjs",
+      "bytes": 21875,
+      "sha256": "0e3a95ec72d4bb6f63c79125ac7ea95286d0246c9b586280e0fb2665d95e1b2d"
+    }
+  ],
+  "runs": [
+    {
+      "node": "22.22.2",
+      "exitCode": 0,
+      "counts": {
+        "tests": 101,
+        "pass": 101,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "milliseconds": 46083.71575,
+      "original": {
+        "path": ".cache/p03g-mission-replacement/node22-status-final.log",
+        "bytes": 23980,
+        "sha256": "8765cd2a9c38c19a35253d7495c526c29961f03dfaea8e6b94afec359d02ae9a"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-g/node22-status-final.log.gz",
+        "bytes": 4528,
+        "sha256": "51e30dc09999d8427113fe9869b9f8b1f0b6bd270d8e441d40a0d0727ce98b89"
+      }
+    },
+    {
+      "node": "20.19.5",
+      "exitCode": 0,
+      "counts": {
+        "tests": 101,
+        "pass": 101,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "milliseconds": 61448.211208,
+      "original": {
+        "path": ".cache/p03g-mission-replacement/node20-status-final.log",
+        "bytes": 22404,
+        "sha256": "6df7337e8f61f55518cb2b2e46b47a7a782bf5982648b91cbc480a485dbf96d1"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-g/node20-status-final.log.gz",
+        "bytes": 4467,
+        "sha256": "66e08981b69252078933c58b2d3ff5b71c3d1bfeeb51a37e9c01b440f9c668af"
+      }
+    }
+  ],
+  "staticChecks": {
+    "eslint": "PASS exact app/new host test",
+    "format": "PASS source/HTML/new host test/docs/skill; evidence README checked during packaging",
+    "gitDiffWhitespace": "PASS",
+    "relativeLinks": "Existing changed-document links resolve in exact Git; new evidence links checked against owned package."
+  },
+  "sourceReview": {
+    "reviewer": "Parfit /root/runtime_expansion",
+    "scope": "Complete G runtime/app-local retention/four-adapter/pack-cancel/currentness/focus delta, current host tests and final one-line status/test successor. No blocker; no reviewer tests or native actions.",
+    "runtimeSha256": "20ef09459f865b10d3ecee6d082476800f9ddb7a6e3c2432e325116f117c2aca",
+    "testSha256": "4b1b73ebce3ed6bc6a012904a0d895370cc1dc95a3d345b8e9c93a7d999ce808"
+  },
+  "native": {
+    "observer": "root",
+    "before": {
+      "path": "docs/verification/cross-mode/p03-g/native-before-verification.json",
+      "bytes": 2843,
+      "sha256": "f9cbc21d3d490b6a1b296faaacafe5499481980083e26fecf02b8d00bdaa31b9"
+    },
+    "after": {
+      "path": "docs/verification/cross-mode/p03-g/native-after-verification.json",
+      "bytes": 1492,
+      "sha256": "173b5787e93b568216e1c7ae87b25d4124d54187bdb81744f68b7b6153a92ff6"
+    },
+    "firstEvents": 21,
+    "cumulativeEvents": 24,
+    "successorEvents": 3,
+    "sourceCorrespondence": {
+      "path": "docs/verification/cross-mode/p03-g/status-successor.json",
+      "bytes": 608,
+      "sha256": "372be3fc85479853999d67a693ac0706202fbb1e3b96c4b9f7e5f958f78b0fce"
+    },
+    "scope": "Four actual desktop keyboard entry adapters on pre-copy runtime; only three extra narrow card-copy events on final runtime. No public or physical-device acceptance."
+  },
+  "retention": {
+    "path": "docs/verification/cross-mode/p03-g/retention.json",
+    "bytes": 9705,
+    "sha256": "b23808cb1428b2bb878fb48d11b02a2f804f75b305a1d3691a3576b5d8129d9c"
+  },
+  "remaining": [
+    "P03-H Starting class/Steering currently reset live attempts; authored Tactical Hangar is separate.",
+    "P05 confirmation full-height blank-space layout.",
+    "Team setup departure and broader mode-entry/integrated release/device gates."
+  ]
+}
