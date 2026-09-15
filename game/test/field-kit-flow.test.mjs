@@ -6,9 +6,9 @@ import { attachMissionPicker } from '../ui/mission-picker.mjs';
 const visibleActions = (page) =>
   [...page.doc.querySelector('.home-actions').children]
     .filter((node) => !node.hidden)
-    .map((node) => node.id);
+    .map((node) => node.id || node.href);
 
-test('title has five destinations; Workshop and mission Back preserve an unstarted flight', async (t) => {
+test('title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
@@ -16,7 +16,13 @@ test('title has five destinations; Workshop and mission Back preserve an unstart
     'shell-gallery',
     'shell-options',
     'shell-workshop',
+    'http://localhost/releases/',
   ]);
+  const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
+  assert.equal(catalog.tagName, 'A');
+  assert.match(catalog.textContent, /Release explorer/);
+  assert.equal(catalog.hidden, false);
+  assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
   assert.match(page.$('shell-destination').textContent, /Pressure Lines/);
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
@@ -92,6 +98,7 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
     'shell-gallery',
     'shell-options',
     'shell-workshop',
+    'http://localhost/releases/',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);
   const snapshot = [...page.storage.map];
