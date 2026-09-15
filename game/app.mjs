@@ -130,6 +130,7 @@ import { readAssetStore, writeAssetStore } from './storage.mjs';
 import { suspendSession, restoreSession, saveSession, SESSION_STORAGE_BYTES } from './sessions.mjs';
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
+import { createGalleryDifficultyResolver } from './gallery-difficulty.mjs';
 import { savedFlightPreview } from './continuation.mjs';
 import { createSelectionBookmark, resolveSelectionBookmark } from './selection-bookmark.mjs';
 import { createModeReturn } from './mode-return.mjs';
@@ -2305,9 +2306,35 @@ try {
       classRegistry !== ticket.classRegistry ||
       courseRequest?.lessonId !== ticket.lessonId ||
       courseBlocked() ||
+      (ticket.launch &&
+        (!ticket.launch.isCurrent() ||
+          canonicalJSON(resolveMissionRequest(ticket.request).identity) !==
+            ticket.targetIdentity)) ||
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
       throw new Error('The flight or available missions changed. Stay here and choose again.');
+  }
+  const libraryLaunchKinds = new Set(['library-installed', 'library-challenge', 'library-picture']);
+  const isLibraryRequest = (request) => libraryLaunchKinds.has(request.kind);
+  function requestLibraryLaunch(descriptor, launch) {
+    if (
+      !descriptor ||
+      !libraryLaunchKinds.has(descriptor.kind) ||
+      typeof descriptor.id !== 'string' ||
+      descriptor.id.length > 512 ||
+      !launch ||
+      typeof launch.isCurrent !== 'function' ||
+      typeof launch.onSelected !== 'function'
+    )
+      return Promise.reject(new Error('This Library launch is unavailable.'));
+    const request = { kind: descriptor.kind, id: descriptor.id };
+    if (request.kind === 'library-picture') {
+      if (typeof descriptor.recordIdentity !== 'string' || descriptor.recordIdentity.length > 8192)
+        return Promise.reject(new Error('This earned picture identity is unavailable.'));
+      request.recordIdentity = descriptor.recordIdentity;
+    }
+    if (!launch.isCurrent() || !availableFocusTarget(launch.opener)) return Promise.resolve(false);
+    return requestMissionReplacement(request, launch.opener, launch);
   }
   function isSetupRequest(request) {
     return ['class', 'steering', 'lesson'].includes(request.kind);
@@ -2320,6 +2347,59 @@ try {
     if (courseSession) $('first-flight-select').value = courseRequest.lessonId;
   }
   function resolveMissionRequest(request) {
+    if (request.kind === 'library-installed') {
+      const entry = installedEntries.find(
+        (item) => item.sourcePackId && campaignKey(item.campaign) === request.id,
+      );
+      if (!entry) throw new Error('That exact installed campaign is no longer available.');
+      return {
+        same:
+          (entry.baseCampaignKey || campaignKey(entry.campaign)) === modeSelection().campaignKey,
+        title: entry.campaign.title || entry.campaign.name || entry.campaign.id,
+        entry,
+        identity: {
+          kind: request.kind,
+          campaignKey: campaignKey(entry.campaign),
+          sourcePackId: entry.sourcePackId,
+        },
+      };
+    }
+    if (request.kind === 'library-challenge') {
+      const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)$/.exec(request.id);
+      if (!match) throw new Error('That challenge is unavailable.');
+      const next = challengeCampaign(match[1], match[2], baseEntry.classRecipes);
+      return {
+        same: campaignKey(next) === modeSelection().campaignKey,
+        title: next.name,
+        entry: { ...baseEntry, campaign: next, activity: 'challenge' },
+        identity: { kind: request.kind, campaignKey: campaignKey(next) },
+      };
+    }
+    if (request.kind === 'library-picture') {
+      const item = library.gallery.find((row) => row.key === request.id);
+      if (!item || canonicalJSON(item) !== request.recordIdentity)
+        throw new Error('That earned picture changed. Reopen it before replaying.');
+      const picture = createGalleryDifficultyResolver(executionEntries()).picture(item);
+      if (!picture) throw new Error('Reinstall this picture’s exact campaign before replaying.');
+      const options = {
+        levelId: item.levelId,
+        themeId: item.themeId,
+        seed: item.seed ?? 1,
+        ...(picture.difficulty ? { difficulty: picture.difficulty } : {}),
+      };
+      return {
+        same: false,
+        title: `Replay ${picture.level.name}`,
+        entry: picture.entry,
+        options,
+        identity: {
+          kind: request.kind,
+          recordIdentity: request.recordIdentity,
+          campaignKey: campaignKey(picture.entry.campaign),
+          ...options,
+        },
+      };
+    }
     if (request.kind === 'lesson') {
       if (!courseSession) throw new Error('First Flight is not active.');
       const lesson = getFirstFlightLesson(request.id);
@@ -2380,6 +2460,15 @@ try {
   }
   async function applyMissionRequest(request, ticket = null) {
     const target = resolveMissionRequest(request);
+    if (isLibraryRequest(request)) {
+      if (ticket) {
+        missionReplacementCurrent(ticket);
+        ticket.adopting = true;
+      }
+      selectEntry(target.entry, target.options);
+      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`);
+      return true;
+    }
     if (request.kind === 'lesson') {
       selectCourseLesson(request.id);
       return true;
@@ -2429,9 +2518,9 @@ try {
         : `This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; ${action} deliberately discards it.`;
     if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
   }
-  async function requestMissionReplacement(request, opener) {
-    // Only explicit mission, starting-setup and course-choice adapters call this gate. Restore,
-    // replay, Library adoption and authored Hangar actions keep their contracts.
+  async function requestMissionReplacement(request, opener, launch = null) {
+    // Only explicit player launch/selection adapters call this gate. Restore,
+    // internal adoption and authored Hangar actions keep their contracts.
     const setup = isSetupRequest(request);
     if (
       missionReplacement ||
@@ -2449,9 +2538,11 @@ try {
     }
     let target;
     try {
+      if (launch && !launch.isCurrent()) return false;
       target = resolveMissionRequest(request);
     } catch (error) {
       restoreReplacementSelectors();
+      if (launch) throw error;
       contentStatus(error.message, true);
       return false;
     }
@@ -2459,14 +2550,26 @@ try {
       restoreReplacementSelectors();
       return false;
     }
-    if (!unfinishedFlight()) return applyMissionRequest(request);
+    if (!unfinishedFlight()) {
+      if (launch && target.same) return false;
+      const selected = await applyMissionRequest(request);
+      if (selected && launch?.isCurrent()) launch.onSelected();
+      return selected;
+    }
     restoreReplacementSelectors();
     if (target.same) return false;
     // Practice retains its existing non-advertised selection behavior.
-    if (practice && !setup) return applyMissionRequest(request);
+    if (practice && !setup && !launch) return applyMissionRequest(request);
     const ticket = {
-      request: { kind: request.kind, id: request.id },
+      request: {
+        kind: request.kind,
+        id: request.id,
+        ...(request.kind === 'library-picture' ? { recordIdentity: request.recordIdentity } : {}),
+      },
       opener,
+      launch,
+      targetIdentity: launch ? canonicalJSON(target.identity) : null,
+      adopting: false,
       controller: new AbortController(),
       run,
       recorder,
@@ -2480,7 +2583,7 @@ try {
       scenario,
       classRegistry,
       lessonId: courseRequest?.lessonId,
-      sessionOnly: setup && practice,
+      sessionOnly: (setup || !!launch) && practice,
       selection: modeSelection(),
       savedRaw: null,
       pending: true,
@@ -2533,7 +2636,8 @@ try {
     if ($('mission-replace-dialog').open) return;
     const ticket = missionReplacement;
     cancelMissionReplacement();
-    if (availableFocusTarget(ticket?.opener)) ticket.opener.focus({ preventScroll: true });
+    if ((!ticket?.launch || ticket.launch.isCurrent()) && availableFocusTarget(ticket?.opener))
+      ticket.opener.focus({ preventScroll: true });
   });
   $('mission-replace-confirm').onclick = async () => {
     const ticket = missionReplacement;
@@ -2567,7 +2671,9 @@ try {
         if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
         return;
       }
-      if (ticket.request.kind === 'card') {
+      if (ticket.launch) {
+        if (ticket.launch.isCurrent()) ticket.launch.onSelected();
+      } else if (ticket.request.kind === 'card') {
         // Missions remains the active parent, as for ordinary gallery selection.
         if ($('shell-missions').open)
           $('missions').querySelector('.selected')?.focus({ preventScroll: true });
@@ -2577,9 +2683,15 @@ try {
     } catch (error) {
       if (missionReplacement !== ticket) return;
       ticket.pending = false;
-      ticket.failure = `${error.message} Your flight remains paused here.`;
-      $('mission-replace-confirm').disabled = false;
-      missionReplacementMessage(ticket);
+      if (ticket.launch && ticket.adopting) {
+        $('mission-replace-confirm').disabled = true;
+        $('mission-replace-status').textContent =
+          `Selection did not finish: ${error.message} The field may have changed; the previous attempt was not restored. Stay returns to Library.`;
+      } else {
+        ticket.failure = `${error.message} Your flight remains paused here.`;
+        $('mission-replace-confirm').disabled = false;
+        missionReplacementMessage(ticket);
+      }
     }
   };
   function selectCourseLesson(lessonId) {
@@ -3684,6 +3796,7 @@ try {
     executionCatalog: executionEntries,
     getMasteryCatalog: () => masteryCatalog,
     select: selectEntry,
+    requestLaunch: requestLibraryLaunch,
     pause: () => pause(true),
     saved: savedAttempt,
     attemptExportSource: () => attemptFiles.source(),
