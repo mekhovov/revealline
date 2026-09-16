@@ -10,6 +10,8 @@ Keyboard prompts name Enter, Space and Escape. Controller prompts name the Couch
 
 Done is an end-only button. Its initial press keeps reading alive for the ordinary click; cancellation relinquishes reading without starting or resuming. Enter, Space, Escape and controller exits return to Read controls once. Closing Help or leaving the active surface invalidates reading. Terminal teardown removes the reader's listeners before destroying navigation. These contracts preserve the existing pause, neutral-input and focus rules.
 
+The first native review found the active Team reader below the viewport after portrait-to-landscape rotation. Couch now opts into `revealOnResize`: only a current foreground reader may immediately reveal its whole toolbar/hint/text unit. It preserves the actual region focus, rechecks ownership after prompt/layout callbacks, and never starts, resumes, re-enters reading or queues later focus. Other callers retain their previous behavior. The text region keeps its authored scrolling bounds; fitting the unit still requires native verification, especially with Large text. See the [separate source and native evidence](verification/cross-mode/p03-couch-reading/README.md).
+
 [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112), reviewed on 16 September 2026, recommends consistent navigation and clear ways to leave a focused interaction using supported input methods. It also calls for navigation to follow layout changes. This supports the shared toolbar and the separate responsive checks; it does not certify this game or substitute for device testing.
 
 ## Integration and qualification

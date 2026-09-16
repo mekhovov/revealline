@@ -11,6 +11,7 @@ export function attachControllerReading({
   additionalSurfaces = [],
   surfaceDefinitions = null,
   compactOverlay = false,
+  revealOnResize = false,
 } = {}) {
   // An explicit list owns only those surfaces; omitted keeps the Solo defaults
   // and additional surfaces. Entries remain [region, entry, label, unit] tuples.
@@ -34,7 +35,10 @@ export function attachControllerReading({
     return surface;
   });
   let activeId = null,
-    destroyed = false;
+    destroyed = false,
+    readingRevision = 0,
+    revealingResize = false,
+    lastReveal = null;
   const listeners = [];
   const listen = (element, type, handler) => {
     element.addEventListener(type, handler);
@@ -85,6 +89,8 @@ export function attachControllerReading({
   }
   function changed(state) {
     if (destroyed) return;
+    readingRevision++;
+    lastReveal = null;
     const previous = activeId;
     activeId = surfaces.some((surface) => surface.id === state?.regionId) ? state.regionId : null;
     refresh();
@@ -98,6 +104,107 @@ export function attachControllerReading({
     if (destroyed || !activeId) return;
     surfaces.find((surface) => surface.id === activeId).hint.textContent = message;
   }
+  const view = doc.defaultView;
+  function revealResizedReading(event) {
+    if (destroyed || revealingResize || event.target !== view || !activeId) return;
+    revealingResize = true;
+    try {
+      const surface = surfaces.find((value) => value.id === activeId),
+        navigation = getNavigation(),
+        state = navigation.readingState(),
+        scope = getScope(),
+        revision = readingRevision;
+      if (!surface || !state || scope === 'flight') return;
+      const { region, unit } = surface;
+      const text = region.textContent;
+      const current = () => {
+        let visible =
+          unit.isConnected &&
+          unit.contains(region) &&
+          unit.contains(surface.done) &&
+          !surface.done.disabled &&
+          !region.closest('[hidden],[inert],[aria-hidden="true"]') &&
+          !surface.done.closest('[hidden],[inert],[aria-hidden="true"]');
+        for (let parent = region; visible && parent; parent = parent.parentElement) {
+          const style = view.getComputedStyle?.(parent);
+          if (
+            (parent.tagName === 'DETAILS' && !parent.open) ||
+            (parent.tagName === 'DIALOG' && !parent.open) ||
+            style?.display === 'none' ||
+            style?.visibility === 'hidden'
+          )
+            visible = false;
+        }
+        const currentNavigation = getNavigation(),
+          currentScope = getScope(),
+          currentState = navigation.readingState(),
+          foreground = !doc.hidden && doc.hasFocus?.() !== false;
+        return (
+          currentNavigation === navigation &&
+          currentScope === scope &&
+          currentState?.regionId === state.regionId &&
+          currentState?.label === state.label &&
+          state.regionId === surface.id &&
+          region.id === surface.id &&
+          region.textContent === text &&
+          visible &&
+          doc.defaultView === view &&
+          foreground &&
+          !destroyed &&
+          revision === readingRevision &&
+          activeId === surface.id &&
+          doc.activeElement === region
+        );
+      };
+      // Refresh validates the navigation's exact scope, root and reading text.
+      // Its prompt/hint callbacks may retire even a same-ID replacement reader.
+      if (!current() || !navigation.refreshReadingHint() || !current()) return;
+      const width = doc.documentElement.clientWidth || view.innerWidth,
+        height = doc.documentElement.clientHeight || view.innerHeight,
+        rect = unit.getBoundingClientRect(),
+        geometry = [
+          width,
+          height,
+          rect.left,
+          rect.top,
+          rect.right,
+          rect.bottom,
+          rect.width,
+          rect.height,
+        ];
+      if (
+        !geometry.every(Number.isFinite) ||
+        width <= 0 ||
+        height <= 0 ||
+        rect.width <= 0 ||
+        rect.height <= 0 ||
+        rect.right <= rect.left ||
+        rect.bottom <= rect.top ||
+        !current()
+      )
+        return;
+      if (rect.left >= 0 && rect.top >= 0 && rect.right <= width && rect.bottom <= height) {
+        lastReveal = null;
+        return;
+      }
+      // An oversized unit can remain partly outside after nearest scrolling.
+      // An identical measurement does not warrant another no-op scroll.
+      if (
+        lastReveal?.navigation === navigation &&
+        lastReveal.revision === revision &&
+        geometry.every((value, index) => value === lastReveal.geometry[index])
+      )
+        return;
+      if (!current() || !navigation.refreshReadingHint() || !current()) return;
+      // The final currentness check follows all DOM reads and host callbacks.
+      // Resize owns no future focus, entry, resumed play or deferred work.
+      lastReveal = { navigation, revision, geometry };
+      unit.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    } finally {
+      revealingResize = false;
+    }
+  }
+  if (revealOnResize && view?.addEventListener) listen(view, 'resize', revealResizedReading);
   for (const surface of surfaces) {
     listen(surface.entry, 'click', () => {
       if (destroyed || getNavigation().readingState()?.regionId === surface.id) return;

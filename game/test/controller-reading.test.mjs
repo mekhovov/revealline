@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
-import { Document } from './helpers/couch-dom.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
 import { createRun, stepRun, releaseInputs, FIXED_DT, getSummary } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -277,8 +277,13 @@ test('destruction ends once and removes both finite toolbars and details event h
   assert.equal(f.navigation.readingState(), null);
 });
 
-function couchReading(t) {
-  const doc = new Document();
+function couchReading(t, { revealOnResize = false } = {}) {
+  const doc = new Document(),
+    win = Object.assign(new Events(), doc.defaultView, { innerWidth: 844, innerHeight: 390 });
+  doc.defaultView = win;
+  doc.parentNode = win;
+  doc.documentElement.clientWidth = 844;
+  doc.documentElement.clientHeight = 390;
   const make = (tag, id, text) => {
     const element = doc.createElement(tag);
     element.id = id;
@@ -304,26 +309,37 @@ function couchReading(t) {
   ]);
   let reading,
     scope = 'couch-help',
+    root = doc.body,
+    onHint = () => {},
+    onPrompt = () => {},
     transitions = 0,
     back = 0;
-  const prompt = ({ scrollable }) => readingInputPrompt({ modality: 'keyboard', scrollable });
+  const prompt = ({ scrollable }) => {
+    onPrompt();
+    return readingInputPrompt({ modality: 'keyboard', scrollable });
+  };
   const navigation = attachControllerNavigation({
     document: doc,
     getScope: () => scope,
-    getRoot: () => doc.body,
+    getRoot: () => root,
     getDefaultFocus: () => entry,
     getReadingPrompt: prompt,
     keyboard: true,
     onBack: () => back++,
     onReadingChange: (state) => reading?.changed(state),
-    onHint: (message) => reading?.hint(message),
+    onHint: (message) => {
+      reading?.hint(message);
+      onHint();
+    },
   });
+  let currentNavigation = navigation;
   reading = attachControllerReading({
     document: doc,
-    getNavigation: () => navigation,
+    getNavigation: () => currentNavigation,
     getReadingPrompt: prompt,
     getScope: () => scope,
     surfaceDefinitions: definitions,
+    revealOnResize,
     // An explicit list replaces both defaults and extensions; these unrelated
     // elements deliberately do not exist in the Couch document.
     additionalSurfaces: [['unowned', 'unowned-read', 'Unowned', 'unowned-unit']],
@@ -336,6 +352,8 @@ function couchReading(t) {
   });
   return {
     doc,
+    win,
+    unit,
     entry,
     done,
     region,
@@ -344,6 +362,10 @@ function couchReading(t) {
     reading,
     navigation,
     setScope: (value) => (scope = value),
+    setRoot: (value) => (root = value),
+    setNavigation: (value) => (currentNavigation = value),
+    onHint: (value) => (onHint = value),
+    onPrompt: (value) => (onPrompt = value),
     counts: () => ({ transitions, back }),
   };
 }
@@ -401,6 +423,222 @@ test('custom toolbar refuses flight entry and releases its own listeners on dest
   assert.equal(h.navigation.readingState(), null);
   assert.equal(h.doc.activeElement, h.other);
   assert.deepEqual(h.counts(), before);
+});
+
+const resizedOutside = { x: 20, y: 510, width: 360, height: 190 };
+const resizedInside = { x: 20, y: 180, width: 360, height: 190 };
+const resizeNearest = { block: 'nearest', inline: 'nearest', behavior: 'instant' };
+function resizeReading(t, options = {}) {
+  const h = couchReading(t, { revealOnResize: true, ...options });
+  h.entry.click();
+  h.unit._rect = resizedOutside;
+  const scrolls = [];
+  t.mock.method(h.unit, 'scrollIntoView', (value) => scrolls.push(value));
+  t.mock.method(h.region, 'focus', () => assert.fail('Resize cannot focus the reader again.'));
+  t.mock.method(h.navigation, 'sync', () => assert.fail('Resize cannot sync navigation.'));
+  t.mock.method(h.navigation, 'engage', () => assert.fail('Resize cannot engage navigation.'));
+  return { ...h, scrolls };
+}
+
+test('resize opt-in reveals the current reading unit, updates measured hints and preserves focus and Done', (t) => {
+  const h = resizeReading(t),
+    before = h.counts(),
+    state = h.navigation.readingState();
+  h.region.scrollHeight = h.region.clientHeight;
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [resizeNearest]);
+  assert.match(h.hint.textContent, /All text is visible · Enter, Space or Escape returns/);
+  assert.equal(h.doc.activeElement, h.region);
+  assert.equal(h.done.disabled, false);
+  assert.deepEqual(h.navigation.readingState(), state);
+  assert.deepEqual(h.counts(), before);
+  h.unit._rect = resizedInside;
+  h.win.emit('resize');
+  assert.equal(h.scrolls.length, 1, 'A visible reading unit needs no further scroll.');
+});
+
+test('resize leaves existing default reader behavior unchanged', (t) => {
+  const h = resizeReading(t, { revealOnResize: false });
+  assert.equal(h.win.listeners.get('resize')?.size ?? 0, 0);
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, []);
+  assert.equal(h.doc.activeElement, h.region);
+  assert.equal(h.done.disabled, false);
+});
+
+for (const condition of [
+  'ended',
+  'background',
+  'hidden-document',
+  'changed-scope',
+  'changed-root',
+  'changed-text',
+  'hidden-unit',
+  'inert-unit',
+  'invisible-unit',
+  'closed-disclosure',
+  'closed-dialog',
+  'disabled-done',
+  'detached-unit',
+])
+  test(`resize cannot reveal the active unit after ${condition}`, (t) => {
+    const h = resizeReading(t);
+    if (condition === 'ended') h.navigation.endReading({ restoreFocus: false });
+    if (condition === 'background') h.doc.focused = false;
+    if (condition === 'hidden-document') h.doc.hidden = true;
+    if (condition === 'changed-scope') h.setScope('flight');
+    if (condition === 'changed-root') h.setRoot(h.other);
+    if (condition === 'changed-text') h.region.textContent = 'Replacement instructions';
+    if (condition === 'hidden-unit') h.unit.hidden = true;
+    if (condition === 'inert-unit') h.unit.inert = true;
+    if (condition === 'invisible-unit') h.unit.style.visibility = 'hidden';
+    if (condition === 'closed-disclosure' || condition === 'closed-dialog') {
+      const closed = h.doc.createElement(condition === 'closed-disclosure' ? 'details' : 'dialog');
+      h.doc.body.append(closed);
+      closed.append(h.unit);
+    }
+    if (condition === 'disabled-done') h.done.disabled = true;
+    if (condition === 'detached-unit') h.unit.remove();
+    const before = h.counts(),
+      focus = h.doc.activeElement;
+    h.win.emit('resize');
+    assert.deepEqual(h.scrolls, []);
+    assert.equal(h.doc.activeElement, focus);
+    assert.deepEqual(h.counts(), before);
+  });
+
+for (const callback of ['prompt', 'hint'])
+  test(`resize retires when the ${callback} callback replaces its same-ID reading owner`, (t) => {
+    const h = resizeReading(t),
+      before = h.counts();
+    // A deliberate host replacement may focus its newly accepted reader. It
+    // ends with the same region, focus and public state as the retired reader.
+    t.mock.method(h.region, 'focus', Object.getPrototypeOf(h.region).focus);
+    const retire = () => {
+      h.onPrompt(() => {});
+      h.onHint(() => {});
+      h.navigation.endReading({ restoreFocus: false });
+      h.navigation.beginReading({
+        region: h.region,
+        origin: h.entry,
+        exit: h.done,
+        label: 'Couch controls',
+      });
+    };
+    if (callback === 'prompt') h.onPrompt(retire);
+    else h.onHint(retire);
+    h.win.emit('resize');
+    assert.deepEqual(h.scrolls, []);
+    assert.equal(h.doc.activeElement, h.region);
+    assert.equal(h.navigation.readingState().regionId, h.region.id);
+    assert.equal(h.counts().transitions, before.transitions + 2);
+  });
+
+for (const interruption of [
+  'other-focus',
+  'new-navigation',
+  'changed-scope',
+  'closed',
+  'background',
+  'destroyed',
+])
+  test(`resize hint publication cannot reveal its old unit after ${interruption}`, (t) => {
+    const h = resizeReading(t);
+    h.onHint(() => {
+      h.onHint(() => {});
+      if (interruption === 'other-focus') h.other.focus();
+      if (interruption === 'new-navigation') h.setNavigation({ ...h.navigation });
+      if (interruption === 'changed-scope') h.setScope('flight');
+      if (interruption === 'closed') h.unit.hidden = true;
+      if (interruption === 'background') h.doc.focused = false;
+      if (interruption === 'destroyed') h.reading.destroy();
+    });
+    h.win.emit('resize');
+    assert.deepEqual(h.scrolls, []);
+    assert.equal(h.doc.activeElement, interruption === 'other-focus' ? h.other : h.region);
+  });
+
+for (const read of ['geometry', 'final-style'])
+  test(`${read} publication cannot reveal a retired resize owner`, (t) => {
+    const h = resizeReading(t),
+      rect = h.unit.getBoundingClientRect.bind(h.unit),
+      style = h.win.getComputedStyle.bind(h.win);
+    let measured = false;
+    t.mock.method(h.unit, 'getBoundingClientRect', () => {
+      measured = true;
+      if (read === 'geometry') h.setScope('flight');
+      return rect();
+    });
+    t.mock.method(h.win, 'getComputedStyle', (element) => {
+      const value = style(element);
+      if (read === 'final-style' && measured) h.doc.focused = false;
+      return value;
+    });
+    h.win.emit('resize');
+    assert.equal(measured, true);
+    assert.deepEqual(h.scrolls, []);
+    assert.equal(h.doc.activeElement, h.region);
+  });
+
+test('resize ignores descendant delivery and invalid viewport or unit geometry', (t) => {
+  const h = resizeReading(t);
+  h.region.emit('resize');
+  assert.deepEqual(h.scrolls, []);
+  for (const invalid of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+    h.doc.documentElement.clientWidth = h.win.innerWidth = invalid;
+    h.win.emit('resize');
+  }
+  h.doc.documentElement.clientWidth = h.win.innerWidth = 844;
+  for (const invalid of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+    h.unit._rect = { ...resizedOutside, height: invalid };
+    h.win.emit('resize');
+  }
+  assert.deepEqual(h.scrolls, []);
+  assert.equal(h.doc.activeElement, h.region);
+});
+
+test('reentrant and identical resize deliveries cannot repeatedly scroll an oversized reading unit', (t) => {
+  const h = resizeReading(t),
+    rect = h.unit.getBoundingClientRect.bind(h.unit);
+  h.unit._rect = { ...resizedOutside, height: 600 };
+  h.onHint(() => h.win.emit('resize'));
+  t.mock.method(h.unit, 'getBoundingClientRect', () => {
+    h.win.emit('resize');
+    return rect();
+  });
+  t.mock.method(h.unit, 'scrollIntoView', (value) => {
+    h.scrolls.push(value);
+    h.win.emit('resize');
+  });
+  h.win.emit('resize');
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [resizeNearest]);
+  h.unit._rect = { ...resizedOutside, x: -10, height: 600 };
+  h.win.emit('resize');
+  assert.deepEqual(
+    h.scrolls,
+    [resizeNearest, resizeNearest],
+    'New geometry receives a fresh reveal.',
+  );
+  assert.equal(h.doc.activeElement, h.region);
+});
+
+test('resize stores no delayed restoration and removes its listener on teardown', async (t) => {
+  const h = resizeReading(t);
+  assert.equal(h.win.listeners.get('resize').size, 1);
+  h.doc.focused = false;
+  h.win.emit('resize');
+  h.doc.focused = true;
+  await Promise.resolve();
+  assert.deepEqual(h.scrolls, []);
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [resizeNearest]);
+  h.reading.destroy();
+  assert.equal(h.win.listeners.get('resize').size, 0);
+  h.win.emit('resize');
+  assert.equal(h.scrolls.length, 1);
+  assert.equal(h.done.disabled, true);
+  assert.equal(h.doc.activeElement, h.region);
 });
 
 const pack = JSON.parse(
