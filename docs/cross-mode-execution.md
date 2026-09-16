@@ -20,6 +20,8 @@ The `124f58df` integration attempt failed its full source tests: both families r
 
 The next source, `39eaea27`, also failed full qualification: both families reported **5,282/5,292 passing**, with the same ten chapter-preparation timeouts across four files. Its preflights and ordinary PR build passed, but freeze was skipped and no release artifact was produced. The [navigation recovery correction](verification/cross-mode/p03/navigation-recovery/README.md) retains those originals, adds bounded operation-specific timing/state diagnostics, and fixes a separately reproduced late-Resume race while the page is hidden or unfocused. The in-app tab-selection attempt did not establish document focus loss and remains unaccepted evidence. These corrections require another complete exact-source qualification; they do not advance P03 or replace public v0.58.1.
 
+The More worlds correction also remains part of this unaccepted candidate. The original same-chapter reset and cross-chapter bypass were reproduced before correction. All three Choose adapters now share the checked flight-replacement gate; same-chapter selection preserves the run. See [the selection contract](more-worlds-flight-selection.md). Focus, failed-save and stale-operation checks are distinct from full source and public qualification.
+
 The approved remaining order is unchanged: P03 → P05 → P08-A → P08-B → P09 → P07 → P02-B → P04 → P06 → P10 → P11–P15 campaigns → P16 → P17 → P18. Native distribution and online multiplayer retain separate later gates. After this feature's public gate passes, record its exact source, PR, URL and observed journeys here while keeping P03's outstanding acceptance work visible.
 
 ## Retained release and correction history

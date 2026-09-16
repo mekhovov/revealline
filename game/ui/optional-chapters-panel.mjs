@@ -40,6 +40,7 @@ export function attachOptionalChaptersPanel({
   let catalog = null,
     disposed = false,
     generation = 0,
+    launchGeneration = 0,
     pending = null,
     pendingFocus = null,
     pendingStatus = null,
@@ -140,6 +141,7 @@ export function attachOptionalChaptersPanel({
   pageStatus.setAttribute('aria-live', 'polite');
   pager.append(previous, pageStatus, nextPage);
   themeFilter.onchange = modeFilter.onchange = () => {
+    ++launchGeneration;
     page = 0;
     if (!busy) pinned = null;
     refreshView();
@@ -156,6 +158,46 @@ export function attachOptionalChaptersPanel({
     actions,
   );
   doc.body.append(dialog);
+  const pageEvents =
+    typeof doc.defaultView?.addEventListener === 'function'
+      ? doc.defaultView
+      : (globalThis.window ?? globalThis);
+  const retireLaunch = () => {
+    ++launchGeneration;
+    if (pendingFocus) pendingFocus.moved = true;
+  };
+  const pageBlur = (event) => {
+    if (!event.target || event.target === pageEvents) retireLaunch();
+  };
+  const pageVisibility = () => {
+    if (doc.hidden) retireLaunch();
+  };
+  pageEvents.addEventListener?.('blur', pageBlur);
+  pageEvents.addEventListener?.('pagehide', retireLaunch);
+  doc.addEventListener('visibilitychange', pageVisibility);
+  function choiceLaunch(opener, current) {
+    const epoch = ++launchGeneration;
+    let selected = false;
+    const isCurrent = () =>
+      !selected &&
+      current() &&
+      epoch === launchGeneration &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      opener.isConnected &&
+      (busy || !opener.disabled) &&
+      !opener.closest('[hidden],[inert],[aria-hidden="true"]');
+    return {
+      opener,
+      isCurrent,
+      onSelected() {
+        if (!isCurrent()) return;
+        selected = true;
+        close(false);
+        onChosen();
+      },
+    };
+  }
   const rows = new Map(),
     installedRows = new Map(),
     matches = new WeakMap();
@@ -247,11 +289,9 @@ export function attachOptionalChaptersPanel({
       run(
         async (signal, current, report) => {
           report(`Preparing ${chapter.name}…`, 'preparing');
-          await chapter.choose({ signal, onStatus: report });
-          if (current()) {
-            close(false);
-            onChosen();
-          }
+          const launch = choiceLaunch(row.choose, current);
+          const selected = await chapter.choose({ signal, onStatus: report, launch });
+          if (selected !== false) launch.onSelected();
         },
         { origin: row.choose, fallback: recoverySummary },
       ),
@@ -426,6 +466,7 @@ export function attachOptionalChaptersPanel({
       : '';
   }
   function movePage(delta) {
+    ++launchGeneration;
     const origin = doc.activeElement;
     if (!busy) pinned = null;
     page = Math.max(0, page + delta);
@@ -500,11 +541,9 @@ export function attachOptionalChaptersPanel({
           run(
             async (signal, current, report) => {
               report(`Preparing ${pack.name}…`, 'preparing');
-              const selected = await chooseInstalled(pack, { signal, onStatus: report });
-              if (current() && selected !== false) {
-                close(false);
-                onChosen();
-              }
+              const launch = choiceLaunch(row.choose, current);
+              const selected = await chooseInstalled(pack, { signal, onStatus: report, launch });
+              if (selected !== false) launch.onSelected();
             },
             { origin: row.choose },
           ),
@@ -530,7 +569,14 @@ export function attachOptionalChaptersPanel({
   };
   doc.addEventListener('focusin', movedFocus);
   function returnFocus(plan, succeeded = false, cancelled = false) {
-    if (disposed || !dialog.open || (!cancelled && (!plan || plan.moved))) return;
+    if (
+      disposed ||
+      !dialog.open ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      (!cancelled && (!plan || plan.moved))
+    )
+      return;
     if (![doc.body, dialog, plan?.origin, cancel].includes(doc.activeElement)) return;
     for (const candidate of [
       succeeded ? plan?.next : null,
@@ -676,12 +722,9 @@ export function attachOptionalChaptersPanel({
     await run(
       async (signal, current, report) => {
         report(`Preparing ${item.name}…`, 'preparing');
-        const result = await choose(item, { signal, onStatus: report });
-        if (!current()) return;
-        if (result !== false) {
-          close(false);
-          onChosen();
-        }
+        const launch = choiceLaunch(rows.get(item.id).choose, current);
+        const result = await choose(item, { signal, onStatus: report, launch });
+        if (result !== false) launch.onSelected();
       },
       { origin: rows.get(item.id)?.choose },
     );
@@ -707,6 +750,7 @@ export function attachOptionalChaptersPanel({
   }
   function close(notify = true) {
     if (!dialog.open) return;
+    retireLaunch();
     cancelPending({ restoreFocus: false });
     dialog.close();
     if (notify) onClose();
@@ -718,7 +762,10 @@ export function attachOptionalChaptersPanel({
   };
   dialog.addEventListener('cancel', escape);
   dialog.addEventListener('close', () => {
-    if (!dialog.open && pending) cancelPending();
+    if (!dialog.open) {
+      retireLaunch();
+      if (pending) cancelPending();
+    }
   });
   function dispose() {
     if (disposed) return;
@@ -729,6 +776,10 @@ export function attachOptionalChaptersPanel({
     pending?.abort();
     pending = null;
     pendingFocus = null;
+    retireLaunch();
+    pageEvents.removeEventListener?.('blur', pageBlur);
+    pageEvents.removeEventListener?.('pagehide', retireLaunch);
+    doc.removeEventListener('visibilitychange', pageVisibility);
     doc.removeEventListener('focusin', movedFocus);
     compact?.removeEventListener?.('change', resized);
     if (dialog.open) dialog.close();
