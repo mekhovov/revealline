@@ -17,6 +17,11 @@ test('a new attempt keeps replay export locked until the previous download reque
     if (delay === 60000) timer.unref();
     return timer;
   });
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  page.frame(100);
+  page.key('ArrowDown', false);
+  page.$('pause-button').click();
   const previousRun = page.rendered.run;
   // The real web export is pending at its promise boundary. A native adapter
   // can stay at this same boundary while its Save sheet remains open.
@@ -24,7 +29,10 @@ test('a new attempt keeps replay export locked until the previous download reque
   assert.equal(page.$('replay-dialog').open, true);
   assert.equal(page.$('export-replay').disabled, true);
   page.$('replay-dialog').close();
-  page.$('restart-button').onclick();
+  page.$('overlay-restart').click();
+  assert.equal(page.$('restart-dialog').open, true);
+  page.$('restart-confirm').click();
+  assert.equal(page.$('restart-dialog').open, false);
   page.frame(0);
   assert.notEqual(page.rendered.run, previousRun);
   assert.equal(page.$('export-replay').disabled, true);

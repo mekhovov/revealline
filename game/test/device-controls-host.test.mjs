@@ -15,7 +15,7 @@ const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', i
 const pack = JSON.parse(
   await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url)),
 );
-const FEATURED_ORIGINALS_TIMEOUT_MS = 180000;
+const PRESSURE_ORIGINALS_TIMEOUT_MS = 180000;
 const ticks = (page, count) => {
   for (let n = 0; n < count; n++) page.frame();
 };
@@ -61,21 +61,32 @@ function imageBoundary(t) {
   });
 }
 
-async function featuredPictureReady(page) {
+async function choosePressureChapter(page) {
+  // Title Start now launches the selected mission. Choose this chapter explicitly
+  // through Missions before testing its authored Arcade rules.
+  page.$('shell-play').click();
+  assert.equal(page.$('shell-missions').open, true);
+  page.$('shell-prepare').click();
+  assert.equal(page.$('mission-picker-setup').open, true);
+  page.change('pack-select', pack.id);
   // This action imports and authenticates the complete original-image pack.
   // Keep the same bounded allowance as other bulk-original hosts; input waits
   // retain their shared deadline and no application timeout is changed.
   try {
     await waitFor(
-      () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
+      () =>
+        !page.$('pack-select').disabled &&
+        page.$('pack-select').value === pack.id &&
+        page.doc.body.dataset.pictureState === 'ready',
       {
-        timeoutMs: FEATURED_ORIGINALS_TIMEOUT_MS,
-        message: 'Featured mission must finish its exact picture preparation before Deploy.',
+        timeoutMs: PRESSURE_ORIGINALS_TIMEOUT_MS,
+        message:
+          'Selected Pressure Lines mission must finish its exact picture preparation before Deploy.',
       },
     );
   } catch (error) {
     error.message += `\n${JSON.stringify({
-      timeoutMs: FEATURED_ORIGINALS_TIMEOUT_MS,
+      timeoutMs: PRESSURE_ORIGINALS_TIMEOUT_MS,
       pack: page.$('pack-select').value,
       pictureState: page.doc.body.dataset.pictureState,
       packStatus: page.$('pack-status').textContent,
@@ -105,12 +116,11 @@ test('pause updates flight presentation before another animation frame can run',
   assert.deepEqual(page.errors, []);
 });
 
-test('featured pressure chapter hides manual actions and actual keyboard action attempts cannot change its flight', async (t) => {
+test('selected pressure chapter hides manual actions and actual keyboard action attempts cannot change its flight', async (t) => {
   imageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
   controls(page, 'hidden');
-  page.$('shell-featured').click();
-  await featuredPictureReady(page);
+  await choosePressureChapter(page);
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
   assert.equal(page.$('manual-equipment-help').hidden, true);
   assert.doesNotMatch(page.$('keyboard-help').textContent, /supply/i);
@@ -154,8 +164,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: first Arcade Down cut keeps rendering and saves after a batched capture`, async (t) => {
     imageBoundary(t);
     const page = await soloPage(t, { titleScreen: true, storage: storageWith({ turnPolicy }) });
-    page.$('shell-featured').click();
-    await featuredPictureReady(page);
+    await choosePressureChapter(page);
     page.$('shell-deploy').click();
     assert.equal(page.$('shell-missions').open, false, 'Deploy leaves the mission browser.');
     await settle(() => page.doc.body.dataset.flightState === 'running');

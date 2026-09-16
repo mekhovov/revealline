@@ -5,7 +5,7 @@ import { campaignKey } from '../library.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 
-test('featured chapter installs exact pressure chapter and keeps R4, R3, R2 and First Light selectable', async (t) => {
+test('explicit chapter selection installs exact pressure chapter and keeps R4, R3, R2 and First Light selectable', async (t) => {
   const read = async (file) => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
   const [index, catalog, archiveIndex, archiveCatalog, pack, r4, r3, r2, original] =
     await Promise.all([
@@ -71,8 +71,19 @@ test('featured chapter installs exact pressure chapter and keeps R4, R3, R2 and 
     else globalThis.Image = oldImage;
   });
   const page = await soloPage(t, { titleScreen: true });
-  page.$('shell-featured').click();
-  await settle(() => !page.$('shell-featured').disabled, 'featured launch settled');
+  // Title Start uses the saved/current selection. Chapter installation is an
+  // explicit Missions choice, and must not silently start the selected flight.
+  page.$('shell-play').click();
+  const choose = page.$('mission-picker-cards').querySelector(`[data-pack="${pack.id}"]`);
+  assert.ok(choose);
+  choose.click();
+  await settle(
+    () =>
+      page.$('pack-select').value === pack.id &&
+      page.$('campaign-select').value === keyFor(pack) &&
+      !page.$('pack-select').disabled &&
+      page.doc.body.dataset.pictureState === 'ready',
+  );
   assert.equal(page.$('pack-select').value, pack.id, page.$('run-message').textContent);
   assert.equal(page.$('campaign-select').value, keyFor(pack));
   assert.equal(page.$('shell-home').open, false);
@@ -134,9 +145,20 @@ for (const [id, ruleset, coverage] of [
       else globalThis.Image = oldImage;
     });
     const earlier = await soloPage(sub, { titleScreen: true });
-    earlier.$('shell-featured').click();
-    await settle(() => !earlier.$('shell-featured').disabled);
+    earlier.$('shell-play').click();
+    const choose = earlier.$('mission-picker-cards').querySelector(`[data-pack="${pack.id}"]`);
+    assert.ok(choose);
+    choose.click();
+    await settle(
+      () =>
+        earlier.$('pack-select').value === pack.id &&
+        earlier.$('campaign-select').value === keyFor(pack) &&
+        !earlier.$('pack-select').disabled &&
+        earlier.doc.body.dataset.pictureState === 'ready',
+    );
     assert.equal(earlier.$('pack-select').value, pack.id);
+    earlier.$('shell-prepare').click();
+    assert.equal(earlier.$('mission-picker-setup').open, true);
     earlier.change('pack-select', edition.id);
     await settle(
       () =>
