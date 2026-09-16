@@ -1,0 +1,159 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-18",
+  "infrastructureCommit": "b83acdd80f0aaa35a72cff8c6b861250e894b1d7",
+  "deploymentId": 6474004290,
+  "versions": [
+    "v0.58.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-18/native/review.json",
+      "sha256": "a01dfce5b7373f89f920c61e44dc9dddc423f3356f4a0000560e546a5d63be86"
+    },
+    {
+      "path": "evidence/archive-18/native/01-ready.ax.txt",
+      "sha256": "6422637c33390bc0c720b4131d5875da333fac66f978ed514f439d7c9a0f10b0"
+    },
+    {
+      "path": "evidence/archive-18/native/01-ready.json",
+      "sha256": "988c442585d8a8ae3ee53f64ca4aec234684d37aa28ed53b0ba7437559f5d175"
+    },
+    {
+      "path": "evidence/archive-18/native/01-ready.png",
+      "sha256": "80c9afc391b1629fd3944b16d104466c93bbf15b146067a6f0d5792445214819"
+    },
+    {
+      "path": "evidence/archive-18/native/02-saved-flight-restored.ax.txt",
+      "sha256": "9b8e5264f96d878256978337320e35238ea1ad3a4359ccce54b545536064a6cf"
+    },
+    {
+      "path": "evidence/archive-18/native/02-saved-flight-restored.json",
+      "sha256": "2a4f92887b151d2f4574ea8584ba15a232720cd93bb62ca1eb295099de1e447f"
+    },
+    {
+      "path": "evidence/archive-18/native/02-saved-flight-restored.png",
+      "sha256": "fb204e4989c56f443bfe3441d748b3543cb117e2956b246c01c670c2404f9c9c"
+    },
+    {
+      "path": "evidence/archive-18/native/03-flight-resumed.ax.txt",
+      "sha256": "792744cae5324be345785de0799a50d568db42f4413e58cf3420a9cd2fa72f21"
+    },
+    {
+      "path": "evidence/archive-18/native/03-flight-resumed.json",
+      "sha256": "48feb9e4b256ea00d16ef4416f84a1d859370bfc8bdc638d4bea3ff06cf06bfa"
+    },
+    {
+      "path": "evidence/archive-18/native/04-clock-ended.ax.txt",
+      "sha256": "6208421618d33fb1d94e1671b71b1daa200a99f9ad0909977c70e8973777b56f"
+    },
+    {
+      "path": "evidence/archive-18/native/04-clock-ended.json",
+      "sha256": "a6f11f318b438899a8a3dc47e7f7e0f5963072ca21f433ff7fa740e2ecde3307"
+    },
+    {
+      "path": "evidence/archive-18/native/04-clock-ended.png",
+      "sha256": "d9b8d4119f68b69a086bd15b214ba1b23451669a1a96c5d6b7d789f916daa64a"
+    },
+    {
+      "path": "evidence/archive-18/native/05-retry-paused.ax.txt",
+      "sha256": "fab7c70cc2c222a719230c7581603ec6b6c96d3abec633549570ad62f92281be"
+    },
+    {
+      "path": "evidence/archive-18/native/05-retry-paused.json",
+      "sha256": "5bb0d11672d7c40cfc979e64fb3f57d9836e2466e29d41d2bd4d4eecedce5b74"
+    },
+    {
+      "path": "evidence/archive-18/native/05-retry-paused.png",
+      "sha256": "94c8bc42afc54e47f1288bc7fd7753663282438578f7c065353823d27836ac48"
+    },
+    {
+      "path": "evidence/archive-18/native/06-resume-repause.ax.txt",
+      "sha256": "fab7c70cc2c222a719230c7581603ec6b6c96d3abec633549570ad62f92281be"
+    },
+    {
+      "path": "evidence/archive-18/native/06-resume-repause.json",
+      "sha256": "cafc7482fff48c62d26e1640a0a73aeec179268525a56157879c2ed127ddd5e5"
+    },
+    {
+      "path": "evidence/archive-18/native/07-audio-settings.ax.txt",
+      "sha256": "bbace640e7d44e9b02c614d26977604d81f18bb99b47dbcba748f10dbf0f166d"
+    },
+    {
+      "path": "evidence/archive-18/native/07-audio-settings.json",
+      "sha256": "f50608addd7f722da405da26e1a3404cffdc1d70373e988f81b8b376d463a359"
+    },
+    {
+      "path": "evidence/archive-18/native/07-audio-settings.png",
+      "sha256": "d628a53d9bb23580663c216776b17f631fad6f18239eea27adf61dfc11bcb1f5"
+    },
+    {
+      "path": "evidence/archive-18/native/08-settings-return-paused.ax.txt",
+      "sha256": "8ffb740739b9d7676dfb78b015d704449a8bff54a94d1c87b886d0e18b35d174"
+    },
+    {
+      "path": "evidence/archive-18/native/08-settings-return-paused.json",
+      "sha256": "70d0cd50de7dd9751e382a8ccc9ee0df8109c314fdb896079182089cbf41cf98"
+    },
+    {
+      "path": "evidence/archive-18/native/09-return-title.ax.txt",
+      "sha256": "f58ec122a63582cb1aaa326e616939a4c6c364ef93fec2ad816566f47911b530"
+    },
+    {
+      "path": "evidence/archive-18/native/09-return-title.json",
+      "sha256": "05d4038eeae8d113375a84d8da06264792e95f2d7800d108a20d5135a577a5ed"
+    },
+    {
+      "path": "evidence/archive-18/native/09-return-title.png",
+      "sha256": "8ee2275146000f918d44718eea77edbecf29b0997ddf88db6297d0b483223b3d"
+    },
+    {
+      "path": "evidence/archive-18/http/http-results.jsonl",
+      "sha256": "2f77efc959e4e7c585954ed9a7fb075a491e84993296aacdf0afcdc4bfd5cc4e"
+    },
+    {
+      "path": "evidence/archive-18/http/http-attempts.jsonl",
+      "sha256": "2f77efc959e4e7c585954ed9a7fb075a491e84993296aacdf0afcdc4bfd5cc4e"
+    },
+    {
+      "path": "evidence/archive-18/http/auditor.py",
+      "sha256": "d0d1d302f2c362bd9ffaeafc08ba846d57a932f4ce2e5ae73bae4ec18d531590"
+    },
+    {
+      "path": "evidence/archive-18/verification-receipts.zip",
+      "sha256": "bd2564ddee6fb9f9375317167b1afef02c3f08f3451bf01060109660a597a2c2"
+    },
+    {
+      "path": "evidence/archive-18/verification-receipts/receipt.json",
+      "sha256": "903f1a2667ce90335478071a5a61c82ad3aa56d21b5057683485e6d01d0f7079"
+    },
+    {
+      "path": "evidence/archive-18/verification-receipts/zip-receipt-v0.58.0.json",
+      "sha256": "d9fca55322ac8a02286ce72194002a0a6bca839cf021ec522fd853b0bba1c83e"
+    },
+    {
+      "path": "evidence/archive-18/deployment.json",
+      "sha256": "76291c4f2b372dc4c6187c579d638d93cefc7a8bbd0e7605aafbe89a88245ee8"
+    },
+    {
+      "path": "evidence/archive-18/deployment-statuses.json",
+      "sha256": "136c9e969bd5c454085d0c8846b8a14c3d088b570ff021e51f48e2e4de854cb9"
+    },
+    {
+      "path": "evidence/archive-18/after-hosted-main.json",
+      "sha256": "dab308c890e6b8e6663e339d502f3d118df18b4a1dedfdb9d599b98ba41e4bb8"
+    }
+  ],
+  "scope": "Historical online preservation of original v0.58.0 only. Root accepted the retained native review: title, existing saved-flight restoration paused until explicit Resume, flight, clock-expired result, retry, pause, audio settings and return to title. Full HTTP independently verified all 665 files / 312702795 bytes. No victory, offline, physical touch/controller or audible listening acceptance. Original Team notice defect remains in this historical release; this is not acceptance of the v0.58.1 correction or a completed phase.",
+  "observationScopes": [
+    {
+      "version": "v0.58.0",
+      "nativeInfrastructureCommit": "b83acdd80f0aaa35a72cff8c6b861250e894b1d7",
+      "nativeDeploymentId": 6474004290,
+      "evidencePath": "evidence/archive-18/native/review.json",
+      "freshBrowserRun": true
+    }
+  ],
+  "phaseAccepted": false
+}
