@@ -103,6 +103,11 @@ for (const mode of ['Versus', 'Team']) {
       assert.equal(region.getAttribute('aria-describedby'), f.control('help-reading-hint').id);
       assert.match(f.control('help-reading-hint').textContent, /Enter, Space or Escape returns/);
       assert.doesNotMatch(f.control('help-reading-hint').textContent, /South|East/);
+      assert.doesNotMatch(
+        f.control(mode === 'Team' ? 'pads' : 'menu-status').textContent,
+        /Enter, Space or Escape returns/,
+        'Reading hints have one visible status owner, rather than a duplicate in another panel.',
+      );
       assert.equal(f.press(key).defaultPrevented, true);
       f.release(key);
       assert.equal(f.doc.activeElement, f.control('help-read'));

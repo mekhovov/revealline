@@ -1161,8 +1161,10 @@ try {
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
     onHint: (message) => {
-      menuHint = message;
-      reading?.hint(message);
+      if (navigation.readingState()) {
+        menuHint = '';
+        reading?.hint(message);
+      } else menuHint = message;
       updateMenu();
     },
     onReadingChange: (state) => reading?.changed(state),
@@ -1171,6 +1173,7 @@ try {
     getNavigation: () => navigation,
     getScope: couchScope,
     getReadingPrompt: readingPrompt,
+    revealOnResize: true,
     surfaceDefinitions: [
       ['race-help-reading', 'race-help-read', 'Couch controls', 'race-help-unit'],
     ],

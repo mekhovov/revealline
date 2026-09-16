@@ -296,8 +296,10 @@ export function bootCoop() {
       if (departure || run?.status === 'paused') back();
     },
     onHint: (message) => {
-      menuHint = message;
-      reading?.hint(message);
+      if (navigation.readingState()) {
+        menuHint = '';
+        reading?.hint(message);
+      } else menuHint = message;
     },
     onReadingChange: (state) => reading?.changed(state),
   });
@@ -305,6 +307,7 @@ export function bootCoop() {
     getNavigation: () => navigation,
     getScope: scope,
     getReadingPrompt: readingPrompt,
+    revealOnResize: true,
     surfaceDefinitions: [
       ['coop-help-reading', 'coop-help-read', 'Relay Rescue controls', 'coop-help-unit'],
     ],
