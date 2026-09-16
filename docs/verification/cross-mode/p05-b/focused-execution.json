@@ -1,0 +1,62 @@
+{
+  "files": [
+    "menu-style-preferences",
+    "menu-appearance",
+    "menu-style-host",
+    "display-preferences-host",
+    "couch-shell",
+    "couch-navigation",
+    "coop-host",
+    "title-entry-host"
+  ],
+  "runs": [
+    {
+      "node": "22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/menu-appearance.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/title-entry-host.test.mjs"
+      ],
+      "startedAt": "2026-09-15T20:38:45.647239+00:00",
+      "seconds": 73.96718,
+      "exitCode": 0,
+      "log": ".cache/p05b/whole-final-node22.log",
+      "logBytes": 47742,
+      "logSha256": "fd87d2e21036c965dd47dd81ab49cf6aa5f0b4eb89209467eaadaad6680c0e26"
+    },
+    {
+      "node": "20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/menu-appearance.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/title-entry-host.test.mjs"
+      ],
+      "startedAt": "2026-09-15T20:39:59.615237+00:00",
+      "seconds": 82.612726,
+      "exitCode": 0,
+      "log": ".cache/p05b/whole-final-node20.log",
+      "logBytes": 44567,
+      "logSha256": "d66143e93a05baee7a86af3f0cfcce13a683aaff53a86ccde44db771040f7e7a"
+    }
+  ],
+  "inputCount": 291,
+  "inputBytes": 15727778,
+  "inputsUnchanged": true,
+  "sourceScope": "Eight complete actual files; finite DOM/Canvas boundary, not native/browser/public qualification."
+}

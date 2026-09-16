@@ -23,6 +23,61 @@ const change = (f, id, value) => {
 const press = (f, key, target = f.doc.activeElement, extra = {}) =>
   target.emit('keydown', { key, code: key, repeat: false, ...extra });
 
+// These assert the real shell's scrolling intent and owner checks, not viewport
+// geometry. Root's separate browser samples qualify actual visible focus.
+for (const interruption of [
+  'other-focus',
+  'new-screen',
+  'background',
+  'hidden',
+  'destroyed',
+  'detached',
+])
+  test(`Couch return reveal cannot outlive a focus callback's ${interruption}`, async (t) => {
+    const f = await couchPage(t),
+      target = f.$('race-options'),
+      before = f.checkpoint();
+    target.click();
+    const focus = target.focus.bind(target),
+      reveals = [];
+    t.mock.method(target, 'scrollIntoView', (options) => reveals.push(options));
+    t.mock.method(target, 'focus', (options) => {
+      focus(options);
+      if (interruption === 'other-focus') f.$('race-help').focus();
+      if (interruption === 'new-screen') f.$('race-help').click();
+      if (interruption === 'background') f.doc.focused = false;
+      if (interruption === 'hidden') f.doc.hidden = true;
+      if (interruption === 'destroyed') f.win.emit('pagehide', { persisted: false });
+      if (interruption === 'detached') target.remove();
+    });
+    f.$('race-options-back').click();
+    assert.deepEqual(reveals, []);
+    if (interruption === 'other-focus') assert.equal(f.doc.activeElement.id, 'race-help');
+    if (interruption === 'new-screen') {
+      assert.equal(f.$('race-help-panel').hidden, false);
+      assert.equal(f.doc.activeElement.id, 'race-help-read');
+    }
+    assert.deepEqual(f.checkpoint(), before);
+    assert.equal(f.tick(), 0);
+  });
+
+test('Couch main Back reveals the same already-focused action without activating it', async (t) => {
+  const f = await couchPage(t),
+    target = f.$('race-start'),
+    before = f.checkpoint(),
+    reveals = [];
+  target.focus();
+  t.mock.method(target, 'scrollIntoView', (options) => {
+    assert.equal(f.doc.activeElement === target, true);
+    reveals.push(options);
+  });
+  press(f, 'Escape');
+  assert.deepEqual(reveals, [{ block: 'nearest', inline: 'nearest', behavior: 'auto' }]);
+  assert.equal(f.doc.activeElement === target, true);
+  assert.deepEqual(f.checkpoint(), before);
+  assert.equal(f.tick(), 0);
+});
+
 test('lobby, setup and children use reachable native controls and Back restores the actual opener', async (t) => {
   const f = await couchPage(t);
   assert.equal(f.doc.documentElement.dataset.toolState, 'ready');
@@ -313,8 +368,19 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   const base = JSON.parse(
     await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
   );
-  const campaign = { ...base, levels: [retryFixture('enemy-player').level] };
-  const f = await couchPage(t, { campaign });
+  const campaign = { ...base, briefs: [], levels: [retryFixture('enemy-player').level] };
+  const f = await couchPage(t, { campaign }),
+    firstResultsReveal = [];
+  t.mock.method(f.$('race-start'), 'scrollIntoView', (options) => {
+    firstResultsReveal.push({
+      options,
+      title: f.$('race-title').textContent,
+      rows: [0, 1].map((i) => ({
+        hidden: f.$(`race-result-${i}`).hidden,
+        text: f.$(`race-result-${i}`).textContent,
+      })),
+    });
+  });
   f.$('race-start').click();
   f.frame();
   f.key('KeyD');
@@ -326,6 +392,13 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   assert.match(f.$('race-title').textContent, /Round complete/);
   assert.equal(f.$('race-result-0').hidden, false);
   assert.equal(f.$('race-result-1').hidden, false);
+  assert.deepEqual(firstResultsReveal, [
+    {
+      options: { block: 'nearest', inline: 'nearest', behavior: 'auto' },
+      title: 'Round complete.',
+      rows: [0, 1].map((i) => ({ hidden: false, text: f.$(`race-result-${i}`).textContent })),
+    },
+  ]);
   f.$('race-review').click();
   assert.equal(f.$('race-boards').hidden, false);
   assert.equal(f.$('race-shell').hidden, true);
@@ -333,9 +406,16 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   for (const i of [0, 1]) assert.match(f.$(`racer-input-${i}`).textContent, /Results for options/);
   f.frames(10, 200);
   assert.deepEqual(f.checkpoint(), before);
+  const revealed = [];
+  t.mock.method(f.$('race-review'), 'scrollIntoView', (options) => {
+    assert.equal(f.doc.activeElement === f.$('race-review'), true);
+    assert.equal(f.$('race-main').hidden || f.$('race-main').inert, false);
+    revealed.push(options);
+  });
   f.$('race-pause').click();
   assert.equal(f.$('race-main').hidden, false);
   assert.equal(f.doc.activeElement.id, 'race-review');
+  assert.deepEqual(revealed, [{ block: 'nearest', inline: 'nearest', behavior: 'auto' }]);
   assert.equal(
     f
       .$('race-main')

@@ -425,6 +425,9 @@ canvas {
   gap: 10px;
   margin-top: 22px;
 }
+.field-kit #coop-pause-modes {
+  margin-block-start: var(--fk-space-4, 16px);
+}
 .coop-mode-actions {
   display: flex;
   flex-wrap: wrap;
@@ -789,4 +792,40 @@ kbd {
     font-size: var(--fk-text-secondary);
     line-height: 1.3;
   }
+}
+
+/* Shared display roles enlarge text without changing either player's geometry. */
+.field-kit[data-field-kit-page='relay-rescue']
+  :is(.identity, .identity strong, .identity > span, .team-status, .masthead, .eyebrow) {
+  font-size: var(--fk-text-secondary);
+  line-height: 1.35;
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.team-status > strong, #coop-clock) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-counter);
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.mode-label, .team-status) {
+  letter-spacing: normal;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity {
+  min-width: 0;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity strong {
+  overflow-wrap: anywhere;
+}
+
+/* Picture controls share the movable lobby/pause tools and their current root. */
+.coop-picture {
+  min-inline-size: 0;
+}
+.coop-picture p {
+  overflow-wrap: anywhere;
+}
+.coop-picture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.coop-picture-actions button {
+  min-block-size: 50px;
 }

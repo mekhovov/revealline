@@ -144,6 +144,7 @@ test('a real terminal draw keeps both destination links direct and does not star
     await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
   );
   campaign.levels = [retryFixture('enemy-player').level];
+  campaign.briefs = [];
   const f = await couchPage(t, { campaign });
   f.$('race-start').click();
   f.frame();

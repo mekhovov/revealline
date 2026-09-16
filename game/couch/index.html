@@ -16,6 +16,7 @@
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/menu-appearance.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
@@ -151,7 +152,8 @@
               >Relay Rescue · team up</a
             >
             <button id="race-start" class="race-primary" type="button">Start round</button>
-            <button id="race-chapter-retry" type="button" hidden>Retry chapter picture</button>
+            <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
+            <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
             <button id="race-focus" type="button">Race setup</button>
             <button id="race-options" type="button">Options</button>
             <button id="race-help" type="button">How to play</button>
@@ -205,12 +207,32 @@
           <p class="race-kicker">MAKE YOURSELF AT HOME</p>
           <h1 id="race-options-title" data-field-kit-copy="settings.couchTitle">Flight settings</h1>
           <label class="field-kit-page-text"
+            >Text style<select id="race-text-face">
+              <option value="pixel">Theme font</option>
+              <option value="plain">Plain</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
             ><span data-field-kit-copy="display.textSize">Text size</span
-            ><select data-field-kit-text-size>
+            ><select id="race-text-size">
               <option value="standard" data-field-kit-copy="display.standard">Standard</option>
               <option value="large" data-field-kit-copy="display.large">Large</option>
             </select></label
           >
+          <label class="field-kit-page-text"
+            >Menu colours<select id="race-menu-palette">
+              <option value="auto">Automatic</option>
+              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
+            >Menu ornaments<select id="race-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="race-menu-style-status" class="micro-note" role="status"></p>
           <div class="race-fields">
             <label
               >Player 1 touch controls<select id="race-touch-0">
@@ -237,6 +259,8 @@
           <label class="race-check"
             ><input id="race-reduced" type="checkbox" /> Reduced effects</label
           >
+          <p id="race-system-reduction" class="setting-note"></p>
+          <p id="race-display-status" class="setting-note" role="status"></p>
           <button id="race-audio" type="button" aria-pressed="false">Unmute sound</button>
           <label for="race-master-volume">Master sound volume</label>
           <input id="race-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
