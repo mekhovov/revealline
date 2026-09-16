@@ -1,0 +1,11 @@
+{
+  "status": "PASS_POST_NATIVE_IMMUTABLE_AUTHORITY",
+  "at": "2026-09-15T21:56:55.420217+00:00",
+  "archiveCommit": "f7d7ecd711cb895801412a4bcf7796e63d25887c",
+  "runId": 35024424739,
+  "deploymentId": 6468597117,
+  "nineAssetIdsNamesSizesDigestsUnchanged": true,
+  "tagObjectUnchanged": true,
+  "gameSource": "7945c6d07714d41cee9b6f848059b8dc18aed86c",
+  "browserEvidenceScope": "Historical online preservation; parent-native-review.json retains findings and required P01 fixes."
+}

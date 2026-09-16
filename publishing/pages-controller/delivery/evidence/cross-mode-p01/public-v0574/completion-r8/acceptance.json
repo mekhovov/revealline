@@ -1,0 +1,281 @@
+{
+  "format": "revealline-phase-acceptance.v1",
+  "phase": "P01",
+  "status": "accepted",
+  "phaseAccepted": true,
+  "preparedAt": "2026-09-16T01:16:46.793971+00:00",
+  "productGatesSatisfied": true,
+  "remainingProductFailures": [],
+  "version": "v0.57.4",
+  "gameSourceRevision": "856850ce8d4597c1fb6e8bb28ddb8a63db337a8c",
+  "gameSourceTree": "4cd7f24680af174ea35773d28e07e54e5f39e01f",
+  "controllerCommit": "9c955f767b68a1d948e5db3a5c5fc42f2346c0c2",
+  "controllerTree": "6338dfcabcef20650b9b39b8d7d68556023e30d1",
+  "productionRun": 35037951446,
+  "deploymentId": 6470855889,
+  "releaseId": 389543702,
+  "url": "https://mekhovov.github.io/revealline/releases/v0.57.4/site/game/index.html",
+  "sourceGatesPassed": 6,
+  "sourceTestFamilies": 2,
+  "testsPerFamily": 4256,
+  "sourceTestFiles": 378,
+  "publicFiles": 2476,
+  "publicBytes": 637238456,
+  "publicFinalFailures": 0,
+  "publicTransientRetries": 0,
+  "publicSkippedFiles": 0,
+  "offline": {
+    "buildId": "e14cab22ffd6eef0489f90da616663e56eb0c43df8a036b5aac385bee5c05ae7",
+    "files": 609,
+    "bytes": 55473406,
+    "onlinePrepareAndVerify": "PASS_R7_WITH_RETAINED_OBSERVER_TIMEOUT",
+    "coldContinueAndExplicitResumePause": "PASS_R7_SCOPED",
+    "coldCachedPrepareAndExplicitVerify": "PASS_R8",
+    "restoredNetworkAndSavedEndpoint": "PASS_R8"
+  },
+  "r8Endpoint": {
+    "savedTicks": 32,
+    "checkpoint": "968ca6e620cc3696",
+    "savedRawBytes": 4930,
+    "savedRawSha256": "ca8b2e649b8b3d4ab115ff76628cd02bb37c5681921f64c8194310c0a9e40e27",
+    "fourObservedRawStorageAndDatabaseEndpointsExactlyEqual": true,
+    "newGameplayInR8": false
+  },
+  "proofs": [
+    {
+      "id": "source",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Exact six source gates, both complete hosted families, production reproduction/readiness, frozen source/distribution and offline inventory integrity",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "authorities/qualification/source-qualification.json",
+          "bytes": 77167,
+          "sha256": "2856e195ad700b54879aebbd257f1cf1d9ea3d58c56a0c2e002d345aa350b9d8"
+        },
+        {
+          "archive": "../evidence.zip",
+          "member": "release/qualification-independent/result-scope-review.json",
+          "bytes": 1030,
+          "sha256": "136ef64f5316d04b7f8c3cdde3a51cfe1b35ec307c1a4fac2ff7962e4a3dace4"
+        }
+      ]
+    },
+    {
+      "id": "release",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Immutable stable release, annotated tag, nine original assets and API digests",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "release/package-independent/result-scope-review.json",
+          "bytes": 680,
+          "sha256": "c3e0ffd0572578769cefdd89482b302b9f58c4900c9b7261b51c2140b68bfdae"
+        },
+        {
+          "archive": "../evidence.zip",
+          "member": "release/publication/stable-review.json",
+          "bytes": 1658,
+          "sha256": "2d34bacd1bc60e1e2879ca4457e9389d14f0368db1cdd63ac529f17aef29720b"
+        }
+      ]
+    },
+    {
+      "id": "public_bytes",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Actual publisher main/run/deployment, all-body audit and post-audit unchanged authority",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "publication/production/review.json",
+          "bytes": 1649,
+          "sha256": "a339af6ee61b2c5d2e79c4c2d07d3d9540edd86e9578449bd254808bfc6b65cd"
+        },
+        {
+          "archive": "../evidence.zip",
+          "member": "public/current-authority/independent-public-review.json",
+          "bytes": 7543,
+          "sha256": "0cf4aa0b3c5df6840b0faf9244656666f7d7eb3fbf1120b63ec79a3859c8aae3"
+        }
+      ]
+    },
+    {
+      "id": "prior_hosts",
+      "status": "PASS_SCOPED_REUSE",
+      "requirement": "A01–A56 existing implementation and source/native evidence, completed unchanged public hosts",
+      "evidence": [
+        {
+          "repositoryPath": "docs/verification/cross-mode/p01/inventory.json",
+          "gitCommit": "3bb9a3432a6822c821916afd98fb54d7ac1835ae",
+          "bytes": 239308,
+          "sha256": "b4d973e5a056edc1df6834f348528eb6666cc17d82792cbb288689a2e3342409"
+        },
+        {
+          "archive": "evidence.zip",
+          "member": "context/prior-host-reconciliation.md",
+          "bytes": 9658,
+          "sha256": "58a16181a23f52b502cb50e052dedda4c6d91849eca493942a1583df124cd08f"
+        },
+        {
+          "repositoryPath": "publishing/pages-controller/delivery/evidence/cross-mode-p01/public-v0573/review.json",
+          "gitCommit": "3bb9a3432a6822c821916afd98fb54d7ac1835ae",
+          "bytes": 3576,
+          "sha256": "a0b864a941348291f495b7e17e84d30874f8ecf484406542477401c11264d01b"
+        }
+      ]
+    },
+    {
+      "id": "pending_cancel",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Real pending launch, native Escape, original response release, no late auto-start",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "authorities/native-pending-cancel-independent-review.json",
+          "bytes": 8190,
+          "sha256": "a1e15bf77abe76a1a26027710f2e9729212485c875b55fdbc801aeda555d16fc"
+        }
+      ]
+    },
+    {
+      "id": "online_recovery",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Short genuine saved flight; Install-only owner absence; actual persisted Explorer Back; writer-required inline reason; Export/Library Escape/focus; portrait/landscape controls; direct Reload; paused Continue and preserved endpoints",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "reviews/online/review.json",
+          "bytes": 31012,
+          "sha256": "0566af0e2038a5f132540de5c400eff8910e2f2a67353bd3c5a698c257282783"
+        }
+      ]
+    },
+    {
+      "id": "online_offline_prepare",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Native Prepare, visible progress, native Verify609 and owned online closure",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "reviews/online-offline-prepare/review.json",
+          "bytes": 18690,
+          "sha256": "3f7ce4288ce31833e24a2799d227cda760d94e3569c53576c5273b716b1b699e"
+        }
+      ]
+    },
+    {
+      "id": "versioned_migration",
+      "status": "PASS_AT_RECORDED_SCOPE",
+      "requirement": "Authentic retained old MAIN versioned v573 worker lifecycle to Archive17, unchanged retained save/originals and paused Continue",
+      "evidence": [
+        {
+          "archive": "../evidence.zip",
+          "member": "migration/run/review.json",
+          "bytes": 13173,
+          "sha256": "0b431c2f6ae1269bea198ae3f7c2f0c545673275eacaac8083a1252f3f119c46"
+        },
+        {
+          "archive": "../evidence.zip",
+          "member": "migration/run/manifest.json",
+          "bytes": 24580,
+          "sha256": "dcdeb28e4dc7ac997abc8a1916a198f2910a29ac152fa278ef3dc5981d9e39cb"
+        },
+        {
+          "archive": "../evidence.zip",
+          "member": "migration/run/closure.json",
+          "bytes": 2725,
+          "sha256": "5295c519dc6cfc01342b9573c9431262c0f2cb5ca0147b4d137b9f2382cc06e7"
+        }
+      ]
+    },
+    {
+      "id": "coldVerify",
+      "status": "PASS",
+      "requirement": "Native cached Prepare then explicit Verify609 under actual refused networking",
+      "evidence": [
+        {
+          "archive": "evidence.zip",
+          "member": "r8/review.json",
+          "bytes": 45779,
+          "sha256": "79bc0f5135b2ce59501b02b3d6596621ff7c9bafaaa6b8201396bfd690b02596"
+        }
+      ]
+    },
+    {
+      "id": "restored",
+      "status": "PASS",
+      "requirement": "Fresh no-proxy process receives uncached out-of-scope network404; all four observed raw save/storage/database endpoints identical",
+      "evidence": [
+        {
+          "archive": "evidence.zip",
+          "member": "r8/review.json",
+          "bytes": 45779,
+          "sha256": "79bc0f5135b2ce59501b02b3d6596621ff7c9bafaaa6b8201396bfd690b02596"
+        },
+        {
+          "archive": "evidence.zip",
+          "member": "r8/closure-check.json",
+          "bytes": 2217,
+          "sha256": "eec300675da1be46778efefc3dacdd7348bd1ec2a260a4e96e345b111f6b8391"
+        }
+      ]
+    }
+  ],
+  "finalScopeReview": {
+    "archive": "evidence.zip",
+    "member": "context/root-r8-scope-review.json",
+    "bytes": 3738,
+    "sha256": "ad68e520831954d27815a6ea18f384605b945a35e0f2316852cc67ca9386bef7"
+  },
+  "retention": {
+    "priorSealedArchive": {
+      "path": "../evidence.zip",
+      "bytes": 4002516,
+      "sha256": "d1ac5bd34564c9c9dd0bb59608324ca620518bb9f9f418b8253d637e7bbe8fea",
+      "originalFiles": 1121,
+      "originalBytes": 17164202
+    },
+    "completionArchive": {
+      "path": "evidence.zip",
+      "bytes": 414285,
+      "sha256": "a51e9eab70de36fd8c19001deccd3e69511370c9e427f203c3168e48a57d7f21"
+    },
+    "completionManifest": {
+      "path": "manifest.json",
+      "bytes": 23452,
+      "sha256": "18398fa89762697e6fe69d8e2d9ff6106ca0460b5591b5a00c9d0203b5e1b05f"
+    },
+    "completionOriginalFiles": 64,
+    "completionOriginalBytes": 1448904,
+    "allCompletionMembersCrcSizeHashAndSourceBytesVerified": true,
+    "priorPendingReviewUnchanged": true,
+    "profilesIncluded": false,
+    "runtimePayloadsIncluded": false
+  },
+  "releasedSourceEvidence": {
+    "url": "https://github.com/mekhovov/revealline/releases/download/v0.57.4/source-qualification-evidence.zip",
+    "bytes": 13096303,
+    "sha256": "10d59bcde49f8de3c0da361cbc18f276dd1a446d7087d16fc9a5b015006209f8",
+    "originalFiles": 336,
+    "notDuplicated": true
+  },
+  "limitations": [
+    "P01 loading-feedback scope only. P02-P18, physical devices, controller hardware, audible playback and exhaustive responsive coverage are not accepted.",
+    "Earlier R3-R7 failures, observer gaps, explicit action/process amendments and capacity stop remain failed or partial originals; R8 is a separate two-process completion.",
+    "R7 online/cold Continue retained17ticks; legitimate brief Resume precedes the later32tick save. R8 preserves four32tick endpoints exactly, not an uninterrupted write trace across all attempts.",
+    "The refusal probe is established by correlated CONNECT502 and ERR_TUNNEL_CONNECTION_FAILED. Restored network is an actual out-of-scope404 with serviceWorker/cachefalse, despite the reused helper generic expected field.",
+    "Both canonical document responses retain fromServiceWorker=true and fromDiskCache=true. No disk-cache-false claim is made.",
+    "Historical migration covers the genuine old MAIN versionedv573 profile to Archive17 via retirement/reopen and HTTP200 bridge; no root-scope historical worker, worker302 or archive-offline claim.",
+    "P05 retains the Settings short-landscape header1.3px edge. P01 recovery controls separately passed Standard/Large geometry.",
+    "Earlier accepted-with-limits v573 P1/P3 and v570-v572 evidence retain their own scope. No new application source, tests, release or deployment is created by this record."
+  ],
+  "nextPhase": "P02-A",
+  "nextPhaseAccepted": false,
+  "acceptedAt": "2026-09-16T01:17:09.801711+00:00",
+  "parentRetentionReview": {
+    "path": "parent-retention-review.json",
+    "bytes": 886,
+    "sha256": "07f34b23fb146da0602560becaa24e43dab46a663086392700e37540a012600a"
+  },
+  "evidencePathBase": "Paths in this record are relative to completion-r8; repositoryPath is relative to the repository root."
+}

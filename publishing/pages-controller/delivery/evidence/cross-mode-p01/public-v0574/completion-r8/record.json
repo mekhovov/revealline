@@ -1,0 +1,37 @@
+{
+  "format": "revealline-p01-r8-completion-retention.v1",
+  "status": "ASSEMBLED_AND_VERIFIED",
+  "at": "2026-09-16T01:15:08.885241+00:00",
+  "originalFiles": 64,
+  "originalBytes": 1448904,
+  "r8OriginalFiles": 59,
+  "r8OriginalBytes": 1414148,
+  "archive": {
+    "path": "evidence.zip",
+    "bytes": 414285,
+    "sha256": "a51e9eab70de36fd8c19001deccd3e69511370c9e427f203c3168e48a57d7f21"
+  },
+  "manifest": {
+    "path": "manifest.json",
+    "bytes": 23452,
+    "sha256": "18398fa89762697e6fe69d8e2d9ff6106ca0460b5591b5a00c9d0203b5e1b05f"
+  },
+  "builder": {
+    "path": "retention-builder.py",
+    "bytes": 7106,
+    "sha256": "67a0dfdcc25256e8194d6da369f821ba204ed58d560752d5545aadc828e55df2"
+  },
+  "allOriginalsReread": true,
+  "allMembersCrcSizeHashAndBytesVerified": true,
+  "priorSealedFilesUnchanged": true,
+  "profilesIncluded": false,
+  "runtimePayloadsIncluded": false,
+  "physicalDeviceClaim": false,
+  "freeBytesBefore": 3930783744,
+  "freeBytesAfter": 3930238976,
+  "parentRetentionReview": {
+    "path": "parent-retention-review.json",
+    "bytes": 886,
+    "sha256": "07f34b23fb146da0602560becaa24e43dab46a663086392700e37540a012600a"
+  }
+}
