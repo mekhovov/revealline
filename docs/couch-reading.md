@@ -12,6 +12,10 @@ Done is an end-only button. Its initial press keeps reading alive for the ordina
 
 The first native review found the active Team reader below the viewport after portrait-to-landscape rotation. Couch now opts into `revealOnResize`: only a current foreground reader may immediately reveal its whole toolbar/hint/text unit. It preserves the actual region focus, rechecks ownership after prompt/layout callbacks, and never starts, resumes, re-enters reading or queues later focus. Other callers retain their previous behavior. The text region keeps its authored scrolling bounds; fitting the unit still requires native verification, especially with Large text. See the [separate source and native evidence](verification/cross-mode/p03-couch-reading/README.md).
 
+Visibility includes the client area of clipping/scrolling ancestors, including the pause panel, not only the outer viewport. Native Large-text review exposed this second clipping boundary. The helper intersects those bounds before deciding whether nearest scrolling is needed.
+
+Couch also opts into `nativeReadingScroll`. A legitimate primary pointer inside the current text region retains the reader while the browser performs scrolling or selection; its matching native scroll cancellation does not disable Done. Outside input, cancelled Done presses and stale reader ownership keep their existing behavior. Wheel input is left untouched. Reading messages carry optional `{ kind: 'reading', regionId }` context so the local hint remains the single status owner through exit as well as entry. Other navigation consumers retain their original callbacks and defaults.
+
 [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112), reviewed on 16 September 2026, recommends consistent navigation and clear ways to leave a focused interaction using supported input methods. It also calls for navigation to follow layout changes. This supports the shared toolbar and the separate responsive checks; it does not certify this game or substitute for device testing.
 
 ## Integration and qualification

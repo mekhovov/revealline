@@ -14,11 +14,20 @@ const pad = () => ({
 
 // Real entry markup, event registrations, navigation and simulations. Finite
 // DOM/clock/controller boundaries are modeled; these are not device tests.
-async function host(t, mode) {
+async function host(t, mode, { resizeWindow = false } = {}) {
   const team = mode === 'Team';
+  const beforeImport = (context) => {
+    if (!resizeWindow) return;
+    const doc = context.doc || context.document,
+      win = context.win || context.window;
+    Object.assign(win, doc.defaultView);
+    doc.defaultView = win;
+    win.innerWidth = doc.documentElement.clientWidth = 844;
+    win.innerHeight = doc.documentElement.clientHeight = 390;
+  };
   const f = team
-    ? await teamPage(t, { touch: true, capturePaint: true, nativeFocus: true })
-    : await couchPage(t, { coarse: true, pads: [pad()] });
+    ? await teamPage(t, { touch: true, capturePaint: true, nativeFocus: true, beforeImport })
+    : await couchPage(t, { coarse: true, pads: [pad()], beforeImport });
   if (team) f.pads.push(pad());
   const prefix = team ? 'coop' : 'race';
   const tick = (n = 1) => (team ? f.tick(n) : f.frames(n));
@@ -113,6 +122,10 @@ for (const mode of ['Versus', 'Team']) {
       assert.equal(f.doc.activeElement, f.control('help-read'));
       assert.equal(f.control('help-reading-done').disabled, true);
       assert.equal(region.hasAttribute('data-controller-reading'), false);
+      assert.doesNotMatch(
+        f.control(mode === 'Team' ? 'pads' : 'menu-status').textContent,
+        /Reading ended/,
+      );
       f.tick(90);
       assert.deepEqual(f.state(), before);
     });
@@ -157,6 +170,67 @@ for (const mode of ['Versus', 'Team']) {
       f.tick(30);
       assert.deepEqual(f.state(), before);
     }
+  });
+
+  test(`${mode} native content scrolling retains Done and the same paused attempt`, async (t) => {
+    const f = await host(t, mode);
+    f.pause();
+    const before = f.state();
+    f.openHelp();
+    const entry = f.control('help-read'),
+      region = f.control('help-reading'),
+      done = f.control('help-reading-done');
+    region.scrollHeight = 600;
+    entry.emit('pointerdown', { pointerType: 'touch', pointerId: 4, button: 0 });
+    entry.click();
+    const down = region.emit('pointerdown', {
+      pointerType: 'touch',
+      pointerId: 5,
+      button: 0,
+      isPrimary: true,
+    });
+    assert.equal(down.defaultPrevented, false, 'The browser owns native content scrolling.');
+    // Model the browser's scroll and pointer cancellation when it adopts a pan.
+    // This checks event lifecycle, not a physical touch gesture or layout.
+    region.scrollTop = 80;
+    region.emit('pointercancel', { pointerType: 'touch', pointerId: 5, isPrimary: true });
+    f.tick(4);
+    assert.equal(f.doc.activeElement, region);
+    assert.equal(done.disabled, false);
+    assert.equal(region.hasAttribute('data-controller-reading'), true);
+    assert.match(f.control('help-reading-hint').textContent, /Done reading returns/);
+    done.emit('pointerdown', { pointerType: 'touch', pointerId: 6, button: 0 });
+    done.click();
+    assert.equal(f.doc.activeElement, entry);
+    assert.equal(done.disabled, true);
+    f.tick(30);
+    assert.deepEqual(f.state(), before);
+  });
+
+  test(`${mode} opted-in resize reveals the current reading unit without moving focus or resuming`, async (t) => {
+    const f = await host(t, mode, { resizeWindow: true });
+    f.pause();
+    const before = f.state();
+    f.openHelp();
+    f.press('Enter');
+    f.release('Enter');
+    const region = f.control('help-reading'),
+      unit = f.control('help-unit');
+    region.clientHeight = 148;
+    region.scrollHeight = 656;
+    unit._rect = { x: 40, y: 480, width: 300, height: 248 };
+    const prior = unit.scrolled;
+    f.win.emit('resize');
+    assert.equal(unit.scrolled, prior + 1);
+    assert.equal(f.doc.activeElement, region);
+    assert.equal(f.control('help-reading-done').disabled, false);
+    f.tick(30);
+    assert.deepEqual(f.state(), before);
+    f.press('Escape');
+    f.release('Escape');
+    f.win.emit('resize');
+    assert.equal(unit.scrolled, prior + 1, 'Inactive reading cannot reclaim scroll or focus.');
+    assert.equal(f.doc.activeElement, f.control('help-read'));
   });
 
   test(`${mode} fresh input changes reading copy while an idle pad preserves keyboard ownership`, async (t) => {

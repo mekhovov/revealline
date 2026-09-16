@@ -183,7 +183,50 @@ export function attachControllerReading({
         !current()
       )
         return;
-      if (rect.left >= 0 && rect.top >= 0 && rect.right <= width && rect.bottom <= height) {
+      // A reader can fit the window while a scrolled panel still clips it.
+      // Intersect each overflow axis with that ancestor's native client box;
+      // border widths and scrollbars are outside the usable reading area.
+      const clip = { left: 0, top: 0, right: width, bottom: height };
+      const clips = (overflow) => /^(auto|scroll|hidden|clip|overlay)$/.test(overflow);
+      for (let parent = unit.parentElement; parent; parent = parent.parentElement) {
+        const style = view.getComputedStyle?.(parent),
+          clipsX = clips(style?.overflowX),
+          clipsY = clips(style?.overflowY);
+        if (!current()) return;
+        if (!clipsX && !clipsY) continue;
+        const bounds = parent.getBoundingClientRect(),
+          { clientLeft, clientTop, clientWidth, clientHeight } = parent,
+          metrics = [bounds.left, bounds.top, bounds.right, bounds.bottom];
+        if (clipsX) metrics.push(clientLeft, clientWidth);
+        if (clipsY) metrics.push(clientTop, clientHeight);
+        if (
+          !metrics.every(Number.isFinite) ||
+          bounds.right <= bounds.left ||
+          bounds.bottom <= bounds.top ||
+          (clipsX && (clientLeft < 0 || clientWidth <= 0)) ||
+          (clipsY && (clientTop < 0 || clientHeight <= 0)) ||
+          !current()
+        )
+          return;
+        if (clipsX) {
+          clip.left = Math.max(clip.left, bounds.left + clientLeft);
+          clip.right = Math.min(clip.right, bounds.left + clientLeft + clientWidth);
+        }
+        if (clipsY) {
+          clip.top = Math.max(clip.top, bounds.top + clientTop);
+          clip.bottom = Math.min(clip.bottom, bounds.top + clientTop + clientHeight);
+        }
+      }
+      geometry.push(clip.left, clip.top, clip.right, clip.bottom);
+      // A valid ancestor can itself be outside the viewport. Even an empty
+      // intersection then needs nearest scrolling through that ancestor.
+      if (!geometry.every(Number.isFinite) || !current()) return;
+      if (
+        rect.left >= clip.left &&
+        rect.top >= clip.top &&
+        rect.right <= clip.right &&
+        rect.bottom <= clip.bottom
+      ) {
         lastReveal = null;
         return;
       }
