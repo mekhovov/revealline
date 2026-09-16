@@ -5182,6 +5182,9 @@ try {
     refreshHUD();
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
+    // A queued activation may arrive after blur even when the picture is cached.
+    // Use actual foreground state: a fresh Resume need not wait for another frame.
+    if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
     attemptFiles?.invalidate();

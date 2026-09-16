@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -357,12 +358,15 @@ test('only an ordinary validated Arcade action policy receives the Arcade label'
   );
   assert.ok(chapter);
   chapter.click();
-  await settle(
+  await waitForChapterSelection(
+    t,
+    page,
     () =>
       page.$('pack-select').value === 'fpv-arcade-r5' &&
       page.$('campaign-select').value.startsWith('fpv-pressure-lines/1/') &&
       !page.$('pack-select').disabled &&
       page.doc.body.dataset.pictureState === 'ready',
+    'Validated Arcade chapter install and exact picture must become ready',
   );
   page.frame(0);
   assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
