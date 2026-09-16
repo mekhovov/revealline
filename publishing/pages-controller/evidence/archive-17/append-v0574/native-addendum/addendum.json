@@ -1,0 +1,29 @@
+{
+  "scope": "Addendum to already retained initial native record. No runtime changes or additional gameplay acceptance.",
+  "note": "The earlier1280\u00d7720 number labels original screenshot pixel dimensions, not a measured CSS viewport. Later read-only DOM observations reported1150\u00d71348, then639\u00d7749/DPR2 during sequential inspections without an explicit root viewport override. No stable viewport/device claim is made; cause is unresolved. Final actual DOM and screenshot still show the same paused1.5%/340point/3life run. Header representations changed and focus was body; no responsive or complete-focus acceptance is claimed.",
+  "imagesInspectedByRoot": [
+    "07-final.png"
+  ],
+  "files": [
+    {
+      "path": "07-final.ax.txt",
+      "bytes": 1692,
+      "sha256": "a07ce8d05ba91655576b88a02de20d61af5c2d6b8b6c43512a6d21b716be7cd0"
+    },
+    {
+      "path": "07-final.dom.txt",
+      "bytes": 917,
+      "sha256": "cec4afd07597d9ff0342c8195d323716e17cbf6d4d1046f65b4ba7f2f6bbc2da"
+    },
+    {
+      "path": "07-final.geometry.json",
+      "bytes": 182,
+      "sha256": "603d3a059bae936ccd016c173ce5632d086e8f4172cc00044d114277fb719e75"
+    },
+    {
+      "path": "07-final.png",
+      "bytes": 42819,
+      "sha256": "0cef9254533323d653057844360a0667d7dfbadfff67668e15c9c57d332fdffd"
+    }
+  ]
+}
