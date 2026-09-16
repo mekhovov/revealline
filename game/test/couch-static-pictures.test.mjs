@@ -577,3 +577,151 @@ test('the 51 existing static combinations resolve exact authored owners without 
   assert.equal(raceId, 51);
   assert.equal(JSON.stringify(entries), before);
 });
+
+// These transactions exercise real original-byte validation with finite image
+// decoding. They do not certify browser decoding or visual appearance.
+test('staged static picture retains the accepted original through confirmation and explicit handoff', async (t) => {
+  const f = fixture(t),
+    prior = await f.select(f.row);
+  const stage = await f.pictures.stage(f.row, { raceId: 2 });
+  assert.equal(f.pictures.current() === prior, true);
+  assert.equal(prior.image.closed, 0);
+  assert.throws(() => stage.commit(), /Confirm/);
+  await stage.confirm();
+  assert.equal(f.pictures.current() === prior, true);
+  const retire = stage.commit();
+  assert.equal(f.pictures.current() === stage.picture, true);
+  assert.equal(
+    prior.image.closed,
+    0,
+    'The host publishes its own references before retiring Results.',
+  );
+  stage.cancel();
+  assert.equal(
+    stage.picture.image.closed,
+    0,
+    'A committed ticket no longer owns its accepted image.',
+  );
+  retire();
+  retire();
+  assert.equal(prior.image.closed, 1);
+  assert.equal(stage.picture.image.closed, 0);
+  f.pictures.dispose();
+  assert.equal(stage.picture.image.closed, 1);
+  assert.equal(f.revoked.length, 2);
+});
+
+for (const action of ['cancel', 'abort', 'confirmation refusal'])
+  test(`staged static ${action} releases only its candidate`, async (t) => {
+    const f = fixture(t),
+      prior = await f.select(f.row),
+      controller = new AbortController();
+    const stage = await f.pictures.stage(f.row, { raceId: 2, signal: controller.signal });
+    if (action === 'abort') controller.abort();
+    else if (action === 'cancel') stage.cancel();
+    else {
+      f.replaceSnapshot();
+      await assert.rejects(stage.confirm(), /artwork changed/);
+      stage.cancel();
+    }
+    assert.equal(f.pictures.current() === prior, true);
+    assert.equal(prior.image.closed, 0);
+    assert.equal(stage.picture.image.closed, 1);
+    assert.throws(() => stage.commit());
+    stage.cancel();
+    assert.equal(stage.picture.image.closed, 1);
+  });
+
+test('cancelled pending static stage cannot release Results or replace a later stage', async (t) => {
+  const f = fixture(t),
+    prior = await f.select(f.row),
+    gate = deferred(),
+    entered = deferred();
+  f.state.onDecode = () => {
+    entered.resolve();
+    return gate.promise;
+  };
+  const pending = f.pictures.stage(f.row, { raceId: 2 });
+  await entered.promise;
+  f.pictures.cancel();
+  await assert.rejects(pending, { name: 'AbortError' });
+  assert.equal(f.pictures.current() === prior, true);
+  assert.equal(prior.image.closed, 0);
+  f.state.onDecode = null;
+  const next = await f.pictures.stage(f.row, { raceId: 2 });
+  gate.resolve();
+  await next.confirm();
+  const retire = next.commit();
+  retire();
+  assert.equal(f.pictures.current() === next.picture, true);
+  assert.equal(f.images[1].closed, 1);
+  assert.equal(prior.image.closed, 1);
+  assert.equal(next.picture.image.closed, 0);
+});
+
+for (const action of ['cancel', 'dispose'])
+  test(`static staged ready callback ${action} cannot publish or leak a candidate`, async (t) => {
+    const f = fixture(t),
+      prior = await f.select(f.row);
+    await assert.rejects(
+      f.pictures.stage(f.row, {
+        raceId: 2,
+        onStatus(status) {
+          if (status.status === 'ready') f.pictures[action]();
+        },
+      }),
+      { name: 'AbortError' },
+    );
+    assert.equal(prior.image.closed, action === 'dispose' ? 1 : 0);
+    assert.equal(f.images[1].closed, 1);
+    assert.equal(f.pictures.current() === (action === 'dispose' ? null : prior), true);
+  });
+
+test('static final context callback cancellation refuses adoption after its last reader', async (t) => {
+  const f = fixture(t),
+    prior = await f.select(f.row);
+  const stage = await f.pictures.stage(f.row, { raceId: 2 });
+  const current = f.page.current;
+  f.page.current = () => {
+    f.pictures.cancel();
+    return current();
+  };
+  await assert.rejects(stage.confirm(), { name: 'AbortError' });
+  assert.equal(f.pictures.current() === prior, true);
+  assert.equal(prior.image.closed, 0);
+  assert.equal(stage.picture.image.closed, 1);
+});
+
+test('static previous-image cleanup sees the adopted owner and disposal releases both once', async (t) => {
+  const f = fixture(t),
+    prior = await f.select(f.row);
+  const stage = await f.pictures.stage(f.row, { raceId: 2 });
+  await stage.confirm();
+  const originalClose = prior.image.close.bind(prior.image);
+  let sawAccepted = false;
+  prior.image.close = () => {
+    sawAccepted = f.pictures.current() === stage.picture;
+    originalClose();
+    f.pictures.dispose();
+  };
+  const retire = stage.commit();
+  retire();
+  retire();
+  assert.equal(sawAccepted, true);
+  assert.equal(prior.image.closed, 1);
+  assert.equal(stage.picture.image.closed, 1);
+  assert.equal(f.revoked.length, 2);
+});
+
+test('static disposal also retires a committed prior lease if its host handoff is interrupted', async (t) => {
+  const f = fixture(t),
+    prior = await f.select(f.row);
+  const stage = await f.pictures.stage(f.row, { raceId: 2 });
+  await stage.confirm();
+  const retire = stage.commit();
+  f.pictures.dispose();
+  retire();
+  assert.equal(prior.image.closed, 1);
+  assert.equal(stage.picture.image.closed, 1);
+  assert.equal(f.revoked.length, 2);
+});
