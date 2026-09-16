@@ -431,7 +431,7 @@ test('paused Help reading and Back return to an action without resuming the shar
   f.$('coop-pause').click();
   const clock = f.$('coop-clock').textContent;
   f.disclose('coop-help');
-  assert.equal(f.$('coop-help-read').onclick(), true);
+  f.$('coop-help-read').click();
   assert.equal(f.doc.activeElement.id, 'coop-help-reading');
   f.tick(120);
   assert.equal(f.$('coop-clock').textContent, clock);

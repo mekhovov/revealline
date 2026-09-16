@@ -1,0 +1,8 @@
+{
+  "source": "f81b14ee69531930b98a9e83dd63d69dd46401c4",
+  "requests": 400,
+  "uniquePaths": 247,
+  "uniqueBytes": 15682364,
+  "sourceMismatches": [],
+  "scope": "Successfully recorded served responses from this stopped immutable-source preview only. No assertion of full asset, HTTP failure, offline, range/media, or public qualification."
+}

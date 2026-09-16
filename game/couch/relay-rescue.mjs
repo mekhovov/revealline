@@ -20,6 +20,9 @@ import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
+import { nextInputModality } from '../input-presentation.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
@@ -172,7 +175,21 @@ export function bootCoop() {
   const selectedConfiguration = () =>
     COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
     COOP_PLAYTEST_CONFIGURATIONS[0];
-  let menuHint = '';
+  let menuHint = '',
+    reading = null,
+    readingModality = 'pointer';
+  const readingPrompt = ({ scrollable }) =>
+    readingInputPrompt({
+      modality: readingModality,
+      scrollable,
+      controls: { confirm: 'South', back: 'East' },
+    });
+  function setReadingModality(modality) {
+    if (readingModality === modality) return;
+    readingModality = modality;
+    reading?.refresh();
+    navigation.refreshReadingHint();
+  }
   const touchQuery = matchMedia('(any-pointer: coarse)');
   const tools = $('coop-tools');
   const modeChoices = $('coop-mode-actions');
@@ -271,13 +288,30 @@ export function bootCoop() {
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
+    nativeReadingScroll: true,
+    getReadingPrompt: readingPrompt,
+    onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
     onMenu: () => {
       if (departure || run?.status === 'paused') back();
     },
-    onHint: (message) => {
-      menuHint = message;
+    onHint: (message, context) => {
+      if (context?.kind === 'reading' && context.regionId === 'coop-help-reading') {
+        menuHint = '';
+        const hint = $('coop-help-reading-hint');
+        if (hint.textContent !== message) hint.textContent = message;
+      } else menuHint = message;
     },
+    onReadingChange: (state) => reading?.changed(state),
+  });
+  reading = attachControllerReading({
+    getNavigation: () => navigation,
+    getScope: scope,
+    getReadingPrompt: readingPrompt,
+    revealOnResize: true,
+    surfaceDefinitions: [
+      ['coop-help-reading', 'coop-help-read', 'Relay Rescue controls', 'coop-help-unit'],
+    ],
   });
   function clear() {
     input.clear();
@@ -918,6 +952,8 @@ export function bootCoop() {
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
       if (!running()) {
+        if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
+          setReadingModality('controller');
         if (routed.status.code === 'joined') navigation.engage();
         navigation.handle(routed.ui);
       }
@@ -1079,12 +1115,6 @@ export function bootCoop() {
   };
   const touchChanged = () => showTouch();
   touchQuery.addEventListener?.('change', touchChanged);
-  $('coop-help-read').onclick = () =>
-    navigation.beginReading({
-      region: $('coop-help-reading'),
-      origin: $('coop-help-read'),
-      label: 'Relay Rescue controls',
-    });
   placeTools(false);
   $('coop-reduced').onchange = () => {
     displayPreferences.set({ reducedEffects: $('coop-reduced').checked });
@@ -1118,6 +1148,7 @@ export function bootCoop() {
     clear();
     input.destroy();
     router.destroy();
+    reading.destroy();
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
     window.removeEventListener('blur', suspend);

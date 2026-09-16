@@ -1,0 +1,32 @@
+[
+  {
+    "label": "baseline",
+    "source": "03d12fb5bfd6315a2d6f71720b3e4987549ae69d",
+    "requests": 396,
+    "uniquePaths": 245,
+    "uniqueBytes": 15661665,
+    "changedResponses": [],
+    "sourceMismatches": [],
+    "closedOwnedPID": 19499
+  },
+  {
+    "label": "first",
+    "source": "6c36d7326492543e55d6a2f3170bae8f443b7216",
+    "requests": 575,
+    "uniquePaths": 247,
+    "uniqueBytes": 15673362,
+    "changedResponses": [],
+    "sourceMismatches": [],
+    "closedOwnedPID": 42880
+  },
+  {
+    "label": "resize",
+    "source": "93b053931148ae8b26b12c1675945580c9f2b939",
+    "requests": 575,
+    "uniquePaths": 247,
+    "uniqueBytes": 15677712,
+    "changedResponses": [],
+    "sourceMismatches": [],
+    "closedOwnedPID": 60762
+  }
+]

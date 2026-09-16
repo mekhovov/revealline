@@ -1483,6 +1483,7 @@ try {
     $('controller-ui-hint').textContent =
       controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint();
     controllerReading?.refresh();
+    controllerNavigation?.refreshReadingHint();
     refreshControllerBoostCue();
   }
   function refreshControllerBoostCue() {
@@ -1646,12 +1647,28 @@ try {
       refreshControllerBoostCue();
     },
   });
+  function readingPrompt({ scrollable }) {
+    const mode = document.body.dataset.inputMode;
+    const scroll = !scrollable
+      ? 'All text is visible'
+      : mode === 'controller' || mode === 'keyboard'
+        ? 'Up/Down scroll'
+        : 'Scroll to read';
+    const exit =
+      mode === 'controller'
+        ? `${controllerLabels.menu.confirm} or ${controllerLabels.menu.back}`
+        : mode === 'keyboard'
+          ? 'Enter, Space or Escape'
+          : 'Done reading';
+    return `${scroll} · ${exit} returns`;
+  }
   function setInputModality(mode) {
     if (document.body.dataset.inputMode === mode) return;
     if (mode === 'controller') input.releaseLocalControls();
     else input.clearPhysical();
     document.body.dataset.inputMode = mode;
     refreshInputPresentation();
+    controllerNavigation?.refreshReadingHint();
   }
   function refreshInputPresentation() {
     const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
@@ -1670,6 +1687,7 @@ try {
     getRoot: controllerMenuRoot,
     keyboard: true,
     getDefaultFocus: controllerFocus,
+    getReadingPrompt: readingPrompt,
     getControlLabels: () => ({
       directions: 'Direction controls',
       confirm: controllerLabels.menu.confirm,
@@ -1710,6 +1728,7 @@ try {
     ],
     getNavigation: () => controllerNavigation,
     getControlLabels: () => controllerLabels.menu,
+    getReadingPrompt: readingPrompt,
     getScope: controllerScope,
     pause,
     onTransition: () => clearInput({ preserveNavigation: true }),

@@ -866,3 +866,13 @@ kbd {
 .coop-picture-actions button {
   min-block-size: 50px;
 }
+
+#coop-help-unit .reading-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-2);
+}
+#coop-help-unit .reading-hint {
+  margin-block: var(--fk-space-2);
+  color: var(--fk-text);
+}

@@ -11,6 +11,9 @@ import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
+import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
@@ -347,7 +350,20 @@ try {
     isCurrent: () => !disposed,
   });
   let preparationDisplay = null;
-  let menuRouter, navigation, shell;
+  let menuRouter, navigation, shell, reading;
+  let readingModality = 'pointer';
+  const readingPrompt = ({ scrollable }) =>
+    readingInputPrompt({
+      modality: readingModality,
+      scrollable,
+      controls: { confirm: 'South', back: 'East' },
+    });
+  function setReadingModality(modality) {
+    if (readingModality === modality) return;
+    readingModality = modality;
+    reading?.refresh();
+    navigation?.refreshReadingHint();
+  }
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
 
   function clear({ resetDirection = false } = {}) {
@@ -1123,6 +1139,7 @@ try {
     'race-options-back',
     'race-help-back',
     'race-help-read',
+    'race-help-reading-done',
     'race-help-reading',
     'race-review',
     'race-pause',
@@ -1136,21 +1153,32 @@ try {
     getRoot: () => shell.root(),
     getDefaultFocus: () => shell.primary(),
     keyboard: true,
+    nativeReadingScroll: true,
     accept: (element) => menuIds.has(element.id),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
+    getReadingPrompt: readingPrompt,
+    onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
-    onHint: (message) => {
-      menuHint = message;
+    onHint: (message, context) => {
+      if (context?.kind === 'reading' && context.regionId === 'race-help-reading') {
+        menuHint = '';
+        const hint = $('race-help-reading-hint');
+        if (hint.textContent !== message) hint.textContent = message;
+      } else menuHint = message;
       updateMenu();
     },
+    onReadingChange: (state) => reading?.changed(state),
   });
-  $('race-help-read').onclick = () =>
-    navigation.beginReading({
-      region: $('race-help-reading'),
-      origin: $('race-help-read'),
-      label: 'Couch controls',
-    });
+  reading = attachControllerReading({
+    getNavigation: () => navigation,
+    getScope: couchScope,
+    getReadingPrompt: readingPrompt,
+    revealOnResize: true,
+    surfaceDefinitions: [
+      ['race-help-reading', 'race-help-read', 'Couch controls', 'race-help-unit'],
+    ],
+  });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
     menuRouter.invalidate();
@@ -1167,6 +1195,8 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
+      setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
     menuOwner = result.assigned;
     menuGate =
@@ -1242,6 +1272,7 @@ try {
     preparationStatus.dispose();
     input.destroy();
     menuRouter.destroy();
+    reading.destroy();
     navigation.destroy();
     shell.destroy();
     stopNative();
