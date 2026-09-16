@@ -581,6 +581,45 @@ test('a deliberate focus change during native blur wins over story fallback', as
   assert.equal(h.doc.activeElement, close);
 });
 
+test('Skip and natural end move a disappearing Skip action to Replay without changing the earned poster', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  await h.player.play();
+  h.button('Skip').focus();
+  h.button('Skip').click();
+  assert.equal(h.doc.activeElement, h.button('Replay'));
+  assert.equal(h.poster.hidden, false);
+  assert.equal(h.poster.dataset.exactOriginal, h.pin.sha256);
+  h.button('Replay').click();
+  assert.equal(h.doc.activeElement, h.button('Skip'), 'The loading story still has a Skip action');
+  h.video.completeSeek();
+  await microtasks();
+  assert.equal(h.doc.activeElement, h.button('Pause'));
+  h.button('Skip').focus();
+  h.video.at(4);
+  assert.equal(h.doc.activeElement, h.button('Replay'));
+  assert.equal(h.poster.dataset.exactOriginal, h.pin.sha256);
+});
+
+test('closing the presentation during a focus change cannot focus a retired story action', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  await h.player.play();
+  const skip = h.button('Skip');
+  skip.focus();
+  const blur = skip.blur.bind(skip);
+  skip.blur = () => {
+    blur();
+    h.player.dispose();
+  };
+  skip.click();
+  assert.equal(h.player.snapshot().state, 'disposed');
+  assert.equal(h.doc.activeElement, h.doc.body);
+  assert.equal(h.player.element.isConnected, false);
+  assert.equal(h.urls.size, 0);
+  assert.equal(h.poster.hidden, false);
+});
+
 test('an obsolete play result cannot pause or redock a newer explicit play', async (t) => {
   const h = await setup(t);
   h.ready();
