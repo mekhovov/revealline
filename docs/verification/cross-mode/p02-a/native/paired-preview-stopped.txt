@@ -1,0 +1,195 @@
+- link "Skip inventory":
+  - /url: "#inspector"
+- paragraph:
+  - status: Current release assets loaded. Changes stay in this local studio.
+- banner:
+  - link "REVEALLINE / WORKSHOP":
+    - /url: ../../game/
+  - heading "Asset Studio" [level=1]
+  - button "Save local revision"
+  - button "Export .rltheme"
+  - text: Import collection
+  - button "Import collection"
+- group "Shared sound settings":
+  - button "Unmute sound"
+  - generic: Master sound volume
+  - slider "Master sound volume": "0.13"
+  - status
+- paragraph: Theme FPV Field Kit · document r19 · local save none
+- button "Undo draft" [disabled]
+- button "Redo draft" [disabled]
+- button "Reset to saved" [disabled]
+- button "Reload saved"
+- button "Load release collection"
+- main:
+  - complementary "Asset inventory":
+    - heading "Asset inventory" [level=2]
+    - generic: 1 / 293
+    - text: Search
+    - searchbox "Search": audio.music
+    - text: Theme
+    - combobox "Theme":
+      - option "Field Kit"
+      - option "FPV Field Kit" [selected]
+    - text: Screen
+    - combobox "Screen":
+      - option "All screens" [selected]
+      - option "about"
+      - option "archive"
+      - option "boot"
+      - option "briefing"
+      - option "collection"
+      - option "controller-practice"
+      - option "couch"
+      - option "credits"
+      - option "first-flight"
+      - option "flight"
+      - option "guide"
+      - option "hangar"
+      - option "library"
+      - option "missions"
+      - option "pause"
+      - option "picture"
+      - option "privacy"
+      - option "recovery"
+      - option "replay"
+      - option "results"
+      - option "settings"
+      - option "soundtrack"
+      - option "story"
+      - option "studio"
+      - option "title"
+      - option "worlds"
+    - text: State
+    - combobox "State":
+      - option "All states" [selected]
+      - option "default"
+      - option "disabled"
+      - option "error"
+      - option "focus"
+      - option "hover"
+      - option "loading"
+      - option "pressed"
+      - option "selected"
+    - text: Kind
+    - combobox "Kind":
+      - option "All kinds" [selected]
+      - option "image"
+      - option "recipe"
+      - option "font"
+      - option "audio"
+    - text: Readiness
+    - combobox "Readiness":
+      - option "Every stage" [selected]
+      - option "Needs production or review"
+      - option "Missing binding"
+      - option "Source recipe"
+      - option "Produced"
+      - option "Reviewed"
+    - paragraph: 0 missing · 99 source · 0 produced · 194 reviewed. Readiness is evidence based.
+    - list "Presentation slots":
+      - checkbox "Include Theme music in collection"
+      - button "Theme music audio.music · reviewed" [pressed]:
+        - strong: Theme music
+        - generic: audio.music · reviewed
+    - generic "Build a coordinated collection"
+  - region "Theme music":
+    - paragraph: audio.music
+    - heading "Theme music" [level=2]
+    - generic: reviewed
+    - paragraph: "Theme music: existing bounded component with Field Kit tokens and state styling."
+    - text: Preview
+    - combobox "Preview":
+      - option "Pixel enlarged" [selected]
+      - option "Native size"
+      - option "Transparency"
+      - option "Field context"
+    - text: Backdrop
+    - combobox "Backdrop":
+      - option "Checkerboard" [selected]
+      - option "Dark"
+      - option "Light"
+    - text: State
+    - combobox "State":
+      - option "default" [selected]
+    - text: Motion
+    - combobox "Motion":
+      - option "Paused" [selected]
+      - option "Play cosmetic loop"
+      - option "Reduced effects"
+    - checkbox "Geometry overlay" [checked]
+    - text: Geometry overlay
+    - figure "Saved / current":
+      - generic: Saved / current
+      - paragraph:
+        - status: "Saved preview: ready."
+      - heading "Theme music" [level=3]
+      - button "Audition 4 seconds"
+      - button "Stop"
+      - paragraph:
+        - status: Audition stopped.
+    - figure "Working draft":
+      - generic: Working draft
+      - paragraph:
+        - status: "Draft preview: ready."
+      - heading "Theme music" [level=3]
+      - button "Audition 4 seconds"
+      - button "Stop" [active]
+      - paragraph:
+        - status: Audition stopped.
+    - paragraph: Bounded asset preview. It does not simulate a complete game or establish production readiness.
+    - term: Frame
+    - definition: Scalable / media
+    - term: Accepted
+    - definition: audio, recipe
+    - term: Budget
+    - definition: 4096 KiB
+    - term: Alpha
+    - definition: either
+    - term: Sampling
+    - definition: nearest
+    - term: Required
+    - definition: "Yes"
+    - generic "Usage and exact requirements"
+    - generic: title
+    - generic: flight
+    - generic: couch
+    - generic: :default
+    - list:
+      - listitem: Keep functional text separate from artwork.
+      - listitem: Preserve gameplay geometry and input behavior.
+      - listitem: Review the actual-size preview on light and dark backgrounds.
+    - generic: "{ \"alpha\": \"either\", \"budget\": { \"maxBytes\": 4194304 }, \"dependencies\": [], \"dimensions\": null, \"format\": \"revealline-asset-slot.v1\", \"geometry\": null, \"group\": \"audio\", \"id\": \"audio.music\", \"kinds\": [ \"audio\", \"recipe\" ], \"label\": \"Theme music\", \"owner\": null, \"palette\": [ \"#070b12\", \"#101923\", \"#f3f0db\", \"#78dce8\", \"#f4bf62\", \"#f07879\", \"#9dbb7a\", \"#a5b2bb\" ], \"prompt\": \"Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.\", \"recipes\": [ \"audio.music.v1\" ], \"required\": true, \"requirements\": [ \"Keep functional text separate from artwork.\", \"Preserve gameplay geometry and input behavior.\", \"Review the actual-size preview on light and dark backgrounds.\" ], \"revision\": 1, \"sampling\": \"nearest\", \"screens\": [ \"title\", \"flight\", \"couch\" ], \"states\": [ \"default\" ], \"currentAsset\": \"audio.music.field-kit@6\" }"
+    - generic "Upload, crop and geometry"
+    - paragraph: The original bytes are retained as a separate immutable asset. Cropping creates a PNG derivative at the selected slot’s exact frame size.
+    - text: Choose replacement file
+    - button "Choose replacement file"
+    - button "Edit current raster metadata" [disabled]
+    - paragraph: No replacement selected.
+    - text: Description
+    - textbox "Description": Theme music
+    - text: Creator
+    - textbox "Creator":
+      - /placeholder: Your name or creator
+    - text: Source
+    - textbox "Source":
+      - /placeholder: Original file / source reference
+    - text: License / rights
+    - textbox "License / rights":
+      - /placeholder: Your actual rights statement
+    - text: Effective generation/edit prompt
+    - textbox "Effective generation/edit prompt"
+    - button "Validate and stage replacement" [disabled]
+    - button "Discard slot draft" [disabled]
+    - generic "Pixel editor · single layer, up to 128 × 128"
+    - generic "Theme tokens"
+    - generic "AI prompts"
+    - generic "Asset revision history"
+- contentinfo:
+  - link "Design atlas":
+    - /url: ../design-atlas/
+  - link "Studio guide":
+    - /url: ../../docs/asset-studio.md
+  - link "Return to game":
+    - /url: ../../game/
+  - generic: Local authoring workspace · player saves stay separate

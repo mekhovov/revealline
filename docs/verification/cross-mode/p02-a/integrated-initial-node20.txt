@@ -1,0 +1,2220 @@
+TAP version 13
+# Subtest: saved and draft native auditions share master output while keeping independent local faders and cleanup
+ok 1 - saved and draft native auditions share master output while keeping independent local faders and cleanup
+  ---
+  duration_ms: 654.99075
+  ...
+# Subtest: Stop waiting releases a pending native preview and late metadata cannot restore sound or output
+ok 2 - Stop waiting releases a pending native preview and late metadata cannot restore sound or output
+  ---
+  duration_ms: 278.151084
+  ...
+# Subtest: audio.music keeps the shared mute gate through delayed context resume and retains its local attenuation
+ok 3 - audio.music keeps the shared mute gate through delayed context resume and retains its local attenuation
+  ---
+  duration_ms: 5.903792
+  ...
+# Subtest: audio.music teardown before context readiness fences late procedural playback
+ok 4 - audio.music teardown before context readiness fences late procedural playback
+  ---
+  duration_ms: 1.377708
+  ...
+# Subtest: audio.capture keeps the shared mute gate through delayed context resume and retains its local attenuation
+ok 5 - audio.capture keeps the shared mute gate through delayed context resume and retains its local attenuation
+  ---
+  duration_ms: 5.065667
+  ...
+# Subtest: audio.capture teardown before context readiness fences late procedural playback
+ok 6 - audio.capture teardown before context readiness fences late procedural playback
+  ---
+  duration_ms: 3.656375
+  ...
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+ok 7 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 4956.952041
+  ...
+# Subtest: Studio announces before a delayed read; cancellation fences adoption and stale finally cannot unlock a retry
+ok 8 - Studio announces before a delayed read; cancellation fences adoption and stale finally cannot unlock a retry
+  ---
+  duration_ms: 8.359375
+  ...
+# Subtest: Stop waiting retains the non-abortable save lock and reconciles success or failure
+ok 9 - Stop waiting retains the non-abortable save lock and reconciles success or failure
+  ---
+  duration_ms: 4.471542
+  ...
+# Subtest: delayed failure keeps its error; a cached retry completes without a minimum delay
+ok 10 - delayed failure keeps its error; a cached retry completes without a minimum delay
+  ---
+  duration_ms: 6.893084
+  ...
+# Subtest: a cancelled real bundle import preserves the current document and exact original transfer bytes
+ok 11 - a cancelled real bundle import preserves the current document and exact original transfer bytes
+  ---
+  duration_ms: 1238.684125
+  ...
+# Subtest: preview labels precede decode; superseded bitmaps close without replacing the newer canvas or status
+ok 12 - preview labels precede decode; superseded bitmaps close without replacing the newer canvas or status
+  ---
+  duration_ms: 240.472375
+  ...
+# Subtest: Stop waiting and retry preserve preview ownership through late success and failure
+ok 13 - Stop waiting and retry preserve preview ownership through late success and failure
+  ---
+  duration_ms: 298.1235
+  ...
+# Subtest: source labels and unavailability follow the host, without suspending or verifying on refresh
+ok 14 - source labels and unavailability follow the host, without suspending or verifying on refresh
+  ---
+  duration_ms: 39.525416
+  ...
+# Subtest: one stored export verifies, rechecks authority, copies before the real web adapter, and restores controls
+ok 15 - one stored export verifies, rechecks authority, copies before the real web adapter, and restores controls
+  ---
+  duration_ms: 15.130708
+  ...
+# Subtest: current replay-only export names its source and retains the matching-campaign warning
+ok 16 - current replay-only export names its source and retains the matching-campaign warning
+  ---
+  duration_ms: 16.158584
+  ...
+# Subtest: button cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 17 - button cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 4.773833
+  ...
+# Subtest: Escape cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 18 - Escape cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 3.410166
+  ...
+# Subtest: controller Back cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 19 - controller Back cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 9.181
+  ...
+# Subtest: close aborts and suppresses a pending export without restoring focus
+ok 20 - close aborts and suppresses a pending export without restoring focus
+  ---
+  duration_ms: 3.432541
+  ...
+# Subtest: pagehide aborts and suppresses a pending export without restoring focus
+ok 21 - pagehide aborts and suppresses a pending export without restoring focus
+  ---
+  duration_ms: 1.64625
+  ...
+# Subtest: a stale host assertion or failed verification preserves the previous copy and permits a fresh attempt
+ok 22 - a stale host assertion or failed verification preserves the previous copy and permits a fresh attempt
+  ---
+  duration_ms: 3.876083
+  ...
+# Subtest: a cancelled operation cannot clear a newer operation or overwrite its status
+ok 23 - a cancelled operation cannot clear a newer operation or overwrite its status
+  ---
+  duration_ms: 11.544541
+  ...
+# Subtest: adapter failure retains the already verified copy and reports the real error
+ok 24 - adapter failure retains the already verified copy and reports the real error
+  ---
+  duration_ms: 2.673667
+  ...
+# Subtest: Stop waiting keeps a requested download protected until the platform returns
+ok 25 - Stop waiting keeps a requested download protected until the platform returns
+  ---
+  duration_ms: 1.452667
+  ...
+# Subtest: verified attempt download offers Stop waiting and reports the actual platform result afterward
+ok 26 - verified attempt download offers Stop waiting and reports the actual platform result afterward
+  ---
+  duration_ms: 7.408375
+  ...
+# Subtest: export-backup awaits the external backup guard before preparation or download
+ok 27 - export-backup awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 3.290792
+  ...
+# Subtest: export-packs awaits the external backup guard before preparation or download
+ok 28 - export-packs awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 2.00175
+  ...
+# Subtest: import-save awaits the external backup guard before preparation or download
+ok 29 - import-save awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 3.262083
+  ...
+# Subtest: a cancelled Library file read cannot install or unlock a newer read
+ok 30 - a cancelled Library file read cannot install or unlock a newer read
+  ---
+  duration_ms: 32.07375
+  ...
+# Subtest: rail places the exact status and escape before a held read; navigation restores their original nodes
+ok 31 - rail places the exact status and escape before a held read; navigation restores their original nodes
+  ---
+  duration_ms: 10.220833
+  ...
+# Subtest: older cancelled read cannot replace a newer Packs rail or release its controls
+ok 32 - older cancelled read cannot replace a newer Packs rail or release its controls
+  ---
+  duration_ms: 10.777
+  ...
+# Subtest: attempt rail preserves count, cancel focus and exact sibling order across terminal navigation
+ok 33 - attempt rail preserves count, cancel focus and exact sibling order across terminal navigation
+  ---
+  duration_ms: 4.50575
+  ...
+# Subtest: non-abortable owner reopens with its exact detached status and no stale closed rail
+ok 34 - non-abortable owner reopens with its exact detached status and no stale closed rail
+  ---
+  duration_ms: 5.726458
+  ...
+# Subtest: backup navigation same-section joins cancellation then clears only the invalidated backup host
+not ok 35 - backup navigation same-section joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 84.730541
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/attempt-export-panel.test.mjs:579:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async backupSetFixture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/helpers/backup-set-fixture.mjs:13:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/attempt-export-panel.test.mjs:580:21)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: backup navigation other-section joins cancellation then clears only the invalidated backup host
+not ok 36 - backup navigation other-section joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 35.668792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/attempt-export-panel.test.mjs:579:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async backupSetFixture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/helpers/backup-set-fixture.mjs:13:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/attempt-export-panel.test.mjs:580:21)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: backup navigation close-reopen joins cancellation then clears only the invalidated backup host
+not ok 37 - backup navigation close-reopen joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 12.1865
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/attempt-export-panel.test.mjs:579:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async backupSetFixture (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/helpers/backup-set-fixture.mjs:13:11)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/attempt-export-panel.test.mjs:580:21)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: native-reported sticky overlap scrolls the live focused control clear without changing focus or ownership
+ok 38 - native-reported sticky overlap scrolls the live focused control clear without changing focus or ownership
+  ---
+  duration_ms: 2.277333
+  ...
+# Subtest: a queued feedback layout reads current focus and cannot follow an old opener or a closed dialog
+ok 39 - a queued feedback layout reads current focus and cannot follow an old opener or a closed dialog
+  ---
+  duration_ms: 1.146083
+  ...
+# Subtest: Close above feedback retains its own native scroll destination
+ok 40 - Close above feedback retains its own native scroll destination
+  ---
+  duration_ms: 11.392791
+  ...
+# Subtest: a tall Library editor keeps its beginning below feedback when its full height cannot fit
+ok 41 - a tall Library editor keeps its beginning below feedback when its full height cannot fit
+  ---
+  duration_ms: 1.158917
+  ...
+# Subtest: master starts silent, publishes explicit intent synchronously and never exposes mutable state
+ok 42 - master starts silent, publishes explicit intent synchronously and never exposes mutable state
+  ---
+  duration_ms: 6.339542
+  ...
+# Subtest: invalid master changes leave state and observers untouched
+ok 43 - invalid master changes leave state and observers untouched
+  ---
+  duration_ms: 0.455375
+  ...
+# Subtest: a failed output cannot prevent other outputs from muting, and newer observer intent wins
+ok 44 - a failed output cannot prevent other outputs from muting, and newer observer intent wins
+  ---
+  duration_ms: 0.188875
+  ...
+# Subtest: native output composes local and shared volume once and preserves local mute
+ok 45 - native output composes local and shared volume once and preserves local mute
+  ---
+  duration_ms: 0.699959
+  ...
+# Subtest: queued native volume/play events reassert the current gate without cumulative gain or loops
+ok 46 - queued native volume/play events reassert the current gate without cumulative gain or loops
+  ---
+  duration_ms: 0.464291
+  ...
+# Subtest: native bindings have independent cleanup and refuse two owners of one element
+ok 47 - native bindings have independent cleanup and refuse two owners of one element
+  ---
+  duration_ms: 0.205667
+  ...
+# Subtest: zero master/local volume enforces native mute without changing either mute preference
+ok 48 - zero master/local volume enforces native mute without changing either mute preference
+  ---
+  duration_ms: 0.152166
+  ...
+# Subtest: a native platform ignoring volume writes cannot loop and zero still uses its mute gate
+ok 49 - a native platform ignoring volume writes cannot loop and zero still uses its mute gate
+  ---
+  duration_ms: 0.976
+  ...
+# Subtest: Soundscape master changes do not create a context and retain local preview attenuation
+ok 50 - Soundscape master changes do not create a context and retain local preview attenuation
+  ---
+  duration_ms: 14.35475
+  ...
+# Subtest: master mute wins over deferred enable and resume without changing transport preference
+ok 51 - master mute wins over deferred enable and resume without changing transport preference
+  ---
+  duration_ms: 1.139375
+  ...
+# Subtest: master disposal silences outputs and disposed Soundscapes release only their subscription
+ok 52 - master disposal silences outputs and disposed Soundscapes release only their subscription
+  ---
+  duration_ms: 1.476959
+  ...
+# Subtest: valid global preferences override legacy fallback synchronously without writing
+ok 53 - valid global preferences override legacy fallback synchronously without writing
+  ---
+  duration_ms: 4.893583
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: not json
+ok 54 - invalid stored record retains fallback and original bytes: not json
+  ---
+  duration_ms: 1.094083
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: null
+ok 55 - invalid stored record retains fallback and original bytes: null
+  ---
+  duration_ms: 0.861583
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: []
+ok 56 - invalid stored record retains fallback and original bytes: []
+  ---
+  duration_ms: 0.199416
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false}
+ok 57 - invalid stored record retains fallback and original bytes: {"muted":false}
+  ---
+  duration_ms: 0.151125
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":0,"volume":0.5}
+ok 58 - invalid stored record retains fallback and original bytes: {"muted":0,"volume":0.5}
+  ---
+  duration_ms: 0.134625
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false,"volume":2}
+ok 59 - invalid stored record retains fallback and original bytes: {"muted":false,"volume":2}
+  ---
+  duration_ms: 0.436375
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false,"volume":1e999}
+ok 60 - invalid stored record retains fallback and original bytes: {"muted":false,"volume":1e999}
+  ---
+  duration_ms: 0.459584
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false,"volume":0.5,"version":2}
+ok 61 - invalid stored record retains fallback and original bytes: {"muted":false,"volume":0.5,"version":2}
+  ---
+  duration_ms: 0.715834
+  ...
+# Subtest: invalid stored record retains fallback and original bytes:
+ok 62 - invalid stored record retains fallback and original bytes:
+  ---
+  duration_ms: 0.325208
+  ...
+# Subtest: profile seed stays in memory; an explicit action saves only the two global scalars
+ok 63 - profile seed stays in memory; an explicit action saves only the two global scalars
+  ---
+  duration_ms: 0.817541
+  ...
+# Subtest: same-value explicit intent and direct newer authority revisions reject late profile seeds
+ok 64 - same-value explicit intent and direct newer authority revisions reject late profile seeds
+  ---
+  duration_ms: 2.807542
+  ...
+# Subtest: a global record arriving before the profile seed wins even before its storage event
+ok 65 - a global record arriving before the profile seed wins even before its storage event
+  ---
+  duration_ms: 0.43825
+  ...
+# Subtest: navigation reads saved intent and does not save fallback again
+ok 66 - navigation reads saved intent and does not save fallback again
+  ---
+  duration_ms: 0.512541
+  ...
+# Subtest: practice can change session audio without writing, and cannot lose it to a remote event
+ok 67 - practice can change session audio without writing, and cannot lose it to a remote event
+  ---
+  duration_ms: 0.222916
+  ...
+# Subtest: unavailable storage and a throwing notice leave sound working in memory
+ok 68 - unavailable storage and a throwing notice leave sound working in memory
+  ---
+  duration_ms: 0.103542
+  ...
+# Subtest: quota failure protects unsaved intent; a later successful action resumes sharing
+ok 69 - quota failure protects unsaved intent; a later successful action resumes sharing
+  ---
+  duration_ms: 1.942541
+  ...
+# Subtest: storage events require the exact key, storage area and still-current raw value
+ok 70 - storage events require the exact key, storage area and still-current raw value
+  ---
+  duration_ms: 1.180833
+  ...
+# Subtest: deleted and malformed remote values do not reset live sound or get rewritten
+ok 71 - deleted and malformed remote values do not reset live sound or get rewritten
+  ---
+  duration_ms: 0.282042
+  ...
+# Subtest: a remote unmute changes the media gate without calling play or changing transport
+ok 72 - a remote unmute changes the media gate without calling play or changing transport
+  ---
+  duration_ms: 0.3265
+  ...
+# Subtest: reentrant newer intent during a seed cannot be overwritten by its remaining fields
+ok 73 - reentrant newer intent during a seed cannot be overwritten by its remaining fields
+  ---
+  duration_ms: 0.357042
+  ...
+# Subtest: invalid explicit scalars change neither authority nor stored intent
+ok 74 - invalid explicit scalars change neither authority nor stored intent
+  ---
+  duration_ms: 2.606584
+  ...
+# Subtest: accepted intent still persists if an output subscriber throws after the state change
+ok 75 - accepted intent still persists if an output subscriber throws after the state change
+  ---
+  duration_ms: 0.264459
+  ...
+# Subtest: disposal stops persistence and remote adoption without disposing the shared authority
+ok 76 - disposal stops persistence and remote adoption without disposing the shared authority
+  ---
+  duration_ms: 1.304875
+  ...
+# Subtest: playback audio session opts out of iPhone ambient mute and safely falls back elsewhere
+ok 77 - playback audio session opts out of iPhone ambient mute and safely falls back elsewhere
+  ---
+  duration_ms: 4.016709
+  ...
+# Subtest: classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music
+ok 78 - classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music
+  ---
+  duration_ms: 12.8485
+  ...
+# Subtest: no context or sound is created before an explicit user audio action
+ok 79 - no context or sound is created before an explicit user audio action
+  ---
+  duration_ms: 1.8015
+  ...
+# Subtest: all five styles have deterministic distinct original orchestration with bounded notes
+ok 80 - all five styles have deterministic distinct original orchestration with bounded notes
+  ---
+  duration_ms: 30.465333
+  ...
+# Subtest: scheduler preserves musical deadlines under frequent calls and avoids backlog bursts
+ok 81 - scheduler preserves musical deadlines under frequent calls and avoids backlog bursts
+  ---
+  duration_ms: 1.788042
+  ...
+# Subtest: master/music/sfx buses are independently controlled and invalid changes are atomic
+ok 82 - master/music/sfx buses are independently controlled and invalid changes are atomic
+  ---
+  duration_ms: 1.030292
+  ...
+# Subtest: track descriptors are copied, styles switch cleanly, and unsupported media are rejected
+ok 83 - track descriptors are copied, styles switch cleanly, and unsupported media are rejected
+  ---
+  duration_ms: 10.510334
+  ...
+# Subtest: pause cancels scheduled notes, freezes scheduling and resumes only through explicit method
+ok 84 - pause cancels scheduled notes, freezes scheduling and resumes only through explicit method
+  ---
+  duration_ms: 8.906833
+  ...
+# Subtest: adopting mute disables active preview immediately and ordinary resume cannot re-enable it
+ok 85 - adopting mute disables active preview immediately and ordinary resume cannot re-enable it
+  ---
+  duration_ms: 0.592792
+  ...
+# Subtest: mute needs no context and wins an in-flight preview enable
+ok 86 - mute needs no context and wins an in-flight preview enable
+  ---
+  duration_ms: 1.163
+  ...
+# Subtest: terminal events distinguish victory and failure, stop backing music, and survive inactive update
+ok 87 - terminal events distinguish victory and failure, stop backing music, and survive inactive update
+  ---
+  duration_ms: 0.95725
+  ...
+# Subtest: polyphony is capped and event bursts deduplicate instead of allocating forever
+ok 88 - polyphony is capped and event bursts deduplicate instead of allocating forever
+  ---
+  duration_ms: 1.56375
+  ...
+# Subtest: failed autoplay resume reports disabled and disposal wins pending enable race
+ok 89 - failed autoplay resume reports disabled and disposal wins pending enable race
+  ---
+  duration_ms: 0.549208
+  ...
+# Subtest: tension is derived read-only and does not change the musical tempo or game state
+ok 90 - tension is derived read-only and does not change the musical tempo or game state
+  ---
+  duration_ms: 0.216208
+  ...
+# Subtest: gesture preview plays from an inactive terminal screen and stops at its bounded deadline
+ok 91 - gesture preview plays from an inactive terminal screen and stops at its bounded deadline
+  ---
+  duration_ms: 0.756916
+  ...
+# Subtest: pause, reset, mute and disposal cancel preview without restarting after a delayed gesture
+ok 92 - pause, reset, mute and disposal cancel preview without restarting after a delayed gesture
+  ---
+  duration_ms: 4.774792
+  ...
+# Subtest: persistent soundtrack opt-in remains silent until an allowed audio action
+ok 93 - persistent soundtrack opt-in remains silent until an allowed audio action
+  ---
+  duration_ms: 1.290125
+  ...
+# Subtest: persistent music survives menu, gameplay pause, terminal cues and attempt reset
+ok 94 - persistent music survives menu, gameplay pause, terminal cues and attempt reset
+  ---
+  duration_ms: 0.593166
+  ...
+# Subtest: automatic authored tracks wait for a real song boundary and adopt the new tempo there
+ok 95 - automatic authored tracks wait for a real song boundary and adopt the new tempo there
+  ---
+  duration_ms: 158.605791
+  ...
+# Subtest: same authored context cancels a queued change without restart; explicit selection replaces it
+ok 96 - same authored context cancels a queued change without restart; explicit selection replaces it
+  ---
+  duration_ms: 1.315125
+  ...
+# Subtest: persistent lifecycle suspension and mute silence sources but retain the musical position
+ok 97 - persistent lifecycle suspension and mute silence sources but retain the musical position
+  ---
+  duration_ms: 0.832
+  ...
+# Subtest: persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes
+ok 98 - persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes
+  ---
+  duration_ms: 2.563834
+  ...
+# Subtest: persistent audition returns to the ongoing soundtrack without a cursor reset
+ok 99 - persistent audition returns to the ongoing soundtrack without a cursor reset
+  ---
+  duration_ms: 0.270291
+  ...
+# Subtest: persistent scheduler remains bounded after a stall and only explicit music reset restarts it
+ok 100 - persistent scheduler remains bounded after a stall and only explicit music reset restarts it
+  ---
+  duration_ms: 0.198417
+  ...
+# Subtest: mount is inert and renders every button map with sixteen explicit options
+ok 101 - mount is inert and renders every button map with sixteen explicit options
+  ---
+  duration_ms: 9.612042
+  ...
+# Subtest: generated select, range and checkbox controls expose readable names for controller previews
+ok 102 - generated select, range and checkbox controls expose readable names for controller previews
+  ---
+  duration_ms: 10.93625
+  ...
+# Subtest: an explicit draft keeps the original configuration unchanged until canonical Apply
+ok 103 - an explicit draft keeps the original configuration unchanged until canonical Apply
+  ---
+  duration_ms: 11.467917
+  ...
+# Subtest: temporary button conflicts permit complete swaps but invalid Apply never reaches the host
+ok 104 - temporary button conflicts permit complete swaps but invalid Apply never reaches the host
+  ---
+  duration_ms: 3.242209
+  ...
+# Subtest: Cancel discards valid and conflicting draft changes without adoption
+ok 105 - Cancel discards valid and conflicting draft changes without adoption
+  ---
+  duration_ms: 8.4045
+  ...
+# Subtest: Restore defaults changes only the draft and requires Apply
+ok 106 - Restore defaults changes only the draft and requires Apply
+  ---
+  duration_ms: 4.050417
+  ...
+# Subtest: button label choices update draft option text without changing saved indices or detecting hardware
+ok 107 - button label choices update draft option text without changing saved indices or detecting hardware
+  ---
+  duration_ms: 75.286416
+  ...
+# Subtest: whole-candidate validation rejects axes, bounds and release-above-press conflicts
+ok 108 - whole-candidate validation rejects axes, bounds and release-above-press conflicts
+  ---
+  duration_ms: 33.736167
+  ...
+# Subtest: session-only success adopts the map and displays the host persistence warning as text
+ok 109 - session-only success adopts the map and displays the host persistence warning as text
+  ---
+  duration_ms: 22.579708
+  ...
+# Subtest: a thrown host rejection retains the current map and permits repairing the draft
+ok 110 - a thrown host rejection retains the current map and permits repairing the draft
+  ---
+  duration_ms: 5.461041
+  ...
+# Subtest: source change before Apply discards the old draft without overwriting new preferences
+ok 111 - source change before Apply discards the old draft without overwriting new preferences
+  ---
+  duration_ms: 5.883791
+  ...
+# Subtest: refresh explicitly invalidates even an unchanged source draft
+ok 112 - refresh explicitly invalidates even an unchanged source draft
+  ---
+  duration_ms: 40.384834
+  ...
+# Subtest: async Apply is single-flight and allows its own canonical adoption
+ok 113 - async Apply is single-flight and allows its own canonical adoption
+  ---
+  duration_ms: 1.12425
+  ...
+# Subtest: native Apply blur restores the same enabled Edit button and releases focus observers
+ok 114 - native Apply blur restores the same enabled Edit button and releases focus observers
+  ---
+  duration_ms: 1.032625
+  ...
+# Subtest: pending Apply does not reclaim focus after other modal
+ok 115 - pending Apply does not reclaim focus after other modal
+  ---
+  duration_ms: 2.457209
+  ...
+# Subtest: pending Apply does not reclaim focus after other control then blur
+ok 116 - pending Apply does not reclaim focus after other control then blur
+  ---
+  duration_ms: 28.26825
+  ...
+# Subtest: pending Apply does not reclaim focus after pointer on body
+ok 117 - pending Apply does not reclaim focus after pointer on body
+  ---
+  duration_ms: 23.418958
+  ...
+# Subtest: pending Apply does not reclaim focus after keyboard navigation
+ok 118 - pending Apply does not reclaim focus after keyboard navigation
+  ---
+  duration_ms: 2.664417
+  ...
+# Subtest: pending Apply does not reclaim focus after window blur and return
+ok 119 - pending Apply does not reclaim focus after window blur and return
+  ---
+  duration_ms: 3.042083
+  ...
+# Subtest: pending Apply does not reclaim focus after hidden page
+ok 120 - pending Apply does not reclaim focus after hidden page
+  ---
+  duration_ms: 6.181625
+  ...
+# Subtest: pending Apply does not reclaim focus after hidden page then return
+ok 121 - pending Apply does not reclaim focus after hidden page then return
+  ---
+  duration_ms: 0.739916
+  ...
+# Subtest: programmatic Apply without initial focus ownership does not claim body focus
+ok 122 - programmatic Apply without initial focus ownership does not claim body focus
+  ---
+  duration_ms: 30.182083
+  ...
+# Subtest: refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status
+ok 123 - refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status
+  ---
+  duration_ms: 3.866667
+  ...
+# Subtest: source changes during asynchronous preparation invalidate the guard without a refresh
+ok 124 - source changes during asynchronous preparation invalidate the guard without a refresh
+  ---
+  duration_ms: 6.189625
+  ...
+# Subtest: malformed current data fails visibly and a later valid refresh recovers
+ok 125 - malformed current data fails visibly and a later valid refresh recovers
+  ---
+  duration_ms: 4.393542
+  ...
+# Subtest: destroy removes listeners and aborts pending work without late DOM adoption
+ok 126 - destroy removes listeners and aborts pending work without late DOM adoption
+  ---
+  duration_ms: 1.83075
+  ...
+# Subtest: a file selected before Start cannot replace setup after returning from an attempt
+ok 127 - a file selected before Start cannot replace setup after returning from an attempt
+  ---
+  duration_ms: 159.852209
+  ...
+# Subtest: invalid or oversized imports preserve the selected custom pack and challenge
+ok 128 - invalid or oversized imports preserve the selected custom pack and challenge
+  ---
+  duration_ms: 72.136208
+  ...
+# Subtest: the latest file selection wins when earlier reads finish out of order
+ok 129 - the latest file selection wins when earlier reads finish out of order
+  ---
+  duration_ms: 60.094542
+  ...
+# Subtest: returning to built-ins cancels an outstanding file read
+ok 130 - returning to built-ins cancels an outstanding file read
+  ---
+  duration_ms: 41.392917
+  ...
+# Subtest: custom fractional coverage and multiple required cores drive the actual briefing and HUD
+ok 131 - custom fractional coverage and multiple required cores drive the actual briefing and HUD
+  ---
+  duration_ms: 49.156625
+  ...
+# Subtest: lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads
+ok 132 - lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads
+  ---
+  duration_ms: 135.31125
+  ...
+# Subtest: the selected cut rules agree across the briefing and actual start message
+ok 133 - the selected cut rules agree across the briefing and actual start message
+  ---
+  duration_ms: 48.203292
+  ...
+# Subtest: real keyboard self-crossings explain the shared recovery and cause-aware retry
+ok 134 - real keyboard self-crossings explain the shared recovery and cause-aware retry
+  ---
+  duration_ms: 448.687791
+  ...
+# Subtest: retry feedback counts required objectives and distinguishes enemy and spark causes
+ok 135 - retry feedback counts required objectives and distinguishes enemy and spark causes
+  ---
+  duration_ms: 0.315416
+  ...
+# Subtest: a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires
+ok 136 - a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires
+  ---
+  duration_ms: 11.447959
+  ...
+# Subtest: Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative
+ok 137 - Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative
+  ---
+  duration_ms: 36.114459
+  ...
+# Subtest: paused Help reading and Back return to an action without resuming the shared simulation
+ok 138 - paused Help reading and Back return to an action without resuming the shared simulation
+  ---
+  duration_ms: 636.3435
+  ...
+# Subtest: assigning a controller releases hidden held touch; disconnect stays paused until Resume
+ok 139 - assigning a controller releases hidden held touch; disconnect stays paused until Resume
+  ---
+  duration_ms: 159.662625
+  ...
+# Subtest: Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus
+ok 140 - Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus
+  ---
+  duration_ms: 13.088333
+  ...
+# Subtest: Back and closing the Team pack picker detach a read before reopening
+ok 141 - Back and closing the Team pack picker detach a read before reopening
+  ---
+  duration_ms: 20.9705
+  ...
+# Subtest: Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+    # Subtest: actual Versus controls
+    ok 1 - actual Versus controls
+      ---
+      duration_ms: 355.20875
+      ...
+    # Subtest: fresh Team receives settings, not music or progress
+    ok 2 - fresh Team receives settings, not music or progress
+      ---
+      duration_ms: 41.0395
+      ...
+    # Subtest: fresh Versus restores without context creation or playing
+    ok 3 - fresh Versus restores without context creation or playing
+      ---
+      duration_ms: 117.522667
+      ...
+    1..3
+ok 142 - Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+  ---
+  duration_ms: 515.018083
+  ...
+# Subtest: Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+ok 143 - Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+  ---
+  duration_ms: 377.014291
+  ...
+# Subtest: Versus controller edits the actual master slider without starting either board
+ok 144 - Versus controller edits the actual master slider without starting either board
+  ---
+  duration_ms: 152.516041
+  ...
+# Subtest: Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+ok 145 - Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+  ---
+  duration_ms: 292.669542
+  ...
+# Subtest: two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions
+ok 146 - two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions
+  ---
+  duration_ms: 1251.008083
+  ...
+# Subtest: actual select previews cancel without replacing the duel and commit once through onchange
+ok 147 - actual select previews cancel without replacing the duel and commit once through onchange
+  ---
+  duration_ms: 552.097208
+  ...
+# Subtest: Back and Menu cancel previews or focus the primary action without starting or resetting
+ok 148 - Back and Menu cancel previews or focus the primary action without starting or resetting
+  ---
+  duration_ms: 368.182042
+  ...
+# Subtest: native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard
+ok 149 - native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard
+  ---
+  duration_ms: 304.375375
+  ...
+# Subtest: Ready slot loss consumes another pad Confirm; the surviving player keeps its slot
+ok 150 - Ready slot loss consumes another pad Confirm; the surviving player keeps its slot
+  ---
+  duration_ms: 208.758
+  ...
+# Subtest: descriptor change at the same index pauses flight and requires neutral plus a new menu join
+ok 151 - descriptor change at the same index pauses flight and requires neutral plus a new menu join
+  ---
+  duration_ms: 345.472625
+  ...
+# Subtest: disconnect event at the same index pauses flight and requires neutral plus a new menu join
+ok 152 - disconnect event at the same index pauses flight and requires neutral plus a new menu join
+  ---
+  duration_ms: 232.339625
+  ...
+# Subtest: explicit menu release permits the other player to join, never transfers a held edge
+ok 153 - explicit menu release permits the other player to join, never transfers a held edge
+  ---
+  duration_ms: 167.63525
+  ...
+# Subtest: one hardware read per visible frame and no reads or ticks while unfocused, hidden or disposed
+ok 154 - one hardware read per visible frame and no reads or ticks while unfocused, hidden or disposed
+  ---
+  duration_ms: 219.162625
+  ...
+# Subtest: persisted return and Ready Escape preserve the true state and cancel a pending edit
+ok 155 - persisted return and Ready Escape preserve the true state and cancel a pending edit
+  ---
+  duration_ms: 155.767916
+  ...
+# Subtest: API errors and unsupported pads remain usable with keyboard and truthful Ready status
+ok 156 - API errors and unsupported pads remain usable with keyboard and truthful Ready status
+  ---
+  duration_ms: 109.374208
+  ...
+# Subtest: immediate: actual Sentinel round win and best-of-three rematch retain legal core route results
+ok 157 - immediate: actual Sentinel round win and best-of-three rematch retain legal core route results
+  ---
+  duration_ms: 19287.748083
+  ...
+# Subtest: grid-center: actual Sentinel round win and best-of-three rematch retain legal core route results
+ok 158 - grid-center: actual Sentinel round win and best-of-three rematch retain legal core route results
+  ---
+  duration_ms: 23782.412416
+  ...
+# Subtest: one lost craft does not expose shared menu; both ended draws retain explicit Next
+ok 159 - one lost craft does not expose shared menu; both ended draws retain explicit Next
+  ---
+  duration_ms: 517.848875
+  ...
+# Subtest: native checkboxes and both held touch pads stay independent after leaving controller navigation
+ok 160 - native checkboxes and both held touch pads stay independent after leaving controller navigation
+  ---
+  duration_ms: 309.961167
+  ...
+# Subtest: immediate: actual Pause retains two different requested turns and explicit Resume continues both
+ok 161 - immediate: actual Pause retains two different requested turns and explicit Resume continues both
+  ---
+  duration_ms: 242.77775
+  ...
+# Subtest: immediate: real recovery clears only that player's continuous intent before later substeps
+ok 162 - immediate: real recovery clears only that player's continuous intent before later substeps
+  ---
+  duration_ms: 275.312375
+  ...
+# Subtest: grid-center: actual Pause retains two different requested turns and explicit Resume continues both
+ok 163 - grid-center: actual Pause retains two different requested turns and explicit Resume continues both
+  ---
+  duration_ms: 247.218041
+  ...
+# Subtest: grid-center: real recovery clears only that player's continuous intent before later substeps
+ok 164 - grid-center: real recovery clears only that player's continuous intent before later substeps
+  ---
+  duration_ms: 249.152833
+  ...
+# Subtest: timeout draw keeps series at zero and needs a fresh explicit Next gesture
+ok 165 - timeout draw keeps series at zero and needs a fresh explicit Next gesture
+  ---
+  duration_ms: 1126.770666
+  ...
+# Subtest: immediate, keyboard: real cut closure stops only its player across substeps and held input
+ok 166 - immediate, keyboard: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 1485.99975
+  ...
+# Subtest: immediate, controller: real cut closure stops only its player across substeps and held input
+ok 167 - immediate, controller: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 1377.981625
+  ...
+# Subtest: grid-center, keyboard: real cut closure stops only its player across substeps and held input
+ok 168 - grid-center, keyboard: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 1675.430791
+  ...
+# Subtest: grid-center, controller: real cut closure stops only its player across substeps and held input
+ok 169 - grid-center, controller: real cut closure stops only its player across substeps and held input
+  ---
+  duration_ms: 1683.738458
+  ...
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 170 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 4.456958
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 171 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.795625
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 172 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 4.129417
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 173 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.109833
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 174 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.082208
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 175 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.065042
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 176 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 8.528334
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 177 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 122.774417
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 178 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.217625
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 179 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 0.285084
+  ...
+# Subtest: Mission setup keeps the original craft status in its modal and restores it after closing
+ok 180 - Mission setup keeps the original craft status in its modal and restores it after closing
+  ---
+  duration_ms: 830.239958
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+ok 181 - direct briefing and disposal retain one craft presenter outside hidden mission content
+  ---
+  duration_ms: 638.231833
+  ...
+# Subtest: title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight
+ok 182 - title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight
+  ---
+  duration_ms: 656.79825
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 183 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 955.660333
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+ok 184 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+  ---
+  duration_ms: 800.2645
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 185 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 1199.643708
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+ok 186 - Missions button returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 2588.132167
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+ok 187 - Missions escape returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 2164.661166
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+ok 188 - Missions controller returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 2347.26775
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+ok 189 - Missions button returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 3141.194083
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+ok 190 - Missions escape returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 6550.264875
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+ok 191 - Missions controller returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 5742.955959
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+ok 192 - Missions button returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 2495.024333
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+ok 193 - Missions escape returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 2620.163542
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+ok 194 - Missions controller returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 3530.063208
+  ...
+# Subtest: Back to flight remains an intentional exit from title Missions
+ok 195 - Back to flight remains an intentional exit from title Missions
+  ---
+  duration_ms: 874.255041
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+ok 196 - controller Back retains a cancellation warning when a transaction keeps its dialog open
+  ---
+  duration_ms: 1291.559125
+  ...
+# Subtest: Large portrait selector is fully below the measured expanded heading
+ok 197 - Large portrait selector is fully below the measured expanded heading
+  ---
+  duration_ms: 0.921083
+  ...
+# Subtest: Large landscape selector clears the measured bottom action bar
+ok 198 - Large landscape selector clears the measured bottom action bar
+  ---
+  duration_ms: 0.093292
+  ...
+# Subtest: queued reflow reads current focus and leaves the heading action alone
+ok 199 - queued reflow reads current focus and leaves the heading action alone
+  ---
+  duration_ms: 0.072125
+  ...
+# Subtest: large reading region retains its beginning and manual scrolling is not undone
+ok 200 - large reading region retains its beginning and manual scrolling is not undone
+  ---
+  duration_ms: 1.421708
+  ...
+# Subtest: queued layout cannot alter a closed owner's scroll or focus
+ok 201 - queued layout cannot alter a closed owner's scroll or focus
+  ---
+  duration_ms: 0.176792
+  ...
+# Subtest: queued layout cannot alter a hidden owner's scroll or focus
+ok 202 - queued layout cannot alter a hidden owner's scroll or focus
+  ---
+  duration_ms: 0.061875
+  ...
+# Subtest: queued layout cannot alter a blurred owner's scroll or focus
+ok 203 - queued layout cannot alter a blurred owner's scroll or focus
+  ---
+  duration_ms: 0.143959
+  ...
+# Subtest: queued layout cannot alter a outside owner's scroll or focus
+ok 204 - queued layout cannot alter a outside owner's scroll or focus
+  ---
+  duration_ms: 0.10375
+  ...
+# Subtest: queued layout cannot alter a disposed owner's scroll or focus
+ok 205 - queued layout cannot alter a disposed owner's scroll or focus
+  ---
+  duration_ms: 0.605209
+  ...
+# Subtest: Collection shows pagination only when 0 pictures need a second page
+ok 206 - Collection shows pagination only when 0 pictures need a second page
+  ---
+  duration_ms: 4.184625
+  ...
+# Subtest: Collection shows pagination only when 12 pictures need a second page
+ok 207 - Collection shows pagination only when 12 pictures need a second page
+  ---
+  duration_ms: 39.47025
+  ...
+# Subtest: Collection shows pagination only when 13 pictures need a second page
+ok 208 - Collection shows pagination only when 13 pictures need a second page
+  ---
+  duration_ms: 23.499459
+  ...
+# Subtest: Filtering to one page preserves unrelated focus
+ok 209 - Filtering to one page preserves unrelated focus
+  ---
+  duration_ms: 90.525083
+  ...
+# Subtest: Filtering to one page restores removed pager focus to search
+ok 210 - Filtering to one page restores removed pager focus to search
+  ---
+  duration_ms: 86.798667
+  ...
+# Subtest: wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+ok 211 - wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+  ---
+  duration_ms: 4.862833
+  ...
+# Subtest: Back restores the same stable picture on its page and preserves the original filter
+ok 212 - Back restores the same stable picture on its page and preserves the original filter
+  ---
+  duration_ms: 95.448834
+  ...
+# Subtest: native cancel follows the same picture return path and does not clear collection context
+ok 213 - native cancel follows the same picture return path and does not clear collection context
+  ---
+  duration_ms: 83.787292
+  ...
+# Subtest: a reordered collection resolves the stable picture key rather than the old card index
+ok 214 - a reordered collection resolves the stable picture key rather than the old card index
+  ---
+  duration_ms: 71.714792
+  ...
+# Subtest: a removed picture clamps the page and focuses a remaining enabled card
+ok 215 - a removed picture clamps the page and focuses a remaining enabled card
+  ---
+  duration_ms: 56.560875
+  ...
+# Subtest: a missing pack or empty filtered collection falls back to the enabled search field
+ok 216 - a missing pack or empty filtered collection falls back to the enabled search field
+  ---
+  duration_ms: 51.283834
+  ...
+# Subtest: the underlying Collection cannot replace its open child picture
+ok 217 - the underlying Collection cannot replace its open child picture
+  ---
+  duration_ms: 0.971
+  ...
+# Subtest: Replay leaves the collection closed and preserves the host mission focus
+ok 218 - Replay leaves the collection closed and preserves the host mission focus
+  ---
+  duration_ms: 46.140875
+  ...
+# Subtest: late decoding and a queued old close cannot steal focus from a new picture
+ok 219 - late decoding and a queued old close cannot steal focus from a new picture
+  ---
+  duration_ms: 1.242375
+  ...
+# Subtest: a new picture hides the previous artwork and blocks actions until its own decode completes
+ok 220 - a new picture hides the previous artwork and blocks actions until its own decode completes
+  ---
+  duration_ms: 0.94175
+  ...
+# Subtest: an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+ok 221 - an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+  ---
+  duration_ms: 2.251667
+  ...
+# Subtest: an older rejected decode cannot replace the selected ready picture with an error
+ok 222 - an older rejected decode cannot replace the selected ready picture with an error
+  ---
+  duration_ms: 2.660583
+  ...
+# Subtest: a failed selected decode keeps stale pixels hidden and can be closed and retried
+ok 223 - a failed selected decode keeps stale pixels hidden and can be closed and retried
+  ---
+  duration_ms: 3.202541
+  ...
+# Subtest: a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+ok 224 - a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+  ---
+  duration_ms: 3.234791
+  ...
+# Subtest: a failed illustration reload cannot start a procedural celebration over the ready authored picture
+ok 225 - a failed illustration reload cannot start a procedural celebration over the ready authored picture
+  ---
+  duration_ms: 0.579458
+  ...
+# Subtest: busy library import still prevents cancel until its guarded task finishes
+ok 226 - busy library import still prevents cancel until its guarded task finishes
+  ---
+  duration_ms: 1.582375
+  ...
+# Subtest: profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+ok 227 - profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+  ---
+  duration_ms: 10.269541
+  ...
+# Subtest: a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+ok 228 - a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+  ---
+  duration_ms: 3.990667
+  ...
+# Subtest: a late seal updates an existing focused collection card without repaint or replacement
+not ok 229 - a late seal updates an existing focused collection card without repaint or replacement
+  ---
+  duration_ms: 8.64725
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:815:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/content/packs/homeward-skies.json'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async homewardCollection (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:761:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:816:13)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: an already open picture receives friendly seal details without disturbing its focus or artwork
+not ok 230 - an already open picture receives friendly seal details without disturbing its focus or artwork
+  ---
+  duration_ms: 2.898375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:836:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/content/packs/homeward-skies.json'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async homewardCollection (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:761:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:837:13)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+not ok 231 - late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+  ---
+  duration_ms: 1.895708
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:867:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/content/packs/homeward-skies.json'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async homewardCollection (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:761:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:868:13)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: both difficulty records share a card while mode changes preserve focus and Back returns to that card
+ok 232 - both difficulty records share a card while mode changes preserve focus and Back returns to that card
+  ---
+  duration_ms: 45.581542
+  ...
+# Subtest: picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+ok 233 - picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+  ---
+  duration_ms: 4.718209
+  ...
+# Subtest: picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+ok 234 - picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+  ---
+  duration_ms: 5.256292
+  ...
+# Subtest: rapid difficulty switches retain the latest image generation and keep stale actions blocked
+ok 235 - rapid difficulty switches retain the latest image generation and keep stale actions blocked
+  ---
+  duration_ms: 2.346625
+  ...
+# Subtest: score and saved-attempt mode labels use exact execution keys and searchable separate boards
+ok 236 - score and saved-attempt mode labels use exact execution keys and searchable separate boards
+  ---
+  duration_ms: 33.18325
+  ...
+# Subtest: a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+not ok 237 - a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+  ---
+  duration_ms: 7.061166
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:1038:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/content/packs/homeward-skies.json'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async homewardCollection (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:761:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/gallery-focus.test.mjs:1039:13)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: an open picture cannot replay a pack removed after the picture was resolved
+ok 238 - an open picture cannot replay a pack removed after the picture was resolved
+  ---
+  duration_ms: 0.842042
+  ...
+# Subtest: a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+ok 239 - a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+  ---
+  duration_ms: 2.587333
+  ...
+# Subtest: Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+ok 240 - Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+  ---
+  duration_ms: 376.745375
+  ...
+# Subtest: Collection retains an earned original after its pack is removed without offering replay or invented animation
+ok 241 - Collection retains an earned original after its pack is removed without offering replay or invented animation
+  ---
+  duration_ms: 198.6575
+  ...
+# Subtest: an unavailable original never silently falls back to current authored artwork
+ok 242 - an unavailable original never silently falls back to current authored artwork
+  ---
+  duration_ms: 121.816875
+  ...
+# Subtest: closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+ok 243 - closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+  ---
+  duration_ms: 177.32925
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after navigation
+ok 244 - Back keeps its scope but late metadata cannot steal focus after navigation
+  ---
+  duration_ms: 220.600958
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+ok 245 - Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+  ---
+  duration_ms: 242.354042
+  ...
+# Subtest: Collection labels the retained score run separately from a later best medal without rewriting either record
+ok 246 - Collection labels the retained score run separately from a later best medal without rewriting either record
+  ---
+  duration_ms: 1.678166
+  ...
+# Subtest: v1 raw and storage envelopes migrate read-only into v2 with empty masteries
+ok 247 - v1 raw and storage envelopes migrate read-only into v2 with empty masteries
+  ---
+  duration_ms: 10.95975
+  ...
+# Subtest: v1 cannot smuggle mastery fields and v2 must supply a valid exact collection
+ok 248 - v1 cannot smuggle mastery fields and v2 must supply a valid exact collection
+  ---
+  duration_ms: 15.09525
+  ...
+# Subtest: metadata helper preserves ordinary awards and owns every returned record
+ok 249 - metadata helper preserves ordinary awards and owns every returned record
+  ---
+  duration_ms: 4.248459
+  ...
+# Subtest: library union is idempotent and retains earliest records and changed definitions separately
+ok 250 - library union is idempotent and retains earliest records and changed definitions separately
+  ---
+  duration_ms: 23.498959
+  ...
+# Subtest: concurrent saves union seals while preserving whole controller preferences and replacement generations
+ok 251 - concurrent saves union seals while preserving whole controller preferences and replacement generations
+  ---
+  duration_ms: 59.406375
+  ...
+# Subtest: malformed or over-capacity metadata never changes the ordinary library or storage
+ok 252 - malformed or over-capacity metadata never changes the ordinary library or storage
+  ---
+  duration_ms: 3.551084
+  ...
+# Subtest: the whole library byte limit still applies when individually valid collections are combined
+ok 253 - the whole library byte limit still applies when individually valid collections are combined
+  ---
+  duration_ms: 9218.944542
+  ...
+# Subtest: full backups migrate old libraries and preserve v2 records, packs and live-cut checkpoints
+ok 254 - full backups migrate old libraries and preserve v2 records, packs and live-cut checkpoints
+  ---
+  duration_ms: 199.861708
+  ...
+# Subtest: complete backup import and Undo replace seals through guarded generations; failed import restores exact old bytes
+ok 255 - complete backup import and Undo replace seals through guarded generations; failed import restores exact old bytes
+  ---
+  duration_ms: 48.100542
+  ...
+# Subtest: source-locked transfer migrates earlier v1 and carries v2 records without modifying source storage
+ok 256 - source-locked transfer migrates earlier v1 and carries v2 records without modifying source storage
+  ---
+  duration_ms: 41.308291
+  ...
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 257 - opening order owns controller scope across reversed DOM order, Back and fresh reopen
+  ---
+  duration_ms: 6.630541
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 258 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+  ---
+  duration_ms: 1.199125
+  ...
+# Subtest: actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+ok 259 - actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+  ---
+  duration_ms: 1530.385792
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 260 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+  ---
+  duration_ms: 1236.72
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 261 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 2075.100667
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 262 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 1987.88925
+  ...
+# Subtest: Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+ok 263 - Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+  ---
+  duration_ms: 1123.48775
+  ...
+# Subtest: Collection disclosure ends reading on collapse without stealing later focus
+ok 264 - Collection disclosure ends reading on collapse without stealing later focus
+  ---
+  duration_ms: 984.55525
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 265 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+  ---
+  duration_ms: 3181.197625
+  ...
+# Subtest: title Settings returns to its title opener after controller Back or native Escape
+ok 266 - title Settings returns to its title opener after controller Back or native Escape
+  ---
+  duration_ms: 1102.511125
+  ...
+# Subtest: opening Settings during a flight keeps its paused-flight return instead of opening the title
+ok 267 - opening Settings during a flight keeps its paused-flight return instead of opening the title
+  ---
+  duration_ms: 2836.060375
+  ...
+# Subtest: title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+ok 268 - title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+  ---
+  duration_ms: 1887.91025
+  ...
+# Subtest: Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+ok 269 - Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+  ---
+  duration_ms: 2039.5215
+  ...
+# Subtest: title picture controller returns through Collection to its exact title opener
+ok 270 - title picture controller returns through Collection to its exact title opener
+  ---
+  duration_ms: 1844.145375
+  ...
+# Subtest: title picture escape returns through Collection to its exact title opener
+ok 271 - title picture escape returns through Collection to its exact title opener
+  ---
+  duration_ms: 1612.044708
+  ...
+# Subtest: title picture close button returns through Collection to its exact title opener
+ok 272 - title picture close button returns through Collection to its exact title opener
+  ---
+  duration_ms: 1310.179208
+  ...
+# Subtest: picture Replay deliberately leaves title and Collection for the selected ready briefing
+ok 273 - picture Replay deliberately leaves title and Collection for the selected ready briefing
+  ---
+  duration_ms: 983.036792
+  ...
+# Subtest: Collection Choose appearance deliberately leaves title for Missions setup
+ok 274 - Collection Choose appearance deliberately leaves title for Missions setup
+  ---
+  duration_ms: 780.880833
+  ...
+# Subtest: Collection resets its return label from title to a direct paused-flight visit
+ok 275 - Collection resets its return label from title to a direct paused-flight visit
+  ---
+  duration_ms: 2611.8345
+  ...
+# Subtest: programmatic Collection after a real win does not refocus a hidden opener
+ok 276 - programmatic Collection after a real win does not refocus a hidden opener
+  ---
+  duration_ms: 24251.675125
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 277 - unchanged production preserves its exact document and appends changed revisions
+  ---
+  duration_ms: 1546.755
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 278 - review evidence gets an immutable successor and normal reproduction keeps the review
+  ---
+  duration_ms: 2945.615041
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 279 - production refuses silent slot contract mutation and can explicitly return to an old revision
+  ---
+  duration_ms: 1392.289584
+  ...
+# Subtest: the current source-pinned motion and feedback recipe reviews remain selected
+ok 280 - the current source-pinned motion and feedback recipe reviews remain selected
+  ---
+  duration_ms: 1438.356209
+  ...
+# Subtest: P01 UI and P02-A audio reviews cover exact current inputs
+not ok 281 - P01 UI and P02-A audio reviews cover exact current inputs
+  ---
+  duration_ms: 1553.551667
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/presentation-production-history.test.mjs:110:1'
+  failureType: 'testCodeFailure'
+  error: 'audio.focus'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/game/test/presentation-production-history.test.mjs:119:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: changed loading and shared-master inputs reopen only their own reviewed recipe group
+ok 282 - changed loading and shared-master inputs reopen only their own reviewed recipe group
+  ---
+  duration_ms: 10098.411916
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 283 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 38548.016708
+  ...
+# Subtest: temporary leases attenuate synth without restarting or changing saved controls
+ok 284 - temporary leases attenuate synth without restarting or changing saved controls
+  ---
+  duration_ms: 8.946292
+  ...
+# Subtest: temporary leases attenuate MP3 without restarting or changing saved controls
+ok 285 - temporary leases attenuate MP3 without restarting or changing saved controls
+  ---
+  duration_ms: 7.605625
+  ...
+# Subtest: volume edits, zero volume and paused listening intent survive lease release
+ok 286 - volume edits, zero volume and paused listening intent survive lease release
+  ---
+  duration_ms: 7.020584
+  ...
+# Subtest: an idle lease neither enables audio nor changes explicit mute/master state
+ok 287 - an idle lease neither enables audio nor changes explicit mute/master state
+  ---
+  duration_ms: 1.118584
+  ...
+# Subtest: lease changes during asynchronous original acquisition use the latest mix once playback begins
+ok 288 - lease changes during asynchronous original acquisition use the latest mix once playback begins
+  ---
+  duration_ms: 1.78075
+  ...
+# Subtest: lease release composes with an in-flight fade and stays correct on the next track
+ok 289 - lease release composes with an in-flight fade and stays correct on the next track
+  ---
+  duration_ms: 53.0665
+  ...
+# Subtest: suspension and lease cleanup never resume playback or lose the surviving owner
+ok 290 - suspension and lease cleanup never resume playback or lose the surviving owner
+  ---
+  duration_ms: 6.4245
+  ...
+# Subtest: player disposal clears only this player’s leases and late releases are terminal no-ops
+ok 291 - player disposal clears only this player’s leases and late releases are terminal no-ops
+  ---
+  duration_ms: 5.204458
+  ...
+# Subtest: invalid factors and failed mixer acquisition do not leave hidden attenuation
+ok 292 - invalid factors and failed mixer acquisition do not leave hidden attenuation
+  ---
+  duration_ms: 1.718583
+  ...
+# Subtest: reentrant disposal during mixer allocation cannot publish a surviving lease
+ok 293 - reentrant disposal during mixer allocation cannot publish a surviving lease
+  ---
+  duration_ms: 0.968708
+  ...
+# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+ok 294 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+  ---
+  duration_ms: 2750.073667
+  ...
+# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+ok 295 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+  ---
+  duration_ms: 21394.658875
+  ...
+# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings
+ok 296 - actual master, music and SFX controls remain independent and the studio fader persists to game settings
+  ---
+  duration_ms: 876.40925
+  ...
+# Subtest: Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+ok 297 - Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight
+  ---
+  duration_ms: 669.618833
+  ...
+# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+ok 298 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+  ---
+  duration_ms: 2032.026667
+  ...
+# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable
+ok 299 - missing file-audio API disables Studio and leaves the original synth fallback usable
+  ---
+  duration_ms: 600.580708
+  ...
+# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+ok 300 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+  ---
+  duration_ms: 702.833333
+  ...
+# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+ok 301 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+  ---
+  duration_ms: 1319.598834
+  ...
+# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+ok 302 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+  ---
+  duration_ms: 2022.469125
+  ...
+# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts
+ok 303 - closing Studio during pending Play respects play with saved audio disabled when flight starts
+  ---
+  duration_ms: 482.927167
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts
+ok 304 - closing Studio during pending Play respects pause with saved audio disabled when flight starts
+  ---
+  duration_ms: 500.893584
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts
+ok 305 - closing Studio during pending Play respects pause with saved audio enabled when flight starts
+  ---
+  duration_ms: 587.505333
+  ...
+# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts
+ok 306 - closing Studio during pending Play respects mute with saved audio enabled when flight starts
+  ---
+  duration_ms: 573.658875
+  ...
+# Subtest: a Studio 13% master commit remains exactly 13% in native-sanitized Settings and on reopening
+ok 307 - a Studio 13% master commit remains exactly 13% in native-sanitized Settings and on reopening
+  ---
+  duration_ms: 674.765458
+  ...
+# Subtest: actual Solo Settings and Studio input-and-change keyboard range edits persist through close/reopen without playback or flight advance
+ok 308 - actual Solo Settings and Studio input-and-change keyboard range edits persist through close/reopen without playback or flight advance
+  ---
+  duration_ms: 638.879125
+  ...
+# Subtest: actual Solo Settings and Studio change-only assistive range edits persist through close/reopen without playback or flight advance
+ok 309 - actual Solo Settings and Studio change-only assistive range edits persist through close/reopen without playback or flight advance
+  ---
+  duration_ms: 612.016708
+  ...
+# Subtest: MP3 master gain composes once with independent music leases without transport or library changes
+ok 310 - MP3 master gain composes once with independent music leases without transport or library changes
+  ---
+  duration_ms: 14.170209
+  ...
+# Subtest: master changes during original acquisition govern eventual playback without overriding desired
+ok 311 - master changes during original acquisition govern eventual playback without overriding desired
+  ---
+  duration_ms: 7.504708
+  ...
+# Subtest: deferred native Play after mute stays silent and cannot restart explicitly paused music
+ok 312 - deferred native Play after mute stays silent and cannot restart explicitly paused music
+  ---
+  duration_ms: 8.583667
+  ...
+# Subtest: master unmute and lease cleanup cannot clear lifecycle suspension or disposed media ownership
+ok 313 - master unmute and lease cleanup cannot clear lifecycle suspension or disposed media ownership
+  ---
+  duration_ms: 2.613875
+  ...
+# Subtest: shared master immediately governs audition output while retaining local volume and transport
+ok 314 - shared master immediately governs audition output while retaining local volume and transport
+  ---
+  duration_ms: 24.330042
+  ...
+# Subtest: master controls remain available during loading and host save failure does not veto session mute
+ok 315 - master controls remain available during loading and host save failure does not veto session mute
+  ---
+  duration_ms: 3.416334
+  ...
+# Subtest: late audition and music Play completion cannot invoke the legacy master-enable callback
+ok 316 - late audition and music Play completion cannot invoke the legacy master-enable callback
+  ---
+  duration_ms: 13.325209
+  ...
+# Subtest: first Studio read restores displaced Close focus after successful loading
+ok 317 - first Studio read restores displaced Close focus after successful loading
+  ---
+  duration_ms: 1.121833
+  ...
+# Subtest: first Studio read restores displaced Close focus after a reported storage failure
+ok 318 - first Studio read restores displaced Close focus after a reported storage failure
+  ---
+  duration_ms: 1.242792
+  ...
+# Subtest: first Studio read preserves a deliberate transport focus chosen while loading
+ok 319 - first Studio read preserves a deliberate transport focus chosen while loading
+  ---
+  duration_ms: 5.611375
+  ...
+# Subtest: first Studio read relinquishes restoration after a later focus choice even if it blurs
+ok 320 - first Studio read relinquishes restoration after a later focus choice even if it blurs
+  ---
+  duration_ms: 5.500792
+  ...
+# Subtest: first Studio read does not refocus a dialog closed externally during loading
+ok 321 - first Studio read does not refocus a dialog closed externally during loading
+  ---
+  duration_ms: 1.241041
+  ...
+# Subtest: first Studio read does not refocus a disposed panel when its pending read settles
+ok 322 - first Studio read does not refocus a disposed panel when its pending read settles
+  ---
+  duration_ms: 0.701
+  ...
+# Subtest: first Studio read does not pull focus into a hidden document
+ok 323 - first Studio read does not pull focus into a hidden document
+  ---
+  duration_ms: 3.357625
+  ...
+# Subtest: cached Studio reopening focuses Close without a second store read
+ok 324 - cached Studio reopening focuses Close without a second store read
+  ---
+  duration_ms: 5.476458
+  ...
+# Subtest: first Studio read restores Close when disabling blurs later during success
+ok 325 - first Studio read restores Close when disabling blurs later during success
+  ---
+  duration_ms: 0.831458
+  ...
+# Subtest: first Studio read restores Close when disabling blurs later during failure
+ok 326 - first Studio read restores Close when disabling blurs later during failure
+  ---
+  duration_ms: 0.705084
+  ...
+# Subtest: late first-read blur does not override a later deliberate focus choice that also blurs
+ok 327 - late first-read blur does not override a later deliberate focus choice that also blurs
+  ---
+  duration_ms: 0.969917
+  ...
+# Subtest: real MP3 batch import is a draft; one atomic save stores originals and metadata without restarting transport
+ok 328 - real MP3 batch import is a draft; one atomic save stores originals and metadata without restarting transport
+  ---
+  duration_ms: 23.2755
+  ...
+# Subtest: a failing second file discards the whole batch while preserving an earlier unsaved draft
+ok 329 - a failing second file discards the whole batch while preserving an earlier unsaved draft
+  ---
+  duration_ms: 24.404125
+  ...
+# Subtest: clone built-in playlist, mix MP3, move entries, configure shuffle and exact map assignment
+ok 330 - clone built-in playlist, mix MP3, move entries, configure shuffle and exact map assignment
+  ---
+  duration_ms: 11.46375
+  ...
+# Subtest: removal checks playlist references and refuses deleting a playlist last entry
+ok 331 - removal checks playlist references and refuses deleting a playlist last entry
+  ---
+  duration_ms: 5.693125
+  ...
+# Subtest: binary download and replacement draft preserve exact original audio; Undo cancels replacement
+ok 332 - binary download and replacement draft preserve exact original audio; Undo cancels replacement
+  ---
+  duration_ms: 14.149625
+  ...
+# Subtest: concurrent writer conflict preserves a draft and never silently overwrites newer saved state
+ok 333 - concurrent writer conflict preserves a draft and never silently overwrites newer saved state
+  ---
+  duration_ms: 2.190958
+  ...
+# Subtest: cancellation during the browser probe leaves saved bytes and draft untouched
+ok 334 - cancellation during the browser probe leaves saved bytes and draft untouched
+  ---
+  duration_ms: 1.853875
+  ...
+# Subtest: MP3 audition pauses only music and restores previous intent; manual music playback ends the audition
+ok 335 - MP3 audition pauses only music and restores previous intent; manual music playback ends the audition
+  ---
+  duration_ms: 3.263042
+  ...
+# Subtest: transport seeking and music volume use the public player API, while unavailable storage can retry
+ok 336 - transport seeking and music volume use the public player API, while unavailable storage can retry
+  ---
+  duration_ms: 1.111083
+  ...
+# Subtest: cancel arriving after the native commit reports the completed save, never a false rollback
+ok 337 - cancel arriving after the native commit reports the completed save, never a false rollback
+  ---
+  duration_ms: 15.634375
+  ...
+# Subtest: shared managed-media budget failure retains the old library and a recoverable unsaved draft
+ok 338 - shared managed-media budget failure retains the old library and a recoverable unsaved draft
+  ---
+  duration_ms: 2.867042
+  ...
+# Subtest: a post-commit host refresh failure stays visible and does not falsely report an unsaved library
+ok 339 - a post-commit host refresh failure stays visible and does not falsely report an unsaved library
+  ---
+  duration_ms: 2.449292
+  ...
+# Subtest: user transport, volume and successful audition notify host persistence; periodic updates do not
+ok 340 - user transport, volume and successful audition notify host persistence; periodic updates do not
+  ---
+  duration_ms: 3.5555
+  ...
+# Subtest: hiding during audition restores remembered intent without starting hidden-page audio
+ok 341 - hiding during audition restores remembered intent without starting hidden-page audio
+  ---
+  duration_ms: 5.906042
+  ...
+# Subtest: beforeAudio is an explicit activation hook, never called from ordinary studio rendering
+ok 342 - beforeAudio is an explicit activation hook, never called from ordinary studio rendering
+  ---
+  duration_ms: 10.930375
+  ...
+# Subtest: New playlist uses the visibly selected library track rather than the separate append-track picker
+ok 343 - New playlist uses the visibly selected library track rather than the separate append-track picker
+  ---
+  duration_ms: 7.759208
+  ...
+# Subtest: ordinary audition transport controls pause/resume, seek and change only audition volume without rewriting music intent
+ok 344 - ordinary audition transport controls pause/resume, seek and change only audition volume without rewriting music intent
+  ---
+  duration_ms: 18.193333
+  ...
+# Subtest: preparing a visible native link is read-only and retains exact saved bytes for explicit retry
+ok 345 - preparing a visible native link is read-only and retains exact saved bytes for explicit retry
+  ---
+  duration_ms: 34.48075
+  ...
+# Subtest: prepared download participates in local keyboard focus and discard never changes saved music
+ok 346 - prepared download participates in local keyboard focus and discard never changes saved music
+  ---
+  duration_ms: 2.478041
+  ...
+# Subtest: adopted draft edits, Undo, import, save and reload invalidate a prepared copy without auto-downloading
+ok 347 - adopted draft edits, Undo, import, save and reload invalidate a prepared copy without auto-downloading
+  ---
+  duration_ms: 19.101042
+  ...
+# Subtest: cancellation and disposal during real binary preparation cannot expose a late download
+ok 348 - cancellation and disposal during real binary preparation cannot expose a late download
+  ---
+  duration_ms: 9.1035
+  ...
+# Subtest: native adapter receives prepared bytes synchronously on explicit activation and can retry a refusal
+ok 349 - native adapter receives prepared bytes synchronously on explicit activation and can retry a refusal
+  ---
+  duration_ms: 6.786083
+  ...
+# Subtest: preparation announcements stay separate from the changing music clock
+ok 350 - preparation announcements stay separate from the changing music clock
+  ---
+  duration_ms: 1.5755
+  ...
+# Subtest: pending audition visibly prepares and late playback cannot repopulate a closed/reopened panel
+ok 351 - pending audition visibly prepares and late playback cannot repopulate a closed/reopened panel
+  ---
+  duration_ms: 3.714041
+  ...
+# Subtest: transport settling refuses a predicate that never becomes ready
+ok 352 - transport settling refuses a predicate that never becomes ready
+  ---
+  duration_ms: 21.862083
+  ...
+# Subtest: transport construction/settings/selection stay silent until explicit Play
+ok 353 - transport construction/settings/selection stay silent until explicit Play
+  ---
+  duration_ms: 4.060125
+  ...
+# Subtest: preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles
+ok 354 - preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles
+  ---
+  duration_ms: 4.812042
+  ...
+# Subtest: synth song boundary signals once at actual audio deadline and does not schedule the next song early
+ok 355 - synth song boundary signals once at actual audio deadline and does not schedule the next song early
+  ---
+  duration_ms: 0.576375
+  ...
+# Subtest: music-only pause freezes position while gameplay SFX remain available; full lifecycle suspends both
+ok 356 - music-only pause freezes position while gameplay SFX remain available; full lifecycle suspends both
+  ---
+  duration_ms: 2.517666
+  ...
+# Subtest: ordered mixed queue advances synth→MP3→end without another element or album decode
+ok 357 - ordered mixed queue advances synth→MP3→end without another element or album decode
+  ---
+  duration_ms: 5.543334
+  ...
+# Subtest: repeat-one repeats only on natural end, while Next explicitly advances
+ok 358 - repeat-one repeats only on natural end, while Next explicitly advances
+  ---
+  duration_ms: 2.689209
+  ...
+# Subtest: authored game music is the automatic fallback and changes only at a song boundary
+ok 359 - authored game music is the automatic fallback and changes only at a song boundary
+  ---
+  duration_ms: 2.095209
+  ...
+# Subtest: scope assignments beat authored fallback and context updates wait for current song
+ok 360 - scope assignments beat authored fallback and context updates wait for current song
+  ---
+  duration_ms: 2.927083
+  ...
+# Subtest: library metadata edits preserve current owned MP3 and object URL until natural boundary
+ok 361 - library metadata edits preserve current owned MP3 and object URL until natural boundary
+  ---
+  duration_ms: 4.294333
+  ...
+# Subtest: paused MP3 resumes the same URL/position and its ended handler remains active
+ok 362 - paused MP3 resumes the same URL/position and its ended handler remains active
+  ---
+  duration_ms: 4.795708
+  ...
+# Subtest: one broken original is skipped once and a finite builtin fallback remains observable
+ok 363 - one broken original is skipped once and a finite builtin fallback remains observable
+  ---
+  duration_ms: 3.097792
+  ...
+# Subtest: autoplay denial is observable, preserves current track, and requires another explicit Play
+ok 364 - autoplay denial is observable, preserves current track, and requires another explicit Play
+  ---
+  duration_ms: 3.892792
+  ...
+# Subtest: a stale pending asset load cannot publish audio after explicit selection or disposal
+ok 365 - a stale pending asset load cannot publish audio after explicit selection or disposal
+  ---
+  duration_ms: 3.921709
+  ...
+# Subtest: volume owns the music fader only, combines with master for MP3, and preserves SFX volume
+ok 366 - volume owns the music fader only, combines with master for MP3, and preserves SFX volume
+  ---
+  duration_ms: 0.58825
+  ...
+# Subtest: seeking a paused synth before creating audio is retained for its first permitted playback
+ok 367 - seeking a paused synth before creating audio is retained for its first permitted playback
+  ---
+  duration_ms: 0.8395
+  ...
+# Subtest: a complete synth rendition advances through real scheduler steps on a controlled audio clock
+ok 368 - a complete synth rendition advances through real scheduler steps on a controlled audio clock
+  ---
+  duration_ms: 20.657709
+  ...
+# Subtest: repeat-all wraps and shuffled sessions preserve the exact authored entry multiset
+ok 369 - repeat-all wraps and shuffled sessions preserve the exact authored entry multiset
+  ---
+  duration_ms: 2.75275
+  ...
+# Subtest: explicit switch fades only music and a pause during its fade cannot publish late playback
+ok 370 - explicit switch fades only music and a pause during its fade cannot publish late playback
+  ---
+  duration_ms: 1.370833
+  ...
+# Subtest: lifecycle suspension of MP3 preserves listening intent and resumes the SFX context too
+ok 371 - lifecycle suspension of MP3 preserves listening intent and resumes the SFX context too
+  ---
+  duration_ms: 1.738625
+  ...
+# Subtest: unsupported or corrupt originals never reach an object URL and fallback attempts stay finite
+ok 372 - unsupported or corrupt originals never reach an object URL and fallback attempts stay finite
+  ---
+  duration_ms: 4.814542
+  ...
+# Subtest: a changed stored selection is adopted on the next boundary while unrelated metadata edits preserve a session choice
+ok 373 - a changed stored selection is adopted on the next boundary while unrelated metadata edits preserve a session choice
+  ---
+  duration_ms: 27.3785
+  ...
+# Subtest: disposal aborts a pending storage load and its late original cannot allocate a URL
+ok 374 - disposal aborts a pending storage load and its late original cannot allocate a URL
+  ---
+  duration_ms: 0.6925
+  ...
+# Subtest: a delayed media play promise cannot restore playing status after transport pause
+ok 375 - a delayed media play promise cannot restore playing status after transport pause
+  ---
+  duration_ms: 31.197375
+  ...
+# Subtest: returning explicitly to automatic selection restores the authored map recipe immediately
+ok 376 - returning explicitly to automatic selection restores the authored map recipe immediately
+  ---
+  duration_ms: 1.662584
+  ...
+# Subtest: a delayed synth enable denial cannot overwrite pause, suspend or dispose state
+ok 377 - a delayed synth enable denial cannot overwrite pause, suspend or dispose state
+  ---
+  duration_ms: 3.265334
+  ...
+# Subtest: restoring inactive listening intent after an audition never starts audio until host resume
+ok 378 - restoring inactive listening intent after an audition never starts audio until host resume
+  ---
+  duration_ms: 2.06125
+  ...
+# Subtest: silent audio preparation reports a delayed read and stale completion cannot reclaim its status
+ok 379 - silent audio preparation reports a delayed read and stale completion cannot reclaim its status
+  ---
+  duration_ms: 0.876584
+  ...
+# Subtest: earlier cached play settlement cannot clear a newer play preparation observer
+ok 380 - earlier cached play settlement cannot clear a newer play preparation observer
+  ---
+  duration_ms: 2.540084
+  ...
+# Subtest: exact historical A survives unbinding and original availability is checked before codec acquisition
+ok 381 - exact historical A survives unbinding and original availability is checked before codec acquisition
+  ---
+  duration_ms: 317.410833
+  ...
+# Subtest: opening stages exact poster before awaiting originals and never calls Play or changes volume automatically
+ok 382 - opening stages exact poster before awaiting originals and never calls Play or changes volume automatically
+  ---
+  duration_ms: 166.392625
+  ...
+# Subtest: dialog forwards the live shared master across delayed opening and releases no host authority on close
+ok 383 - dialog forwards the live shared master across delayed opening and releases no host authority on close
+  ---
+  duration_ms: 252.610417
+  ...
+# Subtest: missing/corrupt movie keeps the already staged exact poster and gives finite recovery guidance
+ok 384 - missing/corrupt movie keeps the already staged exact poster and gives finite recovery guidance
+  ---
+  duration_ms: 1.891292
+  ...
+# Subtest: Close during delayed acquisition neutralizes input and prevents late presentation allocation
+ok 385 - Close during delayed acquisition neutralizes input and prevents late presentation allocation
+  ---
+  duration_ms: 1.904583
+  ...
+# Subtest: new context and external lifecycle abort cannot publish old or later resources
+ok 386 - new context and external lifecycle abort cannot publish old or later resources
+  ---
+  duration_ms: 60.233084
+  ...
+# Subtest: failed poster staging preserves current view; blur pauses ready story and hidden loading closes safely
+ok 387 - failed poster staging preserves current view; blur pauses ready story and hidden loading closes safely
+  ---
+  duration_ms: 107.202875
+  ...
+# Subtest: reentrant presentation allocation cancellation releases the returned view without a late success
+ok 388 - reentrant presentation allocation cancellation releases the returned view without a late success
+  ---
+  duration_ms: 73.143167
+  ...
+# Subtest: persisted pagehide releases the open presentation and permits explicit reopening after pageshow
+ok 389 - persisted pagehide releases the open presentation and permits explicit reopening after pageshow
+  ---
+  duration_ms: 137.556041
+  ...
+# Subtest: persisted pagehide cancels pending acquisition without publishing its late return after reopening
+ok 390 - persisted pagehide cancels pending acquisition without publishing its late return after reopening
+  ---
+  duration_ms: 3.13625
+  ...
+# Subtest: exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs
+ok 391 - exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs
+  ---
+  duration_ms: 28.200708
+  ...
+# Subtest: Skip and Replay preserve the same poster, seek the selected start and never mint a new result
+ok 392 - Skip and Replay preserve the same poster, seek the selected start and never mint a new result
+  ---
+  duration_ms: 15.095334
+  ...
+# Subtest: blocked play is truthful, returns music gain and offers a later native retry
+ok 393 - blocked play is truthful, returns music gain and offers a later native retry
+  ---
+  duration_ms: 15.149583
+  ...
+# Subtest: blur pauses pending play and a late successful promise cannot restart audible video
+ok 394 - blur pauses pending play and a late successful promise cannot restart audible video
+  ---
+  duration_ms: 5.932916
+  ...
+# Subtest: hidden-page pause retains current position and needs explicit Resume story
+ok 395 - hidden-page pause retains current position and needs explicit Resume story
+  ---
+  duration_ms: 5.257042
+  ...
+# Subtest: pause during Replay seek cancels its autoplay intent but allows later explicit Play
+ok 396 - pause during Replay seek cancels its autoplay intent but allows later explicit Play
+  ---
+  duration_ms: 6.463417
+  ...
+# Subtest: Skip before metadata keeps the exact poster and never starts after late readiness
+ok 397 - Skip before metadata keeps the exact poster and never starts after late readiness
+  ---
+  duration_ms: 5.031291
+  ...
+# Subtest: reduced motion stays opt-in, and enabling it during playback returns to the exact poster
+ok 398 - reduced motion stays opt-in, and enabling it during playback returns to the exact poster
+  ---
+  duration_ms: 7.473875
+  ...
+# Subtest: cinematic volume is independent and pause releases only this music lease
+ok 399 - cinematic volume is independent and pause releases only this music lease
+  ---
+  duration_ms: 8.867
+  ...
+# Subtest: stale frame callback cannot clear the newer Replay poll or finish a different play epoch
+ok 400 - stale frame callback cannot clear the newer Replay poll or finish a different play epoch
+  ---
+  duration_ms: 8.065084
+  ...
+# Subtest: finite load, seek and play deadlines preserve poster and release temporary music
+ok 401 - finite load, seek and play deadlines preserve poster and release temporary music
+  ---
+  duration_ms: 26.131625
+  ...
+# Subtest: different playback dimensions or unhonored seek never show video
+ok 402 - different playback dimensions or unhonored seek never show video
+  ---
+  duration_ms: 13.393875
+  ...
+# Subtest: duration mutation and media decode failure stop the player without replacing earned art
+ok 403 - duration mutation and media decode failure stop the player without replacing earned art
+  ---
+  duration_ms: 22.389375
+  ...
+# Subtest: without frame callbacks the current-time observer still ends the selected segment
+ok 404 - without frame callbacks the current-time observer still ends the selected segment
+  ---
+  duration_ms: 7.933625
+  ...
+# Subtest: dispose/pagehide revokes one owned URL, all listeners/timers and late play success
+ok 405 - dispose/pagehide revokes one owned URL, all listeners/timers and late play success
+  ---
+  duration_ms: 5.436791
+  ...
+# Subtest: an external abort before or after opening releases owned media and keeps the caller poster
+ok 406 - an external abort before or after opening releases owned media and keeps the caller poster
+  ---
+  duration_ms: 17.069292
+  ...
+# Subtest: a broken music restoration adapter cannot prevent owned video cleanup and reports its limit
+ok 407 - a broken music restoration adapter cannot prevent owned video cleanup and reports its limit
+  ---
+  duration_ms: 7.226041
+  ...
+# Subtest: failed gain acquisition rolls back only the new lease and never starts media
+ok 408 - failed gain acquisition rolls back only the new lease and never starts media
+  ---
+  duration_ms: 10.57725
+  ...
+# Subtest: premature native end reports truncation instead of claiming the selected segment completed
+ok 409 - premature native end reports truncation instead of claiming the selected segment completed
+  ---
+  duration_ms: 21.231208
+  ...
+# Subtest: native focus follows visible story actions through Play, Pause, end and Replay
+ok 410 - native focus follows visible story actions through Play, Pause, end and Replay
+  ---
+  duration_ms: 4.818166
+  ...
+# Subtest: an obsolete play result cannot pause or redock a newer explicit play
+ok 411 - an obsolete play result cannot pause or redock a newer explicit play
+  ---
+  duration_ms: 11.175167
+  ...
+# Subtest: native media interruption releases music and requires explicit story Resume
+ok 412 - native media interruption releases music and requires explicit story Resume
+  ---
+  duration_ms: 7.5315
+  ...
+# Subtest: abort during video allocation cleans the returned unadopted video without loading an original
+ok 413 - abort during video allocation cleans the returned unadopted video without loading an original
+  ---
+  duration_ms: 13.641709
+  ...
+# Subtest: abort during URL allocation revokes the returned unadopted URL exactly once
+ok 414 - abort during URL allocation revokes the returned unadopted URL exactly once
+  ---
+  duration_ms: 10.972708
+  ...
+# Subtest: abort during gain acquisition releases the returned lease without starting video
+ok 415 - abort during gain acquisition releases the returned lease without starting video
+  ---
+  duration_ms: 10.454334
+  ...
+# Subtest: abort during status callback keeps disposed state after pending seek readiness
+ok 416 - abort during status callback keeps disposed state after pending seek readiness
+  ---
+  duration_ms: 23.517791
+  ...
+# Subtest: abort during gain release cannot reopen a disposed story as a static view
+ok 417 - abort during gain release cannot reopen a disposed story as a static view
+  ---
+  duration_ms: 6.655917
+  ...
+# Subtest: cinematic slider remains independent while explicit playback honors master attenuation and mute
+ok 418 - cinematic slider remains independent while explicit playback honors master attenuation and mute
+  ---
+  duration_ms: 28.923125
+  ...
+# Subtest: invalid master controls refuse without changing current cinematic controls
+ok 419 - invalid master controls refuse without changing current cinematic controls
+  ---
+  duration_ms: 11.397042
+  ...
+# Subtest: injected master applies once and synchronously without changing cinematic volume or story transport
+ok 420 - injected master applies once and synchronously without changing cinematic volume or story transport
+  ---
+  duration_ms: 9.282917
+  ...
+# Subtest: master mute survives pending story Play and owned cleanup releases only the story output
+ok 421 - master mute survives pending story Play and owned cleanup releases only the story output
+  ---
+  duration_ms: 14.701917
+  ...
+1..421
+# tests 424
+# suites 0
+# pass 416
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 80645.286

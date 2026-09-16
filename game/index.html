@@ -1032,7 +1032,7 @@
           </select></label
         >
         <label class="slider-field"
-          >Master <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.8"
+          >Master <input id="master-volume" type="range" min="0" max="1" step="0.01" value="0.8"
         /></label>
         <label class="slider-field"
           >Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.45"
@@ -1040,6 +1040,9 @@
         <label class="slider-field"
           >Effects <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
         /></label>
+        <button id="settings-master-mute" class="button secondary" type="button">
+          Unmute sound
+        </button>
         <button id="music-preview" class="button secondary">Play music ♫</button>
         <button id="soundtrack-open" class="button secondary" disabled>
           Music library & playlists
@@ -1567,14 +1570,7 @@
           <a data-release-explorer href="../releases/">Release explorer</a>
         </nav>
       </details>
-      <button
-        id="sound-button"
-        hidden
-        class="icon-button"
-        type="button"
-        aria-label="Enable sound"
-        aria-pressed="false"
-      >
+      <button id="sound-button" hidden class="icon-button" type="button" aria-label="Enable sound">
         Toggle sound
       </button>
     </dialog>

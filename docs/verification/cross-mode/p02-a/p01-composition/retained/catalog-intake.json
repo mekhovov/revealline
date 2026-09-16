@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "path": "game/content/packs/catalog.json",
+      "bytes": 4898,
+      "sha256": "2e755c604a6ccc7a71d7e7b9c9e869e005856bae26354322aaff91d0d6232c0c"
+    },
+    {
+      "path": "game/content/packs/index.json",
+      "bytes": 693,
+      "sha256": "6f5874d7527940f46af7c58427d4ca2a2719613b9abe8246b7e0a43b4e278c67"
+    },
+    {
+      "path": "game/content/packs/archive-catalog.json",
+      "bytes": 2600,
+      "sha256": "6da75db47524940c3d1469274faa652558137ef4ec55d3ef349f4c22ad70341a"
+    },
+    {
+      "path": "game/content/scenarios/line-impact-demo.json",
+      "bytes": 2619,
+      "sha256": "9f916ec62cc885ecf53bc110b5ba98f0f2c1b0307a19ec604054fcbc942a6c14"
+    }
+  ],
+  "bytes": 10810,
+  "beforeFree": 858333184,
+  "afterFree": 858198016
+}

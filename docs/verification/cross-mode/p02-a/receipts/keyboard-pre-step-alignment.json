@@ -1,0 +1,197 @@
+{
+  "format": "revealline-scoped-verification.v1",
+  "scope": "P02-A Studio master range committed-change integration",
+  "createdAt": "2026-09-15T14:50:16.724432+00:00",
+  "productionDelta": "Only new master slider: bind the existing synchronous volume callback to change as well as input. No navigation, transport, persistence-authority or other fader change.",
+  "ownedPaths": [
+    "game/ui/soundtrack-panel.mjs",
+    "game/test/soundtrack-master-keyboard-host.test.mjs"
+  ],
+  "tests": {
+    "files": 3,
+    "passed": 53,
+    "runtimes": [
+      "22.22.2",
+      "20.19.5"
+    ],
+    "newCases": 2
+  },
+  "evidence": {
+    "before": [
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "bytes": 50526,
+        "sha256": "a3b61c9636c8b8a0fff13f35b28d16f39abca634fc9989ff2e746cd259740d69"
+      },
+      {
+        "path": "game/test/soundtrack-master-keyboard-host.test.mjs",
+        "bytes": 5108,
+        "sha256": "2ebc60ccc2ef3fcae947deb9e3e787762f3125fd61ef5f53bc0b93f14233798d"
+      },
+      {
+        "path": "game/test/soundtrack-host.test.mjs",
+        "bytes": 20448,
+        "sha256": "611a821c061b6520e3db1183505110dd75e9f1025509346310cda97001a60b37"
+      },
+      {
+        "path": "game/test/soundtrack-panel.test.mjs",
+        "bytes": 44363,
+        "sha256": "5202c9576967e01189c78e96ef995bf95c9491ce774f63eb86a19b8f0c80d1b2"
+      },
+      {
+        "path": "game/ui/controller-navigation.mjs",
+        "bytes": 20848,
+        "sha256": "db1d3952d02e46904d0f8c852157925e1bfc4bc1f34f4e4ed1576e63b45a73b6"
+      },
+      {
+        "path": "game/ui/modal-navigation.mjs",
+        "bytes": 3994,
+        "sha256": "f511800fcfba01f86a7e70566578b2016eb056b13aaad54b6632c9ebf2c43b65"
+      },
+      {
+        "path": "game/app.mjs",
+        "bytes": 215527,
+        "sha256": "e39b31a183a3a4677c2679520b524655ec738fb51e4e1cacbb0192629d7fd33c"
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "bytes": 14988,
+        "sha256": "73e2569016955531d6d5673b0766fcacf516d3885ab73e0e5bd02677bc84fc4d"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      }
+    ],
+    "runs": [
+      {
+        "runtime": "22.22.2",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--test",
+          "game/test/soundtrack-master-keyboard-host.test.mjs",
+          "game/test/soundtrack-host.test.mjs",
+          "game/test/soundtrack-panel.test.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 13.732,
+        "log": ".cache/p02a-master-keyboard/node-22.22.2.log",
+        "logSha256": "1bb9da127d121f6f42bdca8655fe134ddc1c1a31e02c1347646161f88bcc7cc2",
+        "pinsUnchanged": true
+      },
+      {
+        "runtime": "20.19.5",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "--test",
+          "game/test/soundtrack-master-keyboard-host.test.mjs",
+          "game/test/soundtrack-host.test.mjs",
+          "game/test/soundtrack-panel.test.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 19.372,
+        "log": ".cache/p02a-master-keyboard/node-20.19.5.log",
+        "logSha256": "c3685678e958d6d40031dc8cf9c4080cb0499305f848881ad6af3f4a2ed6b3c9",
+        "pinsUnchanged": true
+      }
+    ],
+    "after": [
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "bytes": 50526,
+        "sha256": "a3b61c9636c8b8a0fff13f35b28d16f39abca634fc9989ff2e746cd259740d69"
+      },
+      {
+        "path": "game/test/soundtrack-master-keyboard-host.test.mjs",
+        "bytes": 5108,
+        "sha256": "2ebc60ccc2ef3fcae947deb9e3e787762f3125fd61ef5f53bc0b93f14233798d"
+      },
+      {
+        "path": "game/test/soundtrack-host.test.mjs",
+        "bytes": 20448,
+        "sha256": "611a821c061b6520e3db1183505110dd75e9f1025509346310cda97001a60b37"
+      },
+      {
+        "path": "game/test/soundtrack-panel.test.mjs",
+        "bytes": 44363,
+        "sha256": "5202c9576967e01189c78e96ef995bf95c9491ce774f63eb86a19b8f0c80d1b2"
+      },
+      {
+        "path": "game/ui/controller-navigation.mjs",
+        "bytes": 20848,
+        "sha256": "db1d3952d02e46904d0f8c852157925e1bfc4bc1f34f4e4ed1576e63b45a73b6"
+      },
+      {
+        "path": "game/ui/modal-navigation.mjs",
+        "bytes": 3994,
+        "sha256": "f511800fcfba01f86a7e70566578b2016eb056b13aaad54b6632c9ebf2c43b65"
+      },
+      {
+        "path": "game/app.mjs",
+        "bytes": 215527,
+        "sha256": "e39b31a183a3a4677c2679520b524655ec738fb51e4e1cacbb0192629d7fd33c"
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "bytes": 14988,
+        "sha256": "73e2569016955531d6d5673b0766fcacf516d3885ab73e0e5bd02677bc84fc4d"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      }
+    ]
+  },
+  "staticChecks": [
+    "ESLint two changed files PASS",
+    "Prettier two changed files PASS",
+    "Node22 new test syntax PASS",
+    "git diff --check panel PASS"
+  ],
+  "beforeFix": {
+    "ordinaryInputAndChange": "PASS",
+    "changeOnlyCommit": "FAIL: shared volume stayed 0.05 after visible slider reached 0.06",
+    "raw": "before-change-handler-node22.log"
+  },
+  "fixtureDiagnostics": "Initial unrecorded tool-output runs targeted hidden shell controls; actual navigation correctly redirected focus. Corrected entry to visible Title shell-options before the retained before-fix run. No production claim from fixture entry failures.",
+  "limitations": [
+    "No browser event capture: actual native/tool discrepancy not proven to emit change-only.",
+    "The finite DOM models only missing native key defaults after real host event propagation; no physical keyboard/controller/browser qualification.",
+    "No audible media proof.",
+    "No commit, source build, native interaction or broad suite."
+  ],
+  "priorPanelPin": {
+    "path": "game/ui/soundtrack-panel.mjs",
+    "bytes": 50412,
+    "sha256": "c0b225030dcd57697ef52406ddec38e687fe7aa4da6f882bd6a48e43728fc18e"
+  },
+  "supportPins": [
+    {
+      "path": "before-change-handler-node22.log",
+      "bytes": 1646,
+      "sha256": "9b9e556118304de026e9927a69cad69559589747b3612a9a7901cc8d3611761f"
+    },
+    {
+      "path": "node-20.19.5.log",
+      "bytes": 12922,
+      "sha256": "c3685678e958d6d40031dc8cf9c4080cb0499305f848881ad6af3f4a2ed6b3c9"
+    },
+    {
+      "path": "node-22.22.2.log",
+      "bytes": 13723,
+      "sha256": "1bb9da127d121f6f42bdca8655fe134ddc1c1a31e02c1347646161f88bcc7cc2"
+    },
+    {
+      "path": "panel-before.json",
+      "bytes": 135,
+      "sha256": "4ff93085986d909689c125a7563961de628501f439b0f70e288192f5afd14b0b"
+    },
+    {
+      "path": "runs.json",
+      "bytes": 4160,
+      "sha256": "7a5190854edfdb5d67e7feb5a5a0dcdee02ff6a96e95059314b991b9dde93473"
+    }
+  ]
+}

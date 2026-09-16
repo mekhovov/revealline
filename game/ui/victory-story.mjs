@@ -1,4 +1,5 @@
 import { createOperationStatus } from './operation-status.mjs';
+import { bindAudioMasterMedia } from './audio-master.mjs';
 import { required } from '../data-json.mjs';
 import { requirePreparedVictoryStory, VICTORY_STORY_LIMITS } from '../victory-story.mjs';
 
@@ -51,6 +52,7 @@ export function createVictoryStoryPresentation({
   URLImpl = globalThis.URL,
   timers = globalThis,
   musicDucker = null,
+  audioMaster = null,
   volume = 0.7,
   masterVolume = 1,
   muted = false,
@@ -146,6 +148,16 @@ export function createVictoryStoryPresentation({
     releaseDuck = null,
     cancelPlay = null;
   let audioWarning = null;
+  let masterBinding = null,
+    releaseMasterStatus = null;
+  const applyAudio = () => {
+    if (!media) return;
+    if (masterBinding) masterBinding.setLocal({ volume, muted: !desired || volume === 0 });
+    else {
+      media.volume = volume * masterVolume;
+      media.muted = !desired || muted || volume === 0 || masterVolume === 0;
+    }
+  };
   const listeners = [];
   const listen = (target, name, fn) => {
     target?.addEventListener(name, fn);
@@ -190,7 +202,8 @@ export function createVictoryStoryPresentation({
               : reducedMotion
                 ? 'Reduced motion: the earned picture stays available. Play is optional.'
                 : 'Your picture. Story playback is optional.');
-    if (muted || masterVolume === 0)
+    const master = audioMaster?.snapshot();
+    if (master ? master.muted || master.volume === 0 : muted || masterVolume === 0)
       message += ' Master sound is muted; cinematic volume does not unmute it.';
     if (audioWarning) message += ` ${audioWarning}`;
     if (state === 'preparing' || state === 'starting') {
@@ -242,7 +255,7 @@ export function createVictoryStoryPresentation({
     cancelPlay = null;
     cancel?.(false);
     if (media) {
-      media.muted = true;
+      applyAudio();
       media.pause();
     }
     unduck();
@@ -347,8 +360,7 @@ export function createVictoryStoryPresentation({
         return Promise.resolve(false);
       }
       releaseDuck = allocatedDuck;
-      video.volume = volume * masterVolume;
-      video.muted = muted || volume === 0 || masterVolume === 0;
+      applyAudio();
       armDeadline('Story playback did not begin. Skip or close the story.');
       // Invoke play within this call, before any await, preserving native user activation.
       const started = video.play();
@@ -458,10 +470,7 @@ export function createVictoryStoryPresentation({
     volumeInput.value = String(v);
     const changed = !reducedMotion && reduced;
     reducedMotion = reduced;
-    if (media) {
-      media.volume = volume * masterVolume;
-      media.muted = !desired || muted || volume === 0 || masterVolume === 0;
-    }
+    applyAudio();
     if (changed) skip();
     else render();
   }
@@ -470,6 +479,10 @@ export function createVictoryStoryPresentation({
     disposed = true;
     feedback.dispose();
     halt();
+    releaseMasterStatus?.();
+    releaseMasterStatus = null;
+    masterBinding?.dispose();
+    masterBinding = null;
     generation++;
     for (const remove of listeners.splice(0)) remove();
     if (media) {
@@ -531,7 +544,14 @@ export function createVictoryStoryPresentation({
     media.muted = true;
     media.playsInline = true;
     media.preload = 'auto';
-    media.volume = volume * masterVolume;
+    if (audioMaster)
+      masterBinding = bindAudioMasterMedia({
+        audioMaster,
+        element: media,
+        volume,
+        muted: true,
+      });
+    else media.volume = volume * masterVolume;
     media.style.maxWidth = '100%';
     media.style.maxHeight = '100%';
     media.style.objectFit = 'contain';
@@ -598,6 +618,11 @@ export function createVictoryStoryPresentation({
     armDeadline('Video loading timed out. Your picture remains available.');
     media.load();
     render();
+    if (audioMaster && !disposed) {
+      const unsubscribe = audioMaster.subscribe(() => render());
+      if (disposed) unsubscribe();
+      else releaseMasterStatus = unsubscribe;
+    }
     if (signal?.aborted) dispose();
   } catch {
     if (!disposed) fail('Native video playback is unavailable. Your picture remains available.');

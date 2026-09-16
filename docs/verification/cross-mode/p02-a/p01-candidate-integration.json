@@ -1,0 +1,9 @@
+{
+  "incomingCandidate": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "localParent": "224a04518df90cfb0a8d34bbb9646b1993619654",
+  "status": "MERGED_PREPARATION_NOT_P01_ACCEPTANCE",
+  "resolution": "Keep0.58.0 version at all four positions, union execution register with explicit prerequisite and incoming P01 failed/corrected history. Other shared hunks auto-merged.",
+  "productionHistory": "four incoming records retained byte-for-byte",
+  "whitespace": "Owned source/conflict resolutions pass diff --check. Incoming byte-exact historical logs/diff evidence retain original trailing spaces; full index whitespace check therefore reports them. No original evidence is normalized.",
+  "nativeEvidence": "Earlier P02 source preview predates this integration; affected final-source checks remain required."
+}

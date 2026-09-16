@@ -365,8 +365,8 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
   }
   loop(surface, own, render, options.motion);
 }
-export function audioRecipePreview(surface, slot, own) {
-  const player = new Soundscape(),
+export function audioRecipePreview(surface, slot, own, { audioMaster = null } = {}) {
+  const player = new Soundscape({ audioMaster }),
     box = text('div', '', 'recipe-sample'),
     play = text('button', slot.id === 'audio.music' ? 'Audition 4 seconds' : 'Audition cue'),
     stop = text('button', 'Stop'),
@@ -420,7 +420,11 @@ export function audioRecipePreview(surface, slot, own) {
         }[cue];
         player.event({ type: event, won: true, tick: performance.now() });
       }
-      lease.finish({ message: 'Playing the registered Soundscape recipe.' });
+      lease.finish({
+        message: audioMaster?.snapshot().muted
+          ? 'Audition playing · master sound is muted.'
+          : 'Playing the registered Soundscape recipe.',
+      });
     } catch (error) {
       if (alive && request === audition) lease.finish({ message: error.message, state: 'error' });
     }

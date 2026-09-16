@@ -52,7 +52,7 @@ export function releasePlaybackAudioSession(audioSession = globalThis.navigator?
  * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
  */
 export class Soundscape {
-  constructor({ contextFactory = defaultFactory, persistentMusic = false } = {}) {
+  constructor({ contextFactory = defaultFactory, persistentMusic = false, audioMaster } = {}) {
     if (typeof persistentMusic !== 'boolean')
       throw new TypeError('persistentMusic must be a boolean');
     this.enabled = false;
@@ -78,6 +78,11 @@ export class Soundscape {
     this.songEndHandler = null;
     this.songEnded = null;
     this.publishedAudio = null;
+    this.audioMaster = { muted: false, volume: 1 };
+    this.releaseAudioMaster = audioMaster?.subscribe((state) => {
+      this.audioMaster = state;
+      this.applyVolumes();
+    });
   }
   setPublishedAudio(readAudio) {
     this.publishedAudio?.close();
@@ -308,7 +313,10 @@ export class Soundscape {
       [this.sfxBus, 'sfx'],
     ]) {
       node.gain.cancelScheduledValues(time);
-      node.gain.setTargetAtTime(this.enabled ? this.settings[key] : 0, time, 0.015);
+      const masterGain = this.audioMaster.muted ? 0 : this.audioMaster.volume;
+      const value = this.enabled ? this.settings[key] * (key === 'master' ? masterGain : 1) : 0;
+      if (key === 'master' && masterGain === 0) node.gain.setValueAtTime(0, time);
+      else node.gain.setTargetAtTime(value, time, 0.015);
     }
   }
   async enable() {
@@ -421,6 +429,7 @@ export class Soundscape {
   async dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.releaseAudioMaster?.();
     this.setPublishedAudio(null);
     this.cancelPreview();
     ++this.transition;

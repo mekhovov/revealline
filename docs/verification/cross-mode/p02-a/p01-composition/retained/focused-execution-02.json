@@ -1,0 +1,59 @@
+{
+  "base": "ac644a99eebb2fef049458f6abf69fa626f81983",
+  "incoming": "7945c6d07714d41cee9b6f848059b8dc18aed86c",
+  "trackedPhysicalInputCount": 400,
+  "inputsStable": true,
+  "results": [
+    {
+      "node": "v22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/soundtrack-panel.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-master-keyboard-host.test.mjs",
+        "game/test/soundtrack-master.test.mjs",
+        "game/test/audio-master.test.mjs",
+        "game/test/audio-preferences.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/asset-studio-audio-master.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/victory-story-ui.test.mjs",
+        "game/test/history-picture-host.test.mjs",
+        "game/test/profile-original-recovery-view.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 78.57928129192442,
+      "log": "whole-node22-02.log",
+      "logBytes": 44186,
+      "logSha256": "87e0962f1189f90e86c0050c0f24a0cc5d4b5c596a2eae643486365c1744ac22"
+    },
+    {
+      "node": "v20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/soundtrack-panel.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-master-keyboard-host.test.mjs",
+        "game/test/soundtrack-master.test.mjs",
+        "game/test/audio-master.test.mjs",
+        "game/test/audio-preferences.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/asset-studio-audio-master.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/victory-story-ui.test.mjs",
+        "game/test/history-picture-host.test.mjs",
+        "game/test/profile-original-recovery-view.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 84.62702816608362,
+      "log": "whole-node20-02.log",
+      "logBytes": 41517,
+      "logSha256": "bd33eae20a49329be53dea258d4415ab3850f65a0037326dbcb89195cbf3e12f"
+    }
+  ],
+  "limits": "Focused whole files only. Eight combined test cases are in working tree beyond staged P01 test merge; physical inputs recorded. Not complete import graph/full CI/native/public acceptance."
+}

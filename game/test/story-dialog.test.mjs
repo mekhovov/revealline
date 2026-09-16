@@ -8,6 +8,7 @@ import { prepareStoredStillMedia } from '../media-storage-record.mjs';
 import { changeStoredStoryBinding, STORY_STORAGE_FORMAT } from '../story-storage-record.mjs';
 import { createAuthoredStoryPin } from '../story-bindings.mjs';
 import { acquirePinnedStory, createStoryDialog } from '../ui/story-dialog.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
 
 const f = await prepareStoryFixture(),
   still = (
@@ -165,6 +166,27 @@ test('opening stages exact poster before awaiting originals and never calls Play
     muted: true,
     reducedMotion: false,
   });
+});
+
+test('dialog forwards the live shared master across delayed opening and releases no host authority on close', async (t) => {
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.8 }),
+    waiting = deferred(),
+    h = setup(t, { audioMaster, readMedia: () => waiting.promise });
+  const opening = h.host.open(h.request);
+  audioMaster.setMuted(true);
+  audioMaster.setVolume(0.25);
+  waiting.resolve(media());
+  assert.equal(await opening, true);
+  assert.equal(h.calls[0].audioMaster, audioMaster);
+  assert.equal(h.calls[0].audioMaster.snapshot().muted, true);
+  assert.equal(h.calls[0].audioMaster.snapshot().volume, 0.25);
+  assert.equal(h.calls[0].volume, 0.75);
+  const before = audioMaster.snapshot();
+  h.host.close();
+  assert.deepEqual(audioMaster.snapshot(), before);
+  assert.deepEqual(h.saved, []);
+  assert.equal(await h.host.open(h.request), true);
+  assert.equal(h.calls[1].audioMaster, audioMaster);
 });
 
 test('missing/corrupt movie keeps the already staged exact poster and gives finite recovery guidance', async (t) => {

@@ -1,0 +1,18 @@
+[
+  {
+    "currentTime": 0.126055,
+    "duration": 2.0375,
+    "muted": true,
+    "paused": false,
+    "preview": "current-preview",
+    "readyState": 4
+  },
+  {
+    "currentTime": 0.07989,
+    "duration": 2.0375,
+    "muted": true,
+    "paused": false,
+    "preview": "draft-preview",
+    "readyState": 4
+  }
+]

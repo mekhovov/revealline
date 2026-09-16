@@ -29,6 +29,8 @@ import { drawAssetPreview } from './preview.mjs';
 import { mountSpritePanel } from './sprite-panel.mjs';
 import { createStudioOperations } from './operation.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
+import { createAudioMaster } from '../../game/ui/audio-master.mjs';
+import { createAudioPreferences } from '../../game/audio-preferences.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '') => {
   const el = document.createElement(tag);
@@ -83,6 +85,22 @@ const operations = createStudioOperations({
 });
 const status = (message, kind = '') => operations.message(message, kind);
 const report = (error) => status(error.message || String(error), 'error');
+const audioMaster = createAudioMaster();
+const audioPreferences = createAudioPreferences({
+  audioMaster,
+  window,
+  getStorage: () => localStorage,
+  onWarning: (message) => {
+    $('studio-audio-status').textContent = message;
+  },
+});
+const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+  $('studio-audio-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
+  $('studio-master-volume').value = volume;
+});
+$('studio-audio-mute').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
+$('studio-master-volume').onchange = () =>
+  audioPreferences.setVolume(Number($('studio-master-volume').value));
 const operation = (label, fn) => operations.run(label, fn);
 window.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && operations.cancel()) event.preventDefault();
@@ -292,6 +310,7 @@ async function refreshPreviews() {
     map = new Map(working.assets);
   if (pending?.candidateBlob) map.set(candidate.file.sha256, pending.candidateBlob);
   const options = {
+    audioMaster,
     mode: $('preview-mode').value,
     background: $('preview-background').value,
     geometry: $('preview-geometry').checked,
@@ -1179,6 +1198,11 @@ window.addEventListener('pagehide', (event) => {
     pending?.bitmap?.close();
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
+  if (!event.persisted) {
+    stopMasterView();
+    audioPreferences.dispose();
+    audioMaster.dispose();
+  }
 });
 window.addEventListener('pageshow', (event) => {
   if (event.persisted) refreshPreviews();

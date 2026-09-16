@@ -1,0 +1,30 @@
+{
+  "format": "revealline-local-history-merge-commit.v1",
+  "createdAt": "2026-09-15T20:08:24.080577+00:00",
+  "commit": "86e381aed02a94e0882d3a0d6f29ebea9b7b386d",
+  "tree": "729b8e4f2de2ab1ba7f43d716b26c92db31ef8ac",
+  "parents": [
+    "c1bb897e4fa95f3bf779c0b2a81c69ffe321ce2a",
+    "016b14af6b42d27de1f194c1ac5d48f7a0b3eaa9"
+  ],
+  "review": {
+    "path": ".cache/p02-p01-main-merge/review.json",
+    "bytes": 38507,
+    "sha256": "88c5cfffce988492b7f92cdd1eba2875f79be10afcbe56795fcddc84d5e63fac"
+  },
+  "trackedWorktreeClean": true,
+  "untrackedRetained": [
+    "?? node_modules"
+  ],
+  "originalP02Worktree": "unchanged",
+  "pr62": {
+    "state": "OPEN",
+    "isDraft": true,
+    "headRefName": "codex/p02a-shared-audio",
+    "observedHeadRefOid": "ac644a99eebb2fef049458f6abf69fa626f81983",
+    "remoteMutation": false
+  },
+  "publicP01Acceptance": "pending owner receipt",
+  "finalHostedQualification": "not run",
+  "freeBytes": 763506688
+}

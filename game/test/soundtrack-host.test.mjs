@@ -8,6 +8,7 @@ import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
+import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 
@@ -104,6 +105,81 @@ function leaveStudio(page) {
   page.frame(0);
 }
 
+test('Settings music text follows master immediately and remains coherent after transport notifications', async (t) => {
+  const { page } = await setup(t);
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  await page.$('music-preview').onclick();
+  const media = musicMedia(page);
+  assert.equal(media.paused, false);
+  assert.equal(media.muted, true);
+  assert.equal(page.$('music-preview').textContent, 'Playlist playing · master sound muted');
+  media.currentTime = 0.015;
+  const before = { src: media.src, time: media.currentTime, plays: media.plays };
+  for (const muted of [false, true]) {
+    page.$('settings-master-mute').click();
+    const label = muted ? 'Playlist playing · master sound muted' : 'Soundtrack playing ♫';
+    assert.equal(page.$('music-preview').textContent, label, 'No frame or media event has run');
+    assert.equal(media.muted, muted);
+    media.emit('timeupdate');
+    assert.equal(page.$('music-preview').textContent, label);
+    assert.deepEqual({ src: media.src, time: media.currentTime, plays: media.plays }, before);
+    assert.equal(media.paused, false);
+  }
+  assert.deepEqual(page.errors, []);
+});
+
+test('late Settings Play cancellation cannot replace a newer Library Pause label', async (t) => {
+  const { page } = await setup(t);
+  const media = musicMedia(page);
+  await waitFor(() => !!media.src, 'Actual selected original is prepared');
+  const originalPlay = media.play.bind(media);
+  let release;
+  const completion = new Promise((resolve) => (release = resolve));
+  t.after(() => release());
+  media.play = async () => {
+    await originalPlay();
+    await completion;
+  };
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  const playing = page.$('music-preview').onclick();
+  await waitFor(() => !media.paused, 'Actual Settings Play reaches the media element');
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  assert.equal(media.paused, true);
+  assert.equal(page.$('music-preview').textContent, 'Play selected playlist ♫');
+  const plays = media.plays;
+  release();
+  await playing;
+  assert.equal(page.$('music-preview').textContent, 'Play selected playlist ♫');
+  assert.equal(media.paused, true);
+  assert.equal(media.plays, plays);
+  assert.deepEqual(page.errors, []);
+});
+
+test('blocked Settings Play feedback survives master edits until a real transport retry', async (t) => {
+  const { page } = await setup(t);
+  const media = musicMedia(page);
+  await waitFor(() => !!media.src, 'Actual selected original is prepared');
+  const originalPlay = media.play.bind(media);
+  media.play = async () => {
+    throw Object.assign(new Error('Gesture refused'), { name: 'NotAllowedError' });
+  };
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  await page.$('music-preview').onclick();
+  assert.equal(page.$('music-preview').textContent, 'Audio is unavailable');
+  page.$('settings-master-mute').click();
+  assert.equal(page.$('music-preview').textContent, 'Audio is unavailable');
+  assert.equal(media.paused, true);
+  media.play = originalPlay;
+  await page.$('music-preview').onclick();
+  assert.equal(page.$('music-preview').textContent, 'Soundtrack playing ♫');
+  assert.equal(media.paused, false);
+  assert.deepEqual(page.errors, []);
+});
+
 test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight', async (t) => {
   const { page, audio } = await setup(t);
   assert.equal(audio.sources.length, 0, 'construction does not create audible sources');
@@ -119,7 +195,11 @@ test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and 
   );
   await playStudio(page);
   assert.match(page.$('soundtrack-now').textContent, /Synthetic coded silence.*playing/);
-  assert.equal(preferences(page).musicEnabled, true);
+  assert.equal(preferences(page).musicEnabled, false, 'Play does not unmute the master');
+  assert.equal(musicMedia(page).muted, true);
+  page.$('soundtrack-master-mute').click();
+  assert.equal(preferences(page).musicEnabled, true, 'The explicit master control persists intent');
+  assert.equal(musicMedia(page).muted, false);
   assert.equal(musicMedia(page).plays, 1);
   page.$('soundtrack-next').click();
   await waitFor(
@@ -204,6 +284,38 @@ test('actual master, music and SFX controls remain independent and the studio fa
   assert.deepEqual(page.errors, []);
 });
 
+test('Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight', async (t) => {
+  const { page } = await setup(t, { audioPreferences: { musicEnabled: true } });
+  await openStudio(page);
+  await playStudio(page);
+  const media = musicMedia(page);
+  media.currentTime = 0.012;
+  await page.$('soundtrack-pause').onclick();
+  page.frame(0);
+  const tick = page.rendered.run.tick,
+    plays = media.plays,
+    url = media.src;
+  page.$('soundtrack-master-mute').click();
+  assert.equal(media.muted, true);
+  page.$('soundtrack-master-volume').value = '0.4';
+  page.$('soundtrack-master-volume').emit('input');
+  assert.deepEqual(JSON.parse(page.storage.getItem(AUDIO_PREFERENCES_KEY)), {
+    muted: true,
+    volume: 0.4,
+  });
+  page.$('soundtrack-master-mute').click();
+  assert.equal(media.muted, false);
+  assert.equal(media.paused, true, 'Unmute does not undo music Pause');
+  assert.equal(media.plays, plays, 'Unmute does not issue another Play');
+  assert.equal(media.currentTime, 0.012);
+  assert.equal(media.src, url);
+  assert.equal(Number(page.$('master-volume').value), 0.4);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, tick);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
 test('actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume', async (t) => {
   const { page } = await setup(t);
   await openStudio(page);
@@ -248,6 +360,8 @@ test('missing file-audio API disables Studio and leaves the original synth fallb
   assert.equal(page.$('soundtrack-dialog'), null);
   page.$('sound-button').click();
   await waitFor(() => preferences(page).musicEnabled === true, 'Legacy sound fallback enabled');
+  assert.equal(audio.sources.length, 0, 'Unmuting alone does not start a soundtrack');
+  await page.$('music-preview').onclick();
   page.frame(0);
   assert.ok(audio.sources.length > 0);
   assert.deepEqual(page.errors, []);
@@ -432,7 +546,7 @@ for (const [intent, initiallyEnabled] of [
   ['mute', true],
 ])
   test(`closing Studio during pending Play respects ${intent} with saved audio ${initiallyEnabled ? 'enabled' : 'disabled'} when flight starts`, async (t) => {
-    const { page } = await setup(t);
+    const { page } = await setup(t, { audioPreferences: { musicEnabled: initiallyEnabled } });
     await openStudio(page);
     if (initiallyEnabled) {
       await playStudio(page);
@@ -456,7 +570,7 @@ for (const [intent, initiallyEnabled] of [
     assert.equal(
       preferences(page).musicEnabled,
       initiallyEnabled,
-      'Successful playback notification is still pending',
+      'Play leaves the master preference unchanged',
     );
     assert.equal(page.$('soundtrack-close').disabled, false);
     const url = media.src;
@@ -468,14 +582,16 @@ for (const [intent, initiallyEnabled] of [
     assert.equal(page.rendered.paused, false, 'Flight remains available while media completes');
     assert.equal(
       media.paused,
-      intent !== 'play',
-      'Starting flight preserves the latest explicit listening intent',
+      intent === 'pause',
+      'Only music Pause stops transport; master Mute preserves transport intent',
     );
     release();
     await playing;
+    assert.equal(preferences(page).musicEnabled, intent === 'mute' ? false : initiallyEnabled);
     assert.equal(
-      preferences(page).musicEnabled,
-      intent === 'mute' ? false : initiallyEnabled || intent === 'play',
+      media.muted,
+      intent === 'mute' || !initiallyEnabled,
+      'Late Play completion cannot defeat the latest master mute',
     );
     assert.equal(media.src, url);
     assert.deepEqual(page.errors, []);

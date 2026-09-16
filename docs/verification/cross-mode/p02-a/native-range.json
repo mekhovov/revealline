@@ -1,0 +1,41 @@
+{
+  "format": "revealline.p02a-scoped-native-observation.v1",
+  "reviewer": "Root task browser operator",
+  "date": "2026-09-15",
+  "source": "Mutable P02-A source preview based on4c85277; no final source commit/tree bound",
+  "context": "Desktop native keyboard interaction in root-owned preview; exact dimensions/audible output not recorded in this observation",
+  "beforeCorrection": {
+    "observation": "Studio shared record retained requested value; Settings range step0.05 snapped display0.11/0.12 to0.10 and0.13 to0.15. Studio step was0.01.",
+    "causeScope": "Root reproduced step-grid display discrepancy; not a Studio persistence failure. No native event capture proves change-only input was its cause."
+  },
+  "afterCorrection": {
+    "rootReportedJourney": [
+      "Fresh reload after all shared-master HTML steps aligned to0.01.",
+      "Studio Home then Right gives0.01; closing displays Settings0.01.",
+      "Reopen; Right twelve times gives0.13; closing displays Settings0.13."
+    ],
+    "retainedEvidence": "Text and screenshot show final Settings Master0.13 and paused Signal Afterglow playlist."
+  },
+  "artifacts": [
+    {
+      "path": "native/settings-master-13.txt",
+      "originalPath": ".cache/p02a-browser/settings-master-13.txt",
+      "bytes": 3004,
+      "sha256": "5723fd0f0b054231ad05f0e7755d7cc5aee5775210ed6e2cd4fabd9b9853fadf",
+      "copyByteExact": true
+    },
+    {
+      "path": "native/settings-master-13.jpg",
+      "originalPath": ".cache/p02a-browser/settings-master-13.jpg",
+      "bytes": 57764,
+      "sha256": "d37cb3aa15534fd6d98f5abd8a604a32d98446404f87812e95e92d1ac461dae4",
+      "copyByteExact": true
+    }
+  ],
+  "limits": [
+    "No audible playback/listening or original codec review.",
+    "No physical controller, touch or iOS volume qualification.",
+    "Cross-mode reload/history restoration outside the stated journey remains separately qualified.",
+    "Not a frozen build, public release or phase-completion proof."
+  ]
+}

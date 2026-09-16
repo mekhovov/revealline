@@ -1,0 +1,13 @@
+{
+  "path": "game/test/soundtrack-panel.test.mjs",
+  "stageAtReview": {
+    "bytes": 49512,
+    "sha256": "f949dcbb3d980c139b7c5acf3e3877054613a936572c1e8b1bc31837a499942b"
+  },
+  "reviewedAndExecutedPhysical": {
+    "bytes": 53458,
+    "sha256": "cc2a7f0f2e2291c4605fcda71a5ecd233011d7196c51d30bb13e7b10d4ee8d34"
+  },
+  "difference": "Eight composition-specific pending audition/master retirement cases were unstaged beyond the automatically merged incoming P01 tests; both complete physical files and their dependencies are recorded in execution inputs.",
+  "stagedYet": false
+}
