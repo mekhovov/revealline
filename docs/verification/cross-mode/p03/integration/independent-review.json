@@ -1,0 +1,40 @@
+{
+  "status": "PASS_SCOPED_EVIDENCE_INTEGRITY_REVIEW",
+  "phaseAcceptance": false,
+  "reviewer": "team_notice_release_review",
+  "archive": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-composition-audit/integration-bundle-preparation/delivery/evidence.zip",
+    "bytes": 917952,
+    "sha256": "4658460bba55658c58a617b63fe1db75cea1f1562c8d50379b61ebbee61eefa3",
+    "members": 116
+  },
+  "manifest": {
+    "bytes": 67420,
+    "sha256": "67042258c4fc8e6912255d7a05fe7fccfe383ed0f496c0088507bdf29c661138",
+    "originalMappings": 172,
+    "uniqueOriginalMembers": 114,
+    "aliasMappings": 58,
+    "originalMappedBytes": 13753737,
+    "uniqueOriginalBytes": 3690886
+  },
+  "deliveryTotalBytes": 991796,
+  "separateAttempts": 7,
+  "separateRuntimeRuns": 10,
+  "failedRuntimeRunsRetained": 3,
+  "checks": [
+    "Every mapped original rehashed and byte-compared with its ZIP member.",
+    "Exact README and manifest inside and outside ZIP match; all 116 ordinary unique member names reviewed.",
+    "Ten raw TAP point counts and final summaries match original receipts, exits and separately stated README results.",
+    "Complete file commands, original runner/manifest pins, before/after physical input snapshots and unchanged original logs retained.",
+    "Original failed Gallery, Team lifecycle and Versus reader-scope attempts remain distinct; no overlapping totals combined.",
+    "Production candidate/admission and published c930 oracle are separated from native, public, full-source and full-phase qualification."
+  ],
+  "reviewFindings": [],
+  "nativeOrPhysicalClaimsAccepted": false,
+  "fullSourceOrReleaseQualificationPerformed": false,
+  "testsExecuted": false,
+  "browserUsed": false,
+  "sourceOrIndexChanged": false,
+  "remoteMutations": false,
+  "originalsUnchanged": true
+}

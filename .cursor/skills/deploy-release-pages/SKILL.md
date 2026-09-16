@@ -33,6 +33,12 @@ Exercise offline feedback with the full shipped optional-pack catalogue. Its nam
 
 If a historical source check lacks a sharding helper or generated cache directory, fix the workflow/runner instead of rewriting the tag. Focused runner tests cover discovery, imports, working directory and exit propagation; they do not establish hosted qualification or a public deployment.
 
+## Scoped feature delivery
+
+A named feature release inside an unfinished phase still needs exact-source qualification, original frozen assets, the reviewed publication selector and actual public verification. Keep the parent phase implementing until its own complete gate passes; internal work-package IDs do not become accepted phases merely because their code ships. List tested input methods and viewports separately from outstanding physical hardware and actual foreground-loss/return checks.
+
+When browser screenshots are available only inline, identify that limitation and the observer. Retain actual source/HTTP records and written observations without inventing exported images or their hashes. Such evidence does not close raw-image, physical-device or full-phase acceptance. Preserve unsupported/failed attempts and verify the final public source independently.
+
 ## Example publishing prompt
 
 “Publish the exact qualified frozen release selected on main. Preserve every immutable source/tag/asset pin, the complete semantic release explorer and direct archive routes. Keep comparison-only testing routes distinct from full byte/browser admissions and the stable root default. Verify original ZIP and all output/public bytes, latest stable selection and actual current play/offline; keep failed attempts and successful retries in the evidence.”
