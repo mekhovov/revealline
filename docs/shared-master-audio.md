@@ -1,6 +1,6 @@
 # Shared master sound — P02-A
 
-Status: v0.58.0 implementation candidate. The current uncommitted [composition on published P01 v0.57.4](p02-p01-v0574-composition.md) combines P02 `cbc09f7640ad554c4c34d8699f2e81458e5b8faf` with P01 `856850ce8d4597c1fb6e8bb28ddb8a63db337a8c`. It retains P01's immutable history and generates `fpv@24` for shared-master audio. P01 public browser acceptance and final P02 committed-source qualification remain outstanding. See the [execution register](cross-mode-execution.md) for current status; this document is a behavior contract, not a public-release certificate.
+Status: v0.58.0 candidate in final source qualification. The [composition on accepted P01 v0.57.4](p02-p01-v0574-composition.md) is committed at `f235ce7894d91e02f0631833e1ba215c8e9b5b99`, combining P02 `cbc09f7640ad554c4c34d8699f2e81458e5b8faf` with P01 `856850ce8d4597c1fb6e8bb28ddb8a63db337a8c`. It retains P01's immutable history and generates `fpv@24` for shared-master audio. The final integration incorporates accepted-main `0684ddbfe978e95f2b6ddcd02b4f9e0f70a4190d` without changing runtime or generated bodies. [P01 public acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p01/public-v0574/completion-r8/acceptance.json) is complete; final P02 committed-source qualification, frozen artifacts and public acceptance remain outstanding. See the [execution register](cross-mode-execution.md) for current status; this document is a behavior contract, not a public-release certificate.
 
 ## Player behavior
 
@@ -29,7 +29,7 @@ Play and audition are transport actions, including while muted. The Library expl
 | P02-A.02 | Synth and streamed music share one gate; late-play modeled; real muted MP3 playback and native speaker override checked | Final built/public verification; audible quality and physical-device qualification stay separately tracked |
 | P02-A.03 | All existing output paths integrated; browser checked two simultaneous native MP3 previews                              | Final built/public input journeys; physical controllers/touch hardware remain P18                          |
 | P02-A.04 | Real MP3 paused position preserved across mute; exact 13% survives reload and all four host routes                      | Final built/public lifecycle/history verification; transfer/offline expansion remains P02-B                |
-| P02-A.05 | Skills, prompt examples and scoped test receipts included                                                               | Review final intended source; P01 integration; source PR, frozen build and public acceptance               |
+| P02-A.05 | Skills, prompt examples and scoped test receipts included                                                               | Review final intended source; source PR, frozen build and public acceptance                                |
 
 Focused tests use real game modules with finite media/context/DOM boundaries. They establish sequencing and state, not audible quality, actual decoding, native hit targets or hardware behavior. The historical source preview used unchanged assets from exact v0.57.1. The current composition preview serves an immutable snapshot of the candidate Git index, including all regenerated outputs. Both are separate from an ordinary production build and immutable public verification.
 
