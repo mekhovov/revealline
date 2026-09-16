@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 
@@ -112,7 +113,9 @@ for (const width of [306, 600]) {
     page.$('shell-prepare').click();
     assert.equal(page.$('mission-picker-setup').open, true);
     page.change('pack-select', 'fpv-arcade-r5');
-    await settle(
+    await waitForChapterSelection(
+      t,
+      page,
       () =>
         !page.$('pack-select').disabled &&
         page.$('pack-select').value === 'fpv-arcade-r5' &&

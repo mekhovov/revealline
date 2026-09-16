@@ -1,0 +1,2449 @@
+{
+  "status": "NAVIGATION_RECOVERY_ORIGINALS_ONLY",
+  "phaseAcceptance": false,
+  "qualification": false,
+  "publicReleaseAcceptance": false,
+  "sourceContext": {
+    "baseSource": "39eaea27d456551b694c78e3a24f236cdb598fd9",
+    "baseTree": "595651c9575c8c5a93dd192f21647f4d730b3ecd",
+    "observedHead": "39eaea27d456551b694c78e3a24f236cdb598fd9",
+    "trackedIndexSHA256": "3c980641024d7ca5db47eca19369575b05f423d4a21c6512a8658303ab8ffb6c",
+    "finalDiffSHA256": "1563ff5f371c3fe3ccc7c15e3ea3576a40d38ee34ad27ece10581a81776272f9",
+    "explicitCurrentSourceInputs": {
+      ".cursor/skills/deploy-release-pages/SKILL.md": "cf9fab58f58b583b9144f4e8af7bb2e4540b6edfc4cba5f04e32c56eda49e750",
+      "authoring/prompts/cross-mode-delivery.md": "00b470b4a877baf389f7d9ceb15fd36f75197d561c1e7ad0f1d1a13914c190b3",
+      "authoring/skills/xonix-runtime-maintainer/SKILL.md": "8569eeac08a2c4543ffa75c10196fefd3c3f6ab5692c6ff11615530955a560c2",
+      "docs/cross-mode-execution.md": "1796fc91547cfbe113b3a0a6f905837fa62649eef5e67f8ee5bde47dd0ca6c1c",
+      "docs/verification/cross-mode/p03/README.md": "2b5b70836957c1e6948d8ed1f03c07e6dea6c419d8f127b817728b3a45e9f588",
+      "game/app.mjs": "7ca5bc8acef81c142832c95398f6b8e92b7d172ff1b8c847ad784c2438a30746",
+      "game/test/chapter-download-host.test.mjs": "24620f09ba44d047476b33a841f2b1fd21d7fa00750b2f13edb19a08bdff65a2",
+      "game/test/continuous-host.test.mjs": "070a3fd7c90bf4795df8e2ce8ecce511c973b7a4016cc8792ff279c3a0fe1825",
+      "game/test/featured-chapter.test.mjs": "0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3",
+      "game/test/host-presentation-size.test.mjs": "90c6b7e8a7bd2cc09c8574d3926e6dd85a369ed6029394ca9b4dca2163151a10",
+      "game/test/practice-brief-host.test.mjs": "5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045",
+      "game/test/helpers/chapter-install-wait.mjs": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968"
+    },
+    "scope": "Uncommitted correction snapshot; not frozen release qualification."
+  },
+  "localRuns": [
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-baseline-node20.json",
+      "stage": "earlier-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/continuous-host.test.mjs"
+      ],
+      "exitCode": 1,
+      "reportedTAPCounts": {
+        "tests": 11,
+        "pass": 7,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Per-command observation; overlapping counts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-corrected-node20.json",
+      "stage": "earlier-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/continuous-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Per-command observation; overlapping counts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node20.json",
+      "stage": "earlier-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/chapter-download-host.test.mjs",
+        "game/test/continuous-host.test.mjs",
+        "game/test/featured-chapter.test.mjs",
+        "game/test/flight-pictures-host.test.mjs",
+        "game/test/host-presentation-size.test.mjs",
+        "game/test/practice-brief-host.test.mjs",
+        "game/test/title-entry-host.test.mjs",
+        "game/test/victory-story-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 135,
+        "pass": 135,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Per-command observation; overlapping counts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node22.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/chapter-download-host.test.mjs",
+        "game/test/continuous-host.test.mjs",
+        "game/test/featured-chapter.test.mjs",
+        "game/test/flight-pictures-host.test.mjs",
+        "game/test/host-presentation-size.test.mjs",
+        "game/test/practice-brief-host.test.mjs",
+        "game/test/title-entry-host.test.mjs",
+        "game/test/victory-story-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 135,
+        "pass": 135,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Per-command observation; overlapping counts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-final-node20.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/continuous-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Per-command observation; overlapping counts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-lint.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "game/app.mjs",
+        "game/test/chapter-download-host.test.mjs",
+        "game/test/continuous-host.test.mjs",
+        "game/test/featured-chapter.test.mjs",
+        "game/test/host-presentation-size.test.mjs",
+        "game/test/practice-brief-host.test.mjs",
+        "game/test/helpers/chapter-install-wait.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {},
+      "scope": "Per-command observation; overlapping counts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-format.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/app.mjs",
+        "game/test/chapter-download-host.test.mjs",
+        "game/test/continuous-host.test.mjs",
+        "game/test/featured-chapter.test.mjs",
+        "game/test/host-presentation-size.test.mjs",
+        "game/test/practice-brief-host.test.mjs",
+        "game/test/helpers/chapter-install-wait.mjs",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        ".cursor/skills/deploy-release-pages/SKILL.md",
+        "authoring/prompts/cross-mode-delivery.md",
+        "docs/cross-mode-execution.md",
+        "docs/verification/cross-mode/p03/README.md"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {},
+      "scope": "Per-command observation; overlapping counts are not additive."
+    }
+  ],
+  "origins": [
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-navigation-recovery-evidence-proposal/root-reviewed-inputs.json",
+      "name": "p03-navigation-recovery-evidence-proposal/root-reviewed-inputs.json",
+      "group": "reviewed-final-input-binding",
+      "bytes": 7243,
+      "sha256": "a0de7f28565886f0e07c25f62a0e65438a74d8c0f2d52a0bc69c32d61886d7c7",
+      "member": "objects/a0de7f28565886f0e07c25f62a0e65438a74d8c0f2d52a0bc69c32d61886d7c7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-navigation-recovery-evidence-proposal/static-intake.json",
+      "name": "p03-navigation-recovery-evidence-proposal/static-intake.json",
+      "group": "intake-plan",
+      "bytes": 74792,
+      "sha256": "c4df6b90c355d3c7f6d6227f035c06e64cc4a769036bd0f0844f094378c2de2f",
+      "member": "objects/c4df6b90c355d3c7f6d6227f035c06e64cc4a769036bd0f0844f094378c2de2f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/automation-originals-collection.receipt.json",
+      "name": "p03-final-qualification-intake/automation-originals-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 397,
+      "sha256": "469550c569975895ba9152e1d51379ff3dfb06b3a48ee870902a4267cc72b686",
+      "member": "objects/469550c569975895ba9152e1d51379ff3dfb06b3a48ee870902a4267cc72b686"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/automation-originals-collection.stderr",
+      "name": "p03-final-qualification-intake/automation-originals-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/automation-originals-collection.stdout",
+      "name": "p03-final-qualification-intake/automation-originals-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 215,
+      "sha256": "c4e2ce7fb970d672e6acbe1243af28a4307371df3bb966835495efee7089c3ac",
+      "member": "objects/c4e2ce7fb970d672e6acbe1243af28a4307371df3bb966835495efee7089c3ac"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/collect-completed-job.py",
+      "name": "p03-final-qualification-intake/collect-completed-job.py",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2007,
+      "sha256": "75756d4b88467d79808bf6a8f28421f960ff817e6b871a65b63e94109f99a4fb",
+      "member": "objects/75756d4b88467d79808bf6a8f28421f960ff817e6b871a65b63e94109f99a4fb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/collect_hosted.py",
+      "name": "p03-final-qualification-intake/collect_hosted.py",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 10446,
+      "sha256": "11fbb2f9aa548a1a7942f543955906969bee6bcd63998012b1af5cd9feb49de0",
+      "member": "objects/11fbb2f9aa548a1a7942f543955906969bee6bcd63998012b1af5cd9feb49de0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/completed-job-helper-origin.json",
+      "name": "p03-final-qualification-intake/completed-job-helper-origin.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 422,
+      "sha256": "da32c07e6060e3a992351611ed04bf15c3ce14b3145fb6dd26f73530d071e29b",
+      "member": "objects/da32c07e6060e3a992351611ed04bf15c3ce14b3145fb6dd26f73530d071e29b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/failed-39e-first-observation/failed-tests.json",
+      "name": "p03-final-qualification-intake/intake/failed-39e-first-observation/failed-tests.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12642,
+      "sha256": "348e707a412d47b4925a8e4c9e1ea73ebfa251e6394f47311d2de826c7a3c204",
+      "member": "objects/348e707a412d47b4925a8e4c9e1ea73ebfa251e6394f47311d2de826c7a3c204"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/failed-39e-inventory/inventory.json",
+      "name": "p03-final-qualification-intake/intake/failed-39e-inventory/inventory.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 49822,
+      "sha256": "28f2e3f56f2067ce81624be5cba6b6dbd41da183e6cbb71c3f72103d84e525c2",
+      "member": "objects/28f2e3f56f2067ce81624be5cba6b6dbd41da183e6cbb71c3f72103d84e525c2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/artifacts-final.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/artifacts-final.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 32,
+      "sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c",
+      "member": "objects/244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104735824880-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104735824880-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 718,
+      "sha256": "eb7341b2618929ae0e371f6e6b29bf6117d25a94dfb290414f46da603dda960d",
+      "member": "objects/eb7341b2618929ae0e371f6e6b29bf6117d25a94dfb290414f46da603dda960d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104735824880.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104735824880.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 3746,
+      "sha256": "931e068d597f4016fd806331af5dbbad46abf60dc18a725f5513165f3b699637",
+      "member": "objects/931e068d597f4016fd806331af5dbbad46abf60dc18a725f5513165f3b699637"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104735824880.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104735824880.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 9919,
+      "sha256": "2e96e67335b7c74c2a47317719a0149c08169351e0dd908e78682e0c72cbbc1d",
+      "member": "objects/2e96e67335b7c74c2a47317719a0149c08169351e0dd908e78682e0c72cbbc1d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104735826296.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104735826296.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 889,
+      "sha256": "66cd43cd6a466d31836a5873bb145f10bd439d4d22f1005121bb9a920648668d",
+      "member": "objects/66cd43cd6a466d31836a5873bb145f10bd439d4d22f1005121bb9a920648668d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104735826358.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104735826358.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 889,
+      "sha256": "8b343855d6df649102908424feca9d24ff6acc16d49767b698208ee8042806ff",
+      "member": "objects/8b343855d6df649102908424feca9d24ff6acc16d49767b698208ee8042806ff"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315752-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315752-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 696,
+      "sha256": "1aa39fcb021982bd0207983e963e305e9d8712f414696fe95cc8fd9eff6db111",
+      "member": "objects/1aa39fcb021982bd0207983e963e305e9d8712f414696fe95cc8fd9eff6db111"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315752.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315752.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2707,
+      "sha256": "2127040eb7db406b6c4604cd5ecc65b4c388e0e4241f2c82f141b4ee3d9ca7d6",
+      "member": "objects/2127040eb7db406b6c4604cd5ecc65b4c388e0e4241f2c82f141b4ee3d9ca7d6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315752.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315752.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 111143,
+      "sha256": "9b8457c065966dc2d1171a9f494f6fb86258f14269353c973077d30eef2d5965",
+      "member": "objects/9b8457c065966dc2d1171a9f494f6fb86258f14269353c973077d30eef2d5965"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315838-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315838-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 722,
+      "sha256": "5f79bf54fbed00e4b90e9b93b15b03814c1ae641be0ec75afdf84b084c6bc908",
+      "member": "objects/5f79bf54fbed00e4b90e9b93b15b03814c1ae641be0ec75afdf84b084c6bc908"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315838.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315838.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2707,
+      "sha256": "f102d8a85f1d7592033d325cf4bfd7aae76e50b0528787cf5d058ace0b23b853",
+      "member": "objects/f102d8a85f1d7592033d325cf4bfd7aae76e50b0528787cf5d058ace0b23b853"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315838.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315838.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 108418,
+      "sha256": "864c0f136d02040112fe453b6d9e7792625b444b2fb32bafdb15f7c2c0a3981a",
+      "member": "objects/864c0f136d02040112fe453b6d9e7792625b444b2fb32bafdb15f7c2c0a3981a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315843-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315843-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 721,
+      "sha256": "78740d5adf451ed982db53e90a410d82cbf621843a27cb16e9878d4a4b30c890",
+      "member": "objects/78740d5adf451ed982db53e90a410d82cbf621843a27cb16e9878d4a4b30c890"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315843.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315843.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2707,
+      "sha256": "4951239b137b0d69346854d4bce8fb4b88c7f3eafa72a331e8401ae3c3f52b62",
+      "member": "objects/4951239b137b0d69346854d4bce8fb4b88c7f3eafa72a331e8401ae3c3f52b62"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315843.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315843.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 89041,
+      "sha256": "54f777e29e64654ec0842d78e856baae00f5f1bba13650625af25fffac0a007b",
+      "member": "objects/54f777e29e64654ec0842d78e856baae00f5f1bba13650625af25fffac0a007b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315852-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315852-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 722,
+      "sha256": "0b4f279f28f62ee3c418ada10b7528021f9e411e0bd8cc4852c00d02a6935815",
+      "member": "objects/0b4f279f28f62ee3c418ada10b7528021f9e411e0bd8cc4852c00d02a6935815"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315852.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315852.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2707,
+      "sha256": "4284585c3aa2a6e1b8a5a14405a6e51ffe964eb8af371a92309125de7d4c7c06",
+      "member": "objects/4284585c3aa2a6e1b8a5a14405a6e51ffe964eb8af371a92309125de7d4c7c06"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104736315852.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104736315852.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 101485,
+      "sha256": "78ad8da6dff07c624134799029521e507ff48f7a98882ef8c9f34fd663bbd27b",
+      "member": "objects/78ad8da6dff07c624134799029521e507ff48f7a98882ef8c9f34fd663bbd27b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/job-104744525708.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/job-104744525708.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 879,
+      "sha256": "bbd65a93300446bfef398a6ff67afb98304750eb1ec111cf91f3d4aca74bd92b",
+      "member": "objects/bbd65a93300446bfef398a6ff67afb98304750eb1ec111cf91f3d4aca74bd92b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/jobs.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17265,
+      "sha256": "b0df9ab696f84c057e951e952a70946920beb0dde0867f99d17bd01973ec2858",
+      "member": "objects/b0df9ab696f84c057e951e952a70946920beb0dde0867f99d17bd01973ec2858"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/manual/run.json",
+      "name": "p03-final-qualification-intake/intake/hosted/manual/run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12602,
+      "sha256": "d4d8aa934008e70593d836b770afef4686985aaf4385f2c1810aa6e3bfdd8ddd",
+      "member": "objects/d4d8aa934008e70593d836b770afef4686985aaf4385f2c1810aa6e3bfdd8ddd"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__deploy-pages.yml",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__deploy-pages.yml",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+      "member": "objects/22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__deploy-pages.yml.api.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__deploy-pages.yml.api.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12158,
+      "sha256": "4f13317ba553096e40f48c9e2488b0782f892462f87ee7d309937e891e3481a5",
+      "member": "objects/4f13317ba553096e40f48c9e2488b0782f892462f87ee7d309937e891e3481a5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9",
+      "member": "objects/c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml.api.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml.api.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 7266,
+      "sha256": "bc82a6b55a9e37db888e05b5dd87e17715f848ec28e915383f1ae1083550ce8d",
+      "member": "objects/bc82a6b55a9e37db888e05b5dd87e17715f848ec28e915383f1ae1083550ce8d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/commit.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/commit.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2648,
+      "sha256": "a419b78aa6b848e219f47714136e15dc7efccbd7cb2566b5217ddd18c4c4e1bb",
+      "member": "objects/a419b78aa6b848e219f47714136e15dc7efccbd7cb2566b5217ddd18c4c4e1bb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2743,
+      "sha256": "1ec730046205ef3200034f182008efbf7a0b03dc34757c80a80ecdc481638a71",
+      "member": "objects/1ec730046205ef3200034f182008efbf7a0b03dc34757c80a80ecdc481638a71"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/scripts__check-source-identity.mjs",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/scripts__check-source-identity.mjs",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4",
+      "member": "objects/a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/scripts__check-source-identity.mjs.api.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/scripts__check-source-identity.mjs.api.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 11139,
+      "sha256": "b998d7d17d911db666fae9dfc5a233eef339f0310a22e091730921a11aa75ac5",
+      "member": "objects/b998d7d17d911db666fae9dfc5a233eef339f0310a22e091730921a11aa75ac5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/scripts__run-test-shard.mjs",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/scripts__run-test-shard.mjs",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730",
+      "member": "objects/dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-automation/scripts__run-test-shard.mjs.api.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-automation/scripts__run-test-shard.mjs.api.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 4816,
+      "sha256": "67eb8e856096ab312302d6f7ca3f0dd4ae3957f773591cdfebb6380eb7127916",
+      "member": "objects/67eb8e856096ab312302d6f7ca3f0dd4ae3957f773591cdfebb6380eb7127916"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104735734856-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104735734856-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 724,
+      "sha256": "a592d6e14506d925b55055864bca13b2d035fb5e73915df75afa01b76e59edba",
+      "member": "objects/a592d6e14506d925b55055864bca13b2d035fb5e73915df75afa01b76e59edba"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104735734856.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104735734856.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 3310,
+      "sha256": "98e607adb8462ecd5bb555a1529c867442e4a09bfb3c0ae0d1923e8355e5e7ac",
+      "member": "objects/98e607adb8462ecd5bb555a1529c867442e4a09bfb3c0ae0d1923e8355e5e7ac"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104735734856.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104735734856.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 14650,
+      "sha256": "857fa2820db2365670cd4913e4bd8988b3f5e61fb690d64c16c53786bb06e60f",
+      "member": "objects/857fa2820db2365670cd4913e4bd8988b3f5e61fb690d64c16c53786bb06e60f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104735736520.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104735736520.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 892,
+      "sha256": "c87c8b9311f5f67d553c9e5523b6f465da0b36d8ab04a48de55b7737495befbe",
+      "member": "objects/c87c8b9311f5f67d553c9e5523b6f465da0b36d8ab04a48de55b7737495befbe"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736204974-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736204974-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 719,
+      "sha256": "040398480ae4498a9db4b4784aa1145ad23215cf4dd08b02a64a6d260bdbda4b",
+      "member": "objects/040398480ae4498a9db4b4784aa1145ad23215cf4dd08b02a64a6d260bdbda4b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736204974.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736204974.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2956,
+      "sha256": "ca414a70f57921a6b578dbff9fe69a3f1f845bf383a59d06e5cd5350e3596d0e",
+      "member": "objects/ca414a70f57921a6b578dbff9fe69a3f1f845bf383a59d06e5cd5350e3596d0e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736204974.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736204974.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 9724,
+      "sha256": "ae5b3f66f822f32588ca18d840d86fa39361675bfe7c72209dc3873a64bf7e45",
+      "member": "objects/ae5b3f66f822f32588ca18d840d86fa39361675bfe7c72209dc3873a64bf7e45"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205125-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205125-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 699,
+      "sha256": "2a1259d02ff4626a83b7db2757eecce39d9359c85b31d6f779cad98f12d1af24",
+      "member": "objects/2a1259d02ff4626a83b7db2757eecce39d9359c85b31d6f779cad98f12d1af24"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205125.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205125.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2909,
+      "sha256": "c8264776a5c820317e52d4af31f98cc0435727326cec414ec4d80281787b6438",
+      "member": "objects/c8264776a5c820317e52d4af31f98cc0435727326cec414ec4d80281787b6438"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205125.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205125.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 109482,
+      "sha256": "de9097891cff6d8e2cac382aa104b4b04cf431148a125c0ed4a61ca659d4b289",
+      "member": "objects/de9097891cff6d8e2cac382aa104b4b04cf431148a125c0ed4a61ca659d4b289"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205170-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205170-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 724,
+      "sha256": "f872f248a6199554fdbf2c827d71e08173b315e2024b9e5866bb39133cac63d3",
+      "member": "objects/f872f248a6199554fdbf2c827d71e08173b315e2024b9e5866bb39133cac63d3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205170.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205170.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2909,
+      "sha256": "51565045fb6fd9e461608d19d9fd6fa2f9f4efdd9f90f5e71bce7a35ddb85c2a",
+      "member": "objects/51565045fb6fd9e461608d19d9fd6fa2f9f4efdd9f90f5e71bce7a35ddb85c2a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205170.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205170.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 87250,
+      "sha256": "c560a94e624b26429337217b350a69fb4c4a3240b7e92bf0a97e0530e0794dcc",
+      "member": "objects/c560a94e624b26429337217b350a69fb4c4a3240b7e92bf0a97e0530e0794dcc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205197-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205197-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 725,
+      "sha256": "a2cde7d7e18632a6ded94f1b343a148907008deb656743554194ce4af4a84bf0",
+      "member": "objects/a2cde7d7e18632a6ded94f1b343a148907008deb656743554194ce4af4a84bf0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205197.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205197.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2909,
+      "sha256": "fa77f4d04bad6309f9cb52647c9e0c779fd40a5c6371dc98030f049152d2f9b3",
+      "member": "objects/fa77f4d04bad6309f9cb52647c9e0c779fd40a5c6371dc98030f049152d2f9b3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205197.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205197.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 100166,
+      "sha256": "b64c053c47af92219d38b4bba1a6958db43156ca5c594529e35dc4965cf07ba7",
+      "member": "objects/b64c053c47af92219d38b4bba1a6958db43156ca5c594529e35dc4965cf07ba7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205222-receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205222-receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 725,
+      "sha256": "e937b0da7244dcf3876e6582679ca4d35a72cd322dadf5162e772e6d6deab529",
+      "member": "objects/e937b0da7244dcf3876e6582679ca4d35a72cd322dadf5162e772e6d6deab529"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205222.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205222.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2909,
+      "sha256": "8305c3986b4481a48050c4f1d835949b1e9087289833f5663ad69c177f2ca4ba",
+      "member": "objects/8305c3986b4481a48050c4f1d835949b1e9087289833f5663ad69c177f2ca4ba"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/job-104736205222.log.gz",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/job-104736205222.log.gz",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 107008,
+      "sha256": "41fc62deef898fbb34823c92d856c4e3513f82e3ad201c29fd69f628aab6524f",
+      "member": "objects/41fc62deef898fbb34823c92d856c4e3513f82e3ad201c29fd69f628aab6524f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/jobs.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 18827,
+      "sha256": "076a39fbcac683307c25ce6faa1ee742caf7d0bf734eb190a8c79765a1c9797c",
+      "member": "objects/076a39fbcac683307c25ce6faa1ee742caf7d0bf734eb190a8c79765a1c9797c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/pr-source/run.json",
+      "name": "p03-final-qualification-intake/intake/hosted/pr-source/run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12614,
+      "sha256": "fe66deb8f0f8a1a7c16b8884c6347e357e9ec89761bf86f071d0a18665d2af8f",
+      "member": "objects/fe66deb8f0f8a1a7c16b8884c6347e357e9ec89761bf86f071d0a18665d2af8f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/source-executed/.github__workflows__deploy-pages.yml",
+      "name": "p03-final-qualification-intake/intake/hosted/source-executed/.github__workflows__deploy-pages.yml",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+      "member": "objects/22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/source-executed/.github__workflows__publish-frozen-pages.yml",
+      "name": "p03-final-qualification-intake/intake/hosted/source-executed/.github__workflows__publish-frozen-pages.yml",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9",
+      "member": "objects/c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/source-executed/receipt.json",
+      "name": "p03-final-qualification-intake/intake/hosted/source-executed/receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 1353,
+      "sha256": "478a0053caf1053f8e2b17f98bf872077fae828c589085a95c1192a28aa570d7",
+      "member": "objects/478a0053caf1053f8e2b17f98bf872077fae828c589085a95c1192a28aa570d7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/source-executed/scripts__check-source-identity.mjs",
+      "name": "p03-final-qualification-intake/intake/hosted/source-executed/scripts__check-source-identity.mjs",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4",
+      "member": "objects/a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/hosted/source-executed/scripts__run-test-shard.mjs",
+      "name": "p03-final-qualification-intake/intake/hosted/source-executed/scripts__run-test-shard.mjs",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730",
+      "member": "objects/dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205170-collection.receipt.json",
+      "name": "p03-final-qualification-intake/job-104736205170-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 423,
+      "sha256": "cd54ebcfcfcfc9de7e7de2c3daf08311a57e11e31db23912b04eac408198bbb7",
+      "member": "objects/cd54ebcfcfcfc9de7e7de2c3daf08311a57e11e31db23912b04eac408198bbb7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205170-collection.stderr",
+      "name": "p03-final-qualification-intake/job-104736205170-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205170-collection.stdout",
+      "name": "p03-final-qualification-intake/job-104736205170-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 804,
+      "sha256": "73ada85e6686712c4894c45fd7ca03f241be4748d5e360fe65b34c8b4fd33e17",
+      "member": "objects/73ada85e6686712c4894c45fd7ca03f241be4748d5e360fe65b34c8b4fd33e17"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205197-collection.receipt.json",
+      "name": "p03-final-qualification-intake/job-104736205197-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 423,
+      "sha256": "3eaa9317159c1e2a2dd03ebebf8a58196364d7e07b95b3553fe32d1370dff5c6",
+      "member": "objects/3eaa9317159c1e2a2dd03ebebf8a58196364d7e07b95b3553fe32d1370dff5c6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205197-collection.stderr",
+      "name": "p03-final-qualification-intake/job-104736205197-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205197-collection.stdout",
+      "name": "p03-final-qualification-intake/job-104736205197-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 352,
+      "sha256": "14428aee924f2f46b08946694061dc3fd906d167d222ded19ebdeac026cc01c3",
+      "member": "objects/14428aee924f2f46b08946694061dc3fd906d167d222ded19ebdeac026cc01c3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205222-collection.receipt.json",
+      "name": "p03-final-qualification-intake/job-104736205222-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 424,
+      "sha256": "f53a93706fe1f18b862a6daca5b72065e14c5c0d2b2b4e6e54bb2c1909e74e4a",
+      "member": "objects/f53a93706fe1f18b862a6daca5b72065e14c5c0d2b2b4e6e54bb2c1909e74e4a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205222-collection.stderr",
+      "name": "p03-final-qualification-intake/job-104736205222-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736205222-collection.stdout",
+      "name": "p03-final-qualification-intake/job-104736205222-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2083,
+      "sha256": "3e4c90b53d831eeddc258e7a72bb907560d52e6eed1a7589d7fff291373e6d0f",
+      "member": "objects/3e4c90b53d831eeddc258e7a72bb907560d52e6eed1a7589d7fff291373e6d0f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315838-collection.receipt.json",
+      "name": "p03-final-qualification-intake/job-104736315838-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 421,
+      "sha256": "722420f5efacc6b5a0951c10c5b2b50bb9bdf5f4309a1be912809215ad775391",
+      "member": "objects/722420f5efacc6b5a0951c10c5b2b50bb9bdf5f4309a1be912809215ad775391"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315838-collection.stderr",
+      "name": "p03-final-qualification-intake/job-104736315838-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315838-collection.stdout",
+      "name": "p03-final-qualification-intake/job-104736315838-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 2080,
+      "sha256": "ad64d991ab9025d418b167e1ed0e4f4e798c8e3194ab6b23ce93d123024efd07",
+      "member": "objects/ad64d991ab9025d418b167e1ed0e4f4e798c8e3194ab6b23ce93d123024efd07"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315843-collection.receipt.json",
+      "name": "p03-final-qualification-intake/job-104736315843-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 420,
+      "sha256": "5401f9e0be0b798d0d40c6df452c0a0362d93c90f6021046127d458ab4b5a9a3",
+      "member": "objects/5401f9e0be0b798d0d40c6df452c0a0362d93c90f6021046127d458ab4b5a9a3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315843-collection.stderr",
+      "name": "p03-final-qualification-intake/job-104736315843-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315843-collection.stdout",
+      "name": "p03-final-qualification-intake/job-104736315843-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 801,
+      "sha256": "d6aaae030217f1ee6a914ae612f89a22b647e493ae50cf7903a53f4eb4ad4438",
+      "member": "objects/d6aaae030217f1ee6a914ae612f89a22b647e493ae50cf7903a53f4eb4ad4438"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315852-collection.receipt.json",
+      "name": "p03-final-qualification-intake/job-104736315852-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 420,
+      "sha256": "3c6e4775253ccf9bf7b29ecb0f07d600e5f956a82cc9c3cfad98f52067f4aba0",
+      "member": "objects/3c6e4775253ccf9bf7b29ecb0f07d600e5f956a82cc9c3cfad98f52067f4aba0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315852-collection.stderr",
+      "name": "p03-final-qualification-intake/job-104736315852-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/job-104736315852-collection.stdout",
+      "name": "p03-final-qualification-intake/job-104736315852-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 349,
+      "sha256": "d1d7d547ae3a3427bc0fdc0f012895cf084a0292a65434fddbfb801460c08d9b",
+      "member": "objects/d1d7d547ae3a3427bc0fdc0f012895cf084a0292a65434fddbfb801460c08d9b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/manual-preflight-collection.receipt.json",
+      "name": "p03-final-qualification-intake/manual-preflight-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 420,
+      "sha256": "34c44b8ab6d549576e531c1aaa4c9c306845897bbb35cb45145662848aefa9c6",
+      "member": "objects/34c44b8ab6d549576e531c1aaa4c9c306845897bbb35cb45145662848aefa9c6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/manual-preflight-collection.stderr",
+      "name": "p03-final-qualification-intake/manual-preflight-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/manual-preflight-collection.stdout",
+      "name": "p03-final-qualification-intake/manual-preflight-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 298,
+      "sha256": "b0597256eb97925e2fd78a2b752c0fc26c8dd85ca017d1b19726435f72f287ed",
+      "member": "objects/b0597256eb97925e2fd78a2b752c0fc26c8dd85ca017d1b19726435f72f287ed"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/manual-terminal-collection.receipt.json",
+      "name": "p03-final-qualification-intake/manual-terminal-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 393,
+      "sha256": "f78ff1f003b7d1bbf22a7e6e92d0d3367493bc216d00b21f6e9e9fa1c11d98eb",
+      "member": "objects/f78ff1f003b7d1bbf22a7e6e92d0d3367493bc216d00b21f6e9e9fa1c11d98eb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/manual-terminal-collection.stderr",
+      "name": "p03-final-qualification-intake/manual-terminal-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/manual-terminal-collection.stdout",
+      "name": "p03-final-qualification-intake/manual-terminal-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 141,
+      "sha256": "6cd2f08acd91cffb7f6d71a4ff32c23c0d7fd9d6ad1fccbfea058e6372771dcd",
+      "member": "objects/6cd2f08acd91cffb7f6d71a4ff32c23c0d7fd9d6ad1fccbfea058e6372771dcd"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 5056,
+      "sha256": "30c57fa62e7c5fa64553886a31cc01303dac7ec0f24432664844c1c1c6af8988",
+      "member": "objects/30c57fa62e7c5fa64553886a31cc01303dac7ec0f24432664844c1c1c6af8988"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 277,
+      "sha256": "c98ffef1543ffb2e71b5b62665b9b7a4a1b5f9c1ac93455610d6ca15cda9d3bc",
+      "member": "objects/c98ffef1543ffb2e71b5b62665b9b7a4a1b5f9c1ac93455610d6ca15cda9d3bc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12599,
+      "sha256": "abef48e066c5efa371b22fc63dd5d46fb185a125a9e69413cd7e64ae32603936",
+      "member": "objects/abef48e066c5efa371b22fc63dd5d46fb185a125a9e69413cd7e64ae32603936"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "4ce8469e9b4cedcec087df81b286d9d948a26254fd0651bcc181963c44383f1f",
+      "member": "objects/4ce8469e9b4cedcec087df81b286d9d948a26254fd0651bcc181963c44383f1f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091550909556Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 15085,
+      "sha256": "111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5",
+      "member": "objects/111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 278,
+      "sha256": "7ba508f4c9fa0d19ae3e9690e55a6dbc6f7e5f101e46d50f3c7460ac57e2f22c",
+      "member": "objects/7ba508f4c9fa0d19ae3e9690e55a6dbc6f7e5f101e46d50f3c7460ac57e2f22c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12599,
+      "sha256": "de762fa3aaa21b69f3af6e1ce24ea088fe13614dc47a47d6801002112aecd0b6",
+      "member": "objects/de762fa3aaa21b69f3af6e1ce24ea088fe13614dc47a47d6801002112aecd0b6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "c2b3c74e10d103d4e88436feff7cee684361b3349f72267598e3e15c70863131",
+      "member": "objects/c2b3c74e10d103d4e88436feff7cee684361b3349f72267598e3e15c70863131"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T091811373602Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 15085,
+      "sha256": "111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5",
+      "member": "objects/111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 278,
+      "sha256": "7ba508f4c9fa0d19ae3e9690e55a6dbc6f7e5f101e46d50f3c7460ac57e2f22c",
+      "member": "objects/7ba508f4c9fa0d19ae3e9690e55a6dbc6f7e5f101e46d50f3c7460ac57e2f22c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12599,
+      "sha256": "de762fa3aaa21b69f3af6e1ce24ea088fe13614dc47a47d6801002112aecd0b6",
+      "member": "objects/de762fa3aaa21b69f3af6e1ce24ea088fe13614dc47a47d6801002112aecd0b6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "c2b3c74e10d103d4e88436feff7cee684361b3349f72267598e3e15c70863131",
+      "member": "objects/c2b3c74e10d103d4e88436feff7cee684361b3349f72267598e3e15c70863131"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092112243323Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092422273033Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092422273033Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 15085,
+      "sha256": "111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5",
+      "member": "objects/111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092422273033Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092422273033Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7",
+      "member": "objects/089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092422273033Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092422273033Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092754534224Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092754534224Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 15085,
+      "sha256": "111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5",
+      "member": "objects/111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092754534224Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092754534224Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7",
+      "member": "objects/089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T092754534224Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T092754534224Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093129222873Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093129222873Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 15085,
+      "sha256": "111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5",
+      "member": "objects/111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093129222873Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093129222873Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7",
+      "member": "objects/089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093129222873Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093129222873Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093503912667Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093503912667Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 15085,
+      "sha256": "111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5",
+      "member": "objects/111cb32cc5476c10d5e3100a805d26624edcc601d0c048049a9f10b10b7b8ba5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093503912667Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093503912667Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7",
+      "member": "objects/089ba4ec2c556b4141441685a2a2ced1e6bb200bd45a34d4d648a9fc33813cb7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093503912667Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093503912667Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093823026439Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093823026439Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 16060,
+      "sha256": "985cd3e8f83f52752183e345a441a8d5e155d8389495386d7595ff55d84c60a6",
+      "member": "objects/985cd3e8f83f52752183e345a441a8d5e155d8389495386d7595ff55d84c60a6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093823026439Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093823026439Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "15ac807ffe7f32a0b35a7a1721caaf443e8468c7575a6c2b8b7e81b49e60bea4",
+      "member": "objects/15ac807ffe7f32a0b35a7a1721caaf443e8468c7575a6c2b8b7e81b49e60bea4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T093823026439Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T093823026439Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T094026506184Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T094026506184Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 16060,
+      "sha256": "985cd3e8f83f52752183e345a441a8d5e155d8389495386d7595ff55d84c60a6",
+      "member": "objects/985cd3e8f83f52752183e345a441a8d5e155d8389495386d7595ff55d84c60a6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T094026506184Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T094026506184Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "15ac807ffe7f32a0b35a7a1721caaf443e8468c7575a6c2b8b7e81b49e60bea4",
+      "member": "objects/15ac807ffe7f32a0b35a7a1721caaf443e8468c7575a6c2b8b7e81b49e60bea4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T094026506184Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T094026506184Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T094335352882Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T094335352882Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17265,
+      "sha256": "b0df9ab696f84c057e951e952a70946920beb0dde0867f99d17bd01973ec2858",
+      "member": "objects/b0df9ab696f84c057e951e952a70946920beb0dde0867f99d17bd01973ec2858"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T094335352882Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T094335352882Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "6c86bae77b89ed4af76a96308f27616930381ecc50d86052aa16802d2a26aed7",
+      "member": "objects/6c86bae77b89ed4af76a96308f27616930381ecc50d86052aa16802d2a26aed7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/manual-20260916T094335352882Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/manual-20260916T094335352882Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 14618,
+      "sha256": "4110a9659628af257179febc2ee51b643ca4e2d58d475b3b9798f5fbaef06081",
+      "member": "objects/4110a9659628af257179febc2ee51b643ca4e2d58d475b3b9798f5fbaef06081"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 278,
+      "sha256": "1d9cb9b08a79c290b8e41deee8eb08779bf05303e62a5df328ea645203a5c260",
+      "member": "objects/1d9cb9b08a79c290b8e41deee8eb08779bf05303e62a5df328ea645203a5c260"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12611,
+      "sha256": "c9befe45df8397929c687f4106b3ad71bdf53a80dd377a41ab4228b613f82812",
+      "member": "objects/c9befe45df8397929c687f4106b3ad71bdf53a80dd377a41ab4228b613f82812"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "955881e2b7e5a53b4361e2bb4ed25c0ba4abc13083d43039ea202dd38237f50f",
+      "member": "objects/955881e2b7e5a53b4361e2bb4ed25c0ba4abc13083d43039ea202dd38237f50f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091550909556Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 16987,
+      "sha256": "e100c82a94acc8c1e9104ce2834d36b9409306539e112125bc5373fd1beb3f9c",
+      "member": "objects/e100c82a94acc8c1e9104ce2834d36b9409306539e112125bc5373fd1beb3f9c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 278,
+      "sha256": "90dbb5b0749b57b1e57adbc5df02ba904b998be29751d6751f16d347bc8fe38b",
+      "member": "objects/90dbb5b0749b57b1e57adbc5df02ba904b998be29751d6751f16d347bc8fe38b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12611,
+      "sha256": "c9befe45df8397929c687f4106b3ad71bdf53a80dd377a41ab4228b613f82812",
+      "member": "objects/c9befe45df8397929c687f4106b3ad71bdf53a80dd377a41ab4228b613f82812"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "955881e2b7e5a53b4361e2bb4ed25c0ba4abc13083d43039ea202dd38237f50f",
+      "member": "objects/955881e2b7e5a53b4361e2bb4ed25c0ba4abc13083d43039ea202dd38237f50f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T091811373602Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17355,
+      "sha256": "0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c",
+      "member": "objects/0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 278,
+      "sha256": "300dc369b701994d6fb963aff5c81375a50947c62af916702224a7f545faa641",
+      "member": "objects/300dc369b701994d6fb963aff5c81375a50947c62af916702224a7f545faa641"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12611,
+      "sha256": "c9befe45df8397929c687f4106b3ad71bdf53a80dd377a41ab4228b613f82812",
+      "member": "objects/c9befe45df8397929c687f4106b3ad71bdf53a80dd377a41ab4228b613f82812"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "955881e2b7e5a53b4361e2bb4ed25c0ba4abc13083d43039ea202dd38237f50f",
+      "member": "objects/955881e2b7e5a53b4361e2bb4ed25c0ba4abc13083d43039ea202dd38237f50f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092112243323Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092422273033Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092422273033Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17355,
+      "sha256": "0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c",
+      "member": "objects/0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092422273033Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092422273033Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19",
+      "member": "objects/c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092422273033Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092422273033Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092754534224Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092754534224Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17355,
+      "sha256": "0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c",
+      "member": "objects/0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092754534224Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092754534224Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19",
+      "member": "objects/c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T092754534224Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T092754534224Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093129222873Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093129222873Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17355,
+      "sha256": "0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c",
+      "member": "objects/0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093129222873Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093129222873Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19",
+      "member": "objects/c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093129222873Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093129222873Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093503912667Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093503912667Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 17355,
+      "sha256": "0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c",
+      "member": "objects/0a50291b6cb76e99db66661d91503e8dd202e6d72452c17d930750b85f32a45c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093503912667Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093503912667Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19",
+      "member": "objects/c8b6cbff01f6af6e492cac4efadc704bedd1f41d65218c343698c53c26820c19"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093503912667Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093503912667Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093823026439Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093823026439Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 18091,
+      "sha256": "80a85e7e42f2682d40ea14c41d7c20de200620a4c2715c2ba070b83f36c5e406",
+      "member": "objects/80a85e7e42f2682d40ea14c41d7c20de200620a4c2715c2ba070b83f36c5e406"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093823026439Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093823026439Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "ab7712e5a976f5f3c4f0e9f2357067475231570427f1fe1755efd6549c034989",
+      "member": "objects/ab7712e5a976f5f3c4f0e9f2357067475231570427f1fe1755efd6549c034989"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T093823026439Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T093823026439Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094026506184Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094026506184Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 18459,
+      "sha256": "a675616a2ea874102ee82aa1ebe03b6e24d80a0cf3ddfb10e994935f8276dbc4",
+      "member": "objects/a675616a2ea874102ee82aa1ebe03b6e24d80a0cf3ddfb10e994935f8276dbc4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094026506184Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094026506184Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "96290b47c08436029c6ddd90af0238136e57a93a41602d476a5fad3929a556b2",
+      "member": "objects/96290b47c08436029c6ddd90af0238136e57a93a41602d476a5fad3929a556b2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094026506184Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094026506184Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094335352882Z-jobs.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094335352882Z-jobs.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 18502,
+      "sha256": "63137ba80a8f707b0844d8914cf8b19fd559b2dca2e42fafcebf923d8c932345",
+      "member": "objects/63137ba80a8f707b0844d8914cf8b19fd559b2dca2e42fafcebf923d8c932345"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094335352882Z-jobs.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094335352882Z-jobs.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 289,
+      "sha256": "49dbfa638c3a5471fc05e89c303845d0592b4a83aa52b4938c4b99efd5ed6e73",
+      "member": "objects/49dbfa638c3a5471fc05e89c303845d0592b4a83aa52b4938c4b99efd5ed6e73"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094335352882Z-jobs.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094335352882Z-jobs.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094546212518Z-run.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094546212518Z-run.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 12614,
+      "sha256": "fe66deb8f0f8a1a7c16b8884c6347e357e9ec89761bf86f071d0a18665d2af8f",
+      "member": "objects/fe66deb8f0f8a1a7c16b8884c6347e357e9ec89761bf86f071d0a18665d2af8f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094546212518Z-run.receipt.json",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094546212518Z-run.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 260,
+      "sha256": "13e8a795f03d105f1c7573b2eba5677536dc2ad3a4b53641c91109f1fd75ec90",
+      "member": "objects/13e8a795f03d105f1c7573b2eba5677536dc2ad3a4b53641c91109f1fd75ec90"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/monitor/pr-source-20260916T094546212518Z-run.stderr",
+      "name": "p03-final-qualification-intake/monitor/pr-source-20260916T094546212518Z-run.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/ordinary-build-collection.receipt.json",
+      "name": "p03-final-qualification-intake/ordinary-build-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 423,
+      "sha256": "e001ba5d533cbc19fb9457b5c99b65803c4577dcda46a51586e414305a6f7eab",
+      "member": "objects/e001ba5d533cbc19fb9457b5c99b65803c4577dcda46a51586e414305a6f7eab"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/ordinary-build-collection.stderr",
+      "name": "p03-final-qualification-intake/ordinary-build-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/ordinary-build-collection.stdout",
+      "name": "p03-final-qualification-intake/ordinary-build-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 299,
+      "sha256": "9508df02fe43e104fc1bf83c34dd9e552d3cee3bf4e6d48380fea34bfb9bfec1",
+      "member": "objects/9508df02fe43e104fc1bf83c34dd9e552d3cee3bf4e6d48380fea34bfb9bfec1"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/pr-source-terminal-collection.receipt.json",
+      "name": "p03-final-qualification-intake/pr-source-terminal-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 396,
+      "sha256": "938c3ca16e6da195345bfac3c7042f4624794692f711e536f19993deb1dab0c8",
+      "member": "objects/938c3ca16e6da195345bfac3c7042f4624794692f711e536f19993deb1dab0c8"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/pr-source-terminal-collection.stderr",
+      "name": "p03-final-qualification-intake/pr-source-terminal-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/pr-source-terminal-collection.stdout",
+      "name": "p03-final-qualification-intake/pr-source-terminal-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 144,
+      "sha256": "ff571c81572023936e62ab8c6a007ac052b7c729050ccae974183ca2204e9eca",
+      "member": "objects/ff571c81572023936e62ab8c6a007ac052b7c729050ccae974183ca2204e9eca"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/preflight-collection.receipt.json",
+      "name": "p03-final-qualification-intake/preflight-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 423,
+      "sha256": "7c51e72e33ae4e9edb321e6e911a83a8f42128b8dc7c88ad7546392fef89164c",
+      "member": "objects/7c51e72e33ae4e9edb321e6e911a83a8f42128b8dc7c88ad7546392fef89164c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/preflight-collection.stderr",
+      "name": "p03-final-qualification-intake/preflight-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/preflight-collection.stdout",
+      "name": "p03-final-qualification-intake/preflight-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 350,
+      "sha256": "2412fd798e733334151dbf11c5018bbc28e2627194ccb5cc554798fdcb6c505c",
+      "member": "objects/2412fd798e733334151dbf11c5018bbc28e2627194ccb5cc554798fdcb6c505c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/publisher-preview-collection.receipt.json",
+      "name": "p03-final-qualification-intake/publisher-preview-collection.receipt.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 661,
+      "sha256": "b3a1fabadec26f44106ba3af2ba3cd61037882cffe10c821f2b4c6eeee6a3520",
+      "member": "objects/b3a1fabadec26f44106ba3af2ba3cd61037882cffe10c821f2b4c6eeee6a3520"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/publisher-preview-collection.stderr",
+      "name": "p03-final-qualification-intake/publisher-preview-collection.stderr",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/publisher-preview-collection.stdout",
+      "name": "p03-final-qualification-intake/publisher-preview-collection.stdout",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 769,
+      "sha256": "49158cf310a108ceacd9f064a5694f9d9b928a008487f7d70b8ac1868e8839ee",
+      "member": "objects/49158cf310a108ceacd9f064a5694f9d9b928a008487f7d70b8ac1868e8839ee"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-qualification-intake/intake/failed-39e-inventory/manifest.json",
+      "name": "p03-final-qualification-intake/intake/failed-39e-inventory/manifest.json",
+      "group": "failed-39e-hosted-originals",
+      "bytes": 49544,
+      "sha256": "1b430b5bc4b796d9fdc712c70f5b320d72e944b778f006eddce9a03ed2bbab40",
+      "member": "objects/1b430b5bc4b796d9fdc712c70f5b320d72e944b778f006eddce9a03ed2bbab40"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-source-native-39e/binding.json",
+      "name": "p03-final-source-native-39e/binding.json",
+      "group": "unaccepted-native-observation",
+      "bytes": 329,
+      "sha256": "0265bd9d8b939e5b01bccc6d6c6c19c80a06ff02c22a703a16e8bdd40a00789c",
+      "member": "objects/0265bd9d8b939e5b01bccc6d6c6c19c80a06ff02c22a703a16e8bdd40a00789c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-source-native-39e/observations.md",
+      "name": "p03-final-source-native-39e/observations.md",
+      "group": "unaccepted-native-observation",
+      "bytes": 5265,
+      "sha256": "18ca98fd89ec1f060b516f13ffb74f9cfc96cc9cf94ffaddbd9a0bf4f0b6b1aa",
+      "member": "objects/18ca98fd89ec1f060b516f13ffb74f9cfc96cc9cf94ffaddbd9a0bf4f0b6b1aa"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-source-native-39e/receipt.json",
+      "name": "p03-final-source-native-39e/receipt.json",
+      "group": "unaccepted-native-observation",
+      "bytes": 868,
+      "sha256": "912cb32a3f095f2af6b6bcdde7eeeec89dd1839da27b995b2f0406bba80c25b6",
+      "member": "objects/912cb32a3f095f2af6b6bcdde7eeeec89dd1839da27b995b2f0406bba80c25b6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-source-native-39e/requests.jsonl",
+      "name": "p03-final-source-native-39e/requests.jsonl",
+      "group": "unaccepted-native-observation",
+      "bytes": 177900,
+      "sha256": "5ce56e1bb88b650440e434b74766da74a20c2ce05cde771f18deeb777e6d142e",
+      "member": "objects/5ce56e1bb88b650440e434b74766da74a20c2ce05cde771f18deeb777e6d142e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-source-native-39e/serve.py",
+      "name": "p03-final-source-native-39e/serve.py",
+      "group": "unaccepted-native-observation",
+      "bytes": 3261,
+      "sha256": "1cdc41722affc1df0b4acc5df7aa453ed953cf612733159fa1848f6e8fd09c63",
+      "member": "objects/1cdc41722affc1df0b4acc5df7aa453ed953cf612733159fa1848f6e8fd09c63"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-foreground-native-39e/binding.json",
+      "name": "p03-final-foreground-native-39e/binding.json",
+      "group": "unaccepted-native-observation",
+      "bytes": 329,
+      "sha256": "3cd2eec0f5732ac26d9036734c7319bc40b836716d3c720184ab1159280c2b7f",
+      "member": "objects/3cd2eec0f5732ac26d9036734c7319bc40b836716d3c720184ab1159280c2b7f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-foreground-native-39e/observations.md",
+      "name": "p03-final-foreground-native-39e/observations.md",
+      "group": "unaccepted-native-observation",
+      "bytes": 1928,
+      "sha256": "5dda337a8993edc14498dd67e787d4c552c1d1f77891228dec48bd7bc02ef472",
+      "member": "objects/5dda337a8993edc14498dd67e787d4c552c1d1f77891228dec48bd7bc02ef472"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-foreground-native-39e/receipt.json",
+      "name": "p03-final-foreground-native-39e/receipt.json",
+      "group": "unaccepted-native-observation",
+      "bytes": 868,
+      "sha256": "619bf697b194c086a60e4507fd0530aaf6e699765291477338b8295ac6afef4e",
+      "member": "objects/619bf697b194c086a60e4507fd0530aaf6e699765291477338b8295ac6afef4e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-foreground-native-39e/requests.jsonl",
+      "name": "p03-final-foreground-native-39e/requests.jsonl",
+      "group": "unaccepted-native-observation",
+      "bytes": 52139,
+      "sha256": "ca08c1d49dc09ba25fc4504d33921c0f99e34adee1cca1fd31022c17cd1fe7cf",
+      "member": "objects/ca08c1d49dc09ba25fc4504d33921c0f99e34adee1cca1fd31022c17cd1fe7cf"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-foreground-native-39e/serve.py",
+      "name": "p03-final-foreground-native-39e/serve.py",
+      "group": "unaccepted-native-observation",
+      "bytes": 3261,
+      "sha256": "1cdc41722affc1df0b4acc5df7aa453ed953cf612733159fa1848f6e8fd09c63",
+      "member": "objects/1cdc41722affc1df0b4acc5df7aa453ed953cf612733159fa1848f6e8fd09c63"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-baseline-node20.json",
+      "name": "p03-final-regression-correction/foreground-baseline-node20.json",
+      "group": "closed-foreground-regression",
+      "bytes": 781,
+      "sha256": "1f368ebff515d8edf48453c16c21abad5524ef21c7e9e6d77b2316de2a3ff086",
+      "member": "objects/1f368ebff515d8edf48453c16c21abad5524ef21c7e9e6d77b2316de2a3ff086"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-baseline-node20.stdout",
+      "name": "p03-final-regression-correction/foreground-baseline-node20.stdout",
+      "group": "closed-foreground-regression",
+      "bytes": 5506,
+      "sha256": "ef0357e3564b836fefe9f48b2698bfde2ec8faea6ab4389b8ba857cda5c38bf5",
+      "member": "objects/ef0357e3564b836fefe9f48b2698bfde2ec8faea6ab4389b8ba857cda5c38bf5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-baseline-node20.stderr",
+      "name": "p03-final-regression-correction/foreground-baseline-node20.stderr",
+      "group": "closed-foreground-regression",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-corrected-node20.json",
+      "name": "p03-final-regression-correction/foreground-corrected-node20.json",
+      "group": "closed-foreground-regression",
+      "bytes": 781,
+      "sha256": "b4720238ebbc63c97dd48ee45e26c5b454ff868cd438a8c76b4169ba45b8417d",
+      "member": "objects/b4720238ebbc63c97dd48ee45e26c5b454ff868cd438a8c76b4169ba45b8417d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-corrected-node20.stdout",
+      "name": "p03-final-regression-correction/foreground-corrected-node20.stdout",
+      "group": "closed-foreground-regression",
+      "bytes": 2592,
+      "sha256": "d87e828f625be45dcca44fd5bbd1b36e19032b186bff9e798503ec375084020a",
+      "member": "objects/d87e828f625be45dcca44fd5bbd1b36e19032b186bff9e798503ec375084020a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-corrected-node20.stderr",
+      "name": "p03-final-regression-correction/foreground-corrected-node20.stderr",
+      "group": "closed-foreground-regression",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/diagnosis.md",
+      "name": "p03-final-wait-correction/diagnosis.md",
+      "group": "wait-proposal-history",
+      "bytes": 3748,
+      "sha256": "cbeeb49cd050d2f71bcbe32859d2ded0d4dea7940943bf83cf101cd7c894b464",
+      "member": "objects/cbeeb49cd050d2f71bcbe32859d2ded0d4dea7940943bf83cf101cd7c894b464"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/original/featured-chapter.test.mjs",
+      "name": "p03-final-wait-correction/original/featured-chapter.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 8560,
+      "sha256": "f3aab18ff10e25aef6f37111fef95d7c1765e00578539bbe1c2a73a10102ea3f",
+      "member": "objects/f3aab18ff10e25aef6f37111fef95d7c1765e00578539bbe1c2a73a10102ea3f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/original/practice-brief-host.test.mjs",
+      "name": "p03-final-wait-correction/original/practice-brief-host.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 16261,
+      "sha256": "0c504a612210d1ea33f54a92ff07a4df072c98db8e02172f355e883d79855786",
+      "member": "objects/0c504a612210d1ea33f54a92ff07a4df072c98db8e02172f355e883d79855786"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/proposal.json",
+      "name": "p03-final-wait-correction/proposal.json",
+      "group": "wait-proposal-history",
+      "bytes": 4151,
+      "sha256": "7758c6a9487439c05702cd4677390d9664046a70678408936b83a30dafc6be81",
+      "member": "objects/7758c6a9487439c05702cd4677390d9664046a70678408936b83a30dafc6be81"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/proposed/chapter-install-wait.mjs",
+      "name": "p03-final-wait-correction/proposed/chapter-install-wait.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 1407,
+      "sha256": "47107453656e48ee2af9c4abbd6a8cb26cb693944651033e182a96be1df90fdf",
+      "member": "objects/47107453656e48ee2af9c4abbd6a8cb26cb693944651033e182a96be1df90fdf"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/proposed/featured-chapter.test.mjs",
+      "name": "p03-final-wait-correction/proposed/featured-chapter.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 8783,
+      "sha256": "0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3",
+      "member": "objects/0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/proposed/practice-brief-host.test.mjs",
+      "name": "p03-final-wait-correction/proposed/practice-brief-host.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 16449,
+      "sha256": "5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045",
+      "member": "objects/5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/proposed.patch",
+      "name": "p03-final-wait-correction/proposed.patch",
+      "group": "wait-proposal-history",
+      "bytes": 6365,
+      "sha256": "51c2c4ccd5e4f0d40814a8e5d2f175883e75fb83b1a1410773f64fece3f9fd39",
+      "member": "objects/51c2c4ccd5e4f0d40814a8e5d2f175883e75fb83b1a1410773f64fece3f9fd39"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/diagnosis.md",
+      "name": "p03-final-wait-correction/successor-four-files/diagnosis.md",
+      "group": "wait-proposal-history",
+      "bytes": 3040,
+      "sha256": "209de761a6e624f88c82e4f0d6a119c975d99006fccba54543c4eb33c20be01d",
+      "member": "objects/209de761a6e624f88c82e4f0d6a119c975d99006fccba54543c4eb33c20be01d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/extension.patch",
+      "name": "p03-final-wait-correction/successor-four-files/extension.patch",
+      "group": "wait-proposal-history",
+      "bytes": 5701,
+      "sha256": "cbfde763bca57ebbd2cd17cd6e4333c662beef1e01e2f3421870a6735cd3b8eb",
+      "member": "objects/cbfde763bca57ebbd2cd17cd6e4333c662beef1e01e2f3421870a6735cd3b8eb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/full-proposed.patch",
+      "name": "p03-final-wait-correction/successor-four-files/full-proposed.patch",
+      "group": "wait-proposal-history",
+      "bytes": 10057,
+      "sha256": "ac1089420738d3b2e5d3abb0a86b881ccc27cbe916dac2de1ddf4c974c046d2f",
+      "member": "objects/ac1089420738d3b2e5d3abb0a86b881ccc27cbe916dac2de1ddf4c974c046d2f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/observed-four-failures.json",
+      "name": "p03-final-wait-correction/successor-four-files/observed-four-failures.json",
+      "group": "wait-proposal-history",
+      "bytes": 7187,
+      "sha256": "00ccb71ec78d0907ea177ad6bf6debd716fc1425a23f5ca0e1ace5d6d023089e",
+      "member": "objects/00ccb71ec78d0907ea177ad6bf6debd716fc1425a23f5ca0e1ace5d6d023089e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/original/chapter-download-host.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/original/chapter-download-host.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 15256,
+      "sha256": "e5131331f6d02b67865a7efc0479e7d057f6f1b4dde3b91860b7c86bc1b426e8",
+      "member": "objects/e5131331f6d02b67865a7efc0479e7d057f6f1b4dde3b91860b7c86bc1b426e8"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/original/featured-chapter.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/original/featured-chapter.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 8560,
+      "sha256": "f3aab18ff10e25aef6f37111fef95d7c1765e00578539bbe1c2a73a10102ea3f",
+      "member": "objects/f3aab18ff10e25aef6f37111fef95d7c1765e00578539bbe1c2a73a10102ea3f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/original/host-presentation-size.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/original/host-presentation-size.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 6776,
+      "sha256": "30fc4d0a632150df25d2304822130b4b4a6984f8d65b4aab9b89f1f4fd4efd04",
+      "member": "objects/30fc4d0a632150df25d2304822130b4b4a6984f8d65b4aab9b89f1f4fd4efd04"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/original/practice-brief-host.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/original/practice-brief-host.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 16261,
+      "sha256": "0c504a612210d1ea33f54a92ff07a4df072c98db8e02172f355e883d79855786",
+      "member": "objects/0c504a612210d1ea33f54a92ff07a4df072c98db8e02172f355e883d79855786"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/proposal.json",
+      "name": "p03-final-wait-correction/successor-four-files/proposal.json",
+      "group": "wait-proposal-history",
+      "bytes": 2919,
+      "sha256": "e4ac85ad53b7718ca3b713c20f34faee3144e885b39b8db36ba2ba81036c71cd",
+      "member": "objects/e4ac85ad53b7718ca3b713c20f34faee3144e885b39b8db36ba2ba81036c71cd"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/proposed/chapter-download-host.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/proposed/chapter-download-host.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 15567,
+      "sha256": "24620f09ba44d047476b33a841f2b1fd21d7fa00750b2f13edb19a08bdff65a2",
+      "member": "objects/24620f09ba44d047476b33a841f2b1fd21d7fa00750b2f13edb19a08bdff65a2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/proposed/chapter-install-wait.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/proposed/chapter-install-wait.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 1563,
+      "sha256": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968",
+      "member": "objects/764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/proposed/featured-chapter.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/proposed/featured-chapter.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 8783,
+      "sha256": "0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3",
+      "member": "objects/0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/proposed/host-presentation-size.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/proposed/host-presentation-size.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 6892,
+      "sha256": "90c6b7e8a7bd2cc09c8574d3926e6dd85a369ed6029394ca9b4dca2163151a10",
+      "member": "objects/90c6b7e8a7bd2cc09c8574d3926e6dd85a369ed6029394ca9b4dca2163151a10"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/successor-four-files/proposed/practice-brief-host.test.mjs",
+      "name": "p03-final-wait-correction/successor-four-files/proposed/practice-brief-host.test.mjs",
+      "group": "wait-proposal-history",
+      "bytes": 16449,
+      "sha256": "5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045",
+      "member": "objects/5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/base/game/app.mjs",
+      "name": "p03-foreground-resume-proposal/base/game/app.mjs",
+      "group": "resume-proposal-history",
+      "bytes": 265230,
+      "sha256": "fe27f19aa1b81b92e7f2e0344badb49d5175707e7573428995cd92e02152cb89",
+      "member": "objects/fe27f19aa1b81b92e7f2e0344badb49d5175707e7573428995cd92e02152cb89"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/base/game/test/continuous-host.test.mjs",
+      "name": "p03-foreground-resume-proposal/base/game/test/continuous-host.test.mjs",
+      "group": "resume-proposal-history",
+      "bytes": 6766,
+      "sha256": "275649ee157bce4f800348bb2fc9cab0bf3bf500614e5fcc646634a823264746",
+      "member": "objects/275649ee157bce4f800348bb2fc9cab0bf3bf500614e5fcc646634a823264746"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/combined.patch",
+      "name": "p03-foreground-resume-proposal/combined.patch",
+      "group": "resume-proposal-history",
+      "bytes": 6041,
+      "sha256": "6fc09ca09cf03f8c34c2c3ca068b332f19e7de5470fa8237e6a9c98a04a31ac4",
+      "member": "objects/6fc09ca09cf03f8c34c2c3ca068b332f19e7de5470fa8237e6a9c98a04a31ac4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/prepare.py",
+      "name": "p03-foreground-resume-proposal/prepare.py",
+      "group": "resume-proposal-history",
+      "bytes": 9495,
+      "sha256": "702797ca291f1d7099229926fa83f92deac22d92c0212ac49065072cd4d8f5bb",
+      "member": "objects/702797ca291f1d7099229926fa83f92deac22d92c0212ac49065072cd4d8f5bb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/proposal.json",
+      "name": "p03-foreground-resume-proposal/proposal.json",
+      "group": "resume-proposal-history",
+      "bytes": 3001,
+      "sha256": "4d9c3357117190397cec41b8be1c528e6628d8b5f879ba15293f8d480301b354",
+      "member": "objects/4d9c3357117190397cec41b8be1c528e6628d8b5f879ba15293f8d480301b354"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/proposed/game/app.mjs",
+      "name": "p03-foreground-resume-proposal/proposed/game/app.mjs",
+      "group": "resume-proposal-history",
+      "bytes": 265453,
+      "sha256": "7ca5bc8acef81c142832c95398f6b8e92b7d172ff1b8c847ad784c2438a30746",
+      "member": "objects/7ca5bc8acef81c142832c95398f6b8e92b7d172ff1b8c847ad784c2438a30746"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/proposed/game/test/continuous-host.test.mjs",
+      "name": "p03-foreground-resume-proposal/proposed/game/test/continuous-host.test.mjs",
+      "group": "resume-proposal-history",
+      "bytes": 11939,
+      "sha256": "dc44516548d946b8afb853ed9b76923dd7874ac6435d671069582227b2f2ee01",
+      "member": "objects/dc44516548d946b8afb853ed9b76923dd7874ac6435d671069582227b2f2ee01"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/runtime-only.patch",
+      "name": "p03-foreground-resume-proposal/runtime-only.patch",
+      "group": "resume-proposal-history",
+      "bytes": 558,
+      "sha256": "81f001f3b4d3d4a3d057bd0d25bcc95f50546af774b8f2967466d538ab2b1fa3",
+      "member": "objects/81f001f3b4d3d4a3d057bd0d25bcc95f50546af774b8f2967466d538ab2b1fa3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/static-review.json",
+      "name": "p03-foreground-resume-proposal/static-review.json",
+      "group": "resume-proposal-history",
+      "bytes": 9056,
+      "sha256": "876707dcafe25be0c8f4bd550b15158f8df6b4c1b4334f8d5a71bfabaca4effe",
+      "member": "objects/876707dcafe25be0c8f4bd550b15158f8df6b4c1b4334f8d5a71bfabaca4effe"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/tests-only.patch",
+      "name": "p03-foreground-resume-proposal/tests-only.patch",
+      "group": "resume-proposal-history",
+      "bytes": 5483,
+      "sha256": "91c7fa66dbbd37ae009366750b85c56200528df5f11e4ce957a02f3eef75b8bf",
+      "member": "objects/91c7fa66dbbd37ae009366750b85c56200528df5f11e4ce957a02f3eef75b8bf"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/run-focused.py",
+      "name": "p03-final-regression-correction/run-focused.py",
+      "group": "correction-preparation",
+      "bytes": 1294,
+      "sha256": "e9a97cf951037b79adfe4888a8ada0bbc089d23fbb6680efa122448ecfd12805",
+      "member": "objects/e9a97cf951037b79adfe4888a8ada0bbc089d23fbb6680efa122448ecfd12805"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/hydration.json",
+      "name": "p03-final-regression-correction/hydration.json",
+      "group": "correction-preparation",
+      "bytes": 1273,
+      "sha256": "399b9feea22d86df1fbab4ba328df655c88b93cbcc0553c304c3c8e284ca7286",
+      "member": "objects/399b9feea22d86df1fbab4ba328df655c88b93cbcc0553c304c3c8e284ca7286"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/patterns-before.txt",
+      "name": "p03-final-regression-correction/patterns-before.txt",
+      "group": "correction-preparation",
+      "bytes": 34056,
+      "sha256": "7c90f74b2751c93b8280ce97c63058cb0c40a25ef94542d393d9f425fa35a191",
+      "member": "objects/7c90f74b2751c93b8280ce97c63058cb0c40a25ef94542d393d9f425fa35a191"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/patterns-expanded.txt",
+      "name": "p03-final-regression-correction/patterns-expanded.txt",
+      "group": "correction-preparation",
+      "bytes": 34245,
+      "sha256": "245663d824c2f37b538560496dd930c395bd5816ce60176828b1795edc559424",
+      "member": "objects/245663d824c2f37b538560496dd930c395bd5816ce60176828b1795edc559424"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-navigation-recovery-evidence-proposal/package.py",
+      "name": "p03-navigation-recovery-evidence-proposal/package.py",
+      "group": "packaging-driver",
+      "bytes": 13938,
+      "sha256": "f8820da7644ddfddca1b30556cf59687c1795c14b2ba0bc180491437076ae41f",
+      "member": "objects/f8820da7644ddfddca1b30556cf59687c1795c14b2ba0bc180491437076ae41f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-navigation-recovery-evidence-proposal/README.md",
+      "name": "p03-navigation-recovery-evidence-proposal/README.md",
+      "group": "packaging-instructions",
+      "bytes": 4963,
+      "sha256": "356a2bfa59dcd8be8bbdf7ae1659e21209b24b6d2435b2281edb720c3f604f04",
+      "member": "objects/356a2bfa59dcd8be8bbdf7ae1659e21209b24b6d2435b2281edb720c3f604f04"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-navigation-recovery-evidence-proposal/DELIVERY-README.md",
+      "name": "p03-navigation-recovery-evidence-proposal/DELIVERY-README.md",
+      "group": "delivery-explanation",
+      "bytes": 5034,
+      "sha256": "794dc06933a6f929f27efa69428041e0658cb6a5afef665b275d4b464584afdc",
+      "member": "objects/794dc06933a6f929f27efa69428041e0658cb6a5afef665b275d4b464584afdc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/run-check.py",
+      "name": "p03-final-regression-correction/run-check.py",
+      "group": "additional-explicit-original",
+      "bytes": 1344,
+      "sha256": "77c5bd5cd6d28cc3ee45c26b38b31ea01eabf0c69d311d4232cd1d9fe11dd24e",
+      "member": "objects/77c5bd5cd6d28cc3ee45c26b38b31ea01eabf0c69d311d4232cd1d9fe11dd24e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/continuous-format.patch",
+      "name": "p03-final-regression-correction/continuous-format.patch",
+      "group": "additional-explicit-original",
+      "bytes": 518,
+      "sha256": "3d5dfe8458762465a3f67b023d5e2b01107e2e53ace70e90209f29dcd0da85ec",
+      "member": "objects/3d5dfe8458762465a3f67b023d5e2b01107e2e53ace70e90209f29dcd0da85ec"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/continuous-format.proposed.mjs",
+      "name": "p03-final-regression-correction/continuous-format.proposed.mjs",
+      "group": "additional-explicit-original",
+      "bytes": 11935,
+      "sha256": "070a3fd7c90bf4795df8e2ce8ecce511c973b7a4016cc8792ff279c3a0fe1825",
+      "member": "objects/070a3fd7c90bf4795df8e2ce8ecce511c973b7a4016cc8792ff279c3a0fe1825"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/format-first-observation.md",
+      "name": "p03-final-regression-correction/format-first-observation.md",
+      "group": "additional-explicit-original",
+      "bytes": 788,
+      "sha256": "cad1e3531702df60f4bb10a1c140ea864089d4eeb02a4b075c22c0007ea4522e",
+      "member": "objects/cad1e3531702df60f4bb10a1c140ea864089d4eeb02a4b075c22c0007ea4522e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/reviewed-source-scope.json",
+      "name": "p03-final-regression-correction/reviewed-source-scope.json",
+      "group": "additional-explicit-original",
+      "bytes": 2746,
+      "sha256": "65adb625a1dad209633a74bca95a162fdc58ad35a722b4dd4971b8dff6ab5cf3",
+      "member": "objects/65adb625a1dad209633a74bca95a162fdc58ad35a722b4dd4971b8dff6ab5cf3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/staged-source-review.json",
+      "name": "p03-final-regression-correction/staged-source-review.json",
+      "group": "additional-explicit-original",
+      "bytes": 310,
+      "sha256": "b57cabcea555e492ff090294d97560452a730c3a043ba4c149a398b72616f23a",
+      "member": "objects/b57cabcea555e492ff090294d97560452a730c3a043ba4c149a398b72616f23a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-wait-correction/applied-static-review/review.json",
+      "name": "p03-final-wait-correction/applied-static-review/review.json",
+      "group": "additional-explicit-original",
+      "bytes": 7693,
+      "sha256": "a66687f81631886b68a42ffc5e2893fdb64bd05c3f0bcd3fb561e35f79092679",
+      "member": "objects/a66687f81631886b68a42ffc5e2893fdb64bd05c3f0bcd3fb561e35f79092679"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/applied-review/review.json",
+      "name": "p03-foreground-resume-proposal/applied-review/review.json",
+      "group": "additional-explicit-original",
+      "bytes": 13830,
+      "sha256": "d9b206b6cf9afc18642ee1ddc9fd0cb3da26c4bfea4b5f35f5a2e3d414e31853",
+      "member": "objects/d9b206b6cf9afc18642ee1ddc9fd0cb3da26c4bfea4b5f35f5a2e3d414e31853"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/applied-review/review.sha256",
+      "name": "p03-foreground-resume-proposal/applied-review/review.sha256",
+      "group": "additional-explicit-original",
+      "bytes": 78,
+      "sha256": "7679a13f256eeab093d18896a329e97ffefb8b84b4f97152b7f722a3b29bd741",
+      "member": "objects/7679a13f256eeab093d18896a329e97ffefb8b84b4f97152b7f722a3b29bd741"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-foreground-resume-proposal/applied-review/tracked-source.diff",
+      "name": "p03-foreground-resume-proposal/applied-review/tracked-source.diff",
+      "group": "additional-explicit-original",
+      "bytes": 16048,
+      "sha256": "eac41b850c97773bb91df7bd1f005147b99b3c18524f1e6dceca3ec6823a6dd4",
+      "member": "objects/eac41b850c97773bb91df7bd1f005147b99b3c18524f1e6dceca3ec6823a6dd4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/reviewed-correction.diff",
+      "name": "p03-final-regression-correction/reviewed-correction.diff",
+      "group": "additional-explicit-original",
+      "bytes": 29827,
+      "sha256": "8ea5c705ad56eb4431d116426ceb02d158a2555d86f0f23ec9d672ee3cafc7e6",
+      "member": "objects/8ea5c705ad56eb4431d116426ceb02d158a2555d86f0f23ec9d672ee3cafc7e6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-navigation-recovery-evidence-proposal/DELIVERY-README.initial.md",
+      "name": "p03-navigation-recovery-evidence-proposal/DELIVERY-README.initial.md",
+      "group": "additional-explicit-original",
+      "bytes": 5017,
+      "sha256": "253681cd56de5dfaae582a84299d5db1bce3942ab87e4afb55619cbb1d6fe9dc",
+      "member": "objects/253681cd56de5dfaae582a84299d5db1bce3942ab87e4afb55619cbb1d6fe9dc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/.cursor/skills/deploy-release-pages/SKILL.md",
+      "name": "worktrees/p03-final-integration/.cursor/skills/deploy-release-pages/SKILL.md",
+      "group": "current-correction-source",
+      "bytes": 10187,
+      "sha256": "cf9fab58f58b583b9144f4e8af7bb2e4540b6edfc4cba5f04e32c56eda49e750",
+      "member": "objects/cf9fab58f58b583b9144f4e8af7bb2e4540b6edfc4cba5f04e32c56eda49e750"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/authoring/prompts/cross-mode-delivery.md",
+      "name": "worktrees/p03-final-integration/authoring/prompts/cross-mode-delivery.md",
+      "group": "current-correction-source",
+      "bytes": 34980,
+      "sha256": "00b470b4a877baf389f7d9ceb15fd36f75197d561c1e7ad0f1d1a13914c190b3",
+      "member": "objects/00b470b4a877baf389f7d9ceb15fd36f75197d561c1e7ad0f1d1a13914c190b3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "name": "worktrees/p03-final-integration/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "group": "current-correction-source",
+      "bytes": 166663,
+      "sha256": "8569eeac08a2c4543ffa75c10196fefd3c3f6ab5692c6ff11615530955a560c2",
+      "member": "objects/8569eeac08a2c4543ffa75c10196fefd3c3f6ab5692c6ff11615530955a560c2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/docs/cross-mode-execution.md",
+      "name": "worktrees/p03-final-integration/docs/cross-mode-execution.md",
+      "group": "current-correction-source",
+      "bytes": 95803,
+      "sha256": "1796fc91547cfbe113b3a0a6f905837fa62649eef5e67f8ee5bde47dd0ca6c1c",
+      "member": "objects/1796fc91547cfbe113b3a0a6f905837fa62649eef5e67f8ee5bde47dd0ca6c1c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/docs/verification/cross-mode/p03/README.md",
+      "name": "worktrees/p03-final-integration/docs/verification/cross-mode/p03/README.md",
+      "group": "current-correction-source",
+      "bytes": 7450,
+      "sha256": "2b5b70836957c1e6948d8ed1f03c07e6dea6c419d8f127b817728b3a45e9f588",
+      "member": "objects/2b5b70836957c1e6948d8ed1f03c07e6dea6c419d8f127b817728b3a45e9f588"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/app.mjs",
+      "name": "worktrees/p03-final-integration/game/app.mjs",
+      "group": "current-correction-source",
+      "bytes": 265453,
+      "sha256": "7ca5bc8acef81c142832c95398f6b8e92b7d172ff1b8c847ad784c2438a30746",
+      "member": "objects/7ca5bc8acef81c142832c95398f6b8e92b7d172ff1b8c847ad784c2438a30746"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/chapter-download-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/chapter-download-host.test.mjs",
+      "group": "current-correction-source",
+      "bytes": 15567,
+      "sha256": "24620f09ba44d047476b33a841f2b1fd21d7fa00750b2f13edb19a08bdff65a2",
+      "member": "objects/24620f09ba44d047476b33a841f2b1fd21d7fa00750b2f13edb19a08bdff65a2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/continuous-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/continuous-host.test.mjs",
+      "group": "current-correction-source",
+      "bytes": 11935,
+      "sha256": "070a3fd7c90bf4795df8e2ce8ecce511c973b7a4016cc8792ff279c3a0fe1825",
+      "member": "objects/070a3fd7c90bf4795df8e2ce8ecce511c973b7a4016cc8792ff279c3a0fe1825"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/featured-chapter.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/featured-chapter.test.mjs",
+      "group": "current-correction-source",
+      "bytes": 8783,
+      "sha256": "0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3",
+      "member": "objects/0f5a80de298ac15b465fdfe4df2208a50bb18b000ec180ad92c6a4e43ff790f3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/host-presentation-size.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/host-presentation-size.test.mjs",
+      "group": "current-correction-source",
+      "bytes": 6892,
+      "sha256": "90c6b7e8a7bd2cc09c8574d3926e6dd85a369ed6029394ca9b4dca2163151a10",
+      "member": "objects/90c6b7e8a7bd2cc09c8574d3926e6dd85a369ed6029394ca9b4dca2163151a10"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/practice-brief-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/practice-brief-host.test.mjs",
+      "group": "current-correction-source",
+      "bytes": 16449,
+      "sha256": "5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045",
+      "member": "objects/5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/helpers/chapter-install-wait.mjs",
+      "name": "worktrees/p03-final-integration/game/test/helpers/chapter-install-wait.mjs",
+      "group": "current-correction-source",
+      "bytes": 1563,
+      "sha256": "764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968",
+      "member": "objects/764f39fc341ed6197ea5d0f30126cb2ac1365345a27f1e975178374f7f16f968"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node20.json",
+      "name": "p03-final-regression-correction/corrected-cohort-node20.json",
+      "group": "earlier-local-receipt",
+      "bytes": 1925,
+      "sha256": "a57c3138406f1251be7d5badd88e5d3883abd73e8d6ae3817f88845c1f3db9b2",
+      "member": "objects/a57c3138406f1251be7d5badd88e5d3883abd73e8d6ae3817f88845c1f3db9b2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node20.stdout",
+      "name": "p03-final-regression-correction/corrected-cohort-node20.stdout",
+      "group": "earlier-local-original-log",
+      "bytes": 29618,
+      "sha256": "d4834b2cd6ea6f3ff86c5116723713359a85a2f9351d0fdf702aff596ada52c6",
+      "member": "objects/d4834b2cd6ea6f3ff86c5116723713359a85a2f9351d0fdf702aff596ada52c6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node20.stderr",
+      "name": "p03-final-regression-correction/corrected-cohort-node20.stderr",
+      "group": "earlier-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/flight-pictures-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/flight-pictures-host.test.mjs",
+      "group": "unchanged-local-source-input",
+      "bytes": 25874,
+      "sha256": "d42ddcb6b0cc9f248aa4b239561e26c16a92a48f063bc1354fb802a902f88144",
+      "member": "objects/d42ddcb6b0cc9f248aa4b239561e26c16a92a48f063bc1354fb802a902f88144"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/title-entry-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/title-entry-host.test.mjs",
+      "group": "unchanged-local-source-input",
+      "bytes": 16786,
+      "sha256": "f6c53afaa5a76b896f5d4b1be9b5f305c012a87921b721203540ccbc40847783",
+      "member": "objects/f6c53afaa5a76b896f5d4b1be9b5f305c012a87921b721203540ccbc40847783"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/victory-story-ui.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/victory-story-ui.test.mjs",
+      "group": "unchanged-local-source-input",
+      "bytes": 30700,
+      "sha256": "fde106431956bca29f51351ef71682ff386ee2fa08c4dd79ca372b497a1ae03a",
+      "member": "objects/fde106431956bca29f51351ef71682ff386ee2fa08c4dd79ca372b497a1ae03a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node22.json",
+      "name": "p03-final-regression-correction/corrected-cohort-node22.json",
+      "group": "final-local-receipt",
+      "bytes": 1925,
+      "sha256": "cbba1a9e605dc95838c8083e91aa2f0e025728c0ada9f54099a8a74ee7c8e648",
+      "member": "objects/cbba1a9e605dc95838c8083e91aa2f0e025728c0ada9f54099a8a74ee7c8e648"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node22.stdout",
+      "name": "p03-final-regression-correction/corrected-cohort-node22.stdout",
+      "group": "final-local-original-log",
+      "bytes": 31707,
+      "sha256": "f5c0efeedf671c779dc2d859b87ac2cc665127033dd6e32414dffc6aee618731",
+      "member": "objects/f5c0efeedf671c779dc2d859b87ac2cc665127033dd6e32414dffc6aee618731"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-cohort-node22.stderr",
+      "name": "p03-final-regression-correction/corrected-cohort-node22.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-final-node20.json",
+      "name": "p03-final-regression-correction/foreground-final-node20.json",
+      "group": "final-local-receipt",
+      "bytes": 781,
+      "sha256": "f479d6f2f69203f14f761bad13def282214e9a1cf34efd72338714b86badcf82",
+      "member": "objects/f479d6f2f69203f14f761bad13def282214e9a1cf34efd72338714b86badcf82"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-final-node20.stdout",
+      "name": "p03-final-regression-correction/foreground-final-node20.stdout",
+      "group": "final-local-original-log",
+      "bytes": 2594,
+      "sha256": "996e66fa4da524693f99bc9df387c2f92bd26789415464f17bf5c31890c6a04c",
+      "member": "objects/996e66fa4da524693f99bc9df387c2f92bd26789415464f17bf5c31890c6a04c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/foreground-final-node20.stderr",
+      "name": "p03-final-regression-correction/foreground-final-node20.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-lint.json",
+      "name": "p03-final-regression-correction/corrected-lint.json",
+      "group": "final-local-receipt",
+      "bytes": 1720,
+      "sha256": "e9828e36e5183c13beef9a0ad0f33b5b7290922768bd0643ab8ae3d1e5d6c393",
+      "member": "objects/e9828e36e5183c13beef9a0ad0f33b5b7290922768bd0643ab8ae3d1e5d6c393"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-lint.stdout",
+      "name": "p03-final-regression-correction/corrected-lint.stdout",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-lint.stderr",
+      "name": "p03-final-regression-correction/corrected-lint.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-format.json",
+      "name": "p03-final-regression-correction/corrected-format.json",
+      "group": "final-local-receipt",
+      "bytes": 2538,
+      "sha256": "460269486a3e384d9ecd73528bf9f0050bdd114b9c15e0ecccc6dc1e42792135",
+      "member": "objects/460269486a3e384d9ecd73528bf9f0050bdd114b9c15e0ecccc6dc1e42792135"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-format.stdout",
+      "name": "p03-final-regression-correction/corrected-format.stdout",
+      "group": "final-local-original-log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "member": "objects/17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/corrected-format.stderr",
+      "name": "p03-final-regression-correction/corrected-format.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-final-regression-correction/staged-correction.diff",
+      "name": "p03-final-regression-correction/staged-correction.diff",
+      "group": "final-reviewed-diff",
+      "bytes": 29827,
+      "sha256": "1563ff5f371c3fe3ccc7c15e3ea3576a40d38ee34ad27ece10581a81776272f9",
+      "member": "objects/1563ff5f371c3fe3ccc7c15e3ea3576a40d38ee34ad27ece10581a81776272f9"
+    }
+  ],
+  "uniqueObjects": 194,
+  "uniqueBytes": 3074156,
+  "scope": "Failed 39e CI originals, two native attempts with unresolved foreground scope, before/fix regression evidence, proposal history and actual final local checks. No failed or unperformed acceptance gate is promoted by packaging."
+}

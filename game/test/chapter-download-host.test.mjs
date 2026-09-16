@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 const load = async (name) =>
@@ -52,13 +53,16 @@ async function confirmReplacement(page, beforeConfirm = () => {}) {
   beforeConfirm();
   page.$('mission-replace-confirm').click();
 }
-async function selectedChapter(page, id) {
-  await settle(
+async function selectedChapter(t, page, id) {
+  await waitForChapterSelection(
+    t,
+    page,
     () =>
       page.$('pack-select').value === id &&
       !page.$('pack-select').disabled &&
       !page.$('mission-replace-dialog').open &&
       page.doc.body.dataset.pictureState === 'ready',
+    `${id} chapter install and exact picture must become ready`,
   );
   page.frame(0);
 }
@@ -144,7 +148,7 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
   available = true;
   chooseChapter(page, original.id);
   await confirmReplacement(page);
-  await selectedChapter(page, original.id);
+  await selectedChapter(t, page, original.id);
   assert.equal(page.$('pack-select').value, original.id);
   assert.deepEqual(page.rendered.run.level, normalizedLevel(original.campaigns[0].levels[0]));
   assert.equal(page.rendered.run.tick, 0);
@@ -155,7 +159,12 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
   await settle(() => !page.$('pack-select').disabled);
   available = false;
   page.change('pack-select', original.id);
-  await settle(() => !page.$('pack-select').disabled);
+  await waitForChapterSelection(
+    t,
+    page,
+    () => !page.$('pack-select').disabled,
+    'Stored First Light chapter selection must settle without a new download',
+  );
   page.frame(0);
   assert.equal(page.$('pack-select').value, original.id);
   assert.deepEqual(page.rendered.run.level, normalizedLevel(original.campaigns[0].levels[0]));
@@ -197,7 +206,7 @@ test('explicit chapter download failure stays visible on return to Title and Mis
   available = true;
   page.$('shell-play').click();
   chooseChapter(page, featured.id);
-  await selectedChapter(page, featured.id);
+  await selectedChapter(t, page, featured.id);
   assert.equal(requests, 2);
   assert.equal(page.$('shell-home').open, false);
   assert.deepEqual(page.rendered.run.level, normalizedLevel(featured.campaigns[0].levels[0]));
@@ -278,7 +287,7 @@ test('a successful delayed chapter choice leaves a newer Settings visit in place
   const settingsFocus = page.doc.activeElement;
   release();
   await pending;
-  await selectedChapter(page, featured.id);
+  await selectedChapter(t, page, featured.id);
   assert.equal(button.querySelector('.mission-picker-card-label'), label);
   assert.equal(label.textContent, originalLabel);
   assert.equal(page.$('settings-dialog').open, true);
