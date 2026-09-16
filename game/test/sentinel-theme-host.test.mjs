@@ -206,13 +206,65 @@ async function page(t, f = {}, release = false) {
 const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
 async function open(p) {
   p.$('shell-menu').click();
+  p.$('shell-play').click();
+  p.$('shell-mode-choice').open = true;
   p.$('shell-worlds').click();
   await waitInventory(p, 'Open More worlds and authenticate installed Sentinel originals', {
     ready: () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
   });
 }
-async function choose(p, e) {
-  p.$(id(e, 'choose')).click();
+function showCard(p, e) {
+  const filter = p.$('optional-worlds-theme');
+  filter.value = e.descriptor.themeId;
+  filter.onchange();
+  const card = p.$(id(e, 'card'));
+  for (let n = 0; card.hidden && n < 9; n++) {
+    assert.equal(p.$('optional-worlds-next').disabled, false);
+    p.$('optional-worlds-next').click();
+  }
+  assert.equal(card.hidden, false, 'the exact owner is visibly reachable');
+}
+async function choose(p, e, { replaceFlight = false } = {}) {
+  showCard(p, e);
+  const phase = `Choose and authenticate exact ${e.descriptor.id}`,
+    opener = p.$(id(e, 'choose'));
+  opener.focus();
+  if (replaceFlight) {
+    const run = p.rendered.run,
+      checkpoint = authoritativeCheckpoint(run);
+    assert.equal(
+      run.player.cutting,
+      true,
+      'The initial retained cut requires an explicit decision.',
+    );
+    await waitInventory(p, `${phase}: checked replacement`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+      timeoutMs: 90000,
+    });
+    assert.equal(p.$('optional-worlds-dialog').open, true);
+    assert.match(p.$('mission-replace-status').textContent, /saved and verified/);
+    const saved = new Map(p.fixture.storage.map);
+    p.$('mission-replace-stay').click();
+    p.frame(0);
+    assert.equal(p.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.deepEqual(p.fixture.storage.map, saved);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(p.doc.activeElement, opener);
+    await waitInventory(p, `${phase}: fresh replacement choice`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+      timeoutMs: 90000,
+    });
+    await clickOperation(p, 'mission-replace-confirm');
+    await settle(() => !p.$('optional-worlds-dialog').open);
+  } else
+    await waitInventory(p, phase, {
+      operation: clickOperation(p, opener.id),
+      ready: () => !p.$('optional-worlds-dialog').open,
+      timeoutMs: 90000,
+    });
   await settle(
     () => !p.$('optional-worlds-dialog').open && p.doc.body.dataset.pictureState === 'ready',
   );
@@ -280,7 +332,7 @@ test('three Sentinel theme downloads preserve an unrelated cut, require Choose a
       const route = proof.routes.find((r) => r.id === 'fpv/standard/immediate/court-upper');
       for (const e of allEditions) {
         if (!p.$('optional-worlds-dialog').open) await open(p);
-        await choose(p, e);
+        await choose(p, e, { replaceFlight: e === allEditions[0] });
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
         assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
         p.$('start-button').click();
