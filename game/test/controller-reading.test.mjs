@@ -39,7 +39,7 @@ class Element {
     throw new Error('Reading hints must be safe DOM text.');
   }
 }
-function fixture(t, initialScope = 'paused') {
+function fixture(t, initialScope = 'paused', overrides = {}) {
   const ids = [
     'overlay-reading',
     'overlay-read',
@@ -95,6 +95,7 @@ function fixture(t, initialScope = 'paused') {
       calls.push(['transition', state?.regionId || null]);
       transition();
     },
+    ...overrides,
   });
   t.after(() => reading.destroy());
   return {
@@ -135,6 +136,29 @@ test('two finite toolbars keep Done stable, show mapped labels and retain the re
   assert.deepEqual(f.$('overlay-reading-unit').scrolled, [
     { block: 'nearest', inline: 'nearest', behavior: 'instant' },
   ]);
+});
+
+test('optional reading prompt uses the same measured scrollability without replacing Done or transitions', (t) => {
+  const f = fixture(t, 'paused', {
+    getReadingPrompt: ({ scrollable }) =>
+      `${scrollable ? 'Scroll to read' : 'All text is visible'} · Done reading returns`,
+  });
+  const region = f.$('overlay-reading'),
+    done = f.$('overlay-reading-done');
+  region.clientHeight = 100;
+  region.scrollHeight = 100;
+  f.$('overlay-read').click();
+  assert.match(
+    f.$('overlay-reading-hint').textContent,
+    /All text is visible · Done reading returns/,
+  );
+  const calls = [...f.calls];
+  region.scrollHeight = 400;
+  f.reading.refresh();
+  assert.match(f.$('overlay-reading-hint').textContent, /Scroll to read · Done reading returns/);
+  assert.equal(f.$('overlay-reading-done'), done);
+  assert.equal(done.disabled, false);
+  assert.deepEqual(f.calls, calls);
 });
 
 test('running full-brief entry pauses before beginning; overlay entry cannot start or pause flight', (t) => {
