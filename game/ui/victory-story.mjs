@@ -221,6 +221,7 @@ export function createVictoryStoryPresentation({
     }
     if (
       !disposed &&
+      activePage() &&
       Object.values(buttons).includes(focused) &&
       (focused.hidden || focused.disabled) &&
       (document.activeElement === focused || document.activeElement === document.body)
