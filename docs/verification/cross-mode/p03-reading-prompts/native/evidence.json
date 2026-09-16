@@ -1,0 +1,206 @@
+{
+  "format": "revealline-reading-prompts-native-supplement.v1",
+  "checkpoint": {
+    "commit": "6727d83e0fefc5d54b1ef6f1d61a19c272b595bd",
+    "tree": "786b2cf56a2af8508c4b9c5da8f9ed2693a62a77",
+    "baseCommit": "1f3b9995af43879d54fb7b0053846f0723e2e069"
+  },
+  "scope": "Root-observed keyboard and pointer Mission brief on the immutable local preview. Historical model-only evidence remains unchanged. No phase, public release or physical-device acceptance.",
+  "observations": {
+    "records": 5,
+    "originalJpegs": 3,
+    "rootInspectedAllJpegs": true,
+    "viewport": {
+      "width": 1454,
+      "height": 1348
+    },
+    "readingRecordsDpr": 2,
+    "initialDiagnosticDpr": 1.7999999523162842,
+    "url": "http://127.0.0.1:65352/game/"
+  },
+  "retainedAmbiguity": "Initial accessibility route indication disagreed with the following Solo DOM record. Record 01 label states intended diagnosis; actual DOM is authoritative. Cause unresolved, neither a proven product navigation defect nor a successful Versus journey.",
+  "verification": {
+    "checkpointRuntimeAndTestsMatchHeldFiles": 6,
+    "identicalBeforeAfterHttpResponses": 12,
+    "httpBodiesMatchCheckpoint": true,
+    "decodedMembersEqualOriginals": 26,
+    "productSourceChanged": false,
+    "testsRerun": false
+  },
+  "excludedClaims": [
+    "physical controller or touch",
+    "scrollable reader",
+    "native remapped-controller switching",
+    "save bytes or checkpoints",
+    "full Help journey",
+    "responsive/zoom matrix",
+    "current P02 composition",
+    "full source qualification",
+    "public release",
+    "P03 completion"
+  ],
+  "archive": {
+    "path": "evidence.zip",
+    "bytes": 172347,
+    "sha256": "7d8dd61866d9d92c2171b498ab4a036414422282d867eabb1b14efbf2fa89645"
+  },
+  "originalBytes": 321229,
+  "members": [
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/01.json",
+      "member": "observations/01.json",
+      "bytes": 3291,
+      "sha256": "13d0358bcdff58186425f6434634b7a77c9e76fdf5febfa8182fa6eeb6f23d6b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/02.jpg",
+      "member": "observations/02.jpg",
+      "bytes": 82450,
+      "sha256": "34dee558f9cfded12c61646d5b9d552007507db18d24421f456b8d3b85b2e4cb"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/02.json",
+      "member": "observations/02.json",
+      "bytes": 2334,
+      "sha256": "e7631fce6d25d0d16e13e92ced10b17e81b72ba5eec85b2eb28dbf95270569ad"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/03.jpg",
+      "member": "observations/03.jpg",
+      "bytes": 81511,
+      "sha256": "c5d590da4744228bb94bc232b5f612718c73d166dc9b077853f4dc36e0f82272"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/03.json",
+      "member": "observations/03.json",
+      "bytes": 2313,
+      "sha256": "e68a230d87e144554e9410774be7644ca80b1bd2137496039fcc55950ea32e4a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/04.jpg",
+      "member": "observations/04.jpg",
+      "bytes": 81523,
+      "sha256": "3f0a640bdaf5c399593f4cf2e90363a946b07239d710288e63871d8a30fb0a5e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/04.json",
+      "member": "observations/04.json",
+      "bytes": 2366,
+      "sha256": "792378cfbd6b00ba690d88d62115b1a809b6624a78818456db592f55e3ea34ac"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/05.json",
+      "member": "observations/05.json",
+      "bytes": 2184,
+      "sha256": "d854f8e26f31fb417fd9b52565a73a313b97caa969466b1cdbf466d2112c99dd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/binding.json",
+      "member": "observations/binding.json",
+      "bytes": 134,
+      "sha256": "baeb56146832f06422981b605d0c2b64df485c29ea74f24673d0591f6bc237b0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/closed.json",
+      "member": "observations/closed.json",
+      "bytes": 26,
+      "sha256": "2207dde4b97d71b2d65e1a25ebb549baeb4af03b59c46a75356549ea69fd21d3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/events.json",
+      "member": "observations/events.json",
+      "bytes": 3577,
+      "sha256": "7c10f8fee497da016b771e7baa7c5bdbc966b796cc16daf61486645db51bfe1e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-reading-native-root/root-review.md",
+      "member": "observations/root-review.md",
+      "bytes": 2445,
+      "sha256": "8ea659e205130ce84d938aa7dabcdadd5cbd9e65defb011840b114f2db6ab514"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/binding.json",
+      "member": "preview/binding.json",
+      "bytes": 2107,
+      "sha256": "1abef659adc84c187ac7a1ebb90d78ea3ec87fcc00bdde2b2b9cca81457de6d9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/config.json",
+      "member": "preview/config.json",
+      "bytes": 1435,
+      "sha256": "7ec926f4f4fcc24c58d6a062a20704f1fab2734d957190bb545576ff4f90db3c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/helper-reuse.diff",
+      "member": "preview/helper-reuse.diff",
+      "bytes": 7401,
+      "sha256": "f06db9d46cf12369b6887e5c625205198f9c7b2902a918c0efd59b14a55e88ed"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/http-before.json",
+      "member": "preview/http-before.json",
+      "bytes": 3579,
+      "sha256": "6e95e454a8bdb1957b89d2a06df0be7b3634825304fd489edc24c377c662418b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/http-after.json",
+      "member": "preview/http-after.json",
+      "bytes": 3695,
+      "sha256": "567b239ace3cb8d514d9e7d0ec29847416f1f72189009105e4c509e0746b3fc4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/preparation.json",
+      "member": "preview/preparation.json",
+      "bytes": 2140,
+      "sha256": "e2b04fb820b2468eab4b3c0ced1d58751a4932c5107fac3bc61a84bd0909b447"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/serve-before-reading.py",
+      "member": "preview/serve-before-reading.py",
+      "bytes": 9895,
+      "sha256": "aa6aa6a8afc4adaafd4cafffe960b11cf647c243fd94deb03d37363a62dddf7f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/preview/serve.py",
+      "member": "preview/serve.py",
+      "bytes": 10476,
+      "sha256": "c750620def47d3b4eefb964296ac12e81ff658389cd31756b0e35a1a561d0cfe"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/checkpoint-committed.json",
+      "member": "source/checkpoint-committed.json",
+      "bytes": 616,
+      "sha256": "56811c20c16a906dd982baa30c0492430ff1b2f36b9c426cac23072d0eb5dc73"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/source-held-01.json",
+      "member": "source/source-held-01.json",
+      "bytes": 2771,
+      "sha256": "adeb4babb1b9793002346d56917694cf7db55d1fd46e751b4d963ae07b5829f7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/package-held.json",
+      "member": "source/package-held.json",
+      "bytes": 2920,
+      "sha256": "da994c7139a5fb0c939b91eed8a9dc739b6d23c9864a7d52efdb53fc8f2cfcd6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/focused-verification.json",
+      "member": "source/focused-verification.json",
+      "bytes": 3181,
+      "sha256": "3c6018e4ce9244860cd39c90950a2c396facd96dc79525bc6383c3405a3dddfb"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/root-package-review.json",
+      "member": "source/root-package-review.json",
+      "bytes": 468,
+      "sha256": "49425d85c7955b7f60978731606a729a48975708b32eefc1da0ef19438f44b27"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-reading-prompts/.cache/reading-prompts/prepare-preview.py",
+      "member": "source/prepare-preview.py",
+      "bytes": 6391,
+      "sha256": "787911d5fb75e02e01adb4757d7ac2a184d6f64d5882498e5f24d71b95781a7e"
+    }
+  ]
+}
