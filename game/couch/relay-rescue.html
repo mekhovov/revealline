@@ -263,37 +263,46 @@
         </section>
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
-          <button id="coop-help-read" type="button">Read controls</button>
-          <div
-            id="coop-help-reading"
-            role="region"
-            aria-label="Relay Rescue controls"
-            tabindex="0"
-            data-game-reading
-          >
-            <p>
-              Tap a direction to keep moving. Banking a cut stops your craft; steer again to leave.
-              Escape or Menu pauses both players. Resume together is always explicit.
+          <div id="coop-help-unit">
+            <div class="reading-toolbar">
+              <button id="coop-help-read" type="button">Read controls</button>
+              <button id="coop-help-reading-done" type="button" disabled>Done reading</button>
+            </div>
+            <p id="coop-help-reading-hint" class="reading-hint" role="status">
+              Read without starting or resuming.
             </p>
-            <p>
-              <strong>Sunflower:</strong> <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer,
-              <kbd>Left Shift</kbd> Boost, <kbd>Q</kbd> Support.
-            </p>
-            <p>
-              <strong>Skyline:</strong> arrow keys steer, <kbd>Right Shift</kbd> Boost,
-              <kbd>Enter</kbd> Support.
-            </p>
-            <p>
-              Controllers: stick or D-pad steers, right shoulder holds Boost, South uses Support,
-              and Menu pauses. Each player keeps their controller assignment.
-            </p>
-            <p>
-              Tap Support to slow nearby enemies and intercept sparks. Hold it beside a downed
-              partner on safe ground for one second to rescue them. A new direction cancels a
-              rescue. A downed player can crawl along safe ground to meet their partner.
-            </p>
-            <p id="coop-support-0" class="support-status">Sunflower: Support ready</p>
-            <p id="coop-support-1" class="support-status">Skyline: Support ready</p>
+            <div
+              id="coop-help-reading"
+              aria-describedby="coop-help-reading-hint"
+              role="region"
+              aria-label="Relay Rescue controls"
+              tabindex="0"
+              data-game-reading
+            >
+              <p>
+                Tap a direction to keep moving. Banking a cut stops your craft; steer again to
+                leave. Escape or Menu pauses both players. Resume together is always explicit.
+              </p>
+              <p>
+                <strong>Sunflower:</strong> <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer,
+                <kbd>Left Shift</kbd> Boost, <kbd>Q</kbd> Support.
+              </p>
+              <p>
+                <strong>Skyline:</strong> arrow keys steer, <kbd>Right Shift</kbd> Boost,
+                <kbd>Enter</kbd> Support.
+              </p>
+              <p>
+                Controllers: stick or D-pad steers, right shoulder holds Boost, South uses Support,
+                and Menu pauses. Each player keeps their controller assignment.
+              </p>
+              <p>
+                Tap Support to slow nearby enemies and intercept sparks. Hold it beside a downed
+                partner on safe ground for one second to rescue them. A new direction cancels a
+                rescue. A downed player can crawl along safe ground to meet their partner.
+              </p>
+              <p id="coop-support-0" class="support-status">Sunflower: Support ready</p>
+              <p id="coop-support-1" class="support-status">Skyline: Support ready</p>
+            </div>
           </div>
         </details>
         <details id="coop-options">

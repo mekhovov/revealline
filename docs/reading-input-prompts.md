@@ -14,6 +14,8 @@ Both existing reading adapters accept an optional `getReadingPrompt({scrollable}
 
 The first keyboard arrow in controller reading executes before the native-input notification. Solo therefore refreshes the active hint after changing modality, and after refreshing mapped labels. Native Enter on a button remains browser-owned: its default click follows the keyboard notification. The finite host fixture explicitly models that default, rather than adding a production click handler.
 
+The [Couch Help candidate](couch-reading.md) applies the same prompt contract to Versus and Team. It adds stable Done controls and visible hints through explicit shared-reader surface definitions. Couch uses its fixed South/East menu bindings; Solo continues to use applied remapped labels. This does not change the older Solo evidence below or imply phase acceptance.
+
 [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) supports clear exit prompts and consistent input paths. It is design guidance, not an accessibility certification for this change.
 
 The [retained evidence](verification/cross-mode/p03-reading-prompts/README.md) binds exact `1f3b9995` source plus this narrow successor. The three complete navigation, reading-helper and actual-Solo-host files pass 78/78 on Node22 and Node20; all 230 inputs and the semantic index remained unchanged. Seven new host cases cover keyboard exits, first-key switching, remapped controller Back and touch Done; two adapter cases cover optional/default-compatible prompts and neutral/stale refresh. Tests preserve the actual simulation checkpoint and stored profile.

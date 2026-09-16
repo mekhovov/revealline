@@ -9,9 +9,12 @@ export function attachControllerReading({
   pause = () => {},
   onTransition = () => {},
   additionalSurfaces = [],
+  surfaceDefinitions = null,
   compactOverlay = false,
 } = {}) {
-  const definitions = [
+  // An explicit list owns only those surfaces; omitted keeps the Solo defaults
+  // and additional surfaces. Entries remain [region, entry, label, unit] tuples.
+  const definitions = surfaceDefinitions ?? [
     ['overlay-reading', 'overlay-read', 'Mission details', 'overlay-reading-unit'],
     ['mission-brief-reading', 'mission-brief-read', 'Mission brief', 'mission-brief-unit'],
     ...additionalSurfaces,
