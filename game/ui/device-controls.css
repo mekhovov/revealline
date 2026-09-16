@@ -224,6 +224,25 @@
   .game-shell .shell-bar {
     height: 48px;
   }
+  @media (min-width: 681px) {
+    /* Keep menu targets and focus inside the fixed header above the pause panel. */
+    .field-kit.game-shell:not([data-flight-state='running']) .shell-bar {
+      padding-block: 0;
+    }
+    .field-kit.game-shell:not([data-flight-state='running']) .shell-bar > button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--fk-space-1);
+      padding-block: var(--fk-space-1);
+    }
+    .field-kit.game-shell:not([data-flight-state='running'])
+      .shell-bar
+      > button:is(:focus-visible, .controller-focus) {
+      outline-offset: -3px;
+      box-shadow: inset 0 0 0 6px var(--fk-bg);
+    }
+  }
   .game-shell .telemetry {
     min-height: 46px;
     padding: 0;

@@ -473,6 +473,57 @@ body.field-kit[data-field-kit-page]
   }
 }
 
+/* Ready briefings keep a full-height reading region in short landscape.
+   Text and controls keep their chosen scale; long content remains scrollable. */
+@media (orientation: landscape) and (min-width: 681px) and (max-height: 500px) {
+  .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+    grid-template-rows: auto auto minmax(44px, 1fr);
+    gap: 4px 16px;
+    padding: 6px 12px;
+    overflow: auto;
+  }
+  .field-kit.game-shell .game-overlay[data-kind='ready'] #overlay-reading {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    min-width: 0;
+    min-height: 0;
+    max-height: 100%;
+    padding-inline-end: 20px;
+    scrollbar-gutter: stable;
+    overflow-y: auto;
+  }
+  .field-kit.game-shell .game-overlay[data-kind='ready'] .reading-toolbar {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+  }
+  .field-kit.game-shell
+    .game-overlay[data-kind='ready']
+    .reading-actions:has(> #overlay-reading-done[hidden]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .field-kit.game-shell .game-overlay[data-kind='ready'] #flight-preparation-status {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+  }
+  .field-kit.game-shell .game-overlay[data-kind='ready'] .overlay-actions {
+    grid-column: 2;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 8px;
+    min-height: 44px;
+    margin: 0;
+    padding: 4px;
+    overflow-y: auto;
+  }
+}
+
 /* Results lead with the completed attempt's still. Reading and actions retain
    their existing independent overflow/keyboard ownership. */
 .field-kit.game-shell #result-picture {
