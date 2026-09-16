@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 import { createRun, stepRun, releaseInputs, FIXED_DT, getSummary } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -272,6 +275,132 @@ test('destruction ends once and removes both finite toolbars and details event h
   f.reading.destroy();
   assert.equal(f.calls.length, count);
   assert.equal(f.navigation.readingState(), null);
+});
+
+function couchReading(t) {
+  const doc = new Document();
+  const make = (tag, id, text) => {
+    const element = doc.createElement(tag);
+    element.id = id;
+    element.textContent = text;
+    return element;
+  };
+  const unit = make('div', 'couch-help-unit', ''),
+    entry = make('button', 'couch-help-read', 'Read controls'),
+    done = make('button', 'couch-help-reading-done', 'Done reading'),
+    region = make('div', 'couch-help-reading', 'Keep both players on safe ground.'),
+    hint = make('p', 'couch-help-reading-hint', ''),
+    other = make('button', 'couch-help-back', 'Back');
+  region.tabIndex = 0;
+  region.clientHeight = 100;
+  region.scrollHeight = 300;
+  region.setAttribute('data-game-reading', '');
+  region.setAttribute('role', 'region');
+  region.setAttribute('aria-label', 'Couch controls');
+  unit.append(entry, done, hint, region);
+  doc.body.append(unit, other);
+  const definitions = Object.freeze([
+    Object.freeze(['couch-help-reading', 'couch-help-read', 'Couch controls', 'couch-help-unit']),
+  ]);
+  let reading,
+    scope = 'couch-help',
+    transitions = 0,
+    back = 0;
+  const prompt = ({ scrollable }) => readingInputPrompt({ modality: 'keyboard', scrollable });
+  const navigation = attachControllerNavigation({
+    document: doc,
+    getScope: () => scope,
+    getRoot: () => doc.body,
+    getDefaultFocus: () => entry,
+    getReadingPrompt: prompt,
+    keyboard: true,
+    onBack: () => back++,
+    onReadingChange: (state) => reading?.changed(state),
+    onHint: (message) => reading?.hint(message),
+  });
+  reading = attachControllerReading({
+    document: doc,
+    getNavigation: () => navigation,
+    getReadingPrompt: prompt,
+    getScope: () => scope,
+    surfaceDefinitions: definitions,
+    // An explicit list replaces both defaults and extensions; these unrelated
+    // elements deliberately do not exist in the Couch document.
+    additionalSurfaces: [['unowned', 'unowned-read', 'Unowned', 'unowned-unit']],
+    pause: () => assert.fail('The custom Help toolbar cannot pause or resume a flight.'),
+    onTransition: () => transitions++,
+  });
+  t.after(() => {
+    reading.destroy();
+    navigation.destroy();
+  });
+  return {
+    doc,
+    entry,
+    done,
+    region,
+    hint,
+    other,
+    reading,
+    navigation,
+    setScope: (value) => (scope = value),
+    counts: () => ({ transitions, back }),
+  };
+}
+
+test('one custom Couch toolbar owns real navigation focus and a stable pointer Done action', (t) => {
+  const h = couchReading(t);
+  assert.equal(h.doc.getElementById('overlay-reading'), null);
+  assert.equal(h.done.disabled, true);
+  h.entry.focus();
+  h.entry.click();
+  assert.equal(h.doc.activeElement, h.region);
+  assert.equal(h.entry.getAttribute('aria-pressed'), 'true');
+  assert.equal(h.done.disabled, false);
+  assert.match(h.hint.textContent, /Up\/Down scroll · Enter, Space or Escape returns/);
+  h.done.emit('pointerdown', { pointerType: 'touch' });
+  assert.equal(h.navigation.readingState()?.regionId, h.region.id);
+  h.done.click();
+  assert.equal(h.doc.activeElement, h.entry);
+  assert.equal(h.navigation.readingState(), null);
+  assert.equal(h.done.disabled, true);
+  assert.equal(h.entry.getAttribute('aria-pressed'), 'false');
+  assert.deepEqual(h.counts(), { transitions: 2, back: 0 });
+});
+
+test('custom toolbar Escape returns only to its opener and late Done preserves later focus', (t) => {
+  const h = couchReading(t);
+  h.entry.click();
+  h.region.emit('keydown', { key: 'Escape' });
+  assert.equal(h.doc.activeElement, h.entry);
+  assert.equal(h.navigation.readingState(), null);
+  assert.equal(h.counts().back, 0, 'The same Escape cannot also leave Help.');
+  h.entry.click();
+  h.other.focus();
+  assert.equal(h.navigation.readingState(), null);
+  const before = h.counts();
+  h.done.emit('click');
+  assert.equal(h.doc.activeElement, h.other);
+  assert.deepEqual(h.counts(), before);
+});
+
+test('custom toolbar refuses flight entry and releases its own listeners on destruction', (t) => {
+  const h = couchReading(t);
+  h.setScope('flight');
+  h.entry.click();
+  assert.equal(h.navigation.readingState(), null);
+  assert.deepEqual(h.counts(), { transitions: 0, back: 0 });
+  h.setScope('couch-help');
+  h.entry.click();
+  h.reading.destroy();
+  const before = h.counts();
+  h.other.focus();
+  h.entry.click();
+  h.done.emit('click');
+  h.reading.destroy();
+  assert.equal(h.navigation.readingState(), null);
+  assert.equal(h.doc.activeElement, h.other);
+  assert.deepEqual(h.counts(), before);
 });
 
 const pack = JSON.parse(

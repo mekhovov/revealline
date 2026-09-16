@@ -280,41 +280,50 @@
         >
           <p class="race-kicker">FIND YOUR OWN LINE</p>
           <h1 id="race-help-title">How to play</h1>
-          <button id="race-help-read" type="button">Read controls</button>
-          <div
-            id="race-help-reading"
-            role="region"
-            aria-label="Couch controls and rules"
-            tabindex="0"
-            data-game-reading
-          >
-            <p>
-              Leave the safe edge, draw a line, and return to safety to capture territory. Avoid
-              enemies touching you or your unfinished line.
-            </p>
-            <p>
-              A direction keeps moving after release. Turn with a fresh direction. Capture and
-              recovery stop that player's movement; choose a fresh direction to leave again.
-            </p>
-            <div class="race-seats">
-              <article class="seat sun">
-                <h2>Player 1</h2>
-                <p id="race-help-0"></p>
-              </article>
-              <article class="seat sky">
-                <h2>Player 2</h2>
-                <p id="race-help-1"></p>
-              </article>
+          <div id="race-help-unit">
+            <div class="reading-toolbar">
+              <button id="race-help-read" type="button">Read controls</button>
+              <button id="race-help-reading-done" type="button" disabled>Done reading</button>
             </div>
-            <p id="race-controller-help"></p>
-            <p>
-              Escape or either controller's Menu pauses both boards. Resume is always explicit. Each
-              controller needs neutral controls before it can join or resume.
+            <p id="race-help-reading-hint" class="reading-hint" role="status">
+              Read without starting or resuming.
             </p>
-            <p>
-              First clear wins the round. At the time limit: coverage, then lives, then score
-              decide. First to two round wins takes the match.
-            </p>
+            <div
+              id="race-help-reading"
+              aria-describedby="race-help-reading-hint"
+              role="region"
+              aria-label="Couch controls and rules"
+              tabindex="0"
+              data-game-reading
+            >
+              <p>
+                Leave the safe edge, draw a line, and return to safety to capture territory. Avoid
+                enemies touching you or your unfinished line.
+              </p>
+              <p>
+                A direction keeps moving after release. Turn with a fresh direction. Capture and
+                recovery stop that player's movement; choose a fresh direction to leave again.
+              </p>
+              <div class="race-seats">
+                <article class="seat sun">
+                  <h2>Player 1</h2>
+                  <p id="race-help-0"></p>
+                </article>
+                <article class="seat sky">
+                  <h2>Player 2</h2>
+                  <p id="race-help-1"></p>
+                </article>
+              </div>
+              <p id="race-controller-help"></p>
+              <p>
+                Escape or either controller's Menu pauses both boards. Resume is always explicit.
+                Each controller needs neutral controls before it can join or resume.
+              </p>
+              <p>
+                First clear wins the round. At the time limit: coverage, then lives, then score
+                decide. First to two round wins takes the match.
+              </p>
+            </div>
           </div>
           <button id="race-help-back" type="button">Back</button>
         </section>
