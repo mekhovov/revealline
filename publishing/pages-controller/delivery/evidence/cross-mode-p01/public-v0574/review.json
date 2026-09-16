@@ -1,0 +1,76 @@
+{
+  "format": "revealline-public-phase-review.v1",
+  "reviewedAt": "2026-09-16T01:01:14.173784+00:00",
+  "phase": "P01",
+  "status": "DEPLOYED_PUBLIC_SCOPED_CHECKS_PASS_REQUIRED_OFFLINE_CHECKS_PENDING",
+  "phaseAccepted": false,
+  "nextPhaseAuthorized": false,
+  "version": "v0.57.4",
+  "sourceRevision": "856850ce8d4597c1fb6e8bb28ddb8a63db337a8c",
+  "sourceTree": "4cd7f24680af174ea35773d28e07e54e5f39e01f",
+  "publishingRevision": "9c955f767b68a1d948e5db3a5c5fc42f2346c0c2",
+  "publishingRun": 35037951446,
+  "deployment": 6470855889,
+  "testUrl": "https://mekhovov.github.io/revealline/releases/v0.57.4/site/game/index.html",
+  "sourceChecks": {
+    "sixGates": true,
+    "hostedTestFamilies": 2,
+    "testsPerFamily": 4256,
+    "testFiles": 378,
+    "productionReproductionReadiness": true,
+    "frozenArtifacts": true
+  },
+  "publicAudit": {
+    "files": 2476,
+    "bytes": 637238456,
+    "failed": 0,
+    "retried": 0,
+    "skipped": 0
+  },
+  "offlineInventory": {
+    "buildId": "e14cab22ffd6eef0489f90da616663e56eb0c43df8a036b5aac385bee5c05ae7",
+    "files": 609,
+    "bytes": 55473406
+  },
+  "passedScopes": [
+    "Public pending launch native Escape with held approved response",
+    "Visible recovery reason, Export/Library/Escape focus, portrait390x844 and landscape844x390 controls",
+    "Direct product Reload and original17tick paused Continue",
+    "Online native Prepare plus explicit Verify609 with preserved observer timeout and reviewed continuation",
+    "Actual cold service-worker launch, unchanged17tick Continue and explicit221ms Resume/direction/pause",
+    "Genuine old-main v573 versioned profile migration to Archive17 with preserved observed save/art/store endpoints"
+  ],
+  "requiredPending": [
+    "Native cached preparation and explicit609-file verification in a cold refused-network process",
+    "No-proxy restored network probe and final saved-state endpoint",
+    "Final phase acceptance after those originals are reviewed"
+  ],
+  "environmentBlocker": {
+    "kind": "local disk capacity",
+    "lastFreeBytes": 664772608,
+    "lastProjectedFreeBytes": 535304071,
+    "requiredProjectedFreeBytes": 536870912,
+    "requestedFreeSpaceBytes": 2147483648,
+    "lastBrowserStoppedBeforePrepareOrVerify": true
+  },
+  "retention": {
+    "rootIndependentlyRehashedOriginals": 1121,
+    "originalBytes": 17164202,
+    "archiveBytes": 4002516,
+    "archiveSha256": "d1ac5bd34564c9c9dd0bb59608324ca620518bb9f9f418b8253d637e7bbe8fea",
+    "manifestSha256": "e0ed1e138543d9865c3c7a8bd1e47f53e5035b23d2047b125b3b6e73f5d607d4",
+    "everyOriginalAndArchiveMemberCompared": true,
+    "allFailedAttemptsRetained": true,
+    "profilesIncluded": false,
+    "runtimePayloadsIncluded": false
+  },
+  "limits": [
+    "No physical-device or controller-hardware qualification claimed.",
+    "Native online source/read-only observer timeout and separate continuation are not an uninterrupted successful recorder run.",
+    "Cold helper command/guard/label/stability failures and final capacity termination remain failures; no product success inferred across gaps.",
+    "Preparation limits were explicitly amended; original90actions/3processes are not claimed met.",
+    "Historical migration observed a real main HTML bridge after retirement/reopen, not a worker302 or historicalrootprofile migration.",
+    "All owned test browsers/proxy are closed; genuine current and historical profiles preserved.",
+    "No P02-P18 acceptance, gameplay rule change, version/tag rewrite or new public deployment from this evidence-only record."
+  ]
+}
