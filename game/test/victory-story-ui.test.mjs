@@ -4,6 +4,7 @@ import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { prepareStoryFixture } from './helpers/victory-story-fixture.mjs';
 import { createStoryMusicDucker, createVictoryStoryPresentation } from '../ui/victory-story.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
 
 class Node extends Element {
   insertBefore(child, target) {
@@ -717,4 +718,60 @@ test('invalid master controls refuse without changing current cinematic controls
     assert.equal(h.player.snapshot().volume, 0.6);
     assert.equal(h.video.volume, 0.3);
   }
+});
+
+test('injected master applies once and synchronously without changing cinematic volume or story transport', async (t) => {
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.5 }),
+    h = await setup(t, { audioMaster, volume: 0.6, masterVolume: 0.25, muted: true });
+  h.ready();
+  assert.equal(h.video.muted, true, 'Preparation remains silent');
+  await h.player.play();
+  assert.equal(h.video.volume, 0.3, 'Legacy master must not attenuate the authority a second time');
+  assert.equal(h.video.muted, false, 'Injected authority supersedes legacy mute');
+  h.video.at(3);
+  const before = h.player.snapshot(),
+    plays = h.video.playCalls,
+    pauses = h.video.pauseCalls;
+  audioMaster.setMuted(true);
+  audioMaster.setVolume(0.25);
+  assert.equal(h.video.muted, true);
+  assert.equal(h.video.volume, 0.15);
+  assert.deepEqual(h.player.snapshot(), before);
+  assert.equal(h.video.playCalls, plays);
+  assert.equal(h.video.pauseCalls, pauses);
+  assert.match(h.player.element.textContent, /Master sound is muted/);
+  h.player.setPreferences({ volume: 0.8, masterVolume: 0.1, muted: false });
+  assert.equal(h.video.volume, 0.2);
+  assert.equal(h.video.muted, true);
+  assert.equal(h.player.snapshot().volume, 0.8);
+  h.player.pause();
+  audioMaster.setMuted(false);
+  assert.equal(h.video.muted, true);
+  assert.equal(h.player.snapshot().state, 'paused');
+  assert.equal(h.video.playCalls, plays);
+});
+
+test('master mute survives pending story Play and owned cleanup releases only the story output', async (t) => {
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.5 }),
+    h = await setup(t, { audioMaster }),
+    wait = deferred();
+  h.ready();
+  h.video.playResult = () => wait.promise;
+  const playing = h.player.play();
+  audioMaster.setMuted(true);
+  assert.equal(h.video.muted, true);
+  wait.resolve();
+  assert.equal(await playing, true);
+  assert.equal(h.video.muted, true);
+  assert.equal(h.player.snapshot().state, 'playing');
+  const before = audioMaster.snapshot();
+  h.player.dispose();
+  assert.deepEqual(audioMaster.snapshot(), before);
+  assert.equal(h.video.muted, true);
+  assert.equal(h.urls.size, 0);
+  assert.deepEqual(h.gains, [0.2, 1]);
+  audioMaster.setMuted(false);
+  audioMaster.setVolume(1);
+  assert.equal(h.video.muted, true, 'Released media stays muted after a later shared change');
+  assert.equal(h.video.volume, 0.35);
 });

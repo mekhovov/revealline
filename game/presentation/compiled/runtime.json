@@ -12,20 +12,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.cancel.field-kit", "revision": 5 },
+          "parent": { "id": "audio.cancel.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit cancel audio cue for slot audio.cancel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.capture": {
         "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -37,20 +37,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.capture.field-kit", "revision": 5 },
+          "parent": { "id": "audio.capture.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit capture audio cue for slot audio.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.confirm": {
         "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -62,20 +62,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.confirm.field-kit", "revision": 5 },
+          "parent": { "id": "audio.confirm.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit confirm audio cue for slot audio.confirm. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.failure": {
         "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -87,20 +87,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.failure.field-kit", "revision": 5 },
+          "parent": { "id": "audio.failure.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit failure audio cue for slot audio.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.focus": {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -112,20 +112,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.focus.field-kit", "revision": 5 },
+          "parent": { "id": "audio.focus.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit focus audio cue for slot audio.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.music": {
         "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
@@ -137,20 +137,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.music.field-kit", "revision": 5 },
+          "parent": { "id": "audio.music.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.music.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.pickup": {
         "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -162,20 +162,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.pickup.field-kit", "revision": 5 },
+          "parent": { "id": "audio.pickup.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit pickup audio cue for slot audio.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "audio.victory": {
         "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -187,20 +187,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.victory.field-kit", "revision": 5 },
+          "parent": { "id": "audio.victory.field-kit", "revision": 6 },
           "prompt": "Create one original FPV Field Kit victory audio cue for slot audio.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130"
         },
         "quality": {
           "evidence": [
-            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
-            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
-            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
+            "Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.",
+            "Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.",
+            "Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 6
+        "revision": 7
       },
       "control.ability": {
         "description": "Brackets around an active diamond: class ability binding.",
@@ -9149,14 +9149,14 @@
       }
     },
     "bindings": {
-      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 6 },
-      "audio.capture": { "id": "audio.capture.field-kit", "revision": 6 },
-      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 6 },
-      "audio.failure": { "id": "audio.failure.field-kit", "revision": 6 },
-      "audio.focus": { "id": "audio.focus.field-kit", "revision": 6 },
-      "audio.music": { "id": "audio.music.field-kit", "revision": 6 },
-      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 6 },
-      "audio.victory": { "id": "audio.victory.field-kit", "revision": 6 },
+      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 7 },
+      "audio.capture": { "id": "audio.capture.field-kit", "revision": 7 },
+      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 7 },
+      "audio.failure": { "id": "audio.failure.field-kit", "revision": 7 },
+      "audio.focus": { "id": "audio.focus.field-kit", "revision": 7 },
+      "audio.music": { "id": "audio.music.field-kit", "revision": 7 },
+      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 7 },
+      "audio.victory": { "id": "audio.victory.field-kit", "revision": 7 },
       "control.ability": { "id": "control.ability.field-kit", "revision": 2 },
       "control.boost": { "id": "control.boost.field-kit", "revision": 2 },
       "control.cancel": { "id": "control.cancel.field-kit", "revision": 2 },
@@ -9921,7 +9921,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 9 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 23 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 24 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -9949,7 +9949,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 23 },
+  "source": { "id": "field-kit", "revision": 24 },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
     "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65": "./assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",

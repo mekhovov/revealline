@@ -816,3 +816,14 @@ body.field-kit {
     padding: 12px 0;
   }
 }
+.studio-audio {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+.studio-audio input {
+  min-height: 44px;
+  width: min(16rem, 100%);
+}

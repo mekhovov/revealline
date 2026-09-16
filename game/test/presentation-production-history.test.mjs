@@ -10,6 +10,120 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
 import { createFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
+import { createHash } from 'node:crypto';
+import { canonicalJSON } from '../data-json.mjs';
+import { compilePresentation } from '../../scripts/compile-presentation.mjs';
+
+test('P02 retains the published P01 history and appends audio7 under a new fpv24', async () => {
+  // This oracle was independently read from published 856850ce, not this candidate.
+  const oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-p01-v0574.json', import.meta.url), 'utf8'),
+  );
+  const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const key = (record) => `${record.id}@${record.revision}`;
+  const raw = await fs.readFile(
+    new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+  );
+  const candidate = await importThemeBundle(new Blob([raw]), { decodeImage: null });
+  const priorSource = structuredClone(oracle.metadata);
+  for (const [group, pin] of Object.entries(oracle.groups)) {
+    const prefix = candidate.document[group].slice(0, pin.count);
+    assert.equal(prefix.length, pin.count, `published ${group} count`);
+    assert.equal(sha(canonicalJSON(prefix)), pin.sha256, `published ${group} bytes`);
+    priorSource[group] = prefix;
+  }
+  // Only after matching every immutable group may candidate records supply the prior.
+  const prior = validateThemeBundle(priorSource);
+  const payloads = [];
+  for (const [hash, blob] of candidate.assets) {
+    const bytes = Buffer.from(await blob.arrayBuffer());
+    assert.equal(sha(bytes), hash, `actual payload ${hash}`);
+    payloads.push([hash, bytes.length]);
+  }
+  payloads.sort(([a], [b]) => a.localeCompare(b));
+  assert.equal(payloads.length, oracle.payloads.count);
+  assert.equal(sha(canonicalJSON(payloads)), oracle.payloads.sha256);
+  const priorBytes = Buffer.from(
+    await (await exportThemeBundle(prior, candidate.assets)).arrayBuffer(),
+  );
+  assert.equal(priorBytes.length, oracle.provenance.bytes);
+  assert.equal(sha(priorBytes), oracle.provenance.sha256, 'reconstructed published bundle');
+
+  const production = await createFieldKitProduction();
+  const next = retainProductionHistory(production.document, prior);
+  validateThemeBundle(next, { previous: prior, expectedRevision: 23 });
+  assert.equal(canonicalJSON(next), canonicalJSON(candidate.document));
+  const expected = [
+    'cancel',
+    'capture',
+    'confirm',
+    'failure',
+    'focus',
+    'music',
+    'pickup',
+    'victory',
+  ]
+    .map((name) => `audio.${name}.field-kit@7`)
+    .sort();
+  assert.deepEqual(next.assets.slice(oracle.groups.assets.count).map(key).sort(), expected);
+  assert.equal(next.assets.length, 1082);
+  assert.equal(next.themes.length, 25);
+  assert.equal(next.revision, 24);
+  assert.deepEqual(next.selection.theme, { id: 'fpv', revision: 24 });
+  const theme = next.themes.at(-1);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 23 });
+  assert.deepEqual(Object.values(theme.bindings).map(key).sort(), expected);
+  assert.deepEqual(theme.tokens, {});
+  const screens = Object.entries(resolvePresentation(next).assets).filter(
+    ([slot]) => slot.startsWith('screen.') && !slot.startsWith('screen.title.'),
+  );
+  assert.equal(screens.length, 7);
+  for (const [slot, record] of screens) assert.equal(record.revision, 12, slot);
+  assert.equal(next.slots.length, oracle.groups.slots.count);
+  assert.equal(next.collections.length, oracle.groups.collections.count);
+
+  const mergedAssets = new Map([...candidate.assets, ...production.assets]);
+  assert.equal(mergedAssets.size, 127);
+  for (const [hash, before] of candidate.assets)
+    assert.deepEqual(
+      Buffer.from(await mergedAssets.get(hash).arrayBuffer()),
+      Buffer.from(await before.arrayBuffer()),
+      `retained payload ${hash}`,
+    );
+  const second = retainProductionHistory(production.document, next);
+  assert.equal(canonicalJSON(second), canonicalJSON(next));
+  const exported = Buffer.from(await (await exportThemeBundle(next, mergedAssets)).arrayBuffer());
+  const repeated = Buffer.from(await (await exportThemeBundle(second, mergedAssets)).arrayBuffer());
+  assert.deepEqual(exported, raw, 'actual CLI ledger equals reproduced bundle');
+  assert.deepEqual(repeated, exported, 'second export identical');
+  const compiledPrior = await compilePresentation(prior, candidate.assets);
+  const compiledNext = await compilePresentation(next, mergedAssets);
+  const compiledSecond = await compilePresentation(second, mergedAssets);
+  assert.equal(compiledNext.files.size, 131);
+  assert.deepEqual([...compiledNext.files.keys()].sort(), [...compiledPrior.files.keys()].sort());
+  const changed = [];
+  for (const [name, body] of compiledNext.files) {
+    assert.deepEqual(body, compiledSecond.files.get(name), `second compile ${name}`);
+    if (!Buffer.from(body).equals(Buffer.from(compiledPrior.files.get(name)))) changed.push(name);
+  }
+  assert.deepEqual(changed.sort(), ['manifest.json', 'runtime.json', 'studio.json']);
+
+  const conflictingTheme = structuredClone(next);
+  conflictingTheme.themes.find((record) => key(record) === 'fpv@23').bindings['audio.music'] = {
+    id: 'audio.music.field-kit',
+    revision: 7,
+  };
+  assert.throws(
+    () => validateThemeBundle(conflictingTheme, { previous: prior }),
+    /Immutable themes history changed/,
+  );
+  const conflictingAsset = structuredClone(next);
+  conflictingAsset.assets[0].description = 'A replacement of published immutable content.';
+  assert.throws(
+    () => validateThemeBundle(conflictingAsset, { previous: prior }),
+    /Immutable assets history changed/,
+  );
+});
 
 function desired(
   description = 'First production recipe',
@@ -107,7 +221,7 @@ test('the current source-pinned motion and feedback recipe reviews remain select
   }
 });
 
-test('P01 UI and audio reviews cover exact inputs and changed loading sources reopen review', async (t) => {
+test('P01 UI and P02-A audio reviews cover exact current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -115,18 +229,48 @@ test('P01 UI and audio reviews cover exact inputs and changed loading sources re
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
     assert.equal(asset.quality.stage, 'reviewed', slot.id);
-    assert.ok(asset.quality.evidence.some((entry) => entry.includes('Scoped P01 source review')));
+    const review = slot.group === 'ui' ? 'Scoped P01 source review' : 'Scoped P02-A source review';
+    assert.ok(
+      asset.quality.evidence.some((entry) => entry.includes(review)),
+      slot.id,
+    );
     if (slot.group === 'ui') {
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.css/);
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
+    } else {
+      assert.match(asset.provenance.source, /game\/ui\/audio-master\.mjs/);
     }
   }
+});
 
+test('changed loading and shared-master inputs reopen only their own reviewed recipe group', async (t) => {
+  const production = await createFieldKitProduction();
+  const prior = structuredClone(production.document);
+  const reviewed = prior.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
+  const selected = resolvePresentation(prior);
+  // Review-state fixture only. Actual current approvals are asserted separately above.
+  for (const slot of reviewed) {
+    const ref = selected.assets[slot.id];
+    const asset = prior.assets.find(
+      (asset) => asset.id === ref.id && asset.revision === ref.revision,
+    );
+    if (asset.quality.stage !== 'reviewed')
+      asset.quality = {
+        stage: 'reviewed',
+        evidence: ['Synthetic source-invalidation fixture; not production approval.'],
+      };
+  }
+  const resolved = resolvePresentation(prior);
   const root = fileURLToPath(new URL('../../', import.meta.url));
-  const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'p01-recipe-review-'));
+  const fixture = await fs.mkdtemp(path.join(os.tmpdir(), 'recipe-source-invalidation-'));
   t.after(() => fs.rm(fixture, { recursive: true, force: true }));
-  const inputs = ['operation-status.css', 'operation-status.mjs', 'soundtrack-player.mjs'];
-  // Read unchanged inputs through links; only these three fixture files are writable.
+  const inputs = new Map([
+    ['operation-status.css', 'ui'],
+    ['operation-status.mjs', 'ui'],
+    ['soundtrack-player.mjs', 'audio'],
+    ['audio-master.mjs', 'audio'],
+  ]);
+  // Read unchanged inputs through links; only the named fixture files are writable.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
   for (const entry of ['authoring', 'site'])
     await fs.symlink(path.join(root, entry), path.join(fixture, entry));
@@ -136,18 +280,17 @@ test('P01 UI and audio reviews cover exact inputs and changed loading sources re
   for (const entry of await fs.readdir(path.join(root, 'game', 'ui'))) {
     const source = path.join(root, 'game', 'ui', entry);
     const target = path.join(fixture, 'game', 'ui', entry);
-    if (inputs.includes(entry)) await fs.copyFile(source, target);
+    if (inputs.has(entry)) await fs.copyFile(source, target);
     else await fs.symlink(source, target);
   }
-  for (const input of inputs) {
+  for (const [input, group] of inputs) {
     const target = path.join(fixture, 'game', 'ui', input);
     const original = await fs.readFile(target);
     await fs.appendFile(target, '\n/* Unreviewed fixture change. */\n');
     const changed = await createFieldKitProduction({ projectRoot: fixture });
-    const next = retainProductionHistory(changed.document, production.document);
-    validateThemeBundle(next, { previous: production.document });
+    const next = retainProductionHistory(changed.document, prior);
+    validateThemeBundle(next, { previous: prior });
     const assets = resolvePresentation(next).assets;
-    const group = input === 'soundtrack-player.mjs' ? 'audio' : 'ui';
     for (const slot of reviewed) {
       assert.equal(assets[slot.id].quality.stage, slot.group === group ? 'source' : 'reviewed');
       if (slot.group === group) {
@@ -156,12 +299,9 @@ test('P01 UI and audio reviews cover exact inputs and changed loading sources re
           resolved.assets[slot.id].provenance.source,
         );
         assert.equal(assets[slot.id].revision, resolved.assets[slot.id].revision + 1);
-      }
+      } else assert.deepEqual(assets[slot.id], resolved.assets[slot.id]);
     }
-    assert.deepEqual(
-      next.assets.slice(0, production.document.assets.length),
-      production.document.assets,
-    );
+    assert.deepEqual(next.assets.slice(0, prior.assets.length), prior.assets);
     await fs.writeFile(target, original);
   }
 });

@@ -1,4 +1,5 @@
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
+import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
 import {
@@ -34,6 +35,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     cancelButton,
     label = 'Asset preview',
     isCurrent: hostCurrent = () => true,
+    audioMaster = null,
   } = settings;
   surface.previewCleanup?.();
   const marker = {};
@@ -103,10 +105,32 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (asset.kind === 'audio') {
       phase('loading audio metadata…', 'decoding');
       const audio = document.createElement('audio');
+      const audioBinding = audioMaster
+        ? bindAudioMasterMedia({ audioMaster, element: audio })
+        : null;
+      own(() => audioBinding?.dispose());
       const url = URL.createObjectURL(blob);
       urls.push(url);
       audio.controls = true;
       audio.preload = 'metadata';
+      if (audioBinding) {
+        const label = text('label', 'Audition volume'),
+          fader = document.createElement('input');
+        fader.type = 'range';
+        fader.min = '0';
+        fader.max = '1';
+        fader.step = '0.05';
+        fader.value = '1';
+        fader.oninput = () => audioBinding.setLocal({ volume: Number(fader.value) });
+        label.append(fader);
+        surface.append(
+          label,
+          text(
+            'small',
+            'Use Audition volume for this preview. Master sound applies to both previews.',
+          ),
+        );
+      }
       await new Promise((resolve, reject) => {
         const clear = () => {
           audio.removeEventListener('loadedmetadata', ready);
@@ -239,7 +263,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     if (asset.kind === 'recipe' && slot.group === 'audio') {
-      audioRecipePreview(surface, slot, own);
+      audioRecipePreview(surface, slot, own, { audioMaster });
       return;
     }
     if (asset.kind === 'recipe' && slot.group === 'effects') {

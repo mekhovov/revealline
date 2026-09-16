@@ -1,0 +1,57 @@
+{
+  "format": "revealline.p02a-production-successor.v1",
+  "sourceParent": "0b541daa0d9bdd569c68517fe98a07ae0a15ca6c",
+  "incomingCandidate": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "previousRevision": 22,
+  "revision": 23,
+  "preservedAssets": 1067,
+  "preservedThemes": 23,
+  "preservedCollections": 1,
+  "addedAssets": [
+    {
+      "id": "audio.focus.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.confirm.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.cancel.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.capture.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.failure.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.victory.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.pickup.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    },
+    {
+      "id": "audio.music.field-kit",
+      "revision": 7,
+      "kind": "recipe"
+    }
+  ],
+  "compiledAssetFilesIdentical": 127,
+  "compiledCssIdentical": true,
+  "preservedBinaryCount": 127,
+  "phaseComplete": false,
+  "qualification": "Candidate history preservation only; P01 acceptance and final qualification pending."
+}
