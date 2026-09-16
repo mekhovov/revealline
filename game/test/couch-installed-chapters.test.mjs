@@ -90,7 +90,7 @@ function pictures() {
   };
   return model;
 }
-async function fixture(t, { embedded = false, chapter = pilot } = {}) {
+async function fixture(t, { embedded = false, chapter = pilot, additionalChapters = [] } = {}) {
   const assets = managedIndexedDB(),
     media = managedIndexedDB(),
     locks = new Locks();
@@ -120,7 +120,7 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
     lockManager: locks,
     writer,
     registeredEntries: [],
-    knownDescriptors: [chapter.descriptor],
+    knownDescriptors: [chapter, ...additionalChapters].map((entry) => entry.descriptor),
     getManagedStore: () => manager,
     decodeImage,
   });
@@ -129,7 +129,9 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
     await installer.commitMutation(
       await installer.prepareMutation(current, installPack(current.packs, chapter.prior)),
     );
-  } else await installer.install(chapter.prepared);
+  } else {
+    for (const entry of [chapter, ...additionalChapters]) await installer.install(entry.prepared);
+  }
   installer.close();
   writer.release();
   const model = pictures();
@@ -405,6 +407,35 @@ test('installed couch reader authenticates the same three originals without acqu
     before,
     'a different exact channel does not borrow the dev pack or write a profile',
   );
+});
+
+test('installed campaign grouping preserves each exact owner and authored mission order across refresh', async (t) => {
+  const other = await buildCountercurrentTheme('coupa');
+  const f = await fixture(t, { additionalChapters: [other] }),
+    before = f.writes();
+  const rows = await f.reader.refresh();
+  assert.equal(rows.length, 6);
+  const owners = new Set(rows.map((row) => row.campaign));
+  assert.equal(owners.size, 2, 'Two installed editions cannot become one tour.');
+  for (const chapter of [pilot, other]) {
+    const expected = chapter.descriptor.originals.map((original) => original.levelId);
+    const group = rows.filter((row) => expected.includes(row.level.id));
+    assert.deepEqual(
+      group.map((row) => row.level.id),
+      expected,
+    );
+    assert.equal(new Set(group.map((row) => row.campaign)).size, 1);
+    assert.equal(Object.isFrozen(group[0].campaign), true);
+    assert.ok(group.every((row) => row.key.startsWith(group[0].campaign.key + '/')));
+  }
+  const refreshed = await f.reader.refresh();
+  assert.deepEqual(
+    refreshed.map((row) => row.key),
+    rows.map((row) => row.key),
+  );
+  assert.ok(refreshed.every((row, index) => row.campaign !== rows[index].campaign));
+  await assert.rejects(f.reader.select(rows[0], { raceId: 1 }), /current installed/);
+  assert.deepEqual(f.writes(), before);
 });
 
 test('publication rejects a changed original generation after actual decode and a changed pointer before Start', async (t) => {
@@ -914,7 +945,7 @@ for (const [name, build] of [
 // These cases finish the actual installed race through its input and clock.
 // The boundary models delay decoding/lock delivery; they do not edit a run,
 // fabricate a result or certify browser pixels.
-async function completedInstalledRound(t) {
+async function completedInstalledRound(t, { format = 'first-to-two', selectedIndex = 0 } = {}) {
   const f = await fixture(t),
     before = f.writes();
   f.reader.dispose();
@@ -926,17 +957,22 @@ async function completedInstalledRound(t) {
     lockManager: f.locks,
     URLImpl: f.model.URLImpl,
   });
-  const choice = page
+  const installedChoices = page
     .$('race-level')
-    .options.find((option) => option.value.startsWith('installed/'));
+    .options.filter((option) => option.value.startsWith('installed/'));
+  const choice = installedChoices[selectedIndex];
   assert.ok(choice);
   page.$('race-focus').click();
   page.$('race-level').value = choice.value;
   await action(page.$('race-level'), 'change');
+  page.$('race-format').value = format;
+  await action(page.$('race-format'), 'change');
   await settle(
     () => !page.$('race-start').disabled,
     'The installed first round never became ready.',
   );
+  if (format === 'campaign-tour')
+    assert.equal(page.$('race-level').value, installedChoices[0].value);
   page.$('race-setup-back').click();
   await action(page.$('race-start'));
   page.frame(0);
@@ -958,7 +994,7 @@ async function completedInstalledRound(t) {
   assert.equal(sha(completed.picture.image.bytes), completed.picture.pin.sha256);
   assert.equal(completed.picture === page.drawOptions[1].backdrop, true);
   assert.deepEqual(f.writes(), before);
-  return { f, page, before, completed };
+  return { f, page, before, completed, installedChoices };
 }
 function assertCompletedInstalled(page, completed) {
   page.frame(0);
@@ -981,6 +1017,93 @@ function assertCompletedInstalled(page, completed) {
   assert.equal(completed.picture.image.released || 0, 0);
   assert.equal(page.$('race-review').hidden, false);
 }
+
+test('installed tour starts at its authored first mission and advances to the exact second original in Ready', async (t) => {
+  const { f, page, before, completed, installedChoices } = await completedInstalledRound(t, {
+    format: 'campaign-tour',
+    selectedIndex: 2,
+  });
+  assert.equal(completed.selection, installedChoices[0].value);
+  assert.equal(completed.picture.pin.identity.levelId, pilot.descriptor.originals[0].levelId);
+  assert.match(page.$('race-format-summary').textContent, /1\/3 missions complete/);
+  assert.match(page.$('race-start').textContent, /^Next · /);
+  page.$('race-start').focus();
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'ready');
+  assert.equal(page.$('race-level').value, installedChoices[1].value);
+  const next = page.drawOptions[0].backdrop,
+    original = pilot.descriptor.originals[1];
+  assert.equal(next === page.drawOptions[1].backdrop, true);
+  assert.equal(next.pin.identity.baseCampaignKey, pilot.descriptor.campaignKey);
+  assert.equal(next.pin.identity.levelId, original.levelId);
+  assert.equal(sha(next.image.bytes), original.sha256);
+  assert.notEqual(next.pin.sha256, completed.picture.pin.sha256);
+  assert.equal(completed.picture.image.released, 1);
+  assert.equal(page.$('series-score').textContent, completed.wins);
+  assert.match(page.$('race-format-summary').textContent, /1\/3 missions complete/);
+  assert.equal(
+    page.renders.every((run) => run.level.id === original.levelId && run.tick === 0),
+    true,
+  );
+  const ready = page.checkpoint();
+  page.frames(20);
+  assert.deepEqual(page.checkpoint(), ready, 'Adoption alone cannot begin an installed mission.');
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  assert.equal(page.drawOptions[0].backdrop, next);
+  assert.deepEqual(f.writes(), before);
+});
+
+test('a removed installed tour owner refuses Next, preserves earned Results, then remains unavailable after refresh', async (t) => {
+  const diagnostics = [];
+  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+  const { f, page, completed } = await completedInstalledRound(t, { format: 'campaign-tour' });
+  // Model an independently committed removal through the actual pointer
+  // transaction. This test does not claim a player-facing uninstall workflow.
+  await f.pointer.compareAndSwap(await f.pointer.snapshot(), {
+    packs: null,
+    index: null,
+    journal: null,
+  });
+  const afterExternalRemoval = f.writes();
+  page.$('race-start').focus();
+  await action(page.$('race-start'));
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.$('race-start').disabled, false, 'The failed target remains retryable.');
+  assert.equal(page.doc.activeElement, page.$('race-start'));
+  assert.match(page.$('race-message').textContent, /Results are kept/);
+  assert.match(diagnostics[0][1].message, /snapshot changed/);
+  assert.equal(page.$('race-level').value, completed.selection);
+  assert.deepEqual(
+    f.writes(),
+    afterExternalRemoval,
+    'A refused Next cannot restore removed content.',
+  );
+  page.$('race-focus').click();
+  page.$('race-confirm-reset').click();
+  await settle(
+    () => !page.$('race-installed-refresh').disabled,
+    'Reset did not finish refusing the removed owner.',
+  );
+  await action(page.$('race-installed-refresh'));
+  page.frame(0);
+  assert.equal(page.state(), 'ready');
+  assert.equal(
+    page.$('race-level').value,
+    completed.selection,
+    'Keep the missing selection; never switch to a shipped map.',
+  );
+  assert.equal(page.$('race-start').disabled, true);
+  assert.match(page.$('race-format-note').textContent, /previous selection is unavailable/);
+  assert.match(page.$('race-installed-status').textContent, /No installed chapters/);
+  assert.equal(
+    page.drawOptions.every((options) => options.backdrop === null),
+    true,
+  );
+  assert.deepEqual(f.writes(), afterExternalRemoval);
+});
 
 test('installed failed Next decode keeps completed Results, wins and the original available to View', async (t) => {
   const diagnostics = [];

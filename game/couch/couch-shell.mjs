@@ -373,7 +373,14 @@ export function createCouchShell({
     const seat = arena?.closest('.racer');
     if (seat) observe(Number(seat.dataset.player), 'touch');
   });
-  function update({ match, summary, won, contentBusy = false, focusTransition = true }) {
+  function update({
+    match,
+    summary,
+    won,
+    progression = null,
+    contentBusy = false,
+    focusTransition = true,
+  }) {
     if (destroyed) return;
     const previous = status;
     status = match.status;
@@ -392,9 +399,8 @@ export function createCouchShell({
         : status === 'paused'
           ? 'Both boards paused.'
           : status === 'finished'
-            ? won.some((n) => n >= 2)
-              ? 'Match complete.'
-              : 'Round complete.'
+            ? progression?.title ||
+              (won.some((n) => n >= 2) ? 'Match complete.' : 'Round complete.')
             : 'Two boards. One race.',
     );
     $('race-review').hidden = status !== 'finished';
@@ -403,7 +409,7 @@ export function createCouchShell({
     $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
-    for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time'])
+    for (const id of ['race-format', 'race-level', 'race-theme', 'race-turn', 'race-time'])
       $(id).disabled = status !== 'ready';
     $('race-tap-field').hidden = !equipment.some((e) => e.boost);
     $('race-tap').disabled = !equipment.some((e) => e.boost);
@@ -425,7 +431,7 @@ export function createCouchShell({
       $(`race-result-${i}`).hidden = status !== 'finished';
       setText(
         `race-result-${i}`,
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points · ${won[i]} round wins`,
+        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points · ${won[i]} ${progression?.scoreLabel || 'round wins'}`,
       );
     }
     renderPads();

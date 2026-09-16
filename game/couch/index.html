@@ -152,6 +152,7 @@
               >Relay Rescue · team up</a
             >
             <button id="race-start" class="race-primary" type="button">Start round</button>
+            <button id="race-rematch" type="button" hidden>Rematch this mission</button>
             <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
             <button id="race-focus" type="button">Race setup</button>
@@ -160,8 +161,8 @@
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../">Return to solo</a>
           </div>
-          <p class="race-footnote">
-            First to two rounds. Couch races do not change your solo progress.
+          <p id="race-format-summary" class="race-footnote">
+            One race. Couch races do not change your solo progress.
           </p>
         </section>
         <section
@@ -175,6 +176,13 @@
           <h1 id="race-setup-title">Race setup</h1>
           <p>Choose together. Each player starts with the same map, craft and time.</p>
           <div class="race-fields">
+            <label
+              >Format<select id="race-format">
+                <option value="one-race" selected>One race</option>
+                <option value="first-to-two">First to two</option>
+                <option value="campaign-tour">Campaign tour</option>
+              </select></label
+            >
             <label>Map<select id="race-level"></select></label>
             <label>World<select id="race-theme"></select></label>
             <label id="race-class-field">Craft<select id="race-class"></select></label>
@@ -192,6 +200,7 @@
               </select></label
             >
           </div>
+          <p id="race-format-note" class="race-summary"></p>
           <p id="race-loadout" class="race-summary"></p>
           <p id="race-installed-status" role="status"></p>
           <button id="race-installed-refresh" type="button">Refresh installed chapters</button>
@@ -313,7 +322,9 @@
             </p>
             <p>
               First clear wins the round. At the time limit: coverage, then lives, then score
-              decide. First to two round wins takes the match.
+              decide. One race is the default. First to two counts wins, not draws. A campaign tour
+              plays one race per mission in order; a rematch replaces that mission's result. Tour
+              points stay on this page and never change Solo progress.
             </p>
           </div>
           <button id="race-help-back" type="button">Back</button>

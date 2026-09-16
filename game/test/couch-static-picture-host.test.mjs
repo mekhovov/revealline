@@ -134,6 +134,9 @@ async function fixture(
         return { ok: false };
     },
     beforeImport({ document, window }) {
+      // These retained Next/series contracts explicitly choose the existing
+      // first-to-two format. The default one-race has its own full-host cases.
+      document.getElementById('race-format').value = 'first-to-two';
       onMount?.({ document, window });
       lease = mountPresentationPage({
         document,
@@ -736,7 +739,7 @@ test('completed match wins reset only when an explicitly retried Next commits', 
   await action(p, 'race-start');
   retainedResult(p, before);
   assert.equal(p.$('series-score').textContent, '2 : 0');
-  assert.match(p.$('race-start').textContent, /another match/);
+  assert.match(p.$('race-start').textContent, /^Rematch match · First Signal$/);
   await action(p, 'race-start');
   assert.equal(p.state(), 'running');
   assert.equal(p.$('series-score').textContent, '0 : 0');
