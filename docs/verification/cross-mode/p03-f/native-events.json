@@ -1,0 +1,295 @@
+[
+  {
+    "step": "Collection reverse boundary stays on Back to menu",
+    "facts": {
+      "dialogs": [
+        "collection-dialog",
+        "shell-home"
+      ],
+      "focus": {
+        "id": "collection-back",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Back to menu →"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\" [active]\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "step": "Collection forward boundary wraps to Close",
+    "facts": {
+      "dialogs": [
+        "collection-dialog",
+        "shell-home"
+      ],
+      "focus": {
+        "id": "",
+        "label": "Close collection",
+        "tag": "BUTTON",
+        "text": "\n        ×\n      "
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\" [active]: ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "step": "Picture reverse boundary wraps to earned story",
+    "facts": {
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home"
+      ],
+      "focus": {
+        "id": "gallery-story",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Play earned story"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\" [active]\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "step": "Picture forward boundary returns Close picture",
+    "facts": {
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home"
+      ],
+      "focus": {
+        "id": "",
+        "label": "Close picture",
+        "tag": "BUTTON",
+        "text": "\n        ×\n      "
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\" [active]: ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "step": "Story reverse boundary wraps Close to Cinematic volume",
+    "facts": {
+      "cinematic": "0.4",
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home",
+        "victory-story-dialog"
+      ],
+      "focus": {
+        "id": "",
+        "label": "Cinematic volume",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"First Signal\":\n  - button \"Close story\": ×\n  - heading \"First Signal\" [level=2]\n  - img \"Exact unlocked picture\"\n  - region \"Optional victory story\":\n    - paragraph: Dawn Signal — follow the drone approaching the coastal station as the morning lights awaken.\n    - paragraph:\n      - status: Your picture. Story playback is optional. Master sound is muted; cinematic volume does not unmute it.\n    - button \"Play\"\n    - text: Cinematic volume\n    - slider \"Cinematic volume\" [active]: \"0.4\""
+  },
+  {
+    "step": "Story forward boundary wraps volume to Close",
+    "facts": {
+      "cinematic": "0.4",
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home",
+        "victory-story-dialog"
+      ],
+      "focus": {
+        "id": "",
+        "label": "Close story",
+        "tag": "BUTTON",
+        "text": "×"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"First Signal\":\n  - button \"Close story\" [active]: ×\n  - heading \"First Signal\" [level=2]\n  - img \"Exact unlocked picture\"\n  - region \"Optional victory story\":\n    - paragraph: Dawn Signal — follow the drone approaching the coastal station as the morning lights awaken.\n    - paragraph:\n      - status: Your picture. Story playback is optional. Master sound is muted; cinematic volume does not unmute it.\n    - button \"Play\"\n    - text: Cinematic volume\n    - slider \"Cinematic volume\": \"0.4\""
+  },
+  {
+    "step": "Interior Tab reaches Play without activating",
+    "facts": {
+      "cinematic": "0.4",
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home",
+        "victory-story-dialog"
+      ],
+      "focus": {
+        "id": "",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Play"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"First Signal\":\n  - button \"Close story\": ×\n  - heading \"First Signal\" [level=2]\n  - img \"Exact unlocked picture\"\n  - region \"Optional victory story\":\n    - paragraph: Dawn Signal — follow the drone approaching the coastal station as the morning lights awaken.\n    - paragraph:\n      - status: Your picture. Story playback is optional. Master sound is muted; cinematic volume does not unmute it.\n    - button \"Play\" [active]\n    - text: Cinematic volume\n    - slider \"Cinematic volume\": \"0.4\""
+  },
+  {
+    "step": "Interior Tab reaches volume without changing value",
+    "facts": {
+      "cinematic": "0.4",
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home",
+        "victory-story-dialog"
+      ],
+      "focus": {
+        "id": "",
+        "label": "Cinematic volume",
+        "tag": "INPUT",
+        "text": ""
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"First Signal\":\n  - button \"Close story\": ×\n  - heading \"First Signal\" [level=2]\n  - img \"Exact unlocked picture\"\n  - region \"Optional victory story\":\n    - paragraph: Dawn Signal — follow the drone approaching the coastal station as the morning lights awaken.\n    - paragraph:\n      - status: Your picture. Story playback is optional. Master sound is muted; cinematic volume does not unmute it.\n    - button \"Play\"\n    - text: Cinematic volume\n    - slider \"Cinematic volume\" [active]: \"0.4\""
+  },
+  {
+    "step": "Explicit Enter starts story and focuses Pause",
+    "facts": {
+      "cinematic": "0.4",
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home",
+        "victory-story-dialog"
+      ],
+      "focus": {
+        "id": "",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Pause"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"First Signal\":\n  - button \"Close story\": ×\n  - heading \"First Signal\" [level=2]\n  - region \"Optional victory story\":\n    - paragraph: Dawn Signal — follow the drone approaching the coastal station as the morning lights awaken.\n    - paragraph:\n      - status: Story playing. Master sound is muted; cinematic volume does not unmute it.\n    - button \"Play\" [disabled]\n    - button \"Pause\" [active]\n    - button \"Skip\"\n    - text: Cinematic volume\n    - slider \"Cinematic volume\": \"0.4\""
+  },
+  {
+    "step": "Story natural ending remains on Replay",
+    "facts": {
+      "cinematic": "0.4",
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home",
+        "victory-story-dialog"
+      ],
+      "focus": {
+        "id": "",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Replay"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"First Signal\":\n  - button \"Close story\": ×\n  - heading \"First Signal\" [level=2]\n  - img \"Exact unlocked picture\"\n  - region \"Optional victory story\":\n    - paragraph: Dawn Signal — follow the drone approaching the coastal station as the morning lights awaken.\n    - paragraph:\n      - status: Story ended. Your exact picture is unchanged. Master sound is muted; cinematic volume does not unmute it.\n    - button \"Replay\" [active]\n    - text: Cinematic volume\n    - slider \"Cinematic volume\": \"0.4\""
+  },
+  {
+    "step": "Escape story returns to earned story action",
+    "facts": {
+      "dialogs": [
+        "collection-dialog",
+        "gallery-view-dialog",
+        "shell-home"
+      ],
+      "focus": {
+        "id": "gallery-story",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Play earned story"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 12.18s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n  - button \"Play earned story\" [active]\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "step": "Escape picture returns to earned Collection card",
+    "facts": {
+      "dialogs": [
+        "collection-dialog",
+        "shell-home"
+      ],
+      "focus": {
+        "id": "",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "First SignalFPV Front · Standard · Picture best 8,160 points · Level best GOLDLoading picture…"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\" [active]:\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to menu →\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  },
+  {
+    "step": "Escape Collection returns to Title Collection",
+    "facts": {
+      "dialogs": [
+        "shell-home"
+      ],
+      "focus": {
+        "id": "shell-gallery",
+        "label": null,
+        "tag": "BUTTON",
+        "text": "Collection"
+      },
+      "url": "http://127.0.0.1:53903/game/",
+      "viewport": [
+        1393,
+        1348
+      ]
+    },
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\" [active]\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:53903/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+  }
+]

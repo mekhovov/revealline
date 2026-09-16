@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { campaignKey } from '../library.mjs';
 import { normalizedLevel } from '../core/level.mjs';
-import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { soloPage } from './helpers/solo-dom.mjs';
+import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 
-test('featured chapter installs exact pressure chapter and keeps R4, R3, R2 and First Light selectable', async (t) => {
+test('explicit chapter selection installs exact pressure chapter and keeps R4, R3, R2 and First Light selectable', async (t) => {
   const read = async (file) => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
   const [index, catalog, archiveIndex, archiveCatalog, pack, r4, r3, r2, original] =
     await Promise.all([
@@ -70,9 +71,24 @@ test('featured chapter installs exact pressure chapter and keeps R4, R3, R2 and 
     if (oldImage === undefined) delete globalThis.Image;
     else globalThis.Image = oldImage;
   });
+  const expectedCampaign = keyFor(pack);
   const page = await soloPage(t, { titleScreen: true });
-  page.$('shell-featured').click();
-  await settle(() => !page.$('shell-featured').disabled, 'featured launch settled');
+  // Title Start uses the saved/current selection. Chapter installation is an
+  // explicit Missions choice, and must not silently start the selected flight.
+  page.$('shell-play').click();
+  const choose = page.$('mission-picker-cards').querySelector(`[data-pack="${pack.id}"]`);
+  assert.ok(choose);
+  choose.click();
+  await waitForChapterSelection(
+    t,
+    page,
+    () =>
+      page.$('pack-select').value === pack.id &&
+      page.$('campaign-select').value === expectedCampaign &&
+      !page.$('pack-select').disabled &&
+      page.doc.body.dataset.pictureState === 'ready',
+    'Pressure Lines chapter install and exact picture must become ready',
+  );
   assert.equal(page.$('pack-select').value, pack.id, page.$('run-message').textContent);
   assert.equal(page.$('campaign-select').value, keyFor(pack));
   assert.equal(page.$('shell-home').open, false);
@@ -133,23 +149,36 @@ for (const [id, ruleset, coverage] of [
       if (oldImage === undefined) delete globalThis.Image;
       else globalThis.Image = oldImage;
     });
+    const pressureCampaign = keyFor(pack),
+      archivedCampaign = keyFor(edition);
     const earlier = await soloPage(sub, { titleScreen: true });
-    earlier.$('shell-featured').click();
-    await settle(() => !earlier.$('shell-featured').disabled);
+    earlier.$('shell-play').click();
+    const choose = earlier.$('mission-picker-cards').querySelector(`[data-pack="${pack.id}"]`);
+    assert.ok(choose);
+    choose.click();
+    await waitForChapterSelection(
+      sub,
+      earlier,
+      () =>
+        earlier.$('pack-select').value === pack.id &&
+        earlier.$('campaign-select').value === pressureCampaign &&
+        !earlier.$('pack-select').disabled &&
+        earlier.doc.body.dataset.pictureState === 'ready',
+      'Pressure Lines chapter install and exact picture must become ready',
+    );
     assert.equal(earlier.$('pack-select').value, pack.id);
+    earlier.$('shell-prepare').click();
+    assert.equal(earlier.$('mission-picker-setup').open, true);
     earlier.change('pack-select', edition.id);
-    await settle(
+    await waitForChapterSelection(
+      sub,
+      earlier,
       () =>
         earlier.$('pack-select').value === edition.id &&
         !earlier.$('pack-select').disabled &&
-        earlier.$('campaign-select').value === keyFor(edition),
+        earlier.$('campaign-select').value === archivedCampaign,
       `${edition.id} selection settled`,
-    ).catch((error) => {
-      throw new Error(
-        `${error.message}: ${earlier.$('content-select-status').textContent}; ${earlier.$('run-message').textContent}; selected=${earlier.$('campaign-select').value}`,
-        { cause: error },
-      );
-    });
+    );
     earlier.frame(0);
     assert.deepEqual(earlier.rendered.run.level, normalizedLevel(edition.campaigns[0].levels[0]));
     assert.equal(earlier.rendered.run.ruleset, ruleset);

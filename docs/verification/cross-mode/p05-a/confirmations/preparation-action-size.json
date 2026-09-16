@@ -1,0 +1,39 @@
+{
+  "format": "p05-confirmation-action-size-successor.v1",
+  "createdAt": "2026-09-15T17:21:05.563168+00:00",
+  "base": "6e1040ba18c6f219288cbe3983bcd15bede7fac6",
+  "freeBytes": 1445122048,
+  "predecessor": {
+    "path": ".cache/p05-confirmation-dialogs/preparation.json",
+    "sha256": "d7111a110d39b2e4663f9f931bc0d19e12609b4305cb0af65486a95cd2a6ccab"
+  },
+  "files": [
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    },
+    {
+      "path": "docs/shared-display-preferences.md",
+      "bytes": 7860,
+      "sha256": "0e633dad911b8f24667e118997d615118080437edf0f514074f92f2a014caff1"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 99088,
+      "sha256": "8747a46a61537fc9865199eaf2469d437bbcc54f43549faa3ef4a79f704642bd"
+    }
+  ],
+  "reason": "Native compact confirmation worked but later Field Kit min-block-size won at equal specificity. Add overlay-actions to the existing confirmation-button selector only; no !important or shared compiled input mutation.",
+  "static": "Prettier three files and git diff --check passed. No runtime tests repeated for this CSS-only successor.",
+  "native": "Prior compact/dialog focus pass and 44px action observation preserved. Successor 50px action check and viewport matrix pending root.",
+  "notClaimed": [
+    "No source tests prove CSS geometry.",
+    "No full product, public, offline or physical-device acceptance."
+  ],
+  "nativePredecessor": {
+    "path": ".cache/p05-confirmation-dialogs/native-before-action-size.json",
+    "bytes": 735,
+    "sha256": "486fa94aa9b5dd790d8341f07c973b26e574b4c301887a69a0d4a029b57e3450"
+  }
+}

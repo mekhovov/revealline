@@ -5,8 +5,24 @@ import { deferred } from './helpers/media-fixtures.mjs';
 import { prepareStoryFixture } from './helpers/victory-story-fixture.mjs';
 import { createStoryMusicDucker, createVictoryStoryPresentation } from '../ui/victory-story.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 
 class Node extends Element {
+  get hidden() {
+    return this._hidden ?? false;
+  }
+  set hidden(value) {
+    this._hidden = Boolean(value);
+    // A browser drops focus as soon as its active control becomes hidden.
+    if (this._hidden && this.ownerDocument.activeElement === this) this.blur();
+  }
+  get disabled() {
+    return this._disabled ?? false;
+  }
+  set disabled(value) {
+    this._disabled = Boolean(value);
+    if (this._disabled && this.ownerDocument.activeElement === this) this.blur();
+  }
   insertBefore(child, target) {
     child.remove();
     const index = this.children.indexOf(target);
@@ -262,23 +278,34 @@ test('blur pauses pending play and a late successful promise cannot restart audi
   assert.equal(h.video.playCalls, 1);
 });
 
-test('hidden-page pause retains current position and needs explicit Resume story', async (t) => {
-  const h = await setup(t);
-  h.ready();
-  await h.player.play();
-  h.video.at(2.75);
-  h.doc.hidden = true;
-  h.doc.emit('visibilitychange');
-  assert.equal(h.player.snapshot().state, 'paused');
-  assert.equal(h.video.currentTime, 2.75);
-  assert.equal(await h.player.play(), false);
-  h.doc.hidden = false;
-  h.doc.emit('visibilitychange');
-  assert.equal(h.video.playCalls, 1);
-  h.button('Resume story').click();
-  await microtasks();
-  assert.equal(h.player.snapshot().state, 'playing');
-  assert.equal(h.video.currentTime, 2.75);
+test('inactive-page pause releases hidden focus and needs explicit Resume story', async (t) => {
+  for (const hidden of [true, false]) {
+    const h = await setup(t);
+    h.ready();
+    await h.player.play();
+    h.video.at(2.75);
+    h.button('Pause').focus();
+    let foreground = false;
+    h.doc.hasFocus = () => foreground;
+    h.doc.hidden = hidden;
+    (hidden ? h.doc : h.win).emit(hidden ? 'visibilitychange' : 'blur');
+    assert.equal(h.player.snapshot().state, 'paused');
+    assert.equal(h.doc.activeElement, h.doc.body, 'no fallback focus while inactive');
+    assert.equal(h.video.currentTime, 2.75);
+    assert.equal(await h.player.play(), false);
+    foreground = true;
+    h.doc.hidden = false;
+    h.doc.emit('visibilitychange');
+    h.win.emit('focus');
+    assert.equal(h.video.playCalls, 1);
+    assert.equal(h.doc.activeElement, h.doc.body, 'return does not claim focus or resume');
+    h.button('Resume story').focus();
+    h.button('Resume story').click();
+    await microtasks();
+    assert.equal(h.player.snapshot().state, 'playing');
+    assert.equal(h.video.currentTime, 2.75);
+    assert.equal(h.doc.activeElement, h.button('Pause'));
+  }
 });
 
 test('pause during Replay seek cancels its autoplay intent but allows later explicit Play', async (t) => {
@@ -534,6 +561,76 @@ test('native focus follows visible story actions through Play, Pause, end and Re
   // Native focus methods and click defaults are modeled here; physical keys/controllers remain a host gate.
 });
 
+test('story completion preserves focus on volume or the enclosing Close action', async (t) => {
+  for (const target of ['volume', 'close']) {
+    const h = await setup(t);
+    h.ready();
+    const close = h.doc.createElement('button');
+    close.textContent = 'Close story';
+    h.doc.body.append(close);
+    const chosen = target === 'volume' ? h.player.element.querySelector('input') : close;
+    assert.ok(chosen);
+    await h.player.play();
+    chosen.focus();
+    h.video.at(4);
+    assert.equal(h.player.snapshot().state, 'poster');
+    assert.equal(h.doc.activeElement, chosen);
+  }
+});
+
+test('a deliberate focus change during native blur wins over story fallback', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  await h.player.play();
+  const close = h.doc.createElement('button');
+  close.textContent = 'Close story';
+  h.doc.body.append(close);
+  const pause = h.button('Pause');
+  pause.focus();
+  pause.blur = () => close.focus();
+  h.video.at(4);
+  assert.equal(h.doc.activeElement, close);
+});
+
+test('Skip and natural end move a disappearing Skip action to Replay without changing the earned poster', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  await h.player.play();
+  h.button('Skip').focus();
+  h.button('Skip').click();
+  assert.equal(h.doc.activeElement, h.button('Replay'));
+  assert.equal(h.poster.hidden, false);
+  assert.equal(h.poster.dataset.exactOriginal, h.pin.sha256);
+  h.button('Replay').click();
+  assert.equal(h.doc.activeElement, h.button('Skip'), 'The loading story still has a Skip action');
+  h.video.completeSeek();
+  await microtasks();
+  assert.equal(h.doc.activeElement, h.button('Pause'));
+  h.button('Skip').focus();
+  h.video.at(4);
+  assert.equal(h.doc.activeElement, h.button('Replay'));
+  assert.equal(h.poster.dataset.exactOriginal, h.pin.sha256);
+});
+
+test('closing the presentation during a focus change cannot focus a retired story action', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  await h.player.play();
+  const skip = h.button('Skip');
+  skip.focus();
+  const blur = skip.blur.bind(skip);
+  skip.blur = () => {
+    blur();
+    h.player.dispose();
+  };
+  skip.click();
+  assert.equal(h.player.snapshot().state, 'disposed');
+  assert.equal(h.doc.activeElement, h.doc.body);
+  assert.equal(h.player.element.isConnected, false);
+  assert.equal(h.urls.size, 0);
+  assert.equal(h.poster.hidden, false);
+});
+
 test('an obsolete play result cannot pause or redock a newer explicit play', async (t) => {
   const h = await setup(t);
   h.ready();
@@ -774,4 +871,43 @@ test('master mute survives pending story Play and owned cleanup releases only th
   audioMaster.setVolume(1);
   assert.equal(h.video.muted, true, 'Released media stays muted after a later shared change');
   assert.equal(h.video.volume, 0.35);
+});
+
+test('actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  const dialog = h.doc.createElement('dialog'),
+    close = h.doc.createElement('button');
+  dialog.open = true;
+  dialog.setAttribute('open', '');
+  close.id = 'close-story';
+  dialog.append(close, h.container);
+  h.doc.body.append(dialog);
+  h.win.getComputedStyle = (element) => ({
+    display: element.style.display || 'block',
+    visibility: element.style.visibility || 'visible',
+  });
+  const navigation = attachControllerNavigation({
+    document: h.doc,
+    keyboard: true,
+    getRoot: () => dialog,
+    getScope: () => 'modal:story',
+  });
+  t.after(() => navigation.destroy());
+  const play = h.button('Play'),
+    volume = h.player.element.querySelector('input');
+  assert.equal(volume.type, 'range');
+  const before = h.player.snapshot();
+  close.focus();
+  const first = close.emit('keydown', { key: 'Tab' });
+  assert.equal(first.defaultPrevented, false); // Browser owns interior movement.
+  play.focus();
+  assert.equal(play.emit('keydown', { key: 'Tab' }).defaultPrevented, false);
+  volume.focus();
+  assert.equal(volume.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
+  assert.equal(h.doc.activeElement === close, true);
+  assert.equal(close.emit('keydown', { key: 'Tab', shiftKey: true }).defaultPrevented, true);
+  assert.equal(h.doc.activeElement === volume, true);
+  assert.equal(h.video.playCalls, 0);
+  assert.deepEqual(h.player.snapshot(), before);
 });

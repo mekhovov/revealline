@@ -1,0 +1,287 @@
+{
+  "scope": "Story inactive-focus correction; reproduced failure and corrected whole-file tests, plus superseded CI. No final qualification or public acceptance.",
+  "phaseAccepted": false,
+  "count": 56,
+  "files": [
+    {
+      "path": "before-source/victory-story.mjs",
+      "bytes": 20728,
+      "sha256": "2dd3fd1fd1b5a4b2f4b8e9aa3f2330c6333fafe527877de1527220fbfccc9351"
+    },
+    {
+      "path": "corrected-source/game/test/victory-story-ui.test.mjs",
+      "bytes": 30700,
+      "sha256": "fde106431956bca29f51351ef71682ff386ee2fa08c4dd79ca372b497a1ae03a"
+    },
+    {
+      "path": "corrected-source/game/ui/victory-story.mjs",
+      "bytes": 20750,
+      "sha256": "e5ffd3e5576b55e1dedc906b9dfba59512fcc7c4a12b149e0f6e693e59626e06"
+    },
+    {
+      "path": "local/after-guard-node20.19.5.json",
+      "bytes": 611,
+      "sha256": "aafafc314272aeb3c3f4b600467e998caabaaf4c6128689cb14863ea6d9c8188"
+    },
+    {
+      "path": "local/after-guard-node20.19.5.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local/after-guard-node20.19.5.stdout",
+      "bytes": 8127,
+      "sha256": "857e116766591ac26fa0121b712a43562c344abd1a8b4b149b1d5007e317166d"
+    },
+    {
+      "path": "local/after-guard-node22.22.2.json",
+      "bytes": 611,
+      "sha256": "aa9e47f762c3015c83f9b3bc499417b94e9e7a01f47723c57f8405d2a364bd00"
+    },
+    {
+      "path": "local/after-guard-node22.22.2.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local/after-guard-node22.22.2.stdout",
+      "bytes": 8681,
+      "sha256": "ec08272db7bc83cc9a575c92053b5b55f4bb072813f68ed478d99f0d83256721"
+    },
+    {
+      "path": "local/before-guard.json",
+      "bytes": 644,
+      "sha256": "c81e1aef2f3f94f3a17a72a691ffd7810a2d95180ec732f3ebcb8ce8eab839a5"
+    },
+    {
+      "path": "local/before-guard.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local/before-guard.stdout",
+      "bytes": 1245754,
+      "sha256": "45b11964f3a0180d9f323cea8c17d482bcb64550ae2c9c634bad099eae4da27c"
+    },
+    {
+      "path": "review/pr73-initial.json",
+      "bytes": 9643,
+      "sha256": "55df1594a9a447f86c5eb69c326fc4b931b022436f7a1b7ecf57058579b64766"
+    },
+    {
+      "path": "superseded-ci/manifest.json",
+      "bytes": 7304,
+      "sha256": "389037c32342cf83bb2e6aa7899f7a6705c9b3ef74bbf57e9f147b9ddb11741a"
+    },
+    {
+      "path": "superseded-ci/manual/job-104709891715-receipt.json",
+      "bytes": 392,
+      "sha256": "a08d19b5658820be7aad9b0cddebd1b5f2dc5ccc251f31b4f05dd6bb314c93cd"
+    },
+    {
+      "path": "superseded-ci/manual/job-104709891715.json",
+      "bytes": 3746,
+      "sha256": "3552f24123a2a7b32ecc78e1fbbc4215aea51b859b325418bb1b67126b254403"
+    },
+    {
+      "path": "superseded-ci/manual/job-104709891715.log.gz",
+      "bytes": 9795,
+      "sha256": "a5c03806cd43ce9b927f9c3990abe39b6d082113b183ccc42e087c50b90a7429"
+    },
+    {
+      "path": "superseded-ci/manual/job-104709892749.json",
+      "bytes": 889,
+      "sha256": "4ddf881399973fce01f59534e2d4991f977791a6525c22f75dc3dedc99512941"
+    },
+    {
+      "path": "superseded-ci/manual/job-104709892850.json",
+      "bytes": 889,
+      "sha256": "e5269776e2ce5ff6aa31a0b1398f96683768c8d368049fdbc778f774184b691d"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339883-receipt.json",
+      "bytes": 397,
+      "sha256": "11df455791b958a27d5cf1d26da5aec23cb49a891c8bea2e2c67cd96a9ef2162"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339883.json",
+      "bytes": 2711,
+      "sha256": "fd78b8713b64297b8785d1344932861d7186c1be927f848a032df11854eb8883"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339883.log.gz",
+      "bytes": 40917,
+      "sha256": "8efe5b57d3281699324b7d192995ba8d16ac5014ce4080c4ca9efa438d43c7a1"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339894-receipt.json",
+      "bytes": 397,
+      "sha256": "1e0fd9f034a037223959c55787870fe07716f9267aedf0d613751d0b0ca3d6ec"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339894.json",
+      "bytes": 2711,
+      "sha256": "bb27e61c7f55b0ed60827f28812077e2882f1254603dea5834e1ecf78cf2f73d"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339894.log.gz",
+      "bytes": 39336,
+      "sha256": "c62df36464b2380fffe7289937ff6976e9822e198602d0d1ddb1b8a880cf12ec"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339906-receipt.json",
+      "bytes": 397,
+      "sha256": "106a32a06766adc41c734e96fb9f98d7fdcc133c9d138d98ec7f4f9b6c66a216"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339906.json",
+      "bytes": 2711,
+      "sha256": "0f4ed5089d82110f2a718033475b587dca55d516ac1ffec3ea4604b6daf4cedb"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339906.log.gz",
+      "bytes": 39182,
+      "sha256": "a2f1d1972e6db616d709a516a8a183d99c30ae3fcfe9c0ee9459fef2958d5aaf"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339941-receipt.json",
+      "bytes": 397,
+      "sha256": "462c530f9d3349aa047c30fcc94b7ce8c9f4fdd74fb14aeaf398d28630de11b1"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339941.json",
+      "bytes": 2711,
+      "sha256": "a12de89b974c22801e93b75bfe8c39b1d23e7a35061dcc2dae2d7d168fb076aa"
+    },
+    {
+      "path": "superseded-ci/manual/job-104710339941.log.gz",
+      "bytes": 56435,
+      "sha256": "319abbbecc3a3eefd2ed880f33a75320482dbd087f5565a9bde62558d04221b7"
+    },
+    {
+      "path": "superseded-ci/manual/job-104711799017-log-unavailable.json",
+      "bytes": 414,
+      "sha256": "792169a22b22a91c1098474ad2a3b117d209f71ccf357fbbb950681a0a1d1cdf"
+    },
+    {
+      "path": "superseded-ci/manual/job-104711799017.json",
+      "bytes": 881,
+      "sha256": "e6de986e4fc2c40f065df5e3ea6cdc9d7eede56849fa62965d5b89db028c8fa9"
+    },
+    {
+      "path": "superseded-ci/manual/jobs.json",
+      "bytes": 17283,
+      "sha256": "09fb016fd9cca95023ec3f09318ed49da5f626f265df5a9f963fb45710cfe2c9"
+    },
+    {
+      "path": "superseded-ci/manual/run.json",
+      "bytes": 12620,
+      "sha256": "88f34708bf95dafc11c18bf4a1612a0dfa41d51583a5119313ec5cb9c1adeffb"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104709864092-receipt.json",
+      "bytes": 395,
+      "sha256": "1b891cfd1984fab24fe1b56c17e4d4fedb9d17acc4c63cf4d5ddc107591aebdd"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104709864092.json",
+      "bytes": 3310,
+      "sha256": "a4db0110e4219acc2213e82b76cc961b76e99a99f3ce719700e3c0f9018a5957"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104709864092.log.gz",
+      "bytes": 14792,
+      "sha256": "5456a20e90054842187fe6b227b9f55b6525d3629637274100950de7b05cdcf2"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104709865866.json",
+      "bytes": 892,
+      "sha256": "550ec3f3a57dcad57f9b1009f0c163683e9d601fbed5e6bf115a47228a3a9dd4"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419621-receipt.json",
+      "bytes": 390,
+      "sha256": "a831b9dc29a39ca91be615bad470731f091f96c8f63b625aba0a4588253c42a5"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419621.json",
+      "bytes": 2956,
+      "sha256": "f5b6e50a0e71178fce8e4e9a290f1fe30c08792b035a7190451cdd500c6abfd2"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419621.log.gz",
+      "bytes": 9968,
+      "sha256": "ac90e89933b8d8fe29b21845bd52c02ec3843c08b3fff2f3d5e70df39fdd33f8"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419689-receipt.json",
+      "bytes": 397,
+      "sha256": "d285689122926617e0b0f661c616dbf8a25a889333965f97859ac7a6a5399571"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419689.json",
+      "bytes": 2913,
+      "sha256": "a5f0446ea34c06faa2117da6322fcbf62c16eef14bb5f012b2e35d588e2cda45"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419689.log.gz",
+      "bytes": 38873,
+      "sha256": "4523e5b98ba475dcf05f34084107d2bfc6ac6a93a7315c808e191a3526cb50de"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419706-receipt.json",
+      "bytes": 397,
+      "sha256": "8f0b85ba2b15b6a4a3f9be5fa387c1386e074b7bd2b57c2173cd5b4729e9772f"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419706.json",
+      "bytes": 2913,
+      "sha256": "a64485b840e74489f6120a4b1a66be610ee537dbf1e9f76deffbed9af4e5a019"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419706.log.gz",
+      "bytes": 54473,
+      "sha256": "370665a6a72203d41c5f5d03332da866d57218b2637fed0efeb6eb72018be491"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419755-receipt.json",
+      "bytes": 397,
+      "sha256": "c7e0bd1b2cc7847675e2639c8663d561cbaedb89e2866b6354644a759657d3ba"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419755.json",
+      "bytes": 2913,
+      "sha256": "3a3e8a22f214b5d79c76b5ef1d467b28ca576685d80b1b8fb0312d3bd05b27a8"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419755.log.gz",
+      "bytes": 37505,
+      "sha256": "b9dd3258a53f01ba6c66ed8da1b61573ee86edeb8fae3be9d8a24bcce49f07da"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419759-receipt.json",
+      "bytes": 397,
+      "sha256": "63fb9cb4449043dd0fb18049b46da3d707c53d7c911fcb5b9a1bfa01ba04c91b"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419759.json",
+      "bytes": 2913,
+      "sha256": "941c7c4e015bd41cdc5549a5a7ce2c8b787c82c98a0cd177bc70f397918e0293"
+    },
+    {
+      "path": "superseded-ci/pr-source/job-104710419759.log.gz",
+      "bytes": 37295,
+      "sha256": "3f62cb93e6cb057b01a83c18c53b05b1803a83db0cae6d36697a2f2aa8603c9c"
+    },
+    {
+      "path": "superseded-ci/pr-source/jobs.json",
+      "bytes": 18843,
+      "sha256": "e9d49f9f7bab804c44d168f8eebfe5ae7361283ab7801d5ffa8339599fe5a914"
+    },
+    {
+      "path": "superseded-ci/pr-source/run.json",
+      "bytes": 12632,
+      "sha256": "ef0b10a35fd894f14eaf47d89962a358a94d78d962c58307292146bdf9d3468e"
+    }
+  ]
+}

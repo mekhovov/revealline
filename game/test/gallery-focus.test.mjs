@@ -1,4 +1,4 @@
-import { Element as DOMElement } from './helpers/couch-dom.mjs';
+import { Element as DOMElement, Events } from './helpers/couch-dom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -18,9 +18,10 @@ class Element extends DOMElement {
   constructor(owner, tagName = 'div', connected = false) {
     super(owner, tagName);
     this.owner = owner;
-    this.tagName = tagName;
-    this.rootConnected = connected;
+    this.tagName = tagName.toUpperCase();
     this.parent = null;
+    this.parentNode = connected ? owner : null;
+    if (connected) owner.children.push(this);
     this.children = [];
     this.listeners = new Map();
     this.dataset = {};
@@ -32,9 +33,6 @@ class Element extends DOMElement {
     this.hidden = false;
     this.open = false;
   }
-  get isConnected() {
-    return this.rootConnected || !!this.parent?.isConnected;
-  }
   get parentNode() {
     return this.parent;
   }
@@ -44,13 +42,17 @@ class Element extends DOMElement {
   append(...children) {
     for (const child of children) {
       child.remove();
-      child.rootConnected = false;
       child.parent = this;
+      child.parentNode = this;
       this.children.push(child);
     }
   }
   replaceChildren(...children) {
-    for (const child of this.children) child.parent = null;
+    for (const child of this.children) {
+      if (child.contains(this.owner.activeElement)) this.owner.activeElement = this.owner.body;
+      child.parent = null;
+      child.parentNode = null;
+    }
     this.children = [];
     this.append(...children);
   }
@@ -67,41 +69,49 @@ class Element extends DOMElement {
   querySelectorAll(selector) {
     const names = selector.split(',');
     return this.children.flatMap((child) => [
-      ...(names.includes(child.tagName) ? [child] : []),
+      ...(names.includes(child.tagName.toLowerCase()) ? [child] : []),
       ...child.querySelectorAll(selector),
     ]);
   }
-  addEventListener(type, fn) {
-    if (!this.listeners.has(type)) this.listeners.set(type, new Set());
-    this.listeners.get(type).add(fn);
-  }
-  emit(type) {
-    const event = {
-      type,
-      target: this,
-      defaultPrevented: false,
-      preventDefault() {
-        this.defaultPrevented = true;
-      },
+  set onclick(callback) {
+    this.action = (...args) => {
+      // Legacy tests call card.onclick directly to model keyboard activation.
+      // Establish that real activation precondition, never focus behind a view.
+      if (
+        this.className === 'gallery-card' &&
+        this.isConnected &&
+        !this.disabled &&
+        !this.owner.getElementById('gallery-view-dialog').open
+      )
+        this.focus();
+      return callback?.apply(this, args);
     };
-    for (const fn of this.listeners.get(type) || []) fn(event);
-    return event;
+  }
+  get onclick() {
+    return this.action;
   }
   focus() {
     assert.equal(this.isConnected, true, 'focus must target a current DOM node');
     assert.equal(this.disabled || this.hidden, false, 'focus must target an enabled visible node');
     this.owner.activeElement = this;
+    this.emit('focusin');
   }
   showModal() {
     assert.equal(this.open, false, 'an already open dialog must not be reopened');
+    this.origin = this.owner.activeElement;
+    this.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
     this.open = true;
     this.owner.activeElement = this;
   }
   close() {
     if (!this.open) return;
     this.open = false;
-    this.owner.activeElement = null;
-    this.emit('close');
+    const origin = this.origin;
+    if (origin?.isConnected && !origin.disabled && !origin.hidden) origin.focus();
+    else this.owner.activeElement = this.owner.body;
+    // Synchronous legacy fixture; actual queued native ordering is covered by
+    // gallery-return-host and collection-context-host with the complete markup.
+    this.emit('close', { bubbles: false });
   }
   requestClose() {
     const event = this.emit('cancel');
@@ -110,6 +120,39 @@ class Element extends DOMElement {
   }
 }
 
+test('gallery fixture preserves real root membership when connected nodes move or detach', () => {
+  const document = new Events();
+  document.nodeType = 9;
+  document.children = [];
+  document.defaultView = new Events();
+  document.parentNode = document.defaultView;
+  document.body = new Element(document, 'body', true);
+  document.activeElement = document.body;
+  const dialog = new Element(document, 'dialog', true),
+    status = new Element(document, 'div', true),
+    sibling = new Element(document, 'div', true),
+    action = new Element(document, 'button');
+  assert.deepEqual(document.children, [document.body, dialog, status, sibling]);
+  dialog.append(status);
+  status.append(action);
+  assert.deepEqual(document.children, [document.body, dialog, sibling]);
+  assert.equal(status.parentNode, dialog);
+  assert.equal(action.isConnected, true);
+  const captures = [];
+  document.defaultView.addEventListener('focusin', (event) => captures.push(event.target), true);
+  action.focus();
+  assert.deepEqual(captures, [action], 'Window capture retains the original descendant target.');
+  dialog.remove();
+  assert.deepEqual(document.children, [document.body, sibling]);
+  assert.equal(dialog.parentNode, null);
+  assert.equal(dialog.isConnected, false);
+  assert.equal(status.isConnected, false);
+  assert.equal(action.isConnected, false);
+  assert.throws(() => action.focus(), /focus must target a current DOM node/);
+  dialog.remove();
+  assert.deepEqual(document.children, [document.body, sibling], 'Repeated removal keeps siblings.');
+});
+
 async function setup(t, count = 30, hostOverrides = {}) {
   const prior = new Map(
     ['document', 'fetch', 'Image', 'cancelAnimationFrame', 'requestAnimationFrame'].map((key) => [
@@ -117,13 +160,29 @@ async function setup(t, count = 30, hostOverrides = {}) {
       Object.getOwnPropertyDescriptor(globalThis, key),
     ]),
   );
-  const document = { activeElement: null },
+  const document = new Events(),
     nodes = new Map();
+  document.defaultView = new Events();
+  document.parentNode = document.defaultView;
+  document.nodeType = 9;
+  document.children = [];
+  document.body = new Element(document, 'body', true);
+  document.activeElement = document.body;
+  document.hidden = false;
+  document.hasFocus = () => true;
   document.getElementById = (id) => {
     if (!nodes.has(id))
       nodes.set(
         id,
-        new Element(document, id.endsWith('search') || id.endsWith('json') ? 'input' : 'div', true),
+        new Element(
+          document,
+          id.endsWith('dialog')
+            ? 'dialog'
+            : id.endsWith('search') || id.endsWith('json')
+              ? 'input'
+              : 'div',
+          true,
+        ),
       );
     return nodes.get(id);
   };

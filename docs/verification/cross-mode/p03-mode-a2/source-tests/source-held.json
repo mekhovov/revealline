@@ -1,0 +1,52 @@
+{
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "scope": "P03 A2 source hold; native and final pair pending",
+  "inputs": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 245151,
+      "sha256": "9c61336914c6b1d4e5c1ef2fcd870050804e87d1c69dd5858a0a9243f321700b"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70354,
+      "sha256": "216121d369e6b112c01073916f5e17c8d556248749ea0299f3a85ae018e04165"
+    },
+    {
+      "path": "game/mode-return-v2.mjs",
+      "bytes": 6771,
+      "sha256": "0d10a32521d4f615559691964276e23f6c40d992d0c517e4fe3ff4c51e04f036"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 39262,
+      "sha256": "4c92a981ed7a29596a5c6fcc823394460c1d0d350af179a4199055ce3ddeaba5"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14014,
+      "sha256": "c2b2b732c020411af0ed95adb0a2abbbb1b6cc1f70b37686971b0559ac18f913"
+    },
+    {
+      "path": "game/test/mode-return-v2.test.mjs",
+      "bytes": 10306,
+      "sha256": "4ee3e01979d0f40e92c669e2186b59a5ba3999d5ce13a14be3b28eadee641ea2"
+    },
+    {
+      "path": "game/test/mode-return-host.test.mjs",
+      "bytes": 21258,
+      "sha256": "f58d22c4fd25bfb98d40d2b66ac0284c69795ac94e4a336a50cd1c6439fbda45"
+    },
+    {
+      "path": "game/test/couch-departure.test.mjs",
+      "bytes": 8758,
+      "sha256": "a677e4f75ea8de4838315d607720d5edf0b90c70bbfcbf5c3f2ffd57b33a5847"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "bytes": 8188,
+      "sha256": "e75846c35c6e9efcb7e23717b069803b20d39aa0d42886015a940a4770385163"
+    }
+  ],
+  "v1UnchangedSha256": "d7b428457d17bd024de91e8a04008743abb363750f500998ede5c55f4619c526"
+}

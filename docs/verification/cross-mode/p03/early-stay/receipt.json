@@ -1,0 +1,15 @@
+{
+  "status": "EARLY_STAY_ORIGINALS_PACKAGED",
+  "sourceBase": "c9ef8a9c2bfbf073d2a043e79fe2d97cdf09bf13",
+  "zipBytes": 1161684,
+  "zipSHA256": "b8fefaf15528e737d8a51d06c694a2853f517d940b4378cf6b597950a0b693b9",
+  "manifestBytes": 82349,
+  "manifestSHA256": "635b43641edfa8ad2d40af274c257a6de3ff0ea4cc381965048c0c97cf24a183",
+  "readmeBytes": 3261,
+  "readmeSHA256": "039f51dc9cc977d7f23136fab5002c3cebd93df434ba78d0e634388c6950e374",
+  "origins": 143,
+  "uniqueObjects": 129,
+  "phaseAcceptance": false,
+  "qualification": false,
+  "publicReleaseAcceptance": false
+}

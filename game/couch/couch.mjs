@@ -1,7 +1,9 @@
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
+import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
@@ -9,17 +11,36 @@ import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
+import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 const $ = (id) => document.getElementById(id);
+const unclaimedFocus = (element) =>
+  !element || element === document.body || element === document.documentElement;
+// Capture before attached() can hide a deliberately chosen loader recovery link.
+let initialFocusPending =
+  unclaimedFocus(document.activeElement) && !document.hidden && document.hasFocus?.() !== false;
+const initialFocusChoice = (event) => {
+  if (!unclaimedFocus(event.target)) initialFocusPending = false;
+};
+const initialFocusLost = () => {
+  initialFocusPending = false;
+};
+const initialVisibility = () => {
+  if (document.hidden) initialFocusLost();
+};
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
   audioMaster,
@@ -36,11 +57,57 @@ const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
 $('race-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
 $('race-master-volume').onchange = () =>
   audioPreferences.setVolume(Number($('race-master-volume').value));
+const displayPreferences = createDisplayPreferences({
+  window,
+  matchMedia,
+  getStorage: () => localStorage,
+  onWarning: (message) => {
+    $('race-display-status').textContent = message;
+  },
+});
+const stopDisplayView = displayPreferences.subscribe((state) => {
+  document.body.dataset.textFace = state.textFace;
+  document.body.dataset.textSize = state.textSize;
+  document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+  $('race-text-face').value = state.textFace;
+  $('race-text-size').value = state.textSize;
+  $('race-reduced').checked = state.reducedEffects;
+  $('race-system-reduction').textContent =
+    state.effectiveReducedEffects && !state.reducedEffects
+      ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
+      : '';
+});
+const menuStyle = attachMenuStyleControls({
+  document,
+  window,
+  getStorage: () => localStorage,
+  prefix: 'race-',
+});
+$('race-text-face').onchange = () =>
+  displayPreferences.set({ textFace: $('race-text-face').value });
+$('race-text-size').onchange = () =>
+  displayPreferences.set({ textSize: $('race-text-size').value });
+$('race-reduced').onchange = () =>
+  displayPreferences.set({ reducedEffects: $('race-reduced').checked });
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({ message: 'Preparing both boards…', stage: 'reading' });
 let bootFailed = false;
+let bootFinished = false;
+function finishBoot() {
+  if (bootFinished) return;
+  bootFinished = true;
+  document.querySelectorAll('[data-boot-inert]').forEach((element) => {
+    element.inert = false;
+    element.removeAttribute('aria-busy');
+  });
+  if (!bootFailed) {
+    bootDisplay.clear();
+    $('boot-return').hidden = true;
+  }
+}
+
 const artworkLifetime = new AbortController();
 const presentationFeedback = createOperationStatus($('race-presentation-status'));
 let presentationOperation = null;
@@ -61,10 +128,15 @@ const presentationPage = mountPresentationPage({
     }
   },
 });
-let featured, installed, publishedAudio, publishedPlayer;
+// Cosmetic menu choice follows this same accepted release; it owns no board lease.
+presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
+let featured, installed, staticPictures, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
+  stopDisplayView();
+  displayPreferences.dispose();
+  menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
   publishedAudio?.close();
@@ -74,6 +146,7 @@ const releaseArtwork = (event) => {
   presentationFeedback.dispose();
   featured?.dispose();
   installed?.dispose();
+  staticPictures?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
 window.addEventListener('pagehide', releaseArtwork);
@@ -83,6 +156,10 @@ const json = async (url) => {
   return r.json();
 };
 try {
+  document.addEventListener('focusin', initialFocusChoice, true);
+  document.addEventListener('visibilitychange', initialVisibility);
+  window.addEventListener('blur', initialFocusLost);
+  window.addEventListener('pagehide', initialFocusLost);
   const [campaign, registry, themes, presets] = await Promise.all([
     json('../content/campaign.json'),
     json('../content/classes.json'),
@@ -90,6 +167,15 @@ try {
     json('../../authoring/motion-lab/presets.json'),
   ]);
   const characterPresentations = createCharacterPresentations(presets);
+  const baseEntry = {
+    campaign: { ...campaign, classRecipes: registry },
+    classRecipes: registry,
+    themes: themes.themes,
+    visualOverrides: {},
+    levelVisuals: [],
+    music: [],
+    sourcePackId: null,
+  };
   const maps = campaign.levels.map((level) => ({
     key: level.id,
     chapter: campaign.title,
@@ -99,6 +185,8 @@ try {
     visualOverrides: {},
     defaultThemeId: level.themeId || campaign.themeId,
     track: null,
+    pictureEntry: baseEntry,
+    authoredBackground: null,
   }));
   let featuredSource,
     featuredStatus = '';
@@ -137,10 +225,20 @@ try {
           }).filter(([role]) => role !== 'background'),
         ),
         backdrop: featured.backdrop(level.id),
+        pictureEntry: featured.resolved,
+        authoredBackground:
+          featured.resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides
+            ?.background ||
+          featured.resolved.visualOverrides.background ||
+          null,
       })),
     );
   }
   const shippedMaps = [...maps];
+  staticPictures = createCouchStaticPictures({
+    entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
+    presentationPage,
+  });
   let installedStatus = 'Installed chapters have not been checked.';
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
@@ -148,17 +246,7 @@ try {
       : 'dev';
     installed = createCouchInstalledChapters({
       channel,
-      registeredEntries: [
-        {
-          campaign: { ...campaign, classRecipes: registry },
-          classRecipes: registry,
-          themes: themes.themes,
-          visualOverrides: {},
-          levelVisuals: [],
-          music: [],
-          sourcePackId: null,
-        },
-      ],
+      registeredEntries: [baseEntry],
     });
     bootDisplay.update({
       message: 'Checking installed chapters and pictures…',
@@ -237,6 +325,11 @@ try {
     won = [0, 0],
     finished = false,
     generation = 0,
+    raceSequence = 0,
+    roundRecipe = null,
+    nextAttempt = null,
+    preparedFocusMatch = null,
+    startIntentEpoch = 0,
     framePads = [],
     frameReadError = null,
     padDescriptors = new Map(),
@@ -257,9 +350,22 @@ try {
     isCurrent: () => !disposed,
   });
   let preparationDisplay = null;
-  let menuRouter, navigation, shell;
+  let menuRouter, navigation, shell, reading;
+  let readingModality = 'pointer';
+  const readingPrompt = ({ scrollable }) =>
+    readingInputPrompt({
+      modality: readingModality,
+      scrollable,
+      controls: { confirm: 'South', back: 'East' },
+    });
+  function setReadingModality(modality) {
+    if (readingModality === modality) return;
+    readingModality = modality;
+    reading?.refresh();
+    navigation?.refreshReadingHint();
+  }
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
-  $('race-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function clear({ resetDirection = false } = {}) {
     if (resetDirection) input.clear();
     else input.clearPhysical();
@@ -270,55 +376,118 @@ try {
     menuHint = '';
   }
   function actionFocus(origin) {
-    const startedHere = document.activeElement === origin,
+    const foreground = () => !document.hidden && document.hasFocus(),
+      startedHere = document.activeElement === origin && foreground(),
       scope = shell.scope();
-    let moved = false;
+    let moved = false,
+      shifting = false,
+      pendingTarget = null;
     const observe = (event) => {
-      if (![origin, document.body, document.documentElement].includes(event.target)) moved = true;
+      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
+        moved = true;
     };
+    const hidden = () => {
+      if (!foreground()) moved = true;
+    };
+    const blurred = () => {
+      moved = true;
+    };
+    const owns = (current) =>
+      current &&
+      !disposed &&
+      startedHere &&
+      !moved &&
+      foreground() &&
+      shell.scope() === scope &&
+      [origin, pendingTarget, document.body, document.documentElement].includes(
+        document.activeElement,
+      );
+    const available = (target) =>
+      target?.isConnected &&
+      !target.disabled &&
+      !target.closest('[hidden],[inert]') &&
+      target.getClientRects().length > 0;
     document.addEventListener('focusin', observe);
-    return (target, current) => {
+    document.addEventListener('visibilitychange', hidden);
+    window.addEventListener('blur', blurred);
+    const close = () => {
       document.removeEventListener('focusin', observe);
-      if (
-        current &&
-        !disposed &&
-        startedHere &&
-        !moved &&
-        shell.scope() === scope &&
-        !target.disabled &&
-        !target.closest('[hidden],[inert]')
-      )
-        target.focus({ preventScroll: true });
+      document.removeEventListener('visibilitychange', hidden);
+      window.removeEventListener('blur', blurred);
     };
+    const restore = (target, current, { retain = false } = {}) => {
+      if (!retain) close();
+      try {
+        if (owns(current) && available(target)) target.focus({ preventScroll: true });
+      } catch (error) {
+        close();
+        throw error;
+      }
+    };
+    restore.close = close;
+    restore.pending = (target, current) => {
+      if (!owns(current) || !available(target)) return;
+      // This transfer belongs to the action, not to a new user choice. Later
+      // navigation or foreground loss still relinquishes completion focus.
+      pendingTarget = target;
+      shifting = true;
+      try {
+        target.focus({ preventScroll: true });
+      } finally {
+        shifting = false;
+      }
+    };
+    restore.current = owns;
+    return restore;
   }
   function cancelContent() {
     if (!contentBusy) return;
     preparationDisplay?.finish({ state: 'cancelled', message: '' });
     preparationDisplay = null;
     contentController?.abort();
-    installed?.clear();
-    backdrop = null;
+    const retainedResult = match?.status === 'finished' && nextAttempt?.previous === match;
+    if (retainedResult) {
+      nextAttempt.lease?.cancel();
+      installed?.cancel();
+    } else {
+      installed?.clear();
+      backdrop = null;
+    }
+    staticPictures.cancel();
     contentBusy = false;
-    contentReady = false;
-    contentError = 'Picture loading cancelled. Retry when you are ready.';
+    contentReady = retainedResult;
+    contentError = retainedResult
+      ? 'Next picture loading cancelled. Results are kept. Choose Next when you are ready.'
+      : 'Picture loading cancelled. Retry when you are ready.';
     if (installedStatus === 'Checking installed chapters…')
       installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
     $('race-message').textContent = contentError;
     updateMenu();
   }
+  $('race-picture-cancel').onclick = () => {
+    const restoreFocus = actionFocus($('race-picture-cancel'));
+    cancelContent();
+    restoreFocus(
+      match.status === 'finished' ? $('race-start') : $('race-chapter-retry'),
+      !!contentError,
+    );
+  };
   function prepare() {
+    nextAttempt?.lease?.cancel();
+    nextAttempt = null;
+    preparedFocusMatch = null;
     preparationStatus.clear();
     preparationDisplay = null;
     contentController?.abort();
     installed?.clear();
+    staticPictures.cancel();
     contentController = new AbortController();
     contentScope = shell?.scope() || 'main';
     contentError = null;
     contentBusy = false;
     contentReady = false;
     clear({ resetDirection: true });
-    const entry = maps.find((m) => m.key === $('race-level').value),
-      level = entry.level;
+    const entry = maps.find((m) => m.key === $('race-level').value);
     const classId = entry.classes.some((c) => c.id === $('race-class').value)
       ? $('race-class').value
       : entry.classes[0].id;
@@ -333,13 +502,36 @@ try {
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
     $('race-theme').replaceChildren(...entry.themes.map((t) => new Option(t.name, t.id)));
     $('race-theme').value = theme.id;
-    match = createDuel(
-      level,
-      { seed: 2026, turnPolicy: $('race-turn').value, classId, classRecipes: entry.classes },
-      { seconds: Number($('race-time').value) },
+    roundRecipe = {
+      entry,
+      theme,
+      classId,
+      turnPolicy: $('race-turn').value,
+      seconds: Number($('race-time').value),
+    };
+    match = createRound(roundRecipe);
+    generation = ++raceSequence;
+    paintRound(roundRecipe);
+    finished = false;
+    $('race-start').textContent = 'Start round ↗';
+    return loadPreparedPicture(entry);
+  }
+  function createRound(recipe) {
+    return createDuel(
+      recipe.entry.level,
+      {
+        seed: 2026,
+        turnPolicy: recipe.turnPolicy,
+        classId: recipe.classId,
+        classRecipes: recipe.entry.classes,
+      },
+      { seconds: recipe.seconds },
     );
-    generation++;
-    const { width, height } = boardPaintSizeForLevel(level);
+  }
+  function paintRound(recipe) {
+    const { entry, theme, classId } = recipe,
+      level = entry.level,
+      { width, height } = boardPaintSizeForLevel(level);
     for (const player of [0, 1]) {
       const canvas = $(`race-canvas-${player}`);
       canvas.width = width;
@@ -351,35 +543,36 @@ try {
     publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
     publishedPlayer?.setContext({ themeId: theme.id });
     painters.forEach((p) => {
-      p.setLook(theme, bodyFor(theme, $('race-class').value), entry.visualOverrides);
+      p.setLook(theme, bodyFor(theme, classId), entry.visualOverrides);
       p.setLevel?.(level, { seed: 2026 });
       p.skipCelebration?.();
     });
-    finished = false;
-    $('race-start').textContent = 'Start round ↗';
-    contentReady = shippedMaps.includes(entry);
-    contentBusy = !contentReady;
-    $('race-message').textContent = contentReady
-      ? [featuredStatus, 'Both boards use the same map, class and seed. Ready when you are.']
-          .filter(Boolean)
-          .join(' ')
-      : 'Checking this chapter and loading its original picture…';
+  }
+  function loadPreparedPicture(entry) {
+    contentReady = false;
+    contentBusy = true;
+    contentError = null;
+    const staticEntry = shippedMaps.includes(entry),
+      owner = staticEntry ? staticPictures : installed,
+      message = staticEntry
+        ? 'Checking this map and preparing the same picture for both boards…'
+        : 'Checking this chapter and loading its original picture…';
+    $('race-message').textContent = message;
     updateMenu();
-    if (contentReady) return Promise.resolve(true);
     const selectedRun = match,
       ticket = generation,
       controller = contentController;
     const current = () =>
       !disposed && !controller.signal.aborted && match === selectedRun && ticket === generation;
     const display = preparationStatus.begin({
-      message: 'Checking this chapter and loading its original picture…',
+      message,
       stage: 'verifying',
       isCurrent: current,
     });
     preparationDisplay = display;
     return (async () => {
       try {
-        const image = await installed.select(entry, {
+        const image = await owner.select(entry, {
           themeId: theme.id,
           raceId: ticket,
           signal: controller.signal,
@@ -389,14 +582,19 @@ try {
           return false;
         backdrop = image;
         contentReady = true;
-        $('race-message').textContent =
-          'Original picture ready for both boards. Start when you are ready.';
+        $('race-message').textContent = [
+          staticEntry ? featuredStatus : '',
+          image?.notice,
+          'Both boards use the same map, class, seed and prepared picture. Start when you are ready.',
+        ]
+          .filter(Boolean)
+          .join(' ');
         display.finish({ message: '' });
         return true;
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
-        contentError = `This chapter could not load: ${error.message}`;
+        contentError = `This ${staticEntry ? 'map picture' : 'chapter'} could not load: ${error.message}`;
         $('race-message').textContent = contentError;
         display.finish({ state: 'error', message: '' });
         return false;
@@ -408,7 +606,121 @@ try {
       }
     })();
   }
+  async function prepareNext() {
+    if (!nextAttempt || nextAttempt.previous !== match || nextAttempt.recipe !== roundRecipe) {
+      nextAttempt = {
+        previous: match,
+        previousGeneration: generation,
+        recipe: roundRecipe,
+        match: createRound(roundRecipe),
+        raceId: ++raceSequence,
+        resetWins: won.some((n) => n >= 2),
+        lease: null,
+      };
+    }
+    const restoreFocus = actionFocus($('race-start')),
+      attempt = nextAttempt,
+      { entry } = attempt.recipe,
+      isStatic = shippedMaps.includes(entry),
+      owner = isStatic ? staticPictures : installed;
+    contentController?.abort();
+    const controller = new AbortController();
+    contentController = controller;
+    contentScope = shell.scope();
+    contentBusy = true;
+    contentError = null;
+    const current = () =>
+      !disposed &&
+      !controller.signal.aborted &&
+      contentController === controller &&
+      nextAttempt === attempt &&
+      roundRecipe === attempt.recipe &&
+      match === attempt.previous &&
+      generation === attempt.previousGeneration;
+    const display = preparationStatus.begin({
+      message: 'Preparing the next picture. Your completed Results are kept until it is ready…',
+      stage: 'verifying',
+      isCurrent: current,
+    });
+    preparationDisplay = display;
+    updateMenu();
+    restoreFocus.pending($('race-picture-cancel'), current());
+    let lease = null,
+      prepared = null;
+    try {
+      lease = await owner.stage(entry, {
+        themeId: attempt.recipe.theme.id,
+        raceId: attempt.raceId,
+        signal: controller.signal,
+        onStatus: (status) => display.update(status),
+      });
+      if (!current()) return null;
+      attempt.lease = lease;
+      await lease.confirm({ onStatus: (status) => display.update(status) });
+      if (!current()) return null;
+      const retirePrevious = lease.commit();
+      // Publish only plain references before cleanup can call back into the page.
+      match = attempt.match;
+      preparedFocusMatch = match;
+      backdrop = lease.picture;
+      generation = attempt.raceId;
+      finished = false;
+      if (attempt.resetWins) won = [0, 0];
+      nextAttempt = null;
+      retirePrevious();
+      if (
+        disposed ||
+        controller.signal.aborted ||
+        controller !== contentController ||
+        match !== attempt.match
+      )
+        return null;
+      clear({ resetDirection: true });
+      paintRound(attempt.recipe);
+      $('race-start').textContent = 'Start round ↗';
+      $('race-message').textContent = [
+        lease.picture?.notice,
+        'Both boards use the prepared next picture. Start when you are ready.',
+      ]
+        .filter(Boolean)
+        .join(' ');
+      contentReady = true;
+      display.finish({ message: '' });
+      prepared = {
+        match,
+        controller,
+        isStatic,
+        ownsAction: () => restoreFocus.current(true),
+        releaseFocus: restoreFocus.close,
+      };
+      return prepared;
+    } catch (error) {
+      if (current()) {
+        contentError =
+          'The next picture could not be prepared. Results are kept. Choose Next to retry.';
+        $('race-message').textContent = contentError;
+        display.finish({ state: 'error', message: '' });
+        console.warn('Next picture preparation failed.', error);
+      }
+      return null;
+    } finally {
+      lease?.cancel();
+      if (attempt.lease === lease) attempt.lease = null;
+      if (!disposed && controller === contentController && !controller.signal.aborted) {
+        contentBusy = false;
+        updateMenu();
+      }
+      restoreFocus(
+        $('race-start'),
+        !disposed && controller === contentController && !controller.signal.aborted,
+        { retain: !!prepared },
+      );
+    }
+  }
   function pause() {
+    // Suspend and controller-loss paths also pass here. Picture preparation
+    // may finish, but an interrupted gesture no longer authorizes a start.
+    startIntentEpoch++;
     sound.pause();
     if (!match || match.status === 'finished') return;
     pauseDuel(match, { preserveContinuation: true });
@@ -424,23 +736,41 @@ try {
       disposed ||
       contentBusy ||
       !contentReady ||
+      document.hidden ||
+      !document.hasFocus() ||
       match.status === 'running' ||
       shell.scope() !== 'main'
     )
       return;
+    const intent = ++startIntentEpoch,
+      ownsStartIntent = () =>
+        !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
+    let nextConfirmed = false,
+      nextFocus = null;
     if (match.status === 'finished') {
-      if (won.some((n) => n >= 2)) won = [0, 0];
-      // A fresh installed round first loads its original, then awaits a new Start.
-      const ready = prepare();
-      if (contentBusy) {
-        await ready;
+      const prepared = await prepareNext();
+      // Preparation may finish after blur, but only the original foreground
+      // shipped Next gesture may start it. Installed chapters keep fresh Start.
+      if (
+        !prepared ||
+        !prepared.isStatic ||
+        !prepared.ownsAction() ||
+        !ownsStartIntent() ||
+        match !== prepared.match ||
+        contentController !== prepared.controller ||
+        prepared.controller.signal.aborted ||
+        shell.scope() !== 'main'
+      ) {
+        prepared?.releaseFocus();
         return;
       }
+      nextFocus = prepared;
+      nextConfirmed = true;
     }
     const entry = maps.find((row) => row.key === selectedMapKey),
       selectedRun = match,
       ticket = generation;
-    if (match.status === 'ready' && !shippedMaps.includes(entry)) {
+    if (match.status === 'ready' && !nextConfirmed) {
       const restoreFocus = actionFocus($('race-start'));
       contentBusy = true;
       const controller = contentController;
@@ -457,14 +787,25 @@ try {
       preparationDisplay = display;
       updateMenu();
       try {
-        await installed.confirm(entry, {
-          raceId: ticket,
-          signal: controller.signal,
-          onStatus: (status) => display.update(status),
-        });
+        const confirmation = (shippedMaps.includes(entry) ? staticPictures : installed).confirm(
+          entry,
+          {
+            raceId: ticket,
+            signal: controller.signal,
+            onStatus: (status) => display.update(status),
+          },
+        );
+        if (confirmation?.then) {
+          restoreFocus.pending(
+            $('race-picture-cancel'),
+            ownsStartIntent() && controller === contentController && !controller.signal.aborted,
+          );
+          await confirmation;
+        }
         if (
-          disposed ||
-          contentController.signal.aborted ||
+          !ownsStartIntent() ||
+          controller !== contentController ||
+          controller.signal.aborted ||
           match !== selectedRun ||
           ticket !== generation ||
           shell.scope() !== 'main'
@@ -475,44 +816,76 @@ try {
           !disposed &&
           match === selectedRun &&
           ticket === generation &&
-          !contentController.signal.aborted
+          controller === contentController &&
+          !controller.signal.aborted
         ) {
           contentReady = false;
-          contentError = `Refresh installed chapters in Race setup before starting: ${error.message}`;
+          contentError = shippedMaps.includes(entry)
+            ? `The prepared picture could not be confirmed. Retry or choose a new setup: ${error.message}`
+            : `Refresh installed chapters in Race setup before starting: ${error.message}`;
           $('race-message').textContent = contentError;
           display.finish({ state: 'error', message: '' });
         }
         return;
       } finally {
-        if (!disposed && match === selectedRun && ticket === generation) {
+        if (
+          !disposed &&
+          match === selectedRun &&
+          ticket === generation &&
+          controller === contentController &&
+          !controller.signal.aborted
+        ) {
           if (!contentError) display.finish({ message: '' });
           contentBusy = false;
           updateMenu();
         }
         restoreFocus(
           $('race-chapter-retry'),
-          contentError && match === selectedRun && ticket === generation,
+          contentError &&
+            ownsStartIntent() &&
+            match === selectedRun &&
+            ticket === generation &&
+            controller === contentController &&
+            !controller.signal.aborted,
         );
       }
     }
-    if (!contentReady || disposed) return;
-    clear();
-    resumeDuel(match, { preserveContinuation: true });
-    neutralResumeTick = true;
-    if (publishedPlayer) {
-      (publishedPlayer.snapshot().track ? publishedPlayer.resume() : publishedPlayer.play()).catch(
-        () => {},
-      );
-    } else sound.enable().catch(() => {});
-    $('race-message').textContent = 'Make your line count. First clear wins.';
-    updateMenu();
-    input.focus();
+    try {
+      if (!contentReady || disposed) return;
+      clear();
+      if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
+      resumeDuel(match, { preserveContinuation: true });
+      neutralResumeTick = true;
+      if (publishedPlayer) {
+        (publishedPlayer.snapshot().track
+          ? publishedPlayer.resume()
+          : publishedPlayer.play()
+        ).catch(() => {});
+      } else sound.enable().catch(() => {});
+      $('race-message').textContent = 'Make your line count. First clear wins.';
+      updateMenu();
+      input.focus();
+    } finally {
+      nextFocus?.releaseFocus();
+    }
   };
+
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
     const restoreFocus = actionFocus($('race-chapter-retry'));
-    const ready = prepare(),
-      controller = contentController;
+    preparationStatus.clear();
+    contentController?.abort();
+    contentController = new AbortController();
+    contentScope = shell.scope();
+    const entry = maps.find((row) => row.key === selectedMapKey);
+    // Retry the same untouched attempt and picture choice; only setup changes
+    // establish a new race identity and may resolve a new assignment.
+    const controller = contentController,
+      ready = loadPreparedPicture(entry);
+    restoreFocus.pending(
+      $('race-picture-cancel'),
+      controller === contentController && !controller.signal.aborted,
+    );
     try {
       return await ready;
     } finally {
@@ -594,11 +967,11 @@ try {
     $(id).onchange = () => {
       if (match?.status !== 'ready' || disposed) return;
       won = [0, 0];
-      prepare();
+      return prepare();
     };
   $('race-theme').onchange = () => {
     if (match?.status !== 'ready' || disposed) return;
-    prepare();
+    return prepare();
   };
   $('race-tap').onchange = clear;
   const input = attachCouchInput({
@@ -618,8 +991,18 @@ try {
       if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
     },
   });
+  let soloReturnStorage;
+  try {
+    soloReturnStorage = sessionStorage;
+  } catch {
+    /* The fixed Solo title route remains available. */
+  }
   shell = createCouchShell({
     coarse: matchMedia('(pointer: coarse)').matches,
+    getDepartureState: () => ({ match, generation }),
+    onLeaveRequest: pause,
+    getSoloReturnToken: () =>
+      readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage }),
     onTransition: ({ to, back = false } = {}) => {
       clear();
       if (back || to !== contentScope) cancelContent();
@@ -699,6 +1082,7 @@ try {
     $('race-start').disabled = running || contentBusy || !contentReady;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
+    $('race-picture-cancel').hidden = !contentBusy;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
     $('race-installed-status').textContent = [featuredStatus, installedStatus]
       .filter(Boolean)
@@ -707,10 +1091,15 @@ try {
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
     const entry = maps.find((m) => m.key === selectedMapKey);
+    // The transaction's first Ready update belongs to its retained action
+    // lease, including an update reentered from prior-image cleanup.
+    const focusTransition = match !== preparedFocusMatch;
+    preparedFocusMatch = null;
     shell?.update({
       match,
       won,
       contentBusy,
+      focusTransition,
       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
     });
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
@@ -724,6 +1113,7 @@ try {
     'race-coop',
     'race-start',
     'race-chapter-retry',
+    'race-picture-cancel',
     'race-installed-refresh',
     'race-focus',
     'race-options',
@@ -739,12 +1129,17 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-text-face',
+    'race-text-size',
+    'race-menu-palette',
+    'race-menu-ornaments',
     'race-audio',
     'race-master-volume',
     'race-menu-release',
     'race-options-back',
     'race-help-back',
     'race-help-read',
+    'race-help-reading-done',
     'race-help-reading',
     'race-review',
     'race-pause',
@@ -758,21 +1153,32 @@ try {
     getRoot: () => shell.root(),
     getDefaultFocus: () => shell.primary(),
     keyboard: true,
+    nativeReadingScroll: true,
     accept: (element) => menuIds.has(element.id),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
+    getReadingPrompt: readingPrompt,
+    onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
-    onHint: (message) => {
-      menuHint = message;
+    onHint: (message, context) => {
+      if (context?.kind === 'reading' && context.regionId === 'race-help-reading') {
+        menuHint = '';
+        const hint = $('race-help-reading-hint');
+        if (hint.textContent !== message) hint.textContent = message;
+      } else menuHint = message;
       updateMenu();
     },
+    onReadingChange: (state) => reading?.changed(state),
   });
-  $('race-help-read').onclick = () =>
-    navigation.beginReading({
-      region: $('race-help-reading'),
-      origin: $('race-help-read'),
-      label: 'Couch controls',
-    });
+  reading = attachControllerReading({
+    getNavigation: () => navigation,
+    getScope: couchScope,
+    getReadingPrompt: readingPrompt,
+    revealOnResize: true,
+    surfaceDefinitions: [
+      ['race-help-reading', 'race-help-read', 'Couch controls', 'race-help-unit'],
+    ],
+  });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
     menuRouter.invalidate();
@@ -789,6 +1195,8 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
+      setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
     menuOwner = result.assigned;
     menuGate =
@@ -796,6 +1204,7 @@ try {
         ? 'Release controller buttons and the movement stick to continue.'
         : '';
     if (result.disconnected) {
+      shell.cancelDeparture();
       clear();
       if (!released) menuStatus = result.status.message;
       updateMenu();
@@ -808,6 +1217,7 @@ try {
         ? 'This controller has no standard mapping.'
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
+      shell.cancelDeparture();
       clear();
       updateMenu();
       return;
@@ -817,7 +1227,8 @@ try {
       focusPrimaryAction();
     } else if (scope !== menuScope) {
       menuScope = scope;
-      navigation.clear();
+      // Native input can already own a reader in this screen before the next
+      // controller poll. Sync retires stale scopes without clearing that newer owner.
       navigation.sync();
     } else {
       navigation.handle(result.ui);
@@ -826,6 +1237,7 @@ try {
   }
   function suspend() {
     if (disposed) return;
+    shell?.cancelDeparture();
     pause();
     sound.suspend();
     publishedPlayer?.suspend();
@@ -861,6 +1273,7 @@ try {
     preparationStatus.dispose();
     input.destroy();
     menuRouter.destroy();
+    reading.destroy();
     navigation.destroy();
     shell.destroy();
     stopNative();
@@ -946,7 +1359,7 @@ try {
           p.startCelebration?.({
             levelId: match.runs[i].levelId,
             seed: 2026,
-            reduced: $('race-reduced').checked,
+            reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
       });
     }
@@ -987,8 +1400,9 @@ try {
         delete group.dataset.phase;
       }
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
+        textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
-        reduced: $('race-reduced').checked,
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
         fullReveal: run.status === 'won',
         celebrationPaused: document.hidden,
         backdrop,
@@ -1002,10 +1416,37 @@ try {
     updateMenu();
     frameId = requestAnimationFrame(frame);
   }
-  const initialPreparation = prepare();
+  const initialPreparation = prepare(),
+    initialMatch = match,
+    initialGeneration = generation;
   frameId = requestAnimationFrame(frame);
-  await initialPreparation;
-  document.documentElement.dataset.toolState = contentReady ? 'ready' : 'error';
+  // Install the usable lobby before waiting for its required picture. Cancel
+  // and Back stay reachable; only Start waits for this exact preparation.
+  finishBoot();
+  document.documentElement.dataset.toolState = 'ready';
+  const initialReady = await initialPreparation;
+  const start = $('race-start');
+  if (
+    initialFocusPending &&
+    initialReady &&
+    !disposed &&
+    !artworkLifetime.signal.aborted &&
+    match === initialMatch &&
+    generation === initialGeneration &&
+    match.status === 'ready' &&
+    contentReady &&
+    !contentBusy &&
+    shell.scope() === 'main' &&
+    unclaimedFocus(document.activeElement) &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    start.isConnected &&
+    !start.disabled &&
+    !start.closest('[hidden],[inert],[aria-hidden="true"]') &&
+    start.getClientRects().length > 0 &&
+    document.defaultView?.getComputedStyle(start)?.visibility !== 'hidden'
+  )
+    start.focus({ preventScroll: true });
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
@@ -1014,12 +1455,10 @@ try {
   $('race-start').disabled = true;
   $('race-message').textContent = `The race could not load: ${error.message}`;
 } finally {
-  document.querySelectorAll('[data-boot-inert]').forEach((element) => {
-    element.inert = false;
-    element.removeAttribute('aria-busy');
-  });
-  if (!bootFailed) {
-    bootDisplay.clear();
-    $('boot-return').hidden = true;
-  }
+  initialFocusPending = false;
+  document.removeEventListener('focusin', initialFocusChoice, true);
+  document.removeEventListener('visibilitychange', initialVisibility);
+  window.removeEventListener('blur', initialFocusLost);
+  window.removeEventListener('pagehide', initialFocusLost);
+  finishBoot();
 }

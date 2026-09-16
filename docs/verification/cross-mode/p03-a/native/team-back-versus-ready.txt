@@ -1,0 +1,24 @@
+- main:
+  - region "Two boards. One race.":
+    - paragraph: REVEAL LINE / LOCAL TWO PLAYER
+    - heading "Two boards. One race." [level=1]
+    - status: Both boards use the same map, class and seed. Ready when you are.
+    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds
+    - article:
+      - text: PLAYER 1
+      - heading "Sunflower" [level=2]
+      - paragraph: W A S D
+    - article:
+      - text: PLAYER 2
+      - heading "Skyline" [level=2]
+      - paragraph: Arrow keys
+    - link "Relay Rescue · team up":
+      - /url: relay-rescue.html?return=versus
+    - button "Start round ↗"
+    - button "Race setup"
+    - button "Options"
+    - button "How to play"
+    - link "Return to solo":
+      - /url: ../
+    - paragraph: First to two rounds. Couch races do not change your solo progress.
+  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.

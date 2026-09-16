@@ -1,0 +1,16 @@
+{
+  "status": "PASS_HTTP_AUDIT_AND_EXACT_SPARSE_RETIREMENT",
+  "head": "beb0140eff7315b63269ee78ded07155de3e7084",
+  "logicalIndexSHA256": "3e6b8d580a26a2d82394f9d8573610e08b60b2baddbc09f0c1a1f0ebd1224cd9",
+  "remainingSourceFiles": 617,
+  "remainingPrettierFiles": 56,
+  "retiredFiles": 32,
+  "retiredBytes": 34669519,
+  "allocatedWorktreeAndGitBytes": 59088896,
+  "originalsUnchanged": true,
+  "testsRun": false,
+  "browserRun": false,
+  "generated": false,
+  "remoteMutation": false,
+  "phaseAcceptance": false
+}

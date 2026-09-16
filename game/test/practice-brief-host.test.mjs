@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -349,8 +350,28 @@ test('only an ordinary validated Arcade action policy receives the Arcade label'
     }
   }
   const page = await soloPage(t, { titleScreen: true, pictures: { Image: ChapterImage } });
-  await page.$('shell-featured').onclick();
+  // Start continues the selected flight. Choose the authored Arcade chapter
+  // explicitly instead of assuming the title action replaces that selection.
+  page.$('shell-play').click();
+  const chapter = [...page.$('mission-picker-cards').children].find(
+    (button) => button.getAttribute('data-pack') === 'fpv-arcade-r5',
+  );
+  assert.ok(chapter);
+  chapter.click();
+  await waitForChapterSelection(
+    t,
+    page,
+    () =>
+      page.$('pack-select').value === 'fpv-arcade-r5' &&
+      page.$('campaign-select').value.startsWith('fpv-pressure-lines/1/') &&
+      !page.$('pack-select').disabled &&
+      page.doc.body.dataset.pictureState === 'ready',
+    'Validated Arcade chapter install and exact picture must become ready',
+  );
   page.frame(0);
+  assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
+  assert.equal(page.rendered.run.levelId, 'orchard-crossing');
+  assert.equal(page.rendered.run.tick, 0, 'Choosing a chapter does not start it');
   assert.equal(
     page.$('shell-edition').textContent,
     'ARCADE EDITION',

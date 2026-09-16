@@ -1,0 +1,65 @@
+[
+  {
+    "name": "lint",
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+      "game/couch/couch-static-pictures.mjs",
+      "game/couch/couch.mjs",
+      "game/presentation/page.mjs",
+      "game/test/couch-chapter.test.mjs",
+      "game/test/couch-installed-chapters.test.mjs",
+      "game/test/couch-navigation.test.mjs",
+      "game/test/couch-shell.test.mjs",
+      "game/test/couch-static-picture-host.test.mjs",
+      "game/test/couch-static-pictures.test.mjs",
+      "game/test/helpers/couch-host.mjs",
+      "game/test/presentation-page.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 0.8,
+    "log": ".cache/p08a/focus-lint.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "format",
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+      "--check",
+      "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "docs/shared-static-pictures.md",
+      "game/couch/couch-static-pictures.mjs",
+      "game/couch/couch.mjs",
+      "game/couch/index.html",
+      "game/presentation/page.mjs",
+      "game/test/couch-chapter.test.mjs",
+      "game/test/couch-installed-chapters.test.mjs",
+      "game/test/couch-navigation.test.mjs",
+      "game/test/couch-shell.test.mjs",
+      "game/test/couch-static-picture-host.test.mjs",
+      "game/test/couch-static-pictures.test.mjs",
+      "game/test/helpers/couch-host.mjs",
+      "game/test/presentation-page.test.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 0.898,
+    "log": ".cache/p08a/focus-format.log",
+    "bytes": 66,
+    "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+  },
+  {
+    "name": "diff",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.052,
+    "log": ".cache/p08a/focus-diff.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

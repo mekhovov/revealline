@@ -9,6 +9,7 @@ export function attachControllerNavigation({
   getRoot = () => doc,
   getDefaultFocus = () => null,
   getControlLabels = () => ({ directions: 'D-pad', confirm: 'South', back: 'East' }),
+  getReadingPrompt = null,
   accept = () => true,
   onBack = () => {},
   onMenu = () => {},
@@ -16,6 +17,8 @@ export function attachControllerNavigation({
   onReadingChange = () => {},
   onNativeInput = () => {},
   keyboard = false,
+  ownsKeyboardEvent = () => false,
+  nativeReadingScroll = false,
 } = {}) {
   let scope = null,
     root = null,
@@ -23,6 +26,7 @@ export function attachControllerNavigation({
     focused = null,
     editing = null,
     reading = null,
+    nativeScroll = null,
     readingInvalidated = false,
     destroyed = false,
     focusing = false;
@@ -32,7 +36,9 @@ export function attachControllerNavigation({
     doc.addEventListener(type, fn, true);
     listeners.push(() => doc.removeEventListener(type, fn, true));
   };
-  const hint = (message) => onHint(message);
+  const hint = (message, metadata) => (metadata ? onHint(message, metadata) : onHint(message));
+  const readingMessage = (message, owner) =>
+    hint(message, { kind: 'reading', regionId: owner.regionId });
   function visible(element) {
     return visibleInScope(element, false);
   }
@@ -96,6 +102,7 @@ export function attachControllerNavigation({
     };
   }
   function cancelReading({ restoreFocus = false, message = '', invalidated = false } = {}) {
+    nativeScroll = null;
     if (!reading) return false;
     const previous = reading;
     reading = null;
@@ -103,7 +110,7 @@ export function attachControllerNavigation({
     if (focused === previous.region) mark(null);
     readingInvalidated ||= invalidated;
     onReadingChange(null);
-    if (message) hint(message);
+    if (message) readingMessage(message, previous);
     if (
       restoreFocus &&
       !destroyed &&
@@ -118,8 +125,41 @@ export function attachControllerNavigation({
     return cancelReading({ restoreFocus, message: 'Reading ended. Choose an action when ready.' });
   }
   function readingHint() {
+    const scrollable = !!readingMetrics(reading.region)?.max;
+    if (getReadingPrompt) return `${reading.label}: ${getReadingPrompt({ scrollable })}`;
     const labels = getControlLabels();
-    return `${reading.label}: ${readingMetrics(reading.region)?.max ? 'Up/Down scroll' : 'All text is visible'} · ${labels.confirm} or ${labels.back} returns`;
+    return `${reading.label}: ${scrollable ? 'Up/Down scroll' : 'All text is visible'} · ${labels.confirm} or ${labels.back} returns`;
+  }
+  function readingCurrent(owner = reading) {
+    return (
+      owner &&
+      visible(owner.region) &&
+      owner.region.id === owner.regionId &&
+      visible(owner.origin) &&
+      doc.activeElement === owner.region &&
+      owner.region.textContent === owner.text &&
+      owner.region.hasAttribute('data-game-reading') &&
+      (owner.region.getAttribute('aria-label') || owner.region.getAttribute('aria-labelledby')) &&
+      !(owner.region.tabIndex < 0) &&
+      readingMetrics(owner.region) &&
+      reading === owner
+    );
+  }
+  function refreshReadingHint() {
+    // A modality change can follow the current key's reading action. Republish
+    // only its still-current text; do not sync, refocus or enter another reader.
+    if (
+      destroyed ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      scope !== getScope() ||
+      root !== getRoot() ||
+      !readingCurrent()
+    )
+      return false;
+    const owner = reading;
+    readingMessage(readingHint(), owner);
+    return true;
   }
   function beginReading({ region, origin, label: name, exit = null } = {}) {
     if (destroyed) return false;
@@ -159,6 +199,7 @@ export function attachControllerNavigation({
     if (readingContent.has(region) && readingContent.get(region) !== region.textContent)
       region.scrollTop = 0;
     readingContent.set(region, region.textContent);
+    nativeScroll = null;
     reading = {
       region,
       regionId: region.id,
@@ -176,7 +217,10 @@ export function attachControllerNavigation({
     focus(region);
     onReadingChange(readingState());
     // A host may deliberately clear navigation during the callback.
-    if (reading) hint(readingHint());
+    if (reading) {
+      const owner = reading;
+      readingMessage(readingHint(), owner);
+    }
     return !!reading;
   }
   function relinquish() {
@@ -185,7 +229,51 @@ export function attachControllerNavigation({
     engaged = false;
     mark(null);
   }
+  function nativeReaderCurrent(owner, event) {
+    if (
+      !nativeReadingScroll ||
+      !owner ||
+      reading !== owner ||
+      destroyed ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      getScope() !== owner.scope ||
+      getRoot() !== owner.root ||
+      !owner.region.contains(event.target) ||
+      !readingCurrent(owner)
+    )
+      return false;
+    // Visibility/acceptance reads can synchronously retire this exact owner.
+    return (
+      getScope() === owner.scope &&
+      getRoot() === owner.root &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      !destroyed &&
+      reading === owner &&
+      doc.activeElement === owner.region
+    );
+  }
   listen('pointerdown', (event) => {
+    nativeScroll = null;
+    const owner = reading;
+    if (
+      (event.button === undefined || event.button === 0) &&
+      event.isPrimary !== false &&
+      event.cancelable !== false &&
+      !event.defaultPrevented &&
+      nativeReaderCurrent(owner, event)
+    ) {
+      // Preserve the browser's native pan/selection default and the stable Done
+      // action. Only this pointer and exact reader can survive scroll adoption.
+      nativeScroll = { owner, pointerId: event.pointerId };
+      onNativeInput(event);
+      if (!nativeReaderCurrent(owner, event)) {
+        nativeScroll = null;
+        if (reading === owner) relinquish();
+      }
+      return;
+    }
     const exit = reading?.exit;
     if (
       exit &&
@@ -206,10 +294,31 @@ export function attachControllerNavigation({
     relinquish();
     onNativeInput(event);
   });
-  listen('pointercancel', () => {
+  if (nativeReadingScroll)
+    listen('pointerup', (event) => {
+      if (nativeScroll?.pointerId === event.pointerId) nativeScroll = null;
+    });
+  listen('pointercancel', (event) => {
+    const gesture = nativeScroll;
+    nativeScroll = null;
+    if (
+      gesture &&
+      gesture.pointerId === event.pointerId &&
+      event.isPrimary !== false &&
+      !event.defaultPrevented &&
+      nativeReaderCurrent(gesture.owner, event)
+    )
+      return;
     if (reading) relinquish();
   });
   listen('keydown', (event) => {
+    // Explicit host capture owns these keys before document-level menu navigation.
+    // Relinquish stale previews without consuming the event or moving focus.
+    if (keyboard && ownsKeyboardEvent(event)) {
+      relinquish();
+      onNativeInput(event);
+      return;
+    }
     if (keyboard && keyboardNavigation(event)) {
       onNativeInput(event);
       return;
@@ -257,21 +366,7 @@ export function attachControllerNavigation({
       mark(null);
       if (engaged && scope !== 'flight') ensureFocus();
     }
-    if (
-      reading &&
-      (!visible(reading.region) ||
-        reading.region.id !== reading.regionId ||
-        !visible(reading.origin) ||
-        doc.activeElement !== reading.region ||
-        reading.region.textContent !== reading.text ||
-        !reading.region.hasAttribute('data-game-reading') ||
-        !(
-          reading.region.getAttribute('aria-label') ||
-          reading.region.getAttribute('aria-labelledby')
-        ) ||
-        reading.region.tabIndex < 0 ||
-        !readingMetrics(reading.region))
-    ) {
+    if (reading && !readingCurrent()) {
       invalidated = true;
       cancelReading({ message: 'The reading region changed. Choose it again to read.' });
     }
@@ -426,8 +521,9 @@ export function attachControllerNavigation({
     element.click();
   }
   function readDirection(direction) {
+    const owner = reading;
     if (direction !== 'up' && direction !== 'down') {
-      hint(readingHint());
+      readingMessage(readingHint(), owner);
       return;
     }
     const { region } = reading;
@@ -444,8 +540,9 @@ export function attachControllerNavigation({
     }
     const boundary = max === 0 ? 'all' : top === 0 ? 'start' : top === max ? 'end' : null;
     if (boundary && reading.boundary !== boundary)
-      hint(
+      readingMessage(
         `${boundary === 'all' ? 'All text is visible.' : boundary === 'start' ? 'Start of details.' : 'End of details.'} ${readingHint()}`,
+        owner,
       );
     reading.boundary = boundary;
   }
@@ -529,7 +626,20 @@ export function attachControllerNavigation({
     const items = controls(),
       current = items.indexOf(doc.activeElement);
     if (event.key === 'Tab') {
-      if (root.tagName === 'DIALOG') return false;
+      if (root.tagName === 'DIALOG') {
+        // Keep native traversal inside the current modal. Intercept only its
+        // first/last boundary; native inputs still own all interior Tab keys.
+        const tabStops = [...root.querySelectorAll(`${CONTROLS},[tabindex]`)]
+          .filter((element) => element.tabIndex >= 0 && visible(element))
+          .sort((a, b) => (a.tabIndex || Infinity) - (b.tabIndex || Infinity));
+        if (!root.open || !tabStops.length) return false;
+        const boundary = event.shiftKey ? tabStops[0] : tabStops.at(-1);
+        if (doc.activeElement !== boundary) return false;
+        event.preventDefault();
+        relinquish();
+        focus(event.shiftKey ? tabStops.at(-1) : tabStops[0]);
+        return true;
+      }
       if (!items.length) return false;
       event.preventDefault();
       relinquish();
@@ -591,6 +701,14 @@ export function attachControllerNavigation({
     beginReading,
     endReading,
     readingState,
+    refreshReadingHint,
+    // One focus handoff; callers own readiness/foreground/intent checks.
+    // Unlike engage(), this does not enable later controller scope refocusing.
+    focusAvailable() {
+      if (destroyed) return null;
+      sync();
+      return scope === 'flight' ? null : ensureFocus();
+    },
     engage() {
       if (destroyed) return;
       sync();

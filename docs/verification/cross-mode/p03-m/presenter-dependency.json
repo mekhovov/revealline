@@ -1,0 +1,14 @@
+[
+  {
+    "path": "game/ui/mode-choice.mjs",
+    "bytes": 1339,
+    "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858",
+    "owner": "root p03l-common-lobby; dependency only, DO NOT STAGE"
+  },
+  {
+    "path": "game/ui/mode-choice.css",
+    "bytes": 1506,
+    "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6",
+    "owner": "root p03l-common-lobby; dependency only, DO NOT STAGE"
+  }
+]

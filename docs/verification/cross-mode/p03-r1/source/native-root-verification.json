@@ -1,0 +1,64 @@
+{
+  "scope": "Local native keyboard verification of both guarded Solo Restart openers; no phase or release acceptance",
+  "checkedAt": "2026-09-15T18:15:25.881918+00:00",
+  "base": "3253189f3599378dedc30f8f654e6e0d5dfd2253",
+  "origin": "http://127.0.0.1:60241/game/",
+  "source": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 241350,
+      "sha256": "47009b41f82b759b7af4aa69f2c4a53477c083929d25a844bf73b53262d135de",
+      "httpMatch": true
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70334,
+      "sha256": "ce6f600d6209f6cd7b4e2e98e6af1f5fa0c39ff2e773371750da18aead06e33d",
+      "httpMatch": true
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98",
+      "httpMatch": true
+    }
+  ],
+  "events": 14,
+  "passed": [
+    "A genuine saved 0:11 First Signal flight was restored paused through the title UI.",
+    "Workshop Restart opens a decision without resetting the 0:11 HUD. Stay is initially focused; Tab loops inside the decision.",
+    "Escape and explicit Stay preserve Workshop/Home and restore the actual Workshop Restart opener.",
+    "Confirmed Workshop Restart closes parent menus, prepares its picture, resets the HUD to 0:00 and enters a running field.",
+    "The visible Pause Restart opens the same guarded decision; Escape returns to its own overlay opener.",
+    "Confirmed Pause Restart resets the HUD to 0:00, completes picture preparation and enters a running field. Later explicit Escape pauses it."
+  ],
+  "evidenceNotes": [
+    "Snapshot and DOM reads are sequential. Event 13 catches preparation first; its subsequent live DOM explicitly establishes running and hidden overlay.",
+    "No browser storage or game state was injected. The genuine saved flight originated in the earlier owned 60241 preview.",
+    "Both screenshots were visually inspected. The restarted pause image is the normal dedicated pause surface."
+  ],
+  "limits": [
+    "No physical controller, phone, zoom or short-landscape qualification.",
+    "No native queued-cut, failed-image, cancelled preparation, blur or storage-failure claim; applicable deterministic host tests are separate.",
+    "No saved-slot byte comparison or public-deployment claim.",
+    "Source contains the separately reviewed P05 compact-dialog CSS overlay."
+  ],
+  "predecessor": "../p03-r1-native-before in p03a-navigation worktree preserves the reproduced unguarded Restart bug.",
+  "artifacts": [
+    {
+      "path": "events.json",
+      "bytes": 38963,
+      "sha256": "d06b07751be14ec35960aecf58083ca426320ebac4214ab2c07ecfc3ea76c976"
+    },
+    {
+      "path": "restart-confirmation.jpeg",
+      "bytes": 56532,
+      "sha256": "8847155520c7fac55dc55459fe4b1aaf3ad8e616d5cb50ce7dc437caab81095d"
+    },
+    {
+      "path": "restarted-pause.jpeg",
+      "bytes": 82864,
+      "sha256": "acb6bb676d67464c2292cbb7f000584e0e36ecef80846e20d1fee33aaa03fd21"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 // button/summary/Tab/Escape defaults and physical gamepad samples are modeled boundaries.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage, SoloElement } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 
 function key(page, value) {
@@ -189,16 +189,27 @@ for (const mode of ['keyboard', 'controller']) {
     const workshop = page.$('shell-workshop-dialog');
     assert.equal(workshop.open, true);
     activate(page, input, page.$('shell-library'), workshop);
-    assert.equal(workshop.open, false);
-    assert.equal(home.open, false);
+    assert.equal(workshop.open, true);
+    assert.equal(home.open, true);
     assert.equal(page.$('library-dialog').open, true);
     assert.equal(page.$('collection-dialog').open, false);
     input.back();
     page.frame(0);
     assert.equal(page.$('library-dialog').open, false);
     assert.equal(page.$('library-dialog').contains(page.doc.activeElement), false);
+    assert.equal(workshop.open, true);
+    assert.ok(page.doc.activeElement === page.$('shell-library'));
+    input.back();
+    page.frame(0);
+    assert.equal(workshop.open, false);
+    assert.equal(home.open, true);
+    assert.ok(page.doc.activeElement === page.$('shell-workshop'));
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), ready);
-    activate(page, input, page.$('start-button'), nonmodalOverlay(page));
+    activate(page, input, page.$('shell-featured'), home);
+    await settle(() => {
+      page.frame(0);
+      return !home.open && !page.rendered.paused;
+    }, 'The explicit named Title Start must complete before sending flight input.');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let i = 0; i < 20; i++) page.frame();

@@ -272,7 +272,7 @@ test('settled writer recovery clears on explicit retry, world change and page re
   assert.deepEqual(page.errors, []);
 });
 
-test('history Continue and explicit Resume keep the saved pin and checkpoint without reacquiring or writing', async (t) => {
+test('history Load saved flight and explicit Resume keep the saved pin and checkpoint without reacquiring or writing', async (t) => {
   const { page, memory, locks, sha256, reads } = await pageFor(t);
   page.$('start-button').click();
   page.key('ArrowDown');
@@ -281,18 +281,31 @@ test('history Continue and explicit Resume keep the saved pin and checkpoint wit
   page.$('pause-button').click();
   const saved = JSON.parse(page.storage.getItem(sessionKey)),
     checkpoint = authoritativeCheckpoint(page.rendered.run);
+  page.$('shell-packs').click();
+  page.$('shell-prepare').click();
   page.change('turn-select', 'grid-center');
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  await page.$('mission-replace-confirm').onclick();
   await settle(() => page.doc.body.dataset.pictureState === 'ready');
+  assert.equal(page.$('mission-replace-dialog').open, false);
+  page.$('shell-briefing').click();
   await historyReturn(page, locks);
   const storage = new Map(page.storage.map),
     writes = memory.allPuts.length;
   // A fresh read-only choice may reuse the exact published history already retained.
-  page.change('turn-select', 'immediate');
+  page.$('shell-packs').click();
+  page.$('shell-prepare').click();
+  page.$('turn-select').value = 'immediate';
+  await page.$('turn-select').onchange();
   await settle(() => page.doc.body.dataset.pictureState === 'ready');
   assert.equal(reads(), 1);
   assert.equal(memory.allPuts.length, writes);
-  page.$('shell-menu').click();
-  page.$('shell-continue').click();
+  page.$('shell-briefing').click();
+  // Generic Load remains paused; Title Continue deliberately resumes now.
+  assert.equal(page.$('continue-saved').hidden, false);
+  await page.$('continue-saved').onclick();
   await settle(() => page.doc.body.dataset.flightState === 'paused');
   page.frame(0);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
@@ -306,6 +319,8 @@ test('history Continue and explicit Resume keep the saved pin and checkpoint wit
   ticks(page, 3);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="saves"]').click();
+  assert.equal(page.$('library-saves').hidden, false);
   page.$('export-session').click();
   await settle(() => page.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(page.$('save-json').value);
@@ -316,6 +331,7 @@ test('history Continue and explicit Resume keep the saved pin and checkpoint wit
   page.$('start-button').click();
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
+  assert.equal(page.doc.querySelectorAll('dialog[open]').length, 0);
   assert.ok(page.rendered.run.tick > saved.replay.ticks);
   assert.deepEqual(page.storage.map, storage);
   assert.equal(memory.allPuts.length, writes);

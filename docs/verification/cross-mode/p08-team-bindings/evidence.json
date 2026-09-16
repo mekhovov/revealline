@@ -1,0 +1,141 @@
+{
+  "format": "revealline.team-picture-bindings-evidence.v1",
+  "base": "1817377c00049874eb8ab3f47f0b630894ba28f8",
+  "incoming": "e5b2b91e480b235a6c24ba1fd44ba6e42415c743",
+  "sourceHoldSha256": "324a8b2dc53e245bf9f91c2b77577a2bac6ed180ab1a1df95dc7deb95905fa02",
+  "scope": "Unwired Team painter/lease and exact two-row picture authority. Historical107 pair is separate from final195 per-runtime source tests.",
+  "archive": {
+    "path": "evidence.zip",
+    "bytes": 123048,
+    "sha256": "b641a43b254acd422a40e35eea2657b1a9bc48eb938b02b4dabe97e26bcdab0c"
+  },
+  "files": [
+    {
+      "source": ".cache/team-bindings/authority.json",
+      "member": "authority.json",
+      "bytes": 14411,
+      "sha256": "1c86375bf314194a262963d82dd2f202e65bf9c20135b15d23f882c7c7204549"
+    },
+    {
+      "source": ".cache/team-bindings/completion.json",
+      "member": "completion.json",
+      "bytes": 4733,
+      "sha256": "bccca2c7914ae71befd563d40bc87dfd41002049e31edc6e6f3408858a6a13c4"
+    },
+    {
+      "source": ".cache/team-bindings/dynamic-entry-inputs.json",
+      "member": "dynamic-entry-inputs.json",
+      "bytes": 429,
+      "sha256": "e312d97f50894b74f85eac0e80c4495ac788c38da031649228056e7ce4fb75c2"
+    },
+    {
+      "source": ".cache/team-bindings/host-manifest-comparison.json",
+      "member": "host-manifest-comparison.json",
+      "bytes": 2109,
+      "sha256": "9cf91f98fd04153744507f5ef6f87d3b06dcbdebf938bf38ef2e9b22ccc80909"
+    },
+    {
+      "source": ".cache/team-bindings/inputs-after.json",
+      "member": "inputs-after.json",
+      "bytes": 55181,
+      "sha256": "27b4eac0dafed33a4c2f74961b154e3611e89a533d17e8bcc2ef00f8c02986b3"
+    },
+    {
+      "source": ".cache/team-bindings/inputs-before-01.json",
+      "member": "inputs-before-01.json",
+      "bytes": 55028,
+      "sha256": "6b14cb4a7cbd29c49af7b308aa8dde1f94b5fdf2ee37a1ade6ad82443a8298c6"
+    },
+    {
+      "source": ".cache/team-bindings/inputs-before.json",
+      "member": "inputs-before.json",
+      "bytes": 55181,
+      "sha256": "27b4eac0dafed33a4c2f74961b154e3611e89a533d17e8bcc2ef00f8c02986b3"
+    },
+    {
+      "source": ".cache/team-bindings/preparation.json",
+      "member": "preparation.json",
+      "bytes": 54717,
+      "sha256": "9aa8c9619fbb23da1e9964b166325812a0cd2150a2ca08e7f334e81464a076b5"
+    },
+    {
+      "source": ".cache/team-bindings/run-pair-01.py",
+      "member": "run-pair-01.py",
+      "bytes": 2226,
+      "sha256": "082df78ebaea7beb73bd2d682802a82240cbc1601bf47c4439057ee8d969dab3"
+    },
+    {
+      "source": ".cache/team-bindings/run-pair-final.py",
+      "member": "run-pair-final.py",
+      "bytes": 2238,
+      "sha256": "cb27b685a2dbb6f43683b3820e4854253053666777580e19e01f69c9e86fb5fe"
+    },
+    {
+      "source": ".cache/team-bindings/source-held-01.diff",
+      "member": "source-held-01.diff",
+      "bytes": 23852,
+      "sha256": "d05724676080c879a873710b198dff8874e1d7360352c57001ecae30bbacbe43"
+    },
+    {
+      "source": ".cache/team-bindings/source-held-01.json",
+      "member": "source-held-01.json",
+      "bytes": 8167,
+      "sha256": "324a8b2dc53e245bf9f91c2b77577a2bac6ed180ab1a1df95dc7deb95905fa02"
+    },
+    {
+      "source": ".cache/team-bindings/static-checks.json",
+      "member": "static-checks.json",
+      "bytes": 1148,
+      "sha256": "03e68b4d22bf1039204c26d0ce120b54bfc7f89b63e93f9ce2b07398c7c07848"
+    },
+    {
+      "source": ".cache/team-bindings/test-plan.json",
+      "member": "test-plan.json",
+      "bytes": 3874,
+      "sha256": "a33e53a089a86ae02c840505eff99d2936930a09a2734f453e502196c8dddcf5"
+    },
+    {
+      "source": ".cache/team-bindings/verification.json",
+      "member": "verification.json",
+      "bytes": 3751,
+      "sha256": "6cfa4c375a081e89011ddda8b52ae81cd4bd7362528b10016db95e288744c73a"
+    },
+    {
+      "source": ".cache/team-bindings/whole-final-node20.json",
+      "member": "whole-final-node20.json",
+      "bytes": 771,
+      "sha256": "40bb6c6215efbd9af6f189325114b3f23ea139e4b6a26e55143a961bb626963e"
+    },
+    {
+      "source": ".cache/team-bindings/whole-final-node20.log",
+      "member": "whole-final-node20.log",
+      "bytes": 45404,
+      "sha256": "637c951520d096309b35ec2b9f12a2eb8b1a1d541dc733705bd5da0667d67d97"
+    },
+    {
+      "source": ".cache/team-bindings/whole-final-node22.json",
+      "member": "whole-final-node22.json",
+      "bytes": 771,
+      "sha256": "d1095288bc9526ced1813b94dfa902d79a5e93cc6446235352c298a6b0b7d4f0"
+    },
+    {
+      "source": ".cache/team-bindings/whole-final-node22.log",
+      "member": "whole-final-node22.log",
+      "bytes": 48307,
+      "sha256": "7bb2352da8aed2da578f6bfce1b4334e0e318bcac8d3be908ad45b789c8b4831"
+    },
+    {
+      "source": ".cache/team-bindings/whole-node22-01.json",
+      "member": "whole-node22-01.json",
+      "bytes": 765,
+      "sha256": "e92350b45499e3e7801bee1e37db775665dd369ddf8151c0fd052529c68d2369"
+    },
+    {
+      "source": ".cache/team-bindings/whole-node22-01.log",
+      "member": "whole-node22-01.log",
+      "bytes": 115527,
+      "sha256": "fc35a8168e83945d9fe6f003cdf8b450c6a4ab4fbb681f6cb377fe07774778a2"
+    }
+  ],
+  "decodedBytes": 498590
+}

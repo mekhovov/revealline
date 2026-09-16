@@ -1,0 +1,1577 @@
+{
+  "base": "f61a249277944a5fdd50cf7d545cbb18dbd0eaf8",
+  "createdAt": "2026-09-15T18:10:58.595410+00:00",
+  "freeBefore": 1102565376,
+  "reserveBytes": 268435456,
+  "ownedBudgetBytes": 104857600,
+  "regularSourceBytes": 15127444,
+  "paths": [
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "gitBlob": "7f63a629b87ac199cfb83983abb3f3498b7ee68b",
+      "bytes": 124
+    },
+    {
+      "path": ".prettierignore",
+      "mode": "100644",
+      "gitBlob": "bab27e1ef8372f6cb94ca47dfd9e9338b2408253",
+      "bytes": 13
+    },
+    {
+      "path": ".prettierrc.json",
+      "mode": "100644",
+      "gitBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+      "bytes": 73
+    },
+    {
+      "path": "authoring/motion-lab/animation.mjs",
+      "mode": "100644",
+      "gitBlob": "887cb989d0f849b8c6bad12dee2820eb1a51c584",
+      "bytes": 8068
+    },
+    {
+      "path": "authoring/motion-lab/presets.json",
+      "mode": "100644",
+      "gitBlob": "e958dea073c8da46b8ae374e75a2e16f1d657279",
+      "bytes": 50888
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "mode": "100644",
+      "gitBlob": "7a5edad2472ff03253a0e3a7db36588bc1e9ec50",
+      "bytes": 6660
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "mode": "100644",
+      "gitBlob": "22f515f4959e81abb69676a3dea754a711b526f2",
+      "bytes": 107476
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "mode": "100644",
+      "gitBlob": "c849556361a3c6ed1f7ebd820d69f51d4e3a1bdd",
+      "bytes": 43869
+    },
+    {
+      "path": "docs/development.md",
+      "mode": "100644",
+      "gitBlob": "8e131b52997a47c14c4417d2e63220b524fdd221",
+      "bytes": 26204
+    },
+    {
+      "path": "docs/team-departure.md",
+      "mode": "100644",
+      "gitBlob": "4279c4559faaf672e413fb32552744a1f92096d6",
+      "bytes": 4753
+    },
+    {
+      "path": "eslint.config.mjs",
+      "mode": "100644",
+      "gitBlob": "0ad37c342bc68486d087ca9ef3ef282151d88797",
+      "bytes": 1610
+    },
+    {
+      "path": "game/app.mjs",
+      "mode": "100644",
+      "gitBlob": "4149ce42fdc2446da0af4a5355658ebd057cdce2",
+      "bytes": 238294
+    },
+    {
+      "path": "game/attempt-export.mjs",
+      "mode": "100644",
+      "gitBlob": "0081aa9b3d8a5ddeeab81c5afbac6b4643c5b4df",
+      "bytes": 3620
+    },
+    {
+      "path": "game/attempt-file.mjs",
+      "mode": "100644",
+      "gitBlob": "5846887d4aa391c05c9c926db33df18980befb70",
+      "bytes": 11518
+    },
+    {
+      "path": "game/audio-preferences.mjs",
+      "mode": "100644",
+      "gitBlob": "5a78af7d484970948c88fe4500089d330faf82ca",
+      "bytes": 5006
+    },
+    {
+      "path": "game/backup-set.mjs",
+      "mode": "100644",
+      "gitBlob": "3fa6369e62ea06bccbf8eb7e718481719099af18",
+      "bytes": 7510
+    },
+    {
+      "path": "game/backup-storage.mjs",
+      "mode": "100644",
+      "gitBlob": "565e345f399f58bc36bd74781725720a8678256d",
+      "bytes": 17265
+    },
+    {
+      "path": "game/backup.mjs",
+      "mode": "100644",
+      "gitBlob": "4ff69b96bd6400979d7b7153174521a02976fade",
+      "bytes": 9540
+    },
+    {
+      "path": "game/body-derivative.mjs",
+      "mode": "100644",
+      "gitBlob": "fa8e33cc948f29ce9f545ec06f01c0f2814520e4",
+      "bytes": 1461
+    },
+    {
+      "path": "game/build-config.json",
+      "mode": "100644",
+      "gitBlob": "9b9e039e77f198b41759b157364267a1350f954d",
+      "bytes": 5252
+    },
+    {
+      "path": "game/campaign-contexts.mjs",
+      "mode": "100644",
+      "gitBlob": "b55b1c0bc169887cd1df26e13d6a080d43d4646b",
+      "bytes": 4403
+    },
+    {
+      "path": "game/campaign-difficulty.mjs",
+      "mode": "100644",
+      "gitBlob": "c3bf985f1b583ac70e1172b4d8c588b53447544a",
+      "bytes": 7336
+    },
+    {
+      "path": "game/challenges.mjs",
+      "mode": "100644",
+      "gitBlob": "8e41069b2a4117207445659ef2121e8c29f17bbd",
+      "bytes": 1508
+    },
+    {
+      "path": "game/chapter-download.mjs",
+      "mode": "100644",
+      "gitBlob": "eb58eaffe5540cb81e3863413ee087062ca3576e",
+      "bytes": 1326
+    },
+    {
+      "path": "game/character-presentations.mjs",
+      "mode": "100644",
+      "gitBlob": "a0e95aa2f98bab661d817b044bfdf8b76b3ddf77",
+      "bytes": 11597
+    },
+    {
+      "path": "game/collection-results.mjs",
+      "mode": "100644",
+      "gitBlob": "5568727514d40cc26662f52a6ee4215054febed6",
+      "bytes": 852
+    },
+    {
+      "path": "game/content-launch.mjs",
+      "mode": "100644",
+      "gitBlob": "ea4d5af71f011fa26f4897190e2a5b91798b30e5",
+      "bytes": 9259
+    },
+    {
+      "path": "game/content.mjs",
+      "mode": "100644",
+      "gitBlob": "ce0786c6cd6a41cdbe4ae2e00a94388f516be9c3",
+      "bytes": 23214
+    },
+    {
+      "path": "game/content/campaign.json",
+      "mode": "100644",
+      "gitBlob": "57d9277a23efecd687710ce607f02ff757f5f7f2",
+      "bytes": 18487
+    },
+    {
+      "path": "game/content/classes.json",
+      "mode": "100644",
+      "gitBlob": "e7dbbaec7a732e5bbd4709d3f555ec29ed6205d8",
+      "bytes": 2227
+    },
+    {
+      "path": "game/content/enemy-presentations.json",
+      "mode": "100644",
+      "gitBlob": "d2b16f9cdb7367415b3ed64eb358ec8e86ef237b",
+      "bytes": 9576
+    },
+    {
+      "path": "game/content/external-worlds.json",
+      "mode": "100644",
+      "gitBlob": "8f58338038e85a23e8968b3e88c9aa97b570d794",
+      "bytes": 12823
+    },
+    {
+      "path": "game/content/optional-worlds.json",
+      "mode": "100644",
+      "gitBlob": "7aaae475304c685f480e7fe9209f954fca537336",
+      "bytes": 3973
+    },
+    {
+      "path": "game/content/packs/archive-catalog.json",
+      "mode": "100644",
+      "gitBlob": "eec906cea096b03c84f62bdff8138674a7c440e5",
+      "bytes": 2600
+    },
+    {
+      "path": "game/content/packs/catalog.json",
+      "mode": "100644",
+      "gitBlob": "a3389fb2637ac20d2f5d2defd7f2e6c2c8331e46",
+      "bytes": 4898
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "mode": "100644",
+      "gitBlob": "37108db6fc98f1c4e3eeed4381b1b5d19e24ef16",
+      "bytes": 11708176
+    },
+    {
+      "path": "game/content/packs/index.json",
+      "mode": "100644",
+      "gitBlob": "720ba56d9b3be5ec65cdac5386c5fd2ed3abaf4d",
+      "bytes": 693
+    },
+    {
+      "path": "game/content/recovery-catalogs.json",
+      "mode": "100644",
+      "gitBlob": "26e5dcbb853fa359997ef5b0a29e4fa2f7103391",
+      "bytes": 279846
+    },
+    {
+      "path": "game/content/scenarios/line-impact-demo.json",
+      "mode": "100644",
+      "gitBlob": "ade153124187d03cafc5c53a5aa55bd8417c8195",
+      "bytes": 2619
+    },
+    {
+      "path": "game/content/themes.json",
+      "mode": "100644",
+      "gitBlob": "ecf8ac03b979abd2228955522107254d4cd10491",
+      "bytes": 4266
+    },
+    {
+      "path": "game/continuation.mjs",
+      "mode": "100644",
+      "gitBlob": "2ba146c5dab9bea2d0087a18b9f058eeb698d50f",
+      "bytes": 2831
+    },
+    {
+      "path": "game/controller-bindings.mjs",
+      "mode": "100644",
+      "gitBlob": "7baa4b77cb4d252113146af70ffaf44b10c8dafa",
+      "bytes": 11948
+    },
+    {
+      "path": "game/controller-boost.mjs",
+      "mode": "100644",
+      "gitBlob": "1dab261e8dd7f720029d8214f8e92d98e5f7593c",
+      "bytes": 398
+    },
+    {
+      "path": "game/coop/core.mjs",
+      "mode": "100644",
+      "gitBlob": "d1020c92648aeb177b7fe7982f8a8b854e7836ee",
+      "bytes": 37008
+    },
+    {
+      "path": "game/coop/first-connection.mjs",
+      "mode": "100644",
+      "gitBlob": "d91fed7fab8eeb3a975a23459c3a634fae0c74b7",
+      "bytes": 540
+    },
+    {
+      "path": "game/coop/geometry.mjs",
+      "mode": "100644",
+      "gitBlob": "2bf49f657c84ae76cd968ba7cad71d0d5f07b4c3",
+      "bytes": 8307
+    },
+    {
+      "path": "game/coop/input-policy.mjs",
+      "mode": "100644",
+      "gitBlob": "0dbb6e794a7c6c7cbaf8c6765119a9407a9fb0a1",
+      "bytes": 1519
+    },
+    {
+      "path": "game/coop/library.mjs",
+      "mode": "100644",
+      "gitBlob": "dd6f93f479413f75a1cb6acce4f2ea22041764ee",
+      "bytes": 1337
+    },
+    {
+      "path": "game/coop/recipes.mjs",
+      "mode": "100644",
+      "gitBlob": "3ae320835ad7e41bebdd194d0f28e69daabef88a",
+      "bytes": 11916
+    },
+    {
+      "path": "game/coop/relay-yard.mjs",
+      "mode": "100644",
+      "gitBlob": "fe74f08962c70a953a0a63150e36df3e56c1ccb0",
+      "bytes": 797
+    },
+    {
+      "path": "game/coop/threats.mjs",
+      "mode": "100644",
+      "gitBlob": "d972d770224fda53903c7190a0c23c362894de75",
+      "bytes": 13742
+    },
+    {
+      "path": "game/core/abilities.mjs",
+      "mode": "100644",
+      "gitBlob": "03f1754cb9741d83546954bcde7614efc179d0a6",
+      "bytes": 3855
+    },
+    {
+      "path": "game/core/arcade-actions.mjs",
+      "mode": "100644",
+      "gitBlob": "3aa9f1aa674ef7b76a723c534db1076986033de1",
+      "bytes": 848
+    },
+    {
+      "path": "game/core/capture.mjs",
+      "mode": "100644",
+      "gitBlob": "c538e2dc5d8b9b3de779336ec800824fd0e6389d",
+      "bytes": 8038
+    },
+    {
+      "path": "game/core/classic-contour.mjs",
+      "mode": "100644",
+      "gitBlob": "43b1e83ec9272df5d028d528df86f6f6d4a7d4b8",
+      "bytes": 7465
+    },
+    {
+      "path": "game/core/classic-definition.mjs",
+      "mode": "100644",
+      "gitBlob": "2f1c86fcbbe06b7029571a2e57360ef4968255a9",
+      "bytes": 7266
+    },
+    {
+      "path": "game/core/classic-motion.mjs",
+      "mode": "100644",
+      "gitBlob": "9ba324d87576187ff29d8f366a181515c135f1e3",
+      "bytes": 12271
+    },
+    {
+      "path": "game/core/classic-state.mjs",
+      "mode": "100644",
+      "gitBlob": "1968bc7eb8dac7550579fb03480cb13234d7ffce",
+      "bytes": 2306
+    },
+    {
+      "path": "game/core/classic-step.mjs",
+      "mode": "100644",
+      "gitBlob": "4990ef3c688444483c2b2a1cadcf9ff7be07f903",
+      "bytes": 16343
+    },
+    {
+      "path": "game/core/classic-topology.mjs",
+      "mode": "100644",
+      "gitBlob": "d97b4703bb07cff526e073a23d4d4114022d6196",
+      "bytes": 6357
+    },
+    {
+      "path": "game/core/contacts.mjs",
+      "mode": "100644",
+      "gitBlob": "2f81997ab24aa3b829efa53bfcf2a86dcbc96531",
+      "bytes": 5168
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "mode": "100644",
+      "gitBlob": "c9f8b75647b1d99039a5c4b8981d60ba07436f08",
+      "bytes": 8716
+    },
+    {
+      "path": "game/core/enemy-pressure.mjs",
+      "mode": "100644",
+      "gitBlob": "bf316cfb83a1fb72277709920663c2d0d167c007",
+      "bytes": 11725
+    },
+    {
+      "path": "game/core/geometry.mjs",
+      "mode": "100644",
+      "gitBlob": "48a709dd2675ab8241ac12081c28da0f477b15e1",
+      "bytes": 3989
+    },
+    {
+      "path": "game/core/index.mjs",
+      "mode": "100644",
+      "gitBlob": "1e19544f00409977ec2266f470eb7b949e11296f",
+      "bytes": 17291
+    },
+    {
+      "path": "game/core/level.mjs",
+      "mode": "100644",
+      "gitBlob": "0980bd902473551dafbe28e198685c93d10afd6e",
+      "bytes": 14178
+    },
+    {
+      "path": "game/core/line-impact.mjs",
+      "mode": "100644",
+      "gitBlob": "85fa1da266d502acebaf0cea92762d8fe149e962",
+      "bytes": 9000
+    },
+    {
+      "path": "game/core/movement.mjs",
+      "mode": "100644",
+      "gitBlob": "c982661b31f3583268d4ff78eea2dea1fea2704b",
+      "bytes": 10912
+    },
+    {
+      "path": "game/core/registry.mjs",
+      "mode": "100644",
+      "gitBlob": "98e011d57acb8cb82d2d2377901b5bc9aabca387",
+      "bytes": 6661
+    },
+    {
+      "path": "game/core/systems.mjs",
+      "mode": "100644",
+      "gitBlob": "3edbe81ca663035291f79b1405d1541ca418bb7a",
+      "bytes": 4621
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "mode": "100644",
+      "gitBlob": "8c13db69dd16cd838175d996fe983a9d49832cf2",
+      "bytes": 3074
+    },
+    {
+      "path": "game/couch/coop-feedback.mjs",
+      "mode": "100644",
+      "gitBlob": "1bc88b2a90090bd3c1c3df50e3732fd53be705fc",
+      "bytes": 2277
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "mode": "100644",
+      "gitBlob": "8437a7f5847de1aaa1e9ac80acb0825ef6a5e1ce",
+      "bytes": 9934
+    },
+    {
+      "path": "game/couch/couch-chapter.mjs",
+      "mode": "100644",
+      "gitBlob": "0218252eb1ec497ca8950a526a00b8ecb7061cc7",
+      "bytes": 4112
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "mode": "100644",
+      "gitBlob": "dbd0686da77996ef7c01ba4caa8495ec0d736075",
+      "bytes": 17426
+    },
+    {
+      "path": "game/couch/couch-installed-chapters.mjs",
+      "mode": "100644",
+      "gitBlob": "3f01577b653dc01ea2eccc55b4533af17664bdec",
+      "bytes": 12625
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "mode": "100644",
+      "gitBlob": "46258788f25249403b1a8c7170116c1eef840574",
+      "bytes": 10249
+    },
+    {
+      "path": "game/couch/couch.css",
+      "mode": "100644",
+      "gitBlob": "fbeacbe0f18f70a50903b2bfbd2cc2f539d7f25c",
+      "bytes": 9189
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "mode": "100644",
+      "gitBlob": "c77b7acf1dbed0bbd1f5885351bdc8ddaf817c6b",
+      "bytes": 38761
+    },
+    {
+      "path": "game/couch/index.html",
+      "mode": "100644",
+      "gitBlob": "8acb56eff97be3ec97600bf1ccd7140992de3914",
+      "bytes": 15228
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "mode": "100644",
+      "gitBlob": "d467f4b78b0c95a15d6c281943fc74f322803c64",
+      "bytes": 15174
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "mode": "100644",
+      "gitBlob": "361aaf0e5efbc250f7cf23ae980183ce00ddb1e6",
+      "bytes": 14942
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mode": "100644",
+      "gitBlob": "055072c8244f7c19aeed23dba5d08aafc63d5374",
+      "bytes": 32926
+    },
+    {
+      "path": "game/data-json.mjs",
+      "mode": "100644",
+      "gitBlob": "cc93f3186e5e90de6c520db6589ee12a2f6ac643",
+      "bytes": 4640
+    },
+    {
+      "path": "game/difficulty-access.mjs",
+      "mode": "100644",
+      "gitBlob": "bd106ab61635a917a1dfbbaf0df5311df931784b",
+      "bytes": 5601
+    },
+    {
+      "path": "game/difficulty-navigation.mjs",
+      "mode": "100644",
+      "gitBlob": "ca7a82b5c6e6147ac4d9502fba68159f20c1631c",
+      "bytes": 6725
+    },
+    {
+      "path": "game/enemy-catalog-scenarios.mjs",
+      "mode": "100644",
+      "gitBlob": "a703f65c62f23509b7b1ecdc0f9b790bbd36402a",
+      "bytes": 3201
+    },
+    {
+      "path": "game/enemy-catalog.mjs",
+      "mode": "100644",
+      "gitBlob": "ad9eb4659a16249934b6eefb8582f7b813b0c5b5",
+      "bytes": 5966
+    },
+    {
+      "path": "game/enemy-guide.mjs",
+      "mode": "100644",
+      "gitBlob": "c8af8b433b6b40b8a545e2330016e4dfdfdc755d",
+      "bytes": 4922
+    },
+    {
+      "path": "game/enemy-presentations.mjs",
+      "mode": "100644",
+      "gitBlob": "7acc47a103d374e62d2db23a782b4368c608295e",
+      "bytes": 4858
+    },
+    {
+      "path": "game/external-backup-assets.mjs",
+      "mode": "100644",
+      "gitBlob": "645b8755bcea9401e11af41e59912ebb1360c700",
+      "bytes": 9973
+    },
+    {
+      "path": "game/external-chapter-backup.mjs",
+      "mode": "100644",
+      "gitBlob": "6e402361e872a32b66cf873cbd461b085022e2c8",
+      "bytes": 8476
+    },
+    {
+      "path": "game/external-chapter-catalog.mjs",
+      "mode": "100644",
+      "gitBlob": "b6d9dbb6c07441536a9b7f72dc66248d6cd317ac",
+      "bytes": 5541
+    },
+    {
+      "path": "game/external-chapter-host.mjs",
+      "mode": "100644",
+      "gitBlob": "5c8f61850128f9ca62b021a3edf0785a8e563566",
+      "bytes": 23797
+    },
+    {
+      "path": "game/external-chapter-install.mjs",
+      "mode": "100644",
+      "gitBlob": "f5a2f96b8c93cb7edd95356f16bde2ead0980cb7",
+      "bytes": 14880
+    },
+    {
+      "path": "game/external-chapter-pointer.mjs",
+      "mode": "100644",
+      "gitBlob": "648445ed7266908b9a18219f5bebd85693c2fe83",
+      "bytes": 6486
+    },
+    {
+      "path": "game/external-chapter-source.mjs",
+      "mode": "100644",
+      "gitBlob": "3e4467ace9ffecf7e2c070e41b5ec77916ce1bcc",
+      "bytes": 32127
+    },
+    {
+      "path": "game/external-chapter.mjs",
+      "mode": "100644",
+      "gitBlob": "1265a9b83cd136ba01d7d76143faf17bdcc1034d",
+      "bytes": 10532
+    },
+    {
+      "path": "game/external-recovery-catalog.mjs",
+      "mode": "100644",
+      "gitBlob": "ae1071c89506720079efe440bb62917be7fe7a46",
+      "bytes": 6513
+    },
+    {
+      "path": "game/first-flight.mjs",
+      "mode": "100644",
+      "gitBlob": "f12a1a252454833945bbf8da73ce9cb53703f2b8",
+      "bytes": 24628
+    },
+    {
+      "path": "game/flight-media-pins.mjs",
+      "mode": "100644",
+      "gitBlob": "a8e1968316e64438f212c2954fe6816fa7b75a6e",
+      "bytes": 4875
+    },
+    {
+      "path": "game/gallery-difficulty.mjs",
+      "mode": "100644",
+      "gitBlob": "a126e3daf30e1e972dbdc0b3d41aa1e07cb519a3",
+      "bytes": 3454
+    },
+    {
+      "path": "game/generator.mjs",
+      "mode": "100644",
+      "gitBlob": "b7a07a7bf0cce6a0c46852d3f554797cb02a7b49",
+      "bytes": 2245
+    },
+    {
+      "path": "game/imports.mjs",
+      "mode": "100644",
+      "gitBlob": "8c5c2fb8efd027ac4182a7cff7e998c688d36aa4",
+      "bytes": 4923
+    },
+    {
+      "path": "game/index.html",
+      "mode": "100644",
+      "gitBlob": "ac5d9c3faebf7df907854ed933b446234c63f01a",
+      "bytes": 70335
+    },
+    {
+      "path": "game/input-presentation.mjs",
+      "mode": "100644",
+      "gitBlob": "3cd379090d717b42f9584a9776d53eb47c551c0f",
+      "bytes": 1770
+    },
+    {
+      "path": "game/key-bindings.mjs",
+      "mode": "100644",
+      "gitBlob": "d287e175fda0671eec5c53e3d63f151a4c57a4f9",
+      "bytes": 12560
+    },
+    {
+      "path": "game/library.mjs",
+      "mode": "100644",
+      "gitBlob": "c53ccccd6ac9759b4dde1c5cd9478d3d7d05b446",
+      "bytes": 36454
+    },
+    {
+      "path": "game/managed-media-store.mjs",
+      "mode": "100644",
+      "gitBlob": "6bad43e459314e0f47c5855040562ee32728d9e4",
+      "bytes": 37789
+    },
+    {
+      "path": "game/mastery-awards.mjs",
+      "mode": "100644",
+      "gitBlob": "e156027c0bddf69ba3d17c2d7f2fb9b07225ca6a",
+      "bytes": 2816
+    },
+    {
+      "path": "game/mastery-catalog.mjs",
+      "mode": "100644",
+      "gitBlob": "d1c2a7e56c8825ce807b8c7e96e35d03ff66d5c7",
+      "bytes": 13632
+    },
+    {
+      "path": "game/mastery-equipment.mjs",
+      "mode": "100644",
+      "gitBlob": "aaa151f4d685a98bb089ccc425daec21f8c0f493",
+      "bytes": 29233
+    },
+    {
+      "path": "game/mastery-records.mjs",
+      "mode": "100644",
+      "gitBlob": "c982d1c4c5b9fdb7031fa9f60e11c9c0cbaf7bc6",
+      "bytes": 10009
+    },
+    {
+      "path": "game/mastery-verification.mjs",
+      "mode": "100644",
+      "gitBlob": "9576a3434c43bf11affdc130d8fc873065bcea49",
+      "bytes": 4572
+    },
+    {
+      "path": "game/mastery.mjs",
+      "mode": "100644",
+      "gitBlob": "4a7e0986ccd1b85873029920cd2940cf6374c5d8",
+      "bytes": 16941
+    },
+    {
+      "path": "game/media-bundle.mjs",
+      "mode": "100644",
+      "gitBlob": "b4cd9405d32dab4e3d926507602bff54c9d291c8",
+      "bytes": 10383
+    },
+    {
+      "path": "game/media-library.mjs",
+      "mode": "100644",
+      "gitBlob": "4675c2585c6019fa44605828d6e0c80270afaf01",
+      "bytes": 12188
+    },
+    {
+      "path": "game/media-presentation.mjs",
+      "mode": "100644",
+      "gitBlob": "3c587baa8d2b04403de41fc6864e40c63e8b1420",
+      "bytes": 1688
+    },
+    {
+      "path": "game/media-still.mjs",
+      "mode": "100644",
+      "gitBlob": "d85ac0a52ec6744812a9067b6856101daff0d2c2",
+      "bytes": 5220
+    },
+    {
+      "path": "game/media-storage-record.mjs",
+      "mode": "100644",
+      "gitBlob": "50583a0260f49d4e412787fed8c1cd795355aed9",
+      "bytes": 11906
+    },
+    {
+      "path": "game/media-store.mjs",
+      "mode": "100644",
+      "gitBlob": "699d0af74d7681384b9efaff0fd7ffed1df70ad0",
+      "bytes": 4947
+    },
+    {
+      "path": "game/mission-brief.mjs",
+      "mode": "100644",
+      "gitBlob": "d468012c8d85e5043881cdec86868b2e10fe7e6f",
+      "bytes": 4673
+    },
+    {
+      "path": "game/mode-return.mjs",
+      "mode": "100644",
+      "gitBlob": "cd0678071fa4354c32bc06b3d316288e9f5b4b55",
+      "bytes": 5791
+    },
+    {
+      "path": "game/mp3.mjs",
+      "mode": "100644",
+      "gitBlob": "194bab73e885e8b539d8de2ed5606e7412745640",
+      "bytes": 8902
+    },
+    {
+      "path": "game/multiplayer.mjs",
+      "mode": "100644",
+      "gitBlob": "3ebb6a3d6ab604700cf7f1a284a1d1848af97653",
+      "bytes": 4315
+    },
+    {
+      "path": "game/offline.mjs",
+      "mode": "100644",
+      "gitBlob": "e3f868f6edea537d8873a0e17e185dd1ce55edbe",
+      "bytes": 14552
+    },
+    {
+      "path": "game/optional-chapters.mjs",
+      "mode": "100644",
+      "gitBlob": "ae53c4ca241cae2775ff2f7b0058bf31df274009",
+      "bytes": 8810
+    },
+    {
+      "path": "game/packs.mjs",
+      "mode": "100644",
+      "gitBlob": "09b390f29d273b9f116d5f6a28afb1ee92322c7d",
+      "bytes": 21347
+    },
+    {
+      "path": "game/picture-receipts.mjs",
+      "mode": "100644",
+      "gitBlob": "53754aeb762229137f6e05ddb5d7cec521de5782",
+      "bytes": 4055
+    },
+    {
+      "path": "game/platform.mjs",
+      "mode": "100644",
+      "gitBlob": "2a33a5da44e2ca695a26020e7948e3dd1b046847",
+      "bytes": 2524
+    },
+    {
+      "path": "game/presentation-pins.mjs",
+      "mode": "100644",
+      "gitBlob": "159379412a5aa3abfdee70f453085ab29e05dd6a",
+      "bytes": 7014
+    },
+    {
+      "path": "game/presentation/bundle.mjs",
+      "mode": "100644",
+      "gitBlob": "efbc0d2676186b9a21101cbd4b96d89ef58d0b73",
+      "bytes": 8883
+    },
+    {
+      "path": "game/presentation/current-picture-baselines.mjs",
+      "mode": "100644",
+      "gitBlob": "d121e16d1e00e293a1a80228442dc427dd0bd71c",
+      "bytes": 12897
+    },
+    {
+      "path": "game/presentation/current-pictures.mjs",
+      "mode": "100644",
+      "gitBlob": "9958feb6a99373b0d87bc3dae773b8b222452e4c",
+      "bytes": 49810
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "mode": "100644",
+      "gitBlob": "934a3e4069b30fa983f0f58b66e6d6af651f2efb",
+      "bytes": 27939
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "mode": "100644",
+      "gitBlob": "ebf144d3fabc19fdc78bfbf05cd3e700c31a69ea",
+      "bytes": 26831
+    },
+    {
+      "path": "game/presentation/page.mjs",
+      "mode": "100644",
+      "gitBlob": "877156e2284bcddcf9c39e215ae4e95a4a67470c",
+      "bytes": 5300
+    },
+    {
+      "path": "game/presentation/release-pictures.mjs",
+      "mode": "100644",
+      "gitBlob": "860c46927059cb34ec2c8593920de988c8a7fc62",
+      "bytes": 13782
+    },
+    {
+      "path": "game/presentation/runtime.mjs",
+      "mode": "100644",
+      "gitBlob": "be11d55b5f4f4533c13c440354b13debef8079e6",
+      "bytes": 7206
+    },
+    {
+      "path": "game/profile-channel-assets.mjs",
+      "mode": "100644",
+      "gitBlob": "bb477abe5388d52558ccc1478fe41ca9572d9aeb",
+      "bytes": 6445
+    },
+    {
+      "path": "game/profile-channel-json.mjs",
+      "mode": "100644",
+      "gitBlob": "6b1812ee8e35849bef3bfd6836ffdf0a71f7ddd9",
+      "bytes": 1522
+    },
+    {
+      "path": "game/profile-channel-reader.mjs",
+      "mode": "100644",
+      "gitBlob": "4eb1f7cd8ca272dba576fd54293aaf318cbca44a",
+      "bytes": 26097
+    },
+    {
+      "path": "game/profile-channel.mjs",
+      "mode": "100644",
+      "gitBlob": "a4a18875594cbb953c358266a44863569e9987ff",
+      "bytes": 3248
+    },
+    {
+      "path": "game/profile-original-recovery.mjs",
+      "mode": "100644",
+      "gitBlob": "0e0c9cffcfa0b4b53c550c15d6743664925429b2",
+      "bytes": 4284
+    },
+    {
+      "path": "game/profile-recovery-catalogs.mjs",
+      "mode": "100644",
+      "gitBlob": "755c6cb572e4cff73b76ff3e858c95515e875e9f",
+      "bytes": 4649
+    },
+    {
+      "path": "game/profile-shared-media.mjs",
+      "mode": "100644",
+      "gitBlob": "8e4bfbb2abc1449db5aebba4d0cf5bc51ab4046e",
+      "bytes": 15469
+    },
+    {
+      "path": "game/profile-transfer.mjs",
+      "mode": "100644",
+      "gitBlob": "6b0e905bf5fb215ee0019720001a71b9c117b631",
+      "bytes": 13804
+    },
+    {
+      "path": "game/profile-writer.mjs",
+      "mode": "100644",
+      "gitBlob": "2cf26c07961e934c7e03831232c3b9295992937a",
+      "bytes": 2372
+    },
+    {
+      "path": "game/progress.mjs",
+      "mode": "100644",
+      "gitBlob": "3269ceea8fef40b3a81f83a27fdf34df7479f763",
+      "bytes": 14612
+    },
+    {
+      "path": "game/release-explorer.mjs",
+      "mode": "100644",
+      "gitBlob": "aac736f24a371928260c37f8567a12fb0e26278e",
+      "bytes": 448
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "mode": "100644",
+      "gitBlob": "757b4650816ba6aa9f124c87face1d41d4162a3e",
+      "bytes": 8297
+    },
+    {
+      "path": "game/replay.mjs",
+      "mode": "100644",
+      "gitBlob": "4771ffb2833ae6ef95aec4fe525231321d5411a8",
+      "bytes": 23633
+    },
+    {
+      "path": "game/selection-bookmark.mjs",
+      "mode": "100644",
+      "gitBlob": "8dc30ac784f6a9655f5573b7f2af43959ec870ae",
+      "bytes": 3207
+    },
+    {
+      "path": "game/sessions.mjs",
+      "mode": "100644",
+      "gitBlob": "235c7b9529d802f84ed4ebe3074951a7d1558265",
+      "bytes": 10279
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "mode": "100644",
+      "gitBlob": "f000274ef6a82f07c649d61da4462cd6e67fa2e9",
+      "bytes": 7059
+    },
+    {
+      "path": "game/soundtrack-store-legacy.mjs",
+      "mode": "100644",
+      "gitBlob": "5a99695c2fba851fcc5df162e7d4e25552876510",
+      "bytes": 9093
+    },
+    {
+      "path": "game/soundtrack-store.mjs",
+      "mode": "100644",
+      "gitBlob": "86fe9223daff66755f7fe681d83f13985cd49878",
+      "bytes": 1073
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "mode": "100644",
+      "gitBlob": "962aef7719df1efc99235c136924253d8d08303f",
+      "bytes": 10172
+    },
+    {
+      "path": "game/storage.mjs",
+      "mode": "100644",
+      "gitBlob": "b8dfe84e05e0316f439ceacefe8ec9e68dfebd15",
+      "bytes": 1653
+    },
+    {
+      "path": "game/story-bindings.mjs",
+      "mode": "100644",
+      "gitBlob": "5a302f28a214339ddd7e5b6800120d2dc8a76e05",
+      "bytes": 3657
+    },
+    {
+      "path": "game/story-bundle.mjs",
+      "mode": "100644",
+      "gitBlob": "93214fbfd02ce211f61eb6217f0e7c6bb4ec7b48",
+      "bytes": 9428
+    },
+    {
+      "path": "game/story-media-store.mjs",
+      "mode": "100644",
+      "gitBlob": "5bcb75dadab4499286473041b2179875c34336d9",
+      "bytes": 17612
+    },
+    {
+      "path": "game/story-receipts.mjs",
+      "mode": "100644",
+      "gitBlob": "158118e88d4a6bb92ecba7ecf4e25ff1220740ca",
+      "bytes": 2208
+    },
+    {
+      "path": "game/story-storage-record.mjs",
+      "mode": "100644",
+      "gitBlob": "92be29833985daa46466e804ed41017697620640",
+      "bytes": 12312
+    },
+    {
+      "path": "game/test/controller-navigation.test.mjs",
+      "mode": "100644",
+      "gitBlob": "43a51d394deaed5c471fb0be54ad554d572807ec",
+      "bytes": 54544
+    },
+    {
+      "path": "game/test/coop-core.test.mjs",
+      "mode": "100644",
+      "gitBlob": "776b82942848b545da58295b43ed5ec46105af27",
+      "bytes": 19344
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "mode": "100644",
+      "gitBlob": "80acb921e93879110e2f5477d4930c51fac32116",
+      "bytes": 51109
+    },
+    {
+      "path": "game/test/coop-input-policy.test.mjs",
+      "mode": "100644",
+      "gitBlob": "93ab458351df889e65a7c506bd25b6f4e9773346",
+      "bytes": 11704
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "mode": "100644",
+      "gitBlob": "a62bb82cde9cf820a0a6168acd9d00528180452b",
+      "bytes": 10819
+    },
+    {
+      "path": "game/test/couch-input.test.mjs",
+      "mode": "100644",
+      "gitBlob": "0c59856c793f2243f0779e4d33a39a819b7f3763",
+      "bytes": 17306
+    },
+    {
+      "path": "game/test/couch-markup.test.mjs",
+      "mode": "100644",
+      "gitBlob": "485d992e42abb56381ac3bbb8a6ac2d4edad08a2",
+      "bytes": 2981
+    },
+    {
+      "path": "game/test/couch-navigation.test.mjs",
+      "mode": "100644",
+      "gitBlob": "1f0e31873b639a0267d2e5fef62c9d004ad06ac1",
+      "bytes": 22762
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "mode": "100644",
+      "gitBlob": "c1966b4c1abf59ce27859b3a98fa9615722fff0b",
+      "bytes": 16393
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "mode": "100644",
+      "gitBlob": "b1349bebc2941c92c1423912a237e6c8776cc010",
+      "bytes": 10779
+    },
+    {
+      "path": "game/test/fixtures/audio/silence-mpeg1-layer3.mp3",
+      "mode": "100644",
+      "gitBlob": "6e2503e68ead2bab363d47a14d4d6ecb461f0620",
+      "bytes": 4170
+    },
+    {
+      "path": "game/test/fixtures/coop-prototype.mjs",
+      "mode": "100644",
+      "gitBlob": "eeaede92669471d308673b8060890982f2f5afc6",
+      "bytes": 1385
+    },
+    {
+      "path": "game/test/fixtures/retry-scenarios.mjs",
+      "mode": "100644",
+      "gitBlob": "871393254a7531b357b1e591c35a36352bd18b54",
+      "bytes": 2869
+    },
+    {
+      "path": "game/test/fixtures/video/owned-poster-fixture.mp4",
+      "mode": "100644",
+      "gitBlob": "48b9a68b94309bd24f8abf9e96c9d7c975f417ef",
+      "bytes": 75767
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "mode": "100644",
+      "gitBlob": "04438f342163e2434b73a412e0bb2017ba7aa977",
+      "bytes": 10172
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "mode": "100644",
+      "gitBlob": "1bfd17add2fd40e6927524c9daf73adc4c505201",
+      "bytes": 8103
+    },
+    {
+      "path": "game/test/helpers/managed-idb.mjs",
+      "mode": "100644",
+      "gitBlob": "19eb0cf34df68671632de9e0a5eed1553dd77ef5",
+      "bytes": 7659
+    },
+    {
+      "path": "game/test/helpers/media-fixtures.mjs",
+      "mode": "100644",
+      "gitBlob": "13b1d0e74bb40c6a2dc2be2fbec2d04342f868a1",
+      "bytes": 3271
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "mode": "100644",
+      "gitBlob": "1f98b860759382fd0f9918eda33e820a858d5a37",
+      "bytes": 14988
+    },
+    {
+      "path": "game/test/helpers/soundtrack-audio.mjs",
+      "mode": "100644",
+      "gitBlob": "c0bb1a97f6ec7a6923dea64f05c48ecee665fd5c",
+      "bytes": 3039
+    },
+    {
+      "path": "game/test/helpers/soundtrack-fixtures.mjs",
+      "mode": "100644",
+      "gitBlob": "087a15bb5665cc62ae42e781b4558bb5c257ff01",
+      "bytes": 2032
+    },
+    {
+      "path": "game/test/helpers/victory-story-fixture.mjs",
+      "mode": "100644",
+      "gitBlob": "99356178edfeefb5f4dea97965b9e514c6924f44",
+      "bytes": 3413
+    },
+    {
+      "path": "game/test/helpers/wait-for.mjs",
+      "mode": "100644",
+      "gitBlob": "7d66140efdaf0862aa8d1b939f49ae7b7b292d36",
+      "bytes": 595
+    },
+    {
+      "path": "game/test/menu-initial-focus.test.mjs",
+      "mode": "100644",
+      "gitBlob": "dc9b408feb8a4f372dd42640b8b79990f7c4fd15",
+      "bytes": 2900
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "mode": "100644",
+      "gitBlob": "d09c371204199d539933594e9b27a99bb7f5b8d2",
+      "bytes": 40692
+    },
+    {
+      "path": "game/test/victory-story-ui.test.mjs",
+      "mode": "100644",
+      "gitBlob": "726d90c6af6456d8e312a6ca9536954d213813ab",
+      "bytes": 28789
+    },
+    {
+      "path": "game/text-face.mjs",
+      "mode": "100644",
+      "gitBlob": "94ad8dcc1d111924a1dd174532c9f33990ad54c3",
+      "bytes": 807
+    },
+    {
+      "path": "game/text-size.mjs",
+      "mode": "100644",
+      "gitBlob": "3fc7897fac5166ecb2d7670bad28e6a8d1fedcca",
+      "bytes": 251
+    },
+    {
+      "path": "game/touch-controls.mjs",
+      "mode": "100644",
+      "gitBlob": "1c47bbcc4d76de4875534c60df1168b11180d7f9",
+      "bytes": 1651
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "mode": "100644",
+      "gitBlob": "c999017778a04e1d5aa4f7274d93c607abb7b374",
+      "bytes": 26201
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "mode": "100644",
+      "gitBlob": "184b754536c35e850b690d88b3aea3496e018011",
+      "bytes": 5277
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "mode": "100644",
+      "gitBlob": "f628b370371d6752ce0b13cfeecf151658d49201",
+      "bytes": 26731
+    },
+    {
+      "path": "game/ui/backup-set-panel.mjs",
+      "mode": "100644",
+      "gitBlob": "046e5a4166d9f4b1a60cde2d4a2ac33a1d8290ae",
+      "bytes": 8364
+    },
+    {
+      "path": "game/ui/celebration.mjs",
+      "mode": "100644",
+      "gitBlob": "90e3f917d7cc3c0efe0c4dcc079afde3fa67b282",
+      "bytes": 7855
+    },
+    {
+      "path": "game/ui/classic-view.mjs",
+      "mode": "100644",
+      "gitBlob": "7abceb3bca78e842729cbc7660b18357ff71b3e9",
+      "bytes": 21584
+    },
+    {
+      "path": "game/ui/controller-boost-host.mjs",
+      "mode": "100644",
+      "gitBlob": "3936ef3d78f247f409a5abc4b8d2177769540336",
+      "bytes": 888
+    },
+    {
+      "path": "game/ui/controller-boost-settings.mjs",
+      "mode": "100644",
+      "gitBlob": "4516a0f61dd717d7534b39fd09f2f724e352b41d",
+      "bytes": 1722
+    },
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "mode": "100644",
+      "gitBlob": "10cc4c20dfe01fae935fcb66333709d25611ab4c",
+      "bytes": 21848
+    },
+    {
+      "path": "game/ui/controller-preview.mjs",
+      "mode": "100644",
+      "gitBlob": "746c0dbc74fc99fbdd810afdb1cbe6525f9bf4f6",
+      "bytes": 7643
+    },
+    {
+      "path": "game/ui/controller-reading.mjs",
+      "mode": "100644",
+      "gitBlob": "512f9bf69420f21005ef49c99a377ca5c0394d2c",
+      "bytes": 7040
+    },
+    {
+      "path": "game/ui/controller-router.mjs",
+      "mode": "100644",
+      "gitBlob": "2f97459c98d9949636f8a2f72c8e128e4a9fa009",
+      "bytes": 15585
+    },
+    {
+      "path": "game/ui/controller-settings.mjs",
+      "mode": "100644",
+      "gitBlob": "c7cf761312d3fca4dd3877c15b277a0a43817e8d",
+      "bytes": 15271
+    },
+    {
+      "path": "game/ui/earned-picture.mjs",
+      "mode": "100644",
+      "gitBlob": "5c03c430e1922f8760b7b17880b76d56998cdd33",
+      "bytes": 3709
+    },
+    {
+      "path": "game/ui/encounter-view.mjs",
+      "mode": "100644",
+      "gitBlob": "615ac86cabb9bc69056a106c698d79c00ee8a06a",
+      "bytes": 6241
+    },
+    {
+      "path": "game/ui/enemy-body-assets.mjs",
+      "mode": "100644",
+      "gitBlob": "a6e8bc07d3b35394d480b5fd49bd8f5c8ed71d41",
+      "bytes": 10113
+    },
+    {
+      "path": "game/ui/enemy-body-motion.mjs",
+      "mode": "100644",
+      "gitBlob": "c413ae08a186fd447ca903c81547f871205fd227",
+      "bytes": 1179
+    },
+    {
+      "path": "game/ui/enemy-guide.mjs",
+      "mode": "100644",
+      "gitBlob": "f73731982547c6f7c28d9961540668cdb39de242",
+      "bytes": 17120
+    },
+    {
+      "path": "game/ui/enemy-workshop-return.mjs",
+      "mode": "100644",
+      "gitBlob": "027fc4edd4afe68579f5c67ecf957dce13a5d4e6",
+      "bytes": 3896
+    },
+    {
+      "path": "game/ui/event-feedback.mjs",
+      "mode": "100644",
+      "gitBlob": "6e6415c13d96ca68a0c8cb9e6c495b984a3eb22f",
+      "bytes": 5824
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "mode": "100644",
+      "gitBlob": "3b198e87d8a0867a4f087e52f48a8ea7b692dbc0",
+      "bytes": 22607
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "mode": "100644",
+      "gitBlob": "ed989f088e1e0a36407a1bafd361ed69fe46e888",
+      "bytes": 10003
+    },
+    {
+      "path": "game/ui/field-kit-copy.mjs",
+      "mode": "100644",
+      "gitBlob": "adee8993ec455267966c2b272959ca8b0b75bd59",
+      "bytes": 3798
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "mode": "100644",
+      "gitBlob": "9e19817de49d95efb209e57f4d44c07a417116e5",
+      "bytes": 638
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.mjs",
+      "mode": "100644",
+      "gitBlob": "5f70fe25c52d2c5c13a1bb08b110a4b1dc02ba29",
+      "bytes": 3149
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "mode": "100644",
+      "gitBlob": "e31ed09e1f9286be97a97a3972a9d2ab268ffba7",
+      "bytes": 2496
+    },
+    {
+      "path": "game/ui/first-flight-entry.mjs",
+      "mode": "100644",
+      "gitBlob": "5b96eec5935293c4f0bf9ec88d8927cab72c38bd",
+      "bytes": 3827
+    },
+    {
+      "path": "game/ui/first-flight-launch.mjs",
+      "mode": "100644",
+      "gitBlob": "071cd9f4ea25fb51141deb2e71a7cb5265cc2cac",
+      "bytes": 957
+    },
+    {
+      "path": "game/ui/first-flight-view.mjs",
+      "mode": "100644",
+      "gitBlob": "5f49553af0e3daeb656cda90f6771d9b5ba086e3",
+      "bytes": 7571
+    },
+    {
+      "path": "game/ui/flight-pictures.mjs",
+      "mode": "100644",
+      "gitBlob": "3643290e2955f3e6fa3816a1cd2b4a6e41e8251d",
+      "bytes": 6565
+    },
+    {
+      "path": "game/ui/fullscreen.mjs",
+      "mode": "100644",
+      "gitBlob": "b42f3f7c3d2f90db9fd53ea8d8f348f6b9a9cc05",
+      "bytes": 2325
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "mode": "100644",
+      "gitBlob": "08484d6df9caa73317a25be58dd7e2d4610fca43",
+      "bytes": 13234
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "mode": "100644",
+      "gitBlob": "592432069ae58f5ec7aa534849f218f29c2373e4",
+      "bytes": 18003
+    },
+    {
+      "path": "game/ui/key-settings.mjs",
+      "mode": "100644",
+      "gitBlob": "9c2a632717bfde684c25bea2459eda8fb0d35b15",
+      "bytes": 8161
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "mode": "100644",
+      "gitBlob": "b01700cfe03d53e61a2c9035be69a71e00ed3f1b",
+      "bytes": 50599
+    },
+    {
+      "path": "game/ui/mastery-view.mjs",
+      "mode": "100644",
+      "gitBlob": "6f6cf5fc69be2507f4457c85dc64e074d1c8128a",
+      "bytes": 7740
+    },
+    {
+      "path": "game/ui/mission-gallery.mjs",
+      "mode": "100644",
+      "gitBlob": "743589ded583db9b587e17c3a277141c5c126a89",
+      "bytes": 5387
+    },
+    {
+      "path": "game/ui/mission-picker.mjs",
+      "mode": "100644",
+      "gitBlob": "c27bdbc0d939e110ab448695f7daa103f4ea3a9d",
+      "bytes": 10158
+    },
+    {
+      "path": "game/ui/mission-thumbnails.mjs",
+      "mode": "100644",
+      "gitBlob": "af3547766a689dac48cc4a0a077834894b237fff",
+      "bytes": 5177
+    },
+    {
+      "path": "game/ui/modal-navigation.mjs",
+      "mode": "100644",
+      "gitBlob": "1645dc4c4143d9b7652aeea0108d5f0f06cb86b7",
+      "bytes": 3994
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "mode": "100644",
+      "gitBlob": "379171806b8558eb1943a658b70b1fb5a4780cd6",
+      "bytes": 7050
+    },
+    {
+      "path": "game/ui/offline-panel.mjs",
+      "mode": "100644",
+      "gitBlob": "162c285239f5d7a8b6c666a210bd5858bc683f48",
+      "bytes": 4414
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "mode": "100644",
+      "gitBlob": "0fb541e1e5e2211fde429784eeffa1c91df57d1b",
+      "bytes": 1889
+    },
+    {
+      "path": "game/ui/operation-status.mjs",
+      "mode": "100644",
+      "gitBlob": "f1aed1bda7ae9c32cfaaaa2869774fb2c1bde757",
+      "bytes": 4173
+    },
+    {
+      "path": "game/ui/optional-chapters-panel.mjs",
+      "mode": "100644",
+      "gitBlob": "b76a9de175635be75e542a7656395c52bebb8dfc",
+      "bytes": 27188
+    },
+    {
+      "path": "game/ui/picture-identity.mjs",
+      "mode": "100644",
+      "gitBlob": "01deb8a296f4dcae4170a31ae710024e1c4b2427",
+      "bytes": 3164
+    },
+    {
+      "path": "game/ui/practice-navigation.mjs",
+      "mode": "100644",
+      "gitBlob": "7c982b483ec7e6f9fa3eb35c9f4e5e7549039ff9",
+      "bytes": 1761
+    },
+    {
+      "path": "game/ui/presentation-draw-image.mjs",
+      "mode": "100644",
+      "gitBlob": "911a0f99fa94ee0a88dc3a79e3d87f1c6a163280",
+      "bytes": 389
+    },
+    {
+      "path": "game/ui/presentation-image.mjs",
+      "mode": "100644",
+      "gitBlob": "3192498f89159fbb64eaf9dc406a5fd5fd5efe76",
+      "bytes": 9341
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.mjs",
+      "mode": "100644",
+      "gitBlob": "735740455671196ebcd914bb8bde796f3aae37d1",
+      "bytes": 6936
+    },
+    {
+      "path": "game/ui/profile-recovery.mjs",
+      "mode": "100644",
+      "gitBlob": "b0081303e2512284987f630d2c76e8dc10c5d5b5",
+      "bytes": 12995
+    },
+    {
+      "path": "game/ui/profile-transfer-panel.mjs",
+      "mode": "100644",
+      "gitBlob": "ee287c4412acd5ae1045dfda2afe904be0e3da88",
+      "bytes": 6872
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "mode": "100644",
+      "gitBlob": "ce6461104d278a3ab08f513a11232708a47bc0dd",
+      "bytes": 5718
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "mode": "100644",
+      "gitBlob": "af23589ffe2dae5fa955149be5ffa34753ea63e3",
+      "bytes": 34321
+    },
+    {
+      "path": "game/ui/result-picture.mjs",
+      "mode": "100644",
+      "gitBlob": "4ccf555349e8f67f2680037b061801e0f175c0f6",
+      "bytes": 1693
+    },
+    {
+      "path": "game/ui/retry-view.mjs",
+      "mode": "100644",
+      "gitBlob": "8508007a4668c9f51bc2d7e395803c1714cb1703",
+      "bytes": 2847
+    },
+    {
+      "path": "game/ui/scene-art.mjs",
+      "mode": "100644",
+      "gitBlob": "8785eeb5f278177a5d8a3e4208d5ea8d8f62539e",
+      "bytes": 9119
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "mode": "100644",
+      "gitBlob": "1656b0096b284abe3d22134c89f7369de86ff01f",
+      "bytes": 3507
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "mode": "100644",
+      "gitBlob": "99b7fbdca53855bc78b690c641388ad8999fff80",
+      "bytes": 50526
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "mode": "100644",
+      "gitBlob": "07aa85669952f0d37933894a544e7f19bdcf090b",
+      "bytes": 24085
+    },
+    {
+      "path": "game/ui/storage-retention.mjs",
+      "mode": "100644",
+      "gitBlob": "0ac5e85c2eb213416c8c168477ec2cf75d3dd711",
+      "bytes": 3289
+    },
+    {
+      "path": "game/ui/story-dialog.mjs",
+      "mode": "100644",
+      "gitBlob": "28e9b895d07fa19558209c346a8c725f9efe08c0",
+      "bytes": 8368
+    },
+    {
+      "path": "game/ui/touch-steering.mjs",
+      "mode": "100644",
+      "gitBlob": "7292c85664e7cc40bc6b6b1807818b4be4dce94b",
+      "bytes": 3599
+    },
+    {
+      "path": "game/ui/victory-story.mjs",
+      "mode": "100644",
+      "gitBlob": "99c3f90fa4f74a8db2f6bd7672d397e38298fe2f",
+      "bytes": 20709
+    },
+    {
+      "path": "game/ui/worlds-browser.mjs",
+      "mode": "100644",
+      "gitBlob": "bfec53e4a7006f41ef5f82ab881c589d1c07582e",
+      "bytes": 2374
+    },
+    {
+      "path": "game/victory-story.mjs",
+      "mode": "100644",
+      "gitBlob": "b855e36f4b587e6e4a324136c48258f3399f274a",
+      "bytes": 5111
+    },
+    {
+      "path": "game/video-poster.mjs",
+      "mode": "100644",
+      "gitBlob": "db81737b7c1bc232ed4a3428ef65a4796f78c154",
+      "bytes": 17190
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "gitBlob": "783538917eb2c105b758cc7464e3d7beeb784190",
+      "bytes": 1819
+    }
+  ],
+  "scope": "Exact finite baseline leaves only; no bulk assets/build/archives. Shared dependency symlink."
+}

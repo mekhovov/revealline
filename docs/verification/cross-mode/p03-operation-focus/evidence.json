@@ -1,0 +1,949 @@
+{
+  "format": "revealline-operation-focus-evidence.v1",
+  "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "archive": {
+    "path": "evidence.zip",
+    "bytes": 1331109,
+    "sha256": "d5582eac9e3edcaa944ee18019f8887d091b86d3a1abc7acde65e67e62c127c2"
+  },
+  "originalBytes": 3283407,
+  "members": [
+    {
+      "member": "focus/REVIEW.md",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/REVIEW.md",
+      "bytes": 6693,
+      "sha256": "609cf07b2037cca32e4efad2052d6ae4881ca7b9292d9468fc322cf81e659b75"
+    },
+    {
+      "member": "focus/add-cancel-tests.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/add-cancel-tests.py",
+      "bytes": 5008,
+      "sha256": "51a4e64c8661a8d55616ce542d2f236b5239e2137ef3a72040a4d262f3acb889"
+    },
+    {
+      "member": "focus/admission.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/admission.json",
+      "bytes": 47040,
+      "sha256": "8acdc6feae48d9790915325cee43fc8ae63d669ab4c035a0764f257324a3d2bb"
+    },
+    {
+      "member": "focus/before-02-focus-test.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/before-02-focus-test.mjs",
+      "bytes": 6163,
+      "sha256": "9e469a922e91ec219d89c675f21387f1c6756fea38e569d210d45622fac95c2f"
+    },
+    {
+      "member": "focus/before-02-stop.txt",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/before-02-stop.txt",
+      "bytes": 329,
+      "sha256": "2618e9901317b021869861a8c069dd814808c26391b0b75b3623d65792d23e17"
+    },
+    {
+      "member": "focus/before-03-focus-test.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/before-03-focus-test.mjs",
+      "bytes": 6301,
+      "sha256": "5a33261a38c3a922979c1ec5dcb4fae340e83d5a9b84597d0aec8bcd2495bd4d"
+    },
+    {
+      "member": "focus/before-04-focus-test.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/before-04-focus-test.mjs",
+      "bytes": 6890,
+      "sha256": "68d902556808f134a352f83aa6e7f108ffb6113adc583091eb187c6586a66b87"
+    },
+    {
+      "member": "focus/cancel-eslint.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-eslint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "focus/cancel-final-eslint.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-eslint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "focus/cancel-final-node20-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node20-after.json",
+      "bytes": 42905,
+      "sha256": "3b704c7ee98e79e182c5d735838aaea4d16ec24aceb733f6cbb8bdcef5ba709c"
+    },
+    {
+      "member": "focus/cancel-final-node20-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node20-before.json",
+      "bytes": 42905,
+      "sha256": "3b704c7ee98e79e182c5d735838aaea4d16ec24aceb733f6cbb8bdcef5ba709c"
+    },
+    {
+      "member": "focus/cancel-final-node20.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node20.json",
+      "bytes": 720,
+      "sha256": "69a153069367c82a9e36ee93fb87e40c4f96e59b03fa0f752d59f98b60f8c63b"
+    },
+    {
+      "member": "focus/cancel-final-node20.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node20.log",
+      "bytes": 43523,
+      "sha256": "c1f0f6e51a7e4d2e206eda860aa08ad439236cb8b89ca14ed74e89c782ce2016"
+    },
+    {
+      "member": "focus/cancel-final-node22-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node22-after.json",
+      "bytes": 42905,
+      "sha256": "3b704c7ee98e79e182c5d735838aaea4d16ec24aceb733f6cbb8bdcef5ba709c"
+    },
+    {
+      "member": "focus/cancel-final-node22-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node22-before.json",
+      "bytes": 42905,
+      "sha256": "3b704c7ee98e79e182c5d735838aaea4d16ec24aceb733f6cbb8bdcef5ba709c"
+    },
+    {
+      "member": "focus/cancel-final-node22.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node22.json",
+      "bytes": 719,
+      "sha256": "2bd53a1f65218251b1bd8e686187fc25aed323795cb6ec30f04ec5b6819be93f"
+    },
+    {
+      "member": "focus/cancel-final-node22.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-node22.log",
+      "bytes": 46293,
+      "sha256": "41edaabd7c39aa0fe02f4d4dff68f2d0d36ccde777ab1823072d408c10e7f435"
+    },
+    {
+      "member": "focus/cancel-final-prettier.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-prettier.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "member": "focus/cancel-final-static.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-static.json",
+      "bytes": 1422,
+      "sha256": "413d3019e85c033371e5c6095dd79be647d6a1fac0c79500ef673f0b7f27790c"
+    },
+    {
+      "member": "focus/cancel-final-whitespace.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-final-whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "focus/cancel-prettier.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/cancel-prettier.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "member": "focus/check-cancel-post-native.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/check-cancel-post-native.py",
+      "bytes": 1374,
+      "sha256": "e2b315c12bfcc4b7ffcb22034767df57ae5c652eb1172e5751b677d577fe9465"
+    },
+    {
+      "member": "focus/check-cancel-preview.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/check-cancel-preview.py",
+      "bytes": 1364,
+      "sha256": "6a380e55599c2fa2543e747a2ebc3d06f4d8fe832380d28e1817864106b3ccd7"
+    },
+    {
+      "member": "focus/check-post-native.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/check-post-native.py",
+      "bytes": 1439,
+      "sha256": "ef0007955e196a7552447227aa10f592d93b034a88054393ee9cd6bbd2f3118b"
+    },
+    {
+      "member": "focus/explicit-cancel-after.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/explicit-cancel-after.log",
+      "bytes": 6268,
+      "sha256": "86b5197fc27ac4148fdc192f5bdd0953797018c53e5524329ad81f340143726b"
+    },
+    {
+      "member": "focus/explicit-cancel-before.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/explicit-cancel-before.log",
+      "bytes": 6957,
+      "sha256": "9efe66392077f66f1f74b642bca7eb80c0ca278cc6ea05c40a88ab3097ef30ac"
+    },
+    {
+      "member": "focus/explicit-cancel-source.diff",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/explicit-cancel-source.diff",
+      "bytes": 8980,
+      "sha256": "58f8de38e9805f2ad8a7ad8a2e038ea39355b6088ccb16690488384f3e75e6fa"
+    },
+    {
+      "member": "focus/fieldcraft-input.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/fieldcraft-input.json",
+      "bytes": 195,
+      "sha256": "577d5885fc12861ab52762dff0aafd3b602e4f4e6e9246040338fd941a4113ba"
+    },
+    {
+      "member": "focus/final-eslint.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-eslint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "focus/final-node20-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node20-after.json",
+      "bytes": 42904,
+      "sha256": "9f8a752da96cbc00bdd77078ce93dd972cbe35c25b1dda798149aeb9c86e8315"
+    },
+    {
+      "member": "focus/final-node20-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node20-before.json",
+      "bytes": 42904,
+      "sha256": "9f8a752da96cbc00bdd77078ce93dd972cbe35c25b1dda798149aeb9c86e8315"
+    },
+    {
+      "member": "focus/final-node20.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node20.json",
+      "bytes": 720,
+      "sha256": "3d9428bcbb6c3a7bd7df60509b944e84015d9ae530a437b0d706f6ca09969b27"
+    },
+    {
+      "member": "focus/final-node20.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node20.log",
+      "bytes": 42357,
+      "sha256": "57a74c1b93d3c0384663456c954a6641c7a1df9c5e1270ee3ebdda5cd55389f0"
+    },
+    {
+      "member": "focus/final-node22-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node22-after.json",
+      "bytes": 42904,
+      "sha256": "9f8a752da96cbc00bdd77078ce93dd972cbe35c25b1dda798149aeb9c86e8315"
+    },
+    {
+      "member": "focus/final-node22-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node22-before.json",
+      "bytes": 42904,
+      "sha256": "9f8a752da96cbc00bdd77078ce93dd972cbe35c25b1dda798149aeb9c86e8315"
+    },
+    {
+      "member": "focus/final-node22.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node22.json",
+      "bytes": 718,
+      "sha256": "ed2669ae1e08aa2ab62a4581e1baafc599d5d09a1aef69e0b524075e9cf0f3a7"
+    },
+    {
+      "member": "focus/final-node22.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-node22.log",
+      "bytes": 45045,
+      "sha256": "8d7bbfc0f04010cb4e8d282b2edd6877f3a0a79a2fa8ec46ab6172ba5aceed98"
+    },
+    {
+      "member": "focus/final-prettier.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-prettier.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "member": "focus/final-whitespace.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/final-whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "focus/focus-after-01.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focus-after-01.log",
+      "bytes": 10063,
+      "sha256": "812436e980444ab47f2f818f0aa24e754cdebfb537ec3b43cf2da7bf18143e81"
+    },
+    {
+      "member": "focus/focus-after-02.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focus-after-02.log",
+      "bytes": 5038,
+      "sha256": "0efb5561f24f4c1f720848a8ea1e20c902f75021bb04268f6b49af7067f315a6"
+    },
+    {
+      "member": "focus/focused-node20-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node20-after.json",
+      "bytes": 42904,
+      "sha256": "d761c49529a4365c3e203399a2ba97baeb41e40a42d3e0420e6a573078df13e9"
+    },
+    {
+      "member": "focus/focused-node20-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node20-before.json",
+      "bytes": 42904,
+      "sha256": "d761c49529a4365c3e203399a2ba97baeb41e40a42d3e0420e6a573078df13e9"
+    },
+    {
+      "member": "focus/focused-node20.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node20.json",
+      "bytes": 720,
+      "sha256": "a6eee94276a659463d860c5aa9b0d832ebc7428f126dfafc1ce428da207b2720"
+    },
+    {
+      "member": "focus/focused-node20.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node20.log",
+      "bytes": 42364,
+      "sha256": "b3554dc0e32c27b0cf3daa4543f4e0f573a8d3bd5d14c8fbe2b204d177f0235f"
+    },
+    {
+      "member": "focus/focused-node22-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node22-after.json",
+      "bytes": 42904,
+      "sha256": "d761c49529a4365c3e203399a2ba97baeb41e40a42d3e0420e6a573078df13e9"
+    },
+    {
+      "member": "focus/focused-node22-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node22-before.json",
+      "bytes": 42904,
+      "sha256": "d761c49529a4365c3e203399a2ba97baeb41e40a42d3e0420e6a573078df13e9"
+    },
+    {
+      "member": "focus/focused-node22.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node22.json",
+      "bytes": 719,
+      "sha256": "5269761127d0b7401caf8fdc0a812462ac72aa8d51576e532e35875bd4641328"
+    },
+    {
+      "member": "focus/focused-node22.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/focused-node22.log",
+      "bytes": 45057,
+      "sha256": "446cf53b2a883e92abce3a38a46cbb9620461dd387af2c21b0dadb9e002e0d2e"
+    },
+    {
+      "member": "focus/host-before-explicit-cancel.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/host-before-explicit-cancel.mjs",
+      "bytes": 6979,
+      "sha256": "3eca166088f9e55ba6c7fcd4c5ed801bdf3edb4b120141adb8cfacbf0ebe7940"
+    },
+    {
+      "member": "focus/host-before-native-blur.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/host-before-native-blur.mjs",
+      "bytes": 6890,
+      "sha256": "68d902556808f134a352f83aa6e7f108ffb6113adc583091eb187c6586a66b87"
+    },
+    {
+      "member": "focus/host-before-window-identity.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/host-before-window-identity.mjs",
+      "bytes": 7066,
+      "sha256": "8714323302de0c40c2fd52825f26a1bd143db8e8df7ab358627067ce26f11881"
+    },
+    {
+      "member": "focus/host-explicit-cancel-before.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/host-explicit-cancel-before.mjs",
+      "bytes": 11425,
+      "sha256": "d7ca9d22b1641c4bf920bbb23c4abedcbcc58a77b40c8c69e9444f134b784b95"
+    },
+    {
+      "member": "focus/initial-focus-test.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/initial-focus-test.mjs",
+      "bytes": 6167,
+      "sha256": "5b673c65e77479594ef1a4cc930d3e42bf5c59dfc32ce68b155ec4fe4ee06c15"
+    },
+    {
+      "member": "focus/library-panel-after-01.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/library-panel-after-01.mjs",
+      "bytes": 54139,
+      "sha256": "cc9ee927f177d40088aff2f037e2eb4a2df2b268b278df85276aeaef6d4c9439"
+    },
+    {
+      "member": "focus/library-panel-held-01.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/library-panel-held-01.mjs",
+      "bytes": 54139,
+      "sha256": "cc9ee927f177d40088aff2f037e2eb4a2df2b268b278df85276aeaef6d4c9439"
+    },
+    {
+      "member": "focus/library-panel-held-03.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/library-panel-held-03.mjs",
+      "bytes": 54139,
+      "sha256": "cc9ee927f177d40088aff2f037e2eb4a2df2b268b278df85276aeaef6d4c9439"
+    },
+    {
+      "member": "focus/mission-picker-after-01.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/mission-picker-after-01.mjs",
+      "bytes": 10918,
+      "sha256": "4878725de5cd6172093a45bf0609f4656f72728b1b3f26b857497caf6296dfb5"
+    },
+    {
+      "member": "focus/mission-picker-held-01.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/mission-picker-held-01.mjs",
+      "bytes": 10918,
+      "sha256": "4878725de5cd6172093a45bf0609f4656f72728b1b3f26b857497caf6296dfb5"
+    },
+    {
+      "member": "focus/native/chapter-focus-restored.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native/chapter-focus-restored.png",
+      "bytes": 99151,
+      "sha256": "c51a83c1d7e86a9c9fbef764b3c569dd8bd7f264849c0110021778431cdd0b27"
+    },
+    {
+      "member": "focus/native/events.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native/events.json",
+      "bytes": 24102,
+      "sha256": "077803a5427f423dc0d714ddee0b5ea9f3b8c77093d7aea3db882d96c294c1aa"
+    },
+    {
+      "member": "focus/native/library-focus-first-candidate.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native/library-focus-first-candidate.png",
+      "bytes": 120917,
+      "sha256": "6311faa8a9fb9e351486b258ddc2b6564a79898b0339ba79ae4faaac67da3966"
+    },
+    {
+      "member": "focus/native-blur-after-02.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-blur-after-02.log",
+      "bytes": 5036,
+      "sha256": "6a996ef2c8313e7328d777dde80b2675bcc88bfdd574e959337a7a459c391d55"
+    },
+    {
+      "member": "focus/native-blur-after.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-blur-after.log",
+      "bytes": 6442,
+      "sha256": "71752009ce892f349d660f32969fb8c54876f23b12b4000e4bb2eb8ddbd64c5e"
+    },
+    {
+      "member": "focus/native-blur-before.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-blur-before.log",
+      "bytes": 8508,
+      "sha256": "4608f377003d4f8f462fa431ad3e2d65dee673fad461028f09961972a4b68afe"
+    },
+    {
+      "member": "focus/native-drop-before-02.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-drop-before-02.log",
+      "bytes": 17616,
+      "sha256": "0082eccad3d4a915ed72dd44113935da76d4b29949ef06e35d023608a8d86db7"
+    },
+    {
+      "member": "focus/native-drop-before-03.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-drop-before-03.log",
+      "bytes": 7812,
+      "sha256": "24fa3124cbeb95bc5336667a3ac5f6cc2f7bd6ff0f709c3e9585cf236b989a8f"
+    },
+    {
+      "member": "focus/native-drop-before-04.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-drop-before-04.log",
+      "bytes": 7815,
+      "sha256": "09691316465a0fd536051dbd519551bc03649dd599da64b3dc02b099863f8399"
+    },
+    {
+      "member": "focus/native-drop-before.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-drop-before.log",
+      "bytes": 14979,
+      "sha256": "7f7d4bac759e7df7756674fa7d4b4314fbb0d61656a7c0331dc59bfee36db7a1"
+    },
+    {
+      "member": "focus/native-final-cancel/cancel-restored.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-final-cancel/cancel-restored.png",
+      "bytes": 80665,
+      "sha256": "2d8ce5d7fc412fd966afca559cbb746c227217448664b3cc8ebc35937b5405df"
+    },
+    {
+      "member": "focus/native-final-cancel/chapter-restored.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-final-cancel/chapter-restored.png",
+      "bytes": 98899,
+      "sha256": "6b002650fe819c5c1e467a31495b0c1a20ae6891cf2a25f04df9af9b5ab166ab"
+    },
+    {
+      "member": "focus/native-final-cancel/completion-respects-focus.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-final-cancel/completion-respects-focus.png",
+      "bytes": 110920,
+      "sha256": "1557681c6f66f21dd1bfc63498374cbc2ab230874c346cc137e99d178134653d"
+    },
+    {
+      "member": "focus/native-final-cancel/events.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-final-cancel/events.json",
+      "bytes": 54732,
+      "sha256": "19a736dd67777f60e345d27b9e88662e8dd08635290a457a284c90d02cce288d"
+    },
+    {
+      "member": "focus/native-receipt-history.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-receipt-history.json",
+      "bytes": 736,
+      "sha256": "80c4ca4b96d8c11b99e7c971be8ffe7b61aa057dfb42adcd0cbc73dcf03851cb"
+    },
+    {
+      "member": "focus/native-successor/chapter-complete.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-successor/chapter-complete.png",
+      "bytes": 98899,
+      "sha256": "6b002650fe819c5c1e467a31495b0c1a20ae6891cf2a25f04df9af9b5ab166ab"
+    },
+    {
+      "member": "focus/native-successor/delayed-no-focus-steal.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-successor/delayed-no-focus-steal.png",
+      "bytes": 110920,
+      "sha256": "1557681c6f66f21dd1bfc63498374cbc2ab230874c346cc137e99d178134653d"
+    },
+    {
+      "member": "focus/native-successor/events-first12-reconstructed.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-successor/events-first12-reconstructed.json",
+      "bytes": 65676,
+      "sha256": "f8025327d4121cfc8c52fdba6388ec1d2b496a716ff721f94271903bf8fba9ba"
+    },
+    {
+      "member": "focus/native-successor/events.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-successor/events.json",
+      "bytes": 78009,
+      "sha256": "80f43ff41b2ddef2008ad433b67273c8a8d93d7ba930cf3c1e2bd448b0799d93"
+    },
+    {
+      "member": "focus/native-successor/explicit-cancel-focus-failure.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-successor/explicit-cancel-focus-failure.png",
+      "bytes": 105533,
+      "sha256": "1a8e8eae04336202f38ab5611e34ba1ca2d71f2ae08bcac1e1a29a9f0d53b4e2"
+    },
+    {
+      "member": "focus/native-successor/library-complete.png",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-successor/library-complete.png",
+      "bytes": 121763,
+      "sha256": "7b635aae4a0019f2edee25418b7b8cec08593ab95a3d7c4eafec9e6b71e2eb7b"
+    },
+    {
+      "member": "focus/native-verification-final.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-verification-final.json",
+      "bytes": 6283,
+      "sha256": "1845b0e97446070e1099aa23db441d8fb8225bf73eb076b7b444ab36098f42ea"
+    },
+    {
+      "member": "focus/native-verification.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/native-verification.json",
+      "bytes": 3283,
+      "sha256": "702ec379563ed56f0de0aa4d17fde667858e1e9d26083d8025acbaea4cd883a5"
+    },
+    {
+      "member": "focus/operation-focus-held-01.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/operation-focus-held-01.mjs",
+      "bytes": 2458,
+      "sha256": "9173a269aea845b6d9b859232723d99e494e7a804dc3a0a04e961da92251419f"
+    },
+    {
+      "member": "focus/operation-focus-held-03.mjs",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/operation-focus-held-03.mjs",
+      "bytes": 2593,
+      "sha256": "bfd24cb4985c6103acbb93115b6db135cf9c5b6acf25cbfb6c02a5727d4e442c"
+    },
+    {
+      "member": "focus/post-native-http-cancel.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/post-native-http-cancel.json",
+      "bytes": 1826,
+      "sha256": "cc9a3f9cf21873022687495dfa1ad8695e84bcca9242f1b6d1db611929550efe"
+    },
+    {
+      "member": "focus/post-native-http.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/post-native-http.json",
+      "bytes": 3365,
+      "sha256": "d373a12ad40bc8d67db3985557307209a92a98883cb4b265c22c2c7013693526"
+    },
+    {
+      "member": "focus/predecessor-completion.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/predecessor-completion.json",
+      "bytes": 4060,
+      "sha256": "e2c3977c0ab439013342db20290760d0bef99407846c01a6bc887df47132703f"
+    },
+    {
+      "member": "focus/preview-cancel-delayed.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-cancel-delayed.json",
+      "bytes": 1464,
+      "sha256": "04f12f29981e73ff78169c4b59015738223e0a2500b3bb72ca3cc460dd298cd1"
+    },
+    {
+      "member": "focus/preview-config-02.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-config-02.json",
+      "bytes": 1012,
+      "sha256": "17108912815cdfe05dfd686b1f8b9f75bd23863db53707ca576c14f48c8d5f76"
+    },
+    {
+      "member": "focus/preview-config-cancel.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-config-cancel.json",
+      "bytes": 1085,
+      "sha256": "0c98349d5eae1c13ad0a1578f7f9074f8e8d25521b313119b9f4bba2c1561a47"
+    },
+    {
+      "member": "focus/preview-config-fieldcraft.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-config-fieldcraft.json",
+      "bytes": 1079,
+      "sha256": "541d9494ba386bc65bf37d0e100db5118a77fb6ca31085632a83222cbe5063d2"
+    },
+    {
+      "member": "focus/preview-config.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-config.json",
+      "bytes": 1000,
+      "sha256": "1185a83f20c0fcaf2157a9b1fb3f1424f8e85144aea4f61e90309028118700b9"
+    },
+    {
+      "member": "focus/preview-fieldcraft.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-fieldcraft.json",
+      "bytes": 1468,
+      "sha256": "81f5ca89d518f20f8871ba009eb0ec2d93b13f37cb364138e00a1408e9defdb8"
+    },
+    {
+      "member": "focus/preview-http-02.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-http-02.json",
+      "bytes": 1150,
+      "sha256": "9008c8f9f6324da07ebe3b311c77c94c1fbcf6b6f9d618be15d7243d08075032"
+    },
+    {
+      "member": "focus/preview-http-cancel-delayed.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-http-cancel-delayed.json",
+      "bytes": 1826,
+      "sha256": "d87af0f287f89d400a3a9a24b5b29150fbc9172f7a428c0de19da6f4850d759d"
+    },
+    {
+      "member": "focus/preview-http-fieldcraft.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-http-fieldcraft.json",
+      "bytes": 1650,
+      "sha256": "6f0c371f8775baffe412f75fc9233f9cc46fef59fff04b66cbbdef69b894b6b3"
+    },
+    {
+      "member": "focus/preview-http.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-http.json",
+      "bytes": 1150,
+      "sha256": "76da52ee009ce44fcccb6a12486ef9c75314d94272fbeb2a0f92dd9cebf6e1d5"
+    },
+    {
+      "member": "focus/preview-normal-02.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-normal-02.json",
+      "bytes": 1388,
+      "sha256": "2117ebd159c21146a4781eb5d1e7ec1bdbc8b6ed0210bbd0d0e4613b9d10ff98"
+    },
+    {
+      "member": "focus/preview-normal.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/preview-normal.json",
+      "bytes": 1386,
+      "sha256": "e5956e80f5544442f0b9e89aafca901c591ac17ada262559c67fff33a77b21ab"
+    },
+    {
+      "member": "focus/root-http-final-cancel.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/root-http-final-cancel.json",
+      "bytes": 836,
+      "sha256": "4dcffec30cc774d44647f773e1f7b59750541307e8a42a9ee0d88ac333135a5c"
+    },
+    {
+      "member": "focus/run-cancel-final.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/run-cancel-final.py",
+      "bytes": 2233,
+      "sha256": "003f2e350fd12573950f325250acad8bfae3382cc18ba93e3d4ab335c3905468"
+    },
+    {
+      "member": "focus/run-final.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/run-final.py",
+      "bytes": 1742,
+      "sha256": "e55c3708f51ac08fb0eacb6319fca7f43a2b555055565fa18a0ffcbd9a68adca"
+    },
+    {
+      "member": "focus/run-focused.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/run-focused.py",
+      "bytes": 1744,
+      "sha256": "ab0d062a0dca389cbf62760ce9dacace089b3bafe06746e8bf8706b9628e694c"
+    },
+    {
+      "member": "focus/run-successor.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/run-successor.py",
+      "bytes": 1746,
+      "sha256": "60150f3633cdbf6e2f9bb7c7b0ee757715650125aedfe73b3cdf109798a04c85"
+    },
+    {
+      "member": "focus/serve-focus-fieldcraft.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/serve-focus-fieldcraft.py",
+      "bytes": 8471,
+      "sha256": "87c9812ec92a59c2c0c9f470ecde82c661e2e3774ff770386100db43900f8bdd"
+    },
+    {
+      "member": "focus/serve-focus.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/serve-focus.py",
+      "bytes": 8459,
+      "sha256": "de0df9bb4a96e1fedba37d236721af371ff43a0653b205029a688ca28fa64b14"
+    },
+    {
+      "member": "focus/source-held-02.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-held-02.json",
+      "bytes": 1408,
+      "sha256": "1761f220da7bcd381e2188e5db2a01334af825da164798023c34f23f568121dd"
+    },
+    {
+      "member": "focus/source-held-03.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-held-03.json",
+      "bytes": 1520,
+      "sha256": "5196f7a87486db6807f80423b8b95c23458db6065acbe68b8967baea2bb36d9a"
+    },
+    {
+      "member": "focus/source-held-04.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-held-04.json",
+      "bytes": 1680,
+      "sha256": "5c148a996220a0b8ee0379ff8599f42d01aad23176e38f6b4a090160ed2df27f"
+    },
+    {
+      "member": "focus/source-held.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-held.json",
+      "bytes": 1205,
+      "sha256": "bf59827f828f095e5a348198bb5f1b00beef5f55ace45fd29fa74bcae15d359f"
+    },
+    {
+      "member": "focus/source-peer-02.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-peer-02.json",
+      "bytes": 659,
+      "sha256": "fbb21ea460972dd7420ae164dba5dbf1da54ff1ad351b35ab4d442af0e903f47"
+    },
+    {
+      "member": "focus/source-peer-03.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-peer-03.json",
+      "bytes": 684,
+      "sha256": "395aaa7a370636eca9f8b999e1326af663698cce81f307869e7c01f02e3d8c6d"
+    },
+    {
+      "member": "focus/source-peer.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source-peer.json",
+      "bytes": 2191,
+      "sha256": "d47f35a7de7a296e26d841d935f178d81cba6082a67b0690be547b0c60aa043c"
+    },
+    {
+      "member": "focus/source.diff",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/source.diff",
+      "bytes": 9946,
+      "sha256": "2653f194c250e6287cbcaafb54da330d74bf18a06514f67c89244b432075cbfe"
+    },
+    {
+      "member": "focus/static-checks.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/static-checks.json",
+      "bytes": 1114,
+      "sha256": "a313904be256934e513c844982a876b6b6c3467488e4e1d3d416d731acd1d1cf"
+    },
+    {
+      "member": "focus/successor-interruption.txt",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/successor-interruption.txt",
+      "bytes": 459,
+      "sha256": "4d1e86c2197fc2173c1942a36737e379396ce0aaf2452b437b7a6428b8588b25"
+    },
+    {
+      "member": "focus/successor-node22-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/successor-node22-after.json",
+      "bytes": 42904,
+      "sha256": "30de39de750209ed47ce55221625a54c6c552a70e032b8746927c91c9f5fc2b1"
+    },
+    {
+      "member": "focus/successor-node22-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/successor-node22-before.json",
+      "bytes": 42904,
+      "sha256": "30de39de750209ed47ce55221625a54c6c552a70e032b8746927c91c9f5fc2b1"
+    },
+    {
+      "member": "focus/successor-node22.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/successor-node22.json",
+      "bytes": 720,
+      "sha256": "9225e39d90cb203b203997b0c05a47aeaae6fd8729abea315e1c49840de36b2d"
+    },
+    {
+      "member": "focus/successor-node22.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/successor-node22.log",
+      "bytes": 23182,
+      "sha256": "00d7b3a6e7a2d883f7efa760abb39c8789080b789401866901e3e9fe9c914b50"
+    },
+    {
+      "member": "focus/verification-final.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/verification-final.json",
+      "bytes": 5963,
+      "sha256": "733dc7fd2f9407d66557f9bf07b6ca10c9abddb9c5d013c9c0b2470a3007d818"
+    },
+    {
+      "member": "focus/verification.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/operation-focus/verification.json",
+      "bytes": 4773,
+      "sha256": "0b31de76ff01b7628aeccbc0953a416825e5cc26ef9b9e67cddf25ad7268fc05"
+    },
+    {
+      "member": "fixtures/completion.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/completion.json",
+      "bytes": 1746,
+      "sha256": "66c1f96b25c49b22e30f11ffdfe4af2cb2162473c109fa96d59722c30a7c316b"
+    },
+    {
+      "member": "fixtures/coop-host.test.mjs.before",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/coop-host.test.mjs.before",
+      "bytes": 61479,
+      "sha256": "375dc70245bfda1350d8cd599b28a15bbd514822bbde1bb2459335e145d321c3"
+    },
+    {
+      "member": "fixtures/run-pair.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/run-pair.py",
+      "bytes": 1528,
+      "sha256": "9fa2f7663b111e166240fa187b2a0d8a9096fad09bb28ea304dad4ba18f3aac3"
+    },
+    {
+      "member": "fixtures/source.diff",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/source.diff",
+      "bytes": 5035,
+      "sha256": "3efe2bd1a21a04183f4f618ea0a30644523066a98b5fbc5c8f385c9aee96c62e"
+    },
+    {
+      "member": "fixtures/title-operation-status-host.test.mjs.before",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/title-operation-status-host.test.mjs.before",
+      "bytes": 4956,
+      "sha256": "195e41dbe7a2bf8e271322bd41beef8e44d7d3b01efdd2911a718702d4611e3c"
+    },
+    {
+      "member": "fixtures/whole-node20-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node20-after.json",
+      "bytes": 42428,
+      "sha256": "829577383537ddbf338f8a0e11a2940b952ca8599c25d120bb5de8b88e5a344e"
+    },
+    {
+      "member": "fixtures/whole-node20-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node20-before.json",
+      "bytes": 42428,
+      "sha256": "829577383537ddbf338f8a0e11a2940b952ca8599c25d120bb5de8b88e5a344e"
+    },
+    {
+      "member": "fixtures/whole-node20.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node20.json",
+      "bytes": 492,
+      "sha256": "f10ca574ec3bff8f50b9de03b132034011a98a9bd2abeecbe8ec6b8261bbaa50"
+    },
+    {
+      "member": "fixtures/whole-node20.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node20.log",
+      "bytes": 16972,
+      "sha256": "edeb50ad4c703f39771fd585d25fe07ce028579a4c425a1c82b17699301aa1ca"
+    },
+    {
+      "member": "fixtures/whole-node22-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node22-after.json",
+      "bytes": 42428,
+      "sha256": "829577383537ddbf338f8a0e11a2940b952ca8599c25d120bb5de8b88e5a344e"
+    },
+    {
+      "member": "fixtures/whole-node22-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node22-before.json",
+      "bytes": 42428,
+      "sha256": "829577383537ddbf338f8a0e11a2940b952ca8599c25d120bb5de8b88e5a344e"
+    },
+    {
+      "member": "fixtures/whole-node22.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node22.json",
+      "bytes": 492,
+      "sha256": "976dfab27fb6a7b20de78ef9d6803e5e2f0a2eef79db2069b84f1ffcf471939f"
+    },
+    {
+      "member": "fixtures/whole-node22.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-operation-focus/.cache/legacy-fixture-corrections/whole-node22.log",
+      "bytes": 18116,
+      "sha256": "c6290701ebf50e40693f311235e17af476a957a92daf3585f0b6a9d4cec4a786"
+    },
+    {
+      "member": "prior-combined/diagnostic-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/diagnostic-3acce194.json",
+      "bytes": 4692,
+      "sha256": "68cb7f456e3a0484d591c0b75de31ab744c9d525c7973e7b1a3ca43ee5658dd8"
+    },
+    {
+      "member": "prior-combined/final-inputs-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/final-inputs-3acce194.json",
+      "bytes": 82219,
+      "sha256": "5222f87214601e55c1afee314faeb90d4bc51beffb2dd8ae649890a6ea6cc54a"
+    },
+    {
+      "member": "prior-combined/index-guard-refusal.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/index-guard-refusal.json",
+      "bytes": 576,
+      "sha256": "4f35fbe8dbff1bdac988e9f85949bf179b1d968e321ed8d2d36fdc03beb17759"
+    },
+    {
+      "member": "prior-combined/run-pair-before-index-guard.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-pair-before-index-guard.py",
+      "bytes": 8535,
+      "sha256": "b028ec5ba3ac302f859a46267f34ee200d0239a3be54b4020c2a9ff2af356fb9"
+    },
+    {
+      "member": "prior-combined/prepare-before-index-guard.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/prepare-before-index-guard.py",
+      "bytes": 7378,
+      "sha256": "c487d1e0cebced78647cc5ff210c6836098e012a0cdd1a72a8580b7fd73860e0"
+    },
+    {
+      "member": "prior-combined/prepare.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/prepare.py",
+      "bytes": 7401,
+      "sha256": "92d0ff970f98078bb3e48485d179021dfa6229afa33dd3fabc147ecc9a78af2d"
+    },
+    {
+      "member": "prior-combined/run-pair.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-pair.py",
+      "bytes": 8557,
+      "sha256": "4af28d19ee24d25e75d7d67948e655e9ca154a8200212d369b32f8a85fabc3d9"
+    },
+    {
+      "member": "prior-combined/test-list.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/test-list.json",
+      "bytes": 1864,
+      "sha256": "c4081f8419913f2c8cb86c849c7b3dc0955453d550c55718ed7b67aab0ad55b4"
+    },
+    {
+      "member": "prior-combined/run-3acce194-02/inputs-before.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-3acce194-02/inputs-before.json",
+      "bytes": 45984,
+      "sha256": "cf7eacdc50a0bd276e66ad8c6924de65b48c0691366d4a4d48dd1ba64a4858ea"
+    },
+    {
+      "member": "prior-combined/run-3acce194-02/runner-authority.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-3acce194-02/runner-authority.json",
+      "bytes": 2947,
+      "sha256": "7fb70168c7391d95e283de9def808d9f72bdbc577407c42b36a1c5ccc4ebb059"
+    },
+    {
+      "member": "prior-combined/run-3acce194-02/node22-inputs-after.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-3acce194-02/node22-inputs-after.json",
+      "bytes": 45876,
+      "sha256": "5a4a43f923999d70da8967618bde8c7e55f3555a81dbb44d4fe397e5ce0771bf"
+    },
+    {
+      "member": "prior-combined/run-3acce194-02/node22-result.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-3acce194-02/node22-result.json",
+      "bytes": 2637,
+      "sha256": "b25521a834a29ba325bd7c1875fa485ce6e1533779f0b4dd57fd7a8666ca797f"
+    },
+    {
+      "member": "prior-combined/run-3acce194-02/node22.log",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-3acce194-02/node22.log",
+      "bytes": 181005,
+      "sha256": "0d13930a126e40cc7c5846658a7e8a6e085e7b490f08988bcf571a3b375fed2c"
+    },
+    {
+      "member": "prior-combined/run-3acce194-02/completion.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/run-3acce194-02/completion.json",
+      "bytes": 3245,
+      "sha256": "d855f405e0b5467214eaea8bb111743ee26484db053ea0dd29616cab2ecfc560"
+    },
+    {
+      "member": "prior-combined/preview-config-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/preview-config-3acce194.json",
+      "bytes": 917,
+      "sha256": "810e0dd3800a0497448cfef5b215998ab8d0a9e52f882d31cce7da834f504fc1"
+    },
+    {
+      "member": "prior-combined/serve-preview.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/serve-preview.py",
+      "bytes": 7446,
+      "sha256": "628b391822753ebc13dd6719a76c5c28b5bb44c9fb3b04dc8343e9237ffb4377"
+    },
+    {
+      "member": "prior-combined/check-preview.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/check-preview.py",
+      "bytes": 2990,
+      "sha256": "fdde95b4188bd2cf9fc281aa06f2f0f00025ee4349d316b256ea3dd40d8ab6b0"
+    },
+    {
+      "member": "prior-combined/preview-normal-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/preview-normal-3acce194.json",
+      "bytes": 874,
+      "sha256": "a0dce996f76ede068b8570c735f681bcaf90d39d46d544ac20ebb0cfa57f198d"
+    },
+    {
+      "member": "prior-combined/preview-delayed-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/preview-delayed-3acce194.json",
+      "bytes": 935,
+      "sha256": "b7996d3e18e37a645f7eefe8ab8c487e38f202ac5a1e96e0c20bc45b9bc60d67"
+    },
+    {
+      "member": "prior-combined/preview-normal-http-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/preview-normal-http-3acce194.json",
+      "bytes": 6646,
+      "sha256": "b425d9e737ec507ca6a044a13b0da9b281de17bf9430abddbbc00889af925244"
+    },
+    {
+      "member": "prior-combined/preview-delayed-http-3acce194.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/.cache/p03-final-qualification/preview-delayed-http-3acce194.json",
+      "bytes": 6647,
+      "sha256": "5902dd625f5d9f530851db68c91bd3f6a4c90f5438afdab61053cf4c4d4093e7"
+    }
+  ],
+  "scope": "Lossless cache originals and prior combined diagnostic inputs. Original relative paths inside receipts remain historical provenance; the member map gives retained locations. Current runtime source belongs to this commit, and whole original assets are not duplicated. Final9 native events are separate from previous4 and14. First12 historical event serialization is explicitly reconstructed only after its preexisting size/SHA matched. No receipt is rewritten to imply acceptance."
+}

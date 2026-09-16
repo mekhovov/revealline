@@ -82,6 +82,8 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         }
       }
       page.$('library-button').click();
+      page.doc.querySelector('[data-library-panel="packs"]').click();
+      assert.equal(page.$('library-packs').hidden, false);
       page.$('pack-json').value = JSON.stringify(pack);
       await page.$('install-pack').onclick();
       assert.match(page.$('pack-status').textContent, /Validated and installed/);
@@ -91,7 +93,10 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         .find((b) => b.textContent === `Play ${pack.campaigns[0].title}`);
       assert.ok(play);
       await play.onclick();
-      await settle(() => page.doc.body.dataset.pictureState === 'ready');
+      await settle(
+        () =>
+          page.$('pack-select').value === pack.id && page.doc.body.dataset.pictureState === 'ready',
+      );
       page.frame(0);
     }
     assert.equal(page.$('hangar-button').hidden, !available);

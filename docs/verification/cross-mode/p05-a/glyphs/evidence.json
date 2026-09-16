@@ -1,0 +1,118 @@
+{
+  "source": "f047a46a9a1bb9982600bd7e2682d765a75cb9cc",
+  "date": "2026-09-15",
+  "status": "scoped source verification; P05 incomplete",
+  "binaryCommand": "/tmp/revealline-field-kit-font-tools/bin/python scripts/verify-field-kit-fonts.py",
+  "nativeURL": "http://127.0.0.1:50168/authoring/design-atlas/#type",
+  "viewport": {
+    "width": 1393,
+    "height": 1348
+  },
+  "sourcePins": [
+    {
+      "path": "game/ui/fonts/field-kit/Exo2-OFL.txt",
+      "bytes": 4386,
+      "sha256": "7f95a8eeecc6904ffc81cd10cc8ebc7fcee72a67922924bf45f02dff03b88127"
+    },
+    {
+      "path": "game/ui/fonts/field-kit/Handjet-OFL.txt",
+      "bytes": 4389,
+      "sha256": "934a45d3b43276e1f857301e9cb07e00b829cca3d0c13e8e6f8c6790dd6c8a2c"
+    },
+    {
+      "path": "game/ui/fonts/field-kit/IBMPlexMono-OFL.txt",
+      "bytes": 4456,
+      "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+    },
+    {
+      "path": "game/ui/fonts/field-kit/exo2-ui-400-600.woff2",
+      "bytes": 76652,
+      "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef"
+    },
+    {
+      "path": "game/ui/fonts/field-kit/handjet-display-600.woff2",
+      "bytes": 38120,
+      "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145"
+    },
+    {
+      "path": "game/ui/fonts/field-kit/ibm-plex-mono-500.woff2",
+      "bytes": 40080,
+      "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8"
+    },
+    {
+      "path": "game/ui/fonts/field-kit/provenance.json",
+      "bytes": 3307,
+      "sha256": "bf9cfd7804641437f4b1bddee268249d74726af70a7172a41ed2c4b61f32e8dd"
+    },
+    {
+      "path": "scripts/verify-field-kit-fonts.py",
+      "bytes": 6223,
+      "sha256": "546dee1708235bb8ba4741f30b3c44c72a3b4b93fb150b385e2c5e56d14a0709"
+    },
+    {
+      "path": "game/presentation/compiled/assets/0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8.woff2",
+      "bytes": 40080,
+      "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8"
+    },
+    {
+      "path": "game/presentation/compiled/assets/4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145.woff2",
+      "bytes": 38120,
+      "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145"
+    },
+    {
+      "path": "game/presentation/compiled/assets/fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2",
+      "bytes": 76652,
+      "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef"
+    },
+    {
+      "path": "authoring/design-atlas/index.html",
+      "bytes": 24947,
+      "sha256": "3ed4c0332eb2fdaf90b3a69a2bd4abf1c3bd0a9616aa1c48962be9277efd25e6"
+    },
+    {
+      "path": "authoring/design-atlas/atlas.css",
+      "bytes": 40779,
+      "sha256": "96e623bc5f38aaa39925b941dbeb1a0daa8c40b98d6dbe5319c89dde7c9b52a7"
+    },
+    {
+      "path": "authoring/design-atlas/atlas.mjs",
+      "bytes": 32304,
+      "sha256": "c3100a434bddbab145e02df98f382c073a9be8230f731ceff606214018acf44d"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "README.md",
+      "bytes": 2159,
+      "sha256": "a6ddcd31573ad8485db3153dd60eb748ddb29fbbeffec000799b6d5bed78d113"
+    },
+    {
+      "path": "binary-verification.txt",
+      "bytes": 501,
+      "sha256": "77e00e962eba9a351aa554f4e956a9f2df02a7d8e17246eae4db68d7a4d669aa"
+    },
+    {
+      "path": "native-facts.json",
+      "bytes": 3901,
+      "sha256": "854d236cc3f3a580f870d8da718ce58a24e74746021575811063edf1f825eafe"
+    },
+    {
+      "path": "source-pins.json",
+      "bytes": 2234,
+      "sha256": "0a8bebb3157b0ae7845c4f42e7708ac041bfe71da74a40baed4f8d10b8073ca5"
+    },
+    {
+      "path": "ukrainian-specimens.jpg",
+      "bytes": 136975,
+      "sha256": "d85f11a52d5212d3d0dcfa9b433e14ac235e122f9ed511140a1af378225c82e0"
+    }
+  ],
+  "limits": [
+    "Existing atlas specimens, not all actual game screens",
+    "No physical-controller, touch, zoom, narrow-layout or cold-font qualification",
+    "No release or source version change"
+  ],
+  "transforms": {
+    "native-facts.json": "Prettier JSON whitespace only; raw cache retained."
+  }
+}

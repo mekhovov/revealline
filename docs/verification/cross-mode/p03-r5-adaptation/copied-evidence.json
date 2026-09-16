@@ -1,0 +1,319 @@
+{
+  "scope": "Bounded R5 adaptation source/test/preview and root scoped native records. Prior R5 original receipts remain separately sourced at5822500.",
+  "files": [
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/source-held.json",
+        "bytes": 836,
+        "sha256": "1543be533de2ddd3cfce0c7042bab7ee0cddd82af2be85038f19f1fad7e9e1e1"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/source-held.json",
+        "bytes": 836,
+        "sha256": "1543be533de2ddd3cfce0c7042bab7ee0cddd82af2be85038f19f1fad7e9e1e1"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/source.diff",
+        "bytes": 5969,
+        "sha256": "866a25184d88de2b3f9ea2ef9b4ec3c90268c9aa2ac5da8baaed93e34ea79e2d"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/source.diff.gz",
+        "bytes": 2191,
+        "sha256": "77161c1169ef59972f6d34de413af91d2f1193b5766a9fd3d3e1a28962d91756"
+      },
+      "encoding": "deterministic gzip, lossless original after decompression"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/initial-focus-test-held.mjs",
+        "bytes": 7289,
+        "sha256": "07c93c1b7ababf0520482b7592979cdf58bf39263a3f64d2d6848d6c99dc9584"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/initial-focus-test-held.mjs",
+        "bytes": 7289,
+        "sha256": "07c93c1b7ababf0520482b7592979cdf58bf39263a3f64d2d6848d6c99dc9584"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/execution-inputs.json",
+        "bytes": 45221,
+        "sha256": "1dcf7587c0df6e9903ccbbeb17f124be6c1cf6bcfd1240caa54ad16af2be1ef4"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/execution-inputs.json",
+        "bytes": 45221,
+        "sha256": "1dcf7587c0df6e9903ccbbeb17f124be6c1cf6bcfd1240caa54ad16af2be1ef4"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/run-pair.py",
+        "bytes": 2042,
+        "sha256": "46b93097100c91801a4e212fca1b94ada91589b1564933e363f26231d8340efc"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/run-pair.py",
+        "bytes": 2042,
+        "sha256": "46b93097100c91801a4e212fca1b94ada91589b1564933e363f26231d8340efc"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/execution.json",
+        "bytes": 2083,
+        "sha256": "83ecaa6ed4c3e666fc8d99bd53786d18fbbfe0caac9994ed64fb96c0d4c87c76"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/execution.json",
+        "bytes": 2083,
+        "sha256": "83ecaa6ed4c3e666fc8d99bd53786d18fbbfe0caac9994ed64fb96c0d4c87c76"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/node22-whole.log",
+        "bytes": 50511,
+        "sha256": "8fce1e043f4a1c421570fb9db2790aaa25e4087b5a070e5da33f4d15500c1dcd"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/node22-whole.log.gz",
+        "bytes": 8136,
+        "sha256": "fe94cf282e4bec9af69b652abdabd254c4cf921a4c7734a079b3286dc12deadc"
+      },
+      "encoding": "deterministic gzip, lossless original after decompression"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/node20-whole.log",
+        "bytes": 47228,
+        "sha256": "68f0c29ecdc6340ec5617448cfcf453ec66d45aadbe4c9c9441404a84e5d25ec"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/node20-whole.log.gz",
+        "bytes": 8009,
+        "sha256": "03a134be11fbb4213e8a091cd3877ea00e0693c53d27fd25bc085458ab19b71e"
+      },
+      "encoding": "deterministic gzip, lossless original after decompression"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/static.json",
+        "bytes": 1843,
+        "sha256": "250ac11532a483e3f02816effc89890305e282aa2182c6516bcd37fd74afce4d"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/static.json",
+        "bytes": 1843,
+        "sha256": "250ac11532a483e3f02816effc89890305e282aa2182c6516bcd37fd74afce4d"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/static.log",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/static.log.gz",
+        "bytes": 82,
+        "sha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+      },
+      "encoding": "deterministic gzip, lossless original after decompression"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/verification.json",
+        "bytes": 5084,
+        "sha256": "6d994c6ddb072d6d114fec170dcd90c14080de77c93d1a26eefe41f2ac6ec628"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/verification.json",
+        "bytes": 5084,
+        "sha256": "6d994c6ddb072d6d114fec170dcd90c14080de77c93d1a26eefe41f2ac6ec628"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/peer-source-summary.json",
+        "bytes": 863,
+        "sha256": "42e6ed75f0c8eb57315f026ae98173ec0fcb6f4da256cddc8b9ea17c5229a33f"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/peer-source-summary.json",
+        "bytes": 863,
+        "sha256": "42e6ed75f0c8eb57315f026ae98173ec0fcb6f4da256cddc8b9ea17c5229a33f"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/preview-inputs.json",
+        "bytes": 719,
+        "sha256": "0d3ec400349aaca1a702acf96adb2b92c27a98dbaa5fb226f015d51b5c4c928c"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/preview-inputs.json",
+        "bytes": 719,
+        "sha256": "0d3ec400349aaca1a702acf96adb2b92c27a98dbaa5fb226f015d51b5c4c928c"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/serve-preview.py",
+        "bytes": 4410,
+        "sha256": "7bb431ac2f78f7e2b61463713cddf3b10606d358af67b112ae54414e728e8fd1"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/serve-preview.py",
+        "bytes": 4410,
+        "sha256": "7bb431ac2f78f7e2b61463713cddf3b10606d358af67b112ae54414e728e8fd1"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/preview-normal.json",
+        "bytes": 1046,
+        "sha256": "6b51fd3ae1f2557c09457d82855a3d9900df9726b9408a5a599c12fd3e90248c"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/preview-normal.json",
+        "bytes": 1046,
+        "sha256": "6b51fd3ae1f2557c09457d82855a3d9900df9726b9408a5a599c12fd3e90248c"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/preview-delayed.json",
+        "bytes": 1046,
+        "sha256": "aad664c2c589e04fe3c12f29d91ec0622c5b83eec49a3f83d790a4e53e9601c5"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/preview-delayed.json",
+        "bytes": 1046,
+        "sha256": "aad664c2c589e04fe3c12f29d91ec0622c5b83eec49a3f83d790a4e53e9601c5"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/preview-http-check.json",
+        "bytes": 1481,
+        "sha256": "021f7010b1d8f382f4137541dc8d04fc6ef7c6227f91ea533fa88a0ef86a5ee6"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/preview-http-check.json",
+        "bytes": 1481,
+        "sha256": "021f7010b1d8f382f4137541dc8d04fc6ef7c6227f91ea533fa88a0ef86a5ee6"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/prior-r5/native-root-verification.json",
+        "bytes": 2036,
+        "sha256": "a366a24ae184cc3a21e79664b38905f6fd56f91f8359c8f66e183d33fe253ec3"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/prior-r5/native-root-verification.json",
+        "bytes": 2036,
+        "sha256": "a366a24ae184cc3a21e79664b38905f6fd56f91f8359c8f66e183d33fe253ec3"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/prior-r5/verification.json",
+        "bytes": 6828,
+        "sha256": "43f5cba631edf84358b1371b4f9e079aefe023613733cf8059930298b476eee3"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/prior-r5/verification.json",
+        "bytes": 6828,
+        "sha256": "43f5cba631edf84358b1371b4f9e079aefe023613733cf8059930298b476eee3"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/native-root-verification-initial.json",
+        "bytes": 1111,
+        "sha256": "8dae0b3be4f30df2a38306e88ec06f7fc0948ef5cbd46e03241bf53d400ce5ee"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/native-root-verification-initial.json",
+        "bytes": 1111,
+        "sha256": "8dae0b3be4f30df2a38306e88ec06f7fc0948ef5cbd46e03241bf53d400ce5ee"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/native-root-verification.json",
+        "bytes": 2531,
+        "sha256": "fec9bab51c6271c980cc0b5c6b1004007bbc996a3447c8c207775a21bce1b19a"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/native-root-verification.json",
+        "bytes": 2531,
+        "sha256": "fec9bab51c6271c980cc0b5c6b1004007bbc996a3447c8c207775a21bce1b19a"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/native/events.json",
+        "bytes": 13293,
+        "sha256": "62a1d9a5d78330ea0ba73b59812ad4138dd235aeaef3815cc96103d37bd26dcd"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/native/events.json",
+        "bytes": 13293,
+        "sha256": "62a1d9a5d78330ea0ba73b59812ad4138dd235aeaef3815cc96103d37bd26dcd"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/native/initial-ready-start.png",
+        "bytes": 72522,
+        "sha256": "77e116fe412d3af8f6ed1728c42f0e3774267dacbe7f3c687393c2d9ea4df32b"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/native/initial-ready-start.png",
+        "bytes": 72522,
+        "sha256": "77e116fe412d3af8f6ed1728c42f0e3774267dacbe7f3c687393c2d9ea4df32b"
+      },
+      "encoding": "exact original bytes"
+    },
+    {
+      "original": {
+        "path": ".cache/r5-adaptation/native/delayed-choice-ready.png",
+        "bytes": 71870,
+        "sha256": "1826312fba5bf83c7a5778ea1a91722497963759ebaf9073546761a43f89bd66"
+      },
+      "retained": {
+        "path": "docs/verification/cross-mode/p03-r5-adaptation/retained/native/delayed-choice-ready.png",
+        "bytes": 71870,
+        "sha256": "1826312fba5bf83c7a5778ea1a91722497963759ebaf9073546761a43f89bd66"
+      },
+      "encoding": "exact original bytes"
+    }
+  ],
+  "retainedBytes": 262572,
+  "originalBytes": 347928
+}

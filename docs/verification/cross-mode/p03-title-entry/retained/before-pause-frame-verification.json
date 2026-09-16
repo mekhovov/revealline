@@ -1,0 +1,100 @@
+{
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "pins": {
+    "game/app.mjs": {
+      "bytes": 250007,
+      "sha256": "2781cea918d2b62e74cac015d62658d8750712b60b3debb3b0a3dde88178fa91"
+    },
+    "game/index.html": {
+      "bytes": 70549,
+      "sha256": "538e4c50d24666fb3d34d6ddd69db1e72e623e842b5cebed645fff33880a3547"
+    },
+    "game/ui/game-shell.mjs": {
+      "bytes": 15792,
+      "sha256": "66fc90114c1a6678882c541b37f09c244f12c1562cca979a359ade9768eef84e"
+    },
+    "game/ui/field-kit-copy.mjs": {
+      "bytes": 3829,
+      "sha256": "f3ac3bed3a344934cf72990c1a9b37833320ecee1e05393cc1cc42166fe1ae23"
+    },
+    "game/test/title-entry-host.test.mjs": {
+      "bytes": 13915,
+      "sha256": "9cce87a6668595180bd20e2516c0fb8ce0296d17400b04ab8e47207aa6ec9f00"
+    },
+    "game/test/field-kit-flow.test.mjs": {
+      "bytes": 10861,
+      "sha256": "e7b5c7058336f4362aa9acc81e6bebc81ee201a198f3f1b74df613d5b81af994"
+    },
+    "game/test/flight-pictures-host.test.mjs": {
+      "bytes": 19695,
+      "sha256": "dc926477752d329db2ed8ed5b6bf2582d61f2d813d4e1efcbaaf23e4dfe6d8bd"
+    },
+    "game/test/initial-focus-host.test.mjs": {
+      "bytes": 5650,
+      "sha256": "12a811b071c1ae39c4d3c12b647f3dff4728c0995083214f59a42a406484d503"
+    },
+    "game/test/mission-replacement-host.test.mjs": {
+      "bytes": 17937,
+      "sha256": "e8cdc6a9076e8fd58e667bddbff607a2708a5d3f49a8c1cbf1e35bce457d7e15"
+    },
+    "game/test/starting-setup-host.test.mjs": {
+      "bytes": 20211,
+      "sha256": "f8c01835d74425530e1d91ecbfce4d6e676acc33efee10289fc13ab940b3daaa"
+    },
+    "game/test/restart-navigation-host.test.mjs": {
+      "bytes": 10733,
+      "sha256": "8d4b02034f63a69bd8d57a6c23d45b3d306ebb8c671facdba285e820e0af4fd2"
+    },
+    "game/test/course-selection-host.test.mjs": {
+      "bytes": 8591,
+      "sha256": "83c4f2c9af28926fabfc9410b61dd5b54340502a1cae93619b2095d574f66bfa"
+    },
+    "game/test/mode-return-host.test.mjs": {
+      "bytes": 14172,
+      "sha256": "2ecb8ae59aef3825d7f616c98155184f2c691910aa9cb67be6f64c507cce2215"
+    },
+    "game/test/storage-retention-host.test.mjs": {
+      "bytes": 5850,
+      "sha256": "b36d9a015043cf485d4f3d40d23468b4d43dbbc9949d520e1377e54112a0bc59"
+    },
+    "game/test/sessions-continuous.test.mjs": {
+      "bytes": 3957,
+      "sha256": "216a59a4dcddd3b7ca5ba51178ea282d658af3296160420dc42845df7f355c95"
+    }
+  },
+  "results": [
+    {
+      "version": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/title-entry-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/flight-pictures-host.test.mjs",
+        "game/test/initial-focus-host.test.mjs",
+        "game/test/mission-replacement-host.test.mjs",
+        "game/test/starting-setup-host.test.mjs",
+        "game/test/restart-navigation-host.test.mjs",
+        "game/test/course-selection-host.test.mjs",
+        "game/test/mode-return-host.test.mjs",
+        "game/test/storage-retention-host.test.mjs",
+        "game/test/sessions-continuous.test.mjs"
+      ],
+      "exitCode": 1,
+      "seconds": 129.84424229105935,
+      "summary": {
+        "tests": "183",
+        "pass": "181",
+        "fail": "2",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "129801.842875"
+      },
+      "sourcePinsUnchanged": true,
+      "log": "whole-node22.log",
+      "logSha256": "a176dc7311070887f661b5b5932ee2a75f709dffc4892040a8aeeb2d5e576638"
+    }
+  ]
+}

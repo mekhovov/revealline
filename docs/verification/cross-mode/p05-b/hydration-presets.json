@@ -1,0 +1,7 @@
+{
+  "base": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "path": "authoring/motion-lab/presets.json",
+  "bytes": 50888,
+  "sha256": "c1ad73a04e31f63eaa1244b5a73ba076160960746f57bf0944c53ee28e85d7ba",
+  "reason": "Initial real host startup requires unchanged authored preset JSON; raw missing-file and dependent assertion diagnostics retained."
+}

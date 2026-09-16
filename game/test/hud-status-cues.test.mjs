@@ -152,6 +152,8 @@ for (const stopOnCapture of [false, true])
           music: [],
         };
       page.$('library-button').click();
+      page.doc.querySelector('[data-library-panel="packs"]').click();
+      assert.equal(page.$('library-packs').hidden, false);
       page.$('pack-json').value = JSON.stringify(candidate);
       await page.$('install-pack').onclick();
       assert.match(page.$('pack-status').textContent, /Validated and installed/);
@@ -160,7 +162,12 @@ for (const stopOnCapture of [false, true])
         .querySelectorAll('button')
         .find((button) => button.textContent === 'Play Secured cut cues');
       assert.ok(play);
-      play.click();
+      await play.onclick();
+      await settle(
+        () =>
+          page.$('pack-select').value === candidate.id &&
+          page.doc.body.dataset.pictureState === 'ready',
+      );
       page.frame(0);
       assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
       assert.equal(page.rendered.run.rules.stopOnCapture, stopOnCapture);
