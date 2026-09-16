@@ -1,0 +1,29 @@
+{
+  "status": "PASS_UNCHANGED_AFTER_HTTP",
+  "at": "2026-09-16T03:22:18.843849+00:00",
+  "archiveCommit": "d92391c40a1757de0497c2b7709c0a4925318e5a",
+  "deploymentId": 6472983959,
+  "runId": 35050939612,
+  "pins": [
+    {
+      "path": "main.json",
+      "bytes": 5295,
+      "sha256": "3451b2b85f7391395032993a243989f01f014a72c6fcfc28e229f234861e0304"
+    },
+    {
+      "path": "run.json",
+      "bytes": 13212,
+      "sha256": "6de3d9f8e1e8019baa0461f50224965d6e4e117e6407ce8320341115ca3977fd"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 3856,
+      "sha256": "c30ec7da188d3274da7e57beba6803683fe1fe0591c98f7499135a294bda2e55"
+    },
+    {
+      "path": "statuses.json",
+      "bytes": 6817,
+      "sha256": "4efd688fb6fa38a8bc47654a8c16a66ea5efa79ca8aa55b57b985b8f79a1ea33"
+    }
+  ]
+}

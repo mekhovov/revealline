@@ -1,0 +1,20 @@
+{
+  "format": "revealline-evidence-preservation.v1",
+  "status": "VERIFIED_EXACT_ORIGINALS",
+  "originals": 13,
+  "uncompressedBytes": 135375,
+  "zip": {
+    "path": "evidence/archive-17/append-v0574/native-evidence.zip",
+    "sha256": "107a2cf6ac0782dde6b837c2c9b4b9fa51bbe20afc3e521fffb50abd6c9811fb",
+    "kind": "reference",
+    "bytes": 79849
+  },
+  "manifest": {
+    "path": "evidence/archive-17/append-v0574/native-evidence-manifest.json",
+    "sha256": "30a9e4ce6dcd1155d22e78bd3a46158c38fa0a0f10c77665c4c3fcfba1b408be",
+    "kind": "reference",
+    "bytes": 2316
+  },
+  "phaseAccepted": false,
+  "noNewBrowserExecution": true
+}
