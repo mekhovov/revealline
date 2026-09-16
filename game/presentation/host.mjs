@@ -601,7 +601,7 @@ export function createPresentationHost({
       required(current && !closed, 'No accepted presentation is loaded.');
       const releaseTokens = applyPresentation(element, current.snapshot.resolved);
       const before = new Map(),
-        attributes = [],
+        attributes = new Map(),
         values = {};
       for (const [slot, url] of Object.entries(current.cssImages)) {
         const name = slot.replaceAll('.', '-');
@@ -643,23 +643,59 @@ export function createPresentationHost({
               ...(scope.children?.length ? (scope.querySelectorAll?.(selector) ?? []) : []),
             ];
             for (const control of controls) {
-              if (control.getAttribute(attribute) === icon) continue;
-              attributes.push({
-                control,
-                icon,
-                attribute,
-                before: control.getAttribute(attribute),
-              });
+              let owned = attributes.get(control);
+              const record = owned?.get(attribute),
+                value = control.getAttribute(attribute);
+              // Keep external changes, but let a still-owned attribute follow
+              // a changed role or later matching selector with its first baseline.
+              if (value === icon || (record && value !== record.icon)) continue;
+              if (record) record.icon = icon;
+              else {
+                if (!owned) attributes.set(control, (owned = new Map()));
+                owned.set(attribute, { icon, before: value });
+              }
               control.setAttribute(attribute, icon);
             }
           }
       };
+      const releaseControl = (control) => {
+        const owned = attributes.get(control);
+        if (!owned) return;
+        attributes.delete(control);
+        for (const [attribute, { icon, before: prior }] of owned) {
+          if (control.getAttribute(attribute) !== icon) continue;
+          if (prior === null) control.removeAttribute(attribute);
+          else control.setAttribute(attribute, prior);
+        }
+      };
+      let active = true;
       markControls();
       const Observer =
         element.ownerDocument?.defaultView?.MutationObserver ?? globalThis.MutationObserver;
       const observer =
         typeof Observer === 'function'
           ? new Observer((records) => {
+              if (!active) return;
+              // Use final containment: moves and remove/reinsert batches retain
+              // their lease. Include every removal record because a descendant
+              // can leave an already detached subtree before notification.
+              const removed = new Set(
+                records.flatMap((record) =>
+                  [...(record.removedNodes ?? [])].filter((node) => node.nodeType === 1),
+                ),
+              );
+              for (const node of removed) {
+                if (node === element || element.contains?.(node)) continue;
+                let parent = node.parentElement;
+                while (parent && !removed.has(parent)) parent = parent.parentElement;
+                if (parent) continue;
+                const pending = [node];
+                while (pending.length) {
+                  const control = pending.pop();
+                  releaseControl(control);
+                  for (const child of control.children ?? []) pending.push(child);
+                }
+              }
               // HUD text may contain a new <small> every frame. Visit only
               // newly inserted element subtrees, never rescan the whole page.
               const inserted = new Set(
@@ -676,7 +712,6 @@ export function createPresentationHost({
             })
           : null;
       observer?.observe(element, { childList: true, subtree: true });
-      let active = true;
       const cleanup = () => {
         if (!active) return;
         active = false;
@@ -687,11 +722,7 @@ export function createPresentationHost({
           if (prior.value) element.style.setProperty(name, prior.value, prior.priority);
           else element.style.removeProperty(name);
         }
-        for (const { control, icon, attribute, before: prior } of attributes) {
-          if (control.getAttribute(attribute) !== icon) continue;
-          if (prior === null) control.removeAttribute(attribute);
-          else control.setAttribute(attribute, prior);
-        }
+        for (const control of attributes.keys()) releaseControl(control);
         applications.delete(cleanup);
       };
       applications.add(cleanup);
