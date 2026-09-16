@@ -1,0 +1,140 @@
+{
+  "format": "p03b-initial-focus-verification.v1",
+  "base": "7c7ebb87f0166fb6463043ac7bc2cb10b0b879e7",
+  "baselineSourceEquivalent": "09861a9c445728b0ee007d536309faee44d6279c",
+  "status": "source-tests-passed-native-pending",
+  "source": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 216447,
+      "sha256": "53b1ae462f7fae6e302852c9ffceef67d235e6775909fe2c4aca29428bcbf086"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 13234,
+      "sha256": "aeff03078904a29dfd43d4ff25550715ee5a07c8195db21030952d3a61532fbb"
+    },
+    {
+      "path": "game/test/initial-focus-host.test.mjs",
+      "bytes": 5650,
+      "sha256": "12a811b071c1ae39c4d3c12b647f3dff4728c0995083214f59a42a406484d503"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 31880,
+      "sha256": "f78b2a2092353b569c24ba59a474a39d959d5b1b6b9fc0bf7d664d1bdfcafcfa"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 99190,
+      "sha256": "59542530350a83b9fd18312d2a5da9d225a8afe640fc956f63923ada41d7a41a"
+    }
+  ],
+  "tests": [
+    {
+      "node": "v22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/initial-focus-host.test.mjs",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/field-kit-flow.test.mjs"
+      ],
+      "counts": {
+        "tests": 51,
+        "pass": 51,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durationMs": 40670.84875,
+      "log": {
+        "path": "node22-final.log",
+        "bytes": 12400,
+        "sha256": "5d3026bd1e5d2ace34508089bbeb04d867f18ce1ffba18f5f68dd66f6792c143"
+      }
+    },
+    {
+      "node": "v20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/initial-focus-host.test.mjs",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/field-kit-flow.test.mjs"
+      ],
+      "counts": {
+        "tests": 51,
+        "pass": 51,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durationMs": 53240.30075,
+      "log": {
+        "path": "node20-final.log",
+        "bytes": 11623,
+        "sha256": "7707ba733d1a864875530a2ca0d10a8cddc17d087ca7aa17e97d2cb3dfa4edba"
+      }
+    }
+  ],
+  "static": {
+    "syntax": "three changed mjs files passed Node22",
+    "eslint": "three changed mjs files passed, zero warnings",
+    "prettier": "five changed files passed",
+    "gitDiffCheck": "passed"
+  },
+  "evidence": [
+    {
+      "path": "baseline-node22.log",
+      "bytes": 4520,
+      "sha256": "3d35b9a795f9c078015d6dd88fac0b1855e6747fed8dcda860798fc858f384bf"
+    },
+    {
+      "path": "node20-final.log",
+      "bytes": 11623,
+      "sha256": "7707ba733d1a864875530a2ca0d10a8cddc17d087ca7aa17e97d2cb3dfa4edba"
+    },
+    {
+      "path": "node22-01.log",
+      "bytes": 42989,
+      "sha256": "6a606622128bb46d1014522c94d48ca7c48470e33ac0365af38522c994a91f54"
+    },
+    {
+      "path": "node22-complete.log",
+      "bytes": 12403,
+      "sha256": "24429dcb0d000791bf4d6b7b6a354deeaf0e7825c491462ee61850dcbc4f16aa"
+    },
+    {
+      "path": "node22-final.log",
+      "bytes": 12400,
+      "sha256": "5d3026bd1e5d2ace34508089bbeb04d867f18ce1ffba18f5f68dd66f6792c143"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 1033,
+      "sha256": "cbcf96e6c454f59c735c485d351cb6808b9fc10742223a0ab13db920a7bb8960"
+    },
+    {
+      "path": "source.diff",
+      "bytes": 7598,
+      "sha256": "1ba98f8d9eb5aec6e215dcda8e5d999e33bafd73d4c7c9915361c1c534df37e1"
+    }
+  ],
+  "scope": [
+    "Actual app/markup with native-like pre-ready focus rejection; fresh Deploy, saved Continue and disabled-primary fallback",
+    "Deliberate visible menu choice and background focus preserved",
+    "Real saved cut remains unadopted, exact received save bytes and ready checkpoint unchanged",
+    "Full modal and Field Kit flow regression files pass"
+  ],
+  "retainedFailures": "Unchanged source produced BODY for three initial-focus cases. First fixed-source run corrected focus but compared saved bytes captured before source pagehide; only savedAt differed. Fixture now binds bytes after the completed departing pagehide. Both raw failures retained.",
+  "limitations": [
+    "No browser, physical device or public qualification for this patch",
+    "Mode-return context and unfinished-flight departure remain design only",
+    "Root-owned P03-A native evidence commit is preserved"
+  ],
+  "freeBytes": 1913069568,
+  "createdAt": "2026-09-15T15:50:31.119213+00:00"
+}

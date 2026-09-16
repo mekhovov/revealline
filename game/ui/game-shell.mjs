@@ -2,6 +2,7 @@ import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
 import { fieldKitCopy } from './field-kit-copy.mjs';
 import { attachFocusClearance } from './focus-clearance.mjs';
+import { mountModeChoices } from './mode-choice.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -9,8 +10,14 @@ export function attachGameShell({
   pause,
   canContinue,
   initial = true,
+  initialFocus = true,
   training = false,
   onFeatured,
+  onTitleStart,
+  onTitleContinue,
+  onTitleCancel,
+  onModeDeparture,
+  titleDestination,
   onWorlds,
   getTopDialog,
   focusMissions,
@@ -25,7 +32,8 @@ export function attachGameShell({
   if (!home || !missions) return null;
   let destroyed = false,
     returnToHome = false,
-    homeVisit = 0;
+    homeVisit = 0,
+    titleModeIntent = null;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const surfaces = attachFieldKitSurfaces({ document: doc });
@@ -57,6 +65,8 @@ export function attachGameShell({
     craftFeedbackMarker = null;
   };
   const closeHome = () => {
+    titleModeIntent = null;
+    cancelTitle();
     homeVisit++;
     if (workshop?.open) workshop.close();
     if (home.open) home.close();
@@ -108,7 +118,8 @@ export function attachGameShell({
     focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
   };
-  const openHome = () => {
+  const openHome = ({ focus = true } = {}) => {
+    titleModeIntent = null;
     pause(true);
     if (missions.open) missions.close();
     restoreMissionView();
@@ -124,7 +135,7 @@ export function attachGameShell({
                 ? $('continue-saved').title
                 : $('mission-brief-title').textContent,
             })
-          : copy('title.deployDestination');
+          : titleDestination?.() || copy('title.deployDestination');
     if (!home.open) {
       // A prior successful chapter selection is not the next title action.
       // Keep errors visible; fresh operation feedback still arrives normally.
@@ -133,12 +144,13 @@ export function attachGameShell({
         status.hidden = true;
       home.showModal();
     }
-    (training
-      ? $('shell-course-return')
-      : canContinue()
-        ? $('shell-continue')
-        : $('shell-featured') || $('shell-play')
-    ).focus();
+    if (focus)
+      (training
+        ? $('shell-course-return')
+        : canContinue()
+          ? $('shell-continue')
+          : $('shell-featured') || $('shell-play')
+      ).focus();
   };
   const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
@@ -228,10 +240,125 @@ export function attachGameShell({
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
+  let titleAction = null;
+  const cancelTitle = () => {
+    if (!titleAction) return;
+    const { button, labelNode, label } = titleAction;
+    titleAction = null;
+    onTitleCancel?.();
+    button.disabled = false;
+    labelNode.textContent = label;
+  };
+  const titleCancel = $('shell-flight-cancel');
+  const cancelTitleAndRestore = (operation) => {
+    if (!operation || titleAction !== operation) return;
+    const visit = homeVisit;
+    const ownedFocus = doc.activeElement === doc.body || doc.activeElement === titleCancel;
+    cancelTitle();
+    // Hiding Cancel can synchronously move focus or open another screen. Check
+    // ownership again after that callback; keep an already-returned primary.
+    if (
+      ownedFocus &&
+      !destroyed &&
+      !titleAction &&
+      homeVisit === visit &&
+      topDialog() === home &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      (doc.activeElement === doc.body || doc.activeElement === titleCancel)
+    )
+      operation.button.focus({ preventScroll: true });
+  };
+  if (titleCancel) titleCancel.onclick = () => cancelTitleAndRestore(titleAction);
+  const launchTitle = async (button, callback) => {
+    if (button.disabled || destroyed || topDialog() !== home) return;
+    cancelTitle();
+    const visit = homeVisit;
+    const labelNode = button.querySelector('[data-field-kit-copy]') ?? button;
+    const operation = { button, labelNode, label: labelNode.textContent };
+    titleAction = operation;
+    button.disabled = true;
+    labelNode.textContent = copy('title.preparing');
+    try {
+      const pending = callback({
+        isCurrent: () =>
+          !destroyed &&
+          titleAction === operation &&
+          homeVisit === visit &&
+          topDialog() === home &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false,
+        leave: closeHome,
+      });
+      if (
+        titleAction === operation &&
+        homeVisit === visit &&
+        topDialog() === home &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        !titleCancel?.hidden &&
+        (doc.activeElement === doc.body || doc.activeElement === button)
+      )
+        titleCancel?.focus({ preventScroll: true });
+      await pending;
+    } finally {
+      cancelTitleAndRestore(operation);
+    }
+  };
   const leaveFeatured = (event) => {
-    if (event.target?.closest?.('button,a,summary') !== featured) homeVisit++;
+    titleModeIntent = null;
+    const target = event.target?.closest?.('button,a,summary');
+    if (target !== titleAction?.button && target !== titleCancel) cancelTitle();
+    if (target !== featured) homeVisit++;
   };
   home.addEventListener('click', leaveFeatured, true);
+  const titleModes = $('shell-title-modes');
+  if (titleModes) {
+    mountModeChoices({
+      root: titleModes,
+      current: 'solo',
+      actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
+    });
+    titleModes.hidden = training || !onModeDeparture;
+    for (const kind of ['versus', 'team']) {
+      const opener = $(`shell-title-${kind}`);
+      opener.onclick = (event) => {
+        if (
+          event.defaultPrevented ||
+          event.ctrlKey ||
+          event.metaKey ||
+          event.altKey ||
+          event.shiftKey ||
+          (event.button !== undefined && event.button !== 0)
+        )
+          return;
+        if (destroyed || training || !onModeDeparture || topDialog() !== home) {
+          event.preventDefault();
+          return;
+        }
+        // Native click capture has already retired any previous Title action.
+        // Keep this explicit too for callers invoking the owned handler directly.
+        cancelTitle();
+        const intent = { visit: homeVisit };
+        titleModeIntent = intent;
+        return onModeDeparture(kind, event, opener, {
+          origin: 'solo-title',
+          isCurrent: () => {
+            const top = topDialog();
+            return (
+              !destroyed &&
+              titleModeIntent === intent &&
+              homeVisit === intent.visit &&
+              home.open &&
+              !doc.hidden &&
+              doc.hasFocus?.() !== false &&
+              (top === home || top === $('mode-leave-dialog'))
+            );
+          },
+        });
+      };
+    }
+  }
   if (featured && onFeatured)
     featured.onclick = async () => {
       if (featured.disabled || destroyed) return;
@@ -252,6 +379,7 @@ export function attachGameShell({
         }
       }
     };
+  if (featured && onTitleStart) featured.onclick = () => launchTitle(featured, onTitleStart);
   $('shell-briefing').onclick = () => {
     missions.close();
     focusGame();
@@ -285,14 +413,16 @@ export function attachGameShell({
     if (!$('continue-saved').hidden) $('continue-saved').click();
     else focusGame();
   };
+  if (onTitleContinue)
+    $('shell-continue').onclick = () => launchTitle($('shell-continue'), onTitleContinue);
   forward('shell-collection', 'collection-button', { keepHome: true });
   forward('shell-gallery', 'collection-button', { keepHome: true });
   forward('shell-settings', 'settings-button', { keepHome: true });
-  forward('shell-library', 'library-button');
+  forward('shell-library', 'library-button', { keepHome: true });
   forward('shell-options', 'settings-button', { keepHome: true });
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
-  forward('shell-help', 'help-button');
+  forward('shell-help', 'help-button', { keepHome: true });
   // Keep Workshop beneath its Guide so native modal return restores the visible opener.
   const courseReturn = $('shell-course-return');
   if (courseReturn) {
@@ -320,12 +450,30 @@ export function attachGameShell({
       element.hidden = true;
   }
   const cancelHome = () => {
+    titleModeIntent = null;
+    cancelTitle();
     homeVisit++;
     queueMicrotask(() => {
       if (!destroyed && !home.open && !topDialog()) focusGame();
     });
   };
   home.addEventListener('cancel', cancelHome);
+  const suspendedTitle = () => {
+    titleModeIntent = null;
+    cancelTitle();
+  };
+  const hiddenTitle = () => {
+    if (doc.hidden) suspendedTitle();
+  };
+  const titleClosed = () => {
+    if (!home.open) suspendedTitle();
+  };
+  const titleWindow =
+    typeof doc.defaultView?.addEventListener === 'function' ? doc.defaultView : globalThis.window;
+  titleWindow?.addEventListener('blur', suspendedTitle);
+  titleWindow?.addEventListener('pagehide', suspendedTitle);
+  doc.addEventListener('visibilitychange', hiddenTitle);
+  home.addEventListener('close', titleClosed);
   // Native controls retain their arrow editing semantics. Arrows on game menu
   // actions move focus; Enter/Space and Tab remain browser-standard activation.
   const keydown = (event) => {
@@ -347,12 +495,22 @@ export function attachGameShell({
     event.preventDefault();
   };
   doc.addEventListener('keydown', keydown);
-  if (initial) openHome();
+  if (initial) openHome({ focus: initialFocus });
   return {
     openHome,
     openMissions,
     destroy() {
       destroyed = true;
+      titleModeIntent = null;
+      cancelTitle();
+      for (const kind of ['versus', 'team']) {
+        const opener = $(`shell-title-${kind}`);
+        if (opener) opener.onclick = null;
+      }
+      titleWindow?.removeEventListener('blur', suspendedTitle);
+      titleWindow?.removeEventListener('pagehide', suspendedTitle);
+      doc.removeEventListener('visibilitychange', hiddenTitle);
+      home.removeEventListener('close', titleClosed);
       restoreMissionView();
       restoreCraftFeedback();
       focusClearance.destroy();

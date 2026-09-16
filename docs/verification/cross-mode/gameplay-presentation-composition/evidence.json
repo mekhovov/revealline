@@ -1,0 +1,986 @@
+{
+  "format": "revealline.internal-evidence-map.v1",
+  "archive": {
+    "file": "evidence.zip",
+    "bytes": 1230070,
+    "sha256": "0beff4f701d477a5543b8b498d6f56361d1dd2cb78f44ceb255d0bba24df63aa"
+  },
+  "sourceTree": "a20e424d31331221791ae429c2b8bcc39cfee5af",
+  "originalParents": [
+    "356401f936578db5d3643e13cb6287e59535e853",
+    "61fb43b32974187fe664f130117465285223251b",
+    "d30f883df1e11d04fb8a5682e17171f98da67901",
+    "99f33086c5c381cd91459e59e672c4adba1fe18d"
+  ],
+  "count": 138,
+  "originalBytes": 3208978,
+  "scope": "Lossless originals. Fresh complete19-file414/414 pair, earlier400/414 input omission and exact recovery, root native failures/timing misses/bounded successes stay distinct. Root alone inspected the native images. No full phase, release, publication, physical device, current P02 composition or new artwork acceptance.",
+  "files": [
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/admission.json",
+      "member": "preparation/admission.json",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 117735,
+      "sha256": "454fc9b3796092ca012479a49030d75e549f624518bb7c7d324062b749fb4223"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/closed-fixture-candidates.json",
+      "member": "preparation/closed-fixture-candidates.json",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 14740,
+      "sha256": "11f692a5d663a3fbd8a2f637f2251040d2af5cb9d64142e422fcf87b8c30af26"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/compose-trees.py",
+      "member": "preparation/compose-trees.py",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 2849,
+      "sha256": "be14c9d695c1fea0852e3202bced79227e785e165f92a0eadf7afd0803afc444"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/composition.json",
+      "member": "preparation/composition.json",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 2984,
+      "sha256": "4bd9ea46f87fc32f329a1480b99fd3d8950403a02edf76621d25b34a08747aac"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/materialization.json",
+      "member": "preparation/materialization.json",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 171134,
+      "sha256": "abfbd23db7d56921040903c5882c937312ed8b0a800243511f0feeba1d3cbaae"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/merge-actors.txt",
+      "member": "preparation/merge-actors.txt",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 300,
+      "sha256": "292722f7ef4f56ecebc53f5154f0922ed182d3e61cbb63902852e3137b91bc2c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/merge-hud.txt",
+      "member": "preparation/merge-hud.txt",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 280,
+      "sha256": "6e661b74d0749e5e45cf01b04a187135ecbceb9aa8ff0b58c49dc22822842147"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/merge-next.txt",
+      "member": "preparation/merge-next.txt",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 362,
+      "sha256": "b9b35455d2c3b4415fb6388574a5e086cac3aa25c636d2b32000f63cc928724e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/cross-mode-gameplay-preparation/prepare-worktree.py",
+      "member": "preparation/prepare-worktree.py",
+      "role": "Finite source composition and admitted materialization; diagnostic merge objects are not qualified commits",
+      "bytes": 4491,
+      "sha256": "83a90ea372c765589f6891f9d60f488b4d498efe5c8d73f6177a6ca7c61a64de"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/audit-import-closure.py",
+      "member": "qualification/audit-import-closure.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2955,
+      "sha256": "3e6de9b8ed7029d8f13f72ef0a9b64882e0768279311bf532d92c6b4d3b9208a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/diff-check.log",
+      "member": "qualification/diff-check.log",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/fixture-inventory-held-01.json",
+      "member": "qualification/fixture-inventory-held-01.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 155852,
+      "sha256": "cda1392c029f0691bf63ceb72d96e58ce3d688bc502a14ab36103e4ca1a5a636"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/fixture-inventory-recovery.json",
+      "member": "qualification/fixture-inventory-recovery.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 156198,
+      "sha256": "5ce808d0896d99330547cfe6d952e25c7b24f94e4caf94dad1ad5835ec34a3b8"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/format.log",
+      "member": "qualification/format.log",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/hold-source.py",
+      "member": "qualification/hold-source.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 4240,
+      "sha256": "2da6e9d4706a91fe879d7b2cbb2f05e12311baa4da0977e30f50a2210984b75a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/import-audit-summary.json",
+      "member": "qualification/import-audit-summary.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3628,
+      "sha256": "84d86ae2f76e15cd32243a3d2123e3ece2f9cf3e72f287cd0c56db06b1731213"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/initial-diagnostic.json",
+      "member": "qualification/initial-diagnostic.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1887,
+      "sha256": "9042133f67ea92482ca99d79799c1c0dbc93638330613660a395cb1e31b5532e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/intake-import-audit.json",
+      "member": "qualification/intake-import-audit.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 5755,
+      "sha256": "035b2c41097a81eb1b3ca676e5463dabb0a9f889289d81f91a63b4abbb4a89c3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/intake-peer.json",
+      "member": "qualification/intake-peer.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1212,
+      "sha256": "e53c3da19d680adfe4431729746b699b2dc3c1abdbea3907e759297307e6fdce"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/intake-recovery.json",
+      "member": "qualification/intake-recovery.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1302,
+      "sha256": "3f4e17f09fa454789fd4813d7a767a28fd6182ac94c00490b7e6893eb3e35dd6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/intake-required-graph-unclassified.json",
+      "member": "qualification/intake-required-graph-unclassified.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3404,
+      "sha256": "4c4c540d9e75127ad415c21372c29772ff595220766f7018f68cebe2031afc3e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/intake-required-graph.json",
+      "member": "qualification/intake-required-graph.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3628,
+      "sha256": "84d86ae2f76e15cd32243a3d2123e3ece2f9cf3e72f287cd0c56db06b1731213"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/lint.log",
+      "member": "qualification/lint.log",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/materialization.json",
+      "member": "qualification/materialization.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 171134,
+      "sha256": "abfbd23db7d56921040903c5882c937312ed8b0a800243511f0feeba1d3cbaae"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/packaging-notes.md",
+      "member": "qualification/packaging-notes.md",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2113,
+      "sha256": "11d22351a891039299c8216463ce90d0ea22f4ac4daaa7ff03444ad299c3692f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/prepare-preview.py",
+      "member": "qualification/prepare-preview.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 5371,
+      "sha256": "520a592303eecb0480c310eeeeae99638a7de13b3a928ff75ad5ec7d9de95b96"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/binding-cancel-final.json",
+      "member": "qualification/preview/binding-cancel-final.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3146,
+      "sha256": "96f1293fd133f56d78dc585f78dff4a6de1668967b1fcc876aebd5c07bf6465e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/binding-cancel.json",
+      "member": "qualification/preview/binding-cancel.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2949,
+      "sha256": "950cc52640e08865f1a5357ccb13011ebceeb8abf19bf1f75c923bd5523fcf9a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/binding-normal.json",
+      "member": "qualification/preview/binding-normal.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2187,
+      "sha256": "4e308ab3cfa60d01883d22587fd77b8f9ffa609d2bfa51f61b2ca841da9a2d8c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/binding-transport.json",
+      "member": "qualification/preview/binding-transport.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3048,
+      "sha256": "5dfdec1a7358864323a47fbc7eb78ce6debed046b8096a6cfd1f330493ca10a6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-config.json",
+      "member": "qualification/preview/cancel-config.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3220,
+      "sha256": "5fd364111b4b2aed4286075283821f6ce829522cec6d77de35200beeb3f15d64"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-final-config.json",
+      "member": "qualification/preview/cancel-final-config.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3472,
+      "sha256": "41d5d7fee0184ab843271aabf16e53db2b0188cabaf878124afa401657ca681e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-final-helper-reuse.diff",
+      "member": "qualification/preview/cancel-final-helper-reuse.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2148,
+      "sha256": "f8559377b1cc72e6b03f9189512fcfd19d73de2716da94a7dfa61fc025912412"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-final-preparation.json",
+      "member": "qualification/preview/cancel-final-preparation.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 900,
+      "sha256": "6ea6a7678c7c6b0825445c5acc4f5d0f1f1957fb0ca6761dfb136fde0b684053"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-final-requests.jsonl",
+      "member": "qualification/preview/cancel-final-requests.jsonl",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2307,
+      "sha256": "67f0f2e9a664efc0a4b83ff8aa8350c5098fefa7107e76c22f76caaded1508af"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-helper-reuse.diff",
+      "member": "qualification/preview/cancel-helper-reuse.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2076,
+      "sha256": "37a05d068e74d4c89b7df1d7125713bc8955e67b3536771e90506dc912721601"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-preparation.json",
+      "member": "qualification/preview/cancel-preparation.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 892,
+      "sha256": "30035caef8add7787de7e9865362733cd038925cbafb5017bcee254810209753"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/cancel-requests.jsonl",
+      "member": "qualification/preview/cancel-requests.jsonl",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1076,
+      "sha256": "baf254e8a173edd6e1a863f3e76e955512261a68c20de8e7fcddeaee0fc10544"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/check-http.py",
+      "member": "qualification/preview/check-http.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2290,
+      "sha256": "df8bef3d7d66f5accf80d7efd47570ac51022e228c93b5c8ab32bdd3691ad7e4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-after-cancel-final.json",
+      "member": "qualification/preview/http-after-cancel-final.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17453,
+      "sha256": "08f001618e7c02192a90e656eb2b74948bb22ae8466470fcc1dfe76e105ce03e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-after-cancel.json",
+      "member": "qualification/preview/http-after-cancel.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17447,
+      "sha256": "d901ef3502578c8dfd76f015f1496554f1d73e0677fb16e92c13131032e11c4a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-after-normal.json",
+      "member": "qualification/preview/http-after-normal.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17446,
+      "sha256": "74241c838222dba139b14c65f5f552d5d983ef10d3af780ce1503093e6a89052"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-after-transport.json",
+      "member": "qualification/preview/http-after-transport.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17450,
+      "sha256": "3975b8fa57729b6f424dec0d6b419090b9b8206f5e0b26c5adcb2f9d627d0bd9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-before-cancel-final.json",
+      "member": "qualification/preview/http-before-cancel-final.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17453,
+      "sha256": "4e22fdd7655627e37775fd5836f77dda998f1d8be0d5d8484cb31b7d68dc4808"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-before-cancel.json",
+      "member": "qualification/preview/http-before-cancel.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17447,
+      "sha256": "d20d70af1ab486b5f4554c169153a49d65a3f0f42e0c5a232d427ec60c78c9a4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-before-normal.json",
+      "member": "qualification/preview/http-before-normal.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17446,
+      "sha256": "fd5a6f86a0246298e2515f9c0464ab7f342d1b42445da7e3ba5a1619418e0eef"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-before-transport.json",
+      "member": "qualification/preview/http-before-transport.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 17450,
+      "sha256": "2504eadcf117e47be156664f178c58a7f87953052ff4686919974f180d4de834"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/http-plan.json",
+      "member": "qualification/preview/http-plan.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 11234,
+      "sha256": "10b00c5211628106fad97a1fa9431882acd550a3ce3f40a21a672159fd50af17"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/normal-config.json",
+      "member": "qualification/preview/normal-config.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2596,
+      "sha256": "28ea8ace5b9000269445b7610a8075c6ee6f6f7118523457200a70d9f78b3acf"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/normal-helper-reuse.diff",
+      "member": "qualification/preview/normal-helper-reuse.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2278,
+      "sha256": "8dc94c5879956eee09511d4045b2852a6090caaae70cd8b26f144d179d943f5d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/preparation.json",
+      "member": "qualification/preview/preparation.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1290,
+      "sha256": "0fe6b3d0b68e23f0bbf0aa5f02431443e6354f71b6b1ebe284d805aeecb7cccd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/prepare-http-plan.py",
+      "member": "qualification/preview/prepare-http-plan.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1688,
+      "sha256": "2f9c9fa6c1ec21d194ccf2f762f45816691896a8b50e9f8ba2ba974696fcf193"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/serve-cancel-final.py",
+      "member": "qualification/preview/serve-cancel-final.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 13941,
+      "sha256": "e1c12b55fc672b249e400908f0112be621be87c0dad06852326240de1ebf3ee7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/serve-cancel.py",
+      "member": "qualification/preview/serve-cancel.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 13804,
+      "sha256": "a03a69ac12c41ee86aff6356c30a5447fa10adabe348e5e16168343e268818bd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/serve-normal.py",
+      "member": "qualification/preview/serve-normal.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 10874,
+      "sha256": "95756fb0896550b8aec804f6c89f8e05c901454e65153ca9ea4902a162acfbf9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/serve-transport.py",
+      "member": "qualification/preview/serve-transport.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 13873,
+      "sha256": "38be42da84172c32a245a10bf0931f52a2780bd6f26a70e6d2dc4f4eb80a82af"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/transport-config.json",
+      "member": "qualification/preview/transport-config.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3242,
+      "sha256": "2164e13b816ba3895d9c0ef339c10de7c07143863813c592312bcb0034f6d4d1"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/transport-helper-reuse.diff",
+      "member": "qualification/preview/transport-helper-reuse.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 6853,
+      "sha256": "1cfb5d7ae2e66809431776c58320a5343ed0cd7f240d61daf4d75f7167e262ae"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/transport-requests.jsonl",
+      "member": "qualification/preview/transport-requests.jsonl",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1442,
+      "sha256": "41b7e7af017343586e1b1734548d029e678bd11d8d7802272cd9632fe3a75d28"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/qualification-authority.json",
+      "member": "qualification/qualification-authority.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2146,
+      "sha256": "3dfda7ba058376380ae83bb04eecb968f289da751884a0832d2224f397b59729"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/qualification-peer.json",
+      "member": "qualification/qualification-peer.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1279,
+      "sha256": "775a0ba084f29feb3db829b26777dda0806a2c94229d9551e90dc47a7d691b8e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/qualification-recovery.json",
+      "member": "qualification/qualification-recovery.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 2167,
+      "sha256": "ed9f199e080dd7917bbb3a583bd292f750b16f01b7d86b118ccebece048cb976"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/recovery-after-node20.json",
+      "member": "qualification/recovery-after-node20.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 147238,
+      "sha256": "76f94b571d82a60cf95431905feb59242650aa7900749a3f0369e08026fb3761"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/recovery-after-node22.json",
+      "member": "qualification/recovery-after-node22.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 147238,
+      "sha256": "76f94b571d82a60cf95431905feb59242650aa7900749a3f0369e08026fb3761"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/recovery-before.json",
+      "member": "qualification/recovery-before.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 147238,
+      "sha256": "76f94b571d82a60cf95431905feb59242650aa7900749a3f0369e08026fb3761"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/recovery-node20.log",
+      "member": "qualification/recovery-node20.log",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 95159,
+      "sha256": "9852463ff28abca71e78058ff2bc1024d561a58c0e2bfb0dda010fc095ce77d2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/recovery-node22.log",
+      "member": "qualification/recovery-node22.log",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 101395,
+      "sha256": "2f77b4ba24846a0da6c790641220f8f65fddf7a59c92901c407ea3db391da7ee"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/recovery-receipt.json",
+      "member": "qualification/recovery-receipt.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3478,
+      "sha256": "5fb55d499fd573f89fa7b8e6ea6f604ebbc10db6569a5407e7749013a37f971d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/root-priority-pause.json",
+      "member": "qualification/root-priority-pause.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1673,
+      "sha256": "8d54a962f161674c432e1ce8a68a7f5d62791414de29a8abafc221fa1664a2e3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/run-qualified-recovery.py",
+      "member": "qualification/run-qualified-recovery.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 4264,
+      "sha256": "757a713a3ca9cff46708616f6540fc051d12153e50e3c824df21dcca86982744"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/run-qualified.py",
+      "member": "qualification/run-qualified.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3687,
+      "sha256": "f65f4d87acf8743c4a5541007de9f083bacdd6e825835f1cc6c8ed23794b9ec9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/seal-qualified.py",
+      "member": "qualification/seal-qualified.py",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3621,
+      "sha256": "329d8952fcb61c0e02624211f897bf0e366ae8914cb4e5c99d1b25d9588913ed"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/shared-hunks.diff",
+      "member": "qualification/shared-hunks.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 20231,
+      "sha256": "4ae2fe0afb933445e528bf91ced67c358d07bfdcf287cbae71d5b229340ff995"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/shell-vs-p07.diff",
+      "member": "qualification/shell-vs-p07.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3906,
+      "sha256": "4b2b6e29abc8da11c79d1a00838b80e8769d3127dd4e31a8757c3c67374306e3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/source-held-01.json",
+      "member": "qualification/source-held-01.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 32209,
+      "sha256": "9a224176b869948363f2f9757ec777dc35691be0155fd065c96971bd1ab76b33"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/source.diff",
+      "member": "qualification/source.diff",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 130083,
+      "sha256": "16990bc4ce7d402b7ecb91a47ab9de0536cf3668ec00358d223367f961367bff"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/source.stat",
+      "member": "qualification/source.stat",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3989,
+      "sha256": "8002b59e441e4dddfefa7fbada990b38137690e778360c7066592b045b605b4d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/static-checks.json",
+      "member": "qualification/static-checks.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1056,
+      "sha256": "20520624f0a68cfb8bd8c77c4c82e4a6ce53e6bc7c5e6d0c13b3bae86506b1f5"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/tested-guidance/authoring/prompts/cross-mode-delivery.md",
+      "member": "qualification/tested-guidance/authoring/prompts/cross-mode-delivery.md",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 15279,
+      "sha256": "cc432e78de296f327fddfa948aa806dc8079bc8be426f283fdd0698fa31df603"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/tested-guidance/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "member": "qualification/tested-guidance/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 141052,
+      "sha256": "58fc4b812b00413ee731d5b28e268e1008a3c8ab85e90c3a6dcaf173e9db6c55"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/tested-guidance/docs/cross-mode-execution.md",
+      "member": "qualification/tested-guidance/docs/cross-mode-execution.md",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 72733,
+      "sha256": "2b7f599917f5147e4ab0abaca87702105d9d6b01ba474d4778cdda87b283a3d4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/tested-guidance/docs/gameplay-presentation-composition.md",
+      "member": "qualification/tested-guidance/docs/gameplay-presentation-composition.md",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 3473,
+      "sha256": "12b221d377f130822d74818287b1fec50beefa5ceff419e98d1a81dd0a434fd7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/tested-guidance.json",
+      "member": "qualification/tested-guidance.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1317,
+      "sha256": "2de85a92206841e563d37a1834035442a1fbad205518cb8ecf39c51d7bb6b1e5"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/verification-union.json",
+      "member": "qualification/verification-union.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 6801,
+      "sha256": "f7e9e4e646e4a83f8404a421c1328184e2c4f679878c102d9de5bd11d9334ea2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/verification.json",
+      "member": "qualification/verification.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 601,
+      "sha256": "1bc8a226f57d1be9e2586b42ddd19256159830af0e4a432e4d146e1dbe2c8634"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/whole-after-node22.json",
+      "member": "qualification/whole-after-node22.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 147027,
+      "sha256": "b5e9ef1b554e54d0adbb4c8f8737b4450e0d3c8868798634c3eb70107b80cc23"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/whole-before.json",
+      "member": "qualification/whole-before.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 147027,
+      "sha256": "b5e9ef1b554e54d0adbb4c8f8737b4450e0d3c8868798634c3eb70107b80cc23"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/whole-node22.log",
+      "member": "qualification/whole-node22.log",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 115080,
+      "sha256": "e165a4973c1c1649256503bb5c5390c16ba1ab340b54d243eb68933530da38be"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/whole-receipt.json",
+      "member": "qualification/whole-receipt.json",
+      "role": "Exact held source, original failure, corrected whole pair, independent receipts and immutable preview bindings",
+      "bytes": 1930,
+      "sha256": "6b7d4cbe9f9645f4f7b52040cff88fdfe9bfdb9fb086e75bf9471c1b1181360b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/root-review.md",
+      "member": "native/root-review.md",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 5670,
+      "sha256": "4aba9d022856fd1316572825ee4f64d36898c99db08f7f74144cb7d828970b63"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/01.jpg",
+      "member": "native/team/01.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 23265,
+      "sha256": "725eef37e673b4dca1ca056697cc5247b82e37a70baf337aca80f29331225372"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/01.json",
+      "member": "native/team/01.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1302,
+      "sha256": "6f4f8274f26a6c69517fe2a7b4d54ca26e469e136c0cb8fa68a4d01252f427f0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/binding.json",
+      "member": "native/team/binding.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 158,
+      "sha256": "c9cf39a62456d855073cdd3ca457538c7261c847284caa00dff430a0f3fc01e4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/closed.json",
+      "member": "native/team/closed.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 26,
+      "sha256": "ecd414e5a46b0a7c384f9ed19b73ef247fead2ad5b53159f2dddb4cfae4c3c02"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/events.json",
+      "member": "native/team/events.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 507,
+      "sha256": "aa6ae690d4bf8505f0a5ed48c4becaa252e29544686d5b5f25398b1470bf8d30"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/01.jpg",
+      "member": "native/team-portrait/01.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 31929,
+      "sha256": "2a203abcb55a34d4b185b6b3250daf9ae04e8a60b11c5015f37cc3a26d8b8ec4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/01.json",
+      "member": "native/team-portrait/01.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1320,
+      "sha256": "e5f6454909f399e61306c522c163371deb57a6ebe6b95b3065427757600ec171"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/02.jpg",
+      "member": "native/team-portrait/02.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 39765,
+      "sha256": "979abdcb4e1d975d51a9e318394aca4aefef09e06f3ca4ccf32cd7f277c84b18"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/02.json",
+      "member": "native/team-portrait/02.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2614,
+      "sha256": "52a41accf3e0756e0946bc4343acfaba66e44edda32ba9c528123a55b9030cea"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/03.jpg",
+      "member": "native/team-portrait/03.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 31374,
+      "sha256": "13d4e93e242023fe18c849fbba6a8ed17ad1fbe1de39881f21a3838ea6473e4f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/03.json",
+      "member": "native/team-portrait/03.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1279,
+      "sha256": "d871114d6711627edbe2da3e76f0e70b4858c93d76303c76846d4daa371c588b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/04.jpg",
+      "member": "native/team-portrait/04.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 47863,
+      "sha256": "174ed2d5aac368e29db936d7f7f5254ff7088873c53f283c289b3a915d037ff9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/04.json",
+      "member": "native/team-portrait/04.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 3470,
+      "sha256": "fd5138f5ee640fe9afce7af4c6fb8543aeb95702df9602fde85899d999ef6133"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/05.json",
+      "member": "native/team-portrait/05.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2539,
+      "sha256": "1dcb89c101edc26763d6c47bc62f7d7cf5a56fdfbe1399517528b039ce6cb2bf"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/binding.json",
+      "member": "native/team-portrait/binding.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 158,
+      "sha256": "c9cf39a62456d855073cdd3ca457538c7261c847284caa00dff430a0f3fc01e4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/closed.json",
+      "member": "native/team-portrait/closed.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 26,
+      "sha256": "2207dde4b97d71b2d65e1a25ebb549baeb4af03b59c46a75356549ea69fd21d3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team-portrait/events.json",
+      "member": "native/team-portrait/events.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2649,
+      "sha256": "9f939b72e86f22ff0f899abfae659b2a490bf68652dede818e6f302df4173af6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel/01.json",
+      "member": "native/versus-cancel/01.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1606,
+      "sha256": "1fd3faddd64e4d2b6dd4a2a0c8b4f68046ff81b6e32c75f78b166f5ee487d21f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel/02.json",
+      "member": "native/versus-cancel/02.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1606,
+      "sha256": "9deae0d6dcc2a214f76d5361b260475f1c8bc491a86cc1266e2adb82aaf4219d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel/03.json",
+      "member": "native/versus-cancel/03.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2180,
+      "sha256": "e38aca13797d50501e26e96dfa7634715ff8efb9b28ef5764d8d19cfcb0a8427"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel/binding.json",
+      "member": "native/versus-cancel/binding.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 158,
+      "sha256": "3f9bc8e5beb48c423c91298c8f22d68d254440b85ca8c3402f7d19ae4da02474"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel/closed.json",
+      "member": "native/versus-cancel/closed.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 26,
+      "sha256": "310bac0a0ce19251e7c995b57cfa680231fc496d1602542f9f14c647fd6f3043"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel/events.json",
+      "member": "native/versus-cancel/events.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2801,
+      "sha256": "9889f8388108fd21f2bf03f889c96a1b45de77b74fbdff3a5196235be00b995a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/01.json",
+      "member": "native/versus-cancel-final/01.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2306,
+      "sha256": "4f1c00c9beddc4c406ed6394c5c81f38ece7836d7ba6fe1bff00998957149a69"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/02.json",
+      "member": "native/versus-cancel-final/02.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2504,
+      "sha256": "d1106d344c58e564a270d5de8ac0f0f63126c7b5e76ee816747b1d8a4271cf03"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/03.jpg",
+      "member": "native/versus-cancel-final/03.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 98089,
+      "sha256": "ab051a6c0b0e77d599afe318ab90c85fde7d23085beb715d833d38f77c442497"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/03.json",
+      "member": "native/versus-cancel-final/03.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2414,
+      "sha256": "ae8b7516975c8d36765d1c923c0a3515d3c09b444bca4dadea25c89fc22bbc80"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/04.json",
+      "member": "native/versus-cancel-final/04.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2415,
+      "sha256": "3e9bab617c457a84161e5b93f1950ebfb842cd2a9370a7342ea5327b30de0395"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/05.json",
+      "member": "native/versus-cancel-final/05.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2546,
+      "sha256": "590497f6ec03dbb9459632a26ac7e082bdffcd06ba3043aef9897cec82951298"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/06.json",
+      "member": "native/versus-cancel-final/06.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2402,
+      "sha256": "0ff4dc75685721ae11026d6059c9b8d28d714f22daa6beb054ceac637c7537e7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/07.json",
+      "member": "native/versus-cancel-final/07.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2536,
+      "sha256": "e1e001c443912d70f8016e19f0e80246f19b0a87b8966d8a358c45ac7b6dbc80"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/08.json",
+      "member": "native/versus-cancel-final/08.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1544,
+      "sha256": "cd5cb0ece0eaa79c662dce5b09963863b564e63d6614ded848d488e0e6fe7f63"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/09.json",
+      "member": "native/versus-cancel-final/09.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2316,
+      "sha256": "a848c53fb35e138f1ed3ad24948a67ef21d37cdcadb4297943b529ce56446018"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/binding.json",
+      "member": "native/versus-cancel-final/binding.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 164,
+      "sha256": "eabe126fe406f81253831bd38f9f568f9a63ad3f2a8c0b52e28548491972d627"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/closed.json",
+      "member": "native/versus-cancel-final/closed.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 26,
+      "sha256": "f2eff68532703b0818b614999ef224b1fec47026991e1914e28dbc0458e83445"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-cancel-final/events.json",
+      "member": "native/versus-cancel-final/events.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 8975,
+      "sha256": "3d43f7a1a7976069ae8838438e482347e53bb8e4eb5c3d01eeb8b1b052ae387e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/01.json",
+      "member": "native/versus-transport/01.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2261,
+      "sha256": "1fd8747276a879e7b9ab1965393070ac62bda53fb618ba6d9d42ad59d8762bb7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/02.jpg",
+      "member": "native/versus-transport/02.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 95699,
+      "sha256": "a60fa7a5df8348b5aa373d5858a9a4b0e38eb23bc41176c654a5c4feacd1efc9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/02.json",
+      "member": "native/versus-transport/02.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2260,
+      "sha256": "a0a05c25524333aeffd839d7ad3020a80b555e24f5dfb834b9cd88a72383a807"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/03.jpg",
+      "member": "native/versus-transport/03.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 98895,
+      "sha256": "b9fa2db48ba8ffbb5512f2351159356b8fc9c966f10af1e1075693f1706b0958"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/03.json",
+      "member": "native/versus-transport/03.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2347,
+      "sha256": "da304a90fcc51bca1922dc89d6e6d3dfe741fbf8899fffbec1d84792ac22e09d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/04.json",
+      "member": "native/versus-transport/04.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2468,
+      "sha256": "43b8083d332a5c94223e1ac0f6bb942576665e48c0c51383ff14eb5329d7f603"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/05.jpg",
+      "member": "native/versus-transport/05.jpg",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 72531,
+      "sha256": "bdc0dfc16db781e5010348e8ed0ed3c3568fae603befb1f4e3c466abf890f745"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/05.json",
+      "member": "native/versus-transport/05.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 1566,
+      "sha256": "fe3e058b682adb3279496b4318b699976fcc170a7b3471f2e348bf2a1995e553"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/06.json",
+      "member": "native/versus-transport/06.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 2265,
+      "sha256": "9b99021d0e2e2a056e305894aabed9aab958e866cf53f76ef1205d8df7649661"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/binding.json",
+      "member": "native/versus-transport/binding.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 161,
+      "sha256": "048ec0955012adea1d596b3d5d90db9c277acd682324aa24003688991d6399f8"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/closed.json",
+      "member": "native/versus-transport/closed.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 26,
+      "sha256": "6965fd5528251d871b10c4412855d938470059475ccf39ab4547d3b0dcfd7ada"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/versus-transport/events.json",
+      "member": "native/versus-transport/events.json",
+      "role": "Root native original; failure, timing miss and bounded pass remain distinct in root review",
+      "bytes": 5556,
+      "sha256": "6ae048215047ac8e9697003c8b8cea46e8c45866b28a7e3fc00d6bfcbc1e58f4"
+    }
+  ]
+}

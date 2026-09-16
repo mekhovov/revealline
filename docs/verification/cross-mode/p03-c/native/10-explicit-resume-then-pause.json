@@ -1,0 +1,32 @@
+{
+  "step": "10-explicit-resume-then-pause",
+  "dom": {
+    "dialogs": [],
+    "focus": {
+      "id": "start-button",
+      "tag": "BUTTON",
+      "text": "Resume →"
+    },
+    "hud": [
+      {
+        "id": "coverage",
+        "text": "1.5%"
+      },
+      {
+        "id": "lives",
+        "text": "◆ ◆ ◆"
+      },
+      {
+        "id": "time",
+        "text": "2:51"
+      },
+      {
+        "id": "score",
+        "text": "00340"
+      }
+    ],
+    "url": "http://127.0.0.1:60366/game/?mode-return=d299fb7b1e574e3488bde57af1690278",
+    "view": [1393, 1348]
+  },
+  "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: ARCADE EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 1.5%\n    - emphasis: TARGET 68%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 2:51\n    - generic: SCORE\n    - strong: \"00340\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Flight resumed.\n    - status"
+}

@@ -1,0 +1,57 @@
+{
+  "scope": "P03 title Start/Continue source candidate, native desktop keyboard only",
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "events": 26,
+  "variants": {
+    "events1to17": "native-preview-before-focus.json",
+    "events18to26": "native-preview-binding.json"
+  },
+  "observed": [
+    "One title Start enters the actual named FirstSignal mission",
+    "Pause -> Main menu -> one Continue enters running without a second Resume",
+    "An actual direction press ultimately captures52.2% and wins",
+    "After actual win, title Start explicitly launches same named mission fresh",
+    "Reload offersContinue for savedflight; one Enter verifies and resumes it",
+    "Final shell focus successor repeatsStart,memoryContinue andsavedContinue; explicitPause remainsusable"
+  ],
+  "limits": [
+    "Events16and17 intentlabels mentionrunning/pause but actualobservations arealreadywon at0:48; onlysavedcontinuationcompletionisproven there",
+    "Event25 completed beforeCancelcouldbeobserved; delayedCancel/failurefocusarehosttestevidence, notnativeproof",
+    "Storedbytes/checkpointidentity checked inhosttests, notbrowserstorageinjection orinspection",
+    "DOMsnapshotthenDOMreadaresequential, notatomic",
+    "No physicalcontroller/touch/phone/zoom/publicphaseclaim",
+    "Freshsourcebase startsFirstSignal; benchmarkArcade/titlethree-modeentry remains subsequentP03lobbywork"
+  ],
+  "files": [
+    {
+      "path": "native/events.json",
+      "bytes": 53049,
+      "sha256": "10cb17d0b6e16672635b03bc4f989c2af1e6acb6e5132b0d71302edfa6e5c320"
+    },
+    {
+      "path": "native/live-cut.png",
+      "bytes": 76503,
+      "sha256": "ffa610fe3d75dd9b2d80127990f16b3b7dc2e09d9d12dbda7e709afdc1243396"
+    },
+    {
+      "path": "native/restored-pause.png",
+      "bytes": 81687,
+      "sha256": "602ce7e1bc91520bb7a78ac83e13c56fdf7a3a7a0d9fbc50a1d80eddc51260b5"
+    },
+    {
+      "path": "native/final-restored-pause.png",
+      "bytes": 78821,
+      "sha256": "0ec1a07d5aefc2d8dac1f4d826dc214f578e383c50611dfbc390cb3beeab3516"
+    },
+    {
+      "path": "native-preview-before-focus.json",
+      "bytes": 1210,
+      "sha256": "e8d20781addc79ac95996bacaa80be44a9408d2f9cf2f0c97b414dc03086222b"
+    },
+    {
+      "path": "native-preview-binding.json",
+      "bytes": 1210,
+      "sha256": "e54bfe1112fe255cf71229cbb8ece2e3ecf4a65d55c60e08054068e17cd6a141"
+    }
+  ]
+}

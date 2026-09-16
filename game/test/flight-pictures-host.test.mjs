@@ -472,7 +472,9 @@ test('a missing saved original cannot adopt a different picture or overwrite the
   p.$('pause-button').click();
   const savedA = JSON.parse(p.storage.getItem(sessionKey));
   await f.replace();
-  p.$('restart-button').click();
+  p.$('overlay-restart').click();
+  assert.equal(p.$('restart-dialog').open, true);
+  p.$('restart-confirm').click();
   await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowRight');
   ticks(p, 8);
@@ -591,3 +593,75 @@ test('raw installed campaign plus retained normalized owner can export a complet
   );
   assert.equal(verifyReplay(backup.session.replay).match, true);
 });
+
+for (const outcome of ['ready', 'error', 'background'])
+  test(`confirmed Workshop Restart with ${outcome} picture completion has no retained modal or stale auto-start`, async (t) => {
+    const f = await setup(t),
+      gate = deferred();
+    let delayed = false,
+      entered = 0,
+      released = 0;
+    class RestartPicture extends Picture {
+      decode() {
+        if (!delayed) return Promise.resolve();
+        entered++;
+        return gate.promise;
+      }
+      removeAttribute() {
+        if (delayed) released++;
+        super.removeAttribute();
+      }
+    }
+    const p = await pageFor(t, f, { pictures: { Image: RestartPicture } });
+    p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
+    p.key('ArrowDown');
+    ticks(p, 13);
+    p.key('ArrowDown', false);
+    p.$('pause-button').click();
+    p.$('overlay-menu').click();
+    p.$('shell-workshop').click();
+    p.$('restart-button').closest('details').open = true;
+    p.$('restart-button').focus();
+    const previous = p.rendered.run,
+      saved = p.storage.getItem(sessionKey);
+    p.$('restart-button').click();
+    assert.equal(p.$('restart-dialog').open, true);
+    delayed = true;
+    p.$('restart-confirm').click();
+    await settle(() => entered === 1);
+    p.frame(0);
+    const next = p.rendered.run;
+    assert.notEqual(next, previous);
+    assert.equal(p.$('shell-workshop-dialog').open, false);
+    assert.equal(p.$('shell-home').open, false);
+    assert.equal(p.$('restart-dialog').open, false);
+    assert.equal(next.tick, 0);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(p.storage.getItem(sessionKey), saved);
+    ticks(p, 20);
+    assert.equal(next.tick, 0);
+    if (outcome === 'background') globalThis.window.emit('blur');
+    if (outcome === 'error') gate.reject(new Error('Modeled fresh picture decode failure'));
+    else gate.resolve();
+    if (outcome === 'background') await settle(() => released > 0);
+    else
+      await settle(() =>
+        outcome === 'error'
+          ? p.$('flight-preparation-status').dataset.state === 'error'
+          : p.doc.body.dataset.pictureState === 'ready',
+      );
+    if (outcome === 'ready') await settle(() => p.doc.body.dataset.flightState === 'running');
+    p.frame(0);
+    assert.equal(p.rendered.run, next);
+    assert.equal(p.rendered.paused, outcome !== 'ready');
+    assert.equal(next.tick, 0);
+    assert.equal(p.storage.getItem(sessionKey), saved);
+    if (outcome === 'error') assert.match(p.$('run-message').textContent, /picture.*unavailable/i);
+    if (outcome === 'background') {
+      globalThis.window.emit('focus');
+      ticks(p, 20);
+      assert.equal(p.rendered.paused, true);
+      assert.equal(next.tick, 0);
+    }
+  });

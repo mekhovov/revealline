@@ -1,0 +1,10 @@
+{
+  "failure": "Owned --no-checkout worktree read-tree ignored common sparse flags because inherited config.worktree set core.sparseCheckout=false, expanding beyond finite list and reporting ENOSPC. No tests ran.",
+  "failedWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03jk-4397-verify",
+  "cleanup": "Only this newly created failed worktree removed with git worktree remove --force.",
+  "observedAllocatedKiB": 783496,
+  "freeBeforeCleanupKiB": 118644,
+  "freeAfterCleanupKiB": 908944,
+  "commonConfigNote": "Attempt wrote common core.sparseCheckout=true/core.sparseCheckoutCone=false; per-worktree override remained false. Parent informed; no further shared config change.",
+  "successor": "Direct finite git-show projection; no checkout/read-tree."
+}

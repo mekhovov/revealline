@@ -1,0 +1,41 @@
+{
+  "base": "1f53e829de7ec5db387ef5803b3622a10816e028",
+  "overlays": {
+    "game/ui/mode-choice.mjs": {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1339,
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+    },
+    "game/ui/mode-choice.css": {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+    },
+    "game/couch/couch-shell.mjs": {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14224,
+      "sha256": "a6eb0558c0326ba2ce9772219dd4ea501d6305d240e0cc91af54f10aa8b9057a"
+    },
+    "game/couch/index.html": {
+      "path": "game/couch/index.html",
+      "bytes": 15335,
+      "sha256": "0762b605c95fbafee43ffb7ad480612a1d44f0677e8aeb34706c906dcefa90f9"
+    },
+    "game/couch/relay-rescue.html": {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15340,
+      "sha256": "45921fe390e71b7120387653b04bc9373d4e7b3f41792e064d9694644aa0a69b"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 33712,
+      "sha256": "4504d44503508c2d0a0579c53ee22b59a302bdad10cb7cf109f1bc5c78a4570d"
+    }
+  },
+  "scope": "Current P03 A2/R3 base plus six shared-lobby presentation overlays; no game/storage/input state injection or timing change.",
+  "port": 53720,
+  "delaySeconds": 0,
+  "configurationSha256": "ead32bd01e36f1a0363d7ddf7aec5b61de0acef5b665da62218af6da665c7953",
+  "helperSha256": "df63723102b9fafcf56e34bcd013c795d883c858b43f7dcfd21bb12e3ec10140",
+  "transfer": "At most4 body readers;64KiB Git streaming;64MiB member bound; SHA-bound local overlays only."
+}

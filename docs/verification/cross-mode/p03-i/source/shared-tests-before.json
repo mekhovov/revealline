@@ -1,0 +1,55 @@
+{
+  "admittedFreeBytes": 1184751616,
+  "inputs": [
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 32926,
+      "sha256": "892e065c39a1c9afbf62d5c7a8b032177cc04e6c8f5c4c7916e076bac9e51ca1"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 14942,
+      "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 15174,
+      "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+    },
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "bytes": 21848,
+      "sha256": "82cf9f2d1060f7559a89f795abc72f0d972c519684528f495225cc4d919bac4f"
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "bytes": 17426,
+      "sha256": "4c53894d90fcf7b5a70b4fbe77d9cd535689bb983cbaab401ad3fd0b97c7827f"
+    },
+    {
+      "path": "game/coop/input-policy.mjs",
+      "bytes": 1519,
+      "sha256": "89e0a28cf383d79ca3c56a3faf6dc3caf9bf6b5c129764fbcdc03612d6220528"
+    },
+    {
+      "path": "game/coop/core.mjs",
+      "bytes": 37008,
+      "sha256": "f3158679da2d0d1664f4a17d3e3e5cbb761f06e56140d171011fcf52ebfcb6bd"
+    },
+    {
+      "path": "game/test/controller-navigation.test.mjs",
+      "bytes": 54544,
+      "sha256": "cf104327dc9ef8d14df1936004d1716be22d1caab90e5ef13efe2ebc8792f8a2"
+    },
+    {
+      "path": "game/test/couch-input.test.mjs",
+      "bytes": 17306,
+      "sha256": "a5daf52e5648a770bfb03807e9356df521fdfeea43957788c4c2313cea798bc9"
+    },
+    {
+      "path": "game/test/coop-input-policy.test.mjs",
+      "bytes": 11704,
+      "sha256": "9610aa4be4977ee9808efda6518c910ec68bb82afde11b8f60e1efd23a671e41"
+    }
+  ]
+}

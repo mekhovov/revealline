@@ -1,0 +1,88 @@
+{
+  "scope": "Root native desktop keyboard: same b1e8d58a source as normal50512, delayed51204 helper config-only diff reviewed. Six-second GET delay affects only original c1aedf89 PNG, First Signal Tactical. No game clock/state/response body injection. Closed after15 events.",
+  "events": 15,
+  "screenshots": 10,
+  "acceptedObservations": [
+    "3: initial metadata preparation Back cancelled to Retry; distinct from required-image delay.",
+    "8: First Signal selected through actual Map dropdown, published-original downloading observed; Back from Setup cancels and returns to Setup opener with Retry available. Its note says returns to Retry but describes availability, not focus.",
+    "9: Retry focus transferred to Cancel during observed original download; activating Cancel returned focus to Retry.",
+    "10\u201311: new Retry, deliberately Tab to Setup; completion retained Setup focus, enabled Start, no implicit start.",
+    "12\u201315: explicit Start, actual S/Down commands on separate seats; Sunflower won52.2%,3lives8160points,1:0. View both boards shows full original winner picture and losing unfinished gold cut. Back to Results preserves numbers."
+  ],
+  "corrections": [
+    "1 completed before Escape; not cancellation proof. Corrected2.",
+    "4\u20136 intended labels did not match actual cached/quick retry, Start then focus-leave Pause; corrected7 and excluded from delayed-action proof.",
+    "13 was already finished before Escape; not a Pause transition. Corrected14.",
+    "DPR temporarily1.8 at4\u20137 without controlled action, otherwise2; no browser zoom claim."
+  ],
+  "visualInspection": [
+    "05-first-signal-cancel.png",
+    "06-first-signal-button-cancel.png",
+    "07-ready-keeps-new-focus.png",
+    "08-both-seats-live.png",
+    "09-both-seats-paused.png",
+    "10-earned-picture-boards.png"
+  ],
+  "limits": [
+    "Four earlier PNGs retained as raw timing diagnostics; not accepted delayed-action visual proof.",
+    "No physical controller/touch, narrow device layout, full failure/offline/public qualification or subjective enjoyment claim. Normal cross-mode preferences have separate record.",
+    "No finished-to-Next attempt: P07 prior-result preservation remains open."
+  ],
+  "pins": [
+    {
+      "path": "01-loading-back-result.png",
+      "bytes": 86188,
+      "sha256": "bb7b94f83e982ede30b4817526a2859374ad708a391d04cdb79277290c9772a2"
+    },
+    {
+      "path": "02-cancelled-retry.png",
+      "bytes": 88232,
+      "sha256": "50f96c9c73310ebd94baacd57b435d6ddad630f563ab334d0c849abb6b907582"
+    },
+    {
+      "path": "03-retry-pending.png",
+      "bytes": 86978,
+      "sha256": "649f4b3ed88abd297070a19958d626247e4a01757cf510e25696b7536a4248a7"
+    },
+    {
+      "path": "04-button-cancel.png",
+      "bytes": 92214,
+      "sha256": "68f1afd6df04de37b02f0259e81b30d887f7b766d2e6c60feb495d6c95974d70"
+    },
+    {
+      "path": "05-first-signal-cancel.png",
+      "bytes": 85144,
+      "sha256": "ab70413179056b1e2f071c39fb1bf06d3d18fe1daef109a89df36f1463cb19f2"
+    },
+    {
+      "path": "06-first-signal-button-cancel.png",
+      "bytes": 85208,
+      "sha256": "ff1f62d0a21ca2c9b2fd84dc9f978ebe8c9ec86d2e13761c2606aeff41f28e33"
+    },
+    {
+      "path": "07-ready-keeps-new-focus.png",
+      "bytes": 84438,
+      "sha256": "24e052228fd2027d07640707d56606970bfeab0c522b449c0a5910870459c7e8"
+    },
+    {
+      "path": "08-both-seats-live.png",
+      "bytes": 68828,
+      "sha256": "27dd5c21aa75242d62595fb6550ae1d035fcedf2886d733e7bb448c8f1d79601"
+    },
+    {
+      "path": "09-both-seats-paused.png",
+      "bytes": 90978,
+      "sha256": "52fdd4ca3c0ecbc9da01dd428d0ac3732a1817b4b3552a482ab293d1d1f77d9c"
+    },
+    {
+      "path": "10-earned-picture-boards.png",
+      "bytes": 128321,
+      "sha256": "e14a5020ef12c531b359d1501ccde7d1499279e8f0574a9d1a63c6e15ebc7ec5"
+    },
+    {
+      "path": "events.json",
+      "bytes": 32000,
+      "sha256": "22e9f85ae52588f18904dabd7ca1ee0d6d3662f61c0151c4cd44344133729fb1"
+    }
+  ]
+}

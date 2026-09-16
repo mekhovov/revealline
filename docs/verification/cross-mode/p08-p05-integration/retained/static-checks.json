@@ -1,0 +1,44 @@
+[
+  {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "node_modules/eslint/bin/eslint.js",
+      "game/couch/couch-static-pictures.mjs",
+      "game/couch/couch.mjs",
+      "game/presentation/page.mjs",
+      "game/test/couch-chapter.test.mjs",
+      "game/test/couch-initial-focus.test.mjs",
+      "game/test/couch-installed-chapters.test.mjs",
+      "game/test/couch-navigation.test.mjs",
+      "game/test/couch-shell.test.mjs",
+      "game/test/couch-static-picture-host.test.mjs",
+      "game/test/couch-static-pictures.test.mjs",
+      "game/test/helpers/couch-host.mjs",
+      "game/test/presentation-page.test.mjs",
+      "--max-warnings",
+      "0"
+    ],
+    "exitCode": 0,
+    "log": {
+      "path": "static-check-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "HEAD",
+      "--check",
+      "--",
+      "game"
+    ],
+    "exitCode": 0,
+    "log": {
+      "path": "static-check-2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+]

@@ -1,0 +1,496 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "5a2acab012b8f4d4935f3e00e5606a58b831757e52126f6600589571ca067c5e",
+  "originalGitBlob": "7a68d56e950a35ab60cb08f228be762341cfe044",
+  "removedRecordsOrFields": 2,
+  "excerpt": [
+    {
+      "label": "01-title-ready",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "REVEAL / LINE\n        \n        Find your line.\n        Loading flight systems…\n        <p class=\"lau"
+        },
+        "decision": "",
+        "dialogs": [],
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "",
+          "pack": "",
+          "theme": ""
+        }
+      },
+      "snapshot": "- region \"Find your line.\":\n  - paragraph: REVEAL / LINE\n  - heading \"Find your line.\" [level=1]\n  - status: Loading flight systems…\n  - navigation \"Launch options\":\n    - link \"Reload game\":\n      - /url: \"\"\n    - link \"Play online\":\n      - /url: https://mekhovov.github.io/revealline/game/\n  - generic \"Playing a downloaded copy?\""
+    },
+    {
+      "label": "02-title-ready",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "shell-featured",
+          "text": "Deploy\n            →"
+        },
+        "decision": "",
+        "dialogs": [
+          "shell-home"
+        ],
+        "flight": "briefing",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Deploy\" [active]:\n      - generic: Deploy\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Deploy · Pressure Lines / Arcade\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+    },
+    {
+      "label": "03-first-signal-started",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "game-canvas",
+          "text": ""
+        },
+        "decision": "",
+        "dialogs": [],
+        "flight": "running",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- button \"Enter fullscreen\": ⛶\n- button \"Pause or resume\": Ⅱ\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\" [active]\n    - strong: Safe ground\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status"
+    },
+    {
+      "label": "04-flight-paused-before-library",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "game-canvas",
+          "text": ""
+        },
+        "decision": "",
+        "dialogs": [],
+        "flight": "picture",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 52.2%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:03\n    - generic: SCORE\n    - strong: \"08160\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\" [active]\n    - button \"Results ↗\"\n    - strong: Mission complete\n    - generic: Target reached\n    - status: Picture unlocked. A whole world, from one brave line.\n    - status"
+    },
+    {
+      "label": "05-title-from-pause",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "Base game · 12 levelsCurrent chapter"
+        },
+        "decision": "",
+        "dialogs": [
+          "shell-missions"
+        ],
+        "flight": "picture",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      }
+    },
+    {
+      "label": "06-relay-orchard-selected",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "02Relay Orchard↗Picture concealed"
+        },
+        "decision": "",
+        "dialogs": [
+          "shell-missions"
+        ],
+        "flight": "briefing",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      }
+    },
+    {
+      "label": "07-relay-paused",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "start-button",
+          "text": "Resume →"
+        },
+        "decision": "",
+        "dialogs": [],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status"
+    },
+    {
+      "label": "08-earned-collection-open",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "×"
+        },
+        "decision": "",
+        "dialogs": [
+          "collection-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\" [active]: ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to the field →\""
+    },
+    {
+      "label": "09-earned-picture-view",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "×"
+        },
+        "decision": "",
+        "dialogs": [
+          "collection-dialog",
+          "gallery-view-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to the field →\"\n- dialog \"First Signal\":\n  - button \"Close picture\" [active]: ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 3.58s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\""
+    },
+    {
+      "label": "10-replay-replacement-warning",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "mission-replace-stay",
+          "text": "Stay with this flight"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "collection-dialog",
+          "gallery-view-dialog",
+          "mission-replace-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to the field →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 3.58s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: Relay Orchard → Replay First Signal\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace\""
+    },
+    {
+      "label": "11-stay-restores-picture-replay",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "gallery-replay",
+          "text": "Replay mission"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "collection-dialog",
+          "gallery-view-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to the field →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 3.58s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\" [active]\n  - button \"Back to collection\""
+    },
+    {
+      "label": "12-replay-selected-not-started",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "gallery-replay",
+          "text": "Replay mission"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "collection-dialog",
+          "gallery-view-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to the field →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 3.58s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\" [active]\n  - button \"Back to collection\""
+    },
+    {
+      "label": "13-replay-confirmation-ready",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "mission-replace-stay",
+          "text": "Stay with this flight"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "collection-dialog",
+          "gallery-view-dialog",
+          "mission-replace-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-02",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 58%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status\n- dialog \"Your collection.\":\n  - button \"Close collection\": ×\n  - paragraph: YOUR FLIGHT LOG\n  - heading \"Your collection.\" [level=2]\n  - paragraph: Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new best.\n  - text: Find a picture\n  - searchbox \"Find a picture\"\n  - button \"First Signal FPV Front · Standard · Picture best 8,160 points · Level best GOLD\":\n    - strong: First Signal\n    - generic: FPV Front · Standard · Picture best 8,160 points · Level best GOLD\n  - generic \"Achievements and appearances\"\n  - option \"First Signal · Standard\" [selected]\n  - button \"Flight records\"\n  - button \"Back to the field →\"\n- dialog \"First Signal\":\n  - button \"Close picture\": ×\n  - paragraph:\n    - status: \"FPV Front · Standard · Best picture score: 8,160 points · GOLD · 3.58s · Level best medal: GOLD\"\n  - heading \"First Signal\" [level=2]\n  - img \"Completed level picture\"\n  - button \"Play celebration ↗\"\n  - button \"Replay mission\"\n  - button \"Back to collection\"\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: Relay Orchard → Replay First Signal\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace\""
+    },
+    {
+      "label": "14-confirmed-replay-selected",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "start-button",
+          "text": "Start mission ↗"
+        },
+        "decision": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
+        "dialogs": [],
+        "flight": "briefing",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\" [active]\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status"
+    },
+    {
+      "label": "15-fresh-replay-paused",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "start-button",
+          "text": "Resume →"
+        },
+        "decision": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
+        "dialogs": [],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status"
+    },
+    {
+      "label": "16-workshop-open",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "Back"
+        },
+        "decision": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
+        "dialogs": [
+          "shell-home",
+          "shell-workshop-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"Make it yours\":\n  - paragraph: FIELD KIT / WORKSHOP\n  - heading \"Make it yours\" [level=2]\n  - button \"Back\" [active]\n  - paragraph: Build a world, tune your kit, or practice the next move.\n  - navigation \"Workshop destinations\":\n    - link \"Asset Studio Art, themes & generation prompts\":\n      - /url: ../authoring/asset-studio/\n      - text: Asset Studio\n      - generic: Art, themes & generation prompts\n    - link \"Mission playground Build and test a flight\":\n      - /url: playground/\n      - text: Mission playground\n      - generic: Build and test a flight\n    - link \"Enemy workshop Characters & behaviors\":\n      - /url: ../authoring/enemy-catalog/\n      - text: Enemy workshop\n      - generic: Characters & behaviors\n    - link \"Motion lab\":\n      - /url: ../authoring/motion-lab/\n    - link \"Pictures & stories\":\n      - /url: ../authoring/still-media/\n    - link \"Video poster workshop\":\n      - /url: ../authoring/video-poster/\n    - link \"Design atlas\":\n      - /url: ../authoring/design-atlas/\n    - link \"Replay Theater Review a recorded flight\":\n      - /url: replay-theater/\n      - text: Replay Theater\n      - generic: Review a recorded flight\n    - link \"Controller practice Check your controls\":\n      - /url: controller-lab/\n      - text: Controller practice\n      - generic: Check your controls\n    - button \"Field guide & practice\"\n    - button \"Scores & saves\"\n    - button \"How to play\"\n  - generic \"Sound & game extras\""
+    },
+    {
+      "label": "17-library-from-workshop",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "×"
+        },
+        "decision": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
+        "dialogs": [
+          "library-dialog",
+          "shell-home",
+          "shell-workshop-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Flight library.\":\n  - button \"Close library\" [active]: ×\n  - paragraph: THE THINGS YOU KEEP\n  - heading \"Flight library.\" [level=2]\n  - group \"Library sections\":\n    - button \"Records\"\n    - button \"Saves & loads\"\n    - button \"Expansion packs\"\n    - button \"Challenges\"\n  - paragraph: Your best clears, grouped by map and exact setup. These scores are stored on this device; there is no global ranking service.\n  - text: Find a score\n  - searchbox \"Find a score\"\n  - heading \"First Signal\" [level=3]\n  - paragraph: Standard · scout · immediate · seed 1\n  - list:\n    - listitem: 8,160 points · 3.58s · gold · 2026-09-15\n  - navigation \"Score pages\":\n    - button \"Previous\" [disabled]\n    - generic: 1 entries · page 1 of 1\n    - button \"Next\" [disabled]\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"Make it yours\":\n  - paragraph: FIELD KIT / WORKSHOP\n  - heading \"Make it yours\" [level=2]\n  - button \"Back\"\n  - paragraph: Build a world, tune your kit, or practice the next move.\n  - navigation \"Workshop destinations\":\n    - link \"Asset Studio Art, themes & generation prompts\":\n      - /url: ../authoring/asset-studio/\n      - text: Asset Studio\n      - generic: Art, themes & generation prompts\n    - link \"Mission playground Build and test a flight\":\n      - /url: playground/\n      - text: Mission playground\n      - generic: Build and test a flight\n    - link \"Enemy workshop Characters & behaviors\":\n      - /url: ../authoring/enemy-catalog/\n      - text: Enemy workshop\n      - generic: Characters & behaviors\n    - link \"Motion lab\":\n      - /url: ../authoring/motion-lab/\n    - link \"Pictures & stories\":\n      - /url: ../authoring/still-media/\n    - link \"Video poster workshop\":\n      - /url: ../authoring/video-poster/\n    - link \"Design atlas\":\n      - /url: ../authoring/design-atlas/\n    - link \"Replay Theater Review a recorded flight\":\n      - /url: replay-theater/\n      - text: Replay Theater\n      - generic: Review a recorded flight\n    - link \"Controller practice Check your controls\":\n      - /url: controller-lab/\n      - text: Controller practice\n      - generic: Check your controls\n    - button \"Field guide & practice\"\n    - button \"Scores & saves\"\n    - button \"How to play\"\n  - generic \"Sound & game extras\""
+    },
+    {
+      "label": "18-challenges-selected",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "",
+          "text": "Challenges"
+        },
+        "decision": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
+        "dialogs": [
+          "library-dialog",
+          "shell-home",
+          "shell-workshop-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Flight library.\":\n  - button \"Close library\": ×\n  - paragraph: THE THINGS YOU KEEP\n  - heading \"Flight library.\" [level=2]\n  - group \"Library sections\":\n    - button \"Records\"\n    - button \"Saves & loads\"\n    - button \"Expansion packs\"\n    - button \"Challenges\" [active]\n  - paragraph: Return whenever you like. Daily boards remain playable by date; no streak expires and no reward depends on logging in.\n  - text: Board date\n  - textbox \"Board date\": 2026-09-15\n  - text: Challenge\n  - combobox \"Challenge\":\n    - option \"Daily route\" [selected]\n    - option \"Open skies · slower patrols\"\n    - option \"Pressure run · faster patrols\"\n  - button \"Play this challenge →\"\n  - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"Make it yours\":\n  - paragraph: FIELD KIT / WORKSHOP\n  - heading \"Make it yours\" [level=2]\n  - button \"Back\"\n  - paragraph: Build a world, tune your kit, or practice the next move.\n  - navigation \"Workshop destinations\":\n    - link \"Asset Studio Art, themes & generation prompts\":\n      - /url: ../authoring/asset-studio/\n      - text: Asset Studio\n      - generic: Art, themes & generation prompts\n    - link \"Mission playground Build and test a flight\":\n      - /url: playground/\n      - text: Mission playground\n      - generic: Build and test a flight\n    - link \"Enemy workshop Characters & behaviors\":\n      - /url: ../authoring/enemy-catalog/\n      - text: Enemy workshop\n      - generic: Characters & behaviors\n    - link \"Motion lab\":\n      - /url: ../authoring/motion-lab/\n    - link \"Pictures & stories\":\n      - /url: ../authoring/still-media/\n    - link \"Video poster workshop\":\n      - /url: ../authoring/video-poster/\n    - link \"Design atlas\":\n      - /url: ../authoring/design-atlas/\n    - link \"Replay Theater Review a recorded flight\":\n      - /url: replay-theater/\n      - text: Replay Theater\n      - generic: Review a recorded flight\n    - link \"Controller practice Check your controls\":\n      - /url: controller-lab/\n      - text: Controller practice\n      - generic: Check your controls\n    - button \"Field guide & practice\"\n    - button \"Scores & saves\"\n    - button \"How to play\"\n  - generic \"Sound & game extras\""
+    },
+    {
+      "label": "19-pressure-challenge-warning",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "mission-replace-stay",
+          "text": "Stay with this flight"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "library-dialog",
+          "mission-replace-dialog",
+          "shell-home",
+          "shell-workshop-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Flight library.\":\n  - button \"Close library\": ×\n  - paragraph: THE THINGS YOU KEEP\n  - heading \"Flight library.\" [level=2]\n  - group \"Library sections\":\n    - button \"Records\"\n    - button \"Saves & loads\"\n    - button \"Expansion packs\"\n    - button \"Challenges\"\n  - paragraph: Return whenever you like. Daily boards remain playable by date; no streak expires and no reward depends on logging in.\n  - text: Board date\n  - textbox \"Board date\": 2026-09-15\n  - text: Challenge\n  - combobox \"Challenge\":\n    - option \"Daily route\"\n    - option \"Open skies · slower patrols\"\n    - option \"Pressure run · faster patrols\" [selected]\n  - button \"Play this challenge →\"\n  - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Pressure run · 2026-09-15\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"Make it yours\":\n  - paragraph: FIELD KIT / WORKSHOP\n  - heading \"Make it yours\" [level=2]\n  - button \"Back\"\n  - paragraph: Build a world, tune your kit, or practice the next move.\n  - navigation \"Workshop destinations\":\n    - link \"Asset Studio Art, themes & generation prompts\":\n      - /url: ../authoring/asset-studio/\n      - text: Asset Studio\n      - generic: Art, themes & generation prompts\n    - link \"Mission playground Build and test a flight\":\n      - /url: playground/\n      - text: Mission playground\n      - generic: Build and test a flight\n    - link \"Enemy workshop Characters & behaviors\":\n      - /url: ../authoring/enemy-catalog/\n      - text: Enemy workshop\n      - generic: Characters & behaviors\n    - link \"Motion lab\":\n      - /url: ../authoring/motion-lab/\n    - link \"Pictures & stories\":\n      - /url: ../authoring/still-media/\n    - link \"Video poster workshop\":\n      - /url: ../authoring/video-poster/\n    - link \"Design atlas\":\n      - /url: ../authoring/design-atlas/\n    - link \"Replay Theater Review a recorded flight\":\n      - /url: replay-theater/\n      - text: Replay Theater\n      - generic: Review a recorded flight\n    - link \"Controller practice Check your controls\":\n      - /url: controller-lab/\n      - text: Controller practice\n      - generic: Check your controls\n    - button \"Field guide & practice\"\n    - button \"Scores & saves\"\n    - button \"How to play\"\n  - generic \"Sound & game extras\""
+    },
+    {
+      "label": "20-challenge-stay-restores-launcher",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "launch-challenge",
+          "text": "Play this challenge →"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "library-dialog",
+          "shell-home",
+          "shell-workshop-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Flight library.\":\n  - button \"Close library\": ×\n  - paragraph: THE THINGS YOU KEEP\n  - heading \"Flight library.\" [level=2]\n  - group \"Library sections\":\n    - button \"Records\"\n    - button \"Saves & loads\"\n    - button \"Expansion packs\"\n    - button \"Challenges\"\n  - paragraph: Return whenever you like. Daily boards remain playable by date; no streak expires and no reward depends on logging in.\n  - text: Board date\n  - textbox \"Board date\": 2026-09-15\n  - text: Challenge\n  - combobox \"Challenge\":\n    - option \"Daily route\"\n    - option \"Open skies · slower patrols\"\n    - option \"Pressure run · faster patrols\" [selected]\n  - button \"Play this challenge →\" [active]\n  - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"Make it yours\":\n  - paragraph: FIELD KIT / WORKSHOP\n  - heading \"Make it yours\" [level=2]\n  - button \"Back\"\n  - paragraph: Build a world, tune your kit, or practice the next move.\n  - navigation \"Workshop destinations\":\n    - link \"Asset Studio Art, themes & generation prompts\":\n      - /url: ../authoring/asset-studio/\n      - text: Asset Studio\n      - generic: Art, themes & generation prompts\n    - link \"Mission playground Build and test a flight\":\n      - /url: playground/\n      - text: Mission playground\n      - generic: Build and test a flight\n    - link \"Enemy workshop Characters & behaviors\":\n      - /url: ../authoring/enemy-catalog/\n      - text: Enemy workshop\n      - generic: Characters & behaviors\n    - link \"Motion lab\":\n      - /url: ../authoring/motion-lab/\n    - link \"Pictures & stories\":\n      - /url: ../authoring/still-media/\n    - link \"Video poster workshop\":\n      - /url: ../authoring/video-poster/\n    - link \"Design atlas\":\n      - /url: ../authoring/design-atlas/\n    - link \"Replay Theater Review a recorded flight\":\n      - /url: replay-theater/\n      - text: Replay Theater\n      - generic: Review a recorded flight\n    - link \"Controller practice Check your controls\":\n      - /url: controller-lab/\n      - text: Controller practice\n      - generic: Check your controls\n    - button \"Field guide & practice\"\n    - button \"Scores & saves\"\n    - button \"How to play\"\n  - generic \"Sound & game extras\""
+    },
+    {
+      "label": "21-challenge-ready-confirm",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "mission-replace-stay",
+          "text": "Stay with this flight"
+        },
+        "decision": "Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.",
+        "dialogs": [
+          "library-dialog",
+          "mission-replace-dialog",
+          "shell-home",
+          "shell-workshop-dialog"
+        ],
+        "flight": "paused",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "signal-01",
+          "pack": "",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"Flight library.\":\n  - button \"Close library\": ×\n  - paragraph: THE THINGS YOU KEEP\n  - heading \"Flight library.\" [level=2]\n  - group \"Library sections\":\n    - button \"Records\"\n    - button \"Saves & loads\"\n    - button \"Expansion packs\"\n    - button \"Challenges\"\n  - paragraph: Return whenever you like. Daily boards remain playable by date; no streak expires and no reward depends on logging in.\n  - text: Board date\n  - textbox \"Board date\": 2026-09-15\n  - text: Challenge\n  - combobox \"Challenge\":\n    - option \"Daily route\"\n    - option \"Open skies · slower patrols\"\n    - option \"Pressure run · faster patrols\" [selected]\n  - button \"Play this challenge →\"\n  - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Pressure run · 2026-09-15\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace\"\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:51257/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT\n- dialog \"Make it yours\":\n  - paragraph: FIELD KIT / WORKSHOP\n  - heading \"Make it yours\" [level=2]\n  - button \"Back\"\n  - paragraph: Build a world, tune your kit, or practice the next move.\n  - navigation \"Workshop destinations\":\n    - link \"Asset Studio Art, themes & generation prompts\":\n      - /url: ../authoring/asset-studio/\n      - text: Asset Studio\n      - generic: Art, themes & generation prompts\n    - link \"Mission playground Build and test a flight\":\n      - /url: playground/\n      - text: Mission playground\n      - generic: Build and test a flight\n    - link \"Enemy workshop Characters & behaviors\":\n      - /url: ../authoring/enemy-catalog/\n      - text: Enemy workshop\n      - generic: Characters & behaviors\n    - link \"Motion lab\":\n      - /url: ../authoring/motion-lab/\n    - link \"Pictures & stories\":\n      - /url: ../authoring/still-media/\n    - link \"Video poster workshop\":\n      - /url: ../authoring/video-poster/\n    - link \"Design atlas\":\n      - /url: ../authoring/design-atlas/\n    - link \"Replay Theater Review a recorded flight\":\n      - /url: replay-theater/\n      - text: Replay Theater\n      - generic: Review a recorded flight\n    - link \"Controller practice Check your controls\":\n      - /url: controller-lab/\n      - text: Controller practice\n      - generic: Check your controls\n    - button \"Field guide & practice\"\n    - button \"Scores & saves\"\n    - button \"How to play\"\n  - generic \"Sound & game extras\""
+    },
+    {
+      "label": "22-challenge-selected-parents-closed",
+      "url": "http://127.0.0.1:51257/game/",
+      "state": {
+        "active": {
+          "id": "start-button",
+          "text": "Start mission ↗"
+        },
+        "decision": "Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.",
+        "dialogs": [],
+        "flight": "briefing",
+        "heading": "Replace this flight?",
+        "selection": {
+          "level": "route-2026-09-15-expert",
+          "pack": "campaign:route-2026-09-15-expert/1/526bc6df5d137090",
+          "theme": "fpv"
+        }
+      },
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 75%\n    - generic: LIVES\n    - strong: ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Pressure run · 2026-09-15\" [level=1]\n      - paragraph: Reveal 75% · 1 required relay.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\" [active]\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: \"Relay: 0 / 1\"\n    - status: Choose your route. Open Missions → Mission brief for guidance.\n    - status"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+  "scope": "Finite original source/test/native evidence; historical cache paths are preserved provenance, with retained mappings below. No asset/runtime binary copies except two original native screenshots.",
+  "files": [
+    {
+      "originalPath": ".cache/p03i-team-departure/admission.json",
+      "originalBytes": 42583,
+      "originalSha256": "89b73614cb11038681122a9ccd2f1c9c74af1fa65c272bee132f6b976a073def",
+      "retainedPath": "source/admission.json",
+      "retainedBytes": 42583,
+      "retainedSha256": "89b73614cb11038681122a9ccd2f1c9c74af1fa65c272bee132f6b976a073def",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/source-held-01.json",
+      "originalBytes": 915,
+      "originalSha256": "1e3958350b1f7ef62d2f4217babefefaa49ba226522ec97092611f3d1ddbd9da",
+      "retainedPath": "source/source-held-01.json",
+      "retainedBytes": 915,
+      "retainedSha256": "1e3958350b1f7ef62d2f4217babefefaa49ba226522ec97092611f3d1ddbd9da",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/source-held-01.diff",
+      "originalBytes": 17146,
+      "originalSha256": "50048f7d2bf7de97e9788de8d715c4b22639ecb3f0a69ce6f3fb9252a9eae1e1",
+      "retainedPath": "source/source-held-01.diff.gz",
+      "retainedBytes": 5306,
+      "retainedSha256": "7f730772a68382eda640bee73148fe0a217ac5c153e985d9e1daed86607cb1ea",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/source-held-02.json",
+      "originalBytes": 660,
+      "originalSha256": "4061f46215d8341a2f25197dbb56084652776e2d7be99d4ad2141e7f5a0b3e3b",
+      "retainedPath": "source/source-held-02.json",
+      "retainedBytes": 660,
+      "retainedSha256": "4061f46215d8341a2f25197dbb56084652776e2d7be99d4ad2141e7f5a0b3e3b",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/source-held-02.diff",
+      "originalBytes": 19525,
+      "originalSha256": "23fa1b989f004ccb35299c2b9cbc9b54c8c40fbb662fb19ba5f26b816cf702a1",
+      "retainedPath": "source/source-held-02.diff.gz",
+      "retainedBytes": 5850,
+      "retainedSha256": "e8f990eb932e9295e4127f682ffb30763abddb91e0793bf7b348aaee039f2880",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/source-held-03.json",
+      "originalBytes": 677,
+      "originalSha256": "549d35431050d4d373d075fa46fb3a922368af5528842f8c79e6c6dfc15ee5b4",
+      "retainedPath": "source/source-held-03.json",
+      "retainedBytes": 677,
+      "retainedSha256": "549d35431050d4d373d075fa46fb3a922368af5528842f8c79e6c6dfc15ee5b4",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/source-held-03.diff",
+      "originalBytes": 19948,
+      "originalSha256": "f7f275d77c03d83b6c4ed26fc5dbbb636e7cfd3ec3a463b6fdb38decc5057db2",
+      "retainedPath": "source/source-held-03.diff.gz",
+      "retainedBytes": 5981,
+      "retainedSha256": "fa2605199d0356b60107b9f0dbe5340f498ae074321c1d2e53decbc4a950d99e",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/shared-tests-before.json",
+      "originalBytes": 1706,
+      "originalSha256": "d1bda6b66770b23506a31002015fe4bab52f63a2678943e1ce96c2ab5eef2311",
+      "retainedPath": "source/shared-tests-before.json",
+      "retainedBytes": 1706,
+      "retainedSha256": "d1bda6b66770b23506a31002015fe4bab52f63a2678943e1ce96c2ab5eef2311",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/shared-node22.json",
+      "originalBytes": 334,
+      "originalSha256": "e4f0612c9187a2369f1bf89277a1263fdf8654fe11dcf61a0d4bd7774cadadfe",
+      "retainedPath": "source/shared-node22.json",
+      "retainedBytes": 334,
+      "retainedSha256": "e4f0612c9187a2369f1bf89277a1263fdf8654fe11dcf61a0d4bd7774cadadfe",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/shared-node22.log",
+      "originalBytes": 22308,
+      "originalSha256": "87c3ad88571668604fce8096e6727da1506b5bd9d3205114b55abecb9efb6f26",
+      "retainedPath": "source/shared-node22.log.gz",
+      "retainedBytes": 4158,
+      "retainedSha256": "5f31ee95fed7dabb38172260e2156003afea2e5e62b644d9c658c6d7a146ad53",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/shared-node20.json",
+      "originalBytes": 368,
+      "originalSha256": "45c20159854e609e67b7002d311b502d5b9ca4a00c6d72cff0b442edd9ecf4a0",
+      "retainedPath": "source/shared-node20.json",
+      "retainedBytes": 368,
+      "retainedSha256": "45c20159854e609e67b7002d311b502d5b9ca4a00c6d72cff0b442edd9ecf4a0",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/shared-node20.log",
+      "originalBytes": 20930,
+      "originalSha256": "85f4cd6126be92a279dd4ae9f31f91df2a5aef1c18abaf1448d6a9b74bf3d5c5",
+      "retainedPath": "source/shared-node20.log.gz",
+      "retainedBytes": 4102,
+      "retainedSha256": "73919d4a5618efcf8cedf34139f849b724665ef8d48e08e9a78d6e40707e8e17",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node22-initial.log",
+      "originalBytes": 15188,
+      "originalSha256": "5af69e6becf89273d6325f6e7e0fbaade94f1cea3797a708a653324591f380dd",
+      "retainedPath": "host/node22-initial.log.gz",
+      "retainedBytes": 3041,
+      "retainedSha256": "e372e242fbd58e9eb0e1da781d3008453fcfc5709d70c5d76d9b53f82f374c7c",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node22-fault-successor.log",
+      "originalBytes": 16663,
+      "originalSha256": "9c5dbc4b097093c5a79178a3285a9b4547c109ef03c0103f9f61223ca9c49122",
+      "retainedPath": "host/node22-fault-successor.log.gz",
+      "retainedBytes": 3303,
+      "retainedSha256": "2b28e4e5bcb8f5ed6b47000dfd1ded768127a461660be7083101e5c7c8d79166",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node22-recipe-successor.log",
+      "originalBytes": 15016,
+      "originalSha256": "d2f011bda6ea286c3b0328287c89f962bfef783cbdef30b14a8d7063070150f1",
+      "retainedPath": "host/node22-recipe-successor.log.gz",
+      "retainedBytes": 3102,
+      "retainedSha256": "a5049ab8b61a0c9aea617499a5407ce4b2a2824623c0702e2fcc94b58acabc68",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node22-final.log",
+      "originalBytes": 14345,
+      "originalSha256": "5fb13c7b256b0e35bebb31154fe877ca9d11d174de9db8667ae678368370f7ce",
+      "retainedPath": "host/node22-final.log.gz",
+      "retainedBytes": 2809,
+      "retainedSha256": "82a2388a1af71d92fc0cad44c09eb8dffd1e30315a3e15bfc930c4550e8bbdcf",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node20-final.log",
+      "originalBytes": 13438,
+      "originalSha256": "cef2bb6f800955151b963895073243d0bf65cacb6159bf998f1c58926bf7d3dc",
+      "retainedPath": "host/node20-final.log.gz",
+      "retainedBytes": 2762,
+      "retainedSha256": "a89b17b9496e3470cad0a904e2f7ce5c2c904761329deeadf0eba7fc28b34f26",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node22-final-qualified.log",
+      "originalBytes": 14356,
+      "originalSha256": "ba2caf9e5e57012b50d7186dac8441a23ac306b5180a463a4479225cf1976a3f",
+      "retainedPath": "host/node22-final-qualified.log.gz",
+      "retainedBytes": 2804,
+      "retainedSha256": "1258bdf0dec4fb5d1e4ffe84cb17211a647abb6396e1ba272ee620848da2e3b2",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/node20-final-qualified.log",
+      "originalBytes": 13447,
+      "originalSha256": "8b9a6f9145bd83f464df035c8bb1b003ec12fa6bbceca88c4af207e588294d6a",
+      "retainedPath": "host/node20-final-qualified.log.gz",
+      "retainedBytes": 2771,
+      "retainedSha256": "000473a1fb1527217dda3b112a213436e401605f015971e3b8ea6be3e28d9dc1",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/eslint-final.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedPath": "host/eslint-final.log.gz",
+      "retainedBytes": 20,
+      "retainedSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/format-final.log",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "retainedPath": "host/format-final.log.gz",
+      "retainedBytes": 82,
+      "retainedSha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5",
+      "encoding": "gzip (exact original on decompression)"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/initial-pins.json",
+      "originalBytes": 617,
+      "originalSha256": "88883bf3328fc870a53c2ab86c3d45f240fa9e8aa1268ee60d3ecdf6f43213d2",
+      "retainedPath": "host/initial-pins.json",
+      "retainedBytes": 617,
+      "retainedSha256": "88883bf3328fc870a53c2ab86c3d45f240fa9e8aa1268ee60d3ecdf6f43213d2",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/pre-lint-pins.json",
+      "originalBytes": 617,
+      "originalSha256": "345ee4a4e9bba2d14fe325849897048780b095815de4a53ecbc4e73dacb6cc54",
+      "retainedPath": "host/pre-lint-pins.json",
+      "retainedBytes": 617,
+      "retainedSha256": "345ee4a4e9bba2d14fe325849897048780b095815de4a53ecbc4e73dacb6cc54",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/final-pins.json",
+      "originalBytes": 617,
+      "originalSha256": "c41ae3c075a1eb4a9db7c5a6f88f9fe2f549fe41305b5897d90bcf92c7b23cd5",
+      "retainedPath": "host/final-pins.json",
+      "retainedBytes": 617,
+      "retainedSha256": "c41ae3c075a1eb4a9db7c5a6f88f9fe2f549fe41305b5897d90bcf92c7b23cd5",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-tests-dewey/verification.json",
+      "originalBytes": 5963,
+      "originalSha256": "bead8f57e54de44d9ff2bf15614534f9acda4bcef5eb89adf47fe85062d7a0c2",
+      "retainedPath": "host/verification.json",
+      "retainedBytes": 5963,
+      "retainedSha256": "bead8f57e54de44d9ff2bf15614534f9acda4bcef5eb89adf47fe85062d7a0c2",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/native-root-verification.json",
+      "originalBytes": 3082,
+      "originalSha256": "8390aaf0db1162b9be71c63718f3cebb9dec8b735b02d88fbeabb89f1a3239f4",
+      "retainedPath": "native/native-root-verification.json",
+      "retainedBytes": 3082,
+      "retainedSha256": "8390aaf0db1162b9be71c63718f3cebb9dec8b735b02d88fbeabb89f1a3239f4",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/native-preview-binding.json",
+      "originalBytes": 997,
+      "originalSha256": "b06cac08e97dc9a6e9a192622e1468869756973a2acbc07bf3af3e94538a9362",
+      "retainedPath": "native/native-preview-binding.json",
+      "retainedBytes": 997,
+      "retainedSha256": "b06cac08e97dc9a6e9a192622e1468869756973a2acbc07bf3af3e94538a9362",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/serve-native-root.py",
+      "originalBytes": 2971,
+      "originalSha256": "e496f2e9283f01e0640aa81fd97c526211d7774a80ad49e4b73edd750ce34a77",
+      "retainedPath": "native/serve-native-root.py",
+      "retainedBytes": 2971,
+      "retainedSha256": "e496f2e9283f01e0640aa81fd97c526211d7774a80ad49e4b73edd750ce34a77",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/native-root/events.json",
+      "originalBytes": 52298,
+      "originalSha256": "620e579648e5facfff23c4e47148349754f01317c6c6bf41bc48af7a81875a55",
+      "retainedPath": "native/events.json",
+      "retainedBytes": 52298,
+      "retainedSha256": "620e579648e5facfff23c4e47148349754f01317c6c6bf41bc48af7a81875a55",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/native-root/team-confirmation.jpg",
+      "originalBytes": 64714,
+      "originalSha256": "df0fbe772b69ba5624bd414ffc9ffe7df5d28326d0351246d0b8ae6284ec5334",
+      "retainedPath": "native/team-confirmation.jpg",
+      "retainedBytes": 64714,
+      "retainedSha256": "df0fbe772b69ba5624bd414ffc9ffe7df5d28326d0351246d0b8ae6284ec5334",
+      "encoding": "exact original bytes"
+    },
+    {
+      "originalPath": ".cache/p03i-team-departure/native-root/team-leave.jpg",
+      "originalBytes": 63402,
+      "originalSha256": "d1d981e617abcea9eaea964eff1ba97c7bf65e5cce454427423faf84f70c2655",
+      "retainedPath": "native/team-leave.jpg",
+      "retainedBytes": 63402,
+      "retainedSha256": "d1d981e617abcea9eaea964eff1ba97c7bf65e5cce454427423faf84f70c2655",
+      "encoding": "exact original bytes"
+    }
+  ],
+  "retainedBytes": 288612
+}

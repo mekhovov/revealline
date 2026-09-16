@@ -1,0 +1,228 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "d66d306350717eac06967d00ab3932f36b5b4fc1c7242253e43c15aa5042e353",
+  "originalGitBlob": "3607265289b6bad9b737bf71db3020f9a83237db",
+  "removedRecordsOrFields": 12,
+  "excerpt": [
+    {
+      "label": "Real First Signal attempt paused before changing setup",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:11\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status",
+      "ui": {
+        "active": "start-button",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": false,
+        "status": "",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Starting class change pauses and verifies old flight",
+      "ui": {
+        "active": "mission-replace-stay",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Stay restores exact Starting class control, original Scout and11s flight",
+      "ui": {
+        "active": "class-select",
+        "activeTag": "SELECT",
+        "class": "scout",
+        "modal": false,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Grid request restores old Immediate selector while awaiting decision",
+      "ui": {
+        "active": "mission-replace-stay",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Stay restores exact Steering control and retains Immediate",
+      "ui": {
+        "active": "turn-select",
+        "activeTag": "SELECT",
+        "class": "scout",
+        "modal": false,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Class preparation: keyboard reaches explicit destructive action",
+      "ui": {
+        "active": "mission-replace-stay",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      },
+      "observation": "Tab occurred while confirmation was still disabled; focus remained Stay. The label describes intended action, not observed success."
+    },
+    {
+      "label": "Confirmed Light carrier prepares a fresh attempt without starting",
+      "ui": {
+        "active": "class-select",
+        "activeTag": "SELECT",
+        "class": "scout",
+        "modal": false,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      },
+      "observation": "Return actually activated Stay: Scout and11s paused attempt remain. No fresh preparation occurred."
+    },
+    {
+      "label": "Repeated class request; wait for verified preparation control",
+      "ui": {
+        "active": "mission-replace-stay",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Verified class request: Tab now reaches Prepare fresh attempt",
+      "ui": {
+        "active": "mission-replace-confirm",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Confirmed preparation: Light carrier selected, mission ready0:00",
+      "ui": {
+        "active": "class-select",
+        "activeTag": "SELECT",
+        "class": "bomber",
+        "modal": false,
+        "status": "Preparing the requested fresh attempt without starting it.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Restore verified original after preparing another class",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; supply R; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - paragraph:\n      - status: Reading the saved picture original…\n    - button \"Cancel preparation\"\n    - button \"Verifying saved flight…\" [disabled]\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status",
+      "ui": {
+        "active": "start-button",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": false,
+        "status": "Preparing the requested fresh attempt without starting it.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Retained Scout flight restored paused at11s",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:11\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status",
+      "ui": {
+        "active": "start-button",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": false,
+        "status": "Preparing the requested fresh attempt without starting it.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Restored flight: request Grid + buffer",
+      "ui": {
+        "active": "mission-replace-stay",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Grid preparation action focused",
+      "ui": {
+        "active": "mission-replace-confirm",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": true,
+        "status": "Your current flight was saved and verified. Prepare fresh attempt uses the requested starting setup without starting it. Stay keeps this flight paused.",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "Grid + buffer prepared without starting",
+      "ui": {
+        "active": "turn-select",
+        "activeTag": "SELECT",
+        "class": "scout",
+        "modal": false,
+        "status": "Preparing the requested fresh attempt without starting it.",
+        "turn": "grid-center"
+      }
+    },
+    {
+      "label": "Course controls: no visible Immediate/Grid selector; no hidden-control action attempted",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: FIRST FLIGHT\n- button \"Enter fullscreen\": ⛶\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - status: Fly down from the marked start to the opposite safe edge.\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; pause Esc / P. Releasing a direction keeps you moving.\"\n    - generic: Start ↓\n    - generic: Safe edge\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - region \"First Flight course\":\n      - heading \"First Flight · Close a line\" [level=2]\n      - generic: Practice · no rewards\n      - paragraph: Your real cuts advance these steps. Reading and course choices never move the craft.\n      - generic \"Lesson steps\"\n      - generic: Choose a lesson\n      - combobox \"Choose a First Flight lesson\":\n        - option \"1. Close a line\" [selected]\n        - option \"2. Find the empty side\"\n        - option \"3. Bring the picture home\"\n      - button \"Skip lesson\"\n      - button \"Return to the game\"\n    - status: Start at the marked top edge. Fly down to the opposite safe edge to close a live line.\n    - status\n- dialog \"Flight settings.\":\n  - button \"Close settings\": ×\n  - paragraph: TUNE YOUR ARCADE\n  - heading \"Flight settings.\" [level=2]\n  - tablist \"Settings categories\":\n    - tab \"Controls\" [active] [selected]\n    - tab \"Audio\"\n    - tab \"Display & accessibility\"\n    - tab \"Game data\"\n  - tabpanel \"Controls\":\n    - heading \"Controls\" [level=3]\n    - paragraph: Keyboard, controller and touch.\n    - generic \"Keyboard controls\"\n    - option \"Arrows + WASD\" [selected]\n    - option \"Left hand\"\n    - option \"Right hand\"\n    - option \"Custom\" [disabled]\n    - region \"Controller controls\":\n      - heading \"Controller controls\" [level=3]\n      - paragraph: \"Automatic / position labels · Flight: Left stick · Menus: Left stick · Dead zone 0.35 / 0.35.\"\n      - paragraph: Use a complete draft to swap buttons. Your current controller remains active until Apply. Keyboard and touch remain available.\n      - button \"Edit controller settings\"\n      - paragraph:\n        - status: Current controller settings loaded. Choose Edit to make a draft.\n    - region \"Solo controller Boost behavior\":\n      - text: Solo controller Boost\n      - combobox \"Solo controller Boost\":\n        - option \"Hold\" [selected]\n        - option \"Toggle\"\n      - paragraph: \"Toggle: press Boost once for on/off. Pause and recovery turn it off. Tap a direction to keep flying. Couch keeps its separate Hold controls for Boost.\"\n      - paragraph: This setting is separate from the button-map draft. Select Hold to reset it.\n      - status: \"Controller Boost: Hold.\"\n    - heading \"Touch & on-screen steering\" [level=4]\n    - text: On-screen steering\n    - combobox \"On-screen steering\":\n      - option \"Auto · touch only\" [selected]\n      - option \"Always · touch or mouse\"\n      - option \"Off · keyboard or controller\"\n    - paragraph: Auto shows steering during touch play. Keyboard or controller use hides it. Choose Always to steer with a mouse. Drag anywhere on the board, or use the thumb area below.\n    - text: Touch steering\n    - combobox \"Touch steering\":\n      - option \"Floating stick · drag from anywhere\" [selected]\n      - option \"Swipe · flick to turn\"\n      - option \"D-pad · tap or slide between directions\"\n    - text: Steering hand\n    - combobox \"Steering hand\":\n      - option \"Right\" [selected]\n      - option \"Left\"\n    - text: Touch control size\n    - combobox \"Touch control size\":\n      - option \"Regular\" [selected]\n      - option \"Large\"\n    - text: Touch control opacity\n    - slider \"Touch control opacity\": \"0.55\"\n    - paragraph: A short drag turns immediately. Lift your finger to keep flying; use Pause to take a break. The stick starts at your first touch. Controls stay within thumb reach. In short landscape layouts, the D-pad reserves room beside the field.\n    - paragraph: Move the stick, swipe area or D-pad to your left or right thumb. Actions use the other side.\n    - paragraph: This edition uses manual equipment. Scout Scan reveals nearby objectives and briefly shows enemy direction hints. Supply refills charge-based craft at supply pads. Boost increases speed without making you invulnerable. Field bonuses activate on contact.\n    - checkbox \"Toggle on-screen Boost\"\n    - text: Toggle on-screen Boost",
+      "ui": {
+        "active": "settings-tab-controls",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": false,
+        "status": "",
+        "turn": "grid-center"
+      }
+    },
+    {
+      "label": "Returned from course to ordinary game; explicit Resume still required",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; supply R; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\" [active]:\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:60241/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · First Signal · First Signal\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT",
+      "ui": {
+        "active": "shell-continue",
+        "activeTag": "BUTTON",
+        "class": "bomber",
+        "modal": false,
+        "status": "",
+        "turn": "grid-center"
+      },
+      "observation": "Course return reaches the title/ready state with Continue. It does not automatically restore or resume the saved flight."
+    },
+    {
+      "label": "Explicit Continue after course requests saved-flight restoration",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; supply R; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Clear a path. Reveal a world.\" [level=1]\n      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.\n      - paragraph: Standard difficulty.\n    - paragraph:\n      - status: Reading the saved picture original…\n    - button \"Cancel preparation\"\n    - button \"Verifying saved flight…\" [disabled]\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: \"Your first route: fly down from the marked start to the opposite border.\"\n    - status",
+      "ui": {
+        "active": "start-button",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": false,
+        "status": "",
+        "turn": "immediate"
+      }
+    },
+    {
+      "label": "After course: saved Scout Immediate11s flight restored paused",
+      "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:11\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status",
+      "ui": {
+        "active": "start-button",
+        "activeTag": "BUTTON",
+        "class": "scout",
+        "modal": false,
+        "status": "",
+        "turn": "immediate"
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "scope": "Five exact served code bytes only; no gameplay claim.",
+  "rows": [
+    {
+      "path": "game/app.mjs",
+      "url": "http://127.0.0.1:65444/game/app.mjs",
+      "status": 200,
+      "mime": "text/javascript",
+      "bytes": 245151,
+      "sha256": "9c61336914c6b1d4e5c1ef2fcd870050804e87d1c69dd5858a0a9243f321700b"
+    },
+    {
+      "path": "game/index.html",
+      "url": "http://127.0.0.1:65444/game/index.html",
+      "status": 200,
+      "mime": "text/html",
+      "bytes": 70354,
+      "sha256": "216121d369e6b112c01073916f5e17c8d556248749ea0299f3a85ae018e04165"
+    },
+    {
+      "path": "game/mode-return-v2.mjs",
+      "url": "http://127.0.0.1:65444/game/mode-return-v2.mjs",
+      "status": 200,
+      "mime": "text/javascript",
+      "bytes": 6771,
+      "sha256": "0d10a32521d4f615559691964276e23f6c40d992d0c517e4fe3ff4c51e04f036"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "url": "http://127.0.0.1:65444/game/couch/couch.mjs",
+      "status": 200,
+      "mime": "text/javascript",
+      "bytes": 39262,
+      "sha256": "4c92a981ed7a29596a5c6fcc823394460c1d0d350af179a4199055ce3ddeaba5"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "url": "http://127.0.0.1:65444/game/couch/couch-shell.mjs",
+      "status": 200,
+      "mime": "text/javascript",
+      "bytes": 14014,
+      "sha256": "c2b2b732c020411af0ed95adb0a2abbbb1b6cc1f70b37686971b0559ac18f913"
+    }
+  ]
+}

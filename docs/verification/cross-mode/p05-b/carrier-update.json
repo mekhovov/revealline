@@ -1,0 +1,31 @@
+{
+  "scope": "Evidence carrier correction only; no original raw-byte normalization",
+  "reason": "Git staged whitespace check flagged three blank context lines inside two raw diff artifacts. Both are now losslessly compressed, not edited.",
+  "initialDiagnostic": {
+    "retained": "package-staged-whitespace-initial.log.gz",
+    "originalBytes": 259,
+    "originalSha256": "0043bf09ebadf6af34617f28f56ba3db19519dd040d1ad9765085b549004bf5a",
+    "retainedBytes": 127,
+    "retainedSha256": "895daaf74e3c7905fd701c42288c2582d1ef06a45240f8d0b446b9a2e550f8f0"
+  },
+  "changes": [
+    {
+      "map": "evidence.json",
+      "oldMapSha256": "0a6ffc54cc983990ee301a1591917ac6471928c565826868d978c6da776fe246",
+      "retained": "source-held-01.diff.gz",
+      "originalBytes": 9638,
+      "originalSha256": "4461fd38c087c16df71ef36ef59d05affd957430465ca749676d0d35d1e55ece",
+      "retainedBytes": 2400,
+      "retainedSha256": "6a767b03ca62f89b69720efdefeffb002d31acb7ca3640ffd45de4c2fe21fd6a"
+    },
+    {
+      "map": "gutter-successor/evidence.json",
+      "oldMapSha256": "c442877c9c0f73118850df611e5b11c7b9e61298d1c8087dfb931934a69a257d",
+      "retained": "gutter-successor/source.diff.gz",
+      "originalBytes": 5527,
+      "originalSha256": "23e1e48b2a4349a1c698c25c3ef1c124f45363e266a20db8ddaeab1a5048f1f9",
+      "retainedBytes": 1867,
+      "retainedSha256": "1939374588f32c1b8fc32641c0d0d80227da26852bc73010968471cc6de09a78"
+    }
+  ]
+}

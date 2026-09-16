@@ -1,0 +1,176 @@
+{
+  "format": "revealline.p03-i-host-tests.v1",
+  "scope": "Actual Team markup/modules/core, modeled DOM/native defaults/Canvas commands/frames/pads/storage boundaries; no browser/device proof",
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "sourceFiles": [
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "bytes": 51109,
+      "sha256": "30e64340bfdeafd667393054eabbfed78a52fbb5c9d556abb0dfe53f6e4310a2"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 32926,
+      "sha256": "892e065c39a1c9afbf62d5c7a8b032177cc04e6c8f5c4c7916e076bac9e51ca1"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 14942,
+      "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 15174,
+      "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+    }
+  ],
+  "testFiles": [
+    "game/test/coop-host.test.mjs"
+  ],
+  "finalResults": {
+    "node22": "61/61",
+    "node20": "61/61",
+    "skips": 0,
+    "cancellations": 0
+  },
+  "checks": {
+    "eslint": true,
+    "prettier": true,
+    "gitDiffCheck": true
+  },
+  "retained": [
+    {
+      "path": ".cache/p03i-tests-dewey/node22-initial.log",
+      "bytes": 15188,
+      "sha256": "5af69e6becf89273d6325f6e7e0fbaade94f1cea3797a708a653324591f380dd",
+      "tests": {
+        "tests": 59,
+        "pass": 57,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 8420.378042
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/node22-fault-successor.log",
+      "bytes": 16663,
+      "sha256": "9c5dbc4b097093c5a79178a3285a9b4547c109ef03c0103f9f61223ca9c49122",
+      "tests": {
+        "tests": 61,
+        "pass": 58,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 9367.707292
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/node22-recipe-successor.log",
+      "bytes": 15016,
+      "sha256": "d2f011bda6ea286c3b0328287c89f962bfef783cbdef30b14a8d7063070150f1",
+      "tests": {
+        "tests": 61,
+        "pass": 60,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 8653.331625
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/node22-final.log",
+      "bytes": 14345,
+      "sha256": "5fb13c7b256b0e35bebb31154fe877ca9d11d174de9db8667ae678368370f7ce",
+      "tests": {
+        "tests": 61,
+        "pass": 61,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 8622.030459
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/node20-final.log",
+      "bytes": 13438,
+      "sha256": "cef2bb6f800955151b963895073243d0bf65cacb6159bf998f1c58926bf7d3dc",
+      "tests": {
+        "tests": 61,
+        "pass": 61,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 11747.017125
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/node22-final-qualified.log",
+      "bytes": 14356,
+      "sha256": "ba2caf9e5e57012b50d7186dac8441a23ac306b5180a463a4479225cf1976a3f",
+      "tests": {
+        "tests": 61,
+        "pass": 61,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 9037.473959
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/node20-final-qualified.log",
+      "bytes": 13447,
+      "sha256": "8b9a6f9145bd83f464df035c8bb1b003ec12fa6bbceca88c4af207e588294d6a",
+      "tests": {
+        "tests": 61,
+        "pass": 61,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 12656.933708
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/eslint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests": {}
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/format-final.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "tests": {}
+    }
+  ],
+  "supportingPins": [
+    {
+      "path": ".cache/p03i-tests-dewey/initial-pins.json",
+      "bytes": 617,
+      "sha256": "88883bf3328fc870a53c2ab86c3d45f240fa9e8aa1268ee60d3ecdf6f43213d2"
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/pre-lint-pins.json",
+      "bytes": 617,
+      "sha256": "345ee4a4e9bba2d14fe325849897048780b095815de4a53ecbc4e73dacb6cc54"
+    },
+    {
+      "path": ".cache/p03i-tests-dewey/final-pins.json",
+      "bytes": 617,
+      "sha256": "c41ae3c075a1eb4a9db7c5a6f88f9fe2f549fe41305b5897d90bcf92c7b23cd5"
+    }
+  ],
+  "diagnostics": [
+    "Initial57/59: real Retry recipe validation failed because simulated enemy state was cloned as authored level.",
+    "Fault successor58/61: new request-time paint fault passed, same recipe failure blocked Retry and repeated paint test.",
+    "Recipe successor60/61: immutable original recipe and both fault paths passed; final clock oracle mistakenly used75frames at120Hz, corrected to150frames.",
+    "Pre-lint61/61 pair retained: source unchanged; test qualified location as globalThis.location for ESLint no-undef before final61/61 pair. Initial lint diagnostic was tool output, not fabricated as a raw file."
+  ],
+  "limitations": [
+    "No actual native key/focus/layout/controller/touch/media or storage-fault claim.",
+    "Paused header tests activate real click handlers; they do not prove keyboard reachability from the paused root. Root independently observed Enter on external header redirects to Resume; normal setup\u2192discard\u2192lobby route remains separate.",
+    "Canvas SHA captures real painter command stream, not physical pixel output or private core state.",
+    "Shared navigation/input files are owned and executed separately by Parfit; do not add overlapping historical runs as unique cases."
+  ],
+  "writes": "Only owned coop-host test and bounded cache metadata/logs. No production edits, assets, builds, commits or GitHub actions by this test lane."
+}

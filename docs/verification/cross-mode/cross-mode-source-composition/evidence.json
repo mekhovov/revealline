@@ -1,0 +1,1100 @@
+{
+  "format": "revealline.internal-evidence-map.v1",
+  "archive": {
+    "file": "evidence.zip",
+    "bytes": 2477217,
+    "sha256": "5f29157e305627938fc0a5bef58bc2ea0eef8c60de4969313a705a6fe37ecc68"
+  },
+  "parents": [
+    "29a98c0e2984b8c3cca7079f40047465e9bf767b",
+    "90e8bc8102cc71a992a57aa1f41d7cdcd6659b3e",
+    "657ac7b5528925a8c6bee0f77449a1428962f172",
+    "d3ff0bc1e9948f5752e79c5b21c8207dd74c69e1"
+  ],
+  "commonBase": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "combinedPredecessorTree": "def1186e23ca8ce668b362c0b001f2b039eb76e5",
+  "testedSuccessorTree": "ebcf47cc56bd7c620cb74f2fa2ea9eb3a6b38e9b",
+  "scope": "Lossless exact original bytes. Root performed image inspection; packaging does not repeat it. Four-parent full composition, with a narrow successor and docs-only packaging; no phase/version/publication claim.",
+  "fileCount": 154,
+  "originalBytes": 5949004,
+  "files": [
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/summary-final.json",
+      "member": "composition/summary-final.json",
+      "role": "predecessor composition",
+      "bytes": 1389,
+      "sha256": "d50c7ebbb8d1c9de4727f043d18d01f59bf4e4376c3f03ea04c0b056c16b4524"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/source-held-01.json",
+      "member": "composition/source-held-01.json",
+      "role": "predecessor composition",
+      "bytes": 5741,
+      "sha256": "8d72b2ec8c94a3150c066866da1e7cb0f112320f8dcc2fa9725721d66a25d97f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/source-held-02.json",
+      "member": "composition/source-held-02.json",
+      "role": "predecessor composition",
+      "bytes": 1449,
+      "sha256": "0d7b80502707a48b576ff3952277860efd26374661d88309337d273da6baecd5"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/root-source-review.json",
+      "member": "composition/root-source-review.json",
+      "role": "predecessor composition",
+      "bytes": 1078,
+      "sha256": "9dbd6bbd9d1249d5e1830eec6141216dd45ecc2854146e5b1a97132ac1af372d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/shared-source-final.json",
+      "member": "composition/shared-source-final.json",
+      "role": "predecessor composition",
+      "bytes": 16900,
+      "sha256": "d1aa75f5554c00e54a96bbf775dff35a0cca2020c89608d3bbb168f62a969f3b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/source-correspondence-final.json",
+      "member": "composition/source-correspondence-final.json",
+      "role": "predecessor composition",
+      "bytes": 268700,
+      "sha256": "4605e4208124b8ee0c5595967b1d3351fe3ff8b16bf3ec9827fdb26fa0cd6e73"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/fixture-successor.diff",
+      "member": "composition/fixture-successor.diff",
+      "role": "predecessor composition",
+      "bytes": 2967,
+      "sha256": "9456187398435c288125b9bad5b63526932efaf263315834e2a7c82a0fe1dcfb"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/diagnostic-01.json",
+      "member": "composition/diagnostic-01.json",
+      "role": "predecessor composition",
+      "bytes": 5267,
+      "sha256": "51ede6929dceafafbad1a41dcb20a718d3279a705e11e54b82f4c6bade1b0903"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/union-node22.log",
+      "member": "composition/union-node22.log",
+      "role": "predecessor composition",
+      "bytes": 161735,
+      "sha256": "558056ee7549aa0fabc3cabc95140765b5cf2d4564cfefb0ff6104f53f8ef894"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/union-node22.json",
+      "member": "composition/union-node22.json",
+      "role": "predecessor composition",
+      "bytes": 2418,
+      "sha256": "15e11b58644d51653b8098c099d6041f73991bfc519a072031c158aaf656f817"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/union-inputs-before.json",
+      "member": "composition/union-inputs-before.json",
+      "role": "predecessor composition",
+      "bytes": 252047,
+      "sha256": "ec6e374a77f216c414f897df161b11e6f6375a83d8a9ff4ba61ded07eb23d218"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/union-inputs-after-node22.json",
+      "member": "composition/union-inputs-after-node22.json",
+      "role": "predecessor composition",
+      "bytes": 252047,
+      "sha256": "ec6e374a77f216c414f897df161b11e6f6375a83d8a9ff4ba61ded07eb23d218"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/test-admission-plan.json",
+      "member": "composition/test-admission-plan.json",
+      "role": "predecessor composition",
+      "bytes": 5837,
+      "sha256": "11ee26102442acd64d3645bccd947ef9b97b2316c778e197013897ddd4f1ccf1"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/test-hydration.json",
+      "member": "composition/test-hydration.json",
+      "role": "predecessor composition",
+      "bytes": 5167,
+      "sha256": "9490b17b3cc41fcf6527b09ba52a0e9e59065f6044ad8af9dd478bac33f56194"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/dynamic-input-hydration.json",
+      "member": "composition/dynamic-input-hydration.json",
+      "role": "predecessor composition",
+      "bytes": 949,
+      "sha256": "83c5b9651d1aca7dd8fbf9739c1c14e97eb127748b61d6cbf9a99bdc3fbf1977"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/post-tests-fixture-dematerialization.json",
+      "member": "composition/post-tests-fixture-dematerialization.json",
+      "role": "predecessor composition",
+      "bytes": 783,
+      "sha256": "e6813e0e1d14e17e15126eccfa04ac8612337aa1039bfb617061a1714bdb3851"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/collection-return-proposal.md",
+      "member": "composition/collection-return-proposal.md",
+      "role": "predecessor composition",
+      "bytes": 3558,
+      "sha256": "d0df27783631323869a35983efb7a90032bc34bf68c79688800f8af49cbacb6e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/collection-return-proposal-pins.json",
+      "member": "composition/collection-return-proposal-pins.json",
+      "role": "predecessor composition",
+      "bytes": 994,
+      "sha256": "bd873930241096bdf9ced19011919af1b50fda347703c9e4d3b16ef56c5c6f8c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/closure.json",
+      "member": "composition/final/closure.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 3083,
+      "sha256": "87533af94b02a60f2bf2520cb7f97351830e0974b5128066b79d066ed4a4c2f8"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/run-union.py",
+      "member": "composition/final/run-union.py",
+      "role": "predecessor39 whole pair",
+      "bytes": 3590,
+      "sha256": "de9e2d4d509d1452b63550166e8e5d3fbade560eb492e0860bf4cca548b4b9b2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/seal-pair.py",
+      "member": "composition/final/seal-pair.py",
+      "role": "predecessor39 whole pair",
+      "bytes": 3068,
+      "sha256": "26ec976cdb8ed065bbb1b3d6eeb226527a9913fad83c3d167d9ea26c78bdcf86"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/test-admission-plan.json",
+      "member": "composition/final/test-admission-plan.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 5956,
+      "sha256": "5c5326984534e4574e68699840f708c15c3d651ce5d9e04e4b289f37f92adf91"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-inputs-after-node20.json",
+      "member": "composition/final/union-inputs-after-node20.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 314,
+      "sha256": "a5a8daeb0752aa9f595ddfa1ef625fcdbecf80f0c83af1c542657a7dbef462fb"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-inputs-after-node22.json",
+      "member": "composition/final/union-inputs-after-node22.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 314,
+      "sha256": "a5a8daeb0752aa9f595ddfa1ef625fcdbecf80f0c83af1c542657a7dbef462fb"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-inputs-before.json",
+      "member": "composition/final/union-inputs-before.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 252818,
+      "sha256": "29d5154457cc1387ce10426b31aaa83e3cece2b1d225ec0324640dd1627809f4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-node20.json",
+      "member": "composition/final/union-node20.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 2422,
+      "sha256": "75fbfb201ad22113287b120997d823c6ea1b8a2d95f3a41a1a3a3ec40c0cb911"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-node20.log",
+      "member": "composition/final/union-node20.log",
+      "role": "predecessor39 whole pair",
+      "bytes": 170491,
+      "sha256": "5f2e2e165bf2486efcaea63f481d563ed337072788557feba7abbd007c760bed"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-node22.json",
+      "member": "composition/final/union-node22.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 2422,
+      "sha256": "7b1cb0e30154e0a808d5b704d7a15d0612705367b463af76584762b9f9e7cadc"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/union-node22.log",
+      "member": "composition/final/union-node22.log",
+      "role": "predecessor39 whole pair",
+      "bytes": 181930,
+      "sha256": "2212ee00c645e64cafefac32a5c900892e1c040f71dea8932256d339a083780c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/final/verification-union.json",
+      "member": "composition/final/verification-union.json",
+      "role": "predecessor39 whole pair",
+      "bytes": 7844,
+      "sha256": "d9b9cdf3269c25359445ec899625c3d795c5f038449c03b93f133e26b53eb286"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/01.jpg",
+      "member": "composition/native-root/01.jpg",
+      "role": "root predecessor native",
+      "bytes": 221438,
+      "sha256": "4e07a98bfd75d883375dbb14ae3007ff45555205842151462702e526a921b6ea"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/01.json",
+      "member": "composition/native-root/01.json",
+      "role": "root predecessor native",
+      "bytes": 3242,
+      "sha256": "c14aba86264c3855b17f9ed9c0bb49ad0e6861a4f7e7104f6742f26590dcb121"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/02.json",
+      "member": "composition/native-root/02.json",
+      "role": "root predecessor native",
+      "bytes": 4488,
+      "sha256": "9f7f6ed90a9305c495f3da763c5a1697fc26514ec34ed8357348c4f5c6f1ff96"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/03.json",
+      "member": "composition/native-root/03.json",
+      "role": "root predecessor native",
+      "bytes": 5881,
+      "sha256": "f3a866a8bb5e3cf551fe02ae359260b439f553ac454130aaf52da583b2e3b2cc"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/04.jpg",
+      "member": "composition/native-root/04.jpg",
+      "role": "root predecessor native",
+      "bytes": 160463,
+      "sha256": "ae5cfce5226b8f5b45708a02e587a7bd94ef7e9c8368629f1a1f4404409e2292"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/04.json",
+      "member": "composition/native-root/04.json",
+      "role": "root predecessor native",
+      "bytes": 6416,
+      "sha256": "ba738ccc9ef08cb28b426c9a72f0af3f2f4731eac8527a8ecbcc3bd7c90f5e71"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/05.json",
+      "member": "composition/native-root/05.json",
+      "role": "root predecessor native",
+      "bytes": 6254,
+      "sha256": "83b744f7c462d2630a3ba328f8ecd8f74a5b4e67dfcbdb1cb8f06ff1bafe0fbd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/06.json",
+      "member": "composition/native-root/06.json",
+      "role": "root predecessor native",
+      "bytes": 3203,
+      "sha256": "1208905dfde9a327cff59cac723d5776ca3675b5eac476c51068b57f44444b7b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/07.jpg",
+      "member": "composition/native-root/07.jpg",
+      "role": "root predecessor native",
+      "bytes": 92593,
+      "sha256": "c14511baa61f0cafa879e01baef630c3647091112186c577514d7b314987ae4f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/07.json",
+      "member": "composition/native-root/07.json",
+      "role": "root predecessor native",
+      "bytes": 2291,
+      "sha256": "91d035f2f9e9c0a556d3783d0d183e29614e02b08210eb2b0e5b7e025fdb3ac8"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/08.jpg",
+      "member": "composition/native-root/08.jpg",
+      "role": "root predecessor native",
+      "bytes": 94365,
+      "sha256": "5330e2c9eebd6c2bb219387575b2c78d0ec61efa3ce2668d701c814b0ee60d5d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/08.json",
+      "member": "composition/native-root/08.json",
+      "role": "root predecessor native",
+      "bytes": 2383,
+      "sha256": "b24b0248cf4efbd04e692de21a677805e589a8620bd544b7ebf18ed44ff30cf7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/09.jpg",
+      "member": "composition/native-root/09.jpg",
+      "role": "root predecessor native",
+      "bytes": 129732,
+      "sha256": "2dbe95cc7a8b14dd7b070e2ec2193f7f4a53eee9a1c44e54840816670e091d8b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/09.json",
+      "member": "composition/native-root/09.json",
+      "role": "root predecessor native",
+      "bytes": 1654,
+      "sha256": "ea90a0b36921d65afb1560b5451e39374a535a034fa5de3c7d16d96f0196d472"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/10.json",
+      "member": "composition/native-root/10.json",
+      "role": "root predecessor native",
+      "bytes": 2358,
+      "sha256": "cb463fc38835cfa52e88426524efcb6e5d36909df16fdd11706330ae467f2e59"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/11.jpg",
+      "member": "composition/native-root/11.jpg",
+      "role": "root predecessor native",
+      "bytes": 115970,
+      "sha256": "a28ec30ea74c40abc791935cef84adef004d8ff3f6c66709bd90487a626a5d81"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/11.json",
+      "member": "composition/native-root/11.json",
+      "role": "root predecessor native",
+      "bytes": 2806,
+      "sha256": "6929641404a0084c41b82fdb1042c600ecdb5b858f21e2a44b0ea847fa268150"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/12.jpg",
+      "member": "composition/native-root/12.jpg",
+      "role": "root predecessor native",
+      "bytes": 177065,
+      "sha256": "7baa6ee297dac3d26338e72b123427f70574754ffffe7f91d59d99df011177b8"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/12.json",
+      "member": "composition/native-root/12.json",
+      "role": "root predecessor native",
+      "bytes": 4070,
+      "sha256": "b3e2dc72de3bf8ed078f64bfd930f85e9f89269d29310bdc003d53153c2558af"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/13.jpg",
+      "member": "composition/native-root/13.jpg",
+      "role": "root predecessor native",
+      "bytes": 113858,
+      "sha256": "569c39c9425b2833b1045c21b4dbcc5ef7ced779370b2ad41be5b61cdc83096d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/13.json",
+      "member": "composition/native-root/13.json",
+      "role": "root predecessor native",
+      "bytes": 2739,
+      "sha256": "c781cac54754ebc3c4f667a6a0f3e350d1f23a596a17c4e95de179628eff5c2d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/14.jpg",
+      "member": "composition/native-root/14.jpg",
+      "role": "root predecessor native",
+      "bytes": 123461,
+      "sha256": "641a9ced05dc9ebd9967983e857254c054a26910a84a535b053e18335440255d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/14.json",
+      "member": "composition/native-root/14.json",
+      "role": "root predecessor native",
+      "bytes": 6246,
+      "sha256": "5ad7b75b382362ce0d289db9c8a3e3160932ab57b720653e00e9f8e6bb4be5cd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/binding.json",
+      "member": "composition/native-root/binding.json",
+      "role": "root predecessor native",
+      "bytes": 2195,
+      "sha256": "bd308381852730df6a17ebb6606360b803bc2e67d02126e22c257d65a98fae80"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/closed.json",
+      "member": "composition/native-root/closed.json",
+      "role": "root predecessor native",
+      "bytes": 27,
+      "sha256": "cbcef54dae25a44d0e64d7496aec16b577df8e165c242d6f69b71475788336c3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/events.json",
+      "member": "composition/native-root/events.json",
+      "role": "root predecessor native",
+      "bytes": 10528,
+      "sha256": "8e0f90f14c80a8f328a3f168de50f3e05b2d4268d353a9ecebbe4467e4c9b5f7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root/root-review.md",
+      "member": "composition/native-root/root-review.md",
+      "role": "root predecessor native",
+      "bytes": 1249,
+      "sha256": "b1ef74c22bea97040073640147da60006cd26c4729b031a0f0f9fa5cfe05bc74"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/01.jpg",
+      "member": "composition/native-root-growth-settled/01.jpg",
+      "role": "root predecessor native",
+      "bytes": 88856,
+      "sha256": "3f6f33422298c18f69d677a4b03b095878a3dd943294b1fcc8511ce2df787fea"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/01.json",
+      "member": "composition/native-root-growth-settled/01.json",
+      "role": "root predecessor native",
+      "bytes": 3772,
+      "sha256": "3a9ebbb1856e36a46bdc01ff36a0db3888feb9d0985636c29c6b10fc366568c5"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/02.json",
+      "member": "composition/native-root-growth-settled/02.json",
+      "role": "root predecessor native",
+      "bytes": 5685,
+      "sha256": "463c2e396a00fd93e3949eec5b79f4edbd59bd356c4afb0212972c822d3874a1"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/03.jpg",
+      "member": "composition/native-root-growth-settled/03.jpg",
+      "role": "root predecessor native",
+      "bytes": 132047,
+      "sha256": "b04fad46ed1152dc6b6c6b75e3d25e00995012f25feee1694cdbaa11ea5e29ff"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/03.json",
+      "member": "composition/native-root-growth-settled/03.json",
+      "role": "root predecessor native",
+      "bytes": 6223,
+      "sha256": "bc7b39b77c36f086f691cbf132b95c982f83acfe39ae0676c5c710a57863976b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/binding.json",
+      "member": "composition/native-root-growth-settled/binding.json",
+      "role": "root predecessor native",
+      "bytes": 142,
+      "sha256": "4002da8c01a81ddabcae13f5dac42b14430d132710eb2de57dd72c5b1057758f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/closed.json",
+      "member": "composition/native-root-growth-settled/closed.json",
+      "role": "root predecessor native",
+      "bytes": 26,
+      "sha256": "310bac0a0ce19251e7c995b57cfa680231fc496d1602542f9f14c647fd6f3043"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/events.json",
+      "member": "composition/native-root-growth-settled/events.json",
+      "role": "root predecessor native",
+      "bytes": 1867,
+      "sha256": "47e892d690ce9b142d3b3dd843de7b68f851503f5f7f4da791d9bb68a303f193"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/native-root-growth-settled/root-review.md",
+      "member": "composition/native-root-growth-settled/root-review.md",
+      "role": "root predecessor native",
+      "bytes": 502,
+      "sha256": "78db4ef83d48387cc75f259f619635e4dbd5919921160f00afc4e183fe1cd05b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/serve-composition.py",
+      "member": "composition/preview/serve-composition.py",
+      "role": "predecessor source binding",
+      "bytes": 9900,
+      "sha256": "19b1b71a1acc54ebfa2b67b1d792fff63e216b290bf49f9ecd08b9dd882ed359"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/config.json",
+      "member": "composition/preview/config.json",
+      "role": "predecessor source binding",
+      "bytes": 3315,
+      "sha256": "b79645f18088c2ea39fe0deee0c847b14048a553fd6cab3b09da2853bf8c93e3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/binding-normal.json",
+      "member": "composition/preview/binding-normal.json",
+      "role": "predecessor source binding",
+      "bytes": 2195,
+      "sha256": "bd308381852730df6a17ebb6606360b803bc2e67d02126e22c257d65a98fae80"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/binding-growth.json",
+      "member": "composition/preview/binding-growth.json",
+      "role": "predecessor source binding",
+      "bytes": 2195,
+      "sha256": "386bd8852323ecb720078e0c466be4d5fc956392f475bd491b155c753df92b50"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/http-source-plan.json",
+      "member": "composition/preview/http-source-plan.json",
+      "role": "predecessor source binding",
+      "bytes": 5761,
+      "sha256": "4a525c59e65c3f30e46542c287efd8581dd3643070456e81d37151916d0a0055"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/http-source-before-native.json",
+      "member": "composition/preview/http-source-before-native.json",
+      "role": "predecessor source binding",
+      "bytes": 9116,
+      "sha256": "567ce8eec2cd3b5708653e0e5e6cf11ab29da9dfbdac4811d0c8b2f56fc0bcf4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/http-source-after-native.json",
+      "member": "composition/preview/http-source-after-native.json",
+      "role": "predecessor source binding",
+      "bytes": 13201,
+      "sha256": "843ae65a62110c6e93f3940996acecf7e23b698d9241201a06b14b7ae3717552"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/http-source-before-growth-native.json",
+      "member": "composition/preview/http-source-before-growth-native.json",
+      "role": "predecessor source binding",
+      "bytes": 9237,
+      "sha256": "505eb1cb5bfdd80743a313f75c94a97a1c8654625ba8a49b9bcee7de5279ae1e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-source-integration/.cache/cross-mode-composition/preview/http-source-after-growth-native.json",
+      "member": "composition/preview/http-source-after-growth-native.json",
+      "role": "predecessor source binding",
+      "bytes": 9990,
+      "sha256": "a9b646742ea641a6f7335cf56fb7e61c8a47738d193510fd72abf40a1f05d549"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/admission.json",
+      "member": "successor/admission.json",
+      "role": "successor source/test preparation",
+      "bytes": 193174,
+      "sha256": "0ed7a81f83a5f42a585ec68ea5b070b840d9557800b4ed8ac5c8d6ae6b8f511a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/diff-check-final.log",
+      "member": "successor/diff-check-final.log",
+      "role": "successor source/test preparation",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/enospc-diagnostic.json",
+      "member": "successor/enospc-diagnostic.json",
+      "role": "successor source/test preparation",
+      "bytes": 1058,
+      "sha256": "f0c4656aaef7f5d39ef7c5ac7da16ea90fd59570c9ef8cd171f1f204439fec3e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-after-node20.json",
+      "member": "successor/field-after-node20.json",
+      "role": "successor source/test preparation",
+      "bytes": 93039,
+      "sha256": "e80f59817e50b3341c5f8cebefbaee1638d1b250ad996b3149da0d7113cbc70b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-after-node22.json",
+      "member": "successor/field-after-node22.json",
+      "role": "successor source/test preparation",
+      "bytes": 93039,
+      "sha256": "e80f59817e50b3341c5f8cebefbaee1638d1b250ad996b3149da0d7113cbc70b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-archive-index-intake.json",
+      "member": "successor/field-archive-index-intake.json",
+      "role": "successor source/test preparation",
+      "bytes": 434,
+      "sha256": "ed339c69413d48adb934c4245d8df248e525eb88e3da59b1fd65e4e171d4bf7f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-before.json",
+      "member": "successor/field-before.json",
+      "role": "successor source/test preparation",
+      "bytes": 93039,
+      "sha256": "e80f59817e50b3341c5f8cebefbaee1638d1b250ad996b3149da0d7113cbc70b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-child-node20.json",
+      "member": "successor/field-child-node20.json",
+      "role": "successor source/test preparation",
+      "bytes": 244,
+      "sha256": "9dadfa16144e1babf9e5b12231e0251c2046a5c581a790e788e7258f71c78329"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-child-node22.json",
+      "member": "successor/field-child-node22.json",
+      "role": "successor source/test preparation",
+      "bytes": 244,
+      "sha256": "fc340e450051afcea4ef345692d8a4c10693dff6c45118a322fe611a9c855163"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-cohort.json",
+      "member": "successor/field-cohort.json",
+      "role": "successor source/test preparation",
+      "bytes": 3111,
+      "sha256": "69701d5474e7cb7e3610633157e208556afbcc296c9d70410843de4524f335be"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-input-swap.json",
+      "member": "successor/field-input-swap.json",
+      "role": "successor source/test preparation",
+      "bytes": 204613,
+      "sha256": "658c9e72124bdec03c6bbb50550c7d34fa9977ae722271ff3a5fbd3ef75ad850"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-intake-diagnostic-after-node22.json",
+      "member": "successor/field-intake-diagnostic-after-node22.json",
+      "role": "successor source/test preparation",
+      "bytes": 92868,
+      "sha256": "575c6d1f07859b78cea13226fdb75e8339aaee6415a23ea929b855c069519131"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-intake-diagnostic-before.json",
+      "member": "successor/field-intake-diagnostic-before.json",
+      "role": "successor source/test preparation",
+      "bytes": 92868,
+      "sha256": "575c6d1f07859b78cea13226fdb75e8339aaee6415a23ea929b855c069519131"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-intake-diagnostic-child-node22.json",
+      "member": "successor/field-intake-diagnostic-child-node22.json",
+      "role": "successor source/test preparation",
+      "bytes": 245,
+      "sha256": "daef2492cf771828f2eea08cb1f0dfaacbf36aa1abb94c3e6ffac4e56d507ef0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-intake-diagnostic-node22.log",
+      "member": "successor/field-intake-diagnostic-node22.log",
+      "role": "successor source/test preparation",
+      "bytes": 3048,
+      "sha256": "7c40408bf7c3d427e2191d1cec3f7612ec9cec17b13e49f247db58f3f5771964"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-intake-diagnostic-verification.json",
+      "member": "successor/field-intake-diagnostic-verification.json",
+      "role": "successor source/test preparation",
+      "bytes": 1788,
+      "sha256": "b8f0e7c842562e4f468a1149a6fc0bc52084a6365fbfe9249ea72ed79df982bc"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-node20.log",
+      "member": "successor/field-node20.log",
+      "role": "successor source/test preparation",
+      "bytes": 1690,
+      "sha256": "15a458abcbc7ac2ea7b67037405e7091efde7cc9529ed2467117dd64d4d9467f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-node22.log",
+      "member": "successor/field-node22.log",
+      "role": "successor source/test preparation",
+      "bytes": 1790,
+      "sha256": "7f743a9f1d34b147582950caa0d4b1216d0645338f16f5edd58bb09277820c4c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/field-verification.json",
+      "member": "successor/field-verification.json",
+      "role": "successor source/test preparation",
+      "bytes": 2768,
+      "sha256": "c58a5c73d02c4522e3209a8eb18d6a22fd8e928079b59f30f9c68306c1973a09"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/finite-extra-plan.json",
+      "member": "successor/finite-extra-plan.json",
+      "role": "successor source/test preparation",
+      "bytes": 28447,
+      "sha256": "43db4f104a6af77b1a02776648a43dd9e7c857d11356f2bd75d9e6ccf410b800"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-after-node20.json",
+      "member": "successor/focus-after-node20.json",
+      "role": "successor source/test preparation",
+      "bytes": 191985,
+      "sha256": "b2babaeb0546c75f1ff33448dc5caa046f6b33dfd396408ac03c24b139e55a4c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-after-node22.json",
+      "member": "successor/focus-after-node22.json",
+      "role": "successor source/test preparation",
+      "bytes": 191985,
+      "sha256": "b2babaeb0546c75f1ff33448dc5caa046f6b33dfd396408ac03c24b139e55a4c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-before.json",
+      "member": "successor/focus-before.json",
+      "role": "successor source/test preparation",
+      "bytes": 191985,
+      "sha256": "b2babaeb0546c75f1ff33448dc5caa046f6b33dfd396408ac03c24b139e55a4c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-child-node20.json",
+      "member": "successor/focus-child-node20.json",
+      "role": "successor source/test preparation",
+      "bytes": 580,
+      "sha256": "ed10970871022ccedadeb240adf47e7af49fc5407dc92cedcc5fa5a0faebfe2d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-child-node22.json",
+      "member": "successor/focus-child-node22.json",
+      "role": "successor source/test preparation",
+      "bytes": 579,
+      "sha256": "195ed4a46e2e6be394f09be5ae717ece51de7c0c3d960bb6b11d923c0836a5b2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-cohort.json",
+      "member": "successor/focus-cohort.json",
+      "role": "successor source/test preparation",
+      "bytes": 4463,
+      "sha256": "8fc262faf358c64398385e82b66cd7470c9d20b1cd5c287179f0c9f44ce34117"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-enospc-before.json",
+      "member": "successor/focus-enospc-before.json",
+      "role": "successor source/test preparation",
+      "bytes": 191985,
+      "sha256": "b2babaeb0546c75f1ff33448dc5caa046f6b33dfd396408ac03c24b139e55a4c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-enospc-node22.log",
+      "member": "successor/focus-enospc-node22.log",
+      "role": "successor source/test preparation",
+      "bytes": 36831,
+      "sha256": "dc9af15419a09655bc12aac18e937ae3ca0067eaa2ef4b93b1c078b1f298d9ba"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-node20.log",
+      "member": "successor/focus-node20.log",
+      "role": "successor source/test preparation",
+      "bytes": 39289,
+      "sha256": "4d7102c8d8cff97f083c1f9381c17117500b0a48146c6e48f3589912156a5409"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-node22.log",
+      "member": "successor/focus-node22.log",
+      "role": "successor source/test preparation",
+      "bytes": 41955,
+      "sha256": "1ce291b97396a3c0c3d8d4134bd0f1fb5ac031a46cdd73fe686ce89c21eb49d5"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/focus-verification.json",
+      "member": "successor/focus-verification.json",
+      "role": "successor source/test preparation",
+      "bytes": 3832,
+      "sha256": "9a0fa81bc81f54624ec1f3138dbd5e071f5073b57016dbf0f99fbb69c7181b31"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/format-final.log",
+      "member": "successor/format-final.log",
+      "role": "successor source/test preparation",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/initial-test-reconstructed.mjs",
+      "member": "successor/initial-test-reconstructed.mjs",
+      "role": "successor source/test preparation",
+      "bytes": 13747,
+      "sha256": "30c61394dffc385e4b526032525cc1a859488136e2292493fc832ae37d1232d3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/new-host-node22-fixture-correction.log",
+      "member": "successor/new-host-node22-fixture-correction.log",
+      "role": "successor source/test preparation",
+      "bytes": 1296,
+      "sha256": "d2c4e6336d4c90fc547005dd29871a31046ba87dcc8295b71912555eefe90620"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/new-host-node22-import-correction.log",
+      "member": "successor/new-host-node22-import-correction.log",
+      "role": "successor source/test preparation",
+      "bytes": 406,
+      "sha256": "77a39d40ec6db3851e855bad4a024d17be937359dc05236fd6889cb617778b24"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/new-host-node22-initial.log",
+      "member": "successor/new-host-node22-initial.log",
+      "role": "successor source/test preparation",
+      "bytes": 7343,
+      "sha256": "b38ebd2bc5319373758b146e6b70ec01379bcb4fbc776a60d309ce475638c414"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/post-field-fixture-dematerialization.json",
+      "member": "successor/post-field-fixture-dematerialization.json",
+      "role": "successor source/test preparation",
+      "bytes": 1478,
+      "sha256": "496c362467b1f9bb7837dca506823aae340a1f4c3d41d2e708d8ead98a164bc3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/predecessor-native-map.json",
+      "member": "successor/predecessor-native-map.json",
+      "role": "successor source/test preparation",
+      "bytes": 4061,
+      "sha256": "5d05a60a39012edf4ea1ab09f8b39626f2cfe447a28abbebcb1a6aa8307f9ecb"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/prepare-field-inputs.py",
+      "member": "successor/prepare-field-inputs.py",
+      "role": "successor source/test preparation",
+      "bytes": 2923,
+      "sha256": "354bde1fd359650c2817dab3e29409903f6a552c85fa3f114cf7f3cd23ff986e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/run-cohort-before-enospc.py",
+      "member": "successor/run-cohort-before-enospc.py",
+      "role": "successor source/test preparation",
+      "bytes": 2512,
+      "sha256": "8df79bac5dc78f4a1f59095982837b9cb71235ddae87b9d1309503eeee7778d0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/run-cohort.py",
+      "member": "successor/run-cohort.py",
+      "role": "successor source/test preparation",
+      "bytes": 2680,
+      "sha256": "54ab3079e7f0f14583b8465977338dac4d0cfc087475f9f484b910ed6d1d3db5"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/run-field-cohort.py",
+      "member": "successor/run-field-cohort.py",
+      "role": "successor source/test preparation",
+      "bytes": 2680,
+      "sha256": "9f56ca37ad58da16a61c5769a291bbd79a8f287770c5d789e5e69b4eecdd3a39"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/source-held-01.diff",
+      "member": "successor/source-held-01.diff",
+      "role": "successor source/test preparation",
+      "bytes": 4279,
+      "sha256": "d666d1441a9183e9889f7451d1d80f6e3876c9afa7278b47ad54d41dfaa9d10c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/source-held-01.json",
+      "member": "successor/source-held-01.json",
+      "role": "successor source/test preparation",
+      "bytes": 738,
+      "sha256": "ff1e9dbcccc624f34d1104dcb1b1c854115333674e90c2ddb834968f2b7a3530"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/source-held-02.diff",
+      "member": "successor/source-held-02.diff",
+      "role": "successor source/test preparation",
+      "bytes": 4279,
+      "sha256": "d666d1441a9183e9889f7451d1d80f6e3876c9afa7278b47ad54d41dfaa9d10c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/source-held-02.json",
+      "member": "successor/source-held-02.json",
+      "role": "successor source/test preparation",
+      "bytes": 1571,
+      "sha256": "c0494f22b9a6ab0dcc07cf1e730bfa0e55effed1a84308eb868580567f5b569a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/static-initial.log",
+      "member": "successor/static-initial.log",
+      "role": "successor source/test preparation",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/verification-native-ready.json",
+      "member": "successor/verification-native-ready.json",
+      "role": "successor source/test preparation",
+      "bytes": 607,
+      "sha256": "df5246da6da9334a611424062bed9d74cc02e92340775734bfa5efc73f260295"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/verification.json",
+      "member": "successor/verification.json",
+      "role": "successor source/test preparation",
+      "bytes": 2062,
+      "sha256": "a76e570377df3eb448a5aba7e070a0465445a9173c2c05a87ffdc476fe18723b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/binding-native.json",
+      "member": "successor/preview/binding-native.json",
+      "role": "successor immutable binding",
+      "bytes": 2256,
+      "sha256": "1fd97a932d27cecb54425f687cdce575739b844cb2534e9214b8134392268dbd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/check-http.py",
+      "member": "successor/preview/check-http.py",
+      "role": "successor immutable binding",
+      "bytes": 1511,
+      "sha256": "70a47ca93702af2d6e438d194827beeba5774091e52bb507ca9bac1fb794a202"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/config.json",
+      "member": "successor/preview/config.json",
+      "role": "successor immutable binding",
+      "bytes": 2179,
+      "sha256": "61bdc9e74979b74216ef8aaf69c9faf67075b98314869d8ace3ca8dc1f4d3d0b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/helper-reuse.diff",
+      "member": "successor/preview/helper-reuse.diff",
+      "role": "successor immutable binding",
+      "bytes": 5056,
+      "sha256": "807a833628cf24a02566a867d70c4daaa9ed33c94c52ecb8e40ddfa62d29c355"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/http-source-after-native.json",
+      "member": "successor/preview/http-source-after-native.json",
+      "role": "successor immutable binding",
+      "bytes": 9836,
+      "sha256": "24a70c4cf3312deddb4f6082d8062c224e022154f6a32a226137d4f74b44d685"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/http-source-before-native.json",
+      "member": "successor/preview/http-source-before-native.json",
+      "role": "successor immutable binding",
+      "bytes": 9836,
+      "sha256": "1a0217a38a60efdd74c74a9d7e8c492954cd2ad8b85e192b8c00952422b8a9b1"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/http-source-plan.json",
+      "member": "successor/preview/http-source-plan.json",
+      "role": "successor immutable binding",
+      "bytes": 6213,
+      "sha256": "5961a7ece8a9572bc1e11c50e9b8662b87313c315bddb2017f92727f37fb309e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/native-admission-reuse.diff",
+      "member": "successor/preview/native-admission-reuse.diff",
+      "role": "successor immutable binding",
+      "bytes": 2186,
+      "sha256": "183ad68bc375ad2961adc6e37ef0ac066d3f5f857c212f76e46b85d060d44021"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/serve-focus-qualified.py",
+      "member": "successor/preview/serve-focus-qualified.py",
+      "role": "successor immutable binding",
+      "bytes": 11199,
+      "sha256": "eb13981bfbfec61ac1a61da2b4dbdb642862bb0e1a21053a918ce7f7ad9e111a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/serve.py",
+      "member": "successor/preview/serve.py",
+      "role": "successor immutable binding",
+      "bytes": 10878,
+      "sha256": "f2c81f20e7cbab149a8386fcde5f1643c55ef2b2001f5f7bebc0ebe34d0f1e95"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/.cache/collection-records-return/preview/source-tree.diff",
+      "member": "successor/preview/source-tree.diff",
+      "role": "successor immutable binding",
+      "bytes": 555,
+      "sha256": "85b12bf8111973f42aa73037035619084a95a42441d6ae91ef51fce2fe276080"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/01.jpg",
+      "member": "successor/native/01.jpg",
+      "role": "root corrected native",
+      "bytes": 88856,
+      "sha256": "3f6f33422298c18f69d677a4b03b095878a3dd943294b1fcc8511ce2df787fea"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/01.json",
+      "member": "successor/native/01.json",
+      "role": "root corrected native",
+      "bytes": 3786,
+      "sha256": "62f16d0180a54f8387d35129644d1947b4dcd9db4cf470d8597f24441eb330a3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/02.json",
+      "member": "successor/native/02.json",
+      "role": "root corrected native",
+      "bytes": 5718,
+      "sha256": "e802f4c052be781ba585702e80887d9ab2f190be3218f26281134f9354fd11b9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/03.jpg",
+      "member": "successor/native/03.jpg",
+      "role": "root corrected native",
+      "bytes": 128068,
+      "sha256": "e290bb9cafee2cf79c78bf10b616c56d723e31ed775045aa1a937e8b8b6972bf"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/03.json",
+      "member": "successor/native/03.json",
+      "role": "root corrected native",
+      "bytes": 6243,
+      "sha256": "291294143e1b0e6e0923ccbe9730cd39c487b16e966a7d12b1851ef2b3104434"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/04.json",
+      "member": "successor/native/04.json",
+      "role": "root corrected native",
+      "bytes": 6262,
+      "sha256": "15bfe1696d37c28e0eaeafe0bd8c6b3699bf9cc9f367b75d2d1b4e0f52840236"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/binding.json",
+      "member": "successor/native/binding.json",
+      "role": "root corrected native",
+      "bytes": 2256,
+      "sha256": "1fd97a932d27cecb54425f687cdce575739b844cb2534e9214b8134392268dbd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/closed.json",
+      "member": "successor/native/closed.json",
+      "role": "root corrected native",
+      "bytes": 26,
+      "sha256": "2b5c1f3e1d7e62a27135f3a1690f90e9200bd7e4f6b9c8c2b7d12666c0534917"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/events.json",
+      "member": "successor/native/events.json",
+      "role": "root corrected native",
+      "bytes": 2580,
+      "sha256": "2d134126d6a3fc1276a5b9208ac5d91210eb1acd5ccd26b3f47a8c7983626c69"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/growth-geometry.json",
+      "member": "successor/native/growth-geometry.json",
+      "role": "root corrected native",
+      "bytes": 478,
+      "sha256": "74e3abf3bc30e0284eebf0a5212334e106fdb9b998bff568519a25b8707e2835"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-records-root/root-review.md",
+      "member": "successor/native/root-review.md",
+      "role": "root corrected native",
+      "bytes": 952,
+      "sha256": "c7f3b0df8cc0563f4200bde8210d2d9e85c9c8a9552a2724ec5cf4428599975c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/game/app.mjs",
+      "member": "tested-inputs/game/app.mjs",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 260947,
+      "sha256": "754863f5d4cc030a1b6e3368de08d526f2492391051613a10fc7995477432224"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/game/ui/library-panel.mjs",
+      "member": "tested-inputs/game/ui/library-panel.mjs",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 63601,
+      "sha256": "1db4f261c5589d89128546e1c060198f3d3d2836eb35c5abdda5ba1e56e194bd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/game/ui/field-kit-surfaces.mjs",
+      "member": "tested-inputs/game/ui/field-kit-surfaces.mjs",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 2903,
+      "sha256": "8f409e7e949a0e1e2338116fd71c669d5978e6383ab72e673615b7b6361ee1fe"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/game/test/collection-records-return-host.test.mjs",
+      "member": "tested-inputs/game/test/collection-records-return-host.test.mjs",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 13874,
+      "sha256": "986fadca0557789207f7e29c8b0f25ba6ac2d14793c0d02e314d2633865a7acf"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/docs/collection-records-return.md",
+      "member": "tested-inputs/docs/collection-records-return.md",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 2357,
+      "sha256": "91ae11c7068d8176e62aeba63c3eb064f8df8a11d60108ed1efefe2e2f6788a2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/docs/cross-mode-execution.md",
+      "member": "tested-inputs/docs/cross-mode-execution.md",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 70027,
+      "sha256": "f94268bbe2b0a238f4d681e50ef0751913d394532bbffc5e8c745bd49e3628cd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "member": "tested-inputs/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 136925,
+      "sha256": "1cb02122e502aa309cc5771cc58ef3bc52e869ffa2f145e318fe160e86d5d95a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-collection-records-return/authoring/prompts/cross-mode-delivery.md",
+      "member": "tested-inputs/authoring/prompts/cross-mode-delivery.md",
+      "role": "exact tested body before final documentation packaging",
+      "bytes": 11453,
+      "sha256": "44c42d1f7fbdfc1526e6661de4b12a26d5a0ff2957f7641ea9cb3f14126b01a5"
+    }
+  ]
+}

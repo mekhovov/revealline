@@ -1,3 +1,4 @@
+import { captureOperationFocus } from './operation-focus.mjs';
 import { attachMissionGallery } from './mission-gallery.mjs';
 
 const attached = new WeakMap();
@@ -72,6 +73,7 @@ export function attachMissionPicker({
   let destroyed = false,
     dispatching = false,
     requested = null,
+    focusOwner = null,
     scheduled = false;
   const listen = (element, type, callback) => {
     element.addEventListener(type, callback);
@@ -99,6 +101,13 @@ export function attachMissionPicker({
     )
       return;
     if (pack.value === value) return focusMission();
+    focusOwner?.lease.cancel();
+    focusOwner = {
+      button,
+      value,
+      busy: false,
+      lease: captureOperationFocus(button, { document: doc }),
+    };
     requested = value;
     dispatching = true;
     try {
@@ -114,6 +123,7 @@ export function attachMissionPicker({
     if (destroyed) return;
     gallery?.sync();
     const disabled = pack.disabled || pack.hidden;
+    if (focusOwner && pack.disabled) focusOwner.busy = true;
     if (!disabled) requested = null;
     setAttribute(chapters, 'aria-busy', String(pack.disabled && !pack.hidden));
     chapters.hidden = pack.hidden || !!pack.closest('[hidden]');
@@ -180,6 +190,12 @@ export function attachMissionPicker({
     older.hidden = archivedOrder.length === 0;
     const olderLabel = `Older chapters (${archivedOrder.length})`;
     if (olderSummary.textContent !== olderLabel) olderSummary.textContent = olderLabel;
+    if (focusOwner && !disabled) {
+      const owner = focusOwner;
+      focusOwner = null;
+      if (owner.busy && rows.get(owner.value)?.button === owner.button) owner.lease.restore();
+      else owner.lease.cancel();
+    }
   }
   function schedule() {
     if (destroyed || scheduled) return;
@@ -199,8 +215,15 @@ export function attachMissionPicker({
       characterData: true,
       attributes: true,
     });
-  listen(pack, 'change', schedule);
-  listen(levels, 'change', schedule);
+  const selectionChanged = () => {
+    if (!dispatching) {
+      focusOwner?.lease.cancel();
+      focusOwner = null;
+    }
+    schedule();
+  };
+  listen(pack, 'change', selectionChanged);
+  listen(levels, 'change', selectionChanged);
   listen(older, 'toggle', () => {
     // A native summary click already owns focus. Also handle deliberate
     // programmatic collapse without leaving focus on a now-hidden card.
@@ -229,6 +252,8 @@ export function attachMissionPicker({
     destroy() {
       if (destroyed) return;
       destroyed = true;
+      focusOwner?.lease.cancel();
+      focusOwner = null;
       observer?.disconnect();
       for (const remove of removers) remove();
       for (const row of rows.values()) row.remove();
