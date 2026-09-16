@@ -4,6 +4,7 @@ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
+import { createCouchProgression } from './couch-progression.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
@@ -174,8 +175,10 @@ try {
     music: [],
     sourcePackId: null,
   };
+  const baseCampaign = Object.freeze({ key: `base/${campaign.id}`, name: campaign.title });
   const maps = campaign.levels.map((level) => ({
     key: level.id,
+    campaign: baseCampaign,
     chapter: campaign.title,
     level,
     classes: registry,
@@ -203,9 +206,14 @@ try {
     });
     featured = await prepareCouchChapter(featuredSource, { signal: artworkLifetime.signal });
     const featuredCampaign = featured.resolved.campaign;
+    const featuredIdentity = Object.freeze({
+      key: `shipped/${featured.pack.id}/${featuredCampaign.id}`,
+      name: featuredCampaign.title,
+    });
     maps.unshift(
       ...featuredCampaign.levels.map((level) => ({
         key: `shipped/${featured.pack.id}/${featuredCampaign.id}/${level.id}`,
+        campaign: featuredIdentity,
         chapter: featuredCampaign.title,
         level,
         classes: featured.resolved.classRecipes,
@@ -263,6 +271,7 @@ try {
   }
   if (artworkLifetime.signal.aborted)
     throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
+  let currentMapRows = new Set(maps);
   const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
   function showMaps() {
     $('race-level').replaceChildren(
@@ -321,6 +330,9 @@ try {
     accumulator = 0,
     last = 0,
     won = [0, 0],
+    progression = null,
+    campaignEntries = Object.freeze([]),
+    campaignAvailable = false,
     finished = false,
     generation = 0,
     raceSequence = 0,
@@ -365,10 +377,13 @@ try {
       startedHere = document.activeElement === origin && foreground(),
       scope = shell.scope();
     let moved = false,
-      shifting = false,
+      shifting = null,
       pendingTarget = null;
     const observe = (event) => {
-      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
+      if (
+        event.target !== shifting &&
+        ![origin, document.body, document.documentElement].includes(event.target)
+      )
         moved = true;
     };
     const hidden = () => {
@@ -403,7 +418,15 @@ try {
     const restore = (target, current, { retain = false } = {}) => {
       if (!retain) close();
       try {
-        if (owns(current) && available(target)) target.focus({ preventScroll: true });
+        if (owns(current) && available(target)) {
+          if (retain) pendingTarget = target;
+          shifting = target;
+          try {
+            target.focus({ preventScroll: true });
+          } finally {
+            shifting = null;
+          }
+        }
       } catch (error) {
         close();
         throw error;
@@ -415,11 +438,11 @@ try {
       // This transfer belongs to the action, not to a new user choice. Later
       // navigation or foreground loss still relinquishes completion focus.
       pendingTarget = target;
-      shifting = true;
+      shifting = target;
       try {
         target.focus({ preventScroll: true });
       } finally {
-        shifting = false;
+        shifting = null;
       }
     };
     restore.current = owns;
@@ -442,7 +465,7 @@ try {
     contentBusy = false;
     contentReady = retainedResult;
     contentError = retainedResult
-      ? 'Next picture loading cancelled. Results are kept. Choose Next when you are ready.'
+      ? `Picture loading cancelled. Results are kept. Choose ${nextAttempt.action === 'rematch' ? 'Rematch' : 'Next'} when you are ready.`
       : 'Picture loading cancelled. Retry when you are ready.';
     if (installedStatus === 'Checking installed chapters…')
       installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
@@ -453,11 +476,14 @@ try {
     const restoreFocus = actionFocus($('race-picture-cancel'));
     cancelContent();
     restoreFocus(
-      match.status === 'finished' ? $('race-start') : $('race-chapter-retry'),
+      match.status === 'finished'
+        ? nextAttempt?.origin || $('race-start')
+        : $('race-chapter-retry'),
       !!contentError,
     );
   };
   function prepare() {
+    progression?.dispose();
     nextAttempt?.lease?.cancel();
     nextAttempt = null;
     preparedFocusMatch = null;
@@ -472,7 +498,20 @@ try {
     contentBusy = false;
     contentReady = false;
     clear({ resetDirection: true });
-    const entry = maps.find((m) => m.key === $('race-level').value);
+    let entry = maps.find((m) => m.key === $('race-level').value);
+    const format = $('race-format').value;
+    // These exact row objects retain their checked campaign and authored order.
+    // A title or a position in the combined map menu cannot select a successor.
+    campaignAvailable = currentMapRows.has(entry);
+    // A missing selection may remain in the menu as an unavailable placeholder.
+    // It never becomes an authored tour from the current checked catalogue.
+    campaignEntries = Object.freeze(
+      campaignAvailable
+        ? maps.filter((row) => currentMapRows.has(row) && row.campaign === entry.campaign)
+        : [entry],
+    );
+    if (format === 'campaign-tour') entry = campaignEntries[0];
+    $('race-level').value = entry.key;
     const classId = entry.classes.some((c) => c.id === $('race-class').value)
       ? $('race-class').value
       : entry.classes[0].id;
@@ -496,10 +535,53 @@ try {
     };
     match = createRound(roundRecipe);
     generation = ++raceSequence;
+    progression = createCouchProgression({
+      format,
+      campaignKey: entry.campaign.key,
+      campaignName: entry.campaign.name,
+      missions: campaignEntries.map((row) => ({
+        key: row.key,
+        levelId: row.level.id,
+        name: row.level.name,
+      })),
+      initialKey: entry.key,
+      roundId: generation,
+    });
+    won = progression.snapshot().points;
     paintRound(roundRecipe);
     finished = false;
-    $('race-start').textContent = 'Start round ↗';
     return loadPreparedPicture(entry);
+  }
+  function progressionView() {
+    const state = progression.snapshot(),
+      tour = state.format === 'campaign-tour',
+      firstToTwo = state.format === 'first-to-two',
+      mission = state.mission.name;
+    return {
+      ...state,
+      primaryAction: state.next ? 'next' : state.rematch ? 'rematch' : null,
+      chooseCampaign: tour && state.tourComplete,
+      primaryLabel:
+        match.status === 'paused'
+          ? 'Resume round →'
+          : match.status !== 'finished'
+            ? tour && state.completed === 0
+              ? `Start tour · ${state.campaign.name} · ${state.missionCount} missions`
+              : `Start · ${mission}`
+            : tour && state.tourComplete
+              ? 'Choose campaign'
+              : state.next
+                ? `${tour ? 'Next' : 'Next round'} · ${state.next.name}`
+                : `${firstToTwo ? 'Rematch match' : 'Rematch'} · ${mission}`,
+      title:
+        tour && state.tourComplete
+          ? `Tour complete · ${state.campaign.name}`
+          : firstToTwo && state.seriesComplete
+            ? 'Match complete.'
+            : 'Race complete.',
+      scoreLabel: tour ? 'tour points' : firstToTwo ? 'round wins' : 'race wins',
+      formatSummary: `${tour ? `Campaign tour · ${state.completed}/${state.missionCount} missions complete` : firstToTwo ? 'First to two · draws do not count' : 'One race'}. Couch races do not change your solo progress.`,
+    };
   }
   function createRound(recipe) {
     return createDuel(
@@ -591,19 +673,51 @@ try {
       }
     })();
   }
-  async function prepareNext() {
-    if (!nextAttempt || nextAttempt.previous !== match || nextAttempt.recipe !== roundRecipe) {
+  async function prepareNext(action, origin) {
+    if (!campaignAvailable) return null;
+    if (
+      !nextAttempt ||
+      nextAttempt.previous !== match ||
+      nextAttempt.previousRecipe !== roundRecipe ||
+      nextAttempt.action !== action
+    ) {
+      if (nextAttempt) {
+        progression.cancel(nextAttempt.plan);
+        nextAttempt.lease?.cancel();
+      }
+      const plan = progression.plan(action);
+      if (!plan) return null;
+      const entry = campaignEntries.find((row) => row.key === plan.target.key);
+      if (!entry || entry.level.id !== plan.target.levelId) {
+        progression.cancel(plan);
+        return null;
+      }
+      const recipe = {
+        ...roundRecipe,
+        entry,
+        classId: entry.classes.some((row) => row.id === roundRecipe.classId)
+          ? roundRecipe.classId
+          : entry.classes[0].id,
+        theme:
+          entry === roundRecipe.entry
+            ? roundRecipe.theme
+            : entry.themes.find((row) => row.id === entry.defaultThemeId) || entry.themes[0],
+      };
       nextAttempt = {
         previous: match,
         previousGeneration: generation,
-        recipe: roundRecipe,
-        match: createRound(roundRecipe),
+        previousRecipe: roundRecipe,
+        progression,
+        plan,
+        action,
+        origin,
+        recipe,
+        match: createRound(recipe),
         raceId: ++raceSequence,
-        resetWins: won.some((n) => n >= 2),
         lease: null,
       };
     }
-    const restoreFocus = actionFocus($('race-start')),
+    const restoreFocus = actionFocus(origin),
       attempt = nextAttempt,
       { entry } = attempt.recipe,
       isStatic = shippedMaps.includes(entry),
@@ -619,7 +733,9 @@ try {
       !controller.signal.aborted &&
       contentController === controller &&
       nextAttempt === attempt &&
-      roundRecipe === attempt.recipe &&
+      progression === attempt.progression &&
+      progression.current(attempt.plan) &&
+      roundRecipe === attempt.previousRecipe &&
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
@@ -645,12 +761,16 @@ try {
       if (!current()) return null;
       const retirePrevious = lease.commit();
       // Publish only plain references before cleanup can call back into the page.
+      progression.commit(attempt.plan, attempt.raceId);
       match = attempt.match;
       preparedFocusMatch = match;
       backdrop = lease.picture;
       generation = attempt.raceId;
+      roundRecipe = attempt.recipe;
+      selectedMapKey = entry.key;
+      theme = attempt.recipe.theme;
       finished = false;
-      if (attempt.resetWins) won = [0, 0];
+      won = progression.snapshot().points;
       nextAttempt = null;
       retirePrevious();
       if (
@@ -661,8 +781,21 @@ try {
       )
         return null;
       clear({ resetDirection: true });
+      if (
+        disposed ||
+        controller.signal.aborted ||
+        controller !== contentController ||
+        match !== attempt.match ||
+        progression !== attempt.progression ||
+        generation !== attempt.raceId
+      )
+        return null;
+      $('race-level').value = entry.key;
+      $('race-class').replaceChildren(...entry.classes.map((row) => new Option(row.label, row.id)));
+      $('race-class').value = attempt.recipe.classId;
+      $('race-theme').replaceChildren(...entry.themes.map((row) => new Option(row.name, row.id)));
+      $('race-theme').value = theme.id;
       paintRound(attempt.recipe);
-      $('race-start').textContent = 'Start round ↗';
       $('race-message').textContent = [
         lease.picture?.notice,
         'Both boards use the prepared next picture. Start when you are ready.',
@@ -681,8 +814,7 @@ try {
       return prepared;
     } catch (error) {
       if (current()) {
-        contentError =
-          'The next picture could not be prepared. Results are kept. Choose Next to retry.';
+        contentError = `The next picture could not be prepared. Results are kept. Choose ${action === 'rematch' ? 'Rematch' : 'Next'} to retry.`;
         $('race-message').textContent = contentError;
         display.finish({ state: 'error', message: '' });
         console.warn('Next picture preparation failed.', error);
@@ -696,7 +828,7 @@ try {
         updateMenu();
       }
       restoreFocus(
-        $('race-start'),
+        prepared ? $('race-start') : origin,
         !disposed && controller === contentController && !controller.signal.aborted,
         { retain: !!prepared },
       );
@@ -716,7 +848,7 @@ try {
     }
     updateMenu();
   }
-  $('race-start').onclick = async () => {
+  async function startAction(origin, action = null) {
     if (
       disposed ||
       contentBusy ||
@@ -727,13 +859,18 @@ try {
       shell.scope() !== 'main'
     )
       return;
+    const state = progressionView();
+    if (match.status === 'finished' && !action && state.chooseCampaign) {
+      shell.setup();
+      return;
+    }
     const intent = ++startIntentEpoch,
       ownsStartIntent = () =>
         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
     let nextConfirmed = false,
       nextFocus = null;
     if (match.status === 'finished') {
-      const prepared = await prepareNext();
+      const prepared = await prepareNext(action || state.primaryAction, origin);
       // Preparation may finish after blur, but only the original foreground
       // shipped Next gesture may start it. Installed chapters keep fresh Start.
       if (
@@ -853,7 +990,9 @@ try {
     } finally {
       nextFocus?.releaseFocus();
     }
-  };
+  }
+  $('race-start').onclick = () => startAction($('race-start'));
+  $('race-rematch').onclick = () => startAction($('race-rematch'), 'rematch');
 
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
@@ -908,6 +1047,7 @@ try {
       });
       if (disposed || controller.signal.aborted || controller !== contentController) return;
       maps.splice(0, maps.length, ...shippedMaps, ...rows);
+      currentMapRows = new Set(maps);
       // Preserve a missing selection as unavailable; never silently switch its owner.
       if (!maps.some((row) => row.key === oldKey)) maps.push(oldEntry);
       showMaps();
@@ -948,10 +1088,9 @@ try {
       if (!disposed)
         $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
     });
-  for (const id of ['race-level', 'race-class', 'race-turn', 'race-time'])
+  for (const id of ['race-format', 'race-level', 'race-class', 'race-turn', 'race-time'])
     $(id).onchange = () => {
       if (match?.status !== 'ready' || disposed) return;
-      won = [0, 0];
       return prepare();
     };
   $('race-theme').onchange = () => {
@@ -994,7 +1133,6 @@ try {
     },
     onNewMatch: () => {
       if (match?.status === 'running' || disposed) return;
-      won = [0, 0];
       prepare();
       contentScope = 'setup';
     },
@@ -1062,9 +1200,22 @@ try {
   function updateMenu() {
     if (!match || disposed) return;
     const running = match.status === 'running';
+    const progress = progressionView();
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
     $('race-start').disabled = running || contentBusy || !contentReady;
+    $('race-start').textContent = progress.primaryLabel;
+    $('race-rematch').hidden = match.status !== 'finished' || progress.format !== 'campaign-tour';
+    $('race-rematch').disabled = contentBusy || !contentReady;
+    $('race-rematch').textContent = `Rematch · ${progress.mission.name}`;
+    $('race-format-summary').textContent = progress.formatSummary;
+    $('race-format-note').textContent = !campaignAvailable
+      ? 'This previous selection is unavailable. Refresh installed chapters or choose a current map.'
+      : progress.format === 'campaign-tour'
+        ? `Start tour · ${progress.campaign.name} · ${progress.missionCount} missions. First: ${campaignEntries[0].level.name}. Choose any map in a campaign to select that campaign's full tour.`
+        : progress.format === 'first-to-two'
+          ? 'Race this map until a player earns two wins. Draws do not add wins.'
+          : 'One completed race, then an explicit rematch or a new setup.';
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
     $('race-picture-cancel').hidden = !contentBusy;
@@ -1083,6 +1234,7 @@ try {
     shell?.update({
       match,
       won,
+      progression: progress,
       contentBusy,
       focusTransition,
       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
@@ -1097,6 +1249,7 @@ try {
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-rematch',
     'race-chapter-retry',
     'race-picture-cancel',
     'race-installed-refresh',
@@ -1105,6 +1258,7 @@ try {
     'race-help',
     'race-solo-return',
     'race-level',
+    'race-format',
     'race-theme',
     'race-class',
     'race-turn',
@@ -1240,6 +1394,7 @@ try {
     if (event.persisted) return;
     contentController?.abort();
     disposed = true;
+    progression?.dispose();
     preparationStatus.dispose();
     input.destroy();
     menuRouter.destroy();
@@ -1313,24 +1468,32 @@ try {
       }
     }
     if (match.status === 'finished' && !finished) {
+      const terminalMatch = match,
+        terminalGeneration = generation,
+        terminalProgression = progression;
       finished = true;
+      progression.settle({ roundId: generation, winner: match.winner });
+      const progress = progressionView();
+      won = progress.points;
       clear();
-      if (match.winner !== null) won[match.winner]++;
-      const name =
-        match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
-      $('race-message').textContent =
-        `${match.winner === null ? 'Draw' : `${name} wins the round`}. ${match.reason}.${won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
-      $('race-start').textContent = won.some((n) => n >= 2)
-        ? 'Play another match ↗'
-        : 'Next round ↗';
-      painters.forEach((p, i) => {
-        if (match.runs[i].status === 'won')
-          p.startCelebration?.({
-            levelId: match.runs[i].levelId,
-            seed: 2026,
-            reduced: displayPreferences.snapshot().effectiveReducedEffects,
-          });
-      });
+      if (
+        match === terminalMatch &&
+        generation === terminalGeneration &&
+        progression === terminalProgression
+      ) {
+        const name =
+          match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
+        $('race-message').textContent =
+          `${match.winner === null ? 'Draw' : `${name} wins the round`}. ${match.reason}.${progress.seriesComplete ? ` ${name} wins the match!` : ''}${progress.tourComplete ? ` Tour complete · ${progress.campaign.name}.` : ''}`;
+        painters.forEach((p, i) => {
+          if (match.runs[i].status === 'won')
+            p.startCelebration?.({
+              levelId: match.runs[i].levelId,
+              seed: 2026,
+              reduced: displayPreferences.snapshot().effectiveReducedEffects,
+            });
+        });
+      }
     }
     $('series-score').textContent = `${won[0]} : ${won[1]}`;
     const left = Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));

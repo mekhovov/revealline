@@ -270,7 +270,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   f.key('Escape');
   f.frame();
   assert.equal(f.state(), 'ready');
-  assert.match(f.$('race-start').textContent, /Start round/);
+  assert.match(f.$('race-start').textContent, /^Start · First Signal$/);
   f.$('race-focus').click();
   f.frame();
   f.focus('race-level');
@@ -310,7 +310,14 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: actual Sentinel round win and best-of-three rematch retain legal core route results`, async (t) => {
-    const f = await page(t, { campaign: sentinel.campaigns[0], turnPolicy, pads: [pad(0)] });
+    const f = await page(t, {
+      campaign: sentinel.campaigns[0],
+      turnPolicy,
+      pads: [pad(0)],
+      beforeImport({ document }) {
+        document.getElementById('race-format').value = 'first-to-two';
+      },
+    });
     f.join(0);
     const route = sentinelRoutes.routes.find(
       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
@@ -354,14 +361,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       f.pulse(0, 1);
       assert.equal(f.state(), 'finished');
     }
-    assert.match(f.$('race-start').textContent, /Play another match/);
+    assert.match(f.$('race-start').textContent, /^Rematch match · /);
     await nextAction(f, () => f.pulse(0, 0));
     assert.equal(f.state(), 'running');
     assert.equal(f.$('series-score').textContent, '0 : 0');
   });
 }
 
-test('one lost craft does not expose shared menu; both ended draws retain explicit Next', async (t) => {
+test('one lost craft does not expose shared menu; both ended draws retain explicit rematch', async (t) => {
   const { level } = retryFixture('self-contact');
   const f = await page(t, {
     campaign: { ...base, briefs: [], levels: [level] },
@@ -514,7 +521,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   });
 }
 
-test('timeout draw keeps series at zero and needs a fresh explicit Next gesture', async (t) => {
+test('timeout draw keeps wins at zero and needs a fresh explicit rematch gesture', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1), pad(2)] });
   f.frame();
   f.pulse(2, 0);

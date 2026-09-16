@@ -215,6 +215,10 @@ export function createCouchInstalledChapters({
         for (const entry of next.executionCatalog.entries) {
           if (!entry.sourcePackId || entry.difficulty !== 'standard') continue;
           const external = next.index.chapters.some((item) => item.id === entry.sourcePackId);
+          const campaign = Object.freeze({
+            key: `installed/${entry.executionKey}`,
+            name: entry.campaign.title,
+          });
           for (const level of entry.campaign.levels) {
             const visuals = {
               ...entry.visualOverrides,
@@ -222,6 +226,7 @@ export function createCouchInstalledChapters({
             };
             const row = Object.freeze({
               key: `installed/${entry.executionKey}/${level.id}`,
+              campaign,
               chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
               level,
               classes: entry.classRecipes,

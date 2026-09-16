@@ -27,6 +27,17 @@ focus movement prevents an older completion from moving focus. Terminal page
 exit disposes images and object URLs; a persisted pagehide pauses the race and
 retains its owned pictures for the browser's back/forward cache.
 
+## Campaign Tour ownership
+
+The internal [Campaign Tour candidate](couch-campaign-tour.md) groups installed
+missions by their exact checked campaign and authored order. Selecting a later
+map before choosing Campaign tour still starts that campaign at its first map.
+Next prepares the named successor's exact original while retaining the earned
+Results, totals and picture. Failed preparation or changed ownership cannot
+silently select another map. A successfully adopted installed successor waits in
+Ready for a fresh Start; a disappeared owner stays unavailable after refresh.
+These source contracts do not qualify every installed tour or change Solo awards.
+
 ## Read-only authority
 
 `game/couch/couch-installed-chapters.mjs` uses the existing chapter host's checked

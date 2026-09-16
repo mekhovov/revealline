@@ -1,0 +1,503 @@
+{
+  "format": "revealline-couch-tour-evidence.v1",
+  "scope": "Internal P07 source/test checkpoint. No native, physical-device, current-P02 composition, full-source/public or phase acceptance.",
+  "base": {
+    "commit": "1f3b9995af43879d54fb7b0053846f0723e2e069",
+    "tree": "cd4fa75395f045ffa02375e1784072044c2020d4"
+  },
+  "sourceHeld": "trace/host-source-held-04.json",
+  "testedPaths": [
+    {
+      "path": "game/couch/couch-installed-chapters.mjs",
+      "bytes": 16215,
+      "sha256": "1f85efdf2e9fb6b90dda3dc061784410b3554c09a881271dbea7b0a2b28ae936"
+    },
+    {
+      "path": "game/couch/couch-progression.mjs",
+      "bytes": 5478,
+      "sha256": "2e82db52916e56af58cb348e857eb6a979485af23b26d2590f3ca7b2910ad5ff"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 17110,
+      "sha256": "0211e33bf99d656a186bb6cb3374a8f94005161a20c772552e7e1ed95285659e"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 60115,
+      "sha256": "3e2fabc944753cd2471229b9bbb7a0eaca4af0a286142dc0e02722907b28c4b9"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 17206,
+      "sha256": "ed4cca7024a2f7cbd662ea70d328ba74e0dd3e2cb9842a4869e62d8509663d91"
+    },
+    {
+      "path": "game/test/couch-installed-chapters.test.mjs",
+      "bytes": 50918,
+      "sha256": "fe9f71d19e9f10c6bf4bc381daf8338a690cceb0be80cef1350eca11ce6a8364"
+    },
+    {
+      "path": "game/test/couch-navigation.test.mjs",
+      "bytes": 23624,
+      "sha256": "3b4d936c984028477c321be7f155837aaf2d53a02630b18f359a55ef6ea36a92"
+    },
+    {
+      "path": "game/test/couch-progression-host.test.mjs",
+      "bytes": 17377,
+      "sha256": "86c5f32249637d89173a4dd166928f180262d5ef737f986c5297668b8d2dae9a"
+    },
+    {
+      "path": "game/test/couch-progression.test.mjs",
+      "bytes": 12787,
+      "sha256": "9a73fa638af704a7c4c8c695643e3ce6df0a8dfa1688d99fc7749cb482319ef7"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 20434,
+      "sha256": "8391eb0368edca358c1ff752f0d2436a2dbd94dcf310d9510636371261bcdac0"
+    },
+    {
+      "path": "game/test/couch-static-picture-host.test.mjs",
+      "bytes": 29660,
+      "sha256": "c8cb68addf6e1ba6c4a7f89d2a52d44d4e1b8ea597f6673ea5016370db82249f"
+    }
+  ],
+  "finalQualification": {
+    "member": "trace/host-pair-02/verification.json",
+    "files": [
+      "game/test/couch-progression.test.mjs",
+      "game/test/couch-progression-host.test.mjs",
+      "game/test/couch-installed-chapters.test.mjs",
+      "game/test/couch-static-picture-host.test.mjs",
+      "game/test/couch-shell.test.mjs",
+      "game/test/couch-navigation.test.mjs",
+      "game/test/couch-initial-focus.test.mjs",
+      "game/test/couch-markup.test.mjs",
+      "game/test/couch-chapter.test.mjs"
+    ],
+    "inputCount": 360,
+    "inputBytes": 73873423,
+    "runs": [
+      {
+        "version": "v22.22.2",
+        "exitCode": 0,
+        "counts": {
+          "tests": 149,
+          "pass": 149,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "elapsedSeconds": 324.178341,
+        "logMember": "trace/host-pair-02/node22.log",
+        "logSha256": "889f55867c2e93a0883bd1da3f575b24472cb85a746d7e44e38ccb7bda3cebbf"
+      },
+      {
+        "version": "v20.19.5",
+        "exitCode": 0,
+        "counts": {
+          "tests": 149,
+          "pass": 149,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "elapsedSeconds": 346.939887,
+        "logMember": "trace/host-pair-02/node20.log",
+        "logSha256": "0898ce1c0d96247471dcc6c51f6e6f5c4a7b5b7ae1f051aa981be0952f79fb0b"
+      }
+    ]
+  },
+  "historicalScopes": [
+    {
+      "member": "trace/pure-pair-01/verification.json",
+      "scope": "Earlier 16-case pure-owner pair on predecessor99f33086; not added to final149 count."
+    },
+    {
+      "member": "trace/host-pair-01/runs.json",
+      "scope": "Failed Node22 eight-file run:130/132. Ten new host cases never entered because invalid mixed-grid fixture failed module initialization; separate installed reset used onclick-only helper for event listener."
+    },
+    {
+      "member": "trace/host-pair-01/failed-fixture-originals/README.md",
+      "scope": "Exact failed fixture bytes reconstructed by reversing only known edits after the failed run and verified against held03 pre-run SHA-256; reconstruction is explicitly disclosed."
+    },
+    {
+      "member": "trace/fixture-correction-held04.diff",
+      "scope": "Fixture-only correction: legal48\u00d736 route variation and real reset click. No production relaxation; unchanged existing chapter file adds separate72\u219248 setup coverage."
+    },
+    {
+      "member": "trace/intake-preflight-refusal.json",
+      "scope": "Earlier finite intake refused before hydration. Retained as preparation history, not product failure."
+    }
+  ],
+  "provenance": {
+    "created": "2026-09-16T03:42:42.900983+00:00",
+    "method": "Lossless ZIP copies of exact retained local evidence; fixed ZIP timestamps are packaging metadata, not execution dates. No source assets or log rewriting.",
+    "canonicalIndexSha256": "155ad096c5695a3f39ad43374ff6c4a02254d3635126e0c5d7c1eeeeb2b6339a",
+    "packager": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour-package/package.py",
+      "bytes": 7558,
+      "sha256": "05305d6a49bd5c46c89d12121b6b89882ab8fb923c3952d65a3817c12f6870c2"
+    }
+  },
+  "archive": {
+    "path": "evidence.zip",
+    "bytes": 889296,
+    "sha256": "a95e0240c4c0bef98377af96b08b67c88fccc701429e0632ed007e2c3b565888"
+  },
+  "memberCount": 57,
+  "originalBytes": 3060085,
+  "members": [
+    {
+      "member": "trace/admission.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/admission.json",
+      "bytes": 1549,
+      "sha256": "0110596c8d385ca90b109d83525eefdfade6be400f695dafc7792624ecaefb27"
+    },
+    {
+      "member": "trace/documentation-intake.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/documentation-intake.json",
+      "bytes": 769,
+      "sha256": "f8b654f30a7cb6674b75890da5d7dcfa5affc8362a407b9b76d419f84987dd41"
+    },
+    {
+      "member": "trace/documentation-recommendations.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/documentation-recommendations.md",
+      "bytes": 2119,
+      "sha256": "1d05bee4696a66753bd65d3526a1ce66587982a3763dc3c4648c75f3f574aae4"
+    },
+    {
+      "member": "trace/fixture-correction-held04.diff",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/fixture-correction-held04.diff",
+      "bytes": 2748,
+      "sha256": "f7f0258d69cdc3bcbf98ad3ecd4f660b3e907309c6a597ce37eb8c65c2cb7e69"
+    },
+    {
+      "member": "trace/host-base-admission.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-base-admission.json",
+      "bytes": 2718,
+      "sha256": "8587b1cfa811fadacdd368c7963e92662500cfbfc907f3dce3e871b8bf13a70a"
+    },
+    {
+      "member": "trace/host-fixture-intake.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-fixture-intake.json",
+      "bytes": 94307,
+      "sha256": "b0bcd2ff42738cbb552ec1dbbfd617a116d2988c6efc99778b6caeea47f055e9"
+    },
+    {
+      "member": "trace/host-inputs-held03.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-inputs-held03.json",
+      "bytes": 60200,
+      "sha256": "ae067ac0345b763b0541127b14698620eae31ab2aa2aebd2ba657528d9093c31"
+    },
+    {
+      "member": "trace/host-inputs-held04.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-inputs-held04.json",
+      "bytes": 60200,
+      "sha256": "2f278e3ee105030cc5b1a256aa2ff977f8b5ab0cdc30501a29a3fc430df571ed"
+    },
+    {
+      "member": "trace/host-pair-01/after-node22.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/after-node22.json",
+      "bytes": 60122,
+      "sha256": "221287e9b4b5080c3c7a3e3b318dc273a3bb834c2329c2c05329f781c9db0b2e"
+    },
+    {
+      "member": "trace/host-pair-01/authority.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/authority.json",
+      "bytes": 1991,
+      "sha256": "3c7f6245556e0b7d88f86a0977a1b9f2541512611921ab69a3c532b6f922be34"
+    },
+    {
+      "member": "trace/host-pair-01/before.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/before.json",
+      "bytes": 60122,
+      "sha256": "9d8c6ad3a7876e34da924798f7651d3d6aba2496e0fa3c44610f87a4f6a14a9d"
+    },
+    {
+      "member": "trace/host-pair-01/canonical-index-before.bin",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/canonical-index-before.bin",
+      "bytes": 732903,
+      "sha256": "155ad096c5695a3f39ad43374ff6c4a02254d3635126e0c5d7c1eeeeb2b6339a"
+    },
+    {
+      "member": "trace/host-pair-01/failed-fixture-originals/README.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/failed-fixture-originals/README.md",
+      "bytes": 227,
+      "sha256": "930f5dd7fef5d136b758178e37fd39dfb4209d341a71ef5c52be4bb021ce1598"
+    },
+    {
+      "member": "trace/host-pair-01/failed-fixture-originals/couch-installed-chapters.test.mjs",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/failed-fixture-originals/couch-installed-chapters.test.mjs",
+      "bytes": 50924,
+      "sha256": "e3996cdea9932b8517864fce77b6c40d1744db1034abb1620b51fbc8ff8f9bb3"
+    },
+    {
+      "member": "trace/host-pair-01/failed-fixture-originals/couch-progression-host.test.mjs",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/failed-fixture-originals/couch-progression-host.test.mjs",
+      "bytes": 17262,
+      "sha256": "79fdfbfb3b6b5fb7b32d9544823209b7e098e8e2fe5be81548057239154f2cfe"
+    },
+    {
+      "member": "trace/host-pair-01/failure.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/failure.json",
+      "bytes": 1233,
+      "sha256": "1b2107749233fc1dbc2843aa4273d50c75889a4caf30c771c6890293c344cfe5"
+    },
+    {
+      "member": "trace/host-pair-01/node22.log",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/node22.log",
+      "bytes": 34490,
+      "sha256": "5015717a6a206c71a8494a84687da094d5e1c455a1bf5e0017aad3aa3abad5da"
+    },
+    {
+      "member": "trace/host-pair-01/runs.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-01/runs.json",
+      "bytes": 1053,
+      "sha256": "6623d02f7f51372afbfb1842f1c852d251b9052bac191a1e6b6ff0c430366a1e"
+    },
+    {
+      "member": "trace/host-pair-02/after-node20.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/after-node20.json",
+      "bytes": 60122,
+      "sha256": "4a65b2a99ed271e70b4686259b392f0c311f85117ba8cafd87bcc7d841299750"
+    },
+    {
+      "member": "trace/host-pair-02/after-node22.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/after-node22.json",
+      "bytes": 60122,
+      "sha256": "46ad16ab7d9fd2f3ab294700673aab1f06b408300bbc92ea3f12a6b08a1238a3"
+    },
+    {
+      "member": "trace/host-pair-02/authority.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/authority.json",
+      "bytes": 2033,
+      "sha256": "573e0cb60357761b16f73614de7d56ff58a21134fb985f958541f07666badf58"
+    },
+    {
+      "member": "trace/host-pair-02/before.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/before.json",
+      "bytes": 60122,
+      "sha256": "07408f9ef5252259b45ebbf89e63ef5512e5c4226c5d0fb35dec12fb7729dead"
+    },
+    {
+      "member": "trace/host-pair-02/canonical-index-before.bin",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/canonical-index-before.bin",
+      "bytes": 732903,
+      "sha256": "155ad096c5695a3f39ad43374ff6c4a02254d3635126e0c5d7c1eeeeb2b6339a"
+    },
+    {
+      "member": "trace/host-pair-02/node20.log",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/node20.log",
+      "bytes": 35284,
+      "sha256": "0898ce1c0d96247471dcc6c51f6e6f5c4a7b5b7ae1f051aa981be0952f79fb0b"
+    },
+    {
+      "member": "trace/host-pair-02/node22.log",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/node22.log",
+      "bytes": 37519,
+      "sha256": "889f55867c2e93a0883bd1da3f575b24472cb85a746d7e44e38ccb7bda3cebbf"
+    },
+    {
+      "member": "trace/host-pair-02/runs.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/runs.json",
+      "bytes": 2187,
+      "sha256": "ba768845f4541567d957880775ea54057d28b0b0caf96ef95fec7676b5bf34b1"
+    },
+    {
+      "member": "trace/host-pair-02/verification.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-pair-02/verification.json",
+      "bytes": 2707,
+      "sha256": "e2573d13ed4f3003f501295f306d72df1720f4cae247a384b52dc0054070585c"
+    },
+    {
+      "member": "trace/host-source-held-01.diff",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-source-held-01.diff",
+      "bytes": 26580,
+      "sha256": "5e85d9820a3de8db220202d4f782f13593a5d213e4cd460dda45441328421161"
+    },
+    {
+      "member": "trace/host-source-held-01.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-source-held-01.json",
+      "bytes": 2124,
+      "sha256": "37be9b591dab1f00dbdfd91c49f23a1393088eaee36fa0a84f25eeb997acfa33"
+    },
+    {
+      "member": "trace/host-source-held-02.diff",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-source-held-02.diff",
+      "bytes": 27774,
+      "sha256": "5e597fb787f78d0507ad8260467911080b5c34498495f61df8a03cc90d611446"
+    },
+    {
+      "member": "trace/host-source-held-02.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-source-held-02.json",
+      "bytes": 3083,
+      "sha256": "bcdfc3ee112cff17c02ebcafa745fcaacff5de3976cd99ff0ad61798a7fdd637"
+    },
+    {
+      "member": "trace/host-source-held-03.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-source-held-03.json",
+      "bytes": 2688,
+      "sha256": "bde4742b638c89467df207d929279bc9e41ebd45b647a7956cc2da1df450c755"
+    },
+    {
+      "member": "trace/host-source-held-04.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/host-source-held-04.json",
+      "bytes": 3107,
+      "sha256": "57100caaa5550d31a465c253f102e2c6aa927a80e4c67e7a1e119d63b4223ea8"
+    },
+    {
+      "member": "trace/installed-host-held03.diff",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/installed-host-held03.diff",
+      "bytes": 9354,
+      "sha256": "3b0791be7443ff345eaaeb0f65c6caf2886ea0fb2dc0d7e94aee866ea880a40b"
+    },
+    {
+      "member": "trace/installed-host-review-notes.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/installed-host-review-notes.md",
+      "bytes": 2700,
+      "sha256": "7d900701b3d3e28a09f0ae704bcf2ebdc9dc89d8644fd66d9000b07aabbe8a87"
+    },
+    {
+      "member": "trace/intake-preflight-refusal.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/intake-preflight-refusal.json",
+      "bytes": 372,
+      "sha256": "e0b11bc7c047ddaf88607e5bce0503d134b160e6a1d3e3ab3e4e970cea3bd49a"
+    },
+    {
+      "member": "trace/prepare-host-inputs-initial.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/prepare-host-inputs-initial.py",
+      "bytes": 3430,
+      "sha256": "752ddc15bf24ee58b0a0ecbba313d964c8b83ebf006227037e3444e3229c0281"
+    },
+    {
+      "member": "trace/prepare-host-inputs.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/prepare-host-inputs.py",
+      "bytes": 3510,
+      "sha256": "1fc385278bf1bf85d65758625a15e442d44dda09ad5ac29601b437c24fca6ca9"
+    },
+    {
+      "member": "trace/progression-api-fixtures.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/progression-api-fixtures.md",
+      "bytes": 10990,
+      "sha256": "dbe413bcb5e45a759b39d68bcf04d96eb77fc594771da9b3f42224a3312c212c"
+    },
+    {
+      "member": "trace/progression-design-inputs.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/progression-design-inputs.json",
+      "bytes": 2613,
+      "sha256": "3f3bd63244046a13e88ba68908908d482f842546ec1f7e19ce0547ac16a2e74b"
+    },
+    {
+      "member": "trace/progression-next-slice.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/progression-next-slice.md",
+      "bytes": 10003,
+      "sha256": "c74bc5efd38e02fd851a589e992068e801d0fcffc9b66981630d235c127f3a87"
+    },
+    {
+      "member": "trace/pure-pair-01/after-node20.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/after-node20.json",
+      "bytes": 1476,
+      "sha256": "a8b63dcf7018ab04577cb4ec9fbe71de93afc7e35935638881284fa8ebf9149b"
+    },
+    {
+      "member": "trace/pure-pair-01/after-node22.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/after-node22.json",
+      "bytes": 1476,
+      "sha256": "dd259b6db97f92056ca8dcc3bca5b2eff317b15679fba2a24b5fcfcacf5f6360"
+    },
+    {
+      "member": "trace/pure-pair-01/authority.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/authority.json",
+      "bytes": 3194,
+      "sha256": "72151c08abc96ab8d9d76d3a0da78c7a6e8d6cc0f303a5948a6f4cf298c3f12f"
+    },
+    {
+      "member": "trace/pure-pair-01/before.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/before.json",
+      "bytes": 1470,
+      "sha256": "c4196accea67d36948badbc7e6f5e60667ad84474e95edf3d05c1226594fc999"
+    },
+    {
+      "member": "trace/pure-pair-01/canonical-index-before.bin",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/canonical-index-before.bin",
+      "bytes": 708669,
+      "sha256": "f2830131d2a9765f51a62ba14fc2aa5706f29a3a48f85b886d0b216af33d6743"
+    },
+    {
+      "member": "trace/pure-pair-01/node20.log",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/node20.log",
+      "bytes": 3580,
+      "sha256": "0e57c31846dccbf7fdb5eb1dd8dd1bd25c819be575ab9a8d55c6468960774ba1"
+    },
+    {
+      "member": "trace/pure-pair-01/node22.log",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/node22.log",
+      "bytes": 3815,
+      "sha256": "abe1b1be7fca913f0f7457bc015b61710e61614344cf591e256b95c9240a36d8"
+    },
+    {
+      "member": "trace/pure-pair-01/runs.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/runs.json",
+      "bytes": 1435,
+      "sha256": "3ffb40187984de6526a0597babb20cfe72ffa44b829e4c677d4dcb143d350c33"
+    },
+    {
+      "member": "trace/pure-pair-01/verification.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-pair-01/verification.json",
+      "bytes": 2862,
+      "sha256": "cdebc41815c03280b44eaa9f0849f6dca48decb0bb85eb555095db699486e9f1"
+    },
+    {
+      "member": "trace/pure-status.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/pure-status.md",
+      "bytes": 2239,
+      "sha256": "9baa286dd6de178350f254dbf6cdd38aba0342a6e01bed1a55bf690a003d8a2b"
+    },
+    {
+      "member": "trace/run-host-pair-02.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/run-host-pair-02.py",
+      "bytes": 5301,
+      "sha256": "8cdb5c4da5f475dd288e160d8da5da8afb30cb9c5ff2ef6431db72be14fe537c"
+    },
+    {
+      "member": "trace/run-host-pair.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/run-host-pair.py",
+      "bytes": 5303,
+      "sha256": "49de708eded6aefc3aa172dc4fa85775b4cf16bd0d269584cbfe8e450c6147fb"
+    },
+    {
+      "member": "trace/run-pure-pair.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/run-pure-pair.py",
+      "bytes": 5539,
+      "sha256": "5378c32a087039da28d3cbfc153e4449e135cee383328570d2fc3c3cc69be53c"
+    },
+    {
+      "member": "trace/source-held-01.diff",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/source-held-01.diff",
+      "bytes": 19136,
+      "sha256": "3b23a82ac877fae763b264e575a37b1d531da977836dddc061c9fcb679a079fe"
+    },
+    {
+      "member": "trace/source-held-01.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour/source-held-01.json",
+      "bytes": 768,
+      "sha256": "8572566ccb2ba0c12a5fc516b3ec1347479b97df64d297ff13d2bbdce016c726"
+    },
+    {
+      "member": "package/package.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-campaign-tour/.cache/tour-package/package.py",
+      "bytes": 7558,
+      "sha256": "05305d6a49bd5c46c89d12121b6b89882ab8fb923c3952d65a3817c12f6870c2"
+    }
+  ],
+  "remaining": [
+    "Normal native One race/tour/Rematch and installed Ready journeys",
+    "Current-P02 composition and requalification",
+    "Solo/Team continuation and full P07 rewards/story gates",
+    "Public deployment, offline and physical-input acceptance"
+  ]
+}
