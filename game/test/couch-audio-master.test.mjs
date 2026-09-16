@@ -316,3 +316,70 @@ test('Team keyboard master edits remain accessible while paused and preserve its
   assert.equal(page.mediaElements(), 0);
   assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
 });
+
+test('Team keeps its sound explanation through saved edits, storage failure and recovery without starting play', async (t) => {
+  const saved = storage({ muted: true, volume: 0.25 }),
+    persist = saved.setItem.bind(saved),
+    attempts = [];
+  let failWrite = false;
+  saved.setItem = (key, value) => {
+    assert.equal(key, AUDIO_PREFERENCES_KEY);
+    attempts.push([key, value]);
+    if (failWrite) throw new Error('Storage temporarily unavailable.');
+    persist(key, value);
+  };
+  const page = await teamPage(t, saved),
+    options = page.$('coop-options'),
+    status = page.$('coop-audio-status');
+  options.open = true;
+  page.tick(2);
+  const ids = ['coop-clock', 'coop-coverage', 'coop-message', 'coop-state-0', 'coop-state-1'],
+    before = ids.map((id) => page.$(id).textContent);
+  function expectExplanation() {
+    const explanation = options
+      .querySelectorAll('p')
+      .find((node) =>
+        node.textContent.includes('This Team chapter currently uses visual feedback.'),
+      );
+    assert.ok(explanation, 'Changing sound settings must retain the Team sound explanation.');
+    for (let node = explanation; node && node !== page.doc; node = node.parentNode) {
+      assert.equal(node.hidden, false);
+      if (node.tagName === 'DETAILS') assert.equal(node.open, true);
+    }
+    page.tick(120);
+    assert.equal(page.$('coop-menu').hidden, false);
+    assert.deepEqual(
+      ids.map((id) => page.$(id).textContent),
+      before,
+    );
+    assert.equal(page.contexts(), 0);
+    assert.equal(page.mediaElements(), 0);
+    assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
+  }
+  expectExplanation();
+  assert.equal(status.getAttribute('role'), 'status');
+
+  enter(page, 'coop-audio');
+  assert.deepEqual(record(saved), { muted: false, volume: 0.25 });
+  expectExplanation();
+  assert.equal(status.textContent, '');
+
+  failWrite = true;
+  page.$('coop-master-volume').focus();
+  key(page, 'ArrowRight');
+  assert.equal(Number(page.$('coop-master-volume').value), 0.26);
+  assert.deepEqual(record(saved), { muted: false, volume: 0.25 });
+  assert.equal(
+    status.textContent,
+    'Sound changed for this session, but could not be saved for another page.',
+  );
+  expectExplanation();
+
+  failWrite = false;
+  key(page, 'ArrowRight');
+  assert.deepEqual(record(saved), { muted: false, volume: 0.27 });
+  assert.equal(status.textContent, '');
+  expectExplanation();
+  assert.equal(attempts.length, 3);
+  assert.equal(saved.writes.length, 2);
+});

@@ -1,0 +1,698 @@
+{
+  "format": "revealline-evidence-manifest.v1",
+  "scope": "Original public v0.58.0 sound observations, failures and independent review. Phase not accepted.",
+  "files": [
+    {
+      "path": "public-native/01-cold.ax.txt",
+      "bytes": 862,
+      "sha256": "655119987835866930d116a7d7ea172c7c5ba0fc0a93e3a7663982c8ef33d99e"
+    },
+    {
+      "path": "public-native/02-ready-timing.json",
+      "bytes": 127,
+      "sha256": "c7f4089c32e856d16c0fe5af9d5f49658892d205f24fd96462963e44c77296c9"
+    },
+    {
+      "path": "public-native/02-ready.ax.txt",
+      "bytes": 1060,
+      "sha256": "c11361971ea65b7c9cb0d5685afc8ab1b8ebb8b5530bf5fce80f2a4bb737c7ef"
+    },
+    {
+      "path": "public-native/02-ready.png",
+      "bytes": 103537,
+      "sha256": "a90bf85fb977710f392b405eefe0168bf7b9a71f279ee33f728fef899cb0b360"
+    },
+    {
+      "path": "public-native/03-master13.ax.txt",
+      "bytes": 1914,
+      "sha256": "c770276114121fffb24b68bdf8328f9d0d70f8f819f8e49d296f2802cdcdcfc8"
+    },
+    {
+      "path": "public-native/03-master13.json",
+      "bytes": 754,
+      "sha256": "2f50bf3a17b6cf40fb517020a185199429dd77e0182cf7bf27331b5b61838be6"
+    },
+    {
+      "path": "public-native/04-library-playing.ax.txt",
+      "bytes": 8171,
+      "sha256": "60d10e04321ea6639a1aab9772c00ba303c59b95ed582abd78a3c4deb4f687e8"
+    },
+    {
+      "path": "public-native/04-library-playing.json",
+      "bytes": 791,
+      "sha256": "6ea20c1096991ef63e4db56076281ce5a1db2e3eb8d02a071bdd0fd2aac7a331"
+    },
+    {
+      "path": "public-native/04-library-playing.png",
+      "bytes": 64154,
+      "sha256": "3d9ae10d3b98ef51215f9ead04fc6d5dfb3df5ede74ed1e53deae0c303ac03c1"
+    },
+    {
+      "path": "public-native/05-playing-muted.ax.txt",
+      "bytes": 8171,
+      "sha256": "4298fc68c97ceb363bb1c5f1539e12f96802cefc24e20134ff1ce120d5736760"
+    },
+    {
+      "path": "public-native/05-playing-muted.json",
+      "bytes": 797,
+      "sha256": "0428e4f5ee43744fe8591cd7a6330df118584031507dfb92fe36f0cf8ce0dfda"
+    },
+    {
+      "path": "public-native/06-music-paused.ax.txt",
+      "bytes": 8200,
+      "sha256": "2c70058bfe5d0a1bdfe0bc1b2fc497ef6569d205ae2487212bdd954c8b9ef525"
+    },
+    {
+      "path": "public-native/06-music-paused.json",
+      "bytes": 793,
+      "sha256": "722bacf45f47e9e24302310cb3c4e97ad30caafb783958b9e98198c633c4d3cb"
+    },
+    {
+      "path": "public-native/07-paused-zero.ax.txt",
+      "bytes": 8197,
+      "sha256": "dec6587993e1a53f438b2338985c5b2450943e372cdb1cb8705c8a322e7bbf9f"
+    },
+    {
+      "path": "public-native/07-paused-zero.json",
+      "bytes": 798,
+      "sha256": "1a73348327a5356c1f2d5c9c055423d5d7cfd53528c44f569cb8153280852d95"
+    },
+    {
+      "path": "public-native/08-paused13-muted.ax.txt",
+      "bytes": 8198,
+      "sha256": "00ac5404d7927b44a2abbe8171699256f883a74a34e88cea7fd57effa60f903d"
+    },
+    {
+      "path": "public-native/08-paused13-muted.json",
+      "bytes": 799,
+      "sha256": "7070d3359b510a71b52c540c261e6bedfd4f10660f3ec77e4373e0f9fb21cac7"
+    },
+    {
+      "path": "public-native/09-mp3-import.ax.txt",
+      "bytes": 8215,
+      "sha256": "0c3f06b2448481b041be36c75aee3cb826b8ea5f58b08af9461370dc736919ae"
+    },
+    {
+      "path": "public-native/09-mp3-import.json",
+      "bytes": 777,
+      "sha256": "2682aa67b49394a84e8f7e49472e5bfa3cabd6dc309d654981f8236f9505b47d"
+    },
+    {
+      "path": "public-native/10-mp3-muted-playing.ax.txt",
+      "bytes": 8862,
+      "sha256": "61c6176d8a6a468258edc9c8fdc32e67ee79755980ca5e8053bff37aa902fb90"
+    },
+    {
+      "path": "public-native/10-mp3-muted-playing.json",
+      "bytes": 1146,
+      "sha256": "4d01990003c572d8bc1a680f58531371af38f8e8fd5e822dba5dd09240dd16fa"
+    },
+    {
+      "path": "public-native/11-mp3-paused.ax.txt",
+      "bytes": 8820,
+      "sha256": "5dc6ef06f32e79c52a60f8211c4f7aece86261fb5b8c8a75a104355f65ca1c12"
+    },
+    {
+      "path": "public-native/11-mp3-paused.json",
+      "bytes": 1146,
+      "sha256": "11b99e716cf7a017c91af6773294e95a9c209d8aa2fe700407e12ee099682239"
+    },
+    {
+      "path": "public-native/12-mp3-paused-zero.ax.txt",
+      "bytes": 8818,
+      "sha256": "9a7f2a55c83b1ce36f96a43789d5477e702e14c990b34b34f3b25e0d5b627dad"
+    },
+    {
+      "path": "public-native/12-mp3-paused-zero.json",
+      "bytes": 1141,
+      "sha256": "e2e34a2bafd10b3b96b12ee9538b15091460e3aacdaea028797856b99dfefbec"
+    },
+    {
+      "path": "public-native/13-mp3-paused13.ax.txt",
+      "bytes": 8898,
+      "sha256": "b1d8e6844f8b451c6f516cf6c2772b0b757394c40208501aec567f25637c2649"
+    },
+    {
+      "path": "public-native/13-mp3-paused13.json",
+      "bytes": 1144,
+      "sha256": "8496d57b82570f69045066e874e2ef3d6c89718ae3c5191ea527276b3c994724"
+    },
+    {
+      "path": "public-native/14-mp3-resumed-muted.ax.txt",
+      "bytes": 8849,
+      "sha256": "f773c2563e97ba03068ee88c56843ccba74821a45f8161bd25dd3e5407b9f5fe"
+    },
+    {
+      "path": "public-native/14-mp3-resumed-muted.json",
+      "bytes": 1143,
+      "sha256": "728e030f758c77d173a75aac9fd8cd38dc322bd88b9ae8fd75e775f1c936b688"
+    },
+    {
+      "path": "public-native/15-finished-saved.ax.txt",
+      "bytes": 8655,
+      "sha256": "5041fb5f3004705413932d8dee0bc6c8cb54f3198243e9759f1d8f1046ead5a2"
+    },
+    {
+      "path": "public-native/15-finished-saved.json",
+      "bytes": 845,
+      "sha256": "105fe1c34dc771a057d4b3d0d3f1641c96037a2cd16f4c631ae03f7c11dc1c35"
+    },
+    {
+      "path": "public-native/16-returned-settings.ax.txt",
+      "bytes": 1874,
+      "sha256": "707847700e3d93503749154b909a98b3bd081f561728a3c47f308c271147866a"
+    },
+    {
+      "path": "public-native/16-returned-settings.json",
+      "bytes": 824,
+      "sha256": "dd8aa67baebe25be99d12d857753b66ff1404b27a028df57c2db2772fbd9800e"
+    },
+    {
+      "path": "public-native/17-live.ax.txt",
+      "bytes": 1494,
+      "sha256": "3b75a7f80ad7f723b802cf0656116a9e629cedf97a8df9b2a60727804ac0aeac"
+    },
+    {
+      "path": "public-native/17-live.png",
+      "bytes": 55750,
+      "sha256": "c68658b5932a42b272c9bb8c03290d8ef993c8be634b8c46dfd2adaabb7b1016"
+    },
+    {
+      "path": "public-native/18-flight-paused.ax.txt",
+      "bytes": 1604,
+      "sha256": "f2dfac9ca9f76941da2f4a0d2ca8269e6e33167fe26f1e0d618522e6e204e3e7"
+    },
+    {
+      "path": "public-native/19-flight-settings-song-still-paused.ax.txt",
+      "bytes": 1841,
+      "sha256": "08c1be40ecc7e65f52364c6f8cd1b9deba5023cdadb6455200a7f51ee41198c4"
+    },
+    {
+      "path": "public-native/19-flight-settings-song-still-paused.json",
+      "bytes": 809,
+      "sha256": "3614225422612280734050f221f13eabcd3ae8cd68a41309d160bec15577c3ea"
+    },
+    {
+      "path": "public-native/20-explicit-resume-required.ax.txt",
+      "bytes": 1603,
+      "sha256": "b4f9628f82087ba058b55c1fd6434aad11d86db0e4294afebef722898cae5e60"
+    },
+    {
+      "path": "public-native/21-studio-music.ax.txt",
+      "bytes": 1604,
+      "sha256": "22af8e512b1b47f0eff65aa8779403a10f72b24149c732c98bfe94777b7e07f1"
+    },
+    {
+      "path": "public-native/21-studio-music.json",
+      "bytes": 458,
+      "sha256": "2058ccf78fac4824202360122aa2fdc1837c0565defd7b078408c3eefa18c40d"
+    },
+    {
+      "path": "public-native/22-studio-explicit-tab.ax.txt",
+      "bytes": 112086,
+      "sha256": "d611caa4aa3e4c08fd3c6a53ffbd1c17c5d7342de263baaf6470ab305db70ae1"
+    },
+    {
+      "path": "public-native/22-studio-explicit-tab.json",
+      "bytes": 383,
+      "sha256": "29def1705b519f7c0263daa6e35ef01e245f140b5f2f42646a668422fa9b4d41"
+    },
+    {
+      "path": "public-native/23-studio-independent-previews.ax.txt",
+      "bytes": 111915,
+      "sha256": "b6a6caa6aba5bac490a51128b451ee64f45563238fbc2af322344a4c1240c3a3"
+    },
+    {
+      "path": "public-native/23-studio-independent-previews.json",
+      "bytes": 383,
+      "sha256": "5ba4de5264727be5b903fbc292aa7880f99b8bfff4f36688c8ea92512ee69030"
+    },
+    {
+      "path": "public-native/23-studio-independent-previews.png",
+      "bytes": 104662,
+      "sha256": "0fafae5bbc6c8a089c2caffb93a3695c709f6687392beb8b59e2366f2f7fbb3e"
+    },
+    {
+      "path": "public-native/24-studio-saved-native.ax.txt",
+      "bytes": 111677,
+      "sha256": "900177a0a600d30d8cafc6fc92e63b03672c9f73e629ea79fbc7db514f24c496"
+    },
+    {
+      "path": "public-native/24-studio-saved-native.json",
+      "bytes": 1035,
+      "sha256": "072bb1f5a3bc9530f71435675fc11b99525716eb176df504a9595bf2262f1294"
+    },
+    {
+      "path": "public-native/25-native-preview-crash-inventory.json",
+      "bytes": 18610,
+      "sha256": "b58bac6ae3974f3365f4485ea031fb0f93dcf93a74b19705fb97f92200f0f412"
+    },
+    {
+      "path": "public-native/25-native-preview-failure-notes.json",
+      "bytes": 717,
+      "sha256": "16eafcadc7a5d9bec8ed381fbddc6356b2cec1b03b9bd017737fad8a34a815d1"
+    },
+    {
+      "path": "public-native/26-native-preview-recovered-settings.ax.txt",
+      "bytes": 112330,
+      "sha256": "0340db9a0d7c235d72b657545340227437805d4f533924daa65e67ae17db55af"
+    },
+    {
+      "path": "public-native/26-native-preview-recovered-settings.json",
+      "bytes": 1024,
+      "sha256": "b16557c0e9c414de30008a3247c5a9007ba7d6b6c8cd1bbb3cd729b0026ed950"
+    },
+    {
+      "path": "public-native/27-native-preview-keyboard-play.ax.txt",
+      "bytes": 112283,
+      "sha256": "5a0a15aa48811f7956f1d1fe59e093a2ec3285be16bc70cf48d12e1f1c67cea4"
+    },
+    {
+      "path": "public-native/27-native-preview-keyboard-play.json",
+      "bytes": 1040,
+      "sha256": "ed493d3db9ead3c97ff46c0dc60dd7b10d1eb6c97a770c5d500def7e5a0c74c8"
+    },
+    {
+      "path": "public-native/28-native-preview-pause-one-master-mute.ax.txt",
+      "bytes": 112292,
+      "sha256": "e8405461d646d339dd17bc875fb4b9ffdecf452506e7c6f54af9f6b1e98cdfdb"
+    },
+    {
+      "path": "public-native/28-native-preview-pause-one-master-mute.json",
+      "bytes": 1055,
+      "sha256": "0c4ac5dc7e4199f930ac67b097ae6f41ba7ff99e1178cb67f61629c05f98fc86"
+    },
+    {
+      "path": "public-native/28-native-preview-pause-one-master-mute.png",
+      "bytes": 83902,
+      "sha256": "262199d7074702d1d5f6138e9795d16ec54c5c96091b7aad3e791d6f72f5e4ae"
+    },
+    {
+      "path": "public-native/29-visible-native-play-speaker-gate.ax.txt",
+      "bytes": 112259,
+      "sha256": "64cf49cf0d3120ea979cb571132e0b9794a13b22726e9764970e53cb90756caf"
+    },
+    {
+      "path": "public-native/29-visible-native-play-speaker-gate.json",
+      "bytes": 1039,
+      "sha256": "d855b215a84672cdf49bbf3f32d5780573ae3957507ab845951801431aaecde0"
+    },
+    {
+      "path": "public-native/29-visible-native-play-speaker-gate.png",
+      "bytes": 106650,
+      "sha256": "512538ee8fac6467153712545dfd64b5b16c94ff555c351fef6413000452f476"
+    },
+    {
+      "path": "public-native/31-versus-master-lobby.ax.txt",
+      "bytes": 1985,
+      "sha256": "4ddbb55fbcde9533727a015dc83de85d0971972ba9eb6fc3e5ff4f95ece3bf34"
+    },
+    {
+      "path": "public-native/31-versus-master-lobby.json",
+      "bytes": 379,
+      "sha256": "49db3176f6943d048a847195a53e9f0126d16734cf1f0965cc779f5c4370d7a3"
+    },
+    {
+      "path": "public-native/32-versus-paused-audio.ax.txt",
+      "bytes": 2067,
+      "sha256": "20ac6bc91d72ddc37cc5c8d8552d0f3fb1839b96b8837d9186088ee1dfe3d023"
+    },
+    {
+      "path": "public-native/32-versus-paused-audio.json",
+      "bytes": 387,
+      "sha256": "9dbc663a474339972bb3199314b791f8d29758507663ae95886306a6f76ce1fb"
+    },
+    {
+      "path": "public-native/33-versus-remains-paused.ax.txt",
+      "bytes": 1611,
+      "sha256": "39ffab923faac67597481076282d9a2e76eb2c8f716f9899632eba17c78b5d2e"
+    },
+    {
+      "path": "public-native/33-versus-remains-paused.json",
+      "bytes": 252,
+      "sha256": "c55f596429be8014bc2b198596a15ef0137d470d0241a613ad7479b1352c8f46"
+    },
+    {
+      "path": "public-native/33-versus-remains-paused.png",
+      "bytes": 65101,
+      "sha256": "8e31a2fe4362d55758b8d42c24639469d75816a6c66153439009e954e18daa3b"
+    },
+    {
+      "path": "public-native/34-team-shared-policy-no-producer.ax.txt",
+      "bytes": 4664,
+      "sha256": "4f4bc51b0fb5733068b7a21ddbdba690f6ab79ad8b848e1f43ee7d87185e7300"
+    },
+    {
+      "path": "public-native/34-team-shared-policy-no-producer.json",
+      "bytes": 396,
+      "sha256": "7219f0a95af023f9ed5f0766f925cf1569af7e7208cdb38540fd360476382980"
+    },
+    {
+      "path": "public-native/34-team-shared-policy-no-producer.png",
+      "bytes": 84235,
+      "sha256": "e0e4d5a24b2b9d86ed54287ad1650a9ea2a1725d073cd460f3453cc8deb1ed8d"
+    },
+    {
+      "path": "public-native/35-team-master-muted.ax.txt",
+      "bytes": 4668,
+      "sha256": "9eb7278f23041ba5925fbd6f48608fb87d361df1dcdc8a06df2babefa73aa776"
+    },
+    {
+      "path": "public-native/35-team-master-muted.json",
+      "bytes": 396,
+      "sha256": "61481fd3a07e0cce5e9f9c204f025d3f5c8656efa0c3910dee79a72b664f6af9"
+    },
+    {
+      "path": "public-native/36-story-open-live-source-refused.ax.txt",
+      "bytes": 8922,
+      "sha256": "cb87396cc7e821350d14654ef7139065937760a178cabe1ca6fe55e63f0ffbd6"
+    },
+    {
+      "path": "public-native/36-story-open-live-source-refused.json",
+      "bytes": 670,
+      "sha256": "9bd1f8d6d377910a0f2830bbf30ad3779092c8f1e3aa952b63d81e72a3d8a6f4"
+    },
+    {
+      "path": "public-native/37-library-saved-audio-persistence.ax.txt",
+      "bytes": 7979,
+      "sha256": "c0e696b1115eca0015bb26de32983845d914e6d6e85672744fed7d8fbbaf04cd"
+    },
+    {
+      "path": "public-native/37-library-saved-audio-persistence.json",
+      "bytes": 861,
+      "sha256": "acd6744819cd1d18a400c6120b588c25326e319e7889765db77ef8d5fa860abc"
+    },
+    {
+      "path": "public-native/38-dawn-picture-restore.ax.txt",
+      "bytes": 10232,
+      "sha256": "94a9bb2c101a2e73be2109d4c647b8212d340615f52683cd713c2a03f47a9c0d"
+    },
+    {
+      "path": "public-native/38-dawn-picture-restore.json",
+      "bytes": 670,
+      "sha256": "d8a5c9582e709c3095498cabb9cf979fe1da9be38e7a30367128de53704c79e5"
+    },
+    {
+      "path": "public-native/39-dawn-story-restoration.ax.txt",
+      "bytes": 10245,
+      "sha256": "298e8fb1f1da21e0f00c0c9b40496142f8af6d98fd17e412ab261ebe143944c0"
+    },
+    {
+      "path": "public-native/39-dawn-story-restoration.json",
+      "bytes": 670,
+      "sha256": "2bf5d0ab1f2192bf117b12ef217d7ef8463d48973c80d511b57db99a33f1a409"
+    },
+    {
+      "path": "public-native/40-dawn-story-restored-ready.ax.txt",
+      "bytes": 10275,
+      "sha256": "5b78722436aa4638ca780c165da94dcc071fdd3c642c3382b643cc78e6ff36eb"
+    },
+    {
+      "path": "public-native/40-dawn-story-restored-ready.json",
+      "bytes": 670,
+      "sha256": "cea5d429fc42881188ceb7bb8f8b9c92a973d0baac460df64a599cc6d17bb5df"
+    },
+    {
+      "path": "public-native/41-first-signal-real-cut.ax.txt",
+      "bytes": 1477,
+      "sha256": "8464428c24987a30197ba8d1e62be2e8b65162b241f37a57265d29709d1d272f"
+    },
+    {
+      "path": "public-native/41-first-signal-real-cut.json",
+      "bytes": 389,
+      "sha256": "da8a124e0233a1c093240776834f4c75ad80d1f33132bb2dd52ad4f6927d4cf6"
+    },
+    {
+      "path": "public-native/42-first-signal-earned-result.ax.txt",
+      "bytes": 2180,
+      "sha256": "3b845b42b306eed366467c5a71da5b8390e662496c9313077c8c3006a194771a"
+    },
+    {
+      "path": "public-native/42-first-signal-earned-result.json",
+      "bytes": 389,
+      "sha256": "b8fabf74465f707304bd70cdca4e7578a10f00aea6c58f5c39e03c5bdcac1a4e"
+    },
+    {
+      "path": "public-native/42-first-signal-earned-result.png",
+      "bytes": 72993,
+      "sha256": "f04078c5ee1d9df31b3d742ff10ab334eb72449c8a7a66e23e793bf7737275c0"
+    },
+    {
+      "path": "public-native/43-result-parent-music-paused.ax.txt",
+      "bytes": 8221,
+      "sha256": "19f846d0fd494c96900d433fc1ef2e3db205e9f88362f0dc624617ccbfe6d777"
+    },
+    {
+      "path": "public-native/43-result-parent-music-paused.json",
+      "bytes": 791,
+      "sha256": "c53a74f55035c749ca7b8ae7ff3db4eccee25b29ac9b7e505418b38c612660a1"
+    },
+    {
+      "path": "public-native/44-story-playing-muted.ax.txt",
+      "bytes": 816,
+      "sha256": "68705e8aec6a1d73e7cc596c3410765bcd89d5c276a878a24177195a9ad76e30"
+    },
+    {
+      "path": "public-native/44-story-playing-muted.json",
+      "bytes": 704,
+      "sha256": "aa077c3fe060379f952ea5f3a4f8b06cbe1b6cada10b39289ee621517474256d"
+    },
+    {
+      "path": "public-native/45-story-paused-local-volume.ax.txt",
+      "bytes": 890,
+      "sha256": "afd412cc967e669bfd0cbc8c044bffacd8ad4a97bf5b2b5543ee80cfb9f05ba4"
+    },
+    {
+      "path": "public-native/45-story-paused-local-volume.json",
+      "bytes": 700,
+      "sha256": "b20cec212b36d097d9926b3eea75511e833d7e3f0b3cafd4de0bf42e2f7351bf"
+    },
+    {
+      "path": "public-native/46-plain-audio-control-before.ax.txt",
+      "bytes": 375,
+      "sha256": "769b90805ee4fb8130ccccb239994378c59be054735744aa48f709db5865d675"
+    },
+    {
+      "path": "public-native/46-plain-audio-control-before.json",
+      "bytes": 379,
+      "sha256": "c0f0bf63b02ad8132989a6fd5f01f9b7a163590f906eb928a15826e1e6d2ead2"
+    },
+    {
+      "path": "public-native/47-plain-audio-crash-inventory.json",
+      "bytes": 50459,
+      "sha256": "de2068a003b6280266b908b492be41ddaa3ad7c77215820f29e89b55e3d720b0"
+    },
+    {
+      "path": "public-native/48-policy-zero-unmuted.ax.txt",
+      "bytes": 4631,
+      "sha256": "71d7eda9c86b15023cbf3254e4d313901ed7bca741595f6524dee608dfa7f7d0"
+    },
+    {
+      "path": "public-native/48-policy-zero-unmuted.json",
+      "bytes": 393,
+      "sha256": "e9078a23022ffc89c5e49edb0cee36aad13d9bc36ccddce26de55c9fe4e52644"
+    },
+    {
+      "path": "public-native/49-paused-story-master-zero.ax.txt",
+      "bytes": 890,
+      "sha256": "afd412cc967e669bfd0cbc8c044bffacd8ad4a97bf5b2b5543ee80cfb9f05ba4"
+    },
+    {
+      "path": "public-native/49-paused-story-master-zero.json",
+      "bytes": 700,
+      "sha256": "52eb978f8578512ba74467b2d9102a4f1babbcb0ab78ad30a6274d84566a1977"
+    },
+    {
+      "path": "public-native/50-policy-restored13.ax.txt",
+      "bytes": 4740,
+      "sha256": "c3ddf0af19598dcb9060f77120d267ddc531a1ddff65405c56a04c03cfc05fd8"
+    },
+    {
+      "path": "public-native/50-policy-restored13.json",
+      "bytes": 404,
+      "sha256": "36dea282b303128fddb7c6cefe1c4996516398467d685dba4a27c82c1722f51a"
+    },
+    {
+      "path": "public-native/51-paused-story-master13.ax.txt",
+      "bytes": 830,
+      "sha256": "778b2a2331d80090a6c77a54c191d1408434f9e6f0403bc055a6fcaf3e865f54"
+    },
+    {
+      "path": "public-native/51-paused-story-master13.json",
+      "bytes": 700,
+      "sha256": "b2873a2f15861d8fc91842e36b99948a454886fc49ad2f129db2002f279ef572"
+    },
+    {
+      "path": "public-native/51-paused-story-master13.png",
+      "bytes": 84622,
+      "sha256": "5a4106bde9f33ae58158c0d5690b2a65da02f6d1af3c7ed2efa9e60b550d4b27"
+    },
+    {
+      "path": "public-native/52-story-explicit-resume.ax.txt",
+      "bytes": 756,
+      "sha256": "69ea7ecc9bb46af68bcc55d75ab7252281d7864bfff37ed427280cedc75c9316"
+    },
+    {
+      "path": "public-native/52-story-explicit-resume.json",
+      "bytes": 702,
+      "sha256": "7606b76d2ab4be84239e77a26cf8a380de47e6d2d04f34f297b17b0fcbe6574d"
+    },
+    {
+      "path": "public-native/53-story-natural-end.ax.txt",
+      "bytes": 871,
+      "sha256": "5b965e26b09b7237397549769eb125171957327820304f0c125d1ee9ad1426ef"
+    },
+    {
+      "path": "public-native/53-story-natural-end.json",
+      "bytes": 693,
+      "sha256": "5ef610105aad46a6d71e2bc017cb17f34aa448ee49ab79e2d7638215c7eb069f"
+    },
+    {
+      "path": "public-native/54-story-replay-skip.ax.txt",
+      "bytes": 873,
+      "sha256": "5b6c805ee4fbe9286b90307a69b1f8083f72f76f1e58cbff9a2745f609236e9a"
+    },
+    {
+      "path": "public-native/54-story-replay-skip.json",
+      "bytes": 700,
+      "sha256": "e79c1eed9840a3fb6d640cca1ffa6dcdca921240eb52ccee0c275fce90e69ba2"
+    },
+    {
+      "path": "public-native/55-story-closed-result-preserved.ax.txt",
+      "bytes": 2173,
+      "sha256": "42b0837cad2da7c9e8ccab998f2611c4e435f2f005f1faec5e1c8e6fbb9fea27"
+    },
+    {
+      "path": "public-native/55-story-closed-result-preserved.json",
+      "bytes": 396,
+      "sha256": "28c00a9edc4b9f1440060683e02766409e6396d7a644c6ae818ad63779aa7ba6"
+    },
+    {
+      "path": "public-native/56-collection-story-master-mute.ax.txt",
+      "bytes": 815,
+      "sha256": "d0a8b1cd4d0f29a0b9814eb3348abea5c6ec309c7cec35da49a77459379230bb"
+    },
+    {
+      "path": "public-native/56-collection-story-master-mute.json",
+      "bytes": 700,
+      "sha256": "84170e277967632c8d9fd6d519558b593a2a87254e9ef929520afb20dc6aaeb0"
+    },
+    {
+      "path": "public-native/57-collection-story-replay-no-award.ax.txt",
+      "bytes": 791,
+      "sha256": "641bf8b766fbdfde5facd4b927b8dc6edd7bf13c0769612c63506c3125631b8b"
+    },
+    {
+      "path": "public-native/57-collection-story-replay-no-award.json",
+      "bytes": 391,
+      "sha256": "047e9852e573ea9edf137783805ee4213e768c63e0c439477304e8fe004fc7a8"
+    },
+    {
+      "path": "public-native/57-collection-story-replay-no-award.png",
+      "bytes": 77772,
+      "sha256": "925d89687ef7a0178165c19e7ff4296303c509faa78e06f628860e240daea599"
+    },
+    {
+      "path": "public-native/58-after-story-parent-music.ax.txt",
+      "bytes": 8076,
+      "sha256": "2611afb87f59d34f47204c4f7ee84fa2b07d343a5728d1b3d98e640bc8b4c3ed"
+    },
+    {
+      "path": "public-native/58-after-story-parent-music.json",
+      "bytes": 791,
+      "sha256": "c953617acb6913c45e3d22a74a96b3d8824d424fde505febb0c88dfa1d7fabcc"
+    },
+    {
+      "path": "public-native/59-explicit-reload-loading.ax.txt",
+      "bytes": 888,
+      "sha256": "a7e75268410d10d833d7d436a98f9ef9bb2b37a175962de08938dfbebdbf5863"
+    },
+    {
+      "path": "public-native/59-explicit-reload-loading.json",
+      "bytes": 234,
+      "sha256": "d009abfab0a2ebc9afdc05cd84468a9d38638542cbd978734f2dbc5632983bd8"
+    },
+    {
+      "path": "public-native/60-explicit-reload-ready.ax.txt",
+      "bytes": 1088,
+      "sha256": "c78fca014dd53b0e0ca9391dbd6a9db17066a4ace40cf919b10da67863067b05"
+    },
+    {
+      "path": "public-native/60-explicit-reload-ready.json",
+      "bytes": 378,
+      "sha256": "fd3d4483f5607da9ed9697cbd58128be5fba44b5d3ebdde60d2c022d01db7087"
+    },
+    {
+      "path": "public-native/60-explicit-reload-timing.json",
+      "bytes": 198,
+      "sha256": "06f8a01d349ce56de837f514ebd714d63a4a497e101516decb5183b187af6264"
+    },
+    {
+      "path": "public-native/61-reloaded-settings-persisted.ax.txt",
+      "bytes": 1841,
+      "sha256": "14267506262ebb279ed6cebc937ea88e5c31b26d0fea44159707e96da330d82f"
+    },
+    {
+      "path": "public-native/61-reloaded-settings-persisted.json",
+      "bytes": 741,
+      "sha256": "e74bc9a59e8513cf3d3c19a70eaa6de8e0ec56f459fc27ddd86782af779f79de"
+    },
+    {
+      "path": "public-native/preflight.json",
+      "bytes": 1201,
+      "sha256": "157f548f43e2a21461d639ea17b2438a5c8c130f2a9955946c6df48fb0fdcce0"
+    },
+    {
+      "path": "native-control-diagnostic/diagnosis.md",
+      "bytes": 2276,
+      "sha256": "639a14482d5cf7b6b4ef8d680bcbe80a8228a8fdfa9335310566728a9aa28178"
+    },
+    {
+      "path": "native-control-diagnostic/falling-chime.mp3",
+      "bytes": 32600,
+      "sha256": "2d918540dd087b9620a07132bab2d6aab2d69eff4db747dd58ec95fec6c23f32"
+    },
+    {
+      "path": "native-control-diagnostic/index.html",
+      "bytes": 185,
+      "sha256": "2588725f13801bd6e785240c990b50bdd7b2373da77ad13abc3ef0516722e88d"
+    },
+    {
+      "path": "native-control-diagnostic/isolation-evidence.json",
+      "bytes": 4393,
+      "sha256": "dffde70464f8b85542e0fa33cee1f016b54bf078426474def76e953b14942aad"
+    },
+    {
+      "path": "native-control-diagnostic/serve.py",
+      "bytes": 1476,
+      "sha256": "d744e84ad7fcef4500e3a5af6f5d6ae6c7157c3a910a57cb708dc61ac5c0dcfe"
+    },
+    {
+      "path": "native-control-diagnostic/server-start.json",
+      "bytes": 204,
+      "sha256": "eaa2caf4bf34a522dca50005372721ab81026ae453fd882807fc4d56c816fed8"
+    },
+    {
+      "path": "native-control-diagnostic/source-pins.json",
+      "bytes": 733,
+      "sha256": "7d050f1222138caeda23097759b1cbc5be59c7990661766bc4fa8cb93eaabceb"
+    },
+    {
+      "path": "native-review/peer-review.json",
+      "bytes": 10581,
+      "sha256": "05053cf1d3f3d02927870391d7e543cb9c7bf24a89ad8d83a2cbcafb80b48bfc"
+    },
+    {
+      "path": "native-review/peer-review.md",
+      "bytes": 2613,
+      "sha256": "888da094bbcf2416ba02c9670f571094caad17e833cf53be2da35fce4fe0a5c5"
+    },
+    {
+      "path": "owned-media-handoff.json",
+      "bytes": 8349,
+      "sha256": "137040cfae6cecac5b5b3041fdbd4c8d26e4296be9cc87bbed72f09140068c5c"
+    }
+  ],
+  "fileCount": 138,
+  "totalBytes": 2081472
+}
