@@ -1,0 +1,1592 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.58.1",
+  "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+  "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+  "actualCheckoutCommit": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+  "actualCheckoutTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+  "qualifiedAt": "2026-09-16T05:17:37.470785+00:00",
+  "passed": true,
+  "qualificationBasis": "hosted-exact-source-with-verified-frozen-originals",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "root": "/home/runner/work/revealline/revealline",
+    "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+    "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+    "files": 6525,
+    "bytes": 912633193,
+    "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35056211503",
+  "runId": 35056211503,
+  "runAttempt": 1,
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "workflowRevision": "1c1908f5ab3a9f53bc11b54f554c8a5d8ace1b81",
+  "workflowTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+  "sourceWorkflowSha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+  "automationAuthority": {
+    "path": ".cache/p02a-accepted-main/hosted/pr-automation/receipt.json",
+    "bytes": 2791,
+    "sha256": "b55dada73b72bfcec7665ea9005b0af000644123ae8b3e8f8b84d7c250498d20"
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 104666844020,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-16T04:36:31Z",
+        "completed_at": "2026-09-16T04:37:11Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 104666844020,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-16T04:36:31Z",
+        "completed_at": "2026-09-16T04:37:11Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 104666844020,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-16T04:36:31Z",
+        "completed_at": "2026-09-16T04:37:11Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 104666844020,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-16T04:36:31Z",
+        "completed_at": "2026-09-16T04:37:11Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 104666844020,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-16T04:36:31Z",
+        "completed_at": "2026-09-16T04:37:11Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "test",
+      "jobId": 104667175483,
+      "step": {
+        "name": "Run test shard 2/4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-16T04:38:07Z",
+        "completed_at": "2026-09-16T04:59:23Z"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 104667175482,
+          "step": {
+            "name": "Run test shard 1/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-16T04:38:08Z",
+            "completed_at": "2026-09-16T04:57:51Z"
+          },
+          "counts": {
+            "tests": 1106,
+            "pass": 1106,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175482.log.gz",
+            "bytes": 85026,
+            "sha256": "00976a65b152cb731b412eeacc65d0ed20b44f8b6f62bd55e6893cb66f74b0bc"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 1/4 --root ."
+        },
+        {
+          "shard": 2,
+          "jobId": 104667175483,
+          "step": {
+            "name": "Run test shard 2/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-16T04:38:07Z",
+            "completed_at": "2026-09-16T04:59:23Z"
+          },
+          "counts": {
+            "tests": 1210,
+            "pass": 1210,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175483.log.gz",
+            "bytes": 93250,
+            "sha256": "bfb241a67aa9438709d7b68baa8429efdec652552a0380befb97e88db1f65287"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 2/4 --root ."
+        },
+        {
+          "shard": 3,
+          "jobId": 104667175470,
+          "step": {
+            "name": "Run test shard 3/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-16T04:38:05Z",
+            "completed_at": "2026-09-16T04:54:30Z"
+          },
+          "counts": {
+            "tests": 993,
+            "pass": 993,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175470.log.gz",
+            "bytes": 81339,
+            "sha256": "93fae95d267f24cace60b6653ee4d1b3f009e492d92775b3c7d72fa176d1a6e0"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 3/4 --root ."
+        },
+        {
+          "shard": 4,
+          "jobId": 104667175473,
+          "step": {
+            "name": "Run test shard 4/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-16T04:38:05Z",
+            "completed_at": "2026-09-16T04:58:54Z"
+          },
+          "counts": {
+            "tests": 1024,
+            "pass": 1024,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175473.log.gz",
+            "bytes": 82711,
+            "sha256": "0db5a8c405a9dbf509151a9cc6ea3d09ff6fb9ae79e8a33bf63812e350a4e2d9"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 4/4 --root ."
+        }
+      ],
+      "counts": {
+        "tests": 4333,
+        "pass": 4333,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "partition": {
+        "path": ".cache/p02a-accepted-main/hosted/partition-coverage.json",
+        "bytes": 19492,
+        "sha256": "15cb707d9298d78b88dadc0d979745e3a6ec83144c72cff8c80768528b0b138f"
+      },
+      "scope": "Actual last-completed successful shard is representative; all four actual completed shards and exact partition are required."
+    }
+  ],
+  "tests": {
+    "tests": 4333,
+    "pass": 4333,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 384,
+  "observations": [
+    {
+      "path": "pr-source/job-104666844020.log.gz",
+      "line": 352,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104666844020.log.gz",
+      "line": 801,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175482.log.gz",
+      "line": 361,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175482.log.gz",
+      "line": 5940,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175483.log.gz",
+      "line": 361,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175483.log.gz",
+      "line": 6466,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175470.log.gz",
+      "line": 360,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175470.log.gz",
+      "line": 5370,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175473.log.gz",
+      "line": 361,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175473.log.gz",
+      "line": 5537,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175424.log.gz",
+      "line": 488,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-104667175424.log.gz",
+      "line": 526,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+        "sourceTree": "f6055cbcba92d45ef1da2b5d16e7e4f1158c8d2a",
+        "files": 6525,
+        "bytes": 912633193,
+        "aggregateSha256": "afb220376ccd7064337d8793de80a905487af24878900ebef8820dafaa2ec44f",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    }
+  ],
+  "hostedSourceReview": {
+    "path": ".cache/p02a-accepted-main/hosted/review.json",
+    "bytes": 864,
+    "sha256": "11e1cd5aed8376ec808ea645ccd91ad31c8a4052dfda25da049d3ccd5b228f49"
+  },
+  "hostedEvidenceManifest": {
+    "path": ".cache/p02a-accepted-main/hosted/final-evidence-manifest.json",
+    "bytes": 10653,
+    "sha256": "eb54618c23ca288109c3fc93240f81f083636946ac80af38d7afd2f0ef3da65b"
+  },
+  "publisherPreviewObservation": {
+    "status": "not-part-of-this-source-qualification",
+    "reason": "No publisher workflow changes; main-only publication remains a later separate gate."
+  },
+  "hostedNodeVersion": "v20.19.6",
+  "additionalManualQualification": {
+    "run": {
+      "path": ".cache/p02a-accepted-main/hosted/manual/run.json",
+      "bytes": 12613,
+      "sha256": "1cb69de385611c082c92201f9704897657c3d6a3486685fa9777cfa6f77c0290"
+    },
+    "jobs": {
+      "path": ".cache/p02a-accepted-main/hosted/manual/jobs.json",
+      "bytes": 18607,
+      "sha256": "e237342e078f43728726f5d22f15561e61bbc63722a59caef7aa7126340c381d"
+    },
+    "preflight": {
+      "id": 104666863941,
+      "run_id": 35056217009,
+      "workflow_name": "Qualify release source",
+      "head_branch": "codex/p02a-team-sound-note",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/35056217009",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAYXqGZRQ",
+      "head_sha": "c93019a344f6f4c6ac03940c77ea09c81122d911",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/104666863941",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/35056217009/job/104666863941",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-16T04:35:55Z",
+      "started_at": "2026-09-16T04:35:57Z",
+      "completed_at": "2026-09-16T04:37:28Z",
+      "name": "qualify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-16T04:35:58Z",
+          "completed_at": "2026-09-16T04:35:58Z"
+        },
+        {
+          "name": "Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-16T04:35:58Z",
+          "completed_at": "2026-09-16T04:36:13Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-16T04:36:13Z",
+          "completed_at": "2026-09-16T04:36:18Z"
+        },
+        {
+          "name": "Record source identity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-09-16T04:36:18Z",
+          "completed_at": "2026-09-16T04:36:18Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-09-16T04:36:18Z",
+          "completed_at": "2026-09-16T04:36:21Z"
+        },
+        {
+          "name": "Check hosted artifact utility locally",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-16T04:36:21Z",
+          "completed_at": "2026-09-16T04:36:39Z"
+        },
+        {
+          "name": "Validate source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-16T04:36:39Z",
+          "completed_at": "2026-09-16T04:36:53Z"
+        },
+        {
+          "name": "Lint source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-09-16T04:36:53Z",
+          "completed_at": "2026-09-16T04:37:00Z"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-09-16T04:37:00Z",
+          "completed_at": "2026-09-16T04:37:17Z"
+        },
+        {
+          "name": "Check native formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-09-16T04:37:17Z",
+          "completed_at": "2026-09-16T04:37:17Z"
+        },
+        {
+          "name": "Check motion lab syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-09-16T04:37:17Z",
+          "completed_at": "2026-09-16T04:37:18Z"
+        },
+        {
+          "name": "Reproduce production collection when available",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-09-16T04:37:18Z",
+          "completed_at": "2026-09-16T04:37:23Z"
+        },
+        {
+          "name": "Require reviewed production slots in the committed ledger",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-09-16T04:37:23Z",
+          "completed_at": "2026-09-16T04:37:24Z"
+        },
+        {
+          "name": "Verify qualified tracked source is unchanged",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-09-16T04:37:24Z",
+          "completed_at": "2026-09-16T04:37:25Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-09-16T04:37:25Z",
+          "completed_at": "2026-09-16T04:37:26Z"
+        },
+        {
+          "name": "Post Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-09-16T04:37:26Z",
+          "completed_at": "2026-09-16T04:37:27Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-09-16T04:37:27Z",
+          "completed_at": "2026-09-16T04:37:27Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/104666863941",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000001056,
+      "runner_name": "GitHub Actions 1000001056",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 104667158068,
+        "step": {
+          "name": "Run test shard 1/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-16T04:37:52Z",
+          "completed_at": "2026-09-16T05:04:04Z"
+        },
+        "counts": {
+          "tests": 1106,
+          "pass": 1106,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158068.log.gz",
+          "bytes": 87245,
+          "sha256": "581cb2f360effce40853965449dbeb1800953bde56c39cfff0a54e8913c1e533"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 1/4"
+      },
+      {
+        "shard": 2,
+        "jobId": 104667158122,
+        "step": {
+          "name": "Run test shard 2/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-16T04:37:51Z",
+          "completed_at": "2026-09-16T04:59:22Z"
+        },
+        "counts": {
+          "tests": 1210,
+          "pass": 1210,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158122.log.gz",
+          "bytes": 95001,
+          "sha256": "bf2319cf0ef5d874dc4e2da41baede9516bb4e57c35556431d2c1f9fb82c8bff"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 2/4"
+      },
+      {
+        "shard": 3,
+        "jobId": 104667158127,
+        "step": {
+          "name": "Run test shard 3/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-16T04:37:56Z",
+          "completed_at": "2026-09-16T04:54:36Z"
+        },
+        "counts": {
+          "tests": 993,
+          "pass": 993,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158127.log.gz",
+          "bytes": 83508,
+          "sha256": "b849039003885cdc78630a5edc0314dc3217744713eaa27f35c877abd9f37a49"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 3/4"
+      },
+      {
+        "shard": 4,
+        "jobId": 104667158100,
+        "step": {
+          "name": "Run test shard 4/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-16T04:37:55Z",
+          "completed_at": "2026-09-16T04:59:45Z"
+        },
+        "counts": {
+          "tests": 1024,
+          "pass": 1024,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158100.log.gz",
+          "bytes": 84709,
+          "sha256": "5c066e01d9046da533fc1faa8d435601e0831322a4d874eb5d200d74231a28e5"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 4/4"
+      }
+    ],
+    "counts": {
+      "tests": 4333,
+      "pass": 4333,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "manualFreezeObservation": {
+    "runId": 35056217009,
+    "jobPresent": true,
+    "jobId": 104672233616,
+    "conclusion": "success",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-09-16T05:04:10Z",
+        "completed_at": "2026-09-16T05:04:10Z"
+      },
+      {
+        "name": "Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-09-16T05:04:10Z",
+        "completed_at": "2026-09-16T05:04:24Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-09-16T05:04:24Z",
+        "completed_at": "2026-09-16T05:04:28Z"
+      },
+      {
+        "name": "Freeze the exact qualified commit",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-09-16T05:04:28Z",
+        "completed_at": "2026-09-16T05:07:03Z"
+      },
+      {
+        "name": "Retain original release assets",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-09-16T05:07:03Z",
+        "completed_at": "2026-09-16T05:07:10Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-09-16T05:07:10Z",
+        "completed_at": "2026-09-16T05:07:10Z"
+      },
+      {
+        "name": "Post Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-09-16T05:07:10Z",
+        "completed_at": "2026-09-16T05:07:10Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-09-16T05:07:10Z",
+        "completed_at": "2026-09-16T05:07:10Z"
+      }
+    ],
+    "artifactMetadata": {
+      "path": ".cache/p02a-accepted-main/hosted/manual/artifacts-final.json",
+      "bytes": 750,
+      "sha256": "39362850428520abb44aed4b5e25079ac6d646523a7000cf7c8d11cd9982ca38"
+    },
+    "observedArtifacts": [
+      {
+        "id": 10431786234,
+        "node_id": "MDg6QXJ0aWZhY3QxMDQzMTc4NjIzNA==",
+        "name": "qualified-release-snapshot",
+        "size_in_bytes": 1230839391,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10431786234",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10431786234/zip",
+        "expired": false,
+        "digest": "sha256:3eae320a952801c4635ec106e377829d4b63133d13f61f27a1f43bf6d51fef73",
+        "created_at": "2026-09-16T05:07:10Z",
+        "updated_at": "2026-09-16T05:07:10Z",
+        "expires_at": "2026-09-30T05:07:03Z",
+        "workflow_run": {
+          "id": 35056217009,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/p02a-team-sound-note",
+          "head_sha": "c93019a344f6f4c6ac03940c77ea09c81122d911"
+        }
+      }
+    ],
+    "scope": "Actual freeze outcome and artifact API metadata; separate from six source gates. Matching whole original payload inspection is now required before qualification."
+  },
+  "localFullTest": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally: root approved complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local P02 cohorts are separately source-scoped corroboration, not the v0.58.1 patch command gates."
+  },
+  "localOrdinaryBuild": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally: root approved complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local P02 cohorts are separately source-scoped corroboration, not the v0.58.1 patch command gates."
+  },
+  "localCorroboration": {
+    "status": "not-run-on-final-source",
+    "checks": 0,
+    "scope": "Earlier local P02 cohorts remain separate; no local command gates are inferred for the v0.58.1 patch."
+  },
+  "localAdditionalChecks": [],
+  "ordinaryBuildCorroboration": {
+    "runId": 35056211503,
+    "jobId": 104667175424,
+    "step": {
+      "name": "Build pull-request artifact",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-09-16T04:38:18Z",
+      "completed_at": "2026-09-16T04:40:15Z"
+    },
+    "command": "npm run build",
+    "log": {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175424.log.gz",
+      "bytes": 9564,
+      "sha256": "b74b9afd4509b637b5b2189bcbb45ae8949d088ee127fc9ba70f0982573c1814"
+    },
+    "scope": "Actual successful hosted PR ordinary build command on exact source, bounded by raw source identities. No local build or loose ordinary-byte inspection claimed."
+  },
+  "frozenArtifactCorroboration": {
+    "hostedUtility": {
+      "inputs": {
+        "inspection": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+          "bytes": 1910,
+          "sha256": "da0eedf10fb7e258203abaea2e8147b5aa63cecff30ab4eb80df71b4e550aa5b"
+        },
+        "download": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-original.download.json",
+          "bytes": 594,
+          "sha256": "1664b1f69b3c6a5168376c84f4f7d15b3a4373831e25313f8b4643e48389951a"
+        },
+        "releaseRecord": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/release.json",
+          "bytes": 465,
+          "sha256": "fbee114b84af6fe9e7f45d2f34d328c6ee44a04366492fafa5011f448f690740"
+        },
+        "manifest": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+          "bytes": 121882,
+          "sha256": "3d346ee7234877c95e71b122fc586efc8d784e70595b8ecb5d9c47bd296c65f7"
+        },
+        "checksum": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "32de20c541b10675dc81d78a50983f09b118d4353d8da66bd0013430e92ccbc2"
+        },
+        "inspector": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+          "bytes": 25776,
+          "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+        },
+        "frozenOfflineReview": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/review.json",
+          "bytes": 3411,
+          "sha256": "6f63e31f1a3a32f30ed7075707375b429e01a57f23b77e9bb6a864ad3991ca19"
+        },
+        "frozenOfflineManifest": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+          "bytes": 114829,
+          "sha256": "6801d243ea86371e8c4b34bcf7a3c3efe77b623f8726183480f0414e90d3a0b3"
+        },
+        "frozenBuildInfo": {
+          "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+          "bytes": 143,
+          "sha256": "ecaf5d19b94a8561866e37111da46e73c4b80b02086d1b320e4a09bec05eaab7"
+        }
+      },
+      "artifactAuthority": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/artifact-authority.json",
+        "bytes": 801,
+        "sha256": "ad882c5574c6e8e5e6a4c29465abe1187c0bbdc4a6ac2d976a0333eea7c51b76"
+      },
+      "execution": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/execution.json",
+        "bytes": 2210,
+        "sha256": "3e73daa6e568c99891b291ed416e57b89f1e915f7123831620e0fc616c252fbc"
+      },
+      "run": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/run.json",
+        "bytes": 12613,
+        "sha256": "0ed19fd8305e49ca25739d5dd332e2555214d69e44af86b38d04aa396f94eb8e"
+      },
+      "jobs": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/jobs.json",
+        "bytes": 6299,
+        "sha256": "3b45102aa416bdeca719b87e8e6be12171f4e09688011e4edd4b878475fab2e7"
+      },
+      "retainedManifest": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/retained-manifest.json",
+        "bytes": 6782,
+        "sha256": "a75d5a73c6e320f8c8e151718404fc778b4a7ef543f575199e23f784a8fe878d"
+      },
+      "scope": "Hosted original-byte inspection; separate from source command qualification."
+    },
+    "binding": {
+      "path": ".cache/p02a-accepted-main/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2474,
+      "sha256": "0d7977acef9cd01b18e1c64332ff454bf4644bce9b01a4d44e922932a0410c32"
+    },
+    "inputs": {
+      "inspection": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+        "bytes": 1910,
+        "sha256": "da0eedf10fb7e258203abaea2e8147b5aa63cecff30ab4eb80df71b4e550aa5b"
+      },
+      "download": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-original.download.json",
+        "bytes": 594,
+        "sha256": "1664b1f69b3c6a5168376c84f4f7d15b3a4373831e25313f8b4643e48389951a"
+      },
+      "releaseRecord": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/release.json",
+        "bytes": 465,
+        "sha256": "fbee114b84af6fe9e7f45d2f34d328c6ee44a04366492fafa5011f448f690740"
+      },
+      "manifest": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+        "bytes": 121882,
+        "sha256": "3d346ee7234877c95e71b122fc586efc8d784e70595b8ecb5d9c47bd296c65f7"
+      },
+      "checksum": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "32de20c541b10675dc81d78a50983f09b118d4353d8da66bd0013430e92ccbc2"
+      },
+      "inspector": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+        "bytes": 25776,
+        "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+      },
+      "frozenOfflineReview": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/review.json",
+        "bytes": 3411,
+        "sha256": "6f63e31f1a3a32f30ed7075707375b429e01a57f23b77e9bb6a864ad3991ca19"
+      },
+      "frozenOfflineManifest": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+        "bytes": 114829,
+        "sha256": "6801d243ea86371e8c4b34bcf7a3c3efe77b623f8726183480f0414e90d3a0b3"
+      },
+      "frozenBuildInfo": {
+        "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+        "bytes": 143,
+        "sha256": "ecaf5d19b94a8561866e37111da46e73c4b80b02086d1b320e4a09bec05eaab7"
+      }
+    },
+    "artifactId": 10431786234,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "scope": "Existing reviewed streaming inspector checked original TAR Git blobs/types/modes/commit, outer digest and every inner ZIP byte; public delivery remains separate."
+  },
+  "evidencePins": [
+    {
+      "path": ".cache/p02a-accepted-main/hosted/expected-test-partitions.json",
+      "bytes": 19273,
+      "sha256": "1220361915ccca507eba219c33e7eb6413c185af400a8c50b9798e678376be95"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/final-evidence-manifest.json",
+      "bytes": 10653,
+      "sha256": "eb54618c23ca288109c3fc93240f81f083636946ac80af38d7afd2f0ef3da65b"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/job-step-records.json",
+      "bytes": 35498,
+      "sha256": "d9c0bc69a8b5edc42a0d668c54ec028e940dc008dfc1dbcf7df9de315be50828"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/artifacts-final.json",
+      "bytes": 750,
+      "sha256": "39362850428520abb44aed4b5e25079ac6d646523a7000cf7c8d11cd9982ca38"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104666863941-receipt.json",
+      "bytes": 733,
+      "sha256": "b6514d9e892f6d255e330aabb9bc12b24c906f33347958be086e3da5eac973a5"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104666863941.json",
+      "bytes": 3745,
+      "sha256": "695dae77c1c405c37eddeed707460e18a85246f75f2afc5f31eb37af779bbbb6"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104666863941.log.gz",
+      "bytes": 9643,
+      "sha256": "58607c321594cee270c7713ef6d8c0242839bd11335cf06915f0366dc46f6cc8"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158068-receipt.json",
+      "bytes": 911,
+      "sha256": "51758cccd4eaeffec6f30d1a4d6828d02f7cc7debcfcc84142c61df192483376"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158068.json",
+      "bytes": 2706,
+      "sha256": "06ca58510f92a91cbe63676729966d8b8435462e3ff4dc51c66302b02a9b0803"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158068.log.gz",
+      "bytes": 87245,
+      "sha256": "581cb2f360effce40853965449dbeb1800953bde56c39cfff0a54e8913c1e533"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158100-receipt.json",
+      "bytes": 911,
+      "sha256": "de86b5f68c460233acf1b13bd1fbf089030f0f480b44d94b7946319ca067f59e"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158100.json",
+      "bytes": 2706,
+      "sha256": "1440cdbba99aefdff1eab006e16670439b011daa595640b519a74250ef4890b0"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158100.log.gz",
+      "bytes": 84709,
+      "sha256": "5c066e01d9046da533fc1faa8d435601e0831322a4d874eb5d200d74231a28e5"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158122-receipt.json",
+      "bytes": 911,
+      "sha256": "03fa1ac21b8430c527d75278ade1f2dfebe1e24da02cc7c5a8144135ff4cd26d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158122.json",
+      "bytes": 2706,
+      "sha256": "0d674838338065df0e420b78bb0bc1cc8708e6299a057a5aa2599f5d74373e01"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158122.log.gz",
+      "bytes": 95001,
+      "sha256": "bf2319cf0ef5d874dc4e2da41baede9516bb4e57c35556431d2c1f9fb82c8bff"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158127-receipt.json",
+      "bytes": 909,
+      "sha256": "bd7329f476ea3c76774e2219c5add54434266dd99fac14c850f7a550c68f309f"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158127.json",
+      "bytes": 2706,
+      "sha256": "4e8f84922c2829fe62c39978488cb700e08a17d4e12d56b467e0719deb9c5490"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104667158127.log.gz",
+      "bytes": 83508,
+      "sha256": "b849039003885cdc78630a5edc0314dc3217744713eaa27f35c877abd9f37a49"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104672233616-receipt.json",
+      "bytes": 733,
+      "sha256": "def25245cb1906726a3db4d127df0d8737f49a8924c682c1b906e4ea73c5c0e3"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104672233616.json",
+      "bytes": 2228,
+      "sha256": "423d8b2bf7cd892f96942b948c2f0a872d85be823a425c83fe4ce5b1e79373c8"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/job-104672233616.log.gz",
+      "bytes": 10516,
+      "sha256": "61d895663352469ceefbb93f896fe0be3d35510d4af1e54781c6de8061ea31e9"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/jobs.json",
+      "bytes": 18607,
+      "sha256": "e237342e078f43728726f5d22f15561e61bbc63722a59caef7aa7126340c381d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/manual/run.json",
+      "bytes": 12613,
+      "sha256": "1cb69de385611c082c92201f9704897657c3d6a3486685fa9777cfa6f77c0290"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/partition-coverage.json",
+      "bytes": 19492,
+      "sha256": "15cb707d9298d78b88dadc0d979745e3a6ec83144c72cff8c80768528b0b138f"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/.github__workflows__deploy-pages.yml.api.json",
+      "bytes": 12158,
+      "sha256": "aa28817e9fa3b85034afa0aa859f721c9a2258e727e5e44dddeddb958129d56a"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml.api.json",
+      "bytes": 7266,
+      "sha256": "2aa4cd8154785e81dcc558bc8978a62a4cc3d3c8342c7456c8289bebd2163e13"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/commit.json",
+      "bytes": 2648,
+      "sha256": "9c026bb3e22964f0db90fcc1cdbd71d45a58f88d3e4b93404c864bb61f5055a6"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/receipt.json",
+      "bytes": 2791,
+      "sha256": "b55dada73b72bfcec7665ea9005b0af000644123ae8b3e8f8b84d7c250498d20"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/scripts__check-source-identity.mjs.api.json",
+      "bytes": 11139,
+      "sha256": "be00f6f375c489b334f242cdabb40c3057bdabd7d53dd7e5f949e57db516f80c"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-automation/scripts__run-test-shard.mjs.api.json",
+      "bytes": 4816,
+      "sha256": "e602bfb12665a661b1475a0888adc25c8ccd5768706c436c0722edc4da96c57b"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-partition-coverage.json",
+      "bytes": 22259,
+      "sha256": "76dc1a00ff3bf3616f821d8f750b78aa7f2cf1ccc1b823bbb9625c474419140e"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104666844020-receipt.json",
+      "bytes": 907,
+      "sha256": "59afd2fd0a8edb28226554f26cfeea4318f8c0af422df5b12baadf4d499a15bd"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104666844020.json",
+      "bytes": 3309,
+      "sha256": "1a8bd2502c696c9ab2ec0564b140a620922c5ee600ba28b696c58136beb18663"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104666844020.log.gz",
+      "bytes": 14756,
+      "sha256": "aa2439dd520ecbab2e83a90feef1eb61b17b4f5d76aab82157c0c1aabc76a2df"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175424-receipt.json",
+      "bytes": 734,
+      "sha256": "fa541adb88858f58bdf6e053c7ccda0843641a9bf355e2bd7b6e006cd10fb0f7"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175424.json",
+      "bytes": 2955,
+      "sha256": "015bf74cfe8bd9e5724b181ec7e29653bd3980261f05257c7bb25386e8b584fa"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175424.log.gz",
+      "bytes": 9564,
+      "sha256": "b74b9afd4509b637b5b2189bcbb45ae8949d088ee127fc9ba70f0982573c1814"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175470-receipt.json",
+      "bytes": 911,
+      "sha256": "607e70963f1e0175346949acdf46eff65afd71381b86efde83920667fc097eeb"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175470.json",
+      "bytes": 2908,
+      "sha256": "159d8995d8ef534a728ba7a0837cc8edfdef1a386b795632c4843a95ae161dce"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175470.log.gz",
+      "bytes": 81339,
+      "sha256": "93fae95d267f24cace60b6653ee4d1b3f009e492d92775b3c7d72fa176d1a6e0"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175473-receipt.json",
+      "bytes": 914,
+      "sha256": "cdde9e081cb378237cf6894815398e361038a8a1b085e6271ae31efeee4f1d5f"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175473.json",
+      "bytes": 2908,
+      "sha256": "82a55a0bba3049f728881de4293b2da9888a442f173a36e1af533cf3e20f0b75"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175473.log.gz",
+      "bytes": 82711,
+      "sha256": "0db5a8c405a9dbf509151a9cc6ea3d09ff6fb9ae79e8a33bf63812e350a4e2d9"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175482-receipt.json",
+      "bytes": 911,
+      "sha256": "48cc349fbc0f43ecc981d141b1edd5a9c21a607fa467fb370c7743e6f054073d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175482.json",
+      "bytes": 2908,
+      "sha256": "5c0ea7406ebf7fbc7dbe0d12e452e3576442cfbf9c3604a13df58ebf5d1ec91e"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175482.log.gz",
+      "bytes": 85026,
+      "sha256": "00976a65b152cb731b412eeacc65d0ed20b44f8b6f62bd55e6893cb66f74b0bc"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175483-receipt.json",
+      "bytes": 914,
+      "sha256": "79a99c5fffb024b45fbd456b8b2f333488513f3d385dea0487aac8ff8abc504d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175483.json",
+      "bytes": 2908,
+      "sha256": "e68b7c825201538c32ced7fa2b025b9f57613203578d1b2db3e76027823d0b2d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/job-104667175483.log.gz",
+      "bytes": 93250,
+      "sha256": "bfb241a67aa9438709d7b68baa8429efdec652552a0380befb97e88db1f65287"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/jobs.json",
+      "bytes": 18820,
+      "sha256": "ba8eff5ade145de4aad131b5d4dfe500c683ce90e2c74234528f0807d05af249"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/pr-source/run.json",
+      "bytes": 12633,
+      "sha256": "c436bfff0ace4b1d427a9b544b6adc4441d28671e83e60c496d96b862dfe2152"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/review.json",
+      "bytes": 864,
+      "sha256": "11e1cd5aed8376ec808ea645ccd91ad31c8a4052dfda25da049d3ccd5b228f49"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/source-executed/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/source-executed/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/source-executed/receipt.json",
+      "bytes": 1361,
+      "sha256": "c9542d4af70554ef0c42dfc98812501755f6dfacee86938e1091996826da931d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/source-executed/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/source-executed/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/hosted/source-identities.json",
+      "bytes": 7839,
+      "sha256": "244f1f5c304e90089608e9b2d5bf756ec4857a2a7de17ddce1b832b17bc48396"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-bindings/automation-binding.json",
+      "bytes": 466,
+      "sha256": "b75abee20a26ef89f95de9da05b39ac814dc07268b6d62eb174957409a110392"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2474,
+      "sha256": "0d7977acef9cd01b18e1c64332ff454bf4644bce9b01a4d44e922932a0410c32"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-tools/assemble.py",
+      "bytes": 34699,
+      "sha256": "e582b4cc5c095ab84fddae1944013d92e3a86a18356d4d399269ae24db043a8b"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-tools/context.reviewed.json",
+      "bytes": 4511,
+      "sha256": "642b256683f4c1f3a01766d97c1e8ead07d4789693758beece6d42804575bc13"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-tools/qualification_context.py",
+      "bytes": 16034,
+      "sha256": "8ec6960b6bfcbcdeedba911c0d501474316298edad1849f81c9b8e735f7f6803"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-tools/review-final-qualification.py",
+      "bytes": 19507,
+      "sha256": "688d184542313fa146b21cb3b46c6d79deac4f9c0054ee321f4947fc489d6d1d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-tools/source-identity-original.json",
+      "bytes": 450,
+      "sha256": "672f48f033113b44caf3ec5f8371c3a47ee9f0d4abc64db5fd5513ff4faa8bf2"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/qualification-tools/utility-source-pins.json",
+      "bytes": 1698,
+      "sha256": "4515b35599bd55bc1419c1a84eaa9205a59e05e3a298efa250f6c82b501dac3f"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/001.json",
+      "bytes": 718,
+      "sha256": "909bfe534bd088de56429008ba03b7804bfa0b32ea73ad9f260f47dd6dce8b77"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/001.request.json",
+      "bytes": 304,
+      "sha256": "14df97ebe9ecbcf492622b788a525254d2305f2b4cdfdcecf87fa76330e84213"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/002.json",
+      "bytes": 12613,
+      "sha256": "1cb69de385611c082c92201f9704897657c3d6a3486685fa9777cfa6f77c0290"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/002.request.json",
+      "bytes": 301,
+      "sha256": "49fe9a9f7a9717f837f5164152392643f378aa36a361fde6f139045bd169fe4d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/003.json",
+      "bytes": 18607,
+      "sha256": "e237342e078f43728726f5d22f15561e61bbc63722a59caef7aa7126340c381d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/003.request.json",
+      "bytes": 326,
+      "sha256": "5e8c2ffddb7eb1ec860ac2a3ab44a221f4b94769931a2c114288649afb549a78"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/004.json",
+      "bytes": 718,
+      "sha256": "909bfe534bd088de56429008ba03b7804bfa0b32ea73ad9f260f47dd6dce8b77"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/004.request.json",
+      "bytes": 304,
+      "sha256": "4e57901b15af074110518b63863c4347a515edcb55f63053e5dc6c9d51898414"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/005.json",
+      "bytes": 12613,
+      "sha256": "1cb69de385611c082c92201f9704897657c3d6a3486685fa9777cfa6f77c0290"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/005.request.json",
+      "bytes": 301,
+      "sha256": "1e9e6d201ff1731aaad61652ad0b9f0bad1caa33e0540a22b07a99327c9c7b9d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/006.json",
+      "bytes": 18607,
+      "sha256": "e237342e078f43728726f5d22f15561e61bbc63722a59caef7aa7126340c381d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/api/006.request.json",
+      "bytes": 326,
+      "sha256": "ed86f157863f498c3734d2f5425f8cae099c1281f5bee88d5ae8177dafd0b471"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/artifact-authority.json",
+      "bytes": 801,
+      "sha256": "ad882c5574c6e8e5e6a4c29465abe1187c0bbdc4a6ac2d976a0333eea7c51b76"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/binding.json",
+      "bytes": 394,
+      "sha256": "32703f95d534aeb98d811edcaad38170c87aa0fe5a75682ee311259836988c1c"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/execution.json",
+      "bytes": 2210,
+      "sha256": "3e73daa6e568c99891b291ed416e57b89f1e915f7123831620e0fc616c252fbc"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+      "bytes": 143,
+      "sha256": "ecaf5d19b94a8561866e37111da46e73c4b80b02086d1b320e4a09bec05eaab7"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/game/index.html",
+      "bytes": 71796,
+      "sha256": "6c96304284dadcaafe336e082918c38705aeb33cf2915b69557d8c8c0ab8c368"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+      "bytes": 114829,
+      "sha256": "6801d243ea86371e8c4b34bcf7a3c3efe77b623f8726183480f0414e90d3a0b3"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/originals/service-worker.js",
+      "bytes": 106811,
+      "sha256": "0fb8c170dded19aa4fb9c053e117bcbfef8e457ba527ba42b47643a4d3ad4452"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/frozen-offline-review/review.json",
+      "bytes": 3411,
+      "sha256": "6f63e31f1a3a32f30ed7075707375b429e01a57f23b77e9bb6a864ad3991ca19"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/inspection.log",
+      "bytes": 3240,
+      "sha256": "6c33b3481aac1d386a196279d56d42f159dd319b8399b1c06b25ffdfefcba853"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/offline-review.log",
+      "bytes": 194,
+      "sha256": "e023b584bfc8de1a5c978a50674dff50adf6c129c0b8538902cfc4db8b3921f4"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "1664b1f69b3c6a5168376c84f4f7d15b3a4373831e25313f8b4643e48389951a"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "32de20c541b10675dc81d78a50983f09b118d4353d8da66bd0013430e92ccbc2"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+      "bytes": 1910,
+      "sha256": "da0eedf10fb7e258203abaea2e8147b5aa63cecff30ab4eb80df71b4e550aa5b"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+      "bytes": 121882,
+      "sha256": "3d346ee7234877c95e71b122fc586efc8d784e70595b8ecb5d9c47bd296c65f7"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/qualified-artifact-verified/release.json",
+      "bytes": 465,
+      "sha256": "fbee114b84af6fe9e7f45d2f34d328c6ee44a04366492fafa5011f448f690740"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/result.json",
+      "bytes": 548,
+      "sha256": "88fbb976b05e19bc349d098b35a05efdd4ff10b2d15301cea8ef9a2b62dbfd87"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/retained-manifest.json",
+      "bytes": 6782,
+      "sha256": "a75d5a73c6e320f8c8e151718404fc778b4a7ef543f575199e23f784a8fe878d"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/source-after.json",
+      "bytes": 159,
+      "sha256": "7ae4d418190681e2728e99dbedebe7c757c8ccf2f2f569c77c5c1e4382e8fb40"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/evidence/source-before.json",
+      "bytes": 159,
+      "sha256": "7ae4d418190681e2728e99dbedebe7c757c8ccf2f2f569c77c5c1e4382e8fb40"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/.github/workflows/qualify-release-source.yml",
+      "bytes": 9779,
+      "sha256": "1556a65202bc0e70ce84e10333df711fc863aec0f261c710b9216eb7d5b4af83"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/release_artifact.py",
+      "bytes": 29832,
+      "sha256": "f4244438c5df6a6f19d3d197cbb1d785a8a2df616c246b4f4573d4eb4c70604e"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/test_release_artifact.py",
+      "bytes": 24465,
+      "sha256": "a463527fcddee391a98f6bd833b47728091428d37358ff3c93fb24e8ced5fd5f"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/test_upload_distribution.py",
+      "bytes": 14627,
+      "sha256": "463537b0d7e6ecdc8a852134e0b1084e037f82f0d8e894167fdadee919836eda"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/test_upload_source.py",
+      "bytes": 14451,
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/upload_distribution.py",
+      "bytes": 18035,
+      "sha256": "036c8a075b1618032f63e795c9f8b622840754f85e22df55334d1638f6cd3662"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/upload_source.py",
+      "bytes": 17965,
+      "sha256": "32091bd624eb55fbfc5658432d5948cdef0445d4f989d1c0175c9b3a3da5c5c5"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/executed-helpers/publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/jobs.json",
+      "bytes": 6299,
+      "sha256": "3b45102aa416bdeca719b87e8e6be12171f4e09688011e4edd4b878475fab2e7"
+    },
+    {
+      "path": ".cache/p02a-accepted-main/utility-inspection/run.json",
+      "bytes": 12613,
+      "sha256": "0ed19fd8305e49ca25739d5dd332e2555214d69e44af86b38d04aa396f94eb8e"
+    }
+  ],
+  "limits": [
+    "Source qualification uses complete hosted suites/build and already verified frozen originals; release publication, public HTTP/browser/offline and physical-device acceptance remain separate.",
+    "Five source commands share one actual successful preflight step; no per-command exit codes or timestamps are invented.",
+    "PR coverage is authenticated exact runner semantics plus complete deterministic file partitions; no direct per-file execution event trace is claimed.",
+    "Twelve raw hosted identity boundaries verify tracked bytes/modes; these are not a continuous filesystem lock.",
+    "The game checkout is exact bound release; the separately observed executed PR workflow/automation checkout is recorded in workflowRevision/workflowTree with exact retained API/blob authority.",
+    "Literal unsharded npm test and ordinary build were not run locally. Both hosted shard families cover every pinned test file; no unsharded scheduling equivalence or local ordinary-byte/browser carry-forward is claimed."
+  ]
+}
