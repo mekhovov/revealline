@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, SoloElement } from './helpers/solo-dom.mjs';
 
 test('actual app initialization failure retains inert gameplay and does not overwrite saved profile', async (t) => {
   const storage = memoryStorage({ 'owned-profile-sentinel': 'keep my saved data' });
@@ -30,6 +30,12 @@ test('actual app initialization failure retains inert gameplay and does not over
 });
 
 test('actual app fallback readiness exposes native title without starting a flight', async (t) => {
+  const focus = SoloElement.prototype.focus;
+  t.mock.method(SoloElement.prototype, 'focus', function (...args) {
+    // Native focus cannot enter the boot-inert tree or a closed dialog. The
+    // host must choose its ready title target after that guard is removed.
+    if (!this.closest('[hidden],[inert],dialog:not([open])')) return focus.apply(this, args);
+  });
   const page = await soloPage(t, { titleScreen: true });
   for (const element of page.doc.querySelectorAll('[data-boot-inert]'))
     assert.equal(element.inert, false);

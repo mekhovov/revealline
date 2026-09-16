@@ -249,6 +249,8 @@ async function page(t, f = {}) {
 }
 async function worlds(p) {
   p.$('shell-menu').click();
+  p.$('shell-play').click();
+  p.$('shell-mode-choice').open = true;
   p.$('shell-worlds').click();
   await waitSource(p, 'Open More worlds and authenticate installed originals', {
     ready: () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
@@ -269,12 +271,36 @@ async function install(p) {
     p.$('optional-worlds-status').textContent + p.$('optional-worlds-source-state').textContent,
   );
 }
-async function choose(p) {
+async function choose(p, { replaceFlight = false } = {}) {
   const phase = `Choose and authenticate exact ${pilot.descriptor.id}`;
-  await waitSource(p, phase, {
-    operation: clickOperation(p, 'optional-worlds-source-choose'),
-    ready: () => !p.$('optional-worlds-dialog').open,
-  });
+  if (replaceFlight) {
+    const run = p.rendered.run,
+      checkpoint = authoritativeCheckpoint(run),
+      opener = p.$('optional-worlds-source-choose');
+    opener.focus();
+    await waitSource(p, `${phase}: checked replacement`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+    });
+    assert.equal(p.$('optional-worlds-dialog').open, true);
+    assert.match(p.$('mission-replace-status').textContent, /saved and verified/);
+    p.$('mission-replace-stay').click();
+    p.frame(0);
+    assert.equal(p.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(p.doc.activeElement, opener);
+    await waitSource(p, `${phase}: fresh replacement choice`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+    });
+    await clickOperation(p, 'mission-replace-confirm');
+    await settle(() => !p.$('optional-worlds-dialog').open);
+  } else
+    await waitSource(p, phase, {
+      operation: clickOperation(p, 'optional-worlds-source-choose'),
+      ready: () => !p.$('optional-worlds-dialog').open,
+    });
   // Selection starts its own picture read; a fulfilled Choose is not image readiness.
   try {
     await settle(() => p.doc.body.dataset.pictureState === 'ready');
@@ -370,7 +396,7 @@ test('native pair install preserves an unfinished unrelated flight, then separat
   assert.deepEqual(authoritativeCheckpoint(run), before);
   assert.equal(p.rendered.paused, true);
   assert.equal(p.$('pack-select').value, '');
-  await choose(p);
+  await choose(p, { replaceFlight: true });
   assert.equal(p.rendered.run.tick, 0);
   assert.equal(p.rendered.paused, true);
   assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);

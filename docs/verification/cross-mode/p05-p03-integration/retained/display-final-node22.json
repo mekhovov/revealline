@@ -1,0 +1,23 @@
+{
+  "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "sourceHoldSha256": "8c8c43b897146360e5749937988017483cb0255261f85888b75e63946b214784",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/display-preferences-host.test.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "exitCode": 0,
+  "seconds": 4.51821416686289,
+  "inputsUnchanged": true,
+  "files": [
+    "display-preferences-host.test.mjs"
+  ],
+  "log": {
+    "path": "display-final-node22.log",
+    "bytes": 2190,
+    "sha256": "027b91d1ef023b5a7b60d28806a9e9b6fab514fa26a107daaf47e2241bd7c10d"
+  }
+}

@@ -59,15 +59,25 @@ test('actual chapter selection survives reload while the other saved flight stay
       originalSave = storage.getItem(sessionKey);
       assert.equal(JSON.parse(originalSave).replay.ticks, 12);
       p.$('shell-menu').click();
-      await p.$('shell-featured').onclick();
+      p.$('shell-play').click();
+      assert.equal(p.$('shell-missions').open, true);
+      p.$('shell-prepare').click();
+      assert.equal(p.$('mission-picker-setup').open, true);
+      p.change('pack-select', 'fpv-arcade-r5');
+      await settle(
+        () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+        'The existing cut must be saved and checked before an explicit mission replacement.',
+      );
+      assert.match(p.$('mission-replace-status').textContent, /saved and verified/);
+      await p.$('mission-replace-confirm').onclick();
       assert.equal(
         p.$('pack-select').value,
         'fpv-arcade-r5',
-        p.$('shell-featured-status').textContent,
+        p.$('content-select-status').textContent,
       );
       await settle(
         () =>
-          !p.$('shell-featured').disabled &&
+          !p.$('pack-select').disabled &&
           p.$('pack-select').value === 'fpv-arcade-r5' &&
           p.doc.body.dataset.pictureState === 'ready',
       );

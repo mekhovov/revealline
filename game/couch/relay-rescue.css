@@ -205,6 +205,41 @@ h1 em {
   color: var(--muted);
   font-size: 0.8rem;
 }
+.field-kit dialog.coop-confirm-dialog {
+  box-sizing: border-box;
+  inset: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  width: min(
+    520px,
+    calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 32px)
+  );
+  max-height: calc(
+    100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px
+  );
+  margin: auto;
+  padding: clamp(20px, 4vw, 32px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--fk-text);
+  background: var(--fk-panel);
+  border: 2px solid var(--fk-control-line);
+}
+.coop-confirm-dialog h2 {
+  margin-top: 0;
+}
+.coop-confirm-dialog p {
+  overflow-wrap: anywhere;
+  line-height: var(--fk-leading-body);
+}
+.coop-confirm-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.field-kit .coop-confirm-dialog .coop-confirm-actions button {
+  min-block-size: 50px;
+  width: 100%;
+}
 .primary {
   background: var(--sun);
   color: #172426;
@@ -389,6 +424,28 @@ canvas {
   justify-content: center;
   gap: 10px;
   margin-top: 22px;
+}
+.field-kit #coop-pause-modes {
+  margin-block-start: var(--fk-space-4, 16px);
+}
+.coop-mode-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-block: 14px;
+}
+.field-kit .coop-mode-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 50px;
+  max-inline-size: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--fk-corner);
+  color: var(--ink);
+  overflow-wrap: anywhere;
 }
 .controls {
   display: grid;
@@ -735,4 +792,87 @@ kbd {
     font-size: var(--fk-text-secondary);
     line-height: 1.3;
   }
+}
+
+/* Shared display roles enlarge text without changing either player's geometry. */
+.field-kit[data-field-kit-page='relay-rescue']
+  :is(.identity, .identity strong, .identity > span, .team-status, .masthead, .eyebrow) {
+  font-size: var(--fk-text-secondary);
+  line-height: 1.35;
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.team-status > strong, #coop-clock) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-counter);
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.mode-label, .team-status) {
+  letter-spacing: normal;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity {
+  min-width: 0;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity strong {
+  overflow-wrap: anywhere;
+}
+
+/* Give each partner a readable half-row before the shared territory summary.
+   The HUD contains no controls; input order and the arena stay unchanged. */
+@media (max-width: 600px) {
+  .field-kit[data-field-kit-page='relay-rescue'] .hud {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'one two' 'team team';
+    align-items: start;
+    gap: 12px;
+    padding-block: 12px;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud > .sunflower {
+    grid-area: one;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud > .skyline {
+    grid-area: two;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud .player-number {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud .identity strong {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud .identity > span:not(.player-number) {
+    grid-column: 1 / -1;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud > .team-status {
+    grid-area: team;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-width: 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--fk-line);
+  }
+}
+
+/* Picture controls share the movable lobby/pause tools and their current root. */
+.coop-picture {
+  min-inline-size: 0;
+}
+.coop-picture p {
+  overflow-wrap: anywhere;
+}
+.coop-picture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.coop-picture-actions button {
+  min-block-size: 50px;
+}
+
+#coop-help-unit .reading-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-2);
+}
+#coop-help-unit .reading-hint {
+  margin-block: var(--fk-space-2);
+  color: var(--fk-text);
 }

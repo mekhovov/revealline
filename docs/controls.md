@@ -18,6 +18,12 @@ Verify both hands at an actual 844×390 CSS viewport, both touch sizes and text 
 
 The running fullscreen panel also resets the inherited classic/open width cap, including when its status card is hidden. Native review at 844×390 with Large text found that Tactical retained an approximately 247px parent panel; subtracting both D-pad/equipment reserves collapsed its inner board to zero. Switching controls Off exposed the narrow parent in the same flight. The correction gives running classic/open panels the same full-viewport containing block as other running states while retaining the compiled inner-board header cap. Paused layouts stay unchanged. The failed D-pad view and Off diagnosis remain evidence of the defect; [fresh native checks](research/native-dpad-clearance/review.md) show the corrected full board with Right/Regular and Left/Large controls and visible opposite equipment. Broader warning/device checks remain open.
 
+## Current keyboard capture
+
+In **Settings → Controls → Keyboard controls**, choose a preset or select **Change** beside an action. While that control is listening, physical arrow keys are candidates for the binding; they must not navigate the menu. A valid assignment returns focus to the same Change action. A duplicate or reserved key leaves capture active with its validation message. Return and Space cannot become bindings or activate another action while listening.
+
+Escape cancels capture and returns to its Change action without closing Settings. Tab cancels capture while retaining native focus traversal. After capture ends, menu arrows and native select/slider editing work normally. Remapping keeps the Ready or paused flight unchanged; it does not start or resume play. The [shared navigation contract](controller-navigation.md#keyboard-capture-ownership) explains this event boundary. This correction belongs to the unreleased v0.59.0 candidate; its final source and public gates remain in the [execution register](cross-mode-execution.md).
+
 ## Historical manual-control bindings
 
 Open **Settings → Keyboard controls** in solo play. Choose Arrows + WASD, Left hand or Right hand, or choose Change beside an action and press its new key. The assignment takes effect only after validation. Each key belongs to one action; the file format supports 1–4 aliases per action, while the capture UI replaces that action's aliases with one key. Remapping Pause retains Escape as an additional fallback.

@@ -1,0 +1,24 @@
+{
+  "display": {
+    "face": "plain",
+    "ornaments": "rich",
+    "palette": "ukrainian",
+    "size": "large"
+  },
+  "dpr": 1,
+  "focus": {
+    "id": "race-review",
+    "rect": {
+      "height": 49.6953125,
+      "width": 302,
+      "x": 44,
+      "y": 778.0625
+    },
+    "text": "View both boards"
+  },
+  "height": 844,
+  "scrollHeight": 1528,
+  "scrollWidth": 390,
+  "scrollY": 467,
+  "width": 390
+}

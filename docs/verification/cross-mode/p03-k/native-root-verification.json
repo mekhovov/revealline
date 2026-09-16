@@ -1,0 +1,56 @@
+{
+  "scope": "P03-K local native keyboard course selection; no public or phase acceptance",
+  "checkedAt": "2026-09-15T18:21:40.255718+00:00",
+  "base": "f61a249277944a5fdd50cf7d545cbb18dbd0eaf8",
+  "source": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 238950,
+      "sha256": "7cce36e0b99002072808e9b9be211b116d9f90bc342a66b4ac9d7124fc9045dd"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    }
+  ],
+  "origin": "http://127.0.0.1:59631/game/",
+  "events": 13,
+  "passed": [
+    "Title \u2192 Workshop \u2192 How to play \u2192 Learn by playing was traversed with native Tab/Enter.",
+    "Actual Start/Down/Escape produced a paused ordinary First Flight attempt. The complete displayed clock remained below one second; no exact native cut/checkpoint claim.",
+    "The paused course selector was reached by Tab. Native Space/Down/Enter selected a different lesson and opened the decision with Stay focused and active lesson restored.",
+    "Tab loops inside the decision. Escape and explicit Stay each returned to the exact selector without replacing the displayed lesson.",
+    "Explicit Prepare changed to Find the empty side at Ready, focused Start, and did not auto-start. A subsequent fresh Start entered the second lesson.",
+    "Choosing the same option did not open a decision. Explicit Skip prepared the third lesson; Return navigated to the ordinary game URL."
+  ],
+  "limits": [
+    "Desktop keyboard and browser snapshots only; no physical controller, phone/touch, zoom or short-landscape qualification.",
+    "Immediate turning was observed natively; both policies and queued-cut conservation are separately tested with the real host and modeled DOM.",
+    "No native saved-slot byte inspection, award claim, error preparation, background-return or public-deployment claim.",
+    "Course selector scrolling can leave the document scrolled when the Ready screen is focused; shared layout/viewport qualification remains P05/P18.",
+    "Sequential snapshot/DOM reads are not atomic. Boot transitions are annotated in the event record."
+  ],
+  "artifacts": [
+    {
+      "path": "events.json",
+      "bytes": 27106,
+      "sha256": "188b3c59b610dbc3bd01d97da4afb4e76f94985bb9f6dc95aeda03692dae51cd"
+    },
+    {
+      "path": "lesson-decision.jpeg",
+      "bytes": 49329,
+      "sha256": "1c75cba1c59af89df2023e2b809bd59504fc97ec489eadf9d855206115c58673"
+    },
+    {
+      "path": "lesson-ready.jpeg",
+      "bytes": 51206,
+      "sha256": "d2828d0bbcae17ade944aa79e2c0a25c0399d9ff82e01042cbe294896c26d9f8"
+    },
+    {
+      "path": "paused-tab-trace.json",
+      "bytes": 503,
+      "sha256": "13ea1fa3549762bce231507fadff5192d615c7ba031a8412cd1b45d987d9e995"
+    }
+  ]
+}

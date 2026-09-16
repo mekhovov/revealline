@@ -293,37 +293,81 @@ test('a failed older-card request preserves a paused cut and its disclosure; a n
   });
   page.$('pack-select').addEventListener('change', () => changes++);
   const target = card(page, oldIds[0]);
+  target.focus();
   target.click();
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  assert.equal(requests, 0, 'A chapter request waits for the explicit replacement decision');
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  // Checked replacement refreshes savedAt before any download. Every other
+  // saved-session field and storage entry must remain exactly the same.
+  const beforeSave = JSON.parse(stored.get(sessionKey)),
+    checkedRaw = page.storage.getItem(sessionKey),
+    checkedSave = JSON.parse(checkedRaw);
+  assert.equal(typeof checkedSave.savedAt, 'string');
+  assert.ok(Date.parse(checkedSave.savedAt) >= Date.parse(beforeSave.savedAt));
+  assert.deepEqual({ ...checkedSave, savedAt: beforeSave.savedAt }, beforeSave);
+  const requestStored = new Map(stored).set(sessionKey, checkedRaw),
+    requestWrites = page.storage.writes.length;
+  assert.deepEqual(page.storage.map, requestStored);
+  page.$('mission-replace-confirm').click();
+  await settle(() => requests === 1);
   assert.equal(page.$('pack-select').disabled, true);
   target.click();
   card(page, oldIds[1]).click();
   assert.equal(changes, 1);
   assert.equal(requests, 1);
-  summary.focus();
   rejectRequest(new TypeError('Failed to fetch'));
-  await settle(() => !page.$('pack-select').disabled);
+  await settle(() => !page.$('mission-replace-dialog').open && !page.$('pack-select').disabled);
+  assert.equal(page.doc.activeElement, target, 'Failed replacement returns to its chapter card');
+  summary.focus();
   attachMissionPicker({ document: page.doc }).sync();
   page.frame(0);
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
-  assert.deepEqual(page.storage.map, stored);
+  assert.deepEqual(page.storage.map, requestStored);
+  assert.equal(page.storage.writes.length, requestWrites);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.$('mission-picker-older').open, true);
   assert.equal(page.doc.activeElement, summary);
   assert.match(page.$('content-select-status').textContent, /Connect to the internet/);
+  target.focus();
   target.click();
-  assert.equal(requests, 2);
-  page.$('restart-button').click();
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  page.$('mission-replace-confirm').click();
+  await settle(() => requests === 2);
+  // Stay cancels the pending download before a new, visible Restart decision.
+  // Background controls cannot replace a flight behind the active dialog.
+  page.$('mission-replace-stay').click();
+  assert.equal(page.$('mission-replace-dialog').open, false);
+  assert.equal(page.$('pack-select').disabled, false);
+  page.$('shell-missions-back').click();
+  assert.equal(page.$('shell-missions').open, false);
+  page.$('overlay-restart').click();
+  assert.equal(page.$('restart-dialog').open, true);
+  assert.equal(page.rendered.run, run, 'Opening Restart does not replace the paused flight');
+  page.$('restart-confirm').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.$('pause-button').click();
   page.frame(0);
-  const newer = page.rendered.run,
-    newerCheckpoint = authoritativeCheckpoint(newer),
-    status = page.$('content-select-status').textContent;
+  const newer = page.rendered.run;
+  assert.notEqual(newer, run, 'Only the confirmed restart creates the newer attempt');
+  page.$('shell-packs').click();
+  page.frame(0);
+  const newerCheckpoint = authoritativeCheckpoint(newer),
+    status = page.$('content-select-status').textContent,
+    newerStored = new Map(page.storage.map);
   summary.focus();
   rejectRequest(new TypeError('Failed to fetch'));
   await new Promise((resolve) => setImmediate(resolve));
   page.frame(0);
   assert.equal(page.rendered.run, newer);
   assert.deepEqual(authoritativeCheckpoint(newer), newerCheckpoint);
+  assert.deepEqual(page.storage.map, newerStored);
   assert.equal(page.$('content-select-status').textContent, status);
   assert.equal(page.doc.activeElement, summary);
   assert.deepEqual(page.errors, []);

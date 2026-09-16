@@ -1,0 +1,293 @@
+{
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "candidateCommitted": false,
+  "scope": "P03 A2 exact local source and complete affected-file tests; no version, phase, full-source CI, native, public/offline or device acceptance inferred.",
+  "runs": [
+    {
+      "node": "22.22.2",
+      "group": "primary",
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test game/test/mode-return.test.mjs game/test/mode-return-v2.test.mjs game/test/mode-return-host.test.mjs game/test/couch-departure.test.mjs game/test/couch-shell.test.mjs game/test/couch-navigation.test.mjs",
+      "counts": {
+        "tests": 194,
+        "pass": 194,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 46755.588667,
+      "log": {
+        "path": ".cache/p03a2-mode-return/complete-primary-node22.log",
+        "bytes": 47431,
+        "sha256": "339d3d85a42a87557f8663a95341d253048426a2bdff15474ae12a9f2475be31"
+      },
+      "observedProcessExit": 0
+    },
+    {
+      "node": "22.22.2",
+      "group": "retention",
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test game/test/storage-retention.test.mjs game/test/storage-retention-host.test.mjs game/test/mission-replacement-host.test.mjs game/test/starting-setup-host.test.mjs game/test/restart-navigation-host.test.mjs game/test/course-selection-host.test.mjs game/test/controller-navigation.test.mjs game/test/couch-input.test.mjs",
+      "counts": {
+        "tests": 161,
+        "pass": 161,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 43448.134625,
+      "log": {
+        "path": ".cache/p03a2-mode-return/complete-retention-fixtures-node22.log",
+        "bytes": 39312,
+        "sha256": "c9ee6cc42c63ec515faa5597a995d04bf6567d8d24f664f7d1791d5ab4bed5b5"
+      },
+      "observedProcessExit": 0
+    },
+    {
+      "node": "20.19.5",
+      "group": "primary",
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test game/test/mode-return.test.mjs game/test/mode-return-v2.test.mjs game/test/mode-return-host.test.mjs game/test/couch-departure.test.mjs game/test/couch-shell.test.mjs game/test/couch-navigation.test.mjs",
+      "counts": {
+        "tests": 194,
+        "pass": 194,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 131801.76925,
+      "log": {
+        "path": ".cache/p03a2-mode-return/complete-primary-node20.log",
+        "bytes": 44409,
+        "sha256": "995c8093aabbca11dd4927ba6d1604500f3adcdab380247ae2efe24a412276f0"
+      },
+      "observedProcessExit": 0
+    },
+    {
+      "node": "20.19.5",
+      "group": "retention",
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test game/test/storage-retention.test.mjs game/test/storage-retention-host.test.mjs game/test/mission-replacement-host.test.mjs game/test/starting-setup-host.test.mjs game/test/restart-navigation-host.test.mjs game/test/course-selection-host.test.mjs game/test/controller-navigation.test.mjs game/test/couch-input.test.mjs",
+      "counts": {
+        "tests": 161,
+        "pass": 161,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "durationMs": 61343.638459,
+      "log": {
+        "path": ".cache/p03a2-mode-return/complete-retention-node20.log",
+        "bytes": 36921,
+        "sha256": "c1782cc951d6cb19c4edbc7214e684e38115d05ef5a27b87ce00864d562d5f26"
+      },
+      "observedProcessExit": 0
+    }
+  ],
+  "totalPerRuntime": 355,
+  "testFiles": [
+    {
+      "path": "game/test/mode-return.test.mjs",
+      "bytes": 12021,
+      "sha256": "37476839dd63e435c69c5c8821633d1d712755a68c85a81dffed18e232a4b5fd"
+    },
+    {
+      "path": "game/test/mode-return-v2.test.mjs",
+      "bytes": 10306,
+      "sha256": "4ee3e01979d0f40e92c669e2186b59a5ba3999d5ce13a14be3b28eadee641ea2"
+    },
+    {
+      "path": "game/test/mode-return-host.test.mjs",
+      "bytes": 21258,
+      "sha256": "f58d22c4fd25bfb98d40d2b66ac0284c69795ac94e4a336a50cd1c6439fbda45"
+    },
+    {
+      "path": "game/test/couch-departure.test.mjs",
+      "bytes": 8758,
+      "sha256": "a677e4f75ea8de4838315d607720d5edf0b90c70bbfcbf5c3f2ffd57b33a5847"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16573,
+      "sha256": "6178fe42c7926e16d4f1b911788b3fb0eb99d57f10da16856d9947a1378775e4"
+    },
+    {
+      "path": "game/test/couch-navigation.test.mjs",
+      "bytes": 22762,
+      "sha256": "77cc3897f2c190d0cf6dfb84dc57014f0d863c0c5916fa23f27b378b306eef01"
+    },
+    {
+      "path": "game/test/storage-retention.test.mjs",
+      "bytes": 6541,
+      "sha256": "a3c13eea60f95dc5fa936103aafc5b331e997c0eff3275a4ba817aa8ec0e93a3"
+    },
+    {
+      "path": "game/test/storage-retention-host.test.mjs",
+      "bytes": 5850,
+      "sha256": "b36d9a015043cf485d4f3d40d23468b4d43dbbc9949d520e1377e54112a0bc59"
+    },
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "bytes": 17766,
+      "sha256": "4b1b73ebce3ed6bc6a012904a0d895370cc1dc95a3d345b8e9c93a7d999ce808"
+    },
+    {
+      "path": "game/test/starting-setup-host.test.mjs",
+      "bytes": 20211,
+      "sha256": "f8c01835d74425530e1d91ecbfce4d6e676acc33efee10289fc13ab940b3daaa"
+    },
+    {
+      "path": "game/test/restart-navigation-host.test.mjs",
+      "bytes": 10733,
+      "sha256": "8d4b02034f63a69bd8d57a6c23d45b3d306ebb8c671facdba285e820e0af4fd2"
+    },
+    {
+      "path": "game/test/course-selection-host.test.mjs",
+      "bytes": 8591,
+      "sha256": "83c4f2c9af28926fabfc9410b61dd5b54340502a1cae93619b2095d574f66bfa"
+    },
+    {
+      "path": "game/test/controller-navigation.test.mjs",
+      "bytes": 54544,
+      "sha256": "cf104327dc9ef8d14df1936004d1716be22d1caab90e5ef13efe2ebc8792f8a2"
+    },
+    {
+      "path": "game/test/couch-input.test.mjs",
+      "bytes": 17306,
+      "sha256": "a5daf52e5648a770bfb03807e9356df521fdfeea43957788c4c2313cea798bc9"
+    }
+  ],
+  "source": {
+    "path": ".cache/p03a2-mode-return/source-final.json",
+    "bytes": 2208,
+    "sha256": "427ad03bcaf70a571a68a8221b93e6e593465c0f20c4c94670bd7bb0d709b419"
+  },
+  "unchangedBaselineMaterializedLeavesChecked": 263,
+  "unchangedBaselineAuthority": {
+    "path": ".cache/finite-setup/admission.json",
+    "bytes": 67633,
+    "sha256": "fa0af9ee9bfd509f4f7513fd254a4a5c89c8e51672fb32f6cdacf96c7d887b24"
+  },
+  "static": [
+    {
+      "path": ".cache/p03a2-mode-return/eslint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/prettier.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/docs-format-final.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/diff-check-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/register-baseline-format.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/register-current-format.log",
+      "bytes": 8,
+      "sha256": "e2d8f47fd0046edfaf67d91dc91f5da9e2d1e591270c3e242a1eec088d0cc9f9"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/register-final-format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/register-format-boundary.json",
+      "bytes": 472,
+      "sha256": "800b36c38b53aa7ef27f568ebbd170ffd2444d957d897e2455374c2179c08444"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/register-format.diff",
+      "bytes": 1511,
+      "sha256": "f30e3d82af85cedabbdef1674fc0ffac00942386da96ff922a473dbd04dff09d"
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".cache/p03a2-mode-return/source-held.json",
+      "bytes": 1682,
+      "sha256": "55756dc7ea57b33b68cb8e8f53d8e6b3fa3ba7d3210fb3038bb378e2c63d49a6"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/source-held.diff",
+      "bytes": 52316,
+      "sha256": "62fe074ea4109cf6f0bccc91d74a724701dfa780d09f4c120e617ae3fafb0bc4"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/source-final.json",
+      "bytes": 2208,
+      "sha256": "427ad03bcaf70a571a68a8221b93e6e593465c0f20c4c94670bd7bb0d709b419"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/source-final.diff",
+      "bytes": 63252,
+      "sha256": "36542b3fd6c6f9fd7b00cf3dd1b73731185d5b35c020fc861b7af3ebf19ed69f"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/additional-fixtures.json",
+      "bytes": 230,
+      "sha256": "b3cf4e18c83780df7b7a0e6a887a8705a85aac078bc6261fa3ee600e6b0dff31"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/retention-fixtures.json",
+      "bytes": 570,
+      "sha256": "bfe2ecd6ba2830aff4570bf705e4c72be2507eaf9b7245161ea216529b317efe"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/host-initial-node22.log",
+      "bytes": 11526,
+      "sha256": "623d60b3173fb1f0cdd116b6bc13cf483a14474aaa4292be2bff8c064f0f5456"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/host-unit-successor-node22.log",
+      "bytes": 28289,
+      "sha256": "345ac4c6c8da4200844de62fa4883166a719c97369046d8c29f2a9e3dd6c8ecc"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/complete-retention-node22.log",
+      "bytes": 43780,
+      "sha256": "3929ee0146b8540b0173e1768283cd8c5c75203ec1ffb95757ffd34069318101"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/native-preview-binding.json",
+      "bytes": 1099,
+      "sha256": "94c849c1f56660a6778b871f2fead4c02fdecf38bbbb40ba4dcd5e9aae603d31"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/preview-http-check.json",
+      "bytes": 1477,
+      "sha256": "5265b0b79d29b4bb81c09056d3a6e1246780f59e386932cc711fde4ead224a44"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/serve-native.py",
+      "bytes": 3148,
+      "sha256": "e5b34e6d1e6e5ecf2988d375c1c5ace61199e5fc51d6189f2eac7a371c92c932"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/preview-plan.md",
+      "bytes": 1986,
+      "sha256": "993f7418228747f16e3dfa7e83341870c966a074d496b50aa8b41390efd454ce"
+    }
+  ],
+  "qualifications": [
+    "Initial 52-case host and 114-case host/unit passes precede final actual-Couch-host coverage and are not additive.",
+    "Initial 161-case retained-navigation execution was 155 passing / six failures because two exact baseline pack leaves were absent; original raw log is retained. Restoring those 18004 bytes changed no runtime or test assertion. Final complete eight-file rerun is 161/161.",
+    "One initial extra blank line in the authored register append caused its format check refusal; corrected only that authored whitespace. Original baseline was formatted; no formatting exception is claimed.",
+    "Source peer Lagrange reported no blocker for all nine held runtime/test pins. Native root review is pending and separately owned."
+  ],
+  "bounds": {
+    "ownedRegularBytesBeforeReceipt": 16045651,
+    "ownedCapBytes": 104857600,
+    "freeBytes": 699924480,
+    "reserveBytes": 268435456
+  }
+}

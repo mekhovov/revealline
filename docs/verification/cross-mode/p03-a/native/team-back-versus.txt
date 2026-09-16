@@ -1,0 +1,31 @@
+Browser tab: 431, Title: "Couch race · Reveal Line", URL: "http://127.0.0.1:60366/game/couch/".
+1 AXWebArea Couch race · Reveal Line, URL: 127.0.0.1:60366/game/couch/
+	2 container race-shell
+		3 container Two boards. One race., ID: race-main
+			4 text REVEAL LINE / LOCAL TWO PLAYER
+			5 heading Two boards. One race., Value: 1, ID: race-title
+				6 text Two boards. One race.
+			7 text Both boards use the same map, class and seed. Ready when you are.
+			8 text FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds
+			9 container
+				10 text PLAYER 1
+				11 heading Sunflower, Value: 2
+					12 text Sunflower
+				13 text W A S D
+			14 container
+				15 text PLAYER 2
+				16 heading Skyline, Value: 2
+					17 text Skyline
+				18 text Arrow keys
+			19 link Description: Relay Rescue · team up, Value: 127.0.0.1:60366/game/couch/relay-rescue.html?return=versus, ID: race-coop
+			20 button Start round ↗, ID: race-start
+				21 text Start round ↗
+			22 button Race setup, ID: race-focus
+			23 button Options, ID: race-options
+			24 button How to play, ID: race-help
+				25 text How to play
+			26 link Description: Return to solo, Value: 127.0.0.1:60366/game/, ID: race-solo-return
+			27 text First to two rounds. Couch races do not change your solo progress.
+		28 text Connect a controller and use it while this page is visible. Keyboard and touch remain available.
+
+The focused UI element is 1 AXWebArea Couch race · Reveal Line, URL: 127.0.0.1:60366/game/couch/

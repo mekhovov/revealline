@@ -37,11 +37,11 @@ const sources = {
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: 'dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0',
+    sha256: 'fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a',
     evidence: [
-      'Scoped P01 recovery-layout review: docs/verification/cross-mode/p01/recovery-layout-recipe-review.md; screen recipe inputs sha256:dd485d897456b7eeea1e435cf44975ec785d8502177de655a57f5bfdbfb054f0. Only shared surface rules for visible flight preparation change: control typography, available landscape width, spacing and scroll fallback. Other backdrop declarations and original artwork remain unchanged; their existing functional approval is retained in immutable successors.',
-      'Native source 0b368297: R5 Standard and R6 actual Large text at 390x844 and 844x390 show the complete reason and enabled Export/Reload controls without manual scrolling. Export through Library returns to the same error and focus; direct product Reload returns to the saved Orchard Continue screen. Original failed layout, header guard refusal and native select attempts remain distinct evidence in docs/verification/cross-mode/p01/recovery-layout/.',
-      'This CSS correction changes no simulation, operation owner, input or persistence code. Retained endpoint comparisons preserve the saved checkpoint and original media. The integrated flight/history host regression passes 25/25 on its pinned runtime; exact final-source gates and public verification remain separate. This is scoped browser and source review, not physical-device qualification, P01 acceptance or later cross-mode map approval.',
+      'Scoped P03 source review: docs/verification/cross-mode/p03/recipe-review.md; screen recipe inputs sha256:fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a. The only screen-input change from published P02 is the disabled Versus menu-action rule: muted text, panel background and dashed border. Prior backdrop declarations, artwork and P01 recovery rules remain unchanged; their historical records are preserved.',
+      'Source-browser observations at beb0140e with fpv25: actual Versus Next showed disabled Next and focused Cancel during picture preparation, then started both boards. Keyboard Help, Back, Options and explicit Resume were exercised in Solo, Versus and Team. Team reading controls fit 390x844 and 844x390; scoped observations and the source-bound HTTP audit are retained in docs/verification/cross-mode/p03/native/.',
+      'This approves the bounded screen-recipe change, not full P03 completion. Screenshots were inspected inline in the CUA conversation without exported image artifacts. Physical touch/controllers, native foreground switching, complete presentation parity and final public-release journeys remain separate gates.',
     ],
   },
   ui: {
@@ -61,11 +61,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: '7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b',
+    sha256: '39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554',
     evidence: [
-      'Scoped v0.54 source review: authoring/motion-lab/render-character.mjs and game/ui/actor-presentation.mjs sha256:7497071ce73d4bf300257e08686ba4a54416e6e6d7154e9089c96e9fc9cfb13b. The correction preserves the Field Kit rotor recipe contract while aligning the geometry/body-record call order.',
-      'game/test/enemy-body-motion.test.mjs and game/test/presentation-renderer.test.mjs cover supplied body geometry, rotor placement and contact markers for this exact renderer path.',
-      'Prior held-board visual context: docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png; the source fingerprint above, not that screenshot alone, defines this approval.',
+      'Scoped P03 source review: docs/verification/cross-mode/p03/recipe-review.md; motion recipe inputs sha256:39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554. The only motion-input change adds optional finite cosmetic bodyOffset to drawPresentedActor. Body, rotor and badge translate together; the contact footprint remains at the real frame position. Ordinary callers retain their original transform path.',
+      'The retained Team cohort covers actual presentation bindings, layout and separate contact positions; 205/205 passed on Node20.19.5 and Node22.22.2 at the recorded working inputs. Source-browser Team and both Versus boards loaded the exact original artwork. These observations do not constitute a complete animation-set, physical-size or motion-comfort audit.',
+      'All original image payloads, rotor recipes, source sizes and previous approvals remain in immutable history. The measured fpv25 source stage is preserved before this scoped review successor. Full source and public qualification remain separate.',
     ],
   },
   effects: {

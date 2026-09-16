@@ -21,6 +21,9 @@ async function classicPage(t, options = {}) {
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
   const page = await soloPage(t, options);
   page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="packs"]').click();
+  assert.equal(page.$('library-dialog').open, true);
+  assert.equal(page.$('library-packs').hidden, false);
   const arcade = structuredClone(classic);
   arcade.campaigns[0].levels[0].classic.arcadeActions = { version: 'arcade-actions.v1' };
   page.$('pack-json').value = JSON.stringify(arcade);
@@ -32,7 +35,20 @@ async function classicPage(t, options = {}) {
     .find((button) => button.textContent === `Play ${classic.campaigns[0].title}`);
   assert.ok(play);
   play.click();
+  await settle(
+    () =>
+      !page.$('library-dialog').open &&
+      page.$('pack-select').value === classic.id &&
+      page.doc.body.dataset.pictureState === 'ready' &&
+      !page.$('start-button').disabled,
+    'Visible installed campaign launch completes before input testing',
+  );
   page.frame(0);
+  assert.equal(page.rendered.run.levelId, arcade.campaigns[0].levels[0].id);
+  assert.equal(page.doc.body.dataset.flightState, 'briefing');
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.$('game-overlay').dataset.kind, 'ready');
   return page;
 }
 async function setup(t) {

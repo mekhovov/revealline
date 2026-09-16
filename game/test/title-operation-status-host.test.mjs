@@ -48,7 +48,7 @@ async function selectBase(page) {
   await settle(() => page.doc.body.dataset.pictureState === 'ready');
 }
 
-test('completed Base flight does not retain its old selection message beside featured Deploy', async (t) => {
+test('completed Base flight does not retain its old selection message beside the named Title Start', async (t) => {
   const page = await basePage(t);
   await selectBase(page);
   page.$('start-button').click();
@@ -61,7 +61,7 @@ test('completed Base flight does not retain its old selection message beside fea
   page.$('shell-menu').click();
   assert.equal(page.$('shell-continue').hidden, true);
   assert.equal(page.$('shell-featured').hidden, false);
-  assert.equal(page.$('shell-destination').textContent, 'Deploy · Pressure Lines / Arcade');
+  assert.equal(page.$('shell-destination').textContent, 'Start · Base return');
   assert.equal(page.$('shell-featured-status').hidden, true);
   assert.equal(
     page.$('content-select-status').textContent,
@@ -97,19 +97,23 @@ test('a paused Base flight keeps its actual Continue destination', async (t) => 
   assert.deepEqual(page.errors, []);
 });
 
-test('failed featured selection remains visible after leaving and reopening the title', async (t) => {
+test('failed explicit Missions chapter selection remains visible after leaving and reopening the title', async (t) => {
   let attempted = false;
   const page = await basePage(t, {
     fetchJSON(path) {
       if (path === 'content/packs/fpv-arcade-r5.json') {
         attempted = true;
-        throw new Error('Featured chapter unavailable in this test');
+        throw new Error('Requested chapter unavailable in this test');
       }
     },
   });
-  page.$('shell-featured').click();
-  await settle(() => !page.$('shell-featured').disabled, 'Featured failure must settle');
-  assert.equal(attempted, true, 'Deploy still requests its actual Pressure Lines pack');
+  const run = page.rendered.run,
+    tick = run.tick,
+    saved = page.storage.getItem('revealline.suspended.dev.v1');
+  page.$('shell-play').click();
+  page.change('pack-select', 'fpv-arcade-r5');
+  await settle(() => !page.$('pack-select').disabled, 'Requested chapter failure must settle');
+  assert.equal(attempted, true, 'The explicit Missions choice requests Pressure Lines');
   const status = page.$('shell-featured-status');
   assert.equal(status.dataset.kind, 'error');
   assert.equal(
@@ -118,6 +122,10 @@ test('failed featured selection remains visible after leaving and reopening the 
   );
   assert.equal(status.hidden, false);
   const message = status.textContent;
+  page.$('shell-missions-back').click();
+  assert.equal(page.$('shell-home').open, true);
+  assert.equal(status.hidden, false);
+  assert.equal(status.textContent, message);
   page.$('shell-play').click();
   page.$('shell-missions-back').click();
   assert.equal(page.$('shell-home').open, true);
@@ -125,5 +133,10 @@ test('failed featured selection remains visible after leaving and reopening the 
   assert.equal(status.textContent, message);
   assert.equal(page.$('content-select-status').textContent, message);
   assert.equal(page.$('pack-select').value, '');
+  page.frame(0);
+  assert.equal(page.rendered.run === run, true, 'Failed chapter preparation keeps the actual run');
+  assert.equal(page.rendered.run.tick, tick);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), saved);
   assert.deepEqual(page.errors, []);
 });

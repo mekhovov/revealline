@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/menu-appearance.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
@@ -126,6 +128,7 @@
         <p id="race-preparation" hidden></p>
         <p id="race-presentation-status" hidden></p>
         <section id="race-main" class="race-screen" aria-labelledby="race-title">
+          <nav id="race-mode-choices" aria-label="Game mode"></nav>
           <p class="race-kicker">REVEAL LINE / LOCAL TWO PLAYER</p>
           <h1 class="field-kit-display" id="race-title">Two boards.<br />One race.</h1>
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
@@ -145,11 +148,12 @@
             </article>
           </div>
           <div class="race-menu-actions">
-            <a id="race-coop" class="race-primary" href="relay-rescue.html"
+            <a id="race-coop" class="race-primary" href="relay-rescue.html?return=versus"
               >Relay Rescue · team up</a
             >
             <button id="race-start" class="race-primary" type="button">Start round</button>
-            <button id="race-chapter-retry" type="button" hidden>Retry chapter picture</button>
+            <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
+            <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
             <button id="race-focus" type="button">Race setup</button>
             <button id="race-options" type="button">Options</button>
             <button id="race-help" type="button">How to play</button>
@@ -203,12 +207,32 @@
           <p class="race-kicker">MAKE YOURSELF AT HOME</p>
           <h1 id="race-options-title" data-field-kit-copy="settings.couchTitle">Flight settings</h1>
           <label class="field-kit-page-text"
+            >Text style<select id="race-text-face">
+              <option value="pixel">Theme font</option>
+              <option value="plain">Plain</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
             ><span data-field-kit-copy="display.textSize">Text size</span
-            ><select data-field-kit-text-size>
+            ><select id="race-text-size">
               <option value="standard" data-field-kit-copy="display.standard">Standard</option>
               <option value="large" data-field-kit-copy="display.large">Large</option>
             </select></label
           >
+          <label class="field-kit-page-text"
+            >Menu colours<select id="race-menu-palette">
+              <option value="auto">Automatic</option>
+              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
+            >Menu ornaments<select id="race-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="race-menu-style-status" class="micro-note" role="status"></p>
           <div class="race-fields">
             <label
               >Player 1 touch controls<select id="race-touch-0">
@@ -235,6 +259,8 @@
           <label class="race-check"
             ><input id="race-reduced" type="checkbox" /> Reduced effects</label
           >
+          <p id="race-system-reduction" class="setting-note"></p>
+          <p id="race-display-status" class="setting-note" role="status"></p>
           <button id="race-audio" type="button">Unmute sound</button>
           <label for="race-master-volume">Master sound volume</label>
           <input id="race-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
@@ -254,41 +280,50 @@
         >
           <p class="race-kicker">FIND YOUR OWN LINE</p>
           <h1 id="race-help-title">How to play</h1>
-          <button id="race-help-read" type="button">Read controls</button>
-          <div
-            id="race-help-reading"
-            role="region"
-            aria-label="Couch controls and rules"
-            tabindex="0"
-            data-game-reading
-          >
-            <p>
-              Leave the safe edge, draw a line, and return to safety to capture territory. Avoid
-              enemies touching you or your unfinished line.
-            </p>
-            <p>
-              A direction keeps moving after release. Turn with a fresh direction. Capture and
-              recovery stop that player's movement; choose a fresh direction to leave again.
-            </p>
-            <div class="race-seats">
-              <article class="seat sun">
-                <h2>Player 1</h2>
-                <p id="race-help-0"></p>
-              </article>
-              <article class="seat sky">
-                <h2>Player 2</h2>
-                <p id="race-help-1"></p>
-              </article>
+          <div id="race-help-unit">
+            <div class="reading-toolbar">
+              <button id="race-help-read" type="button">Read controls</button>
+              <button id="race-help-reading-done" type="button" disabled>Done reading</button>
             </div>
-            <p id="race-controller-help"></p>
-            <p>
-              Escape or either controller's Menu pauses both boards. Resume is always explicit. Each
-              controller needs neutral controls before it can join or resume.
+            <p id="race-help-reading-hint" class="reading-hint" role="status">
+              Read without starting or resuming.
             </p>
-            <p>
-              First clear wins the round. At the time limit: coverage, then lives, then score
-              decide. First to two round wins takes the match.
-            </p>
+            <div
+              id="race-help-reading"
+              aria-describedby="race-help-reading-hint"
+              role="region"
+              aria-label="Couch controls and rules"
+              tabindex="0"
+              data-game-reading
+            >
+              <p>
+                Leave the safe edge, draw a line, and return to safety to capture territory. Avoid
+                enemies touching you or your unfinished line.
+              </p>
+              <p>
+                A direction keeps moving after release. Turn with a fresh direction. Capture and
+                recovery stop that player's movement; choose a fresh direction to leave again.
+              </p>
+              <div class="race-seats">
+                <article class="seat sun">
+                  <h2>Player 1</h2>
+                  <p id="race-help-0"></p>
+                </article>
+                <article class="seat sky">
+                  <h2>Player 2</h2>
+                  <p id="race-help-1"></p>
+                </article>
+              </div>
+              <p id="race-controller-help"></p>
+              <p>
+                Escape or either controller's Menu pauses both boards. Resume is always explicit.
+                Each controller needs neutral controls before it can join or resume.
+              </p>
+              <p>
+                First clear wins the round. At the time limit: coverage, then lives, then score
+                decide. First to two round wins takes the match.
+              </p>
+            </div>
           </div>
           <button id="race-help-back" type="button">Back</button>
         </section>
@@ -315,10 +350,8 @@
           hidden
           inert
         >
-          <h1 id="race-leave-title">Return to solo?</h1>
-          <p>
-            This couch match is not saved when you leave. Your separate solo flight stays saved.
-          </p>
+          <h1 id="race-leave-title">Leave this Versus attempt?</h1>
+          <p id="race-leave-copy">This attempt is only kept on this page and is not saved.</p>
           <button id="race-leave-back" class="race-primary" type="button">Stay here</button
           ><a id="race-leave" href="../">Leave couch · return to solo</a>
         </section>

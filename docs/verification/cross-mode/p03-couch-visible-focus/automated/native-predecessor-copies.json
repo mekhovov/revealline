@@ -1,0 +1,126 @@
+{
+  "source": "063ff5d650b6e071d2b59e89fa6e9fb5058b3f08",
+  "scope": "Exact original native predecessor bytes; root inspected images. This agent reconciled bytes/metadata only. Not corrected-source proof. Event 05 actual key was Shift+Tab, as review clarifies.",
+  "files": [
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/01.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/01.json",
+      "path": "01.json",
+      "bytes": 567,
+      "sha256": "c9141353dd33a74b00cce4212b266468b86254cc5792053a8a5afc2df33e3f02"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/01.png",
+      "retained": ".cache/couch-visible-focus/native-predecessor/01.png",
+      "path": "01.png",
+      "bytes": 45186,
+      "sha256": "ab1a7c5f3c4626acc3eb7de0e9ed892f4392abdb6516bf0be4ba93324a3e370a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/01.txt",
+      "retained": ".cache/couch-visible-focus/native-predecessor/01.txt",
+      "path": "01.txt",
+      "bytes": 218,
+      "sha256": "3579974bb26b5dc9751319434db06e950dca2a9bda384ce0a7e277c6d743f00d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/02.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/02.json",
+      "path": "02.json",
+      "bytes": 595,
+      "sha256": "9141d7644307db73ff5f4ac4a9d702bf1920694a43732a3b9a182b7c5a0b09b3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/02.png",
+      "retained": ".cache/couch-visible-focus/native-predecessor/02.png",
+      "path": "02.png",
+      "bytes": 47932,
+      "sha256": "22b5621ee7b2336847e4cb7d1d116dfc0473c9dbb4f471f5a393d209c0a0bb28"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/02.txt",
+      "retained": ".cache/couch-visible-focus/native-predecessor/02.txt",
+      "path": "02.txt",
+      "bytes": 893,
+      "sha256": "0e006c540dcbff308d39f055495ba6a5a2e9087725905fb5b15f0ff4e8e8de7e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/03.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/03.json",
+      "path": "03.json",
+      "bytes": 591,
+      "sha256": "be2f5d1edcdf197646c0264457123f2e25668ad568142f1a5273b0525c860d6a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/03.png",
+      "retained": ".cache/couch-visible-focus/native-predecessor/03.png",
+      "path": "03.png",
+      "bytes": 42822,
+      "sha256": "a6dc418562ebdfb09327fc3ac0399d90b075bfb96d522e500866fe2a9efa1c96"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/03.txt",
+      "retained": ".cache/couch-visible-focus/native-predecessor/03.txt",
+      "path": "03.txt",
+      "bytes": 936,
+      "sha256": "421f6c65fb86e9ac754682b9790b0743fce87126e53f474b0163b8fd1ff44910"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/04.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/04.json",
+      "path": "04.json",
+      "bytes": 566,
+      "sha256": "39b6fdfbdc8a71746c0cc1235ccd92507775ae7b7a9052039be6571e3dca2621"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/04.png",
+      "retained": ".cache/couch-visible-focus/native-predecessor/04.png",
+      "path": "04.png",
+      "bytes": 34745,
+      "sha256": "ce983dff4e174dfcca3ae8980afdb06f251fec6a2318abce4f6cc564fcf4eb3b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/04.txt",
+      "retained": ".cache/couch-visible-focus/native-predecessor/04.txt",
+      "path": "04.txt",
+      "bytes": 1712,
+      "sha256": "26094c59546e05a82bbf83cd1e2ffca3108783316e1b44ab1bd94f46b34b45af"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/05.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/05.json",
+      "path": "05.json",
+      "bytes": 559,
+      "sha256": "0b1453cd9316ccb49b58fc9939f2c8e8ebd8728caa5ada9fdb94cd7b0166068e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/05.png",
+      "retained": ".cache/couch-visible-focus/native-predecessor/05.png",
+      "path": "05.png",
+      "bytes": 38781,
+      "sha256": "82867b92ceba2be98eead5b30843ac9e98842f76f7d6e88370634192ac3eb775"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/05.txt",
+      "retained": ".cache/couch-visible-focus/native-predecessor/05.txt",
+      "path": "05.txt",
+      "bytes": 211,
+      "sha256": "f9114c284176599d7b2e429d400069ddf742a723d74c006bad519a19c8075846"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/events.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/events.json",
+      "path": "events.json",
+      "bytes": 1052,
+      "sha256": "5321d1a4cd6b2632abca1004d95c974eeaf601f01256b498adb87ef64215ae92"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05b-p08-static-integration/.cache/p05b-p08/native-responsive-root/review.json",
+      "retained": ".cache/couch-visible-focus/native-predecessor/review.json",
+      "path": "review.json",
+      "bytes": 4118,
+      "sha256": "e0376d027a6b29362c9272c83e29e2781c95de3d13f78fc5349272420e68ce49"
+    }
+  ],
+  "totalBytes": 221484
+}

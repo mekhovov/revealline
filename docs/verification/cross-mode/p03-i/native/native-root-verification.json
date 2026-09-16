@@ -1,0 +1,56 @@
+{
+  "scope": "Root desktop browser observations of Team departure candidate; internal P03 workpackage, not phase/public acceptance.",
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "servedSources": [
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 32926,
+      "sha256": "892e065c39a1c9afbf62d5c7a8b032177cc04e6c8f5c4c7916e076bac9e51ca1"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 14942,
+      "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 15174,
+      "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+    }
+  ],
+  "preview": "http://127.0.0.1:61341/game/couch/relay-rescue.html",
+  "eventCount": 21,
+  "method": "Observed UI with native keyboard and named header pointer actions; DOM-backed read-only observations. No state injection or runtime fault fixture. Sequential snapshot and DOM observations are not atomic.",
+  "passed": [
+    "Actual Relay Yard 0:08 attempt paused, Change setup opens Stay-default dialog.",
+    "Tab advances to Discard and wraps to Stay; Escape returns to Change setup with unchanged 0:08, coverage and reserves.",
+    "Retry opens confirmation; Stay restores Retry with unchanged 0:08; explicit Discard and retry resets to 0:00 with no arena error, then explicit Pause.",
+    "Confirmed Change setup returns lobby and focused Start without auto-start; native selector changes to First Connection.",
+    "Running First Connection header request pauses and asks for discard. Escape/Stay preserve paused Team and return to safe Resume.",
+    "Pointer Solo brand uses guarded request; keyboard confirmation leaves to fixed Solo /game/ title.",
+    "Pointer Race header with keyboard confirmation leaves to /game/couch/ lobby without auto-start.",
+    "Observed confirmation actions are 50 CSS px and content-bounded at 1393 by 1348 desktop viewport."
+  ],
+  "remaining": [
+    "Paused header links remain outside keyboard navigation root. An attempted Solo-brand Enter returned focus to Resume; subsequent Return explicitly resumed. The two misleading intent labels are annotated in events.json and do not count as header-keyboard or Stay passes.",
+    "Full input journey/menu redesign remains P03.",
+    "No native painter-fault, held-controller, imported-pack, nonzero-territory, portrait/short-landscape, zoom, real-touch/controller or public/offline acceptance."
+  ],
+  "evidence": [
+    {
+      "path": ".cache/p03i-team-departure/native-root/events.json",
+      "bytes": 52298,
+      "sha256": "620e579648e5facfff23c4e47148349754f01317c6c6bf41bc48af7a81875a55"
+    },
+    {
+      "path": ".cache/p03i-team-departure/native-root/team-confirmation.jpg",
+      "bytes": 64714,
+      "sha256": "df0fbe772b69ba5624bd414ffc9ffe7df5d28326d0351246d0b8ae6284ec5334"
+    },
+    {
+      "path": ".cache/p03i-team-departure/native-root/team-leave.jpg",
+      "bytes": 63402,
+      "sha256": "d1d981e617abcea9eaea964eff1ba97c7bf65e5cce454427423faf84f70c2655"
+    }
+  ]
+}

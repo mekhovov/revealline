@@ -451,3 +451,13 @@ body.race-focus #couch-app {
   margin-top: 12px;
   border: 1px solid #2b4364;
 }
+
+#race-help-unit .reading-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-2);
+}
+#race-help-unit .reading-hint {
+  margin-block: var(--fk-space-2);
+  color: var(--fk-text);
+}

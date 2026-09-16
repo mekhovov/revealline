@@ -1,0 +1,37 @@
+{
+  "scope": "Complete Title host file only; fixture activation plus cleanup focus successor. No native/full11-file claim.",
+  "before": [
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 16761,
+      "sha256": "ee4fadd514db831d656abc6da58db38827654dbaf9207202e297ce1c466f256c"
+    },
+    {
+      "path": "game/test/title-entry-host.test.mjs",
+      "bytes": 16786,
+      "sha256": "f6c53afaa5a76b896f5d4b1be9b5f305c012a87921b721203540ccbc40847783"
+    }
+  ],
+  "after": [
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 16761,
+      "sha256": "ee4fadd514db831d656abc6da58db38827654dbaf9207202e297ce1c466f256c"
+    },
+    {
+      "path": "game/test/title-entry-host.test.mjs",
+      "bytes": 16786,
+      "sha256": "f6c53afaa5a76b896f5d4b1be9b5f305c012a87921b721203540ccbc40847783"
+    }
+  ],
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "game/test/title-entry-host.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 22.14701795903966,
+  "log": ".cache/p03b-title-entry/title-focus-corrected-node22.log",
+  "bytes": 8638,
+  "sha256": "97cb8b3ec101027c061fedfbb5613575fd745dd5b21acf250da3e8ab6e8a0a6f"
+}

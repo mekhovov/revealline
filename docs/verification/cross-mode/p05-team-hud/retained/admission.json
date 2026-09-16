@@ -1,0 +1,43 @@
+{
+  "base": "d3ff0bc1e9948f5752e79c5b21c8207dd74c69e1",
+  "scope": "P05 independent narrow Team HUD CSS correction; no actor/painter/core/audio changes.",
+  "paths": [
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 16708,
+      "sha256": "398514b94193fd17b789ba57340d0399260a6995cb22bb82bd8a2578ff2e5ab7"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 17096,
+      "sha256": "bba351dda22d809862873a6917184b3bb30e2303b6b78aebfa092351211f9ba6"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "aa160a0fd9138a581073f07d7ccbebbe1d2a8b8e96fc3b421dee8d7e020c429c"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "432f96b4e9e30adffcff772feba7a267f9b3fb9a16be477f1fdc049e1822dede"
+    },
+    {
+      "path": "docs/shared-display-preferences.md",
+      "bytes": 10930,
+      "sha256": "a6375055d62b3ee790cef63acfe14d9b45aea2991851955a87cf2789acfc5535"
+    },
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "bytes": 9778,
+      "sha256": "47dbcdf24ff7c187041082c20da09102892fd74731d27bd90488312d9f6e2c2f"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 128386,
+      "sha256": "7c9629a4fce470dcad29b43023f77ddf086330845c02a6e26e2ffde3b706bb0e"
+    }
+  ],
+  "totalBytes": 220855,
+  "capBytes": 10485760
+}

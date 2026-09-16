@@ -1,0 +1,173 @@
+{
+  "format": "revealline-scoped-source-verification.v1",
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "createdAt": "2026-09-15T17:29:44.444630+00:00",
+  "sourceFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 238294,
+      "sha256": "57624d92220cd1fbc8de70f0bb845a8e4c368d1698f9110f40192ee337f75291"
+    },
+    {
+      "path": "game/test/starting-setup-host.test.mjs",
+      "bytes": 20211,
+      "sha256": "f8c01835d74425530e1d91ecbfce4d6e676acc33efee10289fc13ab940b3daaa"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 40115,
+      "sha256": "fad4e8ccc1e6062fb29da304a7a6efd1b07e9fb370e744522d36a257beced309"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 105655,
+      "sha256": "3706b30bdb441f2f4bc15a7e0e96b316b5bff34e439bc17749b9553dcf22e435"
+    }
+  ],
+  "wholeTestFiles": [
+    {
+      "path": "game/test/starting-setup-host.test.mjs",
+      "bytes": 20211,
+      "sha256": "f8c01835d74425530e1d91ecbfce4d6e676acc33efee10289fc13ab940b3daaa"
+    },
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "bytes": 17766,
+      "sha256": "4b1b73ebce3ed6bc6a012904a0d895370cc1dc95a3d345b8e9c93a7d999ce808"
+    },
+    {
+      "path": "game/test/mode-return.test.mjs",
+      "bytes": 12021,
+      "sha256": "37476839dd63e435c69c5c8821633d1d712755a68c85a81dffed18e232a4b5fd"
+    },
+    {
+      "path": "game/test/mode-return-host.test.mjs",
+      "bytes": 14172,
+      "sha256": "2ecb8ae59aef3825d7f616c98155184f2c691910aa9cb67be6f64c507cce2215"
+    },
+    {
+      "path": "game/test/first-flight-entry.test.mjs",
+      "bytes": 9194,
+      "sha256": "796eeab6416b279cb6d4862682d636e03400bbf462abe59e2a3bd9aabfbb4aad"
+    },
+    {
+      "path": "game/test/mission-picker.test.mjs",
+      "bytes": 9569,
+      "sha256": "c5e6b63cb9847867e182643a3f9ba611c2851b37d43108ce8895cdb5e84d9ca4"
+    },
+    {
+      "path": "game/test/difficulty-host.test.mjs",
+      "bytes": 21875,
+      "sha256": "0e3a95ec72d4bb6f63c79125ac7ea95286d0246c9b586280e0fb2665d95e1b2d"
+    },
+    {
+      "path": "game/test/continuous-host.test.mjs",
+      "bytes": 6766,
+      "sha256": "275649ee157bce4f800348bb2fc9cab0bf3bf500614e5fcc646634a823264746"
+    }
+  ],
+  "runs": [
+    {
+      "node": "22.22.2",
+      "exitCode": 0,
+      "counts": {
+        "tests": 132,
+        "pass": 132,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "milliseconds": 31230.039208,
+      "log": {
+        "path": ".cache/p03h-starting-setup/node22-full-01.log",
+        "bytes": 31190,
+        "sha256": "a21d65e48bc8bc15ef2249548379101d64f0bd116f8ad80a5ff571c3bb40a8f1"
+      }
+    },
+    {
+      "node": "20.19.5",
+      "exitCode": 0,
+      "counts": {
+        "tests": 132,
+        "pass": 132,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "milliseconds": 47585.517,
+      "log": {
+        "path": ".cache/p03h-starting-setup/node20-full-01.log",
+        "bytes": 29167,
+        "sha256": "3ae904782592943dab28295dc81c6e491d79fffeade4f690971cc3ce0b6fd898"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "path": ".cache/p03h-starting-setup/eslint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03h-starting-setup/format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ],
+  "failures": [
+    {
+      "path": ".cache/p03h-starting-setup/node22-initial.log",
+      "bytes": 9442,
+      "sha256": "1576963eb30d8264ee00951fc2bf4bee5e05ba57b5a8d0c26be30599a8f4cece"
+    },
+    {
+      "path": ".cache/p03h-starting-setup/node22-second.log",
+      "bytes": 6673,
+      "sha256": "2d2f5dc4b908055f623fe2b4b934718db09623ac6ecdae2c1cbca6a0601e136e"
+    }
+  ],
+  "notes": [
+    "node22-initial.log: 14/21; profile envelope test shape and too-early Grid direction expectation corrected using real loadLibrary and replay-reconstructed fixed ticks.",
+    "node22-second.log: 25/26; initial classHistory entry is already present; assert old length plus one. No production fix required for these three fixture errors."
+  ],
+  "native": {
+    "observer": "root",
+    "events": 19,
+    "guard": {
+      "path": "docs/verification/cross-mode/p03-h/native-verification.json",
+      "bytes": 3018,
+      "sha256": "a19ed837f676b5cea23a6df784bf564020a93631099de93925d44fa3dc4aa391"
+    },
+    "scope": [
+      "Actual First Signal11s paused attempt retained after class and steering Stay; exact selector focus.",
+      "Confirmed Light carrier selects bomber and prepares ready0:00 without starting; prior saved Scout flight successfully restores paused11s.",
+      "Confirmed Grid + buffer prepares ready0:00 without starting.",
+      "Course entry carries grid-center in visible URL. Returning reaches title; explicit Continue restores original Scout Immediate11s flight paused."
+    ],
+    "limits": [
+      "Held bb372+app57624d plus reviewedP05CSSde78; no application-state injection.",
+      "Course current UI exposes no visible Immediate/Grid selector. Course guard is actual-host coverage, not native reachable control acceptance.",
+      "AX snapshots and DOM records are separate awaits.",
+      "Queued-grid/recovery/controller draft/storage-failure branches are132-case host evidence, not new native cases.",
+      "No physicalcontroller/touch/phone/fullP03/publicrelease claim."
+    ]
+  },
+  "limits": [
+    "Internal P03 work package only; no integrated/public/physical-device acceptance.",
+    "Course/Practice use session-only confirmation, no progress/suspended write.",
+    "Tactical Hangar remains its existing action; course lesson navigation/Library scenario/Team setup are separate journeys."
+  ],
+  "sourceReview": {
+    "reviewer": "Lagrange /root/xposed_sources_round5",
+    "scope": "Full bb372 app delta plus existing retention/currentness/preferences/prepare/course seams; no blocker. No reviewer tests/browser/evidence package review.",
+    "runtimeSha256": "57624d92220cd1fbc8de70f0bb845a8e4c368d1698f9110f40192ee337f75291"
+  },
+  "retention": {
+    "path": "docs/verification/cross-mode/p03-h/retention.json",
+    "bytes": 6010,
+    "sha256": "241f4e1376126402118d2c574f5af72b324be55af053a91c9476abca6cef9ab5"
+  },
+  "postNativeDocumentation": "Only docs/skill changed after the tested/native hold, to record results and the hidden course-selector limitation. Runtime and host test remain byte-exact."
+}

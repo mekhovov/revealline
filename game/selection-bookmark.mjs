@@ -7,7 +7,7 @@ const campaignKey = (value) =>
   typeof value === 'string' &&
   /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}\/[^/]{1,180}\/[0-9a-f]{16}$/.test(value);
 
-function validate(value) {
+export function validateSelectionBookmark(value) {
   const encoded = canonicalJSON(value);
   if (encoded.length > MAX_BYTES) throw new Error('Selection bookmark is too large.');
   const data = JSON.parse(encoded);
@@ -37,7 +37,7 @@ export function createSelectionBookmark({ storage, key, canWrite = () => false }
         if (raw === null) return { status: 'empty', selection: null };
         if (typeof raw !== 'string' || raw.length > MAX_BYTES)
           return { status: 'unavailable', selection: null };
-        return { status: 'ready', selection: validate(JSON.parse(raw)) };
+        return { status: 'ready', selection: validateSelectionBookmark(JSON.parse(raw)) };
       } catch {
         // Preserve malformed/unavailable bytes; menu recovery never repairs saves.
         return { status: 'unavailable', selection: null };
@@ -46,7 +46,12 @@ export function createSelectionBookmark({ storage, key, canWrite = () => false }
     remember({ campaignKey, levelId, themeId }) {
       try {
         if (canWrite() !== true) return false;
-        const selection = validate({ format: FORMAT, campaignKey, levelId, themeId });
+        const selection = validateSelectionBookmark({
+          format: FORMAT,
+          campaignKey,
+          levelId,
+          themeId,
+        });
         const encoded = canonicalJSON(selection);
         if (storage.getItem(key) !== encoded) storage.setItem(key, encoded);
         return true;
@@ -65,7 +70,7 @@ export function resolveSelectionBookmark(selection, { select, playable }) {
   if (!selection) return null;
   let checked;
   try {
-    checked = validate(selection);
+    checked = validateSelectionBookmark(selection);
   } catch {
     return null;
   }
