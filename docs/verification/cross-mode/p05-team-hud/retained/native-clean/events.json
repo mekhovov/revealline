@@ -1,0 +1,280 @@
+[
+  {
+    "n": 1,
+    "label": "Fresh tab433 actual390×844 DPR1; Theme Large carried from normal options",
+    "dom": {
+      "canvas": {
+        "clientWidth": 362,
+        "display": "block",
+        "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+        "fontSize": "22px",
+        "height": 181,
+        "lineHeight": "33px",
+        "scrollWidth": 362,
+        "text": "",
+        "width": 362,
+        "x": 14,
+        "y": 314.484375
+      },
+      "focus": {
+        "id": "coop-canvas",
+        "text": ""
+      },
+      "hud": {
+        "clientWidth": 366,
+        "display": "grid",
+        "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+        "fontSize": "22px",
+        "height": 178.484375,
+        "lineHeight": "33px",
+        "scrollWidth": 366,
+        "text": "1SUNFLOWEROn safe ground\n            Support ready\n          \n          \n            TEAM TERRITORY0.0%3 reserves\n          \n          \n            2SKYLINEOn safe ground\n            Support ready",
+        "width": 366,
+        "x": 12,
+        "y": 56
+      },
+      "names": [
+        {
+          "clientWidth": 148,
+          "display": "block",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 24.296875,
+          "lineHeight": "24.3px",
+          "scrollWidth": 148,
+          "text": "SUNFLOWER",
+          "width": 148,
+          "x": 41,
+          "y": 68
+        },
+        {
+          "clientWidth": 148,
+          "display": "block",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 24.296875,
+          "lineHeight": "24.3px",
+          "scrollWidth": 148,
+          "text": "SKYLINE",
+          "width": 148,
+          "x": 230,
+          "y": 68
+        }
+      ],
+      "page": {
+        "height": 844,
+        "width": 390
+      },
+      "parts": [
+        {
+          "clientWidth": 177,
+          "display": "grid",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 76.890625,
+          "lineHeight": "24.3px",
+          "scrollWidth": 177,
+          "text": "1SUNFLOWEROn safe ground\n            Support ready",
+          "width": 177,
+          "x": 12,
+          "y": 68
+        },
+        {
+          "clientWidth": 366,
+          "display": "grid",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 65.59375,
+          "lineHeight": "24.3px",
+          "scrollWidth": 366,
+          "text": "TEAM TERRITORY0.0%3 reserves",
+          "width": 366,
+          "x": 12,
+          "y": 156.890625
+        },
+        {
+          "clientWidth": 177,
+          "display": "grid",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 76.890625,
+          "lineHeight": "24.3px",
+          "scrollWidth": 177,
+          "text": "2SKYLINEOn safe ground\n            Support ready",
+          "width": 177,
+          "x": 201,
+          "y": 68
+        }
+      ],
+      "preferences": [
+        {
+          "id": "coop-text-face",
+          "value": "pixel"
+        },
+        {
+          "id": "coop-text-size",
+          "value": "large"
+        },
+        {
+          "id": "coop-menu-palette",
+          "value": "auto"
+        },
+        {
+          "id": "coop-menu-ornaments",
+          "value": "subtle"
+        },
+        {
+          "id": "coop-touch",
+          "value": "auto"
+        }
+      ],
+      "viewport": {
+        "dpr": 1,
+        "height": 844,
+        "visualScale": 1,
+        "width": 390
+      }
+    },
+    "ax": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\" [active]\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:01\n    - button \"Pause\"",
+    "screenshot": "01.jpg"
+  },
+  {
+    "n": 2,
+    "label": "Theme Large at actual320×740 minimum-width layout",
+    "dom": {
+      "canvas": {
+        "clientWidth": 292,
+        "display": "block",
+        "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+        "fontSize": "22px",
+        "height": 146,
+        "lineHeight": "33px",
+        "scrollWidth": 292,
+        "text": "",
+        "width": 292,
+        "x": 14,
+        "y": 363.078125
+      },
+      "focus": {
+        "id": "coop-canvas",
+        "text": ""
+      },
+      "hud": {
+        "clientWidth": 296,
+        "display": "grid",
+        "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+        "fontSize": "22px",
+        "height": 227.078125,
+        "lineHeight": "33px",
+        "scrollWidth": 296,
+        "text": "1SUNFLOWEROn safe ground\n            Support ready\n          \n          \n            TEAM TERRITORY0.0%3 reserves\n          \n          \n            2SKYLINEOn safe ground\n            Support ready",
+        "width": 296,
+        "x": 12,
+        "y": 56
+      },
+      "names": [
+        {
+          "clientWidth": 113,
+          "display": "block",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 24.296875,
+          "lineHeight": "24.3px",
+          "scrollWidth": 113,
+          "text": "SUNFLOWER",
+          "width": 113,
+          "x": 41,
+          "y": 68
+        },
+        {
+          "clientWidth": 113,
+          "display": "block",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 24.296875,
+          "lineHeight": "24.3px",
+          "scrollWidth": 113,
+          "text": "SKYLINE",
+          "width": 113,
+          "x": 195,
+          "y": 68
+        }
+      ],
+      "page": {
+        "height": 876,
+        "width": 320
+      },
+      "parts": [
+        {
+          "clientWidth": 142,
+          "display": "grid",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 125.484375,
+          "lineHeight": "24.3px",
+          "scrollWidth": 142,
+          "text": "1SUNFLOWEROn safe ground\n            Support ready",
+          "width": 142,
+          "x": 12,
+          "y": 68
+        },
+        {
+          "clientWidth": 296,
+          "display": "grid",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 65.59375,
+          "lineHeight": "24.3px",
+          "scrollWidth": 296,
+          "text": "TEAM TERRITORY0.0%3 reserves",
+          "width": 296,
+          "x": 12,
+          "y": 205.484375
+        },
+        {
+          "clientWidth": 142,
+          "display": "grid",
+          "font": "RLAsset-fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef, RLAsset-0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8, \"Field Kit Mono\", sans-serif",
+          "fontSize": "18px",
+          "height": 125.484375,
+          "lineHeight": "24.3px",
+          "scrollWidth": 142,
+          "text": "2SKYLINEOn safe ground\n            Support ready",
+          "width": 142,
+          "x": 166,
+          "y": 68
+        }
+      ],
+      "preferences": [
+        {
+          "id": "coop-text-face",
+          "value": "pixel"
+        },
+        {
+          "id": "coop-text-size",
+          "value": "large"
+        },
+        {
+          "id": "coop-menu-palette",
+          "value": "auto"
+        },
+        {
+          "id": "coop-menu-ornaments",
+          "value": "subtle"
+        },
+        {
+          "id": "coop-touch",
+          "value": "auto"
+        }
+      ],
+      "viewport": {
+        "dpr": 1,
+        "height": 740,
+        "visualScale": 1,
+        "width": 320
+      }
+    },
+    "ax": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - link \"Race mode ↗\":\n    - /url: ./\n  - region \"Shared Relay Rescue arena\":\n    - generic: \"1\"\n    - strong: SUNFLOWER\n    - generic: On safe ground\n    - generic: Support ready\n    - generic: TEAM TERRITORY\n    - strong: 0.0%\n    - generic: 3 reserves\n    - progressbar \"Team territory\"\n    - generic: \"2\"\n    - strong: SKYLINE\n    - generic: On safe ground\n    - generic: Support ready\n    - paragraph: Capture the shield anchors · 0 / 2 secured\n    - img \"One shared arena. Sunflower is marked 1 and Skyline is marked 2.\" [active]\n    - status: Watch the Hunter warnings. Cover a crossing or join after the charge passes.\n    - generic: 0:26\n    - button \"Pause\"",
+    "screenshot": "02.jpg"
+  }
+]

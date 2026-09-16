@@ -323,6 +323,10 @@ try {
     won = [0, 0],
     finished = false,
     generation = 0,
+    raceSequence = 0,
+    roundRecipe = null,
+    nextAttempt = null,
+    preparedFocusMatch = null,
     startIntentEpoch = 0,
     framePads = [],
     frameReadError = null,
@@ -391,12 +395,21 @@ try {
     document.addEventListener('focusin', observe);
     document.addEventListener('visibilitychange', hidden);
     window.addEventListener('blur', blurred);
-    const restore = (target, current) => {
+    const close = () => {
       document.removeEventListener('focusin', observe);
       document.removeEventListener('visibilitychange', hidden);
       window.removeEventListener('blur', blurred);
-      if (owns(current) && available(target)) target.focus({ preventScroll: true });
     };
+    const restore = (target, current, { retain = false } = {}) => {
+      if (!retain) close();
+      try {
+        if (owns(current) && available(target)) target.focus({ preventScroll: true });
+      } catch (error) {
+        close();
+        throw error;
+      }
+    };
+    restore.close = close;
     restore.pending = (target, current) => {
       if (!owns(current) || !available(target)) return;
       // This transfer belongs to the action, not to a new user choice. Later
@@ -409,6 +422,7 @@ try {
         shifting = false;
       }
     };
+    restore.current = owns;
     return restore;
   }
   function cancelContent() {
@@ -416,12 +430,20 @@ try {
     preparationDisplay?.finish({ state: 'cancelled', message: '' });
     preparationDisplay = null;
     contentController?.abort();
-    installed?.clear();
+    const retainedResult = match?.status === 'finished' && nextAttempt?.previous === match;
+    if (retainedResult) {
+      nextAttempt.lease?.cancel();
+      installed?.cancel();
+    } else {
+      installed?.clear();
+      backdrop = null;
+    }
     staticPictures.cancel();
-    backdrop = null;
     contentBusy = false;
-    contentReady = false;
-    contentError = 'Picture loading cancelled. Retry when you are ready.';
+    contentReady = retainedResult;
+    contentError = retainedResult
+      ? 'Next picture loading cancelled. Results are kept. Choose Next when you are ready.'
+      : 'Picture loading cancelled. Retry when you are ready.';
     if (installedStatus === 'Checking installed chapters…')
       installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
     $('race-message').textContent = contentError;
@@ -430,9 +452,15 @@ try {
   $('race-picture-cancel').onclick = () => {
     const restoreFocus = actionFocus($('race-picture-cancel'));
     cancelContent();
-    restoreFocus($('race-chapter-retry'), !!contentError);
+    restoreFocus(
+      match.status === 'finished' ? $('race-start') : $('race-chapter-retry'),
+      !!contentError,
+    );
   };
   function prepare() {
+    nextAttempt?.lease?.cancel();
+    nextAttempt = null;
+    preparedFocusMatch = null;
     preparationStatus.clear();
     preparationDisplay = null;
     contentController?.abort();
@@ -444,8 +472,7 @@ try {
     contentBusy = false;
     contentReady = false;
     clear({ resetDirection: true });
-    const entry = maps.find((m) => m.key === $('race-level').value),
-      level = entry.level;
+    const entry = maps.find((m) => m.key === $('race-level').value);
     const classId = entry.classes.some((c) => c.id === $('race-class').value)
       ? $('race-class').value
       : entry.classes[0].id;
@@ -460,13 +487,36 @@ try {
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
     $('race-theme').replaceChildren(...entry.themes.map((t) => new Option(t.name, t.id)));
     $('race-theme').value = theme.id;
-    match = createDuel(
-      level,
-      { seed: 2026, turnPolicy: $('race-turn').value, classId, classRecipes: entry.classes },
-      { seconds: Number($('race-time').value) },
+    roundRecipe = {
+      entry,
+      theme,
+      classId,
+      turnPolicy: $('race-turn').value,
+      seconds: Number($('race-time').value),
+    };
+    match = createRound(roundRecipe);
+    generation = ++raceSequence;
+    paintRound(roundRecipe);
+    finished = false;
+    $('race-start').textContent = 'Start round ↗';
+    return loadPreparedPicture(entry);
+  }
+  function createRound(recipe) {
+    return createDuel(
+      recipe.entry.level,
+      {
+        seed: 2026,
+        turnPolicy: recipe.turnPolicy,
+        classId: recipe.classId,
+        classRecipes: recipe.entry.classes,
+      },
+      { seconds: recipe.seconds },
     );
-    generation++;
-    const { width, height } = boardPaintSizeForLevel(level);
+  }
+  function paintRound(recipe) {
+    const { entry, theme, classId } = recipe,
+      level = entry.level,
+      { width, height } = boardPaintSizeForLevel(level);
     for (const player of [0, 1]) {
       const canvas = $(`race-canvas-${player}`);
       canvas.width = width;
@@ -478,13 +528,10 @@ try {
     publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
     publishedPlayer?.setContext({ themeId: theme.id });
     painters.forEach((p) => {
-      p.setLook(theme, bodyFor(theme, $('race-class').value), entry.visualOverrides);
+      p.setLook(theme, bodyFor(theme, classId), entry.visualOverrides);
       p.setLevel?.(level, { seed: 2026 });
       p.skipCelebration?.();
     });
-    finished = false;
-    $('race-start').textContent = 'Start round ↗';
-    return loadPreparedPicture(entry);
   }
   function loadPreparedPicture(entry) {
     contentReady = false;
@@ -544,6 +591,117 @@ try {
       }
     })();
   }
+  async function prepareNext() {
+    if (!nextAttempt || nextAttempt.previous !== match || nextAttempt.recipe !== roundRecipe) {
+      nextAttempt = {
+        previous: match,
+        previousGeneration: generation,
+        recipe: roundRecipe,
+        match: createRound(roundRecipe),
+        raceId: ++raceSequence,
+        resetWins: won.some((n) => n >= 2),
+        lease: null,
+      };
+    }
+    const restoreFocus = actionFocus($('race-start')),
+      attempt = nextAttempt,
+      { entry } = attempt.recipe,
+      isStatic = shippedMaps.includes(entry),
+      owner = isStatic ? staticPictures : installed;
+    contentController?.abort();
+    const controller = new AbortController();
+    contentController = controller;
+    contentScope = shell.scope();
+    contentBusy = true;
+    contentError = null;
+    const current = () =>
+      !disposed &&
+      !controller.signal.aborted &&
+      contentController === controller &&
+      nextAttempt === attempt &&
+      roundRecipe === attempt.recipe &&
+      match === attempt.previous &&
+      generation === attempt.previousGeneration;
+    const display = preparationStatus.begin({
+      message: 'Preparing the next picture. Your completed Results are kept until it is ready…',
+      stage: 'verifying',
+      isCurrent: current,
+    });
+    preparationDisplay = display;
+    updateMenu();
+    restoreFocus.pending($('race-picture-cancel'), current());
+    let lease = null,
+      prepared = null;
+    try {
+      lease = await owner.stage(entry, {
+        themeId: attempt.recipe.theme.id,
+        raceId: attempt.raceId,
+        signal: controller.signal,
+        onStatus: (status) => display.update(status),
+      });
+      if (!current()) return null;
+      attempt.lease = lease;
+      await lease.confirm({ onStatus: (status) => display.update(status) });
+      if (!current()) return null;
+      const retirePrevious = lease.commit();
+      // Publish only plain references before cleanup can call back into the page.
+      match = attempt.match;
+      preparedFocusMatch = match;
+      backdrop = lease.picture;
+      generation = attempt.raceId;
+      finished = false;
+      if (attempt.resetWins) won = [0, 0];
+      nextAttempt = null;
+      retirePrevious();
+      if (
+        disposed ||
+        controller.signal.aborted ||
+        controller !== contentController ||
+        match !== attempt.match
+      )
+        return null;
+      clear({ resetDirection: true });
+      paintRound(attempt.recipe);
+      $('race-start').textContent = 'Start round ↗';
+      $('race-message').textContent = [
+        lease.picture?.notice,
+        'Both boards use the prepared next picture. Start when you are ready.',
+      ]
+        .filter(Boolean)
+        .join(' ');
+      contentReady = true;
+      display.finish({ message: '' });
+      prepared = {
+        match,
+        controller,
+        isStatic,
+        ownsAction: () => restoreFocus.current(true),
+        releaseFocus: restoreFocus.close,
+      };
+      return prepared;
+    } catch (error) {
+      if (current()) {
+        contentError =
+          'The next picture could not be prepared. Results are kept. Choose Next to retry.';
+        $('race-message').textContent = contentError;
+        display.finish({ state: 'error', message: '' });
+        console.warn('Next picture preparation failed.', error);
+      }
+      return null;
+    } finally {
+      lease?.cancel();
+      if (attempt.lease === lease) attempt.lease = null;
+      if (!disposed && controller === contentController && !controller.signal.aborted) {
+        contentBusy = false;
+        updateMenu();
+      }
+      restoreFocus(
+        $('race-start'),
+        !disposed && controller === contentController && !controller.signal.aborted,
+        { retain: !!prepared },
+      );
+    }
+  }
   function pause() {
     // Suspend and controller-loss paths also pass here. Picture preparation
     // may finish, but an interrupted gesture no longer authorizes a start.
@@ -572,32 +730,32 @@ try {
     const intent = ++startIntentEpoch,
       ownsStartIntent = () =>
         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
+    let nextConfirmed = false,
+      nextFocus = null;
     if (match.status === 'finished') {
-      if (won.some((n) => n >= 2)) won = [0, 0];
-      const isStatic = shippedMaps.some((row) => row.key === selectedMapKey);
-      const ready = prepare(),
-        nextRun = match,
-        nextController = contentController;
-      if (contentBusy) {
-        const prepared = await ready;
-        // Preserve the installed-chapter confirmation gesture. For a shipped
-        // round, this explicit Next action starts after its own preparation only.
-        if (
-          !isStatic ||
-          !prepared ||
-          !ownsStartIntent() ||
-          match !== nextRun ||
-          contentController !== nextController ||
-          nextController.signal.aborted ||
-          shell.scope() !== 'main'
-        )
-          return;
+      const prepared = await prepareNext();
+      // Preparation may finish after blur, but only the original foreground
+      // shipped Next gesture may start it. Installed chapters keep fresh Start.
+      if (
+        !prepared ||
+        !prepared.isStatic ||
+        !prepared.ownsAction() ||
+        !ownsStartIntent() ||
+        match !== prepared.match ||
+        contentController !== prepared.controller ||
+        prepared.controller.signal.aborted ||
+        shell.scope() !== 'main'
+      ) {
+        prepared?.releaseFocus();
+        return;
       }
+      nextFocus = prepared;
+      nextConfirmed = true;
     }
     const entry = maps.find((row) => row.key === selectedMapKey),
       selectedRun = match,
       ticket = generation;
-    if (match.status === 'ready') {
+    if (match.status === 'ready' && !nextConfirmed) {
       const restoreFocus = actionFocus($('race-start'));
       contentBusy = true;
       const controller = contentController;
@@ -677,20 +835,26 @@ try {
         );
       }
     }
-    if (!contentReady || disposed) return;
-    clear();
-    if (!ownsStartIntent()) return;
-    resumeDuel(match, { preserveContinuation: true });
-    neutralResumeTick = true;
-    if (publishedPlayer) {
-      (publishedPlayer.snapshot().track ? publishedPlayer.resume() : publishedPlayer.play()).catch(
-        () => {},
-      );
-    } else sound.enable().catch(() => {});
-    $('race-message').textContent = 'Make your line count. First clear wins.';
-    updateMenu();
-    input.focus();
+    try {
+      if (!contentReady || disposed) return;
+      clear();
+      if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
+      resumeDuel(match, { preserveContinuation: true });
+      neutralResumeTick = true;
+      if (publishedPlayer) {
+        (publishedPlayer.snapshot().track
+          ? publishedPlayer.resume()
+          : publishedPlayer.play()
+        ).catch(() => {});
+      } else sound.enable().catch(() => {});
+      $('race-message').textContent = 'Make your line count. First clear wins.';
+      updateMenu();
+      input.focus();
+    } finally {
+      nextFocus?.releaseFocus();
+    }
   };
+
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
     const restoreFocus = actionFocus($('race-chapter-retry'));
@@ -912,10 +1076,15 @@ try {
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
     const entry = maps.find((m) => m.key === selectedMapKey);
+    // The transaction's first Ready update belongs to its retained action
+    // lease, including an update reentered from prior-image cleanup.
+    const focusTransition = match !== preparedFocusMatch;
+    preparedFocusMatch = null;
     shell?.update({
       match,
       won,
       contentBusy,
+      focusTransition,
       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
     });
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;

@@ -373,7 +373,7 @@ export function createCouchShell({
     const seat = arena?.closest('.racer');
     if (seat) observe(Number(seat.dataset.player), 'touch');
   });
-  function update({ match, summary, won, contentBusy = false }) {
+  function update({ match, summary, won, contentBusy = false, focusTransition = true }) {
     if (destroyed) return;
     const previous = status;
     status = match.status;
@@ -431,7 +431,8 @@ export function createCouchShell({
     renderPads();
     // Result rows and their copy precede the primary action in the layout.
     // Install them before the one transition-owned focus/reveal, never later.
-    if (status !== previous && previous !== null && status !== 'running') focus();
+    if (focusTransition && status !== previous && previous !== null && status !== 'running')
+      focus();
   }
   renderScreens();
   if (view?.addEventListener) listen(view, 'resize', revealResizedAction);

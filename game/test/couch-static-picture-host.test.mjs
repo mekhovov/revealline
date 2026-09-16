@@ -7,6 +7,7 @@ import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const compiled = JSON.parse(
   await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url), 'utf8'),
@@ -37,7 +38,8 @@ function mediaBoundary() {
     revoked = [];
   let count = 0,
     failNext = false,
-    decodeHook = null;
+    decodeHook = null,
+    releaseHook = null;
   class URLImpl extends URL {
     static createObjectURL(blob) {
       const url = `blob:picture-${++count}`;
@@ -75,6 +77,8 @@ function mediaBoundary() {
     removeAttribute(name) {
       assert.equal(name, 'src');
       this.released = true;
+      this.releaseCount = (this.releaseCount || 0) + 1;
+      releaseHook?.(this);
     }
   }
   return {
@@ -83,6 +87,9 @@ function mediaBoundary() {
     images,
     blobs,
     revoked,
+    setReleaseHook: (hook) => {
+      releaseHook = hook;
+    },
     setDecodeHook: (hook) => {
       decodeHook = hook;
     },
@@ -290,6 +297,8 @@ test('interrupted async Next stays ready after blur and return until a fresh Sta
   await action(p, 'race-start');
   p.frames(151, 200);
   assert.equal(p.state(), 'finished');
+  const completedRuns = [...p.renders],
+    completedCheckpoint = p.checkpoint();
   f.media.setDecodeHook(async () => {
     entered.resolve();
     await gate.promise;
@@ -298,8 +307,12 @@ test('interrupted async Next stays ready after blur and return until a fresh Sta
   const next = action(p, 'race-start');
   await entered.promise;
   p.frame(0);
-  const runs = [...p.renders],
-    checkpoint = p.checkpoint();
+  assert.equal(p.state(), 'finished');
+  assert.equal(
+    p.renders.every((run, i) => run === completedRuns[i]),
+    true,
+  );
+  assert.deepEqual(p.checkpoint(), completedCheckpoint);
   p.doc.focused = false;
   p.win.emit('blur');
   p.doc.body.focus();
@@ -311,13 +324,58 @@ test('interrupted async Next stays ready after blur and return until a fresh Sta
   assert.equal(p.$('race-start').disabled, false, 'Picture preparation can complete.');
   assert.equal(p.doc.activeElement === p.doc.body, true);
   assert.equal(
-    p.renders.every((run, index) => run === runs[index]),
+    p.renders.every((run, i) => run !== completedRuns[i]),
     true,
   );
-  assert.deepEqual(p.checkpoint(), checkpoint);
+  const readyRuns = [...p.renders],
+    readyCheckpoint = p.checkpoint();
+  p.frames(20);
+  assert.equal(
+    p.renders.every((run, i) => run === readyRuns[i]),
+    true,
+  );
+  assert.deepEqual(p.checkpoint(), readyCheckpoint);
   assert.equal(p.drawOptions[0].backdrop === p.drawOptions[1].backdrop, true);
   await action(p, 'race-start');
   assert.equal(p.state(), 'running', 'A new explicit Start can use the ready picture.');
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+test('failed Next retains the completed round and its displayed original', async (t) => {
+  const f = await fixture(t),
+    p = f.page;
+  await action(p, 'race-start');
+  p.frames(151, 200);
+  assert.equal(p.state(), 'finished');
+  const checkpoint = p.checkpoint(),
+    runs = [...p.renders],
+    backdrop = p.drawOptions[0].backdrop,
+    results = [0, 1].map((i) => p.$(`race-result-${i}`).textContent),
+    wins = p.$('series-score').textContent;
+  assert.ok(backdrop.image, 'The completed round has its original picture.');
+  f.media.fail();
+  p.$('race-start').focus();
+  await action(p, 'race-start');
+  assert.equal(p.state(), 'finished', 'A refused next picture must preserve Results.');
+  assert.equal(
+    p.renders.every((run, i) => run === runs[i]),
+    true,
+  );
+  assert.deepEqual(p.checkpoint(), checkpoint);
+  assert.deepEqual(
+    [0, 1].map((i) => p.$(`race-result-${i}`).textContent),
+    results,
+  );
+  assert.equal(
+    p.drawOptions.every((options) => options.backdrop === backdrop),
+    true,
+  );
+  assert.notEqual(backdrop.image.released, true);
+  assert.equal(backdrop.image.releaseCount || 0, 0);
+  assert.equal(p.$('series-score').textContent, wins);
+  assert.equal(p.$('race-start').disabled, false);
+  assert.equal(p.$('race-review').hidden, false);
+  assert.match(p.$('race-message').textContent, /could not|unavailable|retry/i);
   assert.deepEqual(f.memory.allPuts, []);
 });
 
@@ -474,3 +532,324 @@ for (const outcome of ['untouched', 'deliberate mode link', 'blur and return', '
     assert.equal(document.getElementById('race-solo-return').getAttribute('href'), '../');
     assert.equal(team.getAttribute('href'), 'relay-rescue.html?return=versus');
   });
+
+const completedResult = (p) => ({
+  runs: [...p.renders],
+  checkpoints: p.checkpoint(),
+  picture: p.drawOptions[0].backdrop,
+  results: [0, 1].map((i) => p.$(`race-result-${i}`).textContent),
+  wins: p.$('series-score').textContent,
+});
+function retainedResult(p, before) {
+  assert.equal(p.state(), 'finished');
+  assert.equal(
+    p.renders.every((run, i) => run === before.runs[i]),
+    true,
+  );
+  assert.deepEqual(p.checkpoint(), before.checkpoints);
+  assert.equal(
+    p.drawOptions.every((options) => options.backdrop === before.picture),
+    true,
+  );
+  assert.deepEqual(
+    [0, 1].map((i) => p.$(`race-result-${i}`).textContent),
+    before.results,
+  );
+  assert.equal(p.$('series-score').textContent, before.wins);
+  assert.equal(before.picture.image.releaseCount || 0, 0);
+  assert.equal(p.$('race-review').hidden, false);
+}
+
+test('failed Next original read keeps Results and keyboard View, then retry adopts one new round', async (t) => {
+  let refuse = false;
+  const readError = new Error(
+      'Presentation file unavailable: ./assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png.',
+    ),
+    diagnostics = [];
+  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+  const f = await fixture(t, {
+      onRead: () => {
+        if (refuse) throw readError;
+      },
+    }),
+    p = f.page;
+  await action(p, 'race-start');
+  p.frames(151, 200);
+  const before = completedResult(p);
+  refuse = true;
+  p.$('race-start').focus();
+  await action(p, 'race-start');
+  retainedResult(p, before);
+  assert.equal(
+    p.$('race-message').textContent,
+    'The next picture could not be prepared. Results are kept. Choose Next to retry.',
+  );
+  assert.doesNotMatch(p.$('race-message').textContent, /assets\/|[a-f0-9]{64}/);
+  assert.deepEqual(diagnostics, [['Next picture preparation failed.', readError]]);
+  assert.equal(p.doc.activeElement === p.$('race-start'), true);
+  p.$('race-review').focus();
+  const review = p.$('race-review');
+  // Shared navigation leaves a current enabled button to native Enter default.
+  // Only this exact, unmodified, unprevented activation gets the finite default.
+  const enter = review.emit('keydown', {
+    key: 'Enter',
+    code: 'Enter',
+    repeat: false,
+    ctrlKey: false,
+    altKey: false,
+    metaKey: false,
+  });
+  assert.equal(enter.defaultPrevented, false);
+  if (
+    !enter.defaultPrevented &&
+    !enter.ctrlKey &&
+    !enter.altKey &&
+    !enter.metaKey &&
+    !review.disabled &&
+    p.doc.activeElement === review &&
+    !review.closest('[hidden],[inert]')
+  )
+    review.click();
+  review.emit('keyup', { key: 'Enter', code: 'Enter' });
+  p.frame();
+  assert.equal(
+    p.$('race-boards').hidden,
+    false,
+    'Native button activation opens both completed boards after the shared handler.',
+  );
+  retainedResult(p, before);
+  await action(p, 'race-pause');
+  refuse = false;
+  p.$('race-start').focus();
+  await action(p, 'race-start');
+  assert.equal(p.state(), 'running');
+  assert.equal(
+    p.renders.every((run, i) => run !== before.runs[i]),
+    true,
+  );
+  assert.equal(before.picture.image.releaseCount, 1);
+  assert.equal(p.drawOptions[0].backdrop === p.drawOptions[1].backdrop, true);
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+for (const interruption of ['Cancel', 'Help', 'View', 'Setup confirmation', 'dispose'])
+  test(`pending completed Next preserves Results through ${interruption}`, async (t) => {
+    const f = await fixture(t),
+      p = f.page,
+      entered = deferred(),
+      gate = deferred();
+    await action(p, 'race-start');
+    p.frames(151, 200);
+    const before = completedResult(p);
+    f.media.setDecodeHook(async () => {
+      entered.resolve();
+      await gate.promise;
+    });
+    p.$('race-start').focus();
+    const next = action(p, 'race-start');
+    await entered.promise;
+    p.frame();
+    retainedResult(p, before);
+    assert.equal(p.$('race-start').disabled, true);
+    const readCount = f.reads.length;
+    await action(p, 'race-start');
+    assert.equal(
+      f.reads.length,
+      readCount,
+      'A duplicate pending Next does not acquire another candidate.',
+    );
+    if (interruption === 'Cancel') {
+      p.$('race-picture-cancel').focus();
+      await action(p, 'race-picture-cancel');
+      assert.equal(p.doc.activeElement === p.$('race-start'), true);
+    } else if (interruption === 'Help') {
+      await action(p, 'race-help');
+      await action(p, 'race-help-back');
+    } else if (interruption === 'View') {
+      await action(p, 'race-review');
+    } else if (interruption === 'Setup confirmation') {
+      await action(p, 'race-focus');
+    } else p.win.emit('pagehide', { persisted: false });
+    if (interruption !== 'dispose') retainedResult(p, before);
+    gate.resolve();
+    await next;
+    if (interruption !== 'dispose') {
+      retainedResult(p, before);
+      assert.equal(p.$('race-start').disabled, false);
+    } else
+      assert.equal(
+        before.picture.image.releaseCount,
+        1,
+        'Page disposal owns the old accepted image.',
+      );
+    assert.equal(
+      f.media.images.at(-1).releaseCount,
+      1,
+      'Only the refused candidate is released by cancellation.',
+    );
+    assert.deepEqual(f.memory.allPuts, []);
+  });
+
+test('successful Next retires its original only after the new duel and picture are published', async (t) => {
+  const f = await fixture(t),
+    p = f.page;
+  await action(p, 'race-start');
+  p.frames(151, 200);
+  const before = completedResult(p);
+  let observed;
+  f.media.setReleaseHook((image) => {
+    if (image !== before.picture.image) return;
+    p.frame(0);
+    observed = {
+      state: p.state(),
+      newRuns: p.renders.every((run, i) => run !== before.runs[i]),
+      newPicture: p.drawOptions[0].backdrop !== before.picture,
+      shared: p.drawOptions[0].backdrop === p.drawOptions[1].backdrop,
+    };
+  });
+  p.$('race-start').focus();
+  await action(p, 'race-start');
+  assert.deepEqual(observed, { state: 'ready', newRuns: true, newPicture: true, shared: true });
+  assert.equal(p.state(), 'running');
+  assert.equal(before.picture.image.releaseCount, 1);
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+test('completed match wins reset only when an explicitly retried Next commits', async (t) => {
+  const f = await fixture(t),
+    p = f.page;
+  await action(p, 'race-start');
+  for (let round = 0; round < 2; round++) {
+    p.key('KeyS');
+    p.frames(151, 200);
+    p.key('KeyS', false);
+    assert.equal(p.state(), 'finished');
+    assert.equal(
+      p.$('series-score').textContent,
+      `${round + 1} : 0`,
+      'Real directional input earns each round.',
+    );
+    if (round === 0) await action(p, 'race-start');
+  }
+  const before = completedResult(p);
+  f.media.fail();
+  await action(p, 'race-start');
+  retainedResult(p, before);
+  assert.equal(p.$('series-score').textContent, '2 : 0');
+  assert.match(p.$('race-start').textContent, /another match/);
+  await action(p, 'race-start');
+  assert.equal(p.state(), 'running');
+  assert.equal(p.$('series-score').textContent, '0 : 0');
+  assert.equal(before.picture.image.releaseCount, 1);
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+test('pending Next respects a newer deliberate action focus when its picture completes', async (t) => {
+  const f = await fixture(t),
+    p = f.page,
+    entered = deferred(),
+    gate = deferred();
+  await action(p, 'race-start');
+  p.frames(151, 200);
+  f.media.setDecodeHook(async () => {
+    entered.resolve();
+    await gate.promise;
+  });
+  p.$('race-start').focus();
+  const next = action(p, 'race-start');
+  await entered.promise;
+  p.$('race-help').focus();
+  gate.resolve();
+  await next;
+  assert.equal(
+    p.state(),
+    'ready',
+    'A newer action choice requires a fresh Start after preparation.',
+  );
+  assert.equal(p.doc.activeElement === p.$('race-help'), true);
+  assert.equal(p.$('race-start').disabled, false);
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+test('Next restoration cannot revive its intent after a queued newer focus choice returns to BODY', async (t) => {
+  const f = await fixture(t),
+    p = f.page,
+    entered = deferred(),
+    gate = deferred();
+  await action(p, 'race-start');
+  p.frames(151, 200);
+  f.media.setDecodeHook(async () => {
+    entered.resolve();
+    await gate.promise;
+  });
+  p.$('race-start').focus();
+  const next = action(p, 'race-start');
+  await entered.promise;
+  let moved = false;
+  const observe = (event) => {
+    if (event.target !== p.$('race-start')) return;
+    queueMicrotask(() => {
+      p.$('race-help').focus();
+      p.doc.body.focus();
+      moved = true;
+    });
+  };
+  p.doc.addEventListener('focusin', observe);
+  gate.resolve();
+  await next;
+  p.doc.removeEventListener('focusin', observe);
+  assert.equal(moved, true, 'The queued callback follows the real restored Start focus.');
+  assert.equal(p.state(), 'ready');
+  assert.equal(p.doc.activeElement === p.doc.body, true);
+  assert.equal(p.$('race-start').disabled, false);
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+test('confirmed new setup owns a fresh race after a cancelled Next decoder settles late', async (t) => {
+  const f = await fixture(t),
+    p = f.page,
+    entered = deferred(),
+    gate = deferred();
+  await action(p, 'race-start');
+  p.frames(151, 200);
+  const completed = completedResult(p);
+  f.media.setDecodeHook(async () => {
+    entered.resolve();
+    await gate.promise;
+  });
+  p.$('race-start').focus();
+  const next = action(p, 'race-start');
+  await entered.promise;
+  await action(p, 'race-focus');
+  retainedResult(p, completed);
+  f.media.setDecodeHook(null);
+  await action(p, 'race-confirm-reset');
+  await waitFor(() => !p.$('race-start').disabled, {
+    message: 'The explicitly confirmed new setup never became ready.',
+  });
+  p.frame(0);
+  const freshRuns = [...p.renders],
+    freshCheckpoint = p.checkpoint(),
+    freshPicture = p.drawOptions[0].backdrop;
+  assert.equal(p.state(), 'ready');
+  assert.equal(
+    p.renders.every((run, i) => run !== completed.runs[i]),
+    true,
+  );
+  assert.equal(p.doc.body.dataset.couchScreen, 'setup');
+  gate.resolve();
+  await next;
+  p.frames(12);
+  assert.equal(
+    p.renders.every((run, i) => run === freshRuns[i]),
+    true,
+  );
+  assert.deepEqual(p.checkpoint(), freshCheckpoint);
+  assert.equal(
+    p.drawOptions.every((options) => options.backdrop === freshPicture),
+    true,
+  );
+  assert.equal(p.state(), 'ready');
+  assert.equal(p.doc.body.dataset.couchScreen, 'setup');
+  assert.deepEqual(f.memory.allPuts, []);
+});
