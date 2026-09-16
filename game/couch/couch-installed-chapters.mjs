@@ -36,7 +36,9 @@ export function createCouchInstalledChapters({
     snapshot = null,
     choices = new WeakMap(),
     binding = null,
-    selection = null;
+    selection = null,
+    staged = null;
+  const retirements = new Set();
   const check = (signal) => {
     if (disposed || signal?.aborted) throw cancelled();
   };
@@ -123,9 +125,13 @@ export function createCouchInstalledChapters({
     selection = null;
     prior?.release();
   }
-  function clear() {
+  function cancel() {
     generation++;
     pending?.controller.abort();
+    staged?.cancel();
+  }
+  function clear() {
+    cancel();
     clearBinding();
   }
   function operation(
@@ -150,44 +156,49 @@ export function createCouchInstalledChapters({
         onStatus({ status, stage, message, progress: null });
       } catch {}
     };
-    report('verifying', message);
-    item.promise = (async () => {
-      // Join cancelled authority work before entering its single-operation lock.
-      if (previous) await previous.promise.catch(() => {});
-      check(controller.signal);
-      requireValue(ticket === generation, 'The selected couch chapter changed.');
-      // Legacy pack preparation receives no signal argument from its decoder
-      // caller. Bind that decoder to the work actually executing, never to a
-      // newer queued operation that is still waiting for this one to unwind.
-      executingSignal = controller.signal;
-      executingStatus = report;
-      try {
-        const result = await work(
-          controller.signal,
-          () => {
-            check(controller.signal);
-            requireValue(ticket === generation, 'The selected couch chapter changed.');
-          },
-          report,
-        );
-        report('ready', 'Installed content is ready.', 'ready');
-        return result;
-      } catch (error) {
-        if (error.name !== 'AbortError') report('error', error.message, 'error');
-        throw error;
-      } finally {
-        if (executingSignal === controller.signal) {
-          executingSignal = null;
-          executingStatus = null;
+    item.promise = Promise.resolve()
+      .then(async () => {
+        // Join cancelled authority work before entering its single-operation lock.
+        if (previous) await previous.promise.catch(() => {});
+        check(controller.signal);
+        requireValue(ticket === generation, 'The selected couch chapter changed.');
+        // Legacy pack preparation receives no signal argument from its decoder
+        // caller. Bind that decoder to the work actually executing, never to a
+        // newer queued operation that is still waiting for this one to unwind.
+        executingSignal = controller.signal;
+        executingStatus = report;
+        try {
+          const result = await work(
+            controller.signal,
+            () => {
+              check(controller.signal);
+              requireValue(ticket === generation, 'The selected couch chapter changed.');
+            },
+            report,
+          );
+          report('ready', 'Installed content is ready.', 'ready');
+          check(controller.signal);
+          requireValue(ticket === generation, 'The selected couch chapter changed.');
+          return result;
+        } catch (error) {
+          if (error.name !== 'AbortError') report('error', error.message, 'error');
+          throw error;
+        } finally {
+          if (executingSignal === controller.signal) {
+            executingSignal = null;
+            executingStatus = null;
+          }
         }
-      }
-    })().finally(() => {
-      signal?.removeEventListener('abort', abort);
-      if (pending === item) pending = null;
-    });
+      })
+      .finally(() => {
+        signal?.removeEventListener('abort', abort);
+        if (pending === item) pending = null;
+      });
+    report('verifying', message);
     return item.promise;
   }
   async function refresh({ signal, onStatus } = {}) {
+    staged?.cancel();
     clearBinding();
     snapshot = null;
     choices = new WeakMap();
@@ -263,10 +274,17 @@ export function createCouchInstalledChapters({
       { signal },
     );
   }
-  async function select(row, { themeId = row.defaultThemeId, raceId, signal, onStatus } = {}) {
+  async function select(
+    row,
+    { themeId = row.defaultThemeId, raceId, signal, onStatus } = {},
+    stage = null,
+  ) {
     const state = stateFor(row, themeId);
     requireValue(Number.isSafeInteger(raceId) && raceId >= 0, 'Use a new in-memory race identity.');
-    clearBinding();
+    if (!stage) {
+      staged?.cancel();
+      clearBinding();
+    }
     return operation(
       signal,
       async (s, current, report) => {
@@ -309,9 +327,17 @@ export function createCouchInstalledChapters({
           await verifyCurrent(state, proof, s);
           current();
           requireValue(state === stateFor(row, themeId), 'The selected installed owner changed.');
+          const selected = { row, themeId, raceId, state, proof };
+          if (stage) {
+            stage.current();
+            stage.picture = candidate;
+            stage.selection = selected;
+            candidate = null;
+            return stage.picture;
+          }
           binding = candidate;
           candidate = null;
-          selection = { row, themeId, raceId, state, proof };
+          selection = selected;
           return binding;
         } finally {
           candidate?.release();
@@ -320,6 +346,89 @@ export function createCouchInstalledChapters({
       onStatus,
       'Checking the selected chapter’s exact picture…',
     );
+  }
+  // The accepted Results image remains live throughout candidate verification.
+  async function stage(row, options = {}) {
+    check(options.signal);
+    staged?.cancel();
+    const controller = new AbortController();
+    let live = true;
+    const item = {
+      picture: null,
+      selection: null,
+      confirmed: false,
+      current() {
+        check(controller.signal);
+        requireValue(live && staged === item, 'The next installed chapter changed.');
+      },
+      cancel() {
+        if (!live) return;
+        live = false;
+        if (staged === item) staged = null;
+        options.signal?.removeEventListener('abort', item.cancel);
+        controller.abort();
+        try {
+          item.picture?.release();
+        } catch {}
+        item.picture = null;
+      },
+    };
+    staged = item;
+    options.signal?.addEventListener('abort', item.cancel, { once: true });
+    if (options.signal?.aborted) item.cancel();
+    try {
+      await select(row, { ...options, signal: controller.signal }, item);
+      item.current();
+      return Object.freeze({
+        picture: item.picture,
+        cancel: item.cancel,
+        async confirm({ onStatus } = {}) {
+          item.current();
+          item.confirmed = false;
+          await operation(
+            controller.signal,
+            async (s, current) => {
+              const selected = item.selection;
+              await verifyCurrent(selected.state, selected.proof, s);
+              current();
+              requireValue(
+                selected.state === stateFor(row, selected.themeId),
+                'The selected installed owner changed.',
+              );
+              item.current();
+              item.confirmed = true;
+            },
+            onStatus,
+            'Confirming the next chapter before adopting it…',
+          );
+          item.current();
+        },
+        commit() {
+          item.current();
+          requireValue(item.confirmed && !pending, 'Confirm the next chapter before adopting it.');
+          const previous = binding;
+          binding = item.picture;
+          selection = item.selection;
+          live = false;
+          staged = null;
+          options.signal?.removeEventListener('abort', item.cancel);
+          let retired = false;
+          const retire = () => {
+            if (retired) return;
+            retired = true;
+            retirements.delete(retire);
+            try {
+              previous?.release();
+            } catch {}
+          };
+          retirements.add(retire);
+          return retire;
+        },
+      });
+    } catch (error) {
+      item.cancel();
+      throw error;
+    }
   }
   async function confirm(row, { raceId, signal, onStatus } = {}) {
     const selected = selection;
@@ -343,10 +452,20 @@ export function createCouchInstalledChapters({
     if (disposed) return;
     disposed = true;
     clear();
+    for (const retire of retirements) retire();
     choices = new WeakMap();
     snapshot = null;
     host.close();
     manager?.close();
   }
-  return Object.freeze({ refresh, select, confirm, current: () => binding, clear, dispose });
+  return Object.freeze({
+    refresh,
+    select,
+    stage,
+    confirm,
+    current: () => binding,
+    cancel,
+    clear,
+    dispose,
+  });
 }
