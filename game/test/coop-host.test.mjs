@@ -1410,3 +1410,129 @@ test('in-panel departure loses its authority on blur; background return cannot r
   assert.equal(f.$('coop-discard-dialog').open, false);
   unchangedPaused(f, before);
 });
+
+for (const interruption of ['blur', 'hidden', 'persisted pagehide'])
+  test(`already-paused Team retires Help and controller intent on ${interruption}, then requires explicit foreground Resume`, async (t) => {
+    const f = await page(t, { nativeFocus: true, capturePaint: true });
+    playingTeam(f);
+    f.$('coop-pause').click();
+    const pad = {
+      index: 0,
+      id: 'Team lifecycle controller',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    f.pads.push(pad);
+    f.tick(2);
+    pad.buttons[0] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[0] = { pressed: false, value: 0 };
+    f.tick(2);
+    assert.equal(f.$('coop-overlay').hidden, false, 'Joining a pad is not Resume.');
+    f.disclose('coop-help');
+    const region = f.$('coop-help-reading'),
+      done = f.$('coop-help-reading-done');
+    region.clientHeight = 100;
+    region.scrollHeight = 800;
+    f.$('coop-help-read').click();
+    assert.equal(f.doc.activeElement, region);
+    pad.buttons[13] = { pressed: true, value: 1 };
+    f.tick();
+    assert.ok(
+      region.scrollTop > 0,
+      'The joined controller actually owns reading before suspension.',
+    );
+    const before = heldTeam(f),
+      scroll = region.scrollTop,
+      audioNote = f.$('coop-audio-note').textContent,
+      audioWarning = f.$('coop-audio-status').textContent;
+    let reads = 0;
+    t.mock.method(navigator, 'getGamepads', () => {
+      reads++;
+      return f.pads;
+    });
+    if (interruption === 'blur') {
+      f.doc.focused = false;
+      f.win.emit('blur');
+    } else if (interruption === 'hidden') {
+      f.doc.hidden = true;
+      f.doc.emit('visibilitychange');
+    } else f.win.emit('pagehide', { persisted: true });
+    // A cached-page event can precede any hasFocus/visibility update; its explicit
+    // inactive lifetime must still retire reading and reject an obsolete action.
+    assert.equal(done.disabled, true);
+    assert.equal(region.hasAttribute('data-controller-reading'), false);
+    assert.equal(f.doc.activeElement, region, 'Suspension retires ownership without moving focus.');
+    pad.buttons[13] = { pressed: false, value: 0 };
+    pad.buttons[0] = { pressed: true, value: 1 };
+    f.$('coop-resume').click();
+    f.tick(90);
+    assert.equal(reads, 0, 'Inactive frames never poll either flight or menu controllers.');
+    assert.deepEqual(heldTeam(f), before);
+    assert.equal(region.scrollTop, scroll);
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.deepEqual(f.visits, []);
+    assert.equal(f.$('coop-audio-note').textContent, audioNote);
+    assert.equal(f.$('coop-audio-status').textContent, audioWarning);
+
+    f.doc.focused = true;
+    f.doc.hidden = false;
+    if (interruption === 'blur') f.win.emit('focus');
+    else if (interruption === 'hidden') f.doc.emit('visibilitychange');
+    else f.win.emit('pageshow', { persisted: true });
+    f.tick(5);
+    assert.ok(reads > 0);
+    assert.deepEqual(heldTeam(f), before);
+    assert.equal(f.$('coop-overlay').hidden, false, 'Held Confirm cannot Resume on return.');
+    assert.equal(done.disabled, true);
+    assert.equal(region.scrollTop, scroll);
+    done.click();
+    assert.deepEqual(heldTeam(f), before);
+    pad.buttons[0] = { pressed: false, value: 0 };
+    f.tick(2);
+    f.tap('Escape'); // Close the still-open disclosure, not the paused flight.
+    assert.equal(f.$('coop-help').open, false);
+    f.tap('Escape'); // Focus the real Resume action without activating it.
+    assert.equal(f.doc.activeElement, f.$('coop-resume'));
+    unchangedPaused(f, before);
+    f.tap('Enter');
+    f.tick(65);
+    assert.equal(f.$('coop-overlay').hidden, true);
+    assert.notEqual(
+      f.$('coop-clock').textContent,
+      before.hud.find(([id]) => id === 'coop-clock')[1],
+    );
+    assert.equal(f.$('coop-audio-note').textContent, audioNote);
+    assert.equal(f.$('coop-audio-status').textContent, audioWarning);
+  });
+
+test('Team detects missed focus-loss notification before polling or stepping and returns paused', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  const time = f.$('coop-clock').textContent;
+  let reads = 0;
+  t.mock.method(navigator, 'getGamepads', () => {
+    reads++;
+    return f.pads;
+  });
+  f.doc.focused = false; // No blur notification: the frame guard owns this observation.
+  f.tick();
+  const paused = heldTeam(f);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-clock').textContent, time);
+  f.tick(90);
+  assert.equal(reads, 0);
+  assert.deepEqual(heldTeam(f), paused);
+  f.$('coop-resume').click();
+  assert.equal(f.$('coop-overlay').hidden, false);
+  f.doc.focused = true;
+  f.win.emit('focus');
+  unchangedPaused(f, paused);
+  f.$('coop-resume').focus();
+  f.tap('Enter');
+  f.tick(65);
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.notEqual(f.$('coop-clock').textContent, time);
+});

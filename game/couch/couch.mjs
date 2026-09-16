@@ -1227,7 +1227,8 @@ try {
       focusPrimaryAction();
     } else if (scope !== menuScope) {
       menuScope = scope;
-      navigation.clear();
+      // Native input can already own a reader in this screen before the next
+      // controller poll. Sync retires stale scopes without clearing that newer owner.
       navigation.sync();
     } else {
       navigation.handle(result.ui);

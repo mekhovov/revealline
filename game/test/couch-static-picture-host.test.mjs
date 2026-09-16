@@ -8,6 +8,9 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
+import { Soundscape } from '../ui/audio.mjs';
+import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 
 const compiled = JSON.parse(
   await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url), 'utf8'),
@@ -113,7 +116,15 @@ async function action(page, id, type = 'click') {
 }
 async function fixture(
   t,
-  { level = 'signal-01', onRead, onMount, unavailable = false, failDecode = false } = {},
+  {
+    level = 'signal-01',
+    onRead,
+    onMount,
+    unavailable = false,
+    failDecode = false,
+    audio,
+    storage,
+  } = {},
 ) {
   const media = mediaBoundary(),
     memory = managedIndexedDB(),
@@ -123,6 +134,8 @@ async function fixture(
   let lease,
     closed = 0;
   const page = await couchPage(t, {
+    audio,
+    storage,
     initialLevel: null,
     ImageClass: media.Image,
     URLImpl: media.URLImpl,
@@ -853,3 +866,170 @@ test('confirmed new setup owns a fresh race after a cancelled Next decoder settl
   assert.equal(p.doc.body.dataset.couchScreen, 'setup');
   assert.deepEqual(f.memory.allPuts, []);
 });
+
+for (const outcome of ['cancel', 'decode refusal'])
+  test(`muted music and completed Results survive Next ${outcome}, Help reading and a fresh retry`, async (t) => {
+    const a = audioHarness(),
+      saved = new Map([[AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: false, volume: 0.4 })]]),
+      writes = [],
+      originalEnable = Soundscape.prototype.enable,
+      diagnostics = [];
+    let sound = null,
+      enables = 0;
+    // Observe the real host-owned sound producer; do not replace its methods or
+    // issue test-only transport commands. Audio time/output is a finite boundary.
+    t.mock.method(Soundscape.prototype, 'enable', function (...args) {
+      sound = this;
+      enables++;
+      return originalEnable.apply(this, args);
+    });
+    t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+    const f = await fixture(t, {
+        audio: {
+          ...a,
+          createElement: () => a.media,
+          Context: class {
+            constructor() {
+              return a.context;
+            }
+          },
+        },
+        storage: {
+          getItem: (name) => saved.get(name) ?? null,
+          setItem: (name, value) => {
+            writes.push([name, value]);
+            saved.set(name, value);
+          },
+        },
+      }),
+      p = f.page;
+    const key = (value) => {
+      const target = p.doc.activeElement,
+        event = target.emit('keydown', { key: value, code: value, repeat: false });
+      // Only the browser's unprevented native button activation is modeled.
+      if (
+        !event.defaultPrevented &&
+        value === 'Enter' &&
+        target.tagName === 'BUTTON' &&
+        !target.disabled &&
+        target.isConnected &&
+        p.doc.activeElement === target &&
+        !target.closest('[hidden],[inert]')
+      )
+        target.click();
+      target.emit('keyup', { key: value, code: value });
+      return event;
+    };
+    const enter = (id) => {
+      p.$(id).focus();
+      key('Enter');
+      p.frame();
+    };
+    await action(p, 'race-start');
+    await settleUntil(() => sound?.enabled && !sound.musicTransportPaused);
+    p.frames(151, 200);
+    const result = completedResult(p);
+    assert.equal(p.state(), 'finished');
+    enter('race-options');
+    enter('race-audio');
+    assert.deepEqual(JSON.parse(saved.get(AUDIO_PREFERENCES_KEY)), { muted: true, volume: 0.4 });
+    enter('race-options-back');
+    const audioBefore = {
+      music: sound.musicState(),
+      cursor: sound.cursor,
+      enables,
+      media: { src: a.media.src, time: a.media.currentTime, plays: a.media.plays },
+      preferences: saved.get(AUDIO_PREFERENCES_KEY),
+      writes: [...writes],
+    };
+    function expectRetainedAudio() {
+      assert.equal(sound.master.gain.value, 0);
+      assert.equal(a.media.muted, true);
+      assert.equal(sound.musicTransportPaused, false);
+      assert.deepEqual(sound.musicState(), audioBefore.music);
+      assert.equal(sound.cursor, audioBefore.cursor);
+      assert.equal(enables, audioBefore.enables);
+      assert.deepEqual(
+        { src: a.media.src, time: a.media.currentTime, plays: a.media.plays },
+        audioBefore.media,
+      );
+      assert.equal(saved.get(AUDIO_PREFERENCES_KEY), audioBefore.preferences);
+      assert.deepEqual(writes, audioBefore.writes);
+      assert.equal(p.$('race-audio').textContent, 'Unmute sound');
+      assert.equal(p.$('race-audio').getAttribute('aria-pressed'), null);
+    }
+    const entered = deferred(),
+      gate = deferred();
+    t.after(() => gate.resolve());
+    f.media.setDecodeHook(async () => {
+      entered.resolve();
+      await gate.promise;
+    });
+    p.$('race-start').focus();
+    const next = action(p, 'race-start');
+    await entered.promise;
+    p.frame();
+    retainedResult(p, result);
+    expectRetainedAudio();
+    const failure = new Error('Owned test image decode refused.');
+    if (outcome === 'cancel') {
+      enter('race-picture-cancel');
+      assert.equal(p.doc.activeElement, p.$('race-start'));
+    } else {
+      gate.reject(failure);
+      await next;
+      assert.match(p.$('race-message').textContent, /Results are kept/);
+      assert.deepEqual(diagnostics, [['Next picture preparation failed.', failure]]);
+    }
+    retainedResult(p, result);
+    enter('race-help');
+    const region = p.$('race-help-reading');
+    region.clientHeight = 100;
+    region.scrollHeight = 600;
+    enter('race-help-read');
+    assert.equal(p.doc.activeElement, region);
+    assert.equal(key('ArrowDown').defaultPrevented, true);
+    assert.ok(region.scrollTop > 0);
+    assert.equal(key('Escape').defaultPrevented, true);
+    assert.equal(p.doc.activeElement, p.$('race-help-read'));
+    assert.equal(p.$('race-help-reading-done').disabled, true);
+    enter('race-help-back');
+    if (outcome === 'cancel') {
+      gate.resolve();
+      await next;
+      assert.deepEqual(diagnostics, []);
+    }
+    p.frames(20);
+    retainedResult(p, result);
+    expectRetainedAudio();
+    assert.equal(p.$('race-start').disabled, false);
+    assert.equal(p.$('race-start').hidden, false);
+    assert.equal(f.media.images.at(-1).releaseCount, 1);
+
+    const retryEntered = deferred(),
+      retryGate = deferred();
+    t.after(() => retryGate.resolve());
+    f.media.setDecodeHook(async () => {
+      retryEntered.resolve();
+      await retryGate.promise;
+    });
+    p.$('race-start').focus();
+    const retry = action(p, 'race-start');
+    await retryEntered.promise;
+    // Deliberately choosing another visible action removes automatic Start
+    // permission; successful preparation must expose a fresh Ready action.
+    p.$('race-help').focus();
+    retryGate.resolve();
+    await retry;
+    p.frames(20);
+    assert.equal(p.state(), 'ready');
+    assert.equal(p.doc.activeElement, p.$('race-help'));
+    assert.equal(p.$('race-start').disabled, false);
+    assert.equal(
+      p.renders.every((run, i) => run !== result.runs[i]),
+      true,
+    );
+    assert.equal(result.picture.image.releaseCount, 1);
+    expectRetainedAudio();
+    assert.deepEqual(f.memory.allPuts, []);
+  });

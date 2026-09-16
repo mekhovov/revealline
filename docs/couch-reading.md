@@ -18,6 +18,14 @@ Couch also opts into `nativeReadingScroll`. A legitimate primary pointer inside 
 
 [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112), reviewed on 16 September 2026, recommends consistent navigation and clear ways to leave a focused interaction using supported input methods. It also calls for navigation to follow layout changes. This supports the shared toolbar and the separate responsive checks; it does not certify this game or substitute for device testing.
 
+## Host foreground and delayed scope observations
+
+A host's remembered controller scope can lag behind a newer keyboard or pointer Help entry. When the next poll observes a changed scope, synchronize navigation with the actual current root and discard that poll's routed command. Do not unconditionally clear navigation first: `beginReading()` may already have synchronized and established the newer valid reader. Real root/scope changes, invalid text, departures, disconnected input and lifecycle suspension still retire their respective owners.
+
+Team tracks foreground inactivity separately from whether its simulation is already paused. Blur, hidden state and persisted page departure clear held flight/menu input and the active reader even from Pause or Help. Background frames do not poll controllers or advance the simulation, and Start/Resume reject background activation. A foreground return resets the frame clock and inactivity gate only; it does not restore reading, synthesize input or resume play. Back from Help closes that interaction; a subsequent explicit Resume is still required. Team retains its existing fresh-direction behavior after Resume, rather than inheriting Solo/Versus saved-direction behavior.
+
+The combined regressions exercise real host Help after native pan and delayed controller polling, retained failed/cancelled Next with newer reading ownership, and muted/shared-audio preferences across those transitions. The Team lifecycle cases also cover already-paused readers, held controller input, missed blur detected by the next frame, and stale Resume attempts. Preserve the original failing evidence before correction. Modeled DOM/controller/clock observations do not establish physical device behavior or native layout: verify actual foreground loss/return and explicit Resume separately, and preserve Team's permanent audio explanation beside its independent transient storage warning.
+
 ## Integration and qualification
 
 - Run the complete shared reader/navigation files, the new Couch reading cases and both existing Couch host/navigation suites. Preserve the source and logs of failures before correction. Run the actual Solo reading host separately to check default compatibility.

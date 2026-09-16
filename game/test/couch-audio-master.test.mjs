@@ -47,6 +47,15 @@ function key(page, value) {
   let rangeChanged = false;
   if (!event.defaultPrevented) {
     if (value === 'Enter' && target.tagName === 'BUTTON') target.click();
+    if (value === 'Enter' && target.tagName === 'SUMMARY' && page.doc.activeElement === target) {
+      // The finite DOM does not implement the browser's summary activation.
+      const click = target.emit('click');
+      if (!click.defaultPrevented) {
+        const details = target.closest('details');
+        details.open = !details.open;
+        details.emit('toggle', { bubbles: false });
+      }
+    }
     if (target.tagName === 'INPUT' && target.type === 'range' && /^Arrow/.test(value)) {
       const delta = ['ArrowRight', 'ArrowUp'].includes(value) ? 1 : -1;
       target.value = String(
@@ -399,3 +408,123 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
   assert.equal(attempts.length, 3);
   assert.equal(saved.writes.length, 2);
 });
+
+for (const mode of ['Versus', 'Team'])
+  test(`${mode} sound edits survive paused Help pan and keyboard return without replacing audio feedback`, async (t) => {
+    const team = mode === 'Team',
+      saved = storage({ muted: false, volume: 0.4 }),
+      persist = saved.setItem.bind(saved);
+    let refuse = false;
+    saved.setItem = (name, value) => {
+      if (refuse) throw new Error('Shared sound preferences temporarily unavailable.');
+      persist(name, value);
+    };
+    const a = team ? null : audio(t),
+      page = team ? await teamPage(t, saved) : await couchPage(t, { storage: saved, audio: a }),
+      prefix = team ? 'coop' : 'race',
+      control = (suffix) => page.$(`${prefix}-${suffix}`),
+      frames = (count) => (team ? page.tick(count) : page.frames(count)),
+      state = () =>
+        team
+          ? {
+              hud: ['clock', 'coverage', 'message', 'state-0', 'state-1'].map(
+                (id) => control(id).textContent,
+              ),
+              progress: control('progress').value,
+              paused: !control('overlay').hidden,
+              lobby: !control('menu').hidden,
+            }
+          : { status: page.state(), checkpoints: page.checkpoint() };
+    enter(page, `${prefix}-start`);
+    if (!team) await settleUntil(() => a.output()?.enabled && !a.output().musicTransportPaused);
+    frames(8);
+    enter(page, `${prefix}-pause`);
+    frames(2);
+    const attempt = state();
+    assert.equal(team ? attempt.paused && !attempt.lobby : attempt.status === 'paused', true);
+    const sound = a?.output(),
+      music = sound?.musicState(),
+      cursor = sound?.cursor,
+      plays = a?.media.plays;
+    enter(page, `${prefix}-${team ? 'options-toggle' : 'options'}`);
+    reaches(page, `${prefix}-audio`);
+    key(page, 'Enter');
+    assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
+    refuse = team;
+    reaches(page, `${prefix}-master-volume`);
+    key(page, 'ArrowRight');
+    assert.equal(Number(control('master-volume').value), 0.41);
+    const preferenceBytes = saved.getItem(AUDIO_PREFERENCES_KEY),
+      writes = saved.writes.length,
+      warning = control('audio-status').textContent,
+      explanation = team ? control('audio-note').textContent : null;
+    if (team) {
+      assert.match(warning, /could not be saved/);
+      assert.match(explanation, /This Team chapter currently uses visual feedback/);
+      assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
+    } else assert.equal(warning, '');
+
+    enter(page, `${prefix}-${team ? 'options-toggle' : 'options-back'}`);
+    enter(page, `${prefix}-${team ? 'help-toggle' : 'help'}`);
+    const entry = control('help-read'),
+      region = control('help-reading'),
+      done = control('help-reading-done');
+    region.clientHeight = 100;
+    region.scrollHeight = 600;
+    enter(page, entry.id);
+    assert.equal(page.doc.activeElement, region);
+    assert.equal(done.disabled, false);
+    const pan = region.emit('pointerdown', {
+      pointerType: 'touch',
+      pointerId: 51,
+      button: 0,
+      isPrimary: true,
+    });
+    assert.equal(pan.defaultPrevented, false);
+    // Native scrolling and pan adoption are boundary inputs, not device evidence.
+    region.scrollTop = 80;
+    region.emit('pointercancel', { pointerType: 'touch', pointerId: 51, isPrimary: true });
+    frames(4);
+    assert.equal(page.doc.activeElement, region);
+    assert.equal(done.disabled, false);
+    assert.match(control('help-reading-hint').textContent, /Done reading returns/);
+    assert.equal(control('audio-status').textContent, warning);
+    assert.equal(key(page, 'Escape').defaultPrevented, true);
+    assert.equal(page.doc.activeElement, entry);
+    assert.equal(done.disabled, true);
+    assert.equal(region.scrollTop, 80);
+    enter(page, `${prefix}-${team ? 'help-toggle' : 'help-back'}`);
+    enter(page, `${prefix}-${team ? 'options-toggle' : 'options'}`);
+    frames(30);
+    assert.deepEqual(state(), attempt);
+    assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), preferenceBytes);
+    assert.equal(saved.writes.length, writes);
+    assert.equal(control('audio-status').textContent, warning);
+    assert.equal(control('audio').textContent, 'Unmute sound');
+    assert.equal(control('audio').getAttribute('aria-pressed'), null);
+    assert.equal(Number(control('master-volume').value), 0.41);
+    assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
+    if (team) {
+      assert.equal(control('options').open, true);
+      assert.equal(control('audio-note').textContent, explanation);
+      assert.equal(control('audio-note').hidden, false);
+      assert.equal(page.contexts(), 0);
+      assert.equal(page.mediaElements(), 0);
+      refuse = false;
+      reaches(page, 'coop-master-volume');
+      key(page, 'ArrowRight');
+      assert.deepEqual(record(saved), { muted: true, volume: 0.42 });
+      assert.equal(control('audio-status').textContent, '');
+      assert.equal(control('audio-note').textContent, explanation);
+      frames(30);
+      assert.deepEqual(state(), attempt);
+      assert.equal(page.contexts(), 0);
+    } else {
+      assert.equal(sound.master.gain.value, 0);
+      assert.equal(a.media.muted, true);
+      assert.equal(sound.musicTransportPaused, false);
+      assert.equal(sound.cursor, cursor);
+      assert.deepEqual(sound.musicState(), music);
+      assert.equal(a.media.plays, plays);
+    }
+  });
