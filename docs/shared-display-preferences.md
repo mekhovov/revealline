@@ -159,6 +159,57 @@ Tab wrapping, Escape opener restoration and the flight still paused. The
 original 44px observation is retained. Portrait, short landscape, zoom and
 physical-input checks remain open; this does not complete P05.
 
+## Short-landscape Solo header
+
+The short-landscape Solo header uses the existing 48px height above the pause
+panel. At widths of at least 681px and heights up to 540px, non-running header
+buttons align their icons and labels in a row with 4px block padding. Their
+44px minimum targets and current text size remain in force. Keyboard and
+controller focus use the same color and 3px outline inside each target, with an
+inset background separator; forced-colors mode retains its existing Highlight
+outline. This avoids the measured P01 Settings edge overshoot without moving
+the arena or changing the pause panel's top inset. Running flight and narrower
+headers retain their existing layout.
+
+The [retained header/briefing record](verification/cross-mode/p05-solo-header/README.md)
+separates the complete two-file 22/22 pair on each Node runtime from actual
+rendered checks. Clean R2 and R4 captures at 844×390 confirm the header's
+Standard and Large/Plain labels, 44px targets and inset Settings focus. Earlier
+negative DOM coordinates and inconclusive banded or mismatched-DPR captures
+remain retained. Recovery actions, whole-arena Resume, other sizes, zoom and
+physical-device checks still require the eventual integrated source.
+
+## Short-landscape Ready briefing
+
+At widths of at least 681px and heights up to 500px in landscape, the Ready
+briefing gives its existing reading region a full-height column. The compact
+Read details toolbar and launch actions occupy the other column in their DOM
+order. Text style, Large size and 44px targets remain unchanged. Long reading
+and action lists keep separate scrolling; the card itself can scroll if its
+minimum content exceeds the viewport. Results, Pause and portrait layouts keep
+their existing ownership and rules.
+
+The clean header review exposed a separate Large/Plain briefing defect: a
+fixed-height flex card left about 64px for its heading and copy after the
+toolbar and actions. R3 fixed the initial heading but still clipped Main menu
+and let the painted scrollbar overlap copy. The corrected layout gives Read
+the full toolbar width only while the existing Done control is hidden, keeps
+the original Read control visible throughout active reading, and reduces
+container spacing without changing text scale or targets. Logical end padding
+and a stable scrollbar gutter protect reading text.
+
+R4's four clean 844×390 captures confirm complete initial headings and all four
+resting actions before and after Done. PageDown reaches the measured text end,
+and Done restores Read focus. Expanded reading hints still put lower actions
+outside their viewport; the demonstrated native Tab exit ends reading through
+the existing owner and then reaches each action visibly with its focus ring.
+This is not simultaneous visibility of every action during reading, a fully
+keyboard-only journey or controller/touch hardware proof. No flight or save
+was exercised. Cancelled fetches and preview 404s remain recorded. Wrong-device
+reading prompts belong to a separate P03 correction; neither this candidate nor
+its native evidence fixes that copy. Other sizes, zoom, integrated/public and
+offline checks remain open; this does not accept P05 or certify 200% scaling.
+
 ## Reusable bounded journey
 
 “Pause an unfinished cut, select Plain and Large, then enable Reduced effects.
