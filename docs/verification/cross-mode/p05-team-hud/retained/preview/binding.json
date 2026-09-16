@@ -1,0 +1,20 @@
+{
+  "base": "d3ff0bc1e9948f5752e79c5b21c8207dd74c69e1",
+  "baseTree": "45d701fa3e6c01d1853893b9372e2b10201a18df",
+  "sourceHoldSha256": "5aa109c2c404c18f2847e6ffc51cd5d6c5373487d334c838444b88126a52bcd4",
+  "overlays": [
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 17554,
+      "sha256": "742b2d0033def72a414dc3eb8be56eba69fc67a46bc74795262df49b05665b91"
+    }
+  ],
+  "candidateTeamHud": true,
+  "pid": 70643,
+  "port": 62363,
+  "url": "http://127.0.0.1:62363/game/couch/relay-rescue.html",
+  "gitBlobCacheBytes": 67108864,
+  "maxConcurrentRequests": 4,
+  "helperSha256": "65d6aa8da214678ae29892a5ab819f8896538ca7d8a6f3bc38e6308c1ca0fbb5",
+  "scope": "Exact Gitd3ff0bc Team picture-host baseline with one immutable narrow-HUD stylesheet overlay. All other regular assets come from the stated Git commit; new actor candidate is excluded. Fresh normal origin; no app state, game-clock or response-delay fixture. Source binding is not native/phase/public acceptance. Actual Standard/Large and Theme/Plain narrow-HUD rendering needs verification. Large is a preset, not browser zoom. LRU cap describes stored Git blobs, not total RSS."
+}

@@ -42,7 +42,9 @@ export function createCouchStaticPictures({
     pending = null,
     requested = null,
     accepted = null,
-    binding = null;
+    binding = null,
+    staged = null;
+  const retirements = new Set();
   const check = (signal) => {
     if (disposed || signal?.aborted) throw cancelled();
   };
@@ -344,8 +346,13 @@ export function createCouchStaticPictures({
       throw error;
     }
   }
-  async function select(row, { themeId = row.defaultThemeId, raceId, signal, onStatus } = {}) {
+  async function select(
+    row,
+    { themeId = row.defaultThemeId, raceId, signal, onStatus } = {},
+    stage = null,
+  ) {
     check(signal);
+    if (!stage) staged?.cancel();
     const context = contextFor(row, themeId, raceId);
     if (requested?.raceId === raceId)
       required(
@@ -387,11 +394,18 @@ export function createCouchStaticPictures({
           notice: state.notice,
           release: candidate.release,
         });
-        const previous = binding;
-        binding = next;
-        accepted = state;
-        candidate = null;
-        previous?.release();
+        if (stage) {
+          stage.current();
+          stage.picture = next;
+          stage.state = state;
+          candidate = null;
+        } else {
+          const previous = binding;
+          binding = next;
+          accepted = state;
+          candidate = null;
+          previous?.release();
+        }
         report('ready', state.notice || 'The exact picture is ready for both boards.', 'ready');
         current();
         return next;
@@ -399,6 +413,84 @@ export function createCouchStaticPictures({
         candidate?.release();
       }
     });
+  }
+  // Next may prepare a new original while Results still owns the accepted one.
+  // Publication is explicit; even final confirmation cannot retire that original.
+  async function stage(row, options = {}) {
+    check(options.signal);
+    staged?.cancel();
+    const controller = new AbortController();
+    let live = true;
+    const item = {
+      picture: null,
+      state: null,
+      confirmed: false,
+      current() {
+        check(controller.signal);
+        required(live && staged === item, 'The next couch picture changed.');
+      },
+      cancel() {
+        if (!live) return;
+        live = false;
+        if (staged === item) staged = null;
+        options.signal?.removeEventListener('abort', item.cancel);
+        controller.abort();
+        try {
+          item.picture?.release();
+        } catch {}
+        item.picture = null;
+      },
+    };
+    staged = item;
+    options.signal?.addEventListener('abort', item.cancel, { once: true });
+    if (options.signal?.aborted) item.cancel();
+    try {
+      await select(row, { ...options, signal: controller.signal }, item);
+      item.current();
+      return Object.freeze({
+        picture: item.picture,
+        cancel: item.cancel,
+        async confirm({ onStatus } = {}) {
+          item.current();
+          item.confirmed = false;
+          await operation(controller.signal, onStatus, async (s, current) => {
+            await verifyMedia(item.state, s);
+            current();
+            verifyContext(item.state, s);
+            current();
+            item.current();
+            item.confirmed = true;
+          });
+          item.current();
+        },
+        commit() {
+          item.current();
+          required(item.confirmed && !pending, 'Confirm the next picture before adopting it.');
+          const previous = binding;
+          binding = item.picture;
+          accepted = item.state;
+          live = false;
+          staged = null;
+          options.signal?.removeEventListener('abort', item.cancel);
+          // No cleanup or injected reader runs between owner and host publication.
+          // Disposal also owns this retirement if the host cannot complete its handoff.
+          let retired = false;
+          const retire = () => {
+            if (retired) return;
+            retired = true;
+            retirements.delete(retire);
+            try {
+              previous?.release();
+            } catch {}
+          };
+          retirements.add(retire);
+          return retire;
+        },
+      });
+    } catch (error) {
+      item.cancel();
+      throw error;
+    }
   }
   function confirm(row, { raceId, signal, onStatus } = {}) {
     check(signal);
@@ -420,15 +512,17 @@ export function createCouchStaticPictures({
   function cancel() {
     generation++;
     pending?.controller.abort();
+    staged?.cancel();
   }
   function dispose() {
     if (disposed) return;
     disposed = true;
     cancel();
+    for (const retire of retirements) retire();
     binding?.release();
     binding = accepted = requested = null;
     store?.close();
     manager?.close();
   }
-  return Object.freeze({ select, confirm, current: () => binding, cancel, dispose });
+  return Object.freeze({ select, stage, confirm, current: () => binding, cancel, dispose });
 }

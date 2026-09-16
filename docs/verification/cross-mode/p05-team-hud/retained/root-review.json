@@ -1,0 +1,38 @@
+{
+  "scope": "P05 narrow Team HUD source checkpoint; not phase or release acceptance",
+  "source": "9a4ce18bc5f43587cfafc211230c3a8d639b235af6f17dff79535513e9c29f21",
+  "base": "d3ff0bc1e9948f5752e79c5b21c8207dd74c69e1",
+  "sourcePeer": "Dewey closed held01 and held02 CSS and preview helper increments",
+  "native": {
+    "final": "native-final/events.json",
+    "events": 6,
+    "images": 6,
+    "allImagesVisuallyInspected": true,
+    "checks": [
+      "320x740 Theme Standard",
+      "320x740 Theme Large",
+      "320x740 Plain Large Ukrainian/Rich",
+      "390x844 Plain Large Ukrainian/Rich",
+      "844x390 larger-width CSS unchanged",
+      "1280x720 viewport reset and paused Resume focus"
+    ],
+    "observations": [
+      "Both player names retain one line at320 and390 CSS pixels.",
+      "Each player status uses its full half-row. At320 Theme Large, HUD height reduced from227.08 to178.48 CSS pixels compared with held01.",
+      "Full2:1 arena remains visible; no horizontal page overflow in the observed sizes.",
+      "Options/Text/Back/explicitResume path used actual keyboard input.",
+      "No browser error logs in final capture."
+    ],
+    "remaining": [
+      "Short844x390 landscape at Large retains existing vertical scrolling and lower Pause placement. This width is outside the changed <=600px rule; whole native layout remains P03/P05 work.",
+      "Actor glyphs are the unchanged d3ff predecessor; actor readability is separately under correction.",
+      "No physical touch/controller,200%browserzoom,completeTeamjourney,fullwin,rescue or broad accessibility acceptance."
+    ]
+  },
+  "predecessors": {
+    "native-root": "Three events, two saved images plus separate full-page diagnostic. DPR.9 captures contain duplicated bands and are inconclusive; Meta/super/ctrl0 attempts did not change measuredDPR.",
+    "native-clean": "Fresh same-browser tab433 produced cleanDPR1 screenshots. Two events/images; names fit but320Large status lines wrapped, motivating held02.",
+    "sourcePreserved": "predecessor.css and source-held-01.json"
+  },
+  "verification": "Five exact HTTP/source pins before/after each preview; CSS formatting and diff check. No new mirrored CSS tests or broad simulation suite claimed."
+}

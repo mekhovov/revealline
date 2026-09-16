@@ -232,7 +232,7 @@ test('all existing Team semantic cues and geometry remain above the picture in r
   painter.paint(run, { picture: binding(run, presentation) });
   assert.deepEqual(semantic(), legacy);
   assert.deepEqual(labels(view.calls), legacyLabels);
-  for (const label of ['+', '2', '✓', 'B', 'SHIELDED', 'P2 · LOCKED', 'RECOVER', 'SLOWED'])
+  for (const label of ['+', '2', '✓', 'B', 'SHIELD', 'LOCK 2', 'RECOVER', 'SLOWED'])
     assert.ok(legacyLabels.includes(label), `Retained semantic label: ${label}`);
   assert.deepEqual(run, before);
 });

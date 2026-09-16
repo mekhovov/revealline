@@ -571,6 +571,7 @@ export function drawPresentedActor(
   image = null,
   geometry = null,
   bodyRecord = null,
+  { bodyOffset = null } = {},
 ) {
   if (!frame) return;
   const colors = {
@@ -589,6 +590,17 @@ export function drawPresentedActor(
     }
   ctx.globalAlpha = frame.stunned ? 0.45 : frame.dormant ? 0.65 : 1;
   ctx.translate(Math.round(frame.x), Math.round(frame.y));
+  // Optional cosmetic placement uses shared pixel coordinates. Contact remains
+  // at the real frame position; ordinary callers retain their exact draw path.
+  const offset =
+    bodyOffset &&
+    Number.isFinite(bodyOffset.x) &&
+    Number.isFinite(bodyOffset.y) &&
+    (bodyOffset.x !== 0 || bodyOffset.y !== 0);
+  if (offset) {
+    ctx.save();
+    ctx.translate(bodyOffset.x, bodyOffset.y);
+  }
   ctx.save();
   ctx.rotate(frame.heading);
   ctx.scale(1 - frame.bank * 0.35, 1 + frame.bank * 0.2);
@@ -634,6 +646,7 @@ export function drawPresentedActor(
   }
   ctx.restore();
   drawRoleBadge(ctx, frame, colors);
+  if (offset) ctx.restore();
   // The luminous center is the contact footprint; larger body art is cosmetic.
   ctx.globalAlpha = 0.8;
   ctx.strokeStyle = colors.dark;
