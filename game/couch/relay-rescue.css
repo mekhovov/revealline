@@ -724,51 +724,74 @@ kbd {
   min-height: var(--fk-target-size);
 }
 
-/* Short landscape gives each touch player a gutter beside the whole arena.
-   The existing wrappers and DOM order remain intact for menus and pause. */
+/* Short landscape budgets the whole live view, including hidden-pad play.
+   The canvas keeps its intrinsic ratio inside the remaining row. Touch targets
+   retain their side gutters; menus and viewport-bounded pause stay independent. */
 @media (orientation: landscape) and (min-width: 640px) and (max-height: 500px) {
-  .playing[data-coop-touch='visible'] #coop-app {
+  .playing #coop-app {
     display: grid;
-    grid-template-columns: 140px minmax(0, 1fr) 140px;
-    grid-template-rows: auto auto minmax(188px, 1fr) auto;
-    gap: 4px 12px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: 2px 12px;
     height: 100svh;
     max-width: none;
-    padding-block: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-bottom));
+    padding-block: max(4px, env(safe-area-inset-top)) max(4px, env(safe-area-inset-bottom));
   }
-  .playing[data-coop-touch='visible'] .masthead {
+  .playing[data-coop-touch='visible'] #coop-app {
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    grid-template-rows: auto auto minmax(188px, 1fr) auto;
+  }
+  .playing[data-coop-touch='visible'] .race-pad {
+    width: max-content;
+    grid-template-columns: repeat(2, minmax(var(--fk-target-size), max-content));
+  }
+  .playing[data-coop-touch='visible'] .race-pad > button {
+    white-space: nowrap;
+  }
+  .playing .masthead {
     display: none;
   }
-  .playing[data-coop-touch='visible'] #coop-play,
+  .playing #coop-play,
   .playing[data-coop-touch='visible'] #coop-controls {
     display: contents;
   }
-  .playing[data-coop-touch='visible'] .hud {
+  .playing .hud {
     grid-column: 1 / -1;
     grid-row: 1;
     padding: 0;
     gap: 8px;
   }
-  .playing[data-coop-touch='visible'] .live-objective {
+  .playing .live-objective {
     grid-column: 1 / -1;
     grid-row: 2;
     margin: 0;
     font-size: var(--fk-text-secondary);
     line-height: 1.3;
   }
+  .playing .arena-wrap {
+    grid-column: 1;
+    grid-row: 3;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  .playing .arena-wrap canvas {
+    min-width: 0;
+    min-height: 0;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
   .playing[data-coop-touch='visible'] .arena-wrap {
     grid-column: 2;
-    grid-row: 3;
-    align-self: center;
     width: 100%;
-    max-width: calc(
-      (
-          100svh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom)) -
-            144px
-        ) *
-        2
-    );
-    margin: 0 auto;
   }
   .playing[data-coop-touch='visible'] .control-card {
     grid-row: 3;
@@ -781,13 +804,13 @@ kbd {
   .playing[data-coop-touch='visible'] .control-card:last-child {
     grid-column: 3;
   }
-  .playing[data-coop-touch='visible'] .board-footer {
+  .playing .board-footer {
     grid-column: 1 / -1;
     grid-row: 4;
     min-height: var(--fk-target-size);
     gap: 8px;
   }
-  .playing[data-coop-touch='visible'] .board-footer p {
+  .playing .board-footer p {
     margin: 0;
     font-size: var(--fk-text-secondary);
     line-height: 1.3;

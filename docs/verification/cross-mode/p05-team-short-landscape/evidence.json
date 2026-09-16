@@ -1,0 +1,894 @@
+{
+  "scope": "One CSS correction over committed 1f3b9995. Root 16-case geometry plus two independent clean Large/shown initial views; all predecessor failures and R1 recorder-cap failure retained. No new product tests, phase, hardware or release acceptance.",
+  "base": "1f3b9995af43879d54fb7b0053846f0723e2e069",
+  "testedGameTree": "a20e424d31331221791ae429c2b8bcc39cfee5af",
+  "css": {
+    "path": "game/couch/relay-rescue.css",
+    "bytes": 18395,
+    "sha256": "77f7ffa62432a8d27143bdd5455f15e2df4e70eca04818e17ac1573b5ac75afe"
+  },
+  "archive": {
+    "path": "evidence.zip",
+    "bytes": 1186727,
+    "sha256": "6d140d22935bba6116b298e41cdb0ac153241dbfdea9e33d5c5953de5960e4ae",
+    "members": 125,
+    "decodedBytes": 14048432
+  },
+  "files": [
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/ability-width-proposal.md",
+      "member": "candidate/ability-width-proposal.md",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1750,
+      "sha256": "9d2ce4bcb2d0ada0b98f99ac7bf116058443305aebef8296edd69e78556b7332"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/ability-width-successor.diff",
+      "member": "candidate/ability-width-successor.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 715,
+      "sha256": "93b1bdace3d3cbc5bfd2ddd0310fc1891eece8a5f0de59cff7a3d0b8554227c4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/admission.json",
+      "member": "candidate/admission.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1450,
+      "sha256": "1c899c5fed6458382434ee2776ce18cbaa1beb2e105cef2adea078b594da6b56"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/committed-parent-adoption.json",
+      "member": "candidate/committed-parent-adoption.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1373,
+      "sha256": "a07a40cba9573b58dc66a8b9558b2be7be0bea75ac80306218d60a19764b9400"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/compact-width-successor.diff",
+      "member": "candidate/compact-width-successor.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 251,
+      "sha256": "fc909016480e4b34c86c9c9b1cea0ee84c6d42f32135920d78becdc89979486f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/inner-track-successor.diff",
+      "member": "candidate/inner-track-successor.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 425,
+      "sha256": "605f4cfc5fdb9678ea8a2d51d440d231d23d312116cc8e36d6352860366c9adf"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/native-checks.md",
+      "member": "candidate/native-checks.md",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1543,
+      "sha256": "511b554367a7ef68c4ebc94e8c8b25b9f172e3322dd4c89b947292a4ea05e022"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/binding-normal.json",
+      "member": "candidate/preview/binding-normal.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 2914,
+      "sha256": "1ca672172c22dcedb0eb59b746193c021af9535474d2dc5d7bc00cc7a187fd46"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/config.json",
+      "member": "candidate/preview/config.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1704,
+      "sha256": "1cbdd8b26a7983ee84b24f4c878f7eae7c9b85b799eea8f08418e8d7e6f9b074"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/helper-reuse.diff",
+      "member": "candidate/preview/helper-reuse.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 9830,
+      "sha256": "bb0a15b96290a5f5672417ff99ae94b896990c6c400ce64687e394d621e18b18"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/http-after-held01.json",
+      "member": "candidate/preview/http-after-held01.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3621,
+      "sha256": "f215c4ce4236e1f6ed12ec3963fd53a8c7bf36e8f4dc32fd08f6f7864ee26755"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/http-before.json",
+      "member": "candidate/preview/http-before.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3572,
+      "sha256": "f78c9030087d1edcc433f1aed48495d4ca4c3cea106b3b28d45e7a481f89efc7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/preparation.json",
+      "member": "candidate/preview/preparation.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1415,
+      "sha256": "a2deb8faa75d6919bb1957036898589a678737a3d75e35d690176fbb408dea47"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview/serve.py",
+      "member": "candidate/preview/serve.py",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 9895,
+      "sha256": "aa6aa6a8afc4adaafd4cafffe960b11cf647c243fd94deb03d37363a62dddf7f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held02/binding-normal.json",
+      "member": "candidate/preview-held02/binding-normal.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 2931,
+      "sha256": "53d45c493fa77d34238b6e9cf7f2a531a0a509fec15671fcd6af77fc8772d803"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held02/config.json",
+      "member": "candidate/preview-held02/config.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1721,
+      "sha256": "5b3431160c8b44a8e55b10ede8c363a23e1bd8863e349ae498e2e78a5031278c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held02/http-after.json",
+      "member": "candidate/preview-held02/http-after.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3635,
+      "sha256": "75ab2449ca6291f2d0542939a0544f4531b6e7529f06a477d1a17eb86983c680"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held02/http-before.json",
+      "member": "candidate/preview-held02/http-before.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3634,
+      "sha256": "4358dcb2f0059941297b37bb178fc5c95f779064a7a5b96b224788dd226bd64a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held02/preparation.json",
+      "member": "candidate/preview-held02/preparation.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1580,
+      "sha256": "15a1c989a8d5e2f0431174ef5ff79bcde484d87ebb71821795c5bb79dc26faad"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held02/serve.py",
+      "member": "candidate/preview-held02/serve.py",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 9895,
+      "sha256": "aa6aa6a8afc4adaafd4cafffe960b11cf647c243fd94deb03d37363a62dddf7f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held03/binding-normal.json",
+      "member": "candidate/preview-held03/binding-normal.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 2935,
+      "sha256": "c3e4e8fa2c2695252521922a6cfbf1dbb5c9de3a78c4e044de6220ec4feb47f9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held03/config.json",
+      "member": "candidate/preview-held03/config.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1725,
+      "sha256": "f9d6adfd918a8cd8f36768c218ee0ea4b2bccfec62d317ad487ff7d40d1ed15e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held03/http-after.json",
+      "member": "candidate/preview-held03/http-after.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3662,
+      "sha256": "0e95f16fc75f69b2a4de55f8f5ed8b694c9c8f42a10071a78274eb913cec0a91"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held03/http-before.json",
+      "member": "candidate/preview-held03/http-before.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3649,
+      "sha256": "970d34e538d2f2a684cffef1a736fcc3eb20589d6970c5a8cdaf2f1841e771cf"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held03/preparation.json",
+      "member": "candidate/preview-held03/preparation.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1662,
+      "sha256": "403ee9e05e17b4e4775749a38264c29b64be9a2c5462fb3bf62373c47b68cb68"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held03/serve.py",
+      "member": "candidate/preview-held03/serve.py",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 9895,
+      "sha256": "aa6aa6a8afc4adaafd4cafffe960b11cf647c243fd94deb03d37363a62dddf7f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held04/binding-normal.json",
+      "member": "candidate/preview-held04/binding-normal.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 2953,
+      "sha256": "67c079d0dd06a82792f476337d96eb88a3f9eb8f041af226b702ac397a261de7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held04/config.json",
+      "member": "candidate/preview-held04/config.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1743,
+      "sha256": "7c0ae923f5cc0898a8c27ea65c22f4bf574dec4d238e386f80c37e85adac45a9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held04/http-after-root-native.json",
+      "member": "candidate/preview-held04/http-after-root-native.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3673,
+      "sha256": "b4b1a3ab2dfb6b4dd2889b3775d7a4c371dca1a98eb8a3df6dda8ba6add3c980"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held04/http-before.json",
+      "member": "candidate/preview-held04/http-before.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3682,
+      "sha256": "0190189019fc3709a5af13c7341ad8f5cde16eb2b4c7bfbf00a9a578c2d2545c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held04/preparation.json",
+      "member": "candidate/preview-held04/preparation.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1584,
+      "sha256": "4ceda31761dc4510c35c6d1b28a475ab2d3e14dc273b935c0d72cf4294ab669f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/preview-held04/serve.py",
+      "member": "candidate/preview-held04/serve.py",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 9895,
+      "sha256": "aa6aa6a8afc4adaafd4cafffe960b11cf647c243fd94deb03d37363a62dddf7f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/relay-rescue-held01.css",
+      "member": "candidate/relay-rescue-held01.css",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 18029,
+      "sha256": "4c3fc9006f1e61a1efb92b59d11d3461e56a62737e4cfbae8dab53704eeb06ef"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/relay-rescue-held02.css",
+      "member": "candidate/relay-rescue-held02.css",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 18118,
+      "sha256": "13cdb8d4d017afddf3f3a96238d83f1958b61a1446e6a7c8d61ab547c22cc22d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/relay-rescue-held03.css",
+      "member": "candidate/relay-rescue-held03.css",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 18378,
+      "sha256": "e8b52b95b1f9aa0c7d4babf9185c953b476fe847dd7db9419cac1424148416d8"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/relay-rescue-held04.css",
+      "member": "candidate/relay-rescue-held04.css",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 18395,
+      "sha256": "77f7ffa62432a8d27143bdd5455f15e2df4e70eca04818e17ac1573b5ac75afe"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-01.diff",
+      "member": "candidate/source-held-01.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3383,
+      "sha256": "f303a6626bd5200de76c1fd5bd4197f3e5ead7d9d4f20eea161e5ae03985d563"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-01.json",
+      "member": "candidate/source-held-01.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 724,
+      "sha256": "38f983c5bda4f9402501fe16b4cc2f6f316b96883e4a517122d2ff1537d0c883"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-02.diff",
+      "member": "candidate/source-held-02.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3475,
+      "sha256": "8d1819d423de3076cbd38e32402cb2f14488e01c8a14274d47faa6770940b56b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-02.json",
+      "member": "candidate/source-held-02.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1759,
+      "sha256": "339b3ae5e119a4aa836ff52a8f5008e86fb9826c8c77118e8c62179a2ad465ea"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-03.diff",
+      "member": "candidate/source-held-03.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3742,
+      "sha256": "9ca68d40f6c415c356e072c02499d522545e75b9b0c1136a01cc1964c8ed87a3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-03.json",
+      "member": "candidate/source-held-03.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1808,
+      "sha256": "e34e445978ae466c9cf95d99e92e97b77c7ccf9cf6377687a149a77d33ae7c30"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-04.diff",
+      "member": "candidate/source-held-04.diff",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 3704,
+      "sha256": "18851200490b02c4f4c6ef5d6900e30ff57f83b081403127693de55f960ecbc3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/source-held-04.json",
+      "member": "candidate/source-held-04.json",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 1786,
+      "sha256": "135efcf52e60fb5d3e73db4ce4fb05cd9e7c5cb85dd969293d779fccd82775a3"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/temporary-base-index-entries.bin",
+      "member": "candidate/temporary-base-index-entries.bin",
+      "role": "Candidate source, historical failures, immutable preview authority or post-source evidence",
+      "bytes": 732527,
+      "sha256": "b0045b08556560c6e47172cb7f7d83cbae0339e7f0888e34623f9c9a9f425c34"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/01.jpg",
+      "member": "native/01.jpg",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 20579,
+      "sha256": "36ce250583ec07450e036c9d7fe9d9580fa67b89d6ebbbd5aa05b4461f91c16d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/01.json",
+      "member": "native/01.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1254,
+      "sha256": "3f545c7b8a4b4e743f6042bb7f7206c6362236c9f59661b0e01e6f60a5a04052"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/binding.json",
+      "member": "native/binding.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 151,
+      "sha256": "951d621ced072b51b08fa6d94c6b7278cca7b65479351f0ae7b83fbc584935db"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/closed.json",
+      "member": "native/closed.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 26,
+      "sha256": "ecd414e5a46b0a7c384f9ed19b73ef247fead2ad5b53159f2dddb4cfae4c3c02"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/events.json",
+      "member": "native/events.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 589,
+      "sha256": "8c6d7841384dcad2ca39848659e6fe5cdc4888e6716570a031acf6d9b6c013d2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/01-standard-hidden-760x351.geometry.json",
+      "member": "native/held02/01-standard-hidden-760x351.geometry.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 5305,
+      "sha256": "f98672f6422820423485637448323338ea92100ba0f0d175bc5e0cf69264b945"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/01.json",
+      "member": "native/held02/01.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1244,
+      "sha256": "9239d77a1d24a17bb670e0007bd412b417cee9746f8beca66c1d5b2aac2d0da0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/02-large-shown-760x351.geometry.json",
+      "member": "native/held02/02-large-shown-760x351.geometry.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8168,
+      "sha256": "af4ff1096fd62a9ad9ffd3a294eb1d9b3353cde0ae66e9306c1422e359b4a81f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/02.json",
+      "member": "native/held02/02.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2122,
+      "sha256": "a85c462f4511f7e8eb33713f09253b97a34e1d726ca1e88dfc3c51503e0db0bc"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/binding.json",
+      "member": "native/held02/binding.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 158,
+      "sha256": "4eeca1e55a88a3cb8100e48a691493d27333db0435d1a06190b0b545d508d3d6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/closed.json",
+      "member": "native/held02/closed.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 26,
+      "sha256": "f433ac84b46541a3c1684523123be5a96f4e4a95da3847c5b4b4da62dc5ed4b0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/events.json",
+      "member": "native/held02/events.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1107,
+      "sha256": "a89c5e5a8d8838c5116b2842b03a8824779dba115978059f03b5e0e4ec657248"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held02/root-review.md",
+      "member": "native/held02/root-review.md",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1515,
+      "sha256": "fda188fdb49c046fa066aa809b184353a3b8f13d7e4706abd1d3103e8291b9c7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/01-standard-auto-relay.geometry.json",
+      "member": "native/held03/01-standard-auto-relay.geometry.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2783,
+      "sha256": "5dc8899f36f535003b4ef8f8aea11b7f0051046e9249e9eb44a8d29e832d7214"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/01.jpg",
+      "member": "native/held03/01.jpg",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 16902,
+      "sha256": "f1b561ad6122ec8369931be57ae41bcc9051a5cc91b624f52aee52873b857114"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/01.json",
+      "member": "native/held03/01.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1261,
+      "sha256": "028cfc388e75073795063490219aa4cf5eb610fd3ffa2b7f8a7553e77139c4b9"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/02-large-shown-relay.geometry.json",
+      "member": "native/held03/02-large-shown-relay.geometry.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8312,
+      "sha256": "e0e2f45b62952de2f6e8513ef3a48afdaddb1bc7334bb5cb66048aef949fb5af"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/02.jpg",
+      "member": "native/held03/02.jpg",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 23617,
+      "sha256": "b52ff14690223ec2ecfc7312a262048da4869a88d7e9df33cb41c79612a58dfe"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/02.json",
+      "member": "native/held03/02.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2124,
+      "sha256": "fbfe98d51ba134f461cb9dc54b3f420c015297da7f33ed572aef07ccd9a1b832"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/03-large-shown-relay-844x390.geometry.json",
+      "member": "native/held03/03-large-shown-relay-844x390.geometry.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8250,
+      "sha256": "6ceb870514eb106d5adc18266e985816ca7f38eb86ed92ebfca27a234094e6da"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/03.json",
+      "member": "native/held03/03.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2131,
+      "sha256": "92b4a99c4bd885368ced058257f68cec326b80db182937a5b46986fba9a46c50"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/03b-large-shown-relay-844x390.rows.json",
+      "member": "native/held03/03b-large-shown-relay-844x390.rows.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3783,
+      "sha256": "f857ce39e9b3d1b8e330b3c9df7b6415419415863e0794ce9d2e8c220bfa5f4e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/04.json",
+      "member": "native/held03/04.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2543,
+      "sha256": "fee06c5ba9b24a9975d579998e2b7848bfec80c35c49376a22408bda2f0b501c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/binding.json",
+      "member": "native/held03/binding.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 158,
+      "sha256": "2fff20be72b2f07c080277698f6b1c2abd4c64c7f301613eac1c5eb85db9a91b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/closed.json",
+      "member": "native/held03/closed.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 26,
+      "sha256": "2b5c1f3e1d7e62a27135f3a1690f90e9200bd7e4f6b9c8c2b7d12666c0534917"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/events.json",
+      "member": "native/held03/events.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2352,
+      "sha256": "8ed7143b9de2f3e48534d6acf0342bcddf6de71d1e8564bef0671569e0a8d75c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held03/root-review.md",
+      "member": "native/held03/root-review.md",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1377,
+      "sha256": "ce5c9fbb0730bc3f8c1fa91a300fb9c97e7cd03289d9ae39f37140f6043ac463"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/01-relay-standard-hidden-760.json",
+      "member": "native/held04/01-relay-standard-hidden-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3376,
+      "sha256": "a90ce5cd4c2186f4c9935eaaf1b1947189a844a49a50692924342d856d8a98e0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/01.json",
+      "member": "native/held04/01.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2149,
+      "sha256": "7b2f679d7fe797e287ba8e7bd4f778fefc1ea85eebbfdd5d00bf8a78211c03d7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/02-relay-standard-hidden-844.json",
+      "member": "native/held04/02-relay-standard-hidden-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3386,
+      "sha256": "254ccd64b494f98b783aa8e9c832d502dfc56f153271ab3e7e791feaed29ae47"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/02.json",
+      "member": "native/held04/02.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2148,
+      "sha256": "59399ec784efeab4b3665dfc8597f42655a01dcc0c24c711869764e99e34190e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/03-relay-standard-shown-844.json",
+      "member": "native/held04/03-relay-standard-shown-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8488,
+      "sha256": "289a118056ae4f0aaaa8240f3f2e57f1045120e84c12a4508f343b7ff5673147"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/03.json",
+      "member": "native/held04/03.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2642,
+      "sha256": "7950b797c8d1ffddde4b3dff411a1141573755ee464b62b4e26b4614078771da"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/04-relay-standard-shown-760.json",
+      "member": "native/held04/04-relay-standard-shown-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8472,
+      "sha256": "50049524c37b5da3423279c731d27817837c53a52c141137658c730a95bc9863"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/04.jpg",
+      "member": "native/held04/04.jpg",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 17272,
+      "sha256": "1e344fc03dc2e2dc9109145aeaae556752e9c56ab086cdfa452dbdaa13af9925"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/04.json",
+      "member": "native/held04/04.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1321,
+      "sha256": "c0e642f6e2649351d995174fc7fa151dc3171a4567789b4e41f9ed3575121a41"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/05-relay-large-shown-760.json",
+      "member": "native/held04/05-relay-large-shown-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8492,
+      "sha256": "460a2951ba60543d6eadb57380a308a2d9f4f7b23243b12f7615f750830adf35"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/06-relay-large-shown-844.json",
+      "member": "native/held04/06-relay-large-shown-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8427,
+      "sha256": "8ac525707e8394cd4f430832b29698aa14b68592244e0b23550fd3b9abdab9f6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/07-relay-large-hidden-844.json",
+      "member": "native/held04/07-relay-large-hidden-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3363,
+      "sha256": "4da97553ff22783a24d96402673b7ba7878140ebed943af6c3803c4f76b5a7b4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/08-relay-large-hidden-760.json",
+      "member": "native/held04/08-relay-large-hidden-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3366,
+      "sha256": "667020d24632ac01639201e6ea9105ec022e8e29903c3618d8f774a59eaa3fb6"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/09-first-large-hidden-760.json",
+      "member": "native/held04/09-first-large-hidden-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3373,
+      "sha256": "db34225486dbf5bbfc8de50d3615983f5fa72e1ce70147481f64ff0cdf6e1167"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/10-first-large-hidden-844.json",
+      "member": "native/held04/10-first-large-hidden-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3378,
+      "sha256": "7ae9e90db557ed5a9bad9750d3ce93eeac186bf0d52afd59766ea83a661fff9d"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/11-first-large-shown-844.json",
+      "member": "native/held04/11-first-large-shown-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8409,
+      "sha256": "bb5bc24cc15b1d8677945eb613ef879bf931d5d0c7c085c3c75ab6b30ab73795"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/12-first-large-shown-760.json",
+      "member": "native/held04/12-first-large-shown-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8474,
+      "sha256": "27b4989f702c9c5c14c3e66b710affa1db943342410660d01b3bccca0c589840"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/13-first-standard-shown-760.json",
+      "member": "native/held04/13-first-standard-shown-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8462,
+      "sha256": "7a97117671ff4a5364eb67283f319b2937ab168b0979ec4c9bd29687aa2860b0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/14-first-standard-shown-844.json",
+      "member": "native/held04/14-first-standard-shown-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8478,
+      "sha256": "31b383f56eb0e07e1ab254726232c30e3964c8049b5ab42751d875cd81e27324"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/15-first-standard-hidden-844.json",
+      "member": "native/held04/15-first-standard-hidden-844.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3343,
+      "sha256": "06e0e8b5b778b33057b390d1e85b791ba9aa455dbea5bfb5c901960dfc3524ce"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/16-first-standard-hidden-760.json",
+      "member": "native/held04/16-first-standard-hidden-760.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3333,
+      "sha256": "596619026fcbf630acecce94f0e2fdf62e057f325f9d9b316c1e39a29b8870a1"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/17-first-standard-hidden-portrait.json",
+      "member": "native/held04/17-first-standard-hidden-portrait.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 3346,
+      "sha256": "6c96d5e68313ab299d99cf0cb996e2bd95fc03286e7cc98c42f1eae0aedc5ee4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/binding.json",
+      "member": "native/held04/binding.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 158,
+      "sha256": "f1d0db53db014a7b55b5301cb3603e3e34fe3a1a8f628b57ac4925008cb3ee21"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/closed.json",
+      "member": "native/held04/closed.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 26,
+      "sha256": "2b5c1f3e1d7e62a27135f3a1690f90e9200bd7e4f6b9c8c2b7d12666c0534917"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/events.json",
+      "member": "native/held04/events.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 2354,
+      "sha256": "8a1d92bd48ad5ab709c6a2fc0da6f29e8ca423c1187e5317dae12fd9deb15757"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/geometry-review.json",
+      "member": "native/held04/geometry-review.json",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 8650,
+      "sha256": "bca41663d422a0e17900afc9c39949a2d94c91ea3c10f1342cf4e7df2175bb06"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/root-review.md",
+      "member": "native/root-review.md",
+      "role": "Root closed native originals; geometry and image scopes remain separate",
+      "bytes": 1382,
+      "sha256": "da24b6675e78c30468ccc30bdb5c792e0092a19f3b4919f7f8f6c6db960b0515"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p09-pressure-review/team-short-landscape-diagnosis.md",
+      "member": "diagnosis/team-short-landscape-diagnosis.md",
+      "role": "Read-only source diagnosis before candidate",
+      "bytes": 6877,
+      "sha256": "e8d109fde1245e94420c7ffb92abba30bb1a439ab050d0f97b82f23348aa03bd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p09-pressure-review/team-short-landscape-diagnosis.json",
+      "member": "diagnosis/team-short-landscape-diagnosis.json",
+      "role": "Read-only source diagnosis before candidate",
+      "bytes": 3290,
+      "sha256": "ec184763b69f2f97cb7509ecde88f23978b93d61668e141e07455e33e90ba074"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/01.json",
+      "member": "baseline-native/01.json",
+      "role": "Original frozen a20e short-landscape observation, separate from this candidate",
+      "bytes": 1302,
+      "sha256": "6f4f8274f26a6c69517fe2a7b4d54ca26e469e136c0cb8fa68a4d01252f427f0"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/01.jpg",
+      "member": "baseline-native/01.jpg",
+      "role": "Original frozen a20e short-landscape observation, separate from this candidate",
+      "bytes": 23265,
+      "sha256": "725eef37e673b4dca1ca056697cc5247b82e37a70baf337aca80f29331225372"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/binding.json",
+      "member": "baseline-native/binding.json",
+      "role": "Original frozen a20e short-landscape observation, separate from this candidate",
+      "bytes": 158,
+      "sha256": "c9cf39a62456d855073cdd3ca457538c7261c847284caa00dff430a0f3fc01e4"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/events.json",
+      "member": "baseline-native/events.json",
+      "role": "Original frozen a20e short-landscape observation, separate from this candidate",
+      "bytes": 507,
+      "sha256": "aa6ae690d4bf8505f0a5ed48c4becaa252e29544686d5b5f25398b1470bf8d30"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/combined-gameplay-native-root/team/closed.json",
+      "member": "baseline-native/closed.json",
+      "role": "Original frozen a20e short-landscape observation, separate from this candidate",
+      "bytes": 26,
+      "sha256": "ecd414e5a46b0a7c384f9ed19b73ef247fead2ad5b53159f2dddb4cfae4c3c02"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/verification.json",
+      "member": "baseline-qualification/verification.json",
+      "role": "Inherited runtime source qualification; not candidate CSS geometry acceptance",
+      "bytes": 601,
+      "sha256": "1bc8a226f57d1be9e2586b42ddd19256159830af0e4a432e4d146e1dbe2c8634"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/verification-union.json",
+      "member": "baseline-qualification/verification-union.json",
+      "role": "Inherited runtime source qualification; not candidate CSS geometry acceptance",
+      "bytes": 6801,
+      "sha256": "f7e9e4e646e4a83f8404a421c1328184e2c4f679878c102d9de5bd11d9334ea2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/cross-mode-gameplay-integration/.cache/gameplay-composition/preview/binding-normal.json",
+      "member": "baseline-qualification/preview/binding-normal.json",
+      "role": "Inherited runtime source qualification; not candidate CSS geometry acceptance",
+      "bytes": 2187,
+      "sha256": "4e308ab3cfa60d01883d22587fd77b8f9ffa609d2bfa51f61b2ca841da9a2d8c"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-short-landscape/.cache/team-short-landscape/retention-plan.json",
+      "member": "candidate/retention-plan.json",
+      "role": "Original finite preliminary retention plan; all 109 pins remain exact",
+      "bytes": 46055,
+      "sha256": "379d6ecd57955a70630bc1ddcb5aaf717e07405567b18de495388e09cea125ae"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/team-short-landscape-native-root/held04/root-review.md",
+      "member": "root-native/held04/root-review.md",
+      "role": "Root geometry and subsequent independent clean-image assessment, retaining provisional text",
+      "bytes": 3603,
+      "sha256": "719c86a61310cddff84a29e1bd4feb899ce8faf2d96d81b7d5b17687cf4ff477"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r1/01-relay-yard-large-shown-760x351.png",
+      "member": "external-clean/team-held04-r1/01-relay-yard-large-shown-760x351.png",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 51034,
+      "sha256": "721e538648444664aa891d6f28e60b1885e76afd31578d276455e2d519546f3a"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r1/chrome.log",
+      "member": "external-clean/team-held04-r1/chrome.log",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 2953,
+      "sha256": "eceaebe6ce0a5ffca37f2c4618198d627525c7b67141fe69d49b6cf4b07d1d05"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r1/diagnose.mjs",
+      "member": "external-clean/team-held04-r1/diagnose.mjs",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 25788,
+      "sha256": "b87b4b4ffc308626ccbe7745aa73b2acbff32652c322f576461038e521b66ad2"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r1/events.jsonl",
+      "member": "external-clean/team-held04-r1/events.jsonl",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 310233,
+      "sha256": "730e427945d66141c866861d10325555999443993ac4db951a5c444aece9623f"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r1/result.json",
+      "member": "external-clean/team-held04-r1/result.json",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 6173904,
+      "sha256": "fee9f928a6fa97236de27777dec596bff704f1a2f70ba1d72e631b624904e37b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r1/source-binding.json",
+      "member": "external-clean/team-held04-r1/source-binding.json",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 5322,
+      "sha256": "aafe56466c4699e6baef5a33bc9580660d5ff39ef0e0e4824b4f1da603662921"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/01-first-connection-large-shown-844x390.png",
+      "member": "external-clean/team-held04-r2/01-first-connection-large-shown-844x390.png",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 55793,
+      "sha256": "0bd0b01b4faa406817589e300170e7dacfce7f36b2cee0530c936081fa573fbd"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/chrome.log",
+      "member": "external-clean/team-held04-r2/chrome.log",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 2262,
+      "sha256": "bc3d65942e92a6a319988b64e2a7ac80254260346b10294c461e1d3f7bc2879e"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/diagnose.mjs",
+      "member": "external-clean/team-held04-r2/diagnose.mjs",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 26735,
+      "sha256": "a2f781a893bb8609dad67c8f6aecd4b717026e394c1fb648e3d1afe8ef0c2616"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/events.jsonl",
+      "member": "external-clean/team-held04-r2/events.jsonl",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 309397,
+      "sha256": "20f1193d778c93db190d3d3c23bd83ad4660b554eac9d7ff33780b830f3f4cb7"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/result.json",
+      "member": "external-clean/team-held04-r2/result.json",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 5779985,
+      "sha256": "3df070c2729499f5865f17fcdff6684a2c1fccab0fa17cfb64e7b574033e948b"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/review.json",
+      "member": "external-clean/team-held04-r2/review.json",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 11945,
+      "sha256": "f192c07b76b063269d12acc0384e730f7d48ffa989d3aeb4f085e0e3a9d5a503"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/source-binding.json",
+      "member": "external-clean/team-held04-r2/source-binding.json",
+      "role": "Original external R1/R2 evidence; execution labels and failure retained",
+      "bytes": 5322,
+      "sha256": "aafe56466c4699e6baef5a33bc9580660d5ff39ef0e0e4824b4f1da603662921"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p05-preparation/team-held04-r2/manifest.json",
+      "member": "external-clean/team-held04-r2/manifest.json",
+      "role": "External owner original 13-file manifest",
+      "bytes": 2416,
+      "sha256": "4a5f34ea8548d78d8ff63fdf61e0ba8657261d7ec4de1b94cc1ea1b96e90f8ef"
+    }
+  ]
+}

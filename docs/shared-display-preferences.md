@@ -180,6 +180,24 @@ and leaves Pause lower on the page. Actor cues, 200% zoom, physical input and
 whole-phase acceptance remain separate. Retain the earlier banded captures as
 inconclusive capture diagnostics; fresh-tab recovery is not a runtime fix.
 
+## Compact live Team layout
+
+The [short-landscape candidate](verification/cross-mode/p05-team-short-landscape/README.md)
+uses the complete live viewport budget for hidden and shown touch controls. Give
+the arena an explicitly shrinkable inner track, contain its intrinsic 2:1 canvas,
+and allocate ability labels their intrinsic width before reducing text or target
+sizes. Keep the directional cross centred and existing input owners unchanged.
+A compact touch rule must override the earlier height-derived width at matching
+specificity. Held04 geometry covers both starter arenas at actual 760×351 and
+844×390, Standard/Large, hidden/shown: 16 cases passed, with five-point button
+hits and no pad overlap. Separate clean Large/shown PNGs for Relay Yard at
+760×351 and First Connection at 844×390 passed external and root inspection.
+R1's later observation-cap failure remains retained alongside its completed
+Relay view and R2's missing-case completion. Preserve
+the earlier implicit-track, wrapped-label and narrow-width failures; inherited
+runtime tests and layout arithmetic do not establish rendered or physical-device
+acceptance.
+
 ## Reusable bounded journey
 
 “Pause an unfinished cut, select Plain and Large, then enable Reduced effects.
