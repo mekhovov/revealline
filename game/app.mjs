@@ -1686,6 +1686,16 @@ try {
     getScope: controllerScope,
     getRoot: controllerMenuRoot,
     keyboard: true,
+    ownsKeyboardEvent: (event) => {
+      const dialog = $('settings-dialog'),
+        cancel = $('cancel-key-capture');
+      return (
+        controllerDialog() === dialog &&
+        !cancel.hidden &&
+        !cancel.disabled &&
+        dialog.contains(event.target)
+      );
+    },
     getDefaultFocus: controllerFocus,
     getReadingPrompt: readingPrompt,
     getControlLabels: () => ({

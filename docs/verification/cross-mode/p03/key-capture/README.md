@@ -1,0 +1,7 @@
+# Keyboard capture correction
+
+The committed0e browser baseline reproduced a valid ArrowUp remap cancelling capture and moving menu focus. Three composed-host regressions failed before the correction, then passed when document-level menu navigation yielded to the exact active key-capture owner. Existing binding validation and controller commands are preserved.
+
+Five complete affected test files pass **153/153 on Node20.19.5 and Node22.22.2**. Scoped lint and formatting pass. Corrected keyboard browser observations cover Up/Down assignment, duplicate and reserved-key rejection, Escape cancellation, real Tab traversal, normal menu navigation afterward and a paused exposed flight that resumes only through explicit Continue. Automated checkpoints and native HUD observations remain separate evidence. Screenshots were inspected inline only; physical controller/touch, foreground lifecycle, offline, final-source qualification and public release are not established here.
+
+`manifest.json` maps every retained original path to its complete byte-identical `objects/<sha256>` member inside `evidence.zip`. It includes the initial failed test/native observations, corrected logs and native preview's two frozen runtime overrides, source/documentation snapshots, scoped reviewer and collector. The final source commit must contain this record before fresh full qualification. Earlier0e hosted outcomes and its successful More worlds native continuation are historical; neither qualifies a successor. v0.59.0 remains unpublished and full P03 remains implementing.
