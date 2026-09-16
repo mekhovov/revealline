@@ -1,0 +1,55 @@
+{
+  "format": "revealline-native-preservation-review.v1",
+  "at": "2026-09-16T03:32:42.323440+00:00",
+  "status": "PASS_SCOPED_HISTORICAL_ONLINE",
+  "archiveId": "archive-17",
+  "infrastructureCommit": "d92391c40a1757de0497c2b7709c0a4925318e5a",
+  "deploymentId": 6472983959,
+  "reviewedOriginalFiles": 13,
+  "reviewedOriginalBytes": 135375,
+  "imagesInspected": [
+    "native/02-ready.png",
+    "native/04-paused.png"
+  ],
+  "reviewerActions": [
+    "Independently rehashed all twelve files from the original native manifest, then preserved that manifest itself.",
+    "Visually inspected both original PNGs. Full wide arena and HUD visible in the running frame; Pause panel has focused Resume and three other actions.",
+    "Read original accessibility captures: live line at 0%; following pause has 1.5% coverage, 340 points, 3 lives; resume retains these values and re-pause focuses Resume.",
+    "After-native main reference and successful hosted run/status agree with the independently bound HTTP deployment.",
+    "Preserved early premature-entry and reverse-Tab limitations without expanding keyboard-only claims."
+  ],
+  "observationScopes": [
+    {
+      "version": "v0.57.3",
+      "kind": "retained-predecessor-native-observations",
+      "originalInfrastructureCommit": "f7d7ecd711cb895801412a4bcf7796e63d25887c",
+      "originalDeploymentId": 6468597117,
+      "preservation": "660 payload rows /312653046 bytes equal the predecessor and pass the new full HTTP audit. No fresh v0.57.3 browser run claimed."
+    },
+    {
+      "version": "v0.57.4",
+      "kind": "new-canonical-archive-native-observation",
+      "originalInfrastructureCommit": "d92391c40a1757de0497c2b7709c0a4925318e5a",
+      "originalDeploymentId": 6472983959,
+      "scope": "Scoped root native preservation observation, not full navigation, offline, touch or physical-controller acceptance."
+    }
+  ],
+  "limits": [
+    "No disconnected reload, saved-flight migration, physical touch/controller, victory or complete keyboard journey; earlier scoped v0574 main acceptance and unchangedv0573 evidence remain separately retained.",
+    "Original v0.57.3 historical defects and limitations remain unchanged. This archive preservation record is not P02, offline, all-input or physical-device acceptance.",
+    "The read-only native addendum has unresolved viewport changes and final body focus. Screenshot pixel dimensions cannot establish CSS viewport/device geometry."
+  ],
+  "phaseAccepted": false,
+  "nativeAddendum": {
+    "originalFiles": 5,
+    "originalBytes": 46930,
+    "originalManifest": {
+      "path": "evidence/archive-17/append-v0574/native-addendum-manifest.json",
+      "sha256": "d43b1bed86b7009111492bb49c8d01213c9a373dde8e16d32816fb1da1398bc1",
+      "kind": "reference"
+    },
+    "imagePersonallyInspected": "native-addendum/07-final.png",
+    "observation": "Same paused 1.5% / 340 points / 3 lives run. The final screenshot shows a reflowed header, a left-aligned paused panel and substantial surrounding space; DOM focus is body.",
+    "viewportQualification": "Earlier 1280\u00d7720 describes PNG pixels, not measured CSS. Subsequent reported CSS viewports differed without an explicit viewport override (1150\u00d71348, then639\u00d7749 at DPR2); cause unresolved. This evidence establishes no stable viewport, responsive layout or complete focus-navigation acceptance."
+  }
+}

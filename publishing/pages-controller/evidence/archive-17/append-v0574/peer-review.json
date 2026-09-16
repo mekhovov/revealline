@@ -1,0 +1,21 @@
+{
+  "status": "PASS_COMPLETE_HTTP_PEER_REVIEW",
+  "at": "2026-09-16T03:24:49.724110+00:00",
+  "reviewer": "archive17_admission_peer",
+  "reportSha256": "e54167fde5703105d8f96b431e5dc842f5e6cc75669ffc30ea33a9b909cd4c2b",
+  "checks": [
+    "1323 expected paths, result rows and attempt rows match exactly",
+    "625323826 bytes; HTTP200, canonical requested/finalURL, identity encoding, content length, MIME, SHA and timestamps verified",
+    "One successful attempt per file; no failures, retries or skips",
+    "660 predecessor payload rows and312653046 bytes unchanged",
+    "Hosted pins and fresh afterHTTP main/tree/run/deployment/status remain exact"
+  ],
+  "scope": "Read-only review; no network, tests, browser or repository changes",
+  "peerInspectionCorrection": {
+    "reportedFailure": "FileNotFoundError(main.json) from resolving after-http/review.json pins relative to admission root",
+    "correction": "Resolved those pins relative to their document directory after-http/; all rechecks passed",
+    "classification": "Local peer inspection correction; no HTTP attempt failure"
+  },
+  "nativeAdmission": false,
+  "phaseAccepted": false
+}
