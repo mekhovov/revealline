@@ -26,6 +26,12 @@ The open dialog owns navigation. Back follows its cancellation rules: a picture 
 
 Disconnecting the selected pad pauses the flight even if another pad remains connected. A replacement must join deliberately. Blur, a hidden page, a scope change and applied keyboard/controller settings clear held commands. A button used to resume or confirm a hangar cannot also use an ability in the resumed flight.
 
+## Keyboard capture ownership
+
+`attachControllerNavigation` accepts an optional `ownsKeyboardEvent(event)` predicate, defaulting to false. When keyboard navigation is enabled and this predicate returns true, the document listener relinquishes its reader/editor state and reports native input, then yields without consuming the key or moving focus. The existing dialog capture handler owns validation and cancellation.
+
+Solo grants ownership only to events inside the current top Settings dialog while its key-capture Cancel control is active. Do not skip all Settings keys or delegate events from another screen. The hook does not change routed controller commands, native select/slider handling or ordinary menu navigation after capture. Test the real document → dialog event order, including arrows, reserved Return/Space, Escape, Tab and unchanged Ready/paused checkpoints; isolated dialog-handler tests cannot prove this composition. See [keyboard controls](controls.md#current-keyboard-capture).
+
 ## Read details without starting a flight
 
 Choose **Mission brief** from Ready or the compact paused dock. The focused view shows the current map, authored description and actual requirements; chapter cards and flight setup are hidden for this view. **Read mission brief / Done reading** controls the existing reader, and **Back** returns to the logical Ready/paused scope. Reading or Back never starts/resumes the flight. Ordinary mission selection restores the full chapter/setup view. First Flight keeps its own course lesson route; imported practice is labeled PRACTICE, the course FIRST FLIGHT, and ARCADE requires an actual validated Arcade policy.

@@ -17,6 +17,7 @@ export function attachControllerNavigation({
   onReadingChange = () => {},
   onNativeInput = () => {},
   keyboard = false,
+  ownsKeyboardEvent = () => false,
   nativeReadingScroll = false,
 } = {}) {
   let scope = null,
@@ -311,6 +312,13 @@ export function attachControllerNavigation({
     if (reading) relinquish();
   });
   listen('keydown', (event) => {
+    // Explicit host capture owns these keys before document-level menu navigation.
+    // Relinquish stale previews without consuming the event or moving focus.
+    if (keyboard && ownsKeyboardEvent(event)) {
+      relinquish();
+      onNativeInput(event);
+      return;
+    }
     if (keyboard && keyboardNavigation(event)) {
       onNativeInput(event);
       return;
