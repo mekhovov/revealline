@@ -2471,6 +2471,39 @@ try {
     if (!launch.isCurrent() || !availableFocusTarget(launch.opener)) return Promise.resolve(false);
     return requestMissionReplacement(request, launch.opener, launch);
   }
+  async function requestWorldLaunch(entry, launch, onStatus) {
+    if (
+      !entry ||
+      !launch ||
+      typeof launch.isCurrent !== 'function' ||
+      typeof launch.onSelected !== 'function' ||
+      !launch.isCurrent()
+    )
+      return Promise.resolve(false);
+    // More worlds owns a temporarily disabled Choose during verification. Its
+    // persistent launch lease, not Library's available-opener check, owns this
+    // handoff. The same checked replacement gate retains the current flight.
+    const request = { kind: 'library-installed', id: campaignKey(entry.campaign) };
+    const selected = await requestMissionReplacement(request, launch.opener, launch);
+    if (!selected && launch.isCurrent()) {
+      const target = resolveMissionRequest(request);
+      if (target.same)
+        preparationStatus(
+          onStatus,
+          `${target.title} is already selected. Your current flight is kept.`,
+          'ready',
+          launch.isCurrent,
+        );
+      else if (missionReplacement?.launch === launch)
+        preparationStatus(
+          onStatus,
+          'Review the chapter choice. Stay keeps your current flight paused.',
+          'ready',
+          launch.isCurrent,
+        );
+    }
+    return selected;
+  }
   function isSetupRequest(request) {
     return ['class', 'steering', 'lesson'].includes(request.kind);
   }
@@ -2821,7 +2854,7 @@ try {
       if (ticket.launch && ticket.adopting) {
         $('mission-replace-confirm').disabled = true;
         $('mission-replace-status').textContent =
-          `Selection did not finish: ${error.message} The field may have changed; the previous attempt was not restored. Stay returns to Library.`;
+          `Selection did not finish: ${error.message} The field may have changed; the previous attempt was not restored. Stay returns to your menu.`;
       } else {
         ticket.failure = `${error.message} Your flight remains paused here.`;
         $('mission-replace-confirm').disabled = false;
@@ -6496,7 +6529,7 @@ try {
             return { status: installed ? 'installed' : 'absent' };
           },
           install: (files, options) => installSourceChapter(descriptor.id, files, options),
-          async choose({ signal, onStatus }) {
+          async choose({ signal, onStatus, launch }) {
             if (!storedStateAdopted || !persistenceReady)
               throw new Error(
                 'Reload after recovery to adopt the preserved profile before choosing this chapter.',
@@ -6509,11 +6542,17 @@ try {
             );
             const snapshot = await checkedChapters({ signal });
             await externalChapters.readiness(snapshot, descriptor.id, { signal });
-            if (signal.aborted)
+            if (signal.aborted || !launch?.isCurrent())
               throw new DOMException('Chapter selection cancelled.', 'AbortError');
+            // Reconcile only checked content; this does not replace the run.
+            // The explicit selection below still requires Stay / Replace.
             adoptContentCatalog(contentFromChapters(snapshot));
             const pack = packs.packs.find((p) => p.id === descriptor.id);
-            selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+            return requestWorldLaunch(
+              resolvePackCampaign(pack, pack.campaigns[0].id),
+              launch,
+              onStatus,
+            );
           },
         }))
       : [],
@@ -6523,7 +6562,7 @@ try {
       return loadOptionalCatalog(options);
     },
     install: installOptionalChapter,
-    chooseInstalled: async (pack, { signal }) => {
+    chooseInstalled: async (pack, { signal, launch, onStatus }) => {
       if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
         throw new Error(
           'Return to the normal game and resolve recovery before choosing a chapter.',
@@ -6534,10 +6573,9 @@ try {
       // External originals always go through their descriptor/readiness card.
       if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
         throw new Error('Use this chapter’s exact original-picture card.');
-      selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
-      return true;
+      return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
     },
-    choose: async (summary, { signal, onStatus }) => {
+    choose: async (summary, { signal, onStatus, launch }) => {
       if (courseEntry || courseSession || practice)
         throw new Error('Return from practice before choosing a world.');
       const pack = packs.packs.find((item) => item.id === summary.id);
@@ -6552,8 +6590,7 @@ try {
       if (signal?.aborted) throw new DOMException('World selection cancelled.', 'AbortError');
       if (packs.packs.find((item) => item.id === summary.id) !== pack)
         throw new Error('Installed content changed; choose this world again.');
-      selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
-      return true;
+      return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
     },
     onOpen: () => {
       pause(true);
