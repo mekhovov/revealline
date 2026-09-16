@@ -466,6 +466,169 @@ test('resize leaves existing default reader behavior unchanged', (t) => {
   assert.equal(h.done.disabled, false);
 });
 
+function clippedReading(t, { overflowX = 'auto', overflowY = 'auto' } = {}) {
+  const h = resizeReading(t),
+    panel = h.doc.createElement('section'),
+    style = h.win.getComputedStyle.bind(h.win);
+  panel._rect = { x: 0, y: 12, width: 844, height: 366 };
+  Object.assign(panel, { clientLeft: 2, clientTop: 2, clientWidth: 840, clientHeight: 362 });
+  Object.assign(panel.style, { overflowX, overflowY });
+  h.doc.body.append(panel);
+  panel.append(h.unit);
+  // Match the observed Large/Plain Team reader: it fits the 390px window,
+  // while its final 7.78px lies below the pause panel's inner bottom at 376.
+  h.unit._rect = { x: 20, y: 146.49, width: 360, height: 237.29 };
+  t.mock.method(h.win, 'getComputedStyle', (element) => ({
+    ...style(element),
+    overflowX: element.style.overflowX || 'visible',
+    overflowY: element.style.overflowY || 'visible',
+  }));
+  return { ...h, panel };
+}
+
+for (const overflow of ['auto', 'scroll', 'hidden', 'clip', 'overlay'])
+  test(`resize reveals a viewport-fitting reader clipped by an ${overflow} ancestor's client box`, (t) => {
+    const h = clippedReading(t, { overflowY: overflow }),
+      before = h.counts(),
+      state = h.navigation.readingState();
+    h.win.emit('resize');
+    assert.deepEqual(h.scrolls, [resizeNearest]);
+    assert.equal(h.doc.activeElement, h.region);
+    assert.equal(h.done.disabled, false);
+    assert.deepEqual(h.navigation.readingState(), state);
+    assert.deepEqual(h.counts(), before);
+  });
+
+test('resize skips a reader inside both viewport and ancestor client box', (t) => {
+  const h = clippedReading(t);
+  h.unit._rect = resizedInside;
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, []);
+  assert.equal(h.doc.activeElement, h.region);
+  assert.equal(h.done.disabled, false);
+});
+
+test('resize intersects horizontal and vertical overflow independently', (t) => {
+  const h = clippedReading(t, { overflowX: 'hidden', overflowY: 'visible' });
+  h.panel._rect = { x: 30, y: 12, width: 400, height: 50 };
+  h.panel.clientWidth = 390;
+  h.panel.clientHeight = 46;
+  h.unit._rect = { x: 32, y: 146, width: 360, height: 230 };
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [], 'Visible vertical overflow does not clip the reader.');
+  h.unit._rect = { ...h.unit._rect, x: 31 };
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [resizeNearest], 'The left border is outside the client box.');
+  h.unit._rect = { ...h.unit._rect, x: 70 };
+  h.win.emit('resize');
+  assert.equal(h.scrolls.length, 2, 'The horizontal client extent excludes the scrollbar.');
+});
+
+test('resize intersects nested clipping panels and does not clip the toolbar to its text region', (t) => {
+  const h = clippedReading(t),
+    outer = h.doc.createElement('section');
+  outer._rect = { x: 0, y: 0, width: 844, height: 365 };
+  Object.assign(outer, { clientLeft: 0, clientTop: 0, clientWidth: 844, clientHeight: 365 });
+  outer.style.overflowY = 'auto';
+  h.doc.body.append(outer);
+  outer.append(h.panel);
+  h.unit._rect = resizedInside;
+  h.region.style.overflowY = 'auto';
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [resizeNearest], 'The outer panel clips the otherwise fitting unit.');
+  outer.clientHeight = 380;
+  outer._rect.height = 380;
+  h.win.emit('resize');
+  assert.equal(h.scrolls.length, 1, 'The inner scrollable text is not an ancestor of its toolbar.');
+});
+
+test('resize reveals through a valid ancestor that is itself outside the viewport', (t) => {
+  const h = clippedReading(t);
+  h.panel._rect = { ...h.panel._rect, y: 500 };
+  h.unit._rect = resizedOutside;
+  h.win.emit('resize');
+  assert.deepEqual(h.scrolls, [resizeNearest], 'An empty intersection still needs reveal.');
+});
+
+test('resize repeat suppression includes the effective ancestor clip bounds', (t) => {
+  const h = clippedReading(t);
+  h.win.emit('resize');
+  h.win.emit('resize');
+  assert.equal(h.scrolls.length, 1);
+  h.panel.clientHeight -= 8;
+  h.win.emit('resize');
+  assert.equal(
+    h.scrolls.length,
+    2,
+    'A changed panel clip gets a fresh reveal with unchanged unit geometry.',
+  );
+  h.win.emit('resize');
+  assert.equal(h.scrolls.length, 2);
+});
+
+for (const invalid of [
+  'nonfinite-position',
+  'zero-width',
+  'zero-height',
+  'negative-border',
+  'missing-client-size',
+])
+  test(`resize ignores a clipping ancestor with ${invalid}`, (t) => {
+    const h = clippedReading(t),
+      before = h.counts();
+    if (invalid === 'nonfinite-position') h.panel._rect.y = Number.NaN;
+    if (invalid === 'zero-width') h.panel._rect.width = 0;
+    if (invalid === 'zero-height') h.panel.clientHeight = 0;
+    if (invalid === 'negative-border') h.panel.clientTop = -1;
+    if (invalid === 'missing-client-size') h.panel.clientWidth = undefined;
+    h.win.emit('resize');
+    assert.deepEqual(h.scrolls, []);
+    assert.equal(h.doc.activeElement, h.region);
+    assert.deepEqual(h.counts(), before);
+  });
+
+for (const read of ['ancestor-style', 'ancestor-rectangle', 'ancestor-client-size'])
+  test(`${read} cannot reveal a retired reading owner`, (t) => {
+    const h = clippedReading(t),
+      unitRect = h.unit.getBoundingClientRect.bind(h.unit),
+      panelRect = h.panel.getBoundingClientRect.bind(h.panel),
+      style = h.win.getComputedStyle.bind(h.win),
+      clientHeight = h.panel.clientHeight;
+    let measured = false,
+      retired = false;
+    const retire = () => {
+      retired = true;
+      h.setScope('flight');
+    };
+    t.mock.method(h.unit, 'getBoundingClientRect', () => {
+      measured = true;
+      return unitRect();
+    });
+    if (read === 'ancestor-style')
+      t.mock.method(h.win, 'getComputedStyle', (element) => {
+        const value = style(element);
+        if (element === h.panel && measured) retire();
+        return value;
+      });
+    if (read === 'ancestor-rectangle')
+      t.mock.method(h.panel, 'getBoundingClientRect', () => {
+        retire();
+        return panelRect();
+      });
+    if (read === 'ancestor-client-size')
+      Object.defineProperty(h.panel, 'clientHeight', {
+        configurable: true,
+        get() {
+          retire();
+          return clientHeight;
+        },
+      });
+    h.win.emit('resize');
+    assert.equal(retired, true);
+    assert.deepEqual(h.scrolls, []);
+    assert.equal(h.doc.activeElement, h.region);
+  });
+
 for (const condition of [
   'ended',
   'background',

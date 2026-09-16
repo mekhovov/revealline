@@ -1504,6 +1504,254 @@ test('Done descendant taps keep click semantics; pointercancel and other pointer
   }
 });
 
+function nativeScrollReader(t, overrides = {}) {
+  let done;
+  const changes = [],
+    inputs = [],
+    h = setup(t, {
+      nativeReadingScroll: true,
+      onReadingChange(state) {
+        changes.push(state);
+        done.disabled = !state;
+      },
+      onNativeInput: (event) => inputs.push(event.type),
+      ...overrides,
+    }),
+    surface = readingSurface(h);
+  h.document.hidden = false;
+  h.document.focused = true;
+  h.document.hasFocus = () => h.document.focused;
+  done = h.control('button', { disabled: true, textContent: 'Done reading' });
+  const text = h.control('p', { textContent: 'Last authored paragraph.' }, surface.region),
+    request = { ...surface, exit: done };
+  done.addEventListener('click', () => h.api.endReading({ restoreFocus: true }));
+  h.api.beginReading(request);
+  return { ...h, ...surface, done, text, request, changes, inputs };
+}
+const nativePan = {
+  button: 0,
+  isPrimary: true,
+  pointerId: 7,
+  pointerType: 'touch',
+  cancelable: true,
+};
+const nativePanCancel = { isPrimary: true, pointerId: 7, pointerType: 'touch', cancelable: false };
+
+test('native scroll opt-in retains reading through primary pan adoption and the real Done click', (t) => {
+  const h = nativeScrollReader(t),
+    state = h.api.readingState();
+  const down = h.text.emit('pointerdown', nativePan);
+  assert.equal(
+    down.defaultPrevented,
+    false,
+    'The browser still owns touch pan and text selection.',
+  );
+  assert.deepEqual(h.api.readingState(), state);
+  assert.equal(h.done.disabled, false);
+  // Native layout/scroll is represented only by its observable scroll offset.
+  h.region.scrollTop = 240;
+  const cancel = h.text.emit('pointercancel', nativePanCancel);
+  assert.equal(cancel.defaultPrevented, false);
+  h.api.handle({});
+  assert.deepEqual(h.api.readingState(), state);
+  assert.equal(h.region.scrollTop, 240);
+  assert.equal(h.document.activeElement, h.region);
+  assert.equal(h.done.disabled, false);
+  assert.deepEqual(h.inputs, ['pointerdown']);
+  assert.equal(h.changes.length, 1);
+  assert.equal(h.done.emit('pointerdown', { ...nativePan, pointerId: 8 }).defaultPrevented, true);
+  h.done.emit('pointerup', { pointerId: 8 });
+  h.done.click();
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.done.disabled, true);
+  assert.equal(h.document.activeElement, h.origin);
+  assert.equal(h.region.scrollTop, 240);
+  assert.equal(h.changes.length, 2);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+});
+
+test('native scrolling opt-in leaves the default pointer relinquish policy unchanged', (t) => {
+  const h = nativeScrollReader(t, { nativeReadingScroll: false });
+  assert.equal(h.document.listeners.get('pointerup'), undefined);
+  assert.equal(h.text.emit('pointerdown', nativePan).defaultPrevented, false);
+  h.text.emit('pointercancel', nativePanCancel);
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.done.disabled, true);
+  assert.equal(h.document.activeElement, h.region);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+});
+
+for (const gesture of [
+  { button: 2 },
+  { isPrimary: false },
+  { defaultPrevented: true },
+  { cancelable: false },
+])
+  test(`native scroll opt-in does not retain a rejected primary gesture: ${JSON.stringify(gesture)}`, (t) => {
+    const h = nativeScrollReader(t);
+    h.text.emit('pointerdown', { ...nativePan, ...gesture });
+    assert.equal(h.api.readingState(), null);
+    assert.equal(h.done.disabled, true);
+    assert.equal(h.document.activeElement, h.region);
+  });
+
+for (const phase of ['pointerdown', 'pointercancel'])
+  for (const stale of [
+    'scope',
+    'root',
+    'content',
+    'focus',
+    'hidden-region',
+    'background',
+    'hidden-document',
+  ])
+    test(`native ${phase} cannot retain reading with stale ${stale}`, (t) => {
+      const h = nativeScrollReader(t),
+        other = h.control('button');
+      if (phase === 'pointercancel') h.text.emit('pointerdown', nativePan);
+      if (stale === 'scope') h.setScope('flight');
+      if (stale === 'root') h.setScope('ready:first', other);
+      if (stale === 'content') h.region.textContent = 'New authored instructions';
+      if (stale === 'focus') other.focus();
+      if (stale === 'hidden-region') h.region.hidden = true;
+      if (stale === 'background') h.document.focused = false;
+      if (stale === 'hidden-document') h.document.hidden = true;
+      h.text.emit(phase, phase === 'pointerdown' ? nativePan : nativePanCancel);
+      assert.equal(h.api.readingState(), null);
+      assert.equal(h.done.disabled, true);
+      assert.equal(h.document.activeElement, stale === 'focus' ? other : h.region);
+      assert.equal(h.calls.back + h.calls.menu, 0);
+    });
+
+test('only the pending region pointer can survive cancellation; Done, outside and ended gestures still cancel', (t) => {
+  const h = nativeScrollReader(t),
+    outside = h.control('button');
+  for (const cancellation of [
+    'untracked',
+    'wrong-pointer',
+    'done',
+    'outside',
+    'after-up',
+    'replacement-reader',
+  ]) {
+    h.api.beginReading(h.request);
+    if (cancellation !== 'untracked') h.text.emit('pointerdown', nativePan);
+    if (cancellation === 'after-up') h.text.emit('pointerup', { pointerId: 7 });
+    if (cancellation === 'replacement-reader') {
+      h.api.endReading({ restoreFocus: false });
+      h.api.beginReading(h.request);
+    }
+    const target = cancellation === 'done' ? h.done : cancellation === 'outside' ? outside : h.text;
+    target.emit('pointercancel', {
+      ...nativePanCancel,
+      pointerId: cancellation === 'wrong-pointer' ? 8 : 7,
+    });
+    assert.equal(h.api.readingState(), null, cancellation);
+    assert.equal(h.done.disabled, true, cancellation);
+    assert.equal(h.document.activeElement, h.region, cancellation);
+  }
+});
+
+test('native scroll retention is retired if input or acceptance callbacks invalidate its reader', (t) => {
+  let onInput = () => {},
+    accept = () => true;
+  const h = nativeScrollReader(t, {
+    onNativeInput: () => onInput(),
+    accept: (element) => accept(element),
+  });
+  onInput = () => h.setScope('changed-after-input');
+  h.text.emit('pointerdown', nativePan);
+  assert.equal(h.api.readingState(), null);
+  h.setScope('ready:first');
+  onInput = () => {};
+  h.api.beginReading(h.request);
+  accept = () => {
+    accept = () => true;
+    h.api.clear();
+    return true;
+  };
+  assert.doesNotThrow(() => h.text.emit('pointerdown', nativePan));
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.done.disabled, true);
+});
+
+test('native wheel remains unhandled and keyboard reading keeps its existing scroll and exit behavior', (t) => {
+  const h = nativeScrollReader(t, { keyboard: true });
+  h.setScope('ready:first', h.document.body);
+  h.api.beginReading(h.request);
+  h.text.emit('pointerdown', nativePan);
+  h.text.emit('pointerup', { pointerId: 7 });
+  const wheel = h.region.emit('wheel', { deltaY: 80 });
+  assert.equal(wheel.defaultPrevented, false);
+  h.region.scrollTop = 80;
+  assert.equal(h.region.emit('keydown', { key: 'ArrowDown' }).defaultPrevented, true);
+  assert.equal(h.region.scrollTop, 128);
+  assert.equal(h.document.activeElement, h.region);
+  assert.equal(h.region.emit('keydown', { key: 'Escape' }).defaultPrevented, true);
+  assert.equal(h.document.activeElement, h.origin);
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+});
+
+test('native scroll opt-in does not change unowned keyboard defaults or retain gestures after destruction', (t) => {
+  const h = nativeScrollReader(t);
+  h.text.emit('pointerdown', nativePan);
+  assert.equal(h.region.emit('keydown', { key: 'ArrowDown' }).defaultPrevented, false);
+  assert.equal(h.api.readingState(), null);
+  h.api.beginReading(h.request);
+  h.text.emit('pointerdown', nativePan);
+  h.api.destroy();
+  assert.equal(h.document.listeners.get('pointerdown').size, 0);
+  assert.equal(h.document.listeners.get('pointerup').size, 0);
+  assert.equal(h.document.listeners.get('pointercancel').size, 0);
+  h.text.emit('pointercancel', nativePanCancel);
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.done.disabled, true);
+});
+
+test('reading hint metadata identifies entry, refresh, boundaries and ended messages after state retirement', (t) => {
+  const messages = [];
+  const h = setup(t, {
+      onHint: (text, metadata) => messages.push({ text, metadata, state: h.api.readingState() }),
+    }),
+    surface = readingSurface(h),
+    metadata = { kind: 'reading', regionId: surface.region.id };
+  surface.begin();
+  h.api.refreshReadingHint();
+  h.api.handle({ direction: 'left' });
+  h.api.handle({ direction: 'up' });
+  h.api.endReading();
+  assert.equal(messages.length, 5);
+  assert.ok(
+    messages.every((message) => JSON.stringify(message.metadata) === JSON.stringify(metadata)),
+  );
+  assert.match(messages[3].text, /^Start of details\./);
+  assert.match(messages[4].text, /^Reading ended\./);
+  assert.equal(messages[4].state, null, 'The ended message still identifies its retired region.');
+  surface.begin();
+  surface.region.textContent = 'Replaced instructions';
+  h.api.sync();
+  assert.match(messages.at(-1).text, /reading region changed/);
+  assert.deepEqual(messages.at(-1).metadata, metadata);
+  surface.begin();
+  surface.origin.focus();
+  assert.equal(messages.at(-1).text, 'Reading ended.');
+  assert.deepEqual(messages.at(-1).metadata, metadata);
+  assert.equal(messages.at(-1).state, null);
+});
+
+test('non-reading hints retain their one-argument callback contract', (t) => {
+  const messages = [],
+    h = setup(t, { onHint: (...args) => messages.push(args) }),
+    selector = h.select();
+  selector.focus();
+  h.api.handle({ confirm: true });
+  h.api.handle({ back: true });
+  assert.equal(messages.length, 2);
+  assert.ok(messages.every((args) => args.length === 1));
+  assert.equal(messages.at(-1)[0], 'Choice cancelled.');
+});
+
 test('exit registration rejects unrelated or hidden controls without replacing a current reader', (t) => {
   const h = setup(t),
     surface = readingSurface(h),

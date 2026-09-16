@@ -28,3 +28,15 @@ The local HTTP server served immutable Git blobs from `6c36d732`; it did not inj
 Text settings were applied with native select controls through the browser tool after a keyboard sequence left their values unchanged and a label locator failed. Those attempts are not counted as keyboard-only setting changes. The native reader journeys themselves used keyboard and pointer actions. They do not qualify physical touch/controllers, native paused checkpoints, all settings, zoom, full gameplay, public bytes or offline operation.
 
 The Team rotation failure is retained as a blocker for the composed P03 journey. Existing P05 source `657ac7b5` changes the Versus shell only and cannot repair the Team reader. A subsequent opt-in shared-reader correction must be verified on a distinct source; it must keep Done/hint visible while the text remains scrollable, retain the focused region and pause ownership, and preserve all callers that do not opt in.
+
+## Resize checkpoint and second review
+
+Source `93b053931148ae8b26b12c1675945580c9f2b939` adds an opt-in resize handler and active-hint deduplication. Its seven complete files pass 221/221 on Node 22; the shared helper alone passes 42/42 on both supported Node versions. Those scopes do not establish a 221-test Node 20 result for this checkpoint.
+
+Native replay repairs the lobby rotation: in 844×390/DPR1, the Team toolbar is at y141.06 with 44-pixel buttons, hint at y193.06 and text at y241.66 with height148.20 and scroll height656. Focus stays `coop-help-reading`.
+
+A real Team attempt was started and explicitly paused. Plain/Large was applied using the actual display selectors. After portrait/landscape rotation, focus and the displayed paused state/0:00 clock stayed unchanged, and the buttons measured47 pixels. **A remaining failure was observed:** the unit's bottom383.78 fits the390-pixel layout viewport, but the pause panel clips content at376. The panel is at y12 with height366, a2-pixel border and client height362. The focused text's lower edge is partly clipped. This needs effective ancestor clipping bounds, not a viewport-only test. The screenshot and DOM geometry are original tool-transcript observations; they do not prove private native checkpoint equality.
+
+A three-Escape sequence during a separate lobby check returned to Versus; it did not create a paused attempt. The subsequent Start → Pause journey above was performed separately. This routing attempt is retained rather than counted as successful paused navigation.
+
+Independent source review also found that beginning a native touch pan inside the reader relinquished reading and disabled Done. Initial tests covered tapping Done, but not content scrolling before Done. A bounded opt-in native-scroll lifecycle and dedicated host cases are required; native gestures and modeled pointer cancellation remain distinct evidence. Reading-end announcements also need a single status owner, using typed reading context rather than matching English strings.

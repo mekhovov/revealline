@@ -1154,16 +1154,18 @@ try {
     getRoot: () => shell.root(),
     getDefaultFocus: () => shell.primary(),
     keyboard: true,
+    nativeReadingScroll: true,
     accept: (element) => menuIds.has(element.id),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
-    onHint: (message) => {
-      if (navigation.readingState()) {
+    onHint: (message, context) => {
+      if (context?.kind === 'reading' && context.regionId === 'race-help-reading') {
         menuHint = '';
-        reading?.hint(message);
+        const hint = $('race-help-reading-hint');
+        if (hint.textContent !== message) hint.textContent = message;
       } else menuHint = message;
       updateMenu();
     },

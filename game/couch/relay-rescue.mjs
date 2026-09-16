@@ -289,16 +289,18 @@ export function bootCoop() {
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
+    nativeReadingScroll: true,
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
     onMenu: () => {
       if (departure || run?.status === 'paused') back();
     },
-    onHint: (message) => {
-      if (navigation.readingState()) {
+    onHint: (message, context) => {
+      if (context?.kind === 'reading' && context.regionId === 'coop-help-reading') {
         menuHint = '';
-        reading?.hint(message);
+        const hint = $('coop-help-reading-hint');
+        if (hint.textContent !== message) hint.textContent = message;
       } else menuHint = message;
     },
     onReadingChange: (state) => reading?.changed(state),
