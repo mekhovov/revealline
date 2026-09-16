@@ -131,6 +131,49 @@ async function studio(page) {
 }
 const record = (page) => JSON.parse(page.storage.getItem(AUDIO_PREFERENCES_KEY));
 
+test('changing-name master commands expose their next action without a toggle state or transport side effect', async (t) => {
+  const { page, audio } = await setup(t, {}, 0.13);
+  enter(page, 'shell-options');
+  enter(page, 'settings-tab-audio');
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const commands = (muted, library = false) => {
+    const name = muted ? 'Unmute sound' : 'Mute sound';
+    assert.equal(page.$('sound-button').getAttribute('aria-label'), name);
+    assert.equal(page.$('settings-master-mute').textContent, name);
+    for (const id of ['sound-button', 'settings-master-mute'])
+      assert.equal(page.$(id).getAttribute('aria-pressed'), null, id);
+    if (library) {
+      assert.equal(
+        page.$('soundtrack-master-mute').textContent,
+        muted ? 'Unmute master sound' : 'Mute master sound',
+      );
+      assert.equal(page.$('soundtrack-master-mute').getAttribute('aria-pressed'), null);
+    }
+    assert.deepEqual(record(page), { muted, volume: 0.13 });
+  };
+  commands(true);
+  for (const muted of [false, true]) {
+    enter(page, 'settings-master-mute');
+    commands(muted);
+    assert.equal(page.doc.activeElement, page.$('settings-master-mute'));
+  }
+  await studio(page);
+  commands(true, true);
+  for (const muted of [false, true]) {
+    enter(page, 'soundtrack-master-mute');
+    commands(muted, true);
+    assert.equal(page.doc.activeElement, page.$('soundtrack-master-mute'));
+  }
+  enter(page, 'soundtrack-close');
+  commands(true);
+  page.frame(0);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.equal(audio.sources.length, 0);
+  assert.ok(page.audioElements.every((media) => !media.plays));
+  assert.deepEqual(page.errors, []);
+});
+
 for (const changeOnly of [false, true]) {
   test(`actual Solo Settings and Studio ${changeOnly ? 'change-only assistive' : 'input-and-change keyboard'} range edits persist through close/reopen without playback or flight advance`, async (t) => {
     const { page, audio } = await setup(t, { changeOnly });

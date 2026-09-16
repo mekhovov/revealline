@@ -182,7 +182,6 @@ export function attachSoundtrackPanel({
     if (!audioMaster || disposed) return;
     const state = audioMaster.snapshot();
     masterToggle.textContent = state.muted ? 'Unmute master sound' : 'Mute master sound';
-    masterToggle.setAttribute('aria-pressed', String(!state.muted));
     masterVolume.element.value = String(state.volume);
     masterStatus.textContent =
       state.muted || state.volume === 0

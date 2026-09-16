@@ -96,7 +96,6 @@ const audioPreferences = createAudioPreferences({
 });
 const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
   $('studio-audio-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
-  $('studio-audio-mute').setAttribute('aria-pressed', String(!muted));
   $('studio-master-volume').value = volume;
 });
 $('studio-audio-mute').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);

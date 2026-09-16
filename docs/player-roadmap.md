@@ -1,6 +1,6 @@
 # RevealLine: what is next
 
-Updated 15 September 2026. This is the readable view of the [active execution plan](cross-mode-execution.md), with [delivery evidence and retained requirements](delivery-priorities.md). The plan is approved for implementation. A source feature, generated picture or passing test is not by itself a public release.
+Updated 16 September 2026. This is the readable view of the [active execution plan](cross-mode-execution.md), with [delivery evidence and retained requirements](delivery-priorities.md). P01 v0.57.4 is published and awaiting public acceptance. Shared master sound is being prepared on that exact source as the [P02 candidate](p02-p01-v0574-composition.md); its final qualification and delivery remain pending. A source feature, generated picture or passing test is not by itself an accepted phase.
 
 ## Current work
 

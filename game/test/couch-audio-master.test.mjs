@@ -176,7 +176,11 @@ test('Versus keyboard master controls persist only the shared record; Team and a
     const before = page.checkpoint();
     enter(page, 'race-options');
     reaches(page, 'race-audio');
+    assert.equal(page.$('race-audio').textContent, 'Unmute sound');
+    assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
     key(page, 'Enter');
+    assert.equal(page.$('race-audio').textContent, 'Mute sound');
+    assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
     reaches(page, 'race-master-volume');
     key(page, 'ArrowRight');
     assert.deepEqual(record(saved), { muted: false, volume: 0.66 });
@@ -190,6 +194,7 @@ test('Versus keyboard master controls persist only the shared record; Team and a
     const before = saved.writes.length,
       page = await teamPage(t, saved);
     assert.equal(page.$('coop-audio').textContent, 'Mute sound');
+    assert.equal(page.$('coop-audio').getAttribute('aria-pressed'), null);
     assert.equal(Number(page.$('coop-master-volume').value), 0.66);
     assert.equal(saved.writes.length, before);
     assert.equal(page.$('coop-menu').hidden, false);
@@ -201,6 +206,7 @@ test('Versus keyboard master controls persist only the shared record; Team and a
       a = audio(t);
     const page = await couchPage(t, { storage: saved, audio: a });
     assert.equal(page.$('race-audio').textContent, 'Mute sound');
+    assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
     assert.equal(Number(page.$('race-master-volume').value), 0.66);
     assert.equal(page.state(), 'ready');
     assert.equal(page.tick(), 0);
@@ -229,6 +235,12 @@ test('Versus starts muted, then master edits preserve active music intent and a 
     cursor = sound.cursor;
   enter(page, 'race-options');
   reaches(page, 'race-audio');
+  key(page, 'Enter');
+  assert.equal(page.$('race-audio').textContent, 'Mute sound');
+  assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
+  key(page, 'Enter');
+  assert.equal(page.$('race-audio').textContent, 'Unmute sound');
+  assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
   key(page, 'Enter');
   assert.equal(sound.master.gain.value, 0.4);
   assert.equal(a.media.muted, false);
@@ -281,6 +293,14 @@ test('Team keyboard master edits remain accessible while paused and preserve its
   page.$('coop-options').open = true;
   page.$('coop-options-toggle').focus();
   reaches(page, 'coop-audio');
+  assert.equal(page.$('coop-audio').textContent, 'Unmute sound');
+  assert.equal(page.$('coop-audio').getAttribute('aria-pressed'), null);
+  key(page, 'Enter');
+  assert.equal(page.$('coop-audio').textContent, 'Mute sound');
+  assert.equal(page.$('coop-audio').getAttribute('aria-pressed'), null);
+  key(page, 'Enter');
+  assert.equal(page.$('coop-audio').textContent, 'Unmute sound');
+  assert.equal(page.$('coop-audio').getAttribute('aria-pressed'), null);
   key(page, 'Enter');
   reaches(page, 'coop-master-volume');
   key(page, 'ArrowRight');
