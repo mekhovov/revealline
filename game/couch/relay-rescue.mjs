@@ -152,6 +152,7 @@ export function bootCoop() {
     pictureSequence = 0,
     startPermitted = true;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
+  let inactive = !foreground();
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let importRequest = 0;
@@ -599,7 +600,14 @@ export function bootCoop() {
     };
   }
   function start(recipe = currentRecipe(), prepared = null) {
-    if (disposed || departure || pictureOperation || (!run && !startPermitted) || !foreground())
+    if (
+      disposed ||
+      inactive ||
+      departure ||
+      pictureOperation ||
+      (!run && !startPermitted) ||
+      !foreground()
+    )
       return;
     const selection = run ? acceptedPicture : pictureSelection;
     if (!selection || selection.state !== 'ready') return;
@@ -685,7 +693,15 @@ export function bootCoop() {
     console.error(error);
   }
   function resume() {
-    if (departure || run?.status !== 'paused' || loopStopped) return;
+    if (
+      disposed ||
+      inactive ||
+      !foreground() ||
+      departure ||
+      run?.status !== 'paused' ||
+      loopStopped
+    )
+      return;
     cancelPicture({ restore: false });
     clear();
     resumeCoop(run);
@@ -870,13 +886,27 @@ export function bootCoop() {
       requestDeparture(kind, $(id));
     });
   const suspend = () => {
+    if (disposed) return;
+    inactive = true;
     pause({ focus: false });
     cancelDeparture({ restore: false });
+    // Losing foreground also retires menu ownership while already paused.
+    // A reader or held menu repeat must not outlive this lifecycle boundary.
+    clear();
+    framePads = [];
+    last = null;
+  };
+  const returned = () => {
+    if (disposed || !foreground()) return;
+    inactive = false;
+    last = null;
   };
   const hidden = () => {
     if (document.hidden) suspend();
+    else returned();
   };
   window.addEventListener('blur', suspend);
+  window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
     for (const event of run.events) {
@@ -930,6 +960,11 @@ export function bootCoop() {
   }
   function update(now) {
     if (disposed) return;
+    if (inactive || !foreground()) {
+      if (!inactive) suspend();
+      frame = requestAnimationFrame(update);
+      return;
+    }
     try {
       try {
         framePads = [...(navigator.getGamepads?.() || [])];
@@ -1152,6 +1187,8 @@ export function bootCoop() {
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
     window.removeEventListener('blur', suspend);
+    window.removeEventListener('focus', returned);
+    window.removeEventListener('pageshow', returned);
     document.removeEventListener('visibilitychange', hidden);
     unsubscribeNative();
   };
@@ -1163,9 +1200,7 @@ export function bootCoop() {
     cancelImport();
     suspend();
   });
-  window.addEventListener('pageshow', () => {
-    last = null;
-  });
+  window.addEventListener('pageshow', returned);
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({ message: 'Two players · one screen · a shared victory' });
