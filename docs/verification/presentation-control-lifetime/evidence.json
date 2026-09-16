@@ -1,0 +1,284 @@
+{
+  "status": "PREPARED_SOURCE_CANDIDATE",
+  "base": "0684ddbfe978e95f2b6ddcd02b4f9e0f70a4190d",
+  "branch": "codex/presentation-control-lifetime",
+  "node": "v22.22.2",
+  "sourcePins": [
+    {
+      "path": "game/presentation/host.mjs",
+      "bytes": 29609,
+      "sha256": "cb1199748195367aeedc51cbd8fe37acb430822800c706ef752c80ff6e78637a"
+    },
+    {
+      "path": "game/test/presentation-ui.test.mjs",
+      "bytes": 15828,
+      "sha256": "1a87ea77045569be1cff4edd5040720fb8b4cd2ae77dd7750d435a088bb24f01"
+    },
+    {
+      "path": "game/test/presentation-page.test.mjs",
+      "bytes": 6785,
+      "sha256": "6a51b8c6bc611b1f691120ca21d23ccc30ca46c8fe417bbac47fa9c763a7187e"
+    },
+    {
+      "path": "game/test/presentation-host.test.mjs",
+      "bytes": 19467,
+      "sha256": "5095cf3e026100054e20355e47201358e255b2fc8a00147890ab4a098b86c3c8"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 10172,
+      "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+    },
+    {
+      "path": "game/assets/field-kit/sprites/player-scout-compact.png",
+      "bytes": 325,
+      "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91"
+    },
+    {
+      "path": ".prettierrc.json",
+      "bytes": 73,
+      "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "bytes": 1610,
+      "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "game/presentation/host.mjs",
+        "game/test/presentation-ui.test.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "log": "role-update-lint.log"
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/presentation/host.mjs",
+        "game/test/presentation-ui.test.mjs",
+        "docs/verification/presentation-control-lifetime.md"
+      ],
+      "exitCode": 0,
+      "log": "role-update-format.log"
+    },
+    {
+      "command": ["git", "diff", "--check"],
+      "exitCode": 0,
+      "log": "role-update-diff.log"
+    }
+  ],
+  "originalLogs": [
+    {
+      "path": ".cache/presentation-control-lifetime/before.log",
+      "bytes": 4998,
+      "sha256": "5b36cc00ae18e2ac60f19055b33713abfffc88236b14892f2d2f3e36151b085e",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: accepted UI artwork decorates native and later-created controls without changing handlers or checked state\nok 1 - accepted UI artwork decorates native and later-created controls without changing handlers or checked state\n  ---\n  duration_ms: 148.340291\n  type: 'test'\n  ...\n# Subtest: removed controls release decoration ownership before host cleanup without changing external attributes\nnot ok 2 - removed controls release decoration ownership before host cleanup without changing external attributes\n  ---\n  duration_ms: 18.956917\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:139:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    'play' !== 'authored'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'authored'\n  actual: 'play'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:153:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: batched live moves and removal then reinsertion preserve the original decoration lease\nnot ok 3 - batched live moves and removal then reinsertion preserve the original decoration lease\n  ---\n  duration_ms: 21.419\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:167:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'play'\n    - 'screen-owner'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'screen-owner'\n  actual: 'play'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:183:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: removed subtree notifications include descendants moved out before delivery\nnot ok 4 - removed subtree notifications include descendants moved out before delivery\n  ---\n  duration_ms: 19.040583\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:190:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    'play' !== null\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: ~\n  actual: 'play'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:209:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: HUD removals do not scan live controls and repeated replacements restore each removed control\nnot ok 5 - HUD removals do not scan live controls and repeated replacements restore each removed control\n  ---\n  duration_ms: 19.2315\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:223:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    'play' !== null\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: ~\n  actual: 'play'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:242:12)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: load replacement and stale cleanup preserve the new application and release removed ownership\nnot ok 6 - load replacement and stale cleanup preserve the new application and release removed ownership\n  ---\n  duration_ms: 39.467333\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:252:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    null !== 'play'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'play'\n  actual: ~\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:263:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 1\n# fail 5\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 626.875084\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/after-initial.log",
+      "bytes": 1661,
+      "sha256": "eb3f8e7b320347af2634faf4de2e1bc947a6d786926d5028ee0cfc894c9876a9",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: accepted UI artwork decorates native and later-created controls without changing handlers or checked state\nok 1 - accepted UI artwork decorates native and later-created controls without changing handlers or checked state\n  ---\n  duration_ms: 143.599791\n  type: 'test'\n  ...\n# Subtest: removed controls release decoration ownership before host cleanup without changing external attributes\nok 2 - removed controls release decoration ownership before host cleanup without changing external attributes\n  ---\n  duration_ms: 20.290625\n  type: 'test'\n  ...\n# Subtest: batched live moves and removal then reinsertion preserve the original decoration lease\nok 3 - batched live moves and removal then reinsertion preserve the original decoration lease\n  ---\n  duration_ms: 17.615416\n  type: 'test'\n  ...\n# Subtest: removed subtree notifications include descendants moved out before delivery\nok 4 - removed subtree notifications include descendants moved out before delivery\n  ---\n  duration_ms: 15.99575\n  type: 'test'\n  ...\n# Subtest: HUD removals do not scan live controls and repeated replacements restore each removed control\nok 5 - HUD removals do not scan live controls and repeated replacements restore each removed control\n  ---\n  duration_ms: 16.950708\n  type: 'test'\n  ...\n# Subtest: load replacement and stale cleanup preserve the new application and release removed ownership\nok 6 - load replacement and stale cleanup preserve the new application and release removed ownership\n  ---\n  duration_ms: 32.039333\n  type: 'test'\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 605.447417\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/focused-ui-page.log",
+      "bytes": 3281,
+      "sha256": "bf8a5803e45b64fe1ddc57d4148d46b4deeb587c0f33d50131b0e04146cb1b1c",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: two Couch painters and repeated page mounts share one load, while leases retain independent cleanup\nok 1 - two Couch painters and repeated page mounts share one load, while leases retain independent cleanup\n  ---\n  duration_ms: 0.975416\n  type: 'test'\n  ...\n# Subtest: Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot\nok 2 - Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot\n  ---\n  duration_ms: 0.103584\n  type: 'test'\n  ...\n# Subtest: a late compiled load cannot replace a painter chosen while loading, or publish after page disposal\nok 3 - a late compiled load cannot replace a painter chosen while loading, or publish after page disposal\n  ---\n  duration_ms: 0.197875\n  type: 'test'\n  ...\n# Subtest: BFCache suspension retains the host and boards until actual disposal, then a new mount can reload\nok 4 - BFCache suspension retains the host and boards until actual disposal, then a new mount can reload\n  ---\n  duration_ms: 0.095875\n  type: 'test'\n  ...\n# Subtest: missing or rejected release resources preserve source look and notify without rejecting page readiness\nok 5 - missing or rejected release resources preserve source look and notify without rejecting page readiness\n  ---\n  duration_ms: 0.321667\n  type: 'test'\n  ...\n# Subtest: cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease\nok 6 - cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease\n  ---\n  duration_ms: 0.167292\n  type: 'test'\n  ...\n# Subtest: accepted UI artwork decorates native and later-created controls without changing handlers or checked state\nok 7 - accepted UI artwork decorates native and later-created controls without changing handlers or checked state\n  ---\n  duration_ms: 147.818833\n  type: 'test'\n  ...\n# Subtest: removed controls release decoration ownership before host cleanup without changing external attributes\nok 8 - removed controls release decoration ownership before host cleanup without changing external attributes\n  ---\n  duration_ms: 16.955042\n  type: 'test'\n  ...\n# Subtest: batched live moves and removal then reinsertion preserve the original decoration lease\nok 9 - batched live moves and removal then reinsertion preserve the original decoration lease\n  ---\n  duration_ms: 16.326292\n  type: 'test'\n  ...\n# Subtest: removed subtree notifications include descendants moved out before delivery\nok 10 - removed subtree notifications include descendants moved out before delivery\n  ---\n  duration_ms: 15.825541\n  type: 'test'\n  ...\n# Subtest: HUD removals do not scan live controls and repeated replacements restore each removed control\nok 11 - HUD removals do not scan live controls and repeated replacements restore each removed control\n  ---\n  duration_ms: 15.75175\n  type: 'test'\n  ...\n# Subtest: load replacement and stale cleanup preserve the new application and release removed ownership\nok 12 - load replacement and stale cleanup preserve the new application and release removed ownership\n  ---\n  duration_ms: 29.3885\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 655.4755\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/focused-host.log",
+      "bytes": 606,
+      "sha256": "085dd426f783183b3a4b80efc0c77674faacb896eca2d1daf5341f5d78e20e55",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: CSS cleanup restores only owned values and preserves later user or screen changes\nok 1 - CSS cleanup restores only owned values and preserves later user or screen changes\n  ---\n  duration_ms: 156.794125\n  type: 'test'\n  ...\n# Subtest: a failed replacement leaves the previous accepted snapshot and its assets alive atomically\nok 2 - a failed replacement leaves the previous accepted snapshot and its assets alive atomically\n  ---\n  duration_ms: 31.685917\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 512.347625\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "utf-8",
+      "text": ""
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/format-final.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "encoding": "utf-8",
+      "text": "Checking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "utf-8",
+      "text": ""
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/role-update-before.log",
+      "bytes": 3498,
+      "sha256": "2c323ca36adfa3696361cd8d04c4db7c0777910fbd51bbbeb3352b4cbe3bd519",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: accepted UI artwork decorates native and later-created controls without changing handlers or checked state\nok 1 - accepted UI artwork decorates native and later-created controls without changing handlers or checked state\n  ---\n  duration_ms: 149.491292\n  type: 'test'\n  ...\n# Subtest: removed controls release decoration ownership before host cleanup without changing external attributes\nok 2 - removed controls release decoration ownership before host cleanup without changing external attributes\n  ---\n  duration_ms: 17.706208\n  type: 'test'\n  ...\n# Subtest: batched live moves and removal then reinsertion preserve the original decoration lease\nok 3 - batched live moves and removal then reinsertion preserve the original decoration lease\n  ---\n  duration_ms: 18.739083\n  type: 'test'\n  ...\n# Subtest: removed subtree notifications include descendants moved out before delivery\nok 4 - removed subtree notifications include descendants moved out before delivery\n  ---\n  duration_ms: 16.5005\n  type: 'test'\n  ...\n# Subtest: HUD removals do not scan live controls and repeated replacements restore each removed control\nok 5 - HUD removals do not scan live controls and repeated replacements restore each removed control\n  ---\n  duration_ms: 16.806958\n  type: 'test'\n  ...\n# Subtest: load replacement and stale cleanup preserve the new application and release removed ownership\nok 6 - load replacement and stale cleanup preserve the new application and release removed ownership\n  ---\n  duration_ms: 31.358875\n  type: 'test'\n  ...\n# Subtest: owned role changes across live moves retain the first baseline and preserve external changes\nnot ok 7 - owned role changes across live moves retain the first baseline and preserve external changes\n  ---\n  duration_ms: 16.471583\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:315:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    'play' !== 'retry'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'retry'\n  actual: 'play'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:338:12)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n# Subtest: overlapping decoration selectors retain last-match behavior and restore the first baseline\nnot ok 8 - overlapping decoration selectors retain last-match behavior and restore the first baseline\n  ---\n  duration_ms: 16.295084\n  type: 'test'\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:359:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    'retry' !== 'close'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'close'\n  actual: 'retry'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_presentation_lifetime/game/test/presentation-ui.test.mjs:365:10)\n    async Test.run (node:internal/test_runner/test:1054:7)\n    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 6\n# fail 2\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 645.912167\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/role-update-ui-page.log",
+      "bytes": 3792,
+      "sha256": "ffcfcfff283b336bc4c2cd3f55b7097c8f0465c5fe02daa4c7c3987c0818e9f3",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: two Couch painters and repeated page mounts share one load, while leases retain independent cleanup\nok 1 - two Couch painters and repeated page mounts share one load, while leases retain independent cleanup\n  ---\n  duration_ms: 1.554208\n  type: 'test'\n  ...\n# Subtest: Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot\nok 2 - Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot\n  ---\n  duration_ms: 0.195\n  type: 'test'\n  ...\n# Subtest: a late compiled load cannot replace a painter chosen while loading, or publish after page disposal\nok 3 - a late compiled load cannot replace a painter chosen while loading, or publish after page disposal\n  ---\n  duration_ms: 0.261083\n  type: 'test'\n  ...\n# Subtest: BFCache suspension retains the host and boards until actual disposal, then a new mount can reload\nok 4 - BFCache suspension retains the host and boards until actual disposal, then a new mount can reload\n  ---\n  duration_ms: 0.104417\n  type: 'test'\n  ...\n# Subtest: missing or rejected release resources preserve source look and notify without rejecting page readiness\nok 5 - missing or rejected release resources preserve source look and notify without rejecting page readiness\n  ---\n  duration_ms: 0.340791\n  type: 'test'\n  ...\n# Subtest: cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease\nok 6 - cosmetic page status is immediate, shared without duplicate work, and fenced per closed lease\n  ---\n  duration_ms: 0.286959\n  type: 'test'\n  ...\n# Subtest: accepted UI artwork decorates native and later-created controls without changing handlers or checked state\nok 7 - accepted UI artwork decorates native and later-created controls without changing handlers or checked state\n  ---\n  duration_ms: 162.499208\n  type: 'test'\n  ...\n# Subtest: removed controls release decoration ownership before host cleanup without changing external attributes\nok 8 - removed controls release decoration ownership before host cleanup without changing external attributes\n  ---\n  duration_ms: 19.749875\n  type: 'test'\n  ...\n# Subtest: batched live moves and removal then reinsertion preserve the original decoration lease\nok 9 - batched live moves and removal then reinsertion preserve the original decoration lease\n  ---\n  duration_ms: 18.819125\n  type: 'test'\n  ...\n# Subtest: removed subtree notifications include descendants moved out before delivery\nok 10 - removed subtree notifications include descendants moved out before delivery\n  ---\n  duration_ms: 16.959125\n  type: 'test'\n  ...\n# Subtest: HUD removals do not scan live controls and repeated replacements restore each removed control\nok 11 - HUD removals do not scan live controls and repeated replacements restore each removed control\n  ---\n  duration_ms: 17.438042\n  type: 'test'\n  ...\n# Subtest: load replacement and stale cleanup preserve the new application and release removed ownership\nok 12 - load replacement and stale cleanup preserve the new application and release removed ownership\n  ---\n  duration_ms: 33.21125\n  type: 'test'\n  ...\n# Subtest: owned role changes across live moves retain the first baseline and preserve external changes\nok 13 - owned role changes across live moves retain the first baseline and preserve external changes\n  ---\n  duration_ms: 17.329875\n  type: 'test'\n  ...\n# Subtest: overlapping decoration selectors retain last-match behavior and restore the first baseline\nok 14 - overlapping decoration selectors retain last-match behavior and restore the first baseline\n  ---\n  duration_ms: 15.565958\n  type: 'test'\n  ...\n1..14\n# tests 14\n# suites 0\n# pass 14\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 741.369125\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/role-update-host.log",
+      "bytes": 606,
+      "sha256": "cb8237e200327597d3012a0d72a909560c800565c4a5f22194124efae2f64a40",
+      "encoding": "utf-8",
+      "text": "TAP version 13\n# Subtest: CSS cleanup restores only owned values and preserves later user or screen changes\nok 1 - CSS cleanup restores only owned values and preserves later user or screen changes\n  ---\n  duration_ms: 159.948333\n  type: 'test'\n  ...\n# Subtest: a failed replacement leaves the previous accepted snapshot and its assets alive atomically\nok 2 - a failed replacement leaves the previous accepted snapshot and its assets alive atomically\n  ---\n  duration_ms: 33.678833\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 526.986125\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/role-update-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "utf-8",
+      "text": ""
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/role-update-format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "encoding": "utf-8",
+      "text": "Checking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "path": ".cache/presentation-control-lifetime/role-update-diff.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "utf-8",
+      "text": ""
+    }
+  ],
+  "baseline": {
+    "hostSha256": "f63aae713bad754ca826fa3d7c0ea2455db4f5d56b55882cd2ef6f196ec13798",
+    "passCount": 1,
+    "failCount": 5,
+    "note": "Initial five regression cases before final formatting and two additional assertions; initial test snapshot was not separately retained, so final test hash is not attributed to that run."
+  },
+  "final": {
+    "uiPagePassed": 14,
+    "selectedHostPassed": 2
+  },
+  "limits": [
+    "No browser, memory measurement, GC assertion, full gates, build or release.",
+    "No causal link to historical Archive12 renderer RSS."
+  ],
+  "previousCandidate": {
+    "sourcePins": [
+      {
+        "path": "game/presentation/host.mjs",
+        "bytes": 29489,
+        "sha256": "23c9d56e71df3be6152afa47b71396eed1e79fa9f471b359fb9e0c74a229e0b7"
+      },
+      {
+        "path": "game/test/presentation-ui.test.mjs",
+        "bytes": 12749,
+        "sha256": "bc51dcf3eb7887c2a1836c9b59f2d731cb71ca19a3333bce1673d7888f2d2d8b"
+      },
+      {
+        "path": "game/test/presentation-page.test.mjs",
+        "bytes": 6785,
+        "sha256": "6a51b8c6bc611b1f691120ca21d23ccc30ca46c8fe417bbac47fa9c763a7187e"
+      },
+      {
+        "path": "game/test/presentation-host.test.mjs",
+        "bytes": 19467,
+        "sha256": "5095cf3e026100054e20355e47201358e255b2fc8a00147890ab4a098b86c3c8"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      },
+      {
+        "path": "game/assets/field-kit/sprites/player-scout-compact.png",
+        "bytes": 325,
+        "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91"
+      },
+      {
+        "path": ".prettierrc.json",
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      },
+      {
+        "path": "eslint.config.mjs",
+        "bytes": 1610,
+        "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+      }
+    ],
+    "checks": [
+      {
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "node_modules/eslint/bin/eslint.js",
+          "game/presentation/host.mjs",
+          "game/test/presentation-ui.test.mjs",
+          "--max-warnings",
+          "0"
+        ],
+        "exitCode": 0,
+        "log": "lint-final.log"
+      },
+      {
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "node_modules/prettier/bin/prettier.cjs",
+          "--check",
+          "game/presentation/host.mjs",
+          "game/test/presentation-ui.test.mjs",
+          "docs/verification/presentation-control-lifetime.md"
+        ],
+        "exitCode": 0,
+        "log": "format-final.log"
+      },
+      {
+        "command": ["git", "diff", "--check"],
+        "exitCode": 0,
+        "log": "diff-check.log"
+      }
+    ],
+    "final": {
+      "uiPagePassed": 12,
+      "selectedHostPassed": 2
+    },
+    "preservedRecord": {
+      "path": ".cache/presentation-control-lifetime/prior-root-review/evidence.json",
+      "bytes": 15532,
+      "sha256": "1b7feda60ddf14ff5652e597ec3813fa1b8129e29307120df49e7b4c14ee6657"
+    }
+  },
+  "roleUpdateRegression": {
+    "previousHostPin": {
+      "path": ".cache/presentation-control-lifetime/prior-root-review/host.mjs",
+      "bytes": 29489,
+      "sha256": "23c9d56e71df3be6152afa47b71396eed1e79fa9f471b359fb9e0c74a229e0b7"
+    },
+    "testPin": {
+      "path": ".cache/presentation-control-lifetime/role-update-test.mjs",
+      "bytes": 15828,
+      "sha256": "1a87ea77045569be1cff4edd5040720fb8b4cd2ae77dd7750d435a088bb24f01"
+    },
+    "previousCandidatePassed": 6,
+    "previousCandidateFailed": 2
+  }
+}
