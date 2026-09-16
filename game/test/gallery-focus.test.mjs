@@ -19,9 +19,9 @@ class Element extends DOMElement {
     super(owner, tagName);
     this.owner = owner;
     this.tagName = tagName.toUpperCase();
-    this.rootConnected = connected;
     this.parent = null;
     this.parentNode = connected ? owner : null;
+    if (connected) owner.children.push(this);
     this.children = [];
     this.listeners = new Map();
     this.dataset = {};
@@ -33,9 +33,6 @@ class Element extends DOMElement {
     this.hidden = false;
     this.open = false;
   }
-  get isConnected() {
-    return this.rootConnected || !!this.parent?.isConnected;
-  }
   get parentNode() {
     return this.parent;
   }
@@ -45,7 +42,6 @@ class Element extends DOMElement {
   append(...children) {
     for (const child of children) {
       child.remove();
-      child.rootConnected = false;
       child.parent = this;
       child.parentNode = this;
       this.children.push(child);
@@ -124,6 +120,39 @@ class Element extends DOMElement {
   }
 }
 
+test('gallery fixture preserves real root membership when connected nodes move or detach', () => {
+  const document = new Events();
+  document.nodeType = 9;
+  document.children = [];
+  document.defaultView = new Events();
+  document.parentNode = document.defaultView;
+  document.body = new Element(document, 'body', true);
+  document.activeElement = document.body;
+  const dialog = new Element(document, 'dialog', true),
+    status = new Element(document, 'div', true),
+    sibling = new Element(document, 'div', true),
+    action = new Element(document, 'button');
+  assert.deepEqual(document.children, [document.body, dialog, status, sibling]);
+  dialog.append(status);
+  status.append(action);
+  assert.deepEqual(document.children, [document.body, dialog, sibling]);
+  assert.equal(status.parentNode, dialog);
+  assert.equal(action.isConnected, true);
+  const captures = [];
+  document.defaultView.addEventListener('focusin', (event) => captures.push(event.target), true);
+  action.focus();
+  assert.deepEqual(captures, [action], 'Window capture retains the original descendant target.');
+  dialog.remove();
+  assert.deepEqual(document.children, [document.body, sibling]);
+  assert.equal(dialog.parentNode, null);
+  assert.equal(dialog.isConnected, false);
+  assert.equal(status.isConnected, false);
+  assert.equal(action.isConnected, false);
+  assert.throws(() => action.focus(), /focus must target a current DOM node/);
+  dialog.remove();
+  assert.deepEqual(document.children, [document.body, sibling], 'Repeated removal keeps siblings.');
+});
+
 async function setup(t, count = 30, hostOverrides = {}) {
   const prior = new Map(
     ['document', 'fetch', 'Image', 'cancelAnimationFrame', 'requestAnimationFrame'].map((key) => [
@@ -135,6 +164,8 @@ async function setup(t, count = 30, hostOverrides = {}) {
     nodes = new Map();
   document.defaultView = new Events();
   document.parentNode = document.defaultView;
+  document.nodeType = 9;
+  document.children = [];
   document.body = new Element(document, 'body', true);
   document.activeElement = document.body;
   document.hidden = false;
