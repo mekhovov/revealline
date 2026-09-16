@@ -27,3 +27,5 @@ Couch also opts into `nativeReadingScroll`. A legitimate primary pointer inside 
 - Rebase or integrate only these reviewed hunks into the phase owner. Choose the next unused release version there, qualify the exact combined source through the six release gates, freeze immutable bytes, deploy and verify public play before phase acceptance. This preparatory branch does not compete with P02 publication.
 
 Source tests, local browser evidence, physical devices, full-source checks and public release acceptance remain separate records. The original 132-mission production plan and the wider P03/P07/P08 requirements remain open.
+
+The final scoped source `f81b14ee` passes the same 269-case cohort on both supported Node versions with unchanged, source-matching inputs. Native replay corrects the observed Team pause-panel clipping and verifies text scrolling before Done in both modes. See the final section of the [evidence record](verification/cross-mode/p03-couch-reading/README.md) for exact measurements, retained failures and remaining qualification. This result is ready for integration review, not public release acceptance.
