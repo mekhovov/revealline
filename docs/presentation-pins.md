@@ -1,5 +1,7 @@
 # Saved-flight picture choices
 
+These picture-pin contracts are integrated into the current player runtime. See [published presentation](presentation-runtime.md) for fresh-attempt selection, saved-flight restoration, first-earned receipts and mission thumbnails, and [delivery priorities](delivery-priorities.md) for release acceptance. The API-only verification at the end of this page remains a historical checkpoint, not the current integration status.
+
 The opt-in `xonix-session.v3` adds `presentationPins` outside the existing replay. `suspendSession` requires explicit continuation and a matching execution/map/world identity. Old v1/v2 sessions keep their exact release and continuation paths.
 
 `createPresentationPins` captures all installed themes once from validated media and execution catalogs. Each choice is either explicit authored artwork or one exact immutable presentation revision and original asset hash. New assignments affect new attempts. Switching worlds or restoring a flight must use these captured choices. Standard and Gentle share their verified authored picture owner while retaining distinct gameplay execution identities.
@@ -8,6 +10,8 @@ The opt-in `xonix-session.v3` adds `presentationPins` outside the existing repla
 
 `resolvePinnedPicture` resolves the retained revision/hash only. Missing managed media returns `unavailable`; it cannot select a newer assignment. An absent theme is an error. Legacy choices retain the existing authored path. A successful metadata lookup is not proof of original-byte availability or successful image decoding.
 
-Runtime integration must forward the verified catalog through every restore, backup, transfer and Undo path. A host must prepare and verify/decode originals before flight/Resume, guard late results by run/map/theme/generation, and offer explicit retry or labelled authored fallback. It must preserve the pin in saved data even when fallback is selected. These source APIs do not yet change ordinary gameplay or Collection; first-earned receipts, original-media transfer and runtime adoption form the next complete milestone.
+Runtime integration must forward the verified catalog through every restore, backup, transfer and Undo path. A host must prepare and verify/decode originals before flight/Resume, guard late results by run/map/theme/generation, and offer explicit retry or labelled authored fallback. It must preserve the pin in saved data even when fallback is selected. The implemented player and Collection integration retains these contracts; changing current assignments must not replace a saved or first-earned managed still-media original. Explicit `legacy` pins retain authored-pack behavior and do not preserve removed embedded pack artwork; receipt-free records also retain that legacy lookup. Source APIs and receipt metadata alone do not prove successful image decoding, browser behavior or public release acceptance.
+
+## Historical API-only verification
 
 Verification: 39 session/picture tests passed on Node 22, including old mastery continuations and v1/v2 compatibility; all 10 new picture tests also passed Node 20. Checks cover Standard/Gentle and both turn policies, assignment A→B, explicit legacy worlds, stale/missing identity, bounded originals metadata, quota failure and unchanged replay checkpoints. Independent source review found no blocker. Physical browser adoption remains pending.

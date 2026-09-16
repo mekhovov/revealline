@@ -92,7 +92,21 @@ For maintainers, [attempt-export.mjs](../game/attempt-export.mjs) owns and verif
 
 ## Expansion contract
 
-`game/packs.mjs` accepts unchanged `xonix-pack.v1` and opt-in `xonix-pack.v2`. V2 adds required top-level `masteries` using the finite optional-goal [contract](pack-mastery-contract.md); empty means none. Maps, campaign identities and old v1 files remain unchanged. A complete v1 pack contains:
+The current `game/packs.mjs` reader accepts the following exact combinations. Keep each campaign's levels homogeneous; changing the format label does not convert a map or recording.
+
+| Pack format     | Engine          | Level format     | Replay format     | Top-level `masteries`                      |
+| --------------- | --------------- | ---------------- | ----------------- | ------------------------------------------ |
+| `xonix-pack.v1` | `xonix-core.v2` | `xonix-level.v1` | `xonix-replay.v3` | Omit the field                             |
+| `xonix-pack.v2` | `xonix-core.v2` | `xonix-level.v1` | `xonix-replay.v3` | Required; supported optional goals or `[]` |
+| `xonix-pack.v3` | `xonix-core.v3` | `xonix-level.v2` | `xonix-replay.v4` | Required `[]`                              |
+| `xonix-pack.v4` | `xonix-core.v4` | `xonix-level.v3` | `xonix-replay.v5` | Required `[]`                              |
+| `xonix-pack.v5` | `xonix-core.v5` | `xonix-level.v4` | `xonix-replay.v6` | Required `[]`                              |
+
+V2 optional goals follow the finite [mastery contract](pack-mastery-contract.md). Encounter v3, wide v4 and classic v5 do not accept authored optional goals. The reader's format support does not establish eligibility in every game mode: use the receiving mode's catalogue and validation. Older clients must reject unsupported formats rather than strip fields or relabel them.
+
+[Relay Rescue](../authoring/coop/README.md) instead imports `revealline-coop-pack.v1` with ruleset `revealline-coop.v3` and `revealline-coop-level.v1` levels. Its compiled pack is a separate, in-memory import; retain its recipe and exported file for reimport. It does not accept Solo packs or a Team presentation envelope. Asset Studio's `.rltheme` (`revealline-theme-bundle.v1`) transfers presentation assets/history, not a gameplay campaign; see the [presentation system](presentation-system.md). The older [authoring draft contract](../authoring/CONTRACT.md) is also separate and has no automatic runtime compiler.
+
+A complete unchanged v1 pack contains:
 
 ```js
 {
@@ -126,7 +140,7 @@ For maintainers, [attempt-export.mjs](../game/attempt-export.mjs) owns and verif
 }
 ```
 
-The three complete editable examples are [Night Shift](../game/content/packs/night-shift.json), [Living Threads](../game/content/packs/living-threads.json) and [Fieldcraft](../game/content/packs/fieldcraft.json). Their ten maps use different authored geometry, time/cut/trail constraints and specialty class interactions. They contain original procedural scene/music recipes; no downloaded Telegram artwork or commercial song is bundled.
+The original three complete editable examples are [Night Shift](../game/content/packs/night-shift.json), [Living Threads](../game/content/packs/living-threads.json) and [Fieldcraft](../game/content/packs/fieldcraft.json). Their ten maps use different authored geometry, time/cut/trail constraints and specialty class interactions; this is the historical starter set, not the current catalogue count. They contain original procedural scene/music recipes; no downloaded Telegram artwork or commercial song is bundled.
 
 Themes, class recipes and map IDs are local to the pack. IDs must be stable, bounded and unique in their declared scope. Map IDs are unique across the entire pack. Reserved JavaScript property names are excluded by this interchange boundary. Optional `level.themeId` and `level.musicId` override campaign choices. `campaign.classIds` selects registered recipes from that pack. `sourcePackId` is returned separately for UI selection and gallery provenance.
 
@@ -195,7 +209,18 @@ node --test game/test/library.test.mjs game/test/packs.test.mjs game/test/progre
 node scripts/verify-packs.mjs
 ```
 
-When intentionally revising supplied maps or class recipes, `node scripts/verify-packs.mjs --discover` performs a bounded legal-input route search and writes new fixtures. Review the content diff before recording a new pack version. The standard proof covers all ten supplied maps under both turning policies: 20 wins without state edits, enemy removal or changing the rules. `node scripts/verify-specialty.mjs` adds 70 Fieldcraft attempts: eight specialty clears, 56 ordinary clears covering every class and both policies, and six comparisons with selected actions omitted. It measures signal resistance, supplied emitter suppression, a hangar switch, Impact recovery and net slowing. This establishes the recorded routes and their actual interactions; it does not establish balance, enjoyable difficulty, finger controls, audio quality or player retention. Test those in the actual shell and on target devices.
+For a small community chapter, start from a copy of Night Shift or the playground's **Export map as expansion**, retain the original, and choose distinct pack/campaign IDs. Inspect the checked-in starter from the repository root, then substitute the exact candidate path:
+
+```sh
+node scripts/game-cli.mjs inspect-goals --pack game/content/packs/night-shift.json
+node scripts/game-cli.mjs inspect-goals --pack .cache/community-night.json
+```
+
+The second command requires your authored candidate file; it does not create one. A successful `xonix-goal-inspection.v1` report identifies the input bytes/hash and reports `structure: valid` and `references: valid`, but also `installedLibrary: not-checked`, `imageDecoding: not-run`, `solvability: not-tested` and `awardAuthority: false`. It is not canonical save/replay identity verification. Follow with prospective-library validation, real image decoding and the prepare/install workflow below this contract; record legal-input routes and browser/device observations separately.
+
+`node scripts/verify-packs.mjs` verifies maintained indexed route fixtures, not an arbitrary candidate. Its legacy `--discover` path has no arbitrary-pack input and currently refuses the indexed non-legacy rulesets before writing proofs. Do not use it as a community-pack generator, remove indexed packs to bypass the guard, or overwrite historical proofs. A changed map needs separately reviewed inputs and a new identity.
+
+The historical starter proof covered ten maps under both turning policies: 20 wins without state edits, enemy removal or changing the rules. The recorded Fieldcraft specialty suite comprises 70 attempts: eight specialty clears, 56 ordinary clears covering every class and both policies, and six comparisons with selected actions omitted. It measures signal resistance, supplied emitter suppression, a hangar switch, Impact recovery and net slowing. These retained counts describe those fixtures, not all current content. Routes establish their actual interactions; they do not establish balance, enjoyable difficulty, finger controls, audio quality or player retention. Test those in the actual shell and on target devices.
 
 ### Useful AI authoring prompts
 

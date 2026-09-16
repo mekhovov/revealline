@@ -1,0 +1,93 @@
+{
+  "source": "0684ddbfe978e95f2b6ddcd02b4f9e0f70a4190d",
+  "status": "READ_ONLY_PREPARATION",
+  "phaseAccepted": false,
+  "audit": {
+    "file": "community-workflow-gap-audit.md",
+    "bytes": 10055,
+    "sha256": "e5e22cd87dd5f036ca7f2c4826bf8c790afaa0affabc28c811ba0270925088ff"
+  },
+  "sourcePins": [
+    {
+      "path": "docs/library-and-packs.md",
+      "bytes": 24947,
+      "sha256": "6ef7c9ec65088217674bb1e635bbbd39cccc7607814ff0399b6c67b6172ebfdf"
+    },
+    {
+      "path": "authoring/README.md",
+      "bytes": 30190,
+      "sha256": "637d728bd0c3a0a3e60e6ba9cbf3974b9f75ae751053b4032b66fe698d1f934a"
+    },
+    {
+      "path": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "bytes": 10742,
+      "sha256": "7861d69a196a087b423831760df7921d310d90d89dcb7bb9995fc2ecdcebbe59"
+    },
+    {
+      "path": "scripts/verify-packs.mjs",
+      "bytes": 25422,
+      "sha256": "aeaa44be38e4727b4504c44a4d1a99e72b3a31e2c12f74e533d344244f260272"
+    },
+    {
+      "path": "game/packs.mjs",
+      "bytes": 21347,
+      "sha256": "6ce53ea4b4e0da27ba0bff7f76e5dc8daccc9dc6b1890f223c28e1d89da34f5c"
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "bytes": 3074,
+      "sha256": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3"
+    },
+    {
+      "path": "docs/presentation-system.md",
+      "bytes": 14003,
+      "sha256": "c31ba61022d63a585bb4e409cb8e3c0ef8cb78166b55a3e757340d32d63bd1f4"
+    },
+    {
+      "path": "scripts/compile-presentation.mjs",
+      "bytes": 12035,
+      "sha256": "3d98b9661230901000a322c2cd360cdb50c427ac63803585878e8c28ebc09e12"
+    },
+    {
+      "path": "scripts/release-catalog.mjs",
+      "bytes": 5549,
+      "sha256": "001b98a89348d726f4dfbfbb0d70088707db0d9946ffcb35de598e8b2359f953"
+    },
+    {
+      "path": "docs/authored-art.md",
+      "bytes": 12042,
+      "sha256": "9d67823ed8598778d3f325f5eade95b315e85d79f45eac8897aaca8a309ceb35"
+    },
+    {
+      "path": "docs/presentation-runtime.md",
+      "bytes": 7630,
+      "sha256": "124b16305aa305f0978bb1462434c7c9143bcacce633210129113ea1362fca17"
+    },
+    {
+      "path": "docs/presentation-pins.md",
+      "bytes": 2462,
+      "sha256": "24ab920b5a1c4908b5d37a1f20cc16ad25685481b7327bdebf4aaf385190e8e8"
+    },
+    {
+      "path": "game/coop/recipes.mjs",
+      "bytes": 11916,
+      "sha256": "571d77f71f123c758288e33d4d81951ab40778c356e48e32792c44a7e67c9675"
+    },
+    {
+      "path": "authoring/coop/README.md",
+      "bytes": 9727,
+      "sha256": "609ff8a814c112f01709b433045116d0fb6b1f2ddea54a1ad1d4ed79e812640f"
+    },
+    {
+      "path": "docs/full-backup.md",
+      "bytes": 27802,
+      "sha256": "f669a8a5b9f88a76d5b7d4c7e229c07cbe286c3164937ca0d2f7a2a4e35b1a81"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 61600,
+      "sha256": "74353c39c14fdfe3c784c2657944024e3d2b7057d3fb92e562470e55e4306629"
+    }
+  ],
+  "execution": "No tests, browser, pack creation, source changes or release actions in this audit."
+}
