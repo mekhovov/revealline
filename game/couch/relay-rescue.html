@@ -11,17 +11,20 @@
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/menu-appearance.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
       <header class="masthead">
-        <a href="../" class="brand">REVEAL<span>LINE</span></a>
+        <a id="coop-home" href="../" class="brand">REVEAL<span>LINE</span></a>
         <span class="mode-label">COUCH CO-OP <b id="coop-stage">FIRST CONNECTION</b></span>
         <a id="coop-race" href="./">Race mode ↗</a>
       </header>
 
       <section id="coop-menu" class="menu" aria-labelledby="coop-title">
         <div class="menu-copy">
+          <div id="coop-lobby-modes"></div>
           <p class="eyebrow">ONE ARENA. TWO PARTNERS.</p>
           <h1 id="coop-title" class="field-kit-display">Find your<br /><em>common ground.</em></h1>
           <p id="coop-intro" class="lead">
@@ -157,6 +160,11 @@
                 <button id="coop-retry" type="button">Retry same arena</button>
                 <button id="coop-lobby" type="button">Change setup</button>
               </div>
+              <div id="coop-pause-modes"></div>
+              <nav id="coop-mode-actions" class="coop-mode-actions" aria-label="Other game modes">
+                <a id="coop-solo" href="../">Return to Solo</a>
+                <a id="coop-versus" href="./">Go to Versus</a>
+              </nav>
               <div id="coop-pause-tools"></div>
             </div>
           </div>
@@ -227,7 +235,32 @@
           </div>
         </article>
       </section>
+      <dialog
+        id="coop-discard-dialog"
+        class="coop-confirm-dialog"
+        role="alertdialog"
+        aria-labelledby="coop-discard-title"
+        aria-describedby="coop-discard-copy"
+      >
+        <h2 id="coop-discard-title">Discard this Team attempt?</h2>
+        <p id="coop-discard-copy">
+          Team progress is only kept on this page; this attempt is not saved.
+        </p>
+        <div class="coop-confirm-actions">
+          <button id="coop-discard-stay" type="button" autofocus>Stay</button>
+          <button id="coop-discard-confirm" type="button">Discard this attempt</button>
+        </div>
+      </dialog>
       <aside id="coop-tools" class="coop-tools" aria-label="Help and options">
+        <section class="coop-picture" aria-label="Arena picture">
+          <p id="coop-picture-status" role="status" aria-live="polite">
+            Preparing the Team picture…
+          </p>
+          <div class="coop-picture-actions">
+            <button id="coop-picture-cancel" type="button" hidden>Cancel picture loading</button>
+            <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
+          </div>
+        </section>
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
           <button id="coop-help-read" type="button">Read controls</button>
@@ -265,6 +298,30 @@
         </details>
         <details id="coop-options">
           <summary id="coop-options-toggle">Options</summary>
+          <label for="coop-text-face">Text style</label>
+          <select id="coop-text-face">
+            <option value="pixel">Theme font</option>
+            <option value="plain">Plain</option>
+          </select>
+          <label for="coop-text-size">Text size</label>
+          <select id="coop-text-size">
+            <option value="standard">Standard</option>
+            <option value="large">Large</option>
+          </select>
+          <label class="field-kit-page-text"
+            >Menu colours<select id="coop-menu-palette">
+              <option value="auto">Automatic</option>
+              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
+            >Menu ornaments<select id="coop-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="coop-menu-style-status" class="micro-note" role="status"></p>
           <label for="coop-touch">Touch controls</label>
           <select id="coop-touch">
             <option value="auto" selected>Auto · touch players without a controller</option>
@@ -277,6 +334,8 @@
             this visit.
           </p>
           <label><input id="coop-reduced" type="checkbox" /> Reduce effects</label>
+          <p id="coop-system-reduction" class="setting-note"></p>
+          <p id="coop-display-status" class="setting-note" role="status"></p>
           <button id="coop-audio" type="button">Unmute sound</button>
           <label for="coop-master-volume">Master sound volume</label>
           <input id="coop-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />

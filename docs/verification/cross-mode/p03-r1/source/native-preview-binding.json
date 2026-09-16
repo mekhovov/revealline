@@ -1,0 +1,19 @@
+{
+  "base": "3253189f3599378dedc30f8f654e6e0d5dfd2253",
+  "overlays": {
+    "game/app.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03j-workshop-restart/game/app.mjs",
+      "sha256": "47009b41f82b759b7af4aa69f2c4a53477c083929d25a844bf73b53262d135de"
+    },
+    "game/index.html": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03j-workshop-restart/game/index.html",
+      "sha256": "ce6f600d6209f6cd7b4e2e98e6af1f5fa0c39ff2e773371750da18aead06e33d"
+    },
+    "game/ui/pixel-theme.css": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05a-display-preferences/game/ui/pixel-theme.css",
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    }
+  },
+  "port": 60241,
+  "scope": "Workshop Restart held app and HTML over exact325, plus separately reviewed compact CSS. Reuses the earlier owned60241 browser origin with a genuine saved flight. No timing or game-state fixture."
+}

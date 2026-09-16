@@ -194,3 +194,73 @@ test('cosmetic page status is immediate, shared without duplicate work, and fenc
   second.close();
   third.close();
 });
+
+test('picture reads keep exact snapshot and original bytes while leases cancel independently', async () => {
+  const f = pageFixture(),
+    snapshot = { resolved: { assets: {} } },
+    reads = [],
+    statuses = [],
+    firstController = new AbortController();
+  const createHost = (options) => ({
+    ...f.createHost(options),
+    readPicture(slot, options) {
+      return new Promise((resolve) => reads.push({ slot, ...options, resolve }));
+    },
+  });
+  const first = mountPresentationPage({ ...f, createHost }),
+    second = mountPresentationPage({ ...f, createHost });
+  assert.equal(first.current(), null);
+  f.resolve(snapshot);
+  await first.ready;
+  assert.equal(first.current(), snapshot);
+  const one = first.readPicture('exact-slot', {
+      snapshot,
+      signal: firstController.signal,
+      onStatus: (status) => statuses.push(status),
+    }),
+    two = second.readPicture('other-slot', { snapshot });
+  assert.equal(reads[0].snapshot, snapshot);
+  assert.equal(reads[1].snapshot, snapshot);
+  first.close();
+  assert.equal(first.current(), null);
+  assert.equal(second.current(), snapshot);
+  assert.equal(reads[0].signal.aborted, true);
+  assert.equal(reads[1].signal.aborted, false);
+  reads[0].onStatus({ message: 'stale' });
+  assert.deepEqual(statuses, []);
+  const original = Object.freeze({ asset: {}, blob: new Blob(['exact original bytes']) });
+  reads[0].resolve(original);
+  reads[1].resolve(original);
+  await assert.rejects(one, { name: 'AbortError' });
+  assert.equal(await two, original, 'Forwarding returns the exact authenticated original object.');
+  firstController.abort();
+  assert.equal(reads[1].signal.aborted, false);
+  assert.equal(f.calls.closes, 0);
+  await assert.rejects(first.readPicture('closed'), /closed/);
+  assert.equal(reads.length, 2);
+  second.close();
+  assert.equal(f.calls.closes, 1);
+});
+
+test('external cancellation and final page disposal fence late picture results', async () => {
+  const f = pageFixture(),
+    controller = new AbortController();
+  let request;
+  const createHost = (options) => ({
+    ...f.createHost(options),
+    readPicture(_slot, options) {
+      return new Promise((resolve) => (request = { ...options, resolve }));
+    },
+  });
+  const page = mountPresentationPage({ ...f, createHost });
+  f.resolve({ release: true });
+  await page.ready;
+  const pending = page.readPicture('original', { signal: controller.signal });
+  controller.abort();
+  assert.equal(request.signal.aborted, true);
+  f.window.emit('pagehide', { persisted: false });
+  request.resolve({ asset: {}, blob: new Blob(['unused']) });
+  await assert.rejects(pending, { name: 'AbortError' });
+  assert.equal(page.current(), null);
+  assert.equal(f.calls.closes, 1);
+});

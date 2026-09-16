@@ -1,0 +1,32 @@
+{
+  "step": "12-consumed-return-token-reload",
+  "dom": {
+    "dialogs": ["shell-home"],
+    "focus": {
+      "id": "shell-continue",
+      "tag": "BUTTON",
+      "text": "Continue\n            →"
+    },
+    "hud": [
+      {
+        "id": "coverage",
+        "text": "0.0%"
+      },
+      {
+        "id": "lives",
+        "text": "◆ ◆ ◆"
+      },
+      {
+        "id": "time",
+        "text": "3:00"
+      },
+      {
+        "id": "score",
+        "text": "00000"
+      }
+    ],
+    "url": "http://127.0.0.1:60366/game/?mode-return=d299fb7b1e574e3488bde57af1690278",
+    "view": [1393, 1348]
+  },
+  "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: ARCADE EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 68%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 3:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 01\n      - heading \"Orchard Crossing\" [level=1]\n      - paragraph: Reveal 68%. Deadline 180s Closing a cut stops your craft. Tap a fresh direction to fly again. Line hit? Close your cut before the travelling spark reaches you. AIM locks a target. Turn before CHASE; REST returns it to patrol.\n      - paragraph: Standard difficulty.\n    - button \"Load saved flight →\"\n    - button \"Start mission ↗\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Bonuses activate on contact. Esc / P pauses.\n    - strong: Ready for launch\n    - generic: Close a line to reveal the picture\n    - status: AIM → CHASE → REST. Bait a locked target, then choose another exit.\n    - status\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - paragraph:\n    - text: Find your line.\n    - text: Bring the picture home.\n  - navigation \"Main menu\":\n    - button \"Continue\" [active]:\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:60366/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · FPV Front · Pressure Lines · Orchard Crossing\n  - paragraph: Choose a flight. Trace a path. Close the line.\n  - paragraph: Version DEV\n  - paragraph:\n    - text: HANGAR 01\n    - generic: FIRST LIGHT"
+}

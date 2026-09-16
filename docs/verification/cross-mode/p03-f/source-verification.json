@@ -1,0 +1,166 @@
+{
+  "format": "p03f-tab-boundary-verification.v1",
+  "sourceBase": "9e8c9cf1fd2a2ff103c2270a16e05dbdf1dacb36",
+  "preparation": {
+    "path": ".cache/p03f-tab-boundary/preparation.json",
+    "bytes": 1347,
+    "sha256": "cd8b43876d743e127aa0e21d83df716a8eba91ba8ea13efc944bc9fcbdf80e3d"
+  },
+  "sourceFiles": [
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "bytes": 21848,
+      "sha256": "82cf9f2d1060f7559a89f795abc72f0d972c519684528f495225cc4d919bac4f"
+    },
+    {
+      "path": "game/test/modal-tab-boundary.test.mjs",
+      "bytes": 7334,
+      "sha256": "62c329afd134f9cae96c1891675ff345e83e5f55e4f5c7283ccaa73ec11c470c"
+    },
+    {
+      "path": "game/test/victory-story-ui.test.mjs",
+      "bytes": 28789,
+      "sha256": "d8327ee4c325af60eda70e958cef9a2913fac10ecb16e47954d72fb37101d319"
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "bytes": 40692,
+      "sha256": "f9ce7374d178ec63c7e006e719f762f29f70c3d8e29ba896dd9065188a5ff47d"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 35696,
+      "sha256": "19c63751b0cd286e12e7537556bec1f27deb086064aa1a44a56f9e711796d5ac"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 103153,
+      "sha256": "02906445ae582d967e35cb92c0624bd8f90f4f5a2d7c17ef12d112b9311eb768"
+    }
+  ],
+  "wholeTestFiles": [
+    "game/test/modal-tab-boundary.test.mjs",
+    "game/test/victory-story-ui.test.mjs",
+    "game/test/modal-navigation.test.mjs",
+    "game/test/controller-navigation.test.mjs",
+    "game/test/menu-initial-focus.test.mjs",
+    "game/test/coop-host.test.mjs"
+  ],
+  "runs": [
+    {
+      "runtime": "22.22.2",
+      "exitCode": 0,
+      "counts": {
+        "tests": 179,
+        "pass": 179,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "raw": {
+        "path": ".cache/p03f-node22-final.log",
+        "bytes": 43447,
+        "sha256": "69c773b404b1cc19a04853de8b5a3833a0b773c4abde899942e9bce3e95b7d9c"
+      }
+    },
+    {
+      "runtime": "20.19.5",
+      "exitCode": 0,
+      "counts": {
+        "tests": 179,
+        "pass": 179,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "raw": {
+        "path": ".cache/p03f-node20-final.log",
+        "bytes": 40756,
+        "sha256": "6514210a900ced9e9d3b6418792a5026786cb7288c01b41bd55cc28f6e0d4063"
+      }
+    }
+  ],
+  "staticChecks": [
+    {
+      "check": "ESLint four changed JavaScript files",
+      "exitCode": 0,
+      "raw": {
+        "path": ".cache/p03f-eslint.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "check": "Prettier six changed paths",
+      "exitCode": 0,
+      "raw": {
+        "path": ".cache/p03f-prettier.log",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      }
+    },
+    {
+      "check": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "retainedFailures": [
+    {
+      "raw": {
+        "path": ".cache/p03f-baseline-node22.log",
+        "bytes": 10272,
+        "sha256": "282d82920856872b495649c9c213507b16cb8113f3c9248d2549bffc80430580"
+      },
+      "meaning": "Unchanged 9e8 shared navigation: 10-case boundary suite, 1 pass/9 fail; no source fix then."
+    },
+    {
+      "raw": {
+        "path": ".cache/p03f-node22-01.log",
+        "bytes": 34782,
+        "sha256": "d4b9e4cd979dee9e32e65970b5799a27ef2ad1ea79ad7acb7d2d4323338d1df1"
+      },
+      "meaning": "Initial four-file run 134/135; new actual-story control test lacked native getComputedStyle on its fake Window. Only test boundary corrected; raw preserved."
+    }
+  ],
+  "rootIntegratedPredecessor": {
+    "sourceRevision": "9e8c9cf1fd2a2ff103c2270a16e05dbdf1dacb36",
+    "scope": "D+E four complete files, Node20 only, final135/135. Not current F acceptance and not added to179 as unique tests.",
+    "raw": [
+      {
+        "path": ".cache/p03-de-integrated-node20.log",
+        "bytes": 139,
+        "sha256": "85c48229fe98ac69499cf82e195f55822cffd90be1a693141d3d7b3a2610a0f9"
+      },
+      {
+        "path": ".cache/p03-de-integrated-node20-second.log",
+        "bytes": 24610,
+        "sha256": "57c7605bef23878368e04a4eaac3f7cb18ec807ffdcd14b442bc4f871743e4b6"
+      },
+      {
+        "path": ".cache/p03-de-integrated-node20-final.log",
+        "bytes": 30589,
+        "sha256": "91d67b9f4f052c326f4a243f3a8fcb0b38a01566a09f0cf4094c736b3fef9ecf"
+      },
+      {
+        "path": ".cache/p03-de-restored.json",
+        "bytes": 1480,
+        "sha256": "675d569df3139a3870203dce3c00937c0d109f56c1e35d32ddffec87e5820fe9"
+      }
+    ],
+    "failures": "First launcher refused absent sparse test; second run102/103 refused missing exact75,767-byte MP4. Root restored exact tracked fixture/input files, no source changes; final135/135."
+  },
+  "nativePredecessor": {
+    "path": ".cache/p03e-native-root/story-tab-boundary.json",
+    "bytes": 2618,
+    "sha256": "9026371d2352995fd45823545574dfc287ecdba8aac11a4449d82c50a9a882b4"
+  },
+  "nativeStatus": "Successor native check root-owned and pending. Prior e71d forward/reverse BODY failure remains failure, not relabeled.",
+  "limits": [
+    "Boundary only, current top dialog; native interior input behavior stays delegated.",
+    "No autoplay, save/adoption, version/build/publication changes.",
+    "P03 remains implementing; physical-device and integrated release gates remain open."
+  ],
+  "freeBytes": 1268428800
+}

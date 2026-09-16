@@ -1,0 +1,49 @@
+{
+  "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "sourceHoldSha256": "8c8c43b897146360e5749937988017483cb0255261f85888b75e63946b214784",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/display-preferences.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/text-face-host.test.mjs",
+    "game/test/text-size-host.test.mjs",
+    "game/test/title-mode-departure-host.test.mjs",
+    "game/test/title-entry-host.test.mjs",
+    "game/test/mode-return-host.test.mjs",
+    "game/test/library-launch-host.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/couch-shell.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/modal-navigation.test.mjs",
+    "game/test/modal-tab-boundary.test.mjs",
+    "game/test/controller-navigation.test.mjs"
+  ],
+  "nodeVersion": "v20.19.5",
+  "exitCode": 0,
+  "seconds": 323.02190500008874,
+  "inputsUnchanged": true,
+  "files": [
+    "display-preferences.test.mjs",
+    "display-preferences-host.test.mjs",
+    "text-face-host.test.mjs",
+    "text-size-host.test.mjs",
+    "title-mode-departure-host.test.mjs",
+    "title-entry-host.test.mjs",
+    "mode-return-host.test.mjs",
+    "library-launch-host.test.mjs",
+    "coop-host.test.mjs",
+    "couch-shell.test.mjs",
+    "couch-navigation.test.mjs",
+    "modal-navigation.test.mjs",
+    "modal-tab-boundary.test.mjs",
+    "controller-navigation.test.mjs"
+  ],
+  "log": {
+    "path": "focused-final-node20.log",
+    "bytes": 94830,
+    "sha256": "1ae8023e47053937763e4715c83f6256a48962345fff54a73737e9638e55ac8c"
+  }
+}

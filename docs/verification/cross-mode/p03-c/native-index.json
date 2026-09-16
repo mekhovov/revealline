@@ -1,0 +1,97 @@
+{
+  "source": "cf169ebd1a214ef2c6b7eb54946860ffe58de644",
+  "normalization": "JSON formatting only; raw root-cache hashes retained.",
+  "files": [
+    {
+      "path": "native/01-ready-solo-mode.json",
+      "bytes": 7841,
+      "sha256": "49b0fc92e4bc66eab5cca588ebdb586aa162581650f1bd70d26575eeb9f5a00b",
+      "rawBytes": 7871,
+      "rawSha256": "72c7e8cc2f32d3e9fc412a34bbc903bde857f0a75cd9aed13528029608cd384a"
+    },
+    {
+      "path": "native/02-team-from-ready-solo.json",
+      "bytes": 3546,
+      "sha256": "2265fa73d6d45c46897401860cd29c32d2787eee04924b8babdd544c46d389e8",
+      "rawBytes": 3564,
+      "rawSha256": "2447f20adad7be4bd41e205bf53209de7feb037c588995fd1d708c6fe5416fef"
+    },
+    {
+      "path": "native/03-team-back-missions.json",
+      "bytes": 7976,
+      "sha256": "c0bd0bd53a401d1d31ff391e735da73d5f03b06a6cca2dc19df0faa51b3947cf",
+      "rawBytes": 8006,
+      "rawSha256": "5a1901cf5782e304d081fed074a8b5ec1d522f725bb1a6e32b464775d7dedcc6"
+    },
+    {
+      "path": "native/04-loaded-solo-paused.json",
+      "bytes": 1658,
+      "sha256": "78c0d98657e7417c8aa8f4bc6293f5f3cef42366882382cee861101d030a2d50",
+      "rawBytes": 1676,
+      "rawSha256": "f722bd48d59f674fe7dd9e7932b9ed69f5a236ea7b324be8e7abb3337a27d960"
+    },
+    {
+      "path": "native/05-unfinished-leave-prompt.json",
+      "bytes": 7631,
+      "sha256": "7ead3b162801155c30cf5ba1ef54cbfb798cd64ea23b90079ec8bdec39f866c0",
+      "rawBytes": 7667,
+      "rawSha256": "c706acb6be17b4d5465f29088177e324bd385865a235287b623e1e9d5ee5024c"
+    },
+    {
+      "path": "native/06-stay-retains-flight-and-team-focus.json",
+      "bytes": 7296,
+      "sha256": "38191df3ed89efa340ffb4a29a6dbe1dd85d70690a38ef1fdde25a7b4f114884",
+      "rawBytes": 7326,
+      "rawSha256": "f6541232190706d273367734b5538e386058f1c6c87813dfa27c1778597660d5"
+    },
+    {
+      "path": "native/07-leave-confirmed-team.json",
+      "bytes": 3546,
+      "sha256": "bfc5ff14eb983300d1ab42f11cdd125fc87882c6e8d53e266cf6da575f8fd7ed",
+      "rawBytes": 3564,
+      "rawSha256": "113401bd162bb8b1780303c12f76f7e7d9be8abc0ab46944ebc47eee45100fbf"
+    },
+    {
+      "path": "native/08-return-selection-with-saved-flight.json",
+      "bytes": 7992,
+      "sha256": "78aff59d2f0764e9a19ed590b43f7f731f3ec1f4e231246bf1c477cf6d9bfc57",
+      "rawBytes": 8022,
+      "rawSha256": "6804b6a39773f08e64dc1a0598966284b5e5bc19504ee1624eccef8a99fcf4ab"
+    },
+    {
+      "path": "native/09-restored-solo-remains-paused.json",
+      "bytes": 1668,
+      "sha256": "23ec805c532bf9a7f496fba6d72e07bfcbf05d020ed1166a3b216d8295e061e1",
+      "rawBytes": 1686,
+      "rawSha256": "6fc33935109cbf68bf867310cd29b121a8ce6e71119494eccd30444e79c303ce"
+    },
+    {
+      "path": "native/10-explicit-resume-then-pause.json",
+      "bytes": 1620,
+      "sha256": "2fc2779521846f8a5141db2a16fd21f2ab72382fcf0e960bb2c6d00460991087",
+      "rawBytes": 1638,
+      "rawSha256": "25f130529dfc1eba6ef7614ef9297b491bfa5199db03450b537f7d74c2323c25"
+    },
+    {
+      "path": "native/11-explicit-resume-running.json",
+      "bytes": 1372,
+      "sha256": "08cbff7a5215c4dbf30196e83c6ee207d22afa7cec921e850f99b8fe06531d8b",
+      "rawBytes": 1390,
+      "rawSha256": "a9dcb9487f2df4fad739e7e5b331f51b9098ce25bdbb8d1a7890c0632107607a"
+    },
+    {
+      "path": "native/12-consumed-return-token-reload.json",
+      "bytes": 3044,
+      "sha256": "51b1e6aecb23d8bb31dc9e720d1894e82fa60c3af29d9f70f7f791e91fa899d5",
+      "rawBytes": 3074,
+      "rawSha256": "d8701b4b4dca97e5f0fc0bbe7d64e3afa89045c3dbf4b6a6888789294095ae55"
+    },
+    {
+      "path": "native/verification.json",
+      "bytes": 3546,
+      "sha256": "e7a4d99b8a26b8e684692ae6b95c9453b18d2541642a4c08445c3a25803e8a82",
+      "rawBytes": 3546,
+      "rawSha256": "e7a4d99b8a26b8e684692ae6b95c9453b18d2541642a4c08445c3a25803e8a82"
+    }
+  ]
+}

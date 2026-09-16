@@ -16,6 +16,7 @@ import { buildFractureTheme } from '../../authoring/library/fracture-theme-chapt
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { deferred } from './helpers/media-fixtures.mjs';
 
 const pilot = await buildExternalPilot();
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -194,6 +195,144 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
   };
 }
 const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 45000, message });
+
+test('interrupted async Start confirmation stays ready after blur and return until a fresh Start', async (t) => {
+  const f = await fixture(t),
+    before = f.writes();
+  f.reader.dispose();
+  const page = await couchPage(t, {
+    initialLevel: null,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+  });
+  const choice = page
+    .$('race-level')
+    .options.find((option) => option.value.startsWith('installed/'));
+  page.$('race-focus').click();
+  page.$('race-level').value = choice.value;
+  await action(page.$('race-level'), 'change');
+  page.$('race-setup-back').click();
+  page.frame(0);
+  const runs = [...page.renders],
+    checkpoint = page.checkpoint(),
+    picture = page.drawOptions[0].backdrop,
+    entered = deferred(),
+    gate = deferred(),
+    request = f.locks.request.bind(f.locks);
+  let hold = true;
+  f.locks.request = async (...args) => {
+    if (hold) {
+      hold = false;
+      entered.resolve();
+      await gate.promise;
+    }
+    return request(...args);
+  };
+  page.$('race-start').focus();
+  const starting = action(page.$('race-start'));
+  await entered.promise;
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  page.doc.focused = false;
+  page.win.emit('blur');
+  page.doc.body.focus();
+  page.doc.focused = true;
+  page.frame(0);
+  gate.resolve();
+  await starting;
+  page.frame(0);
+  assert.equal(page.state(), 'ready', 'The interrupted Start gesture cannot resume on return.');
+  assert.equal(page.$('race-start').disabled, false, 'The confirmed picture remains usable.');
+  assert.equal(page.doc.activeElement === page.doc.body, true);
+  assert.equal(
+    page.renders.every((run, index) => run === runs[index]),
+    true,
+  );
+  assert.deepEqual(page.checkpoint(), checkpoint);
+  assert.equal(page.drawOptions[0].backdrop === picture, true);
+  assert.equal(page.drawOptions[1].backdrop === picture, true);
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  assert.deepEqual(f.writes(), before);
+});
+
+test('cancelled Start confirmation cannot overwrite Retry for the same untouched attempt', async (t) => {
+  const f = await fixture(t),
+    before = f.writes();
+  f.reader.dispose();
+  const page = await couchPage(t, {
+    initialLevel: null,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+  });
+  const choice = page
+    .$('race-level')
+    .options.find((option) => option.value.startsWith('installed/'));
+  page.$('race-focus').click();
+  page.$('race-level').value = choice.value;
+  await action(page.$('race-level'), 'change');
+  page.$('race-setup-back').click();
+  page.frame();
+  const held = page.checkpoint(),
+    runs = [...page.renders];
+  const oldEntered = deferred(),
+    oldGate = deferred(),
+    decodeEntered = deferred(),
+    decodeGate = deferred();
+  const request = f.locks.request.bind(f.locks);
+  let holdNext = true;
+  f.locks.request = async (...args) => {
+    if (holdNext) {
+      holdNext = false;
+      oldEntered.resolve();
+      await oldGate.promise;
+      throw new Error('Delayed old confirmation refusal.');
+    }
+    return request(...args);
+  };
+  page.$('race-start').focus();
+  const starting = action(page.$('race-start'));
+  await oldEntered.promise;
+  assert.equal(page.$('race-picture-cancel').hidden, false);
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  page.$('race-picture-cancel').click();
+  assert.equal(page.doc.activeElement === page.$('race-chapter-retry'), true);
+  f.model.onDecode = async () => {
+    decodeEntered.resolve();
+    await decodeGate.promise;
+  };
+  const retrying = action(page.$('race-chapter-retry'));
+  oldGate.resolve();
+  await starting;
+  await decodeEntered.promise;
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  assert.equal(
+    page.$('race-picture-cancel').hidden,
+    false,
+    'The newer read still owns the busy UI.',
+  );
+  assert.equal(page.$('race-chapter-retry').disabled, true);
+  assert.equal(page.$('race-start').disabled, true);
+  assert.doesNotMatch(page.$('race-message').textContent, /Delayed old confirmation refusal/);
+  assert.deepEqual(page.checkpoint(), held);
+  decodeGate.resolve();
+  await retrying;
+  page.frame(0);
+  assert.equal(page.$('race-start').disabled, false);
+  assert.equal(page.doc.activeElement === page.$('race-start'), true);
+  assert.equal(
+    page.renders.every((run, index) => run === runs[index]),
+    true,
+  );
+  assert.deepEqual(page.checkpoint(), held);
+  assert.deepEqual(f.writes(), before);
+});
 
 // Capture the existing native property handler's promise, then use readiness
 // predicates too: a completed handler alone is not permission to start.
@@ -457,7 +596,6 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   page.$('race-focus').click();
   page.$('race-level').value = installed[0].value;
   await action(page.$('race-level'), 'change');
-  assert.equal(page.$('race-start').disabled, true);
   await settle(() => !page.$('race-start').disabled, page.$('race-message').textContent);
   page.$('race-setup-back').click();
   page.frame();
@@ -510,7 +648,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
       });
   };
   page.$('race-level').value = installed[1].value;
-  await action(page.$('race-level'), 'change');
+  const pendingMap = action(page.$('race-level'), 'change');
   await settle(() => finish, 'pending map original was not read');
   assert.equal(page.$('race-preparation').dataset.state, 'busy');
   assert.equal(page.$('race-preparation').dataset.stage, 'decoding');
@@ -523,6 +661,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   assert.equal(page.$('race-preparation').hidden, true);
   finish();
   f.model.onDecode = null;
+  await pendingMap;
   const retry = page.$('race-chapter-retry');
   blurWhenDisabled(retry);
   retry.focus();
@@ -770,4 +909,285 @@ for (const [name, build] of [
     page.win.emit('pagehide', { persisted: false });
     assert.equal(f.model.urls.size, 0);
     assert.deepEqual(f.writes(), before);
+  });
+
+// These cases finish the actual installed race through its input and clock.
+// The boundary models delay decoding/lock delivery; they do not edit a run,
+// fabricate a result or certify browser pixels.
+async function completedInstalledRound(t) {
+  const f = await fixture(t),
+    before = f.writes();
+  f.reader.dispose();
+  const page = await couchPage(t, {
+    initialLevel: null,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+  });
+  const choice = page
+    .$('race-level')
+    .options.find((option) => option.value.startsWith('installed/'));
+  assert.ok(choice);
+  page.$('race-focus').click();
+  page.$('race-level').value = choice.value;
+  await action(page.$('race-level'), 'change');
+  await settle(
+    () => !page.$('race-start').disabled,
+    'The installed first round never became ready.',
+  );
+  page.$('race-setup-back').click();
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  page.key('KeyS');
+  page.frames(151, 200);
+  page.key('KeyS', false);
+  page.frame(0);
+  assert.equal(page.state(), 'finished');
+  const completed = {
+    runs: [...page.renders],
+    checkpoint: page.checkpoint(),
+    picture: page.drawOptions[0].backdrop,
+    results: [0, 1].map((i) => page.$(`race-result-${i}`).textContent),
+    wins: page.$('series-score').textContent,
+    selection: page.$('race-level').value,
+  };
+  assert.notEqual(completed.wins, '0 : 0', 'The input route must yield a nonzero series result.');
+  assert.equal(sha(completed.picture.image.bytes), completed.picture.pin.sha256);
+  assert.equal(completed.picture === page.drawOptions[1].backdrop, true);
+  assert.deepEqual(f.writes(), before);
+  return { f, page, before, completed };
+}
+function assertCompletedInstalled(page, completed) {
+  page.frame(0);
+  assert.equal(page.state(), 'finished', 'The accepted completed round still owns Results.');
+  assert.equal(
+    page.renders.every((run, i) => run === completed.runs[i]),
+    true,
+  );
+  assert.deepEqual(page.checkpoint(), completed.checkpoint);
+  assert.deepEqual(
+    [0, 1].map((i) => page.$(`race-result-${i}`).textContent),
+    completed.results,
+  );
+  assert.equal(page.$('series-score').textContent, completed.wins);
+  assert.equal(page.$('race-level').value, completed.selection);
+  assert.equal(
+    page.drawOptions.every((options) => options.backdrop === completed.picture),
+    true,
+  );
+  assert.equal(completed.picture.image.released || 0, 0);
+  assert.equal(page.$('race-review').hidden, false);
+}
+
+test('installed failed Next decode keeps completed Results, wins and the original available to View', async (t) => {
+  const diagnostics = [];
+  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+  const { f, page, before, completed } = await completedInstalledRound(t),
+    priorImages = f.model.seen.length;
+  f.model.onDecode = async () => {
+    throw new Error('Held installed Next decode refused.');
+  };
+  page.$('race-start').focus();
+  await action(page.$('race-start'));
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.$('race-start').disabled, false);
+  assert.equal(
+    page.$('race-message').textContent,
+    'The next picture could not be prepared. Results are kept. Choose Next to retry.',
+  );
+  assert.equal(diagnostics.length, 1);
+  assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
+  assert.match(diagnostics[0][1].message, /decode refused/);
+  const rejected = f.model.seen.slice(priorImages);
+  assert.ok(rejected.length > 0, 'The refusal occurred after actual image allocation.');
+  assert.ok(rejected.every((image) => image.released === 1));
+  assert.equal(f.model.urls.has(completed.picture.image.source), true);
+  page.$('race-review').click();
+  page.frame(0);
+  assert.equal(page.$('race-boards').hidden, false);
+  assertCompletedInstalled(page, completed);
+  page.$('race-pause').click();
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.doc.activeElement === page.$('race-review'), true);
+  assert.deepEqual(f.writes(), before);
+});
+
+test('installed Next final confirmation refusal retains the prior lease until an explicit successful retry adopts Ready', async (t) => {
+  const diagnostics = [];
+  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+  const { f, page, completed } = await completedInstalledRound(t),
+    raw = await f.pointer.snapshot(),
+    gate = deferred(),
+    request = f.locks.request.bind(f.locks),
+    priorImages = f.model.seen.length;
+  let armed = true;
+  f.locks.request = async (...args) => {
+    if (
+      armed &&
+      page
+        .$('race-preparation')
+        .textContent.includes('Confirming the next chapter before adopting it')
+    ) {
+      armed = false;
+      await gate.promise;
+    }
+    return request(...args);
+  };
+  page.$('race-start').focus();
+  const pending = action(page.$('race-start'));
+  await settle(() => !armed, 'The final installed confirmation never requested its lock.');
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.$('race-start').disabled, true);
+  assert.equal(page.$('race-picture-cancel').hidden, false);
+  assert.ok(f.model.seen.slice(priorImages).some((image) => image.decoded && !image.released));
+  await f.put(f.pointer.keys.packsKey, `${raw.packs}\n`);
+  const afterExternalChange = f.writes();
+  gate.resolve();
+  await pending;
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.$('race-start').disabled, false);
+  assert.equal(
+    page.$('race-message').textContent,
+    'The next picture could not be prepared. Results are kept. Choose Next to retry.',
+  );
+  assert.equal(diagnostics.length, 1);
+  assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
+  assert.match(diagnostics[0][1].message, /snapshot changed/);
+  assert.ok(f.model.seen.slice(priorImages).every((image) => image.released === 1));
+  assert.deepEqual(
+    f.writes(),
+    afterExternalChange,
+    'The failed read performs no compensating save.',
+  );
+  await f.put(f.pointer.keys.packsKey, raw.packs);
+  const beforeRetry = f.writes();
+  page.$('race-start').focus();
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'ready', 'Installed Next requires another explicit Start.');
+  assert.equal(
+    page.renders.every((run, i) => run !== completed.runs[i]),
+    true,
+  );
+  assert.equal(page.$('series-score').textContent, completed.wins);
+  assert.equal(completed.picture.image.released, 1);
+  const nextPicture = page.drawOptions[0].backdrop;
+  assert.equal(nextPicture === completed.picture, false);
+  assert.equal(nextPicture === page.drawOptions[1].backdrop, true);
+  assert.deepEqual(nextPicture.pin.identity, completed.picture.pin.identity);
+  assert.equal(sha(nextPicture.image.bytes), completed.picture.pin.sha256);
+  const ready = page.checkpoint();
+  page.frames(20);
+  assert.deepEqual(page.checkpoint(), ready);
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  assert.equal(page.drawOptions[0].backdrop === nextPicture, true);
+  assert.deepEqual(f.writes(), beforeRetry);
+});
+
+test('installed cancelled Next cannot overwrite a newer retry or revive Start after blur and return', async (t) => {
+  const { f, page, before, completed } = await completedInstalledRound(t),
+    oldGate = deferred(),
+    newGate = deferred();
+  let oldImage, newImage;
+  f.model.onDecode = async (image) => {
+    oldImage = image;
+    await oldGate.promise;
+  };
+  page.$('race-start').focus();
+  const first = action(page.$('race-start'));
+  await settle(() => oldImage, 'The cancelled candidate decoder never started.');
+  assertCompletedInstalled(page, completed);
+  page.$('race-picture-cancel').focus();
+  page.$('race-picture-cancel').click();
+  await first;
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.doc.activeElement === page.$('race-start'), true);
+  assert.equal(page.$('race-start').disabled, false);
+  assert.match(page.$('race-message').textContent, /cancelled.*Results are kept/s);
+  f.model.onDecode = async (image) => {
+    newImage = image;
+    await newGate.promise;
+  };
+  const retry = action(page.$('race-start'));
+  await settle(() => newImage, 'The replacement candidate decoder never started.');
+  assertCompletedInstalled(page, completed);
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  oldGate.resolve();
+  await settle(() => oldImage.decoded, 'The cancelled decoder did not settle.');
+  assert.equal(oldImage.released, 1);
+  assert.equal(page.$('race-start').disabled, true);
+  assert.equal(page.$('race-picture-cancel').hidden, false);
+  assertCompletedInstalled(page, completed);
+  page.doc.focused = false;
+  page.win.emit('blur');
+  page.doc.body.focus();
+  page.doc.focused = true;
+  newGate.resolve();
+  await retry;
+  page.frame(0);
+  assert.equal(page.state(), 'ready');
+  assert.equal(page.doc.activeElement === page.doc.body, true);
+  assert.equal(completed.picture.image.released, 1);
+  assert.equal(page.$('series-score').textContent, completed.wins);
+  assert.equal(page.drawOptions[0].backdrop === page.drawOptions[1].backdrop, true);
+  const ready = page.checkpoint();
+  page.frames(20);
+  assert.deepEqual(page.checkpoint(), ready);
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  assert.deepEqual(f.writes(), before);
+});
+
+for (const outcome of ['cancel', 'replacement'])
+  test(`installed candidate ready callback ${outcome} retains accepted ownership until a confirmed commit`, async (t) => {
+    const f = await fixture(t),
+      rows = await f.reader.refresh(),
+      accepted = await f.reader.select(rows[0], { raceId: 1 }),
+      before = f.writes(),
+      priorImages = f.model.seen.length;
+    let replacement;
+    const pending = f.reader.stage(rows[1], {
+      raceId: 2,
+      onStatus(status) {
+        if (status.status !== 'ready') return;
+        if (outcome === 'cancel') f.reader.cancel();
+        else replacement = f.reader.stage(rows[2], { raceId: 3 });
+      },
+    });
+    await assert.rejects(pending, { name: 'AbortError' });
+    assert.equal(f.reader.current() === accepted, true);
+    assert.equal(accepted.image.released || 0, 0);
+    if (outcome === 'replacement') {
+      assert.ok(replacement);
+      const candidate = await replacement;
+      assert.equal(f.reader.current() === accepted, true);
+      await candidate.confirm();
+      assert.equal(f.reader.current() === accepted, true);
+      const retire = candidate.commit();
+      assert.equal(f.reader.current() === candidate.picture, true);
+      assert.equal(
+        accepted.image.released || 0,
+        0,
+        'Publication and old-lease cleanup are separate.',
+      );
+      retire();
+      retire();
+      assert.equal(accepted.image.released, 1);
+      candidate.cancel();
+      assert.equal(candidate.picture.image.released || 0, 0);
+      assert.equal(await f.reader.confirm(rows[2], { raceId: 3 }), candidate.picture);
+    } else {
+      assert.ok(f.model.seen.slice(priorImages).every((image) => image.released === 1));
+      assert.equal(await f.reader.confirm(rows[0], { raceId: 1 }), accepted);
+    }
+    assert.deepEqual(f.writes(), before);
+    f.reader.dispose();
+    assert.equal(f.model.urls.size, 0);
+    assert.ok(f.model.seen.every((image) => image.released === 1));
   });

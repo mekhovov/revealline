@@ -1,0 +1,57 @@
+{
+  "scope": "P03 A2 desktop browser keyboard journey; not phase/release closure",
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "sourceHold": {
+    "path": ".cache/p03a2-mode-return/source-held.json",
+    "bytes": 1682,
+    "sha256": "55756dc7ea57b33b68cb8e8f53d8e6b3fa3ba7d3210fb3038bb378e2c63d49a6"
+  },
+  "previewBinding": {
+    "path": ".cache/p03a2-mode-return/native-preview-binding.json",
+    "bytes": 1099,
+    "sha256": "94c849c1f56660a6778b871f2fead4c02fdecf38bbbb40ba4dcd5e9aae603d31"
+  },
+  "events": {
+    "path": ".cache/p03a2-mode-return/native/events.json",
+    "bytes": 104152,
+    "sha256": "5c9f09d228d9725f454c15f83ebc8346db18da818c1c648406dc3ce3dd746384"
+  },
+  "eventCount": 18,
+  "images": [
+    {
+      "path": ".cache/p03a2-mode-return/native/departure-warning.png",
+      "bytes": 38228,
+      "sha256": "cd78e9935b7d427ccb449bf378e8b44c81bedc1d157c2e66242d6ed69acae1e4"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/native/restored-flight.png",
+      "bytes": 78821,
+      "sha256": "8c7fecaea844402a19346bfcb695fec8e1f23af2a9652dfba88dbac5a0b56170"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/native/returned-missions.png",
+      "bytes": 133104,
+      "sha256": "f80e1f349e296defb6927720061b087e67279663cf4963f0eef9baa0f98551ff"
+    },
+    {
+      "path": ".cache/p03a2-mode-return/native/solo-retro-paused.png",
+      "bytes": 78821,
+      "sha256": "0ec1a07d5aefc2d8dac1f4d826dc214f578e383c50611dfbc390cb3beeab3516"
+    }
+  ],
+  "observed": [
+    "Keyboard selected 1994 Forever and Grid + buffer, deployed, sent Down, and paused at displayed 0:06.",
+    "Missions mode departure kept its nested warning visible and initially focused Stay. Escape restored the actual Versus opener.",
+    "A fresh confirmed departure reported a verified saved flight and navigated to the fixed Versus route with a v2 return token.",
+    "Keyboard Return to solo restored Missions, First Signal, retro world and grid-center steering, focused Versus and left the new page in briefing state.",
+    "Explicit Back opened Title Continue. Explicit Continue restored the actual retained flight paused at 0:06; it did not run automatically."
+  ],
+  "limits": [
+    "18 events include intermediate loading states; event labels express intended actions, DOM snapshots record actual outcomes. Event09 labelled Versus choice actually focused Team before the next Tab.",
+    "Unfinished-cut geometry and exact saved bytes were not read or mutated in the browser; the two Down inputs and pause were observed. Host tests establish exact checkpoint and queued-turn retention.",
+    "Versus ready page initially retained body focus: R5 candidate addresses it separately and is not part of this A2 source.",
+    "Current A2 inherits old title Continue loading a paused flight. TitleB separately changes explicit title Continue to start after verification.",
+    "No physical controller, touch device, portrait/zoom, public deployment, P05/P08/R5 composition or full P03 acceptance claim."
+  ],
+  "method": "Documented in-app browser, keyboard actions and read-only DOM snapshots; actual served Git base plus pinned five source overlays. No browser state injection."
+}

@@ -529,7 +529,20 @@ export function attachControllerNavigation({
     const items = controls(),
       current = items.indexOf(doc.activeElement);
     if (event.key === 'Tab') {
-      if (root.tagName === 'DIALOG') return false;
+      if (root.tagName === 'DIALOG') {
+        // Keep native traversal inside the current modal. Intercept only its
+        // first/last boundary; native inputs still own all interior Tab keys.
+        const tabStops = [...root.querySelectorAll(`${CONTROLS},[tabindex]`)]
+          .filter((element) => element.tabIndex >= 0 && visible(element))
+          .sort((a, b) => (a.tabIndex || Infinity) - (b.tabIndex || Infinity));
+        if (!root.open || !tabStops.length) return false;
+        const boundary = event.shiftKey ? tabStops[0] : tabStops.at(-1);
+        if (doc.activeElement !== boundary) return false;
+        event.preventDefault();
+        relinquish();
+        focus(event.shiftKey ? tabStops.at(-1) : tabStops[0]);
+        return true;
+      }
       if (!items.length) return false;
       event.preventDefault();
       relinquish();
@@ -591,6 +604,13 @@ export function attachControllerNavigation({
     beginReading,
     endReading,
     readingState,
+    // One focus handoff; callers own readiness/foreground/intent checks.
+    // Unlike engage(), this does not enable later controller scope refocusing.
+    focusAvailable() {
+      if (destroyed) return null;
+      sync();
+      return scope === 'flight' ? null : ensureFocus();
+    },
     engage() {
       if (destroyed) return;
       sync();

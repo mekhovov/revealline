@@ -1,3 +1,4 @@
+import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 
 const ABILITY = Object.freeze({
@@ -10,11 +11,12 @@ const ABILITY = Object.freeze({
 const SCREENS = Object.freeze({
   main: ['race-main', 'race-start'],
   setup: ['race-setup', 'race-level'],
-  options: ['race-options-panel', 'race-touch-0'],
+  options: ['race-options-panel', 'race-text-face'],
   help: ['race-help-panel', 'race-help-read'],
   confirm: ['race-confirm', 'race-confirm-back'],
   leave: ['race-leave-panel', 'race-leave-back'],
 });
+const DESTINATIONS = Object.freeze({ solo: '../', team: 'relay-rescue.html?return=versus' });
 /** Display capabilities come from the actual authored level and equipped recipe. */
 export function couchEquipment(run) {
   const actions = arcadeActionCapabilities(run.level),
@@ -36,17 +38,28 @@ export function createCouchShell({
   coarse = false,
   onTransition = () => {},
   onNewMatch = () => {},
+  getDepartureState = () => null,
+  onLeaveRequest = () => {},
+  getSoloReturnToken = () => null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
+    view = doc.defaultView,
     pads = [...doc.querySelectorAll('.race-pad')],
     preferences = ['auto', 'auto'],
     modality = [coarse ? 'touch' : 'keyboard', coarse ? 'touch' : 'keyboard'],
     shown = [false, false],
     removers = [];
+  mountModeChoices({
+    root: $('race-mode-choices'),
+    current: 'versus',
+    actions: { solo: $('race-solo-return'), team: $('race-coop') },
+  });
   let screen = 'main',
     status = null,
     opener = null,
+    departure = null,
     destroyed = false,
+    revealingResize = false,
     equipment = [];
   const setText = (id, text) => {
     if ($(id).textContent !== text) $(id).textContent = text;
@@ -65,9 +78,79 @@ export function createCouchShell({
   function root() {
     return status === 'running' || screen === 'review' ? $('race-hud') : $(SCREENS[screen][0]);
   }
+  function actionCurrent(element) {
+    const owner = root(),
+      previousScreen = screen,
+      previousStatus = status;
+    return () =>
+      !destroyed &&
+      foreground() &&
+      screen === previousScreen &&
+      status === previousStatus &&
+      root() === owner &&
+      element?.isConnected &&
+      owner.contains(element) &&
+      !element.disabled &&
+      !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
+      element.getClientRects().length > 0 &&
+      doc.defaultView?.getComputedStyle(element)?.visibility !== 'hidden';
+  }
   function focus(element = primary()) {
-    if (!destroyed && !element.disabled && !element.closest('[hidden],[inert]'))
-      element.focus({ preventScroll: true });
+    const eligible = actionCurrent(element);
+    if (!eligible()) return;
+    element.focus({ preventScroll: true });
+    // The screen is installed first. Reveal its actual focused action without
+    // letting a synchronous focus callback scroll a replacement/background view.
+    if (eligible() && doc.activeElement === element)
+      element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+  }
+  function revealResizedAction(event) {
+    if (revealingResize || event.target !== view) return;
+    revealingResize = true;
+    try {
+      // Resize owns no opener or future focus. Measure only this current action.
+      const element = doc.activeElement,
+        owner = root(),
+        previousScreen = screen,
+        previousStatus = status,
+        current = actionCurrent(element),
+        eligible = () => current() && doc.activeElement === element;
+      if (!eligible()) return;
+      const width = doc.documentElement.clientWidth || view.innerWidth,
+        height = doc.documentElement.clientHeight || view.innerHeight,
+        rect = element.getBoundingClientRect();
+      if (
+        ![
+          width,
+          height,
+          rect.left,
+          rect.top,
+          rect.right,
+          rect.bottom,
+          rect.width,
+          rect.height,
+        ].every(Number.isFinite) ||
+        width <= 0 ||
+        height <= 0 ||
+        rect.width <= 0 ||
+        rect.height <= 0
+      )
+        return;
+      if (
+        (rect.left < 0 || rect.top < 0 || rect.right > width || rect.bottom > height) &&
+        eligible() &&
+        // DOM reads can synchronously retire this resize's current owner.
+        foreground() &&
+        !destroyed &&
+        screen === previousScreen &&
+        status === previousStatus &&
+        root() === owner &&
+        doc.activeElement === element
+      )
+        element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    } finally {
+      revealingResize = false;
+    }
   }
   function renderScreens() {
     const running = status === 'running' || screen === 'review';
@@ -118,7 +201,7 @@ export function createCouchShell({
       }
     }
   }
-  function show(next, { restore = null, remember = false } = {}) {
+  function show(next, { restore = null, remember = false, restoreFocus = true } = {}) {
     if (destroyed || status === 'running' || (!Object.hasOwn(SCREENS, next) && next !== 'review'))
       return;
     if (remember) opener = remember === true ? doc.activeElement : remember;
@@ -126,9 +209,10 @@ export function createCouchShell({
     screen = next;
     renderScreens();
     renderPads();
-    focus(restore || primary());
+    if (restoreFocus) focus(restore || primary());
   }
   function back() {
+    departure = null;
     if (screen === 'main') {
       onTransition({ from: screen, to: screen, back: true });
       return focus();
@@ -139,6 +223,87 @@ export function createCouchShell({
   }
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
+  }
+  const foreground = () => !doc.hidden && doc.hasFocus?.() !== false;
+  function soloReturnToken() {
+    try {
+      const token = getSoloReturnToken();
+      return typeof token === 'string' && /^[0-9a-f]{32}$/.test(token) ? token : null;
+    } catch {
+      return null;
+    }
+  }
+  const destinationHref = (kind, token) =>
+    kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind];
+  function departureCurrent(ticket) {
+    const current = getDepartureState();
+    return (
+      !destroyed &&
+      departure === ticket &&
+      current?.match === ticket.match &&
+      current.generation === ticket.generation &&
+      current.match.status === 'paused'
+    );
+  }
+  function cancelDeparture({ restore = false } = {}) {
+    if (!departure) return;
+    const target = departure.opener;
+    departure = null;
+    opener = null;
+    if (screen === 'leave')
+      show('main', { restore: target, restoreFocus: restore && foreground() });
+  }
+  function requestLeave(kind, element, event) {
+    if (
+      event.defaultPrevented ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.shiftKey ||
+      (event.button !== undefined && event.button !== 0)
+    )
+      return;
+    // Fixed routes are owned here; no target is accepted from a URL or control.
+    const returnToken = kind === 'solo' ? soloReturnToken() : null;
+    element.setAttribute('href', destinationHref(kind, returnToken));
+    const before = getDepartureState();
+    if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
+      event.preventDefault();
+      return;
+    }
+    if (['ready', 'finished'].includes(before.match.status)) return;
+    event.preventDefault();
+    if (!['running', 'paused'].includes(before.match.status)) return;
+    onLeaveRequest(); // The host owns pause and normal physical-input release.
+    const current = getDepartureState();
+    if (
+      destroyed ||
+      !foreground() ||
+      current?.match !== before.match ||
+      current.generation !== before.generation ||
+      current.match.status !== 'paused'
+    )
+      return;
+    const ticket = {
+      kind,
+      returnToken,
+      opener: element,
+      match: current.match,
+      generation: current.generation,
+    };
+    departure = ticket;
+    setText('race-leave-title', kind === 'team' ? 'Go to Couch Team?' : 'Return to Solo?');
+    setText(
+      'race-leave-copy',
+      'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.',
+    );
+    setText(
+      'race-leave',
+      kind === 'team' ? 'Discard and go to Team' : 'Discard and return to Solo',
+    );
+    $('race-leave').setAttribute('href', destinationHref(kind, returnToken));
+    show('leave', { remember: element });
+    if (!departureCurrent(ticket)) cancelDeparture();
   }
   listen($('race-focus'), 'click', setup);
   listen($('race-review'), 'click', () => {
@@ -160,9 +325,21 @@ export function createCouchShell({
     opener = $('race-focus');
     show('setup');
   });
-  listen($('race-solo-return'), 'click', (event) => {
-    event.preventDefault();
-    show('leave', { remember: $('race-solo-return') });
+  for (const [id, kind] of [
+    ['race-solo-return', 'solo'],
+    ['race-coop', 'team'],
+  ])
+    listen($(id), 'click', (event) => requestLeave(kind, $(id), event));
+  listen($('race-leave'), 'click', (event) => {
+    const ticket = departure;
+    if (!ticket || screen !== 'leave' || !foreground() || !departureCurrent(ticket)) {
+      event.preventDefault();
+      cancelDeparture();
+      return;
+    }
+    $('race-leave').setAttribute('href', destinationHref(ticket.kind, ticket.returnToken));
+    // Preserve native anchor activation. If the browser cannot leave, the
+    // original paused attempt stays intact and another decision remains explicit.
   });
   for (let i = 0; i < 2; i++)
     listen($(`race-touch-${i}`), 'change', () => {
@@ -196,16 +373,16 @@ export function createCouchShell({
     const seat = arena?.closest('.racer');
     if (seat) observe(Number(seat.dataset.player), 'touch');
   });
-  function update({ match, summary, won, contentBusy = false }) {
+  function update({ match, summary, won, contentBusy = false, focusTransition = true }) {
     if (destroyed) return;
     const previous = status;
     status = match.status;
+    if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
     if (status !== previous) {
       if (status !== 'ready' || previous === null) screen = 'main';
       opener = null;
       renderScreens();
-      if (previous !== null && status !== 'running') focus();
     }
     setText('race-summary', summary);
     setText(
@@ -252,8 +429,13 @@ export function createCouchShell({
       );
     }
     renderPads();
+    // Result rows and their copy precede the primary action in the layout.
+    // Install them before the one transition-owned focus/reveal, never later.
+    if (focusTransition && status !== previous && previous !== null && status !== 'running')
+      focus();
   }
   renderScreens();
+  if (view?.addEventListener) listen(view, 'resize', revealResizedAction);
   return {
     update,
     back,
@@ -264,7 +446,9 @@ export function createCouchShell({
     focus,
     scope: () => screen,
     controllerHint: () => $('race-controller-help').textContent,
+    cancelDeparture,
     destroy() {
+      departure = null;
       destroyed = true;
       for (const remove of removers) remove();
     },

@@ -1,0 +1,209 @@
+[
+  {
+    "n": 1,
+    "label": "Fresh ready Versus: initial focused Start, no gameplay",
+    "url": "http://127.0.0.1:52763/game/couch/",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\" [active]\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "race-start",
+        "tag": "BUTTON",
+        "text": "Start round ↗"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 2,
+    "label": "Shift Tab reaches Team from initial Start",
+    "url": "http://127.0.0.1:52763/game/couch/",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\" [active]:\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "race-coop",
+        "tag": "A",
+        "text": "Relay Rescue · team up"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 3,
+    "label": "Explicit Start enters the round",
+    "url": "http://127.0.0.1:52763/game/couch/",
+    "snapshot": "- main:\n  - button \"Pause\"\n  - generic: SUNFLOWER\n  - strong: \"0 : 0\"\n  - generic: SKYLINE\n  - strong: 1:30\n  - generic \"Two separate race boards\":\n    - 'region \"Player 1: Sunflower\"':\n      - heading \"Sunflower\" [level=2]\n      - generic: running\n      - img \"Player 1 race board\" [active]\n      - paragraph: 0.0% · 3 lives · 0 points\n      - paragraph: W A S D · Pause for options\n    - 'region \"Player 2: Skyline\"':\n      - heading \"Skyline\" [level=2]\n      - generic: running\n      - img \"Player 2 race board\"\n      - paragraph: 0.0% · 3 lives · 0 points\n      - paragraph: Arrow keys · Pause for options",
+    "dom": {
+      "focus": {
+        "id": "race-canvas-0",
+        "tag": "CANVAS",
+        "text": ""
+      },
+      "start": {
+        "disabled": true,
+        "hidden": false,
+        "inert": true
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 4,
+    "label": "Pause retains round and focuses explicit Resume",
+    "url": "http://127.0.0.1:52763/game/couch/",
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Resume round →\" [active]\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "race-start",
+        "tag": "BUTTON",
+        "text": "Resume round →"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 5,
+    "label": "Pause focus moves to setup without a first-ready repeat",
+    "url": "http://127.0.0.1:52763/game/couch/",
+    "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Resume round →\"\n    - button \"New match · setup\" [active]\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "race-focus",
+        "tag": "BUTTON",
+        "text": "New match · setup"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 6,
+    "label": "During delayed preparation choose visible Back to game",
+    "url": "http://127.0.0.1:52764/game/couch/",
+    "snapshot": "- status:\n  - generic: Preparing both boards…\n- link \"Back to the game\" [active]:\n  - /url: ../\n- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]:\n      - text: Two boards.\n      - text: One race.\n    - status: Both boards use the same map, class and seed.\n    - paragraph\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status",
+    "dom": {
+      "focus": {
+        "id": "boot-return",
+        "tag": "A",
+        "text": "Back to the game"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": true
+      },
+      "state": "loading",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 7,
+    "label": "After delayed ready, previous loading choice is not replaced by Start focus",
+    "url": "http://127.0.0.1:52764/game/couch/",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "",
+        "tag": "BODY",
+        "text": "\n    \n    Back to the game\n    \n      \n        Pause\n        SUNFLOWER 0 : 0\n          SKYLINE\n        1:30\n      \n     "
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 8,
+    "label": "After preparation keyboard can deliberately reach Team",
+    "url": "http://127.0.0.1:52764/game/couch/",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\" [active]:\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\"\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "race-coop",
+        "tag": "A",
+        "text": "Relay Rescue · team up"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  },
+  {
+    "n": 9,
+    "label": "Second fresh normal visit focuses ready Start once",
+    "url": "http://127.0.0.1:52763/game/couch/",
+    "snapshot": "- main:\n  - region \"Two boards. One race.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Two boards. One race.\" [level=1]\n    - status: Both boards use the same map, class and seed. Ready when you are.\n    - paragraph: FPV Front · Pressure Lines · Orchard Crossing · Arcade · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - link \"Relay Rescue · team up\":\n      - /url: relay-rescue.html?return=versus\n    - button \"Start round ↗\" [active]\n    - button \"Race setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available.",
+    "dom": {
+      "focus": {
+        "id": "race-start",
+        "tag": "BUTTON",
+        "text": "Start round ↗"
+      },
+      "start": {
+        "disabled": false,
+        "hidden": false,
+        "inert": false
+      },
+      "state": "ready",
+      "viewport": {
+        "height": 1348,
+        "width": 1309
+      }
+    }
+  }
+]

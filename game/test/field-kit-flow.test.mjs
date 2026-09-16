@@ -80,7 +80,7 @@ test('title has five game destinations and the release catalog; Workshop and mis
   assert.match(catalog.textContent, /Release explorer/);
   assert.equal(catalog.hidden, false);
   assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
-  assert.match(page.$('shell-destination').textContent, /Pressure Lines/);
+  assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
   assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
@@ -160,8 +160,9 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
   assert.match(page.$('shell-destination').textContent, /Continue/);
   const snapshot = [...page.storage.map];
   page.$('shell-continue').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
-  assert.equal(page.rendered.paused, true, 'Continuing keeps the explicit resume protection');
+  assert.equal(page.rendered.paused, false, 'Named title Continue is the explicit resume action');
   assert.deepEqual([...page.storage.map], snapshot);
 });
 

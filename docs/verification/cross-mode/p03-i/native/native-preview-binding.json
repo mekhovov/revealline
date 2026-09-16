@@ -1,0 +1,19 @@
+{
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "overlays": {
+    "game/couch/relay-rescue.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03i-team-departure/game/couch/relay-rescue.mjs",
+      "sha256": "892e065c39a1c9afbf62d5c7a8b032177cc04e6c8f5c4c7916e076bac9e51ca1"
+    },
+    "game/couch/relay-rescue.html": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03i-team-departure/game/couch/relay-rescue.html",
+      "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+    },
+    "game/couch/relay-rescue.css": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03i-team-departure/game/couch/relay-rescue.css",
+      "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+    }
+  },
+  "port": 61341,
+  "scope": "Team departure source-held-03 over exact bb372; three exact runtime overlays, no timing or state fixtures."
+}

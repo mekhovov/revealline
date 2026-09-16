@@ -1,0 +1,121 @@
+{
+  "scope": "Root closed eleven events and inspected all eight JPGs. Exact final record; no independent image review by packager.",
+  "rootReviewSha256": "3a68b9a13db50278c4df096b8ca1a53f208594d92b97152ca7cd4929a25af0a1",
+  "files": [
+    {
+      "path": ".cache/couch-resize-focus/native-root/01.json",
+      "bytes": 3553,
+      "sha256": "e86ff182baee70f96bcfb869ba4fe84c382447ba5ee36b32bc01725b2a419a3e"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/02.jpg",
+      "bytes": 41454,
+      "sha256": "6c52ab224d8cbd69256e71e80e835e1e9e5f06abb6152651194711f0eedbff9b"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/02.json",
+      "bytes": 2016,
+      "sha256": "ad3b47024e2f67cd5c01e27e5cfa339b9aeabbc1bbd663db8926090ff57c9b45"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/03.jpg",
+      "bytes": 48529,
+      "sha256": "564a120f7089d7d5ce85522df8308feca1399c41252136b5c3c7dd020370e04a"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/03.json",
+      "bytes": 2009,
+      "sha256": "23ea1f079711b48029ccf3ad237b0bcb61730fd8ee81a6bf8a4aa4c5ec658ad6"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/04.json",
+      "bytes": 3564,
+      "sha256": "9ed713e9281107d4efabe4bc4f07beeb6e9eea956e48d3a5ec8bf5b526a5d801"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/05.jpg",
+      "bytes": 43433,
+      "sha256": "59930607c443e79d7e52a3fbfd3a55480fb60d8d8176df5bb341b45945281907"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/05.json",
+      "bytes": 2007,
+      "sha256": "b87b7635e604ccbb43af5a2ca241a012e3d2eea8e9600a201dd986982a3c9997"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/06.jpg",
+      "bytes": 57889,
+      "sha256": "0e3acca7435f4b2e5d7c2712dd08fff8bcb43e1f4afd0bcd285411bb1822ee15"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/06.json",
+      "bytes": 2024,
+      "sha256": "696b2ac409d6fb3c6136b64a73d54455fe78d4050f5d755c200248d5140ffb2a"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/07.jpg",
+      "bytes": 43185,
+      "sha256": "5e46ffa5b1ecd76c1999ebf0b462ebe480bf23175d35555654f38a92713f3438"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/07.json",
+      "bytes": 2010,
+      "sha256": "bb5966ac1bb2e361f08234d3f2d020fc7bfa85fe62aba9b25c9f6b073bd43ec2"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/08.jpg",
+      "bytes": 38979,
+      "sha256": "56c144314bf442e7a0fcbc462374989d6ebdc4fd1f460ab4a978aabdf26965ef"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/08.json",
+      "bytes": 3509,
+      "sha256": "79268f38b19702892144ec80cd8dc2d878a77ec00a7559c54e75f3e82e1382b6"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/09.jpg",
+      "bytes": 48176,
+      "sha256": "ab3a9975e3a42230ab539d33eafbd1374ebe292c18664d6e82fd9413cd601922"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/09.json",
+      "bytes": 1975,
+      "sha256": "ab34f6bc2a6d2288f528dbcf6321728fba69fa1cd4d66628eb3753c8eea514a0"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/10.jpg",
+      "bytes": 38475,
+      "sha256": "3fc0e50b7ab2220d85f76025fb7466f2287c68065ed50ceddc15816ef3d616c8"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/10.json",
+      "bytes": 1977,
+      "sha256": "bf37776f83d7c801939bc0074b7309f1de12840662a79d127e13a9bb85a4c497"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/11.json",
+      "bytes": 1979,
+      "sha256": "66aaef65ede2b4a51beccaba58d01e21145582864d2ce30235098340a110b9d4"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/closed.json",
+      "bytes": 70,
+      "sha256": "eeac61ab489b97387c0bd17bc0707cccc70ae08494ecf6f608742b6b98031801"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/events.json",
+      "bytes": 5508,
+      "sha256": "f558d46c4a5632bb8388bb556033bd9937838e40549f9b60a5b9ea5c197d3d7c"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/preferences.json",
+      "bytes": 98,
+      "sha256": "f7892cb67084e52a63bb4fc679f63cd660f91dd1ca67a0691253022032da4a73"
+    },
+    {
+      "path": ".cache/couch-resize-focus/native-root/root-review.json",
+      "bytes": 12306,
+      "sha256": "3a68b9a13db50278c4df096b8ca1a53f208594d92b97152ca7cd4929a25af0a1"
+    }
+  ]
+}

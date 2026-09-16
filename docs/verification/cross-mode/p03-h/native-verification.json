@@ -1,0 +1,76 @@
+{
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "sourcePins": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 238294,
+      "sha256": "57624d92220cd1fbc8de70f0bb845a8e4c368d1698f9110f40192ee337f75291"
+    },
+    {
+      "path": "game/test/starting-setup-host.test.mjs",
+      "bytes": 20211,
+      "sha256": "f8c01835d74425530e1d91ecbfce4d6e676acc33efee10289fc13ab940b3daaa"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 39604,
+      "sha256": "ba75e110b0766d5082076399029e4acc156ef3f852516dc34b8d1cf995169c5a"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 105197,
+      "sha256": "40c0251008e71eef892f20bf1223ada5fade2dbfca94294382dcf8cc3704d524"
+    }
+  ],
+  "http": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 238294,
+      "sha256": "57624d92220cd1fbc8de70f0bb845a8e4c368d1698f9110f40192ee337f75291"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70335,
+      "sha256": "6e2087e9d2f5b4c6f560f2ebb7ea3484cc9f00406813058c55d55f9c834618d5"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    }
+  ],
+  "events": 19,
+  "evidence": [
+    {
+      "path": ".cache/p03h-starting-setup/native-root/class-confirmation.jpg",
+      "bytes": 72546,
+      "sha256": "d91389ef75f366628750bade6cf03989811329b046e7a6cfa9c850575b4ed785"
+    },
+    {
+      "path": ".cache/p03h-starting-setup/native-root/course-return.jpg",
+      "bytes": 201879,
+      "sha256": "7945202051cbfe732a610f67b29b1cc99754e028c6d925d31cedf0d89cb772e4"
+    },
+    {
+      "path": ".cache/p03h-starting-setup/native-root/events.json",
+      "bytes": 134101,
+      "sha256": "d66d306350717eac06967d00ab3932f36b5b4fc1c7242253e43c15aa5042e353"
+    }
+  ],
+  "passes": [
+    "Actual First Signal11s paused attempt retained after class and steering Stay; exact selector focus.",
+    "Confirmed Light carrier selects bomber and prepares ready0:00 without starting; prior saved Scout flight successfully restores paused11s.",
+    "Confirmed Grid + buffer prepares ready0:00 without starting.",
+    "Course entry carries grid-center in visible URL. Returning reaches title; explicit Continue restores original Scout Immediate11s flight paused."
+  ],
+  "retainedAttempts": [
+    "Early Tab occurred while confirm was disabled; actualfocusStay. Return choseStay, notPrepare. Original intent labels annotated with actual observation."
+  ],
+  "boundaries": [
+    "Held bb372+app57624d plus reviewedP05CSSde78; no application-state injection.",
+    "Course current UI exposes no visible Immediate/Grid selector. Course guard is actual-host coverage, not native reachable control acceptance.",
+    "AX snapshots and DOM records are separate awaits.",
+    "Queued-grid/recovery/controller draft/storage-failure branches are132-case host evidence, not new native cases.",
+    "No physicalcontroller/touch/phone/fullP03/publicrelease claim."
+  ]
+}

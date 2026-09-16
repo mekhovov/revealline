@@ -1,0 +1,72 @@
+{
+  "source": "1817377c00049874eb8ab3f47f0b630894ba28f8",
+  "manifest": "docs/verification/cross-mode/p08-p05-integration/retained/installed-fixture-hydration.json",
+  "manifestSha256": "3b008ce4907ceaacf21924b43003208abd87efc9eb83764bcf65aeb0d45dd452",
+  "knownFixtureFiles": 24,
+  "knownFixtureBytes": 55258200,
+  "previouslyDeferredFiles": [
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-coupa.png",
+      "bytes": 2897299,
+      "sha256": "1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-coupa.png",
+      "bytes": 2735312,
+      "sha256": "87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-coupa.png",
+      "bytes": 2884014,
+      "sha256": "ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14"
+    },
+    {
+      "path": "authoring/library/countercurrent/routes.json",
+      "bytes": 3167761,
+      "sha256": "e729ead2a1014b7edf2809d2d32dfd2958f66441194468d36b9e9f7b534ba856"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+      "bytes": 10719959,
+      "sha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "bytes": 11949780,
+      "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/fault-fan-ukraine.png",
+      "bytes": 2981883,
+      "sha256": "ad53eeeb26cd508212d5dff1893688ba0aed9cf3ce12efc236d93fb0db4b8822"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/frayed-causeway-ukraine.png",
+      "bytes": 2983333,
+      "sha256": "65dc84fbb7fcd068cf4bb7ad4b13193f0f9c1393e71b85fa629c1a16b9e717ab"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/split-ring-ukraine.png",
+      "bytes": 2756776,
+      "sha256": "1771010fd554d44713b7fc644f8ab8cbd42a41accfc16e6a564771dffcc59ac9"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit/routes.json",
+      "bytes": 1296963,
+      "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70"
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "bytes": 11377254,
+      "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+    }
+  ],
+  "newlyMaterializedBytes": 55750334,
+  "extraGraphDependency": "sentinel-circuit/routes.json is pinned in the prior complete test-inputs-02 graph in addition to the known24 installed fixtures.",
+  "originalInputSnapshotSha256": "3b7d58ac655616730917dc55544a711c25c440d197e47c280b7022891ea5a005",
+  "physicalBytesBefore": 23010678,
+  "physicalBytesAfter": 78761012,
+  "freeBefore": 2711330816,
+  "freeAfter": 2665807872,
+  "scope": "Authorized exact existing test fixtures, no generation or new art."
+}
