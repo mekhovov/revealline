@@ -9,6 +9,7 @@ export function attachControllerNavigation({
   getRoot = () => doc,
   getDefaultFocus = () => null,
   getControlLabels = () => ({ directions: 'D-pad', confirm: 'South', back: 'East' }),
+  getReadingPrompt = null,
   accept = () => true,
   onBack = () => {},
   onMenu = () => {},
@@ -118,8 +119,40 @@ export function attachControllerNavigation({
     return cancelReading({ restoreFocus, message: 'Reading ended. Choose an action when ready.' });
   }
   function readingHint() {
+    const scrollable = !!readingMetrics(reading.region)?.max;
+    if (getReadingPrompt) return `${reading.label}: ${getReadingPrompt({ scrollable })}`;
     const labels = getControlLabels();
-    return `${reading.label}: ${readingMetrics(reading.region)?.max ? 'Up/Down scroll' : 'All text is visible'} · ${labels.confirm} or ${labels.back} returns`;
+    return `${reading.label}: ${scrollable ? 'Up/Down scroll' : 'All text is visible'} · ${labels.confirm} or ${labels.back} returns`;
+  }
+  function readingCurrent() {
+    return (
+      reading &&
+      visible(reading.region) &&
+      reading.region.id === reading.regionId &&
+      visible(reading.origin) &&
+      doc.activeElement === reading.region &&
+      reading.region.textContent === reading.text &&
+      reading.region.hasAttribute('data-game-reading') &&
+      (reading.region.getAttribute('aria-label') ||
+        reading.region.getAttribute('aria-labelledby')) &&
+      !(reading.region.tabIndex < 0) &&
+      readingMetrics(reading.region)
+    );
+  }
+  function refreshReadingHint() {
+    // A modality change can follow the current key's reading action. Republish
+    // only its still-current text; do not sync, refocus or enter another reader.
+    if (
+      destroyed ||
+      doc.hidden ||
+      doc.hasFocus?.() === false ||
+      scope !== getScope() ||
+      root !== getRoot() ||
+      !readingCurrent()
+    )
+      return false;
+    hint(readingHint());
+    return true;
   }
   function beginReading({ region, origin, label: name, exit = null } = {}) {
     if (destroyed) return false;
@@ -257,21 +290,7 @@ export function attachControllerNavigation({
       mark(null);
       if (engaged && scope !== 'flight') ensureFocus();
     }
-    if (
-      reading &&
-      (!visible(reading.region) ||
-        reading.region.id !== reading.regionId ||
-        !visible(reading.origin) ||
-        doc.activeElement !== reading.region ||
-        reading.region.textContent !== reading.text ||
-        !reading.region.hasAttribute('data-game-reading') ||
-        !(
-          reading.region.getAttribute('aria-label') ||
-          reading.region.getAttribute('aria-labelledby')
-        ) ||
-        reading.region.tabIndex < 0 ||
-        !readingMetrics(reading.region))
-    ) {
+    if (reading && !readingCurrent()) {
       invalidated = true;
       cancelReading({ message: 'The reading region changed. Choose it again to read.' });
     }
@@ -604,6 +623,7 @@ export function attachControllerNavigation({
     beginReading,
     endReading,
     readingState,
+    refreshReadingHint,
     // One focus handoff; callers own readiness/foreground/intent checks.
     // Unlike engage(), this does not enable later controller scope refocusing.
     focusAvailable() {

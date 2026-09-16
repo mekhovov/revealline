@@ -4,6 +4,7 @@ export function attachControllerReading({
   document: doc = globalThis.document,
   getNavigation,
   getControlLabels,
+  getReadingPrompt = null,
   getScope,
   pause = () => {},
   onTransition = () => {},
@@ -36,7 +37,13 @@ export function attachControllerReading({
     element.addEventListener(type, handler);
     listeners.push(() => element.removeEventListener(type, handler));
   };
-  const prompt = () => {
+  const prompt = (region) => {
+    if (getReadingPrompt) {
+      const { clientHeight, scrollHeight } = region;
+      const measured =
+        Number.isFinite(clientHeight) && clientHeight > 0 && Number.isFinite(scrollHeight);
+      return `${getReadingPrompt({ scrollable: !measured || scrollHeight > clientHeight })}.`;
+    }
     const labels = getControlLabels();
     return `Up/Down scroll · ${labels.confirm} or ${labels.back} returns.`;
   };
@@ -47,7 +54,7 @@ export function attachControllerReading({
       surface.done.disabled = !active;
       surface.entry.setAttribute('aria-pressed', String(active));
       surface.hint.textContent = active
-        ? `Reading ${surface.label}. ${prompt()}`
+        ? `Reading ${surface.label}. ${prompt(surface.region)}`
         : 'Read without starting or resuming.';
       if (surface.id === 'overlay-reading' && (compactOverlay || surface.region.hidden)) {
         const { clientHeight, scrollHeight } = surface.region;

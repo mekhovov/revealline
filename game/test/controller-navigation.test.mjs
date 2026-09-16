@@ -946,6 +946,48 @@ test('reading entry focuses a named region before notification and returns owned
   assert.equal(changes.length, 1);
 });
 
+test('reading hint refresh changes current copy without focus, transitions or stale scope publication', (t) => {
+  let prompt = 'Up/Down scroll · Enter or Escape returns',
+    transitions = 0;
+  const h = setup(t, {
+    getReadingPrompt: ({ scrollable }) =>
+      scrollable ? prompt : 'All text is visible · Done returns',
+    onReadingChange: () => transitions++,
+  });
+  assert.equal(h.api.refreshReadingHint(), false);
+  assert.deepEqual(h.calls.hints, []);
+  const surface = readingSurface(h);
+  surface.origin.focus();
+  surface.begin();
+  const active = h.document.activeElement,
+    beforeTransitions = transitions;
+  surface.region.scrollTop = 80;
+  let focuses = 0;
+  const originalFocus = surface.region.focus.bind(surface.region);
+  surface.region.focus = (...args) => {
+    focuses++;
+    originalFocus(...args);
+  };
+  prompt = 'Up/Down scroll · R1 or Square returns';
+  assert.equal(h.api.refreshReadingHint(), true);
+  assert.match(h.calls.hints.at(-1), /R1 or Square returns/);
+  assert.equal(h.document.activeElement, active);
+  assert.equal(surface.region.scrollTop, 80);
+  assert.equal(focuses, 0);
+  assert.equal(transitions, beforeTransitions);
+  const hints = [...h.calls.hints];
+  surface.origin.hidden = true;
+  assert.equal(h.api.refreshReadingHint(), false);
+  surface.origin.hidden = false;
+  h.setScope('another-visit');
+  assert.equal(h.api.refreshReadingHint(), false);
+  assert.deepEqual(h.calls.hints, hints);
+  assert.equal(h.document.activeElement, active);
+  assert.equal(transitions, beforeTransitions, 'Refresh does not perform sync cancellation.');
+  h.api.destroy();
+  assert.equal(h.api.refreshReadingHint(), false);
+});
+
 test('reader scrolls vertically to both endpoints without moving focus, wrapping or repeating edge announcements', (t) => {
   const h = setup(t);
   const surface = readingSurface(h, { scrollTop: 50, scrollLeft: 7 });
