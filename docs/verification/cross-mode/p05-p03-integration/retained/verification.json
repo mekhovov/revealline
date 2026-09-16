@@ -1,0 +1,321 @@
+{
+  "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "baseTree": "d85af7e5d33100575317078aeba8df57d74fe2d5",
+  "incomingCommits": [
+    "4700120adbc670cb6632eca00b151080d73aa1ad",
+    "f047a46a9a1bb9982600bd7e2682d765a75cb9cc",
+    "6e1040ba18c6f219288cbe3983bcd15bede7fac6",
+    "0283677d1d55e6de54477b42af1a0ab178f31fd7",
+    "5d3560ec8ba491c303236353521c364d2422356e"
+  ],
+  "status": "Scoped source, focused tests and desktop keyboard observations complete; no P05 phase/public/device acceptance.",
+  "gameFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 260548,
+      "sha256": "e9d6b2f30ce4c7ddb19f0490e80c3d337b2283b493ef985dbae6636865aa8fa3"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 10237,
+      "sha256": "e695d83afa567ae8a3bcccf9c774782471ed80f1cfdf8f038fbb2223c822c1d3"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14226,
+      "sha256": "2f6b32d98ac04b1afa313f00d5d68149e42110914db3f316c135a8dbafc97f76"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 42691,
+      "sha256": "81af7b8cc7ac13e97bb65a63c4e9e7fe00cef33eaab938bb271fc5cddecd929e"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 15719,
+      "sha256": "6001adfc0c381d99312555357a1e2302ca8c4631a4a4572c069578ed2d875d67"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 16322,
+      "sha256": "6e76413f2435970c8c69b75ee05aeeb898297ed851d488b6de241d8edce6056b"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15922,
+      "sha256": "305fd62619a621a0bbbfeb92a2725a37c92436106e94be801e9b15ca56a69cba"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 35080,
+      "sha256": "b6aa26c8324549a110ff9ee196d86503f0986ab65f82bf9b6a198a680d0adb4f"
+    },
+    {
+      "path": "game/display-preferences.mjs",
+      "bytes": 7319,
+      "sha256": "923bff19b744069eddee0735de2716674278d28ca3e00441ad5bf984a081a576"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 71029,
+      "sha256": "abb8283e270d78edca271840ec94978587a8a4c273114ff83a750692730dce7f"
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "bytes": 61709,
+      "sha256": "d0917377e78174ac3044c5db7bb816e38d4906fd42bd025dbdf321fbc84d5d1c"
+    },
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "bytes": 12659,
+      "sha256": "c99a23f7c0d968bb785b06d9df2202a62fa7a9bc4c49af8cfca9b71f26024f7a"
+    },
+    {
+      "path": "game/test/display-preferences.test.mjs",
+      "bytes": 14436,
+      "sha256": "95a23f9b32cc775ea6c82572605d9a9be60f6a1ee17696632e7feed058b718a5"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "bytes": 18373,
+      "sha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af"
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "bytes": 2713,
+      "sha256": "30d79b9ec13f845377d5ae80a1c0544ca2323fc7a8d65611fe6acced3a6db2e4"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    }
+  ],
+  "gameChangesAfterInitialRun": [
+    "game/couch/couch-shell.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/display-preferences-host.test.mjs"
+  ],
+  "tests": {
+    "selectedWholeFiles": [
+      "display-preferences.test.mjs",
+      "display-preferences-host.test.mjs",
+      "text-face-host.test.mjs",
+      "text-size-host.test.mjs",
+      "title-mode-departure-host.test.mjs",
+      "title-entry-host.test.mjs",
+      "mode-return-host.test.mjs",
+      "library-launch-host.test.mjs",
+      "coop-host.test.mjs",
+      "couch-shell.test.mjs",
+      "couch-navigation.test.mjs",
+      "modal-navigation.test.mjs",
+      "modal-tab-boundary.test.mjs",
+      "controller-navigation.test.mjs"
+    ],
+    "node20": {
+      "cases": 425,
+      "pass": 425,
+      "fail": 0,
+      "run": "focused-final-node20"
+    },
+    "node22": {
+      "scope": "Latest whole-file results cover all 14 files. Ten unaffected files retain initial pass evidence; three affected Couch/Team files passed successor; final display-host passed after test-only zero-time HUD refresh. These overlapping runs are not added as new cases.",
+      "groups": [
+        {
+          "wholeFiles": 10,
+          "cases": 306,
+          "run": "focused-initial-node22",
+          "source": "held01 unaffected files"
+        },
+        {
+          "wholeFiles": 3,
+          "cases": 110,
+          "run": "focused-successor-node22",
+          "source": "held02 affected Couch/Team files excluding display-host"
+        },
+        {
+          "wholeFiles": 1,
+          "cases": 9,
+          "run": "display-final-node22",
+          "source": "held03 display-host"
+        }
+      ]
+    },
+    "diagnostics": [
+      "Initial 14 files 424/425: unchanged 3acce obsolete two-link expectation; exact fixture correction independently 76/76 both Nodes.",
+      "Successor 4 files 116/119: new paused HUD assertion ran before real frame refresh; dependent shared-record subtest then failed. Final test-only zero-time frame preserves original state/focus oracles."
+    ],
+    "runs": [
+      {
+        "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+        "sourceHoldSha256": "009947240d43489441e93f85d2aa54846598b63623e09ccbaec04d4787c57f22",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--test",
+          "--test-concurrency=1",
+          "--test-reporter=tap",
+          "game/test/display-preferences.test.mjs",
+          "game/test/display-preferences-host.test.mjs",
+          "game/test/text-face-host.test.mjs",
+          "game/test/text-size-host.test.mjs",
+          "game/test/title-mode-departure-host.test.mjs",
+          "game/test/title-entry-host.test.mjs",
+          "game/test/mode-return-host.test.mjs",
+          "game/test/library-launch-host.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/couch-shell.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/modal-navigation.test.mjs",
+          "game/test/modal-tab-boundary.test.mjs",
+          "game/test/controller-navigation.test.mjs"
+        ],
+        "nodeVersion": "v22.22.2",
+        "exitCode": 1,
+        "seconds": 276.3119577500038,
+        "inputsUnchanged": true,
+        "files": [
+          "display-preferences.test.mjs",
+          "display-preferences-host.test.mjs",
+          "text-face-host.test.mjs",
+          "text-size-host.test.mjs",
+          "title-mode-departure-host.test.mjs",
+          "title-entry-host.test.mjs",
+          "mode-return-host.test.mjs",
+          "library-launch-host.test.mjs",
+          "coop-host.test.mjs",
+          "couch-shell.test.mjs",
+          "couch-navigation.test.mjs",
+          "modal-navigation.test.mjs",
+          "modal-tab-boundary.test.mjs",
+          "controller-navigation.test.mjs"
+        ],
+        "log": {
+          "path": "focused-initial-node22.log",
+          "bytes": 102051,
+          "sha256": "681f4729658a6bc215dc5872ec8022268b218678485f7514fde00816e9fb3bcd"
+        }
+      },
+      {
+        "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+        "sourceHoldSha256": "89860d252c2684bd89acd8a97cfae3958f5956f18d051614299bb397630354d8",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--test",
+          "--test-concurrency=1",
+          "--test-reporter=tap",
+          "game/test/display-preferences-host.test.mjs",
+          "game/test/couch-shell.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/coop-host.test.mjs"
+        ],
+        "nodeVersion": "v22.22.2",
+        "exitCode": 1,
+        "seconds": 76.64503533300012,
+        "inputsUnchanged": true,
+        "files": [
+          "display-preferences-host.test.mjs",
+          "couch-shell.test.mjs",
+          "couch-navigation.test.mjs",
+          "coop-host.test.mjs"
+        ],
+        "log": {
+          "path": "focused-successor-node22.log",
+          "bytes": 31289,
+          "sha256": "fd29b677c114bb970cae370ed21a5018acd4082d22e4f9b4e6fbcae55017a71a"
+        }
+      },
+      {
+        "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+        "sourceHoldSha256": "8c8c43b897146360e5749937988017483cb0255261f85888b75e63946b214784",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--test",
+          "--test-concurrency=1",
+          "--test-reporter=tap",
+          "game/test/display-preferences-host.test.mjs"
+        ],
+        "nodeVersion": "v22.22.2",
+        "exitCode": 0,
+        "seconds": 4.51821416686289,
+        "inputsUnchanged": true,
+        "files": [
+          "display-preferences-host.test.mjs"
+        ],
+        "log": {
+          "path": "display-final-node22.log",
+          "bytes": 2190,
+          "sha256": "027b91d1ef023b5a7b60d28806a9e9b6fab514fa26a107daaf47e2241bd7c10d"
+        }
+      },
+      {
+        "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+        "sourceHoldSha256": "8c8c43b897146360e5749937988017483cb0255261f85888b75e63946b214784",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "--test",
+          "--test-concurrency=1",
+          "--test-reporter=tap",
+          "game/test/display-preferences.test.mjs",
+          "game/test/display-preferences-host.test.mjs",
+          "game/test/text-face-host.test.mjs",
+          "game/test/text-size-host.test.mjs",
+          "game/test/title-mode-departure-host.test.mjs",
+          "game/test/title-entry-host.test.mjs",
+          "game/test/mode-return-host.test.mjs",
+          "game/test/library-launch-host.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/couch-shell.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/modal-navigation.test.mjs",
+          "game/test/modal-tab-boundary.test.mjs",
+          "game/test/controller-navigation.test.mjs"
+        ],
+        "nodeVersion": "v20.19.5",
+        "exitCode": 0,
+        "seconds": 323.02190500008874,
+        "inputsUnchanged": true,
+        "files": [
+          "display-preferences.test.mjs",
+          "display-preferences-host.test.mjs",
+          "text-face-host.test.mjs",
+          "text-size-host.test.mjs",
+          "title-mode-departure-host.test.mjs",
+          "title-entry-host.test.mjs",
+          "mode-return-host.test.mjs",
+          "library-launch-host.test.mjs",
+          "coop-host.test.mjs",
+          "couch-shell.test.mjs",
+          "couch-navigation.test.mjs",
+          "modal-navigation.test.mjs",
+          "modal-tab-boundary.test.mjs",
+          "controller-navigation.test.mjs"
+        ],
+        "log": {
+          "path": "focused-final-node20.log",
+          "bytes": 94830,
+          "sha256": "1ae8023e47053937763e4715c83f6256a48962345fff54a73737e9638e55ac8c"
+        }
+      }
+    ]
+  },
+  "native": {
+    "path": "native-verification.json",
+    "sha256": "191984051cc08dda3c0255c0867ab0041de623bfc9e557e769205dfbbc0dca37",
+    "events": 17,
+    "screenshots": 8,
+    "observedBy": "root",
+    "sourceGroups": "1\u201311 hold01 twelve overlays;12\u201317 hold02 thirteen overlays;hold03 is test-only."
+  },
+  "preservation": {
+    "historicalP05EvidenceFilesExact": 48,
+    "noP08": true,
+    "noVersionOrPublicChanges": true,
+    "noLaterP03OperationFocusCorrection": true
+  },
+  "limits": [
+    "Large is a preset, not 200% scaling proof.",
+    "Short portrait/landscape, zoom, real system-toggle/storage-event/error and physical-device/assistive checks remain separate.",
+    "No broad production/build/release gates run for this integration."
+  ]
+}

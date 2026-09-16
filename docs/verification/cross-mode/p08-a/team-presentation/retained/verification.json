@@ -1,0 +1,141 @@
+{
+  "format": "revealline-team-presentation-local-verification.v1",
+  "source": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "files": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 14217,
+      "sha256": "e5ff6e24048108f788eb11a472b9cbed5af3d7915f4fe3e3830bb7e3a1c1fc20"
+    },
+    {
+      "path": "game/couch/coop-presentation.mjs",
+      "bytes": 15369,
+      "sha256": "00b57ce6f791065a40662eb3b29a85e3dd60b86a0805a17acb3de940887c0763"
+    },
+    {
+      "path": "game/test/coop-view-presentation.test.mjs",
+      "bytes": 12072,
+      "sha256": "cbda9bdc7df1dbaab801d21bfc967b55770a4fb7c09d64adfd5a64f66e704cc2"
+    },
+    {
+      "path": "game/test/coop-presentation.test.mjs",
+      "bytes": 18239,
+      "sha256": "8b5ae27658362729c4a97b28c253ae33c737723a5b0877c8266b0636c88e50c7"
+    }
+  ],
+  "results": [
+    {
+      "node": "v22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-core.test.mjs",
+        "game/test/coop-library.test.mjs",
+        "game/test/coop-authoring.test.mjs",
+        "game/test/coop-balanced-routes.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 2.1882234171498567,
+      "log": "final-node22.log",
+      "bytes": 26010,
+      "sha256": "92d7dcc632814c25cdfc3b6e4424255caaba73a6230577db9469cd8928149814",
+      "sourcePinsUnchanged": true,
+      "summary": {
+        "tests": "101",
+        "pass": "101",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "1865.467917"
+      }
+    },
+    {
+      "node": "v20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/coop-view-presentation.test.mjs",
+        "game/test/coop-presentation.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-core.test.mjs",
+        "game/test/coop-library.test.mjs",
+        "game/test/coop-authoring.test.mjs",
+        "game/test/coop-balanced-routes.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 1.0519330829847604,
+      "log": "final-node20.log",
+      "bytes": 24486,
+      "sha256": "65f19346f3942a501062496591e919cc4d5caf6bcbd6853ea924e21a7add4ecc",
+      "sourcePinsUnchanged": true,
+      "summary": {
+        "tests": "101",
+        "pass": "101",
+        "fail": "0",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "1008.784667"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "path": "source-held-01.json",
+      "bytes": 1230,
+      "sha256": "f53f983b02557e96bb1bb3973dc41c0f3088d47aba9ef2cbe98f330c7ebe14e9"
+    },
+    {
+      "path": "source-held-01.diff",
+      "bytes": 23506,
+      "sha256": "038c33c918f252edbc3fce389adf87c617e767f07631ee06068514e0144debc0"
+    },
+    {
+      "path": "source-held-02.json",
+      "bytes": 1587,
+      "sha256": "de87fa89f1e4a7645e298e5864d6a09ce0473ee933ef3d5e054cd03a4b84e2c8"
+    },
+    {
+      "path": "source-held-02.diff",
+      "bytes": 23852,
+      "sha256": "d05724676080c879a873710b198dff8874e1d7360352c57001ecae30bbacbe43"
+    },
+    {
+      "path": "initial-node22.log",
+      "bytes": 28025,
+      "sha256": "637a868008672718654179c2148e102ccfdc15ab19f539fcdc092f2a7f8ea361"
+    },
+    {
+      "path": "final-node22.log",
+      "bytes": 26010,
+      "sha256": "92d7dcc632814c25cdfc3b6e4424255caaba73a6230577db9469cd8928149814"
+    },
+    {
+      "path": "final-node20.log",
+      "bytes": 24486,
+      "sha256": "65f19346f3942a501062496591e919cc4d5caf6bcbd6853ea924e21a7add4ecc"
+    },
+    {
+      "path": "execution.json",
+      "bytes": 1907,
+      "sha256": "8ddb98d9af50ca6d032d56813849085a6841bfc9fde072c2653e842158942bd1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3787,
+      "sha256": "24d93b11a6bff7505433410ec366bbe4634c48125b4b73374bcb453b3c06d2bd"
+    }
+  ],
+  "ownedRegularBytesBeforeThisReceipt": 1733767,
+  "freeBytes": 1101705216,
+  "sourcePeer": "pending",
+  "native": false,
+  "hostIntegrated": false,
+  "artAdopted": false,
+  "phaseComplete": false,
+  "committed": false
+}

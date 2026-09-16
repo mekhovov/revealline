@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/menu-appearance.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
@@ -251,6 +252,15 @@
         </div>
       </dialog>
       <aside id="coop-tools" class="coop-tools" aria-label="Help and options">
+        <section class="coop-picture" aria-label="Arena picture">
+          <p id="coop-picture-status" role="status" aria-live="polite">
+            Preparing the Team picture…
+          </p>
+          <div class="coop-picture-actions">
+            <button id="coop-picture-cancel" type="button" hidden>Cancel picture loading</button>
+            <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
+          </div>
+        </section>
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
           <button id="coop-help-read" type="button">Read controls</button>
@@ -288,6 +298,30 @@
         </details>
         <details id="coop-options">
           <summary id="coop-options-toggle">Options</summary>
+          <label for="coop-text-face">Text style</label>
+          <select id="coop-text-face">
+            <option value="pixel">Theme font</option>
+            <option value="plain">Plain</option>
+          </select>
+          <label for="coop-text-size">Text size</label>
+          <select id="coop-text-size">
+            <option value="standard">Standard</option>
+            <option value="large">Large</option>
+          </select>
+          <label class="field-kit-page-text"
+            >Menu colours<select id="coop-menu-palette">
+              <option value="auto">Automatic</option>
+              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
+            >Menu ornaments<select id="coop-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="coop-menu-style-status" class="micro-note" role="status"></p>
           <label for="coop-touch">Touch controls</label>
           <select id="coop-touch">
             <option value="auto" selected>Auto · touch players without a controller</option>
@@ -300,6 +334,8 @@
             this visit.
           </p>
           <label><input id="coop-reduced" type="checkbox" /> Reduce effects</label>
+          <p id="coop-system-reduction" class="setting-note"></p>
+          <p id="coop-display-status" class="setting-note" role="status"></p>
           <button id="coop-audio" type="button" aria-pressed="false">Unmute sound</button>
           <label for="coop-master-volume">Master sound volume</label>
           <input id="coop-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />

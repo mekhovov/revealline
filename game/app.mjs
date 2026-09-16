@@ -76,6 +76,8 @@ import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
+import { createDisplayPreferences } from './display-preferences.mjs';
+import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
@@ -712,6 +714,25 @@ try {
       if (message) warning(message);
     },
   });
+  const displayPreferences = createDisplayPreferences({
+    window,
+    matchMedia,
+    getStorage: () => localStorage,
+    legacyPreferences: library.preferences,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
+    onWarning: (message) => {
+      $('display-preferences-status').textContent = message;
+    },
+  });
+  const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const menuStyle = attachMenuStyleControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
+  });
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
@@ -799,7 +820,7 @@ try {
       volume: library.cinematicVolume ?? DEFAULT_CINEMATIC_VOLUME,
       masterVolume: audioMaster.snapshot().volume,
       muted: audioMaster.snapshot().muted,
-      reducedMotion: $('reduced-effects').checked,
+      reducedMotion: displayPreferences.snapshot().effectiveReducedEffects,
     }),
     saveVolume(volume) {
       if (practice || courseEntry)
@@ -1243,6 +1264,7 @@ try {
         presentationHost.apply(document.documentElement);
         painter.setPresentation(snapshot);
         presentationSnapshot = snapshot;
+        menuStyle.setPresentation(snapshot);
         enemyGuide?.refreshPresentation();
         document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
         return snapshot;
@@ -1312,9 +1334,7 @@ try {
     publishedAudio.close();
     presentationHost?.close();
   });
-  const mediaReduce = matchMedia('(prefers-reduced-motion: reduce)');
-  $('reduced-effects').checked = mediaReduce.matches || library.preferences.reducedEffects;
-  document.body.dataset.effects = $('reduced-effects').checked ? 'reduced' : 'full';
+  applyDisplayPreferences(displayPreferences.snapshot());
   $('tap-steering').checked =
     library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
   syncAssistControls();
@@ -1689,6 +1709,9 @@ try {
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
       stopMasterView();
+      stopDisplayView();
+      displayPreferences.dispose();
+      menuStyle.dispose();
       audioPreferences.dispose();
       audioMaster.dispose();
       soundtrackStore?.close();
@@ -3911,8 +3934,7 @@ try {
     $('terrain-select').value = p.style;
     $('settings-grid').checked = p.showGrid;
     $('match-class-appearance').checked = p.matchClassAppearance;
-    $('reduced-effects').checked = p.reducedEffects;
-    document.body.dataset.effects = p.reducedEffects ? 'reduced' : 'full';
+    applyDisplayPreferences(displayPreferences.snapshot());
     $('tap-steering').checked = p.tapSteering ?? matchMedia('(pointer: coarse)').matches;
     syncAssistControls();
     keySettings.refresh();
@@ -3968,6 +3990,7 @@ try {
         : work(),
   });
   const libraryPanel = attachLibraryPanel({
+    prepareCollectionProgress,
     focusMission,
     pictureMedia,
     assertExternalBackupSupported,
@@ -4015,7 +4038,7 @@ try {
         baseEntries: [baseEntry],
         metadata,
       }),
-    getReducedEffects: () => $('reduced-effects').checked,
+    getReducedEffects: () => displayPreferences.snapshot().effectiveReducedEffects,
     profileTransfer: isRelease
       ? {
           storage: localStorage,
@@ -4418,7 +4441,7 @@ try {
     $('screen-steering-status').textContent = '';
     $('screen-steering-status').hidden = true;
   }
-  $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
+  $('text-size').onchange = () => changeDisplay({ textSize: $('text-size').value });
   for (const key of ['mode', 'size', 'opacity']) {
     $(`touch-${key}`).onchange = () => {
       clearInput();
@@ -4431,13 +4454,37 @@ try {
       syncAssistControls();
     };
   }
-  $('text-face').onchange = () => preferences({ textFace: $('text-face').value });
+  $('text-face').onchange = () => changeDisplay({ textFace: $('text-face').value });
+  function applyDisplayPreferences(state) {
+    $('text-size').value = state.textSize;
+    document.body.dataset.textSize = state.textSize;
+    $('text-face').value = state.textFace;
+    document.body.dataset.textFace = state.textFace;
+    $('reduced-effects').checked = state.reducedEffects;
+    $('settings-reduced-effects').checked = state.reducedEffects;
+    document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    $('display-system-reduction').textContent =
+      state.effectiveReducedEffects && !state.reducedEffects
+        ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
+        : '';
+  }
   function refreshTextSize() {
-    const { textSize: size, textFace: face } = library.preferences;
-    $('text-size').value = size;
-    document.body.dataset.textSize = size;
-    $('text-face').value = face;
-    document.body.dataset.textFace = face;
+    // Current validated profile is a fallback only; shared/explicit intent wins.
+    displayPreferences.adoptLegacy(library.preferences, {
+      expectedRevision: displayPreferences.snapshot().revision,
+    });
+    applyDisplayPreferences(displayPreferences.snapshot());
+  }
+  function changeDisplay(patch) {
+    const state = displayPreferences.set(patch);
+    // Explicit Solo actions alone mirror the legacy profile through its writer.
+    const saved = preferences({
+      textFace: state.textFace,
+      textSize: state.textSize,
+      reducedEffects: state.reducedEffects,
+    });
+    $('display-preferences-status').textContent =
+      displayPreferences.getWarning() || saved.warning || '';
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
@@ -4455,9 +4502,7 @@ try {
   }
   for (const id of ['reduced-effects', 'settings-reduced-effects']) {
     $(id).onchange = () => {
-      preferences({ reducedEffects: $(id).checked });
-      $('reduced-effects').checked = library.preferences.reducedEffects;
-      document.body.dataset.effects = $('reduced-effects').checked ? 'reduced' : 'full';
+      changeDisplay({ reducedEffects: $(id).checked });
       syncAssistControls();
     };
   }
@@ -5426,7 +5471,7 @@ try {
       clearInput();
       return;
     }
-    enemyGuide?.update(elapsed, { reduced: $('reduced-effects').checked });
+    enemyGuide?.update(elapsed, { reduced: displayPreferences.snapshot().effectiveReducedEffects });
     refreshInputPresentation();
     const scope = controllerScope();
     controllerFrame = controller.sample({
@@ -5695,7 +5740,7 @@ try {
           painter.startCelebration?.({
             levelId: run.levelId,
             seed,
-            reduced: $('reduced-effects').checked,
+            reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
           celebrationActive = true;
           show('game-overlay', false);
@@ -6280,11 +6325,11 @@ try {
         document.documentElement.style.setProperty('--board-aspect', String(width / height));
       }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
-        textFace: library.preferences.textFace,
+        textFace: displayPreferences.snapshot().textFace,
         // The texture is detached; only the displayed Phaser canvas has a CSS size.
         displayCSSWidth: this.game.canvas.clientWidth,
         paused,
-        reduced: $('reduced-effects').checked,
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
         fullReveal: run.status === 'won',
         showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
         backdrop: flightPictures?.current(),

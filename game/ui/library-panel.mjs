@@ -75,7 +75,9 @@ export function attachLibraryPanel(api) {
   let galleryPage = 0,
     scorePage = 0,
     galleryReturn = null,
-    galleryReturnFocus = null;
+    galleryReturnFocus = null,
+    collectionReturn = null,
+    collectionVisit = 0;
   const galleryCards = new Map();
   const gallerySealSlots = new Map();
   const pagers = new Map();
@@ -1176,8 +1178,72 @@ export function attachLibraryPanel(api) {
       throw error;
     }
   }
+  function retireCollectionReturn() {
+    collectionReturn?.focus?.cancel();
+    collectionReturn = null;
+  }
+  function refreshCollectionReturn() {
+    if ($('library-dialog').open || !$('collection-dialog').open) return;
+    retireCollectionReturn();
+    const records = $('collection-records'),
+      library = api.get().library,
+      visit = collectionVisit,
+      launch = launchGeneration,
+      owner = { focus: null };
+    let population;
+    collectionReturn = owner;
+    const current = () => {
+      const actual = api.get().library;
+      return (
+        collectionReturn === owner &&
+        visit === collectionVisit &&
+        launch === launchGeneration &&
+        library === actual &&
+        population === galleryPopulation &&
+        $('collection-dialog').open &&
+        !$('library-dialog').open
+      );
+    };
+    // Native close restores this exact persistent opener before its close event.
+    // New Search/Close focus or BODY cannot become records-return permission.
+    if (document.activeElement === records)
+      owner.focus = captureOperationFocus(records, {
+        document,
+        reveal: true,
+        resolveTarget: () => (current() ? records : null),
+      });
+    const retire = () => {
+      owner.focus?.cancel();
+      if (collectionReturn === owner) collectionReturn = null;
+    };
+    const finish = () => {
+      try {
+        if (current()) owner.focus?.restore();
+      } finally {
+        retire();
+      }
+    };
+    try {
+      api.prepareCollectionProgress?.();
+      // Pin the next population before publication, including synchronous reads.
+      population = galleryPopulation + 1;
+      const pending = populateGallery();
+      if (pending?.then) pending.then(finish, retire);
+      else finish();
+    } catch (error) {
+      retire();
+      throw error;
+    }
+  }
+  $('library-dialog').addEventListener('close', refreshCollectionReturn);
+  $('collection-dialog').addEventListener('beforetoggle', () => {
+    collectionVisit++;
+    retireCollectionReturn();
+  });
   $('collection-dialog').addEventListener('close', () => {
     if (!$('collection-dialog').open) {
+      collectionVisit++;
+      retireCollectionReturn();
       galleryPopulation++;
       galleryReturnFocus?.cancel();
       galleryReturnFocus = null;
