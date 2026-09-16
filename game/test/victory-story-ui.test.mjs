@@ -278,23 +278,34 @@ test('blur pauses pending play and a late successful promise cannot restart audi
   assert.equal(h.video.playCalls, 1);
 });
 
-test('hidden-page pause retains current position and needs explicit Resume story', async (t) => {
-  const h = await setup(t);
-  h.ready();
-  await h.player.play();
-  h.video.at(2.75);
-  h.doc.hidden = true;
-  h.doc.emit('visibilitychange');
-  assert.equal(h.player.snapshot().state, 'paused');
-  assert.equal(h.video.currentTime, 2.75);
-  assert.equal(await h.player.play(), false);
-  h.doc.hidden = false;
-  h.doc.emit('visibilitychange');
-  assert.equal(h.video.playCalls, 1);
-  h.button('Resume story').click();
-  await microtasks();
-  assert.equal(h.player.snapshot().state, 'playing');
-  assert.equal(h.video.currentTime, 2.75);
+test('inactive-page pause releases hidden focus and needs explicit Resume story', async (t) => {
+  for (const hidden of [true, false]) {
+    const h = await setup(t);
+    h.ready();
+    await h.player.play();
+    h.video.at(2.75);
+    h.button('Pause').focus();
+    let foreground = false;
+    h.doc.hasFocus = () => foreground;
+    h.doc.hidden = hidden;
+    (hidden ? h.doc : h.win).emit(hidden ? 'visibilitychange' : 'blur');
+    assert.equal(h.player.snapshot().state, 'paused');
+    assert.equal(h.doc.activeElement, h.doc.body, 'no fallback focus while inactive');
+    assert.equal(h.video.currentTime, 2.75);
+    assert.equal(await h.player.play(), false);
+    foreground = true;
+    h.doc.hidden = false;
+    h.doc.emit('visibilitychange');
+    h.win.emit('focus');
+    assert.equal(h.video.playCalls, 1);
+    assert.equal(h.doc.activeElement, h.doc.body, 'return does not claim focus or resume');
+    h.button('Resume story').focus();
+    h.button('Resume story').click();
+    await microtasks();
+    assert.equal(h.player.snapshot().state, 'playing');
+    assert.equal(h.video.currentTime, 2.75);
+    assert.equal(h.doc.activeElement, h.button('Pause'));
+  }
 });
 
 test('pause during Replay seek cancels its autoplay intent but allows later explicit Play', async (t) => {

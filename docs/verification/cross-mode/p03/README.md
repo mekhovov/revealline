@@ -25,6 +25,12 @@ Each bundle's manifest maps original source paths to ZIP members and pins their 
 
 There are no cancelled, skipped or TODO cases in the corrected cohorts. Test totals overlap and must not be added. The production and Team checks precede the documentation/version commit; the release's full source gates must qualify that actual final commit.
 
+## Final review correction
+
+Independent review of source `f1bda4ff` found that story focus recovery could focus Resume while the page was inactive. A focused-Pause regression reproduced it (35/36). The fallback now uses the existing visible/focused-page guard. The complete story UI file passes 36/36 on Node 20.19.5 and 22.22.2, including both hidden-document and unfocused-window paths, unchanged video position and explicit foreground Resume. [Correction originals](story-inactive/manifest.json) retain the initial failure, corrected runs and source review inside the exact-byte ZIP.
+
+The first hosted source attempt (manual `35070262423`, PR `35070255185`) was deliberately cancelled after review so it cannot qualify the corrected commit. Its completed preflights and partial test runs remain superseded observations. The corrected commit must receive new complete hosted gates; the version stays 0.59.0 because no immutable release was published.
+
 ## Outstanding acceptance
 
 Actual foreground loss/return, physical touch/controller journeys and remaining complete screen coverage stay open under P03. The native browser's unsupported focus query and hidden-tab attempt do not establish lifecycle behavior. Viewport overrides do not certify phones or handhelds. Audio listening, comprehensive offline/media recovery, later presentation/campaign phases and native-store readiness are not established here.
