@@ -10,6 +10,120 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
 import { createFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
+import { createHash } from 'node:crypto';
+import { canonicalJSON } from '../data-json.mjs';
+import { compilePresentation } from '../../scripts/compile-presentation.mjs';
+
+test('P02 retains the published P01 history and appends audio7 under a new fpv24', async () => {
+  // This oracle was independently read from published 856850ce, not this candidate.
+  const oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-p01-v0574.json', import.meta.url), 'utf8'),
+  );
+  const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const key = (record) => `${record.id}@${record.revision}`;
+  const raw = await fs.readFile(
+    new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+  );
+  const candidate = await importThemeBundle(new Blob([raw]), { decodeImage: null });
+  const priorSource = structuredClone(oracle.metadata);
+  for (const [group, pin] of Object.entries(oracle.groups)) {
+    const prefix = candidate.document[group].slice(0, pin.count);
+    assert.equal(prefix.length, pin.count, `published ${group} count`);
+    assert.equal(sha(canonicalJSON(prefix)), pin.sha256, `published ${group} bytes`);
+    priorSource[group] = prefix;
+  }
+  // Only after matching every immutable group may candidate records supply the prior.
+  const prior = validateThemeBundle(priorSource);
+  const payloads = [];
+  for (const [hash, blob] of candidate.assets) {
+    const bytes = Buffer.from(await blob.arrayBuffer());
+    assert.equal(sha(bytes), hash, `actual payload ${hash}`);
+    payloads.push([hash, bytes.length]);
+  }
+  payloads.sort(([a], [b]) => a.localeCompare(b));
+  assert.equal(payloads.length, oracle.payloads.count);
+  assert.equal(sha(canonicalJSON(payloads)), oracle.payloads.sha256);
+  const priorBytes = Buffer.from(
+    await (await exportThemeBundle(prior, candidate.assets)).arrayBuffer(),
+  );
+  assert.equal(priorBytes.length, oracle.provenance.bytes);
+  assert.equal(sha(priorBytes), oracle.provenance.sha256, 'reconstructed published bundle');
+
+  const production = await createFieldKitProduction();
+  const next = retainProductionHistory(production.document, prior);
+  validateThemeBundle(next, { previous: prior, expectedRevision: 23 });
+  assert.equal(canonicalJSON(next), canonicalJSON(candidate.document));
+  const expected = [
+    'cancel',
+    'capture',
+    'confirm',
+    'failure',
+    'focus',
+    'music',
+    'pickup',
+    'victory',
+  ]
+    .map((name) => `audio.${name}.field-kit@7`)
+    .sort();
+  assert.deepEqual(next.assets.slice(oracle.groups.assets.count).map(key).sort(), expected);
+  assert.equal(next.assets.length, 1082);
+  assert.equal(next.themes.length, 25);
+  assert.equal(next.revision, 24);
+  assert.deepEqual(next.selection.theme, { id: 'fpv', revision: 24 });
+  const theme = next.themes.at(-1);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 23 });
+  assert.deepEqual(Object.values(theme.bindings).map(key).sort(), expected);
+  assert.deepEqual(theme.tokens, {});
+  const screens = Object.entries(resolvePresentation(next).assets).filter(
+    ([slot]) => slot.startsWith('screen.') && !slot.startsWith('screen.title.'),
+  );
+  assert.equal(screens.length, 7);
+  for (const [slot, record] of screens) assert.equal(record.revision, 12, slot);
+  assert.equal(next.slots.length, oracle.groups.slots.count);
+  assert.equal(next.collections.length, oracle.groups.collections.count);
+
+  const mergedAssets = new Map([...candidate.assets, ...production.assets]);
+  assert.equal(mergedAssets.size, 127);
+  for (const [hash, before] of candidate.assets)
+    assert.deepEqual(
+      Buffer.from(await mergedAssets.get(hash).arrayBuffer()),
+      Buffer.from(await before.arrayBuffer()),
+      `retained payload ${hash}`,
+    );
+  const second = retainProductionHistory(production.document, next);
+  assert.equal(canonicalJSON(second), canonicalJSON(next));
+  const exported = Buffer.from(await (await exportThemeBundle(next, mergedAssets)).arrayBuffer());
+  const repeated = Buffer.from(await (await exportThemeBundle(second, mergedAssets)).arrayBuffer());
+  assert.deepEqual(exported, raw, 'actual CLI ledger equals reproduced bundle');
+  assert.deepEqual(repeated, exported, 'second export identical');
+  const compiledPrior = await compilePresentation(prior, candidate.assets);
+  const compiledNext = await compilePresentation(next, mergedAssets);
+  const compiledSecond = await compilePresentation(second, mergedAssets);
+  assert.equal(compiledNext.files.size, 131);
+  assert.deepEqual([...compiledNext.files.keys()].sort(), [...compiledPrior.files.keys()].sort());
+  const changed = [];
+  for (const [name, body] of compiledNext.files) {
+    assert.deepEqual(body, compiledSecond.files.get(name), `second compile ${name}`);
+    if (!Buffer.from(body).equals(Buffer.from(compiledPrior.files.get(name)))) changed.push(name);
+  }
+  assert.deepEqual(changed.sort(), ['manifest.json', 'runtime.json', 'studio.json']);
+
+  const conflictingTheme = structuredClone(next);
+  conflictingTheme.themes.find((record) => key(record) === 'fpv@23').bindings['audio.music'] = {
+    id: 'audio.music.field-kit',
+    revision: 7,
+  };
+  assert.throws(
+    () => validateThemeBundle(conflictingTheme, { previous: prior }),
+    /Immutable themes history changed/,
+  );
+  const conflictingAsset = structuredClone(next);
+  conflictingAsset.assets[0].description = 'A replacement of published immutable content.';
+  assert.throws(
+    () => validateThemeBundle(conflictingAsset, { previous: prior }),
+    /Immutable assets history changed/,
+  );
+});
 
 function desired(
   description = 'First production recipe',

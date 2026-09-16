@@ -31,7 +31,6 @@ const audioPreferences = createAudioPreferences({
 });
 const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
   $('race-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
-  $('race-audio').setAttribute('aria-pressed', String(!muted));
   $('race-master-volume').value = volume;
 });
 $('race-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);

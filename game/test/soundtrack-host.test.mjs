@@ -105,6 +105,81 @@ function leaveStudio(page) {
   page.frame(0);
 }
 
+test('Settings music text follows master immediately and remains coherent after transport notifications', async (t) => {
+  const { page } = await setup(t);
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  await page.$('music-preview').onclick();
+  const media = musicMedia(page);
+  assert.equal(media.paused, false);
+  assert.equal(media.muted, true);
+  assert.equal(page.$('music-preview').textContent, 'Playlist playing · master sound muted');
+  media.currentTime = 0.015;
+  const before = { src: media.src, time: media.currentTime, plays: media.plays };
+  for (const muted of [false, true]) {
+    page.$('settings-master-mute').click();
+    const label = muted ? 'Playlist playing · master sound muted' : 'Soundtrack playing ♫';
+    assert.equal(page.$('music-preview').textContent, label, 'No frame or media event has run');
+    assert.equal(media.muted, muted);
+    media.emit('timeupdate');
+    assert.equal(page.$('music-preview').textContent, label);
+    assert.deepEqual({ src: media.src, time: media.currentTime, plays: media.plays }, before);
+    assert.equal(media.paused, false);
+  }
+  assert.deepEqual(page.errors, []);
+});
+
+test('late Settings Play cancellation cannot replace a newer Library Pause label', async (t) => {
+  const { page } = await setup(t);
+  const media = musicMedia(page);
+  await waitFor(() => !!media.src, 'Actual selected original is prepared');
+  const originalPlay = media.play.bind(media);
+  let release;
+  const completion = new Promise((resolve) => (release = resolve));
+  t.after(() => release());
+  media.play = async () => {
+    await originalPlay();
+    await completion;
+  };
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  const playing = page.$('music-preview').onclick();
+  await waitFor(() => !media.paused, 'Actual Settings Play reaches the media element');
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  assert.equal(media.paused, true);
+  assert.equal(page.$('music-preview').textContent, 'Play selected playlist ♫');
+  const plays = media.plays;
+  release();
+  await playing;
+  assert.equal(page.$('music-preview').textContent, 'Play selected playlist ♫');
+  assert.equal(media.paused, true);
+  assert.equal(media.plays, plays);
+  assert.deepEqual(page.errors, []);
+});
+
+test('blocked Settings Play feedback survives master edits until a real transport retry', async (t) => {
+  const { page } = await setup(t);
+  const media = musicMedia(page);
+  await waitFor(() => !!media.src, 'Actual selected original is prepared');
+  const originalPlay = media.play.bind(media);
+  media.play = async () => {
+    throw Object.assign(new Error('Gesture refused'), { name: 'NotAllowedError' });
+  };
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  await page.$('music-preview').onclick();
+  assert.equal(page.$('music-preview').textContent, 'Audio is unavailable');
+  page.$('settings-master-mute').click();
+  assert.equal(page.$('music-preview').textContent, 'Audio is unavailable');
+  assert.equal(media.paused, true);
+  media.play = originalPlay;
+  await page.$('music-preview').onclick();
+  assert.equal(page.$('music-preview').textContent, 'Soundtrack playing ♫');
+  assert.equal(media.paused, false);
+  assert.deepEqual(page.errors, []);
+});
+
 test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight', async (t) => {
   const { page, audio } = await setup(t);
   assert.equal(audio.sources.length, 0, 'construction does not create audible sources');

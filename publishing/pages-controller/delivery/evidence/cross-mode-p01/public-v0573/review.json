@@ -1,0 +1,76 @@
+{
+  "format": "revealline-p01-public-review.v1",
+  "at": "2026-09-15T21:11:06.911399+00:00",
+  "phase": "P01",
+  "version": "v0.57.3",
+  "sourceRevision": "7945c6d07714d41cee9b6f848059b8dc18aed86c",
+  "publishingRevision": "016b14af6b42d27de1f194c1ac5d48f7a0b3eaa9",
+  "status": "FAILED_RETAINED_REQUIRED_PATCH",
+  "phaseAccepted": false,
+  "nextPhaseAuthorized": false,
+  "evidence": {
+    "path": "evidence.zip",
+    "bytes": 4566576,
+    "sha256": "f3ec3cd30394bfb508109d738ec1a16f18635ba9a19862208fdf2d9d6e6c04a5"
+  },
+  "manifest": {
+    "path": "manifest.json",
+    "bytes": 332109,
+    "sha256": "2e957be30523221434ad44e83c17a488f4ae7449d9578952f8f4425549ac65c4"
+  },
+  "verifiedMembers": 552,
+  "sourceGates": "Exact-source six gates, production reproduction/readiness and ordinary build passed; original hosted evidence retained in referenced immutable release asset.",
+  "publicBodies": {
+    "verifiedFiles": 2451,
+    "bytes": 637028197,
+    "unresolved": 0,
+    "attempts": 2452,
+    "retainedRetry": "One503 then200 impact.png response."
+  },
+  "families": {
+    "P1": {
+      "closed": true,
+      "allOriginalsIncludingFailuresSelected": true,
+      "manifestSha256": "e3502c2090477ae3f181bc00c2714e8b263f1e1d3895765d02be490324e8d1e8",
+      "disposition": "passed-with-limits",
+      "originalCount": 158,
+      "originalBytes": 4667838,
+      "limits": [
+        "Trusted file-input cancel not observed; retained same-file state and UI JSON observed.",
+        "Observer timeout retained; actual replay download not observed in P1.",
+        "Actual recording27.508 seconds exceeded10-second plan; retained.",
+        "Paged textarea upper border partly meets rail; text/actions readable. Still input extends5px.",
+        "Media playback is not physical audibility."
+      ]
+    },
+    "P2": {
+      "closed": true,
+      "allOriginalsIncludingFailuresSelected": true,
+      "manifestSha256": "ee04eff740dfd2f862827a8de7baf615339f8f1fb8b8408c2ab63a207a08d847",
+      "disposition": "failed-retained",
+      "originalCount": 182,
+      "originalBytes": 2540270,
+      "limits": [
+        "Required recovery failure: Export opens Library but close hides current Export/Reload and loses invoker focus; new patch required.",
+        "Two browser download completions reused one filename; only final retained bytes independently verified.",
+        "Initial socket1006 and relative proxy preflight failure retained, separately reviewed continuation.",
+        "Store endpoints equal; no assertion of every intermediate transaction."
+      ]
+    },
+    "P3": {
+      "closed": true,
+      "allOriginalsIncludingFailuresSelected": true,
+      "manifestSha256": "99960c927815c7571c633065351deea239e2651f2c3bc150b234e833641d384c",
+      "disposition": "passed-with-limits",
+      "originalCount": 130,
+      "originalBytes": 1927705,
+      "limits": [
+        "Original Verify/reset/download and older-save Copy/Undo scoped successes.",
+        "Fast cancellation unobserved; store endpoints only.",
+        "Final PNG actions below viewport; not complete original-recovery layout proof."
+      ]
+    }
+  },
+  "requiredCorrection": "Preserve current writer-required recovery actions and invoker focus through Export game data \u2192 Library \u2192 close; direct Reload without another Check picture. Correct and qualify a new patch; never edit v0.57.3.",
+  "nativeDisclosure": "Modeled checks, observed browser journeys and physical devices are separate; no physical-device qualification. Archive transport/upload/authoring limits remain in each original report."
+}

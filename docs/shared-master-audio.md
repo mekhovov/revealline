@@ -1,10 +1,12 @@
 # Shared master sound — P02-A
 
-Status: v0.58.0 implementation candidate. Composition `86e381a` includes frozen P01 source `7945c6d` and main history `016b14a` on P02 candidate `ac644a9`. Its [final composition record](verification/cross-mode/p02-a/final-composition/README.md) binds the local source and browser follow-up. P01 public acceptance remains the release prerequisite. See the [execution register](cross-mode-execution.md) for the approved phase order; this document is a behavior contract, not a public-release certificate.
+Status: v0.58.0 implementation candidate. The current uncommitted [composition on published P01 v0.57.4](p02-p01-v0574-composition.md) combines P02 `cbc09f7640ad554c4c34d8699f2e81458e5b8faf` with P01 `856850ce8d4597c1fb6e8bb28ddb8a63db337a8c`. It retains P01's immutable history and generates `fpv@24` for shared-master audio. P01 public browser acceptance and final P02 committed-source qualification remain outstanding. See the [execution register](cross-mode-execution.md) for current status; this document is a behavior contract, not a public-release certificate.
 
 ## Player behavior
 
 Master Mute silences existing music, effects, music-library audition, victory/Collection video and Asset Studio previews. It preserves the song, queue, position, local volumes and intended playback. Unmute only opens that gate; it never issues Play, resumes a paused song or resumes flight. Music Pause controls the playlist. Lifecycle suspension remains separately owned by each page; a hidden page never gains playback because a volume changes.
+
+Mute commands change their accessible name between Mute and Unmute, so they use ordinary button semantics without `aria-pressed`. The next action is explicit, while volume and transport remain independent. This follows the [W3C APG button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/); it does not establish screen-reader or device certification.
 
 Solo keeps its quick sound control and existing master fader. The Music Library has its own reachable master controls inside the modal. Versus and Team expose them in Options; Asset Studio has controls outside mutation/loading regions. Team currently has visual feedback only: the shared preference does not imply a delivered Team soundtrack. Custom Versus/Team MP3 libraries and the finished album remain P02-B.
 
@@ -29,7 +31,7 @@ Play and audition are transport actions, including while muted. The Library expl
 | P02-A.04 | Real MP3 paused position preserved across mute; exact 13% survives reload and all four host routes                      | Final built/public lifecycle/history verification; transfer/offline expansion remains P02-B                |
 | P02-A.05 | Skills, prompt examples and scoped test receipts included                                                               | Review final intended source; P01 integration; source PR, frozen build and public acceptance               |
 
-Focused tests use real game modules with finite media/context/DOM boundaries. They establish sequencing and state, not audible quality, actual decoding, native hit targets or hardware behavior. The source preview can serve unchanged missing assets from the exact v0.57.1 Git tree; that preview is explicitly separate from an ordinary production build and immutable public verification.
+Focused tests use real game modules with finite media/context/DOM boundaries. They establish sequencing and state, not audible quality, actual decoding, native hit targets or hardware behavior. The historical source preview used unchanged assets from exact v0.57.1. The current composition preview serves an immutable snapshot of the candidate Git index, including all regenerated outputs. Both are separate from an ordinary production build and immutable public verification.
 
 The [reproducible native mixer check](verification/cross-mode/p02-a/output-probe/README.md) adds actual Web Audio signal measurements after the master/compressor: mute and zero volume produce zero measured signal; quarter volume produces a 0.250056547 RMS ratio. This verifies the digital mixer separately from native MP3/video transport observations and future physical listening/device qualification.
 
@@ -43,7 +45,7 @@ A media Play promise may resolve late or reject because browser policy denies pl
 
 All shared master faders use the same 1% steps. Native range controls can round values to their configured step; a 5% Settings fader would display a different value from a 1% Library fader. Browser review reproduced that mismatch and verified exact 1% and 13% after alignment. [MDN range step](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/range#step).
 
-## Frozen P01 composition
+## Historical frozen P01 composition
 
 The [scoped composition evidence](verification/cross-mode/p02-a/p01-composition/README.md) combines P01's pending audition/Finish visibility, file-picker cancellation, history-picture recovery and replay operation ownership with P02's existing shared master. Audition resets only its local mute, invokes Play in the activation turn, updates visible feedback and Finish, then awaits playback. The legacy enable callback remains disabled when the shared authority is injected; master changes never restore music intent or enable a retired output.
 

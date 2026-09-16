@@ -42,7 +42,6 @@ export function bootCoop() {
   });
   const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
     $('coop-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
-    $('coop-audio').setAttribute('aria-pressed', String(!muted));
     $('coop-master-volume').value = volume;
   });
   $('coop-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);

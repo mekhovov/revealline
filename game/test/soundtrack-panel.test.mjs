@@ -375,10 +375,12 @@ test('master controls remain available during loading and host save failure does
   const opening = app.panel.open();
   assert.equal(app.node('close').disabled, true);
   assert.equal(app.node('master-mute').disabled, false);
-  assert.equal(app.node('master-mute').getAttribute('aria-pressed'), 'true');
+  assert.equal(app.node('master-mute').textContent, 'Mute master sound');
+  assert.equal(app.node('master-mute').getAttribute('aria-pressed'), null);
   app.click('master-mute');
   assert.equal(audioMaster.snapshot().muted, true);
-  assert.equal(app.node('master-mute').getAttribute('aria-pressed'), 'false');
+  assert.equal(app.node('master-mute').textContent, 'Unmute master sound');
+  assert.equal(app.node('master-mute').getAttribute('aria-pressed'), null);
   assert.equal(audioMaster.snapshot().revision, 1, 'Host applies authority exactly once');
   assert.match(app.node('master-status').textContent, /Session only/);
   app.node('master-volume').value = '0.3';

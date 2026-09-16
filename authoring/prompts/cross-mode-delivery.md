@@ -1,5 +1,13 @@
 # Cross-mode delivery prompts
 
+Unjoined picture failure: “Select an installed mission whose approved artwork cannot be prepared before pressing Start. Require a nonempty visible inline error beside its recovery actions, with no Cancel for completed work. Preserve active restore/import/theme owners and ignore stale prewarm results. Return from Export directly to the same message, focus and Reload; inspect the complete message and all button hit targets in portrait/short landscape at Standard and Large text. Distinguish immediate visibility from deliberate scroll reachability; no clipped controls or reduced touch targets.”
+
+Recovery continuation: “Exercise the complete advertised recovery sequence: writer-required picture → Export game data → Library → Back → Reload saved profile. Closing the secondary dialog must restore a visible invoker and keep the settled recovery actions without another Check picture request. Preserve only the exact current picture owner/run/theme; actual pending cancellation, retry, replacement and page retirement still invalidate it. Verify checkpoint, pins, reads and writes, then qualify actual native return focus separately from the modeled test.”
+
+Pending launch cancellation: “Hold actual picture preparation after Start, Retry and confirmed Restart. Deliver Escape through the mounted menu listener and Back through the standard controller router. Both must invoke the existing launch Cancel action, restore Start focus and prevent late success or failure from resuming or changing the saved checkpoint, selected content or art. Preserve modal/course precedence, other preparation owners and terminal recovery. Keep a failing baseline and distinguish modeled routing from native/public input.”
+
+Native evidence: “Pin the installed recorder transport and retain bounded post-open error/close diagnostics. Bind observers to the actual development or release channel; a development server need not provide frozen build metadata. Interactive drivers need a live stdin/PTY. Account for browser-owned profile links without following them, and record data/blob URL hashes instead of embedded payloads. Preserve each actual downloaded file before a repeated same-name download can overwrite it; distinct completion GUIDs do not guarantee distinct retained files. Hash large pack rows instead of returning embedded images in storage observations. Read the actual verifier API (`verifyReplay` returns `match`), and compare saved timestamps separately from checkpoint and picture identity. Keep recorder failures, corrected interpretations and product failures distinct; never rewrite an old failure into a pass.”
+
 Use the [active phase register](../../docs/cross-mode-execution.md). Preserve earlier immutable records, player ownership and historical simulations. Each prompt applies only after its prerequisite phase is accepted; examples do not claim implementation.
 
 ## Continue a phase
@@ -43,6 +51,8 @@ Use the [active phase register](../../docs/cross-mode-execution.md). Preserve ea
 ## Qualify shared master audio
 
 Use the P02-A [shared master candidate contract](../../docs/shared-master-audio.md) within the active phase's authorization. These examples add no registered prompt IDs, new playlists or phase/public acceptance claim.
+
+“Inspect every changing-name Mute/Unmute command in Solo, Music Library, Versus, Team and Asset Studio. Use ordinary buttons without `aria-pressed`, following the [W3C APG button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/). Verify both labels through real keyboard actions while master remains independent of paused transport, position and gameplay. Check immediate mute-status text before a media event and prevent held Play completion from overwriting a newer Pause or retry result. Record source-host and native observations separately; neither proves audible output or physical assistive-technology acceptance.”
 
 “Start Studio audition or story Play with its actual completion held, then explicitly mute master before settling it. Verify output stays muted, the local fader and transport intent remain unchanged, and late callbacks never unmute. Change master volume while muted, then explicitly unmute without a new seek or selected-track restart. Include storage refusal: output changes immediately and a session-only warning remains visible. Preserve the legacy uninjected caller contract.”
 

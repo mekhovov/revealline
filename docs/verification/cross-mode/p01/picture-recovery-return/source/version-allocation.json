@@ -1,0 +1,8 @@
+{
+  "at": "2026-09-15T20:59:28.073145+00:00",
+  "version": "0.57.4",
+  "reason": "P01 terminal picture recovery disappears after Export return on public v0.57.3",
+  "baseRevision": "016b14af6b42d27de1f194c1ac5d48f7a0b3eaa9",
+  "remoteTags": "c3fd6145392491748c4578eef15b51983af84f9e\trefs/tags/v0.57.0\nb7db0134d4ede3452dc90b5d3f7ffb1491a0579b\trefs/tags/v0.57.0^{}\n8b2c1106606ab42d3246b1bc836c4e6b1ad1cb3f\trefs/tags/v0.57.1\n4c85277ac7393eeeabab035387d4d4ae8734aba1\trefs/tags/v0.57.1^{}\n67a6fc9c6d0dce662949cb06f55a7228f22967bf\trefs/tags/v0.57.2\ncc9f8ffcc3be246f53ca0df7f068476d8401d040\trefs/tags/v0.57.2^{}\n081f62bdb9a06941acd52ceeab2e3eaa8f480e30\trefs/tags/v0.57.3\n7945c6d07714d41cee9b6f848059b8dc18aed86c\trefs/tags/v0.57.3^{}\n",
+  "allocatedVersionTagAbsent": true
+}

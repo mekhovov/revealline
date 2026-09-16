@@ -665,12 +665,23 @@ try {
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
+  let musicPreviewState = null,
+    musicPreviewRequest = 0;
+  function renderMusicPreview() {
+    if (!musicPreviewState) return;
+    $('music-preview').textContent = ['blocked', 'error'].includes(musicPreviewState.status)
+      ? 'Audio is unavailable'
+      : musicPreviewState.playing
+        ? audioMaster.snapshot().muted
+          ? 'Playlist playing · master sound muted'
+          : 'Soundtrack playing ♫'
+        : 'Play selected playlist ♫';
+  }
   const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
     $('master-volume').value = volume;
-    $('sound-button').setAttribute('aria-pressed', String(!muted));
     $('sound-button').setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
     $('settings-master-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
-    $('settings-master-mute').setAttribute('aria-pressed', String(!muted));
+    renderMusicPreview();
   });
   let neutralResumeTick = false;
   let gameShell = null,
@@ -805,6 +816,7 @@ try {
   legacyPictureButton.textContent = 'Use original pack artwork';
   legacyPictureButton.hidden = true;
   document.querySelector('.overlay-actions').append(legacyPictureButton);
+  let pictureRecovery = null;
   const pictureRecoveryButtons = [
     ['picture-export-data', 'Export game data', () => libraryPanel.open('saves')],
     ['picture-reload', 'Reload saved profile', () => window.location.reload()],
@@ -820,6 +832,7 @@ try {
     return button;
   });
   function clearPictureRecovery() {
+    pictureRecovery = null;
     for (const button of pictureRecoveryButtons) button.hidden = true;
   }
   async function pictureMedia({ signal } = {}) {
@@ -922,10 +935,22 @@ try {
           : undefined,
     });
   }
-  function cancelPictureStart({ retirePrewarm = false } = {}) {
-    clearPreparation();
-    clearPictureRecovery();
-    themeFeedback.clear();
+  function cancelPictureStart({ retirePrewarm = false, preserveRecovery = false } = {}) {
+    // Opening a secondary dialog must not dismiss a settled recovery path.
+    // A retry, new context or page retirement still cancels it unconditionally.
+    const keepRecovery =
+      preserveRecovery &&
+      !retirePrewarm &&
+      !preparationOperation &&
+      !pictureThemePending &&
+      pictureRecovery?.owner === flightPictures &&
+      pictureRecovery?.run === run &&
+      pictureRecovery?.themeId === theme.id;
+    if (!keepRecovery) {
+      clearPreparation();
+      clearPictureRecovery();
+      themeFeedback.clear();
+    }
     $('theme-preparation-cancel').hidden = true;
     pictureGeneration++;
     if (pictureResume !== null || retirePrewarm) {
@@ -939,10 +964,15 @@ try {
   function pictureFailure(error) {
     if (error?.name === 'AbortError') return;
     const needsWriter = error instanceof ReleasePictureWriteRequiredError;
+    pictureRecovery = needsWriter ? { owner: flightPictures, run, themeId: theme.id } : null;
     const message = needsWriter
       ? error.message
       : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
     warning(message);
+    // An unjoined prewarm has no launch lease to publish its terminal feedback.
+    // Keep other preparation owners in charge of their existing presenter.
+    if (pictureResume === null && !preparationOperation && !pictureThemePending)
+      preparationFeedback.begin({ message }).finish({ message, state: 'error' });
     for (const button of pictureRecoveryButtons) button.hidden = !needsWriter;
     legacyPictureButton.hidden = needsWriter || started || practice;
     if (!started)
@@ -1066,9 +1096,8 @@ try {
         },
         onChange: (state) => {
           soundtrackPanel?.update(state);
-          $('music-preview').textContent = state.playing
-            ? 'Soundtrack playing ♫'
-            : 'Play selected playlist ♫';
+          musicPreviewState = state;
+          renderMusicPreview();
           if (soundtrackLoading) return;
           soundtrackStatus(
             state.error ||
@@ -1502,6 +1531,12 @@ try {
     }
     const scope = controllerScope();
     if (courseBlocked()) return;
+    if (pictureResume !== null && preparationOperation?.cancel === cancelPictureStart) {
+      // Back cancels only this launch owner, after any native modal has handled it.
+      $('flight-preparation-cancel').click();
+      $('start-button').focus({ preventScroll: true });
+      return;
+    }
     if (scope === 'paused') resume();
     else if (scope === 'celebration' || scope === 'defeat-presentation')
       $('skip-celebration').click();
@@ -3350,15 +3385,19 @@ try {
   for (const id of ['music-select', 'master-volume', 'music-volume', 'sfx-volume'])
     $(id).onchange = tuneMusic;
   $('music-preview').onclick = async () => {
+    const player = soundtrackPlayer,
+      request = ++musicPreviewRequest;
     try {
-      const ok = soundtrackPlayer
+      const ok = player
         ? await activateAudio({ explicit: true })
         : await sound.preview({ seconds: 4 });
-      $('music-preview').textContent = ok ? 'Soundtrack playing ♫' : 'Audio is unavailable';
-      if (ok && audioMaster.snapshot().muted)
-        $('music-preview').textContent = 'Playlist playing · master sound muted';
+      // The current player's notifications own its label, including cancellation
+      // or a newer Pause/Play. A late gesture result must not overwrite them.
+      if (player || soundtrackPlayer || request !== musicPreviewRequest) return;
+      musicPreviewState = { playing: ok, status: ok ? 'playing' : 'error' };
+      renderMusicPreview();
     } catch (e) {
-      warning(e.message);
+      if (request === musicPreviewRequest) warning(e.message);
     }
   };
   $('settings-dialog').addEventListener('close', () => {
@@ -4059,6 +4098,7 @@ try {
     activateAudio().catch(() => {});
     if (!flightPictures?.ready(theme.id)) {
       if (pictureResume) return;
+      clearPictureRecovery();
       const owner = flightPictures,
         ticket = ++pictureGeneration,
         selectedRun = run,
@@ -4166,7 +4206,7 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force) {
-    cancelPictureStart();
+    cancelPictureStart({ preserveRecovery: true });
     if (courseBlocked()) {
       clearInput();
       paused = true;
@@ -4746,6 +4786,7 @@ try {
   $('theme-select').onchange = async () => {
     if (courseSession || courseEntry) return;
     cancelRestore();
+    cancelPictureStart();
     pause(true);
     const next =
       themesFile.themes.find((t) => t.id === $('theme-select').value) ||

@@ -444,6 +444,32 @@ body.field-kit[data-field-kit-page]
   background-color: var(--fk-amber);
   border-color: var(--fk-amber);
 }
+/* Recovery adds a complete explanation and actions outside the reading pane.
+   Keep them reachable when that pane gives up its remaining space. */
+.field-kit.game-shell .overlay-card:has(#flight-preparation-status:not([hidden])) {
+  overflow-y: auto;
+}
+.field-kit.game-shell #flight-preparation-status {
+  flex-shrink: 0;
+  margin-block: 8px;
+  font-size: var(--fk-text-control);
+  line-height: 1.5;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .field-kit.game-shell .game-overlay:has(#flight-preparation-status:not([hidden])) {
+    padding: 12px;
+  }
+  .field-kit.game-shell .overlay-card:has(#flight-preparation-status:not([hidden])) {
+    width: min(960px, 100%);
+    max-width: 960px;
+  }
+  .field-kit.game-shell
+    .overlay-card:has(#flight-preparation-status:not([hidden]))
+    .reading-toolbar {
+    margin-block: 6px;
+    padding: 6px;
+  }
+}
 @media (max-width: 600px) {
   .field-kit.game-shell .game-overlay .overlay-actions {
     display: grid;
