@@ -1,0 +1,26 @@
+- button "Game menu": ◩ MENU
+- button "Enter fullscreen": ⛶
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 1.5%
+    - emphasis: TARGET 68%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 2:29
+    - generic: SCORE
+    - strong: "00340"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - status: Paused
+    - text: ◆ ◆
+    - button "Resume →"
+    - text: ◆ ◆ ◆ ◆ ◆
+    - button "Restart mission"
+    - button "Mission brief"
+    - button "Main menu"
+    - text: ◆ ◆
+    - strong: Paused
+    - generic: Close a line to reveal the picture
+    - status: Line secured. 1.5% revealed. Tap a direction to fly again.
+    - status
