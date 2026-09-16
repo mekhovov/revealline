@@ -64,9 +64,16 @@ async function open(page) {
 test('native More worlds discovers Tactical separately and keeps the default run until explicit Choose', async (t) => {
   images(t);
   const page = await soloPage(t, { titleScreen: true });
-  page.$('shell-featured').click();
+  page.$('shell-play').click();
+  assert.equal(page.$('shell-missions').open, true);
+  page.$('shell-prepare').click();
+  assert.equal(page.$('mission-picker-setup').open, true);
+  page.change('pack-select', 'fpv-arcade-r5');
   await settle(
-    () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
+    () =>
+      !page.$('pack-select').disabled &&
+      page.$('pack-select').value === 'fpv-arcade-r5' &&
+      page.doc.body.dataset.pictureState === 'ready',
   );
   page.frame(0);
   const requests = downloads(t),

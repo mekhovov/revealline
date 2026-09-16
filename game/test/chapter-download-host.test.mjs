@@ -19,6 +19,50 @@ function chapterFetch(t, intercept) {
   });
 }
 
+// Optional downloads belong to an explicit Missions choice. Title Start now
+// prepares the named current mission; it does not install a different chapter.
+function chooseChapter(page, id) {
+  const button = page.doc.querySelector(`[data-pack="${id}"]`);
+  assert.ok(button);
+  const disclosure = button.closest('details');
+  if (disclosure && !disclosure.open) {
+    // Native summary expansion is the only modeled disclosure boundary.
+    disclosure.open = true;
+    disclosure.emit('toggle');
+  }
+  const select = page.$('pack-select'),
+    handler = select.onchange;
+  let pending;
+  select.onchange = function (...args) {
+    pending = handler.apply(this, args);
+    return pending;
+  };
+  try {
+    button.focus();
+    button.click();
+  } finally {
+    select.onchange = handler;
+  }
+  return { button, pending: Promise.resolve(pending) };
+}
+async function confirmReplacement(page, beforeConfirm = () => {}) {
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  beforeConfirm();
+  page.$('mission-replace-confirm').click();
+}
+async function selectedChapter(page, id) {
+  await settle(
+    () =>
+      page.$('pack-select').value === id &&
+      !page.$('pack-select').disabled &&
+      !page.$('mission-replace-dialog').open &&
+      page.doc.body.dataset.pictureState === 'ready',
+  );
+  page.frame(0);
+}
+
 function originalImageBoundary(t) {
   const sizes = new Map(
     original.levelVisuals.map(({ visualOverrides }) => {
@@ -56,6 +100,7 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
     return request();
   });
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let i = 0; i < 13; i++) page.frame();
@@ -66,32 +111,46 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
   page.$('shell-packs').click();
   page.frame(0);
   assert.equal(page.rendered.paused, true);
-  // Opening Missions has its existing synchronous pause/autosave boundary.
-  // The subsequent chapter request must perform no additional storage writes.
-  const pausedStorage = new Map(page.storage.map),
-    pausedWrites = page.storage.writes.length;
-  page.change('pack-select', original.id);
-  await settle(() => !page.$('pack-select').disabled);
+  const pausedStorage = new Map(page.storage.map);
+  let requestStored, requestWrites;
+  chooseChapter(page, original.id);
+  await confirmReplacement(page, () => {
+    // Checked replacement may refresh only savedAt. The subsequent download
+    // must preserve its exact verified bytes and every other storage entry.
+    const slot = 'revealline.suspended.dev.v1',
+      beforeSave = JSON.parse(pausedStorage.get(slot)),
+      checkedRaw = page.storage.getItem(slot),
+      checkedSave = JSON.parse(checkedRaw);
+    assert.equal(typeof checkedSave.savedAt, 'string');
+    assert.ok(Date.parse(checkedSave.savedAt) >= Date.parse(beforeSave.savedAt));
+    assert.deepEqual({ ...checkedSave, savedAt: beforeSave.savedAt }, beforeSave);
+    requestStored = new Map(pausedStorage).set(slot, checkedRaw);
+    assert.deepEqual(page.storage.map, requestStored);
+    requestWrites = page.storage.writes.length;
+  });
+  await settle(() => !page.$('mission-replace-dialog').open && !page.$('pack-select').disabled);
   page.frame(0);
   assert.equal(page.rendered.run, run);
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(page.$('pack-select').value, selected);
-  assert.deepEqual(page.storage.map, pausedStorage);
-  assert.equal(page.storage.writes.length, pausedWrites);
+  assert.deepEqual(page.storage.map, requestStored);
+  assert.equal(page.storage.writes.length, requestWrites);
   assert.match(page.$('content-select-status').textContent, /First Light/);
   assert.match(page.$('content-select-status').textContent, /Connect to the internet/);
   assert.match(page.$('content-select-status').textContent, /choose this chapter again/);
   assert.equal(requests, 1);
 
   available = true;
-  page.change('pack-select', original.id);
-  await settle(() => !page.$('pack-select').disabled);
-  page.frame(0);
+  chooseChapter(page, original.id);
+  await confirmReplacement(page);
+  await selectedChapter(page, original.id);
   assert.equal(page.$('pack-select').value, original.id);
   assert.deepEqual(page.rendered.run.level, normalizedLevel(original.campaigns[0].levels[0]));
   assert.equal(page.rendered.run.tick, 0);
   assert.equal(requests, 2);
+  page.$('shell-prepare').click();
+  assert.equal(page.$('mission-picker-setup').open, true);
   page.change('pack-select', '');
   await settle(() => !page.$('pack-select').disabled);
   available = false;
@@ -104,7 +163,7 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
   assert.deepEqual(page.errors, []);
 });
 
-test('featured download failure is visible inside the retained title and its button can deliberately retry', async (t) => {
+test('explicit chapter download failure stays visible on return to Title and Missions can deliberately retry', async (t) => {
   originalImageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
   let available = false,
@@ -119,12 +178,15 @@ test('featured download failure is visible inside the retained title and its but
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run),
     stored = new Map(page.storage.map);
-  page.$('shell-featured').click();
-  await settle(() => !page.$('shell-featured').disabled);
+  page.$('shell-play').click();
+  const first = chooseChapter(page, featured.id);
+  await first.pending;
   page.frame(0);
+  assert.equal(requests, 1);
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.deepEqual(page.storage.map, stored);
+  page.$('shell-missions-back').click();
   assert.equal(page.$('shell-home').open, true);
   const status = page.$('shell-featured-status');
   assert.ok(page.$('shell-home').contains(status));
@@ -132,19 +194,18 @@ test('featured download failure is visible inside the retained title and its but
   assert.equal(status.querySelector('.operation-status-label').getAttribute('role'), 'status');
   assert.match(status.textContent, /Pressure Lines/);
   assert.match(status.textContent, /choose this chapter again/);
-  assert.equal(requests, 1);
   available = true;
-  page.$('shell-featured').click();
-  await settle(() => !page.$('shell-featured').disabled);
-  page.frame(0);
+  page.$('shell-play').click();
+  chooseChapter(page, featured.id);
+  await selectedChapter(page, featured.id);
   assert.equal(requests, 2);
   assert.equal(page.$('shell-home').open, false);
-  assert.equal(page.$('pack-select').value, featured.id);
   assert.deepEqual(page.rendered.run.level, normalizedLevel(featured.campaigns[0].levels[0]));
+  assert.equal(page.rendered.run.tick, 0, 'Installing a chapter prepares it without starting');
   assert.deepEqual(page.errors, []);
 });
 
-test('a late failed chapter request cannot replace the status or run from a newer explicit action', async (t) => {
+test('a late failed chapter request cannot replace the status or run from a newer confirmed restart', async (t) => {
   const page = await soloPage(t);
   let rejectRequest;
   chapterFetch(t, (url, request) =>
@@ -154,21 +215,37 @@ test('a late failed chapter request cannot replace the status or run from a newe
         })
       : request(),
   );
-  page.change('pack-select', original.id);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  const originalRun = page.rendered.run;
+  page.$('shell-packs').click();
+  chooseChapter(page, original.id);
+  await confirmReplacement(page);
+  await settle(() => typeof rejectRequest === 'function');
   assert.equal(page.$('pack-select').disabled, true);
-  page.$('restart-button').click();
+  page.$('mission-replace-stay').click();
+  assert.equal(page.$('pack-select').disabled, false);
+  page.$('shell-missions-back').click();
+  page.$('overlay-restart').click();
+  assert.equal(page.$('restart-dialog').open, true);
+  assert.equal(page.rendered.run, originalRun);
+  page.$('restart-confirm').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.$('pause-button').click();
   page.frame(0);
   const newerRun = page.rendered.run,
     checkpoint = authoritativeCheckpoint(newerRun),
     message = page.$('content-select-status').textContent,
     titleMessage = page.$('shell-featured-status').textContent,
-    titleHidden = page.$('shell-featured-status').hidden;
-  assert.equal(page.$('pack-select').disabled, false);
+    titleHidden = page.$('shell-featured-status').hidden,
+    stored = new Map(page.storage.map);
+  assert.notEqual(newerRun, originalRun);
   rejectRequest(new TypeError('Failed to fetch'));
   await new Promise((resolve) => setImmediate(resolve));
   page.frame(0);
   assert.equal(page.rendered.run, newerRun);
   assert.deepEqual(authoritativeCheckpoint(newerRun), checkpoint);
+  assert.deepEqual(page.storage.map, stored);
   assert.equal(page.$('content-select-status').textContent, message);
   assert.equal(page.$('shell-featured-status').textContent, titleMessage);
   assert.equal(page.$('shell-featured-status').hidden, titleHidden);
@@ -176,7 +253,7 @@ test('a late failed chapter request cannot replace the status or run from a newe
   assert.deepEqual(page.errors, []);
 });
 
-test('a successful delayed Deploy leaves a newer Settings visit in place', async (t) => {
+test('a successful delayed chapter choice leaves a newer Settings visit in place', async (t) => {
   originalImageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
   let release;
@@ -187,22 +264,25 @@ test('a successful delayed Deploy leaves a newer Settings visit in place', async
         })
       : request(),
   );
-  const label = page.$('shell-featured').querySelector('[data-field-kit-copy]');
-  const decoration = page.$('shell-featured').querySelector('[aria-hidden]');
-  page.$('shell-featured').click();
-  await settle(() => !!release);
-  assert.equal(label.textContent, 'Preparing…');
-  assert.equal(page.$('shell-featured').querySelector('[data-field-kit-copy]'), label);
-  assert.equal(decoration.getAttribute('aria-hidden'), 'true');
-  assert.equal(page.$('shell-featured-status').dataset.state, 'busy');
+  page.$('shell-play').click();
+  const { button, pending } = chooseChapter(page, featured.id),
+    label = button.querySelector('.mission-picker-card-label'),
+    originalLabel = label.textContent;
+  await settle(() => typeof release === 'function');
+  assert.equal(page.$('pack-select').disabled, true);
+  assert.equal(page.$('content-select-status').dataset.state, 'busy');
+  assert.equal(button.querySelector('.mission-picker-card-label'), label);
+  page.$('shell-missions-back').click();
   page.$('shell-options').click();
   assert.equal(page.$('settings-dialog').open, true);
+  const settingsFocus = page.doc.activeElement;
   release();
-  await settle(() => !page.$('shell-featured').disabled);
-  assert.equal(label.textContent, 'Deploy');
-  assert.equal(page.$('shell-featured').querySelector('[data-field-kit-copy]'), label);
-  assert.equal(page.$('shell-featured').querySelector('[aria-hidden]'), decoration);
+  await pending;
+  await selectedChapter(page, featured.id);
+  assert.equal(button.querySelector('.mission-picker-card-label'), label);
+  assert.equal(label.textContent, originalLabel);
   assert.equal(page.$('settings-dialog').open, true);
+  assert.equal(page.doc.activeElement, settingsFocus);
   assert.equal(page.$('shell-missions').open, false);
   assert.equal(page.$('shell-home').open, true);
   assert.notEqual(
@@ -210,11 +290,12 @@ test('a successful delayed Deploy leaves a newer Settings visit in place', async
     'error',
     page.$('shell-featured-status').textContent,
   );
-  assert.equal(page.$('pack-select').value, featured.id);
+  assert.deepEqual(page.rendered.run.level, normalizedLevel(featured.campaigns[0].levels[0]));
+  assert.equal(page.rendered.run.tick, 0);
   assert.deepEqual(page.errors, []);
 });
 
-test('blur announces a deferred featured launch cancellation and its late response cannot adopt or persist the chapter', async (t) => {
+test('blur announces a deferred Missions download cancellation and its late response cannot adopt or persist the chapter', async (t) => {
   const database = managedIndexedDB();
   const page = await soloPage(t, { titleScreen: true, assetIndexedDB: database.indexedDB });
   let releaseRequest;
@@ -232,11 +313,14 @@ test('blur announces a deferred featured launch cancellation and its late respon
     writes = page.storage.writes.length,
     installed = database.contents(),
     puts = database.allPuts.length;
-  const pending = page.$('shell-featured').onclick();
+  page.$('shell-play').click();
+  const { pending } = chooseChapter(page, featured.id);
+  await settle(() => typeof releaseRequest === 'function');
+  page.$('shell-missions-back').click();
   let message;
   try {
-    assert.equal(typeof releaseRequest, 'function', 'The actual featured fetch is pending');
-    assert.equal(page.$('shell-featured').disabled, true);
+    assert.equal(typeof releaseRequest, 'function', 'The actual selected chapter fetch is pending');
+    assert.equal(page.$('pack-select').disabled, true);
     assert.match(page.$('shell-featured-status').textContent, /Installing/);
     page.win.emit('blur');
     page.frame(0);
@@ -246,7 +330,11 @@ test('blur announces a deferred featured launch cancellation and its late respon
     assert.equal(page.$('shell-featured-status').hidden, false);
     assert.equal(page.$('content-select-status').textContent, message);
     assert.equal(page.$('pack-select').disabled, false);
-    assert.equal(page.$('shell-featured').disabled, true, 'The request is still settling');
+    assert.equal(
+      page.$('shell-featured').disabled,
+      false,
+      'Cancelled download does not disable Start',
+    );
     assert.equal(page.$('shell-home').open, true);
     assert.equal(page.rendered.run, run);
     assert.equal(page.rendered.paused, true);

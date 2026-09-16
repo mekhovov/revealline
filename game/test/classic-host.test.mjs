@@ -17,6 +17,8 @@ async function setup(t, index, { stopOnCapture } = {}) {
   if (stopOnCapture !== undefined)
     candidate.campaigns[0].levels[0].rules.stopOnCapture = stopOnCapture;
   page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="packs"]').click();
+  assert.equal(page.$('library-packs').hidden, false);
   page.$('pack-json').value = JSON.stringify(candidate);
   page.$('install-pack').click();
   await settle(() => !page.$('install-pack').disabled, 'classic practice pack installed');
@@ -26,7 +28,13 @@ async function setup(t, index, { stopOnCapture } = {}) {
     .querySelectorAll('button')
     .find((button) => button.textContent === `Play ${candidate.campaigns[0].title}`);
   assert.ok(play);
-  play.click();
+  await play.onclick();
+  await settle(
+    () =>
+      page.$('pack-select').value === candidate.id &&
+      page.doc.body.dataset.pictureState === 'ready',
+    'The visible installed campaign must finish selection and picture preparation.',
+  );
   page.frame(0);
   assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
   return page;

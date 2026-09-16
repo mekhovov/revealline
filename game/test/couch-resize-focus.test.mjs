@@ -221,7 +221,10 @@ test('resize stores no future focus intent and terminal disposal removes its lis
   target._rect = outside;
   const calls = observe(t, target),
     before = f.checkpoint();
-  assert.equal(f.win.listeners.get('resize')?.size, 1);
+  // Action and active-reader resize observers can coexist. Their exact count
+  // is not a player contract; every registered observer must be retired.
+  const resizeListeners = [...(f.win.listeners.get('resize') || [])];
+  assert.ok(resizeListeners.length > 0);
   f.doc.focused = false;
   f.win.emit('resize');
   f.doc.focused = true;
@@ -230,6 +233,8 @@ test('resize stores no future focus intent and terminal disposal removes its lis
   f.win.emit('resize');
   assert.deepEqual(calls, [nearest], 'only a new resize considers the current action');
   f.win.emit('pagehide', { persisted: false });
+  for (const listener of resizeListeners)
+    assert.equal(f.win.listeners.get('resize')?.has(listener), false);
   assert.equal(f.win.listeners.get('resize')?.size, 0);
   f.win.emit('resize');
   assert.equal(calls.length, 1);

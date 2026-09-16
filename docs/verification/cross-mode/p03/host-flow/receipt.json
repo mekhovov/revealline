@@ -1,0 +1,11 @@
+{
+  "status": "SCOPED_ORIGINALS_PACKAGED",
+  "zipBytes": 1229750,
+  "zipSHA256": "d1f376e77fb81d6360f894f3b7ba88f1bf8e5b94540efc99e99e18c8e81c4030",
+  "manifestBytes": 80969,
+  "manifestSHA256": "94f304760b19f8180f4e667ce4f4cd5bc5797a96aa75491dc1b95ba5f3e90e5f",
+  "origins": 157,
+  "uniqueObjects": 141,
+  "phaseAcceptance": false,
+  "qualification": false
+}

@@ -107,8 +107,18 @@ for (const width of [306, 600]) {
     const minimum = width >= 480 ? 24 : 16;
     assert.ok(playerSpan(rendering.frame, width) >= minimum - 1e-9);
 
-    page.$('shell-featured').click();
-    await settle(() => !page.$('shell-featured').disabled, 'actual R2 featured chapter selected');
+    page.$('shell-play').click();
+    assert.equal(page.$('shell-missions').open, true);
+    page.$('shell-prepare').click();
+    assert.equal(page.$('mission-picker-setup').open, true);
+    page.change('pack-select', 'fpv-arcade-r5');
+    await settle(
+      () =>
+        !page.$('pack-select').disabled &&
+        page.$('pack-select').value === 'fpv-arcade-r5' &&
+        page.doc.body.dataset.pictureState === 'ready',
+      'The explicitly selected Classic chapter and its original picture must be ready.',
+    );
     page.frame(0);
     await settle(() => rendering.frame.painter.image !== null, 'Daybreak player image loaded');
     page.frame(0);
