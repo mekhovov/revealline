@@ -214,6 +214,8 @@ const id = (e, kind) =>
   `optional-worlds-${e.descriptor.id === pilot.descriptor.id ? 'source' : `source-${e.descriptor.id}`}-${kind}`;
 async function open(p) {
   p.$('shell-menu').click();
+  p.$('shell-play').click();
+  p.$('shell-mode-choice').open = true;
   p.$('shell-worlds').click();
   await waitInventory(p, 'Open More worlds and authenticate installed originals', {
     ready: () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
@@ -228,12 +230,73 @@ async function install(p, e) {
   });
   assert.equal(p.$(id(e, 'choose')).disabled, false, p.$('optional-worlds-status').textContent);
 }
-async function choose(p, e) {
-  const phase = `Choose and authenticate exact ${e.descriptor.id}`;
-  await waitInventory(p, phase, {
-    operation: clickOperation(p, id(e, 'choose')),
-    ready: () => !p.$('optional-worlds-dialog').open,
-  });
+function showCard(p, e) {
+  const filter = p.$('optional-worlds-theme');
+  filter.value = e.descriptor.themeId;
+  filter.onchange();
+  const card = p.$(
+    e.descriptor.id === pilot.descriptor.id ? 'optional-worlds-source-pilot' : id(e, 'card'),
+  );
+  for (let n = 0; card.hidden && n < 9; n++) {
+    assert.equal(p.$('optional-worlds-next').disabled, false);
+    p.$('optional-worlds-next').click();
+  }
+  assert.equal(card.hidden, false, 'the exact owner is visibly reachable');
+}
+async function choose(p, e, { replaceFlight = false, sameCampaign = false } = {}) {
+  showCard(p, e);
+  const phase = `Choose and authenticate exact ${e.descriptor.id}`,
+    opener = p.$(id(e, 'choose'));
+  opener.focus();
+  if (sameCampaign) {
+    const run = p.rendered.run,
+      checkpoint = authoritativeCheckpoint(run),
+      saved = new Map(p.fixture.storage.map);
+    assert.equal(p.$('pack-select').value, e.descriptor.id);
+    await waitInventory(p, `${phase}: keep current campaign`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('optional-worlds-dialog').open && !opener.disabled,
+    });
+    p.frame(0);
+    assert.equal(p.$('mission-replace-dialog').open, false);
+    assert.match(p.$('optional-worlds-status').textContent, /already selected.*flight is kept/);
+    assert.equal(p.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.deepEqual(p.fixture.storage.map, saved);
+    assert.equal(p.rendered.paused, true);
+  } else if (replaceFlight) {
+    const run = p.rendered.run,
+      checkpoint = authoritativeCheckpoint(run);
+    assert.equal(
+      run.player.cutting,
+      true,
+      'The initial retained cut requires an explicit decision.',
+    );
+    await waitInventory(p, `${phase}: checked replacement`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+    });
+    assert.equal(p.$('optional-worlds-dialog').open, true);
+    assert.match(p.$('mission-replace-status').textContent, /saved and verified/);
+    const saved = new Map(p.fixture.storage.map);
+    p.$('mission-replace-stay').click();
+    p.frame(0);
+    assert.equal(p.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.deepEqual(p.fixture.storage.map, saved);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(p.doc.activeElement, opener);
+    await waitInventory(p, `${phase}: fresh replacement choice`, {
+      operation: clickOperation(p, opener.id),
+      ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+    });
+    await clickOperation(p, 'mission-replace-confirm');
+    await settle(() => !p.$('optional-worlds-dialog').open);
+  } else
+    await waitInventory(p, phase, {
+      operation: clickOperation(p, opener.id),
+      ready: () => !p.$('optional-worlds-dialog').open,
+    });
   // Selection starts its own picture read; a fulfilled Choose is not image readiness.
   try {
     await settle(() => p.doc.body.dataset.pictureState === 'ready');
@@ -287,7 +350,7 @@ test('five exact registered editions install together within unchanged budgets, 
     );
     for (const e of editions) {
       if (!p.$('optional-worlds-dialog').open) await open(p);
-      await choose(p, e);
+      await choose(p, e, { replaceFlight: e === editions[0] });
       assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
       p.$('start-button').click();
       const route = proof.routes.find(
@@ -412,7 +475,7 @@ test('released host reads the exact small catalog then explicitly downloads only
     const p = await page(t, f, true);
     await open(p);
     assert.equal(p.$(id(editions[0], 'choose')).disabled, false);
-    await choose(p, editions[0]);
+    await choose(p, editions[0], { sameCampaign: true });
     assert.equal(p.rendered.backdrop.pin.sha256, editions[0].descriptor.originals[0].sha256);
   });
 });

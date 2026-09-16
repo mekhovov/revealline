@@ -560,3 +560,145 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
   assert.deepEqual(page.storage.map, saved);
   assert.deepEqual(page.errors, []);
 });
+
+for (const afterStay of ['unchanged', 'moved focus', 'foreground loss', 'newer operation'])
+  test(`More worlds early Stay restores its exact Choose; late verification respects ${afterStay}`, async (t) => {
+    images(t);
+    const page = await soloPage(t);
+    downloads(t);
+    page.change('pack-select', 'fpv-arcade-r5');
+    await settle(
+      () => !page.$('pack-select').disabled && page.doc.body.dataset.pictureState === 'ready',
+      'The exact initial chapter picture must be ready before the preserved cut starts.',
+    );
+    page.$('start-button').click();
+    page.key('ArrowDown');
+    page.key('ArrowDown', false);
+    for (let i = 0; i < 13; i++) page.frame();
+    const run = page.rendered.run,
+      checkpoint = authoritativeCheckpoint(run);
+    assert.equal(run.player.cutting, true);
+    await open(page);
+    page.$(`optional-worlds-install-${first.id}`).click();
+    await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
+    page.frame(0);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    const before = new Map(page.storage.map),
+      choose = page.$(`optional-worlds-choose-${first.id}`),
+      request = navigator.locks.request.bind(navigator.locks);
+    let grant,
+      delayed = false;
+    t.after(() => grant?.()); // Retire a withheld callback even after a baseline assertion fails.
+    navigator.locks.request = async (name, options, work) => {
+      if (!delayed && name.endsWith('.backup-lock')) {
+        delayed = true;
+        // Model an already queued lock callback whose promise does not settle
+        // immediately on AbortSignal. The real retained-flight guards still run.
+        await new Promise((resolve) => {
+          grant = resolve;
+        });
+      }
+      return request(name, options, work);
+    };
+    choose.focus();
+    const pending = choose.onclick();
+    await settle(() => !!grant, 'The replacement must reach its real checked-save lock.');
+    assert.equal(page.$('mission-replace-dialog').open, true);
+    assert.equal(page.$('mission-replace-confirm').disabled, true);
+    assert.equal(choose.disabled, true, 'The outer preparation still owns the disabled Choose.');
+    assert.equal(page.doc.activeElement, page.$('mission-replace-stay'));
+    page.$('mission-replace-stay').click();
+    assert.equal(page.$('mission-replace-dialog').open, false);
+    assert.equal(page.$('optional-worlds-dialog').open, true);
+    assert.equal(
+      choose.disabled,
+      false,
+      'Stay releases the outer operation before its late callback.',
+    );
+    assert.equal(page.doc.activeElement, choose, 'Stay restores the exact available Choose.');
+    page.frame(0);
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.equal(page.rendered.paused, true);
+    assert.deepEqual(page.storage.map, before);
+    let focusCalls = 0;
+    const focus = choose.focus.bind(choose);
+    choose.focus = (...args) => {
+      focusCalls++;
+      return focus(...args);
+    };
+    if (afterStay === 'newer operation') {
+      const firstGrant = grant;
+      t.after(firstGrant);
+      delayed = false;
+      grant = null;
+      const newer = choose.onclick();
+      await settle(() => !!grant, 'The second choice must own a new checked-save lock.');
+      const secondGrant = grant,
+        stay = page.$('mission-replace-stay');
+      assert.equal(page.$('mission-replace-dialog').open, true);
+      assert.equal(page.$('mission-replace-confirm').disabled, true);
+      assert.equal(choose.disabled, true);
+      assert.equal(page.$('optional-worlds-dialog').getAttribute('aria-busy'), 'true');
+      assert.equal(page.doc.activeElement, stay);
+      const checkingCopy = page.$('mission-replace-status').textContent;
+      firstGrant();
+      await pending;
+      page.frame(0);
+      assert.equal(
+        page.$('mission-replace-dialog').open,
+        true,
+        'Old settlement keeps the newer decision.',
+      );
+      assert.equal(page.$('mission-replace-confirm').disabled, true);
+      assert.equal(choose.disabled, true, 'Old finally cannot release the newer busy controls.');
+      assert.equal(page.$('optional-worlds-dialog').getAttribute('aria-busy'), 'true');
+      assert.equal(page.$('mission-replace-status').textContent, checkingCopy);
+      assert.equal(page.doc.activeElement, stay);
+      assert.equal(focusCalls, 0);
+      assert.equal(page.rendered.run, run);
+      assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+      assert.deepEqual(page.storage.map, before);
+      stay.click();
+      assert.equal(page.$('mission-replace-dialog').open, false);
+      assert.equal(page.$('optional-worlds-dialog').open, true);
+      assert.equal(choose.disabled, false);
+      assert.equal(page.doc.activeElement, choose);
+      assert.equal(focusCalls, 1, 'Only the second explicit Stay restores Choose.');
+      secondGrant();
+      await newer;
+      for (let i = 0; i < 8; i++) page.frame();
+      assert.equal(page.rendered.run, run);
+      assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+      assert.equal(page.rendered.paused, true);
+      assert.deepEqual(page.storage.map, before);
+      assert.equal(page.doc.activeElement, choose);
+      assert.equal(focusCalls, 1, 'Neither late completion gains focus authority.');
+      assert.deepEqual(page.errors, []);
+      return;
+    }
+    if (afterStay === 'moved focus') page.$('optional-worlds-summary').focus();
+    if (afterStay === 'foreground loss') {
+      page.doc.focused = false;
+      page.win.emit('blur');
+    }
+    const focusBeforeCompletion = page.doc.activeElement;
+    grant();
+    await pending;
+    for (let i = 0; i < 8; i++) page.frame();
+    assert.equal(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.equal(page.rendered.paused, true);
+    assert.deepEqual(page.storage.map, before, 'A cancelled save cannot write after lock release.');
+    assert.equal(page.doc.activeElement, focusBeforeCompletion);
+    assert.equal(focusCalls, 0, 'Old finally cannot refocus or steal the newer/background intent.');
+    if (afterStay === 'foreground loss') {
+      page.doc.focused = true;
+      page.win.emit('focus');
+      page.frame();
+      assert.equal(page.rendered.paused, true);
+      assert.equal(focusCalls, 0);
+    }
+    assert.deepEqual(page.errors, []);
+  });

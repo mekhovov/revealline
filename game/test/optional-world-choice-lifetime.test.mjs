@@ -161,3 +161,40 @@ for (const kind of ['installed', 'source']) {
     assert.equal(h.chosen, 0);
   });
 }
+
+test('explicit cancellation releases its Choose without stealing an already moved return focus', async (t) => {
+  let launch, release;
+  const h = fixture(t, 'installed', (options) => {
+    launch = options.launch;
+    return new Promise((resolve) => {
+      release = resolve;
+    });
+  });
+  t.after(() => release?.());
+  await h.panel.open();
+  const choose = h.choose();
+  choose.focus();
+  const pending = choose.onclick();
+  assert.equal(choose.disabled, true);
+  const decision = h.doc.createElement('dialog'),
+    stay = h.doc.createElement('button');
+  decision.append(stay);
+  h.doc.body.append(decision);
+  decision.showModal();
+  stay.focus();
+  decision.close();
+  // Another close listener already made an intentional, visible parent choice.
+  // This tests callback ownership, not browser top-layer layout or a live cut.
+  const newer = h.$('summary');
+  newer.focus();
+  assert.equal(launch.onCancelled({ dialog: decision }), true);
+  assert.equal(choose.disabled, false);
+  assert.equal(h.doc.activeElement, newer);
+  assert.equal(launch.isCurrent(), false);
+  release(false);
+  await pending;
+  launch.onSelected();
+  assert.equal(h.doc.activeElement, newer);
+  assert.equal(h.$('dialog').open, true);
+  assert.equal(h.chosen, 0);
+});

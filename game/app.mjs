@@ -2804,6 +2804,7 @@ try {
     if ($('mission-replace-dialog').open) return;
     const ticket = missionReplacement;
     cancelMissionReplacement();
+    if (ticket?.launch?.onCancelled?.({ dialog: $('mission-replace-dialog') }) === true) return;
     if ((!ticket?.launch || ticket.launch.isCurrent()) && availableFocusTarget(ticket?.opener))
       ticket.opener.focus({ preventScroll: true });
   });

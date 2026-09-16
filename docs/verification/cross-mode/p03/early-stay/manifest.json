@@ -1,0 +1,1447 @@
+{
+  "status": "EARLY_STAY_ORIGINALS_ONLY",
+  "phaseAcceptance": false,
+  "qualification": false,
+  "publicReleaseAcceptance": false,
+  "sourceBase": "c9ef8a9c2bfbf073d2a043e79fe2d97cdf09bf13",
+  "trackedIndexSHA256": "5ba068699e9c0a16af64c0befad6b0d02506da1e36f7a0083d495302b26c7eb3",
+  "reviewedDiffSHA256": "b08400b5fdf174e08cd059002d903d3ced80d9c90e9d2ef505638c472e650f57",
+  "currentSourceInputs": {
+    ".cursor/skills/deploy-release-pages/SKILL.md": "bcc589562670acba9373b9d744f4ce8e605bedd1d08cf4c0e14a9f952e6ddcd1",
+    "authoring/prompts/cross-mode-delivery.md": "acbfb5207066d417da97b3ed82ea0f43018fce907e44d8caaa221100b07c18ef",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": "d34ceb48350f42ede46c906ba670a4a7b3e9c0d6295762df536612ad386c3781",
+    "docs/cross-mode-execution.md": "f41cb6bd885a4a8450d2f20f0e11109bdea81789c65cd4030ea2cf7395090dfe",
+    "docs/more-worlds-flight-selection.md": "73ee3173398a991fe6ef6f3692ecfd653e013c5701afaed6cb7babb6a6b6c679",
+    "game/app.mjs": "f61566fd474c729f9b9801cbe971bd0b7440e884c5c52df807537be40e5b7c4d",
+    "game/test/countercurrent-chapter-host.test.mjs": "f119fbf3abd94348bc87e93a34d3073dea78a8e974807cd5e405c91517299ad1",
+    "game/test/fracture-chapter-host.test.mjs": "a20e444e2bc47fc4a71439abb672e1c71e5b9f6efc2290fbb7e298cf9606e2ae",
+    "game/test/optional-chapters-host.test.mjs": "f2645870602cae7d8751af521d575c92eaf9ff4b9f9429db14467137d5e15c7d",
+    "game/test/optional-world-choice-lifetime.test.mjs": "78d72e38ea72dca3e5ea9505e7b06a7f49526fc8da6a993e99c57da2dab8ec78",
+    "game/test/route-worlds-host.test.mjs": "1bfdb329cf9196e46786e59a9c5519868ab0b28614cfb79f8b3fdaab38b7a07f",
+    "game/test/sentinel-theme-host.test.mjs": "6e8cf6326d4baf67db67656857e7e0599a221a32e086879bbb6c7f2b48ba722b",
+    "game/ui/optional-chapters-panel.mjs": "5b52fe569b5cf8ccf1c9cc5c67c2a8e139994d7a22cebb6fe97907d65e77897c"
+  },
+  "localRuns": [
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-node20.json",
+      "stage": "heap-limited-runner-failure",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--max-old-space-size=100",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=More worlds early Stay",
+        "game/test/optional-chapters-host.test.mjs"
+      ],
+      "exitCode": 1,
+      "reportedTAPCounts": {
+        "tests": 12,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 11
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-default-heap-node20.json",
+      "stage": "three-case-baseline",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=More worlds early Stay",
+        "game/test/optional-chapters-host.test.mjs"
+      ],
+      "exitCode": 1,
+      "reportedTAPCounts": {
+        "tests": 14,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 11
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/corrected-targeted-node20.json",
+      "stage": "earlier-three-case-correction",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-name-pattern=More worlds early Stay",
+        "game/test/optional-chapters-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 14,
+        "pass": 3,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 11
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node20.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/optional-chapters-host.test.mjs",
+        "game/test/optional-world-choice-lifetime.test.mjs",
+        "game/test/external-chapters-panel.test.mjs",
+        "game/test/external-chapter-card-focus.test.mjs",
+        "game/test/external-chapter-app.test.mjs",
+        "game/test/worlds-browser.test.mjs",
+        "game/test/optional-chapters.test.mjs",
+        "game/test/mission-replacement-host.test.mjs",
+        "game/test/library-launch-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 126,
+        "pass": 126,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node22.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/optional-chapters-host.test.mjs",
+        "game/test/optional-world-choice-lifetime.test.mjs",
+        "game/test/external-chapters-panel.test.mjs",
+        "game/test/external-chapter-card-focus.test.mjs",
+        "game/test/external-chapter-app.test.mjs",
+        "game/test/worlds-browser.test.mjs",
+        "game/test/optional-chapters.test.mjs",
+        "game/test/mission-replacement-host.test.mjs",
+        "game/test/library-launch-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 126,
+        "pass": 126,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/fracture-node20.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/fracture-chapter-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/countercurrent-node20.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/countercurrent-chapter-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/route-worlds-node20.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/route-worlds-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 10,
+        "pass": 10,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/sentinel-theme-node20.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/sentinel-theme-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-lint.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "game/app.mjs",
+        "game/ui/optional-chapters-panel.mjs",
+        "game/test/optional-chapters-host.test.mjs",
+        "game/test/optional-world-choice-lifetime.test.mjs",
+        "game/test/fracture-chapter-host.test.mjs",
+        "game/test/countercurrent-chapter-host.test.mjs",
+        "game/test/route-worlds-host.test.mjs",
+        "game/test/sentinel-theme-host.test.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {},
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    },
+    {
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-format-check.json",
+      "stage": "final-local",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/app.mjs",
+        "game/ui/optional-chapters-panel.mjs",
+        "game/test/optional-chapters-host.test.mjs",
+        "game/test/optional-world-choice-lifetime.test.mjs",
+        "game/test/fracture-chapter-host.test.mjs",
+        "game/test/countercurrent-chapter-host.test.mjs",
+        "game/test/route-worlds-host.test.mjs",
+        "game/test/sentinel-theme-host.test.mjs",
+        "docs/cross-mode-execution.md",
+        "docs/more-worlds-flight-selection.md",
+        "authoring/prompts/cross-mode-delivery.md",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        ".cursor/skills/deploy-release-pages/SKILL.md"
+      ],
+      "exitCode": 0,
+      "reportedTAPCounts": {},
+      "scope": "Exact per-command result; skipped cases did not run. Overlapping cohorts are not additive."
+    }
+  ],
+  "completeFileCoverage": {
+    "20.19.5": [
+      "game/test/countercurrent-chapter-host.test.mjs",
+      "game/test/external-chapter-app.test.mjs",
+      "game/test/external-chapter-card-focus.test.mjs",
+      "game/test/external-chapters-panel.test.mjs",
+      "game/test/fracture-chapter-host.test.mjs",
+      "game/test/library-launch-host.test.mjs",
+      "game/test/mission-replacement-host.test.mjs",
+      "game/test/optional-chapters-host.test.mjs",
+      "game/test/optional-chapters.test.mjs",
+      "game/test/optional-world-choice-lifetime.test.mjs",
+      "game/test/route-worlds-host.test.mjs",
+      "game/test/sentinel-theme-host.test.mjs",
+      "game/test/worlds-browser.test.mjs"
+    ],
+    "22.22.2": [
+      "game/test/external-chapter-app.test.mjs",
+      "game/test/external-chapter-card-focus.test.mjs",
+      "game/test/external-chapters-panel.test.mjs",
+      "game/test/library-launch-host.test.mjs",
+      "game/test/mission-replacement-host.test.mjs",
+      "game/test/optional-chapters-host.test.mjs",
+      "game/test/optional-chapters.test.mjs",
+      "game/test/optional-world-choice-lifetime.test.mjs",
+      "game/test/worlds-browser.test.mjs"
+    ]
+  },
+  "localNode22Omissions": [
+    "game/test/countercurrent-chapter-host.test.mjs",
+    "game/test/fracture-chapter-host.test.mjs",
+    "game/test/route-worlds-host.test.mjs",
+    "game/test/sentinel-theme-host.test.mjs"
+  ],
+  "requiredLaterQualification": "Fresh complete hosted source families on the final commit use Node20.19.x; local navigation coverage on Node22.22.2 is separate, and full Node22 campaign qualification is not claimed.",
+  "origins": [
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/reviewed-cap-inputs.json",
+      "name": "p03-worlds-early-stay-correction/reviewed-cap-inputs.json",
+      "group": "reviewed-input-binding",
+      "bytes": 22191,
+      "sha256": "8f0e3e9365c4ec835738bbb3504cc4f6e79456648253dad947657cd58c48af7d",
+      "member": "objects/8f0e3e9365c4ec835738bbb3504cc4f6e79456648253dad947657cd58c48af7d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/static-intake.json",
+      "name": "p03-early-stay-evidence-proposal/static-intake.json",
+      "group": "static-intake",
+      "bytes": 9406,
+      "sha256": "b20c2d26b431fa55126aff539af3461aa5537d0ea2ea3f53e0d2c2f9b80eb890",
+      "member": "objects/b20c2d26b431fa55126aff539af3461aa5537d0ea2ea3f53e0d2c2f9b80eb890"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-node20.json",
+      "name": "p03-worlds-early-stay-correction/baseline-node20.json",
+      "group": "earlier-operation-original",
+      "bytes": 1017,
+      "sha256": "480bbade552ce08a4f6ce6fd8d2e12af4c779ceb38030a03f998182dab5d2fbb",
+      "member": "objects/480bbade552ce08a4f6ce6fd8d2e12af4c779ceb38030a03f998182dab5d2fbb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/baseline-node20.stdout",
+      "group": "earlier-operation-original",
+      "bytes": 10200,
+      "sha256": "3912ede7c5d61cf59a992db47723e11f7efc78bf598c38a1fb6e1de91473bd9c",
+      "member": "objects/3912ede7c5d61cf59a992db47723e11f7efc78bf598c38a1fb6e1de91473bd9c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/baseline-node20.stderr",
+      "group": "earlier-operation-original",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-default-heap-node20.json",
+      "name": "p03-worlds-early-stay-correction/baseline-default-heap-node20.json",
+      "group": "earlier-operation-original",
+      "bytes": 984,
+      "sha256": "bafba508f6ca9e834a41938f2eb41a6207bdd41be45187b782a7c87b3d366ba6",
+      "member": "objects/bafba508f6ca9e834a41938f2eb41a6207bdd41be45187b782a7c87b3d366ba6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-default-heap-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/baseline-default-heap-node20.stdout",
+      "group": "earlier-operation-original",
+      "bytes": 6029,
+      "sha256": "e46b53554aa92d6125f9fa579124740d0e12ddba8a1bed95767e2e0b31ec9a64",
+      "member": "objects/e46b53554aa92d6125f9fa579124740d0e12ddba8a1bed95767e2e0b31ec9a64"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-default-heap-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/baseline-default-heap-node20.stderr",
+      "group": "earlier-operation-original",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/corrected-targeted-node20.json",
+      "name": "p03-worlds-early-stay-correction/corrected-targeted-node20.json",
+      "group": "earlier-operation-original",
+      "bytes": 984,
+      "sha256": "8a1247a1c4575936dcc6e67421d3fe5af5e459a923853dddcef495f6a435f6e2",
+      "member": "objects/8a1247a1c4575936dcc6e67421d3fe5af5e459a923853dddcef495f6a435f6e2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/corrected-targeted-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/corrected-targeted-node20.stdout",
+      "group": "earlier-operation-original",
+      "bytes": 3851,
+      "sha256": "e5523101aa73543ff35463f472401701d2a29f8e2ea0d51959b426d3230943f1",
+      "member": "objects/e5523101aa73543ff35463f472401701d2a29f8e2ea0d51959b426d3230943f1"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/corrected-targeted-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/corrected-targeted-node20.stderr",
+      "group": "earlier-operation-original",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/format-write.json",
+      "name": "p03-worlds-early-stay-correction/format-write.json",
+      "group": "earlier-operation-original",
+      "bytes": 1452,
+      "sha256": "b4e93184fc10702b7ba9c87c8b7d4278d3849b1dedbed14d1eeda30fddbf0b94",
+      "member": "objects/b4e93184fc10702b7ba9c87c8b7d4278d3849b1dedbed14d1eeda30fddbf0b94"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/format-write.stdout",
+      "name": "p03-worlds-early-stay-correction/format-write.stdout",
+      "group": "earlier-operation-original",
+      "bytes": 428,
+      "sha256": "9c2bcf5d21376997dc207798663ca7d794452a380264c354bf8176120be3e4d4",
+      "member": "objects/9c2bcf5d21376997dc207798663ca7d794452a380264c354bf8176120be3e4d4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/format-write.stderr",
+      "name": "p03-worlds-early-stay-correction/format-write.stderr",
+      "group": "earlier-operation-original",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/baseline-test.mjs",
+      "name": "p03-worlds-early-stay-correction/baseline-test.mjs",
+      "group": "exact-baseline-test",
+      "bytes": 27506,
+      "sha256": "f294ab26bf074198fd87148c19cf3d14f0e0b19514e08818382cfb75054e80b0",
+      "member": "objects/f294ab26bf074198fd87148c19cf3d14f0e0b19514e08818382cfb75054e80b0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/run-check.py",
+      "name": "p03-worlds-early-stay-correction/run-check.py",
+      "group": "execution-helper",
+      "bytes": 1332,
+      "sha256": "2879e6d62a21991f65690d85bdc24a4fae7bea9c722d63795d4bcb45ce6d152e",
+      "member": "objects/2879e6d62a21991f65690d85bdc24a4fae7bea9c722d63795d4bcb45ce6d152e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/binding.json",
+      "name": "p03-worlds-native-c9ef/binding.json",
+      "group": "historical-c9-native",
+      "bytes": 336,
+      "sha256": "76fc998984cc7bafc607d190544fc355c09447bf0ec9bed42b272a91c4cf5777",
+      "member": "objects/76fc998984cc7bafc607d190544fc355c09447bf0ec9bed42b272a91c4cf5777"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/closed-receipt.json",
+      "name": "p03-worlds-native-c9ef/closed-receipt.json",
+      "group": "historical-c9-native",
+      "bytes": 788,
+      "sha256": "0a3ac46e294226b4ea7d2a4c3e9fd2c559be81c4d2c3de94ba20d37172f10342",
+      "member": "objects/0a3ac46e294226b4ea7d2a4c3e9fd2c559be81c4d2c3de94ba20d37172f10342"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/observations.md",
+      "name": "p03-worlds-native-c9ef/observations.md",
+      "group": "historical-c9-native",
+      "bytes": 3109,
+      "sha256": "b2110e7bdc4cd311c07fa653f043367d21335f14968d33c87139150508dcddb4",
+      "member": "objects/b2110e7bdc4cd311c07fa653f043367d21335f14968d33c87139150508dcddb4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/requests.jsonl",
+      "name": "p03-worlds-native-c9ef/requests.jsonl",
+      "group": "historical-c9-native",
+      "bytes": 53459,
+      "sha256": "f829894ef107685278916940f6301d78b89a61f5f876748d4182c0bd90476467",
+      "member": "objects/f829894ef107685278916940f6301d78b89a61f5f876748d4182c0bd90476467"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/serve.py",
+      "name": "p03-worlds-native-c9ef/serve.py",
+      "group": "historical-c9-native",
+      "bytes": 3268,
+      "sha256": "3c7d77fa504035f20e14dc1a2d68f4f4c4101e837f938b8ebc485bb5967de544",
+      "member": "objects/3c7d77fa504035f20e14dc1a2d68f4f4c4101e837f938b8ebc485bb5967de544"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p04-composed-10ebbb90/more-worlds-c9-review.md",
+      "name": "p04-composed-10ebbb90/more-worlds-c9-review.md",
+      "group": "source-derived-finding",
+      "bytes": 5900,
+      "sha256": "02f84f3384cd16c5466e22f3d209a26608fa1487772d23eced93e0d7a794b294",
+      "member": "objects/02f84f3384cd16c5466e22f3d209a26608fa1487772d23eced93e0d7a794b294"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/README.md",
+      "name": "p03-worlds-early-stay-proposal/README.md",
+      "group": "proposal-and-review",
+      "bytes": 2591,
+      "sha256": "26ba28047e01e11f972af20bf7033a4583645a83ba844c381a302de84782fbc6",
+      "member": "objects/26ba28047e01e11f972af20bf7033a4583645a83ba844c381a302de84782fbc6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/proposal.json",
+      "name": "p03-worlds-early-stay-proposal/proposal.json",
+      "group": "proposal-and-review",
+      "bytes": 1516,
+      "sha256": "2859947466aa57442896c55d7362d80641b54ecfdb0e4f2b671b622518e5cfa1",
+      "member": "objects/2859947466aa57442896c55d7362d80641b54ecfdb0e4f2b671b622518e5cfa1"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/runtime.patch",
+      "name": "p03-worlds-early-stay-proposal/runtime.patch",
+      "group": "proposal-and-review",
+      "bytes": 1886,
+      "sha256": "8062168e455a44f64b836fb95d18ff3a18403b86a011757649c98baa523e2be0",
+      "member": "objects/8062168e455a44f64b836fb95d18ff3a18403b86a011757649c98baa523e2be0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/tests.patch",
+      "name": "p03-worlds-early-stay-proposal/tests.patch",
+      "group": "proposal-and-review",
+      "bytes": 4175,
+      "sha256": "37ca97de4ceb8a8f74d34189bd4bfdfe2916c9799bbeaddc3065d67e89827d5a",
+      "member": "objects/37ca97de4ceb8a8f74d34189bd4bfdfe2916c9799bbeaddc3065d67e89827d5a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/cleanup-successor/additive.patch",
+      "name": "p03-worlds-early-stay-proposal/cleanup-successor/additive.patch",
+      "group": "proposal-and-review",
+      "bytes": 520,
+      "sha256": "de47b62f4053c14bddd1dc1466c260b142ffbb281f09d8e1e9f78f10130de943",
+      "member": "objects/de47b62f4053c14bddd1dc1466c260b142ffbb281f09d8e1e9f78f10130de943"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/cleanup-successor/proposal.json",
+      "name": "p03-worlds-early-stay-proposal/cleanup-successor/proposal.json",
+      "group": "proposal-and-review",
+      "bytes": 244,
+      "sha256": "392dc4bb3aeb38ea056cbc621d0e907fbd3b877a62a219bad866bc531e4a1d63",
+      "member": "objects/392dc4bb3aeb38ea056cbc621d0e907fbd3b877a62a219bad866bc531e4a1d63"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/newer-owner-extension/tests.patch",
+      "name": "p03-worlds-early-stay-proposal/newer-owner-extension/tests.patch",
+      "group": "proposal-and-review",
+      "bytes": 4644,
+      "sha256": "48a859ed8734620c83d3b3fb671cd5b31b7b82539d28bf860e784c20cfd9311e",
+      "member": "objects/48a859ed8734620c83d3b3fb671cd5b31b7b82539d28bf860e784c20cfd9311e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/newer-owner-extension/proposal.json",
+      "name": "p03-worlds-early-stay-proposal/newer-owner-extension/proposal.json",
+      "group": "proposal-and-review",
+      "bytes": 984,
+      "sha256": "fd759e8da2e2b1b21a64b142387451a2c18dbc90890c1e6dcf8a5d08aa500b3f",
+      "member": "objects/fd759e8da2e2b1b21a64b142387451a2c18dbc90890c1e6dcf8a5d08aa500b3f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/final-applied-review/review.json",
+      "name": "p03-worlds-early-stay-proposal/final-applied-review/review.json",
+      "group": "proposal-and-review",
+      "bytes": 2989,
+      "sha256": "0f741f0caa42474df5ce8b6b919e7c634578c6354d9def0b67e6d3afd7f18f52",
+      "member": "objects/0f741f0caa42474df5ce8b6b919e7c634578c6354d9def0b67e6d3afd7f18f52"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-proposal/final-applied-review/reviewed.diff",
+      "name": "p03-worlds-early-stay-proposal/final-applied-review/reviewed.diff",
+      "group": "proposal-and-review",
+      "bytes": 11327,
+      "sha256": "80774380877c853f2dae3200ad1ffd6bdab7f0b7054d4b0ad30ed24cec248af0",
+      "member": "objects/80774380877c853f2dae3200ad1ffd6bdab7f0b7054d4b0ad30ed24cec248af0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-gate-review/early-stay/requirements.json",
+      "name": "p03-worlds-gate-review/early-stay/requirements.json",
+      "group": "independent-review",
+      "bytes": 4038,
+      "sha256": "904043f4b9503f59765e5904ba441be9f2a3bb2a8b2d6bd82a7544b533d2756b",
+      "member": "objects/904043f4b9503f59765e5904ba441be9f2a3bb2a8b2d6bd82a7544b533d2756b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-gate-review/early-stay/proposal-review.json",
+      "name": "p03-worlds-gate-review/early-stay/proposal-review.json",
+      "group": "independent-review",
+      "bytes": 4366,
+      "sha256": "73ce51306a9acfe7e0d265ea0224458d21094f7722a097aef3ceaeace8c115e6",
+      "member": "objects/73ce51306a9acfe7e0d265ea0224458d21094f7722a097aef3ceaeace8c115e6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/package-bounded-cap.py",
+      "name": "p03-early-stay-evidence-proposal/package-bounded-cap.py",
+      "group": "packaging-procedure",
+      "bytes": 12271,
+      "sha256": "7b2fea1493e7bf9f9f27df354f79a7fc3202791ee2624bbc2b1f059f6bba95b4",
+      "member": "objects/7b2fea1493e7bf9f9f27df354f79a7fc3202791ee2624bbc2b1f059f6bba95b4"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/README-bounded-cap.md",
+      "name": "p03-early-stay-evidence-proposal/README-bounded-cap.md",
+      "group": "packaging-procedure",
+      "bytes": 4591,
+      "sha256": "58407e1eef5e039fd813504d8d7bbbdcf3a038a474c0bb558e2ab2a1a157f8a6",
+      "member": "objects/58407e1eef5e039fd813504d8d7bbbdcf3a038a474c0bb558e2ab2a1a157f8a6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/DELIVERY-README.bounded-cap.md",
+      "name": "p03-early-stay-evidence-proposal/DELIVERY-README.bounded-cap.md",
+      "group": "packaging-procedure",
+      "bytes": 3261,
+      "sha256": "039f51dc9cc977d7f23136fab5002c3cebd93df434ba78d0e634388c6950e374",
+      "member": "objects/039f51dc9cc977d7f23136fab5002c3cebd93df434ba78d0e634388c6950e374"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/pinned-label-finding.md",
+      "name": "p03-worlds-native-c9ef/pinned-label-finding.md",
+      "group": "additional-closed-original",
+      "bytes": 853,
+      "sha256": "7c5d93afcab8ef3058796d2cb989553c9819d402ddd07ce55f8fab0732b10a74",
+      "member": "objects/7c5d93afcab8ef3058796d2cb989553c9819d402ddd07ce55f8fab0732b10a74"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-native-c9ef/sequence-clarification.md",
+      "name": "p03-worlds-native-c9ef/sequence-clarification.md",
+      "group": "additional-closed-original",
+      "bytes": 685,
+      "sha256": "0de7db134af91485a26229090fa430512d899ef14e06e48b813f9ab6e92e98ab",
+      "member": "objects/0de7db134af91485a26229090fa430512d899ef14e06e48b813f9ab6e92e98ab"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-c9-chapter-choice-fixture-proposal/expanded-four-files/tests.patch",
+      "name": "p03-c9-chapter-choice-fixture-proposal/expanded-four-files/tests.patch",
+      "group": "additional-closed-original",
+      "bytes": 14694,
+      "sha256": "22b642e0e1e6af00af159e42d95d9042aa2726d38c8d2869f0aa752d61b0df9f",
+      "member": "objects/22b642e0e1e6af00af159e42d95d9042aa2726d38c8d2869f0aa752d61b0df9f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-c9-chapter-choice-fixture-proposal/expanded-four-files/failure-diagnosis.json",
+      "name": "p03-c9-chapter-choice-fixture-proposal/expanded-four-files/failure-diagnosis.json",
+      "group": "additional-closed-original",
+      "bytes": 23618,
+      "sha256": "8eb46ac5df086a29936f3f65fc98a48785cf1a1f2b3ddfcb492901937a735f2f",
+      "member": "objects/8eb46ac5df086a29936f3f65fc98a48785cf1a1f2b3ddfcb492901937a735f2f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-c9-chapter-choice-fixture-proposal/expanded-four-files/finite-choose-audit.json",
+      "name": "p03-c9-chapter-choice-fixture-proposal/expanded-four-files/finite-choose-audit.json",
+      "group": "additional-closed-original",
+      "bytes": 4640,
+      "sha256": "bc7b50225a591a4455efd308bb92605733c0fd590a7e0163cae72c39027cf38d",
+      "member": "objects/bc7b50225a591a4455efd308bb92605733c0fd590a7e0163cae72c39027cf38d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-c9-chapter-choice-fixture-proposal/final-formatted-review/review.json",
+      "name": "p03-c9-chapter-choice-fixture-proposal/final-formatted-review/review.json",
+      "group": "additional-closed-original",
+      "bytes": 7140,
+      "sha256": "f51cb39257f4e7757d432f16dbe0b1ec93e5e9ee6e8925b566e32f4cc05f531f",
+      "member": "objects/f51cb39257f4e7757d432f16dbe0b1ec93e5e9ee6e8925b566e32f4cc05f531f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/local-scope-adaptation.diff",
+      "name": "p03-early-stay-evidence-proposal/local-scope-adaptation.diff",
+      "group": "additional-closed-original",
+      "bytes": 4730,
+      "sha256": "024d457742c820750f60dceb2fd4ae24b4513917a07e9e23b2e9a9700fa47bf9",
+      "member": "objects/024d457742c820750f60dceb2fd4ae24b4513917a07e9e23b2e9a9700fa47bf9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-gate-review/early-stay-evidence-local-scope/review.json",
+      "name": "p03-worlds-gate-review/early-stay-evidence-local-scope/review.json",
+      "group": "additional-closed-original",
+      "bytes": 9537,
+      "sha256": "faa5e32fd88e6b0540fb9aebe1cca29b8f0403c4e2c955dc5a3ed3bb0f1fe9b0",
+      "member": "objects/faa5e32fd88e6b0540fb9aebe1cca29b8f0403c4e2c955dc5a3ed3bb0f1fe9b0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/ci-fixture-format-write.json",
+      "name": "p03-worlds-early-stay-correction/ci-fixture-format-write.json",
+      "group": "additional-closed-original",
+      "bytes": 1496,
+      "sha256": "fa761f041f588abdeed452c238ade0aca2bcaa06ad7a35e2990dd66962d82880",
+      "member": "objects/fa761f041f588abdeed452c238ade0aca2bcaa06ad7a35e2990dd66962d82880"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/ci-fixture-format-write.stdout",
+      "name": "p03-worlds-early-stay-correction/ci-fixture-format-write.stdout",
+      "group": "additional-closed-original",
+      "bytes": 184,
+      "sha256": "db2b4ecaef5dcdc81bc4536a734e43edaf0f8dd9be1617662a54717bc4416c65",
+      "member": "objects/db2b4ecaef5dcdc81bc4536a734e43edaf0f8dd9be1617662a54717bc4416c65"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/ci-fixture-format-write.stderr",
+      "name": "p03-worlds-early-stay-correction/ci-fixture-format-write.stderr",
+      "group": "additional-closed-original",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/hydrate-family.py",
+      "name": "p03-worlds-early-stay-correction/hydrate-family.py",
+      "group": "additional-closed-original",
+      "bytes": 4474,
+      "sha256": "b9287febc421dea4b34823a11c30dba5f281266591d92b1010da849afb992578",
+      "member": "objects/b9287febc421dea4b34823a11c30dba5f281266591d92b1010da849afb992578"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/fracture-hydration.json",
+      "name": "p03-worlds-early-stay-correction/fracture-hydration.json",
+      "group": "additional-closed-original",
+      "bytes": 8145,
+      "sha256": "47e6ba0864a75023b53d55cf81e07c913d319b05144dfac9a9a6786865665131",
+      "member": "objects/47e6ba0864a75023b53d55cf81e07c913d319b05144dfac9a9a6786865665131"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/countercurrent-hydration.json",
+      "name": "p03-worlds-early-stay-correction/countercurrent-hydration.json",
+      "group": "additional-closed-original",
+      "bytes": 9947,
+      "sha256": "5f0f94aeb2b250a4617b625c504d3419b76e547a6ddb664b851ed948ef946062",
+      "member": "objects/5f0f94aeb2b250a4617b625c504d3419b76e547a6ddb664b851ed948ef946062"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/route-worlds-hydration.json",
+      "name": "p03-worlds-early-stay-correction/route-worlds-hydration.json",
+      "group": "additional-closed-original",
+      "bytes": 11148,
+      "sha256": "0f5029ee9e4fe8ad191c11589dc8300525fa21e145566b1cdc6f8e865ee2f0af",
+      "member": "objects/0f5029ee9e4fe8ad191c11589dc8300525fa21e145566b1cdc6f8e865ee2f0af"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/sentinel-theme-hydration.json",
+      "name": "p03-worlds-early-stay-correction/sentinel-theme-hydration.json",
+      "group": "additional-closed-original",
+      "bytes": 7544,
+      "sha256": "90da67ac34c5f6111fe7cd9ff4ecafb571333bc75e71616bdc97757b327bb931",
+      "member": "objects/90da67ac34c5f6111fe7cd9ff4ecafb571333bc75e71616bdc97757b327bb931"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/package-local-scope.py",
+      "name": "p03-early-stay-evidence-proposal/package-local-scope.py",
+      "group": "additional-closed-original",
+      "bytes": 12268,
+      "sha256": "177756cbde19a61aa12c25ce90a0bc0f7ebebb469a07a99aa163068003526f55",
+      "member": "objects/177756cbde19a61aa12c25ce90a0bc0f7ebebb469a07a99aa163068003526f55"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/README-local-scope.md",
+      "name": "p03-early-stay-evidence-proposal/README-local-scope.md",
+      "group": "additional-closed-original",
+      "bytes": 4190,
+      "sha256": "dffb510dd5ece1927cf0c9ca9c55c5b4f70d4df73fb21d69943ec3fe75ebb7e5",
+      "member": "objects/dffb510dd5ece1927cf0c9ca9c55c5b4f70d4df73fb21d69943ec3fe75ebb7e5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/DELIVERY-README.local-scope.md",
+      "name": "p03-early-stay-evidence-proposal/DELIVERY-README.local-scope.md",
+      "group": "additional-closed-original",
+      "bytes": 2960,
+      "sha256": "df87a9ba84ace6863d4be6ac5a5c89ce8b2e69339ebe553ccc1388d661447925",
+      "member": "objects/df87a9ba84ace6863d4be6ac5a5c89ce8b2e69339ebe553ccc1388d661447925"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/package-cap-refusal.json",
+      "name": "p03-worlds-early-stay-correction/package-cap-refusal.json",
+      "group": "additional-closed-original",
+      "bytes": 19096,
+      "sha256": "9c35e884753b1a8b58ac125dc8eac16b989f7a0c3b1f52145301b133ad9af040",
+      "member": "objects/9c35e884753b1a8b58ac125dc8eac16b989f7a0c3b1f52145301b133ad9af040"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/measure-package-cap.py",
+      "name": "p03-worlds-early-stay-correction/measure-package-cap.py",
+      "group": "additional-closed-original",
+      "bytes": 1632,
+      "sha256": "75f6b5125d52450cdf425bec32ada916f307dbddd32a52e8f695392b44a90317",
+      "member": "objects/75f6b5125d52450cdf425bec32ada916f307dbddd32a52e8f695392b44a90317"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-early-stay-evidence-proposal/bounded-cap-adaptation.diff",
+      "name": "p03-early-stay-evidence-proposal/bounded-cap-adaptation.diff",
+      "group": "additional-closed-original",
+      "bytes": 1685,
+      "sha256": "4b6fcf0bcc2990ed9812e1a0f9f4fabcb53403bd100a8fdff7d53715c0dfdee9",
+      "member": "objects/4b6fcf0bcc2990ed9812e1a0f9f4fabcb53403bd100a8fdff7d53715c0dfdee9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-gate-review/early-stay-evidence-cap-successor/review.json",
+      "name": "p03-worlds-gate-review/early-stay-evidence-cap-successor/review.json",
+      "group": "additional-closed-original",
+      "bytes": 5817,
+      "sha256": "82621dcbf19ad747be39c1d85635f22d53a318e1c3e09f6fb2a2d0d96269829f",
+      "member": "objects/82621dcbf19ad747be39c1d85635f22d53a318e1c3e09f6fb2a2d0d96269829f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/reviewed-final-inputs.json",
+      "name": "p03-worlds-early-stay-correction/reviewed-final-inputs.json",
+      "group": "additional-closed-original",
+      "bytes": 19830,
+      "sha256": "fb1d142d8fba5702bc344bbe09333d7b3f0d5e4445b6b9e02c50801f245a6aea",
+      "member": "objects/fb1d142d8fba5702bc344bbe09333d7b3f0d5e4445b6b9e02c50801f245a6aea"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865840.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865840.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 104129,
+      "sha256": "45d3f7a6fab04bd079fe3eea4b4f7b6ea0c88f0157553f0a93613843d7be03ae",
+      "member": "objects/45d3f7a6fab04bd079fe3eea4b4f7b6ea0c88f0157553f0a93613843d7be03ae"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865840.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865840.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 428,
+      "sha256": "c7085bf67ff591078504b5150f06b9a6b0ae1c91149ef6ba4bbf1c0c07dd8b0f",
+      "member": "objects/c7085bf67ff591078504b5150f06b9a6b0ae1c91149ef6ba4bbf1c0c07dd8b0f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865862.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865862.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 102967,
+      "sha256": "bc19d33219eef105a87d92133ce59bdb05aa2ca9f628461d61a2bfeae471eac6",
+      "member": "objects/bc19d33219eef105a87d92133ce59bdb05aa2ca9f628461d61a2bfeae471eac6"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865862.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865862.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 428,
+      "sha256": "a6c6383ae611d7c31b42839735e86c660a0a10559214e5e075ddf6e142b6d329",
+      "member": "objects/a6c6383ae611d7c31b42839735e86c660a0a10559214e5e075ddf6e142b6d329"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/manual/job-104760865906.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/manual/job-104760865906.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 116963,
+      "sha256": "ff8ae21fbafd2f05c68cec0aa375a1130d197035c120b59afe76035ffe769dd8",
+      "member": "objects/ff8ae21fbafd2f05c68cec0aa375a1130d197035c120b59afe76035ffe769dd8"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/manual/job-104760865906.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/manual/job-104760865906.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 749,
+      "sha256": "7a89ae47f2b9ec7a737b7902acf2acf3858f8930edb8c070e256c21e49ff697e",
+      "member": "objects/7a89ae47f2b9ec7a737b7902acf2acf3858f8930edb8c070e256c21e49ff697e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886077.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886077.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 104149,
+      "sha256": "d7ad72f2d6539ba0e3757ae4e1b506804909bbc5291d60f93352d876fc7230a2",
+      "member": "objects/d7ad72f2d6539ba0e3757ae4e1b506804909bbc5291d60f93352d876fc7230a2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886077.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886077.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 917,
+      "sha256": "1f80dfb13cdce6c2b04960ecce58928b2491cfa2b7d67e8cd7057e0be06912cc",
+      "member": "objects/1f80dfb13cdce6c2b04960ecce58928b2491cfa2b7d67e8cd7057e0be06912cc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886117.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886117.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 102929,
+      "sha256": "faee71213831cb1b7fbc43e437e2fa31a0457cc5b122a88b5eed46df1f242c55",
+      "member": "objects/faee71213831cb1b7fbc43e437e2fa31a0457cc5b122a88b5eed46df1f242c55"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886117.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886117.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 924,
+      "sha256": "83dd6d5ad6e81b021aef250b52b037ee0bdeed493013101c5a62c3a21ddbed61",
+      "member": "objects/83dd6d5ad6e81b021aef250b52b037ee0bdeed493013101c5a62c3a21ddbed61"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886169.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886169.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 113468,
+      "sha256": "9b6c6366e47b04b18dd45087729c1fdbb5beb9cdec79908cc5d8f7e74c800877",
+      "member": "objects/9b6c6366e47b04b18dd45087729c1fdbb5beb9cdec79908cc5d8f7e74c800877"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886169.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/pr-source/job-104760886169.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 924,
+      "sha256": "741d76363cc37b9a3b90ba29a8fe95492c71bca58e85e619bf504ac038127b99",
+      "member": "objects/741d76363cc37b9a3b90ba29a8fe95492c71bca58e85e619bf504ac038127b99"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.run.original.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.run.original.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 12598,
+      "sha256": "72f1052dcccbeb81f3679aa65fa2086cc2a4581f75c427464afe05c2897b087f",
+      "member": "objects/72f1052dcccbeb81f3679aa65fa2086cc2a4581f75c427464afe05c2897b087f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.run.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.run.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 366,
+      "sha256": "73f85374916aa3426ac81c5e738aad484c459584868bf9b5071b09a5c27d7ddd",
+      "member": "objects/73f85374916aa3426ac81c5e738aad484c459584868bf9b5071b09a5c27d7ddd"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.jobs.original.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.jobs.original.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 17265,
+      "sha256": "f0afa167a272f0e55984d553925aade7d03c19a0b3a692fc148276f2f7863248",
+      "member": "objects/f0afa167a272f0e55984d553925aade7d03c19a0b3a692fc148276f2f7863248"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.jobs.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/manual.jobs.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 384,
+      "sha256": "3cb1aef3b6cd178457ba52c8612197c71774467a13e5dc0fb852a22c8bc9a2c9",
+      "member": "objects/3cb1aef3b6cd178457ba52c8612197c71774467a13e5dc0fb852a22c8bc9a2c9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.run.original.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.run.original.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 12610,
+      "sha256": "574ca860374e6a5162e6d732a84cd9d27bac8de2a4a2645ec65623eed7aa78ab",
+      "member": "objects/574ca860374e6a5162e6d732a84cd9d27bac8de2a4a2645ec65623eed7aa78ab"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.run.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.run.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 366,
+      "sha256": "f2e588982d311e3081880fc922d4b03498d9aa3f69f39974aae5ba21c86bb76b",
+      "member": "objects/f2e588982d311e3081880fc922d4b03498d9aa3f69f39974aae5ba21c86bb76b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.jobs.original.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.jobs.original.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 18827,
+      "sha256": "4c3a24647fd38e1b111ecf149205faa72cc5ac906d1e4aed672f8fe4f88c36c7",
+      "member": "objects/4c3a24647fd38e1b111ecf149205faa72cc5ac906d1e4aed672f8fe4f88c36c7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.jobs.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/terminal-followup-04/pr-source.jobs.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 384,
+      "sha256": "4ddbad99324ce35898cae7b8b185b09594d2cc6398525daf94af383605917b78",
+      "member": "objects/4ddbad99324ce35898cae7b8b185b09594d2cc6398525daf94af383605917b78"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/final-failure-inventory/README.md",
+      "name": "p03-worlds-release-preparation/actual-runs/final-failure-inventory/README.md",
+      "group": "failed-c9-hosted-original",
+      "bytes": 1560,
+      "sha256": "9cde68a2184ac458436180a9cc7cffc1ad00b996bebbaf46b81b6b47c05f4c3c",
+      "member": "objects/9cde68a2184ac458436180a9cc7cffc1ad00b996bebbaf46b81b6b47c05f4c3c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/final-failure-inventory/failure-inventory.json",
+      "name": "p03-worlds-release-preparation/actual-runs/final-failure-inventory/failure-inventory.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 57779,
+      "sha256": "138346f9f4e6a267170c6eb05bf56bf53f36e587666c33192297d3d7ae7761c9",
+      "member": "objects/138346f9f4e6a267170c6eb05bf56bf53f36e587666c33192297d3d7ae7761c9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/final-failure-inventory/manifest.json",
+      "name": "p03-worlds-release-preparation/actual-runs/final-failure-inventory/manifest.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 28952,
+      "sha256": "f576eb64651ced50655a6ae36fe4de006aaf034102d032751d49353f66b275db",
+      "member": "objects/f576eb64651ced50655a6ae36fe4de006aaf034102d032751d49353f66b275db"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/final-failure-inventory/original-byte-review.json",
+      "name": "p03-worlds-release-preparation/actual-runs/final-failure-inventory/original-byte-review.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 4266,
+      "sha256": "395b4f664f7c6d91bb9605cb5c402185de3596296d01f9dca0ff59d7f0328f55",
+      "member": "objects/395b4f664f7c6d91bb9605cb5c402185de3596296d01f9dca0ff59d7f0328f55"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/source/countercurrent-chapter-host.test.mjs",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/source/countercurrent-chapter-host.test.mjs",
+      "group": "failed-c9-hosted-original",
+      "bytes": 17994,
+      "sha256": "f144b7ba2cc6a4bfa3343adc1127da402fb1d9f3081e0e3a9ff9d84c730d0b06",
+      "member": "objects/f144b7ba2cc6a4bfa3343adc1127da402fb1d9f3081e0e3a9ff9d84c730d0b06"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/source/fracture-chapter-host.test.mjs",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/source/fracture-chapter-host.test.mjs",
+      "group": "failed-c9-hosted-original",
+      "bytes": 16354,
+      "sha256": "e03a5a1376691a0afe18dd73467b858864299b43a2d6cb5383c71713e5f75ea3",
+      "member": "objects/e03a5a1376691a0afe18dd73467b858864299b43a2d6cb5383c71713e5f75ea3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/source/route-worlds-host.test.mjs",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/source/route-worlds-host.test.mjs",
+      "group": "failed-c9-hosted-original",
+      "bytes": 17969,
+      "sha256": "3aeff68f0e05da1d6b29b7930db2b4c27b0b1831fdb1cc5ed7fb424152723ccc",
+      "member": "objects/3aeff68f0e05da1d6b29b7930db2b4c27b0b1831fdb1cc5ed7fb424152723ccc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/completed-jobs/source/sentinel-theme-host.test.mjs",
+      "name": "p03-worlds-release-preparation/actual-runs/completed-jobs/source/sentinel-theme-host.test.mjs",
+      "group": "failed-c9-hosted-original",
+      "bytes": 12516,
+      "sha256": "5df7d1224b73ecb074808e491fffcbaa0abf76c3ae6dc0d1422504ad25d8e54e",
+      "member": "objects/5df7d1224b73ecb074808e491fffcbaa0abf76c3ae6dc0d1422504ad25d8e54e"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/publisher-preview.run.original.json",
+      "name": "p03-worlds-release-preparation/actual-runs/publisher-preview.run.original.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 12616,
+      "sha256": "7aba05b3d437c60667356006bafe0dcf6075b7fe84e669f602623e11dee3a0a2",
+      "member": "objects/7aba05b3d437c60667356006bafe0dcf6075b7fe84e669f602623e11dee3a0a2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/publisher-preview.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/publisher-preview.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 494,
+      "sha256": "c6903e58b0b6424cb60bf03451befcd4fb8b8eaeec6d8f326b08bef331cdfe5b",
+      "member": "objects/c6903e58b0b6424cb60bf03451befcd4fb8b8eaeec6d8f326b08bef331cdfe5b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/followup-01/publisher-preview.jobs.json",
+      "name": "p03-worlds-release-preparation/actual-runs/followup-01/publisher-preview.jobs.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 4139,
+      "sha256": "329d3b2acc2118b101b4c6e11093def05cebfe5458bc1c97a8e5271362d1f59f",
+      "member": "objects/329d3b2acc2118b101b4c6e11093def05cebfe5458bc1c97a8e5271362d1f59f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/followup-01/publisher-preview.jobs.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/followup-01/publisher-preview.jobs.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 435,
+      "sha256": "bb62d8530df422ba4a01d1e0292963a0ff3f45ae0ddf8362b5af8941dc2a23ad",
+      "member": "objects/bb62d8530df422ba4a01d1e0292963a0ff3f45ae0ddf8362b5af8941dc2a23ad"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/followup-01/publisher-job-104760383216.log.gz",
+      "name": "p03-worlds-release-preparation/actual-runs/followup-01/publisher-job-104760383216.log.gz",
+      "group": "failed-c9-hosted-original",
+      "bytes": 11674,
+      "sha256": "87696bf5ce1bfad8044aa4f90e4ce67ea0d6224be1d80f977e854281473b1ceb",
+      "member": "objects/87696bf5ce1bfad8044aa4f90e4ce67ea0d6224be1d80f977e854281473b1ceb"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/followup-01/publisher-job-104760383216.log.receipt.json",
+      "name": "p03-worlds-release-preparation/actual-runs/followup-01/publisher-job-104760383216.log.receipt.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 424,
+      "sha256": "56ad1590988b498b821d6cfcfea0a14a020c5703f6c6331d3d1826d6d555dd58",
+      "member": "objects/56ad1590988b498b821d6cfcfea0a14a020c5703f6c6331d3d1826d6d555dd58"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/followup-01/source-publication.original.json",
+      "name": "p03-worlds-release-preparation/actual-runs/followup-01/source-publication.original.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 96519,
+      "sha256": "809cbe3aa59ab8716d2d92a9b57b8dd2ec9549d1df8a829c8e18bd3abe5f7e9f",
+      "member": "objects/809cbe3aa59ab8716d2d92a9b57b8dd2ec9549d1df8a829c8e18bd3abe5f7e9f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/followup-01/publisher-preview-failure-review.json",
+      "name": "p03-worlds-release-preparation/actual-runs/followup-01/publisher-preview-failure-review.json",
+      "group": "failed-c9-hosted-original",
+      "bytes": 2220,
+      "sha256": "58b78f90701ee9da972c7b6976f9f8420a7a0275957f62cd2ed720f7884054a0",
+      "member": "objects/58b78f90701ee9da972c7b6976f9f8420a7a0275957f62cd2ed720f7884054a0"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865840.log.stderr",
+      "name": "p03-worlds-release-preparation/actual-runs/failed-jobs-first/job-104760865840.log.stderr",
+      "group": "failed-c9-hosted-original",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node20.json",
+      "name": "p03-worlds-early-stay-correction/affected-node20.json",
+      "group": "final-local-receipt",
+      "bytes": 2259,
+      "sha256": "9625b155166e0a9b29d9d2d25708188acf1004f027cb4bc0b6694335bf084c1a",
+      "member": "objects/9625b155166e0a9b29d9d2d25708188acf1004f027cb4bc0b6694335bf084c1a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/affected-node20.stdout",
+      "group": "final-local-original-log",
+      "bytes": 30548,
+      "sha256": "2624dcd95ed6a7cb94d8a26b6f75f6d3d440db4f94f181e9a577ffe1c76a179c",
+      "member": "objects/2624dcd95ed6a7cb94d8a26b6f75f6d3d440db4f94f181e9a577ffe1c76a179c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/affected-node20.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/app.mjs",
+      "name": "worktrees/p03-final-integration/game/app.mjs",
+      "group": "final-tested-source",
+      "bytes": 267128,
+      "sha256": "f61566fd474c729f9b9801cbe971bd0b7440e884c5c52df807537be40e5b7c4d",
+      "member": "objects/f61566fd474c729f9b9801cbe971bd0b7440e884c5c52df807537be40e5b7c4d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/ui/optional-chapters-panel.mjs",
+      "name": "worktrees/p03-final-integration/game/ui/optional-chapters-panel.mjs",
+      "group": "final-tested-source",
+      "bytes": 30091,
+      "sha256": "5b52fe569b5cf8ccf1c9cc5c67c2a8e139994d7a22cebb6fe97907d65e77897c",
+      "member": "objects/5b52fe569b5cf8ccf1c9cc5c67c2a8e139994d7a22cebb6fe97907d65e77897c"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/optional-chapters-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/optional-chapters-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 29943,
+      "sha256": "f2645870602cae7d8751af521d575c92eaf9ff4b9f9429db14467137d5e15c7d",
+      "member": "objects/f2645870602cae7d8751af521d575c92eaf9ff4b9f9429db14467137d5e15c7d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/optional-world-choice-lifetime.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/optional-world-choice-lifetime.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 6931,
+      "sha256": "78d72e38ea72dca3e5ea9505e7b06a7f49526fc8da6a993e99c57da2dab8ec78",
+      "member": "objects/78d72e38ea72dca3e5ea9505e7b06a7f49526fc8da6a993e99c57da2dab8ec78"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/external-chapters-panel.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/external-chapters-panel.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 6970,
+      "sha256": "f5d51625904b4ffca6b4ae5a08e20e0bc55ddf4c65b4cc764bf59903163e30c7",
+      "member": "objects/f5d51625904b4ffca6b4ae5a08e20e0bc55ddf4c65b4cc764bf59903163e30c7"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/external-chapter-card-focus.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/external-chapter-card-focus.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 12469,
+      "sha256": "77408faab45fc243ff25cdfc8574cc23b1ccde170fc594253488544c51ccbcd2",
+      "member": "objects/77408faab45fc243ff25cdfc8574cc23b1ccde170fc594253488544c51ccbcd2"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/external-chapter-app.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/external-chapter-app.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 34824,
+      "sha256": "682fcb341b425b45c958a854f8a3ec5d56ddf4b04d79a6d1710b6bf45030ca32",
+      "member": "objects/682fcb341b425b45c958a854f8a3ec5d56ddf4b04d79a6d1710b6bf45030ca32"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/worlds-browser.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/worlds-browser.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 12544,
+      "sha256": "d003d3980bcf4a7b5aa7a94f0424bb9b99027e973ac118227e20363aadb37973",
+      "member": "objects/d003d3980bcf4a7b5aa7a94f0424bb9b99027e973ac118227e20363aadb37973"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/optional-chapters.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/optional-chapters.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 7949,
+      "sha256": "c04553e67ce6e8b55828aa4144e3fdb6d8918422208228e5d341b077885f7098",
+      "member": "objects/c04553e67ce6e8b55828aa4144e3fdb6d8918422208228e5d341b077885f7098"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/mission-replacement-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/mission-replacement-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 17953,
+      "sha256": "bd27fffdf0265eac73ac741f1205f71a78d23e42334c4ed698d5c4997f8857e5",
+      "member": "objects/bd27fffdf0265eac73ac741f1205f71a78d23e42334c4ed698d5c4997f8857e5"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/library-launch-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/library-launch-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 21765,
+      "sha256": "f9218589128203a1d165d18047c6d78183ecdb047f02ecc2d2451ee35057e1a9",
+      "member": "objects/f9218589128203a1d165d18047c6d78183ecdb047f02ecc2d2451ee35057e1a9"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node22.json",
+      "name": "p03-worlds-early-stay-correction/affected-node22.json",
+      "group": "final-local-receipt",
+      "bytes": 2259,
+      "sha256": "15ca9e6de73b4e5328fb97ad9337ed6093db2eab40b301cf246aa17eeaa4ff9d",
+      "member": "objects/15ca9e6de73b4e5328fb97ad9337ed6093db2eab40b301cf246aa17eeaa4ff9d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node22.stdout",
+      "name": "p03-worlds-early-stay-correction/affected-node22.stdout",
+      "group": "final-local-original-log",
+      "bytes": 32431,
+      "sha256": "cc60701e415e9ecb29e96aab9290eedafc900e2c03b9b817e9175de99f010c57",
+      "member": "objects/cc60701e415e9ecb29e96aab9290eedafc900e2c03b9b817e9175de99f010c57"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/affected-node22.stderr",
+      "name": "p03-worlds-early-stay-correction/affected-node22.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/fracture-node20.json",
+      "name": "p03-worlds-early-stay-correction/fracture-node20.json",
+      "group": "final-local-receipt",
+      "bytes": 933,
+      "sha256": "f046f621d944c1e0becf5b50c2416a94428c4e0c2e587c8a067c863a021431ab",
+      "member": "objects/f046f621d944c1e0becf5b50c2416a94428c4e0c2e587c8a067c863a021431ab"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/fracture-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/fracture-node20.stdout",
+      "group": "final-local-original-log",
+      "bytes": 1231,
+      "sha256": "f54ae23d0a846fd9214546ff3734248dd9dd891f9eda8eaba846b34af148c818",
+      "member": "objects/f54ae23d0a846fd9214546ff3734248dd9dd891f9eda8eaba846b34af148c818"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/fracture-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/fracture-node20.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/fracture-chapter-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/fracture-chapter-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 18513,
+      "sha256": "a20e444e2bc47fc4a71439abb672e1c71e5b9f6efc2290fbb7e298cf9606e2ae",
+      "member": "objects/a20e444e2bc47fc4a71439abb672e1c71e5b9f6efc2290fbb7e298cf9606e2ae"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/countercurrent-node20.json",
+      "name": "p03-worlds-early-stay-correction/countercurrent-node20.json",
+      "group": "final-local-receipt",
+      "bytes": 944,
+      "sha256": "c521a709a87911d1e3529c0c46c0e815e619ff40c6b0fc81ad5e558b5f738c38",
+      "member": "objects/c521a709a87911d1e3529c0c46c0e815e619ff40c6b0fc81ad5e558b5f738c38"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/countercurrent-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/countercurrent-node20.stdout",
+      "group": "final-local-original-log",
+      "bytes": 1243,
+      "sha256": "21c6f20402c2cf7906689439f402892d2315506f04e9b70c819a1cbdd659eead",
+      "member": "objects/21c6f20402c2cf7906689439f402892d2315506f04e9b70c819a1cbdd659eead"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/countercurrent-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/countercurrent-node20.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/countercurrent-chapter-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/countercurrent-chapter-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 19726,
+      "sha256": "f119fbf3abd94348bc87e93a34d3073dea78a8e974807cd5e405c91517299ad1",
+      "member": "objects/f119fbf3abd94348bc87e93a34d3073dea78a8e974807cd5e405c91517299ad1"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/route-worlds-node20.json",
+      "name": "p03-worlds-early-stay-correction/route-worlds-node20.json",
+      "group": "final-local-receipt",
+      "bytes": 925,
+      "sha256": "6d4b8aa83237aa9c1b2ab4d99c70d3f9b450e402d3e4b8cd2ef6916c817211cc",
+      "member": "objects/6d4b8aa83237aa9c1b2ab4d99c70d3f9b450e402d3e4b8cd2ef6916c817211cc"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/route-worlds-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/route-worlds-node20.stdout",
+      "group": "final-local-original-log",
+      "bytes": 2578,
+      "sha256": "b94c5b0f7ba2e09565e136103d67315c40a9b9f9a0d964faac335c17b4f4569a",
+      "member": "objects/b94c5b0f7ba2e09565e136103d67315c40a9b9f9a0d964faac335c17b4f4569a"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/route-worlds-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/route-worlds-node20.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/route-worlds-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/route-worlds-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 20785,
+      "sha256": "1bfdb329cf9196e46786e59a9c5519868ab0b28614cfb79f8b3fdaab38b7a07f",
+      "member": "objects/1bfdb329cf9196e46786e59a9c5519868ab0b28614cfb79f8b3fdaab38b7a07f"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/sentinel-theme-node20.json",
+      "name": "p03-worlds-early-stay-correction/sentinel-theme-node20.json",
+      "group": "final-local-receipt",
+      "bytes": 928,
+      "sha256": "254012be69f3e87c488b1001e9452b977b0037db122fc183b9d0859e066ed825",
+      "member": "objects/254012be69f3e87c488b1001e9452b977b0037db122fc183b9d0859e066ed825"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/sentinel-theme-node20.stdout",
+      "name": "p03-worlds-early-stay-correction/sentinel-theme-node20.stdout",
+      "group": "final-local-original-log",
+      "bytes": 942,
+      "sha256": "e1d837558a0a9f8f24aecc832eab0ae74b91c7a7559ee1b226c3653c3100ef3d",
+      "member": "objects/e1d837558a0a9f8f24aecc832eab0ae74b91c7a7559ee1b226c3653c3100ef3d"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/sentinel-theme-node20.stderr",
+      "name": "p03-worlds-early-stay-correction/sentinel-theme-node20.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/game/test/sentinel-theme-host.test.mjs",
+      "name": "worktrees/p03-final-integration/game/test/sentinel-theme-host.test.mjs",
+      "group": "final-tested-source",
+      "bytes": 14675,
+      "sha256": "6e8cf6326d4baf67db67656857e7e0599a221a32e086879bbb6c7f2b48ba722b",
+      "member": "objects/6e8cf6326d4baf67db67656857e7e0599a221a32e086879bbb6c7f2b48ba722b"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-lint.json",
+      "name": "p03-worlds-early-stay-correction/final-lint.json",
+      "group": "final-local-receipt",
+      "bytes": 1914,
+      "sha256": "7f6ed48f7e693fb0223f739f5185d20f1631dbf09eb0057518ff5c319d846dd3",
+      "member": "objects/7f6ed48f7e693fb0223f739f5185d20f1631dbf09eb0057518ff5c319d846dd3"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-lint.stdout",
+      "name": "p03-worlds-early-stay-correction/final-lint.stdout",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-lint.stderr",
+      "name": "p03-worlds-early-stay-correction/final-lint.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-format-check.json",
+      "name": "p03-worlds-early-stay-correction/final-format-check.json",
+      "group": "final-local-receipt",
+      "bytes": 2142,
+      "sha256": "6eb64de1091f444f0b9f545e8983b8a1a617f0035e6df469c3ddf5cfe4874b31",
+      "member": "objects/6eb64de1091f444f0b9f545e8983b8a1a617f0035e6df469c3ddf5cfe4874b31"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-format-check.stdout",
+      "name": "p03-worlds-early-stay-correction/final-format-check.stdout",
+      "group": "final-local-original-log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "member": "objects/17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-format-check.stderr",
+      "name": "p03-worlds-early-stay-correction/final-format-check.stderr",
+      "group": "final-local-original-log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "member": "objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/.cursor/skills/deploy-release-pages/SKILL.md",
+      "name": "worktrees/p03-final-integration/.cursor/skills/deploy-release-pages/SKILL.md",
+      "group": "final-reviewed-source",
+      "bytes": 10717,
+      "sha256": "bcc589562670acba9373b9d744f4ce8e605bedd1d08cf4c0e14a9f952e6ddcd1",
+      "member": "objects/bcc589562670acba9373b9d744f4ce8e605bedd1d08cf4c0e14a9f952e6ddcd1"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/authoring/prompts/cross-mode-delivery.md",
+      "name": "worktrees/p03-final-integration/authoring/prompts/cross-mode-delivery.md",
+      "group": "final-reviewed-source",
+      "bytes": 35796,
+      "sha256": "acbfb5207066d417da97b3ed82ea0f43018fce907e44d8caaa221100b07c18ef",
+      "member": "objects/acbfb5207066d417da97b3ed82ea0f43018fce907e44d8caaa221100b07c18ef"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "name": "worktrees/p03-final-integration/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "group": "final-reviewed-source",
+      "bytes": 168116,
+      "sha256": "d34ceb48350f42ede46c906ba670a4a7b3e9c0d6295762df536612ad386c3781",
+      "member": "objects/d34ceb48350f42ede46c906ba670a4a7b3e9c0d6295762df536612ad386c3781"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/docs/cross-mode-execution.md",
+      "name": "worktrees/p03-final-integration/docs/cross-mode-execution.md",
+      "group": "final-reviewed-source",
+      "bytes": 97563,
+      "sha256": "f41cb6bd885a4a8450d2f20f0e11109bdea81789c65cd4030ea2cf7395090dfe",
+      "member": "objects/f41cb6bd885a4a8450d2f20f0e11109bdea81789c65cd4030ea2cf7395090dfe"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-final-integration/docs/more-worlds-flight-selection.md",
+      "name": "worktrees/p03-final-integration/docs/more-worlds-flight-selection.md",
+      "group": "final-reviewed-source",
+      "bytes": 2980,
+      "sha256": "73ee3173398a991fe6ef6f3692ecfd653e013c5701afaed6cb7babb6a6b6c679",
+      "member": "objects/73ee3173398a991fe6ef6f3692ecfd653e013c5701afaed6cb7babb6a6b6c679"
+    },
+    {
+      "origin": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-worlds-early-stay-correction/final-reviewed.diff",
+      "name": "p03-worlds-early-stay-correction/final-reviewed.diff",
+      "group": "final-reviewed-diff",
+      "bytes": 37540,
+      "sha256": "b08400b5fdf174e08cd059002d903d3ced80d9c90e9d2ef505638c472e650f57",
+      "member": "objects/b08400b5fdf174e08cd059002d903d3ced80d9c90e9d2ef505638c472e650f57"
+    }
+  ],
+  "uniqueObjects": 129,
+  "uniqueBytes": 2341963,
+  "scope": "Early Stay correction, failed c9 hosted observations, scoped local checks and historical c9 browser originals. The c9 native record does not test early Stay or prove a retained unfinished cut. Runtime receipts pin their stated app/panel/command files, not all transitive inputs. Earlier world-selection ZIP remains at its original commit; not repackaged. Four heavy chapter fixtures have local Node20 coverage only; fresh complete hosted source families must qualify the final commit on their configured Node20.19.x runtime; full Node22 campaign qualification is not claimed. No new source qualification, public, offline, physical-input or P03 acceptance."
+}

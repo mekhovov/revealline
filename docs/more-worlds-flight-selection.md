@@ -27,6 +27,16 @@ does neither. Closing the parent, changing its selection, backgrounding the page
 or starting newer work retires the previous choice. A late callback cannot close
 a newer panel or select a chapter.
 
+Stay also works before saved-flight verification finishes. The closing decision
+releases its own parent operation immediately, making the originating Choose
+available before returning focus. This explicit handoff does not wait for an
+already queued storage callback. The cancelled callback cannot save, select,
+move focus or release a newer operation. Focus returns only while the current
+foreground decision still owns it; newer focus and retired visits remain intact.
+
+The pinned browsing label says **Chapter in view**. Installing or inspecting a
+card does not make that chapter the active flight.
+
 This follows the focus-return and contained-navigation principles in the
 [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 The operation ownership and saved-flight checks are RevealLine's implementation

@@ -190,6 +190,33 @@ export function attachOptionalChaptersPanel({
     return {
       opener,
       isCurrent,
+      onCancelled({ dialog: decision }) {
+        if (!isCurrent() || decision?.open) return false;
+        const operation = generation;
+        const ownsReturnFocus = (element) =>
+          [doc.body, dialog, opener, decision].includes(element) || decision?.contains(element);
+        const restore = ownsReturnFocus(doc.activeElement);
+        // Stay is a new, explicit return request. Release this outer operation
+        // now, even if the aborted save callback has not settled yet. Its old
+        // finally cannot restore focus or clear a subsequent operation.
+        cancelPending({ restoreFocus: false });
+        if (
+          restore &&
+          !disposed &&
+          dialog.open &&
+          generation === operation + 1 &&
+          epoch === launchGeneration &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          ownsReturnFocus(doc.activeElement) &&
+          opener.isConnected &&
+          !opener.disabled &&
+          !opener.closest('[hidden],[inert],[aria-hidden="true"]') &&
+          (typeof opener.getClientRects !== 'function' || opener.getClientRects().length)
+        )
+          opener.focus();
+        return true;
+      },
       onSelected() {
         if (!isCurrent()) return;
         selected = true;
@@ -462,7 +489,7 @@ export function attachOptionalChaptersPanel({
     const held = entries.find((entry) => entry.key === view.pinned);
     operationStatus.hidden = !held;
     operationStatus.textContent = held
-      ? `${busy ? 'Working on' : 'Current chapter'}: ${held.chapter?.name ?? held.item?.name ?? held.pack.name}. Kept visible while you browse.`
+      ? `${busy ? 'Working on' : 'Chapter in view'}: ${held.chapter?.name ?? held.item?.name ?? held.pack.name}. Kept visible while you browse.`
       : '';
   }
   function movePage(delta) {
