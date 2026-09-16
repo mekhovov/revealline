@@ -76,3 +76,9 @@ node publishing/pages-controller/publish.mjs verify --preview
 ## Delivery evidence updates
 
 The [delivery record](delivery/README.md) is publication metadata. Changes confined to `delivery/**` retain pull-request preview checks but are excluded from the publisher's main push trigger. This prevents completing an acceptance report from starting a new deployment that would need another report. The exclusion follows the positive controller path pattern and does not suppress a mixed commit that changes the selector, workflow or other publication inputs. Immutable game source and release artifacts remain unchanged.
+
+## Archive18 preservation: v0.58.0
+
+Archive18 preserves the original v0.58.0 release for historical online play when another edition becomes current. Its admitted infrastructure commit is `b83acdd80f0aaa35a72cff8c6b861250e894b1d7`, tree `69b9a690589500ea78b240ae242efb7309474730`, deployment `6474004290`. The original ZIP extraction and complete public HTTP audit verified all **665 files / 312,702,795 bytes**, without failed, retried or skipped files. The existing v0.58.0 catalog metadata and source revision remain unchanged.
+
+The scoped native review covers the title, existing saved-flight restoration paused until explicit Resume, flight, a clock-expired result, retry, pause, audio settings and return to title. Original captures and the review are retained under `evidence/archive-18/native/`; the browser-admission record binds them to the exact archive deployment. This is historical online preservation, not a new phase acceptance, victory test, offline qualification, physical touch/controller test or audible listening pass. The historical v0.58.0 Team notice defect is preserved; this admission does not claim the v0.58.1 correction.
