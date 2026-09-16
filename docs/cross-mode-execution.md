@@ -8,6 +8,16 @@ v0.58.1 source `c93019a344f6f4c6ac03940c77ea09c81122d911`, tree `f6055cbcba92d45
 
 The correction keeps Team's permanent visual-feedback-only explanation separate from transient storage warnings after successful sound edits and recovery. P02-A's scoped source/public acceptance does not complete P02-B playlists/content, acoustic listening, full offline-media playback or physical-device qualification. Story natural-end/Skip focus remains part of the unqualified P03 composition; its independent candidate evidence is not public acceptance.
 
+## Current P03 feature delivery
+
+**v0.59.0 — Cross-mode navigation update is being prepared; P03 remains `implementing`.** This named feature delivery combines mode entry, Help/readers, explicit Back/Resume, departure decisions and focus corrections. It does not accept internal P03-A–M packages as separate phases or waive P03's full input gate. Exact committed-source qualification, the frozen artifact and independent public verification remain pending. The current public game is still v0.58.1.
+
+The composed host fixes retain newer Help ownership when a delayed controller poll catches up, and clear Team's reader/held input on backgrounding even when already paused. Actual local keyboard journeys cover Solo wins/Collection/Library, live-cut pause and mission reading, mission setup including Grid + buffer, Team reading/options/departure and Versus setup/pause/results/Next. The [source-browser observations](verification/cross-mode/p03/native/observations.md) identify the actual served fpv25 inputs and inline-only screenshot limitation. Native foreground loss/return, physical touch/controller and complete remaining screen coverage are still open.
+
+Canonical production preserves published P01/P02, the measured fpv25 source stage and its fpv26 review successor, with all 127 original payloads unchanged. The [scoped recipe review](verification/cross-mode/p03/recipe-review.md) and [verification record](verification/cross-mode/p03/README.md) distinguish the corrected 11/11 production-history checks, final Team 205/205 on each runtime, earlier overlapping cohorts and retained failures. These are development checks, not the final release total. No source or public result from v0.58.1 qualifies this candidate.
+
+The approved remaining order is unchanged: P03 → P05 → P08-A → P08-B → P09 → P07 → P02-B → P04 → P06 → P10 → P11–P15 campaigns → P16 → P17 → P18. Native distribution and online multiplayer retain separate later gates. After this feature's public gate passes, record its exact source, PR, URL and observed journeys here while keeping P03's outstanding acceptance work visible.
+
 ## Retained release and correction history
 
 The paragraphs in this section retain their release-time observations and pending states. They do not supersede the accepted P01/P02-A status above or relabel historical failures as passes.

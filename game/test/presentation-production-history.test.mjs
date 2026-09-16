@@ -14,6 +14,37 @@ import { createHash } from 'node:crypto';
 import { canonicalJSON } from '../data-json.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 
+async function reconstructPinnedProduction(oracle, candidate) {
+  const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+  const source = structuredClone(oracle.metadata);
+  for (const [group, pin] of Object.entries(oracle.groups)) {
+    const prefix = candidate.document[group].slice(0, pin.count);
+    assert.equal(prefix.length, pin.count, `pinned ${group} count`);
+    assert.equal(sha(canonicalJSON(prefix)), pin.sha256, `pinned ${group} bytes`);
+    source[group] = prefix;
+  }
+  // Reuse records only after all immutable group hashes match the pinned oracle.
+  const document = validateThemeBundle(source);
+  const assets = new Map();
+  for (const asset of document.assets) {
+    if (!asset.file || assets.has(asset.file.sha256)) continue;
+    const blob = candidate.assets.get(asset.file.sha256);
+    assert.ok(blob, `pinned payload ${asset.file.sha256}`);
+    const bytes = Buffer.from(await blob.arrayBuffer());
+    assert.equal(bytes.length, asset.file.bytes);
+    assert.equal(sha(bytes), asset.file.sha256);
+    assets.set(asset.file.sha256, blob);
+  }
+  const payloads = [...assets].map(([hash, blob]) => [hash, blob.size]);
+  payloads.sort(([a], [b]) => a.localeCompare(b));
+  assert.equal(payloads.length, oracle.payloads.count);
+  assert.equal(sha(canonicalJSON(payloads)), oracle.payloads.sha256);
+  const raw = Buffer.from(await (await exportThemeBundle(document, assets)).arrayBuffer());
+  assert.equal(raw.length, oracle.provenance.bytes);
+  assert.equal(sha(raw), oracle.provenance.sha256, 'reconstructed pinned bundle');
+  return { document, assets, raw };
+}
+
 test('P02 retains the published P01 history and appends audio7 under a new fpv24', async () => {
   // This oracle was independently read from published 856850ce, not this candidate.
   const oracle = JSON.parse(
@@ -21,10 +52,16 @@ test('P02 retains the published P01 history and appends audio7 under a new fpv24
   );
   const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
   const key = (record) => `${record.id}@${record.revision}`;
-  const raw = await fs.readFile(
+  const currentRaw = await fs.readFile(
     new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
   );
-  const candidate = await importThemeBundle(new Blob([raw]), { decodeImage: null });
+  const current = await importThemeBundle(new Blob([currentRaw]), { decodeImage: null });
+  // Pin this historical test to published c930 P02, independent of current generation.
+  const p02Oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-p02-v0581.json', import.meta.url), 'utf8'),
+  );
+  const candidate = await reconstructPinnedProduction(p02Oracle, current);
+  const raw = candidate.raw;
   const priorSource = structuredClone(oracle.metadata);
   for (const [group, pin] of Object.entries(oracle.groups)) {
     const prefix = candidate.document[group].slice(0, pin.count);
@@ -49,7 +86,17 @@ test('P02 retains the published P01 history and appends audio7 under a new fpv24
   assert.equal(priorBytes.length, oracle.provenance.bytes);
   assert.equal(sha(priorBytes), oracle.provenance.sha256, 'reconstructed published bundle');
 
-  const production = await createFieldKitProduction();
+  // The producer visits bindings in slot order, while exported JSON sorts object
+  // keys. Restore that insertion order only; every canonical historical byte
+  // still matches the independent published oracle before replaying the append.
+  const production = { ...candidate, document: structuredClone(candidate.document) };
+  for (const theme of production.document.themes)
+    theme.bindings = Object.fromEntries(
+      production.document.slots
+        .filter((slot) => Object.hasOwn(theme.bindings, slot.id))
+        .map((slot) => [slot.id, theme.bindings[slot.id]]),
+    );
+  assert.equal(canonicalJSON(production.document), canonicalJSON(candidate.document));
   const next = retainProductionHistory(production.document, prior);
   validateThemeBundle(next, { previous: prior, expectedRevision: 23 });
   assert.equal(canonicalJSON(next), canonicalJSON(candidate.document));
@@ -94,7 +141,7 @@ test('P02 retains the published P01 history and appends audio7 under a new fpv24
   assert.equal(canonicalJSON(second), canonicalJSON(next));
   const exported = Buffer.from(await (await exportThemeBundle(next, mergedAssets)).arrayBuffer());
   const repeated = Buffer.from(await (await exportThemeBundle(second, mergedAssets)).arrayBuffer());
-  assert.deepEqual(exported, raw, 'actual CLI ledger equals reproduced bundle');
+  assert.deepEqual(exported, raw, 'published P02 ledger equals reproduced bundle');
   assert.deepEqual(repeated, exported, 'second export identical');
   const compiledPrior = await compilePresentation(prior, candidate.assets);
   const compiledNext = await compilePresentation(next, mergedAssets);
@@ -123,6 +170,129 @@ test('P02 retains the published P01 history and appends audio7 under a new fpv24
     () => validateThemeBundle(conflictingAsset, { previous: prior }),
     /Immutable assets history changed/,
   );
+});
+
+test('P03 retains the measured fpv25 source-stage checkpoint after published P02', async () => {
+  const p02Oracle = JSON.parse(
+    await fs.readFile(new URL('./fixtures/production-p02-v0581.json', import.meta.url), 'utf8'),
+  );
+  const stageOracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-p03-source-fpv25.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const candidate = await importThemeBundle(
+    new Blob([
+      await fs.readFile(
+        new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+      ),
+    ]),
+    { decodeImage: null },
+  );
+  const published = await reconstructPinnedProduction(p02Oracle, candidate);
+  const stage = await reconstructPinnedProduction(stageOracle, candidate);
+  validateThemeBundle(stage.document, {
+    previous: published.document,
+    expectedRevision: p02Oracle.metadata.revision,
+  });
+  assert.equal(stage.document.revision, 25);
+  assert.deepEqual(stage.document.selection.theme, { id: 'fpv', revision: 25 });
+  assert.equal(stage.document.assets.length, 1096);
+  assert.equal(stage.document.themes.length, 26);
+  for (const [group, pin] of Object.entries(p02Oracle.groups))
+    assert.deepEqual(
+      stage.document[group].slice(0, pin.count),
+      published.document[group],
+      `retained P02 ${group}`,
+    );
+  assert.equal(stage.document.slots.length, published.document.slots.length);
+  assert.equal(stage.document.collections.length, published.document.collections.length);
+
+  const screens = [
+    'missions',
+    'hangar',
+    'results',
+    'collection',
+    'settings',
+    'couch',
+    'studio',
+  ].map((name) => `screen.${name}.background.field-kit@13`);
+  const rotors = ['scout', 'bomber', 'carrier', 'interceptor', 'fiber', 'impact', 'trapper'].map(
+    (name) => `player.${name}.rotors.field-kit@6`,
+  );
+  const key = (record) => `${record.id}@${record.revision}`;
+  const appended = stage.document.assets.slice(p02Oracle.groups.assets.count);
+  assert.deepEqual(appended.map(key).sort(), [...screens, ...rotors].sort());
+  for (const asset of appended) {
+    const screen = asset.id.startsWith('screen.');
+    assert.equal(asset.quality.stage, 'source', asset.id);
+    assert.deepEqual(asset.provenance.parent, {
+      id: asset.id,
+      revision: screen ? 12 : 5,
+    });
+    assert.ok(
+      asset.provenance.source.endsWith(
+        screen
+          ? 'sha256:fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a'
+          : 'sha256:39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554',
+      ),
+      asset.id,
+    );
+    assert.equal(asset.file, null, `${asset.id} does not replace an original payload`);
+  }
+  const theme = stage.document.themes.at(-1);
+  assert.deepEqual(theme.parent, { id: 'fpv', revision: 24 });
+  assert.deepEqual(Object.values(theme.bindings).map(key).sort(), [...screens, ...rotors].sort());
+  assert.deepEqual(theme.tokens, {});
+  assert.equal(stage.assets.size, 127);
+  for (const [hash, before] of published.assets)
+    assert.deepEqual(
+      Buffer.from(await stage.assets.get(hash).arrayBuffer()),
+      Buffer.from(await before.arrayBuffer()),
+      `retained P02 payload ${hash}`,
+    );
+});
+
+test('current P03 reproduction retains its measured source stage before any review successor', async () => {
+  const oracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-p03-source-fpv25.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const raw = await fs.readFile(
+    new URL('../../authoring/library/fpv-field-kit/production.rltheme', import.meta.url),
+  );
+  const candidate = await importThemeBundle(new Blob([raw]), { decodeImage: null });
+  const stage = await reconstructPinnedProduction(oracle, candidate);
+  const prior = candidate.document;
+  const production = await createFieldKitProduction();
+  // Match the CLI: reproduce against the complete existing ledger. Rebuilding
+  // from P02 would flatten fpv25 and any later measured review successors.
+  const next = retainProductionHistory(production.document, prior);
+  validateThemeBundle(next, { expectedRevision: prior.revision });
+  assert.ok(next.revision >= stage.document.revision, 'the measured source stage is retained');
+  assert.equal(canonicalJSON(next), canonicalJSON(candidate.document));
+  for (const [group, pin] of Object.entries(oracle.groups))
+    assert.deepEqual(
+      next[group].slice(0, pin.count),
+      stage.document[group],
+      `retained source-stage ${group}`,
+    );
+  const mergedAssets = new Map([...candidate.assets, ...production.assets]);
+  for (const [hash, before] of stage.assets)
+    assert.deepEqual(
+      Buffer.from(await mergedAssets.get(hash).arrayBuffer()),
+      Buffer.from(await before.arrayBuffer()),
+      `retained source-stage payload ${hash}`,
+    );
+  const second = retainProductionHistory(production.document, next);
+  assert.equal(canonicalJSON(second), canonicalJSON(next));
+  const exported = Buffer.from(await (await exportThemeBundle(next, mergedAssets)).arrayBuffer());
+  const repeated = Buffer.from(await (await exportThemeBundle(second, mergedAssets)).arrayBuffer());
+  assert.deepEqual(exported, raw, 'current CLI ledger preserves the measured P03 history');
+  assert.deepEqual(repeated, exported, 'second export identical');
 });
 
 function desired(
@@ -193,17 +363,10 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('the current source-pinned motion and feedback recipe reviews remain selected', async () => {
+test('the unchanged source-pinned feedback recipe reviews remain selected', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   for (const slotId of [
-    'player.scout.rotors',
-    'player.bomber.rotors',
-    'player.carrier.rotors',
-    'player.interceptor.rotors',
-    'player.fiber.rotors',
-    'player.impact.rotors',
-    'player.trapper.rotors',
     'trail.active',
     'trail.secured',
     'trail.head',
@@ -243,10 +406,34 @@ test('P01 UI and P02-A audio reviews cover exact current inputs', async () => {
   }
 });
 
-test('changed loading and shared-master inputs reopen only their own reviewed recipe group', async (t) => {
+test('P03 screen and motion reviews bind only the inspected current inputs', async () => {
+  const production = await createFieldKitProduction();
+  const resolved = resolvePresentation(production.document);
+  const fingerprints = {
+    screens: 'fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a',
+    motion: '39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554',
+  };
+  const reviewed = production.document.slots.filter(
+    (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
+  );
+  assert.equal(reviewed.length, 14);
+  for (const slot of reviewed) {
+    const asset = resolved.assets[slot.id];
+    assert.equal(asset.quality.stage, 'reviewed', slot.id);
+    assert.ok(asset.provenance.source.endsWith(`sha256:${fingerprints[slot.group]}`), slot.id);
+    assert.ok(
+      asset.quality.evidence.some((entry) => entry.includes('Scoped P03 source review')),
+      slot.id,
+    );
+  }
+});
+
+test('changed recipe inputs reopen only their own reviewed group', async (t) => {
   const production = await createFieldKitProduction();
   const prior = structuredClone(production.document);
-  const reviewed = prior.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
+  const reviewed = prior.slots.filter((slot) =>
+    ['ui', 'audio', 'screens', 'motion'].includes(slot.group),
+  );
   const selected = resolvePresentation(prior);
   // Review-state fixture only. Actual current approvals are asserted separately above.
   for (const slot of reviewed) {
@@ -269,6 +456,8 @@ test('changed loading and shared-master inputs reopen only their own reviewed re
     ['operation-status.mjs', 'ui'],
     ['soundtrack-player.mjs', 'audio'],
     ['audio-master.mjs', 'audio'],
+    ['field-kit-surfaces.css', 'screens'],
+    ['actor-presentation.mjs', 'motion'],
   ]);
   // Read unchanged inputs through links; only the named fixture files are writable.
   await fs.mkdir(path.join(fixture, 'game', 'ui'), { recursive: true });
@@ -292,8 +481,9 @@ test('changed loading and shared-master inputs reopen only their own reviewed re
     validateThemeBundle(next, { previous: prior });
     const assets = resolvePresentation(next).assets;
     for (const slot of reviewed) {
-      assert.equal(assets[slot.id].quality.stage, slot.group === group ? 'source' : 'reviewed');
-      if (slot.group === group) {
+      const affected = slot.group === group && assets[slot.id].kind === 'recipe';
+      assert.equal(assets[slot.id].quality.stage, affected ? 'source' : 'reviewed', slot.id);
+      if (affected) {
         assert.notEqual(
           assets[slot.id].provenance.source,
           resolved.assets[slot.id].provenance.source,
