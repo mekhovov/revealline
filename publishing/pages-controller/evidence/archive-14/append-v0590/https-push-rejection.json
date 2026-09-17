@@ -1,0 +1,6 @@
+{
+  "head": "aafe02430e0f41a1c2eb092ac72939862fe83d2e",
+  "error": "OAuth HTTPS credential lacks workflow scope for .github/workflows/deploy.yml",
+  "remoteBranchCreated": false,
+  "resolution": "Use the existing project SSH Git transport; no token or permission change."
+}
