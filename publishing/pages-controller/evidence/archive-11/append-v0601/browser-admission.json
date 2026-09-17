@@ -1,0 +1,42 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-11",
+  "infrastructureCommit": "0679f16d17afb7df30ae4b310b7fabae29269c3c",
+  "deploymentId": 6500626261,
+  "versions": [
+    "v0.51.0",
+    "v0.60.1"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-11/append-v0601/native/observations.json",
+      "sha256": "9d654627e4a82c8e15ca75539cf5ba54f9d1152f6e9753fddfbae57198d55b97"
+    },
+    {
+      "path": "evidence/archive-11/append-v0601/native/root-acceptance.json",
+      "sha256": "0039457a8dc0365aa857ede63abec442fd4f573ce71ba4cba87bdeb4d9291aff"
+    }
+  ],
+  "scope": "Root accepted scoped online retention at the pinned archive infrastructure. Actual v0.60.1 Solo title, Start, exposed flight, explicit Pause/Resume and Explorer; session-only saving respected. Existing v0.51.0 saved flight was preserved: actual embedded no-award Controller Practice Start, 52.2% win, retry and explicit Pause/Resume. No v0.51 campaign win or persistence claim. No physical controller/touch, offline, audible listening, save migration, full phase or new-game-release acceptance.",
+  "observationScopes": [
+    {
+      "version": "v0.60.1",
+      "nativeInfrastructureCommit": "0679f16d17afb7df30ae4b310b7fabae29269c3c",
+      "nativeDeploymentId": 6500626261,
+      "evidencePath": "evidence/archive-11/append-v0601/native/observations.json",
+      "freshBrowserRun": true,
+      "observed": "Session-only Solo title, Start, live exposed line, trail loss, explicit Pause/Resume, Main menu and release explorer bridge."
+    },
+    {
+      "version": "v0.51.0",
+      "nativeInfrastructureCommit": "0679f16d17afb7df30ae4b310b7fabae29269c3c",
+      "nativeDeploymentId": 6500626261,
+      "evidencePath": "evidence/archive-11/append-v0601/native/observations.json",
+      "freshBrowserRun": true,
+      "observed": "Title, existing saved flight left untouched; actual no-award Controller Practice win52.2%/8160points/0:03/3lives, Retry and explicit Pause/Resume."
+    }
+  ],
+  "phaseAccepted": false
+}
