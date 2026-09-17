@@ -147,8 +147,8 @@ test('supporting page text size remains presentation only and listeners are rele
 });
 
 test('surface copy has stable English fallback keys and preserves native controls', () => {
-  assert.equal(fieldKitCopy('settings.display', 'en-GB'), 'Display & accessibility');
-  assert.equal(fieldKitCopy('settings.display', 'uk-UA'), 'Display & accessibility');
+  assert.equal(fieldKitCopy('settings.display', 'en-GB'), 'Appearance & accessibility');
+  assert.equal(fieldKitCopy('settings.display', 'uk-UA'), 'Appearance & accessibility');
   assert.equal(fieldKitCopy('future.missing'), null);
   assert.equal(fieldKitCopy('__proto__'), null);
   assert.equal(

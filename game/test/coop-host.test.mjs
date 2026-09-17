@@ -196,19 +196,34 @@ test('custom fractional coverage and multiple required cores drive the actual br
 test('lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads', async (t) => {
   const f = await page(t),
     seen = new Set();
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-controls').click();
   f.choose('coop-touch', 'on');
-  f.doc.body.focus();
+  f.$('coop-settings-tab-controls').focus();
   for (let index = 0; index < 30; index++) {
     f.press('Tab');
     assert.equal(f.doc.activeElement.closest('.race-pad'), null);
     seen.add(f.doc.activeElement.id);
   }
-  for (const id of ['coop-race', 'coop-touch', 'coop-reduced', 'coop-level', 'coop-start'])
+  assert.ok(seen.has('coop-touch'), 'Controls category exposes touch settings');
+  assert.equal(seen.has('coop-level'), false, 'The dialog excludes the lobby');
+  f.$('coop-settings-tab-display').click();
+  f.$('coop-settings-tab-display').focus();
+  for (let index = 0; index < 20; index++) {
+    f.press('Tab');
+    seen.add(f.doc.activeElement.id);
+  }
+  assert.ok(seen.has('coop-reduced'), 'Display category exposes reduced effects');
+  f.$('coop-settings-close').click();
+  for (let index = 0; index < 30; index++) {
+    f.press('Tab');
+    assert.equal(f.doc.activeElement.closest('.race-pad'), null);
+    seen.add(f.doc.activeElement.id);
+  }
+  for (const id of ['coop-race', 'coop-level', 'coop-start'])
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
   let left = 0;
   f.$('coop-race').onclick = () => left++;
-  f.$('coop-options').open = false;
   f.press('Escape');
   assert.equal(left, 1, 'Lobby Back activates the visible Race destination.');
   f.$('coop-start').click();
@@ -395,9 +410,11 @@ test('Auto touch uses actual controller seats while menu hiding and explicit ove
     [true, true],
   );
   assert.equal(f.$('coop-tools').parentNode.id, 'coop-pause-tools');
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-controls').click();
   f.choose('coop-touch', 'on');
   f.setTouch(false);
+  f.$('coop-settings-close').click();
   assert.equal(
     f.$('coop-controls').hidden,
     true,
@@ -410,9 +427,11 @@ test('Auto touch uses actual controller seats while menu hiding and explicit ove
     'Show overrides pointer capability and controller assignment.',
   );
   f.$('coop-pause').click();
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-controls').click();
   f.choose('coop-touch', 'off');
   f.setTouch(true);
+  f.$('coop-settings-close').click();
   f.$('coop-resume').click();
   assert.equal(f.$('coop-controls').hidden, true);
   f.$('coop-pause').click();
@@ -445,7 +464,8 @@ test('paused Help reading and Back return to an action without resuming the shar
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
   assert.equal(f.$('coop-clock').textContent, clock);
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-controls').click();
   f.$('coop-touch').focus();
   assert.equal(f.press('ArrowDown').defaultPrevented, false, 'Native select arrows stay native.');
   assert.equal(
@@ -696,7 +716,8 @@ test('a late deliberate menu choice at ready is not replaced by Team initial foc
   const h = await page(t, {
     nativeFocus: true,
     onReady: ({ $, doc }) => {
-      $('coop-options').open = true;
+      $('coop-settings-open').click();
+      $('coop-settings-tab-audio').click();
       $('coop-master-volume').focus();
       assert.equal(doc.activeElement.id, 'coop-master-volume');
     },

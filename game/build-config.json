@@ -1,5 +1,11 @@
 {
+<<<<<<< HEAD
   "version": "0.60.5",
+||||||| parent of 6b0cb443 (feat: unify Settings and quick sound across game modes)
+  "version": "0.60.4",
+=======
+  "version": "0.60.6",
+>>>>>>> 6b0cb443 (feat: unify Settings and quick sound across game modes)
   "entry": "game/index.html",
   "include": [
     "game",
