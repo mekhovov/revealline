@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-public-audit-ece40093/review-public.py",
+    "082ef33adbb97f3b508a6ec4359294e7ae5e2663",
+    "complete-1"
+  ],
+  "startedAt": "2026-09-17T11:30:34.811229+00:00",
+  "finishedAt": "2026-09-17T11:30:34.979116+00:00",
+  "seconds": 0.1678566669979773,
+  "exitCode": 0,
+  "stdoutSha256": "3ead6d285b5ff4c79119f6cf3e153b4033dc9d0a7f037a02f77f1f42211da63e",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

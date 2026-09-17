@@ -1,0 +1,99 @@
+--- originals/wrapper_contract.py
++++ wrapper_contract.py
+@@ -7,9 +7,9 @@
+ import stat
+ import subprocess
+ 
+-VERSION = 'v0.60.1'
+-SOURCE = '822f3290787c704a217e7c185d4b8beb7a527e82'
+-TREE = '88bd680e09210f9bf56ca18465fdb46afb2f1307'
++VERSION = 'v0.60.2'
++SOURCE = 'ece40093940aabdc3b3659a07394b856f33ad4a1'
++TREE = '32b36e6e8fc605911b2cb98cd8f67c97b8f4e214'
+ BASE = 'https://mekhovov.github.io/revealline/'
+ API_LIMIT = 2_000_000
+ ASSETS = {'distribution.zip', 'distribution.zip.sha256', 'manifest.json', 'release.json',
+--- originals/test_wrappers.py
++++ test_wrappers.py
+@@ -35,12 +35,12 @@
+         self.publisher = 'c' * 40
+         self.tree = 'd' * 40
+         self.authorities = {
+-            'metadata/v0.60.1/manifest.json': contract.encode({'mock': 'manifest'}),
+-            'metadata/v0.60.1/release.json': contract.encode({'mock': 'record'}),
+-            'evidence/current-v0601/source-qualification.json': contract.encode({'mock': 'qualification'}),
++            'metadata/v0.60.2/manifest.json': contract.encode({'mock': 'manifest'}),
++            'metadata/v0.60.2/release.json': contract.encode({'mock': 'record'}),
++            'evidence/current-v0602/source-qualification.json': contract.encode({'mock': 'qualification'}),
+             'catalog.json': contract.encode({'releases': [{'version': contract.VERSION, 'tagObject': 'e' * 40}]}),
+             'publication.json': contract.encode({'currentVersion': contract.VERSION,
+-                'currentSourceQualification': {'path': 'evidence/current-v0601/source-qualification.json'}}),
++                'currentSourceQualification': {'path': 'evidence/current-v0602/source-qualification.json'}}),
+         }
+         receipt = {'controllerCommit': self.publisher, 'controllerTree': self.tree,
+                    'currentVersion': contract.VERSION, 'gameSourceRevision': contract.SOURCE,
+@@ -50,13 +50,13 @@
+                                  'zip-receipt.json': contract.encode({'mock': True})})
+         assets = []
+         for index, name in enumerate(sorted(contract.ASSETS)):
+-            path = {'manifest.json': 'metadata/v0.60.1/manifest.json',
+-                    'release.json': 'metadata/v0.60.1/release.json',
+-                    'source-qualification.json': 'evidence/current-v0601/source-qualification.json'}.get(name)
++            path = {'manifest.json': 'metadata/v0.60.2/manifest.json',
++                    'release.json': 'metadata/v0.60.2/release.json',
++                    'source-qualification.json': 'evidence/current-v0602/source-qualification.json'}.get(name)
+             body = self.authorities[path] if path else ('mock original ' + name).encode()
+             assets.append({'id': 200 + index, 'name': name, 'size': len(body),
+                            'digest': 'sha256:' + contract.sha(body), 'state': 'uploaded',
+-                           'browser_download_url': f'https://github.com/mekhovov/revealline/releases/download/v0.60.1/{name}'})
++                           'browser_download_url': f'https://github.com/mekhovov/revealline/releases/download/v0.60.2/{name}'})
+         self.release = {'id': 300, 'tag_name': contract.VERSION, 'draft': False, 'prerelease': False,
+                         'published_at': '2000-01-01T00:00:00Z', 'assets': assets}
+         self.models = {
+@@ -201,8 +201,8 @@
+     def refresh_runner(self, command, **kwargs):
+         self.calls.append(command)
+         endpoint = command[2].split('repos/mekhovov/revealline/', 1)[1]
+-        values = {'releases/latest': self.release, 'releases/tags/v0.60.1': self.release,
+-                  'git/ref/tags/v0.60.1': {'object': {'type': 'tag', 'sha': 'e' * 40}},
++        values = {'releases/latest': self.release, 'releases/tags/v0.60.2': self.release,
++                  'git/ref/tags/v0.60.2': {'object': {'type': 'tag', 'sha': 'e' * 40}},
+                   'git/tags/' + 'e' * 40: {'sha': 'e' * 40, 'object': {'type': 'commit', 'sha': contract.SOURCE}},
+                   'deployments?environment=github-pages&per_page=10': [{'id': 102, 'sha': self.publisher}],
+                   'git/commits/' + contract.SOURCE: {'sha': contract.SOURCE, 'tree': {'sha': contract.TREE}}}
+--- originals/tools/audit-main.mjs
++++ tools/audit-main.mjs
+@@ -7,10 +7,10 @@
+ import { BASE, expectedTypes, inspect } from './http-engine.mjs';
+ 
+ export const HOME = path.dirname(fileURLToPath(import.meta.url));
+-export const SOURCE = '822f3290787c704a217e7c185d4b8beb7a527e82';
+-export const TREE = '88bd680e09210f9bf56ca18465fdb46afb2f1307';
+-export const VERSION = 'v0.60.1';
+-export const RETAINED_CATALOG_SHA = '3edda5240c707073c55175b43837e4f0d07c5f13c377a264c6c4d44be70bc3d2';
++export const SOURCE = 'ece40093940aabdc3b3659a07394b856f33ad4a1';
++export const TREE = '32b36e6e8fc605911b2cb98cd8f67c97b8f4e214';
++export const VERSION = 'v0.60.2';
++export const RETAINED_CATALOG_SHA = 'bc5fa53e9b5911f9725bdeface4a02bc3371b189cdcf5607bb203cadcd19c804';
+ export const sha = (raw) => createHash('sha256').update(raw).digest('hex');
+ const encode = (value) => JSON.stringify(value, null, 2) + '\n';
+ const require = (ok, message) => { if (!ok) throw new Error(message); };
+--- originals/tools/self-check.mjs
++++ tools/self-check.mjs
+@@ -5,12 +5,12 @@
+ import { SOURCE, TREE, VERSION, RETAINED_CATALOG_SHA, sha, safePath, validateRows, validateModels, auditRows, isTransient, loadAuthority } from './audit-main.mjs';
+ import { inspect, expectedTypes } from './http-engine.mjs';
+ const home = path.dirname(fileURLToPath(import.meta.url));
+-assert.equal(SOURCE, '822f3290787c704a217e7c185d4b8beb7a527e82');
+-assert.equal(TREE, '88bd680e09210f9bf56ca18465fdb46afb2f1307');
+-assert.equal(VERSION, 'v0.60.1');
++assert.equal(SOURCE, 'ece40093940aabdc3b3659a07394b856f33ad4a1');
++assert.equal(TREE, '32b36e6e8fc605911b2cb98cd8f67c97b8f4e214');
++assert.equal(VERSION, 'v0.60.2');
+ const retainedRaw = await readFile(path.join(home, 'retained-catalog.json'));
+ assert.equal(sha(retainedRaw), RETAINED_CATALOG_SHA);
+-assert.equal(JSON.parse(retainedRaw).releases.length, 71);
++assert.equal(JSON.parse(retainedRaw).releases.length, 72);
+ for (const candidate of [{reviewed:false}, {}]) assert.throws(() => validateModels(candidate, {}, {}, {}), /Explicitly reviewed binding required/);
+ for (const p of ['../x.json', '/x.json', 'x//y.json', 'x/./y.json', 'x/../y.json', 'x\\y.json', 'x\0.json']) assert.throws(() => safePath(p));
+ assert.equal(safePath('.nojekyll'), '.nojekyll');
