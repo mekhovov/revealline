@@ -1,0 +1,319 @@
+{
+  "recordedAt": "2026-09-17T17:45:45.041776+00:00",
+  "status": "Unpublished v0.60.6 correction; exact integrated-source and public gates remain required",
+  "priorCandidateSource": "2330e5e64ce4899aab6ccc1f15ced78bf3ea9655",
+  "candidateVersion": "0.60.6",
+  "sourceBindings": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 269195,
+      "sha256": "456f845f4c104cb064abcbf23f4104aaa0aa33f0feb3384e776f05bb728b2168"
+    },
+    {
+      "path": "game/controller-lab/index.html",
+      "bytes": 12766,
+      "sha256": "73b555a8130d8e2c7197e1c41f517beeae786c9af692ac31bfae1a1d0bf4caf6"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 17277,
+      "sha256": "70d3f0e30a6fd8b0565a9072d3ceb17c8d7df3590e33c05727e9070902e22905"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 55967,
+      "sha256": "fdbf76d0ea5998102111ab72b7514b04072ac856ba919a9c1bb852976a4da6a6"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 21586,
+      "sha256": "25076c69184ac46c5bf03a1a7cc779beb36c87de17584aa22901d4a31629a2e1"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 55585,
+      "sha256": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 20481,
+      "sha256": "62ee1c426053839a9eb706fc804a8cc4d344c456534a2db936799693dfd56368"
+    },
+    {
+      "path": "game/test/couch-static-picture-host.test.mjs",
+      "bytes": 35913,
+      "sha256": "c8ec3e74798e9058e133873769d8b1d90066185803f0eef85edd81dfb8397f22"
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "bytes": 13329,
+      "sha256": "64b25b7b74497c3217ed925f243699bd5b0d0887fff391a60e9486caa099b4a1"
+    },
+    {
+      "path": "game/test/menu-style-controls.test.mjs",
+      "bytes": 5469,
+      "sha256": "d4564d573785ec37e2647a47ca71bf0443c20e7cd2e73d76c6e0f3e2fdc4453c"
+    },
+    {
+      "path": "game/test/preference-restoration.test.mjs",
+      "bytes": 5437,
+      "sha256": "d4944b1153147558af73b30a147ea7c93e89cb2e895d29e44b0622befe23200c"
+    },
+    {
+      "path": "game/test/settings-restoration-host.test.mjs",
+      "bytes": 8342,
+      "sha256": "2215f7d4cd4e532141e72fd1ca8d95f636b3fe601e96c1b04df7485493d32f46"
+    },
+    {
+      "path": "game/ui/field-kit-copy.mjs",
+      "bytes": 5589,
+      "sha256": "ce65d7d9b07a850218c58b8cec33b1bd3265fb372a4894024959446bf08539ee"
+    },
+    {
+      "path": "game/ui/menu-style-controls.mjs",
+      "bytes": 2125,
+      "sha256": "2bb7757979bd0cf83d2b22e8191da1705cc4a0685b6923987f94eacc068f3a08"
+    },
+    {
+      "path": "game/ui/preference-restoration.mjs",
+      "bytes": 1992,
+      "sha256": "ea3bffcf8faf2c0ad508a0a92d65cd2748acb340736e01268bd933b424d1eee2"
+    }
+  ],
+  "behavior": "View-only history restoration from existing authority snapshots, with newer-intent and terminal-departure guards. No gameplay, artwork identity, saved schema, transport or automatic Resume change.",
+  "tests": [
+    {
+      "scope": "helper and menu preferences",
+      "node": "20.19.5",
+      "files": [
+        "game/test/preference-restoration.test.mjs",
+        "game/test/menu-style-controls.test.mjs",
+        "game/test/menu-style-preferences.test.mjs",
+        "game/test/menu-appearance.test.mjs"
+      ],
+      "tests": 56,
+      "pass": 56,
+      "fail": 0,
+      "skipped": 0,
+      "receipt": {
+        "path": "/tmp/revealline-settings-preference-restoration-node20.tap",
+        "bytes": 12595,
+        "sha256": "0ea190fddd18bde622e2f44ca3a6a3d8dcf5389e3bd56b02ec257fc5267e28af"
+      }
+    },
+    {
+      "scope": "copy and supporting tools",
+      "node": "20.19.5",
+      "files": [
+        "game/test/couch-shell.test.mjs",
+        "game/test/practice-playground-display.test.mjs",
+        "game/test/tool-display-restoration.test.mjs"
+      ],
+      "tests": 50,
+      "pass": 50,
+      "fail": 0,
+      "skipped": 0,
+      "receipt": {
+        "path": "/tmp/revealline-settings-copy-node20.tap",
+        "bytes": 11174,
+        "sha256": "a82012a44d03d06a7485d7cd536f4fab90e7534ed47f6b55c9562241b4102b71"
+      }
+    },
+    {
+      "scope": "affected hosts and surfaces",
+      "node": "20.19.5",
+      "files": [
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/shared-settings-solo.test.mjs",
+        "game/test/shared-settings-versus.test.mjs",
+        "game/test/coop-shared-settings.test.mjs",
+        "game/test/field-kit-surfaces.test.mjs"
+      ],
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skipped": 0,
+      "receipt": {
+        "path": "/tmp/revealline-settings-restoration-affected-node20.tap",
+        "bytes": 11215,
+        "sha256": "64e4f1dd7c0987f9ad9afcaa28cce99c2145737dd732d116bf9e487d827aa640"
+      }
+    },
+    {
+      "scope": "strict title flow",
+      "node": "20.19.5",
+      "files": [
+        "game/test/field-kit-flow.test.mjs"
+      ],
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "skipped": 0,
+      "receipt": {
+        "path": "/tmp/revealline-settings-field-kit-flow-node20.tap",
+        "bytes": 3904,
+        "sha256": "7af04bcc453c9e5ded08bc440b803b4f8ca9c6630f3f5f99a206088b05100ca6"
+      }
+    },
+    {
+      "scope": "Versus picture cancellation and refusal",
+      "node": "20.19.5",
+      "files": [
+        "game/test/couch-static-picture-host.test.mjs"
+      ],
+      "tests": 31,
+      "pass": 31,
+      "fail": 0,
+      "skipped": 0,
+      "receipt": {
+        "path": "/tmp/revealline-settings-couch-static-picture-node20.tap",
+        "bytes": 7341,
+        "sha256": "0b456a4125c77fc225e6f4579c1a55c5b46b567c6adeb303e54746f5a03b950a"
+      }
+    }
+  ],
+  "hostRestoration": {
+    "base": "2330e5e64ce4899aab6ccc1f15ced78bf3ea9655",
+    "scope": "Real Solo/Versus/Team entry handlers with modeled DOM/history lifecycle; not browser BFCache admission or physical-device evidence.",
+    "files": {
+      "game/test/settings-restoration-host.test.mjs": "2215f7d4cd4e532141e72fd1ca8d95f636b3fe601e96c1b04df7485493d32f46",
+      "game/app.mjs": "456f845f4c104cb064abcbf23f4104aaa0aa33f0feb3384e776f05bb728b2168",
+      "game/couch/couch.mjs": "fdbf76d0ea5998102111ab72b7514b04072ac856ba919a9c1bb852976a4da6a6",
+      "game/couch/relay-rescue.mjs": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93",
+      "game/ui/preference-restoration.mjs": "ea3bffcf8faf2c0ad508a0a92d65cd2748acb340736e01268bd933b424d1eee2",
+      "game/ui/menu-style-controls.mjs": "2bb7757979bd0cf83d2b22e8191da1705cc4a0685b6923987f94eacc068f3a08"
+    },
+    "tests": {
+      "node20.19.5": {
+        "pass": 12,
+        "fail": 0
+      },
+      "node22.22.2": {
+        "pass": 12,
+        "fail": 0
+      }
+    },
+    "baseline": {
+      "beforeHostIntegration": "0/3 unchanged-preference synchronous repair cases passed. Original fixture lacked prior persisted pagehide; repair assertions failed before that boundary mattered.",
+      "intermediate": "9/12 before modeling genuine retained-page suspension and separating explicit Team presentation changes from simulation assertions."
+    },
+    "checks": [
+      "Prettier check passed",
+      "Six restored form fields across three modes",
+      "Synchronous and zero-task repairs preserve storage/profile bytes, focus, scroll and paused attempt",
+      "Newer explicit intent wins; deferred repair adds no write or focus/scroll side effects",
+      "Terminal pagehide prevents queued and late repaint",
+      "Explicit intent uses the actual Audio/Appearance categories and enabled visible non-inert controls; deferred repair preserves the resulting focus/effects"
+    ],
+    "logs": {
+      "restoration-before.log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/restoration-before.log",
+        "sha256": "ad37868826a5f3932cea0f42827051a0fe748b14f1be859ce93659f5adf1d410"
+      },
+      "restoration-node20.log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/restoration-node20.log",
+        "sha256": "2535f83671883177393f7e3c7150cb9870568784a3dca3e29dba3480c3d388fd"
+      },
+      "restoration-final-node20.log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/restoration-final-node20.log",
+        "sha256": "fdfcc605d89bddaad6f1ab4287d59beb37ae317fe13c26248a9bc39a25feb699"
+      },
+      "restoration-final-node22.log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/restoration-final-node22.log",
+        "sha256": "230e2f877300aedf82d17c08917dc71d10a1f3f2dc3f7a8bf505a0a525472e0b"
+      }
+    }
+  },
+  "retainedMenuFailure": {
+    "result": "8 of 8 new modeled restoration cases failed before correction",
+    "receipt": {
+      "path": "/tmp/revealline-settings-menu-form-baseline.tap",
+      "bytes": 10549,
+      "sha256": "45ed41141d437668e4e107beefdb70e80add95bac2a3eb66b373dae31d596f36"
+    }
+  },
+  "requiredHostedFailures": [
+    {
+      "run": 35252455053,
+      "job": 105308307670,
+      "runtime": "20.19.6",
+      "tests": 1593,
+      "pass": 1591,
+      "fail": 2,
+      "cause": "Strict title-action arrays omitted the new shell-sound button",
+      "receipt": {
+        "path": "/tmp/revealline-settings-2330-ci-test4-job105308307670.log",
+        "bytes": 634184,
+        "sha256": "93e449e390271f171eba586e31267866056cd60078433d0597bd14cbf3e1ce22"
+      }
+    },
+    {
+      "run": 35252455053,
+      "job": 105308307732,
+      "runtime": "20.19.6",
+      "tests": 1249,
+      "pass": 1247,
+      "fail": 2,
+      "cause": "Versus picture fixture invoked hidden Audio control without selecting its category",
+      "receipt": {
+        "path": "/tmp/revealline-settings-2330-pr-node20-test1.log",
+        "bytes": 509822,
+        "sha256": "43e283ad10769ffc88a3eb7df19bed1011982141f9cf7b3096f38aebbbfb265f"
+      }
+    },
+    {
+      "run": 35252465261,
+      "job": 105308588177,
+      "runtime": "20.19.6",
+      "tests": 1249,
+      "pass": 1247,
+      "fail": 2,
+      "cause": "Same obsolete Audio-category route",
+      "receipt": {
+        "path": "/tmp/revealline-settings-2330-manual-node20-test1.log",
+        "bytes": 523435,
+        "sha256": "19be6a06e0c22894307642deca9c1bab0b91357ff8b29efba383c84eec0aefae"
+      }
+    }
+  ],
+  "runtimeCorrection": "Both hosted source test families use Node20.19.x, observed20.19.6 in the logs. Prior Node22 PR-family label was incorrect. Separate local Node22 receipts are unchanged.",
+  "sourceChecks": [
+    {
+      "path": "/tmp/revealline-settings-restoration-lint-final.log",
+      "bytes": 148,
+      "sha256": "772b7838d415a76cb65f147ed89f89698140d6276add762d8b3b48980af16aff"
+    },
+    {
+      "path": "/tmp/revealline-settings-restoration-format-final.log",
+      "bytes": 195,
+      "sha256": "71776caf414e4fa72bcb51fefe2dd5ac61eb25148c8739f915d1edad434d4489"
+    },
+    {
+      "path": "/tmp/revealline-settings-restoration-native-format.log",
+      "bytes": 254,
+      "sha256": "eecbaf26fab3a1d41fde267f9d62d815e03b2d105153444487684d8026d80fb4"
+    },
+    {
+      "path": "/tmp/revealline-settings-restoration-validate.log",
+      "bytes": 562,
+      "sha256": "e254f42adb7253b00891775992e03afb84246c5c5caa2a5109318f4ad1e4fa7d"
+    }
+  ],
+  "syntax": "Node20 --check authoring/motion-lab/app.js passed",
+  "review": "Independent integration review found no actionable host lifecycle or packaging issue. Team restoration bypasses explicit-change focus-clearance work.",
+  "limitations": [
+    "Modeled history events are not native BFCache admission",
+    "No new native browser or physical-device claim for this correction",
+    "Remaining original CI shards were still running when this record was assembled; existing failures block release",
+    "Fresh integrated-source qualification after Motion accepted-public handoff, ordinary build, artifact qualification, archive retention, immutable release, Pages and public journeys remain required"
+  ],
+  "uniqueLocalNode20Cohort": {
+    "files": 16,
+    "tests": 215,
+    "pass": 215,
+    "fail": 0,
+    "skipped": 0,
+    "note": "Five listed cohorts plus twelve host restoration cases; separate Node22 repeats are not added."
+  }
+}
