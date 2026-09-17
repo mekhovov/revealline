@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: automatic menu choice preserves another authored theme and explicit Ukrainian never alters its canvas inputs
+ok 1 - automatic menu choice preserves another authored theme and explicit Ukrainian never alters its canvas inputs
+  ---
+  duration_ms: 3.397417
+  type: 'test'
+  ...
+# Subtest: automatic FPV and declared unavailable-snapshot fallback select the approved menu palette only
+ok 2 - automatic FPV and declared unavailable-snapshot fallback select the approved menu palette only
+  ---
+  duration_ms: 0.683792
+  type: 'test'
+  ...
+# Subtest: invalid menu choices and unaccepted theme identifiers leave the current appearance intact
+ok 3 - invalid menu choices and unaccepted theme identifiers leave the current appearance intact
+  ---
+  duration_ms: 0.933417
+  type: 'test'
+  ...
+# Subtest: ornaments add no focus stops, leave existing anchor order intact and never enter arena or HUD
+ok 4 - ornaments add no focus stops, leave existing anchor order intact and never enter arena or HUD
+  ---
+  duration_ms: 0.299459
+  type: 'test'
+  ...
+# Subtest: replacement ownership removes old decorations and a stale completion cannot overwrite the new choice
+ok 5 - replacement ownership removes old decorations and a stale completion cannot overwrite the new choice
+  ---
+  duration_ms: 0.887125
+  type: 'test'
+  ...
+# Subtest: cleanup restores previous values but preserves a later external writer
+ok 6 - cleanup restores previous values but preserves a later external writer
+  ---
+  duration_ms: 0.185291
+  type: 'test'
+  ...
+# Subtest: approved token pairs preserve functional text and cue contrast on the menu panels
+ok 7 - approved token pairs preserve functional text and cue contrast on the menu panels
+  ---
+  duration_ms: 0.265084
+  type: 'test'
+  ...
+# Subtest: the static menu stylesheet does not animate decorations or style canvas, HUD, fonts or theme image variables
+ok 8 - the static menu stylesheet does not animate decorations or style canvas, HUD, fonts or theme image variables
+  ---
+  duration_ms: 2.9645
+  type: 'test'
+  ...
+# Subtest: a late player dialog and a rerendered dialog gain one decoration without adding input stops
+ok 9 - a late player dialog and a rerendered dialog gain one decoration without adding input stops
+  ---
+  duration_ms: 0.773791
+  type: 'test'
+  ...
+# Subtest: detached player dialogs release their decoration and reattachment remains owned; generic HUD additions are ignored
+ok 10 - detached player dialogs release their decoration and reattachment remains owned; generic HUD additions are ignored
+  ---
+  duration_ms: 0.581042
+  type: 'test'
+  ...
+# Subtest: queued mutation callbacks after disposal or ownership replacement cannot redecorate the page
+ok 11 - queued mutation callbacks after disposal or ownership replacement cannot redecorate the page
+  ---
+  duration_ms: 0.908875
+  type: 'test'
+  ...
+# Subtest: Couch ornament source rules reserve content and focus space without clipping
+ok 12 - Couch ornament source rules reserve content and focus space without clipping
+  ---
+  duration_ms: 1.908709
+  type: 'test'
+  ...
+# Subtest: real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+ok 13 - real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+  ---
+  duration_ms: 52.835334
+  type: 'test'
+  ...
+# Subtest: real theater preserves denied-save intent and its recording across a persisted return
+ok 14 - real theater preserves denied-save intent and its recording across a persisted return
+  ---
+  duration_ms: 12.514959
+  type: 'test'
+  ...
+# Subtest: real theater boot failure retains usable shared reading controls without playback
+ok 15 - real theater boot failure retains usable shared reading controls without playback
+  ---
+  duration_ms: 4.939959
+  type: 'test'
+  ...
+# Subtest: terminal exit during delayed boot retires authority and fences late replay startup
+ok 16 - terminal exit during delayed boot retires authority and fences late replay startup
+  ---
+  duration_ms: 4.010833
+  type: 'test'
+  ...
+# Subtest: native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording
+ok 17 - native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording
+  ---
+  duration_ms: 65.597417
+  type: 'test'
+  ...
+# Subtest: Jump chooses Cancel for a held import and preserves the prior recording after rejection
+ok 18 - Jump chooses Cancel for a held import and preserves the prior recording after rejection
+  ---
+  duration_ms: 24.6095
+  type: 'test'
+  ...
+# Subtest: Jump with no loaded recording reaches Load example without retrying the failed import
+ok 19 - Jump with no loaded recording reaches Load example without retrying the failed import
+  ---
+  duration_ms: 7.065084
+  type: 'test'
+  ...
+# Subtest: Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal
+ok 20 - Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal
+  ---
+  duration_ms: 48.401375
+  type: 'test'
+  ...
+# Subtest: completed Play and Step hand off to Restart with exact final checkpoints and local next Tab
+ok 21 - completed Play and Step hand off to Restart with exact final checkpoints and local next Tab
+  ---
+  duration_ms: 111.813375
+  type: 'test'
+  ...
+# Subtest: completion preserves unrelated editor focus and does not steal background focus
+ok 22 - completion preserves unrelated editor focus and does not steal background focus
+  ---
+  duration_ms: 35.878708
+  type: 'test'
+  ...
+# Subtest: immediate: keyboard transport, focus and Back preserve the real recorded cut through completion
+ok 23 - immediate: keyboard transport, focus and Back preserve the real recorded cut through completion
+  ---
+  duration_ms: 31.126834
+  type: 'test'
+  ...
+# Subtest: grid-center: keyboard transport, focus and Back preserve the real recorded cut through completion
+ok 24 - grid-center: keyboard transport, focus and Back preserve the real recorded cut through completion
+  ---
+  duration_ms: 31.9625
+  type: 'test'
+  ...
+# Subtest: controller joins without activation, previews native speed, cancels once and pauses before leaving
+ok 25 - controller joins without activation, previews native speed, cancels once and pauses before leaving
+  ---
+  duration_ms: 46.405
+  type: 'test'
+  ...
+# Subtest: Back cancels a deferred import without adoption; native text editing and file choice remain native
+ok 26 - Back cancels a deferred import without adoption; native text editing and file choice remain native
+  ---
+  duration_ms: 28.396583
+  type: 'test'
+  ...
+# Subtest: blur, controller loss and page disposal pause exact playback and reject a late import
+ok 27 - blur, controller loss and page disposal pause exact playback and reject a late import
+  ---
+  duration_ms: 24.373417
+  type: 'test'
+  ...
+# Subtest: real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate
+ok 28 - real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate
+  ---
+  duration_ms: 28.489083
+  type: 'test'
+  ...
+# Subtest: Classic replay import stays paused and controller completion checks the exact v6 checkpoint
+ok 29 - Classic replay import stays paused and controller completion checks the exact v6 checkpoint
+  ---
+  duration_ms: 68.430959
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1409.878333

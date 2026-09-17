@@ -1,0 +1,108 @@
+{
+  "status": "PASS_SCOPED_ROOT_NATIVE",
+  "attribution": "Parent root performed browser interactions. Child review reconciles saved AX/color/image originals and parent report; no independent child browser session was available.",
+  "source": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "tree": "df6a6e83dcca0b4b55c402d6804538d0ea43ef37",
+  "baseline": {
+    "completedPlayDisabled": true,
+    "background": "rgb(244, 191, 98)",
+    "text": "rgb(7, 11, 18)",
+    "border": "rgb(244, 191, 98)",
+    "record": "root-browser/baseline-complete-colors.json"
+  },
+  "candidate": {
+    "completedPlayDisabled": true,
+    "background": "rgb(16, 25, 35)",
+    "text": "rgb(165, 178, 187)",
+    "border": "rgb(66, 85, 99)",
+    "borderStyle": "dashed",
+    "focus": "restart",
+    "record": "root-browser/candidate-complete-colors.json"
+  },
+  "playback": {
+    "example": "Copper Crossing built-in genuine recording",
+    "completedTicks": 1305,
+    "checkpoint": "861a6de2ffd7e119",
+    "noProgressAwarded": true,
+    "keyboardRestartTick": 0,
+    "records": [
+      "root-browser/candidate-complete.txt",
+      "root-browser/candidate-keyboard-restart.txt"
+    ]
+  },
+  "rootReportedActions": [
+    "Enabled candidate primary amber remained unchanged.",
+    "Completion handed owned focus to Restart. Tab skipped disabled Step and reached Speed; Shift+Tab then Enter restarted at tick0.",
+    "Keyboard Interface\u2192Plain/Large, then another natural completion preserved disabled colors/focus and exact replay checkpoint.",
+    "Restored Theme/Standard preferences; closed own tabs44/45.",
+    "Read-only DOM viewport1280x720 and documentwidth1280, nohorizontaloverflow."
+  ],
+  "limits": [
+    "Scoped completed Replay appearance/keyboard Restart and Plain/Large observation only.",
+    "No empty/loading/error or aria-disabled-only native observation.",
+    "No physical controller/touch, native stores, public deployment or full phase acceptance."
+  ],
+  "screenshotFacts": "All three extensionless image originals are JPEG/JFIF1056x720, independently identified from bytes using file. Browser DOMviewport reported1280x720; screenshot dimensions are not used as viewport proof.",
+  "nativeOriginalPins": [
+    {
+      "path": "native/root-browser/baseline-complete-colors.json",
+      "bytes": 227,
+      "sha256": "93e936045a102980b70d11c0a57eb7f9096b57cec7faf40bee911e17262576e9"
+    },
+    {
+      "path": "native/root-browser/baseline-complete-image",
+      "bytes": 70329,
+      "sha256": "08bff858b7841cf928f1d30b01ff7b4b3bbec09c41f8c8d4efefe999e79193e6"
+    },
+    {
+      "path": "native/root-browser/baseline-complete.txt",
+      "bytes": 2922,
+      "sha256": "1b0180a4f091a69de255bbf9e5e69759bb7c6e14a45349c0ed0a4e60ab183749"
+    },
+    {
+      "path": "native/root-browser/candidate-complete-colors.json",
+      "bytes": 227,
+      "sha256": "4a91718938f7412ee9a3ea224016ddbf9586f5ecda3900b89bea1b3152844024"
+    },
+    {
+      "path": "native/root-browser/candidate-complete-image",
+      "bytes": 70342,
+      "sha256": "c68f4d67e83074a176dd654c9d1dc8b1ede0ec2184dceb71aaf04768f8cf912d"
+    },
+    {
+      "path": "native/root-browser/candidate-complete.txt",
+      "bytes": 2922,
+      "sha256": "1b0180a4f091a69de255bbf9e5e69759bb7c6e14a45349c0ed0a4e60ab183749"
+    },
+    {
+      "path": "native/root-browser/candidate-keyboard-restart.txt",
+      "bytes": 2887,
+      "sha256": "e9bd1092dbde09131cabd21d5d28a4d5b823d53ed1b031bab45706931b690b5d"
+    },
+    {
+      "path": "native/root-browser/candidate-plain-large-colors.json",
+      "bytes": 220,
+      "sha256": "990c306c8dce9bf70cd1c4c265bdd31d5a5dfb28353b112477e0e65421af504a"
+    },
+    {
+      "path": "native/root-browser/candidate-plain-large-complete.txt",
+      "bytes": 3229,
+      "sha256": "ef079e1cfb40c74b7396c17982781dbc9d1f55a96f86291c6f7934ea28455050"
+    },
+    {
+      "path": "native/root-browser/candidate-plain-large-image",
+      "bytes": 68681,
+      "sha256": "cb88dea33e7307a77b5d7835c278c9b502deb1e3d92a92e0ee3d8112cabe00d2"
+    },
+    {
+      "path": "native/root-browser/candidate-plain-large-ready.txt",
+      "bytes": 3194,
+      "sha256": "e871bca822e717a0c1793b15f3768575fad6eed3e9ca3e9cc5b04db49a463d47"
+    },
+    {
+      "path": "native/root-browser/restored-preferences.txt",
+      "bytes": 3229,
+      "sha256": "4c0c3a2c12991ec8af4f0d900d0ce37517b3bb20ce1fdbdc4641ae54f1edb3f7"
+    }
+  ]
+}

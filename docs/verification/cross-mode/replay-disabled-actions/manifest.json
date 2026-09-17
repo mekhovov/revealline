@@ -1,0 +1,294 @@
+{
+  "format": "revealline-scoped-evidence-copy.v1",
+  "status": "LOCAL_CANDIDATE_NOT_RELEASE_ACCEPTANCE",
+  "source": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "sourceTree": "df6a6e83dcca0b4b55c402d6804538d0ea43ef37",
+  "candidateVersion": "0.60.7",
+  "note": "Original receipt bodies are preserved byte-for-byte, including their historical absolute cache paths and candidate identity. This map supplies repository-relative copies; no receipt is promoted to final source/public acceptance.",
+  "files": [
+    {
+      "path": "originals/native/root-browser/baseline-complete-colors.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/baseline-complete-colors.json",
+      "bytes": 227,
+      "sha256": "93e936045a102980b70d11c0a57eb7f9096b57cec7faf40bee911e17262576e9"
+    },
+    {
+      "path": "originals/native/root-browser/baseline-complete-image",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/baseline-complete-image",
+      "bytes": 70329,
+      "sha256": "08bff858b7841cf928f1d30b01ff7b4b3bbec09c41f8c8d4efefe999e79193e6"
+    },
+    {
+      "path": "originals/native/root-browser/baseline-complete.txt",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/baseline-complete.txt",
+      "bytes": 2922,
+      "sha256": "1b0180a4f091a69de255bbf9e5e69759bb7c6e14a45349c0ed0a4e60ab183749"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-complete-colors.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-complete-colors.json",
+      "bytes": 227,
+      "sha256": "4a91718938f7412ee9a3ea224016ddbf9586f5ecda3900b89bea1b3152844024"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-complete-image",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-complete-image",
+      "bytes": 70342,
+      "sha256": "c68f4d67e83074a176dd654c9d1dc8b1ede0ec2184dceb71aaf04768f8cf912d"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-complete.txt",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-complete.txt",
+      "bytes": 2922,
+      "sha256": "1b0180a4f091a69de255bbf9e5e69759bb7c6e14a45349c0ed0a4e60ab183749"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-keyboard-restart.txt",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-keyboard-restart.txt",
+      "bytes": 2887,
+      "sha256": "e9bd1092dbde09131cabd21d5d28a4d5b823d53ed1b031bab45706931b690b5d"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-plain-large-colors.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-plain-large-colors.json",
+      "bytes": 220,
+      "sha256": "990c306c8dce9bf70cd1c4c265bdd31d5a5dfb28353b112477e0e65421af504a"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-plain-large-complete.txt",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-plain-large-complete.txt",
+      "bytes": 3229,
+      "sha256": "ef079e1cfb40c74b7396c17982781dbc9d1f55a96f86291c6f7934ea28455050"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-plain-large-image",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-plain-large-image",
+      "bytes": 68681,
+      "sha256": "cb88dea33e7307a77b5d7835c278c9b502deb1e3d92a92e0ee3d8112cabe00d2"
+    },
+    {
+      "path": "originals/native/root-browser/candidate-plain-large-ready.txt",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/candidate-plain-large-ready.txt",
+      "bytes": 3194,
+      "sha256": "e871bca822e717a0c1793b15f3768575fad6eed3e9ca3e9cc5b04db49a463d47"
+    },
+    {
+      "path": "originals/native/root-browser/restored-preferences.txt",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/root-browser/restored-preferences.txt",
+      "bytes": 3229,
+      "sha256": "4c0c3a2c12991ec8af4f0d900d0ce37517b3bb20ce1fdbdc4641ae54f1edb3f7"
+    },
+    {
+      "path": "originals/native/request-byte-review.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/request-byte-review.json",
+      "bytes": 4305,
+      "sha256": "b30f856d36d4e3cf7fe8f8605c769255d0db83e9f27270196328c445755ebfe0"
+    },
+    {
+      "path": "originals/native/reconciled-observations.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/reconciled-observations.json",
+      "bytes": 4399,
+      "sha256": "6f534f8c7bb8da5e1c31ff9bf3515c6ec883a28367a555b971b0d55ba8cf536f"
+    },
+    {
+      "path": "originals/native/server-stop.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/server-stop.json",
+      "bytes": 840,
+      "sha256": "926b9d486c48e50f53a5da0e4cdac213bf68c44f0082abeb9ead86ff972e57df"
+    },
+    {
+      "path": "originals/handoff.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/handoff.json",
+      "bytes": 3912,
+      "sha256": "cc5813e3bc250d6f5854789fb995d5d238def32d6010fc19d022db4bf6f7d703"
+    },
+    {
+      "path": "originals/candidate-review.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/candidate-review.json",
+      "bytes": 18856,
+      "sha256": "8d730424e62dab9b68e1a0cf993bb4341da4370a15f8c6e3a1a7f59b8f76e656"
+    },
+    {
+      "path": "originals/fixture-closure-correction.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/fixture-closure-correction.json",
+      "bytes": 3545,
+      "sha256": "3bba9d04e5ee163acf9c9f0fef5005d0d878b9ebef11c15f718c56641cbab2bc"
+    },
+    {
+      "path": "originals/native/baseline/binding.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/baseline/binding.json",
+      "bytes": 484,
+      "sha256": "f081d1b1738eb56c1b491cf7f17734270dc0abf7519ea38df14836d579006d24"
+    },
+    {
+      "path": "originals/native/baseline/binding-proposal.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/baseline/binding-proposal.json",
+      "bytes": 402,
+      "sha256": "5f9ba8402a4dae6c0e3f6efa54c61c9d958e35274e249af7c3cdec284d0ffc53"
+    },
+    {
+      "path": "originals/native/baseline/requests.jsonl",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/baseline/requests.jsonl",
+      "bytes": 71590,
+      "sha256": "a1938f54d6f400f9f9cc0d90b4a87577a0c88cc2d2116dae964884ea355b2003"
+    },
+    {
+      "path": "originals/native/baseline/runtime-overrides.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/baseline/runtime-overrides.json",
+      "bytes": 218,
+      "sha256": "acdf149f099c6fcfb9e0c7d8024bf7b26929933e0b2b809894d44097c88cf0e1"
+    },
+    {
+      "path": "originals/native/baseline/faults.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/baseline/faults.json",
+      "bytes": 26,
+      "sha256": "5dfa85273a085bfb141e649f661a7aa51a98f83a3119a8105e30632722294c6c"
+    },
+    {
+      "path": "originals/native/baseline/serve.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/baseline/serve.py",
+      "bytes": 6708,
+      "sha256": "f43bca8b55a06069b03a0f7e6b3b35140470a20d29b36386b31b5ef3d24736d8"
+    },
+    {
+      "path": "originals/native/candidate/binding.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/candidate/binding.json",
+      "bytes": 1096,
+      "sha256": "881f92827b458da91caf1a7e71210889ec949ed67d94d7404ee3bfed37179e22"
+    },
+    {
+      "path": "originals/native/candidate/binding-proposal.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/candidate/binding-proposal.json",
+      "bytes": 402,
+      "sha256": "e5dc6edd1d429942bbe3f71988f28cf02f4fb8155920dab1a7937ba68995232a"
+    },
+    {
+      "path": "originals/native/candidate/requests.jsonl",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/candidate/requests.jsonl",
+      "bytes": 71608,
+      "sha256": "3f9794052ef8d686d834ba337e0c41b4d940b5d7ab34ee8e8bd5d1bc8bea65b9"
+    },
+    {
+      "path": "originals/native/candidate/runtime-overrides.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/candidate/runtime-overrides.json",
+      "bytes": 830,
+      "sha256": "870ab85440cd61b21eaef018800966995a9645c1c86e1d375381143d2629152b"
+    },
+    {
+      "path": "originals/native/candidate/faults.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/candidate/faults.json",
+      "bytes": 26,
+      "sha256": "5dfa85273a085bfb141e649f661a7aa51a98f83a3119a8105e30632722294c6c"
+    },
+    {
+      "path": "originals/native/candidate/serve.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/native/candidate/serve.py",
+      "bytes": 6708,
+      "sha256": "f43bca8b55a06069b03a0f7e6b3b35140470a20d29b36386b31b5ef3d24736d8"
+    },
+    {
+      "path": "originals/runs/node20-first/output.log",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node20-first/output.log",
+      "bytes": 28971,
+      "sha256": "b5a51d20583e05330dc97bc9900e6d22f212822e815deca7bc1cb894974e7f02"
+    },
+    {
+      "path": "originals/runs/node20-first/receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node20-first/receipt.json",
+      "bytes": 526,
+      "sha256": "554f8d7be02dde00ac0eb6d2953a5c5d529870f10a8be10f2ec267e4a802dacd"
+    },
+    {
+      "path": "originals/runs/node20-complete/receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node20-complete/receipt.json",
+      "bytes": 556,
+      "sha256": "eebaaba8c95d2a97ee2b58bc169e3cf482b17b3808fd1bfc8e3733e7d03eb5c3"
+    },
+    {
+      "path": "originals/runs/node20-complete/stderr.log",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node20-complete/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "originals/runs/node20-complete/stdout.log",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node20-complete/stdout.log",
+      "bytes": 7141,
+      "sha256": "912277557c9729d6251f1c55054d190323a05b7699def231c0b0d1dac2769c5a"
+    },
+    {
+      "path": "originals/runs/node22-complete/receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node22-complete/receipt.json",
+      "bytes": 556,
+      "sha256": "b298ce618c74ba898b313d82d48118ed4ed34add09dcc0cb0a48b67b491de805"
+    },
+    {
+      "path": "originals/runs/node22-complete/stderr.log",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node22-complete/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "originals/runs/node22-complete/stdout.log",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/runs/node22-complete/stdout.log",
+      "bytes": 7572,
+      "sha256": "b98bd7a1d983b7823a93f56f3a80306e4ff7e3aa22957afa8044783a7b2f26b3"
+    },
+    {
+      "path": "originals/integration/format.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/format.stdout",
+      "bytes": 23,
+      "sha256": "ebe82dad128d5e5d8936334ceac09492f3c60bd9e0b4a16cc7fd7075513b33de"
+    },
+    {
+      "path": "originals/integration/format.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/format.stderr",
+      "bytes": 122,
+      "sha256": "f45e6bfce31155a183c06a054eaf726049f4c04730f3b391b46f4cc465aed88d"
+    },
+    {
+      "path": "originals/integration/format-first-review.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/format-first-review.json",
+      "bytes": 637,
+      "sha256": "1532c295a96dd66b97682f7678eb534067221c862815010a2a2d824951881ddd"
+    },
+    {
+      "path": "originals/integration/format-only.diff",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/format-only.diff",
+      "bytes": 499,
+      "sha256": "cbd50483292559264c2c0e68f240724e2678e92f4ad5ba0974d33ccc9e2b3779"
+    },
+    {
+      "path": "originals/integration/final-diff-check.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/final-diff-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "originals/integration/final-diff-check.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/final-diff-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "originals/integration/final-format.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/final-format.stdout",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "originals/integration/final-format.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/final-format.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "originals/integration/focused-checks.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/integration/focused-checks.json",
+      "bytes": 1420,
+      "sha256": "149732099c7fccc2829e7e2b7d27ddcf76f76f889d9d87a62cf9f2024cc4f62f"
+    }
+  ],
+  "count": 47,
+  "bytes": 472453
+}

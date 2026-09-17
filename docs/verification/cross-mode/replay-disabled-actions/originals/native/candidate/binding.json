@@ -1,0 +1,28 @@
+{
+  "commit": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "tree": "df6a6e83dcca0b4b55c402d6804538d0ea43ef37",
+  "pid": 70396,
+  "port": 60354,
+  "url": "http://127.0.0.1:60354/game/",
+  "scope": "Replay disabled-primary visual correction; no runtime JS change. candidate",
+  "runtimeOverrides": {
+    "game/ui/field-kit-surfaces.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/proposal/game/ui/field-kit-surfaces.css",
+      "bytes": 19316,
+      "sha256": "1df68e2cae404a23e19d305cd41e21e0f2f5dad4632421beeb64f2b763c70704"
+    },
+    "game/replay-theater/theater.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-disabled-actions-9c89f997/proposal/game/replay-theater/theater.css",
+      "bytes": 9689,
+      "sha256": "ce8ea7c7f9cbd4f4a9a905e401cfa9a04179ce8ffe138b08e642bf0969d7d1c9"
+    }
+  },
+  "urls": [
+    "http://127.0.0.1:60354/game/replay-theater/"
+  ],
+  "faultPath": "game/build-info.json",
+  "limits": {
+    "requestLogBytes": 1048576,
+    "requestEvents": 2000
+  }
+}
