@@ -1,0 +1,39 @@
+{
+  "status": "PASS_SCOPED_NATIVE_ARCHIVE_RETENTION",
+  "reviewedBy": "root",
+  "at": "2026-09-17T08:47:07.849868+00:00",
+  "archiveCommit": "fcea949bca18193e9303143766a6eecdf4cb8b61",
+  "archiveTree": "6c72f5cf8a82b51fc635dcc4c433c62cfb22c0bf",
+  "runId": 35200608771,
+  "deploymentId": 6498838394,
+  "versions": [
+    "v0.57.2",
+    "v0.60.0"
+  ],
+  "evidence": [
+    {
+      "path": ".cache/p05-v0601-retention-plan/native/observations.md",
+      "bytes": 3701,
+      "sha256": "3994f43110f848d7537bb31d0ee656eb760f275094224cfdaa00da46224f4124"
+    }
+  ],
+  "scope": "Actual browser route identity, complete v0.60.0 First Signal session-only victory, retry preparation cancellation, live explicit pause/resume, portrait pause controls, archive-to-main Explorer and browser Back. Original v0.57.2 title/direct Deploy/capture/pause works; first keyboard activation did not advance and is retained as historical limitation. No all-keyboard certificate for that edition.",
+  "preservedLimitations": [
+    "v0.60.0 session-only run was not saved across Explorer return",
+    "v0.57.2 first keyboard Deploy attempt did not advance; native click fallback used",
+    "No offline/save-migration/physical-device/controller/touch/listening/fullP03P05 acceptance"
+  ],
+  "cleanup": {
+    "closedOwnTabs": [
+      "20"
+    ],
+    "preservedTabs": [
+      "1",
+      "19"
+    ],
+    "viewportReset": true,
+    "displayPreferencesChanged": false
+  },
+  "fullByteAudit": "Separate report1347files625710011B passed; independent reconciliation remains separate",
+  "newGameReleaseAccepted": false
+}
