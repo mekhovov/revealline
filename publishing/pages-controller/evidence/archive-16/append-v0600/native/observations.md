@@ -1,0 +1,18 @@
+# Archive16 append — actual browser observations
+
+Root used CUA in an owned background tab20 on 17 September2026, after successful deployment run35200608771 of infrastructure fcea949bca18193e9303143766a6eecdf4cb8b61. The separately required complete HTTP byte audit remains pending at this observation cutoff. No local server or synthetic page events were used.
+
+- Actual archive root lists original v0.57.2 and v0.60.0. Its v0.60.0 link loaded the Field Kit title, VERSION V0.60.0, with Start focused.
+- Return started First Signal with canvas focus. The game explicitly reported another game tab owns saving, so this was session-only. A brief Down command produced LIVE LINE / EXPOSED; without further directional input it completed at52.2% / three lives /0:09 /8,160points. The full-picture reward and keyboard Results opened the actual win actions; details explicitly said picture collected for this session.
+- Tab from View picture selected Try again. An immediately batched Escape cancelled pending preparation, not live flight; this is retained as a separate observed cancellation. The visible Start mission action then started the retry. A subsequent separate Escape paused the live flight at0:04 with Resume focused.
+- Responsive390×844 observation: all four pause actions fit at x35..355 / y389.8125..532.1875; each156×67.1875. Full canvas rect x13..377 / y207.2890625..479.7890625 (364×272.5). Pause remained0:04 and focus remained start-button. Screenshot inspected inline only, no exported screenshot claimed. This is desktop viewport emulation, not physical touch or zoom acceptance.
+- Viewport reset, explicit Return resumed with canvas focus. Escape separately paused at0:09. Three Tabs and Return chose Main menu; title showed Continue. Five Tabs and Return followed its actual Release explorer link through the archive bridge to canonical main /revealline/releases/ (currentv0.60.0). Browser Back returned to retainedv0.60.0 title with Start focused; session-only continuation was not retained across that navigation and no saved-continuation claim is made. Second Back returned to archive root.
+- Tab/Return from archive root followed the originalv0.57.2 link; its startup observation continues below.
+
+All player/public tabs other than ownedtab20 were preserved. No preferences were changed; temporary viewport was reset. Existing historicalv0.57.2 limitations remain unchanged. This evidence does not establish offline, physicalcontroller/touch, allP05, savedprogress, or humanplaytest acceptance.
+
+Final older-edition and cleanup observations:
+
+- v0.57.2 reached its original Field Kit title, VERSION V0.57.2, Deploy / Pressure Lines Arcade. Initial focus was the document. Tab/Return left Deploy focused without advancing; no console warning/error was reported. Root retained this failed keyboard activation rather than claiming complete keyboard navigation. A direct native click activated its visible Preparing status, installed the original Pressure Lines content and reached Orchard Crossing selection. A second direct Deploy click launched the original board.
+- A brief Down command entered LIVE LINE / EXPOSED. A later Escape paused after successful closure:1.5% revealed / three lives /2:45 remaining /340points. Its status said Line secured; tap a direction to fly again. Resume was focused. No win or save-migration claim for this older edition.
+- Owned tab20 was closed while paused. Browser inventory retained only pre-existing tabs1(v0.59.1) and19(v0.60.0). Viewport was already reset; no display preferences were changed. The old chapter installation and session activity were actual gameplay interactions, not test injection or physical-device certification.
