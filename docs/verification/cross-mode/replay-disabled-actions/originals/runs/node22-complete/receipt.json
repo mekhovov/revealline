@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/replay-theater-navigation.test.mjs",
+    "game/test/replay-theater-display-host.test.mjs",
+    "game/test/menu-appearance.test.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.7102431669991347,
+  "stdoutSha256": "b98bd7a1d983b7823a93f56f3a80306e4ff7e3aa22957afa8044783a7b2f26b3",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

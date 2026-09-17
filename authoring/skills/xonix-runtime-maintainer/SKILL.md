@@ -542,6 +542,8 @@ Repeated Pause rendering is not a new focus request. Retain the selected action 
 
 For Replay focus, let a native Jump anchor perform its fragment default before an owned deferred handoff to a usable transport control. Newer focus/input, cancellation or backgrounding retires that handoff. When completion disables focused Play/Step, move to Restart only while that completing control still owns the journey. Preserve unrelated editor focus and recorded checkpoints; qualify native browser defaults separately from the modeled regression.
 
+When primary controls use ID selectors, guard both shared and route-local active/hover styles against native disabled and `aria-disabled="true"`. Otherwise legacy specificity can leave an unavailable action looking primary. Preserve the existing semantic disabled state, focus handoff and recorded progress. Compare native computed colors across empty/loading/ready/completed states; do not add new navigation owners or treat a source-string check as rendered-state evidence.
+
 For cold-module startup tests, await an observable application boundary such as entry into a deliberately held fetch; do not count event-loop turns as elapsed startup time. Assert early preferences while that fetch remains held, propagate import failure, and clear bounded diagnostic timers. On any failure, close the host, release and drain pending imports, retire late owners, then restore globals. Preserve failed hosted originals and run fresh exact-source qualification after correction.
 
 ## Team live-shell and focused-action clearance
@@ -610,3 +612,9 @@ Example prompt: “Check long Motion labels in EN/UA, combining clusters and unb
 PNG static-preview preparation reads bytes asynchronously before native Image load. Claim the generation before that read and fence each continuation before allocating a URL or mutating pending image/status. Clear, supersession and page departure invalidate pending reads; retain accepted art until replacement onload. Keep PNG container work bounded by 25 MiB / 16,384 chunks, preserve original File bytes, and do not describe encoded bounds as decoder-memory qualification.
 
 Prompt: “Extend Motion upload handling without changing the APNG default identity contract. Run complete parser and real-application host files for byte-read rejection, supersession, Clear, cached/terminal departure and late decode. Preserve native source evidence separately; no fake Image event establishes browser codec conformance.”
+
+## Exact presentation revision consumers
+
+When a reviewed producer repair advances the compiled theme revision, inspect explicit runtime consumers as well as registry metadata. Team's closed picture table binds the complete pack, level, theme revision, collection and asset tuple; unchanged image bytes alone do not make a newer snapshot compatible. Revalidate each tuple against the actual compiled snapshot, then advance only its explicitly reviewed revision. Never wildcard, infer the current revision at runtime or edit historical release bindings. Run the complete binding and host tests against the real compiled metadata and originals, retaining the stale-binding failure and both older/newer snapshot refusals. Do not alter simulation, artwork, saved ownership or unrelated producer fingerprints to repair this compatibility boundary.
+
+Prompt: “After a metadata-only theme revision, find exact revision consumers, reproduce their refusal against actual compiled metadata, and reconcile only reviewed identities. Prove both starter pictures still use their original full-frame assets and that unreviewed revisions fail before image reads. Preserve historical failures and distinguish source tests from native/public acceptance.”

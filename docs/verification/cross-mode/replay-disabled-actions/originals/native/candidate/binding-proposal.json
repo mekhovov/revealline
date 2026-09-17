@@ -1,0 +1,16 @@
+{
+  "commit": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "tree": "df6a6e83dcca0b4b55c402d6804538d0ea43ef37",
+  "port": 60354,
+  "runtimeOverrides": {
+    "bytes": 830,
+    "sha256": "870ab85440cd61b21eaef018800966995a9645c1c86e1d375381143d2629152b"
+  },
+  "urls": [
+    "http://127.0.0.1:60354/game/replay-theater/"
+  ],
+  "limits": {
+    "requestLogBytes": 1048576,
+    "requestEvents": 2000
+  }
+}
