@@ -1,0 +1,104 @@
+{
+  "source": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "tree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "createdAt": "2026-09-17T09:23:13.823550+00:00",
+  "baselineFileCount": 896,
+  "fixtureFileCount": 901,
+  "fixtureBytes": 304597385,
+  "twelvePreimagesMatch": true,
+  "changedPaths": [
+    "game/controller-lab/index.html",
+    "game/controller-lab/style.css",
+    "game/playground/board-view.mjs",
+    "game/playground/index.html",
+    "game/playground/map-diagnostics.mjs",
+    "game/playground/playground.css",
+    "game/playground/playground.mjs",
+    "game/test/playground-map-diagnostics.test.mjs",
+    "game/test/practice-playground-display.test.mjs",
+    "game/ui/field-kit-copy.mjs",
+    "game/ui/tool-display-entry.mjs",
+    "game/ui/tool-display.mjs"
+  ],
+  "freshSourceChangesVsOldDependencySelection": [
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "game/build-config.json",
+    "game/couch/relay-rescue.css",
+    "game/couch/relay-rescue.mjs"
+  ],
+  "inputManifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/fixture-inputs.json",
+    "bytes": 161034,
+    "sha256": "304c3b42a4ca8eac1ad55b4daa3c6e81b64ab6a502639ad0e0adf8999df0458d"
+  },
+  "patches": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/parent.patch",
+      "bytes": 51208,
+      "sha256": "e674b1ba1234f98a1d957345a7d52bf3caf5930c9df8bf7b6488b3842e00f021"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/successor.patch",
+      "bytes": 18692,
+      "sha256": "c79fd47750a57a7b3aa27dd211ddb5ec9f4f34c8408169a277d7157877cc5d87"
+    }
+  ],
+  "originals": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/cohort-selection.original.json",
+      "bytes": 1034,
+      "sha256": "2d018cae9d7eeca5c1694f73fca0433ed7be2ebc19eaf2add4ffb0c69ddfc6b2"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/dependency-selection.original.json",
+      "bytes": 170705,
+      "sha256": "c51e4ba5b4a010c619fdcae7466166803d1dc145b2ba957ebe4113d1bb3612f5"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/native-README.original.md",
+      "bytes": 8205,
+      "sha256": "88d374073153e59b58b899d069950b13e38102f1512fe026f4d708fce27c3644"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/parent-pins.json",
+      "bytes": 5093,
+      "sha256": "0609e38c6134f88307bee5cc65b06c6876b1a6ea300a1d84e7207b15ce4fd42e"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/parent.apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/parent.apply.stdout",
+      "bytes": 585,
+      "sha256": "6c1e0add96e206b86dc989c5ff100bc3e96174320d5f6d359b18f7ff86e6df07"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/parent.patch",
+      "bytes": 51208,
+      "sha256": "e674b1ba1234f98a1d957345a7d52bf3caf5930c9df8bf7b6488b3842e00f021"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/successor-pins.json",
+      "bytes": 3805,
+      "sha256": "56c2eca081f0607214a58b65936ea6d8930625381fab2f7ec3f4eda0ed574063"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/successor.apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/successor.apply.stdout",
+      "bytes": 110,
+      "sha256": "1f3f59f36e6942fa5f0b52c28782f71a8d9f36222619444d683c47932ccf670c"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/originals/successor.patch",
+      "bytes": 18692,
+      "sha256": "c79fd47750a57a7b3aa27dd211ddb5ec9f4f34c8408169a277d7157877cc5d87"
+    }
+  ],
+  "scope": "Fresh exact822f dependencies, two explicitly admitted patches, no source/index/version/remote/build/browser changes. No runtime/native acceptance yet."
+}

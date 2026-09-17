@@ -1,0 +1,47 @@
+{
+  "at": "2026-09-17T10:16:42.998119+00:00",
+  "binding": "binding.json",
+  "status": "PASS_SCOPED_INTEGRATED_BROWSER",
+  "observations": [
+    {
+      "page": "Practice",
+      "preferences": "Theme/Large/full",
+      "viewports": [
+        "390x844",
+        "844x390"
+      ],
+      "documentWidthEqualsViewport": true
+    },
+    {
+      "page": "Playground",
+      "preferences": "Theme/Large/full",
+      "viewports": [
+        "390x844",
+        "844x390"
+      ],
+      "documentWidthEqualsViewport": true,
+      "portraitScreenshot": "Inspected inline; not retained as image artifact"
+    },
+    {
+      "page": "Playground",
+      "actions": "Scout to Fiber draft then Undo",
+      "draftClass": "fiber",
+      "afterUndoClass": "scout",
+      "childSrcStayed": "../?practice=1&revision=1"
+    },
+    {
+      "page": "Playground",
+      "actions": "Actual filechooser import earlier exact exportedpack then explicitPlay then actualStartmission/Pause",
+      "importStatus": "Imported and decoded. The previous pack remains available through Undo.",
+      "beforePlay": "../?practice=1&revision=1",
+      "afterPlay": "../?practice=1&revision=2"
+    }
+  ],
+  "cleanup": "Both old49904 and new52554 localsettingsrestored Theme/Standard/full viaactualcontrols/readback; viewportreset; childpracticepausedthenreturntitle",
+  "limits": [
+    "Nophysicalhardwareor200percentzoom",
+    "No naturallynonemptyoffscreenliveactionset",
+    "No fullsource/publicreleasegate",
+    "NewsessiononHistoryBack notBFCacheproof"
+  ]
+}

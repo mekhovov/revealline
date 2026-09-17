@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-17T10:00:42.391752+00:00",
+  "status": "FAIL_NATIVE_HISTORY_FORM_PRESENTATION_MISMATCH",
+  "source": "822f + integrated e674+c79",
+  "route": "http://127.0.0.1:49904/game/controller-lab/",
+  "steps": [
+    "Practice host setLarge; bodylarge andselectlarge confirmed",
+    "Actualhome link\u2192game Settings\u2192Display\u2192Plain/Standard/reduced",
+    "CloseSettings\u2192browserBack",
+    "AfterPractice ready, readhostdataset andnative selector"
+  ],
+  "actual": {
+    "body": {
+      "textFace": "plain",
+      "textSize": "standard",
+      "effects": "reduced"
+    },
+    "hostTextSizeValue": "large",
+    "viewport": [
+      844,
+      390
+    ],
+    "scrollWidth": 844,
+    "childNewSession": "eadd8d224251420fbf940414216b48be"
+  },
+  "expected": "Selector reflects current display authority Standard without writing back browser-restored Large or replacing child",
+  "limits": "Real history navigation observed, BFCache admission not established. Initial no-match Text size locator fallback used observed#host-text-size; not a product absence claim."
+}

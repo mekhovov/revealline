@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/tool-display-restoration.test.mjs",
+    "game/test/display-preferences.test.mjs",
+    "game/test/practice-playground-display.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-tool-history-restoration-822f3290/candidate",
+  "exitCode": 0,
+  "elapsedSeconds": 0.6816376669994497,
+  "counts": {
+    "tests": 61,
+    "suites": 0,
+    "pass": 61,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "stdoutSha256": "e688f3a98244a18b48369769a2494c55e2d9b5f43238262149b0c987433c7050",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Three complete affected test files, actual host markup/runtime with modeled browser/frame/layout/history/task boundaries; no native or full suite acceptance."
+}

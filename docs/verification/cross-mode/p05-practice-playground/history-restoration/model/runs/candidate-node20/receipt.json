@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/tool-display-restoration.test.mjs",
+    "game/test/display-preferences.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-tool-history-restoration-822f3290/candidate",
+  "exitCode": 0,
+  "runtime": "20.19.5",
+  "elapsedSeconds": 0.32788979100223514,
+  "counts": {
+    "tests": 38,
+    "suites": 0,
+    "pass": 38,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "failureNames": [],
+  "stdoutSha256": "a4aaf6eefc181c8e7d57dbc9fe6b1f9187b472bed2203f6933757d3be5e8c499",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Small exact product display/preference modules with modeled restoration/task boundaries; no browser/app/full-source/build acceptance."
+}

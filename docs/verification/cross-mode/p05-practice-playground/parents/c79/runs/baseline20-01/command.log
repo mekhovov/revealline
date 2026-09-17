@@ -1,0 +1,206 @@
+TAP version 13
+# Subtest: controller-lab: saved policy applies while the actual boot fetch is pending
+ok 1 - controller-lab: saved policy applies while the actual boot fetch is pending
+  ---
+  duration_ms: 34.044042
+  ...
+# Subtest: playground: saved policy applies while the actual boot fetch is pending
+ok 2 - playground: saved policy applies while the actual boot fetch is pending
+  ---
+  duration_ms: 24.956208
+  ...
+# Subtest: Controller: modeled reading-control change is one writer and does not release held input or replace fields
+ok 3 - Controller: modeled reading-control change is one writer and does not release held input or replace fields
+  ---
+  duration_ms: 17.504958
+  ...
+# Subtest: Controller: failed persistence retains accepted intent and a terminal late change cannot write
+ok 4 - Controller: failed persistence retains accepted intent and a terminal late change cannot write
+  ---
+  duration_ms: 19.565125
+  ...
+# Subtest: Controller: persisted return converges policy but never reconnects or reloads practice
+ok 5 - Controller: persisted return converges policy but never reconnects or reloads practice
+  ---
+  duration_ms: 15.2135
+  ...
+# Subtest: Playground: live policy retains focused JSON, undo owner, map, frame and queued work
+ok 6 - Playground: live policy retains focused JSON, undo owner, map, frame and queued work
+  ---
+  duration_ms: 19.414291
+  ...
+# Subtest: Playground: a real pending import keeps its ticket and running preview across display changes
+ok 7 - Playground: a real pending import keeps its ticket and running preview across display changes
+  ---
+  duration_ms: 34.038791
+  ...
+# Subtest: Playground: persisted return retains display owner and terminal disposal stops only its bindings
+ok 8 - Playground: persisted return retains display owner and terminal disposal stops only its bindings
+  ---
+  duration_ms: 19.152041
+  ...
+# Subtest: controller-lab: denied storage uses defaults and system motion without touching player records
+ok 9 - controller-lab: denied storage uses defaults and system motion without touching player records
+  ---
+  duration_ms: 13.606833
+  ...
+# Subtest: controller-lab: actual HTML independently wires exactly one reading owner before the app launcher
+ok 10 - controller-lab: actual HTML independently wires exactly one reading owner before the app launcher
+  ---
+  duration_ms: 5.258667
+  ...
+# Subtest: playground: denied storage uses defaults and system motion without touching player records
+ok 11 - playground: denied storage uses defaults and system motion without touching player records
+  ---
+  duration_ms: 18.85975
+  ...
+# Subtest: playground: actual HTML independently wires exactly one reading owner before the app launcher
+ok 12 - playground: actual HTML independently wires exactly one reading owner before the app launcher
+  ---
+  duration_ms: 2.143083
+  ...
+# Subtest: Playground: readable map diagnostics follow actual edits and Undo without changing pixel or cell geometry
+ok 13 - Playground: readable map diagnostics follow actual edits and Undo without changing pixel or cell geometry
+  ---
+  duration_ms: 31.206875
+  ...
+# Subtest: Playground: last focused Undo returns to the selected brush and preserves the running preview
+not ok 14 - Playground: last focused Undo returns to the selected brush and preserves the running preview
+  ---
+  duration_ms: 24.148542
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:798:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'signal'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'signal'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:813:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Playground: an Undo with more history keeps focus on Undo
+ok 15 - Playground: an Undo with more history keeps focus on Undo
+  ---
+  duration_ms: 28.95125
+  ...
+# Subtest: Playground: last Undo does not steal unrelated editor focus
+ok 16 - Playground: last Undo does not steal unrelated editor focus
+  ---
+  duration_ms: 24.225625
+  ...
+# Subtest: Playground: last Undo does not steal newer focus focus
+ok 17 - Playground: last Undo does not steal newer focus focus
+  ---
+  duration_ms: 22.856125
+  ...
+# Subtest: Playground: last Undo does not steal hidden document focus
+ok 18 - Playground: last Undo does not steal hidden document focus
+  ---
+  duration_ms: 24.243042
+  ...
+# Subtest: Playground: last Undo does not steal unfocused document focus
+ok 19 - Playground: last Undo does not steal unfocused document focus
+  ---
+  duration_ms: 25.622458
+  ...
+# Subtest: Playground: last Undo skips an unavailable selected brush for an existing editor action
+not ok 20 - Playground: last Undo skips an unavailable selected brush for an existing editor action
+  ---
+  duration_ms: 22.980583
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:876:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + ''
+    - 'preview-button'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'preview-button'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:890:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Playground: live measurement handles empty and nonfinite controls without a vacuous visibility claim
+not ok 21 - Playground: live measurement handles empty and nonfinite controls without a vacuous visibility claim
+  ---
+  duration_ms: 19.091583
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:962:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /no measurable action boxes/. Input:
+    
+    'Controls: minimum Infinity × Infinity · all actions visible'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Controls: minimum Infinity × Infinity · all actions visible'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:966:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Playground: new preview clears live measurements immediately while retaining the explicit snapshot
+not ok 22 - Playground: new preview clears live measurements immediately while retaining the explicit snapshot
+  ---
+  duration_ms: 23.9515
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:989:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Waiting for the current preview document/. Input:
+    
+    '390 × 844 CSS pixels requested · frame reports 390 × 844 · shown at 100%'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '390 × 844 CSS pixels requested · frame reports 390 × 844 · shown at 100%'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:1001:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Playground: unavailable current document, arena or viewport clears only live measurement state
+not ok 23 - Playground: unavailable current document, arena or viewport clears only live measurement state
+  ---
+  duration_ms: 20.841958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:1014:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /Infinity|NaN|Continue|minimum|whole arena visible/. Input:
+    
+    'Arena 360.0 × 270.0 · top 60, bottom 330 · whole arena visible · no horizontal overflow'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Arena 360.0 × 270.0 · top 60, bottom 330 · whole arena visible · no horizontal overflow'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-playground-native-runtime-170508f1/behavior-baseline/game/test/practice-playground-display.test.mjs:1044:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 18
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 552.399917

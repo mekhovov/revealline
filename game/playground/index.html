@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+    <script type="module" src="../ui/tool-display-entry.mjs"></script>
     <script type="module" src="../presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
   </head>
@@ -350,21 +351,38 @@
                   value="50"
               /></label>
             </div>
-            <p>
-              Signal zones block boost and abilities for vulnerable classes. Edit flags in Level
-              JSON. Hangars become usable after their ground is safe. Erase removes a whole zone or
-              object.
+            <p data-field-kit-copy="playground.paintHelp">
+              Signal speed and optional boost/ability locks apply to vulnerable classes. Edit each
+              zone's flags in Level JSON. Switch class within a hangar's radius on safe ground, with
+              no active cut and after the switch cooldown. Erase removes a whole zone or object.
             </p>
           </details>
           <canvas
             id="map-editor"
             width="768"
             height="576"
-            aria-label="Click to paint the board. Exact coordinates can also be edited in Level JSON below."
+            aria-label="Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map."
+            aria-describedby="map-readout map-diagnostics-help"
+            data-field-kit-copy-aria-label="playground.mapLabel"
           ></canvas>
           <p id="map-readout" class="micro-note">
             Safe border · grey walls · coral enemies · gold objectives
           </p>
+          <details id="map-diagnostics" open>
+            <summary data-field-kit-copy="playground.mapDetails">Signal zones and hangars</summary>
+            <p id="map-diagnostics-help" data-field-kit-copy="playground.mapDetailsHelp">
+              Dashed rectangles mark signal zones; diamond-framed squares mark hangars. Locations
+              use zero-based cell coordinates: x from the left, y from the top. Hangar marker size
+              does not represent its activation radius. Signal effects apply to vulnerable craft;
+              overlapping zones use the lowest speed. Switch within a hangar's radius on safe
+              ground, with no active cut and after the switch cooldown.
+            </p>
+            <ul id="map-diagnostic-list">
+              <li data-field-kit-copy="playground.mapDetailsLoading">
+                Map details appear after the working configuration loads.
+              </li>
+            </ul>
+          </details>
           <div class="section-line">
             <span>REPLACE ONE VISUAL ROLE</span><span>ORIGINAL FILES PRESERVED</span>
           </div>

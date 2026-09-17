@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/tool-display-restoration.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-tool-history-restoration-822f3290/parent",
+  "exitCode": 1,
+  "runtime": "20.19.5",
+  "elapsedSeconds": 0.6247767499990005,
+  "counts": {
+    "tests": 7,
+    "suites": 0,
+    "pass": 1,
+    "fail": 6,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "failureNames": [
+    "history-restored selector follows current owner after pageshow (persisted=false)",
+    "history-restored selector follows current owner after pageshow (persisted=true)",
+    "persisted return first refreshes shared authority, then corrects late stale form state",
+    "history repair retains unsaved local intent and its persistence warning",
+    "a second pageshow replaces its pending task and a frozen departure cancels it",
+    "terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls"
+  ],
+  "stdoutSha256": "4f90b8e7b75dccd874bce613547dbb6f12189058fc02a5e57d876b2ff4fe48d4",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Small exact product display/preference modules with modeled restoration/task boundaries; no browser/app/full-source/build acceptance."
+}

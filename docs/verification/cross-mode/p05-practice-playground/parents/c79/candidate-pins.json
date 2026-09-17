@@ -1,0 +1,142 @@
+{
+  "status": "BOUNDED_MODEL_QUALIFIED_NATIVE_PENDING",
+  "source": "170508f11dd41204b7e24917a823f21701c15961",
+  "equivalentMainAtAdmission": "a185c94c1d7b981f677f6356eafd84a4f68babba",
+  "tree": "287ea0fddf97f594af0ce9eba452a24dc5f507c7",
+  "parentPatchSha256": "e674b1ba1234f98a1d957345a7d52bf3caf5930c9df8bf7b6488b3842e00f021",
+  "patchSha256": "c79fd47750a57a7b3aa27dd211ddb5ec9f4f34c8408169a277d7157877cc5d87",
+  "files": [
+    {
+      "path": "game/playground/playground.mjs",
+      "preimageSha256": "f242443b2a171ffc5376b9eba5b5ae5dd35a65f820ebaec9d9cda0134cfe1aad",
+      "sha256": "b6cc429d85eb8de198ce9654be27e3762c824fa8b29b45315e4f54b9472d579e",
+      "bytes": 52707
+    },
+    {
+      "path": "game/test/practice-playground-display.test.mjs",
+      "preimageSha256": "69988a1f1e678dce4b2daf274c809620328cd036fad008d1264267934b17e484",
+      "sha256": "7da7af6e53b18e72cbb957585806ac2d7350b0547f71d8132b067bc7ca49a008",
+      "bytes": 39079
+    }
+  ],
+  "proposalInputCount": 901,
+  "parentInputsUnchanged": true,
+  "finalInputsUnchanged": true,
+  "testFilesPerCandidateRuntime": 11,
+  "leafTestsPerCandidateRuntime": 127,
+  "parentGroupsPerCandidateRuntime": 1,
+  "reportedResultsPerCandidateRuntime": 128,
+  "baselineScope": "Qualified parent production + final successor actual-host test, not raw Git baseline;23cases with18pass5defect assertions",
+  "v8OldSpaceMiB": 1024,
+  "sequentialNodeOnly": true,
+  "runs": [
+    {
+      "label": "proposal20-01",
+      "exitCode": 1,
+      "counts": {
+        "tests": 128,
+        "suites": 0,
+        "pass": 121,
+        "fail": 7,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "topLevelResults": 103,
+      "nestedResults": 25,
+      "parentGroups": 1,
+      "leafResults": 127,
+      "timedOut": false,
+      "processTerminal": true,
+      "inputsUnchanged": true,
+      "logMatches": true
+    },
+    {
+      "label": "proposal20-02",
+      "exitCode": 0,
+      "counts": {
+        "tests": 128,
+        "suites": 0,
+        "pass": 128,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "topLevelResults": 103,
+      "nestedResults": 25,
+      "parentGroups": 1,
+      "leafResults": 127,
+      "timedOut": false,
+      "processTerminal": true,
+      "inputsUnchanged": true,
+      "logMatches": true
+    },
+    {
+      "label": "proposal22-01",
+      "exitCode": 0,
+      "counts": {
+        "tests": 128,
+        "suites": 0,
+        "pass": 128,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "topLevelResults": 103,
+      "nestedResults": 25,
+      "parentGroups": 1,
+      "leafResults": 127,
+      "timedOut": false,
+      "processTerminal": true,
+      "inputsUnchanged": true,
+      "logMatches": true
+    },
+    {
+      "label": "baseline20-01",
+      "exitCode": 1,
+      "counts": {
+        "tests": 23,
+        "suites": 0,
+        "pass": 18,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "topLevelResults": 23,
+      "nestedResults": 0,
+      "parentGroups": 0,
+      "leafResults": 23,
+      "timedOut": false,
+      "processTerminal": true,
+      "inputsUnchanged": true,
+      "logMatches": true
+    },
+    {
+      "label": "baseline22-01",
+      "exitCode": 1,
+      "counts": {
+        "tests": 23,
+        "suites": 0,
+        "pass": 18,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "topLevelResults": 23,
+      "nestedResults": 0,
+      "parentGroups": 0,
+      "leafResults": 23,
+      "timedOut": false,
+      "processTerminal": true,
+      "inputsUnchanged": true,
+      "logMatches": true
+    }
+  ],
+  "nativeChecksRun": 0,
+  "phaseAccepted": false,
+  "publicAccepted": false
+}
