@@ -1,0 +1,71 @@
+{
+  "status": "PASS_SCOPED_DELIVERY_CURATION",
+  "at": "2026-09-17T13:53:52.242394+00:00",
+  "base": "63796aab5bb692578fef77f43fb9fa61050a372b",
+  "copiedOriginalFiles": 248,
+  "copiedOriginalBytes": 8150375,
+  "exactOriginalCopiesVerified": true,
+  "closureChecks": [
+    {
+      "file": "acceptance.json",
+      "pinsVerified": 6
+    },
+    {
+      "file": "public-row-review-complete-1.json",
+      "pinsVerified": 4
+    },
+    {
+      "file": "after-http-authorities-main-1/result.json",
+      "pinsVerified": 21
+    },
+    {
+      "file": "tools/inputs/63796aab5bb692578fef77f43fb9fa61050a372b/binding.json",
+      "pinsVerified": 9
+    },
+    {
+      "file": "hosted-observation-before-1/record.json",
+      "pinsVerified": 18
+    },
+    {
+      "file": "hosted-observation-before-2/record.json",
+      "pinsVerified": 24
+    },
+    {
+      "file": "hosted-observation-before-3/record.json",
+      "pinsVerified": 24
+    },
+    {
+      "file": "hosted-observation-after-1/record.json",
+      "pinsVerified": 24
+    }
+  ],
+  "smallZipMembersVerified": 2,
+  "generatedDocuments": [
+    {
+      "path": "README.md",
+      "bytes": 4980,
+      "sha256": "d19ae4e34d329641ce3591166c98087a1e816c08d49de85859238bb495a4ddf9"
+    },
+    {
+      "path": "CURATION.md",
+      "bytes": 2293,
+      "sha256": "43f78cd3fe672a0943674e462ad00493f1287c65e62184f7a1b18bd04cb03686"
+    },
+    {
+      "path": "planning/progress-and-next.md",
+      "bytes": 11097,
+      "sha256": "401398875dc27e829f267826da4ec7e276e1bc56f12cbd6e70657d61be168a6c"
+    },
+    {
+      "path": "retained-files.json",
+      "bytes": 80372,
+      "sha256": "ef3cf6cada48d8ec4131c6e44b4c96237680a7f7c315025ecc2ce8b4b6312565"
+    }
+  ],
+  "currentDeliverySummary": {
+    "path": "../../../README.md",
+    "bytes": 14223,
+    "sha256": "9132685aa423c8cf5c58da3df312f59aef0a2f1e76e36bad4fbccbe97006db91"
+  },
+  "scope": "Only delivery records and current delivery summary prepared. No frozen source/runtime/selector/workflow changes, no whole P03/P05/P18 acceptance and no acceptance of Recovery candidate."
+}

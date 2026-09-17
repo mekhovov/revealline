@@ -1,0 +1,41 @@
+{
+  "status": "PASS_ALL_PUBLIC_RESULT_ROWS_RECONCILED",
+  "reviewedAt": "2026-09-17T13:42:16.134751+00:00",
+  "controllerCommit": "63796aab5bb692578fef77f43fb9fa61050a372b",
+  "deploymentId": 6503914712,
+  "runId": 35227819123,
+  "gameSourceRevision": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "version": "v0.60.3",
+  "files": 2730,
+  "bytes": 639313374,
+  "attempts": 2731,
+  "failedAttempts": 1,
+  "retries": 1,
+  "canonicalRequestURLsVerified": true,
+  "originalInputsAndRunnerPinsUnchanged": true,
+  "noPublicPayloadFiles": true,
+  "reportSha256": "4b721fffbe389843ad291f884d12fd9034ad4fb0db30af3650d27eab44a670df",
+  "pins": [
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3733,
+      "sha256": "4b721fffbe389843ad291f884d12fd9034ad4fb0db30af3650d27eab44a670df"
+    },
+    {
+      "path": "tools/runs/complete-1/inventory.json",
+      "bytes": 692551,
+      "sha256": "03b15b9b090c5e8333a9354d87a21116c802b469846ac87ec2a6e82b1fc4dd45"
+    },
+    {
+      "path": "tools/runs/complete-1/results.jsonl",
+      "bytes": 1773791,
+      "sha256": "aac86b243506a2f180c9b535e71b2a2cc6c684214fa43ab84cad13da4710172e"
+    },
+    {
+      "path": "tools/runs/complete-1/attempts.jsonl",
+      "bytes": 1774353,
+      "sha256": "1d1d34d096549aa513d489d454ab3e0a2dd35b56a464e415e4a579ea16a1f1c6"
+    }
+  ],
+  "scope": "Every complete result and attempt compared to exact hosted inventory; MIME acceptance is the unchanged reviewed transport policy. Live authority refresh and independent peer review remain separate. No browser/offline/physical-device or phase acceptance."
+}
