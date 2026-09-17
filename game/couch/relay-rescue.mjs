@@ -92,6 +92,8 @@ export function bootCoop() {
     audioPreferences.dispose();
     audioMaster.dispose();
   };
+  let prepareDisplayReveal,
+    displayLayoutVersion = 0;
   const displayPreferences = createDisplayPreferences({
     window,
     matchMedia,
@@ -101,6 +103,7 @@ export function bootCoop() {
     },
   });
   const stopDisplayView = displayPreferences.subscribe((state) => {
+    const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
     document.body.dataset.textFace = state.textFace;
     document.body.dataset.textSize = state.textSize;
     document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
@@ -111,6 +114,7 @@ export function bootCoop() {
       state.effectiveReducedEffects && !state.reducedEffects
         ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
         : '';
+    reveal?.();
   });
   const menuStyle = attachMenuStyleControls({
     document,
@@ -268,6 +272,56 @@ export function bootCoop() {
             : run.status === 'paused' && !loopStopped
               ? $('coop-resume')
               : $('coop-retry');
+  // Preference updates can reflow a focused select beyond the pause scroller
+  // without a window resize. Keep only that current action visible, never focus
+  // it again or resume. Initial display application runs before this owner exists.
+  prepareDisplayReveal = (revision) => {
+    const target = document.activeElement,
+      panel = $('coop-overlay'),
+      options = $('coop-options'),
+      attempt = run,
+      epoch = generation;
+    const current = () =>
+      !disposed &&
+      foreground() &&
+      run === attempt &&
+      generation === epoch &&
+      displayLayoutVersion === revision &&
+      run?.status === 'paused' &&
+      !departure &&
+      !panel.hidden &&
+      options.open &&
+      panel.contains(options) &&
+      options.contains(target) &&
+      document.activeElement === target;
+    if (!current() || !visibleAction(target) || !current()) return null;
+    return () => {
+      if (!current() || !visibleAction(target) || !current()) return;
+      const rect = target.getBoundingClientRect(),
+        bounds = panel.getBoundingClientRect(),
+        width = document.documentElement.clientWidth || window.innerWidth,
+        height = document.documentElement.clientHeight || window.innerHeight,
+        left = Math.max(0, bounds.left + panel.clientLeft) + 8,
+        top = Math.max(0, bounds.top + panel.clientTop) + 8,
+        right = Math.min(width, bounds.left + panel.clientLeft + panel.clientWidth) - 8,
+        bottom = Math.min(height, bounds.top + panel.clientTop + panel.clientHeight) - 8;
+      if (
+        ![rect.left, rect.top, rect.right, rect.bottom, left, top, right, bottom].every(
+          Number.isFinite,
+        ) ||
+        rect.width <= 0 ||
+        rect.height <= 0 ||
+        right <= left ||
+        bottom <= top ||
+        (rect.left >= left && rect.right <= right && rect.top >= top && rect.bottom <= bottom)
+      )
+        return;
+      // Layout/style reads can publish a newer action. Recheck ownership after
+      // the last such read and leave its focus, scroll and game status alone.
+      if (!current() || !visibleAction(target) || !current()) return;
+      target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    };
+  };
   input = attachCouchInput({
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),

@@ -1,0 +1,55 @@
+{
+  "baseCommit": "170508f11dd41204b7e24917a823f21701c15961",
+  "files": [
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/couch/relay-rescue.html",
+      "bytes": 17611,
+      "sha256": "8b9e6157983bd8005515407f4979c3a7db2600c04ad8e53fade1e2556eaf2e38"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/couch/couch-input.mjs",
+      "bytes": 17426,
+      "sha256": "4c53894d90fcf7b5a70b4fbe77d9cd535689bb983cbaab401ad3fd0b97c7827f"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/ui/input.mjs",
+      "bytes": 18003,
+      "sha256": "32deb9e8db1311d550608a352e0364a5977137cc6e747a186f38680cbad10388"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/ui/controller-navigation.mjs",
+      "bytes": 25678,
+      "sha256": "af7ee33659b407a36ba9c6840f809c891ab1415c88e0f3c513a45cc17b935310"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/ui/mode-choice.mjs",
+      "bytes": 1339,
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/coop/input-policy.mjs",
+      "bytes": 1519,
+      "sha256": "89e0a28cf383d79ca3c56a3faf6dc3caf9bf6b5c129764fbcdc03612d6220528"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/mode-return.mjs",
+      "bytes": 5791,
+      "sha256": "d7b428457d17bd024de91e8a04008743abb363750f500998ede5c55f4619c526"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/review-inputs/game/test/coop-host.test.mjs",
+      "bytes": 58672,
+      "sha256": "27776826322f720fed4547781e05b6c520ae5aeb30855f0f0daf396ca442bbed"
+    }
+  ],
+  "proposedRuntime": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/proposal/game/couch/relay-rescue.mjs",
+    "bytes": 49873,
+    "sha256": "9792a0818a6fc2e171de196387f51678685cc9919afd3d1a036cf3988475ebc5"
+  },
+  "proposedCss": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/proposal/game/couch/relay-rescue.css",
+    "bytes": 18340,
+    "sha256": "541f5998966bd783ec36187130fc7b3b7782399dadb010de642345619929b662"
+  }
+}
