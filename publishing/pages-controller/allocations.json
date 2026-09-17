@@ -160,7 +160,8 @@
       "id": "archive-16",
       "repository": "mekhovov/revealline-archive-16",
       "versions": [
-        "v0.57.2"
+        "v0.57.2",
+        "v0.60.0"
       ]
     },
     {
