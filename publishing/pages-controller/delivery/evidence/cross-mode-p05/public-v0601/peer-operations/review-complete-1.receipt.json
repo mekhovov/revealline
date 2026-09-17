@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-team-public-audit-822f3290/review-public.py",
+    "c1576deeab14bea21b00449912a6a465c3efaf90",
+    "complete-1"
+  ],
+  "startedAt": "2026-09-17T09:53:45.372571+00:00",
+  "finishedAt": "2026-09-17T09:53:45.454908+00:00",
+  "exitCode": 0,
+  "stdout": {
+    "path": "peer-operations/review-complete-1.stdout",
+    "bytes": 225,
+    "sha256": "8274917db26e7f5b583d11124454bdb604f9cf26e78cfaa04caa94fce4ef3b5b"
+  },
+  "stderr": {
+    "path": "peer-operations/review-complete-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

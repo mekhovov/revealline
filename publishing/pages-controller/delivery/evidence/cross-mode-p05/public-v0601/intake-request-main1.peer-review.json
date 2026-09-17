@@ -1,0 +1,16 @@
+{
+  "status": "PASS_SCOPED_INTAKE_REQUEST_REVIEW",
+  "at": "2026-09-17T09:48:05.745413+00:00",
+  "request": {
+    "path": "intake-request-main1.reviewed.json",
+    "bytes": 998,
+    "sha256": "544dfcb18ab0f088b32361739ad4c4d35ed1da58d1ed50bde0ce04d3085cabee"
+  },
+  "originalReleaseSource": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/team-v0601/root-remote/published-original.json",
+  "copyPreservedExactBytes": true,
+  "observerOriginalPinsRehashed": 24,
+  "allNinePublishedAssetsMatchReviewedUploadBinding": true,
+  "actualRunDeploymentStatusAndReceiptDescriptorVerified": true,
+  "scope": "Authorizes only the bounded small receipt intake. Final public binding remains reviewed:false and HTTP audit is not authorized by this record.",
+  "findings": []
+}
