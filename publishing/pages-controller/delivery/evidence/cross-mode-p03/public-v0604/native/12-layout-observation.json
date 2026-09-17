@@ -1,0 +1,48 @@
+{
+  "body": {
+    "rect": {
+      "bottom": 1551.9140625,
+      "height": 1602.4140625,
+      "left": 0,
+      "right": 1280,
+      "top": -50.5,
+      "width": 1280,
+      "x": 0,
+      "y": -50.5
+    },
+    "style": {
+      "margin": "0px",
+      "padding": "0px",
+      "width": "1280px"
+    }
+  },
+  "document": {
+    "client": 1280,
+    "scroll": 1280
+  },
+  "main": {
+    "rect": {
+      "bottom": 1551.9140625,
+      "height": 1602.4140625,
+      "left": 256,
+      "right": 1024,
+      "top": -50.5,
+      "width": 768,
+      "x": 256,
+      "y": -50.5
+    },
+    "style": {
+      "margin": "0px 256px",
+      "padding": "16px",
+      "width": "768px"
+    }
+  },
+  "scroll": {
+    "x": 0,
+    "y": 50.5
+  },
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

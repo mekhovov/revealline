@@ -1,0 +1,48 @@
+{
+  "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/hosted-observation-before-1",
+  "run": {
+    "id": 35239952497,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "1298acb1dbdef3a96b5a690c171fee754794c26c"
+  },
+  "jobs": [
+    {
+      "id": 105265521413,
+      "name": "assemble",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 105266194388,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 10504568890,
+      "name": "frozen-pages-receipts",
+      "size_in_bytes": 130821,
+      "digest": "sha256:80dd5ec781909e04e87252c1c60582359e3cd42806d469515c4e3167afccebcc"
+    },
+    {
+      "id": 10504114389,
+      "name": "github-pages",
+      "size_in_bytes": 528553169,
+      "digest": "sha256:00dfbf587ef0f408e72c01094e1c58beaf128d027ad86c3b88ff3f7fa8e04ed6"
+    }
+  ],
+  "deployment": {
+    "id": 6506175017,
+    "sha": "1298acb1dbdef3a96b5a690c171fee754794c26c",
+    "environment": "github-pages"
+  },
+  "latestStatus": {
+    "id": 18482014233,
+    "state": "success",
+    "log_url": "https://github.com/mekhovov/revealline/actions/runs/35239952497/job/105266194388",
+    "environment_url": "https://mekhovov.github.io/revealline/"
+  }
+}

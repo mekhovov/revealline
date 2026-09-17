@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/observe-hosted.failure-retention.py",
+    "after-1",
+    "1298acb1dbdef3a96b5a690c171fee754794c26c",
+    "961bf6d7da2159071519172b3de8583a16cca139",
+    "35239952497"
+  ],
+  "startedAt": "2026-09-17T15:33:05.440492+00:00",
+  "finishedAt": "2026-09-17T15:33:07.624799+00:00",
+  "seconds": 2.184353791999456,
+  "exitCode": 0,
+  "stdoutSha256": "59870623eea118eb69fc1fb4210b011262a8095c69382279b3b62f9aea2a79b4",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,39 @@
+Browser tab: 39, Title: "Reveal / Line", URL: "https://mekhovov.github.io/revealline-archive-19/releases/v0.60.3/site/game/".
+1 AXWebArea Reveal / Line, URL: mekhovov.github.io/revealline-archive-19/releases/v0.60.3/site/game/
+	2 button Description: Game menu, ID: shell-menu
+		3 text  ◩ 
+		4 text REVEAL / LINE
+	5 text TACTICAL EDITION
+	6 checkbox Description: Enter fullscreen, Value: 0, ID: shell-fullscreen
+	7 button Missions, ID: shell-packs
+	8 button Collection, ID: shell-collection
+	9 button Description: Game settings, ID: shell-settings
+		10 text Settings
+	11 container Game
+		12 container
+			13 text REVEALED
+			14 container coverage
+				15 text 52.2 %
+			16 text TARGET 58%
+		17 text LIVES
+		18 container Description: 3 lives, ID: lives
+			19 text ◆ ◆ ◆
+		20 text TIME
+		21 container time
+			22 text 1:23
+		23 text SCORE
+		24 container score
+			25 text 08660
+		26 container arena-shell
+			27 container ID: game-canvas, Description: Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.
+			28 container overlay-reading-unit
+				29 text PAUSED
+				30 button Resume →, ID: start-button
+				31 button Restart mission, ID: overlay-restart
+				32 button Mission brief, ID: overlay-brief
+				33 button Main menu, ID: overlay-menu
+		34 text Paused
+		35 text Relay: 1 / 1
+		36 text Flight resumed.
+
+The focused UI element is 30 button Resume →, ID: start-button

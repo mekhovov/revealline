@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "observe-hosted.failure-retention.py",
+    "before-1",
+    "1298acb1dbdef3a96b5a690c171fee754794c26c",
+    "961bf6d7da2159071519172b3de8583a16cca139",
+    "35239952497"
+  ],
+  "startedAt": "2026-09-17T15:27:06.059743+00:00",
+  "endedAt": "2026-09-17T15:27:08.357872+00:00",
+  "exitCode": 0,
+  "stdout": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/deployment-observer-execution/before-1.stdout",
+    "bytes": 1338,
+    "sha256": "34436925cb2c71a34108c0ac74059efbeeb52f79798431e7274da627c6f8d579"
+  },
+  "stderr": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/deployment-observer-execution/before-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "automaticRetry": false
+}
