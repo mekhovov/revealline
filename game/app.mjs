@@ -71,6 +71,7 @@ import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
+import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
 import { attachEnemyGuide } from './ui/enemy-guide.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
@@ -1695,6 +1696,18 @@ try {
         !cancel.disabled &&
         dialog.contains(event.target)
       );
+    },
+    onTabBoundary: ({ backward }) => {
+      if (!controllerPreview || window.name !== 'revealline-controller-practice') return false;
+      requestControllerPracticeExit({
+        window,
+        session: params.get('controller-session'),
+        backward,
+        beforeExit: suspendInteraction,
+      });
+      // A rejected or retired embedded handoff must not wrap focus back into a
+      // stale child. The next deliberate boundary key may try the current lab.
+      return true;
     },
     getDefaultFocus: controllerFocus,
     getReadingPrompt: readingPrompt,
@@ -4928,6 +4941,10 @@ try {
       `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
   }
   function overlay(kind) {
+    // Repeated suspension may repaint Pause, but does not own a new focus
+    // choice. An inactive child must not pull focus back from its parent.
+    const preservePauseFocus =
+      kind === 'pause' && !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'pause';
     drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
     $('game-overlay').dataset.kind = kind;
     show('pause-label', kind === 'pause');
@@ -5060,7 +5077,8 @@ try {
     refreshCourse();
     refreshDifficulty();
     controllerReading?.refresh();
-    if (!controllerDialog()) controllerFocus()?.focus({ preventScroll: true });
+    if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
+      controllerFocus()?.focus({ preventScroll: true });
   }
   function prepare({ restoreAdoption = false, contentSwitchTicket = null, difficulty } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;

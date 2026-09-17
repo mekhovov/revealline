@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "at": "2026-09-17T03:54:30.048363+00:00",
+  "artifactId": 10479618842,
+  "bytes": 123790,
+  "sha256": "13702eb8a11493f976b88e8a17586b6c242b23a5d9fc55dd4a7c04462eada6cb",
+  "members": [
+    {
+      "path": "artifact-receipt.json",
+      "bytes": 497301,
+      "sha256": "c23cf33f6a8c6199217e4da17218fe501fd788d68298e24767c14073ce328e10"
+    },
+    {
+      "path": "zip-receipt.json",
+      "bytes": 407,
+      "sha256": "1ecba5b323b4d0f87f8793011215f20ce35d81d9373b64169c88a7359e650a6b"
+    }
+  ],
+  "publicArtifactDownloaded": false,
+  "exitCode": 0
+}

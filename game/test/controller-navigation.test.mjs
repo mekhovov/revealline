@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import {
+  attachControllerPracticeExit,
+  requestControllerPracticeExit,
+} from '../ui/controller-practice-exit.mjs';
 import { createControllerRouter, neutralControllerFlight } from '../ui/controller-router.mjs';
 import { resolveControllerBindings } from '../controller-bindings.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -1829,4 +1833,211 @@ test('actual two-surface host preserves a native Done click through document cap
     assert.equal(h.calls.back + h.calls.menu, 0);
   }
   assert.equal(transitions, 4);
+});
+
+function embeddedPractice(t) {
+  const parent = new Document();
+  const session = '0123456789abcdef0123456789abcdef';
+  let currentSession = session,
+    ready = true,
+    releases = 0,
+    suspensions = 0;
+  let duringSuspend = () => {},
+    duringRelease = () => {};
+  const frame = new Element(parent, 'iframe');
+  const mission = new Element(parent, 'select', { id: 'mission' });
+  const focusGame = new Element(parent, 'button', { id: 'focus-game' });
+  parent.body.append(mission, focusGame, frame);
+  parent.defaultView.location = { origin: 'http://localhost:8767' };
+  parent.hasFocus = () => !parent.hidden;
+  const h = setup(t, {
+    keyboard: true,
+    onTabBoundary: ({ backward }) => {
+      requestControllerPracticeExit({
+        window: child,
+        session,
+        backward,
+        beforeExit: () => {
+          suspensions++;
+          duringSuspend();
+        },
+      });
+      return true;
+    },
+  });
+  h.setScope('ready:practice', h.document.body);
+  h.document.hasFocus = () => parent.activeElement === frame && !parent.hidden;
+  const child = {
+    document: h.document,
+    frameElement: frame,
+    location: { origin: 'http://localhost:8767' },
+    parent: parent.defaultView,
+    CustomEvent: class extends Event {
+      constructor(type, options) {
+        super(type, options);
+        this.detail = options.detail;
+      }
+    },
+  };
+  frame.contentWindow = child;
+  const bridge = attachControllerPracticeExit({
+    frame,
+    document: parent,
+    getSession: () => currentSession,
+    isReady: () => ready,
+    getTarget: (backward) => (backward ? focusGame : mission),
+    releaseInputs: () => {
+      releases++;
+      duringRelease();
+    },
+  });
+  t.after(() => bridge.destroy());
+  const first = h.control('button', { id: 'game-menu' });
+  const middle = h.control('button', { id: 'start-mission' });
+  const last = h.control('button', { id: 'main-menu' });
+  const enter = (element) => {
+    parent.activeElement = frame;
+    element.focus();
+  };
+  return {
+    h,
+    parent,
+    frame,
+    child,
+    bridge,
+    first,
+    middle,
+    last,
+    mission,
+    focusGame,
+    enter,
+    get releases() {
+      return releases;
+    },
+    get suspensions() {
+      return suspensions;
+    },
+    replaceSession() {
+      currentSession = 'abcdef0123456789abcdef0123456789ab';
+    },
+    loading() {
+      ready = false;
+    },
+    onSuspend(callback) {
+      duringSuspend = callback;
+    },
+    onRelease(callback) {
+      duringRelease = callback;
+    },
+  };
+}
+
+test('embedded practice Tab edges return to parent controls; interior keys keep their menu owner', (t) => {
+  const f = embeddedPractice(t);
+  f.enter(f.middle);
+  assert.equal(f.middle.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
+  assert.equal(f.h.document.activeElement, f.last);
+  assert.equal(f.parent.activeElement, f.frame);
+  assert.equal(f.releases, 0);
+  const exit = f.last.emit('keydown', { key: 'Tab' });
+  assert.equal(exit.defaultPrevented, true);
+  assert.equal(
+    f.parent.activeElement,
+    f.mission,
+    'Forward boundary must escape the child Ready loop.',
+  );
+  assert.equal(f.h.document.activeElement, f.last, 'No wrapped child action receives focus.');
+  assert.equal(f.releases, 1);
+  assert.equal(f.suspensions, 1);
+  f.enter(f.first);
+  assert.equal(f.first.emit('keydown', { key: 'Tab', shiftKey: true }).defaultPrevented, true);
+  assert.equal(f.parent.activeElement, f.focusGame);
+  assert.equal(f.releases, 2);
+  assert.equal(f.suspensions, 2);
+  assert.deepEqual({ back: f.h.calls.back, menu: f.h.calls.menu }, { back: 0, menu: 0 });
+});
+
+test('practice boundary never bypasses a real modal, active reader, native field or unregistered game', (t) => {
+  const f = embeddedPractice(t);
+  const dialog = f.h.control('dialog', { open: true });
+  const close = f.h.control('button', { id: 'close' }, dialog);
+  const apply = f.h.control('button', { id: 'apply' }, dialog);
+  f.h.setScope('modal:settings', dialog);
+  f.enter(apply);
+  apply.emit('keydown', { key: 'Tab' });
+  assert.equal(f.h.document.activeElement, close);
+  assert.equal(f.parent.activeElement, f.frame);
+  f.h.setScope('ready:practice', f.h.document.body);
+  dialog.remove();
+  const reader = readingSurface(f.h);
+  f.enter(reader.origin);
+  assert.equal(reader.begin(), true);
+  reader.region.emit('keydown', { key: 'ArrowDown' });
+  assert.equal(f.h.document.activeElement, reader.region);
+  reader.region.emit('keydown', { key: 'Tab' });
+  assert.equal(f.h.api.readingState(), null);
+  assert.equal(f.parent.activeElement, f.frame, 'Ending a reader is not a frame exit.');
+  const controlReader = readingSurface(f.h, { tagName: 'TEXTAREA' });
+  f.enter(controlReader.origin);
+  assert.equal(controlReader.begin(), true);
+  controlReader.region.emit('keydown', { key: 'Tab' });
+  assert.equal(f.h.api.readingState(), null);
+  assert.equal(
+    f.parent.activeElement,
+    f.frame,
+    'A focusable control reader also ends before any frame exit.',
+  );
+  const native = f.h.select();
+  f.enter(native);
+  assert.equal(native.emit('keydown', { key: 'ArrowDown' }).defaultPrevented, false);
+  assert.equal(f.releases, 0);
+  const standalone = setup(t, { keyboard: true });
+  standalone.setScope('ready:ordinary', standalone.document.body);
+  const a = standalone.control('button'),
+    b = standalone.control('button');
+  b.focus();
+  b.emit('keydown', { key: 'Tab' });
+  assert.equal(standalone.document.activeElement, a);
+});
+
+test('stale, loading, unfocused or disposed practice contexts cannot move parent focus or clear newer input', async (t) => {
+  for (const kind of ['session', 'loading', 'parent-focus', 'hidden', 'wrong-frame', 'disposed'])
+    await t.test(kind, (t) => {
+      const f = embeddedPractice(t);
+      f.enter(f.last);
+      if (kind === 'session') f.replaceSession();
+      if (kind === 'loading') f.loading();
+      if (kind === 'parent-focus') f.parent.activeElement = f.mission;
+      if (kind === 'hidden') f.parent.hidden = true;
+      if (kind === 'wrong-frame') f.frame.contentWindow = {};
+      if (kind === 'disposed') f.bridge.destroy();
+      const before = f.parent.activeElement;
+      f.last.emit('keydown', { key: 'Tab' });
+      assert.equal(f.parent.activeElement, before);
+      assert.equal(f.releases, 0);
+      assert.equal(f.suspensions, 0);
+    });
+});
+
+test('an accepted practice exit cannot wrap the child after a callback changes session or parent focus', async (t) => {
+  for (const stage of ['onSuspend', 'onRelease'])
+    for (const outcome of ['session', 'focus'])
+      await t.test(`${stage}: ${outcome}`, (t) => {
+        const f = embeddedPractice(t);
+        f.enter(f.last);
+        f[stage](() => {
+          if (outcome === 'session') f.replaceSession();
+          else f.focusGame.focus();
+        });
+        const key = f.last.emit('keydown', { key: 'Tab' });
+        assert.equal(key.defaultPrevented, true);
+        assert.equal(
+          f.h.document.activeElement,
+          f.last,
+          'A retired exit must not wrap to child Game menu.',
+        );
+        assert.equal(f.parent.activeElement, outcome === 'focus' ? f.focusGame : f.frame);
+        assert.equal(f.suspensions, 1);
+        assert.equal(f.releases, stage === 'onRelease' ? 1 : 0);
+      });
 });
