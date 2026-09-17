@@ -1,0 +1,36 @@
+{
+  "status": "SCOPED_NATIVE_RETENTION_JOURNEY_PASS",
+  "observedAt": "2026-09-17T14:38:42.095805+00:00",
+  "url": "https://mekhovov.github.io/revealline-archive-19/releases/v0.60.3/site/game/",
+  "archiveCommit": "397a6069022ce1333ca332b07df86e05b239a2fd",
+  "archiveTree": "3766ae0adcea272d904ef8e96fbad012b1e00b8f",
+  "runId": 35233941351,
+  "deploymentId": 6505031581,
+  "version": "v0.60.3",
+  "observed": "Title Continue loaded existing Relay Orchard at52.2%,3lives,score8660,time22s. EscapePaused, ReturnResumed. Repausedat54s, Mainmenu, Releaseexplorer reached canonical maincatalogCurrentv603, browserBack returned archive titleContinue.",
+  "inputScope": "Actual keyboard Continue/Pause/Resume; semantic UI clicks for mainmenu/explorer. No complete controller-only claim.",
+  "limitations": [
+    "No newcut/win or challenge acceptance",
+    "No fresh offline/physicalcontroller/touch",
+    "Same https://mekhovov.github.io origin and versioned profile observed; not cross-origin migration",
+    "Provider default screenshot cropped visible pane; no whole-screen geometry claim from that image",
+    "Temporary844x650 viewport title only, reset afterward"
+  ],
+  "cleanup": {
+    "tab37Closed": true,
+    "viewportReset": true
+  },
+  "originalPins": [
+    {
+      "path": "browser/retained-player-journey.json",
+      "bytes": 41746,
+      "sha256": "738b2c88bdbff1136948e775ff89e52d58176f4d9ae224a7c8428f217fb3ed85"
+    },
+    {
+      "path": "browser/retained-title.png",
+      "bytes": 96448,
+      "sha256": "b0a844123561d7e0902e3b9d6d110a94fb2047596ff665bc192f7ae32c7a96b1"
+    }
+  ],
+  "publicInventoryAcceptance": "Separate audit in progress; not granted by this record"
+}
