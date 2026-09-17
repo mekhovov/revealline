@@ -1,0 +1,27 @@
+{
+  "base": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "baseTree": "cf744b1ced9680b2fb4e0c304ddfc4b9f44b3e86",
+  "scope": "Unreleased composed Recovery P05 + P03 + late-Back candidate against exact a13 source. Three exact reviewed candidate runtime bodies plus one original frozen build-info metadata override; no public/full-phase claim.",
+  "files": {
+    "game/profile-recovery.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-native-a13ab970/runtime/game/profile-recovery.html",
+      "bytes": 3653,
+      "sha256": "47874b5d4e92f5e7bc6bbc9fc5f1afabeac2832e168a7185cb976bebab4fef58"
+    },
+    "game/profile-recovery.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-native-a13ab970/runtime/game/profile-recovery.mjs",
+      "bytes": 6669,
+      "sha256": "0626d7917b4c237a88409702c4c54417d3ae6a2df91fdf0575aecd8e3f6adc10"
+    },
+    "game/ui/profile-recovery.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-native-a13ab970/runtime/game/ui/profile-recovery.css",
+      "bytes": 1486,
+      "sha256": "ef3d3af4e43006c5cc10493e248affccc74d9bde13e7ae33243c5e8c282f0960"
+    },
+    "game/build-info.json": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-native-a13ab970/derived-originals/game/build-info.json",
+      "bytes": 143,
+      "sha256": "a62aecc4b9afd9ebf413accbd604e210120155e6ab6ce5017bdb55a1ca208c07"
+    }
+  }
+}

@@ -1,0 +1,128 @@
+TAP version 13
+# Subtest: controller Back cancels held Recovery startup before any profile read or late adoption
+ok 1 - controller Back cancels held Recovery startup before any profile read or late adoption
+  ---
+  duration_ms: 53.576625
+  ...
+# Subtest: failed startup keeps controller Reload reachable and retains one router through readiness
+ok 2 - failed startup keeps controller Reload reachable and retains one router through readiness
+  ---
+  duration_ms: 94.00375
+  ...
+# Subtest: Reload during a held catalog retires its late completion without replacing the newer view
+ok 3 - Reload during a held catalog retires its late completion without replacing the newer view
+  ---
+  duration_ms: 72.440792
+  ...
+# Subtest: timed-out startup keeps Reload active and late failed work cannot replace its successor
+ok 4 - timed-out startup keeps Reload active and late failed work cannot replace its successor
+  ---
+  duration_ms: 62.718167
+  ...
+# Subtest: startup completion preserves newer focus instead of moving it from Back
+ok 5 - startup completion preserves newer focus instead of moving it from Back
+  ---
+  duration_ms: 56.910375
+  ...
+# Subtest: background completion cannot autofocus now or on foreground return
+ok 6 - background completion cannot autofocus now or on foreground return
+  ---
+  duration_ms: 57.532625
+  ...
+# Subtest: hidden input stays neutral and returning foreground requires a fresh controller command
+ok 7 - hidden input stays neutral and returning foreground requires a fresh controller command
+  ---
+  duration_ms: 7.246167
+  ...
+# Subtest: cached return starts one read and one navigation loop while terminal departure cannot revive either
+ok 8 - cached return starts one read and one navigation loop while terminal departure cannot revive either
+  ---
+  duration_ms: 62.421459
+  ...
+# Subtest: ready Back waits for the actual reader transaction and overlapping Back closes it once
+ok 9 - ready Back waits for the actual reader transaction and overlapping Back closes it once
+  ---
+  duration_ms: 58.666125
+  ...
+# Subtest: old ready Back cannot navigate or focus after persisted departure and return
+not ok 10 - old ready Back cannot navigate or focus after persisted departure and return
+  ---
+  duration_ms: 5062.886083
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:396:1'
+  failureType: 'testCodeFailure'
+  error: 'The new visit begins its own startup after old read cleanup.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/helpers/wait-for.mjs:13:12)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:410:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: ready Back cleanup completed in the background cannot navigate or later autofocus
+not ok 11 - ready Back cleanup completed in the background cannot navigate or later autofocus
+  ---
+  duration_ms: 71.770875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:425:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   './index.html'
+    + ]
+    - []
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: './index.html'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:435:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: terminal departure invalidates a ready Back still awaiting its reader
+ok 12 - terminal departure invalidates a ready Back still awaiting its reader
+  ---
+  duration_ms: 62.736166
+  ...
+# Subtest: terminal departure also invalidates startup Back final navigation continuation
+not ok 13 - terminal departure also invalidates startup Back final navigation continuation
+  ---
+  duration_ms: 1.666875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:460:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   './index.html'
+    + ]
+    - []
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: './index.html'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:465:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 10
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6027.591958

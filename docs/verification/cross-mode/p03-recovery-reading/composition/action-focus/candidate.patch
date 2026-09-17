@@ -1,0 +1,470 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -565,3 +565,7 @@
+ 
+ 
+ When Recovery Back awaits reader close, capture its originating view and read generation. Permit the deferred host callback only for that same current foreground owner; invalidate the final navigation after pagehide. Preserve close-before-Back and allow a fresh current Back after a cancelled stale request. Test the actual host/view/reader with a held readonly transaction abort, both legitimate closure and history/background supersession. Keep modeled storage events separate from native IndexedDB and BFCache evidence; see the deferred Back correction in [Recovery startup navigation](../../../docs/recovery-startup-navigation.md).
++
++When a Recovery read disables its focused Find, Review or preparation action, pass that exact origin into the current operation. Transfer only its foreground focus synchronously to Cancel; never use body focus alone as ownership evidence. Return only while Cancel still owns focus, the operation remains current and background cancellation has not invalidated that return. Keep Find's result-aware Find/Review destination, other enabled origins and the existing successful download-link destination. Preserve newer focus, unowned/background starts and closed views. Test the real view with the observed disabled-control blur, empty/error/channel outcomes and original preparation; retain native focus and downloaded-byte evidence separately. Recovery is currently an explicit troubleshooting URL, not an advertised Library destination. Do not silently add navigation or fabricate eligible profiles to complete a test. See [ready-action focus continuity](../../../docs/recovery-startup-navigation.md#ready-action-focus-continuity).
++
++Prompt example: “Repair only the current Recovery action's focus through async work: focused origin → Cancel → result-appropriate action or prepared download. Prove newer focus and background cancellation win, preserve all read-only data semantics, and keep corrected native and physical-input acceptance distinct from modeled tests.”
+diff --git a/docs/recovery-startup-navigation.md b/docs/recovery-startup-navigation.md
+--- a/docs/recovery-startup-navigation.md
++++ b/docs/recovery-startup-navigation.md
+@@ -30,3 +30,17 @@
+ The separate successor on the same a13 + P05 + P03 composition passes six complete affected files: **81/81 each on Node 20.19.5 and 22.22.2**, with 95 unchanged inputs / 1,144,784 bytes, sequentially at 1024 MiB. Five added cases exercise actual host/view/reader behavior through a modeled readonly IndexedDB transaction whose abort completion is held. They cover legitimate and overlapping Back, persisted departure/return, background closure, terminal ready closure and terminal startup continuation. The preceding P03 runtime fails three of those cases (10 pass / 3 fail across the whole 13-case startup file). This is genuine asynchronous reader ownership coverage with a modeled storage-event boundary, not native IndexedDB/BFCache or physical-controller acceptance. Earlier 68/76 cohorts and their immutable packets remain separate evidence.
+ 
+ Prompt: “Preserve close-before-Back but bind a delayed close callback to its originating Recovery view and generation. A newer history visit or background completion must invalidate its navigation; a fresh current Back must still leave once. Use actual reader work with a delayed readonly transaction abort to prove the boundary, preserve prior failed receipts, and do not change profile permissions or automatic discovery.”
++
++## Ready-action focus continuity
++
++Find, Review and original-file preparation disable their initiating action while work runs. Native inspection of the preceding candidate found that both Find and Review left focus on the document body. This happened with an empty origin and with a discovered `release-v0.60.3` profile; it is not limited to empty results.
++
++The separate correction gives each operation its explicit initiating control. If that control currently owns foreground focus, it transfers focus synchronously to the available Cancel action before awaiting the read. Empty or failed Find returns from Cancel to Find; a successful Find with channels moves to Review. Other checks return to their still-available initiating action. A prepared export retains the existing explicit download-link handoff. Newer focus wins, a background start cannot take focus, and background cancellation invalidates a deferred return even if the page becomes foreground before the read settles. Closing the view prevents all completion handoffs. No automatic Find, storage write, new router or new data capability is introduced.
++
++The full four-patch composition on exact `a13ab970222498d7c5fa7f62f9fc04fe436979d5` passes **89/89 tests on Node 20.19.5 and 89/89 on Node 22.22.2**, using the same six complete affected files sequentially at 1024 MiB. All 95 inputs / 1,152,610 bytes remain unchanged across each run. The preceding ready-view runtime fails seven cases in the two complete view files (26 pass / 7 fail). These regressions use the actual view and model the observed browser behavior in which disabling the focused control moves focus to the body. Reader results, original verification and download handles are fixture boundaries; they do not establish real browser file recovery, physical input or corrected native focus painting. Earlier 68/76/81 cohorts and packets remain unchanged; native correction acceptance is still pending.
++
++The native procedure starts at the explicit troubleshooting URL `/game/profile-recovery.html`. Exact a13 has no advertised game-menu link to this route. The ordinary Library “Bring progress from earlier release” action is a different compatible-transfer workflow. Do not claim a menu-to-Recovery journey or add a route as part of this focus correction. Repeat real empty and discovered-channel Find, Review, Cancel and available preparation actions; verify the actual next Tab action, newer Back focus and background completion. Test physical controller/touch, zoom and eligible original downloads separately.
++
++This product policy applies [W3C guidance on logical, operable focus order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html). It additionally checks current visibility and focus because [MDN documents that `pageshow` can occur in a background or prerendered document](https://developer.mozilla.org/en-US/docs/Web/API/Window/pageshow_event). Those sources were rechecked on 2026-09-17; neither prescribes this particular Cancel handoff or establishes accessibility certification.
++
++Prompt: “Keep Recovery's focused asynchronous action reachable while disabled. Capture only its current foreground focus and hand it to this operation's Cancel; on completion respect newer focus, background cancellation and disposal. Keep Find's result-aware Find/Review destination and existing prepared-download destination. Cover actual empty, failed and channel results with the real view, retain the failing disabled-blur regression, and verify the corrected browser path separately without creating profiles or a new menu route.”
+diff --git a/game/test/profile-original-recovery-view.test.mjs b/game/test/profile-original-recovery-view.test.mjs
+--- a/game/test/profile-original-recovery-view.test.mjs
++++ b/game/test/profile-original-recovery-view.test.mjs
+@@ -579,3 +579,49 @@
+   assert.equal(f.$('original-file').disabled, true);
+   await f.view.close();
+ });
++
++test('current review and original actions transfer focus through Cancel without replacing successful download handoffs', async () => {
++  const f = fixture();
++  f.doc.body = new Element(f.doc);
++  f.doc.hidden = false;
++  f.doc.hasFocus = () => true;
++  const journey = [
++    ['find', 'review'],
++    ['review', 'review'],
++    ['export', 'download'],
++    ['originals-review', 'originals-review'],
++    ['original-verify', 'original-verify'],
++    ['original-file', 'original-download'],
++    ['original-report', 'report-download'],
++  ];
++  for (const [id, target] of journey) {
++    const action = f.$(id);
++    let disabled = action.disabled;
++    Object.defineProperty(action, 'disabled', {
++      configurable: true,
++      get: () => disabled,
++      set(value) {
++        disabled = value;
++        if (value && f.doc.activeElement === action) f.doc.activeElement = f.doc.body;
++      },
++    });
++    action.focus();
++    const work = action.onclick();
++    assert.equal(f.doc.activeElement, f.$('cancel'), `${id} hands off only its own current focus.`);
++    await work;
++    assert.equal(
++      f.doc.activeElement,
++      f.$(target),
++      `${id} retains its specific completion destination.`,
++    );
++  }
++  assert.equal(f.calls.discover.length, 1);
++  assert.equal(f.calls.review.length, 1);
++  assert.equal(f.calls.verify.length, 1);
++  assert.equal(f.calls.export.length, 2);
++  assert.equal(f.urls[1].blob, f.fileBlob);
++  assert.equal(f.urls[2].blob, f.reportBlob);
++  assert.equal(f.$('original-download').href, f.urls[1].url);
++  assert.equal(f.$('report-download').href, f.urls[2].url);
++  await f.view.close();
++});
+diff --git a/game/test/profile-recovery-view.test.mjs b/game/test/profile-recovery-view.test.mjs
+--- a/game/test/profile-recovery-view.test.mjs
++++ b/game/test/profile-recovery-view.test.mjs
+@@ -339,3 +339,132 @@
+   assert.equal(f.frames.size, 0);
+   assert.equal(f.storageCalls(), 0);
+ });
++
++function focusLifecycle(f, action = 'find') {
++  f.doc.body = new Element(f.doc);
++  f.doc.hidden = false;
++  f.doc.focused = true;
++  f.doc.hasFocus = () => f.doc.focused;
++  const element = f.$(action);
++  let disabled = element.disabled;
++  Object.defineProperty(element, 'disabled', {
++    configurable: true,
++    get: () => disabled,
++    set(value) {
++      disabled = value;
++      // Native observation: disabling the current button drops focus to body.
++      if (value && f.doc.activeElement === element) f.doc.activeElement = f.doc.body;
++    },
++  });
++  return element;
++}
++function heldDiscovery() {
++  let resolve, reject;
++  const promise = new Promise((yes, no) => {
++    resolve = yes;
++    reject = no;
++  });
++  return { promise, resolve, reject };
++}
++
++for (const outcome of ['empty', 'error', 'channels']) {
++  test(`focused Find preserves current action through ${outcome} discovery`, async () => {
++    const pending = heldDiscovery();
++    const f = fixture({ discover: () => pending.promise, close: async () => {} });
++    const find = focusLifecycle(f);
++    find.focus();
++    const discovering = find.onclick();
++    assert.equal(find.disabled, true);
++    assert.equal(f.$('cancel').hidden, false);
++    assert.equal(
++      f.doc.activeElement,
++      f.$('cancel'),
++      'The disabled action hands focus to its current Cancel.',
++    );
++    if (outcome === 'error') pending.reject(new Error('Profile names unavailable.'));
++    else pending.resolve({ channels: outcome === 'channels' ? [channel] : [], diagnostics: [] });
++    await discovering;
++    assert.equal(f.doc.activeElement, f.$(outcome === 'channels' ? 'review' : 'find'));
++    assert.equal(f.$('cancel').hidden, true);
++    assert.equal(f.$('find').disabled, false);
++    if (outcome === 'error') assert.match(f.$('status').textContent, /Profile names unavailable/);
++    else
++      assert.match(
++        f.$('status').textContent,
++        outcome === 'empty' ? /No supported profile/ : /1 exact channels/,
++      );
++    await f.view.close();
++  });
++}
++
++test('Find completion preserves a newer Back focus instead of reviving its action handoff', async () => {
++  const pending = heldDiscovery();
++  const f = fixture({ discover: () => pending.promise, close: async () => {} });
++  const find = focusLifecycle(f);
++  find.focus();
++  const discovering = find.onclick();
++  assert.equal(f.doc.activeElement, f.$('cancel'));
++  f.$('back').focus();
++  pending.resolve({ channels: [channel], diagnostics: [] });
++  await discovering;
++  assert.equal(f.doc.activeElement, f.$('back'));
++  await f.view.close();
++});
++
++test('background initiation and unowned scripted Find do not take focus', async () => {
++  for (const background of [false, true]) {
++    const pending = heldDiscovery();
++    const f = fixture({ discover: () => pending.promise, close: async () => {} });
++    const find = focusLifecycle(f);
++    if (background) {
++      find.focus();
++      f.doc.focused = false;
++    } else f.$('back').focus();
++    const discovering = find.onclick();
++    const retained = f.doc.activeElement;
++    assert.notEqual(retained, f.$('cancel'));
++    pending.resolve({ channels: [], diagnostics: [] });
++    await discovering;
++    assert.equal(f.doc.activeElement, retained);
++    f.doc.focused = true;
++    assert.equal(f.doc.activeElement, retained);
++    await f.view.close();
++  }
++});
++
++test('background cancellation revokes deferred focus even if the page returns before reader completion', async () => {
++  const pending = heldDiscovery();
++  const f = fixture({ discover: () => pending.promise, close: async () => {} });
++  const find = focusLifecycle(f);
++  find.focus();
++  const discovering = find.onclick();
++  assert.equal(f.doc.activeElement, f.$('cancel'));
++  f.doc.focused = false;
++  f.view.cancel(); // The actual host calls this when it loses foreground.
++  f.doc.focused = true;
++  pending.resolve({ channels: [channel], diagnostics: [] });
++  await discovering;
++  assert.notEqual(f.doc.activeElement, find);
++  assert.notEqual(f.doc.activeElement, f.$('review'));
++  assert.match(f.$('status').textContent, /cancelled/);
++  assert.equal(f.$('review').disabled, true, 'Cancelled results cannot supply a channel.');
++  await f.view.close();
++});
++
++test('explicit current Cancel returns to Find but terminal close prevents the completion handoff', async () => {
++  for (const closing of [false, true]) {
++    const pending = heldDiscovery();
++    const f = fixture({ discover: () => pending.promise, close: async () => {} });
++    const find = focusLifecycle(f);
++    find.focus();
++    const discovering = find.onclick();
++    assert.equal(f.doc.activeElement, f.$('cancel'));
++    if (closing) await f.view.close();
++    else f.$('cancel').onclick();
++    pending.resolve({ channels: [], diagnostics: [] });
++    await discovering;
++    if (closing) assert.notEqual(f.doc.activeElement, find);
++    else assert.equal(f.doc.activeElement, find);
++    await f.view.close();
++  }
++});
+diff --git a/game/ui/profile-recovery.mjs b/game/ui/profile-recovery.mjs
+--- a/game/ui/profile-recovery.mjs
++++ b/game/ui/profile-recovery.mjs
+@@ -71,9 +71,15 @@
+     $('original-file').disabled = !!active || closed || !verified;
+     $('original-report').disabled = !!active || closed || !verified;
+   }
+-  async function task(fn, { clearRaw = true } = {}) {
++  async function task(fn, { clearRaw = true, origin = null } = {}) {
+     if (active || closed) return;
+-    const operation = { id: ++serial, controller: new AbortController() };
++    const ownedOriginFocus =
++      origin && doc.activeElement === origin && !doc.hidden && doc.hasFocus?.() !== false;
++    const operation = {
++      id: ++serial,
++      controller: new AbortController(),
++      returnFocusAllowed: true,
++    };
+     active = operation;
+     operation.lease = presenter.begin({
+       message: 'Checking stored profile data…',
+@@ -81,6 +87,17 @@
+     });
+     if (clearRaw) clearDownload();
+     refresh();
++    // Disabling a focused action can make the browser move focus to body.
++    // Hand it to the current Cancel only within this same foreground action.
++    if (
++      ownedOriginFocus &&
++      active === operation &&
++      !closed &&
++      !doc.hidden &&
++      doc.hasFocus?.() !== false &&
++      [origin, doc.body].includes(doc.activeElement)
++    )
++      $('cancel').focus();
+     const current = () => !closed && active === operation && !operation.controller.signal.aborted;
+     try {
+       await fn(operation.controller.signal, current);
+@@ -91,13 +108,27 @@
+         const hadCancelFocus = doc.activeElement === $('cancel');
+         active = null;
+         refresh();
+-        if (!closed && !doc.hidden && doc.hasFocus?.() !== false && hadCancelFocus)
+-          ($('review').disabled ? $('find') : $('review')).focus();
++        if (
++          !closed &&
++          !doc.hidden &&
++          doc.hasFocus?.() !== false &&
++          operation.returnFocusAllowed &&
++          hadCancelFocus
++        ) {
++          const target =
++            ownedOriginFocus && origin !== $('find') && !origin.disabled
++              ? origin
++              : $('review').disabled
++                ? $('find')
++                : $('review');
++          target.focus();
++        }
+       }
+     }
+   }
+   function cancel() {
+     if (!active) return;
++    if (doc.hidden || doc.hasFocus?.() === false) active.returnFocusAllowed = false;
+     active.controller.abort();
+     status('Check cancelled. Stored profiles are unchanged.', 'cancelled');
+   }
+@@ -119,28 +150,31 @@
+     $('summary').textContent = fields.join('\n');
+   }
+   $('find').onclick = () =>
+-    task(async (signal, current) => {
+-      review = null;
+-      clearOriginals();
+-      phase('Finding exact profile channels…');
+-      const result = await reader.discover({ signal });
+-      if (!current()) return;
+-      channels = result.channels;
+-      $('channel').replaceChildren();
+-      for (const [index, channel] of channels.entries()) {
+-        const option = doc.createElement('option');
+-        option.value = String(index);
+-        option.textContent = `${channel.version ?? 'Development'} · ${channel.id}${channel.support === 'protected-unknown' ? ' · unverified channel' : ''}`;
+-        $('channel').append(option);
+-      }
+-      $('channel').value = channels.length ? '0' : '';
+-      $('summary').textContent = result.diagnostics.map((item) => item.message).join('\n');
+-      status(
+-        channels.length
+-          ? `${channels.length} exact channels found. Choose one and review its stored values.`
+-          : 'No supported profile channels found on this origin.',
+-      );
+-    });
++    task(
++      async (signal, current) => {
++        review = null;
++        clearOriginals();
++        phase('Finding exact profile channels…');
++        const result = await reader.discover({ signal });
++        if (!current()) return;
++        channels = result.channels;
++        $('channel').replaceChildren();
++        for (const [index, channel] of channels.entries()) {
++          const option = doc.createElement('option');
++          option.value = String(index);
++          option.textContent = `${channel.version ?? 'Development'} · ${channel.id}${channel.support === 'protected-unknown' ? ' · unverified channel' : ''}`;
++          $('channel').append(option);
++        }
++        $('channel').value = channels.length ? '0' : '';
++        $('summary').textContent = result.diagnostics.map((item) => item.message).join('\n');
++        status(
++          channels.length
++            ? `${channels.length} exact channels found. Choose one and review its stored values.`
++            : 'No supported profile channels found on this origin.',
++        );
++      },
++      { origin: $('find') },
++    );
+   $('channel').onchange = () => {
+     if (active || closed) return;
+     review = null;
+@@ -151,48 +185,54 @@
+     refresh();
+   };
+   $('review').onclick = () =>
+-    task(async (signal, current) => {
+-      review = null;
+-      clearOriginals();
+-      const selected = channels[Number($('channel').value)];
+-      if (!selected) throw new Error('Choose an exact profile channel.');
+-      phase('Reviewing stored values…');
+-      const result = await reader.review(selected, { signal });
+-      if (!current()) return;
+-      review = result;
+-      showReview(result);
+-      status(
+-        'Stored values reviewed. Profile structure is checked separately from media and historical execution.',
+-      );
+-    });
++    task(
++      async (signal, current) => {
++        review = null;
++        clearOriginals();
++        const selected = channels[Number($('channel').value)];
++        if (!selected) throw new Error('Choose an exact profile channel.');
++        phase('Reviewing stored values…');
++        const result = await reader.review(selected, { signal });
++        if (!current()) return;
++        review = result;
++        showReview(result);
++        status(
++          'Stored values reviewed. Profile structure is checked separately from media and historical execution.',
++        );
++      },
++      { origin: $('review') },
++    );
+   $('export').onclick = () =>
+-    task(async (signal, current) => {
+-      phase('Rechecking the reviewed profile before export…');
+-      const result = await reader.exportStoredData(review, { signal });
+-      if (!current()) return;
+-      url = createURL(result.blob);
+-      if (!current()) {
+-        clearDownload();
+-        return;
+-      }
+-      $('download').href = url;
+-      $('download').download = result.filename;
+-      $('download').textContent = result.completeStoredSnapshot
+-        ? 'Download stored profile snapshot'
+-        : 'Download incomplete diagnostic';
+-      $('download').hidden = false;
+-      status(
+-        result.completeStoredSnapshot
+-          ? 'Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.'
+-          : 'Incomplete diagnostic prepared. Unsupported components remain in storage and are not included as values.',
+-      );
+-      if (
+-        !doc.hidden &&
+-        doc.hasFocus?.() !== false &&
+-        [$('export'), $('cancel')].includes(doc.activeElement)
+-      )
+-        $('download').focus();
+-    });
++    task(
++      async (signal, current) => {
++        phase('Rechecking the reviewed profile before export…');
++        const result = await reader.exportStoredData(review, { signal });
++        if (!current()) return;
++        url = createURL(result.blob);
++        if (!current()) {
++          clearDownload();
++          return;
++        }
++        $('download').href = url;
++        $('download').download = result.filename;
++        $('download').textContent = result.completeStoredSnapshot
++          ? 'Download stored profile snapshot'
++          : 'Download incomplete diagnostic';
++        $('download').hidden = false;
++        status(
++          result.completeStoredSnapshot
++            ? 'Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.'
++            : 'Incomplete diagnostic prepared. Unsupported components remain in storage and are not included as values.',
++        );
++        if (
++          !doc.hidden &&
++          doc.hasFocus?.() !== false &&
++          [$('export'), $('cancel')].includes(doc.activeElement)
++        )
++          $('download').focus();
++      },
++      { origin: $('export') },
++    );
+   function showOriginal() {
+     const selected = choice();
+     for (const [index, option] of Array.from($('original').children).entries()) {
+@@ -249,7 +289,7 @@
+               : ''),
+         );
+       },
+-      { clearRaw: false },
++      { clearRaw: false, origin: $('originals-review') },
+     );
+   $('original').onchange = () => {
+     if (active || closed) return;
+@@ -273,7 +313,7 @@
+           'Selected image verified. Prepare either file, then activate its download link. This is not a complete backup or earned-picture proof.',
+         );
+       },
+-      { clearRaw: false },
++      { clearRaw: false, origin: $('original-verify') },
+     );
+   function exportOriginal(component, id) {
+     return task(
+@@ -302,7 +342,10 @@
+         )
+           $(id).focus();
+       },
+-      { clearRaw: false },
++      {
++        clearRaw: false,
++        origin: $(component === 'original-file' ? 'original-file' : 'original-report'),
++      },
+     );
+   }
+   $('original-file').onclick = () => exportOriginal('original-file', 'original-download');

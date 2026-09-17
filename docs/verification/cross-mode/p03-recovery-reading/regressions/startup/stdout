@@ -1,0 +1,196 @@
+TAP version 13
+# Subtest: controller Back cancels held Recovery startup before any profile read or late adoption
+not ok 1 - controller Back cancels held Recovery startup before any profile read or late adoption
+  ---
+  duration_ms: 55.444666
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:180:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    One current navigation poll owner.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    tick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:137:12)
+    neutral (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:144:5)
+    Object.join (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:165:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:182:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: failed startup keeps controller Reload reachable and retains one router through readiness
+not ok 2 - failed startup keeps controller Reload reachable and retains one router through readiness
+  ---
+  duration_ms: 8.042791
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:196:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    One current navigation poll owner.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    tick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:137:12)
+    neutral (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:144:5)
+    Object.join (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:165:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:200:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Reload during a held catalog retires its late completion without replacing the newer view
+not ok 3 - Reload during a held catalog retires its late completion without replacing the newer view
+  ---
+  duration_ms: 8.471667
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:224:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    One current navigation poll owner.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    tick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:137:12)
+    neutral (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:144:5)
+    Object.join (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:165:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:228:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: timed-out startup keeps Reload active and late failed work cannot replace its successor
+not ok 4 - timed-out startup keeps Reload active and late failed work cannot replace its successor
+  ---
+  duration_ms: 2.918042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:249:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /timed out.*Reload recovery/. Input:
+    
+    'Release information timed out. Use Back and try recovery again.'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Release information timed out. Use Back and try recovery again.'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:253:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: startup completion preserves newer focus instead of moving it from Back
+not ok 5 - startup completion preserves newer focus instead of moving it from Back
+  ---
+  duration_ms: 98.002417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:267:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:273:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: background completion cannot autofocus now or on foreground return
+not ok 6 - background completion cannot autofocus now or on foreground return
+  ---
+  duration_ms: 2.496625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:276:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    One current navigation poll owner.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    tick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:137:12)
+    neutral (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:144:5)
+    Object.join (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:165:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:278:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: hidden input stays neutral and returning foreground requires a fresh controller command
+not ok 7 - hidden input stays neutral and returning foreground requires a fresh controller command
+  ---
+  duration_ms: 2.629333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:295:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    One current navigation poll owner.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    tick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:137:12)
+    neutral (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:144:5)
+    Object.join (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:165:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:297:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: cached return starts one read and one navigation loop while terminal departure cannot revive either
+not ok 8 - cached return starts one read and one navigation loop while terminal departure cannot revive either
+  ---
+  duration_ms: 2.014084
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:311:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    One current navigation poll owner.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    tick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:137:12)
+    neutral (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:144:5)
+    Object.join (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:165:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-startup-a13ab970/fixture/game/test/profile-recovery-startup-navigation.test.mjs:313:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 508.853792

@@ -232,9 +232,9 @@ test('bootstrap timeout remains visible and a late successful response cannot en
   resolve(new Response(JSON.stringify({ version: 'v0.40.0' })));
   await new Promise((done) => setImmediate(done));
   assert.equal(f.$('find').disabled, true);
-  assert.equal(f.frames.size, 0);
+  assert.equal(f.frames.size, 1, 'Startup errors retain controller Back and Reload.');
   assert.equal(f.storageCalls(), 0);
-  f.$('back').onclick();
+  await f.$('back').onclick();
   assert.deepEqual(f.urls, ['./index.html']);
 });
 
@@ -338,4 +338,133 @@ test('pagehide during catalog fetch cannot attach a late view or poll controls',
   assert.equal(f.$('find').disabled, true);
   assert.equal(f.frames.size, 0);
   assert.equal(f.storageCalls(), 0);
+});
+
+function focusLifecycle(f, action = 'find') {
+  f.doc.body = new Element(f.doc);
+  f.doc.hidden = false;
+  f.doc.focused = true;
+  f.doc.hasFocus = () => f.doc.focused;
+  const element = f.$(action);
+  let disabled = element.disabled;
+  Object.defineProperty(element, 'disabled', {
+    configurable: true,
+    get: () => disabled,
+    set(value) {
+      disabled = value;
+      // Native observation: disabling the current button drops focus to body.
+      if (value && f.doc.activeElement === element) f.doc.activeElement = f.doc.body;
+    },
+  });
+  return element;
+}
+function heldDiscovery() {
+  let resolve, reject;
+  const promise = new Promise((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
+for (const outcome of ['empty', 'error', 'channels']) {
+  test(`focused Find preserves current action through ${outcome} discovery`, async () => {
+    const pending = heldDiscovery();
+    const f = fixture({ discover: () => pending.promise, close: async () => {} });
+    const find = focusLifecycle(f);
+    find.focus();
+    const discovering = find.onclick();
+    assert.equal(find.disabled, true);
+    assert.equal(f.$('cancel').hidden, false);
+    assert.equal(
+      f.doc.activeElement,
+      f.$('cancel'),
+      'The disabled action hands focus to its current Cancel.',
+    );
+    if (outcome === 'error') pending.reject(new Error('Profile names unavailable.'));
+    else pending.resolve({ channels: outcome === 'channels' ? [channel] : [], diagnostics: [] });
+    await discovering;
+    assert.equal(f.doc.activeElement, f.$(outcome === 'channels' ? 'review' : 'find'));
+    assert.equal(f.$('cancel').hidden, true);
+    assert.equal(f.$('find').disabled, false);
+    if (outcome === 'error') assert.match(f.$('status').textContent, /Profile names unavailable/);
+    else
+      assert.match(
+        f.$('status').textContent,
+        outcome === 'empty' ? /No supported profile/ : /1 exact channels/,
+      );
+    await f.view.close();
+  });
+}
+
+test('Find completion preserves a newer Back focus instead of reviving its action handoff', async () => {
+  const pending = heldDiscovery();
+  const f = fixture({ discover: () => pending.promise, close: async () => {} });
+  const find = focusLifecycle(f);
+  find.focus();
+  const discovering = find.onclick();
+  assert.equal(f.doc.activeElement, f.$('cancel'));
+  f.$('back').focus();
+  pending.resolve({ channels: [channel], diagnostics: [] });
+  await discovering;
+  assert.equal(f.doc.activeElement, f.$('back'));
+  await f.view.close();
+});
+
+test('background initiation and unowned scripted Find do not take focus', async () => {
+  for (const background of [false, true]) {
+    const pending = heldDiscovery();
+    const f = fixture({ discover: () => pending.promise, close: async () => {} });
+    const find = focusLifecycle(f);
+    if (background) {
+      find.focus();
+      f.doc.focused = false;
+    } else f.$('back').focus();
+    const discovering = find.onclick();
+    const retained = f.doc.activeElement;
+    assert.notEqual(retained, f.$('cancel'));
+    pending.resolve({ channels: [], diagnostics: [] });
+    await discovering;
+    assert.equal(f.doc.activeElement, retained);
+    f.doc.focused = true;
+    assert.equal(f.doc.activeElement, retained);
+    await f.view.close();
+  }
+});
+
+test('background cancellation revokes deferred focus even if the page returns before reader completion', async () => {
+  const pending = heldDiscovery();
+  const f = fixture({ discover: () => pending.promise, close: async () => {} });
+  const find = focusLifecycle(f);
+  find.focus();
+  const discovering = find.onclick();
+  assert.equal(f.doc.activeElement, f.$('cancel'));
+  f.doc.focused = false;
+  f.view.cancel(); // The actual host calls this when it loses foreground.
+  f.doc.focused = true;
+  pending.resolve({ channels: [channel], diagnostics: [] });
+  await discovering;
+  assert.notEqual(f.doc.activeElement, find);
+  assert.notEqual(f.doc.activeElement, f.$('review'));
+  assert.match(f.$('status').textContent, /cancelled/);
+  assert.equal(f.$('review').disabled, true, 'Cancelled results cannot supply a channel.');
+  await f.view.close();
+});
+
+test('explicit current Cancel returns to Find but terminal close prevents the completion handoff', async () => {
+  for (const closing of [false, true]) {
+    const pending = heldDiscovery();
+    const f = fixture({ discover: () => pending.promise, close: async () => {} });
+    const find = focusLifecycle(f);
+    find.focus();
+    const discovering = find.onclick();
+    assert.equal(f.doc.activeElement, f.$('cancel'));
+    if (closing) await f.view.close();
+    else f.$('cancel').onclick();
+    pending.resolve({ channels: [], diagnostics: [] });
+    await discovering;
+    if (closing) assert.notEqual(f.doc.activeElement, find);
+    else assert.equal(f.doc.activeElement, find);
+    await f.view.close();
+  }
 });

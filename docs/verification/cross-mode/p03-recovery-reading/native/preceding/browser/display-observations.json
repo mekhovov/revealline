@@ -1,0 +1,106 @@
+{
+  "preferences": "Browser tab: 30, Title: \"Reveal / Line\", URL: \"http://127.0.0.1:60342/game/index.html\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\n~\t\t\t\t18 pop up button (collapsed, settable) Text style, Value: Plain, ID: text-face, Secondary Actions: Expand\n~\t\t\t\t\t\t20 Theme font\n~\t\t\t\t\t\t21 (selected) Plain\n~\t\t\t\t24 pop up button (collapsed, settable) Text size, Value: Large, ID: text-size, Secondary Actions: Expand\n~\t\t\t\t\t\t26 Standard\n~\t\t\t\t\t\t27 (selected) Large\nThe focused UI element is 10 tab (selected, settable, boolean) Display & accessibility, Value: 1, ID: settings-tab-display",
+  "portrait": {
+    "buttons": [
+      {
+        "disabled": false,
+        "id": "profile-recovery-back",
+        "rect": {
+          "height": 47,
+          "width": 158.1640625,
+          "x": 16,
+          "y": 16
+        }
+      },
+      {
+        "disabled": false,
+        "id": "profile-recovery-find",
+        "rect": {
+          "height": 47,
+          "width": 146.1484375,
+          "x": 16,
+          "y": 444.5546875
+        }
+      },
+      {
+        "disabled": true,
+        "id": "profile-recovery-review",
+        "rect": {
+          "height": 47,
+          "width": 100.109375,
+          "x": 16,
+          "y": 602.453125
+        }
+      },
+      {
+        "disabled": true,
+        "id": "profile-recovery-export",
+        "rect": {
+          "height": 47,
+          "width": 279.90625,
+          "x": 16,
+          "y": 659.8515625
+        }
+      },
+      {
+        "disabled": true,
+        "id": "profile-recovery-originals-review",
+        "rect": {
+          "height": 47,
+          "width": 180.6640625,
+          "x": 16,
+          "y": 1355.6171875
+        }
+      },
+      {
+        "disabled": true,
+        "id": "profile-recovery-original-verify",
+        "rect": {
+          "height": 47,
+          "width": 147.5625,
+          "x": 16,
+          "y": 1519.515625
+        }
+      },
+      {
+        "disabled": true,
+        "id": "profile-recovery-original-file",
+        "rect": {
+          "height": 47,
+          "width": 208.3359375,
+          "x": 16,
+          "y": 1576.9140625
+        }
+      },
+      {
+        "disabled": true,
+        "id": "profile-recovery-original-report",
+        "rect": {
+          "height": 47,
+          "width": 237.984375,
+          "x": 16,
+          "y": 1634.3125
+        }
+      }
+    ],
+    "face": "plain",
+    "scrollWidth": 390,
+    "size": "large",
+    "width": 390
+  },
+  "landscape": {
+    "face": "plain",
+    "focus": "profile-recovery-find",
+    "focusRect": {
+      "height": 47,
+      "width": 146.1484375,
+      "x": 54,
+      "y": 327.0546875
+    },
+    "scrollWidth": 844,
+    "size": "large",
+    "width": 844
+  },
+  "landscapeAX": "Browser tab: 30, Title: \"Earlier profiles · RevealLine\", URL: \"http://127.0.0.1:60342/game/profile-recovery.html\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 8 button Find profiles, ID: profile-recovery-find",
+  "screenshotLimit": "Captured image compositor scale differs from logical bounds; no physical-device or screenshot pixel-size certification."
+}
