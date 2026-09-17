@@ -4,6 +4,8 @@
   "source": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
   "tree": "4fd8806a081f1a947d32d8c8a8acf910a6d2c6d4",
   "candidatePatch": {
+    "archive": "candidate-patch.zip",
+    "member": "candidate.patch",
     "bytes": 26360,
     "sha256": "79490226d64aab39f496e0b505890aa5241beb79d5adf68ab5b8a4b924a37185"
   },

@@ -4,24 +4,23 @@
   "tree": "4fd8806a081f1a947d32d8c8a8acf910a6d2c6d4",
   "selfExcluded": true,
   "fileCount": 15,
-  "fileBytes": 1495479,
+  "fileBytes": 1476468,
   "files": [
     {
       "path": "README.md",
-      "bytes": 3652,
-      "sha256": "9ef8e6a1d760dc55c3c2f19b77cc84bd84dbdfb2be82457b9ee18637e336dc47"
+      "bytes": 3890,
+      "sha256": "55aee56baff444e36c87868070dfca821b4fdbf6755564b706be3ee457705662"
+    },
+    {
+      "path": "candidate-patch.zip",
+      "bytes": 7040,
+      "sha256": "19f171d2bfdaa11780628d26a263da2ec6710e8917d4baa0009abf3e8cc4aa52"
     },
     {
       "path": "candidate-pins.json",
       "bytes": 1927,
       "sha256": "0ee9e0b7dc6d2d569769c09bdfddd390b4f5f0543c0ae9d4aab98a956a3b0420",
       "originalPath": ".cache/p07-retry-contract-tests-c4851d14/candidate-pins.json"
-    },
-    {
-      "path": "candidate.patch",
-      "bytes": 26360,
-      "sha256": "79490226d64aab39f496e0b505890aa5241beb79d5adf68ab5b8a4b924a37185",
-      "originalPath": ".cache/p07-retry-contract-tests-c4851d14/candidate.patch"
     },
     {
       "path": "ci-failures.zip",
@@ -82,8 +81,8 @@
     },
     {
       "path": "source-and-scope.json",
-      "bytes": 2962,
-      "sha256": "b35ce519501d82298750ccbb4a651baeec4b02b1d29a8acafd444ec9bfaebdf2"
+      "bytes": 3033,
+      "sha256": "49e070615cdc68b11124e7f39554e952e8e4f9b32fa20af63dba70d0438a362f"
     },
     {
       "path": "test-evidence.zip",
@@ -1565,6 +1564,21 @@
           "originalPath": ".cache/p07-isolated-input-reproduction/matrix.json",
           "bytes": 1693,
           "sha256": "bdcb5c2a692a8961308628db33905b1d8eb3cdc788660f82fccedcf6a76c17f3"
+        }
+      ]
+    },
+    {
+      "path": "candidate-patch.zip",
+      "bytes": 7040,
+      "sha256": "19f171d2bfdaa11780628d26a263da2ec6710e8917d4baa0009abf3e8cc4aa52",
+      "memberCount": 1,
+      "memberBytes": 26360,
+      "members": [
+        {
+          "path": "candidate.patch",
+          "originalPath": ".cache/p07-retry-contract-tests-c4851d14/candidate.patch",
+          "bytes": 26360,
+          "sha256": "79490226d64aab39f496e0b505890aa5241beb79d5adf68ab5b8a4b924a37185"
         }
       ]
     }
