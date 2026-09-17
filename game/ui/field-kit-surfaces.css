@@ -253,7 +253,8 @@
 .field-kit[data-field-kit-page] :is(.readouts, #series-score, #race-clock) {
   font-family: var(--fk-font-mono);
 }
-.field-kit[data-field-kit-page] :is(#load-example, #play-pause, #connect, #load) {
+.field-kit[data-field-kit-page]
+  :is(#load-example, #play-pause, #connect, #load):not(:disabled):not([aria-disabled='true']) {
   color: var(--fk-on-accent);
   background-color: var(--fk-amber);
   border-color: var(--fk-amber);
@@ -419,7 +420,9 @@
   color-scheme: dark;
 }
 body.field-kit[data-field-kit-page]
-  :is(#load-example, #play-pause, #connect, #load):not(:disabled):hover {
+  :is(#load-example, #play-pause, #connect, #load):not(:disabled):not(
+    [aria-disabled='true']
+  ):hover {
   color: var(--fk-on-accent);
   background-color: var(--fk-cyan);
   border-color: var(--fk-cyan);
