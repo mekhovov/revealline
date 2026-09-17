@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-17T13:41:49.341125+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-tools-public-audit-a13ab970/tools/audit-main.mjs",
+    "--binding",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-tools-public-audit-a13ab970/tools/inputs/63796aab5bb692578fef77f43fb9fa61050a372b/binding.json",
+    "--binding-sha",
+    "d4ef71e045468de0d3381b6ec8e7c1fd6b9925c88ee55078235f065fd71c21be",
+    "--out",
+    "complete-1"
+  ],
+  "exit": 0
+}

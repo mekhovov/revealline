@@ -1,0 +1,30 @@
+{
+  "format": "revealline-public-refresh-request.v1",
+  "reviewed": true,
+  "outputLabel": "main-1",
+  "binding": {
+    "path": "tools/inputs/63796aab5bb692578fef77f43fb9fa61050a372b/binding.json",
+    "bytes": 2041,
+    "sha256": "d4ef71e045468de0d3381b6ec8e7c1fd6b9925c88ee55078235f065fd71c21be"
+  },
+  "report": {
+    "path": "tools/runs/complete-1/report.json",
+    "bytes": 3733,
+    "sha256": "4b721fffbe389843ad291f884d12fd9034ad4fb0db30af3650d27eab44a670df"
+  },
+  "rowReview": {
+    "path": "public-row-review-complete-1.json",
+    "bytes": 1597,
+    "sha256": "982f2e52b8abe671fd47af325e41d499c766c0c43096bb8e2aaeeb77e4fe9ffd"
+  },
+  "hostedObservation": {
+    "path": "hosted-observation-after-1/record.json",
+    "bytes": 3703,
+    "sha256": "738ba9a81157a1c42f17df3fd67319953f14feace5220787e7a5745dec9a89d4"
+  },
+  "publishedRelease": {
+    "path": "published-release.original.json",
+    "bytes": 16622,
+    "sha256": "84b0f04b39485114ece979b3010e79ad7b48071239d3ff848fdf146797475956"
+  }
+}
