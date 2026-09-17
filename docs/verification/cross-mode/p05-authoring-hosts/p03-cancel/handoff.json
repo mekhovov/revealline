@@ -1,0 +1,63 @@
+{
+  "status": "TEST_ONLY_CANDIDATE_PASS_NO_RUNTIME_DEFECT",
+  "source": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "changedPaths": [
+    {
+      "path": "game/test/title-mode-departure-host.test.mjs",
+      "beforeBytes": 19398,
+      "beforeSha256": "b717e008fc970d3e90362482735e4805177e01683bcb22f383e44a9c7e461e82",
+      "afterBytes": 22406,
+      "afterSha256": "0abbb633c5017e4e72ef6ec614678ba929abbeb81f5d28dbc0045ab89a2b9953",
+      "existingLinesUnchanged": true
+    }
+  ],
+  "dependencyCount": 213,
+  "unchangedDependencyCount": 212,
+  "checks": {
+    "node20": {
+      "tests": 37,
+      "pass": 37,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "node22": "not-run"
+  },
+  "productionChanges": [],
+  "nativeAcceptance": false,
+  "publicAcceptance": false,
+  "phaseAcceptance": false,
+  "pins": [
+    {
+      "path": "README.md",
+      "bytes": 3604,
+      "sha256": "1c39154a88bea6cdcb5ef51c02b580e479b47db07d484019545ceffc1d9e1375"
+    },
+    {
+      "path": "continue-cancel-mode.patch",
+      "bytes": 3348,
+      "sha256": "529f15ea59e6cad4eb996bb0716b87b81d4b3fdf0fa0b0faaf5b529d9978cb92"
+    },
+    {
+      "path": "source-inputs.json",
+      "bytes": 34519,
+      "sha256": "ab149d23c7850722a04bded8642742e538b445dae9ee59f470bef1c8b9ec803c"
+    },
+    {
+      "path": "preimages/title-mode-departure-host.test.mjs",
+      "bytes": 19398,
+      "sha256": "b717e008fc970d3e90362482735e4805177e01683bcb22f383e44a9c7e461e82"
+    },
+    {
+      "path": "runs/candidate-node20/receipt.json",
+      "bytes": 660,
+      "sha256": "7e5a5ff089f1e764d3cadf66ce0e7481d3bf9994ed7a427965c6b01b2605e032"
+    },
+    {
+      "path": "runs/candidate2-node20/receipt.json",
+      "bytes": 660,
+      "sha256": "961a0bb8f3ac22416a55640d6ecaae2f87ffb00c9b11d3711b337b158cf05d96"
+    }
+  ]
+}

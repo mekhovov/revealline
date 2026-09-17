@@ -66,4 +66,21 @@ form.addEventListener('submit', (event) => {
 target.addEventListener('change', selectionChanged);
 preset.addEventListener('change', resize);
 resize();
+target.disabled = false;
+preset.disabled = false;
 selectionChanged();
+const startupStatus = document.querySelector('#viewport-load-status');
+// The shared launcher inserts its temporary Reload anchor immediately after
+// this status. Retire only that action's focus when the real controls are ready.
+const reload = startupStatus?.nextElementSibling;
+const retiringFocus = reload?.tagName === 'A' && document.activeElement === reload;
+if (startupStatus) startupStatus.hidden = true;
+globalThis.RevealLineToolLaunch?.attached?.();
+if (
+  retiringFocus &&
+  !document.hidden &&
+  document.hasFocus() &&
+  reload.hidden &&
+  (document.activeElement === reload || document.activeElement === document.body)
+)
+  target.focus();

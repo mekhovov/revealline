@@ -1,0 +1,238 @@
+TAP version 13
+# Subtest: ready Title versus is a real fixed link, has no hint storage, and Back opens Title without Start
+    # Subtest: actual Title row and keyboard activation
+    ok 1 - actual Title row and keyboard activation
+      ---
+      duration_ms: 464.019167
+      type: 'test'
+      ...
+    # Subtest: fixed receiving route with no automatic continuation
+    ok 2 - fixed receiving route with no automatic continuation
+      ---
+      duration_ms: 234.998875
+      type: 'test'
+      ...
+    1..2
+ok 1 - ready Title versus is a real fixed link, has no hint storage, and Back opens Title without Start
+  ---
+  duration_ms: 699.574666
+  type: 'test'
+  ...
+# Subtest: versus/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 2 - versus/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 745.086
+  type: 'test'
+  ...
+# Subtest: versus/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 3 - versus/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 858.889208
+  type: 'test'
+  ...
+# Subtest: ready Title team is a real fixed link, has no hint storage, and Back opens Title without Start
+    # Subtest: actual Title row and keyboard activation
+    ok 1 - actual Title row and keyboard activation
+      ---
+      duration_ms: 330.821125
+      type: 'test'
+      ...
+    # Subtest: fixed receiving route with no automatic continuation
+    ok 2 - fixed receiving route with no automatic continuation
+      ---
+      duration_ms: 222.460084
+      type: 'test'
+      ...
+    1..2
+ok 4 - ready Title team is a real fixed link, has no hint storage, and Back opens Title without Start
+  ---
+  duration_ms: 553.530708
+  type: 'test'
+  ...
+# Subtest: team/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 5 - team/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 739.649792
+  type: 'test'
+  ...
+# Subtest: team/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 6 - team/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 863.01925
+  type: 'test'
+  ...
+# Subtest: button: pending retention Stay cannot later save, navigate or resume
+ok 7 - button: pending retention Stay cannot later save, navigate or resume
+  ---
+  duration_ms: 588.105583
+  type: 'test'
+  ...
+# Subtest: Escape: pending retention Stay cannot later save, navigate or resume
+ok 8 - Escape: pending retention Stay cannot later save, navigate or resume
+  ---
+  duration_ms: 593.316834
+  type: 'test'
+  ...
+# Subtest: controller: pending retention Stay cannot later save, navigate or resume
+ok 9 - controller: pending retention Stay cannot later save, navigate or resume
+  ---
+  duration_ms: 626.601958
+  type: 'test'
+  ...
+# Subtest: blur: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 10 - blur: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 622.30525
+  type: 'test'
+  ...
+# Subtest: hidden: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 11 - hidden: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 606.415042
+  type: 'test'
+  ...
+# Subtest: pagehide: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 12 - pagehide: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 618.665917
+  type: 'test'
+  ...
+# Subtest: close-reopen: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 13 - close-reopen: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 621.533416
+  type: 'test'
+  ...
+# Subtest: newer-focus: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 14 - newer-focus: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 609.249167
+  type: 'test'
+  ...
+# Subtest: quota: Title departure keeps truthful save authority and preserves newer bytes
+ok 15 - quota: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 589.6355
+  type: 'test'
+  ...
+# Subtest: readback: Title departure keeps truthful save authority and preserves newer bytes
+ok 16 - readback: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 597.009375
+  type: 'test'
+  ...
+# Subtest: newer-before: Title departure keeps truthful save authority and preserves newer bytes
+ok 17 - newer-before: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 594.462292
+  type: 'test'
+  ...
+# Subtest: newer-after: Title departure keeps truthful save authority and preserves newer bytes
+ok 18 - newer-after: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 589.726084
+  type: 'test'
+  ...
+# Subtest: modified Title links retain native defaults; rejected direct navigation leaves a fresh retry available
+ok 19 - modified Title links retain native defaults; rejected direct navigation leaves a fresh retry available
+  ---
+  duration_ms: 226.658167
+  type: 'test'
+  ...
+# Subtest: pending Title Start → versus cancels launch before fixed departure; late media cannot Start or take focus
+ok 20 - pending Title Start → versus cancels launch before fixed departure; late media cannot Start or take focus
+  ---
+  duration_ms: 625.712584
+  type: 'test'
+  ...
+# Subtest: pending Title Start → team cancels launch before fixed departure; late media cannot Start or take focus
+ok 21 - pending Title Start → team cancels launch before fixed departure; late media cannot Start or take focus
+  ---
+  duration_ms: 604.96825
+  type: 'test'
+  ...
+# Subtest: pending saved Continue → versus cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+    # Subtest: seed actual saved picture and cut
+    ok 1 - seed actual saved picture and cut
+      ---
+      duration_ms: 590.976083
+      type: 'test'
+      ...
+    # Subtest: cancel pending restore through the real Title anchor
+    ok 2 - cancel pending restore through the real Title anchor
+      ---
+      duration_ms: 688.054625
+      type: 'test'
+      ...
+    1..2
+ok 22 - pending saved Continue → versus cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+  ---
+  duration_ms: 1446.634208
+  type: 'test'
+  ...
+# Subtest: pending saved Continue → team cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+    # Subtest: seed actual saved picture and cut
+    ok 1 - seed actual saved picture and cut
+      ---
+      duration_ms: 607.011
+      type: 'test'
+      ...
+    # Subtest: cancel pending restore through the real Title anchor
+    ok 2 - cancel pending restore through the real Title anchor
+      ---
+      duration_ms: 694.05775
+      type: 'test'
+      ...
+    1..2
+ok 23 - pending saved Continue → team cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+  ---
+  duration_ms: 1463.361541
+  type: 'test'
+  ...
+# Subtest: saved Continue: explicit keyboard Cancel then versus preserves newer focus when the retired picture decode rejects
+    # Subtest: seed an actual saved original and unfinished cut
+    ok 1 - seed an actual saved original and unfinished cut
+      ---
+      duration_ms: 866.204042
+      type: 'test'
+      ...
+    # Subtest: Cancel, attempt mode departure, then reject only the old decode
+    ok 2 - Cancel, attempt mode departure, then reject only the old decode
+      ---
+      duration_ms: 770.27
+      type: 'test'
+      ...
+    1..2
+ok 24 - saved Continue: explicit keyboard Cancel then versus preserves newer focus when the retired picture decode rejects
+  ---
+  duration_ms: 1805.871167
+  type: 'test'
+  ...
+# Subtest: saved Continue: explicit keyboard Cancel then team preserves newer focus when the retired picture decode rejects
+    # Subtest: seed an actual saved original and unfinished cut
+    ok 1 - seed an actual saved original and unfinished cut
+      ---
+      duration_ms: 867.401
+      type: 'test'
+      ...
+    # Subtest: Cancel, attempt mode departure, then reject only the old decode
+    ok 2 - Cancel, attempt mode departure, then reject only the old decode
+      ---
+      duration_ms: 757.309833
+      type: 'test'
+      ...
+    1..2
+ok 25 - saved Continue: explicit keyboard Cancel then team preserves newer focus when the retired picture decode rejects
+  ---
+  duration_ms: 1801.138917
+  type: 'test'
+  ...
+1..25
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19821.240541

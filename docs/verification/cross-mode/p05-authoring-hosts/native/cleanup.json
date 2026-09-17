@@ -1,0 +1,13 @@
+{
+  "at": "2026-09-17T12:14:00.178659+00:00",
+  "portClosed": true,
+  "ownedTabsClosed": [
+    25,
+    26,
+    27
+  ],
+  "viewportOverrideResetBeforeClosing": true,
+  "publicTab24Retained": true,
+  "serverExit": 130,
+  "reason": "Owned server intentionally stopped after browser and request-byte review"
+}

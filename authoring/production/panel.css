@@ -220,3 +220,85 @@ footer {
     content: '';
   }
 }
+
+/* Readable host roles; source pictures retain the preview geometry above. */
+body.field-kit[data-authoring-host='production'] {
+  overflow-wrap: anywhere;
+}
+body.field-kit[data-authoring-host='production']
+  :is(h1, h2, h3, p, li, th, td, button, label, summary) {
+  overflow-wrap: anywhere;
+}
+body.field-kit[data-authoring-host='production'] :is(button, input, select, summary) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+body.field-kit[data-authoring-host='production'] .filters > label {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+body.field-kit[data-authoring-host='production'] :is(h2, h3) {
+  font-size: calc(var(--fk-text-body) + 6px);
+  line-height: var(--fk-leading-control);
+}
+body.field-kit[data-authoring-host='production'] a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  max-inline-size: 100%;
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-control);
+  white-space: normal;
+}
+body.field-kit[data-authoring-host='production'] header nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+body.field-kit[data-authoring-host='production'] :is(label, th) {
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-control);
+}
+body.field-kit[data-authoring-host='production'] .check-filter {
+  min-inline-size: 44px;
+}
+body.field-kit[data-authoring-host='production'] :is(.muted, .coverage p) {
+  font-size: var(--fk-text-secondary);
+  font-weight: 400;
+  line-height: var(--fk-leading-body);
+}
+body.field-kit[data-authoring-host='production'] .coverage strong {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-counter);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+body.field-kit[data-authoring-host='production']
+  :is(td small, td[data-label='Missing checks'], .pager > span, #production-detail pre),
+body.field-kit[data-authoring-host='production'] #production-detail details > a,
+body.field-kit[data-authoring-host='production'] #production-detail details > a + p {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-body);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+body.field-kit[data-authoring-host='production'] td::before {
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+}
+body.field-kit[data-authoring-host='production'] .operation-status {
+  font-size: var(--fk-text-control);
+  font-weight: 400;
+  line-height: var(--fk-leading-body);
+}
+body.field-kit[data-authoring-host='production'] .operation-status-count {
+  font-weight: 500;
+}

@@ -4,15 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Viewport lab · Xonix authoring</title>
+    <script type="module" src="../shared/host-display-entry.mjs"></script>
     <link rel="stylesheet" href="lab.css" />
-    <script type="module" src="browser.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
   </head>
-  <body class="field-kit field-kit-support">
+  <body class="field-kit field-kit-support" data-authoring-host="viewport">
     <main>
       <header class="lab-header">
         <div>
@@ -23,18 +24,26 @@
         <a class="guide-link" href="README.md">Lab guide ↗</a>
       </header>
 
+      <p id="viewport-load-status" class="operation-status" data-state="busy">
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="operation-status-label" role="status"
+          >Preparing preview controls… You can open the game directly below.</span
+        >
+      </p>
       <section class="controls" aria-label="Preview controls">
         <form id="target-form" class="target-controls">
           <label for="target">Game</label>
-          <select id="target" name="target">
+          <select id="target" name="target" data-tool-control disabled>
             <option value="couch">Couch · two players</option>
             <option value="solo">Solo</option>
           </select>
-          <button id="load-target" type="submit">Load selected game</button>
+          <button id="load-target" type="submit" data-tool-control disabled>
+            Load selected game
+          </button>
         </form>
         <div class="size-controls">
           <label for="preset">Viewport size · CSS pixels</label>
-          <select id="preset">
+          <select id="preset" data-tool-control disabled>
             <option value="390x844">390 × 844 · portrait</option>
             <option value="844x390">844 × 390 · landscape</option>
             <option value="768x1024">768 × 1024 · portrait</option>
@@ -102,5 +111,11 @@
         </p></noscript
       >
     </main>
+    <script
+      defer
+      src="../../game/ui/direct-tool-launch.js"
+      data-module="./browser.mjs"
+      data-status="viewport-load-status"
+    ></script>
   </body>
 </html>

@@ -1,0 +1,433 @@
+{
+  "format": "revealline-bounded-candidate-adoption.v1",
+  "at": "2026-09-17T11:51:42.526794+00:00",
+  "source": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "sourceTree": "32b36e6e8fc605911b2cb98cd8f67c97b8f4e214",
+  "prior": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-viewport-ownership-presets-822f3290",
+  "priorPatchSha256": "1c6c1294303ebf43d8c18ca0504802602cb323d4c5e059f799852cd926c21fc4",
+  "changedPaths": [
+    "authoring/production/index.html",
+    "authoring/production/panel.css",
+    "authoring/shared/host-display-entry.mjs",
+    "authoring/shared/host-display.mjs",
+    "authoring/viewport-lab/browser.mjs",
+    "authoring/viewport-lab/index.html",
+    "authoring/viewport-lab/lab.css",
+    "game/test/authoring-host-display.test.mjs",
+    "game/test/viewport-startup-host.test.mjs"
+  ],
+  "dependencyChangesSincePrior": [
+    "game/build-config.json",
+    "package-lock.json",
+    "package.json"
+  ],
+  "inputs": [
+    {
+      "path": ".prettierrc.json",
+      "changed": false,
+      "base": {
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      },
+      "proposal": {
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      },
+      "priorCandidate": {
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      }
+    },
+    {
+      "path": "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+      "changed": false,
+      "base": {
+        "bytes": 2999096,
+        "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc"
+      },
+      "proposal": {
+        "bytes": 2999096,
+        "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc"
+      },
+      "priorCandidate": {
+        "bytes": 2999096,
+        "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc"
+      }
+    },
+    {
+      "path": "authoring/production/browser.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 1017,
+        "sha256": "0bf0e114e9aadebd75690091b6ad592c8a23af5205b536237117c3706e5beb0f"
+      },
+      "proposal": {
+        "bytes": 1017,
+        "sha256": "0bf0e114e9aadebd75690091b6ad592c8a23af5205b536237117c3706e5beb0f"
+      },
+      "priorCandidate": {
+        "bytes": 1017,
+        "sha256": "0bf0e114e9aadebd75690091b6ad592c8a23af5205b536237117c3706e5beb0f"
+      }
+    },
+    {
+      "path": "authoring/production/index.html",
+      "changed": true,
+      "base": {
+        "bytes": 2220,
+        "sha256": "c30024b3d994124f033161b259786a248d2180ede0f23b9c550aa4398fd87645"
+      },
+      "proposal": {
+        "bytes": 2328,
+        "sha256": "647cad79b5b4b5c9a0150866c0565dea2538440d9c2d06cbb2e35b7453da4b65"
+      },
+      "priorCandidate": {
+        "bytes": 2328,
+        "sha256": "647cad79b5b4b5c9a0150866c0565dea2538440d9c2d06cbb2e35b7453da4b65"
+      }
+    },
+    {
+      "path": "authoring/production/model.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 24204,
+        "sha256": "228a554a884fcd8b4cdcb216ec5e7cc3485ff4e53a56dac081a7a1bfde139e80"
+      },
+      "proposal": {
+        "bytes": 24204,
+        "sha256": "228a554a884fcd8b4cdcb216ec5e7cc3485ff4e53a56dac081a7a1bfde139e80"
+      },
+      "priorCandidate": {
+        "bytes": 24204,
+        "sha256": "228a554a884fcd8b4cdcb216ec5e7cc3485ff4e53a56dac081a7a1bfde139e80"
+      }
+    },
+    {
+      "path": "authoring/production/panel.css",
+      "changed": true,
+      "base": {
+        "bytes": 3331,
+        "sha256": "ecf024be79b3b8046947a0e901214013f799eef1daba4c5a54acc8d1f0e9d245"
+      },
+      "proposal": {
+        "bytes": 6062,
+        "sha256": "3f9b17f5b1a8718239771110b455d324157607c71f3eb690e0075c78588a07d2"
+      },
+      "priorCandidate": {
+        "bytes": 6062,
+        "sha256": "3f9b17f5b1a8718239771110b455d324157607c71f3eb690e0075c78588a07d2"
+      }
+    },
+    {
+      "path": "authoring/production/panel.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 15720,
+        "sha256": "d1d7e4a32c097a4f3a87f6fba5af1341889b179c4c699e4332edd9ab74967d5a"
+      },
+      "proposal": {
+        "bytes": 15720,
+        "sha256": "d1d7e4a32c097a4f3a87f6fba5af1341889b179c4c699e4332edd9ab74967d5a"
+      },
+      "priorCandidate": {
+        "bytes": 15720,
+        "sha256": "d1d7e4a32c097a4f3a87f6fba5af1341889b179c4c699e4332edd9ab74967d5a"
+      }
+    },
+    {
+      "path": "authoring/production/preview.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 5237,
+        "sha256": "aa914b144c96f95d93aa7f4aebdc6a91f462ca676ead3bde598256963a7b0476"
+      },
+      "proposal": {
+        "bytes": 5237,
+        "sha256": "aa914b144c96f95d93aa7f4aebdc6a91f462ca676ead3bde598256963a7b0476"
+      },
+      "priorCandidate": {
+        "bytes": 5237,
+        "sha256": "aa914b144c96f95d93aa7f4aebdc6a91f462ca676ead3bde598256963a7b0476"
+      }
+    },
+    {
+      "path": "authoring/production/register.json",
+      "changed": false,
+      "base": {
+        "bytes": 120297,
+        "sha256": "057f86a1a60c873402f7145e0b6d46cb7d3583b4c9129a7bd755976dadc7369d"
+      },
+      "proposal": {
+        "bytes": 120297,
+        "sha256": "057f86a1a60c873402f7145e0b6d46cb7d3583b4c9129a7bd755976dadc7369d"
+      },
+      "priorCandidate": {
+        "bytes": 120297,
+        "sha256": "057f86a1a60c873402f7145e0b6d46cb7d3583b4c9129a7bd755976dadc7369d"
+      }
+    },
+    {
+      "path": "authoring/shared/host-display-entry.mjs",
+      "changed": true,
+      "base": null,
+      "proposal": {
+        "bytes": 228,
+        "sha256": "8c5a6b8face306bc396f28066a19b128d9a0b7583b65cc7ed0ed9cd2db1e31bd"
+      },
+      "priorCandidate": {
+        "bytes": 228,
+        "sha256": "8c5a6b8face306bc396f28066a19b128d9a0b7583b65cc7ed0ed9cd2db1e31bd"
+      }
+    },
+    {
+      "path": "authoring/shared/host-display.mjs",
+      "changed": true,
+      "base": null,
+      "proposal": {
+        "bytes": 1190,
+        "sha256": "1289981737aef8f4e251e723c6dc5cd9834cba968c6052e89be254c05e6fcbf9"
+      },
+      "priorCandidate": {
+        "bytes": 1190,
+        "sha256": "1289981737aef8f4e251e723c6dc5cd9834cba968c6052e89be254c05e6fcbf9"
+      }
+    },
+    {
+      "path": "authoring/viewport-lab/browser.mjs",
+      "changed": true,
+      "base": {
+        "bytes": 2741,
+        "sha256": "dc2d13e9e4d755b5d640715512aad5120be67b669c2e5f73565645df10df60d9"
+      },
+      "proposal": {
+        "bytes": 3442,
+        "sha256": "a44ca1c60a63720faa33042d4ff0f8f134740890503e28d814cecacad9302526"
+      },
+      "priorCandidate": {
+        "bytes": 3442,
+        "sha256": "a44ca1c60a63720faa33042d4ff0f8f134740890503e28d814cecacad9302526"
+      }
+    },
+    {
+      "path": "authoring/viewport-lab/index.html",
+      "changed": true,
+      "base": {
+        "bytes": 4255,
+        "sha256": "c869abcfb98bebff8f16eeeaf39c6a9cbacf0e4719a306687dd59024219ec7f5"
+      },
+      "proposal": {
+        "bytes": 4984,
+        "sha256": "aef99ad79ea948e190838658c2353098438653131c98b8b9eac230dbb116b733"
+      },
+      "priorCandidate": {
+        "bytes": 4984,
+        "sha256": "aef99ad79ea948e190838658c2353098438653131c98b8b9eac230dbb116b733"
+      }
+    },
+    {
+      "path": "authoring/viewport-lab/lab.css",
+      "changed": true,
+      "base": {
+        "bytes": 4453,
+        "sha256": "dee3697613c2257b89bf8617e675367f22f0eed7e23327d68c0ad23e2d5aefde"
+      },
+      "proposal": {
+        "bytes": 6144,
+        "sha256": "720603274b1838a64917489b244d9c0f7c2480706cadc6dbe6e99e6db6dd5ea4"
+      },
+      "priorCandidate": {
+        "bytes": 6144,
+        "sha256": "720603274b1838a64917489b244d9c0f7c2480706cadc6dbe6e99e6db6dd5ea4"
+      }
+    },
+    {
+      "path": "game/build-config.json",
+      "changed": false,
+      "base": {
+        "bytes": 5252,
+        "sha256": "f688f4c5c001808151861c87801f311f0fb6a2f3cd6984f68278c71f36acd3d0"
+      },
+      "proposal": {
+        "bytes": 5252,
+        "sha256": "f688f4c5c001808151861c87801f311f0fb6a2f3cd6984f68278c71f36acd3d0"
+      },
+      "priorCandidate": {
+        "bytes": 5252,
+        "sha256": "9cd630c2feb18044bac445f2d61bb954c1d50b7a474f1af4b074c02f63f35974"
+      }
+    },
+    {
+      "path": "game/display-preferences.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 8285,
+        "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+      },
+      "proposal": {
+        "bytes": 8285,
+        "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+      },
+      "priorCandidate": {
+        "bytes": 8285,
+        "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+      }
+    },
+    {
+      "path": "game/test/authoring-host-display.test.mjs",
+      "changed": true,
+      "base": null,
+      "proposal": {
+        "bytes": 22660,
+        "sha256": "c927c48bf4c719cc8ed940fc93cdf9b3e1c6b0b941342a13857eeaf10696a4d6"
+      },
+      "priorCandidate": {
+        "bytes": 22660,
+        "sha256": "c927c48bf4c719cc8ed940fc93cdf9b3e1c6b0b941342a13857eeaf10696a4d6"
+      }
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      },
+      "proposal": {
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      },
+      "priorCandidate": {
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      }
+    },
+    {
+      "path": "game/test/helpers/wait-for.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 595,
+        "sha256": "64a49cd79aa3911096efb2554413a34ca862dcfe7ed5be40ed231343c4f187a3"
+      },
+      "proposal": {
+        "bytes": 595,
+        "sha256": "64a49cd79aa3911096efb2554413a34ca862dcfe7ed5be40ed231343c4f187a3"
+      },
+      "priorCandidate": {
+        "bytes": 595,
+        "sha256": "64a49cd79aa3911096efb2554413a34ca862dcfe7ed5be40ed231343c4f187a3"
+      }
+    },
+    {
+      "path": "game/test/viewport-startup-host.test.mjs",
+      "changed": true,
+      "base": null,
+      "proposal": {
+        "bytes": 26229,
+        "sha256": "81c2f5c58447e722d4541edf33725ea6f2906db428b2e2c4526c45ddb1798f8a"
+      },
+      "priorCandidate": {
+        "bytes": 26229,
+        "sha256": "81c2f5c58447e722d4541edf33725ea6f2906db428b2e2c4526c45ddb1798f8a"
+      }
+    },
+    {
+      "path": "game/text-face.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 807,
+        "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0"
+      },
+      "proposal": {
+        "bytes": 807,
+        "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0"
+      },
+      "priorCandidate": {
+        "bytes": 807,
+        "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0"
+      }
+    },
+    {
+      "path": "game/text-size.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 251,
+        "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+      },
+      "proposal": {
+        "bytes": 251,
+        "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+      },
+      "priorCandidate": {
+        "bytes": 251,
+        "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+      }
+    },
+    {
+      "path": "game/ui/direct-tool-launch.js",
+      "changed": false,
+      "base": {
+        "bytes": 2507,
+        "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+      },
+      "proposal": {
+        "bytes": 2507,
+        "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+      },
+      "priorCandidate": {
+        "bytes": 2507,
+        "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+      }
+    },
+    {
+      "path": "game/ui/operation-status.mjs",
+      "changed": false,
+      "base": {
+        "bytes": 4173,
+        "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab"
+      },
+      "proposal": {
+        "bytes": 4173,
+        "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab"
+      },
+      "priorCandidate": {
+        "bytes": 4173,
+        "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab"
+      }
+    },
+    {
+      "path": "package-lock.json",
+      "changed": false,
+      "base": {
+        "bytes": 36138,
+        "sha256": "93762c9a45c0e7b5151e7d66c9e81d03ec4ef9cb4c724df84b102e18d80d90f2"
+      },
+      "proposal": {
+        "bytes": 36138,
+        "sha256": "93762c9a45c0e7b5151e7d66c9e81d03ec4ef9cb4c724df84b102e18d80d90f2"
+      },
+      "priorCandidate": {
+        "bytes": 36138,
+        "sha256": "9ef5d79656bf5c2fecbb3fdca3514f03cfb64cc80349a54cbc6ecbd1c5550b22"
+      }
+    },
+    {
+      "path": "package.json",
+      "changed": false,
+      "base": {
+        "bytes": 1819,
+        "sha256": "b777dea22b5f82e761c0b3a3584027aff9584be69bca5b18d47c2d22b80c404e"
+      },
+      "proposal": {
+        "bytes": 1819,
+        "sha256": "b777dea22b5f82e761c0b3a3584027aff9584be69bca5b18d47c2d22b80c404e"
+      },
+      "priorCandidate": {
+        "bytes": 1819,
+        "sha256": "0d78c2197136ac4a927945c6bd4481af0902ffac69dc9f0279bc002384f1e131"
+      }
+    }
+  ],
+  "logicalProposalBytes": 3308910,
+  "preimagesMatch": true,
+  "scope": "Cache-only composition. No source worktree/index/remote/version mutation. No tests/build/browser acceptance implied."
+}

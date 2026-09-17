@@ -1,0 +1,32 @@
+{
+  "status": "SCOPED_NATIVE_CHECKS_PASS",
+  "at": "2026-09-17T12:10:30.808378+00:00",
+  "base": "c7c4ed747636e66c0319a1843140c39fc6d4b38d",
+  "runtimeOverridesSha256": "56a79699a9baa9aedc88fa119879b7409dd022bae2ceffafa4b8d64446a872fa",
+  "browser": "Codex in-app Chromium, actual CUA UI and read-only rendered DOM",
+  "localOnly": true,
+  "passed": [
+    "Declared actual Viewport module503: initial failure explains retry, waiting selectors/Load disabled, direct-open link available, shared pixel/standard/full preferences adopted independently; keyboard reached Reload.",
+    "Declared module30second delay: initial preparation then Still loading feedback; Tab focused temporary Reload; readiness moved focus to Game, next Tab reached Load; iframe src remained absent.",
+    "Explicit Load Couch rendered actual Couch title; selecting Solo stayed pending and kept Couch URL. All five presets changed exact frame dimensions/output while source stayed Couch and direct link/selection stayed Solo.",
+    "Actual same-tab game Display Plain/Large/reduced then browser Back: tool body adopted latest preference. New document reset target/preset/frame coherently to Couch/1280x720/no frame. No BFCache claim.",
+    "Viewport Plain/Large observed390x844 and844x390 with document width equalviewport; keyboard Game focus ring visible in shortlandscape.",
+    "Production Plain/Large inherited; actual Orchard search/keyboard slot/Preview decoded owned1774x887 original2999096bytes. Cross-tab UI change toTheme/Standard/full retained filter, selected heading, exact previewblobURL and Preview original focus.",
+    "Keyboard Back toslots restored original Orchard row andfilter. Production Theme/Standard andTheme/Large844x390 plusfreshsurfaceTheme/Large390x844 had matchingdocument width and readable focusedrow/card.",
+    "Fresh Viewport afteractualBack loadedCouch; pendingSolo leftCouchunchanged until keyboardLoad; thenactualSoloStartvisible inchild."
+  ],
+  "limits": [
+    "Native full200percent browser zoom notperformed",
+    "Physicalinput/Safari/ENUA/fullstylematrixnotqualified",
+    "Window-background initializationfocus refusal remainsmodeled",
+    "ActualBack recreated tool/resetframe, notbrowser-admittedBFCache",
+    "Images inspectedinline; noscreenshotfilesretained",
+    "NotfullP03/P05orpublicreleaseacceptance"
+  ],
+  "preliminaryAttempts": [
+    "Serverstart followed incorrect profilefilename; no browserrequests happened until correctedexplicitmodule503profile.",
+    "CUAwaitFor20second timeout was capped earlier; initial25seconddelay passed beforeReloadfocus observation. Separate30second check observed Reload thenGame successfully.",
+    "Read-only DOM scope does not expose document.hasFocus; AXfocus wasusedandnoAPI-derivedhasFocus claimmade.",
+    "After settings tabcreation viewport override didnotchange earlierProductiontab; measured844width preventedfalseportraitclaim. Freshsurface +override measured390width andportraitcard inspected."
+  ]
+}
