@@ -1,0 +1,16 @@
+{
+  "status": "ORIGINAL_COMPLETED_FAILED_JOB_COLLECTED",
+  "at": "2026-09-17T16:28:23.018691+00:00",
+  "family": "pr-source",
+  "run": 35243771402,
+  "job": 105279230645,
+  "attempt": 1,
+  "source": "40fe4a31f89efc6686b841f4f0de7fdc17874c72",
+  "apiBytes": 2906,
+  "apiSHA256": "b9cc8205d0167b7d9d262291bcfb87b632d23a4715f8bcb0cabce0c25a344f32",
+  "rawLogBytes": 624635,
+  "rawLogSHA256": "98ea368398489271e092adf4918700582dc4abcb27aa07f9b926c32512cf7b7e",
+  "gzipBytes": 117266,
+  "gzipSHA256": "110f2fc0858723d30569aa986875fc92e70cc7e7a72fb3e322bbc2b17ea800b3",
+  "scope": "Failed completed shard before whole run terminal; no retry/cancel/mutation or source qualification."
+}

@@ -1,0 +1,130 @@
+{
+  "status": "RESEARCH_AND_SOURCE_RECOMMENDATION_ONLY",
+  "at": "2026-09-17T14:23:06.747008+00:00",
+  "sourceBase": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "candidateApp": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-native-a13ab970/runtime/authoring/motion-lab/app.js",
+    "bytes": 66631,
+    "sha256": "30a0c1fc0948e2068697ea20a893149f81f402723f71ecb2e5a06f73f3bd5859"
+  },
+  "fixtureManifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-background-conformance-a13ab970/manifest.json",
+    "bytes": 11715,
+    "sha256": "4596a62b3cfa145a3f7df5f02dfe34ed3e313b9ab576d3a90bf561582c08aab1"
+  },
+  "fixtures": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-background-conformance-a13ab970/fixtures/static-default.png",
+      "bytes": 122,
+      "sha256": "ad2a181fedbac6319d00e2b243072c780bce885454fe8661561774bd05f36988",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13,
+          "crcValid": true
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65,
+          "crcValid": true
+        },
+        {
+          "type": "IEND",
+          "bytes": 0,
+          "crcValid": true
+        }
+      ],
+      "idatBytes": 65,
+      "idatSha256": "382ca8c711fd4c95504ad57ac946cf5d99a6c7c501606d6ed8b8f4ef49d5e6cc"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-background-conformance-a13ab970/fixtures/animated-separate-default.png",
+      "bytes": 377,
+      "sha256": "9f962f9e6c3a1fca97dbe157e86b1cc9450afc1ffe6fcfbb63dc5db82769d217",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13,
+          "crcValid": true
+        },
+        {
+          "type": "acTL",
+          "bytes": 8,
+          "crcValid": true
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65,
+          "crcValid": true
+        },
+        {
+          "type": "fcTL",
+          "bytes": 26,
+          "crcValid": true
+        },
+        {
+          "type": "fdAT",
+          "bytes": 66,
+          "crcValid": true
+        },
+        {
+          "type": "fcTL",
+          "bytes": 26,
+          "crcValid": true
+        },
+        {
+          "type": "fdAT",
+          "bytes": 69,
+          "crcValid": true
+        },
+        {
+          "type": "IEND",
+          "bytes": 0,
+          "crcValid": true
+        }
+      ],
+      "idatBytes": 65,
+      "idatSha256": "382ca8c711fd4c95504ad57ac946cf5d99a6c7c501606d6ed8b8f4ef49d5e6cc"
+    }
+  ],
+  "staticAndAPNGDefaultIDATExactlyEqual": true,
+  "nativeObservationAuthority": "Parent /root owns actual native screenshots, browser identity and repeat-draw comparisons. Research agent received a report of accepted32x24 blue APNG versus red GIF; it did not independently observe browser output.",
+  "sourceLocations": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-native-a13ab970/runtime/authoring/motion-lab/app.js",
+      "lines": [
+        712,
+        764
+      ],
+      "finding": "Original File is passed to createObjectURL; HTMLImageElement onload accepts that unchanged image with token/disposed guards."
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-native-a13ab970/runtime/authoring/motion-lab/app.js",
+      "lines": [
+        1249,
+        1260
+      ],
+      "finding": "Every background draw uses the accepted image element directly; no APNG parser/frame selection exists."
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-native-a13ab970/runtime/authoring/motion-lab/app.js",
+      "lines": [
+        697,
+        709,
+        1788,
+        1827
+      ],
+      "finding": "Clear and lifecycle advance tokens/revoke owned URLs; any preparation await must remain within this ownership."
+    }
+  ],
+  "conclusion": "Normative red default-image expectation is supported and fixture static payload is valid. A stable blue result is consistent with browser first-visible-APNG-frame behavior. It is a default-image identity mismatch, not by itself evidence of animated motion.",
+  "recommendation": "After parent preserves actual equivalent-setting comparison, add a bounded PNG-only preview normalizer that validates chunks and omits acTL/fcTL/fdAT for a derived Blob, preserving original bytes and existing native Image decoder/ownership; no runtime edit in this packet.",
+  "operations": {
+    "browser": false,
+    "sourceEdits": false,
+    "fixtureEdits": false,
+    "imageDerivativesWritten": false,
+    "testsOrBuilds": false,
+    "remoteMutations": false
+  }
+}

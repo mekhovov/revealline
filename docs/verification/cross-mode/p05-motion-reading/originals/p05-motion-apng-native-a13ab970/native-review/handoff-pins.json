@@ -1,0 +1,25 @@
+{
+  "status": "SCOPED_REVIEW_COMPLETE_NOT_RELEASE_ACCEPTANCE",
+  "files": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/native-review/README.md",
+      "bytes": 3279,
+      "sha256": "2c3f18238550ce070b53035e1b2cdc2f40e195f4bea48f2b00bad041f525b0e2"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/native-review/browser-original-pins.json",
+      "bytes": 7115,
+      "sha256": "55ceb354d98a0dcfe0fc1a167dd397faa00f6d1f53b99f1bf0d6cf48f8ac7cff"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/native-review/coverage.json",
+      "bytes": 4487,
+      "sha256": "ae706411a70d9be42eda020bbdf4c4f7b77d3c13234d9f2787fb5217dbc03eb4"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/native-review/request-byte-audit.json",
+      "bytes": 51568,
+      "sha256": "f308c307593e2d369c050dbfaa8212393fe2387b0aef9fc3556e951fdc4245bd"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "base": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "baseTree": "cf744b1ced9680b2fb4e0c304ddfc4b9f44b3e86",
+  "scope": "Unreleased composed Motion startup/shared-reading, label follow-up and PNG still-preview correction on exact a13. Ten candidate runtime overlays plus original frozen v0.60.3 build-info. No Recovery candidate or upload fixtures served.",
+  "files": {
+    "authoring/motion-lab/ability-labels.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/ability-labels.mjs",
+      "bytes": 5096,
+      "sha256": "1dd81603c28eead7cb8aa8dd25782434c78eed8bd5870e79303d7e26daac09ca"
+    },
+    "authoring/motion-lab/app.js": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/app.js",
+      "bytes": 67747,
+      "sha256": "5394c59a3a84d46728692e96c0395c18b47cf1cd52bf9be299b98ebb4ae7d8ba"
+    },
+    "authoring/motion-lab/display-entry.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/display-entry.mjs",
+      "bytes": 151,
+      "sha256": "bde8a80ddcedf983ee3f94b16adf4f3343c08ec6a5758874bf5efd9e987644b2"
+    },
+    "authoring/motion-lab/display.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/display.mjs",
+      "bytes": 3891,
+      "sha256": "54101f49687fbf289e7b0733597b491330ccf7825c8ba43a9bc07c2815fb6714"
+    },
+    "authoring/motion-lab/index.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/index.html",
+      "bytes": 19819,
+      "sha256": "dab183df1a6d11d03608aa19762712be84088268b3090f27b74e5cf97c3954b1"
+    },
+    "authoring/motion-lab/preview-loop.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/preview-loop.mjs",
+      "bytes": 2961,
+      "sha256": "a5cba565b2c901fcded957a14fd2413aa620aa6ce80e853f93212bd14cba48d7"
+    },
+    "authoring/motion-lab/render-ability.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/render-ability.mjs",
+      "bytes": 5526,
+      "sha256": "b6cb2c121790e27c2d74e302d9b39f924a886624ec90312313f73312556174a2"
+    },
+    "authoring/motion-lab/styles.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/styles.css",
+      "bytes": 30152,
+      "sha256": "8840254e898b650ee1d83cec4d327666958597e81e32b6f02bff91715f1e9716"
+    },
+    "game/ui/field-kit-copy.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/game/ui/field-kit-copy.mjs",
+      "bytes": 7130,
+      "sha256": "ed6e58ba9886391100cfce6a2aa978aa180fadcf0c7b9a31312e6cbf483e1faa"
+    },
+    "authoring/motion-lab/png-preview.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/runtime/authoring/motion-lab/png-preview.mjs",
+      "bytes": 5329,
+      "sha256": "c3db29eb42550c36174014c7937cc6d52cc44cc6c01d77f65fb3229bc65d7dc6"
+    },
+    "game/build-info.json": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-apng-native-a13ab970/derived-originals/game/build-info.json",
+      "bytes": 143,
+      "sha256": "a62aecc4b9afd9ebf413accbd604e210120155e6ab6ce5017bdb55a1ca208c07"
+    }
+  }
+}

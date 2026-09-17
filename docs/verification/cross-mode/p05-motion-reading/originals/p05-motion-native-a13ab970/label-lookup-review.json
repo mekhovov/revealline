@@ -1,0 +1,6 @@
+{
+  "status": "LOCATOR_FAILURE_NOT_ESTABLISHED_APP_DEFECT",
+  "finding": "Actual index.html line60 uses valid wrapping label for #turn-policy; class and fit also have wrapping labels. Native AX exposed names. The exact getByLabel locator failure alone does not establish missing labels or accessibility failure. No markup change requested.",
+  "evidence": "runtime/authoring/motion-lab/index.html:60",
+  "supersedesInterpretation": "root-native-review.json relatedRegression association concern only; retains original failed tool attempt."
+}

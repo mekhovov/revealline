@@ -55,6 +55,33 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'display.textSize': 'Text size',
   'display.standard': 'Standard',
   'display.large': 'Large',
+  'motion.stageLabels': 'Stage labels',
+  'motion.stageLabelsHint':
+    'Full text for the toy markers. Canvas captions may shorten to fit; hidden notes appear only while revealed.',
+  'motion.stageRolesHint':
+    'Haze affects the displayed signal only. Enter a supply pad and press R to refill.',
+  'motion.stageKind.haze': 'Haze',
+  'motion.stageKind.pad': 'Supply pad',
+  'motion.stageKind.ground': 'Ground marker',
+  'motion.stageKind.air': 'Air marker',
+  'motion.stageKind.delivery': 'Delivery marker',
+  'motion.stageKind.relay': 'Relay marker',
+  'motion.stageKind.note': 'Note',
+  'motion.concealedNote': 'Concealed note',
+  'motion.noteVisible': 'Visible while the scan lasts',
+  'motion.markerReady': 'Ready',
+  'motion.markerUpdated': 'Updated',
+  'motion.sharedReading':
+    'Text size is shared with the game. Theme or Plain text follows game Display settings.',
+  'motion.effectsCapped':
+    'Shared or system reduced effects are active. The local preview choice is kept; movement and Play/Pause are unchanged.',
+  'motion.effectsLocal':
+    'Local reduced motion freezes attachment detail and removes particles. Movement and Play/Pause are unchanged.',
+  'motion.effectsFull':
+    'Full preview effects are available. Window blur or a hidden page pauses the study; use Play to resume.',
+  'motion.inspectionLoading': 'Body image loading; the neutral marker is shown.',
+  'motion.inspectionUnavailable': 'Body unavailable; the neutral marker is shown.',
+  'motion.inspectionNeutral': 'Neutral fallback marker; this body has no image.',
   'display.sharedToolNotice':
     "Text size is shared with the game's Display settings. Plain text and reduced effects follow those settings too.",
   'playground.mapLabel':

@@ -1,0 +1,10 @@
+{
+  "base": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "baseTree": "cf744b1ced9680b2fb4e0c304ddfc4b9f44b3e86",
+  "parentPatchSha256": "d9522de3fe9345962837eb3d8c4236270befa58ea30b3a0ff1e82e0c76737b33",
+  "parent": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-reading-followup-a13ab970",
+  "nativeFailure": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-native-a13ab970/root-native-review.json",
+  "inheritedInputs": 83,
+  "inheritedBytes": 1751404,
+  "scope": "PNG-only static preview derivation and existing background ownership. No version/source-worktree/index/browser/remote change."
+}
