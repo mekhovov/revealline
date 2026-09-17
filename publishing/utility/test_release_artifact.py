@@ -303,6 +303,160 @@ class UploadBoundaryTests(unittest.TestCase):
     def test_ambiguous_source_never_posts_distribution(self): self.run_case('ambiguous-source')
 
 
+class ResumeUploadTests(unittest.TestCase):
+    """Exercise real draft/tag validators and both perform engines with finite in-memory I/O."""
+    def run_case(self, existing=(), *, mutate=None, late_mutate=None, failed_member=None,
+                 tag_commit=None, expect_failure=False, late_read=2, expected_started=frozenset()):
+        value = binding('upload-originals')
+        bodies = {name: name.encode() for name in utility.NAMES}
+        value['release']['assets'] = [dict(name=name, bytes=len(body), sha256=utility.sha(body))
+                                     for name, body in sorted(bodies.items())]
+        descriptors = {row['name']: row for row in value['release']['assets']}
+        def asset(name):
+            row = descriptors[name]; asset_id = sorted(utility.NAMES).index(name) + 1
+            return {'id': asset_id, 'name': name, 'state': 'uploaded', 'size': row['bytes'],
+                    'digest': 'sha256:' + row['sha256'],
+                    'url': f'https://api.github.com/repos/example/project/releases/assets/{asset_id}'}
+        assets = [asset(name) for name in sorted(utility.SMALL_NAMES | set(existing))]
+        if mutate: mutate(assets)
+        events, downloads = [], []
+        class API:
+            reads = 0
+            def get(self, path):
+                if path == '/repos/example/project/releases/19':
+                    return {'id': 19, 'tag_name': 'v1.2.3', 'draft': True, 'published_at': None,
+                            'url': 'https://api.github.com' + path,
+                            'assets_url': 'https://api.github.com' + path + '/assets',
+                            'upload_url': 'https://uploads.github.com' + path + '/assets{?name,label}'}
+                if path == '/repos/example/project/releases/19/assets?per_page=100&page=1':
+                    self.reads += 1
+                    if self.reads == late_read and late_mutate: late_mutate(assets)
+                    return copy.deepcopy(assets)
+                if path == '/repos/example/project/git/ref/tags/v1.2.3':
+                    return {'ref': 'refs/tags/v1.2.3',
+                            'object': {'type': 'commit', 'sha': tag_commit or value['source']['commit']}}
+                raise AssertionError('Unexpected API request: ' + path)
+            def upload(self, path, stream, size, expected_hash):
+                name = path.split('?name=')[1]
+                events.append('POST ' + name)
+                body = stream.read()
+                self_test.assertEqual((len(body), utility.sha(body)), (size, expected_hash))
+                result = asset(name); assets.append(result)
+                return copy.deepcopy(result), size, expected_hash
+        self_test = self
+        class Held:
+            def __init__(self, args, name):
+                events.append('prepare ' + name)
+                if failed_member == name: raise ValueError('Held original preflight failed')
+                prefix = 'source' if name == 'source.tar' else 'member'
+                self_test.assertEqual(getattr(args, prefix + '_sha256'), descriptors[name]['sha256'])
+                self_test.assertEqual(getattr(args, prefix + '_bytes'), descriptors[name]['bytes'])
+                self.name, self.commit = name, args.source_commit
+                self.size, self.sha256 = descriptors[name]['bytes'], descriptors[name]['sha256']
+            def unchanged(self): events.append('unchanged ' + self.name)
+            def open(self): return io.BytesIO(bodies[self.name])
+            def close(self): events.append('close ' + self.name)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp); (out / 'evidence').mkdir(); (out / 'qualified-artifact-verified').mkdir()
+            (out / 'qualified-artifact-verified/inspection.json').write_bytes(b'fixture inspection')
+            for name in ['manifest.json', 'release.json', 'distribution.zip.sha256']:
+                (out / 'qualified-artifact-verified' / name).write_bytes(bodies[name])
+            def receive(path, _request, size, digest, **_kwargs):
+                downloads.append(path.name)
+                self.assertEqual((size, digest), (len(bodies[path.name]), utility.sha(bodies[path.name])))
+                path.write_bytes(bodies[path.name])
+            with patch.object(utility, 'receive', side_effect=receive), \
+                 patch.object(utility, 'small_assets_check', return_value={'fixture': True}) as checked, \
+                 patch.object(utility.upload_source, 'PinnedSource', side_effect=lambda args: Held(args, 'source.tar')), \
+                 patch.object(utility.upload_distribution, 'PinnedDistribution', side_effect=lambda args: Held(args, 'distribution.zip')):
+                if expect_failure:
+                    with self.assertRaises((ValueError, utility.upload_source.Refusal,
+                                            utility.upload_source.Ambiguous, utility.upload_distribution.Ambiguous)):
+                        utility.upload_originals(value, out, {}, API())
+                else:
+                    utility.upload_originals(value, out, {}, API())
+                    self.assertEqual(set(checked.call_args.args[1]), utility.SMALL_NAMES)
+            receipts = {p.name: json.loads(p.read_text()) for p in (out / 'evidence').glob('*.json')}
+            started = {p.name for p in (out / 'evidence').glob('*.upload-started.json')}
+        posts = [event.removeprefix('POST ') for event in events if event.startswith('POST ')]
+        if expect_failure:
+            self.assertEqual(posts, [])
+            self.assertEqual(started, expected_started)
+            self.assertNotIn('all-nine-assets.json', receipts)
+        else:
+            self.assertEqual(set(downloads), utility.SMALL_NAMES)
+            self.assertEqual(len(downloads), 7)
+            self.assertEqual(posts, [name for name in ['source.tar', 'distribution.zip'] if name not in existing])
+            for name in ['source.tar', 'distribution.zip']:
+                result = receipts[name + '.upload-result.json']
+                retained = name in existing
+                self.assertEqual(result['status'], 'EXISTING_VERIFIED' if retained else 'UPLOADED_VERIFIED')
+                self.assertEqual(result['postCount'], 0 if retained else 1)
+                self.assertEqual((result['assetId'], result['bytes'], result['sha256']),
+                                 (asset(name)['id'], descriptors[name]['bytes'], descriptors[name]['sha256']))
+                self.assertTrue(result['readBackVerified'])
+                self.assertEqual(name + '.upload-started.json' in started, not retained)
+                self.assertIn('prepare ' + name, events)
+                self.assertIn('unchanged ' + name, events)
+                self.assertIn('close ' + name, events)
+                for posted in posts:
+                    self.assertLess(events.index('prepare ' + name), events.index('POST ' + posted))
+            self.assertEqual({a['name'] for a in receipts['all-nine-assets.json']['assets']}, utility.NAMES)
+        return events
+
+    def test_seven_small_assets_upload_both_originals_once(self): self.run_case()
+    def test_complete_source_uploads_only_missing_distribution(self): self.run_case(('source.tar',))
+    def test_complete_distribution_uploads_only_missing_source(self): self.run_case(('distribution.zip',))
+    def test_both_complete_are_verified_without_any_post(self): self.run_case(('source.tar', 'distribution.zip'))
+
+    def test_invalid_existing_original_refuses_before_any_post(self):
+        for name in ['source.tar', 'distribution.zip']:
+            for field, wrong in [('state', 'starter'), ('digest', None), ('digest', 'sha256:' + 'f' * 64),
+                                 ('size', 0), ('size', 999), ('id', 0), ('url', 'https://elsewhere.invalid/asset')]:
+                def mutate(rows): next(row for row in rows if row['name'] == name)[field] = wrong
+                with self.subTest(name=name, field=field, wrong=wrong):
+                    self.run_case((name,), mutate=mutate, expect_failure=True)
+
+    def test_duplicate_or_unexpected_asset_refuses_before_any_post(self):
+        def duplicate(rows): rows.append(copy.deepcopy(rows[-1]))
+        def unexpected(rows): rows.append(dict(rows[-1], id=98, name='extra.zip'))
+        for mutate in [duplicate, unexpected]:
+            with self.subTest(mutate=mutate.__name__):
+                self.run_case(('source.tar',), mutate=mutate, expect_failure=True)
+
+    def test_every_small_asset_remains_mandatory_and_exact(self):
+        for name in sorted(utility.SMALL_NAMES):
+            def missing(rows): rows.remove(next(row for row in rows if row['name'] == name))
+            def corrupt(rows): next(row for row in rows if row['name'] == name)['digest'] = 'sha256:' + 'f' * 64
+            for mutate in [missing, corrupt]:
+                with self.subTest(name=name, mutate=mutate.__name__):
+                    self.run_case(('source.tar', 'distribution.zip'), mutate=mutate, expect_failure=True)
+
+    def test_changed_tag_refuses_before_any_post(self):
+        self.run_case(('source.tar',), tag_commit='f' * 40, expect_failure=True)
+
+    def test_invalid_asset_appearing_during_preflight_refuses_before_any_post(self):
+        def duplicate(rows): rows.append(copy.deepcopy(rows[-1]))
+        self.run_case(('source.tar',), late_mutate=duplicate, expect_failure=True)
+
+    def test_newer_helper_read_cannot_bypass_complete_draft_post_guard(self):
+        def corrupt_small(rows): rows[0]['digest'] = 'sha256:' + 'f' * 64
+        def duplicate(rows): rows.append(copy.deepcopy(rows[0]))
+        def unexpected(rows): rows.append(dict(rows[0], id=98, name='extra.zip'))
+        def starter(rows): rows.append(dict(rows[0], id=99, name='distribution.zip', state='starter'))
+        for mutate in [corrupt_small, duplicate, unexpected, starter]:
+            with self.subTest(mutate=mutate.__name__):
+                # Read 1: initial inventory; 2: outer decision; 3: unchanged engine's own reread.
+                self.run_case(late_mutate=mutate, late_read=3, expect_failure=True,
+                              expected_started={'source.tar.upload-started.json'})
+
+    def test_recovery_still_preflights_both_held_originals(self):
+        for existing in [('source.tar',), ('distribution.zip',), ('source.tar', 'distribution.zip')]:
+            for name in ['source.tar', 'distribution.zip']:
+                with self.subTest(existing=existing, failed_member=name):
+                    self.run_case(existing, failed_member=name, expect_failure=True)
+
+
 class AttachmentTests(unittest.TestCase):
     def test_nine_descriptors_bind_original_members_and_prior_qualification(self):
         value = binding('upload-originals'); source = value['source']

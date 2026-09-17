@@ -3,7 +3,7 @@
 
 The caller supplies a reviewed binding. Inspection has no release writes. Upload
 requires an existing draft, immutable tag and seven already reviewed small assets.
-The only writes to GitHub are one source.tar POST and one distribution.zip POST.
+The only writes to GitHub are one POST per absent original; exact completed assets are retained.
 """
 import argparse
 import contextlib
@@ -333,11 +333,12 @@ def verify_evidence(body, qualification, source):
                 'allQualificationPinsResolved': True}
 
 
-def asset_set(api, binding, expected_names):
+def asset_set(api, binding, expected_names, optional_names=frozenset()):
     release, repo = binding['release'], binding['repository']
     assets = upload_source.release_assets(api, repo, release['id'], release['tag'])
-    require(len(assets) == len(expected_names) and {a['name'] for a in assets} == expected_names,
-            'Draft assets differ; no overwrite, deletion or automatic resume')
+    names = {a.get('name') for a in assets}
+    require(len(assets) == len(names) and expected_names <= names <= expected_names | optional_names,
+            'Draft assets differ; missing, duplicate or unexpected assets cannot be recovered automatically')
     expected = {r['name']: r for r in release['assets']}
     for asset in assets:
         row = expected[asset['name']]
@@ -347,6 +348,26 @@ def asset_set(api, binding, expected_names):
                 'Release asset id/state/size/server digest differs')
     upload_source.verify_tag(api, repo, release['tag'], binding['source']['commit'])
     return assets
+
+
+class DraftUploadAPI:
+    """Keep the unchanged upload engines behind one final complete-draft POST guard."""
+    def __init__(self, api, binding):
+        self.api, self.binding = api, binding
+
+    def get(self, path):
+        return self.api.get(path)
+
+    def upload(self, path, stream, size, digest):
+        binding = self.binding
+        prefix = f'/repos/{binding["repository"]}/releases/{binding["release"]["id"]}/assets?name='
+        name = next((name for name in NAMES - SMALL_NAMES if path == prefix + name), None)
+        require(name is not None, 'Only original payload uploads are permitted')
+        expected = next(row for row in binding['release']['assets'] if row['name'] == name)
+        require(size == expected['bytes'] and digest == expected['sha256'], 'POST descriptor differs')
+        assets = asset_set(self.api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+        require(not any(asset['name'] == name for asset in assets), 'Original appeared before POST; refusing overwrite')
+        return self.api.upload(path, stream, size, digest)
 
 
 def small_assets_check(binding, bodies, inspection):
@@ -392,11 +413,13 @@ def small_assets_check(binding, bodies, inspection):
 
 
 def upload_originals(binding, out, inspection, api):
-    assets = asset_set(api, binding, SMALL_NAMES)
+    assets = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
     bodies = {}
     small = out / 'evidence/reviewed-small-assets'
     small.mkdir()
     for asset in assets:
+        if asset['name'] not in SMALL_NAMES:
+            continue
         path = small / asset['name']
         receive(path, f'repos/{binding["repository"]}/releases/assets/{asset["id"]}',
                 asset['size'], asset['digest'].removeprefix('sha256:'), accept='application/octet-stream')
@@ -422,13 +445,25 @@ def upload_originals(binding, out, inspection, api):
             holder = cls(args)
             stack.callback(holder.close)
             holders.append((module, name, holder))
-        asset_set(api, binding, SMALL_NAMES)
         for module, name, holder in holders:
+            # Recheck the complete draft before each decision, including a no-POST recovery.
+            current = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+            existing = next((asset for asset in current if asset['name'] == name), None)
+            if existing is not None:
+                holder.unchanged()
+                record(out / 'evidence' / (name + '.upload-result.json'), {
+                    'status': 'EXISTING_VERIFIED', 'repository': binding['repository'],
+                    'releaseId': binding['release']['id'], 'tag': binding['release']['tag'],
+                    'tagCommit': binding['source']['commit'], 'assetId': existing['id'], 'assetName': name,
+                    'bytes': existing['size'], 'sha256': descriptors[name]['sha256'],
+                    'serverDigest': existing['digest'], 'postCount': 0, 'readBackVerified': True})
+                continue
             pending = out / 'evidence' / (name + '.upload-started.json')
             record(pending, {'status': 'IN_PROGRESS_REREAD_ASSETS_IF_INTERRUPTED', 'assetName': name,
                              'automaticRetry': False, 'requiresAssetReread': True})
             # Original helpers retain exact no-retry POST/readback behavior.
-            result = module.perform(holder, api, binding['repository'], binding['release']['id'], binding['release']['tag'])
+            result = module.perform(holder, DraftUploadAPI(api, binding), binding['repository'],
+                                    binding['release']['id'], binding['release']['tag'])
             record(out / 'evidence' / (name + '.upload-result.json'), result)
         final_assets = asset_set(api, binding, NAMES)
         record(out / 'evidence/all-nine-assets.json', {'status': 'VERIFIED_RELEASE_ASSETS', 'assets': final_assets,
