@@ -1,0 +1,47 @@
+{
+  "files": [
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "bytes": 13329,
+      "sha256": "64b25b7b74497c3217ed925f243699bd5b0d0887fff391a60e9486caa099b4a1",
+      "blob": "10ce620c5f66181589dbecc689709fea23921fdf"
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "bytes": 43070,
+      "sha256": "381712e4be971e3e9553c07cf90d075dc965204e7ab3a3838deb608c9f8335be",
+      "blob": "ab348ee2503ce549b2b28bc93dc924c9ef9f46ff"
+    },
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "bytes": 51036,
+      "sha256": "8cc5ed01978a54b418b55f48016489bf24b32ce8b9700562f255ba9e00e1a4d1",
+      "blob": "8418c13e32462936b47f05193983f36794db7fc7"
+    },
+    {
+      "path": "game/test/practice-brief-host.test.mjs",
+      "bytes": 16449,
+      "sha256": "5cfa18edf2df2c7534beca2ff43ee380764cde36cc61be8a8a83f8dbc5eb9045",
+      "blob": "f531133744ddc1483b67cbfcf8c4302739381e5e"
+    },
+    {
+      "path": "game/test/fixtures/retry-scenarios.mjs",
+      "bytes": 2869,
+      "sha256": "1622cc5d08a060c206ca4397d8f35605ddfcbff844ddeaea33ed823f568dcae9",
+      "blob": "871393254a7531b357b1e591c35a36352bd18b54"
+    },
+    {
+      "path": "game/ui/mission-brief.css",
+      "bytes": 2690,
+      "sha256": "e2bb6384338d837cb536d59894364d488fc50256c11854389607e7dcdc77f194",
+      "blob": "abb35f7ed880eaf298f65dab91270293530b29ef"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "bytes": 3507,
+      "sha256": "7e48803cada4be1a38ecc8344a9c3350d9a23010721fb59d016b374a15388758",
+      "blob": "1656b0096b284abe3d22134c89f7369de86ff01f"
+    }
+  ],
+  "bytes": 132950
+}

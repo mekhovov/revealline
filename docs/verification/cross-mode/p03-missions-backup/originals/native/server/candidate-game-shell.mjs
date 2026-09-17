@@ -306,13 +306,9 @@ export function attachGameShell({
   const overlayBrief = $('overlay-brief');
   if (overlayBrief)
     overlayBrief.onclick = () => {
-      if (destroyed) return;
       beginMissionsVisit(overlayBrief);
-      const visit = missionsVisit;
       pause(true);
-      if (destroyed || missionsVisit !== visit) return;
       closeHome();
-      if (destroyed || missionsVisit !== visit) return;
       const brief = $('mission-brief'),
         unit = $('mission-brief-unit'),
         slot = $('shell-brief-content');

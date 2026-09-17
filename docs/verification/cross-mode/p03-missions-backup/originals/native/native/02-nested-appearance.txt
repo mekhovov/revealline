@@ -1,0 +1,210 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: TACTICAL EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 0.0%
+    - emphasis: TARGET 45%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:00
+    - generic: SCORE
+    - strong: "00000"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving."
+    - region "Mission details":
+      - paragraph: MISSION 01
+      - heading "Clear a path. Reveal a world." [level=1]
+      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.
+      - paragraph: Standard difficulty.
+    - button "Start mission ↗"
+    - button "Learn by playing"
+    - button "Mission brief"
+    - button "Main menu"
+    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.
+    - strong: Ready for launch
+    - generic: Close a line to reveal the picture
+    - status: "Your first route: fly down from the marked start to the opposite border."
+    - status
+- dialog "Choose your mission":
+  - paragraph: YOUR NEXT FLIGHT
+  - heading "Choose your mission" [level=2]
+  - button "Back"
+  - generic "Mode · Solo flight"
+  - complementary "Mission and loadout":
+    - generic: FLIGHT DECK
+    - generic: 00 / 12 · Standard medals
+    - region "Choose a chapter":
+      - heading "Choose a chapter" [level=3]
+      - group "Choose a chapter":
+        - button "Base game · 12 levels Current chapter" [pressed]:
+          - generic: Base game · 12 levels
+          - generic: Current chapter
+        - button "FPV Front · Pressure Lines · 3 levels Choose chapter":
+          - generic: FPV Front · Pressure Lines · 3 levels
+          - generic: Choose chapter
+        - button "FPV Front · Frontier Lines · 3 levels Choose chapter":
+          - generic: FPV Front · Frontier Lines · 3 levels
+          - generic: Choose chapter
+        - button "Night Shift · 3 levels Choose chapter":
+          - generic: Night Shift · 3 levels
+          - generic: Choose chapter
+        - button "Living Threads · 3 levels Choose chapter":
+          - generic: Living Threads · 3 levels
+          - generic: Choose chapter
+        - button "Fieldcraft · 4 levels Choose chapter":
+          - generic: Fieldcraft · 4 levels
+          - generic: Choose chapter
+        - button "Homeward Skies · 3 levels Choose chapter":
+          - generic: Homeward Skies · 3 levels
+          - generic: Choose chapter
+        - button "Equipment Workshop · 3 levels Choose chapter":
+          - generic: Equipment Workshop · 3 levels
+          - generic: Choose chapter
+        - button "Sentinel Relay · 1 level Choose chapter":
+          - generic: Sentinel Relay · 1 level
+          - generic: Choose chapter
+      - generic "Older chapters (4)"
+    - region "Missions in this chapter":
+      - generic: CAMPAIGN / First Signal
+      - button "Collection"
+      - button "1. First Signal" [pressed]:
+        - generic: "01"
+        - generic: First Signal
+        - generic: ↗
+        - generic: Picture concealed
+      - button "2. Relay Orchard — locked" [disabled]:
+        - generic: "02"
+        - generic: Relay Orchard
+        - generic: —
+        - generic: Locked
+      - button "3. Crosswind — locked" [disabled]:
+        - generic: "03"
+        - generic: Crosswind
+        - generic: —
+        - generic: Locked
+      - button "4. Stone Lanes — locked" [disabled]:
+        - generic: "04"
+        - generic: Stone Lanes
+        - generic: —
+        - generic: Locked
+      - button "5. Night Patrol — locked" [disabled]:
+        - generic: "05"
+        - generic: Night Patrol
+        - generic: —
+        - generic: Locked
+      - button "6. Hidden Frequency — locked" [disabled]:
+        - generic: "06"
+        - generic: Hidden Frequency
+        - generic: —
+        - generic: Locked
+      - navigation "Mission pages":
+        - button "← Previous" [disabled]
+        - status: 1 / 2
+        - button "Next →"
+    - generic "Mission brief"
+    - generic "Flight setup"
+    - text: Pack
+    - combobox "Pack":
+      - option "Base game · 12 levels" [selected]
+      - option "FPV Front · Pressure Lines · 3 levels · install on select"
+      - option "FPV Front · Frontier Lines · 3 levels · install on select"
+      - option "Night Shift · 3 levels · install on select"
+      - option "Living Threads · 3 levels · install on select"
+      - option "Fieldcraft · 4 levels · install on select"
+      - option "Homeward Skies · 3 levels · install on select"
+      - option "Equipment Workshop · 3 levels · install on select"
+      - option "Sentinel Relay · 1 level · install on select"
+      - option "FPV Front · First Light Arcade R4 · 3 levels · install on select"
+      - option "FPV Front · First Light R3 · 3 levels · install on select"
+      - option "FPV Front · First Light R2 · 3 levels · install on select"
+      - option "FPV Front · First Light · 3 levels · install on select"
+    - text: Level
+    - combobox "Level":
+      - option "01 · First Signal" [selected]
+      - option "02 · Relay Orchard · locked" [disabled]
+      - option "03 · Crosswind · locked" [disabled]
+      - option "04 · Stone Lanes · locked" [disabled]
+      - option "05 · Night Patrol · locked" [disabled]
+      - option "06 · Hidden Frequency · locked" [disabled]
+      - option "07 · The Crossing · locked" [disabled]
+      - option "08 · Last Light · locked" [disabled]
+      - option "09 · Signal Garden · locked" [disabled]
+      - option "10 · Supply Circuit · locked" [disabled]
+      - option "11 · Short Fuse · locked" [disabled]
+      - option "12 · Relay Storm · locked" [disabled]
+    - text: World
+    - combobox "World":
+      - option "FPV Front" [selected]
+      - option "Ukraine Atlas"
+      - option "1994 Forever"
+      - option "Spend Network"
+    - text: Campaign
+    - combobox "Campaign":
+      - option "First Signal" [selected]
+    - text: Campaign difficulty
+    - combobox "Campaign difficulty":
+      - option "Standard" [selected]
+      - option "Gentle"
+    - status: "Standard: the authored lives, hazards and deadlines. Both difficulties unlock the same pictures, missions and appearances; scores and medals stay separate. Equipment seals require Standard."
+    - generic "Compare this mission’s rules"
+    - text: Starting class
+    - combobox "Starting class":
+      - option "Scout" [selected]
+      - option "Light carrier"
+      - option "Heavy carrier"
+      - option "Interceptor"
+      - option "Fiber relay"
+      - option "Impact craft"
+      - option "Trapper"
+    - text: Steering
+    - combobox "Steering":
+      - option "Immediate" [selected]
+      - option "Grid + buffer"
+    - paragraph: Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.
+    - paragraph: Invader patrol · Signal sentinel · Supply pad
+    - text: Character appearance
+    - combobox "Character appearance" [active]:
+      - option "Daybreak FPV"
+      - option "Neutral marker"
+      - option "Atlas bird"
+      - option "Tape runner"
+      - option "Spend Sprite"
+      - option "Skyline FPV · locked" [disabled]
+      - option "Night signal FPV · locked" [disabled]
+      - option "Falcon trim · locked" [disabled]
+      - option "Vector trail · locked" [disabled]
+      - option "Audit pulse · locked" [disabled]
+      - option "Scout quad"
+      - option "Heavy lift"
+      - option "Fixed-wing body · locked" [disabled]
+      - option "Delta interceptor · locked" [disabled]
+      - option "Scout camera quad" [selected]
+      - option "Light support carrier"
+      - option "Heavy six-hub carrier"
+      - option "Compact interceptor"
+      - option "Fiber relay quad"
+      - option "Blunt pulse craft"
+      - option "Lattice support craft"
+      - option "Round courier swallow"
+      - option "Pottery courier"
+      - option "Carved supply chest"
+      - option "Broad falcon chevron"
+      - option "Wide barrel bobbin"
+      - option "Bell warden"
+      - option "Woven basket"
+    - checkbox "Match appearance to class" [checked]
+    - text: Match appearance to class
+    - paragraph: "First clear: 0 / 1 different missions in this campaign. See Collection for the appearances."
+    - paragraph: Starting class changes begin a fresh attempt. Use a hangar to switch during flight.
+    - button "Change craft · G"
+    - button "Save & pause" [disabled]
+    - paragraph: Scout · Hangar in range
+  - paragraph: First Signal
+  - button "Flight setup"
+  - button "Back to flight"
+  - button "Deploy →"
