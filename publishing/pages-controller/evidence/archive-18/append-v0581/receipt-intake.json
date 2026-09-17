@@ -1,0 +1,47 @@
+{
+  "artifact": {
+    "id": 10435958437,
+    "node_id": "MDg6QXJ0aWZhY3QxMDQzNTk1ODQzNw==",
+    "name": "archive18-verification-receipts",
+    "size_in_bytes": 69926,
+    "url": "https://api.github.com/repos/mekhovov/revealline-archive-18/actions/artifacts/10435958437",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline-archive-18/actions/artifacts/10435958437/zip",
+    "expired": false,
+    "digest": "sha256:80dd14f1bcc50be66ba89330caf0a4ef43d59087a9eb9669e94d62f927eff120",
+    "created_at": "2026-09-16T07:53:50Z",
+    "updated_at": "2026-09-16T07:53:50Z",
+    "expires_at": "2026-12-15T07:53:33Z",
+    "workflow_run": {
+      "id": 35070855861,
+      "repository_id": 1372525534,
+      "head_repository_id": 1372525534,
+      "head_branch": "main",
+      "head_sha": "eaaf9844f7294be17bd97672de3c5b483e7c1620"
+    }
+  },
+  "downloadBytes": 69926,
+  "downloadSHA256": "80dd14f1bcc50be66ba89330caf0a4ef43d59087a9eb9669e94d62f927eff120",
+  "safeMembers": [
+    {
+      "path": "expected-inventory.json",
+      "bytes": 274546,
+      "sha256": "c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6"
+    },
+    {
+      "path": "zip-receipt-v0.58.0.json",
+      "bytes": 407,
+      "sha256": "d9fca55322ac8a02286ce72194002a0a6bca839cf021ec522fd853b0bba1c83e"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1753,
+      "sha256": "6679c3dce63fedb54909d2d38e6fca822fcc3def188395fd97740ae8de274cf7"
+    },
+    {
+      "path": "zip-receipt-v0.58.1.json",
+      "bytes": 407,
+      "sha256": "8e54a3e0acc63e9329b96ac5181a67d2b24db5ebd7f8328e6d075db34eef592b"
+    }
+  ],
+  "scope": "Actual small hosted original receipts only; no source TAR, distribution ZIP or complete Pages artifact downloaded."
+}

@@ -1,0 +1,41 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-18",
+  "infrastructureCommit": "eaaf9844f7294be17bd97672de3c5b483e7c1620",
+  "deploymentId": 6476315337,
+  "versions": [
+    "v0.58.0",
+    "v0.58.1"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-18/append-v0581/native/observations.md",
+      "sha256": "6f945955011aac50adb8a1ca6cddfcc488f2ebaaecb9e99bb764fd2df96de70c"
+    },
+    {
+      "path": "evidence/archive-18/append-v0581/after-http-review.json",
+      "sha256": "33f67907612164f613e71236761dc870d13bf04d9c26d39cd95f74917b5c5b7b"
+    }
+  ],
+  "scope": "Root accepted narrow historical online preservation based on the actual successor browser observations and complete independent HTTP review: both original entries, v0.58.1 actual capture/paused Settings/explicit Resume and retained Team note, v0.58.0 original saved-flight entry/return, archive-to-main Release Explorer bridge. All1327files/625402709bytes passed without failure/retry. Native evidence is a root-written observation log of actual AX states and inline-inspected screenshots; no exported raw images or independently replayed browser suite are claimed. Initial key/temporary loading observations remain retained. No victory, full keyboard/input, native focus-return, offline migration, acoustic listening, physical touch/controller, P03 or broader game-phase acceptance. The future main-to-v0.58.1 archive cutover/worker migration remains separately required.",
+  "observationScopes": [
+    {
+      "version": "v0.58.1",
+      "nativeInfrastructureCommit": "eaaf9844f7294be17bd97672de3c5b483e7c1620",
+      "nativeDeploymentId": 6476315337,
+      "evidencePath": "evidence/archive-18/append-v0581/native/observations.md",
+      "freshBrowserRun": true,
+      "observed": "Canonical entry/mission preparation; actual51.5% capture; paused Settings Back and explicit Resume; Team permanent note retained through preference edit; return title and Release Explorer. Pointer and keyboard; not a complete keyboard journey; no victory."
+    },
+    {
+      "version": "v0.58.0",
+      "nativeInfrastructureCommit": "eaaf9844f7294be17bd97672de3c5b483e7c1620",
+      "nativeDeploymentId": 6476315337,
+      "evidencePath": "evidence/archive-18/append-v0581/native/observations.md",
+      "freshBrowserRun": true,
+      "observed": "Release Explorer resolves canonical original entry; original saved flight verified/restored paused; explicit Resume, arena/moving actors, Pause and title return. Not asserted to be v0.58.1 progress or a cross-version migration."
+    }
+  ],
+  "phaseAccepted": false
+}
