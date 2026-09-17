@@ -273,7 +273,10 @@ for (const reason of ['blur', 'hidden', 'pagehide', 'close-reopen', 'newer-focus
     if (reason === 'newer-focus') {
       h.$('shell-home').close();
       h.$('settings-dialog').showModal();
+      h.$('settings-tab-audio').click();
+      assert.equal(h.$('settings-panel-audio').hidden, false);
       h.$('master-volume').focus();
+      assert.equal(h.doc.activeElement, h.$('master-volume'));
     }
     if (['blur', 'hidden', 'pagehide'].includes(reason)) {
       await Promise.resolve();

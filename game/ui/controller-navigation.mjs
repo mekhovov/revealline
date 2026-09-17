@@ -642,14 +642,18 @@ export function attachControllerNavigation({
         focus(event.shiftKey ? tabStops.at(-1) : tabStops[0]);
         return true;
       }
-      if (!items.length) return false;
+      // Roving tab lists expose only their selected item to sequential keys.
+      // Spatial and controller traversal still uses every visible control.
+      const tabStops = items.filter((element) => element.tabIndex >= 0),
+        currentTab = tabStops.indexOf(doc.activeElement);
+      if (!tabStops.length) return false;
       // Only a registered embedded host may transfer focus at a nonmodal edge.
       // Interior traversal, native modal containment and ordinary games retain
       // their existing behavior. A reader exits through its own path above.
-      const boundary = event.shiftKey ? 0 : items.length - 1;
+      const boundary = event.shiftKey ? 0 : tabStops.length - 1;
       if (
         !leavingReader &&
-        current === boundary &&
+        currentTab === boundary &&
         onTabBoundary({ backward: !!event.shiftKey }) === true
       ) {
         event.preventDefault();
@@ -658,13 +662,15 @@ export function attachControllerNavigation({
       }
       event.preventDefault();
       relinquish();
+      // An arrow/controller may have focused a tabindex=-1 item. Continue from
+      // its actual position before wrapping to an eligible sequential stop.
+      const remaining = event.shiftKey
+        ? items.slice(0, current < 0 ? items.length : current).reverse()
+        : items.slice(current + 1);
       const next =
-        current < 0
-          ? event.shiftKey
-            ? items.length - 1
-            : 0
-          : (current + (event.shiftKey ? -1 : 1) + items.length) % items.length;
-      focus(items[next]);
+        remaining.find((element) => element.tabIndex >= 0) ||
+        (event.shiftKey ? tabStops.at(-1) : tabStops[0]);
+      focus(next);
       return true;
     }
     if (['Enter', ' '].includes(event.key)) {

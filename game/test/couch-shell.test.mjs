@@ -233,6 +233,7 @@ test('per-seat Auto expands on touch and defers collapse until pause without cha
 test('Always supports independent pointer players; Off wins over coarse and later touch', async (t) => {
   const f = await couchPage(t, { coarse: true });
   f.$('race-options').click();
+  f.$('race-settings-tab-controls').click();
   change(f, 'race-touch-0', 'off');
   change(f, 'race-touch-1', 'always');
   f.$('race-options-back').click();
@@ -403,7 +404,7 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   assert.equal(f.$('race-boards').hidden, false);
   assert.equal(f.$('race-shell').hidden, true);
   assert.equal(f.doc.activeElement.id, 'race-pause');
-  for (const i of [0, 1]) assert.match(f.$(`racer-input-${i}`).textContent, /Results for options/);
+  for (const i of [0, 1]) assert.match(f.$(`racer-input-${i}`).textContent, /Results for Settings/);
   f.frames(10, 200);
   assert.deepEqual(f.checkpoint(), before);
   const revealed = [];

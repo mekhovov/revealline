@@ -32,11 +32,11 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'title.deployDestination': 'Deploy · Pressure Lines / Arcade',
   'title.preparing': 'Preparing…',
   'settings.categories': 'Settings categories',
-  'settings.title': 'Flight settings.',
-  'settings.couchTitle': 'Flight settings',
+  'settings.title': 'Settings',
+  'settings.couchTitle': 'Settings',
   'settings.controls': 'Controls',
   'settings.audio': 'Audio',
-  'settings.display': 'Display & accessibility',
+  'settings.display': 'Appearance & accessibility',
   'settings.data': 'Game data',
   'settings.controlsDescription': 'Keyboard, controller and touch.',
   'settings.audioDescription': 'Music, effects and your soundtrack library.',
@@ -72,7 +72,7 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'motion.markerReady': 'Ready',
   'motion.markerUpdated': 'Updated',
   'motion.sharedReading':
-    'Text size is shared with the game. Theme or Plain text follows game Display settings.',
+    'Text size is shared with the game. Theme or Plain text follows Settings → Appearance & accessibility.',
   'motion.effectsCapped':
     'Shared or system reduced effects are active. The local preview choice is kept; movement and Play/Pause are unchanged.',
   'motion.effectsLocal':
@@ -83,7 +83,7 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'motion.inspectionUnavailable': 'Body unavailable; the neutral marker is shown.',
   'motion.inspectionNeutral': 'Neutral fallback marker; this body has no image.',
   'display.sharedToolNotice':
-    "Text size is shared with the game's Display settings. Plain text and reduced effects follow those settings too.",
+    "Text size is shared with the game's Settings → Appearance & accessibility. Plain text and reduced effects follow those settings too.",
   'playground.mapLabel':
     'Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map.',
   'playground.mapDetails': 'Signal zones and hangars',

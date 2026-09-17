@@ -1,14 +1,18 @@
 # RevealLine: delivery plan and remaining work
 
-Updated 17 September 2026. The [execution register](cross-mode-execution.md) is authoritative; this page is its short, current view. Historical reports retain their original dates and scope.
+**Current implementation authority (17 September 2026):** [whole-game execution plan](whole-game-ux-plan.md). Recovery v0.60.4 remains the accepted public baseline. Motion v0.60.5 source `a336f183` is qualified and frozen, and source PR #93 is merged; publication remains pending uploader recovery. Settings source `a506b060` is composed onto reviewed uploader utility `e4129b46` (PR #95), which descends from Motion merge `3f94acc6`. The uploader utility is not yet accepted on main, and source composition does not establish public acceptance of Settings or complete P03/P05. The whole-game plan controls sequencing; the preceding roadmap, evidence and content accounting below are retained requirements, not an alternative current order.
+
+Updated 17 September 2026. The [whole-game plan](whole-game-ux-plan.md) determines current implementation order; the [execution register](cross-mode-execution.md) retains phase evidence and acceptance records. The roadmap below preserves earlier phase mapping and outstanding requirements. Historical reports retain their original dates and scope.
 
 **Accepted public baseline: [v0.60.4](https://mekhovov.github.io/revealline/releases/v0.60.4/site/game/).** P00 integration, P01 loading feedback and P02-A master sound controls are accepted within their stated gates. P03 navigation and P05 presentation remain partial. The game is playable, but the full production programme and public-release qualification are not complete.
 
-**Active delivery:** v0.60.5 corrects Motion Lab reading preferences, paused previews, static image previews and actionable startup recovery. Its focused checks passed; the first full CI runs exposed an outdated integration assertion for the retired generic text-size hook. Source PR #93 includes the correction and requires fresh full qualification. It is not yet an accepted public release. The next prepared Team artwork candidate must preserve the full picture as an earned reward, retain the exact selected artwork, and pass actual browser play and publication gates.
+**Active delivery:** Motion v0.60.5 publication awaits uploader recovery; its source qualification, frozen artifact and merged PR #93 do not establish public acceptance. Settings v0.60.6 is composed on the reviewed utility ancestry and awaits fresh integrated qualification. The prepared Team artwork candidate remains separate: it must preserve the full picture as an earned reward, retain the exact selected artwork, and pass actual browser play and publication gates.
+
+**Settings qualification:** both required hosted runs for source `2330e5e6` completed on Node 20.19.6 with **5,573 tests: 5,569 passed and four known stale navigation-test failures per run**, zero skipped or cancelled. The corrections are in predecessor `c3fb3296` and its rebased successor `a506b060`. Fresh exact-source gates on the integrated result, followed by release and public verification, remain required.
 
 ## Delivery order
 
-Complete each player-facing milestone before expanding tools and campaign volume. “Partial” means implemented foundations exist but the listed acceptance work remains; it does not mean the phase is finished.
+This retained table maps phase scope and remaining gates; follow the [whole-game plan](whole-game-ux-plan.md) for the current feature order. “Partial” means implemented foundations exist but the listed acceptance work remains; it does not mean the phase is finished.
 
 | Order | Phase                            | Status                        | Remaining result and acceptance gate                                                                                                                                                                    |
 | ----- | -------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
