@@ -1,0 +1,149 @@
+{
+  "status": "SCOPED_STATIC_REVIEW_NO_ACTIONABLE_FINDINGS",
+  "reviewedAt": "2026-09-17T10:21:05.556782+00:00",
+  "baseSource": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-clearance",
+  "sourceScope": "13 current runtime/test paths, ten production and three tests, uncommitted candidate relative to exact822f",
+  "files": [
+    {
+      "path": "game/controller-lab/index.html",
+      "bytes": 12739,
+      "sha256": "0de28f859ddc2dae801b73637ab151dedc648015a6c5cd6300d38abf63a28b8a"
+    },
+    {
+      "path": "game/controller-lab/style.css",
+      "bytes": 7840,
+      "sha256": "afd6d852f82627d6f289c3f3d9c354af7ff918ed82fe899fb180f2849717041b"
+    },
+    {
+      "path": "game/playground/board-view.mjs",
+      "bytes": 4554,
+      "sha256": "789ecd0eac72111861df81231673e102d42348a024b2aec6bb41775f8f47fc89"
+    },
+    {
+      "path": "game/playground/index.html",
+      "bytes": 27517,
+      "sha256": "39da96459b8efc9775d8bd303c0c58245293ff03aaf8e2a0c89a0bc2b3b7d703"
+    },
+    {
+      "path": "game/playground/playground.css",
+      "bytes": 8631,
+      "sha256": "465201e7fa2e95735fbf095c96cebc8dab859513776283eb571a9c1917aa36dd"
+    },
+    {
+      "path": "game/playground/playground.mjs",
+      "bytes": 52707,
+      "sha256": "b6cc429d85eb8de198ce9654be27e3762c824fa8b29b45315e4f54b9472d579e"
+    },
+    {
+      "path": "game/ui/field-kit-copy.mjs",
+      "bytes": 5578,
+      "sha256": "5298e14e1f52697c5b644a15515cfabafb5c42b92fcb787d657c4e9019e7ffbd"
+    },
+    {
+      "path": "game/playground/map-diagnostics.mjs",
+      "bytes": 1590,
+      "sha256": "c63958a61001c712de54107c8a69484d045b12201f5b16302873f610b7b071c1"
+    },
+    {
+      "path": "game/ui/tool-display-entry.mjs",
+      "bytes": 233,
+      "sha256": "2428b9a1259b44f8ed48fcbeaf696a5b60d915c2a215717705b22a4b43094bf5"
+    },
+    {
+      "path": "game/ui/tool-display.mjs",
+      "bytes": 3097,
+      "sha256": "22a0aa71832c15b8e094a6d10cf6e2d900ec2c89e145864ce5ed1fac07bf3849"
+    },
+    {
+      "path": "game/test/playground-map-diagnostics.test.mjs",
+      "bytes": 2777,
+      "sha256": "258a263cdcb0240e16dfe6192b2c84ac50da0d6cf41383942273b1efcc01493f"
+    },
+    {
+      "path": "game/test/practice-playground-display.test.mjs",
+      "bytes": 39079,
+      "sha256": "7da7af6e53b18e72cbb957585806ac2d7350b0547f71d8132b067bc7ca49a008"
+    },
+    {
+      "path": "game/test/tool-display-restoration.test.mjs",
+      "bytes": 6339,
+      "sha256": "08212436611565e46457e97258ca84c70e891b068ead1e9a714496b50263bc21"
+    }
+  ],
+  "findings": [],
+  "nativeRuntimePinsRehashed": 10,
+  "historyRepairPinsRehashed": 2,
+  "retainedTestReceipts": [
+    {
+      "path": ".cache/p05-tool-history-restoration-822f3290/runs/three-file-node20/receipt.json",
+      "bytes": 985,
+      "sha256": "117cf00163a03b302d1d930fc3c9a8e61b0032fcd9855d9d2db15378039992b0",
+      "originalStreamsHashVerified": true,
+      "counts": {
+        "tests": 61,
+        "suites": 0,
+        "pass": 61,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "runByThisReview": false
+    },
+    {
+      "path": ".cache/p05-tool-history-restoration-822f3290/runs/three-file-node22/receipt.json",
+      "bytes": 985,
+      "sha256": "e3ce91e6bbc344a2750193e71381118b7d2ad736a9b6c86c2e48d44678d56715",
+      "originalStreamsHashVerified": true,
+      "counts": {
+        "tests": 61,
+        "suites": 0,
+        "pass": 61,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "runByThisReview": false
+    }
+  ],
+  "nativeOriginals": [
+    {
+      "path": ".cache/p05-practice-history-fixed-native-822f3290/binding.json",
+      "bytes": 3189,
+      "sha256": "735f32802e4d58c3ff9cd6dc841671d6ba8a6ddf3f89722c6a66ac11cdb07549"
+    },
+    {
+      "path": ".cache/p05-practice-history-fixed-native-822f3290/history-repair-observation.json",
+      "bytes": 1193,
+      "sha256": "6ef6d6da590c7776a5d98cae29ba7890bd005145f0a30034093bdc8cad9f45cc"
+    },
+    {
+      "path": ".cache/p05-practice-history-fixed-native-822f3290/integrated-layout-import-observation.json",
+      "bytes": 1526,
+      "sha256": "74c058e650fdd09992d3cbfd88bbfcbfdc21bda2773c210cc1642a42d51cbdb6"
+    },
+    {
+      "path": ".cache/p05-practice-history-fixed-native-822f3290/cleanup.json",
+      "bytes": 185,
+      "sha256": "e23870cd1e79e0bc67ccf2ee6a07f9ecc35500da5fe6c11bd06a74abbe0a18ad"
+    }
+  ],
+  "reviewedContracts": [
+    "One shared display preference owner; only explicit marked select change persists the separate display record. No child navigation, virtual controls, profile, save, working draft or iframe access in the display adapter.",
+    "Pageshow reconciliation reads current owner twice across a cancellable task; owner refresh listener precedes it. Failed-save local intent and warning remain owned; pagehide/dispose cancel pending repair.",
+    "Last-Undo focus repair is synchronous and requires original Undo focus, disabled final button, foreground visibility and no newer active element; only existing visible enabled actions are eligible. Undo content restoration and child preview identity are unchanged.",
+    "Live geometry now clears when pending/unavailable and filters nonfinite/empty rectangles. Text claims measured boxes only. Explicit snapshot is retained and marked stale on reload; no simulation or requested dimensions are mutated.",
+    "Map diagnostics render textContent, preserve parent disclosure, expose individual signal/hangar records, and use unchanged core defaults. Editor canvas cell geometry and pointer transforms are unchanged.",
+    "Existing display surfaces no longer own Practice text size; host notice deliberately has no later cosmetic-copy attribute that could replace an unsaved warning."
+  ],
+  "limits": [
+    "Read-only source/static and retained receipt review. No tests, builds, browser, remote or source/index mutation.",
+    "61 tests per runtime are prior candidate results with original logs rehashed, not new executions or a final source full-suite claim. Prior128 cohort not added to these counts.",
+    "Actual history observations report new child sessions; they do not prove BFCache. Modeled persisted-return tests remain a separate evidence class.",
+    "No physical controller/touch or 200 percent zoom qualification. Native logs explicitly leave naturally nonempty offscreen live-control evidence outside their scope.",
+    "New diagnostics use complete English fallback for uk-UA; this subphase does not deliver a Ukrainian translation catalog.",
+    "Review covers current thirteen runtime/test paths; guidance/version/release/public acceptance are root-owned separate gates."
+  ]
+}

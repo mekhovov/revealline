@@ -1,0 +1,39 @@
+{
+  "baseSource": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "baseScope": "Current twelve-path integrated Practice/Playground e674+c79 candidate, not bare822f",
+  "paths": [
+    {
+      "path": "game/ui/tool-display.mjs",
+      "preimageSha256": "0c017372494c794d44a2b25d10590ec834b76e02c364bfba579e4532a1f9d4e7",
+      "preimageBytes": 2229,
+      "candidateSha256": "22a0aa71832c15b8e094a6d10cf6e2d900ec2c89e145864ce5ed1fac07bf3849",
+      "candidateBytes": 3097
+    },
+    {
+      "path": "game/test/tool-display-restoration.test.mjs",
+      "preimageSha256": null,
+      "preimageBytes": 0,
+      "candidateSha256": "08212436611565e46457e97258ca84c70e891b068ead1e9a714496b50263bc21",
+      "candidateBytes": 6339
+    }
+  ],
+  "patchSha256": "eb0cd33f2bf2b85d15695ba5f870943ebf580793f135c962feca3befe2becbe1",
+  "patchBytes": 9024,
+  "tests": {
+    "parentFinal": "runs/parent-final-node20/receipt.json",
+    "node20": "runs/candidate-final-node20/receipt.json",
+    "node22": "runs/candidate-final-node22/receipt.json",
+    "expandedNode20": "runs/three-file-node20/receipt.json",
+    "expandedNode22": "runs/three-file-node22/receipt.json"
+  },
+  "nativeAcceptance": "PENDING_ROOT_RETEST",
+  "sourceEdited": false,
+  "expandedCohortCounts": {
+    "tests": 61,
+    "pass": 61,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  }
+}

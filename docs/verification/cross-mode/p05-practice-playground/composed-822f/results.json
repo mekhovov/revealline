@@ -1,0 +1,105 @@
+{
+  "status": "BOUNDED_COMPOSED_MODEL_COHORT_PASS",
+  "source": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "tree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "composition": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/composition.json",
+    "bytes": 4904,
+    "sha256": "36895217f11070dcaa5e1bf6fc171498363fd2b595270f59ad6e8e321b9edb68"
+  },
+  "preimages": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/preimage-review.json",
+    "bytes": 3150,
+    "sha256": "c155f623c13876b5ac77f189c92a4f3a55d694c732ab0b025f4cb9eda2d0c2ac"
+  },
+  "fixturePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/fixture-inputs.json",
+    "bytes": 161034,
+    "sha256": "304c3b42a4ca8eac1ad55b4daa3c6e81b64ab6a502639ad0e0adf8999df0458d"
+  },
+  "scripts": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/prepare.py",
+      "bytes": 6141,
+      "sha256": "603dd743de0ed74fdccb0343d31e056d716072c9fb39fed78906dc364d38d921"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/run-cohort.py",
+      "bytes": 2344,
+      "sha256": "f13895a9999496b2b306f121a0e6827b3e3120a68640b04bb5f70fb1adfbd7d5"
+    }
+  ],
+  "runs": [
+    {
+      "runtime": "20.19.5",
+      "completeFiles": 11,
+      "reportedTests": 128,
+      "leafCases": 127,
+      "parentGroups": 1,
+      "elapsedSeconds": 5.939,
+      "receipt": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/20.19.5/receipt.json",
+        "bytes": 1527,
+        "sha256": "8a1d9e43a815552b9cf47f0645849cad8b0c662786adfccecece804271113370"
+      },
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/20.19.5/stdout.log",
+        "bytes": 30061,
+        "sha256": "c587fd9078e15cffa0cf208a36c11cb70b84fdd6f042c6f87a539606978fa51b"
+      },
+      "inputPins": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/20.19.5/inputs.json",
+        "bytes": 161034,
+        "sha256": "304c3b42a4ca8eac1ad55b4daa3c6e81b64ab6a502639ad0e0adf8999df0458d"
+      },
+      "afterPins": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/20.19.5/outputs.json",
+        "bytes": 161034,
+        "sha256": "304c3b42a4ca8eac1ad55b4daa3c6e81b64ab6a502639ad0e0adf8999df0458d"
+      }
+    },
+    {
+      "runtime": "22.22.2",
+      "completeFiles": 11,
+      "reportedTests": 128,
+      "leafCases": 127,
+      "parentGroups": 1,
+      "elapsedSeconds": 5.141,
+      "receipt": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/22.22.2/receipt.json",
+        "bytes": 1527,
+        "sha256": "ca5ff8dc240e72bcaff69e611dfc6aecaba751c92df2004c7e7bef0dcf431de7"
+      },
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/22.22.2/stdout.log",
+        "bytes": 32081,
+        "sha256": "b1273b93444c10a2002c57ea05d653dd796de1445a8cc6d5452feeabafc310e0"
+      },
+      "inputPins": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/22.22.2/inputs.json",
+        "bytes": 161034,
+        "sha256": "304c3b42a4ca8eac1ad55b4daa3c6e81b64ab6a502639ad0e0adf8999df0458d"
+      },
+      "afterPins": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-composed-822f3290/runs/22.22.2/outputs.json",
+        "bytes": 161034,
+        "sha256": "304c3b42a4ca8eac1ad55b4daa3c6e81b64ab6a502639ad0e0adf8999df0458d"
+      }
+    }
+  ],
+  "freshDependencyCount": 901,
+  "fixtureBytes": 304597385,
+  "unchangedInputs": true,
+  "sameTestsRepeatedAcrossRuntimes": true,
+  "failureAttemptsInThisPacket": 0,
+  "nativeRun": false,
+  "buildRun": false,
+  "phaseAccepted": false,
+  "versionAllocated": false,
+  "publicAccepted": false,
+  "limits": [
+    "Whole affected-file model cohort only; no full-source gates or build.",
+    "Prior actual-browser evidence remains bound to170508+e674+c79; this fresh runtime composition does not promote partial native matrix rows.",
+    "This is a future Practice/Playground candidate, not v0.60.1 Team release acceptance."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SCOPED_IMAGE_EXPORT_IMPORT",
+  "time": "2026-09-17T10:06:41.700257+00:00",
+  "sourceBinding": "binding.json",
+  "actions": [
+    "Actual owned PNG file chooser import as background",
+    "Actual Export scenario UI download; CUA download wait timed out but native Downloads file existed after empty before inventory",
+    "Actual exported file chosen through Import content; UI confirmed decoded and Undo available"
+  ],
+  "download": {
+    "bytes": 862703,
+    "sha256": "9a436fa7b78fd28f16e2bb4ba21b048a5d48a1b61cc2a75e82dd753995228683"
+  },
+  "imageSha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4",
+  "exactOriginalImageBytes": true,
+  "previewStayed": "../?practice=1&revision=1",
+  "limitations": [
+    "No full R1/source/release acceptance",
+    "No physical input claim"
+  ]
+}
