@@ -157,6 +157,7 @@ for (const [name, mutate] of [
 
 for (const [name, mutate] of [
   ['theme revision', (s) => s.resolved.theme.revision++],
+  ['older theme revision', (s) => s.resolved.theme.revision--],
   ['different collection', (s) => (s.resolved.collection = { id: 'imported', revision: 1 })],
   ['different theme', (s) => (s.resolved.theme.id = 'retro')],
   ['asset ID', (s, p) => (s.resolved.assets[p.slot].id = 'replacement-picture')],
