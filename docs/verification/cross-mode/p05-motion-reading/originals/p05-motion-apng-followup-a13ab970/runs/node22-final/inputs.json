@@ -1,0 +1,362 @@
+{
+  ".prettierrc.json": {
+    "bytes": 73,
+    "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+  },
+  "authoring/design-atlas/atlas.mjs": {
+    "bytes": 32304,
+    "sha256": "c3100a434bddbab145e02df98f382c073a9be8230f731ceff606214018acf44d"
+  },
+  "authoring/library/reserve-illustrations-catalog/catalog.mjs": {
+    "bytes": 5074,
+    "sha256": "a75e3c6ae54ed7f99bcb02e080d9d4aa455e3dc29cc7c86f6f8c0c68c81732ef"
+  },
+  "authoring/library/reserve-illustrations-catalog/manifest.json": {
+    "bytes": 71251,
+    "sha256": "2b6f772031c46a6c59784ea2fffdfb5459900d7913503f7415c5da9cc495b9d2"
+  },
+  "authoring/motion-lab/README.md": {
+    "bytes": 39738,
+    "sha256": "307915512a64a3d8cd13db2c73844d40425b686da275fc31dee1ba330ef13963"
+  },
+  "authoring/motion-lab/ability-labels.mjs": {
+    "bytes": 5096,
+    "sha256": "1dd81603c28eead7cb8aa8dd25782434c78eed8bd5870e79303d7e26daac09ca"
+  },
+  "authoring/motion-lab/ability-presets.json": {
+    "bytes": 12087,
+    "sha256": "05e956de444eb4ff0ff9867f8438b5dcf18702868d42bf781a98ff7e92d7858a"
+  },
+  "authoring/motion-lab/ability.mjs": {
+    "bytes": 16262,
+    "sha256": "287f08add0aacfaf7f5ecb7bf686179f25716c489dbfaa3dc1a54e339af6daf5"
+  },
+  "authoring/motion-lab/animation.mjs": {
+    "bytes": 8068,
+    "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+  },
+  "authoring/motion-lab/app.js": {
+    "bytes": 67747,
+    "sha256": "5394c59a3a84d46728692e96c0395c18b47cf1cd52bf9be299b98ebb4ae7d8ba"
+  },
+  "authoring/motion-lab/assets/fpv-body.png": {
+    "bytes": 644588,
+    "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4"
+  },
+  "authoring/motion-lab/collection-presets.json": {
+    "bytes": 16627,
+    "sha256": "c553f4a554a5931a155bb231a477dffa49dd3d501db1cfe17e143d767ab654e8"
+  },
+  "authoring/motion-lab/collection.mjs": {
+    "bytes": 16779,
+    "sha256": "90df2634277af9d728087c6b624a6b463d797a8ce5d2df681b60131430b524a4"
+  },
+  "authoring/motion-lab/display-entry.mjs": {
+    "bytes": 151,
+    "sha256": "bde8a80ddcedf983ee3f94b16adf4f3343c08ec6a5758874bf5efd9e987644b2"
+  },
+  "authoring/motion-lab/display.mjs": {
+    "bytes": 3891,
+    "sha256": "54101f49687fbf289e7b0733597b491330ccf7825c8ba43a9bc07c2815fb6714"
+  },
+  "authoring/motion-lab/grid-motion.mjs": {
+    "bytes": 2234,
+    "sha256": "939ae0f5126612cf94c39fee0d08f6403d2c97057d8438675991af41aac5baed"
+  },
+  "authoring/motion-lab/index.html": {
+    "bytes": 19819,
+    "sha256": "dab183df1a6d11d03608aa19762712be84088268b3090f27b74e5cf97c3954b1"
+  },
+  "authoring/motion-lab/motion.mjs": {
+    "bytes": 9933,
+    "sha256": "64eeff049089fbafe8064605ca0063b66f6bf903dec045674b79c559a7533390"
+  },
+  "authoring/motion-lab/png-preview.mjs": {
+    "bytes": 5329,
+    "sha256": "c3db29eb42550c36174014c7937cc6d52cc44cc6c01d77f65fb3229bc65d7dc6"
+  },
+  "authoring/motion-lab/presets.json": {
+    "bytes": 50888,
+    "sha256": "c1ad73a04e31f63eaa1244b5a73ba076160960746f57bf0944c53ee28e85d7ba"
+  },
+  "authoring/motion-lab/preview-loop.mjs": {
+    "bytes": 2961,
+    "sha256": "a5cba565b2c901fcded957a14fd2413aa620aa6ce80e853f93212bd14cba48d7"
+  },
+  "authoring/motion-lab/render-ability.mjs": {
+    "bytes": 5526,
+    "sha256": "b6cb2c121790e27c2d74e302d9b39f924a886624ec90312313f73312556174a2"
+  },
+  "authoring/motion-lab/render-character.mjs": {
+    "bytes": 6660,
+    "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71"
+  },
+  "authoring/motion-lab/steering.mjs": {
+    "bytes": 1208,
+    "sha256": "c649d30f10537db0868c7c671c832add99c961f1a3863807892ccb42c483f826"
+  },
+  "authoring/motion-lab/styles.css": {
+    "bytes": 30152,
+    "sha256": "8840254e898b650ee1d83cec4d327666958597e81e32b6f02bff91715f1e9716"
+  },
+  "authoring/motion-lab/test-ability.mjs": {
+    "bytes": 13260,
+    "sha256": "8d4cb0a495296a6a1f984a0268c51f67838550e8a6b2f0db61fd78c323107efe"
+  },
+  "authoring/motion-lab/test-animation.mjs": {
+    "bytes": 6606,
+    "sha256": "52da87ee5318cf2895a6471d5c2a116a0b85201986782b0a040cff9868540026"
+  },
+  "authoring/motion-lab/test-collection.mjs": {
+    "bytes": 14124,
+    "sha256": "c0dabc20bcc99e546299acdac5275eba48e1cdc7475c653ae1d04888ae14f625"
+  },
+  "authoring/motion-lab/test-grid-motion.mjs": {
+    "bytes": 7908,
+    "sha256": "789be101fd605cd0bc7bce94aae82288c8853def33ce5c02ac265800726e3ca3"
+  },
+  "authoring/motion-lab/test-motion.mjs": {
+    "bytes": 6625,
+    "sha256": "9a5725c2a4abe811b346c37a97af7384a15c60b2243f6374a158a0532bc20c25"
+  },
+  "authoring/motion-lab/test-steering.mjs": {
+    "bytes": 4629,
+    "sha256": "945733935de0688fb7a277ecb20a6f6261d08aedbb25faac5b4ab1ef95adb45b"
+  },
+  "authoring/skills/xonix-animation-director/SKILL.md": {
+    "bytes": 19796,
+    "sha256": "e4ae6ad60be01d9f24ba3ee109bd442eeb801525e523710d7ab3537dc0655372"
+  },
+  "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+    "bytes": 186177,
+    "sha256": "63187d7d027e8c59d5b5e6207aeb07dc4c8e4a696c9d76e1a4abc707ddb33234"
+  },
+  "eslint.config.mjs": {
+    "bytes": 1610,
+    "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+  },
+  "game/build-config.json": {
+    "bytes": 5474,
+    "sha256": "3f57c80e4af434d850fda34909004a9428c98f93149cdf33c34d15a4d97496f8"
+  },
+  "game/campaign-contexts.mjs": {
+    "bytes": 4403,
+    "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8"
+  },
+  "game/campaign-difficulty.mjs": {
+    "bytes": 7336,
+    "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97"
+  },
+  "game/content.mjs": {
+    "bytes": 23214,
+    "sha256": "305dfa4d5fb4c4c27856b59abd0e71779d431f68221ac592989be8f828d75b38"
+  },
+  "game/core/abilities.mjs": {
+    "bytes": 3855,
+    "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+  },
+  "game/core/arcade-actions.mjs": {
+    "bytes": 848,
+    "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+  },
+  "game/core/capture.mjs": {
+    "bytes": 8038,
+    "sha256": "960ebb9ecf19a656fd4fb0877cc5a1d967d1e83617b0262ba62dad4c2189aaef"
+  },
+  "game/core/classic-contour.mjs": {
+    "bytes": 7465,
+    "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+  },
+  "game/core/classic-definition.mjs": {
+    "bytes": 7266,
+    "sha256": "fa49c1e2442a393b2be8e3d3b34a0eef188bbe158243f7c13cb824d18d1d3638"
+  },
+  "game/core/classic-motion.mjs": {
+    "bytes": 12271,
+    "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+  },
+  "game/core/classic-state.mjs": {
+    "bytes": 2306,
+    "sha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377"
+  },
+  "game/core/classic-step.mjs": {
+    "bytes": 16343,
+    "sha256": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca"
+  },
+  "game/core/classic-topology.mjs": {
+    "bytes": 6357,
+    "sha256": "aae16753e999d4829dab13503f3ef603e42b73f4b44e782180881160651db3ff"
+  },
+  "game/core/contacts.mjs": {
+    "bytes": 5168,
+    "sha256": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b"
+  },
+  "game/core/encounter.mjs": {
+    "bytes": 8716,
+    "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+  },
+  "game/core/enemy-pressure.mjs": {
+    "bytes": 11725,
+    "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+  },
+  "game/core/geometry.mjs": {
+    "bytes": 3989,
+    "sha256": "8ca7877a89ea203f072fbf3b85f304844f3a3abcf992e8ba1a54f39957e6f331"
+  },
+  "game/core/index.mjs": {
+    "bytes": 17291,
+    "sha256": "787d7cdc759b04ae2a475e8d5ac49e0618dd26f153336ea71b5920232532e1a2"
+  },
+  "game/core/level.mjs": {
+    "bytes": 14178,
+    "sha256": "0a9fa39cdfa6bb6ed4c9b07a231491529777ab099f2cd6528c54fde84d5e41b8"
+  },
+  "game/core/line-impact.mjs": {
+    "bytes": 9000,
+    "sha256": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6"
+  },
+  "game/core/movement.mjs": {
+    "bytes": 10912,
+    "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+  },
+  "game/core/registry.mjs": {
+    "bytes": 6661,
+    "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+  },
+  "game/core/systems.mjs": {
+    "bytes": 4621,
+    "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+  },
+  "game/core/versions.mjs": {
+    "bytes": 3074,
+    "sha256": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3"
+  },
+  "game/data-json.mjs": {
+    "bytes": 4920,
+    "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823"
+  },
+  "game/display-preferences.mjs": {
+    "bytes": 8285,
+    "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+  },
+  "game/mastery-catalog.mjs": {
+    "bytes": 13632,
+    "sha256": "2d7d7679b084ff1dcf6c15579605a00dd71cf611f822b79e198703fc4ac045be"
+  },
+  "game/mastery-equipment.mjs": {
+    "bytes": 29233,
+    "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+  },
+  "game/mastery.mjs": {
+    "bytes": 16941,
+    "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+  },
+  "game/media-library.mjs": {
+    "bytes": 12188,
+    "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+  },
+  "game/platform.mjs": {
+    "bytes": 2524,
+    "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+  },
+  "game/test/direct-tool-launch.test.mjs": {
+    "bytes": 3997,
+    "sha256": "e98bc5a6c93f10025a9efa38ed2c3a51af7993cb46e1ed5b790a8abda95d018a"
+  },
+  "game/test/direct-tools-loading.test.mjs": {
+    "bytes": 6147,
+    "sha256": "b7668db0337155c78443a91a17615f9d9d32087492e042de7ecaaede955e5f43"
+  },
+  "game/test/display-preferences.test.mjs": {
+    "bytes": 18290,
+    "sha256": "8e4137bb37ee428da39edb7dcf0a4e350aa069ae5519b98160087db56da6152f"
+  },
+  "game/test/fixtures/motion-background/animated-first-frame.gif": {
+    "bytes": 207,
+    "sha256": "c9709df1f237dd396de169b603f7172087920e1e2ba6ed36fd8e8d3f5786e14e"
+  },
+  "game/test/fixtures/motion-background/animated-first-frame.webp": {
+    "bytes": 164,
+    "sha256": "a20ab57d81db103b7388a06eddf8021b4a8590019fa223f6fe1759ee0f997954"
+  },
+  "game/test/fixtures/motion-background/animated-separate-default.png": {
+    "bytes": 377,
+    "sha256": "9f962f9e6c3a1fca97dbe157e86b1cc9450afc1ffe6fcfbb63dc5db82769d217"
+  },
+  "game/test/fixtures/motion-background/invalid-signature-only.png": {
+    "bytes": 8,
+    "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+  },
+  "game/test/fixtures/motion-background/static-default.png": {
+    "bytes": 122,
+    "sha256": "ad2a181fedbac6319d00e2b243072c780bce885454fe8661561774bd05f36988"
+  },
+  "game/test/helpers/couch-dom.mjs": {
+    "bytes": 10172,
+    "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+  },
+  "game/test/helpers/media-fixtures.mjs": {
+    "bytes": 3271,
+    "sha256": "1189b0885583cd075c63b46d48b493a61c8bf72ebe9f235a003691c3fc5931a2"
+  },
+  "game/test/helpers/wait-for.mjs": {
+    "bytes": 595,
+    "sha256": "64a49cd79aa3911096efb2554413a34ca862dcfe7ed5be40ed231343c4f187a3"
+  },
+  "game/test/motion-lab-display-host.test.mjs": {
+    "bytes": 49570,
+    "sha256": "2803a730dab0b31183f15504f510132508a1c512deede4e314269a93329d1359"
+  },
+  "game/test/motion-lab-display-restoration.test.mjs": {
+    "bytes": 6923,
+    "sha256": "90da611836f8976c2f85413b44e03e7f754dcdde09fe80f813731052830140a0"
+  },
+  "game/test/motion-lab-labels.test.mjs": {
+    "bytes": 9811,
+    "sha256": "4c3a4b37468de490658a1a2bab101ab8c323b08332b2ca2b35d8303c45dc4d25"
+  },
+  "game/test/motion-lab-png-preview.test.mjs": {
+    "bytes": 7225,
+    "sha256": "bc5694f6e2622e94764a7c75b21fcead2b74e1d6f0f9e0c847a10a7ff4bd6098"
+  },
+  "game/test/motion-lab-preview-loop.test.mjs": {
+    "bytes": 3004,
+    "sha256": "9ed3470f7e895a93b24a784b51b79c8fa53386d39e18adbfb475131a14aac519"
+  },
+  "game/test/motion-lab-render-ability.test.mjs": {
+    "bytes": 6272,
+    "sha256": "bf583005f997f8340efb9d4200517c6d8c2ee23daf40b899b927753a9b6ef60e"
+  },
+  "game/text-face.mjs": {
+    "bytes": 807,
+    "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0"
+  },
+  "game/text-size.mjs": {
+    "bytes": 251,
+    "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+  },
+  "game/ui/direct-tool-launch.js": {
+    "bytes": 2507,
+    "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+  },
+  "game/ui/field-kit-copy.mjs": {
+    "bytes": 7130,
+    "sha256": "ed6e58ba9886391100cfce6a2aa978aa180fadcf0c7b9a31312e6cbf483e1faa"
+  },
+  "game/ui/field-kit-surfaces.mjs": {
+    "bytes": 2903,
+    "sha256": "8f409e7e949a0e1e2338116fd71c669d5978e6383ab72e673615b7b6361ee1fe"
+  },
+  "game/ui/music.mjs": {
+    "bytes": 7050,
+    "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+  },
+  "game/ui/operation-status.mjs": {
+    "bytes": 4173,
+    "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab"
+  },
+  "package.json": {
+    "bytes": 1819,
+    "sha256": "2f1ab12019f3da53cc67704d6e417164a34f4e1a81d4daa8f5addb8aa1c1982f"
+  }
+}

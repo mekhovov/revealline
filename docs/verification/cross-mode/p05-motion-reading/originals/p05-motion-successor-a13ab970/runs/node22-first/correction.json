@@ -1,0 +1,10 @@
+{
+  "classification": "Finite closure preparation omission, not a product behavior failure",
+  "failedTest": "defaults are fixed 48\u00d736, hybrid, and a compact 1.25-cell body",
+  "correction": "Include the one exact committed asset whose existence the unchanged whole test file asserts; no placeholder or altered assertion.",
+  "path": "authoring/motion-lab/assets/fpv-body.png",
+  "bytes": 644588,
+  "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4",
+  "base": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "otherResults": "144 passed; 1 failed; original log/inputs preserved"
+}

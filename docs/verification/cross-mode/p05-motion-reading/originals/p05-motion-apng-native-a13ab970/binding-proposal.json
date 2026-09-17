@@ -1,0 +1,30 @@
+{
+  "status": "PREPARED_NOT_STARTED_NOT_ROOT_REVIEWED",
+  "at": "2026-09-17T14:40:50.536318+00:00",
+  "commit": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "tree": "cf744b1ced9680b2fb4e0c304ddfc4b9f44b3e86",
+  "port": 60342,
+  "portProbe": "None. Root must close any existing owner before launch; do not terminate arbitrary listeners. Keeping origin is useful for the real Options preference journey, but existing profile contents are not acceptance fixtures.",
+  "runtimeOverrides": {
+    "bytes": 3711,
+    "sha256": "92463aade0b2fff8181505d8a5a324af0f337eaf5b4682544036e776fe835117"
+  },
+  "scope": "Unreleased composed Motion startup/shared-reading, label follow-up and PNG still-preview correction on exact a13. Ten candidate runtime overlays plus original frozen v0.60.3 build-info. No Recovery candidate or upload fixtures served.",
+  "urls": {
+    "motion": "http://127.0.0.1:60342/authoring/motion-lab/",
+    "game": "http://127.0.0.1:60342/game/"
+  },
+  "faultPath": "game/build-info.json",
+  "optionalPresetFaultHelper": {
+    "path": "serve-motion-startup.py",
+    "faultPath": "authoring/motion-lab/ability-presets.json",
+    "onlyDifference": "One FAULT_PATH string literal; root chooses one helper, not two concurrent listeners."
+  },
+  "limits": {
+    "requestLogBytes": 8388608,
+    "requestEvents": 20000,
+    "cacheBytes": 33554432,
+    "singleGitBlobBytes": 67108864,
+    "delaySeconds": 30
+  }
+}

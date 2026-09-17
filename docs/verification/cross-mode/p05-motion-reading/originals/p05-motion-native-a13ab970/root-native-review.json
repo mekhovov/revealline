@@ -1,0 +1,68 @@
+{
+  "status": "PARTIAL_NATIVE_CHECKS_APNG_POSTER_DISCREPANCY_OPEN",
+  "recordedAt": "2026-09-17T14:23:43.240102+00:00",
+  "base": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "candidate": "Two composed Motion proposals, source unintegrated; see binding/runtime hashes",
+  "observed": [
+    {
+      "case": "Preset503/retry",
+      "result": "PASS",
+      "details": "Intentional503 displayed failure and disabled study; Large selector and Return stayed reachable. Clearing fault then Reload loaded ready study with sharedLarge."
+    },
+    {
+      "case": "Reading/config retention",
+      "result": "PASS",
+      "details": "Grid center/light bomber/localPNG/cover/70% retained on Standard/Large changes while paused."
+    },
+    {
+      "case": "Themes/stage labels",
+      "result": "PASS_SCOPED",
+      "details": "Four palette choices updated role labels. Full DOM Stage labels visible; hidden notes remained Concealed note. Disabling toy study hid legend and disabled actions; reenabling restored it."
+    },
+    {
+      "case": "GIF/WebP",
+      "result": "PASS_REDRAW_STILL_OBSERVATION_ONLY",
+      "details": "Actual fixture upload accepted32x24; visible red first frame after palette/text redraw. Not exhaustive running/full-effects/codecs qualification."
+    },
+    {
+      "case": "APNG",
+      "result": "FAIL_EXPECTED_POSTER",
+      "details": "Separate-default APNG accepted32x24; actual field blue after redraw instead of expected separate red IDAT poster. Screenshot/AX retained. Running screenshot was scrolled below arena and does not establish frame behavior."
+    },
+    {
+      "case": "Corrupt image and Clear",
+      "result": "PASS",
+      "details": "InvalidPNG showed decode error and retained preceding redWebP background; Clear available then disabled after explicitClear."
+    },
+    {
+      "case": "Responsive",
+      "result": "PASS_LAYOUT_ONLY",
+      "details": "Large/reduced at390x844 and844x390: documentwidth matched viewport, no horizontal overflow, arena fully within horizontal bounds. Scrolling authoring page; not physicaldevice acceptance."
+    },
+    {
+      "case": "History",
+      "result": "PASS_ORDINARY_RETURN_ONLY",
+      "details": "Return navigated to game startup; browserBack appeared to reconstruct study defaults with sharedLarge/reduced retained and explicitPlay. No persistedBFCache admission claim."
+    }
+  ],
+  "unexecuted": [
+    "Physical controller or touch",
+    "200% browser zoom",
+    "Plain face native pass in this candidate",
+    "Long custom captions via actual authoring UI",
+    "Pending native image completion supersession",
+    "Full-effects running frame checks",
+    "Memory/resource qualification",
+    "Public deployed Motion candidate"
+  ],
+  "cleanup": {
+    "server32814Stopped": true,
+    "tab36Closed": true,
+    "viewportReset": true,
+    "publicDeliverableTabsPreserved": [
+      24,
+      33
+    ]
+  },
+  "relatedRegression": "getByLabel Turn policy had no locator match; #turn-policy observed control worked. Record as existing markup association concern; not source changed."
+}

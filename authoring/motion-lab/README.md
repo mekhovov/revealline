@@ -13,10 +13,10 @@ python3 -m http.server 8080 --bind 127.0.0.1
 Open [the lab](http://127.0.0.1:8080/authoring/motion-lab/). No npm, build step, external fonts, CDN or AI call is needed. HTTP is required for ES modules and JSON; `file://` is unsupported.
 
 - **Autoplay** follows a fixed cardinal route. Enabling it resets the route start. Pause freezes both the arena and inspection animation; Reset keeps artwork and response settings.
-- **Arrows / WASD** request the most recently held cardinal direction under the selected turn policy. Release stops travel immediately. **Shift / Hold boost** multiplies speed by 1.7; **Space / Hold slow** by 0.38. Touch and keyboard holds are supported.
+- **Arrows / WASD** select a cardinal direction under the current turn policy. Releasing a direction keeps the latest deliberate direction; Pause stops travel. **Shift / Hold boost** multiplies speed by 1.7; **Space / Hold slow** by 0.38. Touch and keyboard holds are supported.
 - **Body turn response**, banking, rotor speed and attachments affect presentation only. They never steer or delay authoritative travel.
-- **Escape, window blur and tab hiding** pause and release inputs. Press Play or intentionally move to resume. Held buttons also release on losing focus.
-- **Reduced motion** begins paused when the OS requests it. It freezes attachment animation, removes particles, and disables banking/facing interpolation. Explicit Play still allows intentional movement.
+- **Escape, window blur and tab hiding** pause and release temporary boost/slow inputs while preserving direction and any queued turn. Press Play explicitly to resume; direction presses while paused cannot resume the study. Held buttons also release on losing focus.
+- **Reduced motion** is effective when the local checkbox, shared preference or OS requests it. An initially reduced study begins paused. It freezes optional attachment animation, removes particles, and disables banking/facing interpolation. Later preference changes keep the current running/paused intent; explicit Play allows intentional movement.
 
 Defaults remain **hybrid terrain** and a **1.25-cell FPV body slot**. The scale slider changes presentation only. The body readout reports the slot's CSS-pixel width; transparent padding and contained non-square art may occupy less of that slot. The enlarged north-up **inspection view** uses the same body and attachment rig without enlarging the arena character. Its slow mode exposes blades/flaps/exhaust detail; disabling it follows the normal visual response.
 
@@ -26,26 +26,26 @@ Use **Turn policy** above the arena. The value is also configurable as `motion.t
 
 Changing this selector **explicitly resets and pauses** at the selected policy's route start, disables autoplay, clears all held controls and the buffer, and keeps artwork, collection preferences and response settings. The event note states the new coordinate. There is no silent snap while continuing a run.
 
-| Behavior | Immediate | Grid center + buffer |
-|---|---|---|
-| Turn | Changes travel direction immediately, even between cells | Changes travel direction only at the next cell center |
-| Reverse | Immediate | Queued exactly like a perpendicular turn; unchanged speed until the center, then reversed |
-| Buffer | None | One latest-held cardinal command; newer commands replace it |
-| Release all directions | Stops immediately | Stops immediately at the current position and clears the buffer; never coasts to a center after release |
-| Restart between centers | Travels in the new requested direction immediately | Travels along the retained previous direction while a direction remains held, turning at the next center into that current command |
-| Bounds | Historical inset: x 0.8–47.2, y 0.8–35.2 | Actual edge cell centers: x 0.5–47.5, y 0.5–35.5; an outward command stops there, and a new turn/reverse is immediately eligible |
+| Behavior               | Immediate                                                | Grid center + buffer                                                                                                             |
+| ---------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Turn                   | Changes travel direction immediately, even between cells | Changes travel direction only at the next cell center                                                                            |
+| Reverse                | Immediate                                                | Queued exactly like a perpendicular turn; unchanged speed until the center, then reversed                                        |
+| Buffer                 | None                                                     | One latest deliberate cardinal direction; a fresh direction replaces it                                                          |
+| Release all directions | Continues the selected direction                         | Retains the selected direction and pending turn                                                                                  |
+| Resume between centers | Continues the saved direction after explicit Play        | Continues the saved direction and retained queued turn after explicit Play                                                       |
+| Bounds                 | Historical inset: x 0.8–47.2, y 0.8–35.2                 | Actual edge cell centers: x 0.5–47.5, y 0.5–35.5; an outward command stops there, and a new turn/reverse is immediately eligible |
 
 The drawn cell `[n,n+1]` has center `n+0.5`. Grid mode therefore resets to **(6.5,6.5)**, while immediate mode retains **(6,6)**. Grid autoplay derives center-aligned waypoints from the existing authored route (`floor(coordinate)+0.5`); the source route and 48×36 board remain unchanged. Adjacent waypoints must map to distinct centers, validated before the preview starts. This mode-specific route alignment and edge convention are intentional control-policy differences, not art-driven geometry changes.
 
-In grid mode, commands are consumed **before** spending leftover travel after a center crossing. Boosted or slow frames cannot skip a queued corner or lose the remaining distance. A same-direction command continues straight and cancels a different queued command. Releasing the newest key falls back to the most recently still-held direction; releasing all stops. There is no timed retained tap: the queue remains valid only while its direction is the current held command, and targets at most the next center. Presses shorter than a rendered frame may not create visible movement.
+In grid mode, commands are consumed **before** spending leftover travel after a center crossing. Boosted or slow frames cannot skip a queued corner or lose the remaining distance. A same-direction command continues straight and cancels a different queued command. The lab’s manual-steering adapter retains the latest deliberate direction when keys are released; it does not fall back to an older held key. A direction tap while running can therefore remain selected for the next frame/center. The historical motion functions still accept null as no command, but the lab adapter supplies its retained direction.
 
 The **queue readout** names the queued direction and target coordinates. A dashed segment, square and arrow mark the upcoming turn on the arena. An empty queue is explicit. The marker is presentation only. **Autoplay** follows its center-aligned route in grid mode and keeps the human queue empty; it compares alignment and visual motion, not human buffering. Enabling autoplay resets to its route start. Any fresh direction input takes over manually.
 
 To feel the difference slowly, choose 3 cells/s under Response, start moving, then press another direction before reaching the next center. Hold slow makes the waiting interval longer. Compare the same inputs in Immediate mode; the policy selector resets the experiment each time.
 
-Boost/slow change travel speed immediately under either policy, with the same multipliers; if both are held their multipliers combine. They do not flush or change a held turn. Body facing/banking, sprites, palettes, attachments and reduced motion never affect turn eligibility, buffer selection, speed or center crossing. At a grid boundary the movement readout is zero; there is no fractional edge position that traps a turn.
+Boost/slow change travel speed immediately under either policy, with the same multipliers; if both are held their multipliers combine. They do not flush or change a retained turn. Body facing/banking, sprites, palettes, attachments and reduced motion never affect turn eligibility, buffer selection, speed or center crossing. At a grid boundary the movement readout is zero; there is no fractional edge position that traps a turn.
 
-Pause, Escape, focus loss, tab hiding, Reset and a policy change clear held commands and the queue. Pausing freezes the current cosmetic pose and position; manual Play with no fresh held direction remains stationary. Stale keyboard auto-repeat cannot reactivate cleared movement or hold-boost/slow buttons after a pause. A new press or an explicit autoplay action is needed. Changing mode changes the planned challenge/result identity; no scored runs or leaderboards exist in this sandbox.
+Pause, Escape, focus loss and tab hiding freeze position, cosmetic pose and queued travel while retaining the selected direction. Explicit Play continues that state. Reset and a policy change clear the direction and queue. Keyboard auto-repeat cannot select a new direction; use a fresh press. Boost/slow must be deliberately held again after interruption. Changing mode changes the planned challenge/result identity; no scored runs or leaderboards exist in this sandbox.
 
 ## Configurable arcade abilities
 
@@ -57,18 +57,18 @@ For a first test: select the Light bomber class, click **Reset ability test**, t
 
 All ten presets are implemented using five reusable primitives:
 
-| Class ID / FPV label | Primitive | Implemented toy effect |
-|---|---|---|
-| `scout` / Scout | `pulse`, scan | Temporarily reveals nearby question-mark note labels |
-| `light-bomber` / Light bomber | `drop`, clear | Pick up one charge; a drop applies an immediate abstract clearing pulse to nearby ground markers |
-| `heavy-carrier` / Heavy carrier | `drop`, clear | Same primitive with capacity two; one charge per action |
-| `fiber-courier` / Fiber courier | `pulse`, scan | Scan preset recommending the independently selectable fiber module |
-| `fixedwing-courier` / Fixed-wing courier | `drop`, deliver | Pick up a parcel; deliver near the parcel marker; a decorative wake suggests glide, without inertia or continuous-flight constraints |
-| `strike` / Strike dash | `dash`, clear | Spend one charge on a short cardinal relocation; a ground-marker tag returns the player to the stage start |
-| `interceptor` / Interceptor | `dash`, disable | Short cardinal relocation tags airborne toys only; no pursuit/autoguidance |
-| `repeater` / Pulse emitter | `projectile`, clear | One travelling dot per press; limited charges; swept contact updates a ground/air marker |
-| `net-catcher` / Net catcher | `net`, capture | Places a temporary field that slows airborne toys and collects eligible toys after sufficient dwell time |
-| `relay` / Relay helper | `pulse`, restore | Restores a nearby relay marker |
+| Class ID / FPV label                     | Primitive           | Implemented toy effect                                                                                                               |
+| ---------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `scout` / Scout                          | `pulse`, scan       | Temporarily reveals nearby question-mark note labels                                                                                 |
+| `light-bomber` / Light bomber            | `drop`, clear       | Pick up one charge; a drop applies an immediate abstract clearing pulse to nearby ground markers                                     |
+| `heavy-carrier` / Heavy carrier          | `drop`, clear       | Same primitive with capacity two; one charge per action                                                                              |
+| `fiber-courier` / Fiber courier          | `pulse`, scan       | Scan preset recommending the independently selectable fiber module                                                                   |
+| `fixedwing-courier` / Fixed-wing courier | `drop`, deliver     | Pick up a parcel; deliver near the parcel marker; a decorative wake suggests glide, without inertia or continuous-flight constraints |
+| `strike` / Strike dash                   | `dash`, clear       | Spend one charge on a short cardinal relocation; a ground-marker tag returns the player to the stage start                           |
+| `interceptor` / Interceptor              | `dash`, disable     | Short cardinal relocation tags airborne toys only; no pursuit/autoguidance                                                           |
+| `repeater` / Pulse emitter               | `projectile`, clear | One travelling dot per press; limited charges; swept contact updates a ground/air marker                                             |
+| `net-catcher` / Net catcher              | `net`, capture      | Places a temporary field that slows airborne toys and collects eligible toys after sufficient dwell time                             |
+| `relay` / Relay helper                   | `pulse`, restore    | Restores a nearby relay marker                                                                                                       |
 
 These are fictional cell/second parameters. There are no real payloads, ballistic models, weapon timings, guidance, aerodynamics, operational ranges or named-aircraft performance claims. A heavy body with six rotors is an original concept, not an identified real model. Labels adapt through family vocabulary: business uses Insight scout, Parcel courier, Batch courier, Express courier, Pulse emitter and Workflow filter. The same toy geometry and primitives remain available across all four palettes.
 
@@ -99,31 +99,33 @@ Choose a **Preview context** to examine family/level/challenge/map availability.
 
 **Equip** saves a cosmetic preference for this exact context, the current theme, or every eligible context. More-specific saved scopes take precedence over broader preferences. When a saved choice is unavailable or locked, resolution uses an eligible authored family starter, then the neutral fallback. No collection ownership or cosmetic equipment changes travel statistics. Ability classes and communication modules are separate controls described above.
 
-| Family | Starter | Earned cosmetic examples | Source distinction |
-|---|---|---|---|
-| FPV Front | Daybreak FPV | Skyline FPV; Night signal FPV | Three separate image bodies, each with its own motor rig |
-| Ukraine Atlas | Atlas bird | Falcon trim | Trim uses the same swallow body with a different wing palette; not a separate falcon illustration |
-| 1994 Forever | Tape runner | Vector trail | Shared craft body, alternate thruster palette |
-| Navi Network | Spend Sprite | Audit pulse | Shared original helper body; not verified official Coupa Navi art |
+| Family        | Starter      | Earned cosmetic examples      | Source distinction                                                                                |
+| ------------- | ------------ | ----------------------------- | ------------------------------------------------------------------------------------------------- |
+| FPV Front     | Daybreak FPV | Skyline FPV; Night signal FPV | Three separate image bodies, each with its own motor rig                                          |
+| Ukraine Atlas | Atlas bird   | Falcon trim                   | Trim uses the same swallow body with a different wing palette; not a separate falcon illustration |
+| 1994 Forever  | Tape runner  | Vector trail                  | Shared craft body, alternate thruster palette                                                     |
+| Navi Network  | Spend Sprite | Audit pulse                   | Shared original helper body; not verified official Coupa Navi art                                 |
 
 **Apply test reward** inserts the selected authored simulated result. Repeating the same fixture cannot count twice. The six fixtures demonstrate wins, distinct-level star totals, map objectives and clean-run criteria. Ownership persists independently of current context, while availability remains context-specific. **Reset test collection** restores starters. These controls demonstrate collection design, not real wins or a live economy.
 
-The browser stores only the lab profile at `xonix.motion-lab.collection.v1`, with `mode: "lab"` and `profileId: "local-design"`. Corrupt/incompatible raw saves are not overwritten on load; before an explicit equip/reward/reset write, the original raw value is copied to a timestamped `.recovery.*` key. If recovery/storage cannot be written, changes remain session-only and the old save is retained. Cosmetic recipe edits, palette settings and background files are not persisted. This is a single-tab authoring preview; concurrent tabs do not merge test profiles. The pure collection module's future `game` mode is only a format distinction, **not trusted result authentication or backend integration**.
+Lab collection state is stored at `xonix.motion-lab.collection.v1`, with `mode: "lab"` and `profileId: "local-design"`. Corrupt/incompatible raw saves are not overwritten on load; before an explicit equip/reward/reset write, the original raw value is copied to a timestamped `.recovery.*` key. If recovery/storage cannot be written, changes remain session-only and the old save is retained. Cosmetic recipe edits, palette settings and background files are not persisted. This is a single-tab authoring preview; concurrent tabs do not merge test profiles. The pure collection module's future `game` mode is only a format distinction, **not trusted result authentication or backend integration**.
 
 ## Independent scenes and local backgrounds
 
 Palette, terrain materials, body and animation recipe are independent. **Apply family look** explicitly chooses the selected palette's material family and example context, resolving existing equipment preferences without rewriting them.
 
-| Family | Wall / slow / danger material diagrams |
-|---|---|
-| FPV Front | Concrete / mud / wire |
-| Ukraine Atlas | Stone / reeds / thorns |
-| 1994 Forever | Circuit / static / plasma |
-| Navi Network | Archive / queue / alerts |
+| Family        | Wall / slow / danger material diagrams |
+| ------------- | -------------------------------------- |
+| FPV Front     | Concrete / mud / wire                  |
+| Ukraine Atlas | Stone / reeds / thorns                 |
+| 1994 Forever  | Circuit / static / plasma              |
+| Navi Network  | Archive / queue / alerts               |
 
 Microtiles repeat at one-cell pitch; props use larger spaced diagrams; hybrid combines quiet texture and props. Every treatment clips to the same authored rectangles. These are frontend-rendered diagrams, not finished production tiles.
 
 **Local background** accepts PNG, JPEG, WebP or GIF up to 25 MiB, using a browser object URL. Contain displays the whole image; Cover crops only its display. Opacity and Clear affect the preview. No original bytes are altered, no file is uploaded or saved by the lab, and no AI call is made. This ephemeral preview is separate from the persistent [media authoring CLI](../media/README.md). Animated source formats are not promoted as controlled animation assets; prefer a still PNG/JPEG for repeatable comparisons.
+
+The local background is a **still preview**. Canvas 2D specifies the default image of an animated source, or its first frame when there is no default; repeating `drawImage` does not request GIF/APNG/WebP playback. [WHATWG image-source rules](https://html.spec.whatwg.org/multipage/canvas.html#image-sources-for-2d-rendering-contexts). Keep this expected contract separate from actual browser qualification: inspect animated fixtures while playing, paused, reduced and explicitly redrawn, including an APNG whose default differs from its first animation frame. The modeled host Image cannot prove decoding, displayed pixels or native resource release.
 
 ## Presentation manifest and attachment recipes
 
@@ -142,10 +144,10 @@ A character entry references a body and an independently replaceable animation r
   "sampling": "nearest",
   "animationRecipe": "fpv-tri",
   "rotors": [
-    {"x": -0.31, "y": -0.30, "radiusScale": 1, "direction": 1, "phaseDegrees": 0},
-    {"x": 0.31, "y": -0.30, "radiusScale": 1, "direction": -1, "phaseDegrees": 25},
-    {"x": -0.31, "y": 0.27, "radiusScale": 1, "direction": -1, "phaseDegrees": 50},
-    {"x": 0.31, "y": 0.27, "radiusScale": 1, "direction": 1, "phaseDegrees": 75}
+    { "x": -0.31, "y": -0.3, "radiusScale": 1, "direction": 1, "phaseDegrees": 0 },
+    { "x": 0.31, "y": -0.3, "radiusScale": 1, "direction": -1, "phaseDegrees": 25 },
+    { "x": -0.31, "y": 0.27, "radiusScale": 1, "direction": -1, "phaseDegrees": 50 },
+    { "x": 0.31, "y": 0.27, "radiusScale": 1, "direction": 1, "phaseDegrees": 75 }
   ]
 }
 ```
@@ -156,13 +158,13 @@ Anchors are normalized to the **actual contained source image rectangle**, inclu
 
 Each named `animationRecipes` entry has a `label` and up to eight uniquely identified `components`. The renderer currently supports:
 
-| Type | Data and units |
-|---|---|
-| `rotors` | `bladeCount`: 2/3/4; `bladeShape`: swept/tapered/paddle; `radius`: fraction of body-image width; `bladeWidth`: fraction of radius; `fillColor`, `tipColor`, `hubColor`: hex colors; `direction`: ±1; `phaseDegrees`: degrees; `idleRps`, `travelRps`: requested visual rotations/s at idle and per cruise-speed ratio; `maxVisualRps`: display cap; `blurOpacity`: 0–0.4 |
-| `wings` | `anchors`: `[x,y,side]`, side ±1; `span`: fraction of image width; `chord`: fraction of image height; `frequencyHz`; `speedFrequencyGain`: added frequency per cruise ratio; `amplitudeDegrees`; `foldFraction`; `color`, `tipColor` |
-| `thruster` | `anchors`: `[x,y]`; `length`: fraction of image height; `width`: fraction of image width; `speedGain`: visual length gain; `flickerHz`; `color`, `innerColor` |
-| `pulse` | `anchors`: `[x,y]`; `radius`, `amplitude`: fractions of source dimensions; `frequencyHz`; `opacity`; `color` |
-| `blink` | `anchors`: `[x,y]`; `size`: fraction of image width; `frequencyHz`; `dutyCycle`; `color` (small light/eye-highlight animation) |
+| Type       | Data and units                                                                                                                                                                                                                                                                                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `rotors`   | `bladeCount`: 2/3/4; `bladeShape`: swept/tapered/paddle; `radius`: fraction of body-image width; `bladeWidth`: fraction of radius; `fillColor`, `tipColor`, `hubColor`: hex colors; `direction`: ±1; `phaseDegrees`: degrees; `idleRps`, `travelRps`: requested visual rotations/s at idle and per cruise-speed ratio; `maxVisualRps`: display cap; `blurOpacity`: 0–0.4 |
+| `wings`    | `anchors`: `[x,y,side]`, side ±1; `span`: fraction of image width; `chord`: fraction of image height; `frequencyHz`; `speedFrequencyGain`: added frequency per cruise ratio; `amplitudeDegrees`; `foldFraction`; `color`, `tipColor`                                                                                                                                     |
+| `thruster` | `anchors`: `[x,y]`; `length`: fraction of image height; `width`: fraction of image width; `speedGain`: visual length gain; `flickerHz`; `color`, `innerColor`                                                                                                                                                                                                            |
+| `pulse`    | `anchors`: `[x,y]`; `radius`, `amplitude`: fractions of source dimensions; `frequencyHz`; `opacity`; `color`                                                                                                                                                                                                                                                             |
+| `blink`    | `anchors`: `[x,y]`; `size`: fraction of image width; `frequencyHz`; `dutyCycle`; `color` (small light/eye-highlight animation)                                                                                                                                                                                                                                           |
 
 The live recipe selector and 2/3/4-blade, shape and radius controls are ephemeral per-character presentation overrides. All other parameters are editable in JSON. A rotor recipe selected on a body without motor anchors is reported as unattached, rather than inventing a rig. Effects are designed visual cues, not photoreal flight/biological/engine simulation.
 
@@ -187,4 +189,56 @@ node --check authoring/motion-lab/app.js
 node --test authoring/motion-lab/test-motion.mjs authoring/motion-lab/test-grid-motion.mjs authoring/motion-lab/test-animation.mjs authoring/motion-lab/test-collection.mjs authoring/motion-lab/test-ability.mjs
 ```
 
-**70 tests pass**: 12 original movement/preset invariants, 12 grid policy checks, 9 animation/rig/separation checks, 18 collection cases, and 19 ability checks. Ability checks cover primitive validation, pad pickup/drop, capacities, cooldown, scan/relay/delivery, cardinal dash/return, short-range rejection, fiber dash cost, projectile first-contact ordering/frame-rate consistency, equal-expiry and partial-tick net dwell, pause/deduplication, authoritative reversal-distance accounting, independent link budget/haze and class reset. Grid tests cover immediate compatibility, center alignment, latest-command replacement, reversals, release/restart, pause, skipped crossings, boosts/slowing, all four boundaries, 10–120 fps, autoplay and cosmetic independence. Browser layout, interaction and visual inspection are separately performed by the parent design task; pure tests do not establish visual quality or mobile device performance.
+**Historical recorded cohort (not a qualification result for the current proposal): 70 tests**: 12 original movement/preset invariants, 12 grid policy checks, 9 animation/rig/separation checks, 18 collection cases, and 19 ability checks. Ability checks cover primitive validation, pad pickup/drop, capacities, cooldown, scan/relay/delivery, cardinal dash/return, short-range rejection, fiber dash cost, projectile first-contact ordering/frame-rate consistency, equal-expiry and partial-tick net dwell, pause/deduplication, authoritative reversal-distance accounting, independent link budget/haze and class reset. Grid tests cover immediate compatibility, center alignment, latest-command replacement, reversals, release/restart, pause, skipped crossings, boosts/slowing, all four boundaries, 10–120 fps, autoplay and cosmetic independence. Browser layout, interaction and visual inspection are separately performed by the parent design task; pure tests do not establish visual quality or mobile device performance.
+
+## Shared reading and page lifecycle
+
+One independent display entry adopts Standard/Large, Theme/Plain and effective shared/OS reduction before the application graph is ready. Its Text size selector writes only the shared display preference. Changes preserve selected artwork, recipes, local background, steering and running/paused intent. The local Reduced motion checkbox stays a separate session choice; shared or OS reduction can cap it without overwriting that choice. Status text explains the effective cap.
+
+Canvas ability labels use the selected canvas text family with a minimum of 14px Standard or 18px Large at the current canvas scale. Inspection loading/error text is DOM text. These labels do not provide a complete nonvisual representation of the ability canvas; that requires separate acceptance.
+
+The preview owns at most one scheduled frame. Blur, hiding and page departure interrupt it. An interruption observed before application delivery is retained; a cached return clears the away state but never supplies Play intent. Terminal departure aborts startup, retires handlers/observers and releases owned background URLs; a late app module cannot remount a disposed page.
+
+The new display/lifecycle/renderer cases and native acceptance matrix must be qualified on the integrated source. Source declarations and modeled page events do not establish font rasterization, actual label clearance, BFCache, physical inputs or public/offline behavior. Movement, steering, animation and ability rules remain unchanged by this presentation update.
+
+### Startup and keyboard continuity
+
+The study begins locked while its application modules and three validated preset documents are prepared. Text size and return navigation remain usable. Successful setup releases only the parent lock; Clear, locked equipment and unavailable ability actions keep their own disabled states. The canvas stays outside Tab order and inert until ready. Module failure and preset failure both leave the study unavailable with visible recovery text.
+
+If a slow module load exposes Reload and that link still owns foreground focus when the app attaches, focus moves to Text size. A newer focus owner, hidden page or unfocused window prevents the transfer; returning later does not replay it. Attachment is distinct from preset readiness and never starts a previously interrupted study.
+
+Browser history may restore an old selector value before or after `pageshow`. Motion reapplies the current preference snapshot immediately and in one cancellable next task. It does not save those browser-restored values, erase a failed-save warning or turn history return into Play intent. Native history/form behavior and actual BFCache admission still require separate browser evidence.
+
+### Maintainer qualification prompt
+
+> On the exact reviewed source, preserve Motion's 48×36 study, algorithms, original artwork, collection identities and ability rules. Exercise the actual classic launcher and application, with held/failing modules separately from held/failing preset reads. Confirm the study lock preserves child disabled states, reading and navigation remain available, and retiring Reload only hands off current foreground focus. Verify one shared size writer, current-owner history repair, local/shared/system effects and one owned frame. Run complete affected test files on supported Node versions with bounded memory and cleanup. Then qualify actual fonts, focus, canvas labels, narrow layouts, zoom, static and animated imports, lifecycle, build and public/offline behavior in the allocated lanes. Keep model, native, physical and release evidence distinct; no phase closure follows from source assertions alone.
+
+### Full labels without smaller text
+
+Canvas captions keep the existing 14px Standard / 18px Large minimum. Long labels use a measured, grapheme-safe ellipsis and stay inside the 48×36 stage, including lower-edge pads. If even an ellipsis cannot fit at the minimum, the caption is omitted while its marker and full DOM label remain available. No `fillText` maximum-width scaling or font reduction is used.
+
+The existing settings scroller contains a visible Stage labels section with full authored target text and current marker state. It is ordinary selectable, wrapping text, not a tooltip or live announcement stream. Reading changes and unchanged frames preserve row identity and focus. The legend hides and clears when the toy ability study is disabled. Target positions, scoring, outcomes, presets, original art and simulation are unchanged.
+
+Concealed notes expose only a question mark and “Concealed note.” A successful scan reveals their text; expiry removes it from the canvas and DOM on that rendering update, independently of the slower general status readout. The shared descriptor filters concealment before text fitting or DOM construction. Never cache revealed content in hidden elements, titles or ARIA attributes.
+
+The legend is a text equivalent for labels, not a complete nonvisual game interface. Native glyph metrics, overlapping nearby captions, font readiness, actual settings scrolling, portrait/landscape and 200% zoom remain visual acceptance checks. The descriptor and canvas geometry tests do not prove browser rasterization or complete assistive-technology support.
+
+Prompt example: “Improve Motion labels without shrinking the agreed font or changing the study. Use the shared visible-label descriptors, preserve concealed-note timing, and make every shortened caption's full permitted text available in the settings legend. Exercise English/Ukrainian text, combining clusters, an unbroken long label, exact-fit/ellipsis/no-fit boundaries, pads at the lower edge and zero scale. Verify real app scan→expiry before the general readout tick, hide/show, live reading/focus and unchanged study inputs. Qualify native fonts/layout separately; retain historical failures and source/release identity.”
+
+### APNG static-preview correction
+
+A native separate-default APNG showed its first animation frame instead of its IDAT default. PNG uploads now pass a bounded chunk/CRC parser and derive a local static preview by omitting only acTL/fcTL/fdAT. Ordinary PNG metadata and compressed IDAT bytes are preserved; the original File is untouched. GIF, JPEG and WebP continue through their original native Image path. This is a container transformation, not a custom pixel decoder. The encoded limit remains 25 MiB with at most 16,384 chunks; this does not promise a native decoded-pixel/memory limit.
+
+Byte preparation starts under the same background generation as decode. A newer selection, Clear or departure invalidates it before any URL or status is committed. The accepted image stays until the replacement loads; preparation or decode failure retains it. Static/default identity, repeated native redraw, and actual BFCache admission remain separate observations. Preserve the original blue-APNG failure rather than relabeling it as a pass.
+
+Prompt example: “Maintain Motion’s PNG still-preview parser. Preserve original files, every ordinary PNG chunk and IDAT bytes. Reject bounded malformed framing/CRC/order; never return a partial derivative. Test delayed byte reads superseded by another upload, Clear, cached and terminal departure, preparation failure and native decode failure. Run the complete host and parser files, then verify the separated-default APNG against the static control through actual upload and redraw.”
+
+## Motion integration and scoped native record
+
+The [composed evidence record](../../docs/verification/cross-mode/p05-motion-reading/README.md) retains the three a13-based candidates and the separate APNG failure/correction. Scoped native observations establish the reviewed red default poster, explicit movement/redraw, invalid-replacement retention and GIF/WebP fixture behavior with effective shared reduced effects active. They do not establish full-effects, pending native upload races, physical devices, BFCache or full P05/release acceptance. The v0.60.5 integration preserves accepted Recovery behavior and guidance. Its fresh retry successor passes 183/183 across 15 complete files on each supported Node runtime; final committed hosted and public gates remain separate.
+
+### Retry after preset setup fails
+
+If preset download or validation fails after the module attaches, an ordinary **Retry loading study** link appears beside the error, outside the locked study. It reloads this same tool route; reading and return actions remain available. Showing it must not move focus or restart the disposed preview. During pending or successful setup it stays hidden. Module-graph failure continues to use the existing launcher Reload action.
+
+Maintainer prompt: “Exercise the actual launcher followed by a rejected preset read and invalid validated data. Preserve newer reading/return focus, the disabled study and zero active frames. Confirm the authored retry is a normal same-route link outside the lock, hidden during pending/ready/terminal late failure and without a competing visible launcher action. Run complete affected files, then test real keyboard retry and browser navigation separately; modeled link presence is not physical-controller certification.”

@@ -1,0 +1,442 @@
+{
+  "format": "revealline-motion-background-conformance-fixtures.v1",
+  "status": "Fixture preparation only; native conformance not executed.",
+  "base_source": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "frozen_parent": "../p05-motion-successor-a13ab970/proposal",
+  "frozen_parent_pins": {
+    "authoring/motion-lab/app.js": {
+      "bytes": 64146,
+      "sha256": "408cb11a2fb3ed67a968a5172650871ff00e5fb1cf31e2bc37603b42ff99ed15"
+    },
+    "authoring/motion-lab/index.html": {
+      "bytes": 18927,
+      "sha256": "2295e1da100b5db3aebbd09ec9f4185a2223a7b7a76f433656fe62a4bbe4cf80"
+    },
+    "authoring/motion-lab/README.md": {
+      "bytes": 35723,
+      "sha256": "2e2812d7f391e22331c18906f91b5be9692ce84b4f9f03a3b8371566658a4896"
+    },
+    "authoring/skills/xonix-animation-director/SKILL.md": {
+      "bytes": 17568,
+      "sha256": "3dfe8866cb091dab45ef376e8c6bb3bbdc8f4de3985868d9c613305568d0f5fb"
+    },
+    "game/test/motion-lab-display-host.test.mjs": {
+      "bytes": 38349,
+      "sha256": "92cbedb19df86ff78b4508c9078add0ef236674b7563bb063d0b29f58b49de9c"
+    }
+  },
+  "generator": {
+    "path": "generate.py",
+    "sha256": "3aaa37bd9b0ddfa66372f837bf4ca00bb7de13ed341a8affe2d94418583ee58b",
+    "python_executable": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "pillow": "12.3.0",
+    "libwebp": "1.6.0",
+    "zlib_runtime": "1.2.12"
+  },
+  "origin": "Original synthetic geometry generated solely for conformance inspection; not production artwork.",
+  "total_fixture_bytes": 878,
+  "files": [
+    {
+      "path": "fixtures/static-default.png",
+      "mime": "image/png",
+      "upload_mime": "image/png",
+      "bytes": 122,
+      "sha256": "ad2a181fedbac6319d00e2b243072c780bce885454fe8661561774bd05f36988",
+      "purpose": "Pixel-identical control for the normative still image of all three animated fixtures.",
+      "expected_result": "static red control",
+      "animation": null,
+      "width": 32,
+      "height": 24,
+      "decoded_frame_count": 1,
+      "pillow_frame_inventory": [
+        {
+          "index": 0,
+          "duration_ms": null,
+          "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+          "center_rgba": [
+            224,
+            48,
+            64,
+            255
+          ]
+        }
+      ],
+      "expected_still_pixels": {
+        "source_frame_index": 0,
+        "source_frame_role": "first/only image",
+        "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+        "samples": [
+          {
+            "x": 16,
+            "y": 12,
+            "rgba": [
+              224,
+              48,
+              64,
+              255
+            ]
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ]
+          },
+          {
+            "x": 31,
+            "y": 23,
+            "rgba": [
+              255,
+              255,
+              255,
+              255
+            ]
+          }
+        ]
+      },
+      "container_inventory": {
+        "chunks": [
+          "IHDR",
+          "IDAT",
+          "IEND"
+        ],
+        "frame_controls": [],
+        "default_image_outside_animation": false
+      }
+    },
+    {
+      "path": "fixtures/animated-first-frame.gif",
+      "mime": "image/gif",
+      "upload_mime": "image/gif",
+      "bytes": 207,
+      "sha256": "c9709df1f237dd396de169b603f7172087920e1e2ba6ed36fd8e8d3f5786e14e",
+      "purpose": "Two opaque frames, red 400 ms then blue 600 ms; repeated indefinitely.",
+      "expected_result": "static red first frame",
+      "animation": {
+        "loop": "infinite",
+        "loop_field": 0,
+        "frame_durations_ms": [
+          400,
+          600
+        ],
+        "cycle_duration_ms": 1000
+      },
+      "width": 32,
+      "height": 24,
+      "decoded_frame_count": 2,
+      "pillow_frame_inventory": [
+        {
+          "index": 0,
+          "duration_ms": 400,
+          "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+          "center_rgba": [
+            224,
+            48,
+            64,
+            255
+          ]
+        },
+        {
+          "index": 1,
+          "duration_ms": 600,
+          "rgba_sha256": "684b8521fcb58875ce4c084ded98cd85d4744c65e32c0121763d2409b6510304",
+          "center_rgba": [
+            32,
+            112,
+            224,
+            255
+          ]
+        }
+      ],
+      "expected_still_pixels": {
+        "source_frame_index": 0,
+        "source_frame_role": "first/only image",
+        "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+        "samples": [
+          {
+            "x": 16,
+            "y": 12,
+            "rgba": [
+              224,
+              48,
+              64,
+              255
+            ]
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ]
+          },
+          {
+            "x": 31,
+            "y": 23,
+            "rgba": [
+              255,
+              255,
+              255,
+              255
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "fixtures/animated-separate-default.png",
+      "mime": "image/apng",
+      "upload_mime": "image/png",
+      "bytes": 377,
+      "sha256": "9f962f9e6c3a1fca97dbe157e86b1cc9450afc1ffe6fcfbb63dc5db82769d217",
+      "purpose": "Red separate default; timed frames are blue 400 ms then green 600 ms. Upload MIME is image/png.",
+      "expected_result": "static red default outside animation",
+      "animation": {
+        "loop": "infinite",
+        "loop_field": 0,
+        "frame_durations_ms": [
+          400,
+          600
+        ],
+        "cycle_duration_ms": 1000,
+        "default_image_duration_ms": null,
+        "default_participates_in_animation": false
+      },
+      "width": 32,
+      "height": 24,
+      "decoded_frame_count": 3,
+      "pillow_frame_inventory": [
+        {
+          "index": 0,
+          "duration_ms": null,
+          "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+          "center_rgba": [
+            224,
+            48,
+            64,
+            255
+          ]
+        },
+        {
+          "index": 1,
+          "duration_ms": 400.0,
+          "rgba_sha256": "684b8521fcb58875ce4c084ded98cd85d4744c65e32c0121763d2409b6510304",
+          "center_rgba": [
+            32,
+            112,
+            224,
+            255
+          ]
+        },
+        {
+          "index": 2,
+          "duration_ms": 600.0,
+          "rgba_sha256": "1d33a880ebd9e9fcb1b5961b94c186f0779e0876da7ad4b754f9d0b67d0c3656",
+          "center_rgba": [
+            48,
+            192,
+            80,
+            255
+          ]
+        }
+      ],
+      "expected_still_pixels": {
+        "source_frame_index": 0,
+        "source_frame_role": "separate default image",
+        "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+        "samples": [
+          {
+            "x": 16,
+            "y": 12,
+            "rgba": [
+              224,
+              48,
+              64,
+              255
+            ]
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ]
+          },
+          {
+            "x": 31,
+            "y": 23,
+            "rgba": [
+              255,
+              255,
+              255,
+              255
+            ]
+          }
+        ]
+      },
+      "container_inventory": {
+        "chunks": [
+          "IHDR",
+          "acTL",
+          "IDAT",
+          "fcTL",
+          "fdAT",
+          "fcTL",
+          "fdAT",
+          "IEND"
+        ],
+        "frame_controls": [
+          {
+            "sequence": 0,
+            "width": 32,
+            "height": 24,
+            "x": 0,
+            "y": 0,
+            "delay_numerator": 2,
+            "delay_denominator": 5,
+            "disposal": 0,
+            "blend": 0
+          },
+          {
+            "sequence": 2,
+            "width": 32,
+            "height": 24,
+            "x": 0,
+            "y": 0,
+            "delay_numerator": 3,
+            "delay_denominator": 5,
+            "disposal": 0,
+            "blend": 0
+          }
+        ],
+        "default_image_outside_animation": true
+      }
+    },
+    {
+      "path": "fixtures/animated-first-frame.webp",
+      "mime": "image/webp",
+      "upload_mime": "image/webp",
+      "bytes": 164,
+      "sha256": "a20ab57d81db103b7388a06eddf8021b4a8590019fa223f6fe1759ee0f997954",
+      "purpose": "Two lossless opaque frames, red 400 ms then blue 600 ms; repeated indefinitely.",
+      "expected_result": "static red first frame",
+      "animation": {
+        "loop": "infinite",
+        "loop_field": 0,
+        "frame_durations_ms": [
+          400,
+          600
+        ],
+        "cycle_duration_ms": 1000
+      },
+      "width": 32,
+      "height": 24,
+      "decoded_frame_count": 2,
+      "pillow_frame_inventory": [
+        {
+          "index": 0,
+          "duration_ms": 400,
+          "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+          "center_rgba": [
+            224,
+            48,
+            64,
+            255
+          ]
+        },
+        {
+          "index": 1,
+          "duration_ms": 600,
+          "rgba_sha256": "684b8521fcb58875ce4c084ded98cd85d4744c65e32c0121763d2409b6510304",
+          "center_rgba": [
+            32,
+            112,
+            224,
+            255
+          ]
+        }
+      ],
+      "expected_still_pixels": {
+        "source_frame_index": 0,
+        "source_frame_role": "first/only image",
+        "rgba_sha256": "4217cc97445e3f2c9e3ad57988138d9fc2ffe2e587a3b9d303dfb11abc58b1b6",
+        "samples": [
+          {
+            "x": 16,
+            "y": 12,
+            "rgba": [
+              224,
+              48,
+              64,
+              255
+            ]
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "rgba": [
+              0,
+              0,
+              0,
+              255
+            ]
+          },
+          {
+            "x": 31,
+            "y": 23,
+            "rgba": [
+              255,
+              255,
+              255,
+              255
+            ]
+          }
+        ]
+      },
+      "container_inventory": {
+        "chunks": [
+          "VP8X",
+          "ANIM",
+          "ANMF",
+          "ANMF"
+        ],
+        "animation_frame_durations_ms": [
+          400,
+          600
+        ],
+        "loop": 0
+      }
+    },
+    {
+      "path": "fixtures/invalid-signature-only.png",
+      "mime": "image/png",
+      "upload_mime": "image/png",
+      "bytes": 8,
+      "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6",
+      "purpose": "Invalid replacement must retain the previously accepted background.",
+      "expected_result": "decode failure",
+      "animation": null,
+      "width": null,
+      "height": null,
+      "decoded_frame_count": null,
+      "construction": "Only the eight-byte PNG signature; no IHDR, image data or IEND.",
+      "expected_still_pixels": null
+    }
+  ],
+  "evidence_limits": [
+    "Pillow decoding inventories fixture pixels, not browser behavior.",
+    "No browser, app test, screenshot, source mutation, build or deployment occurred.",
+    "No claim of memory release or absence of native internal decoder work."
+  ]
+}
