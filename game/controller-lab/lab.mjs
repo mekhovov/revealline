@@ -1,5 +1,6 @@
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
 import {
   CONTROLLER_PREVIEW_FORMAT,
   parseControllerPreviewStatus,
@@ -29,6 +30,14 @@ let connected = false,
   pendingStick = null,
   disposed = false;
 const presenter = createOperationStatus($('load-status'));
+const practiceExit = attachControllerPracticeExit({
+  frame,
+  document,
+  getSession: () => session,
+  isReady: () => loaded && !disposed,
+  getTarget: (backward) => $(backward ? 'focus-game' : 'mission'),
+  releaseInputs: releaseAll,
+});
 const status = (message, error = false, busy = false) => {
   const lease = presenter.begin({ message });
   if (!busy) lease.finish({ message, state: error ? 'error' : 'ready' });
@@ -336,6 +345,7 @@ window.addEventListener('pagehide', (event) => {
   // listeners, but never resume a held virtual button on return.
   if (event.persisted) return;
   disposed = true;
+  practiceExit.destroy();
   clearInterval(heartbeat);
   observer.disconnect();
   window.removeEventListener('message', receiveStatus);

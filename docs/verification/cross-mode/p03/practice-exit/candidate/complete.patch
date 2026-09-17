@@ -1,0 +1,808 @@
+--- a/authoring/prompts/cross-mode-delivery.md
++++ b/authoring/prompts/cross-mode-delivery.md
+@@ -145,3 +145,9 @@
+ ### Keyboard remapping through shared navigation
+ 
+ “Open Settings → Controls → Keyboard controls using the real player route. Select Left hand, activate Change Move up and press ArrowUp. The physical arrow must bind and focus must remain on its Change action. Dispatch through document capture and dialog capture; do not call only the local key handler. Reject a duplicate arrow and Return/Space while retaining listening focus, cancel with Escape without closing Settings, and let Tab cancel with native traversal. Then verify normal menu arrows and native select/slider behavior. Delegate only the current capture owner's events; preserve other screens, controller routing, binding validation and Ready/paused checkpoints. Retain the native failure and exact automated baseline/correction records, run complete affected files, and qualify the corrected source afresh before publishing the still-unreleased candidate. These checks do not certify physical controllers, touch or the whole phase.”
++
++### Controller practice frame-exit regression
++
++“From Workshop, open Controller practice with keyboard only. After the real child reports Ready, use Tab and Shift+Tab through its menu boundaries to return to outer setup, then reenter and verify Pause → Options → Back still requires explicit Resume. Preserve modal and reader ownership and native select/range keys. Model current/wrong/replaced frames, session rotation, loading, background focus and pending virtual holds without application-state commands. Retain the actual failing route and scope corrected source/browser evidence separately; do not mark P03 or physical controls complete.”
++
++For repeated Pause focus: “Start an unfinished cut inside Controller practice, pause, visit Settings and return. Tab from Resume to Restart, then deliver another suspension: Restart must keep focus and the checkpoint must stay unchanged. Exit each child boundary into the outer lab; the resulting real blur handler must not pull focus back. Also blur a moving cut before a Pause overlay exists: pause without focusing the inactive child. Reenter and use explicit Resume. Test through the app, preserve profile bytes, and distinguish modeled cross-document events from the served browser journey.”
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -512,3 +512,9 @@
+ A document capture listener runs before a dialog capture listener. Let the exact active key-capture owner claim its event before shared navigation moves focus; use the host's current top dialog and live capture state, not a blanket Settings exemption. Yield without preventing the event or changing focus, while retiring stale navigation previews. Keep the existing binding validator, Return/Space rejection, Escape cancellation, native Tab traversal, repeat/modifier/composition rules and controller command handling unchanged.
+ 
+ Reproduce through the actual document → dialog chain, including a preset with unassigned arrows. Verify valid remaps, rejected duplicates, correct listening focus, normal menu/select/slider behavior after cancellation, and unchanged Ready/paused run checkpoints. Component-only dialog tests miss this ordering. Preserve native baseline observations and failed-then-corrected host logs separately; a known regression in an unpublished candidate needs correction and fresh final-source qualification before release. See [keyboard capture ownership](../../../docs/controller-navigation.md#keyboard-capture-ownership).
++
++### Embedded practice keyboard exit
++
++For a Controller practice focus-boundary change, retain the explicit registered same-origin iframe/session owner. Test actual document key propagation at first/last nonmodal Tab boundaries, including Shift+Tab, plus a real modal, active reader, native input and unchanged standalone menus. Parent focus transfer must be synchronous, release held virtual input/pending stick application and leave gameplay paused. Reject stale sessions, loading/replaced frames, background or newer parent focus; do not add a broad Escape override or change historical replay behavior. Repeat the actual served iframe journey without mouse or state fixtures; simulated bridge coverage is not physical-controller acceptance.
++
++Repeated Pause rendering is not a new focus request. Retain the selected action when the Pause overlay is already visible, and only focus a newly opened overlay while its document is visible, foreground and not owned by a dialog. Test the actual app blur handler during the synchronous child-to-parent handoff, not just the transport helper. Cover first blur from a moving cut, repeated suspension after Settings, both paused Tab boundaries, unchanged checkpoint/profile and explicit Resume on return. A background child's attempt to focus Resume can silently reclaim its iframe and undo an otherwise correct parent handoff.
+--- a/docs/controller-practice.md
++++ b/docs/controller-practice.md
+@@ -110,3 +110,17 @@
+ Automated coverage includes strict transport validation, source/origin rejection, per-load token rotation and queued old-document rejection, stale packet handling, heartbeat loss, all-four-axis clear/release semantics, sampled acknowledgement versus receipt, remapped equipment/right-stick input through the real router, bounded feedback, an actual join→menu→flight→pause→disconnect roundtrip, both steering policies through all offered scenario preparations, and parent-page DOM simulations for all sixteen buttons, draft sliders, pulses, holds, acknowledgement timeout/cancellation, import failure and disposal. A static markup check verifies the actual button-index and slider-label inventory. Reader checks additionally cover the two real surfaces, complete long-text handoff, current class/policy preparations, bounded navigation and pause/exit behavior; current counts and browser evidence belong to the associated verification record.
+ 
+ Navigation tests exercise nested and synthetic clicks, auxiliary activation, every actual solo-page navigation destination, fragment/download exceptions and teardown. The app's boot guard and query-stripped reload require separate app integration checks. DOM simulations do not establish browser focus timing or physical-device behavior. Complete the actual browser journey and physical controller checks described in [the controller plan](round-15-controller-plan.md) separately.
++
++## Embedded keyboard menu boundary
++
++In the registered Controller practice iframe, Tab from the last nonmodal menu action returns to the lab's Mission selector; Shift+Tab from the first returns to its Focus game button. Interior menu keys retain their current behavior. A real dialog keeps native modal containment: close it before returning to the lab. Reading must finish through its own controls before the menu boundary applies. Reenter with Focus game and use explicit Resume for paused play.
++
++The handoff is synchronous on the exact same-origin iframe element and validates the current child, session, readiness, foreground and target. It sends no game state or profile content. The child suspends interaction; the lab releases virtual buttons/sticks and cancels a pending stick draft before focusing an existing outer control. A replaced frame, old session, hidden page or newer parent focus cannot authorize an exit. Ordinary solo, Couch and standalone menu Tab behavior stays unchanged.
++
++The need was observed in source 76dc before this correction: initial Ready focus trapped Tab and Shift+Tab inside the child, leaving outer setup/header unreachable through ordinary traversal. Static comparison confirms the same nonmodal wrap in v0.58.1 and 0e; this was not introduced by keyboard remapping. This proposed correction still requires composed automated and actual-browser verification. It does not establish physical controller/touch support or complete P03 acceptance.
++
++### Paused focus handoff
++
++A repeated suspension of an already-visible Pause menu preserves the currently selected action. In particular, returning from Settings must not let a subsequent blur repaint pull Restart or an outer lab control back to Resume. Creating a new Pause overlay while the child is hidden or unfocused pauses the flight without selecting a child control. Focus return alone never resumes.
++
++The regression cohort exercises the actual app's blur handler with an unfinished cut: repeated Pause after Settings preserves Restart, both registered frame boundaries survive synchronous parent focus, and first blur pauses without reclaiming focus. Each case preserves the authoritative checkpoint and stored profile until explicit Resume. The cross-document focus bookkeeping in these tests models browser events; the served keyboard-only iframe journey remains a separate verification gate.
+--- a/game/app.mjs
++++ b/game/app.mjs
+@@ -71,6 +71,7 @@
+ import { attachControllerReading } from './ui/controller-reading.mjs';
+ import { attachControllerPreview } from './ui/controller-preview.mjs';
+ import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
++import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
+ import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
+ import { attachEnemyGuide } from './ui/enemy-guide.mjs';
+ import { attachControllerSettings } from './ui/controller-settings.mjs';
+@@ -1695,6 +1696,18 @@
+         !cancel.disabled &&
+         dialog.contains(event.target)
+       );
++    },
++    onTabBoundary: ({ backward }) => {
++      if (!controllerPreview || window.name !== 'revealline-controller-practice') return false;
++      requestControllerPracticeExit({
++        window,
++        session: params.get('controller-session'),
++        backward,
++        beforeExit: suspendInteraction,
++      });
++      // A rejected or retired embedded handoff must not wrap focus back into a
++      // stale child. The next deliberate boundary key may try the current lab.
++      return true;
+     },
+     getDefaultFocus: controllerFocus,
+     getReadingPrompt: readingPrompt,
+@@ -4928,6 +4941,10 @@
+       `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
+   }
+   function overlay(kind) {
++    // Repeated suspension may repaint Pause, but does not own a new focus
++    // choice. An inactive child must not pull focus back from its parent.
++    const preservePauseFocus =
++      kind === 'pause' && !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'pause';
+     drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
+     $('game-overlay').dataset.kind = kind;
+     show('pause-label', kind === 'pause');
+@@ -5060,7 +5077,8 @@
+     refreshCourse();
+     refreshDifficulty();
+     controllerReading?.refresh();
+-    if (!controllerDialog()) controllerFocus()?.focus({ preventScroll: true });
++    if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
++      controllerFocus()?.focus({ preventScroll: true });
+   }
+   function prepare({ restoreAdoption = false, contentSwitchTicket = null, difficulty } = {}) {
+     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+--- a/game/controller-lab/index.html
++++ b/game/controller-lab/index.html
+@@ -230,7 +230,8 @@
+             a new menu gesture. In flight, a direction press selects continuous movement; releasing
+             buttons or sticks does not stop it. Use Pause, then explicit Resume to continue. Moving
+             between this panel and the game may pause play; the next virtual gesture focuses the
+-            game first.
++            game first. At either end of a game menu, Tab returns to Mission setup and Shift+Tab
++            returns to Focus game in this panel. Close any game dialog first.
+           </p>
+           <p class="guide default-hints">
+             <strong>Default layout only:</strong> 0 confirms / uses ability (or pauses in Arcade); 1
+--- a/game/controller-lab/lab.mjs
++++ b/game/controller-lab/lab.mjs
+@@ -1,5 +1,6 @@
+ globalThis.RevealLineToolLaunch?.attached();
+ import { createOperationStatus } from '../ui/operation-status.mjs';
++import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
+ import {
+   CONTROLLER_PREVIEW_FORMAT,
+   parseControllerPreviewStatus,
+@@ -29,6 +30,14 @@
+   pendingStick = null,
+   disposed = false;
+ const presenter = createOperationStatus($('load-status'));
++const practiceExit = attachControllerPracticeExit({
++  frame,
++  document,
++  getSession: () => session,
++  isReady: () => loaded && !disposed,
++  getTarget: (backward) => $(backward ? 'focus-game' : 'mission'),
++  releaseInputs: releaseAll,
++});
+ const status = (message, error = false, busy = false) => {
+   const lease = presenter.begin({ message });
+   if (!busy) lease.finish({ message, state: error ? 'error' : 'ready' });
+@@ -336,6 +345,7 @@
+   // listeners, but never resume a held virtual button on return.
+   if (event.persisted) return;
+   disposed = true;
++  practiceExit.destroy();
+   clearInterval(heartbeat);
+   observer.disconnect();
+   window.removeEventListener('message', receiveStatus);
+--- a/game/test/controller-lab.test.mjs
++++ b/game/test/controller-lab.test.mjs
+@@ -1,6 +1,7 @@
+ import test from 'node:test';
+ import { Element as DOMElement } from './helpers/couch-dom.mjs';
+ import assert from 'node:assert/strict';
++import { requestControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
+ import { readFile } from 'node:fs/promises';
+ import {
+   parseControllerPreviewSnapshot,
+@@ -52,6 +53,7 @@
+   }
+   focus() {
+     this.focused = true;
++    if (this.ownerDocument) this.ownerDocument.activeElement = this;
+   }
+ }
+ 
+@@ -116,6 +118,26 @@
+     return element;
+   };
+   doc.hidden = false;
++  doc.nodeType = 9;
++  doc.hasFocus = () => !doc.hidden;
++  doc.defaultView = host;
++  host.getComputedStyle = () => ({ visibility: 'visible', display: 'block' });
++  for (const element of Object.values(elements)) {
++    element.parentNode = doc;
++    doc.children.push(element);
++  }
++  Object.assign(child, {
++    document: { hidden: false, hasFocus: () => doc.activeElement === elements['game-frame'] },
++    frameElement: elements['game-frame'],
++    parent: host,
++    location: host.location,
++    CustomEvent: class extends Event {
++      constructor(type, options) {
++        super(type, options);
++        this.detail = options.detail;
++      }
++    },
++  });
+   const globals = {
+     window: host,
+     document: doc,
+@@ -360,6 +382,49 @@
+         assert.equal(latest().pad.connected, true);
+         assert.ok(latest().pad.buttons.every((v) => !v));
+         assert.equal(timeouts.size, 0);
++      },
++    );
++    await t.test(
++      'accepted keyboard exit releases actual virtual holds and pending stick application without storage writes',
++      async () => {
++        const writesBefore = writes.length;
++        let suspended = 0;
++        const exit = (backward = false) =>
++          requestControllerPracticeExit({
++            window: child,
++            session: latest().session,
++            backward,
++            beforeExit: () => {
++              suspended++;
++            },
++          });
++        await press(15);
++        await press(5);
++        assert.equal(latest().pad.buttons[15], true);
++        assert.equal(latest().pad.buttons[5], true);
++        assert.equal(exit(), true);
++        assert.equal(doc.activeElement, elements.mission);
++        assert.ok(latest().pad.buttons.every((value) => !value));
++        assert.ok(latest().pad.axes.every((value) => value === 0));
++        assert.equal(
++          pads.some((button) => button.getAttribute('aria-pressed') === 'true'),
++          false,
++        );
++        elements['axis-0'].value = '0.75';
++        await elements['axis-0'].emit('input');
++        await click('apply-stick');
++        assert.match(elements['axis-status'].textContent, /Waiting for the game to sample neutral/);
++        assert.ok([...timeouts.values()].some((timeout) => timeout.ms === 2000));
++        assert.equal(exit(true), true);
++        assert.equal(doc.activeElement, elements['focus-game']);
++        assert.equal(elements['axis-0'].value, '0');
++        assert.equal(
++          [...timeouts.values()].some((timeout) => timeout.ms === 2000),
++          false,
++        );
++        assert.ok(latest().pad.axes.every((value) => value === 0));
++        assert.equal(suspended, 2);
++        assert.equal(writes.length, writesBefore);
+       },
+     );
+     await t.test(
+--- a/game/test/controller-navigation.test.mjs
++++ b/game/test/controller-navigation.test.mjs
+@@ -1,6 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
++import {
++  attachControllerPracticeExit,
++  requestControllerPracticeExit,
++} from '../ui/controller-practice-exit.mjs';
+ import { createControllerRouter, neutralControllerFlight } from '../ui/controller-router.mjs';
+ import { resolveControllerBindings } from '../controller-bindings.mjs';
+ import { attachControllerReading } from '../ui/controller-reading.mjs';
+@@ -1830,3 +1834,210 @@
+   }
+   assert.equal(transitions, 4);
+ });
++
++function embeddedPractice(t) {
++  const parent = new Document();
++  const session = '0123456789abcdef0123456789abcdef';
++  let currentSession = session,
++    ready = true,
++    releases = 0,
++    suspensions = 0;
++  let duringSuspend = () => {},
++    duringRelease = () => {};
++  const frame = new Element(parent, 'iframe');
++  const mission = new Element(parent, 'select', { id: 'mission' });
++  const focusGame = new Element(parent, 'button', { id: 'focus-game' });
++  parent.body.append(mission, focusGame, frame);
++  parent.defaultView.location = { origin: 'http://localhost:8767' };
++  parent.hasFocus = () => !parent.hidden;
++  const h = setup(t, {
++    keyboard: true,
++    onTabBoundary: ({ backward }) => {
++      requestControllerPracticeExit({
++        window: child,
++        session,
++        backward,
++        beforeExit: () => {
++          suspensions++;
++          duringSuspend();
++        },
++      });
++      return true;
++    },
++  });
++  h.setScope('ready:practice', h.document.body);
++  h.document.hasFocus = () => parent.activeElement === frame && !parent.hidden;
++  const child = {
++    document: h.document,
++    frameElement: frame,
++    location: { origin: 'http://localhost:8767' },
++    parent: parent.defaultView,
++    CustomEvent: class extends Event {
++      constructor(type, options) {
++        super(type, options);
++        this.detail = options.detail;
++      }
++    },
++  };
++  frame.contentWindow = child;
++  const bridge = attachControllerPracticeExit({
++    frame,
++    document: parent,
++    getSession: () => currentSession,
++    isReady: () => ready,
++    getTarget: (backward) => (backward ? focusGame : mission),
++    releaseInputs: () => {
++      releases++;
++      duringRelease();
++    },
++  });
++  t.after(() => bridge.destroy());
++  const first = h.control('button', { id: 'game-menu' });
++  const middle = h.control('button', { id: 'start-mission' });
++  const last = h.control('button', { id: 'main-menu' });
++  const enter = (element) => {
++    parent.activeElement = frame;
++    element.focus();
++  };
++  return {
++    h,
++    parent,
++    frame,
++    child,
++    bridge,
++    first,
++    middle,
++    last,
++    mission,
++    focusGame,
++    enter,
++    get releases() {
++      return releases;
++    },
++    get suspensions() {
++      return suspensions;
++    },
++    replaceSession() {
++      currentSession = 'abcdef0123456789abcdef0123456789ab';
++    },
++    loading() {
++      ready = false;
++    },
++    onSuspend(callback) {
++      duringSuspend = callback;
++    },
++    onRelease(callback) {
++      duringRelease = callback;
++    },
++  };
++}
++
++test('embedded practice Tab edges return to parent controls; interior keys keep their menu owner', (t) => {
++  const f = embeddedPractice(t);
++  f.enter(f.middle);
++  assert.equal(f.middle.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
++  assert.equal(f.h.document.activeElement, f.last);
++  assert.equal(f.parent.activeElement, f.frame);
++  assert.equal(f.releases, 0);
++  const exit = f.last.emit('keydown', { key: 'Tab' });
++  assert.equal(exit.defaultPrevented, true);
++  assert.equal(
++    f.parent.activeElement,
++    f.mission,
++    'Forward boundary must escape the child Ready loop.',
++  );
++  assert.equal(f.h.document.activeElement, f.last, 'No wrapped child action receives focus.');
++  assert.equal(f.releases, 1);
++  assert.equal(f.suspensions, 1);
++  f.enter(f.first);
++  assert.equal(f.first.emit('keydown', { key: 'Tab', shiftKey: true }).defaultPrevented, true);
++  assert.equal(f.parent.activeElement, f.focusGame);
++  assert.equal(f.releases, 2);
++  assert.equal(f.suspensions, 2);
++  assert.deepEqual({ back: f.h.calls.back, menu: f.h.calls.menu }, { back: 0, menu: 0 });
++});
++
++test('practice boundary never bypasses a real modal, active reader, native field or unregistered game', (t) => {
++  const f = embeddedPractice(t);
++  const dialog = f.h.control('dialog', { open: true });
++  const close = f.h.control('button', { id: 'close' }, dialog);
++  const apply = f.h.control('button', { id: 'apply' }, dialog);
++  f.h.setScope('modal:settings', dialog);
++  f.enter(apply);
++  apply.emit('keydown', { key: 'Tab' });
++  assert.equal(f.h.document.activeElement, close);
++  assert.equal(f.parent.activeElement, f.frame);
++  f.h.setScope('ready:practice', f.h.document.body);
++  dialog.remove();
++  const reader = readingSurface(f.h);
++  f.enter(reader.origin);
++  assert.equal(reader.begin(), true);
++  reader.region.emit('keydown', { key: 'ArrowDown' });
++  assert.equal(f.h.document.activeElement, reader.region);
++  reader.region.emit('keydown', { key: 'Tab' });
++  assert.equal(f.h.api.readingState(), null);
++  assert.equal(f.parent.activeElement, f.frame, 'Ending a reader is not a frame exit.');
++  const controlReader = readingSurface(f.h, { tagName: 'TEXTAREA' });
++  f.enter(controlReader.origin);
++  assert.equal(controlReader.begin(), true);
++  controlReader.region.emit('keydown', { key: 'Tab' });
++  assert.equal(f.h.api.readingState(), null);
++  assert.equal(
++    f.parent.activeElement,
++    f.frame,
++    'A focusable control reader also ends before any frame exit.',
++  );
++  const native = f.h.select();
++  f.enter(native);
++  assert.equal(native.emit('keydown', { key: 'ArrowDown' }).defaultPrevented, false);
++  assert.equal(f.releases, 0);
++  const standalone = setup(t, { keyboard: true });
++  standalone.setScope('ready:ordinary', standalone.document.body);
++  const a = standalone.control('button'),
++    b = standalone.control('button');
++  b.focus();
++  b.emit('keydown', { key: 'Tab' });
++  assert.equal(standalone.document.activeElement, a);
++});
++
++test('stale, loading, unfocused or disposed practice contexts cannot move parent focus or clear newer input', async (t) => {
++  for (const kind of ['session', 'loading', 'parent-focus', 'hidden', 'wrong-frame', 'disposed'])
++    await t.test(kind, (t) => {
++      const f = embeddedPractice(t);
++      f.enter(f.last);
++      if (kind === 'session') f.replaceSession();
++      if (kind === 'loading') f.loading();
++      if (kind === 'parent-focus') f.parent.activeElement = f.mission;
++      if (kind === 'hidden') f.parent.hidden = true;
++      if (kind === 'wrong-frame') f.frame.contentWindow = {};
++      if (kind === 'disposed') f.bridge.destroy();
++      const before = f.parent.activeElement;
++      f.last.emit('keydown', { key: 'Tab' });
++      assert.equal(f.parent.activeElement, before);
++      assert.equal(f.releases, 0);
++      assert.equal(f.suspensions, 0);
++    });
++});
++
++test('an accepted practice exit cannot wrap the child after a callback changes session or parent focus', async (t) => {
++  for (const stage of ['onSuspend', 'onRelease'])
++    for (const outcome of ['session', 'focus'])
++      await t.test(`${stage}: ${outcome}`, (t) => {
++        const f = embeddedPractice(t);
++        f.enter(f.last);
++        f[stage](() => {
++          if (outcome === 'session') f.replaceSession();
++          else f.focusGame.focus();
++        });
++        const key = f.last.emit('keydown', { key: 'Tab' });
++        assert.equal(key.defaultPrevented, true);
++        assert.equal(
++          f.h.document.activeElement,
++          f.last,
++          'A retired exit must not wrap to child Game menu.',
++        );
++        assert.equal(f.parent.activeElement, outcome === 'focus' ? f.focusGame : f.frame);
++        assert.equal(f.suspensions, 1);
++        assert.equal(f.releases, stage === 'onRelease' ? 1 : 0);
++      });
++});
+--- /dev/null
++++ b/game/test/controller-practice-pause-host.test.mjs
+@@ -0,0 +1,205 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { soloPage, SoloElement, memoryStorage } from './helpers/solo-dom.mjs';
++import { Document, Events } from './helpers/couch-dom.mjs';
++import { entryScenario } from '../playground/model.mjs';
++import { authoritativeCheckpoint } from '../replay.mjs';
++import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
++
++function key(page, value, extra = {}) {
++  const target = page.doc.activeElement;
++  const event = target.emit('keydown', { key: value, code: value, repeat: false, ...extra });
++  const dialog = target.closest('dialog[open]');
++  if (!event.defaultPrevented && value === 'Enter' && target.tagName === 'BUTTON') target.click();
++  if (
++    !event.defaultPrevented &&
++    value === 'Escape' &&
++    dialog &&
++    dialog.dispatchEvent(new Event('cancel', { cancelable: true }))
++  )
++    dialog.close();
++  target.emit('keyup', { key: value, code: value, ...extra });
++  return event;
++}
++function startCut(page) {
++  page.$('start-button').click();
++  page.frame(16);
++  page.key('ArrowDown');
++  for (let n = 0; n < 8; n++) page.frame(16);
++  assert.equal(page.rendered.run.player.cutting, true);
++}
++function unchangedPaused(page, run, checkpoint) {
++  for (let n = 0; n < 8; n++) page.frame(16);
++  assert.equal(page.rendered.run, run);
++  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
++  assert.equal(page.$('game-overlay').dataset.kind, 'pause');
++  assert.equal(page.$('game-overlay').hidden, false);
++}
++async function embeddedPractice(t) {
++  const parentDoc = new Document(),
++    parent = new Events();
++  parent.location = { origin: 'http://localhost' };
++  parent.postMessage = () => {}; // Only preview status transport is outside this test.
++  parent.getComputedStyle = parentDoc.defaultView.getComputedStyle;
++  parentDoc.defaultView = parent;
++  const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url))),
++    { themes } = JSON.parse(await readFile(new URL('../content/themes.json', import.meta.url))),
++    scenario = entryScenario({ campaign, themes, visualOverrides: {} }),
++    session = '1234567890abcdef1234567890abcdef';
++  const page = await soloPage(t, {
++    search: `?practice=1&controller-preview=1&controller-session=${session}`,
++    parentWindow: parent,
++    previewStorage: memoryStorage({ 'revealline.playground.current': JSON.stringify(scenario) }),
++  });
++  const frame = parentDoc.createElement('iframe'),
++    mission = parentDoc.createElement('select'),
++    focusGame = parentDoc.createElement('button');
++  frame.id = 'game-frame';
++  mission.id = 'mission';
++  focusGame.id = 'focus-game';
++  parentDoc.body.append(focusGame, frame, mission);
++  frame.contentWindow = page.win;
++  Object.assign(page.win, {
++    document: page.doc,
++    frameElement: frame,
++    name: 'revealline-controller-practice',
++    CustomEvent: class extends Event {
++      constructor(type, options) {
++        super(type, options);
++        this.detail = options.detail;
++      }
++    },
++  });
++  parentDoc.activeElement = frame;
++  // Model the browser's cross-document focus bookkeeping and window blur.
++  // The real app's suspension, pause overlay, navigation and Resume are untouched.
++  const originalFocus = SoloElement.prototype.focus;
++  const calls = [];
++  SoloElement.prototype.focus = function (...args) {
++    originalFocus.apply(this, args);
++    if (this.ownerDocument === page.doc && !this.disabled) {
++      calls.push(this.id);
++      page.doc.focused = true;
++      parentDoc.activeElement = frame;
++    }
++  };
++  t.after(() => {
++    SoloElement.prototype.focus = originalFocus;
++  });
++  for (const target of [mission, focusGame]) {
++    const nativeFocus = target.focus.bind(target);
++    target.focus = () => {
++      nativeFocus();
++      page.doc.focused = false;
++      page.win.emit('blur', { bubbles: false });
++    };
++  }
++  let releases = 0;
++  const handoff = attachControllerPracticeExit({
++    frame,
++    document: parentDoc,
++    getSession: () => session,
++    isReady: () => true,
++    getTarget: (backward) => (backward ? focusGame : mission),
++    releaseInputs: () => {
++      releases++;
++    },
++  });
++  t.after(() => handoff.destroy());
++  return {
++    page,
++    parentDoc,
++    frame,
++    mission,
++    focusGame,
++    calls,
++    get releases() {
++      return releases;
++    },
++  };
++}
++
++test('repeated forced Pause keeps the chosen menu action after Settings closes', async (t) => {
++  const page = await soloPage(t);
++  startCut(page);
++  page.$('pause-button').click();
++  const run = page.rendered.run,
++    checkpoint = authoritativeCheckpoint(run);
++  page.$('shell-settings').focus();
++  page.$('shell-settings').click();
++  assert.equal(page.$('settings-dialog').open, true);
++  page.$('settings-dialog').querySelector('[data-close]').focus();
++  key(page, 'Escape');
++  await new Promise((resolve) => setImmediate(resolve));
++  assert.equal(page.$('settings-dialog').open, false);
++  page.$('start-button').focus();
++  key(page, 'Tab');
++  assert.equal(page.doc.activeElement, page.$('overlay-restart'));
++  // A repeated platform suspension can arrive while focus is still reported
++  // inside this document. It may neutralize input, but cannot restart menu focus.
++  page.win.emit('blur', { bubbles: false });
++  assert.equal(page.doc.activeElement, page.$('overlay-restart'));
++  unchangedPaused(page, run, checkpoint);
++  assert.deepEqual(page.errors, []);
++});
++
++test('paused Controller practice exits both boundaries through the real app blur handler', async (t) => {
++  const f = await embeddedPractice(t),
++    { page } = f;
++  startCut(page);
++  page.$('pause-button').click();
++  const run = page.rendered.run,
++    checkpoint = authoritativeCheckpoint(run),
++    pausedTime = run.time,
++    profile = new Map(page.storage.map);
++  for (const [id, backward, target] of [
++    ['overlay-menu', false, f.mission],
++    ['shell-menu', true, f.focusGame],
++  ]) {
++    page.$(id).focus();
++    const event = key(page, 'Tab', { shiftKey: backward });
++    assert.equal(event.defaultPrevented, true);
++    assert.equal(f.parentDoc.activeElement, target, 'Child blur must not reclaim parent focus.');
++    assert.equal(page.doc.hasFocus(), false);
++    const focusCalls = f.calls.length;
++    page.win.emit('blur', { bubbles: false });
++    unchangedPaused(page, run, checkpoint);
++    assert.equal(f.calls.length, focusCalls, 'Background suspension must not invoke child focus.');
++    assert.equal(f.parentDoc.activeElement, target);
++    assert.deepEqual(page.storage.map, profile);
++  }
++  assert.equal(f.releases, 2);
++  page.$('start-button').focus();
++  unchangedPaused(page, run, checkpoint); // Focus return never resumes.
++  key(page, 'Enter');
++  assert.equal(page.$('game-overlay').hidden, true);
++  page.frame(16);
++  page.key('ArrowDown');
++  page.frame(16);
++  assert.ok(run.time > pausedTime, 'Only explicit Resume permits another real tick.');
++  assert.deepEqual(page.errors, []);
++});
++
++test('first iframe blur pauses a moving cut without focusing its new Resume action', async (t) => {
++  const f = await embeddedPractice(t),
++    { page } = f;
++  startCut(page);
++  const run = page.rendered.run,
++    checkpoint = authoritativeCheckpoint(run),
++    focusCalls = f.calls.length,
++    profile = new Map(page.storage.map);
++  f.mission.focus(); // Actual app handler, with browser foreground already false.
++  assert.equal(f.parentDoc.activeElement, f.mission);
++  assert.equal(f.calls.length, focusCalls);
++  unchangedPaused(page, run, checkpoint);
++  page.doc.hidden = true;
++  page.doc.emit('visibilitychange');
++  assert.equal(f.parentDoc.activeElement, f.mission);
++  assert.equal(f.calls.length, focusCalls);
++  page.doc.hidden = false;
++  page.$('start-button').focus();
++  unchangedPaused(page, run, checkpoint);
++  assert.deepEqual(page.storage.map, profile);
++  assert.deepEqual(page.errors, []);
++});
+--- a/game/ui/controller-navigation.mjs
++++ b/game/ui/controller-navigation.mjs
+@@ -18,6 +18,7 @@
+   onNativeInput = () => {},
+   keyboard = false,
+   ownsKeyboardEvent = () => false,
++  onTabBoundary = () => false,
+   nativeReadingScroll = false,
+ } = {}) {
+   let scope = null,
+@@ -583,6 +584,7 @@
+       event.preventDefault();
+       return true;
+     }
++    const leavingReader = !!reading && event.key === 'Tab';
+     if (reading) {
+       if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
+         event.preventDefault();
+@@ -641,6 +643,19 @@
+         return true;
+       }
+       if (!items.length) return false;
++      // Only a registered embedded host may transfer focus at a nonmodal edge.
++      // Interior traversal, native modal containment and ordinary games retain
++      // their existing behavior. A reader exits through its own path above.
++      const boundary = event.shiftKey ? 0 : items.length - 1;
++      if (
++        !leavingReader &&
++        current === boundary &&
++        onTabBoundary({ backward: !!event.shiftKey }) === true
++      ) {
++        event.preventDefault();
++        relinquish();
++        return true;
++      }
+       event.preventDefault();
+       relinquish();
+       const next =
+--- /dev/null
++++ b/game/ui/controller-practice-exit.mjs
+@@ -0,0 +1,102 @@
++// Synchronous, same-origin focus handoff for the registered Controller practice
++// frame. This is a UI boundary, not an application-state or input transport.
++const EXIT_EVENT = 'revealline-controller-practice-focus-exit';
++const validSession = (value) => typeof value === 'string' && /^[a-f0-9]{32}$/.test(value);
++
++export function requestControllerPracticeExit({
++  window: child = globalThis.window,
++  session,
++  backward = false,
++  beforeExit = () => {},
++} = {}) {
++  try {
++    const frame = child?.frameElement;
++    if (
++      !validSession(session) ||
++      typeof backward !== 'boolean' ||
++      typeof beforeExit !== 'function' ||
++      !frame ||
++      child.parent === child ||
++      child.location.origin === 'null' ||
++      child.parent.location.origin !== child.location.origin ||
++      frame.contentWindow !== child ||
++      child.document.hidden ||
++      child.document.hasFocus?.() === false
++    )
++      return false;
++    const event = new child.CustomEvent(EXIT_EVENT, {
++      cancelable: true,
++      detail: { session, source: child, backward, beforeExit },
++    });
++    frame.dispatchEvent(event);
++    return event.defaultPrevented;
++  } catch {
++    return false;
++  }
++}
++
++export function attachControllerPracticeExit({
++  frame,
++  document: doc = globalThis.document,
++  getSession,
++  isReady,
++  getTarget,
++  releaseInputs,
++}) {
++  let destroyed = false;
++  const available = (element) =>
++    !!element?.isConnected &&
++    element.ownerDocument === doc &&
++    !element.disabled &&
++    !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
++    element.getClientRects().length > 0 &&
++    doc.defaultView?.getComputedStyle(element).visibility !== 'hidden';
++  function receive(event) {
++    if (destroyed || event.target !== frame || event.defaultPrevented) return;
++    try {
++      const detail = event.detail;
++      if (
++        !detail ||
++        !validSession(detail.session) ||
++        typeof detail.backward !== 'boolean' ||
++        typeof detail.beforeExit !== 'function'
++      )
++        return;
++      const target = getTarget(detail.backward);
++      const current = () =>
++        !destroyed &&
++        isReady() &&
++        detail.session === getSession() &&
++        detail.source === frame.contentWindow &&
++        detail.source.location.origin === doc.defaultView.location.origin &&
++        doc.activeElement === frame &&
++        !doc.hidden &&
++        doc.hasFocus?.() !== false &&
++        available(frame) &&
++        target === getTarget(detail.backward) &&
++        available(target);
++      if (!current()) return;
++      event.preventDefault();
++      // The accepted synchronous owner also consumes retirement during callbacks;
++      // the child must never wrap back over a newer parent focus choice.
++      // Suspend and neutralize before moving focus. Recheck the same frame and
++      // session after callbacks; a replacement or newer focus owns its result.
++      detail.beforeExit();
++      if (!current()) return;
++      releaseInputs();
++      if (!current()) return;
++      target.focus({ preventScroll: true });
++      if (doc.activeElement !== target) return;
++      target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
++    } catch {
++      // A gone/replaced/opaque child or unavailable target cannot steal focus.
++    }
++  }
++  frame.addEventListener(EXIT_EVENT, receive);
++  return {
++    destroy() {
++      destroyed = true;
++      frame.removeEventListener(EXIT_EVENT, receive);
++    },
++  };
++}
