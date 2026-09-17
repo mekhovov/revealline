@@ -404,7 +404,7 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   assert.equal(f.$('race-boards').hidden, false);
   assert.equal(f.$('race-shell').hidden, true);
   assert.equal(f.doc.activeElement.id, 'race-pause');
-  for (const i of [0, 1]) assert.match(f.$(`racer-input-${i}`).textContent, /Results for options/);
+  for (const i of [0, 1]) assert.match(f.$(`racer-input-${i}`).textContent, /Results for Settings/);
   f.frames(10, 200);
   assert.deepEqual(f.checkpoint(), before);
   const revealed = [];

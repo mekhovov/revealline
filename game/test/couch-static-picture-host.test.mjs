@@ -931,6 +931,9 @@ for (const outcome of ['cancel', 'decode refusal'])
     const result = completedResult(p);
     assert.equal(p.state(), 'finished');
     enter('race-options');
+    enter('race-settings-tab-audio');
+    assert.equal(p.$('race-settings-panel-audio').hidden, false);
+    assert.equal(p.$('race-audio').closest('[hidden],[inert]'), null);
     enter('race-audio');
     assert.deepEqual(JSON.parse(saved.get(AUDIO_PREFERENCES_KEY)), { muted: true, volume: 0.4 });
     enter('race-options-back');

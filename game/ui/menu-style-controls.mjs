@@ -1,5 +1,6 @@
 import { createMenuStylePreferences } from '../menu-style-preferences.mjs';
 import { createMenuAppearance } from './menu-appearance.mjs';
+import { attachPreferenceRestoration } from './preference-restoration.mjs';
 
 /** Existing Options owns navigation. These native selectors own only the separate
  * menu-style record, and never call a flight's preferences, prepare or Resume. */
@@ -23,10 +24,16 @@ export function attachMenuStyleControls({
       status.textContent = message;
     },
   });
-  const stopView = preferences.subscribe((state) => {
+  const render = (state) => {
     palette.value = state.palette;
     ornaments.value = state.ornaments;
     appearance.set(state);
+  };
+  const stopView = preferences.subscribe(render);
+  const restoration = attachPreferenceRestoration({
+    window: win,
+    getSnapshot: preferences.snapshot,
+    render,
   });
   const choosePalette = () => preferences.set({ palette: palette.value }),
     chooseOrnaments = () => preferences.set({ ornaments: ornaments.value });
@@ -40,6 +47,7 @@ export function attachMenuStyleControls({
       disposed = true;
       palette.removeEventListener('change', choosePalette);
       ornaments.removeEventListener('change', chooseOrnaments);
+      restoration.dispose();
       stopView();
       preferences.dispose();
       appearance.dispose();
