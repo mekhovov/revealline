@@ -1,5 +1,13 @@
 # Team picture authority preparation
 
+## Current revision compatibility correction
+
+The current two-row authority admits the reviewed `fpv@27` snapshot, with collection `null`. The producer's revision-27 metadata repair changed no Team pack, level, picture asset, original bytes, geometry or simulation. Both bindings retain their exact pack/level hashes and the Orchard/Foundry asset tuples below; only the explicit theme revision advances. Older and newer theme snapshots still fail closed before picture reads. Historical release bindings remain unchanged.
+
+The existing complete binding test first reproduced four failures against the revision-27 compiled snapshot with stale revision-26 bindings, including refusal of both starter pictures. The correction retains those positive original-byte/lease checks and adds an older-snapshot refusal alongside the existing newer-snapshot refusal. This is source compatibility evidence; actual decoding, play and public acceptance remain separate gates. The dated preparation account below records its earlier source boundary.
+
+## Historical preparation
+
 Internal P08 preparation on static composition `1817377c00049874eb8ab3f47f0b630894ba28f8`. This adopts only the reviewed painter/lease and their tests from `e5b2b91e480b235a6c24ba1fd44ba6e42415c743`, with the historical evidence retained byte-exact in `verification/cross-mode/p08-a/team-presentation/`. Its 107-case pair remains evidence for that earlier source.
 
 `game/couch/coop-picture-bindings.mjs` supplies two immutable identities to the existing injected lease. The complete canonical starter pack is `relay-rescue-starter@2`, SHA-256 `51735f71d1ac5c7f9dfe72d3032ea78d48a8113179385132fb4aec03078a32d5`. The accepted prepared snapshot is `fpv@19`, with collection `null`.
