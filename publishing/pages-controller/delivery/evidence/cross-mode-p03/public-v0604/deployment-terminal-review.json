@@ -1,0 +1,31 @@
+{
+  "status": "PAGES_SUCCESS_ACTUAL_INTAKE_PROPOSED",
+  "runId": 35239952497,
+  "controller": "1298acb1dbdef3a96b5a690c171fee754794c26c",
+  "tree": "961bf6d7da2159071519172b3de8583a16cca139",
+  "observationLabel": "before-1",
+  "observation": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/hosted-observation-before-1/record.json",
+    "bytes": 3703,
+    "sha256": "abb4572ba7013fe248328a433322c7b9e795733e4b24d7a456fe32779bd5c420"
+  },
+  "deploymentId": 6506175017,
+  "latestSuccessStatusId": 18482014233,
+  "smallReceipt": {
+    "id": 10504568890,
+    "bytes": 130821,
+    "sha256": "80dd5ec781909e04e87252c1c60582359e3cd42806d469515c4e3167afccebcc"
+  },
+  "request": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/intake-request.proposed.json",
+    "bytes": 1195,
+    "sha256": "ffaae202f9e023da19bc555e9a7a6469785df1391a4dd807aa3ba30fd35d56b9"
+  },
+  "publishedOriginal": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/published-release.original.json",
+    "bytes": 16891,
+    "sha256": "30fd4feba63521a90c7d250a7dc7eae05a8e8c7e6c3253b47f1900b41d4c91c9"
+  },
+  "artifactDownloaded": false,
+  "scope": "Actual terminal hosted metadata only. Intake/root binding/public HTTP/native acceptance remain separate."
+}

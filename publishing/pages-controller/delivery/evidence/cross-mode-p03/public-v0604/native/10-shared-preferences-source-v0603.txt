@@ -1,0 +1,109 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: TACTICAL EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 0.0%
+    - emphasis: TARGET 58%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:00
+    - generic: SCORE
+    - strong: "00000"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving."
+    - region "Mission details":
+      - paragraph: MISSION 02
+      - heading "Relay Orchard" [level=1]
+      - paragraph: Reveal 58% · 1 required relay.
+      - paragraph: Standard difficulty.
+    - button "Load saved flight →"
+    - button "Continue campaign →"
+    - button "Learn by playing"
+    - button "Mission brief"
+    - button "Main menu"
+    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.
+    - strong: Ready for launch
+    - generic: "Relay: 0 / 1"
+    - status: Choose your route. Open Missions → Mission brief for guidance.
+    - status
+- dialog "Flight settings.":
+  - button "Close settings": ×
+  - paragraph: TUNE YOUR ARCADE
+  - heading "Flight settings." [level=2]
+  - tablist "Settings categories":
+    - tab "Controls"
+    - tab "Audio"
+    - tab "Display & accessibility" [active] [selected]
+    - tab "Game data"
+  - tabpanel "Display & accessibility":
+    - heading "Display & accessibility" [level=3]
+    - paragraph: Readable text, terrain and comfortable motion.
+    - text: Text style
+    - combobox "Text style":
+      - option "Theme font"
+      - option "Plain" [selected]
+    - text: Text size
+    - combobox "Text size":
+      - option "Standard"
+      - option "Large" [selected]
+    - text: Menu colours
+    - combobox "Menu colours":
+      - option "Automatic" [selected]
+      - option "Ukrainian blue & yellow"
+    - text: Menu ornaments
+    - combobox "Menu ornaments":
+      - option "Off"
+      - option "Subtle" [selected]
+      - option "Rich"
+    - status
+    - text: Terrain detail
+    - combobox "Terrain detail":
+      - option "Balanced detail" [selected]
+      - option "Small pixel tiles"
+      - option "Larger landmarks"
+    - checkbox "Show grid guides"
+    - text: Show grid guides
+    - checkbox "Reduced effects"
+    - text: Reduced effects
+    - paragraph
+    - status
+    - paragraph: Reduced effects softens movement and celebration effects. Every direction tap keeps you moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate controls.
+- dialog "REVEAL / LINE":
+  - paragraph: FPV FIELD KIT / FLIGHT READY
+  - heading "REVEAL / LINE" [level=1]:
+    - text: REVEAL
+    - generic: / LINE
+  - navigation "Game mode":
+    - strong: Solo
+    - generic: One player
+    - link "Versus Two rival boards":
+      - /url: couch/?return=solo
+      - strong: Versus
+      - generic: Two rival boards
+    - link "Team One shared arena":
+      - /url: couch/relay-rescue.html?return=solo
+      - strong: Team
+      - generic: One shared arena
+  - navigation "Main menu":
+    - button "Continue":
+      - generic: Continue
+      - generic: →
+    - button "Missions"
+    - button "Collection"
+    - button "Settings"
+    - button "Workshop"
+    - link "Release explorer Play another edition":
+      - /url: https://mekhovov.github.io/revealline/releases/
+      - text: Release explorer
+      - generic: Play another edition
+  - paragraph: Continue · First Signal · Relay Orchard
+  - paragraph: Choose a flight. Trace a path. Close the line.
+  - paragraph: Version v0.60.3
+  - paragraph:
+    - text: HANGAR 01
+    - generic: FIRST LIGHT

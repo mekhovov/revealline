@@ -1,0 +1,49 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-19",
+  "infrastructureCommit": "397a6069022ce1333ca332b07df86e05b239a2fd",
+  "deploymentId": 6505031581,
+  "versions": [
+    "v0.60.3"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-19/initial-v0603/native/retained-player-journey.json",
+      "sha256": "738b2c88bdbff1136948e775ff89e52d58176f4d9ae224a7c8428f217fb3ed85"
+    },
+    {
+      "path": "evidence/archive-19/initial-v0603/native/root-native-review.json",
+      "sha256": "91a797e4d609508eef21a1e3160d18bf23380f01161b4fb8fb4e3753b0a0f769"
+    },
+    {
+      "path": "evidence/archive-19/initial-v0603/native/retained-title.png",
+      "sha256": "b0a844123561d7e0902e3b9d6d110a94fb2047596ff665bc192f7ae32c7a96b1"
+    },
+    {
+      "path": "evidence/archive-19/initial-v0603/root-acceptance.json",
+      "sha256": "2bccd44e24b949b1f0f09eebe31d395f4169e6a8559edec05826be38c83ce013"
+    },
+    {
+      "path": "evidence/archive-19/initial-v0603/originals.zip",
+      "sha256": "f6d44405c335655d25a36f39a5fd7a09773fa49e94e28d2e8baa1a8ffaf8ce25"
+    },
+    {
+      "path": "evidence/archive-19/initial-v0603/originals-index.json",
+      "sha256": "3432b0bba2b8031da13a314282363c0af3517ba673a15839eedf05634303b2d6"
+    }
+  ],
+  "scope": "Root accepted historical online v0.60.3 retention at the exact stated deployment. Actual title Continue loaded the existing Relay Orchard profile at 52.2%, 3 lives and score 8,660; keyboard Pause/Resume and semantic UI clicks for main menu/Release explorer reached canonical main catalog Current v0.60.3, and browser Back restored retained title/Continue. Main and Archive19 use the same https://mekhovov.github.io origin and observed versioned profile; no cross-origin migration or fresh profile was established. No new cut/win, complete keyboard/controller-only matrix, fresh offline, physical controller/touch, whole-screen geometry, full P03/P05 or new-game-release acceptance. Native progress wording in the original record predates the separately completed HTTP acceptance; originals remain unchanged.",
+  "observationScopes": [
+    {
+      "version": "v0.60.3",
+      "nativeInfrastructureCommit": "397a6069022ce1333ca332b07df86e05b239a2fd",
+      "nativeDeploymentId": 6505031581,
+      "freshBrowserRun": true,
+      "evidencePath": "evidence/archive-19/initial-v0603/native/retained-player-journey.json",
+      "observed": "Actual online Continue/Pause/Resume/title/explorer/main catalog/Back. Mixed keyboard and semantic UI clicks; existing same-origin release-v0.60.3 profile, not a fresh-profile or migration trial."
+    }
+  ],
+  "phaseAccepted": false
+}

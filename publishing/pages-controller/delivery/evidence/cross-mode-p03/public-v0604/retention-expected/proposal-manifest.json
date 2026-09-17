@@ -1,0 +1,93 @@
+{
+  "source": "65a6efcb3bfabf8458702cca452c8120fa756471",
+  "status": "CACHE_ONLY_SCOPED_ROOT_ACCEPTED_RETENTION_CANDIDATE",
+  "files": [
+    {
+      "path": "publishing/pages-controller/allocations.json",
+      "bytes": 3716,
+      "sha256": "c07962b9d5b12971026ae1961050a657cf16cc0b0c2aea077892064dd8eea5ff"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/README.md",
+      "bytes": 3017,
+      "sha256": "6dff2478b09caadc8fb4d634edcfef058b375acaef2b3bf80d594b0fc27e0d9b"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/browser-admission.json",
+      "bytes": 2692,
+      "sha256": "a95305d5420ce628384bd48aa0ab9b028256bc8c95760ccafdfc0230c6cb5b94"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/expected-inventory.json",
+      "bytes": 142237,
+      "sha256": "04eb465832be8b5ed769a11953e766a84c3a408eec6c85486d56cf4537e84719"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/hosted-completion.json",
+      "bytes": 1088,
+      "sha256": "75c3c58644145ed89ef837af8d02a27be4c9615cf5c39c77cc7c3898482e1b58"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/http-report.json",
+      "bytes": 1343,
+      "sha256": "62ace1926a8bf23e6b10cd1db1a256f16caaddb2b654be8e45170c8122970ae3"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/native/retained-player-journey.json",
+      "bytes": 41746,
+      "sha256": "738b2c88bdbff1136948e775ff89e52d58176f4d9ae224a7c8428f217fb3ed85"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/native/retained-title.png",
+      "bytes": 96448,
+      "sha256": "b0a844123561d7e0902e3b9d6d110a94fb2047596ff665bc192f7ae32c7a96b1"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/native/root-native-review.json",
+      "bytes": 1689,
+      "sha256": "91a797e4d609508eef21a1e3160d18bf23380f01161b4fb8fb4e3753b0a0f769"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/originals-index.json",
+      "bytes": 48192,
+      "sha256": "3432b0bba2b8031da13a314282363c0af3517ba673a15839eedf05634303b2d6"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/originals.zip",
+      "bytes": 654264,
+      "sha256": "f6d44405c335655d25a36f39a5fd7a09773fa49e94e28d2e8baa1a8ffaf8ce25"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/root-acceptance.json",
+      "bytes": 1228,
+      "sha256": "2bccd44e24b949b1f0f09eebe31d395f4169e6a8559edec05826be38c83ce013"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/row-review.json",
+      "bytes": 12341,
+      "sha256": "268b6e15a1f630c6a3331073772e5385a317fa93ac3456042ad4b1d044610f48"
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-19/initial-v0603/source-lock.json",
+      "bytes": 1428,
+      "sha256": "bb6f1e0d77047f99abcf1ef7b5a88b487fa84e381e327be5b42aa9fcbb3e4630"
+    },
+    {
+      "path": "publishing/pages-controller/publication.json",
+      "bytes": 116113,
+      "sha256": "0bd063a5f7f5397fb137decb6cbe4959918143c6d4a822f0b20dea235b18db1d"
+    }
+  ],
+  "evidenceFiles": 13,
+  "newAdmissionPins": 13,
+  "existingAdmissionsPreserved": 18,
+  "existingAdmissionPinsPreserved": 517,
+  "currentSelectorUnchanged": "v0.60.3",
+  "catalogEntriesUnchanged": 74,
+  "originalsMembers": 167,
+  "originalsBytes": 2484374,
+  "originalsZipBytes": 654264,
+  "browserBindingReviewed": true,
+  "phaseAccepted": false,
+  "sourceWorktreeOrIndexModified": false
+}
