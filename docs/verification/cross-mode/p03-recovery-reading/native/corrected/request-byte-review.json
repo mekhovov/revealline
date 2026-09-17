@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "at": "2026-09-17T13:36:10.762376+00:00",
+  "source": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "totalRows": 705,
+  "successRows": 705,
+  "distinctBodies": 319,
+  "explicitFaultRows": 0,
+  "delayedRequestRows": 0,
+  "allSuccessfulBodiesMatchExactSourceOrReviewedOverrides": true,
+  "requestLogSha256": "adcd91336d8f0515327a7ef146be5d259f74154da160d61dcb6e47699b05daf6",
+  "scope": "Byte provenance for observed local requests only; native behavior remains separately recorded"
+}

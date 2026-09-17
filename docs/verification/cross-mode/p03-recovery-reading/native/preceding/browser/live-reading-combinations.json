@@ -1,0 +1,30 @@
+{
+  "themeLarge": {
+    "bodyFont": "\"Field Kit UI\", \"Field Kit Mono\", system-ui, sans-serif",
+    "face": "pixel",
+    "heading": 736,
+    "headingFont": "\"Field Kit Display\", \"Field Kit UI\", sans-serif",
+    "size": "large",
+    "status": "Choose Find profiles to inspect stored channel names."
+  },
+  "themeStandard": {
+    "face": "pixel",
+    "fontSize": "18px",
+    "size": "standard",
+    "status": "Choose Find profiles to inspect stored channel names."
+  },
+  "plainStandard": {
+    "face": "plain",
+    "fontSize": "18px",
+    "size": "standard",
+    "status": "Choose Find profiles to inspect stored channel names."
+  },
+  "plainLarge": {
+    "effects": "reduced",
+    "face": "plain",
+    "fontSize": "22px",
+    "size": "large",
+    "status": "Choose Find profiles to inspect stored channel names."
+  },
+  "scope": "Same-origin normal game controls; status unchanged. No pending read/prepared download or physical system preference exercised."
+}

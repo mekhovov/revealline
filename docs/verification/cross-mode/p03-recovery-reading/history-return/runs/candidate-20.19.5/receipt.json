@@ -1,0 +1,32 @@
+{
+  "label": "candidate-20.19.5",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/profile-recovery-startup-navigation.test.mjs",
+    "game/test/profile-recovery-display.test.mjs",
+    "game/test/profile-recovery-view.test.mjs",
+    "game/test/profile-original-recovery-view.test.mjs",
+    "game/test/tool-display-restoration.test.mjs",
+    "game/test/display-preferences.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-history-return-63796aab/fixture",
+  "startedAt": "2026-09-17T13:52:01.007759+00:00",
+  "elapsedSeconds": 1.695,
+  "exitCode": 0,
+  "expectedExitCode": 0,
+  "timedOut": false,
+  "inputsUnchanged": true,
+  "inputCount": 95,
+  "inputBytes": 1155888,
+  "totals": {
+    "tests": 92,
+    "pass": 92,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

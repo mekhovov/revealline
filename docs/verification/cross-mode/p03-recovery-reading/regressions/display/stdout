@@ -1,0 +1,165 @@
+TAP version 13
+# Subtest: Recovery adopts saved reading settings and system reduction before held release information
+not ok 1 - Recovery adopts saved reading settings and system reduction before held release information
+  ---
+  duration_ms: 54.232292
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:182:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   effects: undefined,
+    +   textFace: undefined,
+    +   textSize: undefined
+    -   effects: 'reduced',
+    -   textFace: 'plain',
+    -   textSize: 'large'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    textFace: 'plain'
+    textSize: 'large'
+    effects: 'reduced'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:189:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Recovery reading policy survives application loading failure and the existing Back remains usable
+not ok 2 - Recovery reading policy survives application loading failure and the existing Back remains usable
+  ---
+  duration_ms: 5.459167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:203:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   effects: undefined,
+    +   textFace: undefined,
+    +   textSize: undefined
+    -   effects: 'reduced',
+    -   textFace: 'plain',
+    -   textSize: 'large'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    textFace: 'plain'
+    textSize: 'large'
+    effects: 'reduced'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:212:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Recovery display entry works independently of an unavailable application graph and never writes denied storage
+not ok 3 - Recovery display entry works independently of an unavailable application graph and never writes denied storage
+  ---
+  duration_ms: 1.106834
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:221:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   effects: undefined,
+    +   textFace: undefined,
+    +   textSize: undefined
+    -   effects: 'reduced',
+    -   textFace: 'pixel',
+    -   textSize: 'standard'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    textFace: 'pixel'
+    textSize: 'standard'
+    effects: 'reduced'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:224:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: shared updates preserve Recovery selection, prepared original bytes, live reads and focused actions
+not ok 4 - shared updates preserve Recovery selection, prepared original bytes, live reads and focused actions
+  ---
+  duration_ms: 6.165959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:233:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   effects: undefined,
+    +   textFace: undefined,
+    +   textSize: undefined
+    -   effects: 'reduced',
+    -   textFace: 'plain',
+    -   textSize: 'large'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    textFace: 'plain'
+    textSize: 'large'
+    effects: 'reduced'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:285:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Recovery display lifecycle rereads missed settings once and terminal exit retires the owner
+not ok 5 - Recovery display lifecycle rereads missed settings once and terminal exit retires the owner
+  ---
+  duration_ms: 1.020584
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:311:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   effects: undefined,
+    +   textFace: undefined,
+    +   textSize: undefined
+    -   effects: 'reduced',
+    -   textFace: 'plain',
+    -   textSize: 'large'
+      }
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    textFace: 'plain'
+    textSize: 'large'
+    effects: 'reduced'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-recovery-a13ab970/fixture/game/test/profile-recovery-display.test.mjs:319:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 373.483583

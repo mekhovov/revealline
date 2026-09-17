@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "preimagesMatchCurrentStagedCandidate": true,
+  "patchCheckExit": 0,
+  "runtimeAndTestMatchBothExecutedCohorts": [
+    {
+      "runtime": "20.19.5",
+      "path": "game/profile-recovery.mjs",
+      "bytes": 6995,
+      "sha256": "252d7cbc62c52b0b87fb59bc28a579fcd18229e0231e2760a434ac77e7d65101"
+    },
+    {
+      "runtime": "20.19.5",
+      "path": "game/test/profile-recovery-startup-navigation.test.mjs",
+      "bytes": 19588,
+      "sha256": "db163153b571406f8db2aef9fe71f435d72769b8b32c06b12151df70b609dc5e"
+    },
+    {
+      "runtime": "22.22.2",
+      "path": "game/profile-recovery.mjs",
+      "bytes": 6995,
+      "sha256": "252d7cbc62c52b0b87fb59bc28a579fcd18229e0231e2760a434ac77e7d65101"
+    },
+    {
+      "runtime": "22.22.2",
+      "path": "game/test/profile-recovery-startup-navigation.test.mjs",
+      "bytes": 19588,
+      "sha256": "db163153b571406f8db2aef9fe71f435d72769b8b32c06b12151df70b609dc5e"
+    }
+  ],
+  "worktreeChanged": false
+}

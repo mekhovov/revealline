@@ -1,0 +1,56 @@
+{
+  "commit": "63796aab5bb692578fef77f43fb9fa61050a372b",
+  "tree": "d625be43cf0adfd4643dd67a4c131135c36d41e3",
+  "sourcePrecursor": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "stagedCandidate": {
+    "path": ".cache/p03-recovery-integration-63796aab/staged-files.json",
+    "bytes": 20523,
+    "sha256": "d5f462accb5dae1603f198661473d0a0ade2f27b5258b4ad3f8c9ca39984cb58"
+  },
+  "paths": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "before": {
+        "bytes": 185130,
+        "sha256": "bab9e98dafb29d14e5eb69757c336bb6458d1e5e8a07a61eed6b55e999846f84"
+      },
+      "after": {
+        "bytes": 186337,
+        "sha256": "7b6f2e2cf6b794ded181eb850c00e9bd8647d7740b64d1e89124bd917d4115ad"
+      }
+    },
+    {
+      "path": "docs/recovery-startup-navigation.md",
+      "before": {
+        "bytes": 11596,
+        "sha256": "7d17e8dd19f732364ba37fc643ac8fea3b577ec44fc1afacab1b236a07904efc"
+      },
+      "after": {
+        "bytes": 14403,
+        "sha256": "52bae2d53e4281f17e883314d35d8ca3e0de56dd4471d7c58aa3acf360d7c62d"
+      }
+    },
+    {
+      "path": "game/profile-recovery.mjs",
+      "before": {
+        "bytes": 6669,
+        "sha256": "0626d7917b4c237a88409702c4c54417d3ae6a2df91fdf0575aecd8e3f6adc10"
+      },
+      "after": {
+        "bytes": 6995,
+        "sha256": "252d7cbc62c52b0b87fb59bc28a579fcd18229e0231e2760a434ac77e7d65101"
+      }
+    },
+    {
+      "path": "game/test/profile-recovery-startup-navigation.test.mjs",
+      "before": {
+        "bytes": 16636,
+        "sha256": "5ea626e5baf7df50a7a2507f34abc8d4f76ae393815a55613c6f6ca20ef90353"
+      },
+      "after": {
+        "bytes": 19588,
+        "sha256": "db163153b571406f8db2aef9fe71f435d72769b8b32c06b12151df70b609dc5e"
+      }
+    }
+  ]
+}

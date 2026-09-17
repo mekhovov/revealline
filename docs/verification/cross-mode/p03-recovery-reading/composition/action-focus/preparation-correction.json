@@ -1,0 +1,7 @@
+{
+  "scope": "setup metadata only",
+  "field": "predecessorFixtureBytes",
+  "initial": 1139341,
+  "corrected": 1144784,
+  "explanation": "Initial request inherited the earlier P03 fixture count; execution input manifests and totals were already exact. The late-Back fixture is 1,144,784 bytes before the new tests. No test or runtime body changed."
+}

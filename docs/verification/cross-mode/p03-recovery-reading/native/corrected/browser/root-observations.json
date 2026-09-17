@@ -1,0 +1,27 @@
+{
+  "at": "2026-09-17T13:34:29.618639+00:00",
+  "status": "SCOPED_NATIVE_FOCUS_CORRECTION_VERIFIED",
+  "source": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "pid": 8310,
+  "stopped": true,
+  "scope": "Current candidate keyboard/profile/display correction only, direct troubleshooting URL",
+  "observed": [
+    "Reloaded composed candidate on sameorigin actual release-v0.60.3 profile",
+    "Find completion focuses Review",
+    "Review completion retains Review",
+    "Next Tab then Enter prepares actual profile snapshot and focuses download link",
+    "Separate same-origin Settings keyboard font/size change preserves selected channel,status,and identical preparedbloblink",
+    "Next Tab wraps from download to Back; Escape returns game once with Start focus"
+  ],
+  "limits": [
+    "No actual saved-flight restore,download byte verification,eligible historical original,physicalcontroller/touch,offline/BFcache or 200 percent zoom acceptance",
+    "Pending Cancel timing is modeled in tests; native reads completed tooquickly to inspect Cancel",
+    "Previous startup/layout checks belong to preceding unchanged host/display bytes; earlier actual Find/Review failures remainretained"
+  ],
+  "closedOwnedTabs": [
+    "30",
+    "31",
+    "32"
+  ],
+  "viewportReset": true
+}
