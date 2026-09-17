@@ -1,0 +1,16 @@
+{
+  "status": "ACTUAL_PUBLIC_BINDING_PREPARED_UNREVIEWED",
+  "at": "2026-09-17T19:48:45.504002+00:00",
+  "requestSha256": "013b1984e1385827c8ef2f0ecfaff053fa186a4a3b57a1c6ead673dca1dc0167",
+  "binding": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-a336f183/tools/inputs/e5cb0114bbb80ef53319938b6cad99eb42cd8273/binding.unreviewed.json",
+  "bindingSha256": "b642f1431cc121c527340aefa62ac8b57848756b116c0b1746e4f9ae742d8f6e",
+  "controllerCommit": "e5cb0114bbb80ef53319938b6cad99eb42cd8273",
+  "deploymentId": 6510802918,
+  "runId": 35266528525,
+  "releaseId": 390920301,
+  "files": 2790,
+  "bytes": 639724180,
+  "publicAcceptance": false,
+  "productionAuditExecuted": false,
+  "phaseAccepted": false
+}
