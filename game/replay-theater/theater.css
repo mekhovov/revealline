@@ -411,3 +411,86 @@ textarea {
     margin-bottom: 0;
   }
 }
+
+/* Interface controls stay available while the recording workspace is inert. */
+.field-kit-support .replay-interface {
+  margin-top: 16px;
+  padding: 0 16px 12px;
+  border: 1px solid var(--fk-line);
+  background: var(--fk-panel);
+  color: var(--fk-text);
+  min-width: 0;
+}
+.field-kit-support .replay-interface summary {
+  min-height: 44px;
+  overflow-wrap: anywhere;
+}
+.replay-interface-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 20px;
+  align-items: end;
+}
+.replay-interface-fields label {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.replay-interface-fields select {
+  display: block;
+  min-width: 0;
+  margin-top: 4px;
+}
+.field-kit-support .replay-interface input[type='checkbox'] {
+  width: 44px;
+  height: 44px;
+  min-block-size: 44px;
+  flex: 0 0 44px;
+  margin: 0;
+}
+.field-kit-support .replay-interface-note {
+  margin-top: 10px;
+  color: var(--fk-muted);
+  font-size: var(--fk-text-secondary);
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.field-kit-support #replay-display-status {
+  color: var(--fk-text);
+  padding: 8px 12px;
+  border-inline-start: 3px solid var(--fk-amber);
+}
+
+/* These readouts are host text, not lettering baked into the recorded art. */
+body.field-kit.field-kit-support[data-field-kit-page='replay'] .readouts {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.field-kit-support :is(.badge, .notice) {
+  font-size: var(--fk-text-secondary);
+  font-weight: 500;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.field-kit-support :is(#run-readout, #transport-status, .checkpoint, .quiet, .smallprint) {
+  font-size: var(--fk-text-secondary);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+body.field-kit[data-field-kit-page='replay'] textarea,
+.field-kit-support .event-list,
+.field-kit-support .event-list li {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-secondary);
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 620px) {
+  .replay-interface-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
