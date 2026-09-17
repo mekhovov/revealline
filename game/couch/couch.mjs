@@ -21,6 +21,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
+import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
@@ -52,9 +53,12 @@ const audioPreferences = createAudioPreferences({
 });
 const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
   $('race-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
+  $('race-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+  $('race-quick-sound').setAttribute('aria-pressed', String(!muted));
   $('race-master-volume').value = volume;
 });
 $('race-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
+$('race-quick-sound').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
 $('race-master-volume').onchange = () =>
   audioPreferences.setVolume(Number($('race-master-volume').value));
 const displayPreferences = createDisplayPreferences({
@@ -1117,6 +1121,11 @@ try {
     'race-installed-refresh',
     'race-focus',
     'race-options',
+    'race-quick-sound',
+    'race-settings-tab-controls',
+    'race-settings-tab-audio',
+    'race-settings-tab-display',
+    'race-settings-tab-data',
     'race-help',
     'race-solo-return',
     'race-level',
@@ -1154,6 +1163,7 @@ try {
     getDefaultFocus: () => shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
+    ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) => menuIds.has(element.id),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
     getReadingPrompt: readingPrompt,

@@ -1,5 +1,7 @@
 # RevealLine: delivery plan and remaining work
 
+**Current implementation authority (17 September 2026):** [revised whole-game execution plan](whole-game-ux-plan.md). Recovery v0.60.4 is accepted within its scoped gate. Motion v0.60.5 is finishing publication; shared Settings v0.60.6 is being integrated on `codex/global-settings`. Neither candidate is public acceptance of P03/P05. The revised plan controls sequencing; the preceding delivery view below retains its evidence and outstanding requirements.
+
 Updated 17 September 2026. The [execution register](cross-mode-execution.md) is authoritative; this page is its short, current view. Historical reports retain their original dates and scope.
 
 **Accepted public baseline: [v0.60.4](https://mekhovov.github.io/revealline/releases/v0.60.4/site/game/).** P00 integration, P01 loading feedback and P02-A master sound controls are accepted within their stated gates. P03 navigation and P05 presentation remain partial. The game is playable, but the full production programme and public-release qualification are not complete.

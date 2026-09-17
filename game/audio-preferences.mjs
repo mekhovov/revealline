@@ -67,7 +67,7 @@ export function createAudioPreferences({
     // Close the mute gate before increasing volume; open it after the fader.
     for (const key of record.muted ? ['muted', 'volume'] : ['volume', 'muted']) {
       const current = audioMaster.snapshot();
-      if (current.revision !== revision) return false;
+      if (disposed || current.revision !== revision) return false;
       if (current[key] === record[key]) continue;
       audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](record[key]);
       revision++;
@@ -87,19 +87,24 @@ export function createAudioPreferences({
   }
   const persist = () => {
     try {
-      if (!writable()) {
+      const allowed = writable();
+      if (disposed) return;
+      if (!allowed) {
         unsaved = true;
         notify('Sound changes apply only to this session; saving is disabled here.');
         return;
       }
       const { muted, volume } = audioMaster.snapshot(),
         storage = getStorage();
+      if (disposed) return;
       if (!storage) throw new Error('Storage unavailable.');
       storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify(values({ muted, volume })));
+      if (disposed) return;
       stored = true;
       unsaved = false;
       notify('');
     } catch {
+      if (disposed) return;
       unsaved = true;
       notify('Sound changed for this session, but could not be saved for another page.');
     }
@@ -113,14 +118,18 @@ export function createAudioPreferences({
       audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](value);
     } finally {
       // Output listeners may throw after the authority accepted the intent.
-      if (audioMaster.snapshot().revision !== before.revision) persist();
+      if (!disposed && audioMaster.snapshot().revision !== before.revision) persist();
     }
     return audioMaster.snapshot();
   };
   const receive = (event) => {
     if (disposed || unsaved || event.key !== AUDIO_PREFERENCES_KEY) return;
-    const current = read();
+    const revision = audioMaster.snapshot().revision,
+      current = read();
     if (
+      disposed ||
+      unsaved ||
+      audioMaster.snapshot().revision !== revision ||
       !current.storage ||
       event.storageArea !== current.storage ||
       event.newValue !== current.raw ||
@@ -130,7 +139,19 @@ export function createAudioPreferences({
     stored = true;
     apply(current.value);
   };
+  // Reconcile a restored page with fresh storage rather than a missed event's
+  // payload, without discarding local intent that could not be saved.
+  const restored = (event) => {
+    if (disposed || unsaved || event.persisted !== true) return;
+    const revision = audioMaster.snapshot().revision,
+      current = read();
+    if (disposed || unsaved || audioMaster.snapshot().revision !== revision || !current.value)
+      return;
+    stored = true;
+    apply(current.value);
+  };
   eventTarget?.addEventListener?.('storage', receive);
+  eventTarget?.addEventListener?.('pageshow', restored);
   return Object.freeze({
     setMuted: (value) => change('muted', value),
     setVolume: (value) => change('volume', value),
@@ -152,6 +173,7 @@ export function createAudioPreferences({
       if (disposed) return;
       disposed = true;
       eventTarget?.removeEventListener?.('storage', receive);
+      eventTarget?.removeEventListener?.('pageshow', restored);
     },
   });
 }

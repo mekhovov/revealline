@@ -1,5 +1,6 @@
 import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
+import { attachSettingsPanels } from '../ui/settings-panels.mjs';
 
 const ABILITY = Object.freeze({
   scan: 'Scan',
@@ -11,7 +12,7 @@ const ABILITY = Object.freeze({
 const SCREENS = Object.freeze({
   main: ['race-main', 'race-start'],
   setup: ['race-setup', 'race-level'],
-  options: ['race-options-panel', 'race-text-face'],
+  options: ['race-options-panel', 'race-settings-tab-display'],
   help: ['race-help-panel', 'race-help-read'],
   confirm: ['race-confirm', 'race-confirm-back'],
   leave: ['race-leave-panel', 'race-leave-back'],
@@ -48,7 +49,8 @@ export function createCouchShell({
     preferences = ['auto', 'auto'],
     modality = [coarse ? 'touch' : 'keyboard', coarse ? 'touch' : 'keyboard'],
     shown = [false, false],
-    removers = [];
+    removers = [],
+    settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
   mountModeChoices({
     root: $('race-mode-choices'),
     current: 'versus',
@@ -69,6 +71,7 @@ export function createCouchShell({
     removers.push(() => element.removeEventListener(type, fn));
   };
   function primary() {
+    if (screen === 'options' && settings.primary()) return settings.primary();
     if (screen === 'main' && $('race-start').disabled) {
       const retry = $('race-chapter-retry');
       return retry && !retry.hidden && !retry.disabled ? retry : $('race-focus');
@@ -450,6 +453,7 @@ export function createCouchShell({
     destroy() {
       departure = null;
       destroyed = true;
+      settings.destroy();
       for (const remove of removers) remove();
     },
   };
