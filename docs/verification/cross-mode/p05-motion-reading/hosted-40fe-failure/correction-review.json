@@ -1,0 +1,11 @@
+{
+  "status": "PASS_BOUNDED_TEST_CORRECTION_SOURCE_REVIEW",
+  "at": "2026-09-17T16:31:32.921135+00:00",
+  "path": "game/test/field-kit-surfaces.test.mjs",
+  "bytes": 7375,
+  "sha256": "3e54c19bbac304a1d9b461c6116939c11fa08242217e2c5f5be00e7089303864",
+  "diffBytes": 1657,
+  "diffSha256": "1de5e75ccc2c997cce479d8f93cc40ebca1eb017f9e163d8d3fc9da18f553be9",
+  "review": "The hunk retains the old four runtime/build requirements and adds the five modules introduced by Motion. It requires the dedicated Motion control and independently ordered display entry and excludes the obsolete body-only control hook. It does not change runtime or weaken build/reference validation. No additional finding.",
+  "limits": "Read-only hunk review. No full-file test or actual full build-input closure executed; hosted final-source acceptance remains required."
+}

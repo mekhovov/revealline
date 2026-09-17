@@ -21,7 +21,17 @@ test('Workshop destinations ship their actual authoring runtime and return paths
   ]) {
     assert.ok(files.includes(`authoring/${name}/index.html`), name);
   }
-  for (const name of ['app.js', 'ability-presets.json', 'collection-presets.json', 'styles.css'])
+  for (const name of [
+    'app.js',
+    'ability-presets.json',
+    'collection-presets.json',
+    'styles.css',
+    'display-entry.mjs',
+    'display.mjs',
+    'preview-loop.mjs',
+    'png-preview.mjs',
+    'ability-labels.mjs',
+  ])
     assert.ok(files.includes(`authoring/motion-lab/${name}`), name);
   assert.ok(!files.some((name) => /^authoring\/motion-lab\/test-/.test(name)));
   const refs = await validateBuildReferences(root, files);
@@ -33,7 +43,11 @@ test('Workshop destinations ship their actual authoring runtime and return paths
     'utf8',
   );
   assert.match(motion, /href="\.\.\/\.\.\/game\/"/);
-  assert.match(motion, /data-field-kit-text-size/);
+  assert.match(motion, /data-motion-text-size/);
+  assert.match(motion, /<script type="module" src="\.\/display-entry\.mjs"><\/script>/);
+  // Shared preferences own this control, including startup failure. The generic
+  // body-only adapter must not install a second, independent change listener.
+  assert.doesNotMatch(motion, /data-field-kit-text-size/);
 });
 
 test('settings categories keep the real controls and preferences without starting the flight', async (t) => {
