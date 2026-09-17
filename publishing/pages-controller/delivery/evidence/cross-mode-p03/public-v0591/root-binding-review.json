@@ -1,0 +1,14 @@
+{
+  "source": "206c4b9bdd7bc53aecf818f85a1cbf680814a4e5",
+  "publisher": "5419c020b79b9712f5986699c76f2df9d0f981d0",
+  "tree": "5c61a9299b59b3803289e7353e5880432cc0f83d",
+  "run": 35184596982,
+  "deployment": 6496059255,
+  "ninePinsVerified": true,
+  "exactReviewedMetadata": true,
+  "previousCatalogEntries": 69,
+  "catalogEntries": 70,
+  "files": 2618,
+  "bytes": 638635105,
+  "fullPublicAuditPending": true
+}
