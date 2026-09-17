@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-won-terminal-host.test.mjs"
+  ],
+  "startedAt": "2026-09-17T12:15:17.320442+00:00",
+  "exitCode": 0,
+  "testSha256": "8f506c71d5fe4eab4b20075e98a16006e260cd6f0a30295e56ade3706761ea51",
+  "sourceBase": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "scope": "Complete modified three-case test; full original route diagnostic removed, assertions retained. Finalsource qualification pending.",
+  "stdoutSha256": "34cf9ad5103cbd0c13da9bd733c941f8f88760fa1a80334bf6cbdb5222451a45",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

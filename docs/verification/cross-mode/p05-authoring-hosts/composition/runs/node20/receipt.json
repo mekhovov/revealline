@@ -1,0 +1,23 @@
+{
+  "label": "node20",
+  "startedAt": "2026-09-17T11:52:29.250649+00:00",
+  "elapsedSeconds": 0.4787194169985014,
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/authoring-host-display.test.mjs",
+    "game/test/viewport-startup-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-production-viewport-ece40093/proposal",
+  "nodeVersion": "v20.19.5",
+  "nodeSha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+  "exitCode": 0,
+  "timeout": false,
+  "inputCount": 26,
+  "inputsUnchanged": true,
+  "changed": [],
+  "stdoutSha256": "a63777435e4eba732410a47519d8235e215f2195699c4481b3e4828ed421feb4",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

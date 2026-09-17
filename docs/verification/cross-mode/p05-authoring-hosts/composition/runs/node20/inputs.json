@@ -1,0 +1,106 @@
+{
+  ".prettierrc.json": {
+    "bytes": 73,
+    "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+  },
+  "authoring/library/fpv-pressure-art/originals/orchard-crossing.png": {
+    "bytes": 2999096,
+    "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc"
+  },
+  "authoring/production/browser.mjs": {
+    "bytes": 1017,
+    "sha256": "0bf0e114e9aadebd75690091b6ad592c8a23af5205b536237117c3706e5beb0f"
+  },
+  "authoring/production/index.html": {
+    "bytes": 2328,
+    "sha256": "647cad79b5b4b5c9a0150866c0565dea2538440d9c2d06cbb2e35b7453da4b65"
+  },
+  "authoring/production/model.mjs": {
+    "bytes": 24204,
+    "sha256": "228a554a884fcd8b4cdcb216ec5e7cc3485ff4e53a56dac081a7a1bfde139e80"
+  },
+  "authoring/production/panel.css": {
+    "bytes": 6062,
+    "sha256": "3f9b17f5b1a8718239771110b455d324157607c71f3eb690e0075c78588a07d2"
+  },
+  "authoring/production/panel.mjs": {
+    "bytes": 15720,
+    "sha256": "d1d7e4a32c097a4f3a87f6fba5af1341889b179c4c699e4332edd9ab74967d5a"
+  },
+  "authoring/production/preview.mjs": {
+    "bytes": 5237,
+    "sha256": "aa914b144c96f95d93aa7f4aebdc6a91f462ca676ead3bde598256963a7b0476"
+  },
+  "authoring/production/register.json": {
+    "bytes": 120297,
+    "sha256": "057f86a1a60c873402f7145e0b6d46cb7d3583b4c9129a7bd755976dadc7369d"
+  },
+  "authoring/shared/host-display-entry.mjs": {
+    "bytes": 228,
+    "sha256": "8c5a6b8face306bc396f28066a19b128d9a0b7583b65cc7ed0ed9cd2db1e31bd"
+  },
+  "authoring/shared/host-display.mjs": {
+    "bytes": 1190,
+    "sha256": "1289981737aef8f4e251e723c6dc5cd9834cba968c6052e89be254c05e6fcbf9"
+  },
+  "authoring/viewport-lab/browser.mjs": {
+    "bytes": 3442,
+    "sha256": "a44ca1c60a63720faa33042d4ff0f8f134740890503e28d814cecacad9302526"
+  },
+  "authoring/viewport-lab/index.html": {
+    "bytes": 4984,
+    "sha256": "aef99ad79ea948e190838658c2353098438653131c98b8b9eac230dbb116b733"
+  },
+  "authoring/viewport-lab/lab.css": {
+    "bytes": 6144,
+    "sha256": "720603274b1838a64917489b244d9c0f7c2480706cadc6dbe6e99e6db6dd5ea4"
+  },
+  "game/build-config.json": {
+    "bytes": 5252,
+    "sha256": "f688f4c5c001808151861c87801f311f0fb6a2f3cd6984f68278c71f36acd3d0"
+  },
+  "game/display-preferences.mjs": {
+    "bytes": 8285,
+    "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+  },
+  "game/test/authoring-host-display.test.mjs": {
+    "bytes": 22660,
+    "sha256": "c927c48bf4c719cc8ed940fc93cdf9b3e1c6b0b941342a13857eeaf10696a4d6"
+  },
+  "game/test/helpers/couch-dom.mjs": {
+    "bytes": 10172,
+    "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+  },
+  "game/test/helpers/wait-for.mjs": {
+    "bytes": 595,
+    "sha256": "64a49cd79aa3911096efb2554413a34ca862dcfe7ed5be40ed231343c4f187a3"
+  },
+  "game/test/viewport-startup-host.test.mjs": {
+    "bytes": 26229,
+    "sha256": "81c2f5c58447e722d4541edf33725ea6f2906db428b2e2c4526c45ddb1798f8a"
+  },
+  "game/text-face.mjs": {
+    "bytes": 807,
+    "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0"
+  },
+  "game/text-size.mjs": {
+    "bytes": 251,
+    "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+  },
+  "game/ui/direct-tool-launch.js": {
+    "bytes": 2507,
+    "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+  },
+  "game/ui/operation-status.mjs": {
+    "bytes": 4173,
+    "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab"
+  },
+  "package-lock.json": {
+    "bytes": 36138,
+    "sha256": "93762c9a45c0e7b5151e7d66c9e81d03ec4ef9cb4c724df84b102e18d80d90f2"
+  },
+  "package.json": {
+    "bytes": 1819,
+    "sha256": "b777dea22b5f82e761c0b3a3584027aff9584be69bca5b18d47c2d22b80c404e"
+  }
+}

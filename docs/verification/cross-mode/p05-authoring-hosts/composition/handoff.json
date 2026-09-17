@@ -1,0 +1,114 @@
+{
+  "format": "revealline-bounded-source-adoption-handoff.v1",
+  "at": "2026-09-17T11:54:48.229475+00:00",
+  "status": "READY_FOR_ROOT_INTEGRATION_REVIEW",
+  "source": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "sourceTree": "32b36e6e8fc605911b2cb98cd8f67c97b8f4e214",
+  "patchMatchesReviewedPredecessor": true,
+  "existingPreimagesMatched": 5,
+  "newPathsAbsent": 4,
+  "inputCount": 26,
+  "logicalProposalBytes": 3308910,
+  "completeAffectedTestsPerRuntime": 24,
+  "runtimes": [
+    "20.19.5",
+    "22.22.2"
+  ],
+  "failures": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0,
+  "testedInputBodiesUnchanged": true,
+  "originalCandidateInputsUnchanged": true,
+  "sourceIndexRemoteVersionUntouched": true,
+  "newRuntimeFindings": [],
+  "nativeAndIntegratedReleaseGatesPending": true,
+  "changedPaths": [
+    "authoring/production/index.html",
+    "authoring/production/panel.css",
+    "authoring/shared/host-display-entry.mjs",
+    "authoring/shared/host-display.mjs",
+    "authoring/viewport-lab/browser.mjs",
+    "authoring/viewport-lab/index.html",
+    "authoring/viewport-lab/lab.css",
+    "game/test/authoring-host-display.test.mjs",
+    "game/test/viewport-startup-host.test.mjs"
+  ],
+  "files": [
+    {
+      "path": "candidate.patch",
+      "bytes": 61926,
+      "sha256": "1c6c1294303ebf43d8c18ca0504802602cb323d4c5e059f799852cd926c21fc4"
+    },
+    {
+      "path": "admission.json",
+      "bytes": 13630,
+      "sha256": "b39790c67b8f257c530764319517139b53b915c46f51e98193a374c90b9a5afd"
+    },
+    {
+      "path": "apply-check.json",
+      "bytes": 363,
+      "sha256": "be55565dfbd272e3c15fe6674c3ef2f6167c1f5369d54a31e671080ffad6a4b7"
+    },
+    {
+      "path": "guide-proposal.md",
+      "bytes": 4309,
+      "sha256": "ed194dd71b6b9a2ec71d0bfdf125849d78cbb14d58c50729c9cf4586e73f91be"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6019,
+      "sha256": "dc09b091cf30ac29885a2f6ce6dfb1fdb07ba718b0344ab540d762c987e4a18f"
+    },
+    {
+      "path": "run_bounded.py",
+      "bytes": 1737,
+      "sha256": "3e1f3140e29e1b33c9ee1dd1bf44b5760e2792425467066fa438bcae113e6525"
+    },
+    {
+      "path": "runs/format-check/receipt.json",
+      "bytes": 854,
+      "sha256": "9a793df4092c2075d35c274e5d40498ce64f7ea6c086e2fb32d28bf81eb1ac55"
+    },
+    {
+      "path": "runs/node20/receipt.json",
+      "bytes": 883,
+      "sha256": "3384b6b09594745fb3caca37224c7a89f5a0337686d59fea9ac39f08d30d092c"
+    },
+    {
+      "path": "runs/node20/inputs.json",
+      "bytes": 3729,
+      "sha256": "cd9a90030c092a7e9955bd6eae9c54c440daaff5fd7436f4eea21c34920e3993"
+    },
+    {
+      "path": "runs/node20/stdout.log",
+      "bytes": 6270,
+      "sha256": "a63777435e4eba732410a47519d8235e215f2195699c4481b3e4828ed421feb4"
+    },
+    {
+      "path": "runs/node20/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runs/node22/receipt.json",
+      "bytes": 882,
+      "sha256": "6310be9a95844906276c03da70316096dc6f589aa0b365933d3f782b354d7193"
+    },
+    {
+      "path": "runs/node22/inputs.json",
+      "bytes": 3729,
+      "sha256": "cd9a90030c092a7e9955bd6eae9c54c440daaff5fd7436f4eea21c34920e3993"
+    },
+    {
+      "path": "runs/node22/stdout.log",
+      "bytes": 6636,
+      "sha256": "56da9cedee7c239167493c481851c5abebb040f176fbe9a7ec5fe56a6c38a038"
+    },
+    {
+      "path": "runs/node22/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
