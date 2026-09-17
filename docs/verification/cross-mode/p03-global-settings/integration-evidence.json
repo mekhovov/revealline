@@ -1,0 +1,631 @@
+{
+  "format": "revealline-settings-integration-evidence.v1",
+  "recordedAt": "2026-09-17T18:12:55.055183+00:00",
+  "scope": "Scoped local source-composition checks, not full release qualification or public acceptance.",
+  "source": {
+    "committedBase": "a506b0606224c771353eb6f6160cf3a42dea662b",
+    "tree": "98c39ee0537e4b1dd0b1784e7a85d73148e78458",
+    "preRebaseSettings": "c3fb3296085656d61b3a296e2f37c1520fd322e0",
+    "reviewedUtilityBase": "e4129b46e5d9e66563fb01b324b8855660298715",
+    "motionMergedSource": "3f94acc62cf6d85fd7c930616747e524e06f8d63",
+    "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-global-settings",
+    "uncommittedFollowups": [
+      {
+        "path": "docs/delivery-priorities.md",
+        "bytes": 36803,
+        "sha256": "66380c464905067c908a4870baa89ab139cef240acd4b7e68be380d2119bf86c",
+        "headSha256": "2e9dfab9c5c3c250c61fff8212927804c11a8b8cada40e0988d09191b2734d61",
+        "equalsHead": false
+      },
+      {
+        "path": "docs/player-roadmap.md",
+        "bytes": 12683,
+        "sha256": "57396832806651c8c611deea86951781687da17c21798379d444678f1c69fdd4",
+        "headSha256": "ee1ccbcaa8372597295064b806dc4636fab58412bde31f736f1f5127811f1e0e",
+        "equalsHead": false
+      },
+      {
+        "path": "docs/whole-game-ux-plan.md",
+        "bytes": 12696,
+        "sha256": "eb4e84863335ad32d97359f7f9948e3595541ddb4b606276167ed7ae7cdca400",
+        "headSha256": "2d9ddf2e089d59ff5f789cdc36acd2d96cb8a5138bfc8941a36d2837a41ed4ed",
+        "equalsHead": false
+      },
+      {
+        "path": "game/ui/field-kit-copy.mjs",
+        "bytes": 7159,
+        "sha256": "121d7252b783e2ecc0e835dd0c0c897f8746714d04568345ff7e47bcd3610c78",
+        "headSha256": "78ae259f4281aae684f70a6c0e0a0754ee9654e795a132de1c7812ccbbe136e5",
+        "equalsHead": false
+      }
+    ],
+    "bindingBoundary": "These hashes were collected after the runs. The execution owner identifies a506b060 plus these four followups as the cohort inputs. No independently captured immutable full-worktree before/after inventory is claimed. The new evidence files and appended README were created afterward."
+  },
+  "cohort": {
+    "completeTestFiles": 31,
+    "fileList": {
+      "path": "integrated-cohort-files.json",
+      "bytes": 1415,
+      "sha256": "5d3b280a566f10d2d62c3a8e30798aae6a5218138fef3d41df48316d2d679f59",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/integrated-cohort-files.json"
+    },
+    "postRunInputHashes": [
+      {
+        "path": "authoring/motion-lab/test-ability.mjs",
+        "bytes": 13260,
+        "sha256": "8d4cb0a495296a6a1f984a0268c51f67838550e8a6b2f0db61fd78c323107efe",
+        "headSha256": "8d4cb0a495296a6a1f984a0268c51f67838550e8a6b2f0db61fd78c323107efe",
+        "equalsHead": true
+      },
+      {
+        "path": "authoring/motion-lab/test-animation.mjs",
+        "bytes": 6606,
+        "sha256": "52da87ee5318cf2895a6471d5c2a116a0b85201986782b0a040cff9868540026",
+        "headSha256": "52da87ee5318cf2895a6471d5c2a116a0b85201986782b0a040cff9868540026",
+        "equalsHead": true
+      },
+      {
+        "path": "authoring/motion-lab/test-collection.mjs",
+        "bytes": 14124,
+        "sha256": "c0dabc20bcc99e546299acdac5275eba48e1cdc7475c653ae1d04888ae14f625",
+        "headSha256": "c0dabc20bcc99e546299acdac5275eba48e1cdc7475c653ae1d04888ae14f625",
+        "equalsHead": true
+      },
+      {
+        "path": "authoring/motion-lab/test-grid-motion.mjs",
+        "bytes": 7908,
+        "sha256": "789be101fd605cd0bc7bce94aae82288c8853def33ce5c02ac265800726e3ca3",
+        "headSha256": "789be101fd605cd0bc7bce94aae82288c8853def33ce5c02ac265800726e3ca3",
+        "equalsHead": true
+      },
+      {
+        "path": "authoring/motion-lab/test-motion.mjs",
+        "bytes": 6625,
+        "sha256": "9a5725c2a4abe811b346c37a97af7384a15c60b2243f6374a158a0532bc20c25",
+        "headSha256": "9a5725c2a4abe811b346c37a97af7384a15c60b2243f6374a158a0532bc20c25",
+        "equalsHead": true
+      },
+      {
+        "path": "authoring/motion-lab/test-steering.mjs",
+        "bytes": 4629,
+        "sha256": "945733935de0688fb7a277ecb20a6f6261d08aedbb25faac5b4ab1ef95adb45b",
+        "headSha256": "945733935de0688fb7a277ecb20a6f6261d08aedbb25faac5b4ab1ef95adb45b",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/direct-tool-launch.test.mjs",
+        "bytes": 3997,
+        "sha256": "e98bc5a6c93f10025a9efa38ed2c3a51af7993cb46e1ed5b790a8abda95d018a",
+        "headSha256": "e98bc5a6c93f10025a9efa38ed2c3a51af7993cb46e1ed5b790a8abda95d018a",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/direct-tools-loading.test.mjs",
+        "bytes": 6147,
+        "sha256": "b7668db0337155c78443a91a17615f9d9d32087492e042de7ecaaede955e5f43",
+        "headSha256": "b7668db0337155c78443a91a17615f9d9d32087492e042de7ecaaede955e5f43",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/display-preferences.test.mjs",
+        "bytes": 18290,
+        "sha256": "8e4137bb37ee428da39edb7dcf0a4e350aa069ae5519b98160087db56da6152f",
+        "headSha256": "8e4137bb37ee428da39edb7dcf0a4e350aa069ae5519b98160087db56da6152f",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/motion-lab-display-host.test.mjs",
+        "bytes": 51824,
+        "sha256": "ad08aad89b7e47563e69a599ffe9f54d59a25b17e7175600e20e682dd9a71dbd",
+        "headSha256": "ad08aad89b7e47563e69a599ffe9f54d59a25b17e7175600e20e682dd9a71dbd",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/motion-lab-display-restoration.test.mjs",
+        "bytes": 6923,
+        "sha256": "90da611836f8976c2f85413b44e03e7f754dcdde09fe80f813731052830140a0",
+        "headSha256": "90da611836f8976c2f85413b44e03e7f754dcdde09fe80f813731052830140a0",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/motion-lab-labels.test.mjs",
+        "bytes": 9811,
+        "sha256": "4c3a4b37468de490658a1a2bab101ab8c323b08332b2ca2b35d8303c45dc4d25",
+        "headSha256": "4c3a4b37468de490658a1a2bab101ab8c323b08332b2ca2b35d8303c45dc4d25",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/motion-lab-preview-loop.test.mjs",
+        "bytes": 3004,
+        "sha256": "9ed3470f7e895a93b24a784b51b79c8fa53386d39e18adbfb475131a14aac519",
+        "headSha256": "9ed3470f7e895a93b24a784b51b79c8fa53386d39e18adbfb475131a14aac519",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/motion-lab-render-ability.test.mjs",
+        "bytes": 6272,
+        "sha256": "bf583005f997f8340efb9d4200517c6d8c2ee23daf40b899b927753a9b6ef60e",
+        "headSha256": "bf583005f997f8340efb9d4200517c6d8c2ee23daf40b899b927753a9b6ef60e",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/motion-lab-png-preview.test.mjs",
+        "bytes": 7225,
+        "sha256": "bc5694f6e2622e94764a7c75b21fcead2b74e1d6f0f9e0c847a10a7ff4bd6098",
+        "headSha256": "bc5694f6e2622e94764a7c75b21fcead2b74e1d6f0f9e0c847a10a7ff4bd6098",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/preference-restoration.test.mjs",
+        "bytes": 5437,
+        "sha256": "d4944b1153147558af73b30a147ea7c93e89cb2e895d29e44b0622befe23200c",
+        "headSha256": "d4944b1153147558af73b30a147ea7c93e89cb2e895d29e44b0622befe23200c",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/menu-style-controls.test.mjs",
+        "bytes": 5469,
+        "sha256": "d4564d573785ec37e2647a47ca71bf0443c20e7cd2e73d76c6e0f3e2fdc4453c",
+        "headSha256": "d4564d573785ec37e2647a47ca71bf0443c20e7cd2e73d76c6e0f3e2fdc4453c",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/menu-style-preferences.test.mjs",
+        "bytes": 13332,
+        "sha256": "cff404aaf94608551d6a75a0163944b771fd7558c69f182bd041a75cafe9c214",
+        "headSha256": "cff404aaf94608551d6a75a0163944b771fd7558c69f182bd041a75cafe9c214",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/menu-appearance.test.mjs",
+        "bytes": 13948,
+        "sha256": "18365f2aa3b5b41211d2a3b441b8d0944d1921f313cff77a7aeaa8af7ad3dabb",
+        "headSha256": "18365f2aa3b5b41211d2a3b441b8d0944d1921f313cff77a7aeaa8af7ad3dabb",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/couch-shell.test.mjs",
+        "bytes": 20481,
+        "sha256": "62ee1c426053839a9eb706fc804a8cc4d344c456534a2db936799693dfd56368",
+        "headSha256": "62ee1c426053839a9eb706fc804a8cc4d344c456534a2db936799693dfd56368",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/practice-playground-display.test.mjs",
+        "bytes": 39079,
+        "sha256": "7da7af6e53b18e72cbb957585806ac2d7350b0547f71d8132b067bc7ca49a008",
+        "headSha256": "7da7af6e53b18e72cbb957585806ac2d7350b0547f71d8132b067bc7ca49a008",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/tool-display-restoration.test.mjs",
+        "bytes": 6339,
+        "sha256": "08212436611565e46457e97258ca84c70e891b068ead1e9a714496b50263bc21",
+        "headSha256": "08212436611565e46457e97258ca84c70e891b068ead1e9a714496b50263bc21",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/display-preferences-host.test.mjs",
+        "bytes": 13915,
+        "sha256": "a40629beaf260bbaa7195ba571f780202a647e36aa3963c2bf6764a9518809d4",
+        "headSha256": "a40629beaf260bbaa7195ba571f780202a647e36aa3963c2bf6764a9518809d4",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/menu-style-host.test.mjs",
+        "bytes": 15840,
+        "sha256": "dcb2e30addb5fd99ad4312fe3f604b4b8ff26d79631de1dbc6b952e887e2d674",
+        "headSha256": "dcb2e30addb5fd99ad4312fe3f604b4b8ff26d79631de1dbc6b952e887e2d674",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/shared-settings-solo.test.mjs",
+        "bytes": 7170,
+        "sha256": "d4b8cdc1dc504aec026acba9e84d252e8987b7b0c53fa41378d40d9037d30628",
+        "headSha256": "d4b8cdc1dc504aec026acba9e84d252e8987b7b0c53fa41378d40d9037d30628",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/shared-settings-versus.test.mjs",
+        "bytes": 5173,
+        "sha256": "e8fb9adadd966e1c24163e14b0e703f06761b9b7fd09cdc601995773a03e7669",
+        "headSha256": "e8fb9adadd966e1c24163e14b0e703f06761b9b7fd09cdc601995773a03e7669",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/coop-shared-settings.test.mjs",
+        "bytes": 12948,
+        "sha256": "a48114c7577567950fd8350b75b69559bf8fe69508e24cec0b80fad8df12fcd5",
+        "headSha256": "a48114c7577567950fd8350b75b69559bf8fe69508e24cec0b80fad8df12fcd5",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/field-kit-surfaces.test.mjs",
+        "bytes": 7381,
+        "sha256": "0b55265bbde0542dc74d676f14463607e18661b396848a9ed28811e7b62ff67a",
+        "headSha256": "0b55265bbde0542dc74d676f14463607e18661b396848a9ed28811e7b62ff67a",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/field-kit-flow.test.mjs",
+        "bytes": 13329,
+        "sha256": "64b25b7b74497c3217ed925f243699bd5b0d0887fff391a60e9486caa099b4a1",
+        "headSha256": "64b25b7b74497c3217ed925f243699bd5b0d0887fff391a60e9486caa099b4a1",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/couch-static-picture-host.test.mjs",
+        "bytes": 35913,
+        "sha256": "c8ec3e74798e9058e133873769d8b1d90066185803f0eef85edd81dfb8397f22",
+        "headSha256": "c8ec3e74798e9058e133873769d8b1d90066185803f0eef85edd81dfb8397f22",
+        "equalsHead": true
+      },
+      {
+        "path": "game/test/settings-restoration-host.test.mjs",
+        "bytes": 8342,
+        "sha256": "2215f7d4cd4e532141e72fd1ca8d95f636b3fe601e96c1b04df7485493d32f46",
+        "headSha256": "2215f7d4cd4e532141e72fd1ca8d95f636b3fe601e96c1b04df7485493d32f46",
+        "equalsHead": true
+      }
+    ],
+    "countsAreNotAdditiveAcrossRuntimes": true,
+    "attempts": [
+      {
+        "stage": "before-hydration",
+        "runtimeVersion": "20.19.5",
+        "runtimeEvidence": "Execution owner confirmed exact binary; TAP has no runtime header.",
+        "command": {
+          "binary": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "arguments": [
+            "--max-old-space-size=1024",
+            "--test",
+            "--test-concurrency=1"
+          ],
+          "filesReceipt": "integrated-cohort-files.json"
+        },
+        "counts": {
+          "tests": 398,
+          "pass": 397,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 120255.804083
+        },
+        "log": {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/integrated-node20.log",
+          "bytes": 91333,
+          "sha256": "957621ffc256785e6c4be8ebe439610467c88651a17dace37b51570f7a77030c"
+        },
+        "failures": [
+          {
+            "line": 731,
+            "text": "not ok 145 - reserve catalog labels delayed metadata and fences stale selected image completion"
+          }
+        ],
+        "observedFinalExitCode": null,
+        "exitCodeEvidence": "Failed TAP is retained; exit status is not encoded in this log."
+      },
+      {
+        "stage": "before-hydration",
+        "runtimeVersion": "22.22.2",
+        "runtimeEvidence": "Execution owner confirmed exact binary; TAP has no runtime header.",
+        "command": {
+          "binary": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "arguments": [
+            "--max-old-space-size=1024",
+            "--test",
+            "--test-concurrency=1"
+          ],
+          "filesReceipt": "integrated-cohort-files.json"
+        },
+        "counts": {
+          "tests": 398,
+          "pass": 397,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 104956.654167
+        },
+        "log": {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/integrated-node22.log",
+          "bytes": 97369,
+          "sha256": "96bda480b5310c2d00614397fad4b6e692d2e2c56da744adeeaf618a5c78fd2a"
+        },
+        "failures": [
+          {
+            "line": 875,
+            "text": "not ok 145 - reserve catalog labels delayed metadata and fences stale selected image completion"
+          }
+        ],
+        "observedFinalExitCode": null,
+        "exitCodeEvidence": "Failed TAP is retained; exit status is not encoded in this log."
+      },
+      {
+        "stage": "after-exact-head-hydration",
+        "runtimeVersion": "20.19.5",
+        "runtimeEvidence": "Execution owner confirmed exact binary; TAP has no runtime header.",
+        "command": {
+          "binary": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "arguments": [
+            "--max-old-space-size=1024",
+            "--test",
+            "--test-concurrency=1"
+          ],
+          "filesReceipt": "integrated-cohort-files.json"
+        },
+        "counts": {
+          "tests": 398,
+          "pass": 398,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 109006.066334
+        },
+        "log": {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/integrated-final-node20.log",
+          "bytes": 90528,
+          "sha256": "42cf8bea0aa16945c80c246c40ba6f87e23f670e15b1c597e394f591813b0439"
+        },
+        "failures": [],
+        "observedFinalExitCode": 0,
+        "exitCodeEvidence": "Final sessions 4074 (Node20) / 47828 (Node22) returned 0, confirmed by execution owner."
+      },
+      {
+        "stage": "after-exact-head-hydration",
+        "runtimeVersion": "22.22.2",
+        "runtimeEvidence": "Execution owner confirmed exact binary; TAP has no runtime header.",
+        "command": {
+          "binary": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "arguments": [
+            "--max-old-space-size=1024",
+            "--test",
+            "--test-concurrency=1"
+          ],
+          "filesReceipt": "integrated-cohort-files.json"
+        },
+        "counts": {
+          "tests": 398,
+          "pass": 398,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 95531.662209
+        },
+        "log": {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/integrated-final-node22.log",
+          "bytes": 96525,
+          "sha256": "2d81705e16be22c08c5664a94ef175f8f799267ceb59d83ac310378651111e95"
+        },
+        "failures": [],
+        "observedFinalExitCode": 0,
+        "exitCodeEvidence": "Final sessions 4074 (Node20) / 47828 (Node22) returned 0, confirmed by execution owner."
+      }
+    ]
+  },
+  "sparseFixtureCorrection": {
+    "observedFailure": {
+      "file": "game/test/direct-tools-loading.test.mjs",
+      "declarationLine": 72,
+      "readLine": 77,
+      "test": "reserve catalog labels delayed metadata and fences stale selected image completion",
+      "code": "ENOENT",
+      "missingPath": "authoring/library/reserve-illustrations-catalog/manifest.json"
+    },
+    "correction": "Execution owner hydrated only manifest.json and catalog.mjs from exact HEAD before repeating both complete cohorts. Current byte comparison confirms both match a506b060. This addresses sparse-worktree fixture availability; no runtime/test relaxation is claimed.",
+    "hydratedFiles": [
+      {
+        "path": "authoring/library/reserve-illustrations-catalog/manifest.json",
+        "bytes": 71251,
+        "sha256": "2b6f772031c46a6c59784ea2fffdfb5459900d7913503f7415c5da9cc495b9d2",
+        "headSha256": "2b6f772031c46a6c59784ea2fffdfb5459900d7913503f7415c5da9cc495b9d2",
+        "equalsHead": true
+      },
+      {
+        "path": "authoring/library/reserve-illustrations-catalog/catalog.mjs",
+        "bytes": 5074,
+        "sha256": "a75e3c6ae54ed7f99bcb02e080d9d4aa455e3dc29cc7c86f6f8c0c68c81732ef",
+        "headSha256": "a75e3c6ae54ed7f99bcb02e080d9d4aa455e3dc29cc7c86f6f8c0c68c81732ef",
+        "equalsHead": true
+      }
+    ],
+    "initialCountsPerRuntime": {
+      "tests": 398,
+      "pass": 397,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "finalCountsPerRuntime": {
+      "tests": 398,
+      "pass": 398,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "sourceChecks": [
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exitCode": 0,
+      "exitCodeEvidence": "Execution owner observed exit 0; this text log alone does not encode an exit status.",
+      "log": {
+        "path": "integration-checks/lint.txt",
+        "bytes": 147,
+        "sha256": "373b9a4bb6bf57eb0589f70fd1821a9d05aabb6df0eee74104f6a6252a0ea77a",
+        "normalization": "Removed one trailing empty line from the raw output; content lines and the final newline remain unchanged."
+      },
+      "rawLog": {
+        "path": "/tmp/revealline-settings-integrated-lint.log",
+        "bytes": 148,
+        "sha256": "772b7838d415a76cb65f147ed89f89698140d6276add762d8b3b48980af16aff"
+      }
+    },
+    {
+      "name": "format",
+      "command": "npm run format:check",
+      "exitCode": 0,
+      "exitCodeEvidence": "Execution owner observed exit 0; this text log alone does not encode an exit status.",
+      "log": {
+        "path": "integration-checks/format.txt",
+        "bytes": 195,
+        "sha256": "71776caf414e4fa72bcb51fefe2dd5ac61eb25148c8739f915d1edad434d4489",
+        "originalPath": "/tmp/revealline-settings-integrated-format.log"
+      }
+    },
+    {
+      "name": "native-format",
+      "command": "npm run format:native:check",
+      "exitCode": 0,
+      "exitCodeEvidence": "Execution owner observed exit 0; this text log alone does not encode an exit status.",
+      "log": {
+        "path": "integration-checks/native-format.txt",
+        "bytes": 254,
+        "sha256": "eecbaf26fab3a1d41fde267f9d62d815e03b2d105153444487684d8026d80fb4",
+        "originalPath": "/tmp/revealline-settings-integrated-native-format.log"
+      }
+    },
+    {
+      "name": "validate",
+      "command": "npm run validate",
+      "exitCode": 0,
+      "exitCodeEvidence": "Execution owner observed exit 0; this text log alone does not encode an exit status.",
+      "log": {
+        "path": "integration-checks/validate.txt",
+        "bytes": 630,
+        "sha256": "f14a8fb51762271ca8314073e883702ca194610a81c37ecadb8bb3ffa6429665",
+        "originalPath": "/tmp/revealline-settings-integrated-validate.log"
+      },
+      "result": {
+        "version": "0.60.6",
+        "files": 642,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html \u2192 ../releases/",
+          "game/index.html \u2192 ../releases/",
+          "game/index.html \u2192 ../diagnostics/",
+          "game/index.html \u2192 ../releases/",
+          "game/index.html \u2192 ../releases/",
+          "site/about.html \u2192 ../privacy.html",
+          "site/about.html \u2192 ../credits.html"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 12,
+        "packLevels": 35,
+        "packGoals": 6,
+        "coopPacks": 1,
+        "coopLevels": 2
+      }
+    },
+    {
+      "name": "motionSyntax",
+      "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --check authoring/motion-lab/app.js",
+      "exitCode": 0,
+      "exitCodeEvidence": "Execution owner observed exit 0; no separate output log retained.",
+      "input": {
+        "path": "authoring/motion-lab/app.js",
+        "bytes": 67787,
+        "sha256": "cc4668e143c5c74320d99ba446031a291b6488fa6208c96a216a1a33363c1bd4",
+        "headSha256": "cc4668e143c5c74320d99ba446031a291b6488fa6208c96a216a1a33363c1bd4",
+        "equalsHead": true
+      }
+    }
+  ],
+  "preservation": {
+    "path": "integration-preservation-a506b060.json",
+    "bytes": 8357,
+    "sha256": "0d9aa52b6a0bb9b1c261e82be2149fed27e63e689eff43f31acb5bd8bd35314e",
+    "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/integration-preservation-a506b060.json"
+  },
+  "preservationBoundary": "The retained preservation receipt compares committed a506b060 only, before the four followups. Its complete nonoverlap identity and reviewed overlap checks are distinct from execution qualification. A false whole-Motion-SKILL subsequence flag is explained by the intentional two legacy Team-guidance replacements; all Motion/utility-added blocks remain exact.",
+  "historicalRequiredCI": {
+    "receipt": {
+      "path": "ci-2330-completed.json",
+      "bytes": 28740,
+      "sha256": "1b392875c84fd51a022e722a36517f3702ce1e014e4d6bdb5a3d1728a9b450fe",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-settings-reading-20260917/ci-2330-completed.json"
+    },
+    "source": "2330e5e64ce4899aab6ccc1f15ced78bf3ea9655",
+    "runs": [
+      {
+        "id": 35252455053,
+        "event": "pull_request",
+        "conclusion": "failure",
+        "runtime": "20.19.6",
+        "testTotals": {
+          "tests": 5573,
+          "pass": 5569,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      {
+        "id": 35252465261,
+        "event": "workflow_dispatch",
+        "conclusion": "failure",
+        "runtime": "20.19.6",
+        "testTotals": {
+          "tests": 5573,
+          "pass": 5569,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    ],
+    "knownFailuresPerRun": [
+      {
+        "shard": 1,
+        "name": "muted music and completed Results survive Next cancel, Help reading and a fresh retry",
+        "file": "game/test/couch-static-picture-host.test.mjs",
+        "declarationLine": 871,
+        "assertionLine": 935,
+        "observedMismatch": "Expected muted:true, actual muted:false; both volume:0.4."
+      },
+      {
+        "shard": 1,
+        "name": "muted music and completed Results survive Next decode refusal, Help reading and a fresh retry",
+        "file": "game/test/couch-static-picture-host.test.mjs",
+        "declarationLine": 871,
+        "assertionLine": 935,
+        "observedMismatch": "Expected muted:true, actual muted:false; both volume:0.4."
+      },
+      {
+        "shard": 4,
+        "name": "title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight",
+        "file": "game/test/field-kit-flow.test.mjs",
+        "declarationLine": 67,
+        "assertionLine": 69,
+        "observedMismatch": "Strict expected title-action list omits actual shell-sound between shell-workshop and shell-release-explorer."
+      },
+      {
+        "shard": 4,
+        "name": "Deploy uses the existing start guard and Continue replaces Deploy after a paused flight",
+        "file": "game/test/field-kit-flow.test.mjs",
+        "declarationLine": 136,
+        "assertionLine": 152,
+        "observedMismatch": "Strict expected title-action list omits actual shell-sound between shell-workshop and shell-release-explorer."
+      }
+    ],
+    "correctionBoundary": "The four stale navigation-fixture/action-list failures were corrected in c3fb3296 and preserved through rebase. The old failed runs are not rerun results for this integrated source.",
+    "sourceProofBoundary": "PR shards have full tracked-content/mode proofs before and after tests. Manual shards all record HEAD/tree before tests; post-test HEAD/diff checks were skipped for failed shards 1/4 and passed for shards 2/3."
+  },
+  "limitations": [
+    "Not npm test or a complete repository test total; the 31 complete files are a bounded integration cohort.",
+    "Source lint/format/native-format/validate and Motion syntax passes do not replace fresh exact-commit hosted gates, ordinary build, production/readiness or artifact integrity.",
+    "Seven validate navigation warnings remain recorded; reference validation is not deployed-route verification.",
+    "The runtime/exit status descriptions marked execution-owner confirmations are not inferred from log filenames.",
+    "Original failed/final TAP logs remain at their hashed external cache paths. Small preservation/CI/file-list receipts and source-check outputs are retained here; the lint copy has the explicitly recorded trailing-empty-line normalization, while the other copies remain byte-for-byte.",
+    "No browser, native device, BFCache, offline, release freeze, tag, deployment or public play is established by this packet. Motion publication and uploader acceptance remain separately owned."
+  ]
+}

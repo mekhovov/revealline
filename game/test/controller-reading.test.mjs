@@ -59,6 +59,18 @@ function fixture(t, initialScope = 'paused', overrides = {}) {
   const elements = new Map(ids.map((id) => [id, new Element(id)])),
     calls = [];
   const doc = { getElementById: (id) => elements.get(id) };
+  // Accepted navigation owns a connected region inside its presentation unit.
+  // The real adapter also focuses that region before publishing reading state.
+  for (const [unitId, regionId] of [
+    ['overlay-reading-unit', 'overlay-reading'],
+    ['mission-brief-unit', 'mission-brief-reading'],
+  ]) {
+    const unit = elements.get(unitId),
+      region = elements.get(regionId);
+    unit.isConnected = true;
+    unit.contains = (element) => element === region;
+    region.closest = () => null;
+  }
   let state = null,
     scope = initialScope,
     rejectEntry = false,
@@ -71,6 +83,7 @@ function fixture(t, initialScope = 'paused', overrides = {}) {
       calls.push(['begin', value.region.id, value.origin.id, value.label]);
       if (rejectEntry) return false;
       state = { regionId: value.region.id, label: value.label };
+      doc.activeElement = value.region;
       reading.changed(state);
       return true;
     },

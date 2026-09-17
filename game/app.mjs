@@ -83,6 +83,8 @@ import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
+import { attachPreferenceRestoration } from './ui/preference-restoration.mjs';
+import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
@@ -732,6 +734,11 @@ try {
     },
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const displayRestoration = attachPreferenceRestoration({
+    window,
+    getSnapshot: () => displayPreferences.snapshot(),
+    render: applyDisplayPreferences,
+  });
   const menuStyle = attachMenuStyleControls({
     document,
     window,
@@ -754,11 +761,19 @@ try {
           : 'Soundtrack playing ♫'
         : 'Play selected playlist ♫';
   }
-  const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+  const renderMasterPreferences = ({ muted, volume }) => {
     $('master-volume').value = volume;
     $('sound-button').setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
     $('settings-master-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
+    $('shell-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+    $('shell-sound').setAttribute('aria-pressed', String(!muted));
     renderMusicPreview();
+  };
+  const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
+  const audioRestoration = attachPreferenceRestoration({
+    window,
+    getSnapshot: () => audioMaster.snapshot(),
+    render: renderMasterPreferences,
   });
   let neutralResumeTick = false;
   let gameShell = null,
@@ -1692,9 +1707,8 @@ try {
         cancel = $('cancel-key-capture');
       return (
         controllerDialog() === dialog &&
-        !cancel.hidden &&
-        !cancel.disabled &&
-        dialog.contains(event.target)
+        (settingsTabOwnsKey(event, dialog) ||
+          (!cancel.hidden && !cancel.disabled && dialog.contains(event.target)))
       );
     },
     onTabBoundary: ({ backward }) => {
@@ -1817,6 +1831,8 @@ try {
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      audioRestoration.dispose();
+      displayRestoration.dispose();
       displayPreferences.dispose();
       menuStyle.dispose();
       audioPreferences.dispose();
@@ -6217,6 +6233,7 @@ try {
   };
   $('sound-button').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
+  $('shell-sound').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   for (const id of ['tap-steering', 'settings-tap-steering']) {
     $(id).onchange = () => {
       clearInput();

@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { copyCatalogPresentation, catalogShell } from './release-catalog.mjs';
 import { publishedReleaseIndex } from './build-pages.mjs';
 import { validateBuildReferences } from './game-cli.mjs';
+import { Document } from '../game/test/helpers/couch-dom.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -59,6 +60,20 @@ test('catalog has a portable shared presentation with identical assets and font 
     (await list(target)).filter((file) => !file.includes('/v0.1.0/')),
   );
   assert.equal(refs.literalReferencesValid, true);
+  // Resolve the copied host's actual dependency graph outside the source tree.
+  // Catalog pages have no settings dialog but retain their text-size control.
+  const { attachFieldKitSurfaces } = await import(
+    pathToFileURL(path.join(target, 'catalog-ui/game/ui/field-kit-surfaces.mjs')).href
+  );
+  const document = new Document(),
+    size = document.createElement('select');
+  size.setAttribute('data-field-kit-text-size', '');
+  document.body.append(size);
+  const surfaces = attachFieldKitSurfaces({ document });
+  size.value = 'large';
+  size.emit('change');
+  assert.equal(document.body.dataset.textSize, 'large');
+  surfaces.destroy();
   assert.equal(await fs.readFile(path.join(frozen, 'index.html'), 'utf8'), 'immutable old game');
 });
 

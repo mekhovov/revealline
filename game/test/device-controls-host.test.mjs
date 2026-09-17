@@ -235,6 +235,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('Always enables actual mouse steering and survives a complete backup; omitted old preference restores Auto', async (t) => {
   const page = await soloPage(t, { campaign, storage: storageWith({}) });
   page.$('settings-button').click();
+  page.$('settings-tab-controls').click();
+  assert.equal(page.$('settings-panel-controls').hidden, false);
   page.change('screen-controls', 'always');
   controls(page, 'hidden');
   assert.equal(
@@ -288,6 +290,8 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   );
   page.doc.querySelector('button[data-close="library-dialog"]').click();
   page.$('settings-button').click();
+  page.$('settings-tab-controls').click();
+  assert.equal(page.$('settings-panel-controls').hidden, false);
   page.change('screen-controls', 'off');
   closeSettings(page);
   page.$('start-button').click();

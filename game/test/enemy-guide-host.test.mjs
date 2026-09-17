@@ -487,6 +487,8 @@ for (const listening of [false, true]) {
     const page = await setup(t, { audio, soundtrackIndexedDB: db.indexedDB });
     await settle(() => !page.$('soundtrack-open').disabled);
     page.$('settings-button').click();
+    page.$('settings-tab-audio').click();
+    assert.equal(page.$('settings-panel-audio').hidden, false);
     page.$('soundtrack-open').click();
     await waitFor(
       () =>

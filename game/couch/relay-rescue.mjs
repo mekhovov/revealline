@@ -30,6 +30,8 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
+import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
+import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
 
@@ -80,15 +82,29 @@ export function bootCoop() {
       $('coop-audio-status').textContent = message;
     },
   });
-  const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+  const renderMasterPreferences = ({ muted, volume }) => {
     $('coop-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
+    $('coop-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+    $('coop-quick-sound').setAttribute('aria-pressed', String(!muted));
     $('coop-master-volume').value = volume;
+  };
+  const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
+  const audioRestoration = attachPreferenceRestoration({
+    window,
+    getSnapshot: () => audioMaster.snapshot(),
+    render: renderMasterPreferences,
   });
-  $('coop-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
+  const toggleSound = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
+  $('coop-audio').onclick = toggleSound;
+  $('coop-quick-sound').onclick = toggleSound;
   $('coop-master-volume').onchange = () =>
     audioPreferences.setVolume(Number($('coop-master-volume').value));
   const closeAudio = () => {
+    $('coop-audio').onclick = null;
+    $('coop-quick-sound').onclick = null;
+    $('coop-master-volume').onchange = null;
     stopMasterView();
+    audioRestoration.dispose();
     audioPreferences.dispose();
     audioMaster.dispose();
   };
@@ -102,8 +118,7 @@ export function bootCoop() {
       $('coop-display-status').textContent = message;
     },
   });
-  const stopDisplayView = displayPreferences.subscribe((state) => {
-    const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
+  const renderDisplayPreferences = (state) => {
     document.body.dataset.textFace = state.textFace;
     document.body.dataset.textSize = state.textSize;
     document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
@@ -114,7 +129,16 @@ export function bootCoop() {
       state.effectiveReducedEffects && !state.reducedEffects
         ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
         : '';
+  };
+  const stopDisplayView = displayPreferences.subscribe((state) => {
+    const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
+    renderDisplayPreferences(state);
     reveal?.();
+  });
+  const displayRestoration = attachPreferenceRestoration({
+    window,
+    getSnapshot: () => displayPreferences.snapshot(),
+    render: renderDisplayPreferences,
   });
   const menuStyle = attachMenuStyleControls({
     document,
@@ -128,6 +152,7 @@ export function bootCoop() {
     displayPreferences.set({ textSize: $('coop-text-size').value });
   const closeDisplay = () => {
     stopDisplayView();
+    displayRestoration.dispose();
     displayPreferences.dispose();
     menuStyle.dispose();
   };
@@ -150,6 +175,10 @@ export function bootCoop() {
     generation = 0,
     departure = null;
   const departureDialog = $('coop-discard-dialog');
+  const settingsDialog = $('coop-options');
+  let settingsOwner = null,
+    settingsVisit = 0,
+    settingsPanels = null;
   let acceptedPicture = null,
     pictureSelection = null,
     pictureOperation = null,
@@ -231,11 +260,14 @@ export function bootCoop() {
     tools.hidden = running();
     if (tools.hidden) {
       $('coop-help').open = false;
-      $('coop-options').open = false;
     }
     showTouch();
   }
   function back() {
+    if (settingsDialog.open) {
+      closeSettings();
+      return;
+    }
     if (departure) {
       cancelDeparture();
       return;
@@ -259,40 +291,49 @@ export function bootCoop() {
   }
   const running = () => run?.status === 'running';
   const scope = () =>
-    departure ? 'coop-discard' : running() ? 'flight' : run ? `coop-${run.status}` : 'coop-lobby';
+    settingsDialog.open
+      ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+      : departure
+        ? 'coop-discard'
+        : running()
+          ? 'flight'
+          : run
+            ? `coop-${run.status}`
+            : 'coop-lobby';
   const primary = () =>
-    departure
-      ? $('coop-discard-stay')
-      : pictureOperation
-        ? $('coop-picture-cancel')
-        : !run && pictureSelection?.state !== 'ready'
-          ? $('coop-picture-retry')
-          : !run
-            ? $('coop-start')
-            : run.status === 'paused' && !loopStopped
-              ? $('coop-resume')
-              : $('coop-retry');
-  // Preference updates can reflow a focused select beyond the pause scroller
+    settingsDialog.open
+      ? settingsPanels?.primary() || $('coop-settings-close')
+      : departure
+        ? $('coop-discard-stay')
+        : pictureOperation
+          ? $('coop-picture-cancel')
+          : !run && pictureSelection?.state !== 'ready'
+            ? $('coop-picture-retry')
+            : !run
+              ? $('coop-start')
+              : run.status === 'paused' && !loopStopped
+                ? $('coop-resume')
+                : $('coop-retry');
+  // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
   prepareDisplayReveal = (revision) => {
     const target = document.activeElement,
-      panel = $('coop-overlay'),
-      options = $('coop-options'),
+      panel = settingsDialog,
       attempt = run,
-      epoch = generation;
+      epoch = generation,
+      owner = settingsOwner;
     const current = () =>
       !disposed &&
       foreground() &&
       run === attempt &&
       generation === epoch &&
+      settingsOwner === owner &&
       displayLayoutVersion === revision &&
-      run?.status === 'paused' &&
       !departure &&
       !panel.hidden &&
-      options.open &&
-      panel.contains(options) &&
-      options.contains(target) &&
+      panel.open &&
+      panel.contains(target) &&
       document.activeElement === target;
     if (!current() || !visibleAction(target) || !current()) return null;
     return () => {
@@ -339,21 +380,32 @@ export function bootCoop() {
   const router = createControllerRouter({ readPads: () => framePads });
   const navigation = attachControllerNavigation({
     getScope: scope,
-    getRoot: () => (departure ? departureDialog : run ? $('coop-overlay') : $('coop-app')),
+    getRoot: () =>
+      settingsDialog.open
+        ? settingsDialog
+        : departure
+          ? departureDialog
+          : run
+            ? $('coop-overlay')
+            : $('coop-app'),
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
+    ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, settingsDialog),
     nativeReadingScroll: true,
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
     onMenu: () => {
-      if (departure || run?.status === 'paused') back();
+      if (settingsDialog.open || departure || run?.status === 'paused') back();
     },
     onHint: (message, context) => {
-      if (context?.kind === 'reading' && context.regionId === 'coop-help-reading') {
+      if (
+        context?.kind === 'reading' &&
+        ['coop-help-reading', 'coop-data-reading'].includes(context.regionId)
+      ) {
         menuHint = '';
-        const hint = $('coop-help-reading-hint');
+        const hint = $(`${context.regionId}-hint`);
         if (hint.textContent !== message) hint.textContent = message;
       } else menuHint = message;
     },
@@ -366,6 +418,7 @@ export function bootCoop() {
     revealOnResize: true,
     surfaceDefinitions: [
       ['coop-help-reading', 'coop-help-read', 'Relay Rescue controls', 'coop-help-unit'],
+      ['coop-data-reading', 'coop-data-read', 'Team game data', 'coop-data-unit'],
     ],
   });
   function clear() {
@@ -376,6 +429,89 @@ export function bootCoop() {
     if (run) releaseCoopInputs(run);
     accumulator = 0;
   }
+  settingsPanels = attachSettingsPanels({
+    root: settingsDialog,
+    document,
+    beforeSelect: () => clear(),
+  });
+  const settingsCurrent = (owner) =>
+    !disposed &&
+    settingsOwner === owner &&
+    settingsVisit === owner.visit &&
+    run === owner.run &&
+    generation === owner.generation &&
+    foreground();
+  function openSettings() {
+    const opener = $('coop-settings-open');
+    if (disposed || departure || settingsDialog.open || !foreground() || !visibleAction(opener))
+      return;
+    const owner = { opener, run, generation, visit: ++settingsVisit, restore: true };
+    settingsOwner = owner;
+    // Lobby preparation stays owned by its existing operation; opening Settings
+    // must not call pause(), which also cancels that preparation.
+    if (running()) pause({ focus: false });
+    else clear();
+    if (!settingsCurrent(owner) || !visibleAction(opener)) {
+      if (settingsOwner === owner) settingsOwner = null;
+      return;
+    }
+    settingsDialog.showModal();
+    const active = document.activeElement;
+    if (
+      settingsCurrent(owner) &&
+      settingsDialog.open &&
+      (unclaimedFocus(active) ||
+        active === opener ||
+        active === settingsDialog ||
+        active === $('coop-settings-close'))
+    ) {
+      const target = settingsPanels.primary();
+      if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
+        target.focus({ preventScroll: true });
+    }
+  }
+  function closeSettings({ restore = true } = {}) {
+    if (!settingsDialog.open) return;
+    if (settingsOwner) settingsOwner.restore = restore && foreground();
+    settingsDialog.close();
+  }
+  const settingsClosed = () => {
+    // A queued close from an earlier visit has no authority over a reopened one.
+    if (settingsDialog.open) return;
+    const owner = settingsOwner;
+    if (!owner) return;
+    const restore = owner.restore && settingsCurrent(owner);
+    settingsOwner = null;
+    const closedVisit = ++settingsVisit;
+    const currentReturn = () =>
+      !disposed &&
+      !settingsDialog.open &&
+      !settingsOwner &&
+      settingsVisit === closedVisit &&
+      run === owner.run &&
+      generation === owner.generation &&
+      foreground();
+    navigation.clear();
+    router.clear();
+    if (!restore || !currentReturn() || !visibleAction(owner.opener) || !currentReturn()) return;
+    const active = document.activeElement;
+    if (active !== owner.opener && (unclaimedFocus(active) || settingsDialog.contains(active)))
+      owner.opener.focus({ preventScroll: true });
+  };
+  const cancelSettings = (event) => {
+    event.preventDefault();
+    closeSettings();
+  };
+  const settingsKeydown = (event) => {
+    // Keep the native cancel default away from the window flight Escape hook.
+    // Document capture still gives an active controller editor first refusal.
+    if (event.key === 'Escape') event.stopPropagation();
+  };
+  $('coop-settings-open').onclick = openSettings;
+  $('coop-settings-close').onclick = () => closeSettings();
+  settingsDialog.addEventListener('cancel', cancelSettings);
+  settingsDialog.addEventListener('close', settingsClosed);
+  settingsDialog.addEventListener('keydown', settingsKeydown);
   function message(text) {
     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
   }
@@ -752,6 +888,7 @@ export function bootCoop() {
       inactive ||
       !foreground() ||
       departure ||
+      settingsDialog.open ||
       run?.status !== 'paused' ||
       loopStopped
     )
@@ -823,7 +960,14 @@ export function bootCoop() {
     closeDeparture(departure, options);
   }
   function requestDeparture(kind, opener) {
-    if (disposed || departure || pictureOperation || !Object.hasOwn(departureLabels, kind)) return;
+    if (
+      disposed ||
+      departure ||
+      settingsDialog.open ||
+      pictureOperation ||
+      !Object.hasOwn(departureLabels, kind)
+    )
+      return;
     if (!unfinished()) {
       if (kind === 'setup') lobby();
       else if (kind === 'retry') {
@@ -941,6 +1085,7 @@ export function bootCoop() {
     });
   const suspend = () => {
     if (disposed) return;
+    if (settingsOwner) settingsOwner.restore = false;
     inactive = true;
     pause({ focus: false });
     cancelDeparture({ restore: false });
@@ -1218,6 +1363,17 @@ export function bootCoop() {
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
     if (disposed) return;
+    // Retire dialog callbacks before native close or preference disposal can
+    // reenter. No terminal cleanup restores focus or resumes the attempt.
+    settingsOwner = null;
+    settingsVisit++;
+    $('coop-settings-open').onclick = null;
+    $('coop-settings-close').onclick = null;
+    settingsDialog.removeEventListener('cancel', cancelSettings);
+    settingsDialog.removeEventListener('close', settingsClosed);
+    settingsDialog.removeEventListener('keydown', settingsKeydown);
+    settingsPanels.destroy();
+    if (settingsDialog.open) settingsDialog.close();
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.
     if (running()) pauseCoop(run);
