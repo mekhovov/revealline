@@ -1126,6 +1126,9 @@ try {
     'race-settings-tab-audio',
     'race-settings-tab-display',
     'race-settings-tab-data',
+    'race-data-read',
+    'race-data-reading-done',
+    'race-data-reading',
     'race-help',
     'race-solo-return',
     'race-level',
@@ -1171,9 +1174,12 @@ try {
     onBack: () => shell.back(),
     onMenu: () => shell.back(),
     onHint: (message, context) => {
-      if (context?.kind === 'reading' && context.regionId === 'race-help-reading') {
+      if (
+        context?.kind === 'reading' &&
+        ['race-help-reading', 'race-data-reading'].includes(context.regionId)
+      ) {
         menuHint = '';
-        const hint = $('race-help-reading-hint');
+        const hint = $(`${context.regionId}-hint`);
         if (hint.textContent !== message) hint.textContent = message;
       } else menuHint = message;
       updateMenu();
@@ -1187,6 +1193,7 @@ try {
     revealOnResize: true,
     surfaceDefinitions: [
       ['race-help-reading', 'race-help-read', 'Couch controls', 'race-help-unit'],
+      ['race-data-reading', 'race-data-read', 'Versus game data', 'race-data-unit'],
     ],
   });
   $('race-menu-release').onclick = () => {

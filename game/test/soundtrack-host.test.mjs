@@ -79,6 +79,8 @@ async function setup(t, { filePlayback = true, audioPreferences = {} } = {}) {
 async function openStudio(page) {
   page.$('settings-button').click();
   assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-tab-audio').click();
+  assert.equal(page.$('settings-panel-audio').hidden, false);
   page.$('soundtrack-open').click();
   await waitFor(
     () =>

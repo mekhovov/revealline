@@ -82,6 +82,30 @@ dialog.shared-settings {
   min-block-size: 44px;
   min-inline-size: 44px;
 }
+.shared-settings .settings-reading-unit .reading-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-2);
+}
+.shared-settings .settings-reading-unit .reading-hint {
+  margin-block: var(--fk-space-2);
+}
+.shared-settings .settings-reading-region {
+  max-block-size: 38svh;
+  overflow: auto;
+  padding: var(--fk-space-2);
+  border: 1px solid var(--fk-line);
+}
+.shared-settings .settings-reading-region p {
+  margin: 0 0 var(--fk-space-3);
+}
+.shared-settings .settings-reading-region p:last-child {
+  margin-bottom: 0;
+}
+.shared-settings .settings-reading-region:focus-visible {
+  outline: 3px solid var(--fk-focus);
+  outline-offset: -3px;
+}
 @media (max-width: 640px) {
   .shared-settings .field-kit-settings-tabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
