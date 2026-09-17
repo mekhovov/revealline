@@ -86,7 +86,11 @@ function fixture(
   ]);
   let sequence = 0,
     failWrites = false,
-    releaseBoot;
+    releaseBoot,
+    markBootStarted;
+  const bootStarted = new Promise((resolve) => {
+    markBootStarted = resolve;
+  });
   const bootGate = holdBoot
     ? new Promise((resolve) => {
         releaseBoot = resolve;
@@ -125,6 +129,7 @@ function fixture(
     cancelAnimationFrame: (id) => frames.delete(id),
     fetch: async (path) => {
       if (String(path).includes('content/themes') || String(path).includes('motion-lab/presets')) {
+        markBootStarted();
         await bootGate;
         return {
           ok: !failBoot,
@@ -149,13 +154,31 @@ function fixture(
     Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
   }
   const surfaces = attachFieldKitSurfaces({ document: doc });
-  t.after(() => {
+  t.after(async () => {
     win.emit('pagehide', { persisted: false });
-    surfaces.destroy();
-    frames.clear();
-    for (const [key, descriptor] of previous)
-      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
-      else delete globalThis[key];
+    releaseBoot?.();
+    let deadline;
+    try {
+      await Promise.race([
+        loading,
+        new Promise((_, reject) => {
+          deadline = setTimeout(
+            () => reject(new Error('Replay import did not settle during fixture cleanup.')),
+            5000,
+          );
+        }),
+      ]);
+    } finally {
+      clearTimeout(deadline);
+      // A failed startup assertion can close before the module owns listeners.
+      // Drain it before restoring globals, then retire any late owner as well.
+      win.emit('pagehide', { persisted: false });
+      surfaces.destroy();
+      frames.clear();
+      for (const [key, descriptor] of previous)
+        if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+        else delete globalThis[key];
+    }
   });
   t.mock.method(BoardPainter.prototype, 'setLook', async () => {});
   t.mock.method(BoardPainter.prototype, 'draw', (_context, state, _dt, options) =>
@@ -179,6 +202,23 @@ function fixture(
     frames,
     original,
     loading,
+    async waitForBootStart() {
+      let deadline;
+      try {
+        await Promise.race([
+          bootStarted,
+          loading.then(() => assert.fail('The held boot must not finish before its fetch starts.')),
+          new Promise((_, reject) => {
+            deadline = setTimeout(
+              () => reject(new Error('Replay module did not reach its held startup fetch.')),
+              5000,
+            );
+          }),
+        ]);
+      } finally {
+        clearTimeout(deadline);
+      }
+    },
     releaseBoot: () => releaseBoot?.(),
     failWrites: (value) => {
       failWrites = value;
@@ -231,8 +271,12 @@ test('real theater adopts shared text/cap before boot and changes presentation w
     systemReduced: true,
     holdBoot: true,
   });
-  await until(
-    () => p.doc.body.dataset.textFace === 'plain',
+  // Wait for the real module to enter its held fetch, not an arbitrary number
+  // of event-loop turns while the cold module graph is still loading.
+  await p.waitForBootStart();
+  assert.equal(
+    p.doc.body.dataset.textFace,
+    'plain',
     'Shared preference must appear during delayed startup.',
   );
   assert.equal(p.doc.body.dataset.textSize, 'large');
@@ -345,7 +389,8 @@ test('real theater boot failure retains usable shared reading controls without p
 
 test('terminal exit during delayed boot retires authority and fences late replay startup', async (t) => {
   const p = fixture(t, { holdBoot: true });
-  await until(() => p.doc.body.dataset.textFace === 'pixel', 'Interface mounts before startup.');
+  await p.waitForBootStart();
+  assert.equal(p.doc.body.dataset.textFace, 'pixel', 'Interface mounts before startup.');
   p.win.emit('pagehide', { persisted: false });
   const before = { ...p.doc.body.dataset };
   p.remote({ textFace: 'plain', textSize: 'large', reducedEffects: true });

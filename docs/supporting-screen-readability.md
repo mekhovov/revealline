@@ -23,6 +23,8 @@ These rules apply to the existing shared authority used by Solo, Versus and Team
 
 ## Verification and boundaries
 
+The initial committed candidate `02127f1` failed a hosted Replay startup test that counted event-loop turns before cold module loading completed. The [startup correction](verification/cross-mode/p05-supporting-readability/startup-correction/README.md) retains the original failed shard and replaces that wait with the actual held-fetch boundary, preserving every preference assertion. Production is unchanged; the corrected source needs fresh complete qualification.
+
 The implementation combines 13 Studio source/test paths, eight disjoint Replay source/test paths and a five-path Replay successor (three overlap with that Replay candidate). Separate candidate totals overlap and must not be summed. Their original patches, failures, logs and native observations remain bound to their source snapshots. The current combined source needs its own affected tests, native checks, six source gates, production/build checks, reviewed release, public inventory and affected public journeys.
 
 This delivery does not complete P05, change replay/save formats, alter gameplay or adopt new art. P04's cold Back filter/selection behavior and focus after a successful mutation disables its trigger remain separate. Other supporting routes, disabled transport styling and physical qualification remain in the execution register.
