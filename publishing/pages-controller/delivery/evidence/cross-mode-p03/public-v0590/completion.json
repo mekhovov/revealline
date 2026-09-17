@@ -1,0 +1,52 @@
+{
+  "status": "COMPLETE_PUBLIC_BYTE_AUDIT_AND_LIVE_AUTHORITY_REFRESH",
+  "at": "2026-09-17T03:58:23.026428+00:00",
+  "version": "v0.59.0",
+  "publisherCommit": "2f6a563cbd3ff47c56b40aa7269fb48ca26f2838",
+  "gameSourceRevision": "76dc4bf36baec11ce4dff6ca49773d3b9d6c0ae5",
+  "runId": 35179241725,
+  "deploymentId": 6495159317,
+  "files": 2591,
+  "bytes": 638479286,
+  "failedFiles": 0,
+  "retries": 0,
+  "catalogVersions": 69,
+  "unchangedRetainedCatalogEntries": 68,
+  "unchangedReleaseAssets": 9,
+  "sessions": {
+    "39438": "exit 0",
+    "38660": "exit 0",
+    "87118": "exit 0",
+    "85442": "exit 0"
+  },
+  "pins": [
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3616,
+      "sha256": "4917e4c3f9dae093dc28ced908be2974b9061c865b9c4e1ed33c585790bcb666"
+    },
+    {
+      "path": "public-row-review-complete-1.json",
+      "bytes": 1597,
+      "sha256": "2845568f3ea5c81713d2198db380dfa365a95f7d7cfc03afaf8f113899c5be5c"
+    },
+    {
+      "path": "after-http-review.json",
+      "bytes": 11630,
+      "sha256": "5e78666a25ea16880569692af571bf9a3af982890a64f4f397613fdf224d630f"
+    },
+    {
+      "path": "receipt-download-record.json",
+      "bytes": 576,
+      "sha256": "4cff023df16c6c3d2f3be164299f9e8bb714dcf3b9ea971c63176d84ac435b97"
+    },
+    {
+      "path": "tools/inputs/2f6a563cbd3ff47c56b40aa7269fb48ca26f2838/binding.json",
+      "bytes": 2041,
+      "sha256": "922fd812b1306d07e4d64795d43daf554d6e8910c7f5253a2588a0b0707cbd7f"
+    }
+  ],
+  "sourceIndexOrRemoteWrites": false,
+  "browserOrOfflineAcceptance": false,
+  "phaseAcceptance": false
+}

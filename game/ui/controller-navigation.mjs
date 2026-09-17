@@ -18,6 +18,7 @@ export function attachControllerNavigation({
   onNativeInput = () => {},
   keyboard = false,
   ownsKeyboardEvent = () => false,
+  onTabBoundary = () => false,
   nativeReadingScroll = false,
 } = {}) {
   let scope = null,
@@ -583,6 +584,7 @@ export function attachControllerNavigation({
       event.preventDefault();
       return true;
     }
+    const leavingReader = !!reading && event.key === 'Tab';
     if (reading) {
       if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
         event.preventDefault();
@@ -641,6 +643,19 @@ export function attachControllerNavigation({
         return true;
       }
       if (!items.length) return false;
+      // Only a registered embedded host may transfer focus at a nonmodal edge.
+      // Interior traversal, native modal containment and ordinary games retain
+      // their existing behavior. A reader exits through its own path above.
+      const boundary = event.shiftKey ? 0 : items.length - 1;
+      if (
+        !leavingReader &&
+        current === boundary &&
+        onTabBoundary({ backward: !!event.shiftKey }) === true
+      ) {
+        event.preventDefault();
+        relinquish();
+        return true;
+      }
       event.preventDefault();
       relinquish();
       const next =
