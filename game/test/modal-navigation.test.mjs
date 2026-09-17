@@ -415,6 +415,9 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   h.$('shell-options').click();
   pad.frame();
   pad.frame();
+  h.$('settings-tab-audio').focus();
+  pad.pulse(0);
+  assert.equal(h.$('settings-panel-audio').hidden, false);
   h.$('soundtrack-open').focus();
   pad.pulse(0);
   await settle(() =>
