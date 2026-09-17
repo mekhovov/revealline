@@ -1,0 +1,20 @@
+{
+  "commit": "170508f11dd41204b7e24917a823f21701c15961",
+  "tree": "287ea0fddf97f594af0ce9eba452a24dc5f507c7",
+  "pid": 91475,
+  "port": 62106,
+  "url": "http://127.0.0.1:62106/game/",
+  "scope": "Future Team general live shell after F1-F4, separate from frozen v060. Native verification only.",
+  "runtimeOverrides": {
+    "game/couch/relay-rescue.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-team-focus-reflow-170508f1/proposal/game/couch/relay-rescue.mjs",
+      "bytes": 49873,
+      "sha256": "9792a0818a6fc2e171de196387f51678685cc9919afd3d1a036cf3988475ebc5"
+    },
+    "game/couch/relay-rescue.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-team-live-shell-170508f1/proposal/game/couch/relay-rescue.css",
+      "bytes": 18340,
+      "sha256": "541f5998966bd783ec36187130fc7b3b7782399dadb010de642345619929b662"
+    }
+  }
+}

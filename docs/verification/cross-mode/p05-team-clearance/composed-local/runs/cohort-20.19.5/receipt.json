@@ -1,0 +1,45 @@
+{
+  "label": "cohort-20.19.5",
+  "baseCommit": "587f4e75cc9dde7ae0db7ffac34320761b94588c",
+  "baseTree": "4b3cf59ac44d2f9895c1af19133efa481af2e1e3",
+  "version": "0.60.1",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-display-reflow.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/coop-picture-host.test.mjs",
+    "game/test/display-preferences.test.mjs",
+    "game/test/couch-resize-focus.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-team-v0601-composed-local-587f4e75/fixture",
+  "exitCode": 0,
+  "timedOut": false,
+  "error": null,
+  "seconds": 58.391,
+  "inputCount": 161,
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "counts": {
+    "tests": 164,
+    "suites": 0,
+    "pass": 164,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "logs": {
+    "stdout": {
+      "bytes": 36391,
+      "sha256": "fcc53237ee65d099d0ceaaa4467a8c22928b84f6edf7fe9aeb2272e2a7a945a2"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "scope": "Five complete affected files on exact local composition; not final hosted/public/physical acceptance"
+}
