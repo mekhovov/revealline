@@ -1,0 +1,58 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-19",
+  "infrastructureCommit": "7e771ad4925031ed8a1f6e4294567f43c1457934",
+  "deploymentId": 6507017787,
+  "versions": [
+    "v0.60.3",
+    "v0.60.4"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-19/append-v0604/native/root-observations.json",
+      "sha256": "2a20205404ce6122c3be138a0ae73adf6f3db39e019e1bc57434aef276712a60"
+    },
+    {
+      "path": "evidence/archive-19/append-v0604/native/01-initial-module-failure.txt",
+      "sha256": "bbde0ce3f9cdfbb60ee081d1a800b972d59259da89694f9f4f551cf498516e12"
+    },
+    {
+      "path": "evidence/archive-19/append-v0604/native/03-paused.png",
+      "sha256": "da099244ddd8cc8cf86fbb8966d0ced72190d7bb790ed638f5901957edee5a0f"
+    },
+    {
+      "path": "evidence/archive-19/append-v0604/root-acceptance.json",
+      "sha256": "e2ec58a77668b99e53b7bf4f723dc918b8343b054dd489832437b8e85dbe6448"
+    },
+    {
+      "path": "evidence/archive-19/append-v0604/originals.zip",
+      "sha256": "40b8e8d1650a6b24a5c5320c069efd1643864ad9f9ac6e93509f35b50ad820e5"
+    },
+    {
+      "path": "evidence/archive-19/append-v0604/originals-index.json",
+      "sha256": "4a45a838c59683c601f27824221675fc0fd7b659aeefa66fb0b6300305fc0eb9"
+    }
+  ],
+  "scope": "Root accepted exact Archive19 online retention of v0.60.3 and v0.60.4 at this deployment. Initial v0.60.4 dynamic module fetch failed; its original AX and empty console remain retained, cause unknown. One explicit keyboard Reload recovered, then Continue/Pause/Main menu passed. Semantic Release explorer links reached exact retained v0.60.3; Continue preserved Relay Orchard52.2%/8660 and explicit keyboard Pause passed. Existing same-origin profiles were used; no fresh-profile/migration, new cut/win, full keyboard/controller-only matrix, physical touch/controller, offline, export/import or whole-phase claim. Current v0.60.4 selector remains unchanged; Motion v0.60.5 is not published by this admission.",
+  "observationScopes": [
+    {
+      "version": "v0.60.4",
+      "nativeInfrastructureCommit": "7e771ad4925031ed8a1f6e4294567f43c1457934",
+      "nativeDeploymentId": 6507017787,
+      "freshBrowserRun": true,
+      "evidencePath": "evidence/archive-19/append-v0604/native/root-observations.json",
+      "observed": "Initial import failure retained; explicit keyboard Reload succeeded, Continue/Pause/Main menu passed."
+    },
+    {
+      "version": "v0.60.3",
+      "nativeInfrastructureCommit": "7e771ad4925031ed8a1f6e4294567f43c1457934",
+      "nativeDeploymentId": 6507017787,
+      "freshBrowserRun": true,
+      "evidencePath": "evidence/archive-19/append-v0604/native/root-observations.json",
+      "observed": "Explorer link reached exact retained edition; existing Relay Orchard52.2%/8660 continuation and explicit Pause passed."
+    }
+  ],
+  "phaseAccepted": false
+}
