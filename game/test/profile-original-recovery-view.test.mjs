@@ -579,3 +579,49 @@ test('reverification clears the earlier label before waiting and cancel or failu
   assert.equal(f.$('original-file').disabled, true);
   await f.view.close();
 });
+
+test('current review and original actions transfer focus through Cancel without replacing successful download handoffs', async () => {
+  const f = fixture();
+  f.doc.body = new Element(f.doc);
+  f.doc.hidden = false;
+  f.doc.hasFocus = () => true;
+  const journey = [
+    ['find', 'review'],
+    ['review', 'review'],
+    ['export', 'download'],
+    ['originals-review', 'originals-review'],
+    ['original-verify', 'original-verify'],
+    ['original-file', 'original-download'],
+    ['original-report', 'report-download'],
+  ];
+  for (const [id, target] of journey) {
+    const action = f.$(id);
+    let disabled = action.disabled;
+    Object.defineProperty(action, 'disabled', {
+      configurable: true,
+      get: () => disabled,
+      set(value) {
+        disabled = value;
+        if (value && f.doc.activeElement === action) f.doc.activeElement = f.doc.body;
+      },
+    });
+    action.focus();
+    const work = action.onclick();
+    assert.equal(f.doc.activeElement, f.$('cancel'), `${id} hands off only its own current focus.`);
+    await work;
+    assert.equal(
+      f.doc.activeElement,
+      f.$(target),
+      `${id} retains its specific completion destination.`,
+    );
+  }
+  assert.equal(f.calls.discover.length, 1);
+  assert.equal(f.calls.review.length, 1);
+  assert.equal(f.calls.verify.length, 1);
+  assert.equal(f.calls.export.length, 2);
+  assert.equal(f.urls[1].blob, f.fileBlob);
+  assert.equal(f.urls[2].blob, f.reportBlob);
+  assert.equal(f.$('original-download').href, f.urls[1].url);
+  assert.equal(f.$('report-download').href, f.urls[2].url);
+  await f.view.close();
+});

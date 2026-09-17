@@ -1,0 +1,203 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -569,3 +569,7 @@
+ When a Recovery read disables its focused Find, Review or preparation action, pass that exact origin into the current operation. Transfer only its foreground focus synchronously to Cancel; never use body focus alone as ownership evidence. Return only while Cancel still owns focus, the operation remains current and background cancellation has not invalidated that return. Keep Find's result-aware Find/Review destination, other enabled origins and the existing successful download-link destination. Preserve newer focus, unowned/background starts and closed views. Test the real view with the observed disabled-control blur, empty/error/channel outcomes and original preparation; retain native focus and downloaded-byte evidence separately. Recovery is currently an explicit troubleshooting URL, not an advertised Library destination. Do not silently add navigation or fabricate eligible profiles to complete a test. See [ready-action focus continuity](../../../docs/recovery-startup-navigation.md#ready-action-focus-continuity).
+ 
+ Prompt example: “Repair only the current Recovery action's focus through async work: focused origin → Cancel → result-appropriate action or prepared download. Prove newer focus and background cancellation win, preserve all read-only data semantics, and keep corrected native and physical-input acceptance distinct from modeled tests.”
++
++Explicit Back is a transient departure until the browser declares terminal `pagehide`; do not irreversibly destroy Recovery's sole navigation owner before possible cached retention. Suspend sampling and clear held controls while leaving, retain close-before-Back, and restart one fresh read generation with neutral input on persisted return. Terminal departure must destroy the owner and reject stale return/async callbacks. Test a fully completed startup Back and ready Back before the persisted lifecycle, not just cleanup interrupted before navigation. Preserve the failed predecessor and separate actual-host modeled cache events from native history traversal, verified cache admission and physical-controller evidence. See [the history-return correction](../../../docs/recovery-startup-navigation.md#explicit-back-and-cached-history-return).
++
++Prompt example: “After Recovery Back actually completes navigation, simulate a persisted hide/show and prove the same controller can use the fresh page only after neutral input. Repeat a terminal departure and prove it cannot revive. Keep one navigation owner, no automatic Find, unchanged prepared-data permissions and exact original failure receipts.”
+diff --git a/docs/recovery-startup-navigation.md b/docs/recovery-startup-navigation.md
+--- a/docs/recovery-startup-navigation.md
++++ b/docs/recovery-startup-navigation.md
+@@ -1,6 +1,6 @@
+ # Earlier profiles: controller navigation during startup
+ 
+-**v0.60.4 source candidate, not a released phase.** This page describes the composed display, startup, deferred Back and ready-action corrections. The [integrated evidence record](verification/cross-mode/p03-recovery-reading/README.md) distinguishes original failures, unchanged 89/89 precursor cohorts and corrected local browser observations from pending final-source/public and physical-input gates.
++**v0.60.4 source candidate, not a released phase.** This page describes the composed display, startup, deferred Back, ready-action and explicit Back history-return corrections. The [integrated evidence record](verification/cross-mode/p03-recovery-reading/README.md) distinguishes original failures, 89/89 precursor cohorts, the 92/92 history-return successor and scoped local browser observations from pending final-source/public and physical-input gates.
+ 
+ Earlier profiles keeps **Back to game** and **Reload recovery** usable while release information is loading, timed out or failed. The shared controller navigation adapter starts independently of the version/catalog request. One router owns the page through retries and readiness; retrying does not require a fresh controller join.
+ 
+@@ -52,3 +52,15 @@
+ On the same local origin with a genuinely created `release-v0.60.3` profile, Find completion focused Review, Review retained focus, and preparing a raw snapshot focused the available download link. Keyboard changes to same-origin game text settings preserved the exact channel, feedback and prepared Blob URL. Next Tab reached Back; Escape returned to the game title with Start focused. The older Find/Review failures remain retained. Preceding startup 503, timeout/Reload and display-layout observations concern unchanged host/display bytes, not a re-execution of every case after the last view patch.
+ 
+ All observed response bodies matched exact a13 source or reviewed overrides: 1,767 successful preceding responses across 322 distinct bodies and 705/705 corrected responses across 319 bodies. The preceding log separately retains one deliberate 503 and two delayed-request events. Both owned servers stopped and tabs closed. The reads completed too quickly to observe native Cancel timing; downloaded-byte validation, actual historical originals, saved-flight restore, physical input, offline/BFCache and 200% zoom remain unaccepted. The source/runtime fixes do not add a player-menu route to Recovery.
++
++## Explicit Back and cached history return
++
++Successful Back can navigate to the game while the browser retains the Recovery document for reuse. An independent review found that the preceding candidate permanently closed its navigation owner before that decision, leaving Recovery inert if the browser restored it from cache. The earlier stale-Back regression covered departure while cleanup was still pending; it did not cover completed Back followed by a persisted departure and return. Its 89 passing cases did not establish this missing boundary.
++
++Explicit Back now marks a transient departure, stops polling and clears held input while preserving the single navigation owner. Only terminal `pagehide` destroys it. A persisted return clears the departure state, starts a fresh read generation and requires a neutral controller before a new command. Old reads, deferred Back callbacks and terminally disposed pages cannot restart or navigate. Closing the read-only reader before legitimate Back remains required; returning does not restore a closed prepared-download session or discover profiles automatically.
++
++The successor passes the same six complete affected files: **92/92 on Node 20.19.5 and 92/92 on Node 22.22.2**, sequentially at 1024 MiB with 95 unchanged inputs / 1,155,888 bytes. Three added actual-host cases model completed startup Back and completed ready Back followed by `pagehide.persisted`/`pageshow.persisted`, held-Back neutrality, a fresh usable view and a subsequent fresh Back, plus terminal-departure refusal. The preceding host fails two of the whole 16-case startup file (14 pass / 2 fail). Those modeled events establish implementation behavior, not actual browser cache admission or physical controller acceptance. The earlier native ready-action observations retain their own exact host bytes. A separate native history retest and final composed-source/public qualification remain required.
++
++This distinction follows [MDN's pagehide guidance](https://developer.mozilla.org/en-US/docs/Web/API/Window/pagehide_event) and [web.dev's back/forward cache lifecycle guidance](https://web.dev/articles/bfcache), rechecked on 2026-09-17: a persisted departure can retain a document for reuse. An ordinary browser Back observation alone cannot show whether a new document loaded or a cached one resumed.
++
++Prompt: “Exercise completed explicit Back before emitting persisted departure and return; do not substitute a still-pending Back. Keep departure transient and terminal disposal permanent. Reuse one neutralized router on cached return, begin one fresh read generation, and preserve stale-callback guards. Retain the actual preceding failure and distinguish modeled persisted events from measured browser cache admission.”
+diff --git a/game/profile-recovery.mjs b/game/profile-recovery.mjs
+--- a/game/profile-recovery.mjs
++++ b/game/profile-recovery.mjs
+@@ -13,11 +13,17 @@
+   view = null,
+   epoch = 0,
+   closed = false,
++  leaving = false,
+   suspended = false,
+   focused = document.hasFocus?.() !== false,
+   frame = null;
+ const foreground = () =>
+-  !closed && !suspended && focused && !document.hidden && document.hasFocus?.() !== false;
++  !closed &&
++  !leaving &&
++  !suspended &&
++  focused &&
++  !document.hidden &&
++  document.hasFocus?.() !== false;
+ // Startup and ready controls share one navigation owner. A retry only replaces
+ // its read operation, never the controller's assignment or its physical edges.
+ const navigation = attachControllerNavigation({
+@@ -36,10 +42,10 @@
+ const router = createControllerRouter();
+ function sample(timeMs) {
+   frame = null;
+-  if (closed || suspended) return;
++  if (closed || leaving || suspended) return;
+   if (foreground()) navigation.handle(router.sample({ scope: 'menu', timeMs }).ui);
+   else router.clear();
+-  if (!closed && !suspended) frame = requestAnimationFrame(sample);
++  if (!closed && !leaving && !suspended) frame = requestAnimationFrame(sample);
+ }
+ function stopFrames() {
+   cancelAnimationFrame(frame);
+@@ -73,29 +79,32 @@
+ document.addEventListener('visibilitychange', visibility);
+ 
+ async function leave() {
+-  if (closed) return;
+-  closed = true;
++  if (closed || leaving || suspended) return;
++  leaving = true;
+   const leavingGeneration = ++epoch;
+-  disposeNavigation();
++  // Navigation may enter the browser cache. Only terminal pagehide disposes
++  // this owner; a persisted return starts a fresh read with neutral input.
++  stopFrames();
+   await cleanup?.();
+-  if (leavingGeneration === epoch && !suspended) location.assign('./index.html');
++  if (leavingGeneration === epoch && !closed && !suspended && leaving)
++    location.assign('./index.html');
+ }
+ back.onclick = () => leave();
+ reload.onclick = () => {
+-  if (!closed && !suspended) void start();
++  if (!closed && !leaving && !suspended) void start();
+ };
+ 
+ async function start() {
+-  if (closed || suspended) return;
++  if (closed || leaving || suspended) return;
+   const generation = ++epoch;
+   reload.hidden = false;
+   await cleanup?.();
+-  if (generation !== epoch || closed || suspended) return;
++  if (generation !== epoch || closed || leaving || suspended) return;
+   view = null;
+   back.onclick = () => leave();
+   const lease = presenter.begin({
+     message: 'Loading release information…',
+-    isCurrent: () => generation === epoch && !closed && !suspended,
++    isCurrent: () => generation === epoch && !closed && !leaving && !suspended,
+   });
+   const controller = new AbortController();
+   let timer;
+@@ -191,6 +200,7 @@
+ });
+ window.addEventListener('pageshow', (event) => {
+   if (!event.persisted || closed) return;
++  leaving = false;
+   suspended = false;
+   active();
+   if (frame === null) frame = requestAnimationFrame(sample);
+diff --git a/game/test/profile-recovery-startup-navigation.test.mjs b/game/test/profile-recovery-startup-navigation.test.mjs
+--- a/game/test/profile-recovery-startup-navigation.test.mjs
++++ b/game/test/profile-recovery-startup-navigation.test.mjs
+@@ -466,3 +466,77 @@
+   assert.equal(h.frames.size, 0);
+   assert.equal(h.requests[0].signal.aborted, true);
+ });
++
++for (const readyBeforeBack of [false, true]) {
++  test(`completed ${readyBeforeBack ? 'ready' : 'startup'} Back supports a real persisted departure and fresh return`, async (t) => {
++    const h = await harness(t);
++    h.join();
++    if (readyBeforeBack) await h.ready(0);
++    const previousRequests = h.requests.length;
++    h.press(1);
++    await until(
++      () => h.locations.length === 1,
++      'Explicit Back completed navigation before departure.',
++    );
++    assert.deepEqual(h.locations, ['./index.html']);
++    assert.equal(h.frames.size, 0);
++    assert.equal(h.requests[0].signal.aborted, true);
++    h.win.emit('pagehide', { persisted: true });
++    h.win.emit('pageshow', { persisted: true });
++    assert.equal(
++      h.frames.size,
++      1,
++      'A cached completed departure retains one reusable navigation owner.',
++    );
++    await until(
++      () => h.requests.length === previousRequests + 1,
++      'Return begins a fresh startup read.',
++    );
++    assert.equal(h.win.listeners.get('gamepaddisconnected').size, 1);
++    assert.equal(h.doc.captureListeners.get('keydown').size, 1);
++    h.tick();
++    assert.equal(h.locations.length, 1, 'A Back held through the cached visit is not fresh input.');
++    if (!readyBeforeBack) {
++      h.requests[0].gate.resolve(new Response(JSON.stringify({ version: 'v0.40.0' })));
++      await settle();
++      assert.equal(
++        h.requests.length,
++        previousRequests + 1,
++        'Late departed startup cannot begin a catalog read.',
++      );
++    }
++    await h.ready(previousRequests);
++    assert.equal(h.$('find').disabled, false);
++    assert.equal(h.$('reload').hidden, true);
++    assert.equal(h.frames.size, 1);
++    h.tick();
++    assert.equal(h.locations.length, 1, 'Ready adoption does not replay the still-held Back.');
++    h.neutral();
++    h.press(1);
++    await until(
++      () => h.locations.length === 2,
++      'The same controller can leave again with a fresh Back.',
++    );
++    assert.deepEqual(h.locations, ['./index.html', './index.html']);
++    assert.equal(h.frames.size, 0);
++    assert.equal(h.storeReads(), 0, 'History return never discovers profiles automatically.');
++  });
++}
++
++test('completed Back followed by terminal departure cannot revive on stale persisted pageshow or late startup', async (t) => {
++  const h = await harness(t);
++  h.join();
++  h.press(1);
++  await until(() => h.locations.length === 1, 'Back completed before terminal departure.');
++  h.win.emit('pagehide', { persisted: false });
++  h.win.emit('pageshow', { persisted: true });
++  h.requests[0].gate.resolve(new Response(JSON.stringify({ version: 'v0.40.0' })));
++  await settle();
++  assert.deepEqual(h.locations, ['./index.html']);
++  assert.equal(h.requests.length, 1);
++  assert.equal(h.frames.size, 0);
++  assert.equal(h.win.listeners.get('gamepaddisconnected').size, 0);
++  assert.equal(h.doc.captureListeners.get('keydown').size, 0);
++  assert.equal(h.$('find').disabled, true);
++  assert.equal(h.storeReads(), 0);
++});

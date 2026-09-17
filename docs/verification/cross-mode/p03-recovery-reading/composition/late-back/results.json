@@ -1,0 +1,100 @@
+{
+  "source": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "tree": "cf744b1ced9680b2fb4e0c304ddfc4b9f44b3e86",
+  "baseComposition": "a13ab970 + immutable P05 743fc92b + P03 79058d29 (late-Back successor)",
+  "beforeFix": {
+    "label": "before-fix-20.19.5",
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--max-old-space-size=1024",
+      "--test",
+      "--test-concurrency=1",
+      "game/test/profile-recovery-startup-navigation.test.mjs"
+    ],
+    "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture",
+    "startedAt": "2026-09-17T12:58:33.000190+00:00",
+    "elapsedSeconds": 6.378,
+    "exitCode": 1,
+    "expectedExitCode": 1,
+    "timedOut": false,
+    "inputsUnchanged": true,
+    "inputCount": 95,
+    "inputBytes": 1144438,
+    "totals": {
+      "tests": 13,
+      "pass": 10,
+      "fail": 3,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "results": [
+    {
+      "label": "candidate-20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--max-old-space-size=1024",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/profile-recovery-startup-navigation.test.mjs",
+        "game/test/profile-recovery-display.test.mjs",
+        "game/test/profile-recovery-view.test.mjs",
+        "game/test/profile-original-recovery-view.test.mjs",
+        "game/test/tool-display-restoration.test.mjs",
+        "game/test/display-preferences.test.mjs"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture",
+      "startedAt": "2026-09-17T12:58:39.388317+00:00",
+      "elapsedSeconds": 1.309,
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "timedOut": false,
+      "inputsUnchanged": true,
+      "inputCount": 95,
+      "inputBytes": 1144784,
+      "totals": {
+        "tests": 81,
+        "pass": 81,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "label": "candidate-22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--max-old-space-size=1024",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/profile-recovery-startup-navigation.test.mjs",
+        "game/test/profile-recovery-display.test.mjs",
+        "game/test/profile-recovery-view.test.mjs",
+        "game/test/profile-original-recovery-view.test.mjs",
+        "game/test/tool-display-restoration.test.mjs",
+        "game/test/display-preferences.test.mjs"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-late-back-a13ab970/fixture",
+      "startedAt": "2026-09-17T12:58:40.707221+00:00",
+      "elapsedSeconds": 1.267,
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "timedOut": false,
+      "inputsUnchanged": true,
+      "inputCount": 95,
+      "inputBytes": 1144784,
+      "totals": {
+        "tests": 81,
+        "pass": 81,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  ],
+  "nativeVerified": false,
+  "phaseAccepted": false
+}

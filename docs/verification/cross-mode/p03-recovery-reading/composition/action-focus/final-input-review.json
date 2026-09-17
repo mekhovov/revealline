@@ -1,0 +1,44 @@
+{
+  "result": "PASS",
+  "checked": [
+    {
+      "runtime": "20.19.5",
+      "path": "game/test/profile-original-recovery-view.test.mjs",
+      "bytes": 23545,
+      "sha256": "14073b5b1a4ba58a4b6827357e9246d054d09f0d3718a939dc341d16b4e7a547"
+    },
+    {
+      "runtime": "20.19.5",
+      "path": "game/test/profile-recovery-view.test.mjs",
+      "bytes": 16400,
+      "sha256": "0012b8ebec7d0beee9763b85625f531f158dd6933d6671e24aa070e19618cd6e"
+    },
+    {
+      "runtime": "20.19.5",
+      "path": "game/ui/profile-recovery.mjs",
+      "bytes": 14818,
+      "sha256": "2e7526b215d88beab9597d96abf7f7821130452bced7068247e34daa0a672d11"
+    },
+    {
+      "runtime": "22.22.2",
+      "path": "game/test/profile-original-recovery-view.test.mjs",
+      "bytes": 23545,
+      "sha256": "14073b5b1a4ba58a4b6827357e9246d054d09f0d3718a939dc341d16b4e7a547"
+    },
+    {
+      "runtime": "22.22.2",
+      "path": "game/test/profile-recovery-view.test.mjs",
+      "bytes": 16400,
+      "sha256": "0012b8ebec7d0beee9763b85625f531f158dd6933d6671e24aa070e19618cd6e"
+    },
+    {
+      "runtime": "22.22.2",
+      "path": "game/ui/profile-recovery.mjs",
+      "bytes": 14818,
+      "sha256": "2e7526b215d88beab9597d96abf7f7821130452bced7068247e34daa0a672d11"
+    }
+  ],
+  "noRuntimeChangesAfterTests": true,
+  "preimagesExact": true,
+  "patchCheck": true
+}

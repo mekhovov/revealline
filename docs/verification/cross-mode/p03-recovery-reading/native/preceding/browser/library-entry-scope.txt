@@ -1,0 +1,46 @@
+Browser tab: 30, Title: "Reveal / Line", URL: "http://127.0.0.1:60342/game/index.html".
+1 AXWebArea Reveal / Line, URL: 127.0.0.1:60342/game/index.html
+	2 container Flight library., ID: library-dialog
+		3 button Close library
+		4 text THE THINGS YOU KEEP
+		5 heading Flight library., Value: 2, ID: library-title
+			6 text Flight library.
+		7 container Library sections
+			8 button Records
+			9 button Saves & loads
+			10 button Expansion packs
+			11 button Challenges
+		12 container library-saves
+			13 text 0 / 4096 pictures · 0 / 4096 equipment seals · 0 / 512 campaigns · 0.0% of profile budget. Old pictures are preserved; export archives before reaching capacity.
+			14 container Description: Game and originals backup, ID: backup-set
+				15 button Prepare game and originals backup, ID: prepare-backup-set
+				16 text Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.
+			17 button Export game data, ID: export-backup
+				18 text Export game data
+			19 text This JSON includes your player library, installed packs and saved flight. Importing it replaces those three together. Uploaded originals and custom music need their separate .rlmedia and .rlsound backups. Restore originals first when transferring saved custom pictures, then import the game data. Keep your current backups to preserve both collections.
+			20 button (disabled) Undo game-data import, ID: undo-backup
+				21 text Undo game-data import
+			22 text No suspended attempt. Use Save & pause during a flight.
+			23 button (disabled) Load suspended attempt, ID: resume-save
+			24 button Export saved attempt, ID: export-session
+			25 button Export player library, ID: export-library
+			26 text Player library files contain campaign progress, picture records, local scores and preferences. Attempt files contain a verified unfinished flight. Install matching expansion packs before resuming their flights.
+			27 container
+				28 text Load a saved JSON file
+				29 button Load a saved JSON file, ID: save-file
+			30 button (collapsed) Copy or paste save JSON, Secondary Actions: Expand
+				31 text Copy or paste save JSON
+			32 button (disabled) Undo last library import, ID: undo-library
+				33 text Undo last library import
+			34 container profile-transfer
+				35 button (expanded) Bring progress from an earlier release, Secondary Actions: Collapse
+					36 text Bring progress from an earlier release
+				37 text Copy a collection saved by an earlier release in this browser on this site. This replaces this release’s pictures, scores, preferences, installed packs and saved flight together. Export your current game-data backup first to keep both. The earlier release stays unchanged.
+				38 pop up button (disabled, collapsed, settable) Description: Earlier release, ID: transfer-source, Secondary Actions: Expand
+				39 button (disabled) Review saved progress, ID: transfer-review
+				40 button (disabled) Copy reviewed progress, ID: transfer-copy
+					41 text Copy reviewed progress
+				42 text No compatible earlier collection was found at this address. Use a game-data backup file to transfer from another location.
+				43 text Another browser, address, device or native app needs Export game data in the old game, then Import here. Keep picture originals in .rlmedia, stories in .rlstory and custom music in .rlsound alongside it; restore originals before game data. Close earlier game tabs before reviewing or copying.
+
+The focused UI element is 35 button (expanded) Bring progress from an earlier release, Secondary Actions: Collapse

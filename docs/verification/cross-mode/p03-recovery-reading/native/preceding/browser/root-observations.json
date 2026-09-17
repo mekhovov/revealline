@@ -1,0 +1,25 @@
+{
+  "at": "2026-09-17T13:20:53.625005+00:00",
+  "status": "BOUNDED_NATIVE_OBSERVATIONS_WITH_FOLLOWUP",
+  "source": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "tab": "30",
+  "port": 60342,
+  "observed": [
+    "Explicit two-Tab Enter Find returns truthful no-supported-profiles state on fresh origin",
+    "Next Tab reaches Back; Enter returns game/index.html once",
+    "503 build-info shows Back and Reload; two Tabs focus Reload; removing fault plus Enter reaches ready Find with focus",
+    "30-second build-info delay shows startup actions; actual 10-second timeout preserves Reload focus; retry after removing fault reaches Find",
+    "Escape from ready Recovery returns game",
+    "Normal game Settings UI Plain and Large selection inherited on browser Back to Recovery",
+    "Logical 390x844 and 844x390 document widths equal scroll widths; landscape Find 47px-high focus rectangle remains within viewport"
+  ],
+  "openFinding": "Existing ready Find completion leaves BODY focus after disabling the initiating control; separate actual-view correction requested. Initial keyboard attempts to change native select values did not change them; subsequent supported UI selectOption verified both actual selections.",
+  "limits": [
+    "No available historical originals or actual stored-data export/download",
+    "No BFCache admission, held IndexedDB close timing or physical-controller/touch proof",
+    "Screenshot compositor scale differs from logical viewport; no screenshot pixel-size certification",
+    "200 percent zoom and all four reading combinations pending"
+  ],
+  "faultsRestored": true,
+  "viewportReset": true
+}
