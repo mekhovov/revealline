@@ -93,6 +93,12 @@ Each domain has a fixed checklist. Pictures include framing and partial/full rev
 
 Slot coverage and unique work totals answer different questions. SHA identity, stable work IDs, explicit derivation and recipe handles prevent renamed, recompressed or shared work from inflating unique totals. Two bindings of one movie remain one unique story even when their slots differ. Intentional reuse stays visible. No hash comparison can identify undeclared semantic copying; curation must record `derivedFrom` and layout relationships truthfully.
 
+## Shared reading preferences
+
+The current supporting-tool correction is in development; its scoped source tests are not release acceptance. The independent display entry reads the game's shared Theme/Plain, Standard/Large and effective reduced-effects policy before the tool's main initialization. It keeps loading/error text readable if that application module is delayed or fails. This read-only owner does not save settings, change the register or write game profiles.
+
+Reading changes preserve the active search/filter, selected detail, pending original decode and displayed image. **Back to slots** retains the existing exact-row focus return. Existing page hiding still cancels pending preview work; a history return does not silently restart it. Persisted display restoration reads current shared/system policy without remounting the panel or taking focus. Verify actual Back/Forward and focus visibility at enlarged text separately from modeled lifecycle events; the source view remains a local authoring tool.
+
 ## Verification
 
 Run only the focused source test for this tool:

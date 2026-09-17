@@ -1,0 +1,31 @@
+{
+  "format": "revealline-native-observation.v1",
+  "observedAt": "2026-09-17T11:54:44.158942+00:00",
+  "release": "v0.60.2",
+  "source": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "browser": "Codex in-app Chromium",
+  "boundary": "Actual CUA UI actions and accessibility observations; no app-state injection or simulated decode delay. This is a supplementary P03 scenario, not whole-phase acceptance.",
+  "passed": [
+    "Actual Start, direction and Pause created a saved Solo flight; reload exposed Continue.",
+    "A scoped keyboard press on visible title Cancel preparation cancelled real local saved-media preparation. Title showed Preparation cancelled. Your flight remains paused.; focus returned to Continue.",
+    "Shift+Tab reached Team; Return opened real Team lobby. Start remained explicit.",
+    "Keyboard selected First Connection in the actual Arena selector; no flight auto-started.",
+    "Keyboard reached Solo return; Solo title still offered the Relay Orchard save.",
+    "Explicit Continue restored 52.2% coverage, 8660 points, 3 lives, relay 1/1 and 0:14, matching the pre-cancel paused HUD; focus on game canvas.",
+    "Explicit Pause/Main menu left title with Continue available; no preference or audio change."
+  ],
+  "preliminaryAttempts": [
+    "First inspection-to-Return gap outlasted Cancel; that Return was not accepted as a cancellation observation. The resulting actual First Signal win was 52.2%, 8160 points, 0:10; next campaign briefing opened.",
+    "A broad Cancel preparation role matched both underlying and title controls, so no action executed. Retried only after returning to title/reloading, targeting observed shell-flight-cancel.",
+    "Team ready wait initially omitted the visible arrow suffix and timed out; actual AX showed Start together \u2192 ready. Not a product failure."
+  ],
+  "notClaimed": [
+    "native delayed-decode rejection after cancellation",
+    "busy-cleanup departure refusal timing",
+    "native Team win",
+    "physical controller or touch",
+    "fresh offline or migration qualification",
+    "Collection pagination"
+  ],
+  "leftAt": "https://mekhovov.github.io/revealline/releases/v0.60.2/site/game/"
+}

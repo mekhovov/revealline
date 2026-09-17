@@ -501,3 +501,73 @@ for (const kind of ['versus', 'team'])
       frozen(h, before);
     });
   });
+
+for (const kind of ['versus', 'team'])
+  test(`saved Continue: explicit keyboard Cancel then ${kind} preserves newer focus when the retired picture decode rejects`, async (t) => {
+    const f = await pictureFixture(t),
+      storage = memoryStorage();
+    await t.test('seed an actual saved original and unfinished cut', async (t) => {
+      const h = await flight(t, {
+        storage,
+        policy: 'grid-center',
+        campaign: f.campaign,
+        soundtrackIndexedDB: f.memory.indexedDB,
+        pictures: { Image: Picture },
+      });
+      assert.ok(JSON.parse(storage.getItem(slot)).presentationPins);
+      assert.equal(h.rendered.run.player.cutting, true);
+    });
+    const captured = storage.getItem(slot);
+    await t.test('Cancel, attempt mode departure, then reject only the old decode', async (t) => {
+      const gate = deferred();
+      let decodes = 0;
+      class RestorePicture extends Picture {
+        decode() {
+          decodes++;
+          return decodes === 1 ? Promise.resolve() : gate.promise;
+        }
+      }
+      const h = await host(t, {
+        storage,
+        campaign: f.campaign,
+        soundtrackIndexedDB: f.memory.indexedDB,
+        pictures: { Image: RestorePicture },
+      });
+      const before = checkpoint(h),
+        old = h.rendered.run;
+      h.$('shell-continue').focus();
+      const pending = press(h, 'Enter');
+      await settle(() => decodes >= 2);
+      assert.equal(h.$('shell-flight-cancel').hidden, false);
+      assert.equal(h.doc.activeElement.id, 'shell-flight-cancel');
+      await press(h, 'Enter');
+      assert.equal(h.$('shell-flight-cancel').hidden, true);
+      assert.equal(h.doc.activeElement.id, 'shell-continue');
+      assert.equal(h.$('shell-continue').disabled, false);
+      assert.equal(h.$('continue-saved').disabled, true, 'The actual restore still owns cleanup');
+      assert.equal(storage.getItem(slot), captured);
+      await request(h, kind);
+      assert.equal(globalThis.location.href, homeURL);
+      assert.equal(h.doc.activeElement.id, `shell-title-${kind}`);
+      assert.match(h.$('run-message').textContent, /Finish the current operation/);
+      frozen(h, before);
+      gate.reject(new Error('Retired original decode failed after explicit Cancel'));
+      await pending;
+      await settle(() => !h.$('continue-saved').disabled);
+      assert.equal(h.rendered.run, old, 'Late rejection cannot adopt or replace a flight');
+      assert.equal(
+        h.doc.activeElement.id,
+        `shell-title-${kind}`,
+        'Newer deliberate action keeps focus',
+      );
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.$('mode-leave-dialog').open, false);
+      assert.equal(storage.getItem(slot), captured);
+      frozen(h, before);
+      await request(h, kind);
+      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(storage.getItem(slot), captured);
+      assert.equal(h.$('mode-leave-dialog').open, false);
+      frozen(h, before);
+    });
+  });

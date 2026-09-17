@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/title-mode-departure-host.test.mjs"
+  ],
+  "startedAt": "2026-09-17T11:57:14.642211+00:00",
+  "finishedAt": "2026-09-17T11:57:34.500613+00:00",
+  "exitCode": 0,
+  "fixtureSource": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "integrationBase": "c7c4ed747636e66c0319a1843140c39fc6d4b38d",
+  "exactIntegratedTestBytesMatch": true,
+  "testSha256": "0abbb633c5017e4e72ef6ec614678ba929abbeb81f5d28dbc0045ab89a2b9953",
+  "stdoutSha256": "f0ee19a1e2cd56ae39122171c96fa5f45178135cf121442db8a9ff644c353cdd",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
