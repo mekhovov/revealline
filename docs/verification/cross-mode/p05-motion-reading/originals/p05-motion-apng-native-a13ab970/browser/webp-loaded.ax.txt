@@ -1,0 +1,4 @@
+Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342/authoring/motion-lab/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~						393 text animated-first-frame.webp · 32 × 24. Local display only; source unchanged, no upload or AI call.
+The focused UI element is 0 AXWebArea Motion lab — FPV study, URL: 127.0.0.1:60342/authoring/motion-lab/

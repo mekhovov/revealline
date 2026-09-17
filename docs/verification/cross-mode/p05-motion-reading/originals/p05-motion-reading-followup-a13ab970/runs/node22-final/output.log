@@ -1,0 +1,974 @@
+TAP version 13
+# Subtest: ten classes use only registered primitives and separate valid body/link references
+ok 1 - ten classes use only registered primitives and separate valid body/link references
+  ---
+  duration_ms: 2.32275
+  type: 'test'
+  ...
+# Subtest: unknown primitives, invalid resources, links, lanes and registry versions fail validation
+ok 2 - unknown primitives, invalid resources, links, lanes and registry versions fail validation
+  ---
+  duration_ms: 1.930708
+  type: 'test'
+  ...
+# Subtest: light carrier needs nearby pickup, spends one charge and cannot repeat or overdraw
+ok 3 - light carrier needs nearby pickup, spends one charge and cannot repeat or overdraw
+  ---
+  duration_ms: 2.941458
+  type: 'test'
+  ...
+# Subtest: heavy carrier holds two charges and cooldown cannot consume an extra charge
+ok 4 - heavy carrier holds two charges and cooldown cannot consume an extra charge
+  ---
+  duration_ms: 6.072416
+  type: 'test'
+  ...
+# Subtest: courier delivery updates only its delivery marker, while drop-clear targets ground toys
+ok 5 - courier delivery updates only its delivery marker, while drop-clear targets ground toys
+  ---
+  duration_ms: 1.075416
+  type: 'test'
+  ...
+# Subtest: scan reveals notes temporarily and relay pulse restores only relay markers
+ok 6 - scan reveals notes temporarily and relay pulse restores only relay markers
+  ---
+  duration_ms: 8.299708
+  type: 'test'
+  ...
+# Subtest: strike uses authoritative cardinal direction, spends charge and returns on ground tag
+ok 7 - strike uses authoritative cardinal direction, spends charge and returns on ground tag
+  ---
+  duration_ms: 0.293209
+  type: 'test'
+  ...
+# Subtest: grid dash ends on a valid rail center; immediate keeps continuous end and both clamp bounds
+ok 8 - grid dash ends on a valid rail center; immediate keeps continuous end and both clamp bounds
+  ---
+  duration_ms: 0.27125
+  type: 'test'
+  ...
+# Subtest: a short grid dash cannot round backward or spend a charge without a reachable forward center
+ok 9 - a short grid dash cannot round backward or spend a charge without a reachable forward center
+  ---
+  duration_ms: 0.49175
+  type: 'test'
+  ...
+# Subtest: fiber dash charges its outbound distance once and excludes the strike return teleport
+ok 10 - fiber dash charges its outbound distance once and excludes the strike return teleport
+  ---
+  duration_ms: 0.379291
+  type: 'test'
+  ...
+# Subtest: emitted dots use swept toy hits and deterministic fixed ticks across frame rates
+ok 11 - emitted dots use swept toy hits and deterministic fixed ticks across frame rates
+  ---
+  duration_ms: 4.934167
+  type: 'test'
+  ...
+# Subtest: net slows an airborne toy then captures it after dwell time
+ok 12 - net slows an airborne toy then captures it after dwell time
+  ---
+  duration_ms: 2.629917
+  type: 'test'
+  ...
+# Subtest: a net processes its full active interval including equal dwell/expiry and a partial final tick
+ok 13 - a net processes its full active interval including equal dwell/expiry and a partial final tick
+  ---
+  duration_ms: 6.541167
+  type: 'test'
+  ...
+# Subtest: projectiles resolve the first swept contact rather than the nearest target center
+ok 14 - projectiles resolve the first swept contact rather than the nearest target center
+  ---
+  duration_ms: 0.290166
+  type: 'test'
+  ...
+# Subtest: pause freezes cooldown and actors; rejected/duplicate actions cannot spend charges
+ok 15 - pause freezes cooldown and actors; rejected/duplicate actions cannot spend charges
+  ---
+  duration_ms: 1.850875
+  type: 'test'
+  ...
+# Subtest: fiber is modular, spends budget on travel, refills at pads and does not obstruct movement
+ok 16 - fiber is modular, spends budget on travel, refills at pads and does not obstruct movement
+  ---
+  duration_ms: 0.213292
+  type: 'test'
+  ...
+# Subtest: fiber charges authoritative reversal distance even when one frame returns to the same point
+ok 17 - fiber charges authoritative reversal distance even when one frame returns to the same point
+  ---
+  duration_ms: 0.61225
+  type: 'test'
+  ...
+# Subtest: only synthetic display haze differs between radio and fiber; source player stays untouched
+ok 18 - only synthetic display haze differs between radio and fiber; source player stays untouched
+  ---
+  duration_ms: 0.090042
+  type: 'test'
+  ...
+# Subtest: class/link change cancels transients, resets toy resources, preserves dedupe and avoids cosmetics
+ok 19 - class/link change cancels transients, resets toy resources, preserves dedupe and avoids cosmetics
+  ---
+  duration_ms: 0.1185
+  type: 'test'
+  ...
+# Subtest: every supplied cosmetic has a validated recipe; FPV defaults use three blades
+ok 20 - every supplied cosmetic has a validated recipe; FPV defaults use three blades
+  ---
+  duration_ms: 1.029834
+  type: 'test'
+  ...
+# Subtest: malformed count, radius, rate, recipe ref and source anchor fail before rendering
+ok 21 - malformed count, radius, rate, recipe ref and source anchor fail before rendering
+  ---
+  duration_ms: 1.952542
+  type: 'test'
+  ...
+# Subtest: two, three and four blades have complete evenly spaced geometry at any phase
+ok 22 - two, three and four blades have complete evenly spaced geometry at any phase
+  ---
+  duration_ms: 0.201792
+  type: 'test'
+  ...
+# Subtest: display sampling never jumps a quarter repeated blade pattern even on a slow frame
+ok 23 - display sampling never jumps a quarter repeated blade pattern even on a slow frame
+  ---
+  duration_ms: 0.231584
+  type: 'test'
+  ...
+# Subtest: spin responds to movement; slow inspection caps detail while preserving requested speed metadata
+ok 24 - spin responds to movement; slow inspection caps detail while preserving requested speed metadata
+  ---
+  duration_ms: 1.087916
+  type: 'test'
+  ...
+# Subtest: pause and reduced motion freeze every animation layer, and reduced poses are time invariant
+ok 25 - pause and reduced motion freeze every animation layer, and reduced poses are time invariant
+  ---
+  duration_ms: 0.82475
+  type: 'test'
+  ...
+# Subtest: wing phase stays continuous when speed changes after a long-running preview
+ok 26 - wing phase stays continuous when speed changes after a long-running preview
+  ---
+  duration_ms: 2.912959
+  type: 'test'
+  ...
+# Subtest: all character recipes leave authoritative movement identical across a turn and boost
+ok 27 - all character recipes leave authoritative movement identical across a turn and boost
+  ---
+  duration_ms: 20.433208
+  type: 'test'
+  ...
+# Subtest: non-square source containment preserves body aspect and source-normalized anchor placement
+ok 28 - non-square source containment preserves body aspect and source-normalized anchor placement
+  ---
+  duration_ms: 0.344542
+  type: 'test'
+  ...
+# Subtest: authored collection validates against its visual IDs without permitting stats
+ok 29 - authored collection validates against its visual IDs without permitting stats
+  ---
+  duration_ms: 1.852125
+  type: 'test'
+  ...
+# Subtest: each family starts with an eligible default and unknown contexts use neutral
+ok 30 - each family starts with an eligible default and unknown contexts use neutral
+  ---
+  duration_ms: 2.303125
+  type: 'test'
+  ...
+# Subtest: locked cards expose unmet alternatives; availability and ownership are distinct
+ok 31 - locked cards expose unmet alternatives; availability and ownership are distinct
+  ---
+  duration_ms: 0.284709
+  type: 'test'
+  ...
+# Subtest: complete simulated results change only a new profile; all fixtures earn variants without auto-equipping
+ok 32 - complete simulated results change only a new profile; all fixtures earn variants without auto-equipping
+  ---
+  duration_ms: 1.874625
+  type: 'test'
+  ...
+# Subtest: same event is idempotent and conflicting event or run IDs cannot rewrite a reward
+ok 33 - same event is idempotent and conflicting event or run IDs cannot rewrite a reward
+  ---
+  duration_ms: 0.239833
+  type: 'test'
+  ...
+# Subtest: event identity ignores object property order and objective-set order
+ok 34 - event identity ignores object property order and objective-set order
+  ---
+  duration_ms: 0.162125
+  type: 'test'
+  ...
+# Subtest: replays and challenge/map variants of the same level never inflate level counts
+ok 35 - replays and challenge/map variants of the same level never inflate level counts
+  ---
+  duration_ms: 0.691792
+  type: 'test'
+  ...
+# Subtest: star totals use the best qualifying result of each distinct level
+ok 36 - star totals use the best qualifying result of each distinct level
+  ---
+  duration_ms: 0.938709
+  type: 'test'
+  ...
+# Subtest: wrong map, missing objective, life loss and a lost run cannot satisfy a clean-map unlock
+ok 37 - wrong map, missing objective, life loss and a lost run cannot satisfy a clean-map unlock
+  ---
+  duration_ms: 1.0545
+  type: 'test'
+  ...
+# Subtest: distinct-level alternative works without a perfect run or daily grind
+ok 38 - distinct-level alternative works without a perfect run or daily grind
+  ---
+  duration_ms: 0.521
+  type: 'test'
+  ...
+# Subtest: AND groups and duration/star predicates require all conditions, while OR remains alternative
+ok 39 - AND groups and duration/star predicates require all conditions, while OR remains alternative
+  ---
+  duration_ms: 0.467542
+  type: 'test'
+  ...
+# Subtest: equipping rejects locked, wrong-theme and mismatched scope choices
+ok 40 - equipping rejects locked, wrong-theme and mismatched scope choices
+  ---
+  duration_ms: 0.308333
+  type: 'test'
+  ...
+# Subtest: scope resolution is deterministic: more constraints, then map/level/challenge/case/theme/game
+ok 41 - scope resolution is deterministic: more constraints, then map/level/challenge/case/theme/game
+  ---
+  duration_ms: 1.687458
+  type: 'test'
+  ...
+# Subtest: removed or locked saved choices fall through safely; unequippable defaults do too
+ok 42 - removed or locked saved choices fall through safely; unequippable defaults do too
+  ---
+  duration_ms: 0.239667
+  type: 'test'
+  ...
+# Subtest: lab and future game profiles cannot mix reward modes; fixtures never enter game mode
+ok 43 - lab and future game profiles cannot mix reward modes; fixtures never enter game mode
+  ---
+  duration_ms: 0.090666
+  type: 'test'
+  ...
+# Subtest: valid save round-trips; corruption, foreign identity and unknown versions recover visibly
+ok 44 - valid save round-trips; corruption, foreign identity and unknown versions recover visibly
+  ---
+  duration_ms: 0.856417
+  type: 'test'
+  ...
+# Subtest: malformed conditions, fallback, scopes and incomplete result events fail closed
+ok 45 - malformed conditions, fallback, scopes and incomplete result events fail closed
+  ---
+  duration_ms: 0.9305
+  type: 'test'
+  ...
+# Subtest: result arrival order does not change derived ownership or best totals
+ok 46 - result arrival order does not change derived ownership or best totals
+  ---
+  duration_ms: 0.671834
+  type: 'test'
+  ...
+# Subtest: policy configuration defaults to compatible immediate movement and validates unknown values
+ok 47 - policy configuration defaults to compatible immediate movement and validates unknown values
+  ---
+  duration_ms: 1.896625
+  type: 'test'
+  ...
+# Subtest: explicit grid reset starts at a true cell center without mutating authored route
+ok 48 - explicit grid reset starts at a true cell center without mutating authored route
+  ---
+  duration_ms: 0.613792
+  type: 'test'
+  ...
+# Subtest: perpendicular turns consume at the next center with unchanged speed and leftover distance
+ok 49 - perpendicular turns consume at the next center with unchanged speed and leftover distance
+  ---
+  duration_ms: 0.2525
+  type: 'test'
+  ...
+# Subtest: opposite command waits for the center and reverses at the same speed
+ok 50 - opposite command waits for the center and reverses at the same speed
+  ---
+  duration_ms: 0.748667
+  type: 'test'
+  ...
+# Subtest: one buffer uses the latest held command, including cancellation by the current direction
+ok 51 - one buffer uses the latest held command, including cancellation by the current direction
+  ---
+  duration_ms: 0.373542
+  type: 'test'
+  ...
+# Subtest: release stops immediately, clears queued turn and does not retain a tap for restart
+ok 52 - release stops immediately, clears queued turn and does not retain a tap for restart
+  ---
+  duration_ms: 0.151958
+  type: 'test'
+  ...
+# Subtest: pause clears queued intent without moving or changing the frozen cosmetic pose
+ok 53 - pause clears queued intent without moving or changing the frozen cosmetic pose
+  ---
+  duration_ms: 0.2845
+  type: 'test'
+  ...
+# Subtest: large and boosted frame intervals cannot skip a turn center or lose remaining distance
+ok 54 - large and boosted frame intervals cannot skip a turn center or lose remaining distance
+  ---
+  duration_ms: 0.148625
+  type: 'test'
+  ...
+# Subtest: grid travel and turns are invariant at 10,20,30,60,120fps
+ok 55 - grid travel and turns are invariant at 10,20,30,60,120fps
+  ---
+  duration_ms: 1.62125
+  type: 'test'
+  ...
+# Subtest: grid autoplay uses center-aligned route with empty manual buffer at every frame rate
+ok 56 - grid autoplay uses center-aligned route with empty manual buffer at every frame rate
+  ---
+  duration_ms: 5.969125
+  type: 'test'
+  ...
+# Subtest: all four edges are reachable centers and support held turns and reversals
+ok 57 - all four edges are reachable centers and support held turns and reversals
+  ---
+  duration_ms: 0.274209
+  type: 'test'
+  ...
+# Subtest: body scale, turn response and reduced motion cannot alter buffered travel
+ok 58 - body scale, turn response and reduced motion cannot alter buffered travel
+  ---
+  duration_ms: 0.3085
+  type: 'test'
+  ...
+# Subtest: defaults are fixed 48×36, hybrid, and a compact 1.25-cell body
+ok 59 - defaults are fixed 48×36, hybrid, and a compact 1.25-cell body
+  ---
+  duration_ms: 2.7265
+  type: 'test'
+  ...
+# Subtest: malformed terrain pitch and opacities fail before any render loop
+ok 60 - malformed terrain pitch and opacities fail before any render loop
+  ---
+  duration_ms: 2.840917
+  type: 'test'
+  ...
+# Subtest: invalid geometry, short integration step and diagonal route fail visibly
+ok 61 - invalid geometry, short integration step and diagonal route fail visibly
+  ---
+  duration_ms: 0.517666
+  type: 'test'
+  ...
+# Subtest: cardinal direction and travel speed change immediately while facing lags
+ok 62 - cardinal direction and travel speed change immediately while facing lags
+  ---
+  duration_ms: 0.332583
+  type: 'test'
+  ...
+# Subtest: releasing movement stops immediately, with only visual response allowed to settle
+ok 63 - releasing movement stops immediately, with only visual response allowed to settle
+  ---
+  duration_ms: 0.251459
+  type: 'test'
+  ...
+# Subtest: boost and slow change speed without steering
+ok 64 - boost and slow change speed without steering
+  ---
+  duration_ms: 0.144875
+  type: 'test'
+  ...
+# Subtest: 10, 20 and 60 fps preserve the same real-time manual travel
+ok 65 - 10, 20 and 60 fps preserve the same real-time manual travel
+  ---
+  duration_ms: 0.315417
+  type: 'test'
+  ...
+# Subtest: autoplay carries distance through corners consistently across frame rates
+ok 66 - autoplay carries distance through corners consistently across frame rates
+  ---
+  duration_ms: 3.228125
+  type: 'test'
+  ...
+# Subtest: body turn rate and reduced motion cannot alter authoritative positions
+ok 67 - body turn rate and reduced motion cannot alter authoritative positions
+  ---
+  duration_ms: 0.915208
+  type: 'test'
+  ...
+# Subtest: pause preserves the complete presentation state and does not consume elapsed time
+ok 68 - pause preserves the complete presentation state and does not consume elapsed time
+  ---
+  duration_ms: 0.295792
+  type: 'test'
+  ...
+# Subtest: true stalls cap catch-up, and board limits remain fixed
+ok 69 - true stalls cap catch-up, and board limits remain fixed
+  ---
+  duration_ms: 0.117333
+  type: 'test'
+  ...
+# Subtest: four palettes and three terrain treatments share the same footprint data
+ok 70 - four palettes and three terrain treatments share the same footprint data
+  ---
+  duration_ms: 0.467042
+  type: 'test'
+  ...
+# Subtest: latest fresh key or pointer wins; release, repeats and an older hold cannot reclaim direction
+ok 71 - latest fresh key or pointer wins; release, repeats and an older hold cannot reclaim direction
+  ---
+  duration_ms: 1.359209
+  type: 'test'
+  ...
+# Subtest: pause keeps unstepped intent, ignores inactive holds and reset requires a fresh press
+ok 72 - pause keeps unstepped intent, ignores inactive holds and reset requires a fresh press
+  ---
+  duration_ms: 0.192708
+  type: 'test'
+  ...
+# Subtest: immediate: real motion continues after release and explicit resume retains the complete turn
+ok 73 - immediate: real motion continues after release and explicit resume retains the complete turn
+  ---
+  duration_ms: 1.198833
+  type: 'test'
+  ...
+# Subtest: immediate: explicit autoplay remains the same route and does not consume manual intent
+ok 74 - immediate: explicit autoplay remains the same route and does not consume manual intent
+  ---
+  duration_ms: 0.220541
+  type: 'test'
+  ...
+# Subtest: grid-center: real motion continues after release and explicit resume retains the complete turn
+ok 75 - grid-center: real motion continues after release and explicit resume retains the complete turn
+  ---
+  duration_ms: 0.28425
+  type: 'test'
+  ...
+# Subtest: grid-center: explicit autoplay remains the same route and does not consume manual intent
+ok 76 - grid-center: explicit autoplay remains the same route and does not consume manual intent
+  ---
+  duration_ms: 0.069625
+  type: 'test'
+  ...
+# (node:14777) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a missing static dependency reports module failure and leaves a same-page Reload link
+ok 77 - a missing static dependency reports module failure and leaves a same-page Reload link
+  ---
+  duration_ms: 11.728
+  type: 'test'
+  ...
+# Subtest: slow module observation is truthful and cannot overwrite a later attached host
+ok 78 - slow module observation is truthful and cannot overwrite a later attached host
+  ---
+  duration_ms: 2.495834
+  type: 'test'
+  ...
+# Subtest: reserve catalog labels delayed metadata and fences stale selected image completion
+ok 79 - reserve catalog labels delayed metadata and fences stale selected image completion
+  ---
+  duration_ms: 7.457458
+  type: 'test'
+  ...
+# Subtest: atlas font, optional reference and clipboard waits remain independently scoped
+ok 80 - atlas font, optional reference and clipboard waits remain independently scoped
+  ---
+  duration_ms: 3.7015
+  type: 'test'
+  ...
+# Subtest: motion study reports initial dependency wait and a retryable startup failure
+ok 81 - motion study reports initial dependency wait and a retryable startup failure
+  ---
+  duration_ms: 13.575917
+  type: 'test'
+  ...
+# Subtest: shared display record overrides legacy synchronously and startup never writes
+ok 82 - shared display record overrides legacy synchronously and startup never writes
+  ---
+  duration_ms: 1.216584
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: not json
+ok 83 - invalid stored value preserves original bytes and legacy fallback: not json
+  ---
+  duration_ms: 0.188292
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: null
+ok 84 - invalid stored value preserves original bytes and legacy fallback: null
+  ---
+  duration_ms: 0.151
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: []
+ok 85 - invalid stored value preserves original bytes and legacy fallback: []
+  ---
+  duration_ms: 0.367167
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+ok 86 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+  ---
+  duration_ms: 0.170209
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+ok 87 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.123125
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+ok 88 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+  ---
+  duration_ms: 0.058666
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 89 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.102958
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 90 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.3205
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 91 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 1.021
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback:                                                        
+ok 92 - invalid stored value preserves original bytes and legacy fallback:                                                        
+  ---
+  duration_ms: 0.110541
+  type: 'test'
+  ...
+# Subtest: legacy seed reads only display fields; explicit change saves three fields before navigation
+ok 93 - legacy seed reads only display fields; explicit change saves three fields before navigation
+  ---
+  duration_ms: 0.336417
+  type: 'test'
+  ...
+# Subtest: late legacy snapshots cannot replace explicit same-value intent or a newer seed
+ok 94 - late legacy snapshots cannot replace explicit same-value intent or a newer seed
+  ---
+  duration_ms: 0.076209
+  type: 'test'
+  ...
+# Subtest: a current shared record wins a delayed legacy read even before its storage event
+ok 95 - a current shared record wins a delayed legacy read even before its storage event
+  ---
+  duration_ms: 0.044166
+  type: 'test'
+  ...
+# Subtest: system reduction combines conservatively without changing raw intent or saving
+ok 96 - system reduction combines conservatively without changing raw intent or saving
+  ---
+  duration_ms: 0.193292
+  type: 'test'
+  ...
+# Subtest: injected and legacy media query APIs use current matches and detach on disposal
+ok 97 - injected and legacy media query APIs use current matches and detach on disposal
+  ---
+  duration_ms: 0.076333
+  type: 'test'
+  ...
+# Subtest: missing media query capability still permits explicit reduction
+ok 98 - missing media query capability still permits explicit reduction
+  ---
+  duration_ms: 0.07675
+  type: 'test'
+  ...
+# Subtest: storage events require exact key, area and still-current bounded raw bytes
+ok 99 - storage events require exact key, area and still-current bounded raw bytes
+  ---
+  duration_ms: 0.171125
+  type: 'test'
+  ...
+# Subtest: practice mode changes memory with a warning and protects unsaved intent
+ok 100 - practice mode changes memory with a warning and protects unsaved intent
+  ---
+  duration_ms: 0.099125
+  type: 'test'
+  ...
+# Subtest: quota failures preserve memory, and a later successful save restores sharing
+ok 101 - quota failures preserve memory, and a later successful save restores sharing
+  ---
+  duration_ms: 0.076292
+  type: 'test'
+  ...
+# Subtest: unavailable storage and throwing warning callbacks cannot undo display intent
+ok 102 - unavailable storage and throwing warning callbacks cannot undo display intent
+  ---
+  duration_ms: 0.061625
+  type: 'test'
+  ...
+# Subtest: patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+ok 103 - patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+  ---
+  duration_ms: 0.293542
+  type: 'test'
+  ...
+# Subtest: subscribers see immutable current state and newer reentrant intent reaches storage
+ok 104 - subscribers see immutable current state and newer reentrant intent reaches storage
+  ---
+  duration_ms: 0.07375
+  type: 'test'
+  ...
+# Subtest: a failed observer does not block other observers or persistence
+ok 105 - a failed observer does not block other observers or persistence
+  ---
+  duration_ms: 0.062834
+  type: 'test'
+  ...
+# Subtest: reentrant explicit intent during legacy adoption wins and reports the seed superseded
+ok 106 - reentrant explicit intent during legacy adoption wins and reports the seed superseded
+  ---
+  duration_ms: 0.048333
+  type: 'test'
+  ...
+# Subtest: disposal detaches both event sources and rejects later mutation or subscription
+ok 107 - disposal detaches both event sources and rejects later mutation or subscription
+  ---
+  duration_ms: 0.081
+  type: 'test'
+  ...
+# Subtest: persisted return reads current shared state and cap without resaving or duplicate notifications
+ok 108 - persisted return reads current shared state and cap without resaving or duplicate notifications
+  ---
+  duration_ms: 0.106209
+  type: 'test'
+  ...
+# Subtest: persisted return preserves unsaved intent while refreshing current system reduction
+ok 109 - persisted return preserves unsaved intent while refreshing current system reduction
+  ---
+  duration_ms: 0.158
+  type: 'test'
+  ...
+# Subtest: persisted return ignores malformed and deleted shared data while updating only the effective cap
+ok 110 - persisted return ignores malformed and deleted shared data while updating only the effective cap
+  ---
+  duration_ms: 0.062542
+  type: 'test'
+  ...
+# Subtest: ordinary pageshow and a disposed authority cannot consume restored-page changes
+ok 111 - ordinary pageshow and a disposed authority cannot consume restored-page changes
+  ---
+  duration_ms: 0.036416
+  type: 'test'
+  ...
+# Subtest: persisted return respects a newer explicit choice made by an observer
+ok 112 - persisted return respects a newer explicit choice made by an observer
+  ---
+  duration_ms: 0.057416
+  type: 'test'
+  ...
+# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer
+ok 113 - Motion HTML adopts reading policy before held app startup with one explicit size writer
+  ---
+  duration_ms: 45.620417
+  type: 'test'
+  ...
+# Subtest: Motion failed app startup retains independent size controls and failed-save intent
+ok 114 - Motion failed app startup retains independent size controls and failed-save intent
+  ---
+  duration_ms: 7.198959
+  type: 'test'
+  ...
+# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values
+ok 115 - Motion saved and system reduction cap local choice without changing live run or authored values
+  ---
+  duration_ms: 53.44175
+  type: 'test'
+  ...
+# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume
+ok 116 - Motion local reduced choice survives shared caps and paused preference edits do not resume
+  ---
+  duration_ms: 31.770875
+  type: 'test'
+  ...
+# Subtest: Motion loaded body and local background survive reading changes and cached return
+ok 117 - Motion loaded body and local background survive reading changes and cached return
+  ---
+  duration_ms: 33.266041
+  type: 'test'
+  ...
+# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return
+ok 118 - Motion interruption before pending startup prevents automatic start and stale frames cannot return
+  ---
+  duration_ms: 39.3115
+  type: 'test'
+  ...
+# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners
+ok 119 - Motion terminal departure fences held initialization and leaves no authority or app listeners
+  ---
+  duration_ms: 8.620125
+  type: 'test'
+  ...
+# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+ok 120 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+  ---
+  duration_ms: 26.308042
+  type: 'test'
+  ...
+# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+ok 121 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+  ---
+  duration_ms: 25.60325
+  type: 'test'
+  ...
+# Subtest: Motion application graph completing after terminal departure cannot remount or fetch
+ok 122 - Motion application graph completing after terminal departure cannot remount or fetch
+  ---
+  duration_ms: 3.457458
+  type: 'test'
+  ...
+# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play
+ok 123 - Motion graph first arriving in an unfocused document starts paused until explicit Play
+  ---
+  duration_ms: 17.660458
+  type: 'test'
+  ...
+# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return
+ok 124 - Motion cached interruption before first application delivery cannot autoplay before or after return
+  ---
+  duration_ms: 20.459042
+  type: 'test'
+  ...
+# (node:14780) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+ok 125 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+  ---
+  duration_ms: 32.702333
+  type: 'test'
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+ok 126 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+  ---
+  duration_ms: 30.702125
+  type: 'test'
+  ...
+# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+ok 127 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+  ---
+  duration_ms: 17.620792
+  type: 'test'
+  ...
+# Subtest: Motion preset failure after actual module delivery never unlocks the study or overwrites independent focus
+ok 128 - Motion preset failure after actual module delivery never unlocks the study or overwrites independent focus
+  ---
+  duration_ms: 18.163125
+  type: 'test'
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return
+ok 129 - Motion real launcher does not take Reload focus in an hidden document or defer it until return
+  ---
+  duration_ms: 27.292083
+  type: 'test'
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+ok 130 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+  ---
+  duration_ms: 33.405041
+  type: 'test'
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment
+ok 131 - Motion actual Reload retirement preserves navigation focus acquired before attachment
+  ---
+  duration_ms: 27.212416
+  type: 'test'
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment
+ok 132 - Motion actual Reload retirement preserves navigation focus acquired during attachment
+  ---
+  duration_ms: 26.998417
+  type: 'test'
+  ...
+# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+ok 133 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+  ---
+  duration_ms: 30.829584
+  type: 'test'
+  ...
+# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+ok 134 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+  ---
+  duration_ms: 17.595958
+  type: 'test'
+  ...
+# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+ok 135 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+  ---
+  duration_ms: 24.97925
+  type: 'test'
+  ...
+# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+ok 136 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+  ---
+  duration_ms: 28.929083
+  type: 'test'
+  ...
+# Subtest: Motion history-restored selector follows current owner after pageshow (persisted=false)
+ok 137 - Motion history-restored selector follows current owner after pageshow (persisted=false)
+  ---
+  duration_ms: 1.970084
+  type: 'test'
+  ...
+# Subtest: Motion history-restored selector follows current owner after pageshow (persisted=true)
+ok 138 - Motion history-restored selector follows current owner after pageshow (persisted=true)
+  ---
+  duration_ms: 0.302583
+  type: 'test'
+  ...
+# Subtest: Motion persisted return first refreshes shared authority, then corrects late stale form state
+ok 139 - Motion persisted return first refreshes shared authority, then corrects late stale form state
+  ---
+  duration_ms: 0.272583
+  type: 'test'
+  ...
+# Subtest: Motion history repair retains unsaved local intent and its persistence warning
+ok 140 - Motion history repair retains unsaved local intent and its persistence warning
+  ---
+  duration_ms: 0.630792
+  type: 'test'
+  ...
+# Subtest: Motion deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+ok 141 - Motion deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+  ---
+  duration_ms: 1.77425
+  type: 'test'
+  ...
+# Subtest: Motion a second pageshow replaces its pending task and a frozen departure cancels it
+ok 142 - Motion a second pageshow replaces its pending task and a frozen departure cancels it
+  ---
+  duration_ms: 0.629042
+  type: 'test'
+  ...
+# Subtest: Motion terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+ok 143 - Motion terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+  ---
+  duration_ms: 0.28725
+  type: 'test'
+  ...
+# Subtest: Motion label descriptors cover actual stage roles without changing authored or toy state
+ok 144 - Motion label descriptors cover actual stage roles without changing authored or toy state
+  ---
+  duration_ms: 1.6125
+  type: 'test'
+  ...
+# Subtest: Motion note descriptors conceal before first scan and exactly at expiry without leaking authored text
+ok 145 - Motion note descriptors conceal before first scan and exactly at expiry without leaking authored text
+  ---
+  duration_ms: 7.760583
+  type: 'test'
+  ...
+# Subtest: Motion short labels and exact-fit text retain text and minimum size without compression
+ok 146 - Motion short labels and exact-fit text retain text and minimum size without compression
+  ---
+  duration_ms: 0.302375
+  type: 'test'
+  ...
+# Subtest: Motion long-label fitting keeps complete graphemes: A long sentence wi
+ok 147 - Motion long-label fitting keeps complete graphemes: A long sentence wi
+  ---
+  duration_ms: 0.381
+  type: 'test'
+  ...
+# Subtest: Motion long-label fitting keeps complete graphemes: Ґанок Єдність Імпу
+ok 148 - Motion long-label fitting keeps complete graphemes: Ґанок Єдність Імпу
+  ---
+  duration_ms: 0.750583
+  type: 'test'
+  ...
+# Subtest: Motion long-label fitting keeps complete graphemes: UnbrokenWordUnbrok
+ok 149 - Motion long-label fitting keeps complete graphemes: UnbrokenWordUnbrok
+  ---
+  duration_ms: 1.521625
+  type: 'test'
+  ...
+# Subtest: Motion long-label fitting keeps complete graphemes: ї́ʼп’ятьї́ʼп’ятьї́
+ok 150 - Motion long-label fitting keeps complete graphemes: ї́ʼп’ятьї́ʼп’ятьї́
+  ---
+  duration_ms: 0.571667
+  type: 'test'
+  ...
+# Subtest: Motion fitting clamps ink at all stage edges and relocates bottom-pad captions inside the board
+ok 151 - Motion fitting clamps ink at all stage edges and relocates bottom-pad captions inside the board
+  ---
+  duration_ms: 0.608833
+  type: 'test'
+  ...
+# Subtest: Motion invalid or tiny board scale never paints invalid or undersized labels
+ok 152 - Motion invalid or tiny board scale never paints invalid or undersized labels
+  ---
+  duration_ms: 0.322792
+  type: 'test'
+  ...
+# Subtest: Motion safely uses an ellipsis when no grapheme segmenter is available
+ok 153 - Motion safely uses an ellipsis when no grapheme segmenter is available
+  ---
+  duration_ms: 0.30625
+  type: 'test'
+  ...
+# Subtest: Motion fitting remeasures font metrics after a font changes instead of retaining stale bounds
+ok 154 - Motion fitting remeasures font metrics after a font changes instead of retaining stale bounds
+  ---
+  duration_ms: 0.303792
+  type: 'test'
+  ...
+# Subtest: Motion grapheme cache is reused and bounded; oversized labels still fit safely
+ok 155 - Motion grapheme cache is reused and bounded; oversized labels still fit safely
+  ---
+  duration_ms: 9.601084
+  type: 'test'
+  ...
+# Subtest: Motion loop owns one request, clamps/reset clocks and fences a cancelled callback after a new run
+ok 156 - Motion loop owns one request, clamps/reset clocks and fences a cancelled callback after a new run
+  ---
+  duration_ms: 1.28475
+  type: 'test'
+  ...
+# Subtest: Motion loop respects reentrant interruption and cached restore requires an explicit running action
+ok 157 - Motion loop respects reentrant interruption and cached restore requires an explicit running action
+  ---
+  duration_ms: 0.352542
+  type: 'test'
+  ...
+# Subtest: Motion ability labels retain historical defaults and support Standard/Large Theme/Plain without changing stage commands
+ok 158 - Motion ability labels retain historical defaults and support Standard/Large Theme/Plain without changing stage commands
+  ---
+  duration_ms: 5.503125
+  type: 'test'
+  ...
+# Subtest: Motion label policy preserves concealed and revealed note content and does not advance the toy state
+ok 159 - Motion label policy preserves concealed and revealed note content and does not advance the toy state
+  ---
+  duration_ms: 0.282083
+  type: 'test'
+  ...
+# Subtest: Motion long canvas labels fit without changing stage geometry, effects or toy state
+ok 160 - Motion long canvas labels fit without changing stage geometry, effects or toy state
+  ---
+  duration_ms: 1.102
+  type: 'test'
+  ...
+1..160
+# tests 160
+# suites 0
+# pass 160
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2210.529708

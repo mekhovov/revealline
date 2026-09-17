@@ -1,0 +1,33 @@
+{
+  "label": "node20-final",
+  "startedAt": "2026-09-17T12:57:18.026980+00:00",
+  "elapsedSeconds": 2.111463208006171,
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "authoring/motion-lab/test-ability.mjs",
+    "authoring/motion-lab/test-animation.mjs",
+    "authoring/motion-lab/test-collection.mjs",
+    "authoring/motion-lab/test-grid-motion.mjs",
+    "authoring/motion-lab/test-motion.mjs",
+    "authoring/motion-lab/test-steering.mjs",
+    "game/test/direct-tool-launch.test.mjs",
+    "game/test/direct-tools-loading.test.mjs",
+    "game/test/display-preferences.test.mjs",
+    "game/test/motion-lab-display-host.test.mjs",
+    "game/test/motion-lab-display-restoration.test.mjs",
+    "game/test/motion-lab-preview-loop.test.mjs",
+    "game/test/motion-lab-render-ability.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-successor-a13ab970/proposal",
+  "nodeVersion": "v20.19.5",
+  "nodeSha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+  "exitCode": 0,
+  "timeout": false,
+  "inputCount": 81,
+  "inputsUnchanged": true,
+  "changed": [],
+  "outputSha256": "4ddf24dff71bb618b0510f1cbc823640ceefd7de0edff410495a8b0f3778aac9"
+}

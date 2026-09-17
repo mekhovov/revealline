@@ -1,0 +1,47 @@
+{
+  "retrievedAt": "2026-09-17T14:23:06.746577+00:00",
+  "sources": [
+    {
+      "id": "html-canvas",
+      "url": "https://html.spec.whatwg.org/multipage/canvas.html#image-sources-for-2d-rendering-contexts",
+      "kind": "current normative specification",
+      "observed": "Living Standard last updated 16 September 2026, retrieved 17 September 2026",
+      "finding": "Canvas image-element sources use the format-defined default for animation-disabled use; only absent a default do they use the first animation frame."
+    },
+    {
+      "id": "png3",
+      "url": "https://www.w3.org/TR/png-3/#4Concepts.APNG",
+      "kind": "normative PNG specification",
+      "observed": "PNG Third Edition; sections 4.9.1\u20134.9.2 and 11.2.3 inspected",
+      "finding": "IDAT is the static image. With first fcTL after IDAT, that static image is outside the animation; fdAT contains animation frame data. Removing animation chunks leaves the ordinary PNG static image."
+    },
+    {
+      "id": "html-imagebitmap",
+      "url": "https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#dom-createimagebitmap",
+      "kind": "current normative specification",
+      "finding": "Both image-element and Blob ImageBitmap paths specify the same default-image/first-frame rule. Changing API alone is not evidence of a decoder fix."
+    },
+    {
+      "id": "chromium-historical",
+      "url": "https://codereview.chromium.org/1250373006/#msg28",
+      "kind": "historical implementer explanation, 28 August 2015",
+      "finding": "APNG implementer explains hidden poster/default data is skipped and first visible frame is returned to canvas. This explains the observed symptom but is not a current-build certification."
+    },
+    {
+      "id": "mozilla-historical",
+      "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=1187546#c1",
+      "kind": "historical implementer explanation, 2015",
+      "finding": "Decoder author describes first-frame-only APNG as first non-hidden frame and says canvas does not receive the hidden fallback. This is historical evidence only."
+    },
+    {
+      "id": "chromium-current-tests",
+      "url": "https://chromium.googlesource.com/chromium/src/+/HEAD/third_party/blink/renderer/platform/image-decoders/png/png_image_decoder_test.cc",
+      "kind": "current upstream decoder tests, mutable HEAD",
+      "finding": "Ihdr50ActlIdatFctl30Fdat checks decoder frame zero as the first fdAT animation frame, distinct from full static IDAT. Supports the decoder distinction; it is not itself a canvas conformance result."
+    }
+  ],
+  "retrievalLimits": [
+    "Current Chromium implementation path png_image_decoder.cc and attempted current WPT/generated expectation URLs returned web-tool Internal Error. No claim is based on those failed retrievals.",
+    "Only primary specification/implementer sources support the recommendation. No live browser or direct decoder experiment was run by this reviewer."
+  ]
+}
