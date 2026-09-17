@@ -2,7 +2,7 @@
 
 **Not a released phase.** This correction makes Earlier profiles readable with the game's shared settings and preserves keyboard/controller navigation ownership through startup and asynchronous checks. P03/P05 remain implementing. Recovery is an explicit troubleshooting URL at `game/profile-recovery.html`; there is no newly advertised Library entry, automatic discovery, write/restore operation or gameplay change.
 
-The candidate composes four reviewed patches plus the separately reviewed explicit Back history-return correction from exact source `a13ab970222498d7c5fa7f62f9fc04fe436979d5` onto main `63796aab5bb692578fef77f43fb9fa61050a372b`. Main's intervening changes affect publication records only. The [composition record](integration/composition.json) lists all 11 unique source paths; version metadata is separately synchronized to 0.60.4. Motion and the Team full-picture candidate are excluded.
+The candidate composes four reviewed patches plus the separately reviewed explicit Back history-return correction from exact source `a13ab970222498d7c5fa7f62f9fc04fe436979d5` onto main `63796aab5bb692578fef77f43fb9fa61050a372b`. Main's intervening changes affect publication records only. Final source integration also includes acceptance PR #89 at `65a6efcb3bfabf8458702cca452c8120fa756471`; its changes are delivery records only. The [composition record](integration/composition.json) lists all 11 unique source paths; version metadata is separately synchronized to 0.60.4. Motion and the Team full-picture candidate are excluded.
 
 ## Verification retained
 
