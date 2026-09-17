@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { couchPage } from './helpers/couch-host.mjs';
 
-const press = (page, key) => page.doc.activeElement.emit('keydown', { key, code: key });
+const press = (page, key, extra = {}) =>
+  page.doc.activeElement.emit('keydown', { key, code: key, ...extra });
 const pad = (index) => ({
   index,
   id: `Settings pad ${index}`,
@@ -16,6 +17,30 @@ test('Versus Settings uses native categories, consumes tab keys once and returns
   const f = await couchPage(t),
     before = f.checkpoint();
   f.$('race-options').click();
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-text-face');
+  press(f, 'Tab', { shiftKey: true });
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
+  assert.equal(f.$('race-settings-tab-display').getAttribute('aria-selected'), 'true');
+  // Arrow navigation may focus an inactive category without selecting it.
+  // Subsequent sequential keys continue from that actual DOM position.
+  press(f, 'ArrowDown');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-data');
+  assert.equal(f.doc.activeElement.tabIndex, -1);
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-text-face');
+  press(f, 'Tab', { shiftKey: true });
+  press(f, 'ArrowUp');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-audio');
+  assert.equal(f.doc.activeElement.tabIndex, -1);
+  press(f, 'Tab', { shiftKey: true });
+  assert.equal(f.doc.activeElement.id, 'race-options-back');
+  press(f, 'Tab', { shiftKey: true });
+  assert.equal(f.doc.activeElement.id, 'race-reduced');
+  press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-options-back');
+  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
   press(f, 'ArrowLeft');
   assert.equal(f.doc.activeElement.id, 'race-settings-tab-audio');
@@ -83,7 +108,10 @@ test('modeled controller selects Settings categories and Back preserves its Read
   f.focus('race-options');
   f.pulse(0, 0);
   assert.equal(f.$('race-options-panel').hidden, false);
-  f.focus('race-settings-tab-audio');
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-display');
+  f.pulse(0, 12);
+  assert.equal(f.doc.activeElement.id, 'race-settings-tab-audio');
+  assert.equal(f.doc.activeElement.tabIndex, -1, 'Spatial navigation still reaches inactive tabs.');
   f.pulse(0, 0);
   assert.equal(f.$('race-settings-tab-audio').getAttribute('aria-selected'), 'true');
   assert.equal(f.$('race-settings-panel-audio').inert, false);

@@ -257,17 +257,35 @@ export function attachControllerReading({
       // panels expose it for this synchronous transition, then refresh from
       // the accepted reading state (or hide it again if entry was rejected).
       if (compactOverlay && surface.id === 'overlay-reading') surface.done.hidden = false;
-      if (
-        getNavigation().beginReading({
+      const navigation = getNavigation(),
+        scope = getScope(),
+        accepted = navigation.beginReading({
           region: surface.region,
           origin: surface.entry,
           exit: surface.done,
           label: surface.label,
-        })
+        }),
+        revision = readingRevision;
+      // Install the final hint before measuring/revealing the unit: its longer
+      // active copy can wrap after beginReading publishes the navigation hint.
+      refresh();
+      if (
+        accepted &&
+        !destroyed &&
+        readingRevision === revision &&
+        activeId === surface.id &&
+        getNavigation() === navigation &&
+        getScope() === scope &&
+        navigation.readingState()?.regionId === surface.id &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        doc.activeElement === surface.region &&
+        surface.unit.isConnected &&
+        surface.unit.contains(surface.region) &&
+        !surface.region.closest('[hidden],[inert],[aria-hidden="true"]')
       ) {
         surface.unit.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
       }
-      refresh();
     });
     // End-only: a preceding pointerdown may already have relinquished reading.
     // The stable button never becomes a Start/Resume action or toggles back in.
