@@ -1,0 +1,29 @@
+{
+  "base": "63796aab5bb692578fef77f43fb9fa61050a372b",
+  "version": "0.60.4",
+  "sourcePrecursor": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "patches": [
+    "p05-motion-recovery-a13ab970",
+    "p03-recovery-startup-a13ab970",
+    "p03-recovery-late-back-a13ab970",
+    "p03-recovery-action-focus-a13ab970"
+  ],
+  "paths": [
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/recovery-display-readability.md",
+    "docs/recovery-startup-navigation.md",
+    "game/profile-recovery.html",
+    "game/profile-recovery.mjs",
+    "game/test/profile-original-recovery-view.test.mjs",
+    "game/test/profile-recovery-display.test.mjs",
+    "game/test/profile-recovery-startup-navigation.test.mjs",
+    "game/test/profile-recovery-view.test.mjs",
+    "game/ui/profile-recovery.css",
+    "game/ui/profile-recovery.mjs"
+  ],
+  "composedCandidateBytesExact": true,
+  "setupIssues": [
+    "Initial check encountered sparse unmaterialized Recovery files.",
+    "Existing non-cone mode accepts add without the unsupported --no-cone option. Exact path admission then all checks/applications passed."
+  ]
+}

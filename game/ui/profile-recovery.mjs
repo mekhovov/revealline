@@ -71,9 +71,15 @@ export function attachProfileRecoveryView({
     $('original-file').disabled = !!active || closed || !verified;
     $('original-report').disabled = !!active || closed || !verified;
   }
-  async function task(fn, { clearRaw = true } = {}) {
+  async function task(fn, { clearRaw = true, origin = null } = {}) {
     if (active || closed) return;
-    const operation = { id: ++serial, controller: new AbortController() };
+    const ownedOriginFocus =
+      origin && doc.activeElement === origin && !doc.hidden && doc.hasFocus?.() !== false;
+    const operation = {
+      id: ++serial,
+      controller: new AbortController(),
+      returnFocusAllowed: true,
+    };
     active = operation;
     operation.lease = presenter.begin({
       message: 'Checking stored profile data…',
@@ -81,6 +87,17 @@ export function attachProfileRecoveryView({
     });
     if (clearRaw) clearDownload();
     refresh();
+    // Disabling a focused action can make the browser move focus to body.
+    // Hand it to the current Cancel only within this same foreground action.
+    if (
+      ownedOriginFocus &&
+      active === operation &&
+      !closed &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      [origin, doc.body].includes(doc.activeElement)
+    )
+      $('cancel').focus();
     const current = () => !closed && active === operation && !operation.controller.signal.aborted;
     try {
       await fn(operation.controller.signal, current);
@@ -91,13 +108,27 @@ export function attachProfileRecoveryView({
         const hadCancelFocus = doc.activeElement === $('cancel');
         active = null;
         refresh();
-        if (!closed && !doc.hidden && doc.hasFocus?.() !== false && hadCancelFocus)
-          ($('review').disabled ? $('find') : $('review')).focus();
+        if (
+          !closed &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          operation.returnFocusAllowed &&
+          hadCancelFocus
+        ) {
+          const target =
+            ownedOriginFocus && origin !== $('find') && !origin.disabled
+              ? origin
+              : $('review').disabled
+                ? $('find')
+                : $('review');
+          target.focus();
+        }
       }
     }
   }
   function cancel() {
     if (!active) return;
+    if (doc.hidden || doc.hasFocus?.() === false) active.returnFocusAllowed = false;
     active.controller.abort();
     status('Check cancelled. Stored profiles are unchanged.', 'cancelled');
   }
@@ -119,28 +150,31 @@ export function attachProfileRecoveryView({
     $('summary').textContent = fields.join('\n');
   }
   $('find').onclick = () =>
-    task(async (signal, current) => {
-      review = null;
-      clearOriginals();
-      phase('Finding exact profile channels…');
-      const result = await reader.discover({ signal });
-      if (!current()) return;
-      channels = result.channels;
-      $('channel').replaceChildren();
-      for (const [index, channel] of channels.entries()) {
-        const option = doc.createElement('option');
-        option.value = String(index);
-        option.textContent = `${channel.version ?? 'Development'} · ${channel.id}${channel.support === 'protected-unknown' ? ' · unverified channel' : ''}`;
-        $('channel').append(option);
-      }
-      $('channel').value = channels.length ? '0' : '';
-      $('summary').textContent = result.diagnostics.map((item) => item.message).join('\n');
-      status(
-        channels.length
-          ? `${channels.length} exact channels found. Choose one and review its stored values.`
-          : 'No supported profile channels found on this origin.',
-      );
-    });
+    task(
+      async (signal, current) => {
+        review = null;
+        clearOriginals();
+        phase('Finding exact profile channels…');
+        const result = await reader.discover({ signal });
+        if (!current()) return;
+        channels = result.channels;
+        $('channel').replaceChildren();
+        for (const [index, channel] of channels.entries()) {
+          const option = doc.createElement('option');
+          option.value = String(index);
+          option.textContent = `${channel.version ?? 'Development'} · ${channel.id}${channel.support === 'protected-unknown' ? ' · unverified channel' : ''}`;
+          $('channel').append(option);
+        }
+        $('channel').value = channels.length ? '0' : '';
+        $('summary').textContent = result.diagnostics.map((item) => item.message).join('\n');
+        status(
+          channels.length
+            ? `${channels.length} exact channels found. Choose one and review its stored values.`
+            : 'No supported profile channels found on this origin.',
+        );
+      },
+      { origin: $('find') },
+    );
   $('channel').onchange = () => {
     if (active || closed) return;
     review = null;
@@ -151,48 +185,54 @@ export function attachProfileRecoveryView({
     refresh();
   };
   $('review').onclick = () =>
-    task(async (signal, current) => {
-      review = null;
-      clearOriginals();
-      const selected = channels[Number($('channel').value)];
-      if (!selected) throw new Error('Choose an exact profile channel.');
-      phase('Reviewing stored values…');
-      const result = await reader.review(selected, { signal });
-      if (!current()) return;
-      review = result;
-      showReview(result);
-      status(
-        'Stored values reviewed. Profile structure is checked separately from media and historical execution.',
-      );
-    });
+    task(
+      async (signal, current) => {
+        review = null;
+        clearOriginals();
+        const selected = channels[Number($('channel').value)];
+        if (!selected) throw new Error('Choose an exact profile channel.');
+        phase('Reviewing stored values…');
+        const result = await reader.review(selected, { signal });
+        if (!current()) return;
+        review = result;
+        showReview(result);
+        status(
+          'Stored values reviewed. Profile structure is checked separately from media and historical execution.',
+        );
+      },
+      { origin: $('review') },
+    );
   $('export').onclick = () =>
-    task(async (signal, current) => {
-      phase('Rechecking the reviewed profile before export…');
-      const result = await reader.exportStoredData(review, { signal });
-      if (!current()) return;
-      url = createURL(result.blob);
-      if (!current()) {
-        clearDownload();
-        return;
-      }
-      $('download').href = url;
-      $('download').download = result.filename;
-      $('download').textContent = result.completeStoredSnapshot
-        ? 'Download stored profile snapshot'
-        : 'Download incomplete diagnostic';
-      $('download').hidden = false;
-      status(
-        result.completeStoredSnapshot
-          ? 'Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.'
-          : 'Incomplete diagnostic prepared. Unsupported components remain in storage and are not included as values.',
-      );
-      if (
-        !doc.hidden &&
-        doc.hasFocus?.() !== false &&
-        [$('export'), $('cancel')].includes(doc.activeElement)
-      )
-        $('download').focus();
-    });
+    task(
+      async (signal, current) => {
+        phase('Rechecking the reviewed profile before export…');
+        const result = await reader.exportStoredData(review, { signal });
+        if (!current()) return;
+        url = createURL(result.blob);
+        if (!current()) {
+          clearDownload();
+          return;
+        }
+        $('download').href = url;
+        $('download').download = result.filename;
+        $('download').textContent = result.completeStoredSnapshot
+          ? 'Download stored profile snapshot'
+          : 'Download incomplete diagnostic';
+        $('download').hidden = false;
+        status(
+          result.completeStoredSnapshot
+            ? 'Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.'
+            : 'Incomplete diagnostic prepared. Unsupported components remain in storage and are not included as values.',
+        );
+        if (
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          [$('export'), $('cancel')].includes(doc.activeElement)
+        )
+          $('download').focus();
+      },
+      { origin: $('export') },
+    );
   function showOriginal() {
     const selected = choice();
     for (const [index, option] of Array.from($('original').children).entries()) {
@@ -249,7 +289,7 @@ export function attachProfileRecoveryView({
               : ''),
         );
       },
-      { clearRaw: false },
+      { clearRaw: false, origin: $('originals-review') },
     );
   $('original').onchange = () => {
     if (active || closed) return;
@@ -273,7 +313,7 @@ export function attachProfileRecoveryView({
           'Selected image verified. Prepare either file, then activate its download link. This is not a complete backup or earned-picture proof.',
         );
       },
-      { clearRaw: false },
+      { clearRaw: false, origin: $('original-verify') },
     );
   function exportOriginal(component, id) {
     return task(
@@ -302,7 +342,10 @@ export function attachProfileRecoveryView({
         )
           $(id).focus();
       },
-      { clearRaw: false },
+      {
+        clearRaw: false,
+        origin: $(component === 'original-file' ? 'original-file' : 'original-report'),
+      },
     );
   }
   $('original-file').onclick = () => exportOriginal('original-file', 'original-download');

@@ -4,13 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Earlier profiles · RevealLine</title>
+    <script type="module" src="./ui/tool-display-entry.mjs"></script>
     <link rel="stylesheet" href="./ui/operation-status.css" />
     <link rel="stylesheet" href="./ui/profile-recovery.css" />
+    <link rel="stylesheet" href="./ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="./ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="./ui/field-kit-components.css" />
   </head>
-  <body>
+  <body class="field-kit field-kit-support">
     <main id="profile-recovery-root">
       <button id="profile-recovery-back" type="button">Back to game</button>
-      <h1>Earlier profiles</h1>
+      <button id="profile-recovery-reload" type="button">Reload recovery</button>
+      <h1 class="field-kit-display">Earlier profiles</h1>
       <p>
         Review stored profiles from this site without changing them. Exact release channels stay
         separate.

@@ -6,23 +6,116 @@ import { createControllerRouter } from './ui/controller-router.mjs';
 import { loadProfileRecoveryCatalogs } from './profile-recovery-catalogs.mjs';
 
 const presenter = createOperationStatus(document.getElementById('profile-recovery-status'));
+const root = document.getElementById('profile-recovery-root');
+const back = document.getElementById('profile-recovery-back');
+const reload = document.getElementById('profile-recovery-reload');
 let cleanup = null,
-  epoch = 0;
-document.getElementById('profile-recovery-back').onclick = () => location.assign('./index.html');
+  view = null,
+  epoch = 0,
+  closed = false,
+  leaving = false,
+  suspended = false,
+  focused = document.hasFocus?.() !== false,
+  frame = null;
+const foreground = () =>
+  !closed &&
+  !leaving &&
+  !suspended &&
+  focused &&
+  !document.hidden &&
+  document.hasFocus?.() !== false;
+// Startup and ready controls share one navigation owner. A retry only replaces
+// its read operation, never the controller's assignment or its physical edges.
+const navigation = attachControllerNavigation({
+  getScope: () => 'menu',
+  getRoot: () => root,
+  getDefaultFocus: () => {
+    const find = document.getElementById('profile-recovery-find');
+    return find.disabled ? back : find;
+  },
+  onBack: () => {
+    if (foreground()) back.click();
+  },
+  ownsKeyboardEvent: () => !foreground(),
+  keyboard: true,
+});
+const router = createControllerRouter();
+function sample(timeMs) {
+  frame = null;
+  if (closed || leaving || suspended) return;
+  if (foreground()) navigation.handle(router.sample({ scope: 'menu', timeMs }).ui);
+  else router.clear();
+  if (!closed && !leaving && !suspended) frame = requestAnimationFrame(sample);
+}
+function stopFrames() {
+  cancelAnimationFrame(frame);
+  frame = null;
+  router.clear();
+  navigation.clear();
+}
+function disposeNavigation() {
+  stopFrames();
+  router.destroy();
+  navigation.destroy();
+  window.removeEventListener('blur', inactive);
+  window.removeEventListener('focus', active);
+  document.removeEventListener('visibilitychange', visibility);
+}
+const inactive = () => {
+  focused = false;
+  view?.cancel();
+  router.clear();
+  navigation.clear();
+};
+const active = () => {
+  focused = document.hasFocus?.() !== false;
+};
+const visibility = () => {
+  if (document.hidden) inactive();
+  else active();
+};
+window.addEventListener('blur', inactive);
+window.addEventListener('focus', active);
+document.addEventListener('visibilitychange', visibility);
+
+async function leave() {
+  if (closed || leaving || suspended) return;
+  leaving = true;
+  const leavingGeneration = ++epoch;
+  // Navigation may enter the browser cache. Only terminal pagehide disposes
+  // this owner; a persisted return starts a fresh read with neutral input.
+  stopFrames();
+  await cleanup?.();
+  if (leavingGeneration === epoch && !closed && !suspended && leaving)
+    location.assign('./index.html');
+}
+back.onclick = () => leave();
+reload.onclick = () => {
+  if (!closed && !leaving && !suspended) void start();
+};
+
 async function start() {
+  if (closed || leaving || suspended) return;
   const generation = ++epoch;
+  reload.hidden = false;
+  await cleanup?.();
+  if (generation !== epoch || closed || leaving || suspended) return;
+  view = null;
+  back.onclick = () => leave();
   const lease = presenter.begin({
     message: 'Loading release information…',
-    isCurrent: () => generation === epoch,
+    isCurrent: () => generation === epoch && !closed && !leaving && !suspended,
   });
-  await cleanup?.();
-  if (generation !== epoch) return;
   const controller = new AbortController();
-  cleanup = async () => controller.abort();
-  const timer = setTimeout(() => {
+  let timer;
+  cleanup = async () => {
+    clearTimeout(timer);
+    controller.abort();
+  };
+  timer = setTimeout(() => {
     if (generation === epoch)
       lease.finish({
-        message: 'Release information timed out. Use Back and try recovery again.',
+        message: 'Release information timed out. Choose Reload recovery or Back to game.',
         state: 'error',
       });
     controller.abort();
@@ -61,44 +154,33 @@ async function start() {
     }
     if (generation !== epoch || controller.signal.aborted) return;
     const reader = createProfileChannelReader({ currentVersion: info.version, recoveryCatalogs });
-    const root = document.getElementById('profile-recovery-root');
-    const view = attachProfileRecoveryView({
+    view = attachProfileRecoveryView({
       reader,
       presenter,
       supportedChannels: recoveryCatalogs.map((entry) => entry.channelId),
       catalogIssue,
-      onBack: () => location.assign('./index.html'),
+      onBack: () => {
+        // The ready view closes its reader before calling back. That completion
+        // may belong to an earlier history visit or foreground interaction.
+        if (generation !== epoch || view !== ownedView || !foreground()) return;
+        return leave();
+      },
     });
-    const navigation = attachControllerNavigation({
-      getScope: () => 'menu',
-      getRoot: () => root,
-      getDefaultFocus: () => document.getElementById('profile-recovery-find'),
-      onBack: () => document.getElementById('profile-recovery-back').click(),
-      keyboard: true,
-    });
-    const router = createControllerRouter();
-    let frame,
-      stopped = false;
-    function sample(timeMs) {
-      if (stopped) return;
-      navigation.handle(router.sample({ scope: 'menu', timeMs }).ui);
-      frame = requestAnimationFrame(sample);
-    }
-    const inactive = () => {
-      view.cancel();
-      router.clear();
-    };
-    window.addEventListener('blur', inactive);
-    frame = requestAnimationFrame(sample);
+    const ownedView = view;
     cleanup = async () => {
-      stopped = true;
       controller.abort();
-      cancelAnimationFrame(frame);
-      window.removeEventListener('blur', inactive);
-      router.destroy();
-      navigation.destroy();
-      await view.close();
+      await ownedView.close();
     };
+    const retiringFocus = document.activeElement === reload;
+    reload.hidden = true;
+    navigation.clear();
+    if (
+      retiringFocus &&
+      generation === epoch &&
+      foreground() &&
+      (document.activeElement === reload || document.activeElement === document.body)
+    )
+      document.getElementById('profile-recovery-find').focus();
   } catch (error) {
     if (generation === epoch && !controller.signal.aborted)
       lease.finish({ message: error.message, state: 'error' });
@@ -106,11 +188,23 @@ async function start() {
     clearTimeout(timer);
   }
 }
-window.addEventListener('pagehide', () => {
+window.addEventListener('pagehide', (event) => {
   epoch++;
+  suspended = true;
+  stopFrames();
   void cleanup?.();
+  if (!event.persisted) {
+    closed = true;
+    disposeNavigation();
+  }
 });
 window.addEventListener('pageshow', (event) => {
-  if (event.persisted) void start();
+  if (!event.persisted || closed) return;
+  leaving = false;
+  suspended = false;
+  active();
+  if (frame === null) frame = requestAnimationFrame(sample);
+  void start();
 });
+frame = requestAnimationFrame(sample);
 void start();

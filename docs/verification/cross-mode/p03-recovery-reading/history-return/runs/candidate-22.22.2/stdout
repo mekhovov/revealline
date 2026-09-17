@@ -1,0 +1,562 @@
+TAP version 13
+# Subtest: shared display record overrides legacy synchronously and startup never writes
+ok 1 - shared display record overrides legacy synchronously and startup never writes
+  ---
+  duration_ms: 1.575708
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: not json
+ok 2 - invalid stored value preserves original bytes and legacy fallback: not json
+  ---
+  duration_ms: 0.235042
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: null
+ok 3 - invalid stored value preserves original bytes and legacy fallback: null
+  ---
+  duration_ms: 0.170292
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: []
+ok 4 - invalid stored value preserves original bytes and legacy fallback: []
+  ---
+  duration_ms: 0.102875
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+ok 5 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+  ---
+  duration_ms: 0.248667
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+ok 6 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.135333
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+ok 7 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+  ---
+  duration_ms: 0.062875
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 8 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.094417
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 9 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.351042
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 10 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.871334
+  type: 'test'
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback:                                                        
+ok 11 - invalid stored value preserves original bytes and legacy fallback:                                                        
+  ---
+  duration_ms: 0.068375
+  type: 'test'
+  ...
+# Subtest: legacy seed reads only display fields; explicit change saves three fields before navigation
+ok 12 - legacy seed reads only display fields; explicit change saves three fields before navigation
+  ---
+  duration_ms: 0.239167
+  type: 'test'
+  ...
+# Subtest: late legacy snapshots cannot replace explicit same-value intent or a newer seed
+ok 13 - late legacy snapshots cannot replace explicit same-value intent or a newer seed
+  ---
+  duration_ms: 0.062292
+  type: 'test'
+  ...
+# Subtest: a current shared record wins a delayed legacy read even before its storage event
+ok 14 - a current shared record wins a delayed legacy read even before its storage event
+  ---
+  duration_ms: 0.038833
+  type: 'test'
+  ...
+# Subtest: system reduction combines conservatively without changing raw intent or saving
+ok 15 - system reduction combines conservatively without changing raw intent or saving
+  ---
+  duration_ms: 0.158625
+  type: 'test'
+  ...
+# Subtest: injected and legacy media query APIs use current matches and detach on disposal
+ok 16 - injected and legacy media query APIs use current matches and detach on disposal
+  ---
+  duration_ms: 0.074875
+  type: 'test'
+  ...
+# Subtest: missing media query capability still permits explicit reduction
+ok 17 - missing media query capability still permits explicit reduction
+  ---
+  duration_ms: 0.071917
+  type: 'test'
+  ...
+# Subtest: storage events require exact key, area and still-current bounded raw bytes
+ok 18 - storage events require exact key, area and still-current bounded raw bytes
+  ---
+  duration_ms: 0.163417
+  type: 'test'
+  ...
+# Subtest: practice mode changes memory with a warning and protects unsaved intent
+ok 19 - practice mode changes memory with a warning and protects unsaved intent
+  ---
+  duration_ms: 0.098375
+  type: 'test'
+  ...
+# Subtest: quota failures preserve memory, and a later successful save restores sharing
+ok 20 - quota failures preserve memory, and a later successful save restores sharing
+  ---
+  duration_ms: 0.127375
+  type: 'test'
+  ...
+# Subtest: unavailable storage and throwing warning callbacks cannot undo display intent
+ok 21 - unavailable storage and throwing warning callbacks cannot undo display intent
+  ---
+  duration_ms: 0.081958
+  type: 'test'
+  ...
+# Subtest: patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+ok 22 - patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+  ---
+  duration_ms: 0.315875
+  type: 'test'
+  ...
+# Subtest: subscribers see immutable current state and newer reentrant intent reaches storage
+ok 23 - subscribers see immutable current state and newer reentrant intent reaches storage
+  ---
+  duration_ms: 0.080209
+  type: 'test'
+  ...
+# Subtest: a failed observer does not block other observers or persistence
+ok 24 - a failed observer does not block other observers or persistence
+  ---
+  duration_ms: 0.071708
+  type: 'test'
+  ...
+# Subtest: reentrant explicit intent during legacy adoption wins and reports the seed superseded
+ok 25 - reentrant explicit intent during legacy adoption wins and reports the seed superseded
+  ---
+  duration_ms: 0.043416
+  type: 'test'
+  ...
+# Subtest: disposal detaches both event sources and rejects later mutation or subscription
+ok 26 - disposal detaches both event sources and rejects later mutation or subscription
+  ---
+  duration_ms: 0.081833
+  type: 'test'
+  ...
+# Subtest: persisted return reads current shared state and cap without resaving or duplicate notifications
+ok 27 - persisted return reads current shared state and cap without resaving or duplicate notifications
+  ---
+  duration_ms: 0.104167
+  type: 'test'
+  ...
+# Subtest: persisted return preserves unsaved intent while refreshing current system reduction
+ok 28 - persisted return preserves unsaved intent while refreshing current system reduction
+  ---
+  duration_ms: 0.303334
+  type: 'test'
+  ...
+# Subtest: persisted return ignores malformed and deleted shared data while updating only the effective cap
+ok 29 - persisted return ignores malformed and deleted shared data while updating only the effective cap
+  ---
+  duration_ms: 0.12725
+  type: 'test'
+  ...
+# Subtest: ordinary pageshow and a disposed authority cannot consume restored-page changes
+ok 30 - ordinary pageshow and a disposed authority cannot consume restored-page changes
+  ---
+  duration_ms: 0.065625
+  type: 'test'
+  ...
+# Subtest: persisted return respects a newer explicit choice made by an observer
+ok 31 - persisted return respects a newer explicit choice made by an observer
+  ---
+  duration_ms: 0.103041
+  type: 'test'
+  ...
+# Subtest: Back completion includes the asynchronous parent close and focus callback
+ok 32 - Back completion includes the asynchronous parent close and focus callback
+  ---
+  duration_ms: 5.377792
+  type: 'test'
+  ...
+# Subtest: overlapping Back and close share reader cleanup before either caller can leave
+ok 33 - overlapping Back and close share reader cleanup before either caller can leave
+  ---
+  duration_ms: 1.125375
+  type: 'test'
+  ...
+# Subtest: original review is explicit and lists unverified metadata without claiming an earned picture
+ok 34 - original review is explicit and lists unverified metadata without claiming an earned picture
+  ---
+  duration_ms: 0.449417
+  type: 'test'
+  ...
+# Subtest: an empty shared-original list explains built-in pictures and retains raw recovery
+ok 35 - an empty shared-original list explains built-in pictures and retains raw recovery
+  ---
+  duration_ms: 0.315083
+  type: 'test'
+  ...
+# Subtest: an unsupported exact alias cannot borrow another channel catalog but retains raw export
+ok 36 - an unsupported exact alias cannot borrow another channel catalog but retains raw export
+  ---
+  duration_ms: 0.369833
+  type: 'test'
+  ...
+# Subtest: catalog loading failure leaves the current exact channel raw review and export usable
+ok 37 - catalog loading failure leaves the current exact channel raw review and export usable
+  ---
+  duration_ms: 0.593958
+  type: 'test'
+  ...
+# Subtest: missing and length-mismatched originals remain visible but cannot start verification
+ok 38 - missing and length-mismatched originals remain visible but cannot start verification
+  ---
+  duration_ms: 0.746208
+  type: 'test'
+  ...
+# Subtest: opaque reader handles and separate component links preserve the raw download and revoke only replaced URLs
+ok 39 - opaque reader handles and separate component links preserve the raw download and revoke only replaced URLs
+  ---
+  duration_ms: 0.454542
+  type: 'test'
+  ...
+# Subtest: changing the selected original drops verification and both component links without dropping raw data
+ok 40 - changing the selected original drops verification and both component links without dropping raw data
+  ---
+  duration_ms: 0.879875
+  type: 'test'
+  ...
+# Subtest: a new Find, Review or exact channel choice clears every prepared link and original handle
+ok 41 - a new Find, Review or exact channel choice clears every prepared link and original handle
+  ---
+  duration_ms: 1.375708
+  type: 'test'
+  ...
+# Subtest: cancelled original metadata review cannot publish late choices and preserves the raw link
+ok 42 - cancelled original metadata review cannot publish late choices and preserves the raw link
+  ---
+  duration_ms: 0.321917
+  type: 'test'
+  ...
+# Subtest: cancelled verification cannot promote a late opaque verified handle
+ok 43 - cancelled verification cannot promote a late opaque verified handle
+  ---
+  duration_ms: 0.20475
+  type: 'test'
+  ...
+# Subtest: Back awaits reader closure and a late component export cannot publish a URL
+ok 44 - Back awaits reader closure and a late component export cannot publish a URL
+  ---
+  duration_ms: 0.601459
+  type: 'test'
+  ...
+# Subtest: cancellation during object URL creation revokes the new component URL before publication
+ok 45 - cancellation during object URL creation revokes the new component URL before publication
+  ---
+  duration_ms: 0.3855
+  type: 'test'
+  ...
+# Subtest: fresh component verification failure removes that stale link and keeps the other component and raw link
+ok 46 - fresh component verification failure removes that stale link and keeps the other component and raw link
+  ---
+  duration_ms: 0.252667
+  type: 'test'
+  ...
+# Subtest: reverification clears the earlier label before waiting and cancel or failure cannot restore it
+ok 47 - reverification clears the earlier label before waiting and cancel or failure cannot restore it
+  ---
+  duration_ms: 0.303875
+  type: 'test'
+  ...
+# Subtest: current review and original actions transfer focus through Cancel without replacing successful download handoffs
+ok 48 - current review and original actions transfer focus through Cancel without replacing successful download handoffs
+  ---
+  duration_ms: 0.305792
+  type: 'test'
+  ...
+# Subtest: Recovery adopts saved reading settings and system reduction before held release information
+ok 49 - Recovery adopts saved reading settings and system reduction before held release information
+  ---
+  duration_ms: 89.607667
+  type: 'test'
+  ...
+# Subtest: Recovery reading policy survives application loading failure and the existing Back remains usable
+ok 50 - Recovery reading policy survives application loading failure and the existing Back remains usable
+  ---
+  duration_ms: 10.097125
+  type: 'test'
+  ...
+# Subtest: Recovery display entry works independently of an unavailable application graph and never writes denied storage
+ok 51 - Recovery display entry works independently of an unavailable application graph and never writes denied storage
+  ---
+  duration_ms: 2.13475
+  type: 'test'
+  ...
+# Subtest: shared updates preserve Recovery selection, prepared original bytes, live reads and focused actions
+ok 52 - shared updates preserve Recovery selection, prepared original bytes, live reads and focused actions
+  ---
+  duration_ms: 6.379208
+  type: 'test'
+  ...
+# Subtest: Recovery display lifecycle rereads missed settings once and terminal exit retires the owner
+ok 53 - Recovery display lifecycle rereads missed settings once and terminal exit retires the owner
+  ---
+  duration_ms: 2.886625
+  type: 'test'
+  ...
+# Subtest: controller Back cancels held Recovery startup before any profile read or late adoption
+ok 54 - controller Back cancels held Recovery startup before any profile read or late adoption
+  ---
+  duration_ms: 57.617667
+  type: 'test'
+  ...
+# Subtest: failed startup keeps controller Reload reachable and retains one router through readiness
+ok 55 - failed startup keeps controller Reload reachable and retains one router through readiness
+  ---
+  duration_ms: 94.641625
+  type: 'test'
+  ...
+# Subtest: Reload during a held catalog retires its late completion without replacing the newer view
+ok 56 - Reload during a held catalog retires its late completion without replacing the newer view
+  ---
+  duration_ms: 76.006542
+  type: 'test'
+  ...
+# Subtest: timed-out startup keeps Reload active and late failed work cannot replace its successor
+ok 57 - timed-out startup keeps Reload active and late failed work cannot replace its successor
+  ---
+  duration_ms: 61.98675
+  type: 'test'
+  ...
+# Subtest: startup completion preserves newer focus instead of moving it from Back
+ok 58 - startup completion preserves newer focus instead of moving it from Back
+  ---
+  duration_ms: 54.492292
+  type: 'test'
+  ...
+# Subtest: background completion cannot autofocus now or on foreground return
+ok 59 - background completion cannot autofocus now or on foreground return
+  ---
+  duration_ms: 53.984792
+  type: 'test'
+  ...
+# Subtest: hidden input stays neutral and returning foreground requires a fresh controller command
+ok 60 - hidden input stays neutral and returning foreground requires a fresh controller command
+  ---
+  duration_ms: 8.726667
+  type: 'test'
+  ...
+# Subtest: cached return starts one read and one navigation loop while terminal departure cannot revive either
+ok 61 - cached return starts one read and one navigation loop while terminal departure cannot revive either
+  ---
+  duration_ms: 64.554833
+  type: 'test'
+  ...
+# Subtest: ready Back waits for the actual reader transaction and overlapping Back closes it once
+ok 62 - ready Back waits for the actual reader transaction and overlapping Back closes it once
+  ---
+  duration_ms: 60.112292
+  type: 'test'
+  ...
+# Subtest: old ready Back cannot navigate or focus after persisted departure and return
+ok 63 - old ready Back cannot navigate or focus after persisted departure and return
+  ---
+  duration_ms: 111.427417
+  type: 'test'
+  ...
+# Subtest: ready Back cleanup completed in the background cannot navigate or later autofocus
+ok 64 - ready Back cleanup completed in the background cannot navigate or later autofocus
+  ---
+  duration_ms: 58.579958
+  type: 'test'
+  ...
+# Subtest: terminal departure invalidates a ready Back still awaiting its reader
+ok 65 - terminal departure invalidates a ready Back still awaiting its reader
+  ---
+  duration_ms: 59.687834
+  type: 'test'
+  ...
+# Subtest: terminal departure also invalidates startup Back final navigation continuation
+ok 66 - terminal departure also invalidates startup Back final navigation continuation
+  ---
+  duration_ms: 1.710583
+  type: 'test'
+  ...
+# Subtest: completed startup Back supports a real persisted departure and fresh return
+ok 67 - completed startup Back supports a real persisted departure and fresh return
+  ---
+  duration_ms: 70.749375
+  type: 'test'
+  ...
+# Subtest: completed ready Back supports a real persisted departure and fresh return
+ok 68 - completed ready Back supports a real persisted departure and fresh return
+  ---
+  duration_ms: 122.500375
+  type: 'test'
+  ...
+# Subtest: completed Back followed by terminal departure cannot revive on stale persisted pageshow or late startup
+ok 69 - completed Back followed by terminal departure cannot revive on stale persisted pageshow or late startup
+  ---
+  duration_ms: 8.50225
+  type: 'test'
+  ...
+# Subtest: view keeps media/flight limits visible and prepares a native explicit download link with a revocable URL
+ok 70 - view keeps media/flight limits visible and prepares a native explicit download link with a revocable URL
+  ---
+  duration_ms: 2.644209
+  type: 'test'
+  ...
+# Subtest: late cancelled review and export cannot publish a result or download after Close
+ok 71 - late cancelled review and export cannot publish a result or download after Close
+  ---
+  duration_ms: 1.211792
+  type: 'test'
+  ...
+# Subtest: cancelled discovery returns focus to enabled Find when no profile choice exists
+ok 72 - cancelled discovery returns focus to enabled Find when no profile choice exists
+  ---
+  duration_ms: 0.20075
+  type: 'test'
+  ...
+# Subtest: bootstrap timeout remains visible and a late successful response cannot enable discovery
+ok 73 - bootstrap timeout remains visible and a late successful response cannot enable discovery
+  ---
+  duration_ms: 53.955917
+  type: 'test'
+  ...
+# Subtest: pagehide before late version response cannot bootstrap or inspect storage
+ok 74 - pagehide before late version response cannot bootstrap or inspect storage
+  ---
+  duration_ms: 2.970833
+  type: 'test'
+  ...
+# Subtest: successful built-version bootstrap only enables explicit discovery and closure stops its UI router
+ok 75 - successful built-version bootstrap only enables explicit discovery and closure stops its UI router
+  ---
+  duration_ms: 68.866333
+  type: 'test'
+  ...
+# Subtest: unavailable packaged registry keeps raw discovery usable and original authority unavailable
+ok 76 - unavailable packaged registry keeps raw discovery usable and original authority unavailable
+  ---
+  duration_ms: 3.270083
+  type: 'test'
+  ...
+# Subtest: catalog timeout preserves raw discovery without late registry adoption
+ok 77 - catalog timeout preserves raw discovery without late registry adoption
+  ---
+  duration_ms: 2.07
+  type: 'test'
+  ...
+# Subtest: pagehide during catalog fetch cannot attach a late view or poll controls
+ok 78 - pagehide during catalog fetch cannot attach a late view or poll controls
+  ---
+  duration_ms: 2.368875
+  type: 'test'
+  ...
+# Subtest: focused Find preserves current action through empty discovery
+ok 79 - focused Find preserves current action through empty discovery
+  ---
+  duration_ms: 0.4955
+  type: 'test'
+  ...
+# Subtest: focused Find preserves current action through error discovery
+ok 80 - focused Find preserves current action through error discovery
+  ---
+  duration_ms: 0.112333
+  type: 'test'
+  ...
+# Subtest: focused Find preserves current action through channels discovery
+ok 81 - focused Find preserves current action through channels discovery
+  ---
+  duration_ms: 0.132959
+  type: 'test'
+  ...
+# Subtest: Find completion preserves a newer Back focus instead of reviving its action handoff
+ok 82 - Find completion preserves a newer Back focus instead of reviving its action handoff
+  ---
+  duration_ms: 0.190583
+  type: 'test'
+  ...
+# Subtest: background initiation and unowned scripted Find do not take focus
+ok 83 - background initiation and unowned scripted Find do not take focus
+  ---
+  duration_ms: 0.258583
+  type: 'test'
+  ...
+# Subtest: background cancellation revokes deferred focus even if the page returns before reader completion
+ok 84 - background cancellation revokes deferred focus even if the page returns before reader completion
+  ---
+  duration_ms: 0.154834
+  type: 'test'
+  ...
+# Subtest: explicit current Cancel returns to Find but terminal close prevents the completion handoff
+ok 85 - explicit current Cancel returns to Find but terminal close prevents the completion handoff
+  ---
+  duration_ms: 0.144542
+  type: 'test'
+  ...
+# Subtest: history-restored selector follows current owner after pageshow (persisted=false)
+ok 86 - history-restored selector follows current owner after pageshow (persisted=false)
+  ---
+  duration_ms: 1.7035
+  type: 'test'
+  ...
+# Subtest: history-restored selector follows current owner after pageshow (persisted=true)
+ok 87 - history-restored selector follows current owner after pageshow (persisted=true)
+  ---
+  duration_ms: 0.270791
+  type: 'test'
+  ...
+# Subtest: persisted return first refreshes shared authority, then corrects late stale form state
+ok 88 - persisted return first refreshes shared authority, then corrects late stale form state
+  ---
+  duration_ms: 0.251084
+  type: 'test'
+  ...
+# Subtest: history repair retains unsaved local intent and its persistence warning
+ok 89 - history repair retains unsaved local intent and its persistence warning
+  ---
+  duration_ms: 0.338375
+  type: 'test'
+  ...
+# Subtest: deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+ok 90 - deferred repair reads newer explicit intent instead of replaying the earlier snapshot
+  ---
+  duration_ms: 0.869167
+  type: 'test'
+  ...
+# Subtest: a second pageshow replaces its pending task and a frozen departure cancels it
+ok 91 - a second pageshow replaces its pending task and a frozen departure cancels it
+  ---
+  duration_ms: 0.2225
+  type: 'test'
+  ...
+# Subtest: terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+ok 92 - terminal disposal cancels deferred repair and stale callbacks cannot rewrite controls
+  ---
+  duration_ms: 0.415291
+  type: 'test'
+  ...
+1..92
+# tests 92
+# suites 0
+# pass 92
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2117.946958

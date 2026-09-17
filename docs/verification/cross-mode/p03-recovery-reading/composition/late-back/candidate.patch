@@ -1,0 +1,240 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -562,3 +562,6 @@
+ For [Recovery readability](../../../docs/recovery-display-readability.md), use the existing packaged `game/ui/tool-display-entry.mjs` before the Recovery application entry. This page has no marked preference controls and must remain a read-only display consumer. Shared/system changes may update only text/effect attributes; preserve selected original, pending reader signal, prepared Blob/download link, current feedback and focus. Do not create a second controller/router/reader or inspect profiles to apply display settings. Keep the data host's existing pagehide cancellation and persisted-return restart separate from the display owner's retained preference subscription. Native layout, current-action focus, actual downloads, system reduction, zoom and physical input require their own observations; modeled page events do not prove BFCache or release readiness.
+ 
+ For [Recovery startup navigation](../../../docs/recovery-startup-navigation.md), keep Back/Reload navigable before version/catalog readiness with one page-owned router. Retry replaces the read generation and deadline, not controller assignment. Background or stale completion must neither adopt data nor restore focus. Retire focused Reload to Find only synchronously for the same current foreground startup; clear stale navigation focus so later neutral polling cannot revive that handoff. Keep the existing reader's close-before-Back guarantee, explicit discovery and zero-write scope. Test actual held, failed, timed-out and late startup with the real router/navigation entry and distinguish modeled pad edges from physical controller acceptance.
++
++
++When Recovery Back awaits reader close, capture its originating view and read generation. Permit the deferred host callback only for that same current foreground owner; invalidate the final navigation after pagehide. Preserve close-before-Back and allow a fresh current Back after a cancelled stale request. Test the actual host/view/reader with a held readonly transaction abort, both legitimate closure and history/background supersession. Keep modeled storage events separate from native IndexedDB and BFCache evidence; see the deferred Back correction in [Recovery startup navigation](../../../docs/recovery-startup-navigation.md).
+diff --git a/docs/recovery-startup-navigation.md b/docs/recovery-startup-navigation.md
+--- a/docs/recovery-startup-navigation.md
++++ b/docs/recovery-startup-navigation.md
+@@ -21,3 +21,12 @@
+ In the served composed candidate, hold build information and reach Back/Reload without a mouse. Retry once, deliver the old response late, and confirm only the replacement becomes ready. Fail/timeout startup, retry with the same physical controller and continue into the existing Find/Review menu. Complete startup while Reload is focused, while Back has newer focus and while the page is backgrounded; inspect the actual focus ring and next action. Return from a cached/ordinary history traversal without accidental actions, then explicitly leave. Repeat Theme/Plain and Large reading settings with portrait/short-landscape layout and real touch/controller separately.
+ 
+ Maintainer prompt: “Make startup escape actions navigable before data is ready using one page-owned router. Preserve physical edge history across explicit Reload, cancel only the replaced read/deadline, and never auto-discover profiles. Retire focused Reload to Find only under current foreground ownership; do not defer focus to a later return. Keep the existing read-only reader's Back/Close guarantees and retain actual failed/held/late-response receipts.”
++
++
++## Deferred Back ownership correction
++
++A ready Recovery view closes its reader before asking the host to leave. That asynchronous completion must still belong to the same view, read generation and foreground interaction. A history departure/return or background completion invalidates the old Back request; it cannot navigate or restore focus later. A fresh current Back still works. The final host navigation also checks that pagehide has not invalidated its own continuation. Reader cancellation/closure still completes before legitimate navigation; no data write or automatic inspection is added.
++
++The separate successor on the same a13 + P05 + P03 composition passes six complete affected files: **81/81 each on Node 20.19.5 and 22.22.2**, with 95 unchanged inputs / 1,144,784 bytes, sequentially at 1024 MiB. Five added cases exercise actual host/view/reader behavior through a modeled readonly IndexedDB transaction whose abort completion is held. They cover legitimate and overlapping Back, persisted departure/return, background closure, terminal ready closure and terminal startup continuation. The preceding P03 runtime fails three of those cases (10 pass / 3 fail across the whole 13-case startup file). This is genuine asynchronous reader ownership coverage with a modeled storage-event boundary, not native IndexedDB/BFCache or physical-controller acceptance. Earlier 68/76 cohorts and their immutable packets remain separate evidence.
++
++Prompt: “Preserve close-before-Back but bind a delayed close callback to its originating Recovery view and generation. A newer history visit or background completion must invalidate its navigation; a fresh current Back must still leave once. Use actual reader work with a delayed readonly transaction abort to prove the boundary, preserve prior failed receipts, and do not change profile permissions or automatic discovery.”
+diff --git a/game/profile-recovery.mjs b/game/profile-recovery.mjs
+--- a/game/profile-recovery.mjs
++++ b/game/profile-recovery.mjs
+@@ -75,10 +75,10 @@
+ async function leave() {
+   if (closed) return;
+   closed = true;
+-  epoch++;
++  const leavingGeneration = ++epoch;
+   disposeNavigation();
+   await cleanup?.();
+-  location.assign('./index.html');
++  if (leavingGeneration === epoch && !suspended) location.assign('./index.html');
+ }
+ back.onclick = () => leave();
+ reload.onclick = () => {
+@@ -150,7 +150,12 @@
+       presenter,
+       supportedChannels: recoveryCatalogs.map((entry) => entry.channelId),
+       catalogIssue,
+-      onBack: leave,
++      onBack: () => {
++        // The ready view closes its reader before calling back. That completion
++        // may belong to an earlier history visit or foreground interaction.
++        if (generation !== epoch || view !== ownedView || !foreground()) return;
++        return leave();
++      },
+     });
+     const ownedView = view;
+     cleanup = async () => {
+diff --git a/game/test/profile-recovery-startup-navigation.test.mjs b/game/test/profile-recovery-startup-navigation.test.mjs
+--- a/game/test/profile-recovery-startup-navigation.test.mjs
++++ b/game/test/profile-recovery-startup-navigation.test.mjs
+@@ -45,7 +45,7 @@
+   }
+ }
+ 
+-async function harness(t) {
++async function harness(t, { heldProfileRead = false } = {}) {
+   const doc = new Document(),
+     win = new Events(),
+     frames = new Map(),
+@@ -66,6 +66,22 @@
+   let sequence = 0,
+     time = 0,
+     storeReads = 0;
++  const databaseRead = { opened: 0, aborts: 0, closes: 0, pending: null };
++  const database = {
++    version: 1,
++    objectStoreNames: { contains: (name) => name === 'assets' },
++    close: () => databaseRead.closes++,
++    transaction(name, mode) {
++      assert.equal(name, 'assets');
++      assert.equal(mode, 'readonly');
++      const transaction = {
++        abort: () => databaseRead.aborts++,
++        objectStore: () => ({ getAllKeys: () => ({}) }),
++      };
++      databaseRead.pending = transaction;
++      return transaction;
++    },
++  };
+   const originalSet = globalThis.setTimeout,
+     originalClear = globalThis.clearTimeout;
+   const values = {
+@@ -79,6 +95,7 @@
+     localStorage: {
+       get length() {
+         storeReads++;
++        if (heldProfileRead) return 0;
+         throw new Error('No explicit Find requested.');
+       },
+       getItem() {
+@@ -89,6 +106,16 @@
+         assert.fail('Recovery cannot save.');
+       },
+     },
++    indexedDB: {
++      open(name) {
++        assert.equal(heldProfileRead, true, 'Profile discovery must be explicitly requested.');
++        assert.equal(name, 'revealline-assets-v1');
++        databaseRead.opened++;
++        const request = { result: database };
++        queueMicrotask(() => request.onsuccess());
++        return request;
++      },
++    },
+     fetch: (url, options = {}) => {
+       const gate = deferred();
+       requests.push({ url: String(url), signal: options.signal, gate });
+@@ -120,6 +147,7 @@
+   }
+   t.after(async () => {
+     win.emit('pagehide', { persisted: false });
++    databaseRead.pending?.onabort?.();
+     for (const request of requests)
+       request.gate.resolve(new Response('unavailable', { status: 503 }));
+     await settle();
+@@ -161,6 +189,20 @@
+     neutral,
+     press,
+     storeReads: () => storeReads,
++    databaseRead,
++    async beginProfileRead() {
++      assert.equal(heldProfileRead, true);
++      const finding = $('find').onclick();
++      await until(
++        () => typeof databaseRead.pending?.onabort === 'function',
++        'Explicit Find is waiting on a real reader readonly transaction.',
++      );
++      return { finding };
++    },
++    finishProfileAbort() {
++      assert.ok(databaseRead.aborts > 0, 'The reader requested transaction cancellation.');
++      databaseRead.pending.onabort();
++    },
+     join() {
+       neutral();
+       press(0);
+@@ -333,3 +375,94 @@
+   assert.equal(h.doc.captureListeners.get('keydown').size, 0);
+   assert.equal(h.storeReads(), 0);
+ });
++
++test('ready Back waits for the actual reader transaction and overlapping Back closes it once', async (t) => {
++  const h = await harness(t, { heldProfileRead: true });
++  await h.ready(0);
++  const { finding } = await h.beginProfileRead();
++  const first = h.$('back').onclick(),
++    second = h.$('back').onclick();
++  await settle();
++  assert.deepEqual(h.locations, [], 'Neither Back bypasses pending readonly transaction closure.');
++  assert.equal(h.databaseRead.closes, 0);
++  assert.equal(h.databaseRead.opened, 1);
++  h.finishProfileAbort();
++  await Promise.all([first, second, finding]);
++  assert.deepEqual(h.locations, ['./index.html']);
++  assert.equal(h.databaseRead.closes, 1, 'The single opened connection closes once.');
++  assert.equal(h.frames.size, 0);
++});
++
++test('old ready Back cannot navigate or focus after persisted departure and return', async (t) => {
++  const h = await harness(t, { heldProfileRead: true });
++  await h.ready(0);
++  const { finding } = await h.beginProfileRead();
++  const leaving = h.$('back').onclick();
++  await settle();
++  assert.deepEqual(h.locations, []);
++  assert.equal(h.databaseRead.closes, 0);
++  h.win.emit('pagehide', { persisted: true });
++  h.win.emit('pageshow', { persisted: true });
++  h.$('back').focus();
++  const currentFocus = h.doc.activeElement;
++  h.finishProfileAbort();
++  await Promise.all([leaving, finding]);
++  await until(
++    () => h.requests.length === 3,
++    'The new visit begins its own startup after old read cleanup.',
++  );
++  assert.deepEqual(h.locations, [], 'The completed old Back cannot leave the new history visit.');
++  assert.equal(h.doc.activeElement, currentFocus);
++  assert.equal(h.databaseRead.closes, 1);
++  assert.equal(h.frames.size, 1);
++  await h.ready(2);
++  assert.equal(h.doc.activeElement, currentFocus);
++  assert.equal(h.$('find').disabled, false);
++  await h.$('back').onclick();
++  assert.deepEqual(h.locations, ['./index.html'], 'A fresh current Back still works.');
++});
++
++test('ready Back cleanup completed in the background cannot navigate or later autofocus', async (t) => {
++  const h = await harness(t, { heldProfileRead: true });
++  await h.ready(0);
++  const { finding } = await h.beginProfileRead();
++  const leaving = h.$('back').onclick();
++  h.doc.focused = false;
++  h.win.emit('blur');
++  h.doc.activeElement = h.doc.body;
++  h.finishProfileAbort();
++  await Promise.all([leaving, finding]);
++  assert.deepEqual(h.locations, []);
++  assert.equal(h.doc.activeElement, h.doc.body);
++  h.doc.focused = true;
++  h.win.emit('focus');
++  h.neutral();
++  assert.deepEqual(h.locations, []);
++  assert.equal(h.doc.activeElement, h.doc.body);
++  await h.$('back').onclick();
++  assert.deepEqual(h.locations, ['./index.html']);
++  assert.equal(h.databaseRead.closes, 1);
++});
++
++test('terminal departure invalidates a ready Back still awaiting its reader', async (t) => {
++  const h = await harness(t, { heldProfileRead: true });
++  await h.ready(0);
++  const { finding } = await h.beginProfileRead();
++  const leaving = h.$('back').onclick();
++  h.win.emit('pagehide', { persisted: false });
++  h.finishProfileAbort();
++  await Promise.all([leaving, finding]);
++  assert.deepEqual(h.locations, []);
++  assert.equal(h.frames.size, 0);
++  assert.equal(h.databaseRead.closes, 1);
++});
++
++test('terminal departure also invalidates startup Back final navigation continuation', async (t) => {
++  const h = await harness(t);
++  const leaving = h.$('back').onclick();
++  h.win.emit('pagehide', { persisted: false });
++  await leaving;
++  assert.deepEqual(h.locations, []);
++  assert.equal(h.frames.size, 0);
++  assert.equal(h.requests[0].signal.aborted, true);
++});

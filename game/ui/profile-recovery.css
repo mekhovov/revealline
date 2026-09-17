@@ -1,8 +1,8 @@
 :root {
   color-scheme: dark;
   font-family: system-ui, sans-serif;
-  background: #0d1822;
-  color: #edf5f5;
+  background: var(--fk-bg, #0d1822);
+  color: var(--fk-text, #edf5f5);
 }
 * {
   box-sizing: border-box;
@@ -33,10 +33,10 @@ a {
   font: inherit;
   min-height: 44px;
   padding: 0.65rem 0.9rem;
-  border: 1px solid #587282;
-  border-radius: 0.5rem;
+  border: 1px solid var(--fk-control-line, #587282);
+  border-radius: var(--fk-corner, 0.5rem);
   color: inherit;
-  background: #1b3341;
+  background: var(--fk-panel-raised, #1b3341);
 }
 select {
   width: 100%;
@@ -64,7 +64,7 @@ a:focus-visible,
   margin: 1rem 0;
 }
 .note {
-  color: #becfd7;
+  color: var(--fk-muted, #becfd7);
 }
 #profile-recovery-summary,
 #profile-recovery-original-summary {
