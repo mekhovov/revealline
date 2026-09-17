@@ -30,6 +30,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
+import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
@@ -81,11 +82,17 @@ export function bootCoop() {
       $('coop-audio-status').textContent = message;
     },
   });
-  const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+  const renderMasterPreferences = ({ muted, volume }) => {
     $('coop-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
     $('coop-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
     $('coop-quick-sound').setAttribute('aria-pressed', String(!muted));
     $('coop-master-volume').value = volume;
+  };
+  const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
+  const audioRestoration = attachPreferenceRestoration({
+    window,
+    getSnapshot: () => audioMaster.snapshot(),
+    render: renderMasterPreferences,
   });
   const toggleSound = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
   $('coop-audio').onclick = toggleSound;
@@ -97,6 +104,7 @@ export function bootCoop() {
     $('coop-quick-sound').onclick = null;
     $('coop-master-volume').onchange = null;
     stopMasterView();
+    audioRestoration.dispose();
     audioPreferences.dispose();
     audioMaster.dispose();
   };
@@ -110,8 +118,7 @@ export function bootCoop() {
       $('coop-display-status').textContent = message;
     },
   });
-  const stopDisplayView = displayPreferences.subscribe((state) => {
-    const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
+  const renderDisplayPreferences = (state) => {
     document.body.dataset.textFace = state.textFace;
     document.body.dataset.textSize = state.textSize;
     document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
@@ -122,7 +129,16 @@ export function bootCoop() {
       state.effectiveReducedEffects && !state.reducedEffects
         ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
         : '';
+  };
+  const stopDisplayView = displayPreferences.subscribe((state) => {
+    const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
+    renderDisplayPreferences(state);
     reveal?.();
+  });
+  const displayRestoration = attachPreferenceRestoration({
+    window,
+    getSnapshot: () => displayPreferences.snapshot(),
+    render: renderDisplayPreferences,
   });
   const menuStyle = attachMenuStyleControls({
     document,
@@ -136,6 +152,7 @@ export function bootCoop() {
     displayPreferences.set({ textSize: $('coop-text-size').value });
   const closeDisplay = () => {
     stopDisplayView();
+    displayRestoration.dispose();
     displayPreferences.dispose();
     menuStyle.dispose();
   };

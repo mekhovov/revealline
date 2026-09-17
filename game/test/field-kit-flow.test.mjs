@@ -64,7 +64,7 @@ test('direct briefing and disposal retain one craft presenter outside hidden mis
   assert.deepEqual(page.errors, []);
 });
 
-test('title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
+test('title has five game destinations, quick sound and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
@@ -72,6 +72,7 @@ test('title has five game destinations and the release catalog; Workshop and mis
     'shell-gallery',
     'shell-options',
     'shell-workshop',
+    'shell-sound',
     'shell-release-explorer',
   ]);
   const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
@@ -155,6 +156,7 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
     'shell-gallery',
     'shell-options',
     'shell-workshop',
+    'shell-sound',
     'shell-release-explorer',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);

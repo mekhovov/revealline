@@ -114,7 +114,7 @@
   "supersededHostedRuns": [
     {
       "id": 35249987780,
-      "kind": "PR / Node22",
+      "kind": "PR / Node20",
       "source": "6b0cb44337a6a405bc2b20bf5a62893ea869081c",
       "result": "Cancelled after a required correction and reproduced unbounded stale test route; source and ordinary build passed, full suite incomplete"
     },

@@ -83,7 +83,7 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'motion.inspectionUnavailable': 'Body unavailable; the neutral marker is shown.',
   'motion.inspectionNeutral': 'Neutral fallback marker; this body has no image.',
   'display.sharedToolNotice':
-    "Text size is shared with the game's Display settings. Plain text and reduced effects follow those settings too.",
+    "Text size is shared with the game's Settings → Appearance & accessibility. Plain text and reduced effects follow those settings too.",
   'playground.mapLabel':
     'Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map.',
   'playground.mapDetails': 'Signal zones and hangars',
