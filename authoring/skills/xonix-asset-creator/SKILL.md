@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
 ---
 name: xonix-asset-creator
 description: 'Create, edit, vary, and prepare Xonix game artwork: reveal backgrounds, characters, enemies, sprite concepts, UI, capture effects, icons, galleries, and promotional images. Use for pixel, painterly, photographic, or graphic styles, theme variations, image-pack authoring, and production handoff from AI concepts.'
@@ -28,6 +30,14 @@ For applying art to selectable or earned characters, use [Character Collection](
 Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this installed skill's physical directory to its parent kit. Read the target theme brief and relevant records in `prompts/catalog.json`. Use `python3 authoring/prompt.py list --family FAMILY` to choose a template, then `show ID` or `render ID --set key=value`. If the kit is absent, use [the handoff template](references/asset-handoff.md) without pretending to validate a pack.
 
 ## Execute
+
+1. Identify the role: reveal artwork, player, enemy, UI, effect, or marketing. Read intended dimensions, camera/view, frame scale, palette, and references. Preserve the difference between source-art size, runtime texture size, and gameplay cell coordinates.
+3. Select and fill a prompt; record its ID, substitutions, full effective text, references, tool route, and output paths. Generate meaningful variations along one or two named axes such as daylight, regional motif, medium, or silhouette. Keep the rest consistent so the user can compare them.
+4. Generate or edit the art directly within scope. Keep military reveal subjects consistent with the requested FPV theme; keep illustrated subjects distinct from active threat indicators. For Ukrainian traditions and branded work, verify unfamiliar specifics with primary references before claiming authenticity.
+5. Preserve source images. Propose separate derived exports for each target; never destructively pixelate all media. Pixel sprite atlases need nearest filtering; smooth paintings/photographs belong in separate textures using their intended filtering. An atlas cannot assign a different filter to each frame.
+6. Inspect the resulting image. Assess focal subjects under partial reveal, quiet regions behind HUD, active-trail contrast, silhouette size, and whether the requested medium survived. Correct a substantive mismatch through the image tool. Do not certify exact arena geometry or touch usability from generated concept art.
+7. For sprites, distinguish an attractive sprite-sheet illustration from an inspected production sheet. Check equal frame cells, alpha, padding, consistent pivot, frame ordering, animation tags and timing. Use Aseprite's documented export pipeline when available and useful. Do not claim animation works until the frames were inspected and played or rendered.
+8. Save the asset handoff. Register media with planned/ready status according to the contract's actual checks, not the generator's confidence. Run pack validation if a pack changed; report visual review separately from file/schema checks.
 
 ## Adapt templates to the request
 
@@ -84,6 +94,8 @@ The [local Asset Studio](../../asset-studio/index.html) implements uploads, orig
 ## Field Kit review successors and font briefs
 
 Use the Studio's medium-specific prompts: real WOFF2 plus retained license/source for fonts, encoded audio plus measured playback requirements for sound, and exact raster geometry for images. Keep a current custom production brief. The immutable baseline contract remains readable, even when its old generic art wording needs a medium-specific effective brief. Recheck actual shipped English/Ukrainian glyphs and Standard/Large/200% layout before a font successor.
+
+Studio Interface Theme/Plain and Standard/Large choices affect the host's instructions and controls; they must not replace the selected file or stage a theme revision. Compare saved/draft font originals at the actual selected role: display at least 40px/600, UI 400/500/600 and numeric 500, including `Ґґ Єє Іі Її`, apostrophes and ambiguous letter/number pairs. A compatible shared-file cache or successful decode is not proof of glyph coverage, native matching, readability or reviewed quality. Record source-byte identity and actual browser inspection separately. Preserve prepared uploads and dirty sprites when adjusting Interface settings; follow the [Studio readability contract](../../../docs/asset-studio.md#studio-interface--readability-candidate) and its candidate/release limits.
 
 Reveal corrections append sequential entries to `authoring/library/fpv-field-kit/reveal-source-revisions.json`; the preparer verifies every original and its exact predecessor before selecting a successor. Signal 06 v2 demonstrates native/thumbnail/exact-owner partial-board review. Record agent visual decisions with exact revision/file or source-code hashes and concrete evidence; keep asset readiness distinct from release, public, all-state and physical-device qualification. Never rewrite historical source bytes or review metadata to manufacture a passing gate.
 

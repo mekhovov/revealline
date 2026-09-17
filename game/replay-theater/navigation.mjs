@@ -19,7 +19,11 @@ export function attachReplayNavigation({
     router = createControllerRouter({ readPads, eventTarget: win });
   let destroyed = false,
     active = !doc.hidden,
-    status = '';
+    status = '',
+    jumpTimer = null,
+    jumpGeneration = 0;
+  const defer = win.setTimeout?.bind(win) ?? globalThis.setTimeout,
+    clearDeferred = win.clearTimeout?.bind(win) ?? globalThis.clearTimeout;
   const listeners = [];
   const listen = (target, type, callback, options) => {
     target?.addEventListener?.(type, callback, options);
@@ -41,6 +45,50 @@ export function attachReplayNavigation({
     node?.focus({ preventScroll: true });
     node?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   };
+  const cancelJump = () => {
+    jumpGeneration++;
+    if (jumpTimer !== null) clearDeferred(jumpTimer);
+    jumpTimer = null;
+  };
+  const jump = $('jump-playback');
+  listen(jump, 'click', (event) => {
+    if (
+      destroyed ||
+      !active ||
+      event.defaultPrevented ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.shiftKey ||
+      (event.button !== undefined && event.button !== 0) ||
+      jump.getAttribute('href') !== '#playback' ||
+      jump.hasAttribute('download') ||
+      !['', '_self'].includes((jump.getAttribute('target') || '').toLowerCase())
+    )
+      return;
+    cancelJump();
+    const generation = jumpGeneration;
+    // Preserve native fragment scrolling/history. Its default action may leave
+    // focus on BODY, so hand off only afterward and while this intent is current.
+    jumpTimer = defer(() => {
+      jumpTimer = null;
+      if (
+        destroyed ||
+        !active ||
+        doc.hidden ||
+        doc.hasFocus?.() === false ||
+        event.defaultPrevented ||
+        generation !== jumpGeneration ||
+        (doc.activeElement && ![doc.body, jump, $('playback')].includes(doc.activeElement))
+      )
+        return;
+      router.clear();
+      focus(preferred());
+    }, 0);
+  });
+  // A newer user action owns focus, even when it does not focus an element.
+  listen(doc, 'keydown', cancelJump, true);
+  listen(doc, 'pointerdown', cancelJump, true);
   function back() {
     if (pending()) {
       cancelLoad();
@@ -95,6 +143,7 @@ export function attachReplayNavigation({
   });
   function suspend() {
     if (destroyed) return;
+    cancelJump();
     active = false;
     router.clear();
     navigation.clear();
