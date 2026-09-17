@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-17T09:54:28.041459+00:00",
+  "queries": {
+    "latest": "releases/latest",
+    "release": "releases/tags/v0.60.1",
+    "tag": "git/ref/tags/v0.60.1",
+    "tag-object": "git/tags/725bbe5e04aba9ee77c4261fb057b9ad54767de1",
+    "all-deployments": "deployments?environment=github-pages&per_page=10",
+    "source": "git/commits/822f3290787c704a217e7c185d4b8beb7a527e82"
+  },
+  "afterFullAuditReportSha256": "c98cc81fa5335becd24f882e319e05a48e4e29aa4980075b95e7b28f59a839db"
+}
