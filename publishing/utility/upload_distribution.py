@@ -27,6 +27,23 @@ class Refusal(Exception):
 
 class Ambiguous(Refusal):
     """POST may have created an asset. Never retry or delete automatically."""
+    def __init__(self, message, *, diagnostics=None):
+        super().__init__(message)
+        self.diagnostics = diagnostics
+
+
+def upload_diagnostics(phase, sent, error, status=None):
+    # Whitelist names, never exception text, arbitrary class names, headers or body.
+    safe_types = {'Refusal', 'OSError', 'BrokenPipeError', 'ConnectionResetError',
+                  'ConnectionAbortedError', 'TimeoutError', 'RemoteDisconnected',
+                  'BadStatusLine', 'IncompleteRead', 'HTTPException', 'SSLError',
+                  'ValueError', 'KeyboardInterrupt', 'SystemExit'}
+    kind = type(error).__name__
+    return {'phase': phase, 'sentBytes': sent,
+            'sentBytesMeaning': 'Client-completed body send calls only; not server receipt. '
+                                'A failed send may transmit additional bytes; null means unavailable.',
+            'exceptionType': kind if kind in safe_types else 'OtherError',
+            'httpStatus': status if type(status) is int and 100 <= status <= 599 else None}
 
 
 def require(ok, message):
@@ -151,7 +168,7 @@ class GitHub:
             require(_loopback[0] == '127.0.0.1' and type(_loopback[1]) is int,
                     'Synthetic transport must be loopback')
         self.token, self.loopback, self.timeout = token, _loopback, timeout
-        self.deadline = time.monotonic() + 1800
+        self.deadline = time.monotonic() + 5400
 
     def connection(self, upload=False):
         require(time.monotonic() < self.deadline, 'Operation deadline exceeded')
@@ -189,7 +206,8 @@ class GitHub:
 
     def upload(self, path, stream, size, expected_hash):
         connection = self.connection(upload=True)
-        posted = False
+        posted, sent, status = False, 0, None
+        phase = 'send-headers'
         try:
             headers = self.headers()
             headers.update({'Content-Type': 'application/zip', 'Content-Length': str(size)})
@@ -199,19 +217,30 @@ class GitHub:
             for name, value in headers.items():
                 connection.putheader(name, value)
             connection.endheaders()
-            digest, sent = hashlib.sha256(), 0
+            digest = hashlib.sha256()
+            phase = 'read-body'
             for body in chunks(stream, size):
+                phase = 'check-deadline'
                 require(time.monotonic() < self.deadline, 'Upload deadline exceeded')
                 digest.update(body)
+                phase = 'send-body'
                 connection.send(body)
+                # Count only fully returned send calls, not the attempted chunk.
                 sent += len(body)
+                phase = 'read-body'
+            phase = 'verify-stream'
             require(digest.hexdigest() == expected_hash, 'Upload stream hash differs')
-            result = self.response(connection.getresponse(), 201)
+            phase = 'response-headers'
+            response = connection.getresponse()
+            status = response.status
+            phase = 'validate-response'
+            result = self.response(response, 201)
             return result, sent, digest.hexdigest()
-        except BaseException:
+        except BaseException as error:
             if posted:
                 raise Ambiguous('Upload outcome unconfirmed. Do not retry or delete automatically; '
-                                'reread the exact release asset list first.') from None
+                                'reread the exact release asset list first.',
+                                diagnostics=upload_diagnostics(phase, sent, error, status)) from None
             raise
         finally:
             connection.close()
@@ -277,7 +306,7 @@ def perform(source, api, repository, release_id, tag):
             'distribution.zip already exists; refusing to overwrite, delete or retry')
     verify_tag(api, repository, tag, source.commit)
     source.unchanged()
-    initiated = False
+    initiated, sent = False, None
     try:
         with source.open() as stream:
             initiated = True
@@ -294,10 +323,11 @@ def perform(source, api, repository, release_id, tag):
         verify_tag(api, repository, tag, source.commit)
     except Ambiguous:
         raise
-    except BaseException:
+    except BaseException as error:
         if initiated:
             raise Ambiguous('Post-upload verification unconfirmed. Do not retry or delete automatically; '
-                            'reread the exact release asset list first.') from None
+                            'reread the exact release asset list first.',
+                            diagnostics=upload_diagnostics('verify-upload', sent, error)) from None
         raise
     return {'status': 'UPLOADED_VERIFIED', 'repository': repository, 'releaseId': release_id,
             'tag': tag, 'tagCommit': source.commit, 'assetId': result['id'], 'assetName': 'distribution.zip',
@@ -352,6 +382,8 @@ def main():
                     token = None
         except Ambiguous as error:
             result.update(status='UNCONFIRMED_REREAD_ASSETS', message=str(error), requiresAssetReread=True)
+            if error.diagnostics is not None:
+                result['uploadDiagnostics'] = error.diagnostics
         except Refusal as error:
             result.update(message=str(error))
         except BaseException:
