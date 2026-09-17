@@ -316,3 +316,85 @@ iframe {
     margin: 0;
   }
 }
+
+/* Host reading policy must not alter the practice iframe or virtual input values. */
+body.field-kit.field-kit-support[data-field-kit-page='controller']
+  :is(h1, p, dt, dd, label, legend, button, a, .stage-heading) {
+  overflow-wrap: anywhere;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller']
+  :is(button, select, input, .setup > label, .connection, .face-buttons) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] :is(button, select) {
+  white-space: normal;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  max-inline-size: 100%;
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-control);
+  letter-spacing: normal;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] :is(label, legend) {
+  font-weight: 500;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller']
+  :is(#connection-status, .feedback dd, .operation-status) {
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 400;
+  line-height: var(--fk-leading-body);
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] #host-display-notice {
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-secondary);
+  font-weight: 400;
+  line-height: var(--fk-leading-body);
+  overflow-wrap: anywhere;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller']
+  :is(.axis-label output, #viewport-readout, .operation-status-count) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: normal;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller']
+  :is(.dpad span, .face-buttons span) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-secondary);
+  font-weight: 500;
+  line-height: var(--fk-leading-body);
+  letter-spacing: normal;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] .dpad {
+  grid-template-rows: repeat(2, minmax(64px, auto));
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] .dpad button {
+  padding: 4px;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] .face-buttons {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] .face-buttons button {
+  padding-inline: 5px;
+}
+body.field-kit.field-kit-support[data-field-kit-page='controller'] .axis-label {
+  flex-wrap: wrap;
+}
+@media (max-width: 600px) {
+  body.field-kit.field-kit-support[data-field-kit-page='controller'] aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body.field-kit.field-kit-support[data-field-kit-page='controller'] .setup > label {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

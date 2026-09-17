@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+    <script type="module" src="../ui/tool-display-entry.mjs"></script>
     <script type="module" src="../presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
@@ -36,10 +37,14 @@
           support.
         </p>
       </section>
+      <p id="host-display-notice" class="notice" role="status">
+        Text size is shared with the game's Display settings. Plain text and reduced effects follow
+        those settings too.
+      </p>
       <section class="setup" aria-label="Practice setup">
         <label class="field-kit-page-text"
           ><span data-field-kit-copy="display.textSize">Text size</span
-          ><select data-field-kit-text-size>
+          ><select id="host-text-size" data-tool-text-size aria-describedby="host-display-notice">
             <option value="standard" data-field-kit-copy="display.standard">Standard</option>
             <option value="large" data-field-kit-copy="display.large">Large</option>
           </select></label

@@ -331,3 +331,88 @@ pre {
     flex-wrap: wrap;
   }
 }
+
+/* Authoring chrome follows host preferences; the map and iframe keep authored geometry. */
+body.playground-page.field-kit :is(h1, p, li, a, label, legend, button, summary, .section-line) {
+  overflow-wrap: anywhere;
+}
+body.playground-page.field-kit
+  :is(button, select, input, textarea, summary, fieldset, .workshop-title > div, .masthead nav) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+body.playground-page.field-kit :is(button, select, summary) {
+  white-space: normal;
+}
+body.playground-page.field-kit a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  max-inline-size: 100%;
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-control);
+  letter-spacing: normal;
+}
+body.playground-page.field-kit :is(label, legend) {
+  font-weight: 500;
+}
+body.playground-page.field-kit .masthead {
+  height: auto;
+  min-height: 76px;
+  padding-block: 12px;
+  flex-wrap: wrap;
+}
+body.playground-page.field-kit .masthead nav {
+  font-size: var(--fk-text-secondary);
+  line-height: var(--fk-leading-body);
+}
+body.playground-page.field-kit :is(.section-line, .asset-actions) {
+  flex-wrap: wrap;
+}
+body.playground-page.field-kit .settings-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+body.playground-page.field-kit .settings-row.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+body.playground-page.field-kit :is(.editor-status, .operation-status) {
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 400;
+  line-height: var(--fk-leading-body);
+}
+body.playground-page.field-kit :is(textarea, pre, #geometry-readout, .asset-card) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-body);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+body.playground-page.field-kit .operation-status-count {
+  font-weight: 500;
+}
+body.playground-page.field-kit #geometry-readout {
+  color: var(--fk-text);
+  background: var(--fk-panel);
+}
+body.playground-page.field-kit #preview-size-status.error {
+  color: var(--fk-hazard);
+}
+body.playground-page.field-kit input[type='checkbox'] {
+  inline-size: 44px;
+  block-size: 44px;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+}
+body.playground-page.field-kit .file-button input {
+  height: 100%;
+}
+@media (max-width: 600px) {
+  body.playground-page.field-kit :is(.settings-row, .settings-row.three) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

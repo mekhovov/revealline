@@ -1,0 +1,15 @@
+{
+  "reviewer": "plan_acceptance_delta",
+  "method": "Read-only packet pin/count/scope review; no browser/test/network rerun",
+  "blockingContradictions": [],
+  "confirmed": {
+    "manifestFilesBeforeClarification": 9,
+    "successfulBodyRecords": 2464,
+    "uniqueBodies": 328,
+    "committedBodies": 318,
+    "overlayBodies": 10,
+    "logRecords": 2466
+  },
+  "correction": "Clarified admission shared-origin wording to distinguish isolated localhost preferences from public/user origins. Original retained in admission-original.json.",
+  "limits": "14,903-character snapshot identity is transcript-only; no independent browser repeat. U3/U4/G4/R1 remain qualified only as explicitly stated."
+}

@@ -49,18 +49,21 @@ export function paintEditorMap(canvas, current) {
     c.setLineDash([4, 4]);
     c.strokeRect(zone.x * s, zone.y * s, zone.w * s, zone.h * s);
     c.setLineDash([]);
-    c.fillStyle = '#e4c9f4';
-    c.font = '500 14px "Field Kit Mono", monospace';
-    c.fillText(`SIGNAL ${Math.round(zone.speedFactor * 100)}%`, zone.x * s + 3, zone.y * s + 12);
   }
   const hangars = current.level.hangars ?? [{ ...current.level.spawn, radius: 2 }];
   for (const h of hangars) {
     c.strokeStyle = '#7cdfb0';
     c.lineWidth = 2;
     c.strokeRect(h.x * s - 7, h.y * s - 7, 14, 14);
-    c.fillStyle = '#7cdfb0';
-    c.font = '500 14px "Field Kit Mono", monospace';
-    c.fillText('H', h.x * s - 3, h.y * s + 4);
+    // A diamond frame keeps the hangar distinct from square objectives without
+    // baking host text into the scaled map. It does not represent collision.
+    c.beginPath();
+    c.moveTo(h.x * s, h.y * s - 11);
+    c.lineTo(h.x * s + 11, h.y * s);
+    c.lineTo(h.x * s, h.y * s + 11);
+    c.lineTo(h.x * s - 11, h.y * s);
+    c.closePath();
+    c.stroke();
   }
   c.fillStyle = '#849496';
   for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);

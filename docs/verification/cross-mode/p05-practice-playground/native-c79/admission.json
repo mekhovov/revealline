@@ -1,0 +1,8 @@
+{
+  "source": "170508f11dd41204b7e24917a823f21701c15961",
+  "parent": "e674b1ba1234f98a1d957345a7d52bf3caf5930c9df8bf7b6488b3842e00f021",
+  "successor": "c79fd47750a57a7b3aa27dd211ddb5ec9f4f34c8408169a277d7157877cc5d87",
+  "serverSha256": "d867bc40ee07fc8be44729baba12e994e08d72e745a0d5201596a838798a14e9",
+  "faultMechanism": "Own localhost server only, per-path503 or bounded response delay; no game bytes rewritten",
+  "scope": "Own fresh origin/server/tab; no public/user-origin preferences; isolated localhost preferences may be changed and restored through actual UI"
+}
