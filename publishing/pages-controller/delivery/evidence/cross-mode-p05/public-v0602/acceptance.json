@@ -1,0 +1,70 @@
+{
+  "format": "revealline-p05-feature-public-acceptance.v1",
+  "at": "2026-09-17T11:38:31.319576+00:00",
+  "version": "v0.60.2",
+  "sourceRevision": "ece40093940aabdc3b3659a07394b856f33ad4a1",
+  "sourceTree": "32b36e6e8fc605911b2cb98cd8f67c97b8f4e214",
+  "publisherRevision": "082ef33adbb97f3b508a6ec4359294e7ae5e2663",
+  "publisherTree": "e097715ace048c90f1d139df50874a8820502830",
+  "sourcePR": 84,
+  "publisherPR": 85,
+  "pagesRun": 35215437655,
+  "deploymentId": 6501572504,
+  "statusId": 18471324491,
+  "releaseId": 390644083,
+  "status": "ACCEPTED_SCOPED_PRACTICE_PLAYGROUND_READABILITY",
+  "phase": "P05",
+  "phaseStatus": "implementing",
+  "navigationPhaseStatus": "implementing",
+  "publicFiles": 2705,
+  "publicBytes": 639168008,
+  "failures": 0,
+  "retries": 0,
+  "sourceTestsPerHostedFamily": 5449,
+  "sourceFilesPerHostedFamily": 433,
+  "sourceGatesPassed": 6,
+  "playableURL": "https://mekhovov.github.io/revealline/releases/v0.60.2/site/game/",
+  "pins": [
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3694,
+      "sha256": "5e53764ac9d312bcb3d9095235487d3de74fca5815db843f703d15c420e999f4"
+    },
+    {
+      "path": "public-row-review-complete-1.json",
+      "bytes": 1597,
+      "sha256": "c179bee563f9a4e5ee704b41984845d2eeadafc0de5b5be6ad83784aa40664f5"
+    },
+    {
+      "path": "after-http-authorities-public-1/result.json",
+      "bytes": 7532,
+      "sha256": "9a57c22a0fb57cec8f5ba9575aa067c03b0315405af4ab28f7f7dfa4e627365f"
+    },
+    {
+      "path": "native/observations.json",
+      "bytes": 4205,
+      "sha256": "93bdc75ae2cd61f99a80226b29306e5be98ed66e9b610384a4ee347538da0937"
+    },
+    {
+      "path": "native/export-byte-review.json",
+      "bytes": 298,
+      "sha256": "c8b3670b4f150fa86f7fcd400e097f2b8a0498d4e5b28c98c37b338a1fc7a375"
+    }
+  ],
+  "scope": [
+    "Sharedreadingpreferences onPractice/Playground andactualHistoryBack repair",
+    "Textchanges preserveheldvirtualinput/livepreview",
+    "LastUndo focus andunchangedpreview",
+    "Actualpackimport/exportbyteequality andfailedimportrecovery",
+    "Explicitpreviewplay,realpracticewin,retry,pauseandresume",
+    "CurrentcanonicalPlayroutev0602"
+  ],
+  "limitations": [
+    "No physicaltouch/controller/Safari/device qualification",
+    "No200%browserzoom or completeEN/UA/stylematrix",
+    "No BFCache proof",
+    "No native non-ownerUndo or nonemptyoffscreenactionset",
+    "No fresh offline/media/save-migration or humanfun assessment",
+    "No wholeP03/P05/P18acceptance"
+  ]
+}
