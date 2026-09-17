@@ -55,6 +55,26 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'display.textSize': 'Text size',
   'display.standard': 'Standard',
   'display.large': 'Large',
+  'display.sharedToolNotice':
+    "Text size is shared with the game's Display settings. Plain text and reduced effects follow those settings too.",
+  'playground.mapLabel':
+    'Click to paint the board. Use Paint by coordinates for keyboard editing. Signal and hangar details follow the map.',
+  'playground.mapDetails': 'Signal zones and hangars',
+  'playground.mapDetailsLoading': 'Map details appear after the working configuration loads.',
+  'playground.mapDetailsHelp':
+    "Dashed rectangles mark signal zones; diamond-framed squares mark hangars. Locations use zero-based cell coordinates: x from the left, y from the top. Hangar marker size does not represent its activation radius. Signal effects apply to vulnerable craft; overlapping zones use the lowest speed. Switch within a hangar's radius on safe ground, with no active cut and after the switch cooldown.",
+  'playground.paintHelp':
+    "Signal speed and optional boost/ability locks apply to vulnerable classes. Edit each zone's flags in Level JSON. Switch class within a hangar's radius on safe ground, with no active cut and after the switch cooldown. Erase removes a whole zone or object.",
+  'playground.noSignalZones': 'No signal zones.',
+  'playground.signalZone':
+    'Signal zone {id}: x {x}, y {y}; {width} × {height} cells; speed {speed}%; boost {boost}; ability {ability}.',
+  'playground.boostBlocked': 'blocked',
+  'playground.boostAllowed': 'allowed',
+  'playground.abilityLocked': 'locked',
+  'playground.abilityAllowed': 'allowed',
+  'playground.defaultHangar': 'Default start hangar: x {x}, y {y}; radius 2 cells.',
+  'playground.hangar': 'Hangar {id}: x {x}, y {y}; radius {radius} cells.',
+  'playground.noHangars': 'No hangars; class switching is disabled.',
   'about.eyebrow': 'FIELD KIT / GAME GUIDE',
 });
 

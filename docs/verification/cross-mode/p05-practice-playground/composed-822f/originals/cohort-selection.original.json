@@ -1,0 +1,27 @@
+{
+  "label": "proposal20-01",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=100",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/practice-playground-display.test.mjs",
+    "game/test/playground-map-diagnostics.test.mjs",
+    "game/test/display-preferences.test.mjs",
+    "game/test/controller-lab.test.mjs",
+    "game/test/controller-practice-pause-host.test.mjs",
+    "game/test/practice-navigation.test.mjs",
+    "game/test/playground-import-host.test.mjs",
+    "game/test/playground-model.test.mjs",
+    "game/test/playground-viewport.test.mjs",
+    "game/test/field-kit-surfaces.test.mjs",
+    "game/test/direct-tools-loading.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-practice-playground-170508f1/proposal",
+  "exitCode": 0,
+  "elapsedSeconds": 6.766,
+  "inputCount": 901,
+  "inputsUnchanged": true,
+  "changed": [],
+  "logSha256": "99f7ddbb490a47184db422d8d6f765da3956ff97a9003c4f0894a5c8e84114aa"
+}

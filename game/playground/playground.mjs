@@ -2,6 +2,7 @@ globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { paintEditorMap, editorCellFromPointer } from './board-view.mjs';
+import { renderMapDiagnostics } from './map-diagnostics.mjs';
 import {
   validateScenario,
   downloadJSON,
@@ -214,6 +215,8 @@ let previewLease = null,
   previewDocumentLoaded = false;
 function beginPreview() {
   previewDocumentLoaded = false;
+  clearLiveMeasurements('Waiting for the current preview document.');
+  geometryStale('A new preview is loading. Capture again after it is ready.');
   previewLease = previewPresenter.begin({ message: 'Loading the child game for this preview…' });
   showFeedback('preview');
 }
@@ -392,6 +395,7 @@ function sync() {
 }
 function drawMap() {
   const { hangarCount } = paintEditorMap($('map-editor'), current);
+  renderMapDiagnostics($('map-diagnostic-list'), current.level);
   const { width: columns, height: rows } = geometryForLevel(current.level);
   $('paint-x').max = String(columns - 1);
   $('paint-y').max = String(rows - 1);
@@ -544,23 +548,49 @@ function resizePreview(nextWidth, nextHeight) {
   $('preview-size-status').textContent = `Preview set to ${width} × ${height} CSS pixels.`;
   fit();
 }
+function clearLiveMeasurements(reason) {
+  $('viewport-readout').textContent = `${width} × ${height} CSS pixels requested · ${reason}`;
+  $('layout-readout').textContent = `Arena measurement unavailable. ${reason}`;
+  $('control-readout').textContent = `Control measurements unavailable. ${reason}`;
+  $('launch-readout').textContent = `Launch measurements unavailable. ${reason}`;
+}
 function measure() {
   checkPreviewReady();
+  if (!previewDocumentLoaded) {
+    clearLiveMeasurements('Waiting for the current preview document.');
+    return;
+  }
   try {
     const frame = $('preview-frame'),
       doc = frame.contentDocument,
       view = frame.contentWindow,
       arena = doc?.querySelector('#arena-shell,#race-boards');
-    if (view)
-      $('viewport-readout').textContent =
-        `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`;
-    if (!arena) return;
-    const r = arena.getBoundingClientRect(),
-      visible =
-        r.left >= 0 &&
-        r.top >= 0 &&
-        r.right <= view.innerWidth + 1 &&
-        r.bottom <= view.innerHeight + 1;
+    const measurable = (rect) =>
+      ['left', 'top', 'right', 'bottom', 'width', 'height'].every((key) =>
+        Number.isFinite(rect[key]),
+      ) &&
+      rect.width > 0 &&
+      rect.height > 0;
+    if (
+      !arena ||
+      !view ||
+      ![view.innerWidth, view.innerHeight].every((size) => Number.isFinite(size) && size > 0)
+    ) {
+      clearLiveMeasurements('The current frame and arena are not available.');
+      return;
+    }
+    const r = arena.getBoundingClientRect();
+    if (!measurable(r)) {
+      clearLiveMeasurements('The current arena has no measurable bounds.');
+      return;
+    }
+    $('viewport-readout').textContent =
+      `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`;
+    const visible =
+      r.left >= 0 &&
+      r.top >= 0 &&
+      r.right <= view.innerWidth + 1 &&
+      r.bottom <= view.innerHeight + 1;
     $('layout-readout').textContent =
       `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · top ${r.top.toFixed(0)}, bottom ${r.bottom.toFixed(0)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`;
     const controls = [
@@ -569,7 +599,7 @@ function measure() {
       ),
     ]
       .map((button) => button.getBoundingClientRect())
-      .filter((rect) => rect.width > 0 && rect.height > 0);
+      .filter(measurable);
     const reachable = controls.every(
       (r) =>
         r.left >= 0 &&
@@ -577,8 +607,9 @@ function measure() {
         r.right <= view.innerWidth + 1 &&
         r.bottom <= view.innerHeight + 1,
     );
-    $('control-readout').textContent =
-      `Controls: minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all actions visible' : 'scroll to reach some actions'}`;
+    $('control-readout').textContent = controls.length
+      ? `Controls: ${controls.length} measured ${controls.length === 1 ? 'box' : 'boxes'} · minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all measured boxes inside viewport' : 'some measured boxes outside viewport'}`
+      : 'Controls: no measurable action boxes in this preview.';
     const launchVisible = (button, b) => {
       if (
         b.left < 0 ||
@@ -596,11 +627,13 @@ function measure() {
         label: button.textContent.trim(),
         rect: button.getBoundingClientRect(),
       }))
-      .filter(({ rect }) => rect.width > 0 && rect.height > 0);
+      .filter(({ rect }) => measurable(rect));
     $('launch-readout').textContent = launch.length
       ? `Launch actions: ${launch.map(({ button, label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${launchVisible(button, b) ? 'visible in viewport' : 'scroll needed or covered'}`).join('; ')}`
-      : 'No launch overlay is active.';
-  } catch {}
+      : 'No measurable launch actions in this preview.';
+  } catch {
+    clearLiveMeasurements('The current preview cannot be measured from the Playground.');
+  }
 }
 let geometryCaptured = false;
 let geometryDocument = null;
@@ -1023,7 +1056,9 @@ try {
   });
   $('paint-cell').onclick = () => paintAt(Number($('paint-x').value), Number($('paint-y').value));
   $('undo-button').onclick = () => {
-    const previous = history.pop();
+    const undo = $('undo-button'),
+      ownedFocus = document.activeElement === undo,
+      previous = history.pop();
     if (previous) {
       current = previous.current;
       catalog = previous.catalog;
@@ -1033,12 +1068,34 @@ try {
       themes = { themes: selectedEntry().themes };
       editRevision++;
     }
-    $('undo-button').disabled = !history.length;
+    undo.disabled = !history.length;
     sync();
     if (checked())
       status(
         'Previous configuration and source restored. Play configuration to refresh the preview.',
       );
+    // Retire only the focus this Undo disabled. A surviving Undo, another
+    // reader, or a background page keeps its existing focus ownership.
+    if (
+      ownedFocus &&
+      undo.disabled &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      [undo, document.body].includes(document.activeElement)
+    ) {
+      const next = [
+        document.querySelector('[data-brush][aria-pressed="true"]'),
+        $('paint-cell'),
+        $('preview-button'),
+      ].find(
+        (control) =>
+          control?.isConnected &&
+          !control.disabled &&
+          !control.closest('[hidden], [inert]') &&
+          control.getClientRects().length > 0,
+      );
+      next?.focus();
+    }
   };
   $('preview-button').onclick = preview;
   $('open-preview').onclick = (event) => {

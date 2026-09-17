@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/tool-display-restoration.test.mjs",
+    "game/test/display-preferences.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-tool-history-restoration-822f3290/candidate",
+  "exitCode": 0,
+  "elapsedSeconds": 0.9231368750006368,
+  "counts": {
+    "tests": 38,
+    "suites": 0,
+    "pass": 38,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "stdoutSha256": "552e8104f2c6547d8035ffc7f6390927f5be2d7554870d01ea5ad8ca45470468",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Focused exact real display owners; browser restoration and scheduling are modeled. No native BFCache or full application acceptance."
+}

@@ -1,0 +1,449 @@
+--- a/game/playground/playground.mjs
++++ b/game/playground/playground.mjs
+@@ -215,6 +215,8 @@
+   previewDocumentLoaded = false;
+ function beginPreview() {
+   previewDocumentLoaded = false;
++  clearLiveMeasurements('Waiting for the current preview document.');
++  geometryStale('A new preview is loading. Capture again after it is ready.');
+   previewLease = previewPresenter.begin({ message: 'Loading the child game for this preview…' });
+   showFeedback('preview');
+ }
+@@ -546,23 +548,49 @@
+   $('preview-size-status').textContent = `Preview set to ${width} × ${height} CSS pixels.`;
+   fit();
+ }
++function clearLiveMeasurements(reason) {
++  $('viewport-readout').textContent = `${width} × ${height} CSS pixels requested · ${reason}`;
++  $('layout-readout').textContent = `Arena measurement unavailable. ${reason}`;
++  $('control-readout').textContent = `Control measurements unavailable. ${reason}`;
++  $('launch-readout').textContent = `Launch measurements unavailable. ${reason}`;
++}
+ function measure() {
+   checkPreviewReady();
++  if (!previewDocumentLoaded) {
++    clearLiveMeasurements('Waiting for the current preview document.');
++    return;
++  }
+   try {
+     const frame = $('preview-frame'),
+       doc = frame.contentDocument,
+       view = frame.contentWindow,
+       arena = doc?.querySelector('#arena-shell,#race-boards');
+-    if (view)
+-      $('viewport-readout').textContent =
+-        `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`;
+-    if (!arena) return;
+-    const r = arena.getBoundingClientRect(),
+-      visible =
+-        r.left >= 0 &&
+-        r.top >= 0 &&
+-        r.right <= view.innerWidth + 1 &&
+-        r.bottom <= view.innerHeight + 1;
++    const measurable = (rect) =>
++      ['left', 'top', 'right', 'bottom', 'width', 'height'].every((key) =>
++        Number.isFinite(rect[key]),
++      ) &&
++      rect.width > 0 &&
++      rect.height > 0;
++    if (
++      !arena ||
++      !view ||
++      ![view.innerWidth, view.innerHeight].every((size) => Number.isFinite(size) && size > 0)
++    ) {
++      clearLiveMeasurements('The current frame and arena are not available.');
++      return;
++    }
++    const r = arena.getBoundingClientRect();
++    if (!measurable(r)) {
++      clearLiveMeasurements('The current arena has no measurable bounds.');
++      return;
++    }
++    $('viewport-readout').textContent =
++      `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`;
++    const visible =
++      r.left >= 0 &&
++      r.top >= 0 &&
++      r.right <= view.innerWidth + 1 &&
++      r.bottom <= view.innerHeight + 1;
+     $('layout-readout').textContent =
+       `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · top ${r.top.toFixed(0)}, bottom ${r.bottom.toFixed(0)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`;
+     const controls = [
+@@ -571,7 +599,7 @@
+       ),
+     ]
+       .map((button) => button.getBoundingClientRect())
+-      .filter((rect) => rect.width > 0 && rect.height > 0);
++      .filter(measurable);
+     const reachable = controls.every(
+       (r) =>
+         r.left >= 0 &&
+@@ -579,8 +607,9 @@
+         r.right <= view.innerWidth + 1 &&
+         r.bottom <= view.innerHeight + 1,
+     );
+-    $('control-readout').textContent =
+-      `Controls: minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all actions visible' : 'scroll to reach some actions'}`;
++    $('control-readout').textContent = controls.length
++      ? `Controls: ${controls.length} measured ${controls.length === 1 ? 'box' : 'boxes'} · minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all measured boxes inside viewport' : 'some measured boxes outside viewport'}`
++      : 'Controls: no measurable action boxes in this preview.';
+     const launchVisible = (button, b) => {
+       if (
+         b.left < 0 ||
+@@ -598,11 +627,13 @@
+         label: button.textContent.trim(),
+         rect: button.getBoundingClientRect(),
+       }))
+-      .filter(({ rect }) => rect.width > 0 && rect.height > 0);
++      .filter(({ rect }) => measurable(rect));
+     $('launch-readout').textContent = launch.length
+       ? `Launch actions: ${launch.map(({ button, label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${launchVisible(button, b) ? 'visible in viewport' : 'scroll needed or covered'}`).join('; ')}`
+-      : 'No launch overlay is active.';
+-  } catch {}
++      : 'No measurable launch actions in this preview.';
++  } catch {
++    clearLiveMeasurements('The current preview cannot be measured from the Playground.');
++  }
+ }
+ let geometryCaptured = false;
+ let geometryDocument = null;
+@@ -1025,7 +1056,9 @@
+   });
+   $('paint-cell').onclick = () => paintAt(Number($('paint-x').value), Number($('paint-y').value));
+   $('undo-button').onclick = () => {
+-    const previous = history.pop();
++    const undo = $('undo-button'),
++      ownedFocus = document.activeElement === undo,
++      previous = history.pop();
+     if (previous) {
+       current = previous.current;
+       catalog = previous.catalog;
+@@ -1035,12 +1068,34 @@
+       themes = { themes: selectedEntry().themes };
+       editRevision++;
+     }
+-    $('undo-button').disabled = !history.length;
++    undo.disabled = !history.length;
+     sync();
+     if (checked())
+       status(
+         'Previous configuration and source restored. Play configuration to refresh the preview.',
+       );
++    // Retire only the focus this Undo disabled. A surviving Undo, another
++    // reader, or a background page keeps its existing focus ownership.
++    if (
++      ownedFocus &&
++      undo.disabled &&
++      !document.hidden &&
++      document.hasFocus?.() !== false &&
++      [undo, document.body].includes(document.activeElement)
++    ) {
++      const next = [
++        document.querySelector('[data-brush][aria-pressed="true"]'),
++        $('paint-cell'),
++        $('preview-button'),
++      ].find(
++        (control) =>
++          control?.isConnected &&
++          !control.disabled &&
++          !control.closest('[hidden], [inert]') &&
++          control.getClientRects().length > 0,
++      );
++      next?.focus();
++    }
+   };
+   $('preview-button').onclick = preview;
+   $('open-preview').onclick = (event) => {
+--- a/game/test/practice-playground-display.test.mjs
++++ b/game/test/practice-playground-display.test.mjs
+@@ -761,3 +761,290 @@
+   assert.equal(details.open, false);
+   assert.deepEqual(JSON.parse(f.$('level-json').value).signalZones, []);
+ });
++
++// Model the native disabled-button focus retirement observed in the browser.
++// Application handlers remain real; focus/layout below are explicit fixture boundaries.
++function retireUndoFocus(f, afterRetire = () => {}) {
++  const undo = f.$('undo-button');
++  let disabled = undo.disabled;
++  Object.defineProperty(undo, 'disabled', {
++    configurable: true,
++    get: () => disabled,
++    set(value) {
++      disabled = value;
++      if (value && f.doc.activeElement === undo) {
++        f.doc.activeElement = f.doc.body;
++        afterRetire();
++      }
++    },
++  });
++  return undo;
++}
++function changePlaygroundClass(f, value = 'bomber') {
++  assert.notEqual(f.$('class-select').value, value, 'Each history entry changes the actual class.');
++  f.$('class-select').value = value;
++  f.$('class-select').onchange();
++  assert.equal(f.$('class-select').value, value);
++}
++function previewIdentity(f) {
++  return {
++    src: f.frame.src,
++    writes: f.frame.sourceWrites,
++    sessionWrites: f.sessionWrites.length,
++    saved: f.storageValues.get('revealline.playground.current'),
++  };
++}
++
++test('Playground: last focused Undo returns to the selected brush and preserves the running preview', async (t) => {
++  const f = await harness(t, 'playground');
++  await f.start();
++  const original = f.$('level-json').value,
++    preview = previewIdentity(f),
++    brush = f.doc.querySelector('[data-brush="signal"]');
++  brush.click();
++  changePlaygroundClass(f);
++  f.$('level-json').value = '{"unapplied":"draft Я"}';
++  const undo = retireUndoFocus(f);
++  undo.focus();
++  undo.click();
++  assert.equal(undo.disabled, true);
++  assert.equal(f.$('class-select').value, 'scout');
++
++  assert.equal(f.doc.activeElement?.dataset.brush, 'signal');
++  assert.equal(brush.getAttribute('aria-pressed'), 'true');
++  assert.equal(
++    f.$('level-json').value,
++    original,
++    'Undo deliberately restores the working-map JSON.',
++  );
++  assert.deepEqual(
++    previewIdentity(f),
++    preview,
++    'Only explicit Play may refresh the child preview.',
++  );
++  assert.match(f.$('editor-status').textContent, /Play configuration to refresh the preview/);
++  f.$('preview-button').click();
++  assert.equal(f.frame.sourceWrites, preview.writes + 1);
++  assert.equal(f.sessionWrites.length, preview.sessionWrites + 1);
++  assert.notEqual(f.frame.src, preview.src);
++});
++
++test('Playground: an Undo with more history keeps focus on Undo', async (t) => {
++  const f = await harness(t, 'playground');
++  await f.start();
++  changePlaygroundClass(f, 'bomber');
++  changePlaygroundClass(f, 'fiber');
++  const undo = retireUndoFocus(f),
++    preview = previewIdentity(f);
++  undo.focus();
++  undo.click();
++  assert.equal(undo.disabled, false);
++  assert.equal(f.$('class-select').value, 'bomber');
++
++  assert.equal(f.doc.activeElement?.id, 'undo-button');
++  assert.deepEqual(previewIdentity(f), preview);
++  undo.click();
++  assert.equal(undo.disabled, true);
++  assert.equal(f.$('class-select').value, 'scout');
++  assert.deepEqual(previewIdentity(f), preview);
++});
++
++for (const guard of ['unrelated editor', 'newer focus', 'hidden document', 'unfocused document']) {
++  test(`Playground: last Undo does not steal ${guard} focus`, async (t) => {
++    const f = await harness(t, 'playground');
++    await f.start();
++    changePlaygroundClass(f);
++    const editor = f.$('level-json'),
++      undo = retireUndoFocus(f, () => {
++        if (guard === 'newer focus') editor.focus();
++      });
++    if (guard === 'unrelated editor') editor.focus();
++    else undo.focus();
++    if (guard === 'hidden document') f.doc.hidden = true;
++    if (guard === 'unfocused document') f.doc.focused = false;
++    const preview = previewIdentity(f);
++    undo.click();
++    assert.equal(undo.disabled, true);
++    assert.equal(f.$('class-select').value, 'scout');
++
++    assert.equal(f.doc.activeElement?.tagName, guard.includes('document') ? 'BODY' : 'TEXTAREA');
++    if (!guard.includes('document')) assert.equal(f.doc.activeElement?.id, 'level-json');
++    assert.deepEqual(previewIdentity(f), preview);
++  });
++}
++
++test('Playground: last Undo skips an unavailable selected brush for an existing editor action', async (t) => {
++  const f = await harness(t, 'playground');
++  await f.start();
++  changePlaygroundClass(f);
++  const selected = f.doc.querySelector('[data-brush][aria-pressed="true"]'),
++    undo = retireUndoFocus(f);
++  selected.disabled = true;
++  // The fixture does not model closed-details layout; explicitly make that
++  // fallback unavailable rather than treating a hidden coordinate action as visible.
++  f.$('paint-cell').hidden = true;
++  undo.focus();
++  undo.click();
++  assert.equal(f.$('class-select').value, 'scout');
++
++  assert.equal(f.doc.activeElement?.id, 'preview-button');
++});
++
++function mountedMeasurementChild(f, { controls = true, launch = true } = {}) {
++  const doc = new ToolDocument(),
++    arena = doc.createElement('section');
++  arena.id = 'arena-shell';
++  arena._rect = { x: 0, y: 60, width: 360, height: 270 };
++  doc.body.append(arena);
++  doc.documentElement.scrollWidth = 390;
++  doc.documentElement.scrollHeight = 844;
++  doc.documentElement.dataset.bootState = 'ready';
++  f.child.innerWidth = 390;
++  f.child.innerHeight = 844;
++  f.child.devicePixelRatio = 1;
++  f.child.scrollX = f.child.scrollY = 0;
++  f.child.getComputedStyle = f.host.getComputedStyle;
++  f.child.matchMedia = () => ({ matches: false });
++  doc.defaultView = f.child;
++  const actions = [];
++  if (controls) {
++    for (const [id, x, width, height] of [
++      ['pause-button', 5, 48, 46],
++      ['action-button', 75, 52, 44],
++    ]) {
++      const button = doc.createElement('button');
++      button.id = id;
++      button._rect = { x, y: 380, width, height };
++      doc.body.append(button);
++      actions.push(button);
++    }
++  }
++  const launchButton = doc.createElement('button');
++  launchButton.id = 'fixture-launch';
++  launchButton.textContent = 'Continue';
++  launchButton._rect = { x: 10, y: 430, width: 120, height: 48 };
++  if (launch) doc.body.append(launchButton);
++  // The minimal DOM supports ordinary selectors, but not this descendant+not selector.
++  const query = doc.querySelectorAll.bind(doc);
++  doc.querySelectorAll = (selector) =>
++    selector === '#game-overlay button:not([hidden])'
++      ? launch
++        ? [launchButton]
++        : []
++      : query(selector);
++  doc.elementFromPoint = () => (launch ? launchButton : null);
++  f.frame.contentDocument = doc;
++  f.frame.emit('load');
++  return { doc, arena, actions, launchButton };
++}
++function measureCurrentChild(f) {
++  const interval = [...f.intervals.values()].find((item) => item.ms === 500);
++  assert.ok(interval, 'The actual application installed its existing measurement callback.');
++  interval.fn();
++}
++function liveMeasurementCopy(f) {
++  return Object.fromEntries(
++    ['viewport-readout', 'layout-readout', 'control-readout', 'launch-readout'].map((id) => [
++      id,
++      f.$(id).textContent,
++    ]),
++  );
++}
++function captureCurrentChild(f) {
++  f.$('capture-geometry').click();
++  f.flushFrames();
++  const source = f.$('geometry-readout').textContent,
++    report = JSON.parse(source);
++  assert.equal(report.format, 'revealline-control-geometry.v1');
++  return source;
++}
++
++test('Playground: live measurement handles empty and nonfinite controls without a vacuous visibility claim', async (t) => {
++  const f = await harness(t, 'playground');
++  await f.start();
++  const child = mountedMeasurementChild(f, { controls: false, launch: false });
++  assert.match(f.$('control-readout').textContent, /no measurable action boxes/);
++  assert.doesNotMatch(f.$('control-readout').textContent, /Infinity|NaN|all actions visible/);
++  assert.match(f.$('launch-readout').textContent, /No measurable launch actions/);
++  const button = child.doc.createElement('button');
++  button.id = 'pause-button';
++  button._rect = { x: 0, y: 380, width: Infinity, height: 44 };
++  child.doc.body.append(button);
++  measureCurrentChild(f);
++  assert.match(f.$('control-readout').textContent, /no measurable action boxes/);
++  button._rect = { x: 0, y: 380, width: 0, height: 0 };
++  measureCurrentChild(f);
++  assert.match(f.$('control-readout').textContent, /no measurable action boxes/);
++  button._rect = { x: 350, y: 380, width: 52, height: 44 };
++  measureCurrentChild(f);
++  assert.match(f.$('control-readout').textContent, /1 measured box · minimum 52 × 44/);
++  assert.match(f.$('control-readout').textContent, /some measured boxes outside viewport/);
++  button._rect.x = 10;
++  measureCurrentChild(f);
++  assert.match(f.$('control-readout').textContent, /all measured boxes inside viewport/);
++  assert.equal(f.frame.sourceWrites, 1);
++  assert.equal(f.sessionWrites.length, 1);
++});
++
++test('Playground: new preview clears live measurements immediately while retaining the explicit snapshot', async (t) => {
++  const f = await harness(t, 'playground');
++  await f.start();
++  mountedMeasurementChild(f);
++  assert.match(f.$('control-readout').textContent, /minimum 48 × 44/);
++  assert.match(f.$('launch-readout').textContent, /Continue 120 × 48/);
++  const snapshot = captureCurrentChild(f),
++    frame = f.frame,
++    previousSrc = frame.src;
++  f.$('preview-button').click();
++  assert.notEqual(frame.src, previousSrc);
++  for (const value of Object.values(liveMeasurementCopy(f))) {
++    assert.match(value, /Waiting for the current preview document/);
++    assert.doesNotMatch(value, /Continue|minimum|whole arena visible/);
++  }
++  // Native navigation can retain the prior document until the replacement loads.
++  measureCurrentChild(f);
++  assert.match(f.$('control-readout').textContent, /Waiting for the current preview document/);
++  assert.equal(f.$('geometry-readout').textContent, snapshot);
++  assert.match(f.$('geometry-status').textContent, /Previous capture retained/);
++  mountedMeasurementChild(f, { controls: false, launch: false });
++  assert.match(f.$('control-readout').textContent, /no measurable action boxes/);
++  assert.equal(f.$('geometry-readout').textContent, snapshot);
++});
++
++test('Playground: unavailable current document, arena or viewport clears only live measurement state', async (t) => {
++  const f = await harness(t, 'playground');
++  await f.start();
++  mountedMeasurementChild(f);
++  const snapshot = captureCurrentChild(f),
++    preview = previewIdentity(f);
++  for (const fault of [
++    'missing arena',
++    'zero arena',
++    'nonfinite arena',
++    'missing document',
++    'invalid viewport',
++    'inaccessible document',
++  ]) {
++    const child = mountedMeasurementChild(f);
++    assert.match(f.$('control-readout').textContent, /minimum 48 × 44/);
++    if (fault === 'missing arena') child.arena.remove();
++    if (fault === 'zero arena') child.arena._rect.width = 0;
++    if (fault === 'nonfinite arena') child.arena._rect.x = NaN;
++    if (fault === 'missing document') f.frame.contentDocument = null;
++    if (fault === 'invalid viewport') f.child.innerWidth = Infinity;
++    if (fault === 'inaccessible document')
++      Object.defineProperty(f.frame, 'contentDocument', {
++        configurable: true,
++        get() {
++          throw new Error('Blocked child document');
++        },
++      });
++    measureCurrentChild(f);
++    for (const value of Object.values(liveMeasurementCopy(f))) {
++      assert.doesNotMatch(value, /Infinity|NaN|Continue|minimum|whole arena visible/);
++    }
++    assert.match(f.$('control-readout').textContent, /unavailable/);
++    assert.equal(f.$('geometry-readout').textContent, snapshot);
++    assert.deepEqual(previewIdentity(f), preview);
++  }
++});
