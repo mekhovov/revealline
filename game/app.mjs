@@ -18,7 +18,7 @@ import {
 } from './external-chapter-source.mjs';
 import { validateMediaLibrary } from './media-library.mjs';
 import { createPresentationPins } from './presentation-pins.mjs';
-import { createFlightPresentationPins } from './flight-media-pins.mjs';
+import { createFlightPresentationPins, retryFlightPresentationPins } from './flight-media-pins.mjs';
 import {
   loadOptionalCatalog,
   prepareOptionalDownload,
@@ -664,6 +664,8 @@ try {
     modeDeparture = null,
     missionReplacement = null,
     restartRequest = null,
+    resultAttempt = null,
+    resultAttemptEpoch = 0,
     modeDepartureHold = false,
     titleFlightHold = false,
     lastOwnedAttempt = null,
@@ -812,8 +814,8 @@ try {
     preparationFeedback.clear();
     $('flight-preparation-cancel').hidden = true;
   }
-  function beginPreparation(message, cancel, stage = 'preparing') {
-    const operation = { status: preparationFeedback.begin({ message, stage }), cancel };
+  function beginPreparation(message, cancel, stage = 'preparing', result = false) {
+    const operation = { status: preparationFeedback.begin({ message, stage }), cancel, result };
     preparationOperation = operation;
     $('flight-preparation-cancel').hidden = !cancel;
     return {
@@ -837,6 +839,10 @@ try {
     const operation = preparationOperation;
     if (!operation) return;
     const restoreFocus = document.activeElement === $('flight-preparation-cancel');
+    if (operation.result) {
+      cancelResultAttempt({ restoreFocus });
+      return;
+    }
     operation.cancel();
     clearPreparation();
     preparationFeedback.begin({ message: '' }).finish({
@@ -875,6 +881,7 @@ try {
   document.querySelector('.overlay-actions').append(victoryStoryButton);
   victoryStoryButton.onclick = () => {
     if (practice || run.status !== 'won' || completionWarning) return;
+    cancelResultAttempt();
     try {
       const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
         identityCatalog: flightPictures.identityCatalog,
@@ -1027,7 +1034,12 @@ try {
           : undefined,
     });
   }
-  function cancelPictureStart({ retirePrewarm = false, preserveRecovery = false } = {}) {
+  function cancelPictureStart({
+    retirePrewarm = false,
+    preserveRecovery = false,
+    preserveResult = false,
+  } = {}) {
+    if (!preserveResult) cancelResultAttempt();
     // Opening a secondary dialog must not dismiss a settled recovery path.
     // A retry, new context or page retirement still cancels it unconditionally.
     const keepRecovery =
@@ -1629,6 +1641,10 @@ try {
     }
     const scope = controllerScope();
     if (courseBlocked()) return;
+    if (resultAttempt) {
+      cancelResultAttempt({ restoreFocus: true });
+      return;
+    }
     if (pictureResume !== null && preparationOperation?.cancel === cancelPictureStart) {
       // Back cancels only this launch owner, after any native modal has handled it.
       $('flight-preparation-cancel').click();
@@ -4957,11 +4973,12 @@ try {
     $('mastery-brief').textContent =
       `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
   }
-  function overlay(kind) {
+  function overlay(kind, { preserveFocus = false } = {}) {
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
     const preservePauseFocus =
-      kind === 'pause' && !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'pause';
+      preserveFocus ||
+      (kind === 'pause' && !$('game-overlay').hidden && $('game-overlay').dataset.kind === 'pause');
     drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
     $('game-overlay').dataset.kind = kind;
     show('pause-label', kind === 'pause');
@@ -5097,23 +5114,325 @@ try {
     if (!preservePauseFocus && !document.hidden && document.hasFocus() && !controllerDialog())
       controllerFocus()?.focus({ preventScroll: true });
   }
-  function prepare({ restoreAdoption = false, contentSwitchTicket = null, difficulty } = {}) {
-    if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
-    attemptFiles?.invalidate();
-    if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
-    else invalidateContentSwitch({ announce: true });
-    courseEntryHold = false;
-    modeDepartureHold = false;
-    titleFlightHold = false;
-    courseEntryMessage = '';
-    if (courseSession) coursePhase = 'ready';
-    if (!restoreAdoption) {
-      cancelRestore();
-      applyNextDifficulty(difficulty);
+  function resultAttemptCurrent(ticket) {
+    if (resultAttempt !== ticket || ticket.controller.signal.aborted) return false;
+    // Storage adapters can reenter the host. Inspect ownership after those reads.
+    const backupLock = localStorage.getItem(`${libraryKey}.backup-lock`),
+      savedRaw = localStorage.getItem(sessionKey);
+    return (
+      resultAttempt === ticket &&
+      !ticket.controller.signal.aborted &&
+      !document.hidden &&
+      document.hasFocus() &&
+      !dialogOpen() &&
+      !practice &&
+      !scenario &&
+      !courseSession &&
+      !courseBlocked() &&
+      !courseEntry &&
+      !modeDeparture &&
+      !missionReplacement &&
+      !restartRequest &&
+      !contentSwitchBusy &&
+      !backupBusy &&
+      !sessionBusy &&
+      !pictureThemePending &&
+      run === ticket.run &&
+      recorder === ticket.recorder &&
+      runId === ticket.runId &&
+      flightPictures === ticket.owner &&
+      activeEntry === ticket.entry &&
+      campaign === ticket.campaign &&
+      levelIndex === ticket.levelIndex &&
+      theme === ticket.theme &&
+      seed === ticket.seed &&
+      turnPolicy === ticket.turnPolicy &&
+      classId === ticket.classId &&
+      themeOverride === ticket.themeOverride &&
+      library.preferences.campaignDifficulty === ticket.difficulty &&
+      (ticket.kind !== 'next' || run.status === 'won') &&
+      libraryGeneration === ticket.libraryGeneration &&
+      packs === ticket.packs &&
+      writer.writable === ticket.writable &&
+      persistenceReady === ticket.persistenceReady &&
+      backupLock === ticket.backupLock &&
+      savedRaw === ticket.savedRaw
+    );
+  }
+  function finishResultAttempt(ticket, message, state, restoreFocus = false) {
+    if (resultAttempt !== ticket) return;
+    resultAttempt = null;
+    const epoch = ++resultAttemptEpoch;
+    ticket.button.disabled = false;
+    ticket.feedback?.finish(message, state);
+    ticket.controller.abort();
+    ticket.pictures?.dispose();
+    if (
+      restoreFocus &&
+      resultAttemptEpoch === epoch &&
+      !document.hidden &&
+      document.hasFocus() &&
+      !dialogOpen() &&
+      run === ticket.run &&
+      flightPictures === ticket.owner &&
+      !ticket.button.hidden
+    )
+      ticket.button.focus({ preventScroll: true });
+  }
+  function cancelResultAttempt({ restoreFocus = false } = {}) {
+    if (resultAttempt)
+      finishResultAttempt(
+        resultAttempt,
+        'Preparation cancelled. Your result is kept.',
+        'cancelled',
+        restoreFocus,
+      );
+  }
+  async function prepareResultAttempt(kind, destinationIndex = levelIndex) {
+    if (resultAttempt?.kind === kind) return;
+    const previousEpoch = resultAttemptEpoch,
+      previous = resultAttempt;
+    cancelResultAttempt();
+    // Abort/disposal callbacks can start or retire a newer deliberate operation.
+    if (resultAttempt || resultAttemptEpoch !== previousEpoch + (previous ? 1 : 0)) return;
+    if (
+      practice ||
+      scenario ||
+      courseSession ||
+      courseBlocked() ||
+      dialogOpen() ||
+      document.hidden ||
+      !document.hasFocus() ||
+      !['won', 'lost'].includes(run?.status) ||
+      (kind === 'next' && run.status !== 'won')
+    )
+      return;
+    const ticket = {
+      kind,
+      controller: new AbortController(),
+      button: $(kind === 'next' ? 'next-button' : 'retry-button'),
+      run,
+      recorder,
+      runId,
+      owner: flightPictures,
+      entry: activeEntry,
+      campaign,
+      levelIndex,
+      theme,
+      seed,
+      turnPolicy,
+      classId,
+      themeOverride,
+      difficulty: library.preferences.campaignDifficulty,
+      libraryGeneration,
+      packs,
+      writable: writer.writable,
+      persistenceReady,
+      backupLock: null,
+      savedRaw: null,
+      pictures: null,
+      feedback: null,
+    };
+    resultAttempt = ticket;
+    const epoch = ++resultAttemptEpoch;
+    try {
+      ticket.feedback = beginPreparation(
+        kind === 'next' ? 'Preparing the next mission…' : 'Preparing this mission again…',
+        cancelResultAttempt,
+        'preparing',
+        true,
+      );
+      ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
+      if (resultAttempt !== ticket || resultAttemptEpoch !== epoch) return;
+      ticket.savedRaw = localStorage.getItem(sessionKey);
+      if (resultAttempt !== ticket || resultAttemptEpoch !== epoch) return;
+      if (!resultAttemptCurrent(ticket))
+        throw new DOMException('Preparation cancelled.', 'AbortError');
+      const entry =
+          executionCatalog.select(
+            activeEntry.baseCampaignKey || campaignKey(campaign),
+            library.preferences.campaignDifficulty,
+          ) || activeEntry,
+        level = entry.campaign.levels[destinationIndex],
+        nextTheme = themeOverride
+          ? theme
+          : themesFile.themes.find(
+              (item) => item.id === (level.themeId || entry.campaign.themeId),
+            ) || themesFile.themes[0],
+        options = { seed, turnPolicy, classId, classRecipes: entry.classRecipes };
+      const ownedFocus = document.activeElement === ticket.button;
+      ticket.feedback.update({
+        status: 'preparing',
+        stage: 'preparing',
+        message: `Preparing ${level.name}…`,
+      });
+      ticket.button.disabled = true;
+      if (ownedFocus) $('flight-preparation-cancel').focus({ preventScroll: true });
+      if (!resultAttemptCurrent(ticket))
+        throw new DOMException('Preparation cancelled.', 'AbortError');
+      const nextRun = createRun(level, options),
+        nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
+        nextRecorder = createRecorder(nextRun.level, options, buildVersion);
+      const pins =
+        kind === 'retry' && !ticket.owner.legacy
+          ? retryFlightPresentationPins(ticket.owner.pins(), {
+              identityCatalog: pictureIdentity(),
+              campaignKey: campaignKey(entry.campaign),
+              level: nextRun.level,
+              themeId: nextTheme.id,
+            })
+          : undefined;
+      ticket.pictures = newFlightPictures({
+        nextRun,
+        nextRunId,
+        entry,
+        nextThemeId: nextTheme.id,
+        ...(pins ? { pins } : {}),
+        legacy: kind === 'retry' ? ticket.owner.legacy : undefined,
+      });
+      // Audio permission belongs to this explicit action, before storage or decoding.
+      activateAudio().catch(() => {});
+      await ticket.pictures.ensure(nextTheme.id, {
+        signal: ticket.controller.signal,
+        onStatus(status) {
+          if (resultAttemptCurrent(ticket))
+            ticket.feedback.update({ ...status, message: `${level.name}: ${status.message}` });
+        },
+      });
+      if (!resultAttemptCurrent(ticket))
+        throw new DOMException('Preparation cancelled.', 'AbortError');
+      const preparedPictures = ticket.pictures;
+      const adopted = prepare({
+        preparedAttempt: {
+          ticket,
+          entry,
+          levelIndex: destinationIndex,
+          theme: nextTheme,
+          run: nextRun,
+          runId: nextRunId,
+          recorder: nextRecorder,
+        },
+      });
+      // Disposal, renderer and focus callbacks may hand control to another surface.
+      // A prepared flight does not authorize resuming that newer owner's attempt.
+      if (
+        adopted &&
+        resultAttemptEpoch === ticket.adoptionEpoch &&
+        run === nextRun &&
+        runId === nextRunId &&
+        recorder === nextRecorder &&
+        flightPictures === preparedPictures &&
+        activeEntry === entry &&
+        campaign === entry.campaign &&
+        levelIndex === destinationIndex &&
+        theme === nextTheme &&
+        seed === ticket.seed &&
+        turnPolicy === ticket.turnPolicy &&
+        classId === ticket.classId &&
+        themeOverride === ticket.themeOverride &&
+        libraryGeneration === ticket.libraryGeneration &&
+        library.preferences.campaignDifficulty === ticket.difficulty &&
+        packs === ticket.packs &&
+        writer.writable === ticket.writable &&
+        persistenceReady === ticket.persistenceReady &&
+        !courseBlocked() &&
+        !courseEntry &&
+        !modeDeparture &&
+        !missionReplacement &&
+        !restartRequest &&
+        !contentSwitchBusy &&
+        !backupBusy &&
+        !sessionBusy &&
+        !pictureThemePending &&
+        !document.hidden &&
+        document.hasFocus() &&
+        !dialogOpen()
+      )
+        resume();
+    } catch (error) {
+      if (resultAttempt === ticket) {
+        const cancelled = error?.name === 'AbortError';
+        if (!cancelled) {
+          // Keep the original diagnostic local, outside player-facing feedback.
+          try {
+            console.warn('Mission preparation failed.', error);
+          } catch {
+            // Diagnostics must not interrupt recovery.
+          }
+        }
+        // A diagnostic adapter can hand control to a newer deliberate action.
+        if (resultAttempt !== ticket) return;
+        const ownedFocus = document.activeElement === $('flight-preparation-cancel');
+        finishResultAttempt(
+          ticket,
+          cancelled
+            ? 'Preparation cancelled. Your result is kept.'
+            : 'Could not prepare this mission. Your result is kept. Try again.',
+          cancelled ? 'cancelled' : 'error',
+          ownedFocus,
+        );
+      }
+    } finally {
+      if (resultAttempt === ticket) cancelResultAttempt();
+      ticket.pictures?.dispose();
     }
-    cancelPictureStart();
-    storyDialog.close();
-    if (!restoreAdoption) {
+  }
+  function prepare({
+    restoreAdoption = false,
+    contentSwitchTicket = null,
+    difficulty,
+    preparedAttempt = null,
+  } = {}) {
+    if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+    if (preparedAttempt) {
+      const current = () => resultAttemptCurrent(preparedAttempt.ticket);
+      if (!current()) return false;
+      invalidateContentSwitch({ announce: true });
+      if (!current()) return false;
+      cancelRestore();
+      if (!current()) return false;
+      storyDialog.close();
+      if (!current()) return false;
+      cancelPictureStart({ preserveResult: true });
+      if (!current()) return false;
+      courseEntryHold = false;
+      modeDepartureHold = false;
+      titleFlightHold = false;
+      courseEntryMessage = '';
+      if (courseSession) coursePhase = 'ready';
+    } else {
+      attemptFiles?.invalidate();
+      if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
+      else invalidateContentSwitch({ announce: true });
+      courseEntryHold = false;
+      modeDepartureHold = false;
+      titleFlightHold = false;
+      courseEntryMessage = '';
+      if (courseSession) coursePhase = 'ready';
+      if (!restoreAdoption) {
+        cancelRestore();
+        applyNextDifficulty(difficulty);
+      }
+      cancelPictureStart();
+      storyDialog.close();
+    }
+    let previousPictures = null;
+    if (preparedAttempt) {
+      const ticket = preparedAttempt.ticket;
+      resultAttempt = null;
+      ticket.adoptionEpoch = ++resultAttemptEpoch;
+      ticket.button.disabled = false;
+      previousPictures = flightPictures;
+      flightPictures = ticket.pictures;
+      ticket.pictures = null;
+      activeEntry = preparedAttempt.entry;
+      campaign = activeEntry.campaign;
+      classRegistry = activeEntry.classRecipes;
+      progress = progressFor(library, campaign);
+      levelIndex = preparedAttempt.levelIndex;
+      campaignOverview = false;
+      theme = preparedAttempt.theme;
+    } else if (!restoreAdoption) {
       flightPictures?.dispose();
       flightPictures = null;
     }
@@ -5129,13 +5448,15 @@ try {
     painter.skipCelebration?.();
     show('skip-celebration', false);
     clearInput({ resetDirection: true });
-    run = createRun(scenario?.level || campaign.levels[levelIndex], {
-      seed,
-      turnPolicy,
-      classId,
-      classRecipes: scenario?.classRecipes || classRegistry,
-    });
-    runId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+    run =
+      preparedAttempt?.run ||
+      createRun(scenario?.level || campaign.levels[levelIndex], {
+        seed,
+        turnPolicy,
+        classId,
+        classRecipes: scenario?.classRecipes || classRegistry,
+      });
+    runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     courseObserver = null;
     courseUnavailable = null;
     if (courseSession)
@@ -5226,11 +5547,13 @@ try {
     paused = true;
     handled = false;
     recordingStopped = false;
-    recorder = createRecorder(
-      run.level,
-      { seed, turnPolicy, classId, classRecipes: scenario?.classRecipes || classRegistry },
-      buildVersion,
-    );
+    recorder =
+      preparedAttempt?.recorder ||
+      createRecorder(
+        run.level,
+        { seed, turnPolicy, classId, classRecipes: scenario?.classRecipes || classRegistry },
+        buildVersion,
+      );
     $('export-replay').disabled = !!replayDownload;
     captionUntil = 0;
     $('mode-caption').textContent = courseSession
@@ -5244,7 +5567,9 @@ try {
     updateLoadout();
     refreshMissionBrief();
     paintMissions();
-    overlay(campaignOverview && !practice ? 'campaign-complete' : 'ready');
+    overlay(campaignOverview && !practice ? 'campaign-complete' : 'ready', {
+      preserveFocus: !!preparedAttempt,
+    });
     warning(
       courseSession
         ? getFirstFlightLesson(courseRequest.lessonId).instructions[0]
@@ -5254,11 +5579,13 @@ try {
             ? 'Campaign complete. View your collection or choose a mission to replay.'
             : currentBriefing().status,
     );
-    if (!restoreAdoption) {
+    if (!restoreAdoption && !preparedAttempt) {
       flightPictures = newFlightPictures();
       warmPicture();
     }
+    previousPictures?.dispose();
     refreshHUD();
+    return true;
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
     // A queued activation may arrive after blur even when the picture is cached.
@@ -6174,12 +6501,17 @@ try {
   };
   $('retry-button').onclick = () => {
     if (defeatActive || courseBlocked()) return;
+    if (!practice && !scenario && !courseSession && ['won', 'lost'].includes(run?.status)) {
+      void prepareResultAttempt('retry');
+      return;
+    }
     demo = false;
     prepare();
     resume();
   };
   $('view-picture').onclick = () => {
     if (run.status !== 'won') return;
+    cancelResultAttempt();
     show('game-overlay', false);
     show('show-result', true);
     $('show-result').focus({ preventScroll: true });
@@ -6206,7 +6538,13 @@ try {
         levelIndex = 0;
       }
     } else {
+      if (run?.status !== 'won') return;
       const selection = currentSelection();
+      if (!selection.overview && !scenario && run?.status === 'won') {
+        void prepareResultAttempt('next', selection.levelIndex);
+        return;
+      }
+      cancelResultAttempt();
       campaignOverview = selection.overview;
       if (campaignOverview) {
         clearInput();

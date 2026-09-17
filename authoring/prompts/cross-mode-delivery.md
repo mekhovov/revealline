@@ -202,3 +202,8 @@ The [supporting-screen delivery](../../docs/supporting-screen-readability.md) al
 ## Missions Back returns to its entry
 
 “From the title Missions button, the field Missions button and the ready/paused Mission brief, use Back, Escape and modeled controller Back. Return to the actual surviving opener without resuming or changing the paused cut, checkpoint or saved payload. Follow Home → Missions → Collection → Choose appearance → Back and preserve the same Home visit. Include touch-like activation with focus elsewhere, an unavailable opener, expected native autofocus, a queued old close and a newer dialog/focus established during close or pause. Do not let reopening Home cover that newer owner. Keep Deploy, Back to flight and legacy programmatic field entry as their existing intentional destinations. Qualify actual native focus separately; source/model coverage does not certify physical touch/controller operation or complete P03.”
+
+
+## Ordinary Solo continuation
+
+Example: “Implement P07-A1 so Next keeps the completed result while preparing its named destination, then starts directly after readiness. Retry preserves the accepted full picture/story pins across a validated same-authored-map difficulty change. Verify legal win → delayed Next → Cancel/failure/success and Retry supersession, including throwing/reentrant storage, stale decode, focus return, unchanged awards and session soundtrack. Finish earned thumbnail preparation before targeting the destination decoder. Preserve practice, course, campaign-end and profile-writer lifecycle contracts. Report source, browser and physical-device evidence separately.” See [the scoped contract](../../docs/solo-result-continuation.md).
