@@ -439,13 +439,33 @@
           hidden
         >
           <h3>Game data</h3>
-          <p>
-            Team attempts stay on this page. Closing or reloading it discards the current attempt.
-          </p>
-          <p>
-            Team play does not write Solo saves, campaign progress, scores or earned pictures.
-            Shared sound and appearance preferences are saved separately on this device.
-          </p>
+          <div id="coop-data-unit" class="settings-reading-unit">
+            <div class="reading-toolbar">
+              <button id="coop-data-read" type="button">Read game data</button>
+              <button id="coop-data-reading-done" type="button" disabled>Done reading</button>
+            </div>
+            <p id="coop-data-reading-hint" class="reading-hint" role="status">
+              Read without starting or resuming.
+            </p>
+            <div
+              id="coop-data-reading"
+              class="settings-reading-region"
+              role="region"
+              aria-label="Team game data"
+              aria-describedby="coop-data-reading-hint"
+              tabindex="0"
+              data-game-reading
+            >
+              <p>
+                Team attempts stay on this page. Closing or reloading it discards the current
+                attempt.
+              </p>
+              <p>
+                Team play does not write Solo saves, campaign progress, scores or earned pictures.
+                Shared sound and appearance preferences are saved separately on this device.
+              </p>
+            </div>
+          </div>
         </section>
       </dialog>
     </main>
