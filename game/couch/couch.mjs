@@ -21,6 +21,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
+import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
@@ -51,11 +52,17 @@ const audioPreferences = createAudioPreferences({
     $('race-audio-status').textContent = message;
   },
 });
-const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+const renderMasterPreferences = ({ muted, volume }) => {
   $('race-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
   $('race-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
   $('race-quick-sound').setAttribute('aria-pressed', String(!muted));
   $('race-master-volume').value = volume;
+};
+const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
+const audioRestoration = attachPreferenceRestoration({
+  window,
+  getSnapshot: () => audioMaster.snapshot(),
+  render: renderMasterPreferences,
 });
 $('race-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
 $('race-quick-sound').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
@@ -69,7 +76,7 @@ const displayPreferences = createDisplayPreferences({
     $('race-display-status').textContent = message;
   },
 });
-const stopDisplayView = displayPreferences.subscribe((state) => {
+const renderDisplayPreferences = (state) => {
   document.body.dataset.textFace = state.textFace;
   document.body.dataset.textSize = state.textSize;
   document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
@@ -80,6 +87,12 @@ const stopDisplayView = displayPreferences.subscribe((state) => {
     state.effectiveReducedEffects && !state.reducedEffects
       ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
       : '';
+};
+const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
+const displayRestoration = attachPreferenceRestoration({
+  window,
+  getSnapshot: () => displayPreferences.snapshot(),
+  render: renderDisplayPreferences,
 });
 const menuStyle = attachMenuStyleControls({
   document,
@@ -139,6 +152,8 @@ const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
   stopDisplayView();
+  audioRestoration.dispose();
+  displayRestoration.dispose();
   displayPreferences.dispose();
   menuStyle.dispose();
   audioPreferences.dispose();

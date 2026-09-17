@@ -2,7 +2,7 @@
 
 **v0.60.4 source candidate, not a released phase.** The reviewed Recovery patches and explicit Back history-return successor are composed on main `63796aab5bb692578fef77f43fb9fa61050a372b`. The [integrated evidence record](verification/cross-mode/p03-recovery-reading/README.md) records 89/89 precursor tests, the 92/92 successor per runtime and scoped corrected browser journeys. Exact committed-source qualification and public acceptance remain pending; P03/P05 stay open.
 
-Earlier profiles uses the game's existing Theme/Plain text, Standard/Large text size and effective Reduced effects settings. The lightweight display entry starts before Recovery loads version/catalog information, so loading and failure explanations use the same reading policy. This page has no preference-writing controls: change display settings in the game's Options and return.
+Earlier profiles uses the game's existing Theme/Plain text, Standard/Large text size and effective Reduced effects settings. The lightweight display entry starts before Recovery loads version/catalog information, so loading and failure explanations use the same reading policy. This page has no preference-writing controls: change them in the game's Settings → Appearance & accessibility and return.
 
 Only host text and effect attributes change. Existing Find, Review, Cancel, Back and explicit file-download actions retain their owners. Reading settings do not inspect additional profiles, replace an original choice, cancel an active read, reverify files, clear a prepared link or take focus. System reduction combines with the saved setting. A denied storage read uses defaults plus the available system signal and makes no attempt to save.
 

@@ -194,7 +194,7 @@ export function createCouchShell({
       setText(`race-seat-${i}`, device);
       setText(
         `racer-input-${i}`,
-        `${device} · ${status === 'running' && shown[i] && !wanted ? 'Touch stays visible until pause' : status === 'finished' ? 'Results for options' : 'Pause for options'}`,
+        `${device} · ${status === 'running' && shown[i] && !wanted ? 'Touch stays visible until pause' : status === 'finished' ? 'Results for Settings' : 'Pause for Settings'}`,
       );
       for (const button of pads[i].querySelectorAll('button')) {
         const kind = button.dataset.action;
