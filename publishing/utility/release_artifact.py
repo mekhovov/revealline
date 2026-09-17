@@ -529,8 +529,10 @@ def main():
         require(source_identity(args.repo, binding['source']) == before, 'Source identity changed')
         record(out / 'evidence/source-after.json', before)
         result['status'] = 'INSPECTED_VERIFIED' if args.mode == 'inspect-artifact' else 'ALL_NINE_VERIFIED'
-    except (upload_source.Ambiguous, upload_distribution.Ambiguous):
+    except (upload_source.Ambiguous, upload_distribution.Ambiguous) as error:
         result.update(status='UNCONFIRMED_REREAD_ASSETS', requiresAssetReread=True)
+        if error.diagnostics is not None:
+            result['uploadDiagnostics'] = error.diagnostics
         raise
     finally:
         api.token = ''
