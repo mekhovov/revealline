@@ -76,8 +76,7 @@ select {
   margin: 0 0 9px;
   color: var(--accent);
   text-transform: uppercase;
-  font:
-    700 12px/1.4 var(--fk-font-mono, monospace);
+  font: 700 12px/1.4 var(--fk-font-mono, monospace);
   letter-spacing: 0.12em;
 }
 h1 {
@@ -207,8 +206,7 @@ output {
   height: 52px;
   border: 2px solid #586d8d;
   color: var(--accent);
-  font:
-    32px/44px var(--fk-font-mono, monospace);
+  font: 32px/44px var(--fk-font-mono, monospace);
   box-shadow: 6px 6px 0 #202c40;
 }
 .notes {
@@ -255,4 +253,59 @@ output {
   .stage {
     padding: 12px;
   }
+}
+
+/* Host preferences style the lab, never the embedded document or its dimensions. */
+body.field-kit[data-authoring-host='viewport'] {
+  overflow-wrap: anywhere;
+}
+body.field-kit[data-authoring-host='viewport'] :is(h1, h2, p, a, label, button, output) {
+  overflow-wrap: anywhere;
+}
+body.field-kit[data-authoring-host='viewport'] .lab-header {
+  flex-wrap: wrap;
+}
+body.field-kit[data-authoring-host='viewport'] .lab-header > div {
+  flex: 1 1 20rem;
+  min-width: 0;
+}
+body.field-kit[data-authoring-host='viewport']
+  :is(.preview-heading > p, .target-controls, .size-controls) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+body.field-kit[data-authoring-host='viewport'] a {
+  font-family: var(--fk-font-ui);
+  font-size: var(--fk-text-control);
+  font-weight: 500;
+  line-height: var(--fk-leading-control);
+  max-inline-size: 100%;
+  white-space: normal;
+}
+body.field-kit[data-authoring-host='viewport'] :is(select, button) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  white-space: normal;
+}
+body.field-kit[data-authoring-host='viewport'] label {
+  font-weight: 500;
+}
+body.field-kit[data-authoring-host='viewport'] .eyebrow {
+  font-weight: 400;
+}
+body.field-kit[data-authoring-host='viewport'] .empty-preview h2 {
+  font-size: calc(var(--fk-text-body) + 6px);
+  line-height: var(--fk-leading-control);
+}
+body.field-kit[data-authoring-host='viewport'] output {
+  white-space: normal;
+}
+body.field-kit[data-authoring-host='viewport'] :is(.status, .operation-status) {
+  font-size: var(--fk-text-control);
+  font-weight: 400;
+  line-height: var(--fk-leading-body);
+}
+body.field-kit[data-authoring-host='viewport'] .operation-status-count {
+  font-weight: 500;
 }

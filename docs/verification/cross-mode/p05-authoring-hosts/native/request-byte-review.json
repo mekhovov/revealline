@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "rows": 2764,
+  "successRows": 2761,
+  "distinctSuccessfulPaths": 337,
+  "expectedFaultRows": [
+    {
+      "path": "authoring/viewport-lab/browser.mjs",
+      "request": "/authoring/viewport-lab/browser.mjs",
+      "at": "2026-09-17T11:59:55.513791+00:00",
+      "method": "GET",
+      "status": 503,
+      "source": "explicit-server-fault",
+      "faultConfigSha256": "8813d41c50e7b1553a994c77aeab781ba616f77ed8e708ba414ad9eed56f7ed0"
+    },
+    {
+      "path": "authoring/viewport-lab/browser.mjs",
+      "request": "/authoring/viewport-lab/browser.mjs",
+      "at": "2026-09-17T12:01:03.062416+00:00",
+      "delaySeconds": 25,
+      "source": "explicit-server-delay",
+      "faultConfigSha256": "ef9956392f4b94e109ac4427bba1cedc0fb688dfe938c5a25cde6c31025739c5"
+    },
+    {
+      "path": "authoring/viewport-lab/browser.mjs",
+      "request": "/authoring/viewport-lab/browser.mjs",
+      "at": "2026-09-17T12:01:43.802672+00:00",
+      "delaySeconds": 30,
+      "source": "explicit-server-delay",
+      "faultConfigSha256": "89cb14f87277ee27262bdda8181c227ab0df4013dd353bc8bb948b626b63782c"
+    }
+  ],
+  "runtimeOverrideCount": 7,
+  "allLoggedSuccessBytesVerified": true
+}
