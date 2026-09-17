@@ -1,0 +1,53 @@
+{
+  "status": "PASS_SCOPED_NATIVE_BROWSER_JOURNEYS",
+  "at": "2026-09-17T10:36:34.894392+00:00",
+  "archiveCommit": "0679f16d17afb7df30ae4b310b7fabae29269c3c",
+  "method": "Actual CUA in-app browser actions, observed AX states; no injected gameplay",
+  "journeys": [
+    {
+      "version": "v0.60.1",
+      "url": "https://mekhovov.github.io/revealline-archive-11/releases/v0.60.1/site/game/",
+      "actions": [
+        "Actual archive index Play link",
+        "Title VERSION V0.60.1",
+        "Keyboard Return Start First Signal, target45",
+        "Down selected LIVE LINE / EXPOSED",
+        "Escape paused at0:17,2lives after trail caught",
+        "Return explicitly resumed then Escape paused at0:18",
+        "Keyboard Main menu",
+        "Release explorer link reached main catalogue"
+      ],
+      "saving": "Session-only: another game tab owns saving. No persistence assertion.",
+      "win": false
+    },
+    {
+      "version": "v0.51.0",
+      "url": "https://mekhovov.github.io/revealline-archive-11/releases/v0.51.0/site/game/",
+      "actions": [
+        "Main Explorer actual v0.51 Play link",
+        "Title VERSION V0.51.0",
+        "Existing Continue Saved flight left untouched",
+        "Workshop \u2192 Controller practice",
+        "Actual embedded practice revision1 Start, Down \u2192 live line",
+        "Practice completed52.2%,8160points,0:03,3lives",
+        "Results \u2192 Try again \u2192 Escape paused0:00",
+        "Return explicitly resumed \u2192 Escape paused0:05",
+        "Temporary browser tab closed"
+      ],
+      "practiceURL": "https://mekhovov.github.io/revealline-archive-11/releases/v0.51.0/site/game/controller-lab/",
+      "awards": "PRACTICE / NO CAMPAIGN REWARDS, campaign awards disabled",
+      "win": true
+    }
+  ],
+  "boundaries": [
+    "v0.51 play/pause/resume uses isolated actual-engine practice to preserve existing user saved flight",
+    "No physical controller/touch, offline, audio listening, saved-flight migration or full campaign acceptance",
+    "No full-body hash assertion here; tracked separately in HTTP audit"
+  ],
+  "cleanup": {
+    "temporaryTab23Closed": true,
+    "viewportOverride": "reset",
+    "existingUserSavedFlightNotOpened": true,
+    "publicV0601Tab21Retained": true
+  }
+}

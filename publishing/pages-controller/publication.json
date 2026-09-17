@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.60.1",
-  "catalogSha256": "bc5fa53e9b5911f9725bdeface4a02bc3371b189cdcf5607bb203cadcd19c804",
-  "allocationSha256": "c64d97f8b3ce6ca245f9b252e16d619bd31c2de5253d395279c6dbfcbf918c2c",
+  "currentVersion": "v0.60.2",
+  "catalogSha256": "410638862e82688c335b4c658d70eee1abf45f150ea2cb6832fe09d6f2f0594d",
+  "allocationSha256": "843d7cecb9f76cf28b9ae4e9cbe418fd62f236f6e558defe7b7eafaaf8cf2ee2",
   "admissions": [
     {
       "id": "archive-01",
@@ -751,18 +751,18 @@
     },
     {
       "id": "archive-11",
-      "infrastructureCommit": "fc27c76cb6b285f723ab50072ded7f8b0b27c104",
-      "deploymentId": 6450262257,
+      "infrastructureCommit": "0679f16d17afb7df30ae4b310b7fabae29269c3c",
+      "deploymentId": 6500626261,
       "evidence": [
         {
           "path": "evidence/archive-11/http-report.json",
           "sha256": "66330a01442e04179f1b5cd2c3cf932811c0b65f8a9c479c6dade4a3261c93f8",
-          "kind": "http"
+          "kind": "reference"
         },
         {
           "path": "evidence/archive-11/expected-inventory.json",
           "sha256": "6e3669d0551d4952ee151c9384578be9c66a86811e26ed862a1aaf683b26e5e6",
-          "kind": "inventory"
+          "kind": "reference"
         },
         {
           "path": "evidence/archive-11/source-lock.json",
@@ -822,7 +822,57 @@
         {
           "path": "evidence/archive-11/browser-admission.json",
           "sha256": "5eb71d38dda2350031ab8daa7d0b64c4ca82051da9e5f4f3e07a231caf536cc7",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/browser-admission.json",
+          "sha256": "b3ddb42aecbeefceec4ca2df9196c5d4e7a68f5127aeecb27ae79c47c894c82d",
           "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/expected-inventory.json",
+          "sha256": "ca04e9e5bd66e7320111e276e7ac5dd036873c6393795993e389257997c2e72f",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/hosted-completion.json",
+          "sha256": "486a06437c1b65167f3265e72e99a1a51be5d88a106429af5aa4d4ceb88385f0",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/http-report.json",
+          "sha256": "e9bc04acf2b53820eadbe7eae9ace9d1e11a2f145f4cfc24c3c80025c5f0ab36",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/native/observations.json",
+          "sha256": "9d654627e4a82c8e15ca75539cf5ba54f9d1152f6e9753fddfbae57198d55b97",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/native/root-acceptance.json",
+          "sha256": "0039457a8dc0365aa857ede63abec442fd4f573ce71ba4cba87bdeb4d9291aff",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/originals-index.json",
+          "sha256": "c418a10a3e57d57956e1d5101cc5b48a395d70d0600beb4a7182943530c8f43f",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/originals.zip",
+          "sha256": "bc4cc11bbd5753b81a8bc6c83d31526cc298e9a1d98d274093217cb776ed4a0f",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/row-review.json",
+          "sha256": "85794d33ee6fd1972b57c6757514ff236da119592281ab8b71937fc89dc36622",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-11/append-v0601/source-lock.json",
+          "sha256": "37768771477e1139adae351536d024cffbafc42d60c2be45a553cea62baedfd6",
+          "kind": "reference"
         }
       ]
     },
@@ -2618,8 +2668,8 @@
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v0601/source-qualification.json",
-    "sha256": "ded582540a39feccf92b83f866ecea71c087abe776a6e0c31d50f789f5d2ebf5"
+    "path": "evidence/current-v0602/source-qualification.json",
+    "sha256": "b56a5c5ee65e498671e1e296cddc816c6949488f476a5543cbac16e3d70de94f"
   },
   "retainedReleasesPerMajor": 100,
   "testingRoutes": {}
