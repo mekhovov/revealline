@@ -1,0 +1,53 @@
+{
+  "format": "revealline-p05-feature-public-acceptance.v1",
+  "version": "v0.60.0",
+  "sourceRevision": "170508f11dd41204b7e24917a823f21701c15961",
+  "sourceTree": "287ea0fddf97f594af0ce9eba452a24dc5f507c7",
+  "publisherRevision": "0d1f8a281a3c01768e69ac7a7de05094d03f0ee7",
+  "publisherTree": "de573e29c669f3e16011ee22669c60bcf3f0dc45",
+  "sourcePR": 78,
+  "publisherPR": 79,
+  "pagesRun": 35196541650,
+  "deploymentId": 6498129383,
+  "statusId": 18463307492,
+  "releaseId": 390511341,
+  "status": "ACCEPTED_SCOPED_STUDIO_REPLAY_READABILITY",
+  "phase": "P05",
+  "phaseStatus": "implementing",
+  "publicFiles": 2649,
+  "publicBytes": 638838205,
+  "failures": 0,
+  "retries": 1,
+  "sourceTestsPerHostedFamily": 5399,
+  "sourceGatesPassed": 6,
+  "playableURL": "https://mekhovov.github.io/revealline/releases/v0.60.0/site/game/",
+  "pins": [
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3670,
+      "sha256": "f54c7c2770c3ff40028d7386a900bc64ba65641f2c34dbc5fe2d62d10ab5b130"
+    },
+    {
+      "path": "public-row-review-complete-1.json",
+      "bytes": 1597,
+      "sha256": "7dc2384b04ae73175f90bc72cfced5c65d9fca1f4eac39a567cf59dee20506a2"
+    },
+    {
+      "path": "after-http-authorities-main-1/result.json",
+      "bytes": 7489,
+      "sha256": "3fe3e924b6e1fe771e57719322170d1ea591c6f6e13890a9a826a397a4f684a4"
+    },
+    {
+      "path": "native/observations.md",
+      "bytes": 5597,
+      "sha256": "bc4340182816e80db9425d3002ffd8de57cce1f3fa78ad0d76ff39b2594ab419"
+    }
+  ],
+  "pending": [
+    "Team and remaining supporting-route P05 presentation",
+    "Remaining finite P03 navigation and actual whole-page lifecycle journeys",
+    "Offline/disconnected execution, save migration, physical controllers and real touch",
+    "Human playtests, P18 full qualification and remaining production phases"
+  ],
+  "observedAt": "2026-09-17T08:08:24.731447+00:00"
+}

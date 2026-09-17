@@ -1,0 +1,28 @@
+{
+  "format": "revealline-public-intake-request.v1",
+  "reviewed": true,
+  "outputLabel": "main-1",
+  "currentVersion": "v0.60.0",
+  "gameSourceRevision": "170508f11dd41204b7e24917a823f21701c15961",
+  "qualifiedSourceTree": "287ea0fddf97f594af0ce9eba452a24dc5f507c7",
+  "controllerCommit": "0d1f8a281a3c01768e69ac7a7de05094d03f0ee7",
+  "controllerTree": "de573e29c669f3e16011ee22669c60bcf3f0dc45",
+  "runId": 35196541650,
+  "deploymentId": 6498129383,
+  "latestSuccessStatusId": 18463307492,
+  "receiptArtifact": {
+    "id": 10485664693,
+    "bytes": 126358,
+    "sha256": "1665e31eda8bfb1cd4be9ecb794a86b499bd933d78a9d89457729617b0071b61"
+  },
+  "hostedObservation": {
+    "path": "hosted-observation-before-1/record.json",
+    "bytes": 3703,
+    "sha256": "6e9c5ff954f5b61ef3b4279b341dee222da7bfdf4f0dee6fe075daf5b3513c68"
+  },
+  "publishedRelease": {
+    "path": "published-release.original.json",
+    "bytes": 18292,
+    "sha256": "881d2db8af3ecf7e5d08f5a99ddc03be46c200cbb78047bf4bac83ba9dc7ed81"
+  }
+}
