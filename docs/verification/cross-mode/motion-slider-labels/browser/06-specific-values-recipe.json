@@ -1,0 +1,326 @@
+{
+  "opacity": {
+    "paused": true,
+    "focus": "background-opacity",
+    "storage": [],
+    "sliders": [
+      {
+        "id": "rotor-radius",
+        "value": "0.27",
+        "valueText": "27 percent of body",
+        "name": "Rotor radius",
+        "output": "27% of body"
+      },
+      {
+        "id": "character-scale",
+        "value": "2.15",
+        "valueText": "2.15 times",
+        "name": "Character scale",
+        "output": "2.15\u00d7"
+      },
+      {
+        "id": "background-opacity",
+        "value": "0.7",
+        "valueText": "70 percent",
+        "name": "Background opacity",
+        "output": "70%"
+      },
+      {
+        "id": "cruise-speed",
+        "value": "15.5",
+        "valueText": "15.5 cells per second",
+        "name": "Cruise speed",
+        "output": "15.5 cells/s"
+      },
+      {
+        "id": "turn-rate",
+        "value": "690",
+        "valueText": "690 degrees per second",
+        "name": "Body turn response",
+        "output": "690\u00b0/s"
+      }
+    ]
+  },
+  "turn": {
+    "paused": true,
+    "focus": "turn-rate",
+    "storage": [],
+    "sliders": [
+      {
+        "id": "rotor-radius",
+        "value": "0.27",
+        "valueText": "27 percent of body",
+        "name": "Rotor radius",
+        "output": "27% of body"
+      },
+      {
+        "id": "character-scale",
+        "value": "2.15",
+        "valueText": "2.15 times",
+        "name": "Character scale",
+        "output": "2.15\u00d7"
+      },
+      {
+        "id": "background-opacity",
+        "value": "0.7",
+        "valueText": "70 percent",
+        "name": "Background opacity",
+        "output": "70%"
+      },
+      {
+        "id": "cruise-speed",
+        "value": "15.5",
+        "valueText": "15.5 cells per second",
+        "name": "Cruise speed",
+        "output": "15.5 cells/s"
+      },
+      {
+        "id": "turn-rate",
+        "value": "690",
+        "valueText": "690 degrees per second",
+        "name": "Body turn response",
+        "output": "690\u00b0/s"
+      }
+    ]
+  },
+  "manualRotor": {
+    "paused": true,
+    "focus": "rotor-radius",
+    "storage": [],
+    "sliders": [
+      {
+        "id": "rotor-radius",
+        "value": "0.28",
+        "valueText": "28 percent of body",
+        "name": "Rotor radius",
+        "output": "28% of body"
+      },
+      {
+        "id": "character-scale",
+        "value": "2.15",
+        "valueText": "2.15 times",
+        "name": "Character scale",
+        "output": "2.15\u00d7"
+      },
+      {
+        "id": "background-opacity",
+        "value": "0.7",
+        "valueText": "70 percent",
+        "name": "Background opacity",
+        "output": "70%"
+      },
+      {
+        "id": "cruise-speed",
+        "value": "15.5",
+        "valueText": "15.5 cells per second",
+        "name": "Cruise speed",
+        "output": "15.5 cells/s"
+      },
+      {
+        "id": "turn-rate",
+        "value": "690",
+        "valueText": "690 degrees per second",
+        "name": "Body turn response",
+        "output": "690\u00b0/s"
+      }
+    ]
+  },
+  "recipeAdoption": {
+    "paused": true,
+    "focus": "rotor-radius",
+    "storage": [],
+    "sliders": [
+      {
+        "id": "rotor-radius",
+        "value": "0.16",
+        "valueText": "16 percent of body",
+        "name": "Rotor radius",
+        "output": "16% of body"
+      },
+      {
+        "id": "character-scale",
+        "value": "2.15",
+        "valueText": "2.15 times",
+        "name": "Character scale",
+        "output": "2.15\u00d7"
+      },
+      {
+        "id": "background-opacity",
+        "value": "0.7",
+        "valueText": "70 percent",
+        "name": "Background opacity",
+        "output": "70%"
+      },
+      {
+        "id": "cruise-speed",
+        "value": "15.5",
+        "valueText": "15.5 cells per second",
+        "name": "Cruise speed",
+        "output": "15.5 cells/s"
+      },
+      {
+        "id": "turn-rate",
+        "value": "690",
+        "valueText": "690 degrees per second",
+        "name": "Body turn response",
+        "output": "690\u00b0/s"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "args": [
+        "scrollintoview",
+        "#background-opacity-label"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "click",
+        "#background-opacity-label"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "press",
+        "End"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "eval",
+        "JSON.stringify({paused:document.querySelector('#play-pause').textContent==='Play',focus:document.activeElement.id,storage:Object.keys(localStorage),sliders:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,value:x.value,valueText:x.getAttribute('aria-valuetext'),name:x.labels[0].textContent.trim(),output:x.parentElement.querySelector('output').textContent.trim()}))})"
+      ],
+      "exit": 0,
+      "stdout": "\"{\\\"paused\\\":true,\\\"focus\\\":\\\"background-opacity\\\",\\\"storage\\\":[],\\\"sliders\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"value\\\":\\\"0.27\\\",\\\"valueText\\\":\\\"27 percent of body\\\",\\\"name\\\":\\\"Rotor radius\\\",\\\"output\\\":\\\"27% of body\\\"},{\\\"id\\\":\\\"character-scale\\\",\\\"value\\\":\\\"2.15\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"name\\\":\\\"Character scale\\\",\\\"output\\\":\\\"2.15\u00d7\\\"},{\\\"id\\\":\\\"background-opacity\\\",\\\"value\\\":\\\"0.7\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"name\\\":\\\"Background opacity\\\",\\\"output\\\":\\\"70%\\\"},{\\\"id\\\":\\\"cruise-speed\\\",\\\"value\\\":\\\"15.5\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"name\\\":\\\"Cruise speed\\\",\\\"output\\\":\\\"15.5 cells/s\\\"},{\\\"id\\\":\\\"turn-rate\\\",\\\"value\\\":\\\"690\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"name\\\":\\\"Body turn response\\\",\\\"output\\\":\\\"690\u00b0/s\\\"}]}\"\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "scrollintoview",
+        "#turn-rate-label"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "click",
+        "#turn-rate-label"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "press",
+        "End"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "press",
+        "ArrowLeft"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "eval",
+        "JSON.stringify({paused:document.querySelector('#play-pause').textContent==='Play',focus:document.activeElement.id,storage:Object.keys(localStorage),sliders:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,value:x.value,valueText:x.getAttribute('aria-valuetext'),name:x.labels[0].textContent.trim(),output:x.parentElement.querySelector('output').textContent.trim()}))})"
+      ],
+      "exit": 0,
+      "stdout": "\"{\\\"paused\\\":true,\\\"focus\\\":\\\"turn-rate\\\",\\\"storage\\\":[],\\\"sliders\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"value\\\":\\\"0.27\\\",\\\"valueText\\\":\\\"27 percent of body\\\",\\\"name\\\":\\\"Rotor radius\\\",\\\"output\\\":\\\"27% of body\\\"},{\\\"id\\\":\\\"character-scale\\\",\\\"value\\\":\\\"2.15\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"name\\\":\\\"Character scale\\\",\\\"output\\\":\\\"2.15\u00d7\\\"},{\\\"id\\\":\\\"background-opacity\\\",\\\"value\\\":\\\"0.7\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"name\\\":\\\"Background opacity\\\",\\\"output\\\":\\\"70%\\\"},{\\\"id\\\":\\\"cruise-speed\\\",\\\"value\\\":\\\"15.5\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"name\\\":\\\"Cruise speed\\\",\\\"output\\\":\\\"15.5 cells/s\\\"},{\\\"id\\\":\\\"turn-rate\\\",\\\"value\\\":\\\"690\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"name\\\":\\\"Body turn response\\\",\\\"output\\\":\\\"690\u00b0/s\\\"}]}\"\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "scrollintoview",
+        "#rotor-radius-label"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "click",
+        "#rotor-radius-label"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "press",
+        "End"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "eval",
+        "JSON.stringify({paused:document.querySelector('#play-pause').textContent==='Play',focus:document.activeElement.id,storage:Object.keys(localStorage),sliders:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,value:x.value,valueText:x.getAttribute('aria-valuetext'),name:x.labels[0].textContent.trim(),output:x.parentElement.querySelector('output').textContent.trim()}))})"
+      ],
+      "exit": 0,
+      "stdout": "\"{\\\"paused\\\":true,\\\"focus\\\":\\\"rotor-radius\\\",\\\"storage\\\":[],\\\"sliders\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"value\\\":\\\"0.28\\\",\\\"valueText\\\":\\\"28 percent of body\\\",\\\"name\\\":\\\"Rotor radius\\\",\\\"output\\\":\\\"28% of body\\\"},{\\\"id\\\":\\\"character-scale\\\",\\\"value\\\":\\\"2.15\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"name\\\":\\\"Character scale\\\",\\\"output\\\":\\\"2.15\u00d7\\\"},{\\\"id\\\":\\\"background-opacity\\\",\\\"value\\\":\\\"0.7\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"name\\\":\\\"Background opacity\\\",\\\"output\\\":\\\"70%\\\"},{\\\"id\\\":\\\"cruise-speed\\\",\\\"value\\\":\\\"15.5\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"name\\\":\\\"Cruise speed\\\",\\\"output\\\":\\\"15.5 cells/s\\\"},{\\\"id\\\":\\\"turn-rate\\\",\\\"value\\\":\\\"690\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"name\\\":\\\"Body turn response\\\",\\\"output\\\":\\\"690\u00b0/s\\\"}]}\"\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "scrollintoview",
+        "#animation-recipe"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "select",
+        "#animation-recipe",
+        "fpv-two"
+      ],
+      "exit": 0,
+      "stdout": "\u2713 Done\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "eval",
+        "JSON.stringify({paused:document.querySelector('#play-pause').textContent==='Play',focus:document.activeElement.id,storage:Object.keys(localStorage),sliders:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,value:x.value,valueText:x.getAttribute('aria-valuetext'),name:x.labels[0].textContent.trim(),output:x.parentElement.querySelector('output').textContent.trim()}))})"
+      ],
+      "exit": 0,
+      "stdout": "\"{\\\"paused\\\":true,\\\"focus\\\":\\\"rotor-radius\\\",\\\"storage\\\":[],\\\"sliders\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"value\\\":\\\"0.16\\\",\\\"valueText\\\":\\\"16 percent of body\\\",\\\"name\\\":\\\"Rotor radius\\\",\\\"output\\\":\\\"16% of body\\\"},{\\\"id\\\":\\\"character-scale\\\",\\\"value\\\":\\\"2.15\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"name\\\":\\\"Character scale\\\",\\\"output\\\":\\\"2.15\u00d7\\\"},{\\\"id\\\":\\\"background-opacity\\\",\\\"value\\\":\\\"0.7\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"name\\\":\\\"Background opacity\\\",\\\"output\\\":\\\"70%\\\"},{\\\"id\\\":\\\"cruise-speed\\\",\\\"value\\\":\\\"15.5\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"name\\\":\\\"Cruise speed\\\",\\\"output\\\":\\\"15.5 cells/s\\\"},{\\\"id\\\":\\\"turn-rate\\\",\\\"value\\\":\\\"690\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"name\\\":\\\"Body turn response\\\",\\\"output\\\":\\\"690\u00b0/s\\\"}]}\"\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "snapshot",
+        "-i"
+      ],
+      "exit": 0,
+      "stdout": "- heading \"Small craft. More character.\" [level=1, ref=e1]\n- combobox \"Text size\" [expanded=false, ref=e7]: Standard\n  - option \"Standard\" [selected, ref=e22]\n  - option \"Large\" [ref=e23]\n- region \"Motion and material study\" [ref=e2]\n  - combobox \"Turn policy\" [expanded=false, ref=e14]: Immediate\n    - option \"Immediate\" [selected, ref=e42]\n    - option \"Grid center + buffer\" [ref=e43]\n  - Canvas \"Motion and toy ability preview. Arrow keys or W A S D move, Shift boosts, Space slows, E uses ability, R picks up at a pad, Escape pauses. Terrain is visual only.\" [ref=e15] focusable [tabindex]\n  - button \"Action \u00b7 E\" [ref=e8]\n  - button \"Pick up \u00b7 R\" [ref=e9]\n  - button \"Reset ability test\" [ref=e10]\n  - button \"Play\" [ref=e11]\n  - button \"Reset\" [ref=e12]\n  - checkbox \"Autoplay\" [checked=true, ref=e13]\n  - button \"Move up\" [ref=e16]\n  - button \"Move left\" [ref=e17]\n  - button \"Move down\" [ref=e18]\n  - button \"Move right\" [ref=e19]\n  - button \"Hold boost Shift\" [ref=e20]\n  - button \"Hold slow Space\" [ref=e21]\n  - checkbox \"Show toy ability study\" [checked=true, ref=e24]\n  - combobox \"Class / loadout\" [expanded=false, ref=e44]: Scout\n    - option \"Scout\" [selected, ref=e62]\n    - option \"Light bomber\" [ref=e63]\n    - option \"Heavy carrier\" [ref=e64]\n    - option \"Fiber courier\" [ref=e65]\n    - option \"Fixed-wing courier\" [ref=e66]\n    - option \"Strike dash\" [ref=e67]\n    - option \"Interceptor\" [ref=e68]\n    - option \"Pulse emitter\" [ref=e69]\n    - option \"Net catcher\" [ref=e70]\n    - option \"Relay helper\" [ref=e71]\n  - combobox \"Communication module\" [expanded=false, ref=e45]: Radio link\n    - option \"Radio link\" [selected, ref=e72]\n    - option \"Fiber link\" [ref=e73]\n  - button \"Use Radio link\" [ref=e25]\n  - button \"Apply class appearance\" [ref=e26]\n  - region \"Stage labels\" [ref=e27]\n    - heading \"Stage labels\" [level=2, ref=e46]\n  - combobox \"Preview context\" [expanded=false, ref=e47]: FPV Front \u00b7 first flight\n    - option \"FPV Front \u00b7 first flight\" [selected, ref=e74]\n    - option \"FPV Front \u00b7 relay islands\" [ref=e75]\n    - option \"Ukraine Atlas \u00b7 heritage study\" [ref=e76]\n    - option \"1994 Forever \u00b7 tape arcade\" [ref=e77]\n    - option \"1994 Forever \u00b7 neon switchback\" [ref=e78]\n    - option \"Spend Sprite \u00b7 fictional spend review\" [ref=e79]\n  - combobox \"Character to inspect\" [expanded=false, ref=e48]: Daybreak FPV \u00b7 unlocked\n    - option \"Neutral marker \u00b7 unlocked\" [ref=e80]\n    - option \"Daybreak FPV \u00b7 unlocked\" [selected, ref=e81]\n    - option \"Skyline FPV \u00b7 locked\" [ref=e82]\n    - option \"Night signal FPV \u00b7 locked\" [ref=e83]\n    - option \"Atlas bird \u00b7 unavailable\" [ref=e84]\n    - option \"Falcon trim \u00b7 unavailable\" [ref=e85]\n    - option \"Tape runner \u00b7 unavailable\" [ref=e86]\n    - option \"Vector trail \u00b7 unavailable\" [ref=e87]\n    - option \"Spend Sprite \u00b7 unavailable\" [ref=e88]\n    - option \"Audit pulse \u00b7 unavailable\" [ref=e89]\n    - option \"Scout quad \u00b7 unlocked\" [ref=e90]\n    - option \"Heavy lift \u00b7 unlocked\" [ref=e91]\n    - option \"Fixed-wing body \u00b7 unlocked\" [ref=e92]\n    - option \"Delta interceptor \u00b7 unlocked\" [ref=e93]\n  - button \"Equip\" [ref=e28]\n  - combobox \"Save choice for\" [expanded=false, ref=e49]: This context\n    - option \"This context\" [selected, ref=e94]\n    - option \"This theme\" [ref=e95]\n    - option \"Every context\" [ref=e96]\n  - checkbox \"Slow inspection motion\" [checked=true, ref=e29]\n  - combobox \"Animation recipe\" [expanded=false, ref=e50]: FPV / two-blade tapered\n    - option \"FPV / three-blade swept\" [ref=e97]\n    - option \"FPV / two-blade tapered\" [selected, ref=e98]\n    - option \"FPV / four-blade paddle\" [ref=e99]\n    - option \"Night trim / three-blade\" [ref=e100]\n    - option \"Swallow / pixel wing flap\" [ref=e101]\n    - option \"Falcon trim / shared bird body\" [ref=e102]\n    - option \"1994 / coral thruster\" [ref=e103]\n    - option \"Vector trail / mint thruster\" [ref=e104]\n    - option \"Spend Sprite / pulse + blink\" [ref=e105]\n    - option \"Audit trim / gold pulse + blink\" [ref=e106]\n    - option \"Still body / no attachment\" [ref=e107]\n    - option \"Scout quad / three blades\" [ref=e108]\n    - option \"Heavy lift / six rotors\" [ref=e109]\n    - option \"Fixed-wing / two-blade pusher\" [ref=e110]\n    - option \"Delta / abstract rear glow\" [ref=e111]\n    - option \"fpv-scout-v1-rotors\" [ref=e112]\n    - option \"fpv-light-carrier-v1-rotors\" [ref=e113]\n    - option \"fpv-heavy-carrier-v1-rotors\" [ref=e114]\n    - option \"fpv-interceptor-v1-rotors\" [ref=e115]\n    - option \"fpv-fiber-relay-v1-rotors\" [ref=e116]\n    - option \"fpv-impact-v1-rotors\" [ref=e117]\n    - option \"fpv-trapper-v1-rotors\" [ref=e118]\n    - option \"atlas-swallow-v3-wings\" [ref=e119]\n    - option \"atlas-pottery-courier-v1-wings\" [ref=e120]\n    - option \"atlas-carved-chest-v1-wings\" [ref=e121]\n    - option \"atlas-falcon-crest-v3-wings\" [ref=e122]\n    - option \"atlas-weaver-shuttle-v3-wings\" [ref=e123]\n    - option \"atlas-bell-warden-v1-wings\" [ref=e124]\n    - option \"atlas-woven-basket-v1-wings\" [ref=e125]\n  - combobox \"Blades\" [expanded=false, ref=e57]: 2 blades\n    - option \"2 blades\" [selected, ref=e145]\n    - option \"3 blades\" [ref=e146]\n    - option \"4 blades\" [ref=e147]\n  - combobox \"Shape\" [expanded=false, ref=e58]: Tapered\n    - option \"Swept\" [ref=e148]\n    - option \"Tapered\" [selected, ref=e149]\n    - option \"Paddle\" [ref=e150]\n  - slider \"Rotor radius\" [ref=e51]: 0.1599999964237213\n  - combobox \"Palette\" [expanded=false, ref=e52]: FPV Front / daybreak\n    - option \"FPV Front / daybreak\" [selected, ref=e126]\n    - option \"Ukraine Atlas / indigo linen\" [ref=e127]\n    - option \"1994 Forever / after hours\" [ref=e128]\n    - option \"Navi Network / blue hours\" [ref=e129]\n  - button \"Apply family look\" [ref=e30]\n  - combobox \"Terrain objects\" [expanded=false, ref=e53]: FPV \u00b7 concrete / mud / wire\n    - option \"FPV \u00b7 concrete / mud / wire\" [selected, ref=e130]\n    - option \"Ukraine \u00b7 stone / reeds / thorns\" [ref=e131]\n    - option \"1994 \u00b7 circuit / static / plasma\" [ref=e132]\n    - option \"Navi \u00b7 archive / queue / alerts\" [ref=e133]\n  - LabelText \"Microtile\" [ref=e59] clickable [cursor:pointer]\n    - radio \"Microtile\" [checked=false, ref=e134]\n  - LabelText \"Props\" [ref=e60] clickable [cursor:pointer]\n    - radio \"Props\" [checked=false, ref=e135]\n  - LabelText \"Hybrid\" [ref=e61] clickable [cursor:pointer]\n    - radio \"Hybrid\" [checked=true, ref=e136]\n  - slider \"Character scale\" [ref=e31]: 2.1500000953674316\n  - button \"Local background\" [ref=e54]: No file chosen\n  - combobox \"Display fit\" [expanded=false, ref=e55]: Contain whole image\n    - option \"Contain whole image\" [selected, ref=e137]\n    - option \"Cover / display crop\" [ref=e138]\n  - button \"Clear\" [disabled, ref=e32]\n  - slider \"Background opacity\" [ref=e33]: 0.699999988079071\n  - combobox \"Simulated result\" [expanded=false, ref=e56]: Simulate \u00b7 first FPV clear\n    - option \"Simulate \u00b7 first FPV clear\" [selected, ref=e139]\n    - option \"Simulate \u00b7 clean relay map\" [ref=e140]\n    - option \"Simulate \u00b7 heritage fragment\" [ref=e141]\n    - option \"Simulate \u00b7 first retro clear \u00b7 2 stars\" [ref=e142]\n    - option \"Simulate \u00b7 second retro clear \u00b7 3 stars\" [ref=e143]\n    - option \"Simulate \u00b7 fictional clean spend case\" [ref=e144]\n  - button \"Apply test reward\" [ref=e34]\n  - button \"Reset test collection\" [ref=e35]\n  - slider \"Cruise speed\" [ref=e36]: 15.5\n  - slider \"Body turn response\" [ref=e37]: 690\n  - checkbox \"Grid\" [checked=true, ref=e38]\n  - checkbox \"Rotors\" [checked=true, ref=e39]\n  - checkbox \"Motion particles\" [checked=true, ref=e40]\n  - checkbox \"Reduced motion\" [checked=false, ref=e41]\n- link \"Return to game\" [ref=e3]\n- link \"Design atlas\" [ref=e4]\n- link \"Visual presets\" [ref=e5]\n- link \"Ability presets\" [ref=e6]\n",
+      "stderr": ""
+    }
+  ]
+}
