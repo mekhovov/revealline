@@ -1,0 +1,36 @@
+test_bad_second_metadata_refuses_before_first_extraction (test_prepare.CohortTests.test_bad_second_metadata_refuses_before_first_extraction) ... ok
+test_capacity_refuses_before_output_or_source_access (test_prepare.CohortTests.test_capacity_refuses_before_output_or_source_access) ... ok
+test_changed_extracted_body_fails_full_inventory (test_prepare.CohortTests.test_changed_extracted_body_fails_full_inventory) ... ok
+test_duplicate_version_and_cohort_inventory_omission_refuse (test_prepare.CohortTests.test_duplicate_version_and_cohort_inventory_omission_refuse) ... ok
+test_existing_output_is_never_overwritten (test_prepare.CohortTests.test_existing_output_is_never_overwritten) ... ok
+test_inventory_cannot_omit_the_release_explorer_route (test_prepare.CohortTests.test_inventory_cannot_omit_the_release_explorer_route) ... ok
+test_manifest_source_disagreement_refuses_even_with_rehashed_pin (test_prepare.CohortTests.test_manifest_source_disagreement_refuses_even_with_rehashed_pin) ... ok
+test_mismatched_extraction_receipt_cannot_emit_combined_success (test_prepare.CohortTests.test_mismatched_extraction_receipt_cannot_emit_combined_success) ... ok
+test_missing_release_explorer_bridge_refuses_before_extraction (test_prepare.CohortTests.test_missing_release_explorer_bridge_refuses_before_extraction) ... ok
+test_pinned_qualification_copied_without_changing_original_cohort (test_prepare.CohortTests.test_pinned_qualification_copied_without_changing_original_cohort) ... ok
+test_second_extraction_failure_cannot_emit_combined_success (test_prepare.CohortTests.test_second_extraction_failure_cannot_emit_combined_success) ... Traceback (most recent call last):
+  File "/private/tmp/tmp84kvw1r3/source/extractor.py", line 6, in <module>
+    if r['version']=='v0.2.0': raise ValueError('fixture second failure')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: fixture second failure
+ok
+test_tag_identity_changed_before_or_during_extraction_refuses (test_prepare.CohortTests.test_tag_identity_changed_before_or_during_extraction_refuses) ... fatal: ambiguous argument 'refs/tags/v0.1.0': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+fatal: ambiguous argument 'refs/tags/v0.1.0': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+ok
+test_two_original_cohorts_and_independent_artifact_reread (test_prepare.CohortTests.test_two_original_cohorts_and_independent_artifact_reread) ... ok
+test_changed_or_wrong_identity_qualification_refuses (test_prepare.CommittedMetadataTests.test_changed_or_wrong_identity_qualification_refuses) ... ok
+test_exact_v057_metadata_and_source_qualification (test_prepare.CommittedMetadataTests.test_exact_v057_metadata_and_source_qualification) ... ok
+test_release_explorer_has_an_accessible_fallback_and_main_destination (test_prepare.CommittedMetadataTests.test_release_explorer_has_an_accessible_fallback_and_main_destination) ... ok
+test_directory_symlink_fails (test_verify.InventoryTests.test_directory_symlink_fails) ... ok
+test_exact_hidden_and_nested_inventory (test_verify.InventoryTests.test_exact_hidden_and_nested_inventory) ... ok
+test_missing_extra_changed_and_wrong_expected_files (test_verify.InventoryTests.test_missing_extra_changed_and_wrong_expected_files) ... ok
+test_symbolic_and_hard_links_fail (test_verify.InventoryTests.test_symbolic_and_hard_links_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 5.154s
+
+OK

@@ -1,0 +1,14 @@
+{
+  "mainAtReview": "2f6a563cbd3ff47c56b40aa7269fb48ca26f2838",
+  "mainBudgetBytes": 950000000,
+  "archiveBudgetBytes": 800000000,
+  "mainRetainsHistoricalPayloads": false,
+  "requiresAdmittedArchiveForEveryNonCurrent": true,
+  "archive18CurrentBytes": 625402709,
+  "v059ManifestBytes": 312837602,
+  "archive18CombinedLowerBoundBytes": 938240311,
+  "archive14CurrentBytes": 312553884,
+  "archive14CombinedExactBytes": 625582144,
+  "archive14CombinedFiles": 1342,
+  "decision": "Append v0.59.0 to existing archive14 without adding archive19; new deployment/admission required. No budgets or controller semantics changed."
+}

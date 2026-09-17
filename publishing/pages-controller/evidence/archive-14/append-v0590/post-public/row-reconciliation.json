@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "files": 1342,
+  "bytes": 625582144,
+  "attempts": 1342,
+  "failures": 0,
+  "retries": 0,
+  "skipped": 0,
+  "canonicalURLsExact": true,
+  "originalV057RowsUnchanged": 659,
+  "inventorySha256": "ecee70a4688c06d8279260443407dddddbfaf0e3bbdf1a5da9e4e0a61fdaeccf",
+  "reportSha256": "9eb0cf19fb00114bac67822189af97b9ff2201fb8b1ccdd23f261c320d63be8a",
+  "scope": "Independent parsing/reconciliation of every retained original HTTP result and attempt, plus exact predecessor row equality. No new network bodies or browser simulation."
+}
