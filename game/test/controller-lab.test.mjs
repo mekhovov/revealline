@@ -1,6 +1,7 @@
 import test from 'node:test';
 import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import assert from 'node:assert/strict';
+import { requestControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
 import { readFile } from 'node:fs/promises';
 import {
   parseControllerPreviewSnapshot,
@@ -52,6 +53,7 @@ class Element extends DOMElement {
   }
   focus() {
     this.focused = true;
+    if (this.ownerDocument) this.ownerDocument.activeElement = this;
   }
 }
 
@@ -116,6 +118,26 @@ test('practice page keeps virtual holds, releases and import failures isolated f
     return element;
   };
   doc.hidden = false;
+  doc.nodeType = 9;
+  doc.hasFocus = () => !doc.hidden;
+  doc.defaultView = host;
+  host.getComputedStyle = () => ({ visibility: 'visible', display: 'block' });
+  for (const element of Object.values(elements)) {
+    element.parentNode = doc;
+    doc.children.push(element);
+  }
+  Object.assign(child, {
+    document: { hidden: false, hasFocus: () => doc.activeElement === elements['game-frame'] },
+    frameElement: elements['game-frame'],
+    parent: host,
+    location: host.location,
+    CustomEvent: class extends Event {
+      constructor(type, options) {
+        super(type, options);
+        this.detail = options.detail;
+      }
+    },
+  });
   const globals = {
     window: host,
     document: doc,
@@ -360,6 +382,49 @@ test('practice page keeps virtual holds, releases and import failures isolated f
         assert.equal(latest().pad.connected, true);
         assert.ok(latest().pad.buttons.every((v) => !v));
         assert.equal(timeouts.size, 0);
+      },
+    );
+    await t.test(
+      'accepted keyboard exit releases actual virtual holds and pending stick application without storage writes',
+      async () => {
+        const writesBefore = writes.length;
+        let suspended = 0;
+        const exit = (backward = false) =>
+          requestControllerPracticeExit({
+            window: child,
+            session: latest().session,
+            backward,
+            beforeExit: () => {
+              suspended++;
+            },
+          });
+        await press(15);
+        await press(5);
+        assert.equal(latest().pad.buttons[15], true);
+        assert.equal(latest().pad.buttons[5], true);
+        assert.equal(exit(), true);
+        assert.equal(doc.activeElement, elements.mission);
+        assert.ok(latest().pad.buttons.every((value) => !value));
+        assert.ok(latest().pad.axes.every((value) => value === 0));
+        assert.equal(
+          pads.some((button) => button.getAttribute('aria-pressed') === 'true'),
+          false,
+        );
+        elements['axis-0'].value = '0.75';
+        await elements['axis-0'].emit('input');
+        await click('apply-stick');
+        assert.match(elements['axis-status'].textContent, /Waiting for the game to sample neutral/);
+        assert.ok([...timeouts.values()].some((timeout) => timeout.ms === 2000));
+        assert.equal(exit(true), true);
+        assert.equal(doc.activeElement, elements['focus-game']);
+        assert.equal(elements['axis-0'].value, '0');
+        assert.equal(
+          [...timeouts.values()].some((timeout) => timeout.ms === 2000),
+          false,
+        );
+        assert.ok(latest().pad.axes.every((value) => value === 0));
+        assert.equal(suspended, 2);
+        assert.equal(writes.length, writesBefore);
       },
     );
     await t.test(
