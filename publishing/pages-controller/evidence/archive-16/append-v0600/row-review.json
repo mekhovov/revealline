@@ -1,0 +1,161 @@
+{
+  "format": "revealline-archive16-public-row-review.v1",
+  "status": "PASS",
+  "at": "2026-09-17T08:48:21.195700+00:00",
+  "files": 1347,
+  "verifiedBytes": 625710011,
+  "resultRows": 1347,
+  "uniqueResultPaths": 1347,
+  "attempts": 1347,
+  "uniqueAttemptPaths": 1347,
+  "failedFiles": 0,
+  "failedAttempts": 0,
+  "retries": 0,
+  "retriedFiles": 0,
+  "oldCanonicalRowsPreserved": 660,
+  "allExpectedPathsExactlyOnce": true,
+  "allRecordedDescriptorsURLsStatusesMIMEsSizesHashesMatch": true,
+  "sourcePinsUnchanged": true,
+  "archiveCommit": "fcea949bca18193e9303143766a6eecdf4cb8b61",
+  "archiveTree": "6c72f5cf8a82b51fc635dcc4c433c62cfb22c0bf",
+  "sourceCheckoutCommit": "a509feaa280b1bb1cb9efb90457e2de7af4e3775",
+  "runId": 35200608771,
+  "deploymentId": 6498838394,
+  "deploymentStatusId": 18464928886,
+  "receiptArtifactId": 10487357957,
+  "executionRequestSha256": "dac14023bacb576e76527d33d0a8b4edb56eeb051d068d26dfa8d1b364eac4c7",
+  "expectedInventorySha256": "c02d6bf74f731a5e646159434325153ed79e841e7ff58c7f15b580be3440aeaa",
+  "authoritySnapshots": [
+    "live-authorities/before-20260917T084221Z-a921a370",
+    "live-authorities/after-20260917T084450Z-f0e1b94f"
+  ],
+  "beforeAfterOriginalAPIBodiesUnchanged": true,
+  "mimeCounts": {
+    "application/javascript": 12,
+    "application/json": 180,
+    "application/manifest+json": 2,
+    "application/octet-stream": 45,
+    "font/ttf": 4,
+    "font/woff2": 12,
+    "image/jpeg": 16,
+    "image/png": 384,
+    "image/svg+xml": 2,
+    "text/css": 74,
+    "text/html": 44,
+    "text/javascript": 528,
+    "text/markdown": 34,
+    "text/plain": 10
+  },
+  "errors": [],
+  "evidencePins": [
+    {
+      "path": "execution-request.reviewed.json",
+      "bytes": 1688,
+      "sha256": "dac14023bacb576e76527d33d0a8b4edb56eeb051d068d26dfa8d1b364eac4c7"
+    },
+    {
+      "path": "root-request-review.json",
+      "bytes": 387,
+      "sha256": "aa46b8e0ccd97f796c912d343b44d8f45163b19d047ed2d1f4fb23f8434502cc"
+    },
+    {
+      "path": "inputs/source-lock.json",
+      "bytes": 2263,
+      "sha256": "ab38ba6e860014a77487fafc3f2bd9d527a905722ab155ae7eda2666e6c138f6"
+    },
+    {
+      "path": "inputs/predecessor-inventory.json",
+      "bytes": 137169,
+      "sha256": "5be38feb73ce5bbd6dfd5448e15773a4e2ca7028ba831a92d9fba90faf83280c"
+    },
+    {
+      "path": "collect-live.py",
+      "bytes": 3412,
+      "sha256": "e44a3e6f6b57e120627049296752c4aff16ae6cfe24d75232cd26ec1dae8841a"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/auditor.py",
+      "bytes": 13410,
+      "sha256": "879249fc83b077e724769b6a3b7f0621b004ac3b077c84e7b880d0920778c945"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/audit_binding.py",
+      "bytes": 9393,
+      "sha256": "48dcfa35be3b486792ec27ec3392367ca99e9f0256aaf0865a3e70eacd8b4247"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/expected-inventory.json",
+      "bytes": 278327,
+      "sha256": "c02d6bf74f731a5e646159434325153ed79e841e7ff58c7f15b580be3440aeaa"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/execution-request.json",
+      "bytes": 1688,
+      "sha256": "dac14023bacb576e76527d33d0a8b4edb56eeb051d068d26dfa8d1b364eac4c7"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/http-report.json",
+      "bytes": 1347,
+      "sha256": "548712ec4581986894606c1dcf6f4910fb6a2453e3bc52e1cb34a367df0e2a7d"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/http-results.jsonl",
+      "bytes": 1070112,
+      "sha256": "d4c7f8d25d1c592b9ad51961d44e46a2b928fc2b2af000208eb2e5ed1d22f617"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/http-attempts.jsonl",
+      "bytes": 1070112,
+      "sha256": "d4c7f8d25d1c592b9ad51961d44e46a2b928fc2b2af000208eb2e5ed1d22f617"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/main.json",
+      "bytes": 358,
+      "sha256": "2e7a984553bc408e91dfb2ef70de6a2db82ed8ca9e89ced8049e6bc18fc85004"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/commit.json",
+      "bytes": 2739,
+      "sha256": "3d61820246076b38cfd61304d78edd2d9adf49187653ff1a90f42a7e4b2ab9bb"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/run.json",
+      "bytes": 13162,
+      "sha256": "cdd28f33d5d0e8ecb6a299a13357472af473207a6de844e83664a6ee64618839"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/deployment.json",
+      "bytes": 3856,
+      "sha256": "14ca4065067bd7874bf34539f0cd53781e968af32431e37e70af576b3be8bd99"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/statuses.json",
+      "bytes": 6817,
+      "sha256": "f1426a939bfe8bf3a417d6c23b4355935e5aebff82e7b3a49612409b10c3914c"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/artifacts.json",
+      "bytes": 1454,
+      "sha256": "4f647efe3857f4f0655accf394122df69c76f129737665a410d48727af366e73"
+    },
+    {
+      "path": "http/http-20260917T084229Z-8dcb86f0/authority-originals/receiptZIP.zip",
+      "bytes": 70961,
+      "sha256": "99793cac42a6fe5fc4c80662e7d51a7c2d5dbd3fe668df2e3f81e0bd0323a03f"
+    },
+    {
+      "path": "live-authorities/before-20260917T084221Z-a921a370/result.json",
+      "bytes": 2356,
+      "sha256": "5a6bd7433eadde6b51e19d78e565d8f144715276c7dc24d90730c92a4ae47778"
+    },
+    {
+      "path": "live-authorities/after-20260917T084450Z-f0e1b94f/result.json",
+      "bytes": 2354,
+      "sha256": "494d03ccebb9d38685b7c2c28a1759081912286ffb1b90f56bfa69f5b7c2efef"
+    }
+  ],
+  "browserAccepted": false,
+  "phaseAccepted": false,
+  "boundary": "Independent reconciliation of saved HTTP report, every result/attempt record, pinned hosted receipts, source inputs and before/after API originals. No HTTP payload was persisted or downloaded by this reviewer; no network, browser, tests, source/index edits or remote actions were performed. Native browser observations, interaction, offline execution and physical-device acceptance remain separate and pending root review.",
+  "method": "Path coverage uses Counter over explicit path iterables, never the descriptor mapping. Every final result equals its final recorded attempt; all source/evidence bodies read were rehashed at completion."
+}

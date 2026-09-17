@@ -1,0 +1,60 @@
+{
+  "format": "revealline-final-main-public-binding.v1",
+  "reviewed": false,
+  "base": "https://mekhovov.github.io/revealline/",
+  "currentVersion": "v0.60.1",
+  "gameSourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "qualifiedSourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "controllerCommit": "c1576deeab14bea21b00449912a6a465c3efaf90",
+  "controllerTree": "1ad1ded6774c1fa63b2a2c6cf7f19328facfb7b1",
+  "deploymentId": 6499869218,
+  "runId": 35206271586,
+  "inventorySha256": "37778549a10ed1b5ca3e1cb988f26b101d90f0bbbee3e9b7be9a0b9218502493",
+  "pins": {
+    "receipt": {
+      "path": "receipt.json",
+      "bytes": 512473,
+      "sha256": "3053a1e1a1bafcd827190abede3e3684a48ac9c47eccb1b5f6365a3ecd731f1a"
+    },
+    "deployment": {
+      "path": "deployment.json",
+      "bytes": 3823,
+      "sha256": "d19f7df69b93452374fe4a49e005a10480e0fb8d0e932551d89f9703bf75222b"
+    },
+    "statuses": {
+      "path": "statuses.json",
+      "bytes": 6586,
+      "sha256": "262ba73a9dae3d8b4cb2e791f28bb97ff936ed78c3ae450c696f07631c59d9af"
+    },
+    "run": {
+      "path": "run.json",
+      "bytes": 12182,
+      "sha256": "54728fabea19b78e626a30c93b325c92780449cc6336a602f4900b08fdc050ee"
+    },
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 125543,
+      "sha256": "e18a1f59b678245b6d34d7d183fa3929e3a6411dda1e81d834e8bb65ead870b1"
+    },
+    "record": {
+      "path": "record.json",
+      "bytes": 465,
+      "sha256": "143d208aaac625eae686cfc2fb1a4e86f72b516b731f11be4b3d3e702f85f0e1"
+    },
+    "qualification": {
+      "path": "qualification.json",
+      "bytes": 75071,
+      "sha256": "ded582540a39feccf92b83f866ecea71c087abe776a6e0c31d50f789f5d2ebf5"
+    },
+    "catalog": {
+      "path": "catalog.json",
+      "bytes": 32139,
+      "sha256": "bc5fa53e9b5911f9725bdeface4a02bc3371b189cdcf5607bb203cadcd19c804"
+    },
+    "configuration": {
+      "path": "configuration.json",
+      "bytes": 108881,
+      "sha256": "65be42dec39354cdf9d42342c1163042d9a389a4ced2bf3499f341931922a1f3"
+    }
+  }
+}
