@@ -5,7 +5,7 @@ import { page } from './helpers/coop-host.mjs';
 
 const nearest = { block: 'nearest', inline: 'nearest', behavior: 'instant' };
 const inside = { x: 118, y: 280, width: 300, height: 45.5 };
-// Finite inputs taken from the observed 844×390 pause scroller. The fixture
+// Finite inputs taken from the previously observed 844×390 scroller; reused here as a finite Settings layout. The fixture
 // models layout; a real browser must separately prove its ring and scroll result.
 const clipped = { x: 118, y: 338.4921875, width: 300, height: 45.5 };
 
@@ -31,10 +31,10 @@ async function paused(t, { after = clipped, denySave = false } = {}) {
   f.$('coop-start').click();
   f.tick(180);
   f.$('coop-pause').click();
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
   f.choose('coop-text-face', 'plain');
   const target = f.$('coop-text-size'),
-    panel = f.$('coop-overlay');
+    panel = f.$('coop-options');
   panel._rect = { x: 86, y: 12, width: 672, height: 366 };
   Object.assign(panel, {
     clientLeft: 2,
@@ -70,7 +70,7 @@ function assertPaused(f, clock) {
   assert.equal(f.doc.activeElement === f.target, true);
 }
 
-test('Large reflow reveals the current Team control clipped inside the pause scroller', async (t) => {
+test('Large reflow reveals the current Team control clipped inside the Settings scroller', async (t) => {
   const f = await paused(t),
     clock = f.$('coop-clock').textContent;
   assert.notEqual(clock, '0:00', 'the test paused a real running attempt');
@@ -148,18 +148,21 @@ for (const reason of ['new-focus', 'closed-options', 'background', 'hidden-docum
     t.mock.method(f.target, 'getBoundingClientRect', () => {
       if (!changed && f.doc.body.dataset.textSize === 'large') {
         changed = true;
-        if (reason === 'new-focus') f.$('coop-options-toggle').focus();
-        if (reason === 'closed-options') f.$('coop-options').open = false;
+        if (reason === 'new-focus') f.$('coop-settings-close').focus();
+        if (reason === 'closed-options') f.$('coop-options').close();
         if (reason === 'background') f.doc.focused = false;
         if (reason === 'hidden-document') f.doc.hidden = true;
-        if (reason === 'resumed') f.$('coop-resume').click();
+        if (reason === 'resumed') {
+          f.$('coop-settings-close').click();
+          f.$('coop-resume').click();
+        }
       }
       return read();
     });
     f.choose('coop-text-size', 'large');
     assert.equal(changed, true);
     assert.deepEqual(f.calls, []);
-    if (reason === 'new-focus') assert.equal(f.doc.activeElement.id, 'coop-options-toggle');
+    if (reason === 'new-focus') assert.equal(f.doc.activeElement.id, 'coop-settings-close');
     if (reason === 'resumed') assert.equal(f.panel.hidden, true);
   });
 

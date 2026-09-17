@@ -130,7 +130,24 @@ export function createMenuStylePreferences({
       return;
     apply(current.value);
   };
+  // A frozen page can miss storage events. Only validated current storage may
+  // replace saved state; failed or session-only local choices remain owned here.
+  const restored = (event) => {
+    if (disposed || unsaved || event.persisted !== true) return;
+    const revision = state.revision,
+      current = read();
+    if (
+      disposed ||
+      unsaved ||
+      state.revision !== revision ||
+      !current.value ||
+      fields.every((key) => state[key] === current.value[key])
+    )
+      return;
+    apply(current.value);
+  };
   eventTarget?.addEventListener?.('storage', receive);
+  eventTarget?.addEventListener?.('pageshow', restored);
   return Object.freeze({
     snapshot: () => state,
     subscribe(listener) {
@@ -161,6 +178,7 @@ export function createMenuStylePreferences({
       if (disposed) return;
       disposed = true;
       eventTarget?.removeEventListener?.('storage', receive);
+      eventTarget?.removeEventListener?.('pageshow', restored);
       listeners.clear();
     },
   });

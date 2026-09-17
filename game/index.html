@@ -114,6 +114,7 @@
     <link rel="stylesheet" data-boot-href="ui/field-kit-components.css" />
     <link rel="stylesheet" data-boot-href="ui/field-kit-flow.css" />
     <link rel="stylesheet" data-boot-href="ui/field-kit-surfaces.css" />
+    <link rel="stylesheet" data-boot-href="ui/settings.css" />
     <link rel="stylesheet" data-boot-href="ui/field-kit-compiled.css" />
     <link rel="stylesheet" data-boot-href="ui/profile-recovery-dialog.css" />
     <link rel="stylesheet" data-boot-href="ui/backup-set.css" />
@@ -843,12 +844,12 @@
       <button id="switch-class-button" class="button primary">Switch & continue →</button>
       <p id="switch-status" role="status"></p>
     </dialog>
-    <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <dialog id="settings-dialog" class="shared-settings" aria-labelledby="settings-title">
       <button class="dialog-close" data-close="settings-dialog" aria-label="Close settings">
         ×
       </button>
       <p class="eyebrow">TUNE YOUR ARCADE</p>
-      <h2 id="settings-title" data-field-kit-copy="settings.title">Flight settings.</h2>
+      <h2 id="settings-title" data-field-kit-copy="settings.title">Settings</h2>
       <div
         class="field-kit-settings-tabs"
         role="tablist"
@@ -872,8 +873,8 @@
           type="button"
           role="tab"
           aria-controls="settings-panel-audio"
-          aria-selected="true"
-          tabindex="0"
+          aria-selected="false"
+          tabindex="-1"
         >
           Audio
         </button>
@@ -883,10 +884,10 @@
           type="button"
           role="tab"
           aria-controls="settings-panel-display"
-          aria-selected="false"
-          tabindex="-1"
+          aria-selected="true"
+          tabindex="0"
         >
-          Display & accessibility
+          Appearance & accessibility
         </button>
         <button
           id="settings-tab-data"
@@ -1020,6 +1021,7 @@
         class="field-kit-settings-panel"
         role="tabpanel"
         aria-labelledby="settings-tab-audio"
+        hidden
       >
         <h3 data-field-kit-copy="settings.audio">Audio</h3>
         <p class="micro-note" data-field-kit-copy="settings.audioDescription">
@@ -1061,9 +1063,8 @@
         class="field-kit-settings-panel"
         role="tabpanel"
         aria-labelledby="settings-tab-display"
-        hidden
       >
-        <h3 data-field-kit-copy="settings.display">Display & accessibility</h3>
+        <h3 data-field-kit-copy="settings.display">Appearance & accessibility</h3>
         <p class="micro-note" data-field-kit-copy="settings.displayDescription">
           Readable text, terrain and comfortable motion.
         </p>
@@ -1550,6 +1551,14 @@
           >
             Workshop
           </button>
+          <button
+            id="shell-sound"
+            type="button"
+            class="button secondary quick-sound"
+            aria-pressed="false"
+          >
+            Sound: off
+          </button>
           <a
             id="shell-release-explorer"
             data-release-explorer
@@ -1633,7 +1642,7 @@
       <details class="shell-tools">
         <summary>Sound &amp; game extras</summary>
         <nav>
-          <button id="shell-music" type="button" class="button secondary">Music on / off</button>
+          <button id="shell-music" type="button" class="button secondary">Sound on / off</button>
           <button
             id="restart-button"
             class="button secondary"

@@ -1,3 +1,4 @@
+import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
   waitFor as waitForTeamPicture,
@@ -61,6 +62,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     win = new Events();
   doc.parentNode = win;
   mountCouch(doc, teamHTML);
+  modelTeamDialogs(doc);
   const $ = (id) => doc.getElementById(id),
     frames = new Map(),
     originals = new Map();
@@ -236,8 +238,8 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
       const geometry = page.geometry(),
         clock = page.$('coop-clock').textContent,
         fonts = page.fonts();
-      page.$('coop-options').open = true;
-      page.$('coop-options-toggle').focus();
+      page.$('coop-settings-open').click();
+      page.$('coop-settings-tab-display').focus();
       reaches(page, 'coop-menu-palette');
       change(page, 'coop-menu-palette', 'auto');
       reaches(page, 'coop-menu-ornaments');
@@ -259,7 +261,7 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
     },
   );
   await t.test(
-    'Versus Options retains first Text style focus, paused checkpoint and exact Back opener',
+    'Versus Settings opens Appearance category, paused checkpoint and exact Back opener',
     async (t) => {
       const before = store.writes.length,
         page = await couchPage(t, { storage: store });
@@ -274,7 +276,7 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
         pictures = page.drawOptions.map((options) => options.backdrop);
       page.$('race-options').focus();
       page.$('race-options').click();
-      assert.equal(page.doc.activeElement.id, 'race-text-face');
+      assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
       reaches(page, 'race-menu-palette');
       change(page, 'race-menu-palette', 'ukrainian');
       reaches(page, 'race-menu-ornaments');
