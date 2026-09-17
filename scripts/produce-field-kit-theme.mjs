@@ -37,11 +37,11 @@ const sources = {
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
   screens: {
-    sha256: 'fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a',
+    sha256: '4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d',
     evidence: [
-      'Scoped P03 source review: docs/verification/cross-mode/p03/recipe-review.md; screen recipe inputs sha256:fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a. The only screen-input change from published P02 is the disabled Versus menu-action rule: muted text, panel background and dashed border. Prior backdrop declarations, artwork and P01 recovery rules remain unchanged; their historical records are preserved.',
-      'Source-browser observations at beb0140e with fpv25: actual Versus Next showed disabled Next and focused Cancel during picture preparation, then started both boards. Keyboard Help, Back, Options and explicit Resume were exercised in Solo, Versus and Team. Team reading controls fit 390x844 and 844x390; scoped observations and the source-bound HTTP audit are retained in docs/verification/cross-mode/p03/native/.',
-      'This approves the bounded screen-recipe change, not full P03 completion. Screenshots were inspected inline in the CUA conversation without exported image artifacts. Physical touch/controllers, native foreground switching, complete presentation parity and final public-release journeys remain separate gates.',
+      'Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.',
+      'Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.',
+      'This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged.',
     ],
   },
   ui: {

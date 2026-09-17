@@ -410,7 +410,7 @@ test('P03 screen and motion reviews bind only the inspected current inputs', asy
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
-    screens: 'fde77f2222b0e6d021ff10af22f551532dd9139229b7871aaf584b40cfd1f44a',
+    screens: '4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d',
     motion: '39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554',
   };
   const reviewed = production.document.slots.filter(
