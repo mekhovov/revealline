@@ -1,0 +1,7 @@
+{
+  "chunk_id": "da2759",
+  "wall_time_seconds": 0.000001584,
+  "exit_code": 0,
+  "original_token_count": 314,
+  "output": "{\"checked\": 1225, \"total\": 1327, \"failed\": 0}\n{\"checked\": 1250, \"total\": 1327, \"failed\": 0}\n{\"checked\": 1275, \"total\": 1327, \"failed\": 0}\n{\"checked\": 1300, \"total\": 1327, \"failed\": 0}\n{\"checked\": 1325, \"total\": 1327, \"failed\": 0}\n{\"directory\": \"/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-archive18-successor-preparation/public-audit/http/http-20260916T080006Z-fef7d293\", \"report\": {\"status\": \"PASS\", \"base\": \"https://mekhovov.github.io/revealline-archive-18/\", \"archiveCommit\": \"eaaf9844f7294be17bd97672de3c5b483e7c1620\", \"files\": 1327, \"expectedBytes\": 625402709, \"verifiedBytes\": 625402709, \"failedFiles\": 0, \"failures\": [], \"skipped\": [], \"expectedInventorySha256\": \"c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6\", \"startedAt\": \"2026-09-16T08:00:06.048454+00:00\", \"verifiedAt\": \"2026-09-16T08:02:28.174917+00:00\", \"attempts\": 1327, \"failedAttempts\": 0, \"retriedFiles\": 0, \"workers\": 6, \"socketTimeoutSeconds\": 25, \"attemptDeadlineSeconds\": 90, \"auditDeadlineSeconds\": 1800, \"maxAttemptsPerFile\": 3, \"allFinalURLsExact\": true, \"payloadFilesPersisted\": false, \"scope\": \"Every pinned canonical HTTP body and explicit MIME, including hidden metadata. Independent of browser/offline or physical-device acceptance.\"}}\n"
+}
