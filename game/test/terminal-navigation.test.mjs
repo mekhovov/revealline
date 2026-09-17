@@ -160,7 +160,7 @@ test('controller reaches results plus visible headers; Confirm opens picture and
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 });
 
-test('a legal terminal self-contact focuses Retry and keyboard retry starts a fresh stopped attempt', async (t) => {
+test('a legal terminal self-contact focuses Retry and keyboard retry starts only after preparation', async (t) => {
   const page = await soloPage(t, { campaign: failCampaign });
   page.$('start-button').click();
   page.key('ArrowDown');
@@ -181,7 +181,16 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts a fr
   assert.equal(page.doc.activeElement.id, 'retry-button');
   key(page, 'Enter');
   page.frame(0);
+  assert.equal(page.rendered.run, failed, 'The result survives while Retry prepares.');
+  assert.deepEqual(authoritativeCheckpoint(failed), failureCheckpoint);
+  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
   assert.notEqual(page.rendered.run, failed);
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.activeElement.id, 'game-canvas');
   assert.equal(page.rendered.run.status, 'running');
   assert.equal(page.rendered.run.tick, 0);
   const initial = [page.rendered.run.player.x, page.rendered.run.player.y];
@@ -190,44 +199,53 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts a fr
   assert.deepEqual(page.errors, []);
 });
 
-test('held Confirm cannot cross result → next briefing; keyboard Pause and fresh Resume preserve stopped flight', async (t) => {
+test('held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume', async (t) => {
   const page = await win(t),
     controls = controller(page, t);
-  const previous = page.rendered.run;
+  const previous = page.rendered.run,
+    resultCheckpoint = authoritativeCheckpoint(previous);
   page.$('next-button').focus();
   controls.pad.buttons[0] = { pressed: true, value: 1 };
   controls.frame();
   for (let i = 0; i < 5; i++) controls.frame();
-  assert.notEqual(page.rendered.run, previous);
-  assert.equal(page.$('game-overlay').dataset.kind, 'ready');
-  assert.equal(page.doc.activeElement.id, 'start-button');
-  assert.equal(page.rendered.run.tick, 0);
-  assert.equal(page.doc.body.dataset.flightState, 'briefing');
-  controls.pad.buttons[0] = { pressed: false, value: 0 };
-  controls.frame();
-  assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
-  assert.equal(page.rendered.run.tick, 0);
-  key(page, 'Enter');
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'A fresh confirmed attempt starts only after its picture is ready.',
-  );
-  page.frame(0);
-  assert.equal(page.doc.body.dataset.flightState, 'running');
-  steps(page, 6);
-  const location = [page.rendered.run.player.x, page.rendered.run.player.y];
+  assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
+  assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  const next = page.rendered.run;
+  assert.notEqual(next, previous);
+  assert.notEqual(next.levelId, previous.levelId);
+  assert.equal(next.tick, 0);
+  assert.equal(page.$('game-overlay').hidden, true, 'The accepted Next action starts directly.');
+  assert.equal(page.doc.activeElement.id, 'game-canvas');
+  const location = [next.player.x, next.player.y];
+  for (let i = 0; i < 6; i++) controls.frame();
+  assert.equal(page.rendered.run, next, 'Held Confirm cannot select another destination.');
+  assert.deepEqual([next.player.x, next.player.y], location, 'Menu Confirm adds no movement.');
   page.key('Escape');
   page.frame(0);
   assert.equal(page.$('game-overlay').dataset.kind, 'pause');
   assert.equal(page.doc.activeElement.id, 'start-button');
   assert.equal(page.doc.body.dataset.flightState, 'paused');
+  const paused = authoritativeCheckpoint(next);
+  for (let i = 0; i < 6; i++) controls.frame();
+  assert.equal(page.doc.body.dataset.flightState, 'paused', 'Still-held Confirm cannot Resume.');
+  assert.deepEqual(authoritativeCheckpoint(next), paused);
+  controls.pad.buttons[0] = { pressed: false, value: 0 };
+  controls.frame();
+  assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
   key(page, 'Escape', { repeat: true });
   page.frame(0);
   assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual(authoritativeCheckpoint(next), paused);
   key(page, 'Enter');
   steps(page, 6);
   assert.equal(page.doc.body.dataset.flightState, 'running');
-  assert.deepEqual([page.rendered.run.player.x, page.rendered.run.player.y], location);
+  assert.equal(page.rendered.run, next);
+  assert.deepEqual([next.player.x, next.player.y], location);
   assert.deepEqual(page.errors, []);
 });
 

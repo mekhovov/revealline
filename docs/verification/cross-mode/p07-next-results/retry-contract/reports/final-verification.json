@@ -1,0 +1,143 @@
+{
+  "status": "CANDIDATE_TEST_CONTRACT_CORRECTION_PASS",
+  "at": "2026-09-17T22:50:10.914795+00:00",
+  "source": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-retry-contract-tests",
+  "branch": "codex/p07-retry-contract-tests",
+  "patch": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/candidate.patch",
+    "bytes": 26360,
+    "sha256": "79490226d64aab39f496e0b505890aa5241beb79d5adf68ab5b8a4b924a37185"
+  },
+  "candidatePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/candidate-pins.json",
+    "bytes": 1927,
+    "sha256": "0ee9e0b7dc6d2d569769c09bdfddd390b4f5f0543c0ae9d4aab98a956a3b0420"
+  },
+  "paths": [
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/solo-result-continuation.md",
+    "game/test/defeat-presentation-host.test.mjs",
+    "game/test/picture-ready-status.test.mjs",
+    "game/test/terminal-navigation.test.mjs"
+  ],
+  "tests": [
+    {
+      "runtime": "v20.19.5",
+      "wholeFiles": 4,
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 286.0265181249997,
+      "receipt": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node20/receipt.json",
+        "bytes": 1058,
+        "sha256": "e5d0c71979bf3483448576eca84317070cc7e3f065a1f2b6d930ea4a7e81103b"
+      },
+      "inputs": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node20/inputs.json",
+        "bytes": 195212,
+        "sha256": "e14106b98967316432596a56edd59832c92e9a673d730662a273ebaad91c37fa"
+      },
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node20/stdout",
+        "bytes": 8969,
+        "sha256": "bfc92bae8819ab492d6b4eb6b8fe35439ec878902b99eb22c201cbf590c52f2e"
+      },
+      "stderr": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node20/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "runtime": "v22.22.2",
+      "wholeFiles": 4,
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 198.8420782089961,
+      "receipt": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node22/receipt.json",
+        "bytes": 1058,
+        "sha256": "c5999747f2409bc9af368dfaa900df12153155a8b1392c7b04659c47da685b97"
+      },
+      "inputs": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node22/inputs.json",
+        "bytes": 195212,
+        "sha256": "e14106b98967316432596a56edd59832c92e9a673d730662a273ebaad91c37fa"
+      },
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node22/stdout",
+        "bytes": 9512,
+        "sha256": "5c1ed346ffebb0f2ded14d557fb18187311c664cc74a6e35bb7a1783f5106336"
+      },
+      "stderr": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/runs/final-node22/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "uniqueCases": 38,
+  "inputCount": 1111,
+  "inputBytes": 25345737,
+  "runtimeUnchanged": true,
+  "runtimeApp": {
+    "bytes": 281216,
+    "sha256": "e4ecc924eaa24877d25c72c209e9723ba118370292063997daa1601d9e275d84"
+  },
+  "postTestChanges": {
+    "paths": [
+      "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "docs/solo-result-continuation.md"
+    ],
+    "kind": "Root-authorized documentation only, original cohort input manifests retained.",
+    "receipt": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/native-documentation-update.json",
+      "bytes": 696,
+      "sha256": "e46e3b9336b90efd84c2fa35d637142b09f8b579251170d22f16d68764e662e4"
+    }
+  },
+  "static": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-retry-contract-tests-c4851d14/final-static/receipt.json",
+    "bytes": 1524,
+    "sha256": "213f3b293121e2a3ac7e52c51ce76dc4dcd094e5cc8817b5b0db12fed4459a94"
+  },
+  "indexEmpty": true,
+  "untrackedNodeModules": "Existing root-provided dependency symlink, unchanged and excluded from candidate.",
+  "historicalAttempts": [
+    {
+      "path": "runs/node20",
+      "outcome": "Four module-import failures: missing exact tracked MP3 fixture."
+    },
+    {
+      "path": "runs/hydrated-node20",
+      "outcome": "38 startup failures: missing exact tracked catalog JSONs."
+    },
+    {
+      "path": "runs/catalog-node20",
+      "outcome": "34/38: new fixture expected preparing instead of actual shared status busy."
+    },
+    {
+      "path": "runs/corrected-node20",
+      "outcome": "37/38: new fixture expected cancellation message for background cancellation, which clears status."
+    }
+  ],
+  "limits": [
+    "No runtime, media-loading, timeout, storage, version, branch ancestry, index or remote changes.",
+    "No whole repository gates, ordinary build, hosted qualification, public release or physical-device acceptance.",
+    "Root ordinary-browser observations are separately pinned; this reviewer did not run that browser journey.",
+    "Source c485 original CI failure logs remain at .cache/p07a-v0610-ci-failure-c4851d14; no failure histories were overwritten."
+  ]
+}

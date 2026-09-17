@@ -1,0 +1,72 @@
+{
+  "format": "revealline-p07-retry-contract-evidence.v1",
+  "status": "CANDIDATE_TEST_CORRECTION_AND_SCOPED_BROWSER_EVIDENCE_NOT_RELEASE_ACCEPTANCE",
+  "source": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
+  "tree": "4fd8806a081f1a947d32d8c8a8acf910a6d2c6d4",
+  "candidatePatch": {
+    "bytes": 26360,
+    "sha256": "79490226d64aab39f496e0b505890aa5241beb79d5adf68ab5b8a4b924a37185"
+  },
+  "runtimeUnchanged": true,
+  "changedPaths": [
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/solo-result-continuation.md",
+    "game/test/defeat-presentation-host.test.mjs",
+    "game/test/picture-ready-status.test.mjs",
+    "game/test/terminal-navigation.test.mjs"
+  ],
+  "localTests": {
+    "uniqueCases": 38,
+    "wholeFiles": 4,
+    "runtimes": [
+      "20.19.5",
+      "22.22.2"
+    ],
+    "perRuntime": {
+      "pass": 38,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "inputCount": 1111,
+    "inputBytes": 25345737,
+    "inputManifestSha256": "e14106b98967316432596a56edd59832c92e9a673d730662a273ebaad91c37fa",
+    "postTestChanges": "Only the guide and maintainer skill prose changed after the two runs; original input manifests are retained."
+  },
+  "history": {
+    "hostedDistinctFailedTests": 7,
+    "hostedOriginalJobLogs": 4,
+    "localRunDirectories": 6,
+    "failedHydrationAndFixtureAttemptsRetained": true,
+    "noFailuresRewritten": true
+  },
+  "browser": {
+    "observer": "Root agent; this curator did not perform the browser journey.",
+    "source": "c4851d140b8c7c8ebaebfede998b4d9e60f18807",
+    "runtimeOverrides": {},
+    "viewport": {
+      "width": 1280,
+      "height": 633,
+      "devicePixelRatio": 1
+    },
+    "input": "Pointer controls and paired emulated CDP keys; nativeVirtualKeyCode omitted.",
+    "ordinaryMemberCount": 129,
+    "ordinaryMemberBytes": 297515,
+    "retryObservedBySeconds": 0.86746695799,
+    "nextObservedBySeconds": 1.92434058299,
+    "storyPlayObservedBySeconds": 14.094,
+    "exactStoryReadinessUnknown": true,
+    "storyPlaybackBegan": true,
+    "fullUninterruptedStoryPlaybackProven": false,
+    "initialFailedWaitRetained": true
+  },
+  "guideReview": "Current guide bounds of 0.87 seconds for Retry and 1.93 seconds for Next are conservative observed-by values. It makes no exact story-readiness or game performance-fix claim.",
+  "limits": [
+    "No runtime, decoder deadline, storage, decoded-image reuse, or saving-lease changes.",
+    "The isolated blank-page input-driver reproduction is historical precursor evidence; the ordinary game journey is a separate later observation.",
+    "No full final-source qualification, public deployment acceptance, offline, assistive-technology, physical keyboard/controller/touch, or cross-device acceptance.",
+    "The scoped browser pass did not repeat failure injection or independently prove stored original bytes or duplicate-award behavior.",
+    "P07 and the complete game remain incomplete."
+  ]
+}

@@ -1,0 +1,432 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 086571ec..d1443df3 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -16,7 +16,9 @@ Settings tabs have different sequential and spatial navigation contracts. Tab/Sh
+ 
+ Finalize a reader's active hint before revealing its unit; longer text can wrap and move the lower focus border outside a short dialog. Recheck the accepted reader, scope, revision, focus and foreground after callbacks, and suppress stale reveals after Back. Observable test waits use a real Node monotonic deadline independent of the simulated gameplay clock. A frozen `performance.now()` must not turn an unmet preparation predicate into an unbounded release gate; preserve the original assertion and correct stale hidden-control routes through their actual category.
+ 
+-For ordinary Solo result continuation, stage the destination media before replacing the completed run or releasing its picture. Retry carries complete picture/story pins, including explicit no-story choices; a difficulty bridge must validate every original authored identity. Keep status and Cancel beside result actions, recheck setup and ownership after awaits or callbacks, and reject stale focus/adoption. Test with legal wins and a held destination decoder after earned thumbnails finish. Do not weaken history-return writer policy or turn preparation into another award path. See [Solo result continuation](../../../docs/solo-result-continuation.md); this source contract does not establish other-mode or public acceptance.
++For ordinary Solo result continuation, stage the destination media before replacing the completed run or releasing its picture. Retry carries complete picture/story pins, including explicit no-story choices; a difficulty bridge must validate every original authored identity. Keep status and Cancel beside result actions, recheck setup and ownership after awaits or callbacks, and reject stale focus/adoption. Test with legal wins and a held destination decoder after earned thumbnails finish. Skip the actual celebration to reach Retry; retain the old result, picture, checkpoint and records through status, Cancel and failure. Await ready adoption instead of asserting synchronous replacement, and preserve held-Confirm isolation plus fresh Resume after Pause or foreground return. Do not weaken history-return writer policy or turn preparation into another award path. See [Solo result continuation](../../../docs/solo-result-continuation.md); this source contract does not establish other-mode or public acceptance.
++
++When browser input produces unexplained repeated keys or latency, reproduce it on a blank page and retain bounded event counts before changing the game. Pair keydown/keyup and verify platform key-code semantics: the recorded macOS driver failure sent Windows `nativeVirtualKeyCode` values, while the corrected paired CDP route omitted that field. Recheck the ordinary game without probes or runtime overrides and confirm idle input is quiet. Preserve original failures and observation bounds; pointer plus emulated keys do not establish keyboard-only, physical-device or general performance acceptance.
+ 
+ For host navigation regressions, enter the actual active surface before changing selection: Missions → Prepare for setup selectors, and Library → Expansion packs for installed campaign Play. Title Start launches the selected mission; Title Continue resumes deliberately, while ordinary Load prepares a paused flight. Confirm unfinished-flight setup/restart decisions through their visible controls. Await the exact pack/campaign/picture and operation completion instead of an already-ready old picture. Keep checkpoint, replay, storage, identity and cancellation assertions. Native focus refuses inert/hidden/closed-dialog descendants; model that boundary locally when relevant instead of changing production focus recovery to match an impossible fixture state. Verify all registered resize observers retire without fixing their implementation count. Direct handler tests remain useful for promise ownership but do not establish a visible keyboard/controller journey. See the [P03 host-flow corrections](../../../docs/verification/cross-mode/p03/host-flow/README.md).
+ 
+diff --git a/docs/solo-result-continuation.md b/docs/solo-result-continuation.md
+index 74323618..470025ab 100644
+--- a/docs/solo-result-continuation.md
++++ b/docs/solo-result-continuation.md
+@@ -10,6 +10,6 @@ The Solo host owns one cancellable result-preparation ticket. Capture the run, r
+ 
+ Practice/demo, courses, campaign-end Collection, Workshop restart and saved Continue retain their existing entry contracts. Music keeps its session transport. Completion records are written by the existing once-per-run path, never by result preparation or story replay.
+ 
+-Verification uses legal cuts and real host actions with owned test media. Delay the destination decoder after earned thumbnails have finished, then check successful Next, explicit cancellation, failure, focus loss and supersession. Check complete retry pins and optional story playback, queued difficulty identity validation, old replay behavior and unchanged records. Browser presentation, real touch/controller input, physical hardware and full release qualification remain separate gates.
++Verification uses legal cuts and real host actions with owned test media. Delay the destination decoder after earned thumbnails have finished, then check successful Next, explicit cancellation, failure, focus loss and supersession. Check complete retry pins and optional story playback, queued difficulty identity validation, old replay behavior and unchanged records. Retry status regressions must observe the retained won/lost result during preparation, use the result-adjacent status and Cancel, and await successful direct Start. Do not expect a replacement briefing or expose a raw decoder error in `run-message`. Preserve held-Confirm isolation across adoption and require fresh input after Pause or foreground return. Browser presentation, real touch/controller input, physical hardware and full release qualification remain separate gates.
+ 
+-Current acceptance limit: the precursor ordinary browser run recorded one Retry image-decode timeout after story playback. Diagnostic runs later completed with variable native storage and event-delivery latency; the cause remains unresolved. Keep those failures and timings. This candidate does not change decoder deadlines, storage semantics or decoded-image reuse. Final ordinary-browser and exact-source qualification are required before publication.
++Current evidence includes a scoped ordinary-browser pass on unchanged source `c4851d14`: legal win → story playback → Retry → second win → Next, retaining the result while preparing and starting directly on readiness. Retry adoption was observed by 0.87 seconds and Next by 1.93 seconds. The Chrome run used pointer controls and paired emulated key events at 1280 × 633, DPR 1; it was not keyboard-only or physical-input qualification. The earlier failure and timing records remain. Severe repeated-input slowdown was also reproduced on a blank page and corrected in the input driver; this is not a game performance fix. Decoder deadlines, storage semantics and decoded-image reuse remain unchanged. Story readiness had observation gaps, and this pass did not repeat fault injection or prove stored bytes and duplicate-award behavior. Full final-source qualification, public verification, offline use, assistive technology and physical devices remain pending.
+diff --git a/game/test/defeat-presentation-host.test.mjs b/game/test/defeat-presentation-host.test.mjs
+index 85a30e4d..ae7c241d 100644
+--- a/game/test/defeat-presentation-host.test.mjs
++++ b/game/test/defeat-presentation-host.test.mjs
+@@ -171,6 +171,7 @@ test('Classic traveling-front defeat, reduced effects, focus loss and explicit s
+ });
+ test('controller skip cannot carry held Confirm into Retry', async (t) => {
+   const { page, run } = await setup(t),
++    checkpoint = authoritativeCheckpoint(run),
+     pad = {
+       index: 0,
+       id: 'Defeat controller',
+@@ -189,12 +190,31 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
+   assert.equal(page.doc.activeElement.id, 'retry-button');
+   for (let i = 0; i < 4; i++) page.frame(0);
+   assert.equal(page.rendered.run, run);
++  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+   pad.buttons[0] = { pressed: false, value: 0 };
+   page.frame(0);
+   pad.buttons[0] = { pressed: true, value: 1 };
+   page.frame(0);
+-  assert.notEqual(page.rendered.run, run);
+-  assert.equal(page.rendered.run.tick, 0);
++  assert.equal(
++    page.rendered.run,
++    run,
++    'The failed run stays owned during fresh Retry preparation.',
++  );
++  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
++  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
++  await settle(() => {
++    page.frame(0);
++    return page.doc.body.dataset.flightState === 'running';
++  });
++  const retried = page.rendered.run;
++  assert.notEqual(retried, run);
++  assert.equal(retried.tick, 0);
++  assert.equal(page.$('game-overlay').hidden, true);
++  assert.equal(page.doc.activeElement.id, 'game-canvas');
++  for (let i = 0; i < 4; i++) page.frame(0);
++  assert.equal(page.rendered.run, retried, 'Held Confirm cannot trigger another Retry.');
++  assert.equal(retried.tick, 0);
++  assert.deepEqual(page.errors, []);
+ });
+ test('nonterminal wreck follows ordinary recovery; Pause holds both recovery and effect until explicit Resume', async (t) => {
+   const { page, run, effect } = await setup(t, { lives: 2 });
+diff --git a/game/test/picture-ready-status.test.mjs b/game/test/picture-ready-status.test.mjs
+index ba4a7b96..38683b0d 100644
+--- a/game/test/picture-ready-status.test.mjs
++++ b/game/test/picture-ready-status.test.mjs
+@@ -22,7 +22,15 @@ const campaign = {
+ };
+ const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
+ 
++const profileKey = 'revealline.library.dev.v1';
++const sessionKey = 'revealline.suspended.dev.v1';
++const ticks = (p, n) => {
++  for (let i = 0; i < n; i++) p.frame();
++};
++
+ async function readyRetry(t, policy = 'immediate') {
++  const diagnostics = [];
++  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+   const memory = memoryIndexedDB();
+   const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, richStillMedia: true });
+   t.after(() => manager.close());
+@@ -48,12 +56,11 @@ async function readyRetry(t, policy = 'immediate') {
+     }),
+     { expectedGeneration: 0 },
+   );
+-  const gate = deferred();
+-  let held = false,
+-    waiting = 0;
++  let nextDecode = null;
+   class Picture {
+     constructor() {
+       this.width = this.height = this.naturalWidth = this.naturalHeight = 1;
++      this.releases = 0;
+     }
+     set src(value) {
+       this.url = value;
+@@ -63,12 +70,13 @@ async function readyRetry(t, policy = 'immediate') {
+       return this.url;
+     }
+     decode() {
+-      if (!held) return Promise.resolve();
+-      waiting++;
+-      return gate.promise;
++      const action = nextDecode;
++      nextDecode = null;
++      return action ? action() : Promise.resolve();
+     }
+     removeAttribute() {
+       this.url = '';
++      this.releases++;
+     }
+   }
+   const p = await soloPage(t, {
+@@ -81,60 +89,165 @@ async function readyRetry(t, policy = 'immediate') {
+     await settle(() => p.doc.body.dataset.pictureState === 'ready');
+   }
+   p.$('start-button').click();
++  await settle(() => p.doc.body.dataset.flightState === 'running');
+   p.key('ArrowDown');
+-  for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+   p.key('ArrowDown', false);
++  for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+   assert.equal(p.rendered.run.status, 'won', 'The first attempt must win through real input.');
+-  held = true;
+-  p.$('retry-button').click();
+-  await settle(() => waiting > 0);
++  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+   p.frame(0);
+-  assert.match(p.$('run-message').textContent, /^Preparing the chosen picture\./);
+-  assert.equal(p.doc.body.dataset.flightState, 'briefing');
+-  const checkpoint = authoritativeCheckpoint(p.rendered.run);
+-  for (let i = 0; i < 30; i++) p.frame();
+-  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+-  return { p, gate, checkpoint };
++  assert.equal(p.$('game-overlay').dataset.kind, 'won');
++  await settle(() =>
++    [...p.$('missions').children].every((button) => button.dataset.pictureState !== 'loading'),
++  );
++  const before = {
++    run: p.rendered.run,
++    checkpoint: authoritativeCheckpoint(p.rendered.run),
++    image: p.rendered.backdrop.image,
++    pin: structuredClone(p.rendered.backdrop.pin),
++    profile: p.storage.getItem(profileKey),
++    saved: p.storage.getItem(sessionKey),
++  };
++  const retained = () => {
++    p.frame(0);
++    assert.equal(p.rendered.run, before.run);
++    assert.equal(p.rendered.run.status, 'won');
++    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before.checkpoint);
++    assert.equal(p.rendered.backdrop.image, before.image);
++    assert.deepEqual(p.rendered.backdrop.pin, before.pin);
++    assert.equal(before.image.releases, 0, 'The earned drawable stays owned until adoption.');
++    assert.equal(p.storage.getItem(profileKey), before.profile);
++    assert.equal(p.storage.getItem(sessionKey), before.saved);
++    assert.equal(p.$('game-overlay').hidden, false);
++    assert.equal(p.$('game-overlay').dataset.kind, 'won');
++  };
++  const begin = async () => {
++    const gate = deferred();
++    let waiting = false;
++    nextDecode = () => {
++      waiting = true;
++      return gate.promise;
++    };
++    p.$('retry-button').focus();
++    p.$('retry-button').click();
++    await settle(() => waiting);
++    ticks(p, 30);
++    retained();
++    assert.equal(p.$('retry-button').disabled, true);
++    assert.equal(p.$('flight-preparation-cancel').hidden, false);
++    assert.equal(p.doc.activeElement.id, 'flight-preparation-cancel');
++    assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
++    assert.match(p.$('flight-preparation-status').textContent, new RegExp(campaign.levels[0].name));
++    return gate;
++  };
++  return { p, before, retained, begin, diagnostics, gate: await begin() };
+ }
+ 
+ for (const policy of ['immediate', 'grid-center'])
+-  test(`${policy}: legal win and delayed retry replace preparing status when flight really starts`, async (t) => {
+-    const { p, gate } = await readyRetry(t, policy);
++  test(`${policy}: delayed Retry retains results through Cancel and a fresh ready Retry starts directly`, async (t) => {
++    const { p, gate, before, retained, begin, diagnostics } = await readyRetry(t, policy);
++    p.$('flight-preparation-cancel').click();
++    retained();
++    assert.equal(
++      p.$('flight-preparation-status').textContent,
++      'Preparation cancelled. Your result is kept.',
++    );
++    assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
++    assert.equal(p.doc.activeElement.id, 'retry-button');
++    assert.equal(p.$('retry-button').disabled, false);
++    assert.equal(p.$('flight-preparation-cancel').hidden, true);
+     gate.resolve();
+-    await settle(() => p.doc.body.dataset.flightState === 'running');
+-    p.frame(0);
+-    assert.equal(p.rendered.run.tick, 0, 'Decoding and auto-resume cannot advance a fixed tick.');
+-    assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
+-    assert.doesNotMatch(p.$('run-message').textContent, /Preparing|stays paused/);
+-    const readyMessage = p.$('run-message').textContent;
+-    assert.match(readyMessage, /Picture ready/);
+-    for (let i = 0; i < 30; i++) p.frame();
++    await new Promise((resolve) => setTimeout(resolve, 15));
++    ticks(p, 30);
++    retained();
++    assert.equal(p.doc.activeElement.id, 'retry-button');
++    const fresh = await begin();
++    fresh.resolve();
++    await settle(() => {
++      p.frame(0);
++      return p.doc.body.dataset.flightState === 'running';
++    });
++    assert.notEqual(p.rendered.run, before.run);
++    assert.equal(
++      p.rendered.run.tick,
++      0,
++      'Preparation and direct Start cannot advance a fixed tick.',
++    );
++    assert.equal(p.rendered.run.status, 'running');
++    assert.equal(p.rendered.run.turnPolicy, policy);
++    assert.deepEqual(p.rendered.backdrop.pin, before.pin);
++    assert.equal(before.image.releases, 1, 'The earned drawable releases once after adoption.');
++    assert.equal(p.$('game-overlay').hidden, true, 'Ready does not require a second Start.');
++    assert.equal(
++      p.$('flight-preparation-status').hidden,
++      true,
++      'Adoption clears stale preparing feedback.',
++    );
++    assert.equal(p.doc.activeElement.id, 'game-canvas');
++    assert.equal(p.$('flight-preparation-cancel').hidden, true);
++    assert.doesNotMatch(
++      p.$('run-message').textContent,
++      /Preparing the chosen picture|stays paused/,
++    );
++    const runningMessage = p.$('run-message').textContent;
++    ticks(p, 30);
+     assert.ok(p.rendered.run.tick > 0);
+     assert.equal(p.doc.body.dataset.flightState, 'running');
+-    assert.equal(p.$('run-message').textContent, readyMessage);
++    assert.equal(p.$('run-message').textContent, runningMessage);
++    assert.equal(p.storage.getItem(profileKey), before.profile, 'Retry grants no second reward.');
++    assert.deepEqual(diagnostics, []);
+     assert.deepEqual(p.errors, []);
+   });
+ 
+-test('a failed retry decode retains its recovery warning and paused checkpoint', async (t) => {
+-  const { p, gate, checkpoint } = await readyRetry(t);
+-  gate.reject(new Error('Original decoder refused test image'));
+-  await settle(() => p.$('run-message').textContent.startsWith('Picture unavailable:'));
+-  for (let i = 0; i < 30; i++) p.frame();
+-  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+-  assert.match(p.$('run-message').textContent, /Original decoder refused test image/);
+-  assert.doesNotMatch(p.$('run-message').textContent, /Picture ready/);
++test('failed Retry decode retains its won checkpoint and exact art with friendly actionable feedback', async (t) => {
++  const { p, gate, retained, diagnostics } = await readyRetry(t);
++  const failure = new Error(`Presentation file unavailable: ./assets/${'0233'.repeat(16)}.png`);
++  gate.reject(failure);
++  await settle(() => p.$('flight-preparation-status').dataset.state === 'error');
++  ticks(p, 30);
++  retained();
++  assert.equal(
++    p.$('flight-preparation-status').textContent,
++    'Could not prepare this mission. Your result is kept. Try again.',
++  );
++  assert.doesNotMatch(
++    p.$('flight-preparation-status').textContent,
++    /0233|assets|Presentation file/,
++  );
++  assert.equal(p.$('flight-preparation-cancel').hidden, true);
++  assert.equal(p.$('retry-button').disabled, false);
++  assert.equal(p.doc.activeElement.id, 'retry-button');
++  assert.deepEqual(diagnostics, [['Mission preparation failed.', failure]]);
++  assert.deepEqual(p.errors, []);
+ });
+ 
+-test('backgrounding a pending retry cannot announce a running flight on late decode', async (t) => {
+-  const { p, gate, checkpoint } = await readyRetry(t);
++test('grid-center: foreground return cannot adopt or resume a cancelled Retry after late decode', async (t) => {
++  const { p, gate, retained, before, diagnostics } = await readyRetry(t, 'grid-center');
+   p.doc.hidden = true;
+   p.doc.emit('visibilitychange');
+   gate.resolve();
+-  await new Promise((resolve) => setTimeout(resolve, 10));
++  await settle(() => !p.$('retry-button').disabled);
++  await new Promise((resolve) => setTimeout(resolve, 15));
+   p.doc.hidden = false;
+   p.win.emit('focus');
+-  for (let i = 0; i < 30; i++) p.frame();
+-  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
++  ticks(p, 30);
++  retained();
+   assert.notEqual(p.doc.body.dataset.flightState, 'running');
+-  assert.doesNotMatch(p.$('run-message').textContent, /Picture ready/);
++  assert.equal(p.$('flight-preparation-cancel').hidden, true);
++  assert.equal(p.$('flight-preparation-status').hidden, true);
++  assert.equal(p.$('flight-preparation-status').textContent, '');
++  assert.equal(p.$('flight-preparation-status').dataset.state, undefined);
++  assert.notEqual(p.doc.activeElement.id, 'game-canvas');
++  p.$('retry-button').focus();
++  p.$('retry-button').click();
++  await settle(() => {
++    p.frame(0);
++    return p.doc.body.dataset.flightState === 'running';
++  });
++  assert.notEqual(p.rendered.run, before.run);
++  assert.equal(p.rendered.run.tick, 0);
++  assert.deepEqual(p.rendered.backdrop.pin, before.pin);
++  assert.equal(p.doc.activeElement.id, 'game-canvas');
++  assert.deepEqual(diagnostics, []);
++  assert.deepEqual(p.errors, []);
+ });
+diff --git a/game/test/terminal-navigation.test.mjs b/game/test/terminal-navigation.test.mjs
+index 55663c25..5de1eccb 100644
+--- a/game/test/terminal-navigation.test.mjs
++++ b/game/test/terminal-navigation.test.mjs
+@@ -160,7 +160,7 @@ test('controller reaches results plus visible headers; Confirm opens picture and
+   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+ });
+ 
+-test('a legal terminal self-contact focuses Retry and keyboard retry starts a fresh stopped attempt', async (t) => {
++test('a legal terminal self-contact focuses Retry and keyboard retry starts only after preparation', async (t) => {
+   const page = await soloPage(t, { campaign: failCampaign });
+   page.$('start-button').click();
+   page.key('ArrowDown');
+@@ -181,7 +181,16 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts a fr
+   assert.equal(page.doc.activeElement.id, 'retry-button');
+   key(page, 'Enter');
+   page.frame(0);
++  assert.equal(page.rendered.run, failed, 'The result survives while Retry prepares.');
++  assert.deepEqual(authoritativeCheckpoint(failed), failureCheckpoint);
++  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
++  await settle(() => {
++    page.frame(0);
++    return page.doc.body.dataset.flightState === 'running';
++  });
+   assert.notEqual(page.rendered.run, failed);
++  assert.equal(page.$('game-overlay').hidden, true);
++  assert.equal(page.doc.activeElement.id, 'game-canvas');
+   assert.equal(page.rendered.run.status, 'running');
+   assert.equal(page.rendered.run.tick, 0);
+   const initial = [page.rendered.run.player.x, page.rendered.run.player.y];
+@@ -190,44 +199,53 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts a fr
+   assert.deepEqual(page.errors, []);
+ });
+ 
+-test('held Confirm cannot cross result → next briefing; keyboard Pause and fresh Resume preserve stopped flight', async (t) => {
++test('held Confirm cannot cross Next adoption into another action; Pause requires fresh Resume', async (t) => {
+   const page = await win(t),
+     controls = controller(page, t);
+-  const previous = page.rendered.run;
++  const previous = page.rendered.run,
++    resultCheckpoint = authoritativeCheckpoint(previous);
+   page.$('next-button').focus();
+   controls.pad.buttons[0] = { pressed: true, value: 1 };
+   controls.frame();
+   for (let i = 0; i < 5; i++) controls.frame();
+-  assert.notEqual(page.rendered.run, previous);
+-  assert.equal(page.$('game-overlay').dataset.kind, 'ready');
+-  assert.equal(page.doc.activeElement.id, 'start-button');
+-  assert.equal(page.rendered.run.tick, 0);
+-  assert.equal(page.doc.body.dataset.flightState, 'briefing');
+-  controls.pad.buttons[0] = { pressed: false, value: 0 };
+-  controls.frame();
+-  assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
+-  assert.equal(page.rendered.run.tick, 0);
+-  key(page, 'Enter');
+-  await settle(
+-    () => page.doc.body.dataset.flightState === 'running',
+-    'A fresh confirmed attempt starts only after its picture is ready.',
+-  );
+-  page.frame(0);
+-  assert.equal(page.doc.body.dataset.flightState, 'running');
+-  steps(page, 6);
+-  const location = [page.rendered.run.player.x, page.rendered.run.player.y];
++  assert.equal(page.rendered.run, previous, 'Held Confirm does not replace a pending result.');
++  assert.deepEqual(authoritativeCheckpoint(previous), resultCheckpoint);
++  assert.equal(page.$('game-overlay').dataset.kind, 'won');
++  await settle(() => {
++    page.frame(0);
++    return page.doc.body.dataset.flightState === 'running';
++  });
++  const next = page.rendered.run;
++  assert.notEqual(next, previous);
++  assert.notEqual(next.levelId, previous.levelId);
++  assert.equal(next.tick, 0);
++  assert.equal(page.$('game-overlay').hidden, true, 'The accepted Next action starts directly.');
++  assert.equal(page.doc.activeElement.id, 'game-canvas');
++  const location = [next.player.x, next.player.y];
++  for (let i = 0; i < 6; i++) controls.frame();
++  assert.equal(page.rendered.run, next, 'Held Confirm cannot select another destination.');
++  assert.deepEqual([next.player.x, next.player.y], location, 'Menu Confirm adds no movement.');
+   page.key('Escape');
+   page.frame(0);
+   assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+   assert.equal(page.doc.activeElement.id, 'start-button');
+   assert.equal(page.doc.body.dataset.flightState, 'paused');
++  const paused = authoritativeCheckpoint(next);
++  for (let i = 0; i < 6; i++) controls.frame();
++  assert.equal(page.doc.body.dataset.flightState, 'paused', 'Still-held Confirm cannot Resume.');
++  assert.deepEqual(authoritativeCheckpoint(next), paused);
++  controls.pad.buttons[0] = { pressed: false, value: 0 };
++  controls.frame();
++  assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
+   key(page, 'Escape', { repeat: true });
+   page.frame(0);
+   assert.equal(page.doc.body.dataset.flightState, 'paused');
++  assert.deepEqual(authoritativeCheckpoint(next), paused);
+   key(page, 'Enter');
+   steps(page, 6);
+   assert.equal(page.doc.body.dataset.flightState, 'running');
+-  assert.deepEqual([page.rendered.run.player.x, page.rendered.run.player.y], location);
++  assert.equal(page.rendered.run, next);
++  assert.deepEqual([next.player.x, next.player.y], location);
+   assert.deepEqual(page.errors, []);
+ });
+ 
