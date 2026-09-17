@@ -524,6 +524,11 @@ function mountMotionLab() {
     updateAssetStatus();
   }
 
+  function setRangeReadout(id, output, visible, valueText) {
+    $(output).textContent = visible;
+    $(id).setAttribute('aria-valuetext', valueText);
+  }
+
   function updateAnimationControls() {
     const body = presets.characters[inspectedCharacter];
     $('animation-recipe').value = recipeOverrides.get(inspectedCharacter) || body.animationRecipe;
@@ -534,7 +539,13 @@ function mountMotionLab() {
       $('blade-count').value = rotor.bladeCount;
       $('blade-shape').value = rotor.bladeShape;
       $('rotor-radius').value = rotor.radius;
-      $('rotor-radius-output').textContent = `${Math.round(rotor.radius * 100)}% of body`;
+      const percent = Math.round(rotor.radius * 100);
+      setRangeReadout(
+        'rotor-radius',
+        'rotor-radius-output',
+        `${percent}% of body`,
+        `${percent} percent of body`,
+      );
     }
     $('inspection-blade-label').textContent = rotor
       ? `${rotor.bladeCount} blades / rotor`
@@ -795,7 +806,13 @@ function mountMotionLab() {
     });
     listen($('background-opacity'), 'input', (event) => {
       backgroundOpacity = Number(event.target.value);
-      $('background-opacity-output').textContent = `${Math.round(backgroundOpacity * 100)}%`;
+      const percent = Math.round(backgroundOpacity * 100);
+      setRangeReadout(
+        'background-opacity',
+        'background-opacity-output',
+        `${percent}%`,
+        `${percent} percent`,
+      );
       render();
     });
   }
@@ -1514,6 +1531,7 @@ function mountMotionLab() {
           selection.characterScale = value;
         },
         (value) => `${value.toFixed(2)}×`,
+        (value) => `${value.toFixed(2)} times`,
       ],
       [
         'cruise-speed',
@@ -1523,6 +1541,7 @@ function mountMotionLab() {
           motion.cruiseSpeed = value;
         },
         (value) => `${value} cells/s`,
+        (value) => `${value} cells per second`,
       ],
       [
         'turn-rate',
@@ -1532,16 +1551,17 @@ function mountMotionLab() {
           motion.turnRateDegrees = value;
         },
         (value) => `${value}°/s`,
+        (value) => `${value} degrees per second`,
       ],
     ];
     // Keep slider labels local and readable; no values are baked into source artwork.
-    for (const [id, output, initial, setter, label] of ranges) {
+    for (const [id, output, initial, setter, label, valueText] of ranges) {
       $(id).value = initial;
-      $(output).textContent = label(initial);
+      setRangeReadout(id, output, label(initial), valueText(initial));
       listen($(id), 'input', (event) => {
         const value = Number(event.target.value);
         setter(value);
-        $(output).textContent = label(value);
+        setRangeReadout(id, output, label(value), valueText(value));
         readouts();
         render();
       });

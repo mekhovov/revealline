@@ -1,0 +1,264 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "38777cb1184135a65eea3a1c720df12853add1acc62a9f26979b2ffd1550fb4d",
+  "originalGitBlob": "007ad51fcef994ff867048e622e33803cc8031e4",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "result": "PASS",
+    "observation": {
+      "viewport": [
+        390,
+        844
+      ],
+      "bodyWidth": 390,
+      "face": "pixel",
+      "size": "large",
+      "paused": true,
+      "ranges": [
+        {
+          "id": "rotor-radius",
+          "label": "Rotor radius",
+          "valueText": "16 percent of body",
+          "control": {
+            "x": 14,
+            "y": -627.90625,
+            "width": 362,
+            "height": 44,
+            "top": -627.90625,
+            "right": 376,
+            "bottom": -583.90625,
+            "left": 14
+          },
+          "labelBox": {
+            "x": 14,
+            "y": -693.90625,
+            "width": 362,
+            "height": 27,
+            "top": -693.90625,
+            "right": 376,
+            "bottom": -666.90625,
+            "left": 14
+          },
+          "wrapper": {
+            "x": 14,
+            "y": -693.90625,
+            "width": 362,
+            "height": 110,
+            "top": -693.90625,
+            "right": 376,
+            "bottom": -583.90625,
+            "left": 14
+          }
+        },
+        {
+          "id": "character-scale",
+          "label": "Character scale",
+          "valueText": "2.15 times",
+          "control": {
+            "x": 14,
+            "y": 5.5625,
+            "width": 362,
+            "height": 44,
+            "top": 5.5625,
+            "right": 376,
+            "bottom": 49.5625,
+            "left": 14
+          },
+          "labelBox": {
+            "x": 14,
+            "y": -60.4375,
+            "width": 362,
+            "height": 27,
+            "top": -60.4375,
+            "right": 376,
+            "bottom": -33.4375,
+            "left": 14
+          },
+          "wrapper": {
+            "x": 14,
+            "y": -60.4375,
+            "width": 362,
+            "height": 110,
+            "top": -60.4375,
+            "right": 376,
+            "bottom": 49.5625,
+            "left": 14
+          }
+        },
+        {
+          "id": "background-opacity",
+          "label": "Background opacity",
+          "valueText": "70 percent",
+          "control": {
+            "x": 14,
+            "y": 399.75,
+            "width": 362,
+            "height": 44,
+            "top": 399.75,
+            "right": 376,
+            "bottom": 443.75,
+            "left": 14
+          },
+          "labelBox": {
+            "x": 14,
+            "y": 333.75,
+            "width": 362,
+            "height": 27,
+            "top": 333.75,
+            "right": 376,
+            "bottom": 360.75,
+            "left": 14
+          },
+          "wrapper": {
+            "x": 14,
+            "y": 333.75,
+            "width": 362,
+            "height": 110,
+            "top": 333.75,
+            "right": 376,
+            "bottom": 443.75,
+            "left": 14
+          }
+        },
+        {
+          "id": "cruise-speed",
+          "label": "Cruise speed",
+          "valueText": "15.5 cells per second",
+          "control": {
+            "x": 14,
+            "y": 891.125,
+            "width": 362,
+            "height": 44,
+            "top": 891.125,
+            "right": 376,
+            "bottom": 935.125,
+            "left": 14
+          },
+          "labelBox": {
+            "x": 14,
+            "y": 825.125,
+            "width": 362,
+            "height": 27,
+            "top": 825.125,
+            "right": 376,
+            "bottom": 852.125,
+            "left": 14
+          },
+          "wrapper": {
+            "x": 14,
+            "y": 825.125,
+            "width": 362,
+            "height": 110,
+            "top": 825.125,
+            "right": 376,
+            "bottom": 935.125,
+            "left": 14
+          }
+        },
+        {
+          "id": "turn-rate",
+          "label": "Body turn response",
+          "valueText": "690 degrees per second",
+          "control": {
+            "x": 14,
+            "y": 1014.125,
+            "width": 362,
+            "height": 44,
+            "top": 1014.125,
+            "right": 376,
+            "bottom": 1058.125,
+            "left": 14
+          },
+          "labelBox": {
+            "x": 14,
+            "y": 948.125,
+            "width": 362,
+            "height": 27,
+            "top": 948.125,
+            "right": 376,
+            "bottom": 975.125,
+            "left": 14
+          },
+          "wrapper": {
+            "x": 14,
+            "y": 948.125,
+            "width": 362,
+            "height": 110,
+            "top": 948.125,
+            "right": 376,
+            "bottom": 1058.125,
+            "left": 14
+          }
+        }
+      ]
+    },
+    "commands": [
+      {
+        "args": [
+          "set",
+          "viewport",
+          "390",
+          "844"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "snapshot",
+          "-i"
+        ],
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "args": [
+          "scrollintoview",
+          "@e7"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "select",
+          "@e7",
+          "large"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "scrollintoview",
+          "#background-opacity"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "screenshot",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/settings-v0606/browser-fallback-capability/motion-slider-check/07-portrait-large-sliders.png"
+        ],
+        "exit": 0,
+        "stdout": "✓ Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/settings-v0606/browser-fallback-capability/motion-slider-check/07-portrait-large-sliders.png\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "eval",
+          "JSON.stringify({viewport:[innerWidth,innerHeight],bodyWidth:document.documentElement.scrollWidth,face:document.body.dataset.textFace,size:document.body.dataset.textSize,paused:document.querySelector('#play-pause').textContent==='Play',ranges:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,label:x.labels[0].textContent.trim(),valueText:x.getAttribute('aria-valuetext'),control:x.getBoundingClientRect().toJSON(),labelBox:x.labels[0].getBoundingClientRect().toJSON(),wrapper:x.parentElement.getBoundingClientRect().toJSON()}))})"
+        ],
+        "exit": 0,
+        "stdout": "\"{\\\"viewport\\\":[390,844],\\\"bodyWidth\\\":390,\\\"face\\\":\\\"pixel\\\",\\\"size\\\":\\\"large\\\",\\\"paused\\\":true,\\\"ranges\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"label\\\":\\\"Rotor radius\\\",\\\"valueText\\\":\\\"16 percent of body\\\",\\\"control\\\":{\\\"x\\\":14,\\\"y\\\":-627.90625,\\\"width\\\":362,\\\"height\\\":44,\\\"top\\\":-627.90625,\\\"right\\\":376,\\\"bottom\\\":-583.90625,\\\"left\\\":14},\\\"labelBox\\\":{\\\"x\\\":14,\\\"y\\\":-693.90625,\\\"width\\\":362,\\\"height\\\":27,\\\"top\\\":-693.90625,\\\"right\\\":376,\\\"bottom\\\":-666.90625,\\\"left\\\":14},\\\"wrapper\\\":{\\\"x\\\":14,\\\"y\\\":-693.90625,\\\"width\\\":362,\\\"height\\\":110,\\\"top\\\":-693.90625,\\\"right\\\":376,\\\"bottom\\\":-583.90625,\\\"left\\\":14}},{\\\"id\\\":\\\"character-scale\\\",\\\"label\\\":\\\"Character scale\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"control\\\":{\\\"x\\\":14,\\\"y\\\":5.5625,\\\"width\\\":362,\\\"height\\\":44,\\\"top\\\":5.5625,\\\"right\\\":376,\\\"bottom\\\":49.5625,\\\"left\\\":14},\\\"labelBox\\\":{\\\"x\\\":14,\\\"y\\\":-60.4375,\\\"width\\\":362,\\\"height\\\":27,\\\"top\\\":-60.4375,\\\"right\\\":376,\\\"bottom\\\":-33.4375,\\\"left\\\":14},\\\"wrapper\\\":{\\\"x\\\":14,\\\"y\\\":-60.4375,\\\"width\\\":362,\\\"height\\\":110,\\\"top\\\":-60.4375,\\\"right\\\":376,\\\"bottom\\\":49.5625,\\\"left\\\":14}},{\\\"id\\\":\\\"background-opacity\\\",\\\"label\\\":\\\"Background opacity\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"control\\\":{\\\"x\\\":14,\\\"y\\\":399.75,\\\"width\\\":362,\\\"height\\\":44,\\\"top\\\":399.75,\\\"right\\\":376,\\\"bottom\\\":443.75,\\\"left\\\":14},\\\"labelBox\\\":{\\\"x\\\":14,\\\"y\\\":333.75,\\\"width\\\":362,\\\"height\\\":27,\\\"top\\\":333.75,\\\"right\\\":376,\\\"bottom\\\":360.75,\\\"left\\\":14},\\\"wrapper\\\":{\\\"x\\\":14,\\\"y\\\":333.75,\\\"width\\\":362,\\\"height\\\":110,\\\"top\\\":333.75,\\\"right\\\":376,\\\"bottom\\\":443.75,\\\"left\\\":14}},{\\\"id\\\":\\\"cruise-speed\\\",\\\"label\\\":\\\"Cruise speed\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"control\\\":{\\\"x\\\":14,\\\"y\\\":891.125,\\\"width\\\":362,\\\"height\\\":44,\\\"top\\\":891.125,\\\"right\\\":376,\\\"bottom\\\":935.125,\\\"left\\\":14},\\\"labelBox\\\":{\\\"x\\\":14,\\\"y\\\":825.125,\\\"width\\\":362,\\\"height\\\":27,\\\"top\\\":825.125,\\\"right\\\":376,\\\"bottom\\\":852.125,\\\"left\\\":14},\\\"wrapper\\\":{\\\"x\\\":14,\\\"y\\\":825.125,\\\"width\\\":362,\\\"height\\\":110,\\\"top\\\":825.125,\\\"right\\\":376,\\\"bottom\\\":935.125,\\\"left\\\":14}},{\\\"id\\\":\\\"turn-rate\\\",\\\"label\\\":\\\"Body turn response\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"control\\\":{\\\"x\\\":14,\\\"y\\\":1014.125,\\\"width\\\":362,\\\"height\\\":44,\\\"top\\\":1014.125,\\\"right\\\":376,\\\"bottom\\\":1058.125,\\\"left\\\":14},\\\"labelBox\\\":{\\\"x\\\":14,\\\"y\\\":948.125,\\\"width\\\":362,\\\"height\\\":27,\\\"top\\\":948.125,\\\"right\\\":376,\\\"bottom\\\":975.125,\\\"left\\\":14},\\\"wrapper\\\":{\\\"x\\\":14,\\\"y\\\":948.125,\\\"width\\\":362,\\\"height\\\":110,\\\"top\\\":948.125,\\\"right\\\":376,\\\"bottom\\\":1058.125,\\\"left\\\":14}}]}\"\n",
+        "stderr": ""
+      }
+    ]
+  }
+}

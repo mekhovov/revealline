@@ -1,0 +1,149 @@
+{
+  "result": "PASS_SCOPED_BROWSER_SLIDER_CHECKS",
+  "observedAt": "2026-09-17T20:33:14.547358+00:00",
+  "sourceBase": "5f59f1dfdaca8df6fc737a1923631e120abdf580",
+  "runtimeOverrides": [
+    {
+      "path": "authoring/motion-lab/index.html",
+      "bytes": 21450,
+      "sha256": "9940a5d9265a52097a2101f07f2248323b44c3060964579da07d4785fa1f1d0d"
+    },
+    {
+      "path": "authoring/motion-lab/app.js",
+      "bytes": 68384,
+      "sha256": "743e218a25e8187bc8d42cb4dc5513334e0fd136f2103b75ddd80d6c1a4240bc"
+    }
+  ],
+  "browser": "Headless Chrome153.0.0.0 on macOS; agent-browser CDP; isolated owned profile",
+  "route": "http://127.0.0.1:60369/authoring/motion-lab/",
+  "interaction": "Real DOM-rendered pointer/keyboard through CDP. Read-only DOM inspection; no application-state or event injection. Plain preference changed via real game Settings in a second owned tab.",
+  "checks": [
+    "Five stable purpose labels focus respective range controls",
+    "Home/End obey min/max and ArrowLeft obeys step; Tab/ShiftTab returns",
+    "All five aria-valuetext and visible output values update with units",
+    "Background opacity70percent and body turn690degrees per second",
+    "Manual rotor radius28percent replaced by fpv-two recipe16percent; value/output agree",
+    "Paused preview remains paused during edits and preference adoption",
+    "Theme/Standard, Theme/Large, Plain/Large and Plain/Standard observed",
+    "390x844portrait Large and844x390landscape Plain/Large: all five44px-high ranges within horizontal viewport;1280x800Plain/Standard readable"
+  ],
+  "storageScope": "Range edits before opening game Settings left localStorage empty. Explicit reading changes wrote display preferences; normal game-home initialization also created the development library record in this isolated profile. No existing player profile accessed.",
+  "toolingFindings": [
+    "Two early click commands on the offscreen Pause button reported Done but did not change focus/state. Retained; explicit scrollintoview then click changed button to Play and focused play-pause. All subsequent pointer checks scrolled targets into view."
+  ],
+  "separateProductFinding": "Portrait Chromium native Choose File button displays white text on a pale background. Existing file-picker styling outside slider correction; screenshot07 preserves it.",
+  "limitations": [
+    "No screen reader or touch assistive technology",
+    "No physical touch/controller",
+    "No real browser200percent zoom or BFCache admission",
+    "No source release/public acceptance",
+    "No claimed foreground-CUA check"
+  ],
+  "referenceFiles": [
+    {
+      "path": "01-initial-snapshot.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "01-initial-snapshot.stdout",
+      "bytes": 7718,
+      "sha256": "8c87bd5aeb6895ae9b5f0f748ce4d3b0a91bb795e82d1751b463b92718c781cb"
+    },
+    {
+      "path": "02-pause.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "02-pause.stdout",
+      "bytes": 9,
+      "sha256": "7c8f56aecbeeb314c13c01df65278c8ff9c1d10cc764cfb6bb4fea2accaffc6f"
+    },
+    {
+      "path": "03-paused-snapshot.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "03-paused-snapshot.stdout",
+      "bytes": 7718,
+      "sha256": "8c87bd5aeb6895ae9b5f0f748ce4d3b0a91bb795e82d1751b463b92718c781cb"
+    },
+    {
+      "path": "04-paused-dom.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "04-paused-dom.stdout",
+      "bytes": 1550,
+      "sha256": "121d63a545091b1c601dc190f74e9d8c665c8239ee5db8606edc0d3074be7f57"
+    },
+    {
+      "path": "05-range-interactions.json",
+      "bytes": 35253,
+      "sha256": "1628f1c4fcbbab42e68212cbb4e1f38c1650ffb197269eb3c0c1366637cfad27"
+    },
+    {
+      "path": "06-recipe-snapshot.txt",
+      "bytes": 7738,
+      "sha256": "033780c3055c3c551173041773de1d98c89de62162083f5d55264bd24bdc25d9"
+    },
+    {
+      "path": "06-specific-values-recipe.json",
+      "bytes": 20320,
+      "sha256": "f1243a55e36ab786ebc0a378b5f985b471d02001696472e961de2c71a968d2b1"
+    },
+    {
+      "path": "07-portrait-large-sliders.png",
+      "bytes": 52314,
+      "sha256": "5f27c7faa84b9b80fc54f3a5b78a2beaa23db20a0810f6c79096cbdc5333c880"
+    },
+    {
+      "path": "07-portrait-large.json",
+      "bytes": 17672,
+      "sha256": "38777cb1184135a65eea3a1c720df12853add1acc62a9f26979b2ffd1550fb4d"
+    },
+    {
+      "path": "08-plain-through-settings.json",
+      "bytes": 8207,
+      "sha256": "63b8479f20e3b0d3e57b313812e5bbc7cd785764e110f49f507b6fa037251b21"
+    },
+    {
+      "path": "08-portrait-plain-large.png",
+      "bytes": 56150,
+      "sha256": "3a676114ca5bd060e05f5e42f775a7596907f8259bfdad4454d571dd69a77401"
+    },
+    {
+      "path": "09-desktop-plain-standard.png",
+      "bytes": 162830,
+      "sha256": "e3f006c8ae8552d284ba738a5b183c2d38f55e56c32fa434dcebea44f0a13b46"
+    },
+    {
+      "path": "09-landscape-plain-large.png",
+      "bytes": 102432,
+      "sha256": "2388bceec85d49203169ecbf451e0bf9447dadef92d8d93f4ec7eaf23e5a34df"
+    },
+    {
+      "path": "09-layouts.json",
+      "bytes": 19219,
+      "sha256": "12350180662ef15a4f1ca186440b1002d150337d6ae7d47a3e2407104a3c0f01"
+    },
+    {
+      "path": "app.js.served",
+      "bytes": 68384,
+      "sha256": "743e218a25e8187bc8d42cb4dc5513334e0fd136f2103b75ddd80d6c1a4240bc"
+    },
+    {
+      "path": "index.html.served",
+      "bytes": 21450,
+      "sha256": "9940a5d9265a52097a2101f07f2248323b44c3060964579da07d4785fa1f1d0d"
+    },
+    {
+      "path": "motion.png",
+      "bytes": 66348,
+      "sha256": "3aa027d4e179b9156226d6f5f6fc4256c3c1c3432bcf1fb375c4ca60b1a70200"
+    }
+  ]
+}

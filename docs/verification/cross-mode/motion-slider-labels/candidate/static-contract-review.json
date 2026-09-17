@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "rangeIds": [
+    "rotor-radius",
+    "character-scale",
+    "background-opacity",
+    "cruise-speed",
+    "turn-rate"
+  ],
+  "nativeInputAttributesUnchangedExceptLabelAndValueText": true,
+  "explicitLabels": "Each visible label has one matching for/id pair and the range references only that stable label.",
+  "cssSha256": "8840254e898b650ee1d83cec4d327666958597e81e32b6f02bff91715f1e9716",
+  "cssChanged": false,
+  "layoutBoundary": "Existing range class selectors retained; native wrapping/layout must still be observed."
+}
