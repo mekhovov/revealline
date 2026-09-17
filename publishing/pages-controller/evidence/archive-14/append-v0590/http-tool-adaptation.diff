@@ -1,0 +1,103 @@
+--- accepted-archive18/http_audit.py
++++ bound-archive14/http_audit.py
+@@ -1,4 +1,4 @@
+-"""Read every hash-pinned Archive18 HTTP body without persisting payloads.
++"""Read every hash-pinned Archive14 HTTP body without persisting payloads.
+ 
+ Adapted from the Archive11 auditor. Public execution requires an explicit --run;
+ there is no URL, inventory, or output-path override. Tests use an injected local
+@@ -20,15 +20,15 @@
+ import uuid
+ 
+ BASE_DIR = Path(__file__).resolve().parents[1]
+-INFRA = Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive18-v0581-preservation')
+-BASE = 'https://mekhovov.github.io/revealline-archive-18/'
+-COMMIT = 'eaaf9844f7294be17bd97672de3c5b483e7c1620'
+-SOURCE_COMMIT = 'f4b092ff1d3c0c59657d987ab3519c85707ee865'
+-SOURCE_TREE = '868c0fbacb90b90b5082728393906e8cb8068416'
+-AUTHORITY_SHA = '0d248c0e404663e9dec20b218e7996c207353cb80ce70c63b48a1475052fe5fb'
+-INVENTORY_SHA = 'c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6'
+-EXPECTED_FILES = 1327
+-EXPECTED_BYTES = 625402709
++INFRA = Path('/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-v0591-retention-plan/archive14-worktree')
++BASE = 'https://mekhovov.github.io/revealline-archive-14/'
++COMMIT = '3cdf85cfd5141756a5bc71d209f2d3224c3e7ff9'
++SOURCE_COMMIT = 'aafe02430e0f41a1c2eb092ac72939862fe83d2e'
++SOURCE_TREE = 'd49f32373080063c254670fc28696d43f0cfabfd'
++AUTHORITY_SHA = '1a00c8657510d74f0683845c4d58b0997b879ff89263cdb24502705d10555212'
++INVENTORY_SHA = 'ecee70a4688c06d8279260443407dddddbfaf0e3bbdf1a5da9e4e0a61fdaeccf'
++EXPECTED_FILES = 1342
++EXPECTED_BYTES = 625582144
+ SOCKET_TIMEOUT = 25
+ ATTEMPT_SECONDS = 90
+ AUDIT_SECONDS = 1800
+@@ -86,31 +86,31 @@
+ def pinned_inventory():
+     raw = (INFRA / 'expected-inventory.json').read_bytes()
+     if digest(raw) != INVENTORY_SHA:
+-        raise ValueError('Archive18 inventory pin changed')
++        raise ValueError('Archive14 inventory pin changed')
+     head = subprocess.check_output(['git', '-C', str(INFRA), 'rev-parse', 'HEAD'], text=True).strip()
+     committed = subprocess.check_output(['git', '-C', str(INFRA), 'show', SOURCE_COMMIT + ':expected-inventory.json'])
+     if head != SOURCE_COMMIT or committed != raw:
+-        raise ValueError('Archive18 inventory is not from its pinned infrastructure commit')
++        raise ValueError('Archive14 inventory is not from its pinned infrastructure commit')
+     tree = subprocess.check_output(['git', '-C', str(INFRA), 'rev-parse', 'HEAD^{tree}'], text=True).strip()
+     authority_raw = (BASE_DIR / 'hosted-binding.json').read_bytes()
+     if tree != SOURCE_TREE or digest(authority_raw) != AUTHORITY_SHA:
+-        raise ValueError('Archive18 source tree or hosted authority pin changed')
++        raise ValueError('Archive14 source tree or hosted authority pin changed')
+     authority = json.loads(authority_raw)
+     if (authority['status'] != 'HOSTED_READY_FOR_HTTP' or
+             authority['archiveCommit'] != COMMIT or authority['archiveTree'] != tree or
+             authority['sourceCheckoutCommit'] != head or authority['inventorySha256'] != INVENTORY_SHA):
+-        raise ValueError('Archive18 merged deployment differs from the held source tree')
++        raise ValueError('Archive14 merged deployment differs from the held source tree')
+     for pin in authority['evidence']:
+         evidence = (BASE_DIR / pin['path']).read_bytes()
+         if len(evidence) != pin['bytes'] or digest(evidence) != pin['sha256']:
+-            raise ValueError('Archive18 retained hosted evidence changed')
++            raise ValueError('Archive14 retained hosted evidence changed')
+     value = json.loads(raw)
+     if set(value) != {'base', 'files'} or value['base'] != BASE:
+-        raise ValueError('Archive18 base or inventory format changed')
++        raise ValueError('Archive14 base or inventory format changed')
+     rows = [validate_row(row) for row in value['files']]
+     if (len(rows) != EXPECTED_FILES or len({row['path'] for row in rows}) != EXPECTED_FILES or
+             sum(row['bytes'] for row in rows) != EXPECTED_BYTES):
+-        raise ValueError('Archive18 finite inventory changed')
++        raise ValueError('Archive14 finite inventory changed')
+     return raw, rows
+ 
+ 
+@@ -135,7 +135,7 @@
+             raise TimeoutError('Audit deadline reached before request')
+         request = urllib.request.Request(url, headers={
+             'Accept-Encoding': 'identity', 'Cache-Control': 'no-cache',
+-            'User-Agent': 'RevealLine-archive18-byte-audit/2.0',
++            'User-Agent': 'RevealLine-archive14-byte-audit/2.0',
+         })
+         result['requestStarted'] = True
+         with opener.open(request, timeout=min(SOCKET_TIMEOUT, max(0.1, deadline - started))) as response:
+@@ -197,7 +197,7 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument('--run', action='store_true', help='Audit the fixed public Archive18 inventory')
++    parser.add_argument('--run', action='store_true', help='Audit the fixed public Archive14 inventory')
+     parser.add_argument('--workers', type=int, choices=range(4, 9), default=6)
+     args = parser.parse_args()
+     raw, rows = pinned_inventory()
+--- accepted-archive18/test_http_audit.py
++++ bound-archive14/test_http_audit.py
+@@ -48,8 +48,8 @@
+ 
+     def test_pinned_inventory_validates_without_network(self):
+         raw, rows = audit.pinned_inventory()
+-        self.assertEqual(len(rows), 1327)
+-        self.assertEqual(sum(item['bytes'] for item in rows), 625402709)
++        self.assertEqual(len(rows), 1342)
++        self.assertEqual(sum(item['bytes'] for item in rows), 625582144)
+         self.assertEqual(audit.digest(raw), audit.INVENTORY_SHA)
+ 
+     def test_changed_hosted_authority_pin_refuses(self):

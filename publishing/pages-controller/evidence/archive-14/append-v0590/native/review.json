@@ -1,0 +1,20 @@
+{
+  "status": "SCOPED_NATIVE_ARCHIVE_PRESERVATION_PASS",
+  "observer": "root via Codex native keyboard browser API",
+  "at": "2026-09-17T04:21:15.179386+00:00",
+  "archiveCommit": "3cdf85cfd5141756a5bc71d209f2d3224c3e7ff9",
+  "deploymentId": 6495469425,
+  "routes": [
+    "https://mekhovov.github.io/revealline-archive-14/releases/v0.59.0/site/game/",
+    "https://mekhovov.github.io/revealline-archive-14/releases/v0.57.0/site/game/",
+    "https://mekhovov.github.io/revealline-archive-14/releases/"
+  ],
+  "keyboard": true,
+  "preservedOriginalEvidenceFiles": 83,
+  "allOriginalHashesIndependentlyReread": true,
+  "notesSha256": "1eecdb5a6f7e2621bb87f3d7330397872fc9faebaab15338b2a56170c44344b9",
+  "screenshots": "inline only",
+  "physicalDevices": false,
+  "offline": false,
+  "wholePhase": false
+}
