@@ -72,7 +72,7 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'motion.markerReady': 'Ready',
   'motion.markerUpdated': 'Updated',
   'motion.sharedReading':
-    'Text size is shared with the game. Theme or Plain text follows game Display settings.',
+    'Text size is shared with the game. Theme or Plain text follows Settings → Appearance & accessibility.',
   'motion.effectsCapped':
     'Shared or system reduced effects are active. The local preview choice is kept; movement and Play/Pause are unchanged.',
   'motion.effectsLocal':

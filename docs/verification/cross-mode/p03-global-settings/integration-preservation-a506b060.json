@@ -1,0 +1,161 @@
+{
+  "recordedAt": "2026-09-17T18:06:37.672578+00:00",
+  "kind": "read-only committed-source integration preservation; no execution or release qualification",
+  "scope": "Exact a506b060 tree before subsequent Motion Settings-destination copy and documentation status follow-ups; diagnostic branch not used",
+  "base": "a53d646153fc9dfb2d8f152fdc9dbde607782777",
+  "settingsOriginal": "c3fb3296085656d61b3a296e2f37c1520fd322e0",
+  "motionUtilityBase": "e4129b46e5d9e66563fb01b324b8855660298715",
+  "integratedTip": "a506b0606224c771353eb6f6160cf3a42dea662b",
+  "integratedTree": "98c39ee0537e4b1dd0b1784e7a85d73148e78458",
+  "rebasedFeatureCommits": [
+    "305f9917f2a83fb12f248320de6901d00e377052",
+    "8de5d9acfefcd29b86eae8f3b336b252014c6438",
+    "a506b0606224c771353eb6f6160cf3a42dea662b"
+  ],
+  "method": "Compare Git blob/type/mode records for complete nonoverlapping change sets; exact object identity establishes identical bytes. Read and review intentional overlaps independently.",
+  "settingsChangedPaths": 66,
+  "motionUtilityChangedPaths": 164,
+  "settingsOnly": {
+    "paths": 57,
+    "mismatches": [],
+    "pathModeTypeObjectInventorySHA256": "7fa65a60c4b9f5f7d04f99d6141fb33c1efd3924fcf6eb8b9781b08f17953f60"
+  },
+  "motionUtilityOnly": {
+    "paths": 155,
+    "mismatches": [],
+    "pathModeTypeObjectInventorySHA256": "f87ed3316e1812cdd62c29eab1e5a844eff3a167b968e4216a1081b5827ca949"
+  },
+  "unexpectedChangedPaths": [],
+  "overlapRecords": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "settingsSHA256": "f45bf95e797ffc797957747ab78d1d9255097ec9ff3c61a91af717ee5e2ed9bf",
+      "motionUtilitySHA256": "89ea72fde25980164c216f84c6b30cbe87fdd0f1d3039ee78651bb92582a4550",
+      "integratedSHA256": "9b259393671ad58d80d6b31f0c97d91f83a886b86f46ccd8771d73569ac811b5"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "settingsSHA256": "e5ecb4647308a78cbc5d53215d3faa7659bd3df424367766365ee34a2f805a47",
+      "motionUtilitySHA256": "8a5a9052429b430795fe259dd4bbd6a6b558a565de36369e468c68203f2e0024",
+      "integratedSHA256": "7792c07242c51dbfd56cea165d90fa0106f2af2a0502020c984ca1258866ccff"
+    },
+    {
+      "path": "docs/delivery-priorities.md",
+      "settingsSHA256": "2518eaf54b3a1e21803f009ed061a9314683a7906ff45bd6d1f8342b2fb203c2",
+      "motionUtilitySHA256": "347ca2a27016870e4414b6daaa66fb05de06ef6dd7e538fda08d31db4c247e27",
+      "integratedSHA256": "2e9dfab9c5c3c250c61fff8212927804c11a8b8cada40e0988d09191b2734d61"
+    },
+    {
+      "path": "docs/player-roadmap.md",
+      "settingsSHA256": "27189ba44186e9e100acebfd8cf90222a627690d4dcb89ca30047c757284adef",
+      "motionUtilitySHA256": "e5810ce62125ee162b61339563e1b03cfb3148252cd8aec3cf35c0c499ee8699",
+      "integratedSHA256": "ee1ccbcaa8372597295064b806dc4636fab58412bde31f736f1f5127811f1e0e"
+    },
+    {
+      "path": "game/build-config.json",
+      "settingsSHA256": "4ab60fb80b5652511ffc68f84e366e387008cf669ce5e1285b9ed17b7f22a2c2",
+      "motionUtilitySHA256": "1f67b1871d58e1762f48bae1a97e00f932d8d23169ba57ddb825617cb04eddaf",
+      "integratedSHA256": "ba1cb9ff79c7d594162eb2e403a9ee1e3024496b2da5f4c5a63c5ac5d85c1a11"
+    },
+    {
+      "path": "game/test/field-kit-surfaces.test.mjs",
+      "settingsSHA256": "35667f40f42339f548c66959c832198dbf902cef6d673bf31183ba42fe2fa248",
+      "motionUtilitySHA256": "3e54c19bbac304a1d9b461c6116939c11fa08242217e2c5f5be00e7089303864",
+      "integratedSHA256": "0b55265bbde0542dc74d676f14463607e18661b396848a9ed28811e7b62ff67a"
+    },
+    {
+      "path": "game/ui/field-kit-copy.mjs",
+      "settingsSHA256": "ce65d7d9b07a850218c58b8cec33b1bd3265fb372a4894024959446bf08539ee",
+      "motionUtilitySHA256": "ed6e58ba9886391100cfce6a2aa978aa180fadcf0c7b9a31312e6cbf483e1faa",
+      "integratedSHA256": "78ae259f4281aae684f70a6c0e0a0754ee9654e795a132de1c7812ccbbe136e5"
+    },
+    {
+      "path": "package-lock.json",
+      "settingsSHA256": "7f5d104177b90191ff8e5c6eccc6470652ccda9583e4b4371038de90e98f5cfc",
+      "motionUtilitySHA256": "309b88a812a331fb4263204eac8031630e227f110021decb3a966f93bfc74316",
+      "integratedSHA256": "7f5d104177b90191ff8e5c6eccc6470652ccda9583e4b4371038de90e98f5cfc"
+    },
+    {
+      "path": "package.json",
+      "settingsSHA256": "0edbf8af6dd92a0fc12b44a9956c1c330131600451773cf3e0d1fde366604cf9",
+      "motionUtilitySHA256": "803697e60745519f8c17f948c8668c9b8f6a282dccc0a675498562e347daf14f",
+      "integratedSHA256": "0edbf8af6dd92a0fc12b44a9956c1c330131600451773cf3e0d1fde366604cf9"
+    }
+  ],
+  "overlapChecks": {
+    "packageAndLockByteIdenticalToSettings": true,
+    "buildEqualsMotionConfigurationWithSettingsVersion": true,
+    "fiveMotionBuildIncludesRetained": true,
+    "skillRetainsSettingsLinesInOrder": true,
+    "skillRetainsMotionUtilityLinesInOrder": false,
+    "motionSurfaceTestPlusSettingsLabelsExact": true,
+    "copyIsExactFieldwiseUnionWithSettingsOverrides": true,
+    "docsRetainMotionUtilityLinesInOrder": {
+      "docs/cross-mode-execution.md": true,
+      "docs/delivery-priorities.md": true,
+      "docs/player-roadmap.md": true
+    },
+    "docsRetainSettingsAuthorityLink": {
+      "docs/cross-mode-execution.md": true,
+      "docs/delivery-priorities.md": true,
+      "docs/player-roadmap.md": true
+    },
+    "skillRetainsAllMotionUtilityAddedBlocksExactly": true
+  },
+  "copyUnionMismatchKeys": [],
+  "versions": {
+    "package.json": "0.60.6",
+    "package-lock.json": "0.60.6",
+    "package-lock.json packages[empty].version": "0.60.6",
+    "game/build-config.json": "0.60.6"
+  },
+  "motionBuildIncludeAdditions": [
+    "authoring/motion-lab/ability-labels.mjs",
+    "authoring/motion-lab/display-entry.mjs",
+    "authoring/motion-lab/display.mjs",
+    "authoring/motion-lab/png-preview.mjs",
+    "authoring/motion-lab/preview-loop.mjs"
+  ],
+  "conflictMarkerPaths": [],
+  "knownFollowup": {
+    "path": "game/ui/field-kit-copy.mjs",
+    "key": "motion.sharedReading",
+    "current": "Text size is shared with the game. Theme or Plain text follows game Display settings.",
+    "action": "Root separately updates destination wording to Settings \u2192 Appearance & accessibility. This is not lost Motion source."
+  },
+  "limitations": [
+    "No tests, browser, build, artifact freeze, archive, tag, selector or publication performed.",
+    "This receipt binds the exact integrated commit; subsequent uncommitted or committed follow-ups require their own source binding.",
+    "Historical evidence records are preserved bytes, not requalified results for this integrated source."
+  ],
+  "skillGuidanceReview": {
+    "wholeMotionFileSubsequenceFailure": "Expected: Settings deliberately replaces two preexisting Team Help/Options and paused Options scroller guidance paragraphs with the native Settings-dialog and category/owner contracts. This whole-file boolean is not a source-loss check.",
+    "motionUtilityDeltaBasis": "a53d646153fc9dfb2d8f152fdc9dbde607782777",
+    "motionUtilityAddedBlocks": [
+      {
+        "motionLineStart": 245,
+        "motionLineEnd": 246,
+        "operation": "insert",
+        "lineCount": 2,
+        "sha256": "dcf1b2e43f208f9f74ebac4da9fff3b66ec271dca5d2e3d4f111d111ccde15c7",
+        "exactBlockRetained": true
+      },
+      {
+        "motionLineStart": 578,
+        "motionLineEnd": 601,
+        "operation": "insert",
+        "lineCount": 24,
+        "sha256": "cf3441ccaf38fae2177426619e300bfe87522868cb16325f713625413c53c44c",
+        "exactBlockRetained": true
+      }
+    ],
+    "conclusion": "Every Motion/utility-specific added block is retained byte-for-byte. All Settings skill lines are retained in order. The two changed legacy paragraphs are intentional Settings corrections, not deleted Motion/utility additions."
+  },
+  "processNote": {
+    "diagnosticCommit": "6a0870133fb0abd34560bdfd1477862cb7764414",
+    "diagnosticBranch": "codex/global-settings-rebase-diagnostic-6a087013",
+    "observed": "Local diagnostic branch exists and was excluded from all preservation input comparisons. Current a506b060 changed-path text scan has no conflict markers.",
+    "parentReported": "The initial scripted conflict-resolution attempt was discarded and never pushed; the clean c3 backup was restored and atomic resolutions were rerun. Remote publication absence was not independently audited."
+  },
+  "finalizedAt": "2026-09-17T18:07:58.626792+00:00"
+}
