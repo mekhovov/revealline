@@ -1,0 +1,17 @@
+{
+  "commit": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "tree": "df6a6e83dcca0b4b55c402d6804538d0ea43ef37",
+  "pid": 69859,
+  "port": 60353,
+  "url": "http://127.0.0.1:60353/game/",
+  "scope": "Replay disabled-primary visual correction; no runtime JS change. baseline",
+  "runtimeOverrides": {},
+  "urls": [
+    "http://127.0.0.1:60353/game/replay-theater/"
+  ],
+  "faultPath": "game/build-info.json",
+  "limits": {
+    "requestLogBytes": 1048576,
+    "requestEvents": 2000
+  }
+}

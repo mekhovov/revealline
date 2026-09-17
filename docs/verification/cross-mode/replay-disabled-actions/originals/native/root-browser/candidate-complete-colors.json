@@ -1,0 +1,13 @@
+{
+  "background": "rgb(16, 25, 35)",
+  "border": "rgb(66, 85, 99)",
+  "borderStyle": "dashed",
+  "color": "rgb(165, 178, 187)",
+  "disabled": true,
+  "focus": "restart",
+  "text": "Play",
+  "viewport": [
+    1280,
+    720
+  ]
+}

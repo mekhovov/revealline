@@ -1,0 +1,37 @@
+{
+  "at": "2026-09-17T18:56:16.949772+00:00",
+  "base": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "checks": [
+    {
+      "name": "final-diff-check",
+      "args": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "final-format",
+      "args": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--config",
+        ".prettierrc.json",
+        "--check",
+        "game/ui/field-kit-surfaces.css",
+        "game/replay-theater/theater.css",
+        "game/build-config.json",
+        "package.json",
+        "package-lock.json"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "versions": "three files synchronized to0.60.7; all nonversion JSON values equal exact base",
+  "testsNotRerun": "Unchanged29-test cohort perNode already passed; packaging adds versions/evidence/doc link and whitespace-only CSS wrap. Full final-source qualification remains pending."
+}

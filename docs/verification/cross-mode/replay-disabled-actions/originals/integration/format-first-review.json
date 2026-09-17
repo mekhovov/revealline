@@ -1,0 +1,13 @@
+{
+  "actualSourcePathFormatExit": 1,
+  "stdout": "format.stdout",
+  "stderr": "format.stderr",
+  "oldCachePathFileInfo": {
+    "ignored": true,
+    "inferredParser": null
+  },
+  "assessment": "Earlier cache-path format invocation did not inspect ignored candidate files. The actual worktree-path check caught one whitespace-only hover-selector wrap. Old receipts are retained; this record corrects their evidentiary limit.",
+  "formatOnlyDiff": "format-only.diff",
+  "beforeSha256": "1df68e2cae404a23e19d305cd41e21e0f2f5dad4632421beeb64f2b763c70704",
+  "afterSha256": "4f279f5bcb94e60cb1533814bb3078d708bc017841e025d7152515b3136c6f7b"
+}

@@ -15,6 +15,10 @@ Changing Interface preserves selection, prepared original bytes, dirty pixels, U
 
 Replay's Interface remains usable before content finishes loading and after a startup error. Jump to playback preserves browser fragment navigation and then focuses a usable transport action, unless newer input, focus or backgrounding supersedes it. Completion hands focused Play/Step to Restart; unrelated editor focus stays in place. Display changes preserve recording identity, playback position, verification and play/pause intent. They cannot earn rewards or write progress. A terminal exit prevents late startup from rebuilding the closed page.
 
+## Disabled transport actions
+
+Primary action colors apply only while the control is usable. Guard both shared primary-ID styles and legacy Replay styles against native `disabled` and `aria-disabled="true"`, including hover. Keep the shared muted/panel/line disabled treatment, browser disabled semantics and the existing completion handoff to Restart. Review computed colors in empty, loading, ready and completed playback; a CSS source assertion alone cannot establish the cascade. This correction remains a candidate until its exact-source and public gates pass. The [scoped v0.60.7 candidate record](verification/cross-mode/replay-disabled-actions/README.md) retains the original tests, before/after browser observations and their limits.
+
 ## Return and lifetime
 
 A persisted return rereads shared storage and current system reduction. An unsaved local choice remains authoritative until explicitly saved; a foreign record cannot silently replace it. Repeated delivery of the same storage value does not create another preference revision. Page return does not imply explicit Resume.

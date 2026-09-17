@@ -542,6 +542,8 @@ Repeated Pause rendering is not a new focus request. Retain the selected action 
 
 For Replay focus, let a native Jump anchor perform its fragment default before an owned deferred handoff to a usable transport control. Newer focus/input, cancellation or backgrounding retires that handoff. When completion disables focused Play/Step, move to Restart only while that completing control still owns the journey. Preserve unrelated editor focus and recorded checkpoints; qualify native browser defaults separately from the modeled regression.
 
+When primary controls use ID selectors, guard both shared and route-local active/hover styles against native disabled and `aria-disabled="true"`. Otherwise legacy specificity can leave an unavailable action looking primary. Preserve the existing semantic disabled state, focus handoff and recorded progress. Compare native computed colors across empty/loading/ready/completed states; do not add new navigation owners or treat a source-string check as rendered-state evidence.
+
 For cold-module startup tests, await an observable application boundary such as entry into a deliberately held fetch; do not count event-loop turns as elapsed startup time. Assert early preferences while that fetch remains held, propagate import failure, and clear bounded diagnostic timers. On any failure, close the host, release and drain pending imports, retire late owners, then restore globals. Preserve failed hosted originals and run fresh exact-source qualification after correction.
 
 ## Team live-shell and focused-action clearance

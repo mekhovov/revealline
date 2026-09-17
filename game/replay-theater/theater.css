@@ -147,14 +147,14 @@ select:disabled {
   opacity: 0.5;
   cursor: default;
 }
-button#play-pause,
-button#load-example {
+button#play-pause:not(:disabled):not([aria-disabled='true']),
+button#load-example:not(:disabled):not([aria-disabled='true']) {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
-button#play-pause:hover:enabled,
-button#load-example:hover:enabled {
+button#play-pause:hover:enabled:not([aria-disabled='true']),
+button#load-example:hover:enabled:not([aria-disabled='true']) {
   background: #113f38;
 }
 :focus-visible,
