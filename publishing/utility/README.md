@@ -70,6 +70,12 @@ received by GitHub; a failed send may also have transmitted additional bytes.
 A null count means it was unavailable. No exception text, token, request or
 response headers, URL or response body is included in these diagnostics.
 
+The fixed exception labels include the standard SSL subtypes `SSLEOFError`,
+`SSLZeroReturnError`, `SSLSyscallError`, `SSLWantReadError`, `SSLWantWriteError`
+and `SSLCertVerificationError`. Arbitrary subclass names and all exception text
+remain suppressed; no errno field is added. A retained `OtherError` from an older
+attempt cannot establish that a TLS error occurred or identify its subtype.
+
 The transport and verification rules remain unchanged: no retry, redirect,
 automatic deletion or overwrite; both frozen members are verified before any
 POST, and completed originals remain subject to exact draft/tag/asset checks.
