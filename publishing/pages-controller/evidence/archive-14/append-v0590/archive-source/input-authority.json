@@ -1,0 +1,117 @@
+{
+  "format": "revealline-archive-preservation-candidate.v1",
+  "status": "LOCAL_CANDIDATE_ONLY",
+  "recordedAt": "2026-09-15T12:15:31.285072+00:00",
+  "archiveId": "archive-14",
+  "repository": "mekhovov/revealline-archive-14",
+  "templateRepository": "mekhovov/revealline-archive-12",
+  "templateCommit": "48fadddd098af0e3e71e7913445144731d6da259",
+  "toolingCommit": "0594b60136db000c9d6c87527c7885c2c51a2562",
+  "extractorSha256": "38081b1791b49cb7328d18b4d4325c2876bb3bc8d7db03f4610f8d8a7c4bf91b",
+  "publishedMetadataCommit": "74f289510617603c28768bb3f6bfd8e9f7a72cdd",
+  "version": "v0.57.0",
+  "sourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+  "sourceTree": "7cd40e4ef8bf975e7eb2795cdd2669aa18811a57",
+  "tagObject": "c3fd6145392491748c4578eef15b51983af84f9e",
+  "releaseId": 389093107,
+  "publishedAt": "2026-09-15T11:44:28Z",
+  "metadataPins": [
+    {
+      "path": "metadata/v0.57.0/release.json",
+      "bytes": 465,
+      "sha256": "e03f57b85893dd27d9bb122c2d3cea6795660658a8caf59368b935c77b343f6d",
+      "releaseAssetId": 565581936
+    },
+    {
+      "path": "metadata/v0.57.0/manifest.json",
+      "bytes": 121400,
+      "sha256": "83aecda2a3ec5d6ec5e02cfedc5c61b2fcbc592f923fe739d58c81d23b3bf017",
+      "releaseAssetId": 565581935
+    },
+    {
+      "path": "metadata/v0.57.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "130f887dcb5144706ae2efe1676914f9ab1a501dd1f2765bd53dc757a197085a",
+      "releaseAssetId": 565581939
+    },
+    {
+      "path": "metadata/v0.57.0/source-qualification.json",
+      "bytes": 51091,
+      "sha256": "fa7619fb0633fb20e45def339ff94421b4862eaccd2386ff608c0d0a1f8344bb",
+      "releaseAssetId": 565581746
+    }
+  ],
+  "retainedReleaseAssets": [
+    {
+      "name": "distribution.zip",
+      "id": 565581940,
+      "bytes": 312615996,
+      "digest": "sha256:1727711a87b914d88ea5769915b17907ac001965c23dc036a8865bfd5ac1c31d"
+    },
+    {
+      "name": "distribution.zip.sha256",
+      "id": 565581939,
+      "bytes": 83,
+      "digest": "sha256:130f887dcb5144706ae2efe1676914f9ab1a501dd1f2765bd53dc757a197085a"
+    },
+    {
+      "name": "manifest.json",
+      "id": 565581935,
+      "bytes": 121400,
+      "digest": "sha256:83aecda2a3ec5d6ec5e02cfedc5c61b2fcbc592f923fe739d58c81d23b3bf017"
+    },
+    {
+      "name": "p01-source-evidence.zip",
+      "id": 565582033,
+      "bytes": 9269976,
+      "digest": "sha256:786433a7764fdc4b41f3c08a3d1397324d12d0a102bae87033fa3b42e933dc2d"
+    },
+    {
+      "name": "qualification-evidence-record.json",
+      "id": 565582034,
+      "bytes": 2680,
+      "digest": "sha256:a81ddebcb6d80b2334b21eccff24a69274dd0fa7630245cdf658419480b47977"
+    },
+    {
+      "name": "release.json",
+      "id": 565581936,
+      "bytes": 465,
+      "digest": "sha256:e03f57b85893dd27d9bb122c2d3cea6795660658a8caf59368b935c77b343f6d"
+    },
+    {
+      "name": "source-qualification-evidence.zip",
+      "id": 565581938,
+      "bytes": 6096915,
+      "digest": "sha256:70cd6ce77182fbc0d4a204ef19f6a7e37bfe5e28b5127b7cc7c28b2c3787a47b"
+    },
+    {
+      "name": "source-qualification.json",
+      "id": 565581746,
+      "bytes": 51091,
+      "digest": "sha256:fa7619fb0633fb20e45def339ff94421b4862eaccd2386ff608c0d0a1f8344bb"
+    },
+    {
+      "name": "source.tar",
+      "id": 565581751,
+      "bytes": 793866240,
+      "digest": "sha256:cc258e77789b7351eacba84b5a04f4719d84998585b494d4ddded28bbd465058"
+    },
+    {
+      "name": "verification.json",
+      "id": 565582037,
+      "bytes": 1917,
+      "digest": "sha256:63081b413aa88c055094578a761b7a4504a17a9a8f9a2512fdc47547c0f762e5"
+    }
+  ],
+  "capacity": {
+    "files": 662,
+    "bytes": 312553884,
+    "archiveBudgetBytes": 800000000,
+    "archiveHeadroomBytes": 487446116,
+    "mainBudgetBytes": 950000000,
+    "hostedMinimumFreeBytes": 3221225472,
+    "localBulkExecution": false
+  },
+  "preservation": "All654 manifest bodies remain exact. Original metadata and qualification copied byte-for-byte; exporter adds only existing build marker/checksum, archive root and canonical-main explorer bridge. Original312615996-byte ZIP and793866240-byte source TAR remain immutable GitHub Release assets, not duplicated into archive site.",
+  "scope": "No GitHub creation/push/dispatch/Pages/main selector or tag mutation; no original game rebuild, bulk local download, current public acceptance or P02 progress."
+}

@@ -1,0 +1,64 @@
+{
+  "status": "RELATED_HUNKS_AND_ALL_STAGED_BYTES_REVIEWED",
+  "files": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "bytes": 3110,
+      "sha256": "87d1dd57363db1de7910041511413f68fdb87fc912daa3bd7c12a40ed8876840"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3418,
+      "sha256": "3eb014cb409e6371b279dc021216094210987a15c7b4040506c8bafc44a83a9e"
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 277359,
+      "sha256": "ecee70a4688c06d8279260443407dddddbfaf0e3bbdf1a5da9e4e0a61fdaeccf"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1112,
+      "sha256": "b2c2e4459b8c5b0e9db733a929e3b72924bac0ec6d1e09297e9663aa1d1d0a46"
+    },
+    {
+      "path": "source-lock.json",
+      "bytes": 2263,
+      "sha256": "68b4dd029ff31c59096182fb423b29eba3295434d8fa0881cd937425800cd966"
+    },
+    {
+      "path": "tools/test_prepare.py",
+      "bytes": 17273,
+      "sha256": "920c212b737468aa0018ddbb76f3a8082f808a1e1303fd2dcef9b85caba98e10"
+    },
+    {
+      "path": "input-authority-v0590.json",
+      "bytes": 3646,
+      "sha256": "1a8d28fe93be3ef505f658063d9ff43ffdf1adb878a2029bdc5b1a30022c56cb"
+    },
+    {
+      "path": "metadata/v0.59.0/release.json",
+      "bytes": 465,
+      "sha256": "2dbd1647375c2421456b68b438d8a9f8a7387275c149e1f32f7b32b31b9a0ab5"
+    },
+    {
+      "path": "metadata/v0.59.0/manifest.json",
+      "bytes": 124847,
+      "sha256": "1884a253f9caa94cb3488dc4e69844e1dd62e383358f0199337bf6a8c64eca6b"
+    },
+    {
+      "path": "metadata/v0.59.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "f03849ed55cb06e38179dcaecb6653e25745b3c6cd8d5f7cbb942d70fcd5dcf6"
+    },
+    {
+      "path": "metadata/v0.59.0/source-qualification.json",
+      "bytes": 64871,
+      "sha256": "65322d7765c92c3ae16b71ac95d0109c34294946e4a93a31bb2269511dd0bbc3"
+    }
+  ],
+  "unchangedHistoricalMetadata": true,
+  "unchangedOriginalExtractionGuards": true,
+  "localTests": 20,
+  "payloadsDownloadedLocally": false
+}
