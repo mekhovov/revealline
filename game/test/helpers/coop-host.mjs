@@ -9,6 +9,29 @@ import { installCoopPresentation, waitFor } from './coop-presentation-fixture.mj
 const html = await readFile(new URL('../../couch/relay-rescue.html', import.meta.url), 'utf8');
 let sequence = 0;
 
+/** Finite native dialog state; return focus remains the production host's work. */
+export function modelTeamDialogs(doc) {
+  // Model only native dialog state/default cancel; production owns its lifecycle.
+  for (const dialog of doc.querySelectorAll('dialog')) {
+    dialog.hidden = true;
+    dialog.showModal = () => {
+      dialog.emit('beforetoggle', { newState: 'open', oldState: 'closed', bubbles: false });
+      dialog.open = true;
+      dialog.hidden = false;
+      dialog.setAttribute('open', '');
+      dialog.querySelector('button:not(:disabled)')?.focus();
+    };
+    dialog.close = () => {
+      if (!dialog.open) return;
+      dialog.open = false;
+      dialog.hidden = true;
+      dialog.removeAttribute('open');
+      if (dialog.contains(doc.activeElement)) doc.body.focus();
+      dialog.emit('close', { bubbles: false });
+    };
+  }
+}
+
 /** Real markup and game modules, with a minimal DOM, inert Canvas, and controlled frame callbacks. */
 export async function page(
   t,
@@ -32,25 +55,7 @@ export async function page(
   doc.parentNode = win;
   mountCouch(doc, html);
   const $ = (id) => doc.getElementById(id);
-  // Model only native dialog state/default cancel; production owns its lifecycle.
-  for (const dialog of doc.querySelectorAll('dialog')) {
-    dialog.hidden = true;
-    dialog.showModal = () => {
-      dialog.emit('beforetoggle', { newState: 'open', oldState: 'closed', bubbles: false });
-      dialog.open = true;
-      dialog.hidden = false;
-      dialog.setAttribute('open', '');
-      dialog.querySelector('button:not(:disabled)')?.focus();
-    };
-    dialog.close = () => {
-      if (!dialog.open) return;
-      dialog.open = false;
-      dialog.hidden = true;
-      dialog.removeAttribute('open');
-      if (dialog.contains(doc.activeElement)) doc.body.focus();
-      dialog.emit('close', { bubbles: false });
-    };
-  }
+  modelTeamDialogs(doc);
   if (nativeVisibility) {
     for (const element of doc.querySelectorAll('*')) {
       for (const key of ['hidden', 'disabled']) {

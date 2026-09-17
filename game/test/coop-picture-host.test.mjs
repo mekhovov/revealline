@@ -332,9 +332,10 @@ test('BFCache suspension keeps accepted artwork and shared preferences; terminal
   f.win.emit('pageshow', { persisted: true });
   f.tick(120);
   assert.deepEqual(hud(f), before);
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
   f.choose('coop-text-face', 'plain');
   assert.equal(f.doc.body.dataset.textFace, 'plain');
+  f.$('coop-settings-close').click();
   f.$('coop-resume').click();
   f.tick(90);
   assert.equal(lastImage(f), image);
@@ -376,7 +377,7 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   const before = hud(f),
     image = lastImage(f),
     reads = f.artwork.calls.reads.length;
-  f.disclose('coop-options');
+  f.$('coop-settings-open').click();
   f.choose('coop-text-face', 'plain');
   f.choose('coop-text-size', 'large');
   for (const [id, value] of [

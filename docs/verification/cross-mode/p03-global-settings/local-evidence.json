@@ -1,0 +1,178 @@
+{
+  "recordedAt": "2026-09-17T16:59:22.929249+00:00",
+  "status": "local candidate; not release acceptance",
+  "baseSource": "a53d646153fc9dfb2d8f152fdc9dbde607782777",
+  "branch": "codex/global-settings",
+  "candidateVersion": "0.60.6",
+  "localHTTP": "http://127.0.0.1:8873/",
+  "sourceBindings": [
+    {
+      "path": "game/ui/settings-panels.mjs",
+      "bytes": 4427,
+      "sha256": "668407411e337bf5da1959b5c8d62e5b473bdbfec27d486767bee2c733d25e5b",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/ui/settings.css",
+      "bytes": 2302,
+      "sha256": "b2c9b3e4b17f5501bedf5a1f9292288273720d30b7580d68b739d67554fc40e5",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 55184,
+      "sha256": "e97758a34d8057bb3d66f3c46350c17f7588d476c97606e2266371c1d49f138a",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 17275,
+      "sha256": "6ae7f286fa05e7a3a47dfd98db906e7b77cb13745de76ded50b64ef3ef2f1c67",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 54824,
+      "sha256": "fe57684a2ff923a9dd29c32fd72a70233313c1d35f6be86adfa4d768488094fb",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/audio-preferences.mjs",
+      "bytes": 5918,
+      "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/menu-style-preferences.mjs",
+      "bytes": 5816,
+      "sha256": "67beab52f37053576a26ada91616d98f3b472d485022a4cdc2e7d796fac9d58b",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 72497,
+      "sha256": "bad5efb9832e732e89761f1224ad1abaa7fee78315dc74f9851e37ff3ab3b169",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 20288,
+      "sha256": "1bf7be68ffdd27087819442567e37199046cb5227088c6da8067a9abcf607f9e",
+      "servedEqualsSource": true
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 20752,
+      "sha256": "03a2cc94eed2de61771056bf9822c6de6563c768a36fe8b1fe5756b65cdb8264",
+      "servedEqualsSource": true
+    }
+  ],
+  "tests": {
+    "node": "20.19.5",
+    "files": 16,
+    "tests": 279,
+    "passed": 279,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "receiptSHA256": "ea230d0d9625b785aae89647e7a5ce8428c57ac56354b166ffacee3bd4874678",
+    "note": "Complete 16-file repeat after the Team quick-sound placement correction: 279 passed, no failed/skipped/cancelled tests."
+  },
+  "browserEvidence": {
+    "type": "native Chromium keyboard/pointer with viewport overrides; not hardware certification",
+    "soloPortrait": {
+      "viewport": [
+        390,
+        844
+      ],
+      "dialogWidth": 374,
+      "dialogClientWidth": 374,
+      "dialogScrollWidth": 374,
+      "categoryHeights": [
+        52.59375,
+        52.59375,
+        67.1875,
+        67.1875
+      ],
+      "closeFocus": "shell-options",
+      "keyboard": "Appearance ArrowRight selects Game data exactly once"
+    },
+    "teamPortrait": {
+      "viewport": [
+        390,
+        844
+      ],
+      "dialogWidth": 358,
+      "reducedEffectsRow": {
+        "width": 314,
+        "height": 44
+      },
+      "appearance": "Plain, Large, Ukrainian blue/yellow adopted by Solo on a cold browser Back"
+    },
+    "versusLandscape": {
+      "viewport": [
+        844,
+        390
+      ],
+      "documentScrollWidth": 844,
+      "settingsWidth": 800,
+      "categorySize": [
+        180,
+        78
+      ],
+      "focusTopAfterCorrection": 8,
+      "scrollMargin": 8,
+      "pauseAfterSettings": "Both boards paused.",
+      "clockAfterSettings": "1:30",
+      "returnFocus": "race-options"
+    },
+    "teamLandscape": {
+      "viewport": [
+        844,
+        390
+      ],
+      "pauseAfterSettings": "Both players paused",
+      "clockAfterSettings": "0:00",
+      "coverageAfterSettings": "0.0%",
+      "returnFocus": "coop-settings-open"
+    },
+    "teamHandheld": {
+      "viewport": [
+        1280,
+        800
+      ],
+      "dialog": {
+        "x": 120,
+        "y": 73.3671875,
+        "width": 1040,
+        "height": 653.265625,
+        "clientWidth": 1036,
+        "scrollWidth": 1036
+      },
+      "minimumCategoryHeight": 78,
+      "rememberedCategory": "Audio"
+    },
+    "teamQuickSound": {
+      "viewport": [
+        1280,
+        800
+      ],
+      "keyboard": "Seven Tab presses from Resume reached quick Sound, Return muted it",
+      "label": "Sound: off",
+      "ariaPressed": "false",
+      "focus": "coop-quick-sound",
+      "pausedTitle": "Both players paused",
+      "clock": "0:00",
+      "location": "Inside moving lobby/pause tools; within controller navigation root"
+    }
+  },
+  "openGates": [
+    "Motion integration before release",
+    "complete exact-source hosted test/build/production qualification",
+    "frozen artifact and public bytes/play",
+    "physical controllers and touch",
+    "meaningful 200% zoom and full accessibility matrix",
+    "verified native BFCache admission; observed Back was a cold load",
+    "whole P03/P05 and complete visual themes"
+  ]
+}

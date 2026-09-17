@@ -1,3 +1,4 @@
+import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
   waitFor as waitForTeamPicture,
@@ -27,7 +28,20 @@ function change(page, id, value) {
 }
 function reaches(page, id) {
   for (let count = 0; count < 30; count++) {
-    page.doc.activeElement.emit('keydown', { key: 'Tab', code: 'Tab', repeat: false });
+    const active = page.doc.activeElement,
+      event = active.emit('keydown', { key: 'Tab', code: 'Tab', repeat: false }),
+      dialog = active.closest('dialog[open]');
+    // Model only an unprevented native Tab default within the actual modal.
+    if (!event.defaultPrevented && dialog) {
+      const choices = [...dialog.querySelectorAll('button,a,input,select,textarea,summary')].filter(
+        (node) =>
+          !node.disabled &&
+          node.tabIndex >= 0 &&
+          !node.closest('[hidden],[inert],[aria-hidden="true"]') &&
+          node.getClientRects().length,
+      );
+      choices[(choices.indexOf(active) + 1) % choices.length]?.focus();
+    }
     if (page.doc.activeElement === page.$(id)) return;
   }
   assert.fail(`Actual menu traversal must reach ${id}`);
@@ -44,6 +58,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     win = new Events();
   doc.parentNode = win;
   mountCouch(doc, teamHTML);
+  modelTeamDialogs(doc);
   const $ = (id) => doc.getElementById(id),
     frames = new Map(),
     originals = new Map();
@@ -209,8 +224,8 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     page.tick();
     const geometry = page.geometry(),
       clock = page.$('coop-clock').textContent;
-    page.$('coop-options').open = true;
-    page.$('coop-options-toggle').focus();
+    page.$('coop-settings-open').click();
+    page.$('coop-settings-tab-display').focus();
     for (const id of ['coop-text-face', 'coop-text-size', 'coop-reduced']) reaches(page, id);
     change(page, 'coop-text-face', 'pixel');
     change(page, 'coop-text-size', 'standard');
@@ -239,7 +254,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
         writes = store.writes.length;
       page.$('race-options').focus();
       page.$('race-options').click();
-      assert.equal(page.doc.activeElement.id, 'race-text-face');
+      assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
       assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), display);
       assert.equal(store.writes.length, writes, 'Opening Options does not save a preference');
       assert.equal(page.state(), 'paused');
@@ -313,7 +328,7 @@ test('Versus controller selects the real display control without replacing or st
   const displayBefore = store.getItem(DISPLAY_PREFERENCES_KEY);
   page.$('race-options').click();
   page.frame();
-  assert.equal(page.doc.activeElement.id, 'race-text-face');
+  assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
   assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), displayBefore);
   const before = page.checkpoint();
   page.focus('race-text-size');

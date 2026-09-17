@@ -212,6 +212,7 @@ test('explicit menu release permits the other player to join, never transfers a 
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
   f.$('race-options').click();
+  f.$('race-settings-tab-controls').click();
   f.frame();
   f.focus('race-menu-release');
   f.pulse(0, 0);
@@ -402,11 +403,13 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
   f.$('race-options').click();
+  f.$('race-settings-tab-controls').click();
   f.frame();
   for (const i of [0, 1]) {
     f.$(`race-touch-${i}`).value = 'always';
     f.$(`race-touch-${i}`).emit('change');
   }
+  f.$('race-settings-tab-display').click();
   f.frame();
   f.focus('race-reduced');
   f.pulse(0, 0);
