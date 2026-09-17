@@ -36,6 +36,9 @@ function fixture({ stored, writable, getStorage, onWarning } = {}) {
     warnings,
     preferences,
     storage,
+    restore(persisted = true) {
+      window.dispatchEvent(Object.assign(new Event('pageshow'), { persisted }));
+    },
     fail(error) {
       failure = error;
     },
@@ -263,4 +266,103 @@ test('disposal inside an injected permission callback cannot write after its own
   preferences = f.preferences;
   preferences.set({ ornaments: 'off' });
   assert.deepEqual(f.writes, []);
+});
+
+test('persisted pageshow adopts missed current menu settings once without saving or rewriting other records', () => {
+  const f = fixture({ stored: encode() }),
+    seen = [];
+  f.preferences.subscribe((value) => seen.push(value));
+  f.map.set('revealline.display.v1', 'unchanged display');
+  f.map.set('revealline.library.dev.v1', 'unchanged profile');
+  f.map.set(MENU_STYLE_PREFERENCES_KEY, encode({ palette: 'ukrainian', ornaments: 'rich' }));
+  f.restore(false);
+  assert.equal(seen.length, 1);
+  f.restore();
+  assert.deepEqual(f.preferences.snapshot(), {
+    palette: 'ukrainian',
+    ornaments: 'rich',
+    revision: 1,
+  });
+  f.restore();
+  assert.equal(seen.length, 2, 'Unchanged restores must not rebuild subscribers.');
+  assert.deepEqual(f.writes, []);
+  assert.equal(f.map.get('revealline.display.v1'), 'unchanged display');
+  assert.equal(f.map.get('revealline.library.dev.v1'), 'unchanged profile');
+});
+
+test('restored menu reads the current storage object, not its startup storage or a queued event', () => {
+  let current = { getItem: () => encode() };
+  const f = fixture({ getStorage: () => current });
+  current = { getItem: () => encode({ ornaments: 'off' }) };
+  f.restore();
+  assert.equal(f.preferences.snapshot().ornaments, 'off');
+  f.event(encode());
+  assert.equal(f.preferences.snapshot().ornaments, 'off');
+  assert.deepEqual(f.writes, []);
+});
+
+test('missing, malformed and unavailable current menu storage preserve the live restored choice', () => {
+  const f = fixture({ stored: encode({ ornaments: 'rich' }) }),
+    before = f.preferences.snapshot();
+  for (const raw of [null, '{}', encode({ palette: 'invalid' }), 'x'.repeat(257)]) {
+    if (raw === null) f.map.delete(MENU_STYLE_PREFERENCES_KEY);
+    else f.map.set(MENU_STYLE_PREFERENCES_KEY, raw);
+    f.restore();
+    assert.strictEqual(f.preferences.snapshot(), before);
+    assert.equal(f.map.get(MENU_STYLE_PREFERENCES_KEY), raw ?? undefined);
+  }
+  f.storage.getItem = () => {
+    throw new Error('Storage unavailable after restoration');
+  };
+  f.restore();
+  assert.strictEqual(f.preferences.snapshot(), before);
+  assert.deepEqual(f.writes, []);
+});
+
+test('restoration retains failed and read-only menu intent until an explicit successful save', () => {
+  for (const readOnly of [false, true]) {
+    let allowed = !readOnly;
+    const f = fixture({ stored: encode(), writable: () => allowed });
+    if (!readOnly) f.fail(new Error('Quota exceeded'));
+    f.preferences.set({ palette: 'ukrainian', ornaments: 'off' });
+    const before = f.preferences.snapshot(),
+      warning = f.preferences.getWarning();
+    f.map.set(MENU_STYLE_PREFERENCES_KEY, encode({ ornaments: 'rich' }));
+    f.restore();
+    assert.strictEqual(f.preferences.snapshot(), before);
+    assert.equal(f.preferences.getWarning(), warning);
+    assert.deepEqual(f.writes, []);
+    allowed = true;
+    f.fail(null);
+    f.preferences.set({ ornaments: 'subtle' });
+    f.map.set(MENU_STYLE_PREFERENCES_KEY, encode({ ornaments: 'rich' }));
+    f.restore();
+    assert.equal(f.preferences.snapshot().palette, 'auto');
+    assert.equal(f.preferences.snapshot().ornaments, 'rich');
+    assert.equal(f.writes.length, 1);
+  }
+});
+
+test('a disposed menu owner ignores persisted pageshow without reading storage', () => {
+  const f = fixture(),
+    before = f.preferences.snapshot();
+  f.preferences.dispose();
+  f.storage.getItem = () => assert.fail('Disposed owners must not read storage.');
+  f.restore();
+  assert.strictEqual(f.preferences.snapshot(), before);
+  assert.deepEqual(f.writes, []);
+});
+
+test('menu intent or disposal during a restoration read wins over the captured stored value', () => {
+  for (const dispose of [false, true]) {
+    const f = fixture();
+    f.storage.getItem = () => {
+      if (dispose) f.preferences.dispose();
+      else f.preferences.set({ palette: 'ukrainian', ornaments: 'off' });
+      return encode({ ornaments: 'rich' });
+    };
+    f.restore();
+    assert.equal(f.preferences.snapshot().ornaments, dispose ? 'subtle' : 'off');
+    assert.equal(f.writes.length, dispose ? 0 : 1);
+  }
 });

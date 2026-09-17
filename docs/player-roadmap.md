@@ -1,5 +1,7 @@
 # RevealLine: what is next
 
+**Current implementation authority (17 September 2026):** [revised whole-game execution plan](whole-game-ux-plan.md). Recovery v0.60.4 is accepted at its scoped gate; Motion v0.60.5 is qualifying separately. Shared Settings and quick sound are implementing on `codex/global-settings`; they are not yet a public release or whole P03/P05 acceptance. The dated text below is retained history and must not be used as the current phase ordering or release status.
+
 Updated 16 September 2026. This is the readable view of the [active execution plan](cross-mode-execution.md), with [delivery evidence and retained requirements](delivery-priorities.md). [P01 v0.57.4 is accepted](../publishing/pages-controller/delivery/evidence/cross-mode-p01/public-v0574/completion-r8/acceptance.json) at its recorded loading-feedback scope. Shared master sound is in final source qualification as the [P02-A candidate](p02-p01-v0574-composition.md), preserving that exact source and incorporating its accepted publication history; frozen artifacts and public delivery remain pending. A source feature, generated picture or passing test is not by itself an accepted phase.
 
 ## Current work
