@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { setImmediate } from 'node:timers/promises';
+import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -77,7 +77,7 @@ function mount(doc) {
   for (const select of doc.querySelectorAll('select'))
     for (const option of select.options) option.label = option.textContent;
 }
-async function harness(t, source = recording()) {
+async function harness(t, source = recording(), { expectLoadFailure = false } = {}) {
   const doc = new Document(),
     win = new Events();
   mount(doc);
@@ -152,7 +152,13 @@ async function harness(t, source = recording()) {
     }
   });
   await import(`../replay-theater/app.mjs?navigation=${++serial}`);
-  await until(() => $('recording-name').textContent === source.level.name, 'example loaded');
+  await until(
+    () =>
+      expectLoadFailure
+        ? $('import-status').dataset.state === 'error'
+        : $('recording-name').textContent === source.level.name,
+    expectLoadFailure ? 'initial replay rejected' : 'example loaded',
+  );
   const tick = (ms = 10) => {
     now += ms;
     frame(now);
@@ -214,6 +220,268 @@ async function harness(t, source = recording()) {
     },
   };
 }
+
+function identifyFocusTargets(doc) {
+  doc.body.id ||= 'theater-test-body';
+  const summary = doc.querySelector('.replay-interface summary');
+  if (summary) summary.id ||= 'theater-test-interface-summary';
+}
+
+function jumpToPlayback(h, click = {}) {
+  identifyFocusTargets(h.doc);
+  // The original production markup lacks the new ID. Resolve its real anchor
+  // too, so baseline discrimination reaches the missing focus behavior.
+  const link = h.$('jump-playback') ?? h.doc.querySelector('a[href="#playback"]');
+  if (link) link.id ||= 'jump-playback';
+  assert.ok(link, 'The actual markup exposes the playback anchor.');
+  assert.equal(link.getAttribute('href'), '#playback');
+  assert.equal(h.key(link, 'Enter').defaultPrevented, false, 'Enter retains native activation.');
+  const event = link.emit('click', { button: 0, ...click });
+  // Model the observed browser default AFTER the real click handler: the
+  // fragment scrolls, then leaves BODY focused. The handoff must survive it.
+  if (
+    !event.defaultPrevented &&
+    event.button === 0 &&
+    !event.ctrlKey &&
+    !event.metaKey &&
+    !event.altKey &&
+    !event.shiftKey
+  ) {
+    h.$('playback').scrollIntoView();
+    h.doc.body.focus();
+  }
+  return event;
+}
+
+function modelDisabledControlFocus(h, node) {
+  identifyFocusTargets(h.doc);
+  let disabled = node.disabled;
+  Object.defineProperty(node, 'disabled', {
+    configurable: true,
+    get: () => disabled,
+    set(value) {
+      disabled = value;
+      // Match the native observation: disabling the active transport control
+      // leaves BODY focused before updateControls finishes.
+      if (value && h.doc.activeElement === node) h.doc.body.focus();
+    },
+  });
+}
+
+test('native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording', async (t) => {
+  const h = await harness(t),
+    { $, doc, key, tick } = h;
+  for (let i = 0; i < 12; i++) key($('board'), 'ArrowRight');
+  const before = tick().checkpoint;
+  assert.equal(jumpToPlayback(h).defaultPrevented, false, 'Native fragment/history is retained.');
+  assert.equal(doc.activeElement?.id, doc.body.id, 'The modeled browser default clears focus.');
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'play-pause');
+  assert.ok($('play-pause').scrolled, 'The preferred control is brought into view.');
+  assert.equal($('playback-phase').textContent, 'paused');
+  assert.deepEqual(tick(100).checkpoint, before);
+  key(doc.activeElement, 'Tab');
+  assert.equal(doc.activeElement?.id, 'restart', 'Tab continues in playback, not the header.');
+  assert.deepEqual(tick(100).checkpoint, before);
+
+  key($('play-pause'), 'Enter');
+  const running = tick(0).checkpoint;
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'play-pause');
+  assert.equal($('playback-phase').textContent, 'playing', 'Jump is not a transport command.');
+  assert.deepEqual(tick(0).checkpoint, running);
+  for (let i = 0; i < 15; i++) tick(100);
+  assert.equal($('playback-phase').textContent, 'complete');
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'restart', 'A completed recording has a usable target.');
+  assert.deepEqual(tick().checkpoint, h.source.checkpoint);
+});
+
+test('Jump chooses Cancel for a held import and preserves the prior recording after rejection', async (t) => {
+  const h = await harness(t),
+    { $, doc, tick } = h;
+  h.key($('board'), 'ArrowRight');
+  const before = tick().checkpoint;
+  let finish;
+  $('replay-file').files = [
+    {
+      name: 'pending-jump.json',
+      size: 100,
+      text: () => new Promise((resolve) => (finish = resolve)),
+    },
+  ];
+  $('replay-file').emit('change');
+  await until(() => finish, 'file read is pending');
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'cancel-load');
+  assert.equal($('import-status').dataset.state, 'busy', 'Jump does not cancel preparation.');
+  assert.equal($('cancel-load').hidden, false);
+  assert.deepEqual(tick().checkpoint, before);
+  finish(JSON.stringify({ version: 'wrong' }));
+  await until(() => $('import-status').dataset.state === 'error', 'import rejected');
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'play-pause', 'A failed import keeps prior playback usable.');
+  assert.deepEqual(tick().checkpoint, before);
+  assert.equal($('recording-name').textContent, h.source.level.name);
+});
+
+test('Jump with no loaded recording reaches Load example without retrying the failed import', async (t) => {
+  const h = await harness(t, { version: 'wrong' }, { expectLoadFailure: true }),
+    { $, doc, tick } = h;
+  const message = $('import-status').textContent;
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'load-example');
+  assert.equal($('import-status').dataset.state, 'error');
+  assert.equal($('import-status').textContent, message);
+  assert.equal($('recording-name').textContent, 'Choose a recording');
+  tick();
+  assert.equal(h.snapshots.length, 0);
+});
+
+test('Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal', async (t) => {
+  const h = await harness(t),
+    { $, doc, win, tick } = h,
+    before = tick().checkpoint;
+  for (const click of [
+    { ctrlKey: true },
+    { metaKey: true },
+    { shiftKey: true },
+    { altKey: true },
+    { button: 1 },
+    { button: 2 },
+  ]) {
+    assert.equal(jumpToPlayback(h, click).defaultPrevented, false);
+    await delay(0);
+    assert.equal(doc.activeElement?.id, 'jump-playback');
+  }
+  jumpToPlayback(h, { defaultPrevented: true });
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'jump-playback');
+
+  const link = $('jump-playback');
+  for (const [attribute, value] of [
+    ['target', '_blank'],
+    ['download', 'recording.html'],
+    ['href', '#recording-name'],
+  ]) {
+    const previous = link.getAttribute(attribute);
+    link.setAttribute(attribute, value);
+    link.focus();
+    // Deliver the native click boundary without modeling a new tab/download
+    // or a different fragment. This owner must leave each default untouched.
+    assert.equal(link.emit('click', { button: 0 }).defaultPrevented, false);
+    await delay(0);
+    assert.equal(doc.activeElement?.id, 'jump-playback', `${attribute} retains native ownership.`);
+    if (previous === null) link.removeAttribute(attribute);
+    else link.setAttribute(attribute, previous);
+  }
+  const preventLater = (event) => event.preventDefault();
+  doc.addEventListener('click', preventLater);
+  try {
+    assert.equal(jumpToPlayback(h).defaultPrevented, true);
+    await delay(0);
+    assert.equal(
+      doc.activeElement?.id,
+      'jump-playback',
+      'A later bubble cancellation vetoes focus.',
+    );
+  } finally {
+    doc.removeEventListener('click', preventLater);
+  }
+
+  jumpToPlayback(h);
+  $('restart').focus();
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'restart', 'Newer focus wins.');
+  jumpToPlayback(h);
+  doc.body.emit('pointerdown', { button: 0 });
+  await delay(0);
+  assert.equal(doc.activeElement?.id, doc.body.id, 'A newer pointer gesture can keep BODY focus.');
+  jumpToPlayback(h);
+  h.key($('return-game'), 'Tab');
+  const newerKeyboardFocusId = doc.activeElement.id;
+  await delay(0);
+  assert.equal(doc.activeElement?.id, newerKeyboardFocusId, 'Newer keyboard navigation wins.');
+
+  jumpToPlayback(h);
+  win.emit('blur');
+  await delay(0);
+  assert.equal(doc.activeElement?.id, doc.body.id);
+  win.emit('focus');
+  jumpToPlayback(h);
+  win.emit('pagehide', { persisted: true });
+  await delay(0);
+  assert.equal(doc.activeElement?.id, doc.body.id);
+  win.emit('pageshow', { persisted: true });
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(doc.activeElement?.id, 'play-pause', 'Cached return retains the owned handler.');
+  assert.deepEqual(tick().checkpoint, before);
+
+  jumpToPlayback(h);
+  win.emit('pagehide', { persisted: false });
+  await delay(0);
+  assert.equal(doc.activeElement?.id, doc.body.id, 'Terminal disposal cancels the handoff.');
+  jumpToPlayback(h);
+  await delay(0);
+  assert.equal(
+    doc.activeElement?.id,
+    doc.body.id,
+    'The disposed click handler cannot focus controls.',
+  );
+});
+
+test('completed Play and Step hand off to Restart with exact final checkpoints and local next Tab', async (t) => {
+  const h = await harness(t),
+    { $, doc, key, tick } = h;
+  modelDisabledControlFocus(h, $('play-pause'));
+  modelDisabledControlFocus(h, $('step'));
+  key($('play-pause'), 'Enter');
+  for (let i = 0; i < 15; i++) tick(100);
+  assert.equal($('playback-phase').textContent, 'complete');
+  assert.equal(doc.activeElement?.id, 'restart', 'Focus survives native Play disabling.');
+  assert.deepEqual(h.snapshots.at(-1).checkpoint, h.source.checkpoint);
+  key(doc.activeElement, 'Tab');
+  assert.equal(doc.activeElement?.id, 'speed', 'Tab stays in transport and skips disabled Step.');
+  assert.deepEqual(tick().checkpoint, h.source.checkpoint);
+
+  key($('restart'), 'Enter');
+  for (let i = 0; i < h.source.ticks; i++) key($('step'), 'Enter');
+  assert.equal($('playback-phase').textContent, 'complete');
+  assert.equal(doc.activeElement?.id, 'restart', 'The final explicit Step has the same handoff.');
+  assert.deepEqual(tick().checkpoint, h.source.checkpoint);
+});
+
+test('completion preserves unrelated editor focus and does not steal background focus', async (t) => {
+  const h = await harness(t),
+    { $, doc, key, tick } = h;
+  modelDisabledControlFocus(h, $('play-pause'));
+  key($('play-pause'), 'Enter');
+  $('replay-text').closest('details').open = true;
+  $('replay-text').value = 'Unfinished import text';
+  $('replay-text').focus();
+  for (let i = 0; i < 15; i++) tick(100);
+  assert.equal($('playback-phase').textContent, 'complete');
+  assert.equal(doc.activeElement?.id, 'replay-text');
+  assert.equal($('replay-text').value, 'Unfinished import text');
+  assert.deepEqual(h.snapshots.at(-1).checkpoint, h.source.checkpoint);
+
+  key($('restart'), 'Enter');
+  key($('play-pause'), 'Enter');
+  // Model an in-flight completion after foreground ownership was lost, before
+  // a blur handler could pause. The current document must not steal focus.
+  doc.focused = false;
+  for (let i = 0; i < 15; i++) tick(100);
+  assert.equal($('playback-phase').textContent, 'complete');
+  assert.equal(doc.activeElement?.id, doc.body.id);
+  assert.deepEqual(h.snapshots.at(-1).checkpoint, h.source.checkpoint);
+  doc.focused = true;
+});
 
 for (const policy of ['immediate', 'grid-center'])
   test(`${policy}: keyboard transport, focus and Back preserve the real recorded cut through completion`, async (t) => {

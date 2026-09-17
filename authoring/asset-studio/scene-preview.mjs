@@ -1,3 +1,4 @@
+import { startPreviewMotion } from './preview-motion.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createRun } from '../../game/core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../../game/ui/render.mjs';
@@ -14,10 +15,11 @@ import { Soundscape } from '../../game/ui/audio.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentation.mjs';
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
 import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
-const text = (tag, value, className = '') => {
+const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
   node.textContent = value;
   node.className = className;
+  if (hostRole) node.dataset.studioHost = hostRole;
   return node;
 };
 const read = async (url) => {
@@ -159,22 +161,13 @@ async function croppedImage(asset, blobs, options) {
   await image.decode();
   return options.isCurrent() ? image : null;
 }
-function loop(surface, own, draw, motion) {
-  let alive = true,
-    frame,
-    last = performance.now();
-  const reduced = motion === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const run = (now) => {
-    if (!alive) return;
-    draw(motion === 'playing' && !reduced ? Math.min(0.05, (now - last) / 1000) : 0, reduced);
-    last = now;
-    if (motion === 'playing' && !reduced) frame = requestAnimationFrame(run);
-  };
-  own(() => {
-    alive = false;
-    cancelAnimationFrame(frame);
+function loop(own, draw, options) {
+  return startPreviewMotion({
+    own,
+    draw,
+    motion: options.motion,
+    preferences: options.motionPreferences,
   });
-  run(last);
 }
 export async function playerRecipePreview(surface, slot, resolved, blobs, options, own) {
   options.onStatus?.('loading player preview fixtures…', 'downloading');
@@ -209,13 +202,13 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
       'small',
       `${bodyId} · actual body and registered rotor renderer · ${options.motion}`,
       'bounded-label',
+      'secondary',
     ),
   );
   const ctx = canvas.getContext('2d'),
     palette = canvasPresentation(resolved).palette;
   let animation = createAnimationState();
   loop(
-    surface,
     own,
     (dt, reduced) => {
       ctx.clearRect(0, 0, 320, 220);
@@ -239,7 +232,7 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
         inspectionSlow: true,
       });
     },
-    options.motion,
+    options,
   );
 }
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
@@ -315,8 +308,8 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
   canvas.height = size.height;
   canvas.setAttribute('aria-label', 'Actual board renderer in an isolated mission fixture');
   const frame = text('div', '', 'board-context-frame'),
-    hud = text('div', '', 'context-hud');
-  hud.append(text('span', 'FLIGHT / STUDIO'), text('span', 'III  00:00  0%'));
+    hud = text('div', '', 'context-hud', 'secondary');
+  hud.append(text('span', 'FLIGHT / STUDIO'), text('span', 'III  00:00  0%', '', 'count'));
   frame.append(hud, canvas);
   surface.append(
     frame,
@@ -324,6 +317,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       'small',
       `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${pictureOwner ? 'exact source level' : 'isolated fixture'}${/^player\.[^.]+\.(compact|detailed)$/.test(slot.id) ? ` · selected ${slot.id.split('.')[2]} body at every preview width` : ''}${warning ? ` · ${warning}` : ''}`,
       'bounded-label',
+      'secondary',
     ),
   );
   let gallery = false;
@@ -354,7 +348,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       });
   };
   if (slot.group === 'pictures') {
-    const toggle = text('button', 'Show picture viewer');
+    const toggle = text('button', 'Show picture viewer', '', 'control');
     toggle.type = 'button';
     toggle.onclick = () => {
       gallery = !gallery;
@@ -363,17 +357,27 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     };
     surface.append(toggle);
   }
-  loop(surface, own, render, options.motion);
+  loop(own, render, options);
 }
 export function audioRecipePreview(surface, slot, own, { audioMaster = null } = {}) {
   const player = new Soundscape({ audioMaster }),
     box = text('div', '', 'recipe-sample'),
-    play = text('button', slot.id === 'audio.music' ? 'Audition 4 seconds' : 'Audition cue'),
-    stop = text('button', 'Stop'),
-    result = text('p', 'Sound starts only from this button. Local audition volume: 35%.');
+    play = text(
+      'button',
+      slot.id === 'audio.music' ? 'Audition 4 seconds' : 'Audition cue',
+      '',
+      'control',
+    ),
+    stop = text('button', 'Stop', '', 'control'),
+    result = text(
+      'p',
+      'Sound starts only from this button. Local audition volume: 35%.',
+      '',
+      'control',
+    );
   play.type = 'button';
   stop.type = 'button';
-  box.append(text('h3', slot.label), play, stop, result);
+  box.append(text('h3', slot.label, '', 'heading'), play, stop, result);
   surface.append(box);
   const auditionStatus = createOperationStatus(result);
   auditionStatus
@@ -446,11 +450,15 @@ export function effectRecipePreview(surface, slot, resolved, options, own) {
     palette = canvasPresentation(resolved).palette;
   surface.append(
     canvas,
-    text('small', 'Actual game effect helper · isolated event fixture', 'bounded-label'),
+    text(
+      'small',
+      'Actual game effect helper · isolated event fixture',
+      'bounded-label',
+      'secondary',
+    ),
   );
   let time = 0.2;
   loop(
-    surface,
     own,
     (dt, reduced) => {
       time += dt;
@@ -496,7 +504,7 @@ export function effectRecipePreview(surface, slot, resolved, options, own) {
         });
       }
     },
-    options.motion,
+    options,
   );
 }
 export { componentPreview } from './component-specimens.mjs';

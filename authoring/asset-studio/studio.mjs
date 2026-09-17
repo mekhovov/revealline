@@ -31,11 +31,13 @@ import { createStudioOperations } from './operation.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
+import { mountInterfacePreferences } from './interface-preferences.mjs';
 const $ = (id) => document.getElementById(id);
-const node = (tag, value = '', className = '') => {
+const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
   el.textContent = value;
   el.className = className;
+  if (hostRole) el.dataset.studioHost = hostRole;
   return el;
 };
 const ref = (asset) => ({ id: asset.id, revision: asset.revision });
@@ -85,6 +87,11 @@ const operations = createStudioOperations({
 });
 const status = (message, kind = '') => operations.message(message, kind);
 const report = (error) => status(error.message || String(error), 'error');
+const interfacePreferences = mountInterfacePreferences({
+  document,
+  window,
+  getStorage: () => localStorage,
+});
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
   audioMaster,
@@ -166,6 +173,7 @@ function refreshInventory() {
     const row = node('div', '', `asset-row${slot.id === selected ? ' selected' : ''}`);
     row.setAttribute('role', 'listitem');
     const check = document.createElement('input');
+    check.dataset.studioHost = 'control';
     check.type = 'checkbox';
     check.checked = collectionSlots.has(slot.id);
     check.setAttribute('aria-label', `Include ${slot.label} in collection`);
@@ -174,17 +182,22 @@ function refreshInventory() {
       updateCollectionCount();
       refreshPrompt();
     };
-    const button = node('button');
+    const button = node('button', '', '', 'control');
     button.type = 'button';
     button.setAttribute('aria-pressed', String(slot.id === selected));
     button.append(
-      node('strong', slot.label),
-      node('small', `${slot.id} · ${stage}`, `stage-${stage}`),
+      node('strong', slot.label, '', 'control'),
+      node('small', `${slot.id} · ${stage}`, `stage-${stage}`, 'secondary'),
     );
     button.onclick = () => {
+      const restoreFocus = document.hasFocus() && document.activeElement === button;
       try {
         selectSlot(slot.id);
-        if (matchMedia('(max-width: 700px)').matches) $('inspector').focus();
+        if (document.hasFocus()) {
+          if (matchMedia('(max-width: 700px)').matches) $('inspector').focus();
+          else if (restoreFocus)
+            $('asset-list').querySelector('button[aria-pressed="true"]')?.focus();
+        }
       } catch (error) {
         report(error);
       }
@@ -252,16 +265,16 @@ function refreshInspector() {
   $('slot-facts').replaceChildren(
     ...facts.map(([key, value]) => {
       const wrapper = node('div');
-      wrapper.append(node('dt', key), node('dd', value));
+      wrapper.append(node('dt', key, '', 'secondary'), node('dd', value, '', 'secondary'));
       return wrapper;
     }),
   );
   $('slot-usage').replaceChildren(
-    ...slot.screens.map((screen) => node('span', screen)),
-    ...slot.states.map((state) => node('span', `:${state}`)),
+    ...slot.screens.map((screen) => node('span', screen, '', 'secondary')),
+    ...slot.states.map((state) => node('span', `:${state}`, '', 'secondary')),
   );
   $('slot-requirements').replaceChildren(
-    ...slot.requirements.map((requirement) => node('li', requirement)),
+    ...slot.requirements.map((requirement) => node('li', requirement, '', 'body')),
   );
   $('slot-contract').textContent = JSON.stringify(
     { ...slot, currentAsset: asset ? `${asset.id}@${asset.revision}` : null },
@@ -311,6 +324,7 @@ async function refreshPreviews() {
   if (pending?.candidateBlob) map.set(candidate.file.sha256, pending.candidateBlob);
   const options = {
     audioMaster,
+    motionPreferences: interfacePreferences.motion,
     mode: $('preview-mode').value,
     background: $('preview-background').value,
     geometry: $('preview-geometry').checked,
@@ -377,15 +391,17 @@ function refreshHistory() {
       const row = node('div', '', 'history-row'),
         copy = node('div');
       copy.append(
-        node('strong', `${item.id}@${item.revision}`),
+        node('strong', `${item.id}@${item.revision}`, '', 'technical'),
         node(
           'p',
           `${item.kind} · ${item.quality.stage} · ${item.provenance.creator} · ${item.provenance.license}`,
+          '',
+          'secondary',
         ),
       );
       row.append(copy);
       if (item.file) {
-        const downloadButton = node('button', 'Download file');
+        const downloadButton = node('button', 'Download file', '', 'control');
         downloadButton.type = 'button';
         downloadButton.onclick = () =>
           download(
@@ -394,7 +410,7 @@ function refreshHistory() {
           );
         row.append(downloadButton);
       }
-      const button = node('button', 'Bind this revision');
+      const button = node('button', 'Bind this revision', '', 'control');
       button.type = 'button';
       button.disabled = item.id === asset?.id && item.revision === asset?.revision;
       button.onclick = () =>
@@ -422,8 +438,9 @@ const numberRanges = {
 function refreshTokens() {
   $('token-fields').replaceChildren(
     ...Object.entries(resolved().tokens).map(([key, value]) => {
-      const label = node('label', key),
+      const label = node('label', key, '', 'control'),
         input = document.createElement('input');
+      input.dataset.studioHost = 'control';
       input.name = key;
       input.value = value;
       if (typeof value === 'number') {
@@ -816,7 +833,7 @@ async function validatePending(geometryOnly = false, task) {
     'Replacement validated and staged. The original source and earlier revisions remain in the bundle.',
   );
 }
-const editGeometry = node('button', 'Edit current raster metadata');
+const editGeometry = node('button', 'Edit current raster metadata', '', 'control');
 editGeometry.type = 'button';
 editGeometry.id = 'edit-geometry';
 $('asset-upload-label').after(editGeometry);
@@ -852,7 +869,7 @@ const sprite = mountSpritePanel({
   onPrepare: (blob, task) =>
     startUpload(new File([blob], 'local-sprite.png', { type: 'image/png' }), true, task),
 });
-const discardPixels = node('button', 'Discard pixel edits');
+const discardPixels = node('button', 'Discard pixel edits', '', 'control');
 discardPixels.type = 'button';
 $('edit-current').after(discardPixels);
 discardPixels.onclick = () => {
@@ -1199,6 +1216,7 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    interfacePreferences.dispose();
     stopMasterView();
     audioPreferences.dispose();
     audioMaster.dispose();

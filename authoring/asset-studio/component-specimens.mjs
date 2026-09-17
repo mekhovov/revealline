@@ -1,16 +1,18 @@
 import { FIELD_KIT_ICON_IDS, iconForSlot } from '../../game/presentation/icons.mjs';
 let specimenId = 0;
-const text = (doc, tag, value, className = '') => {
+const text = (doc, tag, value, className = '', hostRole = null) => {
   const node = doc.createElement(tag);
   node.textContent = value;
   node.className = className;
+  if (hostRole) node.dataset.studioHost = hostRole;
   return node;
 };
 
 /** Native, isolated component samples; no presentation host, telemetry or storage. */
 export function componentPreview(surface, slot, options, backgroundImage = null) {
   const doc = surface.ownerDocument,
-    node = (tag, value = '', className = '') => text(doc, tag, value, className),
+    node = (tag, value = '', className = '', hostRole = null) =>
+      text(doc, tag, value, className, hostRole),
     box = node('div', '', 'recipe-sample component-specimen'),
     state = options.state,
     selected = ['selected', 'pressed'].includes(state),
@@ -57,7 +59,7 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     target.max = 100;
     target.value = 62;
     target.setAttribute('aria-label', `${slot.label} specimen: 62 of 100`);
-    box.append(target, node('p', 'Sample value 62 / 100 · not live telemetry'));
+    box.append(target, node('p', 'Sample value 62 / 100 · not live telemetry', '', 'secondary'));
   } else if (slot.id === 'ui.tooltip') {
     const trigger = node('button', 'Tooltip specimen');
     trigger.type = 'button';
@@ -202,6 +204,8 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
       state === 'error'
         ? 'Sample validation error: review this value.'
         : 'Interactive sample only; changes are not saved.',
+      '',
+      state === 'error' ? null : 'secondary',
     ),
   );
   box.append(
@@ -209,6 +213,7 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
       'small',
       `${state} · component library specimen. This is not a live game control, telemetry, earned reward or production review.`,
       'bounded-label',
+      'secondary',
     ),
   );
   surface.append(box);
