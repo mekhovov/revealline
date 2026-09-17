@@ -1,0 +1,86 @@
+{
+  "authoring/prompts/cross-mode-delivery.md": {
+    "bytes": 42759,
+    "sha256": "5a4919988d9ab8f36f4b0de2292a8c45144e4c1094a0ec45164a66cabe23cfad",
+    "baseExists": true,
+    "baseSha256": "ca6958ca5ace3485d75621c44fcb7a8b77dadbd16b4f6b1e80c7c0de77a27d89",
+    "differsFromBase": true
+  },
+  "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+    "bytes": 176286,
+    "sha256": "2503296ed45f80fd8d00b0daf0c4a11d3f484dc1b5adf53694c31d3f3943377f",
+    "baseExists": true,
+    "baseSha256": "2e79aab19d9749b102f683f5d57fb6c5f1f1aeff0e89868ebe3c95cd67de37b1",
+    "differsFromBase": true
+  },
+  "docs/cross-mode-execution.md": {
+    "bytes": 108484,
+    "sha256": "e3015baa61d7deb72507960f59aeacaebf7ff96f088fae98254d7f487398557e",
+    "baseExists": true,
+    "baseSha256": "7e407829bf15e5ca06d4c95efc6a86f0bae07e4bc2cf7080a6c79ba06d9a6ee6",
+    "differsFromBase": true
+  },
+  "docs/delivery-priorities.md": {
+    "bytes": 33912,
+    "sha256": "377588d3073de24d8d5748b24e4b66dace729189840378899dc96b72e40adf42",
+    "baseExists": true,
+    "baseSha256": "f0efb738b7346116c476384797fb90803937d172f13df0540fbd9c5cc2a729af",
+    "differsFromBase": true
+  },
+  "docs/supporting-screen-readability.md": {
+    "bytes": 6397,
+    "sha256": "6b8cd6388015e9c0cb82a6cfff11a0c4fb37f1589038949419090b9e257900de",
+    "baseExists": true,
+    "baseSha256": "7d2b136d142fc955b6913faab939c294505a771e2a731ea0b4118f8036fe05fd",
+    "differsFromBase": true
+  },
+  "docs/team-display-clearance.md": {
+    "bytes": 7076,
+    "sha256": "d621efb540847a8c8786755777c9e747534ee4ea64b5a7395d794179fd702cf1",
+    "baseExists": false,
+    "baseSha256": null,
+    "differsFromBase": true
+  },
+  "game/couch/relay-rescue.css": {
+    "bytes": 18340,
+    "sha256": "541f5998966bd783ec36187130fc7b3b7782399dadb010de642345619929b662",
+    "baseExists": true,
+    "baseSha256": "21686bcce607b0dfdf4f02de057d053af8493ba7735ffaa71981d7071109f4f4",
+    "differsFromBase": true
+  },
+  "game/couch/relay-rescue.mjs": {
+    "bytes": 49873,
+    "sha256": "9792a0818a6fc2e171de196387f51678685cc9919afd3d1a036cf3988475ebc5",
+    "baseExists": true,
+    "baseSha256": "0324c6b2f4ba0203f575af1a7dc001733c51dbcb3adaeba2576b5433e05ed256",
+    "differsFromBase": true
+  },
+  "game/test/coop-display-reflow.test.mjs": {
+    "bytes": 7909,
+    "sha256": "88c21122d7ad4056a478e4b7f8f7785f3399b99d83126a355fc48a388b529c1a",
+    "baseExists": false,
+    "baseSha256": null,
+    "differsFromBase": true
+  },
+  "package.json": {
+    "bytes": 1819,
+    "sha256": "0d78c2197136ac4a927945c6bd4481af0902ffac69dc9f0279bc002384f1e131",
+    "baseExists": true,
+    "baseSha256": "1d54238c89a001d497498041ae461a0c333ebad2721fb4efb5c6350cf5c959c5",
+    "differsFromBase": true
+  },
+  "package-lock.json": {
+    "bytes": 36138,
+    "sha256": "9ef5d79656bf5c2fecbb3fdca3514f03cfb64cc80349a54cbc6ecbd1c5550b22",
+    "baseExists": true,
+    "baseSha256": "08a7f7902dae9209f49c5a801639341e7d5a807ce705910d7579a5d70612b7fb",
+    "differsFromBase": true
+  },
+  "game/build-config.json": {
+    "bytes": 5252,
+    "sha256": "9cd630c2feb18044bac445f2d61bb954c1d50b7a474f1af4b074c02f63f35974",
+    "baseExists": true,
+    "baseSha256": "30caeab425745be5635055c0b7733faaebe02d40dc12ba7b0c032c8c67ab414a",
+    "differsFromBase": true
+  }
+}

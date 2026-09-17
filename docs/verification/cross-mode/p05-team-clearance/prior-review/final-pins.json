@@ -1,0 +1,97 @@
+{
+  "baseCommit": "170508f11dd41204b7e24917a823f21701c15961",
+  "status": "New complete four-path future proposal; general-shell native retest pending",
+  "patch": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/combined.patch",
+    "bytes": 18887,
+    "sha256": "8687ee07143027907c8c1bd483711f6650647ee76acbca159e8af31a6508105c"
+  },
+  "files": [
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/proposal/docs/team-display-clearance.md",
+      "bytes": 6140,
+      "sha256": "b29ec70b46785dc61a364b540acb86f4e859ea175b93b31812ce010f6911e14c"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/proposal/game/couch/relay-rescue.css",
+      "bytes": 18340,
+      "sha256": "541f5998966bd783ec36187130fc7b3b7782399dadb010de642345619929b662"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/proposal/game/couch/relay-rescue.mjs",
+      "bytes": 49873,
+      "sha256": "9792a0818a6fc2e171de196387f51678685cc9919afd3d1a036cf3988475ebc5"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/proposal/game/test/coop-display-reflow.test.mjs",
+      "bytes": 7909,
+      "sha256": "88c21122d7ad4056a478e4b7f8f7785f3399b99d83126a355fc48a388b529c1a"
+    }
+  ],
+  "basePreimages": [
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/baseline/game/couch/relay-rescue.css",
+      "bytes": 18096,
+      "sha256": "21686bcce607b0dfdf4f02de057d053af8493ba7735ffaa71981d7071109f4f4"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/baseline/game/couch/relay-rescue.mjs",
+      "bytes": 47504,
+      "sha256": "0324c6b2f4ba0203f575af1a7dc001733c51dbcb3adaeba2576b5433e05ed256"
+    }
+  ],
+  "preimageReview": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/preimage-review.json",
+    "bytes": 2285,
+    "sha256": "3182bba3f2a62eb3d3f3734b16e8e5dbd03f2ba2d29d664a59aa5efb98629ab7"
+  },
+  "actionReview": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/action-reachability-review.md",
+    "bytes": 4524,
+    "sha256": "6fd788395a5efb94895fead28450eb92ffdf4dc90b8f48469804ad50cad0cd9f"
+  },
+  "actionInputs": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/action-review-inputs.json",
+    "bytes": 2286,
+    "sha256": "95d7464946018cd82f43f75d93ac9513475d25912cbaa9760cb653697a505d5f"
+  },
+  "nativeOriginals": [
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/native-before/F1-F2/request-byte-review.json",
+      "bytes": 47898,
+      "sha256": "2e8ddf16a12801f97885d119d5fcba4b7e81410af2ca194070347b290aea0015"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/native-before/F1-F2/root-observations.md",
+      "bytes": 3399,
+      "sha256": "2c3c8b6a4318c8d77c5157a4d41d9a4e03abeb5c15db1d331e6964168c0c2612"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/native-before/F3-F4/request-byte-review.json",
+      "bytes": 47901,
+      "sha256": "5b2ed76e9104998eeed74ab585a19ed9901c4c4b4eb89038825a898978769ffa"
+    },
+    {
+      "path": ".cache/p05-team-live-shell-combined-170508f1/native-before/F3-F4/root-observations.md",
+      "bytes": 1609,
+      "sha256": "343e65d48aee344c2973f6df37d8000bd4b166eb7387c024d9f45c5e88f26643"
+    }
+  ],
+  "cssFormat": {
+    "path": ".cache/p05-team-live-shell-170508f1/format/receipt.json",
+    "bytes": 1140,
+    "sha256": "999ab588518abf81e858aed7783e7c84cf671420becc338c98af61550a4c9327"
+  },
+  "priorCompleteCohort": {
+    "path": ".cache/p05-team-focus-reflow-170508f1/results.json",
+    "bytes": 11677,
+    "sha256": "8da7377fd430901fe236cc735809744aad86dc17fd32a039855a76bbc3221805"
+  },
+  "testsRerun": false,
+  "sourceIndexVersionRemoteMutations": false,
+  "preimageChain": {
+    "path": ".cache/p05-team-live-shell-combined-170508f1/preimage-chain-verification.json",
+    "bytes": 3744,
+    "sha256": "527094ce3f9472d16e382d924deaee2d3552a2ad39816cdfc657ccabf60c19ae"
+  }
+}

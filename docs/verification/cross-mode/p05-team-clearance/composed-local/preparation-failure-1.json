@@ -1,0 +1,7 @@
+{
+  "stage": "Pre-test snapshot construction",
+  "error": "FileNotFoundError for sparse-worktree .prettierrc.json during unnecessary worktree-byte equality check",
+  "sourceCommit": "587f4e75cc9dde7ae0db7ffac34320761b94588c",
+  "runtimeStarted": false,
+  "correction": "Read unchanged paths from exact Git base; compare worktree bytes only for present paths. All actual related overrides remain required and pinned."
+}

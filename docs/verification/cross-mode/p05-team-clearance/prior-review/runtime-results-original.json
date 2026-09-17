@@ -1,0 +1,338 @@
+{
+  "baseCommit": "170508f11dd41204b7e24917a823f21701c15961",
+  "at": "2026-09-17T07:24:06.586819+00:00",
+  "status": "Bounded development cohort PASS; native/integration/public acceptance remains outside this packet",
+  "finalPatch": {
+    "path": ".cache/p05-team-focus-reflow-170508f1/proposal.final.patch",
+    "bytes": 16910,
+    "sha256": "e257914dd814cc7243250c327522ee088472f7b2eef42a55a9d0f7362c4b5ae7"
+  },
+  "finalRuns": [
+    {
+      "label": "candidate20-1024-01",
+      "runtime": "20.19.5",
+      "exitCode": 0,
+      "counts": {
+        "tests": 164,
+        "pass": 164,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-1024-01/receipt.json",
+        "bytes": 1090,
+        "sha256": "80ffb4b87bd553afce90f52e2dd3e148a19f8a3e6b76ae8a5c62f92de68ec471"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-1024-01/stdout",
+        "bytes": 36391,
+        "sha256": "68658e7b5fb2ee8c37ffc39ff50ccc7054937ab65cc73605ec98e601fad5af88"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-1024-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "candidate22-1024-01",
+      "runtime": "22.22.2",
+      "exitCode": 0,
+      "counts": {
+        "tests": 164,
+        "pass": 164,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-1024-01/receipt.json",
+        "bytes": 1089,
+        "sha256": "bf755a3102959167ad451db2f92a046fb4ca7503d530b09e9d59bd7a5dafed92"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-1024-01/stdout",
+        "bytes": 38835,
+        "sha256": "8c5f502213ed4299f515a3ec3ef227da62b4a5b5622983e484fb8855d2706646"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-1024-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "allRetainedRuns": [
+    {
+      "label": "baseline20-01",
+      "runtime": "20.19.5",
+      "exitCode": 1,
+      "counts": {
+        "tests": 1,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline20-01/receipt.json",
+        "bytes": 988,
+        "sha256": "306ee89615469fc2000741582d21cddb9e9d3f92298f153b6fe851c280a7c9f5"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline20-01/stdout",
+        "bytes": 8614,
+        "sha256": "8a3cc7cd0108736f91105b0c82b0987ab97f5e0444038c87bf767ff2d1982243"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline20-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "baseline20-02",
+      "runtime": "20.19.5",
+      "exitCode": 1,
+      "counts": {
+        "tests": 17,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 15,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline20-02/receipt.json",
+        "bytes": 988,
+        "sha256": "df92c1b3d305e4311ab84f4af8f408a8d10b9fad7f07cf096548f5f363ff6c7e"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline20-02/stdout",
+        "bytes": 5899,
+        "sha256": "a46eea0ae7d380532388840d52f96a5afa2c0433c07c6c39746db070bfb1dfe4"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline20-02/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "baseline22-01",
+      "runtime": "22.22.2",
+      "exitCode": 1,
+      "counts": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline22-01/receipt.json",
+        "bytes": 987,
+        "sha256": "8ac5173ad9d81c8c62e7417f28faef8e13bd0439d2677175e854ed083d2335b0"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline22-01/stdout",
+        "bytes": 2699,
+        "sha256": "b3cc72ba29eb9dfbbd6c9324ec73890acb1d11389cf55bb046ae7758ecc826f2"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/baseline22-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "candidate20-01",
+      "runtime": "20.19.5",
+      "exitCode": 1,
+      "counts": {
+        "tests": 144,
+        "pass": 123,
+        "fail": 21,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-01/receipt.json",
+        "bytes": 1084,
+        "sha256": "4826bb63f79a3a68134ada17912d41c93be1305c0cf52b6be0760cca4cfbda96"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-01/stdout",
+        "bytes": 63560,
+        "sha256": "3bfda4b0c6a5e11af71222826a6f9b13926ae40c3d13cfe5db6bd900cdd7d4b4"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "candidate20-1024-01",
+      "runtime": "20.19.5",
+      "exitCode": 0,
+      "counts": {
+        "tests": 164,
+        "pass": 164,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-1024-01/receipt.json",
+        "bytes": 1090,
+        "sha256": "80ffb4b87bd553afce90f52e2dd3e148a19f8a3e6b76ae8a5c62f92de68ec471"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-1024-01/stdout",
+        "bytes": 36391,
+        "sha256": "68658e7b5fb2ee8c37ffc39ff50ccc7054937ab65cc73605ec98e601fad5af88"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-1024-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "candidate20-256-01",
+      "runtime": "20.19.5",
+      "exitCode": 1,
+      "counts": {
+        "tests": 154,
+        "pass": 153,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-256-01/receipt.json",
+        "bytes": 1088,
+        "sha256": "19aa7d1e06e01b92277a476c2f3e712971cb835060061ef3aacbd60652fdaae1"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-256-01/stdout",
+        "bytes": 41257,
+        "sha256": "2ec196a50b8f5de8ceec28b469f9549f25a2f9842f9882b902892ae1f571612f"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate20-256-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "candidate22-1024-01",
+      "runtime": "22.22.2",
+      "exitCode": 0,
+      "counts": {
+        "tests": 164,
+        "pass": 164,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-1024-01/receipt.json",
+        "bytes": 1089,
+        "sha256": "bf755a3102959167ad451db2f92a046fb4ca7503d530b09e9d59bd7a5dafed92"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-1024-01/stdout",
+        "bytes": 38835,
+        "sha256": "8c5f502213ed4299f515a3ec3ef227da62b4a5b5622983e484fb8855d2706646"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-1024-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "candidate22-256-01",
+      "runtime": "22.22.2",
+      "exitCode": 1,
+      "counts": {
+        "tests": 154,
+        "pass": 153,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "inputsUnchanged": true,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-256-01/receipt.json",
+        "bytes": 1088,
+        "sha256": "5cbf8c5e585b3b8d8e2b130a6e9b58f7b1381ffd45fcde4aee54b4e602d2d2a9"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-256-01/stdout",
+        "bytes": 43092,
+        "sha256": "92f7ae8922b667a131fbd1c774cd4f5515a925649ba6d7144ca595d32404e012"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/candidate22-256-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "format22-01",
+      "runtime": "22.22.2",
+      "exitCode": 0,
+      "counts": {},
+      "inputsUnchanged": false,
+      "receipt": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/format22-01/receipt.json",
+        "bytes": 1316,
+        "sha256": "7c072b643c2dda4156616cba6479dc6c8f570f4c95204fa1cd5ebaf36231a89e"
+      },
+      "stdout": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/format22-01/stdout",
+        "bytes": 122,
+        "sha256": "290315631c76323f457dcc9c02b3a1432c056a20a3ed21c13e079bdec2e1c482"
+      },
+      "stderr": {
+        "path": ".cache/p05-team-focus-reflow-170508f1/runs/format22-01/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "nativeEvidence": "Root owns .cache/p05-team-correction-native-170508; not consumed as acceptance here",
+  "sourceIndexRemoteVersionMutations": false,
+  "completeFilesNoFilteringOnFinalRuns": true,
+  "newTests": 17,
+  "fixtureHeapMiB": 1024,
+  "explanation": [
+    "Two exact before-fix boundary cases fail as intended on both runtimes.",
+    "Initial 100 MiB baseline failure output expanded a cyclic fixture DOM; assertion was narrowed to the same boolean identity check.",
+    "The first cohort omitted dynamic Couch JSON fetch inputs; four exact Git inputs were then admitted.",
+    "At 100 MiB the existing Team host exhausted its artificial heap cap; at 256 MiB the unchanged Couch full featured-pack fixture exhausted its cap. All such outcomes remain retained.",
+    "Root authorized 1024 MiB for complete unchanged files; final 161-input cohorts pass on Node 20.19.5 and 22.22.2 with no splitting or skipped cases."
+  ]
+}

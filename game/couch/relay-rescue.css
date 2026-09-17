@@ -53,6 +53,11 @@
 .playing .masthead {
   min-height: 56px;
 }
+/* During flight, Pause owns the mode exits. Keep the full arena and controls
+   in view at every size; menus and results restore their masthead normally. */
+.playing:has(#coop-overlay[hidden]) .masthead {
+  display: none;
+}
 .playing .controls {
   padding-top: 8px;
 }
@@ -402,6 +407,8 @@ canvas {
   backdrop-filter: none;
   padding: 16px;
   overflow: auto;
+  /* Keep the shared 7px focus ring inside this bounded scroller. */
+  scroll-padding: 8px;
   overscroll-behavior: contain;
 }
 .overlay-card {
@@ -735,9 +742,6 @@ kbd {
     height: 100svh;
     max-width: none;
     padding-block: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-bottom));
-  }
-  .playing[data-coop-touch='visible'] .masthead {
-    display: none;
   }
   .playing[data-coop-touch='visible'] #coop-play,
   .playing[data-coop-touch='visible'] #coop-controls {

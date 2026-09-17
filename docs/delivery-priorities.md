@@ -1,12 +1,16 @@
 # RevealLine delivery plan
 
-Updated 16 September 2026. The active priority and acceptance register is [cross-mode execution](cross-mode-execution.md). P00 is accepted as v0.55.0; P01 loading feedback is accepted as v0.57.4. P02-A shared master sound is deployed as v0.58.0, with exact-source qualification and all 2,505 public files verified. Its [public review](../publishing/pages-controller/delivery/evidence/cross-mode-p02-a/public-v0580/README.md) found one required correction: Team's permanent explanation disappears after sound edits. v0.58.1 is the next unused correction candidate; P03 navigation follows acceptance. Keep source tests, actual browser interactions, audible listening, offline scope and physical hardware distinct. Historical failures, artwork, saves and releases remain preserved.
+Updated 17 September 2026. The active priority and acceptance register is [cross-mode execution](cross-mode-execution.md), with a concise [current progress and remaining phases](../publishing/pages-controller/delivery/evidence/cross-mode-p05/public-v0600/planning/progress-and-next.md). P00 is accepted as v0.55.0, P01 as v0.57.4 and P02-A within its scoped sound-control gate as v0.58.1. **Current public v0.60.0 accepts the named Studio/Replay readability slice; whole P03 and P05 remain incomplete.** Source `170508f11dd41204b7e24917a823f21701c15961` was delivered through source [PR #78](https://github.com/mekhovov/revealline/pull/78), publication [PR #79](https://github.com/mekhovov/revealline/pull/79) and Pages run `35196541650`. The [delivery record](../publishing/pages-controller/delivery/evidence/cross-mode-p05/public-v0600/README.md) separates exact-source qualification, public bytes and actual browser journeys. Historical failures, artwork, saves and immutable releases remain preserved.
+
+Next work is the Team focused-action/live-control correction, Controller Practice/Playground readability and remaining P03 decisions, pagination, terminal and lifecycle journeys. Team already shares display/menu/picture adapters; its correction remains a future candidate, not accepted v0.60.0 content. Keep human playtests, physical controls/touch, audible listening and offline qualification open. The approved P00–P18 sequence and 132 future Solo missions remain unchanged; the mission programme is not delivered content.
 
 For a concise player-facing overview, read [what is next](player-roadmap.md).
 
 The material below is retained historical status and earlier content accounting, not a claim that its “next release” remains current. The [detailed history](current-delivery-plan.md) retains its attempts and evidence. The new register preserves those records and makes complete existing Team map parity a dedicated P08-A release gate.
 
-## Current delivery
+<a id="current-delivery"></a>
+
+## Retained delivery history
 
 **Play:** [current public game](https://mekhovov.github.io/revealline/game/) · [release explorer](https://mekhovov.github.io/revealline/releases/). These stable entry routes identify the currently served edition. The last directly recorded public-game observation in this workstream was v0.51. The extended Archive 10 separately passed its complete public-byte audit of v0.42 and v0.51: **976 files / 633,532,427 bytes**, with scoped native play for each. Those observations do not certify the identity of a later deployment, every device, save path or offline journey.
 
@@ -55,7 +59,9 @@ XPOSED remains a reference for capture rhythm, visible danger, map routing and r
 - Craft switching is offered only when the resolved campaign has another eligible craft and the current map provides an authored hangar. Starting-craft selection for a new attempt remains separate from in-flight switching.
 - Scan is scouting/class-specific information, Supply replenishes applicable charges at authored pads, and Boost changes movement speed under the authored mode. None is a universal requirement for an Arcade victory.
 
-## Prioritized phases
+<a id="prioritized-phases"></a>
+
+## Earlier phase mapping (historical)
 
 | Order | Phase                                       | Deliverable and exit gate                                                                                                                                                                                                                                                                                                                           |
 | ----- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
