@@ -1,0 +1,1792 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.60.1",
+  "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "actualCheckoutCommit": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "actualCheckoutTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "qualifiedAt": "2026-09-17T09:16:50.500026+00:00",
+  "passed": true,
+  "qualificationBasis": "hosted-exact-source-with-verified-frozen-originals",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "root": "/home/runner/work/revealline/revealline",
+    "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+    "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+    "files": 8484,
+    "bytes": 995042542,
+    "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35200161217",
+  "runId": 35200161217,
+  "runAttempt": 1,
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "workflowRevision": "1c21a0ef9957d555e97e1408e178933aae137645",
+  "workflowTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "sourceWorkflowSha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+  "automationAuthority": {
+    "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/receipt.json",
+    "bytes": 2743,
+    "sha256": "3acb762421c069f51449a9f8a7f463fc8e8bbd21a8827a23f54eded2e51bcb1c"
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 105132728615,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-17T08:33:11Z",
+        "completed_at": "2026-09-17T08:33:56Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 105132728615,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-17T08:33:11Z",
+        "completed_at": "2026-09-17T08:33:56Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 105132728615,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-17T08:33:11Z",
+        "completed_at": "2026-09-17T08:33:56Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 105132728615,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-17T08:33:11Z",
+        "completed_at": "2026-09-17T08:33:56Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 105132728615,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-17T08:33:11Z",
+        "completed_at": "2026-09-17T08:33:56Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "test",
+      "jobId": 105133443897,
+      "step": {
+        "name": "Run test shard 2/4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-17T08:35:02Z",
+        "completed_at": "2026-09-17T08:57:33Z"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 105133443862,
+          "step": {
+            "name": "Run test shard 1/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-17T08:35:07Z",
+            "completed_at": "2026-09-17T08:54:46Z"
+          },
+          "counts": {
+            "tests": 1365,
+            "pass": 1365,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443862.log.gz",
+            "bytes": 105462,
+            "sha256": "1d558b8c4db657f009a0b4a9195c0d51fb894c0f02bf91291e6fcf3c96812d1f"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 1/4 --root ."
+        },
+        {
+          "shard": 2,
+          "jobId": 105133443897,
+          "step": {
+            "name": "Run test shard 2/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-17T08:35:02Z",
+            "completed_at": "2026-09-17T08:57:33Z"
+          },
+          "counts": {
+            "tests": 1326,
+            "pass": 1326,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443897.log.gz",
+            "bytes": 102365,
+            "sha256": "47a33b6760ab59ac49cb4fc6088c8da890e8f415a1c4f31c19f1935e3a64e43f"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 2/4 --root ."
+        },
+        {
+          "shard": 3,
+          "jobId": 105133444084,
+          "step": {
+            "name": "Run test shard 3/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-17T08:34:59Z",
+            "completed_at": "2026-09-17T08:53:47Z"
+          },
+          "counts": {
+            "tests": 1511,
+            "pass": 1511,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133444084.log.gz",
+            "bytes": 108444,
+            "sha256": "909b64040c61352012b95552c1677634d618a9211bb5fb945146ecafd516c671"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 3/4 --root ."
+        },
+        {
+          "shard": 4,
+          "jobId": 105133443734,
+          "step": {
+            "name": "Run test shard 4/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-17T08:34:58Z",
+            "completed_at": "2026-09-17T08:56:25Z"
+          },
+          "counts": {
+            "tests": 1214,
+            "pass": 1214,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443734.log.gz",
+            "bytes": 94077,
+            "sha256": "323c9c4356cb2c30c4bfab39c248e1d0157ced733cdd1c9a8ab6af1b1bd13d2e"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 4/4 --root ."
+        }
+      ],
+      "counts": {
+        "tests": 5416,
+        "pass": 5416,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "partition": {
+        "path": ".cache/p05-qualified/team-v0601/hosted/partition-coverage.json",
+        "bytes": 21879,
+        "sha256": "b8548cad823440a8ad6b0c681115c9bb6b348e7d2ad825783b6dad564ce119f6"
+      },
+      "scope": "Actual last-completed successful shard is representative; all four actual completed shards and exact partition are required."
+    }
+  ],
+  "tests": {
+    "tests": 5416,
+    "pass": 5416,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 430,
+  "observations": [
+    {
+      "path": "pr-source/job-105132728615.log.gz",
+      "line": 355,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105132728615.log.gz",
+      "line": 804,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443862.log.gz",
+      "line": 370,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443862.log.gz",
+      "line": 7262,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443897.log.gz",
+      "line": 365,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443897.log.gz",
+      "line": 7075,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133444084.log.gz",
+      "line": 359,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133444084.log.gz",
+      "line": 7973,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443734.log.gz",
+      "line": 365,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443734.log.gz",
+      "line": 6488,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443816.log.gz",
+      "line": 522,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105133443816.log.gz",
+      "line": 560,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+        "sourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+        "files": 8484,
+        "bytes": 995042542,
+        "aggregateSha256": "17ed1590307ab3ee5ebfa310f27b9d88f82ae4513fab10dfa30fbd84d6a6e5f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    }
+  ],
+  "hostedSourceReview": {
+    "path": ".cache/p05-qualified/team-v0601/hosted/review.json",
+    "bytes": 864,
+    "sha256": "46646e52b5c9c8c391aa83083695897f1030c0e44183b39374ba2ace4d159496"
+  },
+  "hostedEvidenceManifest": {
+    "path": ".cache/p05-qualified/team-v0601/hosted/final-evidence-manifest.json",
+    "bytes": 11150,
+    "sha256": "4d4a6508bcbbd07129a681f462342a9462757ca231e840521d4ea49c39f1f509"
+  },
+  "publisherPreviewObservation": {
+    "status": "not-part-of-this-source-qualification",
+    "reason": "No publisher workflow changes; main-only publication remains a later separate gate."
+  },
+  "hostedNodeVersion": "v20.19.6",
+  "additionalManualQualification": {
+    "run": {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/run.json",
+      "bytes": 12604,
+      "sha256": "3e37f3fecc2752cce38f2465e75580bebd2a398dbce9271f77ba3176398e839a"
+    },
+    "jobs": {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/jobs.json",
+      "bytes": 18591,
+      "sha256": "2a4acd43fed35d0a4f8ed2941adc5898693569e98e61ced983450f41ed5d8e45"
+    },
+    "preflight": {
+      "id": 105132758482,
+      "run_id": 35200168640,
+      "workflow_name": "Qualify release source",
+      "head_branch": "codex/p05-team-clearance",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/35200168640",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAYemaV0g",
+      "head_sha": "822f3290787c704a217e7c185d4b8beb7a527e82",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/105132758482",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/35200168640/job/105132758482",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-17T08:31:58Z",
+      "started_at": "2026-09-17T08:32:00Z",
+      "completed_at": "2026-09-17T08:33:32Z",
+      "name": "qualify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-17T08:32:01Z",
+          "completed_at": "2026-09-17T08:32:01Z"
+        },
+        {
+          "name": "Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-17T08:32:01Z",
+          "completed_at": "2026-09-17T08:32:16Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-17T08:32:16Z",
+          "completed_at": "2026-09-17T08:32:21Z"
+        },
+        {
+          "name": "Record source identity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-09-17T08:32:21Z",
+          "completed_at": "2026-09-17T08:32:21Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-09-17T08:32:21Z",
+          "completed_at": "2026-09-17T08:32:24Z"
+        },
+        {
+          "name": "Check hosted artifact utility locally",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-17T08:32:24Z",
+          "completed_at": "2026-09-17T08:32:40Z"
+        },
+        {
+          "name": "Validate source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-17T08:32:40Z",
+          "completed_at": "2026-09-17T08:32:53Z"
+        },
+        {
+          "name": "Lint source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-09-17T08:32:53Z",
+          "completed_at": "2026-09-17T08:33:02Z"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-09-17T08:33:02Z",
+          "completed_at": "2026-09-17T08:33:21Z"
+        },
+        {
+          "name": "Check native formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-09-17T08:33:21Z",
+          "completed_at": "2026-09-17T08:33:22Z"
+        },
+        {
+          "name": "Check motion lab syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-09-17T08:33:22Z",
+          "completed_at": "2026-09-17T08:33:22Z"
+        },
+        {
+          "name": "Reproduce production collection when available",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-09-17T08:33:22Z",
+          "completed_at": "2026-09-17T08:33:27Z"
+        },
+        {
+          "name": "Require reviewed production slots in the committed ledger",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-09-17T08:33:27Z",
+          "completed_at": "2026-09-17T08:33:29Z"
+        },
+        {
+          "name": "Verify qualified tracked source is unchanged",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-09-17T08:33:29Z",
+          "completed_at": "2026-09-17T08:33:29Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-09-17T08:33:29Z",
+          "completed_at": "2026-09-17T08:33:30Z"
+        },
+        {
+          "name": "Post Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-09-17T08:33:30Z",
+          "completed_at": "2026-09-17T08:33:31Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-09-17T08:33:31Z",
+          "completed_at": "2026-09-17T08:33:31Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/105132758482",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000001215,
+      "runner_name": "GitHub Actions 1000001215",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 105133219733,
+        "step": {
+          "name": "Run test shard 1/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-17T08:33:57Z",
+          "completed_at": "2026-09-17T08:55:28Z"
+        },
+        "counts": {
+          "tests": 1365,
+          "pass": 1365,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219733.log.gz",
+          "bytes": 107467,
+          "sha256": "d9a300d63b522f048f307222930b578ca6ac65ff99103f39d78b306583a926c9"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 1/4"
+      },
+      {
+        "shard": 2,
+        "jobId": 105133219796,
+        "step": {
+          "name": "Run test shard 2/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-17T08:34:02Z",
+          "completed_at": "2026-09-17T08:56:17Z"
+        },
+        "counts": {
+          "tests": 1326,
+          "pass": 1326,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219796.log.gz",
+          "bytes": 104218,
+          "sha256": "d38189c3f3eafcd02b28c5c567e40e70a81033783693c6a70c1ef02764bff40d"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 2/4"
+      },
+      {
+        "shard": 3,
+        "jobId": 105133219736,
+        "step": {
+          "name": "Run test shard 3/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-17T08:34:10Z",
+          "completed_at": "2026-09-17T09:04:38Z"
+        },
+        "counts": {
+          "tests": 1511,
+          "pass": 1511,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219736.log.gz",
+          "bytes": 111900,
+          "sha256": "b6ac845676257c434fcf4f6557637df381722d5c737258da4625b28664561d64"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 3/4"
+      },
+      {
+        "shard": 4,
+        "jobId": 105133219748,
+        "step": {
+          "name": "Run test shard 4/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-17T08:33:59Z",
+          "completed_at": "2026-09-17T08:45:55Z"
+        },
+        "counts": {
+          "tests": 1214,
+          "pass": 1214,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219748.log.gz",
+          "bytes": 94192,
+          "sha256": "d581900a0ae8cc6e9157cd6d66631682f38437a6e65168b68104035a13cc6e53"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 4/4"
+      }
+    ],
+    "counts": {
+      "tests": 5416,
+      "pass": 5416,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "manualFreezeObservation": {
+    "runId": 35200168640,
+    "jobPresent": true,
+    "jobId": 105142435374,
+    "conclusion": "success",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-09-17T09:04:45Z",
+        "completed_at": "2026-09-17T09:04:45Z"
+      },
+      {
+        "name": "Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-09-17T09:04:45Z",
+        "completed_at": "2026-09-17T09:05:01Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-09-17T09:05:01Z",
+        "completed_at": "2026-09-17T09:05:05Z"
+      },
+      {
+        "name": "Freeze the exact qualified commit",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-09-17T09:05:05Z",
+        "completed_at": "2026-09-17T09:07:39Z"
+      },
+      {
+        "name": "Retain original release assets",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-09-17T09:07:39Z",
+        "completed_at": "2026-09-17T09:07:48Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-09-17T09:07:48Z",
+        "completed_at": "2026-09-17T09:07:49Z"
+      },
+      {
+        "name": "Post Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-09-17T09:07:49Z",
+        "completed_at": "2026-09-17T09:07:49Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-09-17T09:07:49Z",
+        "completed_at": "2026-09-17T09:07:49Z"
+      }
+    ],
+    "artifactMetadata": {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/artifacts-final.json",
+      "bytes": 748,
+      "sha256": "588e3358e265d8ae5d8e9893a9e0a7c657a305e6e574b76ca93e880a756e17de"
+    },
+    "observedArtifacts": [
+      {
+        "id": 10488458728,
+        "node_id": "MDg6QXJ0aWZhY3QxMDQ4ODQ1ODcyOA==",
+        "name": "qualified-release-snapshot",
+        "size_in_bytes": 1315244695,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10488458728",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10488458728/zip",
+        "expired": false,
+        "digest": "sha256:3a618b4713f91486949900f914f40b4c03a58e3e6dcd231bfeabab2baa706490",
+        "created_at": "2026-09-17T09:07:48Z",
+        "updated_at": "2026-09-17T09:07:48Z",
+        "expires_at": "2026-10-01T09:07:39Z",
+        "workflow_run": {
+          "id": 35200168640,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/p05-team-clearance",
+          "head_sha": "822f3290787c704a217e7c185d4b8beb7a527e82"
+        }
+      }
+    ],
+    "scope": "Actual freeze outcome and artifact API metadata; separate from six source gates. Matching whole original payload inspection is now required before qualification."
+  },
+  "localFullTest": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local P05 cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+  },
+  "localOrdinaryBuild": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local P05 cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+  },
+  "localCorroboration": {
+    "status": "not-run-on-final-source",
+    "checks": 0,
+    "scope": "Earlier local P05 cohorts remain separate; no local command gates are inferred for the final source."
+  },
+  "localAdditionalChecks": [],
+  "ordinaryBuildCorroboration": {
+    "runId": 35200161217,
+    "jobId": 105133443816,
+    "step": {
+      "name": "Build pull-request artifact",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-09-17T08:35:02Z",
+      "completed_at": "2026-09-17T08:37:30Z"
+    },
+    "command": "npm run build",
+    "log": {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443816.log.gz",
+      "bytes": 10115,
+      "sha256": "a1839d7f3211e3802b3b2a88f1de08115a0bdc551a2d20a649fc1cbd8ba4b5f2"
+    },
+    "scope": "Actual successful hosted PR ordinary build command on exact source, bounded by raw source identities. No local build or loose ordinary-byte inspection claimed."
+  },
+  "frozenArtifactCorroboration": {
+    "hostedUtility": {
+      "inputs": {
+        "inspection": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+          "bytes": 1911,
+          "sha256": "768c66563618ffef6e79b1c7143aa57a7c917f0f5999e9eafb472cf271fe1427"
+        },
+        "download": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-original.download.json",
+          "bytes": 594,
+          "sha256": "7a79230fc48de37d9757ba7600b455f2dbfd2fee10a6d9f4e8589058795187c8"
+        },
+        "releaseRecord": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/release.json",
+          "bytes": 465,
+          "sha256": "143d208aaac625eae686cfc2fb1a4e86f72b516b731f11be4b3d3e702f85f0e1"
+        },
+        "manifest": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+          "bytes": 125543,
+          "sha256": "e18a1f59b678245b6d34d7d183fa3929e3a6411dda1e81d834e8bb65ead870b1"
+        },
+        "checksum": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "70f7f879092e2e1d31388c3ebbeb89255b9462cd753e48cf96503d3e9d3cbb2d"
+        },
+        "inspector": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+          "bytes": 25776,
+          "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+        },
+        "frozenOfflineReview": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/review.json",
+          "bytes": 3411,
+          "sha256": "d2d77637b28543ddcfa97d2ae1faa49867af1817b1aa84022ff88def4d5f91fb"
+        },
+        "frozenOfflineManifest": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+          "bytes": 118490,
+          "sha256": "8760b0369746a95dab3ff029fe48f1545d9ef99b84e8689b109bcaf437c1d908"
+        },
+        "frozenBuildInfo": {
+          "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+          "bytes": 143,
+          "sha256": "afddb1379cbfecbf86151480363648331c110e6530dad076823cc1ae2765a884"
+        }
+      },
+      "artifactAuthority": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/artifact-authority.json",
+        "bytes": 799,
+        "sha256": "5919dec224e6ab245bc2bb5ecfad1c90c5302c295bfe673c617a6214f0925735"
+      },
+      "execution": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/execution.json",
+        "bytes": 2210,
+        "sha256": "82e5d0f065f0b5a2ae9c927b7eea6621759da165c734888aec80dda9ace5e78b"
+      },
+      "run": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/run.json",
+        "bytes": 12604,
+        "sha256": "a7dcdd280af9e8bbe91250dc7394dc290126619d00da0887082f613254a3439b"
+      },
+      "jobs": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/jobs.json",
+        "bytes": 6289,
+        "sha256": "e702cc40238e3c21f15f16efc2e4f302b2f0a4572f2e05cb21a8f0c4e3d8c42f"
+      },
+      "retainedManifest": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/retained-manifest.json",
+        "bytes": 6782,
+        "sha256": "079df5bfcac09448b245c0048d1fbe0089d416fd6f8ead205d147f591b02ded5"
+      },
+      "bindingProvenance": {
+        "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/manifest.json",
+        "bytes": 19728,
+        "sha256": "ffe6ff6c152872c4de3e67ed603abb1d2bd4ea4d5544e15457e96b829f999b43"
+      },
+      "scope": "Hosted original-byte inspection; separate from source command qualification."
+    },
+    "binding": {
+      "path": ".cache/p05-qualified/team-v0601/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2528,
+      "sha256": "ba75b9119f80cf6fa2d441b92d7ba799f8281af1934dd9cc7733cc092499268b"
+    },
+    "inputs": {
+      "inspection": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+        "bytes": 1911,
+        "sha256": "768c66563618ffef6e79b1c7143aa57a7c917f0f5999e9eafb472cf271fe1427"
+      },
+      "download": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-original.download.json",
+        "bytes": 594,
+        "sha256": "7a79230fc48de37d9757ba7600b455f2dbfd2fee10a6d9f4e8589058795187c8"
+      },
+      "releaseRecord": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/release.json",
+        "bytes": 465,
+        "sha256": "143d208aaac625eae686cfc2fb1a4e86f72b516b731f11be4b3d3e702f85f0e1"
+      },
+      "manifest": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+        "bytes": 125543,
+        "sha256": "e18a1f59b678245b6d34d7d183fa3929e3a6411dda1e81d834e8bb65ead870b1"
+      },
+      "checksum": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "70f7f879092e2e1d31388c3ebbeb89255b9462cd753e48cf96503d3e9d3cbb2d"
+      },
+      "inspector": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+        "bytes": 25776,
+        "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+      },
+      "frozenOfflineReview": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/review.json",
+        "bytes": 3411,
+        "sha256": "d2d77637b28543ddcfa97d2ae1faa49867af1817b1aa84022ff88def4d5f91fb"
+      },
+      "frozenOfflineManifest": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+        "bytes": 118490,
+        "sha256": "8760b0369746a95dab3ff029fe48f1545d9ef99b84e8689b109bcaf437c1d908"
+      },
+      "frozenBuildInfo": {
+        "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+        "bytes": 143,
+        "sha256": "afddb1379cbfecbf86151480363648331c110e6530dad076823cc1ae2765a884"
+      }
+    },
+    "artifactId": 10488458728,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "scope": "Existing reviewed streaming inspector checked original TAR Git blobs/types/modes/commit, outer digest and every inner ZIP byte; public delivery remains separate."
+  },
+  "evidencePins": [
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/expected-test-partitions.json",
+      "bytes": 21656,
+      "sha256": "8d3d3e1fed64775119cd207b1057ddb52f291f1d4ebc3bc73fe9fda83c477124"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/final-evidence-manifest.json",
+      "bytes": 11150,
+      "sha256": "4d4a6508bcbbd07129a681f462342a9462757ca231e840521d4ea49c39f1f509"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/job-step-records.json",
+      "bytes": 35498,
+      "sha256": "7ab51a1bfb1261ee36eaa698613eaa1e78aa59bae1785b1df6a6fb68ab085c6e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/artifacts-final.json",
+      "bytes": 748,
+      "sha256": "588e3358e265d8ae5d8e9893a9e0a7c657a305e6e574b76ca93e880a756e17de"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105132758482-receipt.json",
+      "bytes": 693,
+      "sha256": "6a8ae9e26d3551f1ba301a8dac62f9d792ebf3d87ae586819bb1a47e87b07e69"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105132758482.json",
+      "bytes": 3743,
+      "sha256": "56bb17b3988958ebe20433f3695ae21fddaca62dcebbb163999dc66629e222c1"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105132758482.log.gz",
+      "bytes": 10010,
+      "sha256": "4359359fb155f2c353e2b4d15e270a22765223cc95855b4b2d09f573faa4f338"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105132759599.json",
+      "bytes": 886,
+      "sha256": "eaea03e6e2c256e2626c7f5e17421d1997ec11f93123c047b53bcb20265ec771"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105132759913.json",
+      "bytes": 886,
+      "sha256": "ae5fbd6f45a3812fba314190f957dbac53ac58be8b8d3cdc946ffb7f36e0b896"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219733-receipt.json",
+      "bytes": 696,
+      "sha256": "577f4d74360f1ff67633fd6e727ad109b809eac7bde396353c47c4685fbc5923"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219733.json",
+      "bytes": 2704,
+      "sha256": "10dce9c25a20d3befc7a92bbfe5cf40d78e94b9767ff462638babf3c289b5cbc"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219733.log.gz",
+      "bytes": 107467,
+      "sha256": "d9a300d63b522f048f307222930b578ca6ac65ff99103f39d78b306583a926c9"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219736-receipt.json",
+      "bytes": 696,
+      "sha256": "8d9d421adb584220728793f8599169bbccd98426a7e75ebf4e297f60fdcb80cf"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219736.json",
+      "bytes": 2704,
+      "sha256": "6d1c204a65dbb4f8e54140ec0a241f8ba27543e682a666bf7781a639680917c0"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219736.log.gz",
+      "bytes": 111900,
+      "sha256": "b6ac845676257c434fcf4f6557637df381722d5c737258da4625b28664561d64"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219748-receipt.json",
+      "bytes": 695,
+      "sha256": "b75966b4aea6c783b24abd9dc899d8939ac789bedfd62c5fe9728ec1fb12f736"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219748.json",
+      "bytes": 2704,
+      "sha256": "6e2ff8b4dfd83e38f16f6f1e70a05026f470d67fe5a87e341d3108e54c2da506"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219748.log.gz",
+      "bytes": 94192,
+      "sha256": "d581900a0ae8cc6e9157cd6d66631682f38437a6e65168b68104035a13cc6e53"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219796-receipt.json",
+      "bytes": 696,
+      "sha256": "90d661939d116ec2d667455e0c49293ca68313da577248fa4a856aed165f57e3"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219796.json",
+      "bytes": 2704,
+      "sha256": "dda52afafac33d34f3bdf2e133bebb30c52513d71db135d29fe6b9cde5d5c985"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105133219796.log.gz",
+      "bytes": 104218,
+      "sha256": "d38189c3f3eafcd02b28c5c567e40e70a81033783693c6a70c1ef02764bff40d"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105142435374-receipt.json",
+      "bytes": 692,
+      "sha256": "483e4c644c48bfe5a9b02ea8d903f82334a75bb54a8ccc1f050e5b96d899314e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105142435374.json",
+      "bytes": 2226,
+      "sha256": "344a73c84d40747276502d082b718773148003726c561617610414dc1ea7de7e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/job-105142435374.log.gz",
+      "bytes": 10977,
+      "sha256": "ea3330eb9087d59f8c9b49db067140336121d824491414c51db1559fc3e454a7"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/jobs.json",
+      "bytes": 18591,
+      "sha256": "2a4acd43fed35d0a4f8ed2941adc5898693569e98e61ced983450f41ed5d8e45"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/manual/run.json",
+      "bytes": 12604,
+      "sha256": "3e37f3fecc2752cce38f2465e75580bebd2a398dbce9271f77ba3176398e839a"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/partition-coverage.json",
+      "bytes": 21879,
+      "sha256": "b8548cad823440a8ad6b0c681115c9bb6b348e7d2ad825783b6dad564ce119f6"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/.github__workflows__deploy-pages.yml.api.json",
+      "bytes": 12158,
+      "sha256": "a2fd8be46c2cf90683611507aaa39b973fdaddc77a6b46638a058f4eabef2430"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml.api.json",
+      "bytes": 7266,
+      "sha256": "939455231beb63ecf1e395503c7eb766885ab7256eda002d4cc79a731b118eae"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/commit.json",
+      "bytes": 2648,
+      "sha256": "f715f431373383c523d991e10a3289a07d6054737eec99f79bbec1df57cb6a76"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/receipt.json",
+      "bytes": 2743,
+      "sha256": "3acb762421c069f51449a9f8a7f463fc8e8bbd21a8827a23f54eded2e51bcb1c"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/scripts__check-source-identity.mjs.api.json",
+      "bytes": 11139,
+      "sha256": "1961edd16ebc1337e0f0c8425250c148dff7a33afff728fd4e6ae2aa872f9f1f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-automation/scripts__run-test-shard.mjs.api.json",
+      "bytes": 4816,
+      "sha256": "3230cfd5f279d9ad12f6bb61e8c03e092bc057f5b59987a771f8f6195b779d76"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-partition-coverage.json",
+      "bytes": 24646,
+      "sha256": "7ddb7bf786435179903f830bcca5b8b576f33aecdca1a34fbfdcce3fa9748f99"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105132728615-receipt.json",
+      "bytes": 698,
+      "sha256": "bfaf087d87fcf8d9fd5f6127ca707994b850d744d2642f6192fffa85bcd9ed62"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105132728615.json",
+      "bytes": 3307,
+      "sha256": "11f75ab042ab7d8099e6c10d7031b6f1e93f8cd6a43632b1309a818151472cba"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105132728615.log.gz",
+      "bytes": 14753,
+      "sha256": "a3371174202e02665f44849ca583c9bf9120caffc08efbd3c221592959e8b1f3"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105132729726.json",
+      "bytes": 889,
+      "sha256": "a213e1adaeea906fb1613cb42c1461d03fd8659c599a1bfa2c217ef14090830a"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443734-receipt.json",
+      "bytes": 698,
+      "sha256": "c1ece93cab0c11ea70cc11d208d20620b11f6786a47a7d9d4b2a787b1d000dd9"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443734.json",
+      "bytes": 2906,
+      "sha256": "a3a094f547eaf008bf957dff74309774b4ed7630372e3c6ed87e6db209730fae"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443734.log.gz",
+      "bytes": 94077,
+      "sha256": "323c9c4356cb2c30c4bfab39c248e1d0157ced733cdd1c9a8ab6af1b1bd13d2e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443816-receipt.json",
+      "bytes": 694,
+      "sha256": "7c9fafc275586878d8c5c6eeee794e85cb0e7edc6fc8c083a1da441cb1c51366"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443816.json",
+      "bytes": 2953,
+      "sha256": "f0db1ae9d463366739f0754c7e3d8920979dc2d8a591f81836876711ee8e2d2f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443816.log.gz",
+      "bytes": 10115,
+      "sha256": "a1839d7f3211e3802b3b2a88f1de08115a0bdc551a2d20a649fc1cbd8ba4b5f2"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443862-receipt.json",
+      "bytes": 699,
+      "sha256": "6d1436e3073cb62d8dc44bdf50c7744e3718af8a463ee1395f825b7f0ac7cad2"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443862.json",
+      "bytes": 2906,
+      "sha256": "2879b9b9773d60d75ae8c2de36635c337668591a98c5e448a95c761e257de73c"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443862.log.gz",
+      "bytes": 105462,
+      "sha256": "1d558b8c4db657f009a0b4a9195c0d51fb894c0f02bf91291e6fcf3c96812d1f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443897-receipt.json",
+      "bytes": 699,
+      "sha256": "12f2a2068837289abe2743d3c79c73eecd199e8885b7dbdeebce00155cce0a77"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443897.json",
+      "bytes": 2906,
+      "sha256": "1ae4beb34b1fdea4f4ee308ec377b329d18ac16c001d27cc10e442a864e32477"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133443897.log.gz",
+      "bytes": 102365,
+      "sha256": "47a33b6760ab59ac49cb4fc6088c8da890e8f415a1c4f31c19f1935e3a64e43f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133444084-receipt.json",
+      "bytes": 699,
+      "sha256": "3ee81dc251061b219f9c262c2302310a6c3d95204ae8da08eaf14ef613e95fd5"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133444084.json",
+      "bytes": 2906,
+      "sha256": "1bd8ae8292ad9f4880f8b41b9fa434b656442e3e8e842d4b4cdf8006a777fdf4"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/job-105133444084.log.gz",
+      "bytes": 108444,
+      "sha256": "909b64040c61352012b95552c1677634d618a9211bb5fb945146ecafd516c671"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/jobs.json",
+      "bytes": 18806,
+      "sha256": "114d0ed92d035ff605774ec64863e5890e257ff1e2c28669a110c98f66e8a8f0"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/pr-source/run.json",
+      "bytes": 12619,
+      "sha256": "1944fd5827146d9e77f782a14fc084348e2ad2a84c01b513b8a9d9c0022ede21"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/review.json",
+      "bytes": 864,
+      "sha256": "46646e52b5c9c8c391aa83083695897f1030c0e44183b39374ba2ace4d159496"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/source-executed/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/source-executed/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/source-executed/receipt.json",
+      "bytes": 1353,
+      "sha256": "041778e13d58dcbe9286aacf63cbbe8cd39be161b65f5499e94d2113cb90ac78"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/source-executed/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/source-executed/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/hosted/source-identities.json",
+      "bytes": 7839,
+      "sha256": "18b30f428d57a923d395e849280887bf21e21bcd7f67b34809df8a88c1cf9e29"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-bindings/automation-binding.json",
+      "bytes": 472,
+      "sha256": "a982c3ff9b54c569f7f4e95a96042043893539bf4df8ee45faaf3817af908223"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2528,
+      "sha256": "ba75b9119f80cf6fa2d441b92d7ba799f8281af1934dd9cc7733cc092499268b"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/assemble.py",
+      "bytes": 34787,
+      "sha256": "97eecd7d93633cfa2dc1fc903813dd623a0487b982ee71718bd383c046f05d73"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/manifest.json",
+      "bytes": 19728,
+      "sha256": "ffe6ff6c152872c4de3e67ed603abb1d2bd4ea4d5544e15457e96b829f999b43"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/0d78c2197136ac4a927945c6bd4481af0902ffac69dc9f0279bc002384f1e131.bin",
+      "bytes": 1819,
+      "sha256": "0d78c2197136ac4a927945c6bd4481af0902ffac69dc9f0279bc002384f1e131"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/114d0ed92d035ff605774ec64863e5890e257ff1e2c28669a110c98f66e8a8f0.bin",
+      "bytes": 18806,
+      "sha256": "114d0ed92d035ff605774ec64863e5890e257ff1e2c28669a110c98f66e8a8f0"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/1944fd5827146d9e77f782a14fc084348e2ad2a84c01b513b8a9d9c0022ede21.bin",
+      "bytes": 12619,
+      "sha256": "1944fd5827146d9e77f782a14fc084348e2ad2a84c01b513b8a9d9c0022ede21"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/1d558b8c4db657f009a0b4a9195c0d51fb894c0f02bf91291e6fcf3c96812d1f.bin",
+      "bytes": 105462,
+      "sha256": "1d558b8c4db657f009a0b4a9195c0d51fb894c0f02bf91291e6fcf3c96812d1f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c.bin",
+      "bytes": 32,
+      "sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/26227e00c346b14c21e118e835fc7126415aa7e2bc1f16f28db8dc3f6d4ab3c9.bin",
+      "bytes": 1238,
+      "sha256": "26227e00c346b14c21e118e835fc7126415aa7e2bc1f16f28db8dc3f6d4ab3c9"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/2a4acd43fed35d0a4f8ed2941adc5898693569e98e61ced983450f41ed5d8e45.bin",
+      "bytes": 18591,
+      "sha256": "2a4acd43fed35d0a4f8ed2941adc5898693569e98e61ced983450f41ed5d8e45"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/323c9c4356cb2c30c4bfab39c248e1d0157ced733cdd1c9a8ab6af1b1bd13d2e.bin",
+      "bytes": 94077,
+      "sha256": "323c9c4356cb2c30c4bfab39c248e1d0157ced733cdd1c9a8ab6af1b1bd13d2e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/327016f016997f3436e8d600a9a9dad533a78ad3d0fa5b1d4c3700d8c09b0b6f.bin",
+      "bytes": 2980,
+      "sha256": "327016f016997f3436e8d600a9a9dad533a78ad3d0fa5b1d4c3700d8c09b0b6f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/360ba0709c4317b426729e9a7e33a376d52490a54811a35b17bab2d5388a4ad3.bin",
+      "bytes": 4758,
+      "sha256": "360ba0709c4317b426729e9a7e33a376d52490a54811a35b17bab2d5388a4ad3"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/3e37f3fecc2752cce38f2465e75580bebd2a398dbce9271f77ba3176398e839a.bin",
+      "bytes": 12604,
+      "sha256": "3e37f3fecc2752cce38f2465e75580bebd2a398dbce9271f77ba3176398e839a"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/4359359fb155f2c353e2b4d15e270a22765223cc95855b4b2d09f573faa4f338.bin",
+      "bytes": 10010,
+      "sha256": "4359359fb155f2c353e2b4d15e270a22765223cc95855b4b2d09f573faa4f338"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/47a33b6760ab59ac49cb4fc6088c8da890e8f415a1c4f31c19f1935e3a64e43f.bin",
+      "bytes": 102365,
+      "sha256": "47a33b6760ab59ac49cb4fc6088c8da890e8f415a1c4f31c19f1935e3a64e43f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/4d92f3a737ec5d1a6f94511ef16b124b4286aba0275ef3ce2abe822d6c3301c0.bin",
+      "bytes": 17698,
+      "sha256": "4d92f3a737ec5d1a6f94511ef16b124b4286aba0275ef3ce2abe822d6c3301c0"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/588e3358e265d8ae5d8e9893a9e0a7c657a305e6e574b76ca93e880a756e17de.bin",
+      "bytes": 748,
+      "sha256": "588e3358e265d8ae5d8e9893a9e0a7c657a305e6e574b76ca93e880a756e17de"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/6191efb008b659d399098d1f842fe56145d557d88be661e9e45284ab36d5e14a.bin",
+      "bytes": 1584,
+      "sha256": "6191efb008b659d399098d1f842fe56145d557d88be661e9e45284ab36d5e14a"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/6561b3f00090c5b7f2ee8ec8b55e9d3ef67528b7be1ea59da8edc42833aa7a14.bin",
+      "bytes": 41,
+      "sha256": "6561b3f00090c5b7f2ee8ec8b55e9d3ef67528b7be1ea59da8edc42833aa7a14"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/909b64040c61352012b95552c1677634d618a9211bb5fb945146ecafd516c671.bin",
+      "bytes": 108444,
+      "sha256": "909b64040c61352012b95552c1677634d618a9211bb5fb945146ecafd516c671"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/9960c1b83874ec11b5f5c4c2c5e384aaf45632ea6b151e23b0530c1f887e0d4f.bin",
+      "bytes": 8270,
+      "sha256": "9960c1b83874ec11b5f5c4c2c5e384aaf45632ea6b151e23b0530c1f887e0d4f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/9cd630c2feb18044bac445f2d61bb954c1d50b7a474f1af4b074c02f63f35974.bin",
+      "bytes": 5252,
+      "sha256": "9cd630c2feb18044bac445f2d61bb954c1d50b7a474f1af4b074c02f63f35974"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/9ef5d79656bf5c2fecbb3fdca3514f03cfb64cc80349a54cbc6ecbd1c5550b22.bin",
+      "bytes": 36138,
+      "sha256": "9ef5d79656bf5c2fecbb3fdca3514f03cfb64cc80349a54cbc6ecbd1c5550b22"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/a1839d7f3211e3802b3b2a88f1de08115a0bdc551a2d20a649fc1cbd8ba4b5f2.bin",
+      "bytes": 10115,
+      "sha256": "a1839d7f3211e3802b3b2a88f1de08115a0bdc551a2d20a649fc1cbd8ba4b5f2"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/a3371174202e02665f44849ca583c9bf9120caffc08efbd3c221592959e8b1f3.bin",
+      "bytes": 14753,
+      "sha256": "a3371174202e02665f44849ca583c9bf9120caffc08efbd3c221592959e8b1f3"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/a7dcdd280af9e8bbe91250dc7394dc290126619d00da0887082f613254a3439b.bin",
+      "bytes": 12604,
+      "sha256": "a7dcdd280af9e8bbe91250dc7394dc290126619d00da0887082f613254a3439b"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/b6ac845676257c434fcf4f6557637df381722d5c737258da4625b28664561d64.bin",
+      "bytes": 111900,
+      "sha256": "b6ac845676257c434fcf4f6557637df381722d5c737258da4625b28664561d64"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/d38189c3f3eafcd02b28c5c567e40e70a81033783693c6a70c1ef02764bff40d.bin",
+      "bytes": 104218,
+      "sha256": "d38189c3f3eafcd02b28c5c567e40e70a81033783693c6a70c1ef02764bff40d"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/d581900a0ae8cc6e9157cd6d66631682f38437a6e65168b68104035a13cc6e53.bin",
+      "bytes": 94192,
+      "sha256": "d581900a0ae8cc6e9157cd6d66631682f38437a6e65168b68104035a13cc6e53"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/d86b0b4c4769e22dd5786208279aef4f167b390e654363a86a79fa8d22091fa3.bin",
+      "bytes": 2056,
+      "sha256": "d86b0b4c4769e22dd5786208279aef4f167b390e654363a86a79fa8d22091fa3"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/d9a300d63b522f048f307222930b578ca6ac65ff99103f39d78b306583a926c9.bin",
+      "bytes": 107467,
+      "sha256": "d9a300d63b522f048f307222930b578ca6ac65ff99103f39d78b306583a926c9"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/e45422b4694fb90324a0430efed729d6ff68bc33e0150404dd0c3a88205c0c59.bin",
+      "bytes": 743,
+      "sha256": "e45422b4694fb90324a0430efed729d6ff68bc33e0150404dd0c3a88205c0c59"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/e702cc40238e3c21f15f16efc2e4f302b2f0a4572f2e05cb21a8f0c4e3d8c42f.bin",
+      "bytes": 6289,
+      "sha256": "e702cc40238e3c21f15f16efc2e4f302b2f0a4572f2e05cb21a8f0c4e3d8c42f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/ea3330eb9087d59f8c9b49db067140336121d824491414c51db1559fc3e454a7.bin",
+      "bytes": 10977,
+      "sha256": "ea3330eb9087d59f8c9b49db067140336121d824491414c51db1559fc3e454a7"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/binding-provenance/originals/ec4bc1f3a39dc38cc200463715ec440eb364d0a43b0771557dce429a752be111.bin",
+      "bytes": 23139,
+      "sha256": "ec4bc1f3a39dc38cc200463715ec440eb364d0a43b0771557dce429a752be111"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/context.reviewed.json",
+      "bytes": 4906,
+      "sha256": "252b6646ac4ebb5a49b65ce95e4457e52bd23e1d371f6f31caf690a8ad7a772c"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/prepared_binding.py",
+      "bytes": 7921,
+      "sha256": "2d5f390191b40d0d1985a6d8fc5b2d33fa8c40ff980f5c2f77f29b623352d09e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/qualification_context.py",
+      "bytes": 19578,
+      "sha256": "50a9f822438a6e9c0f81267eb5459776cae0378f70fbd40aa299e24c31a49a19"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/review-final-qualification.py",
+      "bytes": 19594,
+      "sha256": "23fedb168b300a04e66197a727a973f639f6525e167005e9a7bb53843bbca819"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/source-identity-original.json",
+      "bytes": 450,
+      "sha256": "700ad3c0e12bdff0190c4da29334d4231b16d6212c9844a1ca025c41e70d343d"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/qualification-tools/utility-source-pins.json",
+      "bytes": 1451,
+      "sha256": "f1705419907d24dca3442575983976a45864b6cf564c5b2d34241d9dd5618838"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/001.json",
+      "bytes": 716,
+      "sha256": "321374fd37b425b9386205bd6ba2f23b86742a98082d2c5dc71d8d3bcea91555"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/001.request.json",
+      "bytes": 304,
+      "sha256": "abf1c429bd2ad7154768459e2778728394c917c2de3506d426ae8c3b7f2ff3b5"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/002.json",
+      "bytes": 12604,
+      "sha256": "3e37f3fecc2752cce38f2465e75580bebd2a398dbce9271f77ba3176398e839a"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/002.request.json",
+      "bytes": 301,
+      "sha256": "7a81d961ac2b39421b6dc9a621ca78063bd93c88e8d53bf95fa5534318a7f090"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/003.json",
+      "bytes": 18591,
+      "sha256": "2a4acd43fed35d0a4f8ed2941adc5898693569e98e61ced983450f41ed5d8e45"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/003.request.json",
+      "bytes": 326,
+      "sha256": "bef91f5d5d753f95e0a22bf9761e7dfe7109a7ab6497273ee288e446e00d6265"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/004.json",
+      "bytes": 716,
+      "sha256": "321374fd37b425b9386205bd6ba2f23b86742a98082d2c5dc71d8d3bcea91555"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/004.request.json",
+      "bytes": 304,
+      "sha256": "d6e33c54f146fd4805e1a60a2793c2dd6128723a25f1318781be149f78b91178"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/005.json",
+      "bytes": 12604,
+      "sha256": "3e37f3fecc2752cce38f2465e75580bebd2a398dbce9271f77ba3176398e839a"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/005.request.json",
+      "bytes": 301,
+      "sha256": "b43ac54347be2bd01bb02c0fdbcc7d2b1ab4321e168429588fe18d9bbfd62c59"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/006.json",
+      "bytes": 18591,
+      "sha256": "2a4acd43fed35d0a4f8ed2941adc5898693569e98e61ced983450f41ed5d8e45"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/api/006.request.json",
+      "bytes": 326,
+      "sha256": "e1445114c626a6a706b5eb38a8b753bfd6c2451a2ec64cbb20e5724460c073af"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/artifact-authority.json",
+      "bytes": 799,
+      "sha256": "5919dec224e6ab245bc2bb5ecfad1c90c5302c295bfe673c617a6214f0925735"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/binding.json",
+      "bytes": 417,
+      "sha256": "81418ca40beb5ad3a837125b00c51d57abb193c9d82924adebd9b2fbdc451aa0"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/execution.json",
+      "bytes": 2210,
+      "sha256": "82e5d0f065f0b5a2ae9c927b7eea6621759da165c734888aec80dda9ace5e78b"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+      "bytes": 143,
+      "sha256": "afddb1379cbfecbf86151480363648331c110e6530dad076823cc1ae2765a884"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/game/index.html",
+      "bytes": 74730,
+      "sha256": "4b8f66e556d1fe907141a9aec3833ec7192973fd60095bdd10d653f6825dedca"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+      "bytes": 118490,
+      "sha256": "8760b0369746a95dab3ff029fe48f1545d9ef99b84e8689b109bcaf437c1d908"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/originals/service-worker.js",
+      "bytes": 109724,
+      "sha256": "0216b5e655c52eb5cdc557997d10ecad8af0dd1e54476e48eead6aa14a113810"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/frozen-offline-review/review.json",
+      "bytes": 3411,
+      "sha256": "d2d77637b28543ddcfa97d2ae1faa49867af1817b1aa84022ff88def4d5f91fb"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/inspection.log",
+      "bytes": 3469,
+      "sha256": "5b4c2fa062b1a876f044a0f399825f170299a8e8e421f9bae32e084bc123dae7"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/offline-review.log",
+      "bytes": 194,
+      "sha256": "b0df0d74ab74cc9f941c9ac4153265e1fbfe989c4df6afd46433b39b04f90f27"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "7a79230fc48de37d9757ba7600b455f2dbfd2fee10a6d9f4e8589058795187c8"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "70f7f879092e2e1d31388c3ebbeb89255b9462cd753e48cf96503d3e9d3cbb2d"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+      "bytes": 1911,
+      "sha256": "768c66563618ffef6e79b1c7143aa57a7c917f0f5999e9eafb472cf271fe1427"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+      "bytes": 125543,
+      "sha256": "e18a1f59b678245b6d34d7d183fa3929e3a6411dda1e81d834e8bb65ead870b1"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/qualified-artifact-verified/release.json",
+      "bytes": 465,
+      "sha256": "143d208aaac625eae686cfc2fb1a4e86f72b516b731f11be4b3d3e702f85f0e1"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/result.json",
+      "bytes": 548,
+      "sha256": "8a1e84e9eff6bda33149f8fe330ea100f0678a8dafb42f2adf83ae54e9486d0d"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/retained-manifest.json",
+      "bytes": 6782,
+      "sha256": "079df5bfcac09448b245c0048d1fbe0089d416fd6f8ead205d147f591b02ded5"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/source-after.json",
+      "bytes": 159,
+      "sha256": "d96e4bfd905d2d37e315c2852712e396eb4c34def45171bb842dda67596525fd"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/evidence/source-before.json",
+      "bytes": 159,
+      "sha256": "d96e4bfd905d2d37e315c2852712e396eb4c34def45171bb842dda67596525fd"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/.github/workflows/qualify-release-source.yml",
+      "bytes": 9779,
+      "sha256": "1556a65202bc0e70ce84e10333df711fc863aec0f261c710b9216eb7d5b4af83"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/release_artifact.py",
+      "bytes": 29832,
+      "sha256": "f4244438c5df6a6f19d3d197cbb1d785a8a2df616c246b4f4573d4eb4c70604e"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/test_release_artifact.py",
+      "bytes": 24465,
+      "sha256": "a463527fcddee391a98f6bd833b47728091428d37358ff3c93fb24e8ced5fd5f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/test_upload_distribution.py",
+      "bytes": 14627,
+      "sha256": "463537b0d7e6ecdc8a852134e0b1084e037f82f0d8e894167fdadee919836eda"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/test_upload_source.py",
+      "bytes": 14451,
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/upload_distribution.py",
+      "bytes": 18035,
+      "sha256": "036c8a075b1618032f63e795c9f8b622840754f85e22df55334d1638f6cd3662"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/upload_source.py",
+      "bytes": 17965,
+      "sha256": "32091bd624eb55fbfc5658432d5948cdef0445d4f989d1c0175c9b3a3da5c5c5"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/executed-helpers/publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/jobs.json",
+      "bytes": 6289,
+      "sha256": "e702cc40238e3c21f15f16efc2e4f302b2f0a4572f2e05cb21a8f0c4e3d8c42f"
+    },
+    {
+      "path": ".cache/p05-qualified/team-v0601/utility-inspection/run.json",
+      "bytes": 12604,
+      "sha256": "a7dcdd280af9e8bbe91250dc7394dc290126619d00da0887082f613254a3439b"
+    }
+  ],
+  "limits": [
+    "Source qualification uses complete hosted suites/build and already verified frozen originals; release publication, public HTTP/browser/offline and physical-device acceptance remain separate.",
+    "Five source commands share one actual successful preflight step; no per-command exit codes or timestamps are invented.",
+    "PR coverage is authenticated exact runner semantics plus complete deterministic file partitions; no direct per-file execution event trace is claimed.",
+    "Twelve raw hosted identity boundaries verify tracked bytes/modes; these are not a continuous filesystem lock.",
+    "The game checkout is exact bound release; the separately observed executed PR workflow/automation checkout is recorded in workflowRevision/workflowTree with exact retained API/blob authority.",
+    "Literal unsharded npm test and ordinary build were not run locally. Both hosted shard families cover every pinned test file; no unsharded scheduling equivalence or local ordinary-byte/browser carry-forward is claimed."
+  ]
+}

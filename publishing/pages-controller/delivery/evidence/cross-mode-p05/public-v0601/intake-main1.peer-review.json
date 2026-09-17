@@ -1,0 +1,110 @@
+{
+  "status": "PASS_SCOPED_PUBLIC_INTAKE_REVIEW",
+  "at": "2026-09-17T09:49:51.191054+00:00",
+  "binding": {
+    "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/binding.unreviewed.json",
+    "bytes": 2042,
+    "sha256": "c85efb8ed0a7d3b549bca4e4e0359cfeb75ad0f168dca9479ac8e49655e2a35c"
+  },
+  "bindingApproved": false,
+  "httpAuditExecuted": false,
+  "publicAcceptance": false,
+  "originalBodiesVerified": 9,
+  "hostedReceiptZipMembersVerified": 2,
+  "inventoryFiles": 2674,
+  "inventoryBytes": 638988304,
+  "all679CurrentManifestRowsPreserved": true,
+  "priorCatalogRowsPreserved": 71,
+  "catalogRows": 72,
+  "archive16OldPinsPreserved": 40,
+  "archive16Pins": 50,
+  "otherAdmissionsPreserved": 17,
+  "releaseId": 390577418,
+  "runId": 35206271586,
+  "deploymentId": 6499869218,
+  "latestSuccessStatusId": 18467370379,
+  "findings": [],
+  "checkedPins": [
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/receipt.json",
+      "bytes": 512473,
+      "sha256": "3053a1e1a1bafcd827190abede3e3684a48ac9c47eccb1b5f6365a3ecd731f1a"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/deployment.json",
+      "bytes": 3823,
+      "sha256": "d19f7df69b93452374fe4a49e005a10480e0fb8d0e932551d89f9703bf75222b"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/statuses.json",
+      "bytes": 6586,
+      "sha256": "262ba73a9dae3d8b4cb2e791f28bb97ff936ed78c3ae450c696f07631c59d9af"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/run.json",
+      "bytes": 12182,
+      "sha256": "54728fabea19b78e626a30c93b325c92780449cc6336a602f4900b08fdc050ee"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/manifest.json",
+      "bytes": 125543,
+      "sha256": "e18a1f59b678245b6d34d7d183fa3929e3a6411dda1e81d834e8bb65ead870b1"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/record.json",
+      "bytes": 465,
+      "sha256": "143d208aaac625eae686cfc2fb1a4e86f72b516b731f11be4b3d3e702f85f0e1"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/qualification.json",
+      "bytes": 75071,
+      "sha256": "ded582540a39feccf92b83f866ecea71c087abe776a6e0c31d50f789f5d2ebf5"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/catalog.json",
+      "bytes": 32139,
+      "sha256": "bc5fa53e9b5911f9725bdeface4a02bc3371b189cdcf5607bb203cadcd19c804"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/configuration.json",
+      "bytes": 108881,
+      "sha256": "65be42dec39354cdf9d42342c1163042d9a389a4ced2bf3499f341931922a1f3"
+    },
+    {
+      "path": "intake-request-main1.reviewed.json",
+      "bytes": 998,
+      "sha256": "544dfcb18ab0f088b32361739ad4c4d35ed1da58d1ed50bde0ce04d3085cabee"
+    },
+    {
+      "path": "published-original.json",
+      "bytes": 16972,
+      "sha256": "2d41aa4cd6e99f99e9c53566d0d886f94743e2ec8eeef0d4fcf0badece591b4c"
+    },
+    {
+      "path": "receipt-intake-main1/original.zip",
+      "bytes": 127413,
+      "sha256": "0576d9bf238710ba2b3dbac7c0e10e2bb5870c3312aaee0d5e28d804c6dc7abd"
+    },
+    {
+      "path": "receipt-intake-main1/artifact-receipt.json",
+      "bytes": 512473,
+      "sha256": "3053a1e1a1bafcd827190abede3e3684a48ac9c47eccb1b5f6365a3ecd731f1a"
+    },
+    {
+      "path": "receipt-intake-main1/zip-receipt.json",
+      "bytes": 407,
+      "sha256": "4d3b17e54a7a2e8c7fb6bab7eb0cbf5ab7d8db18ff33990c7b3c0a1ecb6e5db3"
+    },
+    {
+      "path": "tools/inputs/c1576deeab14bea21b00449912a6a465c3efaf90/binding.unreviewed.json",
+      "bytes": 2042,
+      "sha256": "c85efb8ed0a7d3b549bca4e4e0359cfeb75ad0f168dca9479ac8e49655e2a35c"
+    }
+  ],
+  "limits": [
+    "Only the actual small receipt artifact and bounded original API metadata were downloaded by the reviewed intake wrapper.",
+    "Bindings remain explicitly unreviewed; root must independently approve exact bytes before running HTTP audit.",
+    "No public game body requests, source/index/remote/browser mutations, tests, builds or device/phase acceptance.",
+    "Archive16 admission preserves scoped native evidence including the historical old-release keyboard Deploy miss; no broader device coverage inferred."
+  ]
+}
