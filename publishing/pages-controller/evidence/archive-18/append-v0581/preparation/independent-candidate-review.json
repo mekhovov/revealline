@@ -1,0 +1,144 @@
+{
+  "status": "INDEPENDENT_CACHE_DIFF_REVIEW_PASS_TESTS_SEPARATE",
+  "at": "2026-09-16T07:51:40.009367+00:00",
+  "candidateFiles": 21,
+  "candidateSourceBytes": 699535,
+  "expectedPublicFiles": 1327,
+  "expectedPublicBytes": 625402709,
+  "budgetBytes": 800000000,
+  "oldCohortRowsUnchanged": 662,
+  "newCohortRows": 662,
+  "extractorAndPrepareVerifyUnchanged": true,
+  "oldInputAuthorityUnchanged": true,
+  "testScope": "Existing corruption behavior unchanged; only exact two-cohort oracle extended. Root owns active tests; none run by reviewer.",
+  "diffSha256": "e46a96bb434af88c1dfa6902c4f6ee239181e664b0793e0b43173a891e296dfc",
+  "sourceRows": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "bytes": 3112,
+      "sha256": "259faeae38a05ee53877b0aa0478221b4bb21c2064e6fb93cf7e6a0e5bd32fc4",
+      "changed": true
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793",
+      "changed": false
+    },
+    {
+      "path": "README.md",
+      "bytes": 5150,
+      "sha256": "868c4c4b652c49d020f0a51a20b3126c1d2a9d000099ca69daeb8a0278535084",
+      "changed": true
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 274546,
+      "sha256": "c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6",
+      "changed": true
+    },
+    {
+      "path": "index.html",
+      "bytes": 1120,
+      "sha256": "88e1573728fd9f032bc17b72470ae8c888cfb16409ff18f6c83beef4a3e2fc14",
+      "changed": true
+    },
+    {
+      "path": "input-authority-v0581.json",
+      "bytes": 3602,
+      "sha256": "303df428d915f6da786f2cf466155ecfbf97a9844bf1d521e6ada25331c04e7b",
+      "changed": true
+    },
+    {
+      "path": "input-authority.json",
+      "bytes": 3760,
+      "sha256": "c511ebfe5415e27d27b80031cc5ad445a81c849927666faefe89e8cf7f96317e",
+      "changed": false
+    },
+    {
+      "path": "metadata/v0.58.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "76b435c1c531b90644244355cd7f219b0487b6290981d6b0c4a9427336e2b69a",
+      "changed": false
+    },
+    {
+      "path": "metadata/v0.58.0/manifest.json",
+      "bytes": 121882,
+      "sha256": "76987c22bba9c77e11b52eef74a8868b380128facdd270690c6b7656a202e6d5",
+      "changed": false
+    },
+    {
+      "path": "metadata/v0.58.0/release.json",
+      "bytes": 465,
+      "sha256": "9e92a481201a2aec7ff034ed40240152542b168ba793d60f6d74943760620033",
+      "changed": false
+    },
+    {
+      "path": "metadata/v0.58.0/source-qualification.json",
+      "bytes": 65001,
+      "sha256": "4e34504ec5f912c7d4608870c7f2ab1db3542ff0d4a052ff32a02bdc2b45849b",
+      "changed": false
+    },
+    {
+      "path": "metadata/v0.58.1/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "32de20c541b10675dc81d78a50983f09b118d4353d8da66bd0013430e92ccbc2",
+      "changed": true
+    },
+    {
+      "path": "metadata/v0.58.1/manifest.json",
+      "bytes": 121882,
+      "sha256": "3d346ee7234877c95e71b122fc586efc8d784e70595b8ecb5d9c47bd296c65f7",
+      "changed": true
+    },
+    {
+      "path": "metadata/v0.58.1/release.json",
+      "bytes": 465,
+      "sha256": "fbee114b84af6fe9e7f45d2f34d328c6ee44a04366492fafa5011f448f690740",
+      "changed": true
+    },
+    {
+      "path": "metadata/v0.58.1/source-qualification.json",
+      "bytes": 63073,
+      "sha256": "889961391c700bd9bb3c13475b72c4a5c6c403ddfeecb51c17a076e15ff362c4",
+      "changed": true
+    },
+    {
+      "path": "releases/index.html",
+      "bytes": 571,
+      "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0",
+      "changed": false
+    },
+    {
+      "path": "source-lock.json",
+      "bytes": 2263,
+      "sha256": "85c9c84ac02003d79e857d6fa430147644f88f6075a6aae11a97ff08bd857233",
+      "changed": true
+    },
+    {
+      "path": "tools/prepare.py",
+      "bytes": 4420,
+      "sha256": "d0c66a9f0ff13e5c9e343cec0251da40aebc98849059ffc70da948b3f0fa524f",
+      "changed": false
+    },
+    {
+      "path": "tools/test_prepare.py",
+      "bytes": 17844,
+      "sha256": "29eacf346569b70f3ffa8ea2c3b73efeabe61e26acf35ed8ca4affe82824c361",
+      "changed": true
+    },
+    {
+      "path": "tools/test_verify.py",
+      "bytes": 2278,
+      "sha256": "84891f0ee35945d12e165279b5fcffc8393646dc940c703f3fdeab1ef16b3a85",
+      "changed": false
+    },
+    {
+      "path": "tools/verify.py",
+      "bytes": 7916,
+      "sha256": "5e9c64fdc246d61b58355a5afebb39de55cfd4a1d1315f7f6d73b7e706281b06",
+      "changed": false
+    }
+  ],
+  "publicAccepted": false
+}

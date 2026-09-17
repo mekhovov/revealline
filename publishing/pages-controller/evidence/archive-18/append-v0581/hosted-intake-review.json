@@ -1,0 +1,16 @@
+{
+  "status": "HOSTED_ORIGINALS_RECONCILED_PUBLIC_PENDING",
+  "rootReviewRequired": true,
+  "expectedFiles": 1327,
+  "expectedBytes": 625402709,
+  "inventorySha256": "c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6",
+  "hostedBindingSha256": "0d248c0e404663e9dec20b218e7996c207353cb80ce70c63b48a1475052fe5fb",
+  "originalFilesPinned": 33,
+  "originalBytesPinned": 784811,
+  "hostedUnitLogObserved": [
+    4,
+    20
+  ],
+  "newAuditNotExecuted": true,
+  "phaseAccepted": false
+}

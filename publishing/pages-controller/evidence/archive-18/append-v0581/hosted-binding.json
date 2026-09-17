@@ -1,0 +1,185 @@
+{
+  "status": "HOSTED_READY_FOR_HTTP",
+  "at": "2026-09-16T07:58:56.964286+00:00",
+  "archiveId": "archive-18",
+  "archiveCommit": "eaaf9844f7294be17bd97672de3c5b483e7c1620",
+  "archiveTree": "868c0fbacb90b90b5082728393906e8cb8068416",
+  "sourceCheckoutCommit": "f4b092ff1d3c0c59657d987ab3519c85707ee865",
+  "sourceCheckoutTree": "868c0fbacb90b90b5082728393906e8cb8068416",
+  "runId": 35070855861,
+  "buildJob": 104711755143,
+  "deployJob": 104711914237,
+  "deploymentId": 6476315337,
+  "statusId": 18413062536,
+  "inventorySha256": "c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6",
+  "files": 1327,
+  "bytes": 625402709,
+  "evidence": [
+    {
+      "path": "after-hosted-commit.json",
+      "bytes": 2761,
+      "sha256": "a11d161ce011cf452df99fff1fe663a33cdd2de508cb56983455039817aca1cc"
+    },
+    {
+      "path": "after-hosted-commit.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-hosted-deployments.json",
+      "bytes": 3858,
+      "sha256": "9230662ab0d44d232bb03022106b09ecda5637b2b73ade5ad0758a51ee071082"
+    },
+    {
+      "path": "after-hosted-deployments.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-hosted-main.json",
+      "bytes": 358,
+      "sha256": "e8df1bdeaf81656d1ad0eb920be35415e7bd3cc7b11dd165bf088f36f3c9f41d"
+    },
+    {
+      "path": "after-hosted-main.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-hosted-pages.json",
+      "bytes": 348,
+      "sha256": "2b9d925b98a5e9c8de14896fffa221efa862a3ad0f6e62e102421065ff3ea186"
+    },
+    {
+      "path": "after-hosted-pages.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifact-download.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 6817,
+      "sha256": "ba4e5135933cc4f5d2e1d9e18b997e3f36198c1693aecba306d4ff4cf8954440"
+    },
+    {
+      "path": "deployment-statuses.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 3856,
+      "sha256": "aa987b9a3ea377655d467535eef3eedb8d19a9a956871ba76ec5a15edfcaff1a"
+    },
+    {
+      "path": "deployment.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "job-104711755143.log",
+      "bytes": 192722,
+      "sha256": "1be27ab22efc6046fa1b0315bc61b31e395eb1df6c1c04887fe022fa48254519"
+    },
+    {
+      "path": "job-104711755143.raw.log",
+      "bytes": 192722,
+      "sha256": "1be27ab22efc6046fa1b0315bc61b31e395eb1df6c1c04887fe022fa48254519"
+    },
+    {
+      "path": "job-104711755143.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "job-104711914237.log",
+      "bytes": 4404,
+      "sha256": "18004534b077374fff65432ac7f49ca605874e2bc544746ef2c83c4dd26012a7"
+    },
+    {
+      "path": "job-104711914237.raw.log",
+      "bytes": 4404,
+      "sha256": "18004534b077374fff65432ac7f49ca605874e2bc544746ef2c83c4dd26012a7"
+    },
+    {
+      "path": "job-104711914237.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "jobs-01.json",
+      "bytes": 4837,
+      "sha256": "2d3e93a3d6ac8a84d9534ead6be0939553bb1831c0ad56d9b2f2c9baddb0847e"
+    },
+    {
+      "path": "jobs-01.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "log-intake.json",
+      "bytes": 983,
+      "sha256": "2cb7f544aee3e73fcbd336b2c601c68c25437e4661552125fb1dccce7e9886d0"
+    },
+    {
+      "path": "receipt-intake.json",
+      "bytes": 1746,
+      "sha256": "598b03f864d707ec550a947979061d3eb52db17b13dad0a3ade0105329a22a31"
+    },
+    {
+      "path": "run-01.json",
+      "bytes": 13243,
+      "sha256": "514a39dbf1b9975c4e98c9f882d4cbefe3ad8ef2642816fef96b6f3259cfc035"
+    },
+    {
+      "path": "run-01.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-artifacts.json",
+      "bytes": 1454,
+      "sha256": "3bdbee97c5ab8945b78605add3445a058653417385cc4f85e125c8a5d796b932"
+    },
+    {
+      "path": "run-artifacts.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "terminal-api-retrieval.json",
+      "bytes": 3259,
+      "sha256": "39e28dba1eb9ac632a20671ad72191b0b68e02a4cffe493a02653c93d7ef8e4c"
+    },
+    {
+      "path": "verification-receipts/expected-inventory.json",
+      "bytes": 274546,
+      "sha256": "c52247cf0b6f2204bf4b83863e5a0da60f1dd3947301fe653f9f3b86358240b6"
+    },
+    {
+      "path": "verification-receipts/receipt.json",
+      "bytes": 1753,
+      "sha256": "6679c3dce63fedb54909d2d38e6fca822fcc3def188395fd97740ae8de274cf7"
+    },
+    {
+      "path": "verification-receipts/zip-receipt-v0.58.0.json",
+      "bytes": 407,
+      "sha256": "d9fca55322ac8a02286ce72194002a0a6bca839cf021ec522fd853b0bba1c83e"
+    },
+    {
+      "path": "verification-receipts/zip-receipt-v0.58.1.json",
+      "bytes": 407,
+      "sha256": "8e54a3e0acc63e9329b96ac5181a67d2b24db5ebd7f8328e6d075db34eef592b"
+    },
+    {
+      "path": "verification-receipts.zip",
+      "bytes": 69926,
+      "sha256": "80dd14f1bcc50be66ba89330caf0a4ef43d59087a9eb9669e94d62f927eff120"
+    }
+  ],
+  "scope": "Actual two-original-cohort hosted extraction and independent artifact reread passed. Complete canonical public byte and native acceptance remain separate and pending."
+}

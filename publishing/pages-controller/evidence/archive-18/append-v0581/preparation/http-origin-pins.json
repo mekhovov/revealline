@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "http-origins/http_audit.py",
+      "bytes": 13257,
+      "sha256": "d0d1d302f2c362bd9ffaeafc08ba846d57a932f4ce2e5ae73bae4ec18d531590",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p02a-team-note/archive18-public-audit/http-tools/http_audit.py"
+    },
+    {
+      "path": "http-origins/test_http_audit.py",
+      "bytes": 6905,
+      "sha256": "6a59375444a280bb155a10d9bdba7fd6cdd0d6f04d3fd58c085d90885ee25264",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p02a-team-note/archive18-public-audit/http-tools/test_http_audit.py"
+    }
+  ]
+}
