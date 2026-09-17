@@ -1,53 +1,60 @@
-# RevealLine: what is next
+# RevealLine: delivery plan and remaining work
 
-Updated 16 September 2026. This is the readable view of the [active execution plan](cross-mode-execution.md), with [delivery evidence and retained requirements](delivery-priorities.md). [P01 v0.57.4 is accepted](../publishing/pages-controller/delivery/evidence/cross-mode-p01/public-v0574/completion-r8/acceptance.json) at its recorded loading-feedback scope. Shared master sound is in final source qualification as the [P02-A candidate](p02-p01-v0574-composition.md), preserving that exact source and incorporating its accepted publication history; frozen artifacts and public delivery remain pending. A source feature, generated picture or passing test is not by itself an accepted phase.
+Updated 17 September 2026. The [execution register](cross-mode-execution.md) is authoritative; this page is its short, current view. Historical reports retain their original dates and scope.
 
-## Current work
+**Accepted public baseline: [v0.60.4](https://mekhovov.github.io/revealline/releases/v0.60.4/site/game/).** P00 integration, P01 loading feedback and P02-A master sound controls are accepted within their stated gates. P03 navigation and P05 presentation remain partial. The game is playable, but the full production programme and public-release qualification are not complete.
 
-The v0.56 candidate combines guided saves/backups, clearer contextual couch controls, a browsable library of forty reserve illustrations and the existing Field Kit game presentation. Native keyboard checks found and then verified the correction of a first-open music-library focus issue; its regression and browser evidence are recorded in the [focus review](verification/studio-first-open-focus.md). Each release must also pass the complete source/build checks, frozen-package checks and public play verification.
+**Active delivery:** v0.60.5 corrects Motion Lab reading preferences, paused previews, static image previews and actionable startup recovery. Its focused checks passed; the first full CI runs exposed an outdated integration assertion for the retired generic text-size hook. Source PR #93 includes the correction and requires fresh full qualification. It is not yet an accepted public release. The next prepared Team artwork candidate must preserve the full picture as an earned reward, retain the exact selected artwork, and pass actual browser play and publication gates.
 
-Capture-stop, continuous steering during a cut, travelling line damage, differentiated enemy roles and several native menu/feedback paths already exist. They still need consistent acceptance across every advertised mode, theme, difficulty and supported device. The current game is not yet the complete production target.
+## Delivery order
 
-## First priority: make every session feel like one finished game
+Complete each player-facing milestone before expanding tools and campaign volume. “Partial” means implemented foundations exist but the listed acceptance work remains; it does not mean the phase is finished.
 
-| Phase | Player-visible result                           | Done when                                                                                                                                                                                                              |
-| ----- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P00   | A reliable integrated baseline                  | Existing art, progress and releases are preserved; the exact release passes source, package and public checks.                                                                                                         |
-| P01   | Immediate feedback while anything loads         | Loading, cancellation, failures and retries are clear; stale operations cannot change the current screen or flight.                                                                                                    |
-| P02   | One dependable audio experience                 | Music and mute work throughout the session; actual MP3 imports and built-in/custom playlists pass playback, persistence, transfer and offline checks. Finished tracks are also auditioned for their campaign releases. |
-| P03   | Clear Solo, Versus and Team entry               | Start, Continue, lobbies, Back and Resume work through keyboard, controller and touch without a mouse-only step.                                                                                                       |
-| P04   | Flexible editions and creation tools            | Pictures, actors, sounds, maps and registered rules can be edited, validated and moved through existing versioned pack formats without losing original bytes.                                                          |
-| P05   | Consistent readable pixel-inspired presentation | Typography, palettes, menus, focus, ornaments and Team presentation remain readable in normal, Large/Plain and reduced-motion settings.                                                                                |
+| Order | Phase                            | Status                        | Remaining result and acceptance gate                                                                                                                                                                    |
+| ----- | -------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| —     | P00 — Integration baseline       | Complete                      | Preserve the accepted baseline and historical editions in every later release.                                                                                                                          |
+| —     | P01 — Loading feedback           | Complete in v0.57.4           | Later hosts must maintain clear progress, cancellation, failure recovery and focus ownership.                                                                                                           |
+| —     | P02-A — Master sound controls    | Complete within v0.58.1 scope | Preserve shared mute/volume authority. Finished music, listening and custom playlists remain P02-B.                                                                                                     |
+| 1     | P03 — Native navigation          | Partial                       | Finish all Solo/Versus/Team and supporting-screen journeys, explicit Back/Resume, focus restoration and controller/touch coverage.                                                                      |
+| 2     | P05 — Readable presentation      | Partial                       | Finish consistent typography, palettes, preferences, EN/UA glyphs, Large/Plain text, zoom and reduced effects across every advertised screen.                                                           |
+| 3     | P08-A — Artwork and actor parity | Partial                       | Finish exact artwork identity across modes, earned full-picture reveals, recognizable actors, heading, scale and full-arena visibility. Native Team wins and imported-content coverage remain required. |
+| 4     | P08-B — Action feedback          | Partial                       | Finish consistent trail danger, capture, damage, loss/recovery, bonuses, Support/rescue and victory cues, including reduced effects.                                                                    |
+| 5     | P09 — Challenge and intelligence | Partial                       | Tune fair pressure and escape routes; complete readable encounter roles and counters with versioned deterministic simulation, saves and replays.                                                        |
+| 6     | P07 — Rewards and continuation   | Partial                       | Direct Retry/Next, clear mastery/unlocks, satisfying full-picture reward and optional skippable stories. Failed transitions retain results; rewards cannot be counted twice.                            |
+| 7     | P02-B — Music experience         | Partial                       | Qualify uploaded MP3s and ordered/shuffled/mixed playlists in every advertised mode, complete media transfer/offline playback, and audition the finished collection.                                    |
+| 8     | P04 — Creation framework         | Partial                       | Complete Studio editing, registries, previews, history, prompts and bundles; demonstrate upload → edit → export → import → play with exact original bytes and recoverable failures.                     |
+| 9     | P06 — Content discovery          | Partial                       | Unified compatible-content catalogue, explicit downloads and safe replacement/removal. Interrupted installation preserves the working edition and saved flight.                                         |
+| 10    | P10 — Team encounters            | Queued                        | Finish the richer First Connection and Relay Yard variants, Support, rescue, shared objectives and two-player readability.                                                                              |
+| 11    | P11-A–D — FPV campaigns          | Queued                        | Four independently released campaigns of twelve missions, with complete art, actors, music, progression and rewards.                                                                                    |
+| 12    | P12-A–D — DroneAid campaigns     | Queued                        | Four independently released twelve-mission campaigns with distinct Support/Combat framing and authored class interactions.                                                                              |
+| 13    | P13 — Ukrainian culture          | Queued                        | Twelve complete Living Atlas missions with cultural, historical and visual review.                                                                                                                      |
+| 14    | P14 — Retro arcade               | Queued                        | Twelve complete After School Arcade missions with distinct nostalgic art, encounters and music.                                                                                                         |
+| 15    | P15 — Spend management           | Queued                        | Twelve complete Spend in Motion missions with understandable noncombat goals and complete themed presentation.                                                                                          |
+| 16    | P16 — Supporting workflows       | Partial                       | Finish Collection, scores, replay, learning, saves/data recovery and legacy-content workflows against the navigation standard.                                                                          |
+| 17    | P17 — Reproducible authoring     | Partial                       | Complete guides, AI skills/prompts, templates and CLI examples; a fresh-workspace example must be created, installed, played, exported and recovered.                                                   |
+| 18    | P18 — Browser qualification      | Partial evidence              | Complete regression, performance, accessibility, media/offline recovery, human playtesting and real touch/controller/device acceptance.                                                                 |
+| Later | Native distribution              | Deferred                      | Separate iPhone, macOS, Steam and Steam Deck packaging, lifecycle, signing, stores and hardware gates.                                                                                                  |
+| Later | Network multiplayer              | Deferred                      | Authoritative private sessions, reconnect and failure handling; no nonfunctional online menu entries.                                                                                                   |
 
-Touch controls appear when useful, respect safe areas and avoid hiding the arena. Arcade bonuses activate through play; it does not gain a permanent row of Scan, Supply and Boost buttons. Tactical actions appear only when the authored class and map support them.
+## Fixed gameplay and presentation contracts
 
-## Second priority: make the challenge and rewards consistent
+- A direction tap keeps a craft moving during a cut. A capture-stop craft stops when it banks that cut on revealed ground and waits for fresh steering. Immediate and Grid + buffer remain available. Returning focus never resumes play.
+- Arcade bonuses activate through play. Tactical actions appear only for an authored class/map that supports them; there is no universal Scan/Supply/Boost toolbar.
+- Touch controls appear when useful, respect safe areas and stay clear of the arena. All ordinary menus require keyboard, controller and touch journeys without mouse-only steps.
+- Hidden artwork is opaque black. Winning grants the complete picture without changing recorded coverage, followed by an optional skippable story. Lobby teasers must not expose an unearned complete reward.
+- Pictures, actor appearances and media remain independent of collision, score and campaign identity. New mechanics use compatible level/ruleset/replay/checkpoint versions; old outcomes remain reproducible.
+- Difficulty should create route choices and close escapes. Resolve unavoidable hits and unclear warnings before increasing enemy speed.
 
-| Phase | Player-visible result                     | Done when                                                                                                                                            |
-| ----- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P06   | A clear content catalogue                 | Every compatible campaign can be selected and installed; failed downloads preserve the working game and saved flight.                                |
-| P07   | Satisfying endings and quick continuation | Retry and Next are direct, unlocks are clear, scores are counted once, and results survive a failed transition.                                      |
-| P08-A | The right picture in every mode           | Existing Solo, Versus and Team maps use their approved art, retain the whole arena and show readable players, hazards and objectives.                |
-| P08-B | Clear action feedback                     | Cuts, impacts, capture, loss, recovery, Support and rescue explain what happened without overwhelming the picture.                                   |
-| P09   | More varied, fair encounters              | New roles have recognizable silhouettes, movement, warnings and counters; difficulty and class interactions are tested without changing old results. |
-| P10   | Two richer Team encounters                | Shared objectives, Support and rescue remain understandable for both players.                                                                        |
+## Content accounting
 
-Enemy pressure should create route choices and close escapes, not unavoidable hits or forced waiting. Bomber/carrier objectives, impact/redeployment and fiber resistance with vulnerable cable remain explicit authored progression work. Winning grants the full picture, then an optional skippable story; unlocked pictures and stories remain replayable without duplicate rewards.
+The programme remains **132 future Solo missions**, not 132 delivered missions. Bulk production follows the existing three-level benchmark's gameplay and presentation gate. Team compatibility requires separate authored and tested support.
 
-## Third priority: produce complete campaigns
+The last accepted content accounting remains **15 of 29 map families / 60 of 116 pictures, 1 of 12 victory stories, and 40 reviewed reserve illustrations**. Another three families/twelve pictures are candidates. Reserve art is not an installed campaign. The targets of **56 complete animated presentation sets** and **24 finished, auditioned tracks** remain open; body images and synthesizer recipes do not complete those targets. Thirteen delivered AI skills still require independent end-to-end authoring acceptance.
 
-P11–P15 retain the newer target of **132 new Solo missions**: four twelve-mission FPV campaigns, four twelve-mission DroneAid campaigns, and twelve missions each for Ukrainian culture, retro arcade and spend management. Each campaign is its own tested release. Team compatibility must be explicitly authored and verified; it is not inferred from Solo support.
+Saves, scores, Collection, packs, MP3 tooling, class interactions and couch modes have working foundations. They retain the cross-mode, transfer, media, offline and device gates listed above. Browser emulation, automated checks, audible listening, human playtesting and physical hardware are separate evidence categories.
 
-For each campaign, finish its pictures, actor states, role-specific enemies, obstacles, pickups, menus, effects, sounds, soundtrack and rewards together. Introduce unfamiliar mechanics gradually and verify difficulty, progression, replay and every advertised mode before counting a campaign as delivered.
+## Release and progress reporting
 
-The earlier inventory targets—29 map families, 116 pictures, 12 stories, 56 complete character presentation sets and 24 finished tracks—remain tracked separately. Forty reserve illustrations are now complete as reviewed source art. Body images are not complete animation sets, and reserve artwork is not another finished campaign.
+Each completed phase or independently released subphase gets a scoped hunk/line review, related code/tests/docs/skills, synchronized version bump, source PR/merge, immutable release, publication PR and GitHub Pages deployment. Verify the complete deployed inventory and affected player journeys before marking it Complete. Preserve earlier releases and a rollback route.
 
-## Final priority: qualify the complete product
-
-P16 completes supporting screens, Collection, scores, saves and recovery. P17 completes guides, AI skills, prompts, templates and reproducible authoring tools. P18 performs the full regression and public browser-release qualification, including performance, media, offline use and real device/controller journeys.
-
-Native iPhone, macOS, Steam and Steam Deck distribution still require their own lifecycle, packaging, signing, controller and store checks. Online multiplayer remains a later workstream; couch play belongs to the browser release.
-
-## How progress is reported
-
-For each phase: show what changed, what passed, what failed, its playable version and what remains. Keep logical Git commits and independently testable releases. Preserve failed evidence and immutable old releases. Mark a phase accepted only after its required public and device checks—not because its code or artwork exists.
+Every execution item records its ID, priority, status, player-visible result, acceptance evidence, playable URL and remaining issue. Reports state what changed, what passed, what failed and what comes next. A successful build or merged PR alone is not acceptance.

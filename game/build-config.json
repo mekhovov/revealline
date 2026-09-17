@@ -1,5 +1,5 @@
 {
-  "version": "0.60.4",
+  "version": "0.60.5",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -10,6 +10,9 @@
     "authoring/motion-lab/assets",
     "authoring/motion-lab/index.html",
     "authoring/motion-lab/app.js",
+    "authoring/motion-lab/preview-loop.mjs",
+    "authoring/motion-lab/display-entry.mjs",
+    "authoring/motion-lab/display.mjs",
     "authoring/motion-lab/styles.css",
     "authoring/motion-lab/motion.mjs",
     "authoring/motion-lab/steering.mjs",
@@ -19,6 +22,8 @@
     "authoring/motion-lab/ability.mjs",
     "authoring/motion-lab/ability-presets.json",
     "authoring/motion-lab/render-ability.mjs",
+    "authoring/motion-lab/ability-labels.mjs",
+    "authoring/motion-lab/png-preview.mjs",
     "authoring/enemy-catalog",
     "authoring/still-media",
     "authoring/video-poster/index.html",

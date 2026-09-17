@@ -1,0 +1,107 @@
+{
+  "base": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "baseTree": "cf744b1ced9680b2fb4e0c304ddfc4b9f44b3e86",
+  "parentPatchSha256": "dcc5a496b374ac4c0d675cae33e4683aa3ee38b036f3fcf55d606b7395889c79",
+  "status": "SCOPED_MODELED_FOLLOWUP_NOT_NATIVE_OR_RELEASE_ACCEPTED",
+  "version": "0.60.3 unchanged",
+  "paths": [
+    {
+      "path": "authoring/motion-lab/app.js",
+      "beforeBytes": 64146,
+      "beforeSha256": "408cb11a2fb3ed67a968a5172650871ff00e5fb1cf31e2bc37603b42ff99ed15",
+      "bytes": 66631,
+      "sha256": "30a0c1fc0948e2068697ea20a893149f81f402723f71ecb2e5a06f73f3bd5859"
+    },
+    {
+      "path": "authoring/motion-lab/index.html",
+      "beforeBytes": 18927,
+      "beforeSha256": "2295e1da100b5db3aebbd09ec9f4185a2223a7b7a76f433656fe62a4bbe4cf80",
+      "bytes": 19819,
+      "sha256": "dab183df1a6d11d03608aa19762712be84088268b3090f27b74e5cf97c3954b1"
+    },
+    {
+      "path": "authoring/motion-lab/styles.css",
+      "beforeBytes": 28953,
+      "beforeSha256": "b06a6383c24de268791979c480b6c8a08c1bc064f140bcfed6297a6d5b4fb25d",
+      "bytes": 30152,
+      "sha256": "8840254e898b650ee1d83cec4d327666958597e81e32b6f02bff91715f1e9716"
+    },
+    {
+      "path": "authoring/motion-lab/render-ability.mjs",
+      "beforeBytes": 5955,
+      "beforeSha256": "85bcd43f2f6b631145799fd046210583d2d04529b6d078c751acc9ea58cf3e09",
+      "bytes": 5526,
+      "sha256": "b6cb2c121790e27c2d74e302d9b39f924a886624ec90312313f73312556174a2"
+    },
+    {
+      "path": "authoring/motion-lab/README.md",
+      "beforeBytes": 35723,
+      "beforeSha256": "2e2812d7f391e22331c18906f91b5be9692ce84b4f9f03a3b8371566658a4896",
+      "bytes": 38205,
+      "sha256": "35f3ebecdb76117559a4b8f736b2f9bdcc300a1f83a551e1de3ead368e85f4bd"
+    },
+    {
+      "path": "authoring/skills/xonix-animation-director/SKILL.md",
+      "beforeBytes": 17568,
+      "beforeSha256": "3dfe8866cb091dab45ef376e8c6bb3bbdc8f4de3985868d9c613305568d0f5fb",
+      "bytes": 18888,
+      "sha256": "a842239f3ba93634ba56dab04e7b1e6355644aa4e618ed9de5f54ffa72a2a97d"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "beforeBytes": 183899,
+      "beforeSha256": "3ae208fb93b9ca7e8f361798e888eb85e45fbe510b334a68bff2e7be9cf2afb3",
+      "bytes": 185317,
+      "sha256": "b21aa532da99c641f0c432dc9a6d404524a5b32d61ec3cfb771835cd8453c17c"
+    },
+    {
+      "path": "game/build-config.json",
+      "beforeBytes": 5383,
+      "beforeSha256": "3898df62941fb86442ff4521503a629e792f866cfc28e46261d1582e422f1d55",
+      "bytes": 5430,
+      "sha256": "0a417ee9d8ab54d83947ead461dbfe5968cefcceb77a8665ac54cb6748afc8c1"
+    },
+    {
+      "path": "game/ui/field-kit-copy.mjs",
+      "beforeBytes": 6371,
+      "beforeSha256": "4e073035ea42c1e4d601634f53cc72b3c5a25304aed0589256533e6f04d1acc0",
+      "bytes": 7130,
+      "sha256": "ed6e58ba9886391100cfce6a2aa978aa180fadcf0c7b9a31312e6cbf483e1faa"
+    },
+    {
+      "path": "game/test/motion-lab-display-host.test.mjs",
+      "beforeBytes": 38349,
+      "beforeSha256": "92cbedb19df86ff78b4508c9078add0ef236674b7563bb063d0b29f58b49de9c",
+      "bytes": 42657,
+      "sha256": "88e775e77f438c44538c493db422f5a4ffe53abc4b28bccd4279f77f4c09f98e"
+    },
+    {
+      "path": "game/test/motion-lab-render-ability.test.mjs",
+      "beforeBytes": 3815,
+      "beforeSha256": "971b23732405713609b747cf588cc947645e1e145bdd9cefe2df7b2f85779ee9",
+      "bytes": 6272,
+      "sha256": "bf583005f997f8340efb9d4200517c6d8c2ee23daf40b899b927753a9b6ef60e"
+    },
+    {
+      "path": "authoring/motion-lab/ability-labels.mjs",
+      "beforeBytes": null,
+      "beforeSha256": null,
+      "bytes": 5096,
+      "sha256": "1dd81603c28eead7cb8aa8dd25782434c78eed8bd5870e79303d7e26daac09ca"
+    },
+    {
+      "path": "game/test/motion-lab-labels.test.mjs",
+      "beforeBytes": null,
+      "beforeSha256": null,
+      "bytes": 9811,
+      "sha256": "4c3a4b37468de490658a1a2bab101ab8c323b08332b2ca2b35d8303c45dc4d25"
+    }
+  ],
+  "patchBytes": 46602,
+  "patchSha256": "d9522de3fe9345962837eb3d8c4236270befa58ea30b3a0ff1e82e0c76737b33",
+  "patchCheckAndReproduction": true,
+  "runtimeInputPinsEqual": true,
+  "runtimeInputs": 83,
+  "runtimeBytes": 1751404,
+  "unchangedParentInputs": 70
+}

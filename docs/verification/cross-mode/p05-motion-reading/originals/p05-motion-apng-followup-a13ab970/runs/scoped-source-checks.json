@@ -1,0 +1,82 @@
+{
+  "at": "2026-09-17T14:32:00.814691+00:00",
+  "commands": [
+    {
+      "label": "format",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--ignore-path",
+        "/dev/null",
+        "--config",
+        ".prettierrc.json",
+        "--check",
+        "authoring/motion-lab/app.js",
+        "authoring/motion-lab/png-preview.mjs",
+        "authoring/motion-lab/README.md",
+        "authoring/skills/xonix-animation-director/SKILL.md",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "game/build-config.json",
+        "game/test/motion-lab-display-host.test.mjs",
+        "game/test/motion-lab-png-preview.test.mjs"
+      ],
+      "exitCode": 0,
+      "outputSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "label": "lint",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "--config",
+        "eslint.config.mjs",
+        "--max-warnings",
+        "0",
+        "game/test/motion-lab-display-host.test.mjs",
+        "game/test/motion-lab-png-preview.test.mjs"
+      ],
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "syntax-app",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "authoring/motion-lab/app.js"
+      ],
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "syntax-png-preview",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "authoring/motion-lab/png-preview.mjs"
+      ],
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "syntax-motion-lab-display-host.test",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "game/test/motion-lab-display-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "syntax-motion-lab-png-preview.test",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "game/test/motion-lab-png-preview.test.mjs"
+      ],
+      "exitCode": 0,
+      "outputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
