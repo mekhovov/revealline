@@ -1,0 +1,71 @@
+{
+  "status": "PASS_ROW_RECONCILIATION_AND_POST_AUDIT_OBSERVATION",
+  "reviewed": false,
+  "rowReviewCommand": {
+    "argv": [
+      "python3",
+      "-B",
+      "review-public.py",
+      "63796aab5bb692578fef77f43fb9fa61050a372b",
+      "complete-1"
+    ],
+    "exitCode": 0,
+    "stdout": {
+      "path": "review-public-complete-1.stdout",
+      "bytes": 225,
+      "sha256": "a78176fcec5ce7e30e17dddc81a50676a1f9f534573b931dede0485a13d994a6"
+    },
+    "stderr": {
+      "path": "review-public-complete-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "observerCommand": {
+    "argv": [
+      "python3",
+      "-B",
+      "observe-hosted.failure-retention.py",
+      "after-1",
+      "63796aab5bb692578fef77f43fb9fa61050a372b",
+      "d625be43cf0adfd4643dd67a4c131135c36d41e3",
+      "35227819123"
+    ],
+    "exitCode": 0,
+    "stdout": {
+      "path": "observation-after-1.stdout",
+      "bytes": 1345,
+      "sha256": "c2ae839526e56558066ee896d42c932ba31ee476866108ef4566ea664264ee86"
+    },
+    "stderr": {
+      "path": "observation-after-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "refreshRequest": {
+    "path": "refresh-request.proposed.json",
+    "bytes": 1005,
+    "sha256": "e0bd99d5b51890a1c041cf85487dc8fb2e7b17c12e6c4bda571d8e79798e6f10"
+  },
+  "failedAttemptsRetained": [
+    {
+      "path": "releases/v0.60.3/site/authoring/still-media/workshop.mjs",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.60.3/site/authoring/still-media/workshop.mjs",
+      "attempt": 1,
+      "expectedBytes": 100,
+      "expectedSha256": "e17e542120ed2f02d89c65aa9bde72b4a17b0e960d1834a19283ccad03c08394",
+      "startedAt": "2026-09-17T13:41:01.656Z",
+      "status": 503,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "etag": null,
+      "retryAfter": "0",
+      "ok": false,
+      "error": "Error: Expected direct HTTP 200, received 503",
+      "transportError": false,
+      "finishedAt": "2026-09-17T13:41:01.771Z"
+    }
+  ],
+  "scope": "All result and attempt rows independently reconciled; exact successful deployment observed after full audit. Request remains unreviewed; no refresh API execution or browser/phase acceptance."
+}

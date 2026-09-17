@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-17T13:02:12.309439+00:00",
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    ".cache/p05-supporting-tools-public-audit-a13ab970",
+    "-p",
+    "test_wrappers.py",
+    "-v"
+  ],
+  "exitCode": 0,
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSha256": "925277c63e4291f95dd6fbada8593085f64896a0574a1276ec26c6b0ff0e5411",
+  "scope": "Only mocked fixtures; no real network or production binding."
+}
