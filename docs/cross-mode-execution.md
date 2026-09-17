@@ -453,6 +453,8 @@ A separate [native reading supplement](verification/cross-mode/p03-reading-promp
 
 ## P05 supporting-screen readability
 
+**Qualification correction:** initial source `02127f1` failed one hosted held-boot Replay test before its cold module graph entered startup. The [retained correction](verification/cross-mode/p05-supporting-readability/startup-correction/README.md) uses the actual held-fetch boundary and drains imports during cleanup; production is unchanged. All eight affected files pass 57/57 on each supported runtime. Fresh complete hosted families are required; v0.59.1 remains public.
+
 **Status: v0.60.0 candidate integrated; focused verification passing; Replay browser corrections integrated.** This named delivery starts from acceptance merge `10df6751b0f31d3f8ed68ee0132c830b6eefbec8`, with accepted v0.59.1 game source `206c4b9bdd7bc53aecf818f85a1cbf680814a4e5`. It composes the reviewed Studio font/cache, Interface and inventory-focus work with Replay's display adapter and the shared persisted-return correction. Read the [behavior and research notes](supporting-screen-readability.md), [Studio guide](asset-studio.md#studio-interface--readability-candidate) and [shared authority](shared-display-preferences.md#studio-adapter--scoped-readability-candidate). Full P05 remains incomplete.
 
 Both routes use one shared display record, without replacing original media, dirty drafts, sprite history or replay identity. The Studio preview owns only its frames and subscriptions; selected-file specimens keep their exact font identity. Persisted return refreshes shared settings/system reduction while retaining denied-save local intent. The integration preserves the newer practice correction and main's accepted release evidence.
