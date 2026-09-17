@@ -198,3 +198,7 @@ The [supporting-screen delivery](../../docs/supporting-screen-readability.md) al
 ### Replay disabled-action presentation
 
 “Load Replay Theater through its real route. Before loading, confirm Play is visibly disabled; then load the built-in example by keyboard, play to completion and verify focus moves to Restart with the final recording state unchanged. Compare computed foreground/background/border colors before readiness and after completion. Guard shared and legacy active/hover ID rules against native disabled and aria-disabled, preserve enabled focus colors, and verify the existing navigation/style cohorts. Keep local browser and final release acceptance separate.”
+
+## Missions Back returns to its entry
+
+“From the title Missions button, the field Missions button and the ready/paused Mission brief, use Back, Escape and modeled controller Back. Return to the actual surviving opener without resuming or changing the paused cut, checkpoint or saved payload. Follow Home → Missions → Collection → Choose appearance → Back and preserve the same Home visit. Include touch-like activation with focus elsewhere, an unavailable opener, expected native autofocus, a queued old close and a newer dialog/focus established during close or pause. Do not let reopening Home cover that newer owner. Keep Deploy, Back to flight and legacy programmatic field entry as their existing intentional destinations. Qualify actual native focus separately; source/model coverage does not certify physical touch/controller operation or complete P03.”

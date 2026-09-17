@@ -1,0 +1,620 @@
+diff --git a/authoring/prompts/cross-mode-delivery.md b/authoring/prompts/cross-mode-delivery.md
+index 8418c13e..988160ec 100644
+--- a/authoring/prompts/cross-mode-delivery.md
++++ b/authoring/prompts/cross-mode-delivery.md
+@@ -198,3 +198,7 @@ The [supporting-screen delivery](../../docs/supporting-screen-readability.md) al
+ ### Replay disabled-action presentation
+ 
+ “Load Replay Theater through its real route. Before loading, confirm Play is visibly disabled; then load the built-in example by keyboard, play to completion and verify focus moves to Restart with the final recording state unchanged. Compare computed foreground/background/border colors before readiness and after completion. Guard shared and legacy active/hover ID rules against native disabled and aria-disabled, preserve enabled focus colors, and verify the existing navigation/style cohorts. Keep local browser and final release acceptance separate.”
++
++## Missions Back returns to its entry
++
++“From the title Missions button, the field Missions button and the ready/paused Mission brief, use Back, Escape and modeled controller Back. Return to the actual surviving opener without resuming or changing the paused cut, checkpoint or saved payload. Follow Home → Missions → Collection → Choose appearance → Back and preserve the same Home visit. Include touch-like activation with focus elsewhere, an unavailable opener, expected native autofocus, a queued old close and a newer dialog/focus established during close or pause. Do not let reopening Home cover that newer owner. Keep Deploy, Back to flight and legacy programmatic field entry as their existing intentional destinations. Qualify actual native focus separately; source/model coverage does not certify physical touch/controller operation or complete P03.”
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index d0d940b1..f8a4f200 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -344,7 +344,7 @@ For file import/selection tests, capture and join the Promise returned by the ac
+ 
+ Craft switching must follow the active run’s roster and authored hangars, with one availability predicate for the visible action, G and controller entry. Keep fresh Starting class setup and Save & pause separate. Never infer hangar availability from Arcade labels or its ability/pickup/boost policy; preserve Tactical switching and core safe-ground/proximity checks.
+ 
+-Route Missions Back, native cancel and controller cancel through the same origin-aware shell handler. Prevent the native default after handling cancel, but retain cancellation notices for transactions that remain open. Do not reopen Home from a generic close listener: Deploy and Back to flight deliberately leave Missions. Test title, flight and brief origins with the saved cut and explicit Resume unchanged.
++Route Missions Back, native cancel and controller cancel through the same origin-aware shell handler. Prevent the native default after handling cancel, but retain cancellation notices for transactions that remain open. Do not reopen Home from a generic close listener: Deploy and Back to flight deliberately leave Missions. Test title, flight and brief origins with the saved cut and explicit Resume unchanged. Capture the explicit title Missions, field Missions or Mission brief opener before closing its parent; a repeated open of the same Missions visit from Collection appearance setup must retain that original parent and opener. On Back, validate the complete return target and its parent, use the available parent Missions entry or primary only as fallback, and preserve newer dialogs, deliberate focus, background/disposal and close/pause callback ownership before reopening Home. Distinguish expected native close/showModal autofocus from a newer usable focus choice. Preserve the existing no-argument programmatic field handoff and its flight focus; this correction does not extend campaign-complete entry behavior. Test the actual shell/host plus queued native-close modeling, held controller Back, unchanged paused-cut/checkpoint/storage and intentional Deploy/Back to flight. Keep native and physical-device acceptance separate.
+ 
+ Preserve the actual dialog hierarchy: Main menu stays beneath Settings or Collection; Workshop stays beneath Field Guide, with its menu parent retained. Let the existing modal stack restore that exact opener on Close, Escape or controller Back. An already-open Main menu remains the return screen even while its underlying flight is paused; a direct flight opener returns to that paused flight. Nested practice returns to the guide first. Preserve Settings → Music Studio → Close studio → Settings, transaction cancellation and neutral input gates. On a first Studio read, disabling the initially focused Close button can move browser focus to the document; restore it after the read only if that disabling displaced focus and no later focus choice or dialog exit superseded it. Remember the initial target before the read rather than requiring immediate BODY focus: native blur may arrive later. Exercise both immediate and deferred disabled blur during read success/failure separately from cached reopening; never steal focus after a user choice, close or disposal. Explicit Replay or mission/appearance selection closes the appropriate parent dialogs; simply inspecting Collection or its picture retains its entry screen. Read [Collection return behavior](../../../docs/collection-title-return.md). Regression prompt: “Open title Settings and Music Studio, return twice; then open Field Guide, enter and leave practice, and close the guide. Repeat from a real paused cut. Verify the original screen/focus, exact saved state and explicit Resume.” Inspect both keyboard and modeled controller paths, then native browser focus and compact illustration clipping separately. The browser milestone still needs complete source gates and packaged/native-browser/public qualification; source or preview success grants no gate waiver. Full physical-device comfort and supported-device qualification remain P7, with no certification inferred here.
+ 
+@@ -612,3 +612,9 @@ Example prompt: “Check long Motion labels in EN/UA, combining clusters and unb
+ PNG static-preview preparation reads bytes asynchronously before native Image load. Claim the generation before that read and fence each continuation before allocating a URL or mutating pending image/status. Clear, supersession and page departure invalidate pending reads; retain accepted art until replacement onload. Keep PNG container work bounded by 25 MiB / 16,384 chunks, preserve original File bytes, and do not describe encoded bounds as decoder-memory qualification.
+ 
+ Prompt: “Extend Motion upload handling without changing the APNG default identity contract. Run complete parser and real-application host files for byte-read rejection, supersession, Clear, cached/terminal departure and late decode. Preserve native source evidence separately; no fake Image event establishes browser codec conformance.”
++
++## Backup-owned content feedback
++
++A complete-backup Import or Undo owns a journaled replacement, even when it temporarily shares the content-switch busy flag. Preserve cancellation generations, paused adoption and storage guards; announce a pending pack cancellation only for pack-owned work. A blur during held backup commit and successful adoption must not create a fictional newer-play-choice message on Home. Keep restoration feedback in Saves & loads and do not alter pager or profile ordering to fix this copy. See [backup feedback ownership](../../../docs/operation-focus.md#backup-feedback-ownership).
++
++Regression example: exercise actual Collection → Records → Saves file import, explicit Undo and the real held backup lock plus blur; check both title/content statuses, exact saved-flight preservation and no autoplay. Retain the genuine delayed-chapter cancellation/late-response cases. Keep modeled transaction checks separate from native file chooser, focus and device acceptance.
+diff --git a/docs/operation-focus.md b/docs/operation-focus.md
+index 7bbd4ae7..419d1bf6 100644
+--- a/docs/operation-focus.md
++++ b/docs/operation-focus.md
+@@ -47,3 +47,9 @@ After metadata settles, retain the same library object, Collection population an
+ The [combined record](verification/cross-mode/p03-pager-gallery-integration/README.md) composes row removal, pager focus and picture-view return over `ec288a4e`, preserving the independent owners and the pager-only reveal option. Ten complete affected files pass 201/201 on each established Node runtime. Its modal fixture now models native opener restoration before the queued close event; the original stopped diagnostic remains separate.
+ 
+ Nine native keyboard observations include a fixture-backed pager boundary and a separately played First Signal completion. Escape, Close and Back to collection return from that earned picture to the matching recreated card; Collection Escape returns to its title opener. The root inspected six coherent screenshot files, and six source/HTTP pins match before and after the run. This normal preview does not establish delayed/error metadata, physical-input or public-release acceptance, and it excludes the separate Couch, P05/static and Team candidates.
++
++## Backup feedback ownership
++
++Complete-backup Import and Undo temporarily share the content-selection busy flag while their journaled transaction adopts player data. That flag alone does not mean a pack launch is pending. Preserve normal invalidation, stale-operation rejection and paused Ready adoption, but do not announce a cancelled pack launch while the backup owns the busy state. Apply the same distinction during window blur; a successful import must not leave a fictional newer-play-choice message on Home after ordinary Collection/Records returns. Keep restoration feedback with Saves & loads.
++
++Exercise the real file-change import, explicit Undo and a held commit lock plus blur. Verify title and content status alongside the existing profile, suspended-flight and no-autoplay assertions. Separately keep the actual delayed-chapter cancellation test and its late-response rejection. Finite DOM/storage tests do not replace native chooser, focus, responsive layout or physical-device evidence.
+diff --git a/game/app.mjs b/game/app.mjs
+index 521c0414..2f2aea49 100644
+--- a/game/app.mjs
++++ b/game/app.mjs
+@@ -3115,7 +3115,8 @@ try {
+     contentSwitchBusy = false;
+     $('pack-select').disabled = courseSession;
+     $('level-select').disabled = courseSession;
+-    if (announce && interrupted)
++    // Backup adoption shares this busy flag; it is not a pending pack launch.
++    if (announce && interrupted && !backupBusy)
+       contentStatus('Pending pack launch cancelled; your newer play choice is kept.');
+     else if (interrupted)
+       for (const feedback of contentFeedback)
+diff --git a/game/test/field-kit-flow.test.mjs b/game/test/field-kit-flow.test.mjs
+index 10ce620c..9f092210 100644
+--- a/game/test/field-kit-flow.test.mjs
++++ b/game/test/field-kit-flow.test.mjs
+@@ -99,6 +99,7 @@ test('title has five game destinations, quick sound and the release catalog; Wor
+   assert.equal(page.doc.activeElement.id, 'pack-select');
+   page.$('shell-missions-back').click();
+   assert.equal(page.$('shell-home').open, true);
++  assert.equal(page.doc.activeElement.id, 'shell-play', 'Back restores the actual title entry');
+   page.frame(0);
+   assert.equal(page.rendered.run.tick, 0);
+   assert.deepEqual(page.errors, []);
+@@ -226,7 +227,7 @@ for (const origin of ['home', 'flight', 'brief']) {
+         page.frame();
+         page.frame(); // Real controller adoption requires neutral samples.
+         pad.buttons[1] = { pressed: true, value: 1 };
+-        page.frame();
++        for (let held = 0; held < 35; held++) page.frame();
+         pad.buttons[1] = { pressed: false, value: 0 };
+         page.frame();
+       }
+@@ -236,7 +237,7 @@ for (const origin of ['home', 'flight', 'brief']) {
+       assert.equal(page.$('shell-home').open, origin === 'home');
+       assert.equal(
+         page.doc.activeElement.id,
+-        origin === 'home' ? 'shell-continue' : 'start-button',
++        { home: 'shell-play', flight: 'shell-packs', brief: 'overlay-brief' }[origin],
+       );
+       assert.equal(page.rendered.paused, true);
+       assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+diff --git a/game/test/modal-navigation.test.mjs b/game/test/modal-navigation.test.mjs
+index ab348ee2..7e3d3c21 100644
+--- a/game/test/modal-navigation.test.mjs
++++ b/game/test/modal-navigation.test.mjs
+@@ -2,6 +2,7 @@ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import { readFile } from 'node:fs/promises';
+ import { attachModalNavigation } from '../ui/modal-navigation.mjs';
++import { attachGameShell } from '../ui/game-shell.mjs';
+ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+ import { Document } from './helpers/couch-dom.mjs';
+ import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+@@ -1082,3 +1083,134 @@ test('actual nested Collection picture Tab wraps only its current modal and clos
+   assert.equal(h.rendered.paused, true);
+   assert.deepEqual(h.errors, []);
+ });
++
++// Native autofocus and queued close events are modeled by the existing adapter.
++// This follows actual source handlers; no display or physical device claim.
++for (const nested of [false, true]) {
++  test(`Missions preserves its Home opener after ${nested ? 'nested' : 'direct'} Collection appearance setup`, async (t) => {
++    nativeDialogs(t);
++    const h = await soloPage(t, { titleScreen: true });
++    const checkpoint = authoritativeCheckpoint(h.rendered.run);
++    if (nested) {
++      // Touch-like activation: the title primary still owns DOM focus.
++      h.$('shell-featured').focus();
++      h.$('shell-play').click();
++      h.$('collection-button').focus();
++      h.$('collection-button').click();
++    } else openTitleCollection(h);
++    h.$('collection-progress').querySelector('summary').click();
++    h.$('collection-choose-appearance').click();
++    await Promise.resolve();
++    assert.equal(h.$('shell-missions').open, true);
++    assert.equal(h.doc.activeElement.id, 'body-select');
++    h.$('shell-missions-back').click();
++    await Promise.resolve();
++    h.frame(0);
++    assert.equal(h.$('shell-home').open, true);
++    assert.equal(h.doc.activeElement.id, 'shell-play');
++    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
++    assert.deepEqual(h.errors, []);
++  });
++}
++
++for (const unavailable of ['disabled', 'hidden', 'detached']) {
++  test(`Missions Back uses an available Home fallback when its opener is ${unavailable}`, async (t) => {
++    nativeDialogs(t);
++    const h = await soloPage(t, { titleScreen: true });
++    h.$('shell-play').click();
++    const opener = h.$('shell-play');
++    if (unavailable === 'detached') opener.remove();
++    else opener[unavailable] = true;
++    h.$('shell-missions-back').click();
++    await Promise.resolve();
++    assert.equal(h.$('shell-home').open, true);
++    assert.equal(h.doc.activeElement.id, 'shell-featured');
++    assert.equal(h.rendered.run.tick, 0);
++    assert.deepEqual(h.errors, []);
++  });
++}
++for (const replacement of ['dialog', 'focus', 'background']) {
++  test(`Missions close callback retains newer ${replacement} ownership before reopening Home`, async (t) => {
++    nativeDialogs(t);
++    const h = await soloPage(t, { titleScreen: true });
++    h.$('shell-play').click();
++    const close = h.$('shell-missions').close;
++    h.$('shell-missions').close = function () {
++      close.call(this);
++      if (replacement === 'dialog') {
++        h.$('settings-dialog').showModal();
++        h.$('settings-dialog').querySelector('button').focus();
++      } else if (replacement === 'focus') h.$('shell-settings').focus();
++      else h.doc.hidden = true;
++    };
++    h.$('shell-missions-back').click();
++    const focused = h.doc.activeElement;
++    await Promise.resolve();
++    assert.equal(h.$('shell-home').open, false);
++    assert.equal(h.doc.activeElement, focused);
++    if (replacement === 'dialog') assert.equal(h.$('settings-dialog').open, true);
++    if (replacement === 'focus') assert.equal(focused.id, 'shell-settings');
++    h.doc.hidden = false;
++    assert.equal(h.rendered.run.tick, 0);
++    assert.deepEqual(h.errors, []);
++  });
++}
++test('Missions return cannot cover a newer dialog established by its Home pause callback', async (t) => {
++  nativeDialogs(t);
++  const h = await soloPage(t, { titleScreen: true });
++  // Dispose the complete host first: this component-only callback boundary has
++  // one actual shell/navigation owner and no second simulation/controller loop.
++  h.win.emit('pagehide', { persisted: false });
++  let replace = false;
++  const shell = attachGameShell({
++    document: h.doc,
++    initial: false,
++    canContinue: () => false,
++    pause() {
++      if (!replace) return;
++      h.$('settings-dialog').showModal();
++      h.$('settings-dialog').querySelector('button').focus();
++    },
++  });
++  t.after(() => shell.destroy());
++  h.$('shell-play').click();
++  replace = true;
++  h.$('shell-missions-back').click();
++  const focused = h.doc.activeElement;
++  await Promise.resolve();
++  assert.equal(h.$('shell-home').open, false);
++  assert.equal(h.$('settings-dialog').open, true);
++  assert.equal(h.doc.activeElement, focused);
++  assert.ok(h.$('settings-dialog').contains(focused));
++});
++
++for (const replacement of ['dispose', 'home']) {
++  test(`direct Mission brief stops before moving its view after a ${replacement} pause callback`, async (t) => {
++    nativeDialogs(t);
++    const h = await soloPage(t);
++    h.win.emit('pagehide', { persisted: false });
++    let shell,
++      replace = true;
++    const originalParent = h.$('mission-brief-unit').parentNode;
++    shell = attachGameShell({
++      document: h.doc,
++      initial: false,
++      canContinue: () => false,
++      pause() {
++        if (!replace) return;
++        replace = false;
++        if (replacement === 'dispose') shell.destroy();
++        else shell.openHome();
++      },
++    });
++    t.after(() => shell.destroy());
++    assert.doesNotThrow(() => h.$('overlay-brief').click());
++    await Promise.resolve();
++    assert.equal(h.$('shell-missions').open, false);
++    assert.equal(h.$('shell-missions').dataset.view, undefined);
++    assert.equal(h.$('mission-brief-unit').parentNode, originalParent);
++    assert.equal(h.$('shell-home').open, replacement === 'home');
++    assert.equal(h.rendered.run.tick, 0);
++    assert.deepEqual(h.errors, []);
++  });
++}
+diff --git a/game/test/text-size-host.test.mjs b/game/test/text-size-host.test.mjs
+index deccd050..89b1652e 100644
+--- a/game/test/text-size-host.test.mjs
++++ b/game/test/text-size-host.test.mjs
+@@ -234,6 +234,8 @@ test('actual complete-backup import and Undo adopt text size while preserving th
+   await settle(() => !page.$('import-save').disabled);
+   assert.match(page.$('save-status').textContent, /Game data restored/);
+   size(page, 'large');
++  for (const id of ['content-select-status', 'shell-featured-status'])
++    assert.doesNotMatch(page.$(id).textContent, /Pending pack launch cancelled|newer play choice/);
+   assert.equal(profile(page.storage).library.preferences.textSize, 'large');
+   assert.deepEqual(JSON.parse(page.storage.getItem(sessionKey)), original);
+   assert.equal(page.$('undo-backup').disabled, false);
+@@ -247,6 +249,8 @@ test('actual complete-backup import and Undo adopt text size while preserving th
+     /Previous collection, packs and saved flight restored/,
+   );
+   size(page, 'standard');
++  for (const id of ['content-select-status', 'shell-featured-status'])
++    assert.doesNotMatch(page.$(id).textContent, /Pending pack launch cancelled|newer play choice/);
+   assert.equal(profile(page.storage).library.preferences.textSize, 'standard');
+   const restored = JSON.parse(page.storage.getItem(sessionKey));
+   assert.equal(restored.runId, original.runId);
+diff --git a/game/ui/game-shell.mjs b/game/ui/game-shell.mjs
+index c9c57bff..08ca25fa 100644
+--- a/game/ui/game-shell.mjs
++++ b/game/ui/game-shell.mjs
+@@ -31,7 +31,8 @@ export function attachGameShell({
+     workshop = $('shell-workshop-dialog');
+   if (!home || !missions) return null;
+   let destroyed = false,
+-    returnToHome = false,
++    missionsVisit = null,
++    missionsRevision = 0,
+     homeVisit = 0,
+     titleModeIntent = null;
+   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
+@@ -107,21 +108,70 @@ export function attachGameShell({
+     }
+   };
+   missions.addEventListener('close', closedMissions);
+-  const openMissions = () => {
+-    returnToHome = home.open;
++  const retireMissionsVisit = () => {
++    if (missionsVisit) {
++      missionsVisit = null;
++      missionsRevision++;
++    }
++  };
++  const beginMissionsVisit = (opener = null) => {
++    // Re-entering an open picker from Collection keeps the original parent.
++    if (!missions.open) {
++      missionsRevision++;
++      missionsVisit = {
++        home: home.open,
++        opener,
++        originFocus: doc.activeElement,
++      };
++    }
++  };
++  const availableReturn = (element, parent) => {
++    if (
++      !element?.isConnected ||
++      element.disabled ||
++      element.closest('[hidden],[inert],[aria-hidden="true"]') ||
++      (parent ? !parent.contains(element) : element.closest('dialog'))
++    )
++      return false;
++    for (let node = element; node && node !== doc; node = node.parentElement) {
++      if (node.tagName === 'DIALOG' && !node.open) return false;
++      if (
++        node.tagName === 'DETAILS' &&
++        !node.open &&
++        !node.querySelector('summary')?.contains(element)
++      )
++        return false;
++      const style = doc.defaultView?.getComputedStyle?.(node);
++      if (style?.display === 'none' || style?.visibility === 'hidden') return false;
++    }
++    return typeof element.getClientRects !== 'function' || element.getClientRects().length > 0;
++  };
++  const openMissions = ({ opener = null } = {}) => {
++    if (destroyed) return;
++    beginMissionsVisit(opener);
++    const visit = missionsVisit;
+     pause(true);
++    if (destroyed || missionsVisit !== visit) return;
+     restoreMissionView();
+     closeHome();
++    if (destroyed || missionsVisit !== visit) return;
+     showCraftFeedback();
+-    if (!missions.open) missions.showModal();
++    if (!missions.open) {
++      missionsVisit.closeOrigin = doc.activeElement;
++      missions.showModal();
++    }
+     syncPreparation();
+     focusClearance.refresh();
+     if (!focusMissions?.()) $('pack-select').focus();
+   };
+-  const openHome = ({ focus = true } = {}) => {
++  const openHome = ({ focus = true, returnGuard = null } = {}) => {
+     titleModeIntent = null;
++    retireMissionsVisit();
++    const revision = missionsRevision;
+     pause(true);
++    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
+     if (missions.open) missions.close();
++    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
+     restoreMissionView();
+     const continued = !training && canContinue();
+     $('shell-continue').hidden = !continued;
+@@ -168,11 +218,70 @@ export function attachGameShell({
+       workshop?.querySelector('button,a')?.focus();
+     };
+   const backFromMissions = () => {
+-    if (!briefing && returnToHome) openHome();
+-    else {
+-      missions.close();
++    if (destroyed || !missions.open) return;
++    const visit = missionsVisit,
++      previousFocus = doc.activeElement;
++    retireMissionsVisit();
++    const revision = missionsRevision;
++    const canReturn = () =>
++      !destroyed &&
++      missionsRevision === revision &&
++      !missions.open &&
++      !topDialog() &&
++      !doc.hidden &&
++      doc.hasFocus?.() !== false &&
++      (doc.activeElement === previousFocus ||
++        doc.activeElement === doc.body ||
++        doc.activeElement === visit?.opener ||
++        doc.activeElement === visit?.originFocus ||
++        doc.activeElement === visit?.closeOrigin ||
++        !availableReturn(doc.activeElement, null));
++    missions.close();
++    // Close/pause callbacks may establish a newer dialog or deliberate focus.
++    // Check before reopening Home so its native autofocus cannot cover them.
++    if (!canReturn()) return;
++    if (visit?.home) openHome({ focus: false, returnGuard: canReturn });
++    const parent = visit?.home ? home : null;
++    if (
++      destroyed ||
++      missionsRevision !== revision ||
++      missions.open ||
++      topDialog() !== parent ||
++      doc.hidden ||
++      doc.hasFocus?.() === false
++    )
++      return;
++    const nativeHomeFocus = parent
++      ? [...parent.querySelectorAll('button,a,select,input,summary')].find((node) =>
++          availableReturn(node, parent),
++        )
++      : null;
++    const primary = parent
++      ? [training ? $('shell-course-return') : $('shell-continue'), $('shell-featured')].find(
++          (node) => availableReturn(node, parent),
++        )
++      : ['show-result', 'skip-celebration', 'next-button', 'retry-button', 'start-button']
++          .map($)
++          .find((node) => availableReturn(node, null));
++    // Native showModal autofocus is expected. A deliberate newer target wins.
++    if (
++      doc.activeElement !== previousFocus &&
++      doc.activeElement !== doc.body &&
++      doc.activeElement !== visit?.opener &&
++      doc.activeElement !== nativeHomeFocus &&
++      doc.activeElement !== primary &&
++      availableReturn(doc.activeElement, parent)
++    )
++      return;
++    // No explicit same-document opener exists for legacy/programmatic field entry.
++    if (!parent && !visit?.opener) {
+       focusGame();
++      return;
+     }
++    const target = [visit?.opener, $(parent ? 'shell-play' : 'shell-packs'), primary].find((node) =>
++      availableReturn(node, parent),
++    );
++    target?.focus({ preventScroll: true });
+   };
+   if ($('shell-missions-back')) $('shell-missions-back').onclick = backFromMissions;
+   const cancelMissions = (event) => {
+@@ -197,9 +306,13 @@ export function attachGameShell({
+   const overlayBrief = $('overlay-brief');
+   if (overlayBrief)
+     overlayBrief.onclick = () => {
+-      returnToHome = false;
++      if (destroyed) return;
++      beginMissionsVisit(overlayBrief);
++      const visit = missionsVisit;
+       pause(true);
++      if (destroyed || missionsVisit !== visit) return;
+       closeHome();
++      if (destroyed || missionsVisit !== visit) return;
+       const brief = $('mission-brief'),
+         unit = $('mission-brief-unit'),
+         slot = $('shell-brief-content');
+@@ -233,12 +346,15 @@ export function attachGameShell({
+       }
+       if (brief) brief.open = true;
+       showCraftFeedback();
+-      if (!missions.open) missions.showModal();
++      if (!missions.open) {
++        missionsVisit.closeOrigin = doc.activeElement;
++        missions.showModal();
++      }
+       focusClearance.refresh();
+       if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
+     };
+-  $('shell-packs').onclick = openMissions;
+-  $('shell-play').onclick = openMissions;
++  $('shell-packs').onclick = () => openMissions({ opener: $('shell-packs') });
++  $('shell-play').onclick = () => openMissions({ opener: $('shell-play') });
+   const featured = $('shell-featured');
+   let titleAction = null;
+   const cancelTitle = () => {
+@@ -381,6 +497,7 @@ export function attachGameShell({
+     };
+   if (featured && onTitleStart) featured.onclick = () => launchTitle(featured, onTitleStart);
+   $('shell-briefing').onclick = () => {
++    retireMissionsVisit();
+     missions.close();
+     focusGame();
+   };
+@@ -398,6 +515,7 @@ export function attachGameShell({
+     $('shell-deploy').onclick = () => {
+       syncPreparation();
+       if ($('shell-deploy').disabled) return;
++      retireMissionsVisit();
+       missions.close();
+       $('start-button').click();
+       focusGame();
+@@ -501,6 +619,7 @@ export function attachGameShell({
+     openMissions,
+     destroy() {
+       destroyed = true;
++      retireMissionsVisit();
+       titleModeIntent = null;
+       cancelTitle();
+       for (const kind of ['versus', 'team']) {
+diff --git a/game/test/backup-content-feedback-host.test.mjs b/game/test/backup-content-feedback-host.test.mjs
+new file mode 100644
+index 00000000..8bad2f4f
+--- /dev/null
++++ b/game/test/backup-content-feedback-host.test.mjs
+@@ -0,0 +1,131 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFileSync } from 'node:fs';
++import { BACKUP_FORMAT } from '../backup.mjs';
++import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
++import { emptyPackLibrary } from '../packs.mjs';
++import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
++
++const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
++const profileKey = 'revealline.library.dev.v1';
++const sessionKey = 'revealline.suspended.dev.v1';
++const profile = (page) => loadLibrary(page.storage, profileKey, { campaigns: [campaign] });
++function noPackCancellation(page) {
++  for (const id of ['content-select-status', 'shell-featured-status'])
++    assert.doesNotMatch(
++      page.$(id).textContent,
++      /Pending pack launch cancelled|newer play choice/,
++      `${id} must not classify backup work as a cancelled pack launch`,
++    );
++}
++function storage() {
++  const result = memoryStorage();
++  assert.equal(saveLibrary(result, profileKey, emptyLibrary()).ok, true);
++  return result;
++}
++function savesFromCollection(page) {
++  page.$('shell-gallery').click();
++  assert.equal(page.$('collection-dialog').open, true);
++  page.$('collection-records').click();
++  page.doc.querySelector('button[data-library-panel="saves"]').click();
++  assert.equal(page.$('library-dialog').open, true);
++  assert.equal(page.$('library-saves').hidden, false);
++}
++function importOwnedFile(page) {
++  // Chooser/decoding is modeled; production onchange, transaction and adoption run.
++  const body = JSON.stringify({
++    format: BACKUP_FORMAT,
++    library: updatePreferences(emptyLibrary(), { textSize: 'large' }),
++    packs: emptyPackLibrary(),
++    session: null,
++  });
++  page.$('save-file').files = [new Blob([body], { type: 'application/json' })];
++  return page.$('save-file').onchange();
++}
++function returnHome(page) {
++  page.doc.querySelector('button[data-close="library-dialog"]').click();
++  page.doc.querySelector('button[data-close="collection-dialog"]').click();
++  assert.equal(page.$('library-dialog').open, false);
++  assert.equal(page.$('collection-dialog').open, false);
++  assert.equal(page.$('shell-home').open, true);
++}
++function ready(page, size) {
++  assert.equal(profile(page).library.preferences.textSize, size);
++  assert.equal(page.doc.body.dataset.textSize, size);
++  assert.equal(page.storage.getItem(sessionKey), null);
++  page.frame(0);
++  assert.equal(page.rendered.paused, true);
++  assert.equal(page.rendered.run.tick, 0);
++}
++
++// Actual Solo entry/journaled backup; finite DOM and storage. No native layout claim.
++test('Collection file Import and Undo return Home without inventing a cancelled pack launch', async (t) => {
++  const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
++  savesFromCollection(page);
++  await importOwnedFile(page);
++  assert.match(page.$('save-status').textContent, /Game data restored/);
++  ready(page, 'large');
++  noPackCancellation(page);
++  returnHome(page);
++  noPackCancellation(page);
++  savesFromCollection(page);
++  assert.equal(page.$('undo-backup').disabled, false);
++  await page.$('undo-backup').onclick();
++  assert.match(
++    page.$('save-status').textContent,
++    /Previous collection, packs and saved flight restored/,
++  );
++  ready(page, 'standard');
++  noPackCancellation(page);
++  returnHome(page);
++  noPackCancellation(page);
++  assert.deepEqual(page.errors, []);
++});
++
++test('blur during the actual held backup lock does not announce a pack cancellation or autoplay', async (t) => {
++  let armed = false,
++    release;
++  const lockManager = {
++    request(name, options, callback) {
++      const work = callback ?? options;
++      if (
++        armed &&
++        name === `${profileKey}.backup-lock` &&
++        page.$('save-status').textContent === 'Saving the verified collection and saved flight…'
++      ) {
++        armed = false;
++        return new Promise((resolve, reject) => {
++          release = () =>
++            Promise.resolve()
++              .then(() => work({ name }))
++              .then(resolve, reject);
++        });
++      }
++      return Promise.resolve(work({ name }));
++    },
++  };
++  const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true, lockManager });
++  savesFromCollection(page);
++  armed = true;
++  const pending = importOwnedFile(page);
++  try {
++    await settle(() => typeof release === 'function', 'The real backup commit must reach its lock');
++    assert.equal(page.$('pack-select').disabled, true, 'Backup owns the content busy state');
++    const before = new Map(page.storage.map);
++    page.win.emit('blur');
++    page.frame(0);
++    assert.equal(page.rendered.paused, true);
++    assert.equal(page.rendered.run.tick, 0);
++    assert.deepEqual(page.storage.map, before, 'Blur cannot commit or rewrite the held backup');
++    noPackCancellation(page);
++  } finally {
++    release?.();
++    await pending;
++  }
++  assert.match(page.$('save-status').textContent, /Game data restored/);
++  ready(page, 'large');
++  noPackCancellation(page);
++  returnHome(page);
++  noPackCancellation(page);
++  assert.deepEqual(page.errors, []);
++});

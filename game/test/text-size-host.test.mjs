@@ -234,6 +234,8 @@ test('actual complete-backup import and Undo adopt text size while preserving th
   await settle(() => !page.$('import-save').disabled);
   assert.match(page.$('save-status').textContent, /Game data restored/);
   size(page, 'large');
+  for (const id of ['content-select-status', 'shell-featured-status'])
+    assert.doesNotMatch(page.$(id).textContent, /Pending pack launch cancelled|newer play choice/);
   assert.equal(profile(page.storage).library.preferences.textSize, 'large');
   assert.deepEqual(JSON.parse(page.storage.getItem(sessionKey)), original);
   assert.equal(page.$('undo-backup').disabled, false);
@@ -247,6 +249,8 @@ test('actual complete-backup import and Undo adopt text size while preserving th
     /Previous collection, packs and saved flight restored/,
   );
   size(page, 'standard');
+  for (const id of ['content-select-status', 'shell-featured-status'])
+    assert.doesNotMatch(page.$(id).textContent, /Pending pack launch cancelled|newer play choice/);
   assert.equal(profile(page.storage).library.preferences.textSize, 'standard');
   const restored = JSON.parse(page.storage.getItem(sessionKey));
   assert.equal(restored.runId, original.runId);

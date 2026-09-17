@@ -1,0 +1,16 @@
+{
+  "commit": "965f2049cb273b93d0258ee43cd806c62d479421",
+  "tree": "0357008aa4c5bbe50917b91bd44c4a14bb0e502a",
+  "port": 60368,
+  "runtimeOverrides": {
+    "bytes": 905,
+    "sha256": "f3d537230ab46a66ea53ebb9ffb4c264c380df878d84776223a86a7c67a39b15"
+  },
+  "urls": [
+    "http://127.0.0.1:60368/game/"
+  ],
+  "limits": {
+    "requestLogBytes": 1048576,
+    "requestEvents": 2000
+  }
+}
