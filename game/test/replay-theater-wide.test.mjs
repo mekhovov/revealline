@@ -5,7 +5,7 @@ import { setImmediate } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
-import { Document, Element } from './helpers/couch-dom.mjs';
+import { Document, Element, Events } from './helpers/couch-dom.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const html = readFileSync(new URL('../replay-theater/index.html', import.meta.url), 'utf8');
@@ -43,7 +43,9 @@ async function until(predicate, label) {
 for (const turnPolicy of ['immediate', 'grid-center'])
   test(`${turnPolicy}: actual theater adopts verified wide bitmap, preserves it through failed/stale loads and restores legacy size`, async (t) => {
     const doc = new Document(),
+      win = new Events(),
       main = new Element(doc, 'main');
+    doc.defaultView = win;
     doc.body.append(main);
     // Mount the actual page's named controls. DOM layout, image decoding and
     // painting are boundary doubles; the entry handlers/player/verifier are real.
@@ -74,6 +76,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     let frame;
     const globals = {
       document: doc,
+      window: win,
       location: { href: 'https://example.test/game/replay-theater/' },
       matchMedia: () => ({ matches: false }),
       requestAnimationFrame: (callback) => {
@@ -96,6 +99,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
       Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
     }
     t.after(() => {
+      win.emit('pagehide', { persisted: false });
       for (const [key, descriptor] of previous) {
         if (descriptor) Object.defineProperty(globalThis, key, descriptor);
         else delete globalThis[key];

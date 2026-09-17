@@ -18,6 +18,18 @@ Image and media files use their real bytes. Font uploads are decoded with the br
 
 Requirements include all usage screens and states, exact frame size, alpha policy, byte budget, palette, dependencies, and geometry. The complete machine-readable slot contract is visible beside the human-readable explanation.
 
+## Studio Interface — readability candidate
+
+This source adds the scoped [P05 Studio readability candidate](cross-mode-execution.md#p05-supporting-screen-readability). It is not an accepted Studio release or completion of P05.
+
+Open **Interface** for Theme/Plain text, Standard/Large size and Reduced effects. Host body/control/secondary roles use 18/16/14px, or 22/20/18px in Large. These choices update the existing shared display record and existing controls; they do not stage a theme, rebuild a draft, replace prepared media or write player saves. Interface controls remain available during an authoring operation. A failed preference save keeps the visible session-only choice and reports it beside the controls.
+
+Host instructions and actions retain their readable roles even when the draft preview uses different theme tokens. Selected-font and authored-component specimens retain their own identity. Font samples use the selected file: display at least 40px/600, UI at 400/500/600 and numeric at 500, with English/Ukrainian strings. A shared font file retains one registration with compatible requested weight ranges; failed loading or widening offers Retry without discarding a still-usable registration. Those behaviors do not prove glyph coverage or approve an uploaded font.
+
+The system reduced-motion preference caps the saved choice. The checkbox retains the user's raw choice and an explanation identifies an active system cap. Preview changes affect owned frames only; clearing the cap resumes retained Playing with a reset clock, while Paused and Reduced remain still. Text changes do not restart the animation or audio. Persisted navigation may rebuild the existing owned preview views; changing an Interface control does not.
+
+A successful foreground inventory selection retains the replacement selected button on desktop if its activating button owned focus. At widths up to 700px, selection keeps the existing Inspector handoff. A rejected prepared-upload or dirty-sprite selection leaves the original button and work in place. This scoped correction does not fix cold Back filter/selection restoration or focus after a successful mutation disables its own action; those remain separate P04 work.
+
 ## Replacing an asset
 
 1. Select a slot and choose an accepted PNG/JPEG/WebP image, WOFF2/TTF/OTF font, or WAV/OGG/MP3 audio file. The format must match the slot. The original must fit the presentation system's global byte and decoded-dimension limits.

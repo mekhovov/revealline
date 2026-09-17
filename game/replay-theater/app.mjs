@@ -6,9 +6,12 @@ import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { mountReplayDisplay } from './display.mjs';
 
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
+let theaterDisposed = false;
+const replayDisplay = mountReplayDisplay();
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({ message: 'Preparing the theater…', stage: 'reading' });
 const presentationFeedback = createOperationStatus($('presentation-status'));
@@ -30,6 +33,16 @@ const presentationPage = mountPresentationPage({
     }
   },
 });
+const closeTheater = (event = {}) => {
+  if (event.persisted || theaterDisposed) return;
+  theaterDisposed = true;
+  replayDisplay.dispose();
+  bootStatus.dispose();
+  presentationFeedback.dispose();
+  presentationPage.close();
+  window.removeEventListener('pagehide', closeTheater);
+};
+window.addEventListener('pagehide', closeTheater);
 const examples = {
   'fieldcraft-01': {
     file: './data/fieldcraft-01.replay.json',
@@ -59,9 +72,11 @@ try {
     fetch('../content/themes.json'),
     fetch('../../authoring/motion-lab/presets.json'),
   ]);
+  if (theaterDisposed) throw new DOMException('The theater is closed.', 'AbortError');
   if (!themeResponse.ok || !presetResponse.ok)
     throw new Error('Presentation assets could not load.');
   const [{ themes }, presets] = await Promise.all([themeResponse.json(), presetResponse.json()]);
+  if (theaterDisposed) throw new DOMException('The theater is closed.', 'AbortError');
   const context = $('board').getContext('2d');
   if (!context) throw new Error('This browser could not create a 2D canvas.');
   for (const theme of themes) {
@@ -70,7 +85,6 @@ try {
     option.textContent = theme.name;
     $('theme').append(option);
   }
-  $('reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let player = null,
     painter = null,
     releasePresentationPainter = null,
@@ -88,6 +102,14 @@ try {
   const chosenTheme = () => themes.find((theme) => theme.id === $('theme').value) || themes[0];
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
   function updateControls() {
+    const previousFocus = document.activeElement;
+    const completedControl =
+      !disposed &&
+      !pending &&
+      player?.phase === 'complete' &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      [$('play-pause'), $('step')].includes(previousFocus);
     const disabled = pending || !player;
     $('play-pause').disabled = disabled || ['complete', 'error'].includes(player?.phase);
     $('play-pause').textContent = player?.phase === 'playing' ? 'Pause' : 'Play';
@@ -97,6 +119,16 @@ try {
     $('theme').disabled = pending;
     $('cancel-load').hidden = !pending;
     $('playback-phase').textContent = pending ? 'Verifying' : player?.phase || 'Empty';
+    // Native disabling can move Play/Step focus to BODY. Keep this completed
+    // transport journey local without moving focus out of another editor.
+    if (
+      completedControl &&
+      !$('restart').disabled &&
+      [previousFocus, document.body, null].includes(document.activeElement)
+    ) {
+      $('restart').focus({ preventScroll: true });
+      $('restart').scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
   }
   function readouts() {
     if (!player) return;
@@ -349,8 +381,7 @@ try {
       disposed = true;
       importStatus.dispose();
       releasePresentationPainter?.();
-      presentationPage.close();
-      presentationFeedback.dispose();
+      closeTheater();
       globalThis.cancelAnimationFrame?.(frameId);
       nativeUnsubscribe?.();
     },
@@ -372,9 +403,11 @@ try {
     safely(() => {
       if (player && painter) {
         if (player.phase === 'playing' && !pending) consume(player.advance(dt));
+        const display = replayDisplay.snapshot();
         painter.draw(context, player.state, Math.min(dt, 0.1), {
           paused: player.phase !== 'playing',
-          reduced: $('reduced').checked,
+          reduced: display.effectiveReducedEffects,
+          textFace: display.textFace,
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',
           celebrationPaused: document.hidden,
@@ -390,8 +423,9 @@ try {
   frameId = requestAnimationFrame(frame);
   void load(fetchExample, 'Copper Crossing example');
 } catch (error) {
-  bootDisplay.finish({
-    state: 'error',
-    message: `The theater could not start: ${clipped(error.message, 300)} Reload the page to try again.`,
-  });
+  if (!theaterDisposed)
+    bootDisplay.finish({
+      state: 'error',
+      message: `The theater could not start: ${clipped(error.message, 300)} Reload the page to try again.`,
+    });
 }

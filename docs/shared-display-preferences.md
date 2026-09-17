@@ -82,7 +82,23 @@ use the existing semantic size tokens. Standard/Large affects interface text;
 it does not scale the arena, actors or collision geometry. This is not the full
 Team art/palette adapter planned for P08.
 
+## Studio adapter — scoped readability candidate
+
+Asset Studio now has one page-owned view of the same three-field display record. Its Interface controls keep the compatible `pixel` value labelled Theme, retain Standard/Large and show the raw Reduced effects choice separately from its effective system cap. Explicit Studio edits write only shared display preferences; Studio never mirrors Solo's profile or progress. Reads, system changes and cross-page updates retain the existing authority and storage-failure rules.
+
+The adapter changes existing body datasets, control values and nearby notices. It does not refresh inspectors, stage revisions, replace prepared image/font/audio bytes, clear sprite history or restart auditions. Host font/palette aliases are resolved on the body, so draft-theme overrides affect specimens without shrinking or recolouring their explanatory controls.
+
+Preview motion receives a read-only snapshot/subscription view. A change in effective reduction cancels owned frames, fences retired callbacks and resets elapsed time. Releasing the cap resumes only a retained local Playing choice. Text-only updates preserve the current clock. Existing persisted pagehide/pageshow handlers retire and rebuild owned previews while keeping the display authority; terminal navigation disposes it. Actual BFCache admission and cross-tab convergence require browser evidence rather than a modeled lifecycle event.
+
+This adapter belongs to the [Studio readability subphase](cross-mode-execution.md#p05-supporting-screen-readability). Earlier font/F2/focus candidate checks remain bound to their original bytes. The integrated candidate has focused passing checks; final browser corrections, full source qualification and release remain pending. It does not complete P05 or change the historical results below.
+
 ## Historical candidate verification and remaining acceptance
+
+### Supporting-screen integration
+
+The next [supporting-screen delivery](supporting-screen-readability.md) includes the Studio adapter above and Replay Theater. Replay's Interface disclosure stays outside its loading/inert main region, so text style, size and effects remain available during delayed or failed startup. Both routes write only the shared display record. Replay retains its recording, exact playback position and explicit playback intent when those controls change; canvas text receives the same text-face preference.
+
+On a persisted `pageshow`, the shared authority resamples storage and the current system motion request. It preserves an explicit local choice when saving failed, keeps that warning visible, and suppresses a later duplicate storage notification. Returning does not save settings or start gameplay. Terminal disposal rejects late startup and removes the page-owned subscriptions. This behavior applies to the existing Solo/Versus/Team consumers too, so their affected host tests remain part of qualification. Actual browser cache admission is a separate check from dispatched lifecycle tests.
 
 The new adapter cases exercise strict fields, legacy and explicit authority,
 storage identity/failure, late events, system changes, reentrancy and disposal.

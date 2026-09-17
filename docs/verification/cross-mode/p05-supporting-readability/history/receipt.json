@@ -1,0 +1,31 @@
+{
+  "format": "revealline-evidence-curation.v1",
+  "status": "ORIGINALS_CURATED_REPLAY_NATIVE_AND_INTEGRATED_GATES_PENDING",
+  "archive": {
+    "path": "original-evidence.zip",
+    "bytes": 1119054,
+    "sha256": "1de6672843cb3fb0521595310965df749a36b61e8e505c389c89a64f55bb1650",
+    "members": 243
+  },
+  "manifest": {
+    "path": "member-manifest.json",
+    "bytes": 87553,
+    "sha256": "84d13f3def65b66f6a119a9e19eaf83db68208fd4b8dc08876e4bab9c65b5f3f"
+  },
+  "index": {
+    "path": "INDEX.md",
+    "bytes": 4723,
+    "sha256": "c4cdd7f68b4b1d60f1fd4ba2e9fb0f69fc1e92c2cf84bbe77a1e026a55cc2428"
+  },
+  "originalFiles": 241,
+  "originalBytes": 3771904,
+  "allOriginalBytesRereadAfterArchive": true,
+  "allArchivePayloadMembersHashVerified": true,
+  "capturedDependencyTreesExcluded": 8,
+  "testsRun": false,
+  "buildsRun": false,
+  "browserUsed": false,
+  "sourceWorktreeIndexOrRemoteMutations": false,
+  "replayNativeIncluded": false,
+  "combinedSourceAccepted": false
+}

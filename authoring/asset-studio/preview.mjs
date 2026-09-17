@@ -18,10 +18,11 @@ import {
 import { createActorPresentation, drawPresentedActor } from '../../game/ui/actor-presentation.mjs';
 import { drawClassicTerrain, drawPickupIcon } from '../../game/ui/classic-view.mjs';
 const fonts = new Map();
-const text = (tag, value, className = '') => {
+const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
   node.textContent = value;
   node.className = className;
+  if (hostRole) node.dataset.studioHost = hostRole;
   return node;
 };
 export async function drawAssetPreview(surface, slot, asset, resolved, blobs, settings) {
@@ -36,6 +37,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     label = 'Asset preview',
     isCurrent: hostCurrent = () => true,
     audioMaster = null,
+    motionPreferences = null,
   } = settings;
   surface.previewCleanup?.();
   const marker = {};
@@ -53,7 +55,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   const unapply = applyPresentation(surface, resolved);
   const cleanups = [];
   const own = (cleanup) => (isCurrent() ? cleanups.push(cleanup) : cleanup());
-  const options = { mode, motion, state, isCurrent, onStatus: phase };
+  const options = { mode, motion, motionPreferences, state, isCurrent, onStatus: phase };
   let cleaned = false;
   surface.previewCleanup = (preserveStatus = false) => {
     if (cleaned) {
@@ -85,7 +87,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   }
   try {
     if (!asset) {
-      surface.append(text('p', 'No binding. Upload a candidate for this slot.'));
+      surface.append(text('p', 'No binding. Upload a candidate for this slot.', '', 'body'));
       return;
     }
     for (const id of ['font.display', 'font.ui', 'font.numeric']) {
@@ -114,7 +116,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       audio.controls = true;
       audio.preload = 'metadata';
       if (audioBinding) {
-        const label = text('label', 'Audition volume'),
+        const label = text('label', 'Audition volume', '', 'control'),
           fader = document.createElement('input');
         fader.type = 'range';
         fader.min = '0';
@@ -128,6 +130,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
           text(
             'small',
             'Use Audition volume for this preview. Master sound applies to both previews.',
+            '',
+            'body',
           ),
         );
       }
@@ -164,13 +168,27 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       phase('reading and decoding the font…', 'decoding');
       await prepareFont(asset, blob, resolved);
       if (!isCurrent()) return;
-      const sample = text(
-        'div',
-        'Лінія зв’язку · ПОЛІТ\nҐґ Єє Іі Її Йй Щщ\nEnglish · 0123456789 ₴',
-        'font-file-sample',
-      );
-      sample.style.fontFamily = family;
-      surface.append(sample);
+      // The selected slot owns the specimen, even when several roles share a file.
+      // Keep the exact file family rather than the surrounding Theme/Plain tokens.
+      const weights =
+          slot.id === 'font.ui' ? [400, 500, 600] : [slot.id === 'font.display' ? 600 : 500],
+        size =
+          slot.id === 'font.display'
+            ? Math.max(40, resolved.tokens.displaySize)
+            : slot.id === 'font.numeric'
+              ? resolved.tokens.textSize + 8
+              : Math.max(18, resolved.tokens.textSize);
+      for (const weight of weights) {
+        const sample = text(
+          'div',
+          `${slot.label} · ${weight}\nFlight ready · Політ готовий\nContinue mission · Продовжити місію\nҐґ Єє Іі Її Йй Щщ\n01:24 · 75% · 0123456789 ₴\nІ l 1 · О O 0 · ʼ ’`,
+          'font-file-sample',
+        );
+        sample.style.fontFamily = family;
+        sample.style.fontSize = `${size}px`;
+        sample.style.fontWeight = String(weight);
+        surface.append(sample);
+      }
       return;
     }
     const palette = canvasPresentation(resolved).palette;
@@ -228,6 +246,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
               'small',
               `${source.descriptor.label} · ${source.origin.label} · ${source.fit} · source stage`,
               'bounded-label',
+              'secondary',
             ),
           );
       } catch (error) {
@@ -370,7 +389,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       sample.append(
         text('p', 'Flight ready · Політ готовий', `font-${slot.id.split('.')[1]}`),
         text('p', 'Ґґ Єє Іі Її · 0123456789 ₴'),
-        text('small', 'Bundled production font / source recipe', 'bounded-label'),
+        text('small', 'Bundled production font / source recipe', 'bounded-label', 'secondary'),
       );
       surface.append(sample);
       return;
@@ -423,7 +442,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       }
       surface.append(
         canvas,
-        text('small', 'Bounded sample · actual game drawing helper', 'bounded-label'),
+        text('small', 'Bounded sample · actual game drawing helper', 'bounded-label', 'secondary'),
       );
       return;
     }
@@ -432,7 +451,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (!isCurrent()) return;
     failed = true;
     lease?.finish({ message: `${label}: ${error.message || error}`, state: 'error' });
-    surface.replaceChildren(text('p', error.message || String(error)));
+    surface.replaceChildren(text('p', error.message || String(error), '', 'body'));
     if (cancelButton) {
       cancelButton.textContent = 'Retry preview';
       cancelButton.onclick = () =>
@@ -449,24 +468,43 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   }
 }
 function prepareFont(asset, blob, resolved) {
-  const family = `RLAsset-${asset.file.sha256}`;
-  if (!fonts.has(family)) {
-    const pending = (async () => {
-      const face = new FontFace(
-        family,
-        await blob.arrayBuffer(),
-        presentationFontDescriptors(resolved, asset.file.sha256),
-      );
-      const font = await face.load();
+  const family = `RLAsset-${asset.file.sha256}`,
+    descriptors = presentationFontDescriptors(resolved, asset.file.sha256),
+    [minimum, maximum = minimum] = descriptors.weight.split(' ').map(Number);
+  const existing = fonts.get(family);
+  if (existing) {
+    const lower = Math.min(existing.minimum, minimum),
+      upper = Math.max(existing.maximum, maximum);
+    if (lower !== existing.minimum || upper !== existing.maximum) {
+      // A failed descriptor update must leave the previous registration usable.
+      if (existing.face) existing.face.weight = fontWeightRange(lower, upper);
+      existing.minimum = lower;
+      existing.maximum = upper;
+    }
+    return existing.pending;
+  }
+  const entry = { minimum, maximum, face: null, pending: null };
+  // Publish one shared request before byte reading can invoke another consumer.
+  entry.pending = Promise.resolve()
+    .then(async () => {
+      const bytes = await blob.arrayBuffer();
+      entry.face = new FontFace(family, bytes, {
+        ...descriptors,
+        weight: fontWeightRange(entry.minimum, entry.maximum),
+      });
+      const font = await entry.face.load();
       document.fonts.add(font);
       return font;
-    })().catch((error) => {
-      if (fonts.get(family) === pending) fonts.delete(family);
+    })
+    .catch((error) => {
+      if (fonts.get(family) === entry) fonts.delete(family);
       throw error;
     });
-    fonts.set(family, pending);
-  }
-  return fonts.get(family);
+  fonts.set(family, entry);
+  return entry.pending;
+}
+function fontWeightRange(minimum, maximum) {
+  return minimum === maximum ? String(minimum) : `${minimum} ${maximum}`;
 }
 function field(ctx, palette) {
   ctx.fillStyle = palette.field;

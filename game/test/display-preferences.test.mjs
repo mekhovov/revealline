@@ -46,6 +46,11 @@ function fixture({ stored, reduced = false, legacyPreferences, writable, onWarni
     writes,
     warnings,
     media,
+    show(persisted = true) {
+      const event = new Event('pageshow');
+      Object.assign(event, { persisted });
+      window.dispatchEvent(event);
+    },
     failSave(error) {
       failure = error;
     },
@@ -388,4 +393,96 @@ test('disposal detaches both event sources and rejects later mutation or subscri
   assert.throws(() => f.preferences.subscribe(() => {}), /disposed/);
   assert.equal(seen.length, 1);
   assert.deepEqual(f.writes, []);
+});
+
+test('persisted return reads current shared state and cap without resaving or duplicate notifications', () => {
+  const f = fixture({ stored: encode() }),
+    seen = [];
+  f.preferences.subscribe((state) => seen.push(state));
+  f.data.set(DISPLAY_PREFERENCES_KEY, encode({ textFace: 'plain', textSize: 'large' }));
+  f.media.matches = true;
+  f.show();
+  assert.deepEqual(f.preferences.snapshot(), {
+    textFace: 'plain',
+    textSize: 'large',
+    reducedEffects: false,
+    effectiveReducedEffects: true,
+    revision: 1,
+  });
+  assert.equal(seen.length, 2);
+  f.show();
+  f.event(f.data.get(DISPLAY_PREFERENCES_KEY));
+  f.motion(true);
+  assert.equal(seen.length, 2, 'Late storage/media events cannot duplicate the restored state.');
+  assert.equal(f.preferences.snapshot().revision, 1);
+  assert.deepEqual(f.writes, []);
+  assert.equal(f.preferences.adoptLegacy(defaults), false);
+  f.preferences.dispose();
+});
+
+test('persisted return preserves unsaved intent while refreshing current system reduction', () => {
+  const f = fixture({ stored: encode() });
+  f.failSave(new Error('Quota exceeded'));
+  f.preferences.set({ textFace: 'plain', textSize: 'large' });
+  const revision = f.preferences.snapshot().revision;
+  f.data.set(DISPLAY_PREFERENCES_KEY, encode({ textSize: 'standard' }));
+  f.media.matches = true;
+  f.show();
+  assert.deepEqual(rawState(f.preferences), { ...defaults, textFace: 'plain', textSize: 'large' });
+  assert.equal(f.preferences.snapshot().effectiveReducedEffects, true);
+  assert.equal(f.preferences.snapshot().revision, revision);
+  assert.match(f.preferences.getWarning(), /could not be saved/);
+  f.media.matches = false;
+  f.show();
+  assert.equal(f.preferences.snapshot().effectiveReducedEffects, false);
+  assert.deepEqual(f.writes, []);
+  f.preferences.dispose();
+});
+
+test('persisted return ignores malformed and deleted shared data while updating only the effective cap', () => {
+  const f = fixture({ stored: encode({ textFace: 'plain' }) });
+  for (const value of ['broken', null]) {
+    if (value === null) f.data.delete(DISPLAY_PREFERENCES_KEY);
+    else f.data.set(DISPLAY_PREFERENCES_KEY, value);
+    f.media.matches = !f.media.matches;
+    f.show();
+    assert.deepEqual(rawState(f.preferences), { ...defaults, textFace: 'plain' });
+    assert.equal(f.preferences.snapshot().effectiveReducedEffects, f.media.matches);
+    assert.equal(f.preferences.snapshot().revision, 0);
+  }
+  assert.deepEqual(f.writes, []);
+  f.preferences.dispose();
+});
+
+test('ordinary pageshow and a disposed authority cannot consume restored-page changes', () => {
+  const f = fixture({ stored: encode() }),
+    before = f.preferences.snapshot();
+  f.data.set(DISPLAY_PREFERENCES_KEY, encode({ textSize: 'large' }));
+  f.media.matches = true;
+  f.show(false);
+  assert.equal(f.preferences.snapshot(), before);
+  f.preferences.dispose();
+  f.show();
+  assert.equal(f.preferences.snapshot(), before);
+  assert.deepEqual(f.writes, []);
+});
+
+test('persisted return respects a newer explicit choice made by an observer', () => {
+  const f = fixture({ stored: encode() });
+  let changed = false;
+  f.preferences.subscribe((state) => {
+    if (state.textSize === 'large' && !changed) {
+      changed = true;
+      f.preferences.set({ textFace: 'plain' });
+    }
+  });
+  f.data.set(DISPLAY_PREFERENCES_KEY, encode({ textSize: 'large' }));
+  f.show();
+  assert.deepEqual(rawState(f.preferences), { ...defaults, textFace: 'plain', textSize: 'large' });
+  assert.equal(
+    f.data.get(DISPLAY_PREFERENCES_KEY),
+    encode({ textFace: 'plain', textSize: 'large' }),
+  );
+  assert.equal(f.writes.length, 1, 'Only the explicit observer action writes.');
+  f.preferences.dispose();
 });

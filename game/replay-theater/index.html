@@ -32,7 +32,35 @@
       <h1 class="field-kit-display">Watch the route unfold.</h1>
       <p>Pause at a turning point. Follow the cable. See what each craft changes.</p>
       <p class="notice">Read-only playback · No rewards, scores or player progress are saved.</p>
-      <a href="#playback">Jump to playback ↓</a>
+      <details class="replay-interface">
+        <summary>Interface</summary>
+        <div class="replay-interface-fields">
+          <label for="replay-text-face"
+            >Text style
+            <select id="replay-text-face" disabled>
+              <option value="pixel">Theme</option>
+              <option value="plain">Plain</option>
+            </select></label
+          >
+          <label for="replay-text-size"
+            >Text size
+            <select id="replay-text-size" disabled>
+              <option value="standard">Standard</option>
+              <option value="large">Large</option>
+            </select></label
+          >
+          <label class="check"
+            ><input id="reduced" type="checkbox" disabled /> Reduced effects</label
+          >
+        </div>
+        <p class="replay-interface-note">
+          Shared with the game. These choices change the interface and replay effects; the recording
+          and its playback position stay unchanged.
+        </p>
+        <p id="replay-system-reduction" class="replay-interface-note" role="status" hidden></p>
+        <p id="replay-display-status" class="replay-interface-note" role="status" hidden></p>
+      </details>
+      <a id="jump-playback" href="#playback">Jump to playback ↓</a>
     </header>
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
       <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
@@ -154,14 +182,6 @@
           <h2 id="look-heading">A different atmosphere.</h2>
           <label for="theme">Presentation theme</label>
           <select id="theme"></select>
-          <label class="field-kit-page-text"
-            ><span data-field-kit-copy="display.textSize">Text size</span
-            ><select data-field-kit-text-size>
-              <option value="standard" data-field-kit-copy="display.standard">Standard</option>
-              <option value="large" data-field-kit-copy="display.large">Large</option>
-            </select></label
-          >
-          <label class="check"><input id="reduced" type="checkbox" /> Reduce effects</label>
           <label class="check"><input id="grid" type="checkbox" /> Show grid</label>
           <p class="quiet">
             Themes change the art. The imported route, class abilities and result stay exactly as

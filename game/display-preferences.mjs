@@ -154,6 +154,7 @@ export function createDisplayPreferences({
     )
       return;
     stored = true;
+    if (fields.every((key) => state[key] === current.value[key])) return;
     apply(current.value);
   };
   const motionChanged = () => {
@@ -165,6 +166,28 @@ export function createDisplayPreferences({
     state = Object.freeze({ ...state, effectiveReducedEffects });
     notify();
   };
+  // A frozen page can miss storage/media events. Read current authority when
+  // restored, without replacing explicit intent that could not be persisted.
+  const restored = (event) => {
+    if (disposed || event.persisted !== true) return;
+    systemReduced = media?.matches === true;
+    if (!unsaved) {
+      const current = read();
+      if (current.value) {
+        stored = true;
+        if (fields.some((key) => state[key] !== current.value[key])) {
+          apply(current.value);
+          return;
+        }
+      }
+    }
+    const effectiveReducedEffects = state.reducedEffects || systemReduced;
+    if (state.effectiveReducedEffects !== effectiveReducedEffects) {
+      state = Object.freeze({ ...state, effectiveReducedEffects });
+      notify();
+    }
+  };
+  eventTarget?.addEventListener?.('pageshow', restored);
   eventTarget?.addEventListener?.('storage', receive);
   if (media?.addEventListener) media.addEventListener('change', motionChanged);
   else media?.addListener?.(motionChanged);
@@ -210,6 +233,7 @@ export function createDisplayPreferences({
       if (disposed) return;
       disposed = true;
       eventTarget?.removeEventListener?.('storage', receive);
+      eventTarget?.removeEventListener?.('pageshow', restored);
       if (media?.removeEventListener) media.removeEventListener('change', motionChanged);
       else media?.removeListener?.(motionChanged);
       listeners.clear();
