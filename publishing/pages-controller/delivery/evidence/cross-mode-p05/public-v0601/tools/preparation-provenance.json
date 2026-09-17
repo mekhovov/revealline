@@ -1,0 +1,74 @@
+{
+  "status": "PREPARED_AWAITING_ACTUAL_PUBLICATION",
+  "preparedAt": "2026-09-17T08:34:32.120427+00:00",
+  "candidateSourceRevision": "822f3290787c704a217e7c185d4b8beb7a527e82",
+  "candidateSourceTree": "88bd680e09210f9bf56ca18465fdb46afb2f1307",
+  "version": "v0.60.1",
+  "upstream": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/wrapper_contract.py",
+      "bytes": 8315,
+      "sha256": "a5201b366a348ac53a6cb52a7ddc2ec4063326c492bfcb8d2b81a1121bce3438"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/intake-live.py",
+      "bytes": 9641,
+      "sha256": "107db96f4d16a0bd543f8ddaa10e906e0618a73ff6811c0b4225a71284e206df"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/refresh-after-http.py",
+      "bytes": 7514,
+      "sha256": "21504be871c72e0a6e0c5cf7bf38dfcb69a72da761603f4dc79ddd1b8d3e0540"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/review-public.py",
+      "bytes": 4336,
+      "sha256": "d0cd4fe568dc5b4295aafe8bae37f5b1a66e7609f5232d5d1236a85ce5391bdb"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/observe-hosted.failure-retention.py",
+      "bytes": 4978,
+      "sha256": "68e03a50898868735bc36bf59ced8be25aaa252e69f2cfa5ac0d6ffbd02f3cbe"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/test_wrappers.py",
+      "bytes": 14641,
+      "sha256": "7cb6541ba7d6d343967d1b42a53931b44dabce833d95aa11a8857a0b9a8ddbf0"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/tools/audit-main.mjs",
+      "bytes": 21944,
+      "sha256": "c9ff83e0ba75baedfa4f7a75e9e0c44a0c062374154f99cce1af29467f68ef83"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/tools/self-check.mjs",
+      "bytes": 3958,
+      "sha256": "af40be3a03012f3dcf88add4035d5b512a7354e1e7ea4d387edb3d4a67109d9a"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/tools/retained-catalog.json",
+      "bytes": 31249,
+      "sha256": "a2d816f77f3f8af2fbbc723e3f63cccf585ec08fccddd3363436763836d0d737"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-public-audit-170508f1/WRAPPERS.md",
+      "bytes": 8357,
+      "sha256": "1b96a73b2a9f836ee63cae0733ba1678e684fcf93b6ebc5df57c307aba7bd316"
+    }
+  ],
+  "retainedCatalog": {
+    "sourceRevision": "587f4e75cc9dde7ae0db7ffac34320761b94588c",
+    "path": "publishing/pages-controller/catalog.json",
+    "sha256": "3edda5240c707073c55175b43837e4f0d07c5f13c377a264c6c4d44be70bc3d2",
+    "editions": 71,
+    "latest": "v0.60.0"
+  },
+  "networkExecuted": false,
+  "productionBindingCreated": false,
+  "phaseAccepted": false
+}

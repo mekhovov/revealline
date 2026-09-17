@@ -1,0 +1,9 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-team-public-audit-822f3290/tools/self-check.mjs"
+  ],
+  "at": "2026-09-17T08:34:32.120427+00:00",
+  "exit": 0,
+  "network": false
+}
