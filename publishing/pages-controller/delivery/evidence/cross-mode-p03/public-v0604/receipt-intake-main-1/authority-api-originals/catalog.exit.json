@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-17T15:28:35.599630+00:00",
+  "command": [
+    "gh",
+    "api",
+    "repos/mekhovov/revealline/contents/publishing/pages-controller/catalog.json?ref=1298acb1dbdef3a96b5a690c171fee754794c26c"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "stdoutBytes": 47265,
+  "stderrBytes": 0,
+  "acceptedBytesLessThan": 2000000,
+  "timeoutSeconds": 35
+}

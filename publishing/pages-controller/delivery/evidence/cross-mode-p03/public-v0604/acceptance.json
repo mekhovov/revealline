@@ -1,0 +1,58 @@
+{
+  "status": "ROOT_ACCEPTED_V0604_RECOVERY_CORRECTION_ONLY",
+  "accepted": true,
+  "at": "2026-09-17T15:38:42.759038+00:00",
+  "version": "v0.60.4",
+  "source": "d77ea4f5c2aeccf2ba3bdf483a3f25531f8095b6",
+  "sourceTree": "f3a02f9d9e38650f2f9f61ddacd358dfc1f64333",
+  "publisher": "1298acb1dbdef3a96b5a690c171fee754794c26c",
+  "publisherTree": "961bf6d7da2159071519172b3de8583a16cca139",
+  "sourcePR": 90,
+  "publisherPR": 91,
+  "releaseId": 390820115,
+  "runId": 35239952497,
+  "deploymentId": 6506175017,
+  "statusId": 18482014233,
+  "files": 2755,
+  "bytes": 639467460,
+  "attempts": 2756,
+  "retryCount": 1,
+  "failedFiles": 0,
+  "hostedTestsPerFamily": 5511,
+  "hostedTestFiles": 438,
+  "pins": [
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3724,
+      "sha256": "e496b10a52d094827cbdebaa664901622cde2e6ee88e53f218c75842bb372b5d"
+    },
+    {
+      "path": "public-row-review-complete-1.json",
+      "bytes": 1597,
+      "sha256": "a30ce595962faf1957ccb9d7d54c40641242756c26ff521b7f9f9aad7a5aa7be"
+    },
+    {
+      "path": "refresh-root.stdout",
+      "bytes": 7490,
+      "sha256": "fcc85e5d8d8120f7e9d3fd941bc75d43898b06ab5d1ad104a0fcbf1550573736"
+    },
+    {
+      "path": "native/root-observations.json",
+      "bytes": 7899,
+      "sha256": "efe6fdb7bd57489b6670b45f3c5d183b1c62ff82c567e9a0d0d2768a0d49c807"
+    }
+  ],
+  "scope": "Recovery shared reading, stable startup/retry/back owner and foreground action focus. Source and immutable release/publisher/public audit/browser journeys complete within retained limits.",
+  "limitations": [
+    "Mixed input: native keys plus semantic profile choice/settings/link actions; this is not complete keyboard-only or controller certification.",
+    "End/Space/Down did not visibly change the native select in this browser; semantic selection completed the scoped check. Native-select keyboard/platform diagnosis remains open; no application cause established.",
+    "No downloaded export-byte check, historical-original verification, storage migration, fresh offline, forced public failures, actual BFCache admission, real touch/controller or broad zoom/browser certification.",
+    "Local deterministic delayed/fault/restore source evidence remains separate from public successful fast paths.",
+    "Existing same-origin profiles reused. Initial v604Start created normal savedflight state; retainedv603flight clock advanced during real continuation.",
+    "Default screenshot visible crop differs from1280\u00d7720 DOM viewport; DOM widths were1280 without overflow. Portrait check used explicit390\u00d7844."
+  ],
+  "P03Complete": false,
+  "P05Complete": false,
+  "P18Complete": false,
+  "fullGameComplete": false
+}

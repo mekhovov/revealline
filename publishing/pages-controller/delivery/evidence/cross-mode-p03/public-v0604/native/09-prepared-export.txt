@@ -1,0 +1,6 @@
+Browser tab: 39, Title: "Earlier profiles · RevealLine", URL: "https://mekhovov.github.io/revealline/releases/v0.60.4/site/game/profile-recovery.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 58
++		60 text Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.
++		61 link Description: Download stored profile snapshot, Value: blob:https://mekhovov.github.io/378636b0-6646-409b-988a-87b4df054aa5, ID: profile-recovery-download
+The focused UI element is 61 link Description: Download stored profile snapshot, URL: blob:https://mekhovov.github.io/378636b0-6646-409b-988a-87b4df054aa5, ID: profile-recovery-download

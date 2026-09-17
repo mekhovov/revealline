@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/intake-live.py", line 151, in <module>
+    print(json.dumps(intake(Path(__file__).resolve().parent, args.request, args.request_sha256), indent=2))
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/intake-live.py", line 24, in intake
+    models = observation(home, request['hostedObservation'], request, request['latestSuccessStatusId'])
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/wrapper_contract.py", line 99, in observation
+    record = json.loads(read_pin(root, pin))
+                        ~~~~~~~~^^^^^^^^^^^
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/wrapper_contract.py", line 71, in read_pin
+    body = ordinary(root, pin['path'], limit)
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/wrapper_contract.py", line 55, in ordinary
+    for part in relative(name).split('/'):
+                ~~~~~~~~^^^^^^
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/wrapper_contract.py", line 46, in relative
+    require(isinstance(value, str) and 0 < len(value) < 1024 and
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            not re.search(r'[\\\x00-\x1f\x7f:?#]', value) and
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            all(part and part not in ('.', '..') for part in value.split('/')),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            'Unsafe relative evidence path')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-recovery-public-audit-d77ea4f5/wrapper_contract.py", line 22, in require
+    raise ValueError(message)
+ValueError: Unsafe relative evidence path

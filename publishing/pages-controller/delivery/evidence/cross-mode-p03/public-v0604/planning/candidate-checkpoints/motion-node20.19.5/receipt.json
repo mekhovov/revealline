@@ -1,0 +1,53 @@
+{
+  "sourceBase": "d77ea4f5c2aeccf2ba3bdf483a3f25531f8095b6",
+  "branch": "codex/p05-motion-reading",
+  "startedAt": "2026-09-17T15:27:32.832667+00:00",
+  "elapsedSeconds": 2.967866500002856,
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "authoring/motion-lab/test-ability.mjs",
+    "authoring/motion-lab/test-animation.mjs",
+    "authoring/motion-lab/test-collection.mjs",
+    "authoring/motion-lab/test-grid-motion.mjs",
+    "authoring/motion-lab/test-motion.mjs",
+    "authoring/motion-lab/test-steering.mjs",
+    "game/test/direct-tool-launch.test.mjs",
+    "game/test/direct-tools-loading.test.mjs",
+    "game/test/display-preferences.test.mjs",
+    "game/test/motion-lab-display-host.test.mjs",
+    "game/test/motion-lab-display-restoration.test.mjs",
+    "game/test/motion-lab-labels.test.mjs",
+    "game/test/motion-lab-preview-loop.test.mjs",
+    "game/test/motion-lab-render-ability.test.mjs",
+    "game/test/motion-lab-png-preview.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-team-clearance",
+  "nodeVersion": "v20.19.5",
+  "nodeSha256": "c37b0c15f83f1b63c4b162c6f47e586ed6b00ac9ed093037fe679f676f9d2195",
+  "wholeFiles": 15,
+  "exitCode": 0,
+  "timeout": false,
+  "testCounts": {
+    "tests": 181,
+    "pass": 181,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "inputCount": 208,
+  "declaredRuntimeClosure": 90,
+  "inputsUnchanged": true,
+  "changed": [],
+  "outputBytes": 41345,
+  "outputSha256": "7549db344394ee48d2a2161de0309d7c32dbf62c8b7aa8ba8532650430d6986a",
+  "limits": {
+    "nodeMiB": 1024,
+    "concurrency": 1,
+    "timeoutSeconds": 90
+  },
+  "scope": "Actual uncommitted d77 plus reviewed Motion integration. Complete15-file affected cohort; no build, full source qualification or browser acceptance."
+}

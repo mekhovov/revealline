@@ -1,0 +1,10 @@
+- region "Find your line.":
+  - paragraph: REVEAL / LINE
+  - heading "Find your line." [level=1]
+  - status: Loading game styles…
+  - navigation "Launch options":
+    - link "Reload game":
+      - /url: ""
+    - link "Play online":
+      - /url: https://mekhovov.github.io/revealline/game/
+  - generic "Playing a downloaded copy?"

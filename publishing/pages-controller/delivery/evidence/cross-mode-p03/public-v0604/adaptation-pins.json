@@ -1,0 +1,175 @@
+{
+  "at": "2026-09-17T14:55:10.647913+00:00",
+  "predecessor": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-supporting-tools-public-audit-a13ab970",
+  "sourceRevision": "d77ea4f5c2aeccf2ba3bdf483a3f25531f8095b6",
+  "sourceTree": "f3a02f9d9e38650f2f9f61ddacd358dfc1f64333",
+  "version": "v0.60.4",
+  "catalogCommit": "65a6efcb3bfabf8458702cca452c8120fa756471",
+  "catalogSha256": "17dfb89beca61d09a882fa58cde50810a0617cb1cc59db7388be3254c516a7cc",
+  "catalogRows": 74,
+  "expectedCatalogRowsAfterSingleNewRelease": 75,
+  "pins": [
+    {
+      "path": "wrapper_contract.py",
+      "beforeBytes": 8315,
+      "beforeSha256": "fa7d49e88f7fdef61f86eaa8890a993f4052ee35f4cdbe6fd46817ed73fb1b56",
+      "afterBytes": 8315,
+      "afterSha256": "0dfaf2b030f9f1a07eb83a326dca86878667919d20fadd40e7972ef00d23007b",
+      "identical": false
+    },
+    {
+      "path": "intake-live.py",
+      "beforeBytes": 9641,
+      "beforeSha256": "107db96f4d16a0bd543f8ddaa10e906e0618a73ff6811c0b4225a71284e206df",
+      "afterBytes": 9641,
+      "afterSha256": "107db96f4d16a0bd543f8ddaa10e906e0618a73ff6811c0b4225a71284e206df",
+      "identical": true
+    },
+    {
+      "path": "refresh-after-http.py",
+      "beforeBytes": 7514,
+      "beforeSha256": "21504be871c72e0a6e0c5cf7bf38dfcb69a72da761603f4dc79ddd1b8d3e0540",
+      "afterBytes": 7514,
+      "afterSha256": "21504be871c72e0a6e0c5cf7bf38dfcb69a72da761603f4dc79ddd1b8d3e0540",
+      "identical": true
+    },
+    {
+      "path": "review-public.py",
+      "beforeBytes": 4336,
+      "beforeSha256": "d0cd4fe568dc5b4295aafe8bae37f5b1a66e7609f5232d5d1236a85ce5391bdb",
+      "afterBytes": 4336,
+      "afterSha256": "d0cd4fe568dc5b4295aafe8bae37f5b1a66e7609f5232d5d1236a85ce5391bdb",
+      "identical": true
+    },
+    {
+      "path": "observe-hosted.failure-retention.py",
+      "beforeBytes": 4978,
+      "beforeSha256": "68e03a50898868735bc36bf59ced8be25aaa252e69f2cfa5ac0d6ffbd02f3cbe",
+      "afterBytes": 4978,
+      "afterSha256": "68e03a50898868735bc36bf59ced8be25aaa252e69f2cfa5ac0d6ffbd02f3cbe",
+      "identical": true
+    },
+    {
+      "path": "test_wrappers.py",
+      "beforeBytes": 14644,
+      "beforeSha256": "c4a2e12445340f9447faa14bafde091c791e00ce3dd9402e87d9f864dc470d34",
+      "afterBytes": 14644,
+      "afterSha256": "ea16b8ea7ea965e48dac73e825320a0c6c2f8ecc50091a03bf5421a9c3a01f21",
+      "identical": false
+    },
+    {
+      "path": "tools/audit-main.mjs",
+      "beforeBytes": 21944,
+      "beforeSha256": "7096b6a80881b64e7fe5acc0839b3541077483e0bbf26b2b9c3e3be1b5ec9ce9",
+      "afterBytes": 21944,
+      "afterSha256": "3e3a6974e0a410ae177654285d7a74f6b33e41aeea1157d5aecfb2ef8a9706f0",
+      "identical": false
+    },
+    {
+      "path": "tools/http-engine.mjs",
+      "beforeBytes": 3851,
+      "beforeSha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d",
+      "afterBytes": 3851,
+      "afterSha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d",
+      "identical": true
+    },
+    {
+      "path": "tools/self-check.mjs",
+      "beforeBytes": 3958,
+      "beforeSha256": "4474da80ab95971c885d2630e94f318bc37a8648a673bfeaf0092ab00af70358",
+      "afterBytes": 3958,
+      "afterSha256": "83d0c1cdd3b2c5ae0c9ee342e8406e0b686d16b2427a0e206bff5b6dcc605fa7",
+      "identical": false
+    }
+  ],
+  "originalInputPins": [
+    {
+      "path": "current-before/allocations.json",
+      "bytes": 3577,
+      "sha256": "26c1006fe8aa4a07259d38dd12ac67b546ae972b6ed9e78fbb0d83cdb2a89414"
+    },
+    {
+      "path": "current-before/catalog.json",
+      "bytes": 33029,
+      "sha256": "17dfb89beca61d09a882fa58cde50810a0617cb1cc59db7388be3254c516a7cc"
+    },
+    {
+      "path": "current-before/publication.json",
+      "bytes": 113145,
+      "sha256": "5925c6dbd669c81648bcd0a763875c52c09dbdbfdf1c2209e0b4880cf36b8812"
+    },
+    {
+      "path": "source-originals/game/build-config.json",
+      "bytes": 5252,
+      "sha256": "7b5c68cad453498d28556a68cb9fe58acf45227db1a6334cdb6cbfb36ba3c1c3"
+    },
+    {
+      "path": "source-originals/package.json",
+      "bytes": 1819,
+      "sha256": "fe519065b708984a5a1db4d305be022f334736c39c1f2dee9888b141b311d19f"
+    },
+    {
+      "path": "retention-expected/allocations.json",
+      "bytes": 3716,
+      "sha256": "c07962b9d5b12971026ae1961050a657cf16cc0b0c2aea077892064dd8eea5ff"
+    },
+    {
+      "path": "retention-expected/browser-admission.json",
+      "bytes": 2692,
+      "sha256": "a95305d5420ce628384bd48aa0ab9b028256bc8c95760ccafdfc0230c6cb5b94"
+    },
+    {
+      "path": "retention-expected/copy-verification.json",
+      "bytes": 535,
+      "sha256": "f7586a061cb4f0f7e8d66d3240dd7e60eec4b3fe864d83eeea962392df4a21af"
+    },
+    {
+      "path": "retention-expected/handoff-pins.json",
+      "bytes": 2512,
+      "sha256": "348db0ca5684f53f3eefec63e8f2d38394ce89135718f2ff0f371e41c29125d2"
+    },
+    {
+      "path": "retention-expected/proposal-manifest.json",
+      "bytes": 3728,
+      "sha256": "7cadb55444329018d7e85e43c32602285275a00b576a6d0f4e938d17332da605"
+    },
+    {
+      "path": "retention-expected/publication.json",
+      "bytes": 116113,
+      "sha256": "0bd063a5f7f5397fb137decb6cbe4959918143c6d4a822f0b20dea235b18db1d"
+    },
+    {
+      "path": "retention-expected/root-acceptance.original.json",
+      "bytes": 1228,
+      "sha256": "2bccd44e24b949b1f0f09eebe31d395f4169e6a8559edec05826be38c83ce013"
+    }
+  ],
+  "pythonASTIdenticalIgnoringLiterals": true,
+  "identicalHelpers": [
+    "intake-live.py",
+    "refresh-after-http.py",
+    "review-public.py",
+    "observe-hosted.failure-retention.py",
+    "tools/http-engine.mjs"
+  ],
+  "orchestrationTemplateIdentical": true,
+  "operationalRequests": 0,
+  "actualPublicBindingsCreated": false,
+  "transportChanges": false,
+  "unknown": [
+    "releaseId",
+    "tagObject",
+    "uploadRun",
+    "publisherCommit",
+    "publisherTree",
+    "publisherPR",
+    "pagesRun",
+    "deploymentId",
+    "statusId",
+    "receiptArtifact",
+    "artifactInventoryCount",
+    "artifactInventoryBytes",
+    "reviewedRequestHashes"
+  ],
+  "retentionExpected": "Root accepted Archive19 v0.60.3 retention; cache-only admission proposal retains all18 previous admissions/517pins. No publisher adoption or selector change is asserted."
+}

@@ -1,0 +1,40 @@
+{
+  "source": "d77ea4f5c2aeccf2ba3bdf483a3f25531f8095b6",
+  "sourceTree": "f3a02f9d9e38650f2f9f61ddacd358dfc1f64333",
+  "label": "final-node20",
+  "runtime": "v20.19.5",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-lobby-preview.test.mjs",
+    "game/test/coop-picture-host.test.mjs",
+    "game/test/coop-picture-bindings.test.mjs",
+    "game/test/coop-presentation.test.mjs",
+    "game/test/coop-view-presentation.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/coop-won-terminal-host.test.mjs",
+    "game/test/coop-display-reflow.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-preview-d77ea4f5/fixture",
+  "startedAt": "2026-09-17T15:20:34.028268+00:00",
+  "elapsedSeconds": 53.834,
+  "exitCode": 0,
+  "expectedExitCode": 0,
+  "timeoutSeconds": 180,
+  "timedOut": false,
+  "counts": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "inputCount": 168,
+  "inputBytes": 14708201,
+  "inputsUnchanged": true,
+  "stdoutSha256": "1524ca8531549af4d8a2fba82f0a494da873ff3dd6485958f6460d2891e63a60",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

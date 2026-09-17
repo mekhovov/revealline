@@ -1,0 +1,25 @@
+- main:
+  - button "Back to game"
+  - button "Reload recovery"
+  - heading "Earlier profiles" [level=1]
+  - paragraph: Review stored profiles from this site without changing them. Exact release channels stay separate.
+  - paragraph: Read stored values or verify one selected original image. Flight recovery and storage migration are unavailable.
+  - button "Find profiles" [disabled]
+  - generic: Stored profile
+  - combobox "Stored profile" [disabled]
+  - button "Review" [disabled]
+  - button "Prepare stored-data export" [disabled]
+  - paragraph:
+    - status: Loading trusted historical catalogs…
+  - paragraph
+  - heading "Selected original images" [level=2]
+  - paragraph
+  - paragraph: Original files are shared by profiles on this site. Listing or verifying an image does not prove that this profile earned it. These separate files are not a complete backup.
+  - button "Review originals" [disabled]
+  - generic: Shared original
+  - combobox "Shared original" [disabled]
+  - paragraph
+  - button "Verify image" [disabled]
+  - button "Prepare original file" [disabled]
+  - button "Prepare identity report" [disabled]
+  - paragraph: Stored-data exports exclude original files. Selected image downloads exclude other images, audio and saved flights. Identity reports are diagnostics, not import files. Keep existing complete backups.
