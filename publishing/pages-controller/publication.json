@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.60.2",
-  "catalogSha256": "410638862e82688c335b4c658d70eee1abf45f150ea2cb6832fe09d6f2f0594d",
-  "allocationSha256": "843d7cecb9f76cf28b9ae4e9cbe418fd62f236f6e558defe7b7eafaaf8cf2ee2",
+  "currentVersion": "v0.60.3",
+  "catalogSha256": "17dfb89beca61d09a882fa58cde50810a0617cb1cc59db7388be3254c516a7cc",
+  "allocationSha256": "26c1006fe8aa4a07259d38dd12ac67b546ae972b6ed9e78fbb0d83cdb2a89414",
   "admissions": [
     {
       "id": "archive-01",
@@ -70,18 +70,18 @@
     },
     {
       "id": "archive-03",
-      "infrastructureCommit": "1137dfc59cf2dc52bd93483cc4ebeb052824e403",
-      "deploymentId": 6428535084,
+      "infrastructureCommit": "1eff31098cc79cf923f4429fe6dd8d97f520972a",
+      "deploymentId": 6502924637,
       "evidence": [
         {
           "path": "evidence/archive-03/http-report.json",
           "sha256": "61999f832c5d31110097113cdaf3baba11d5cff67f7c2046102ced7dc698e444",
-          "kind": "http"
+          "kind": "reference"
         },
         {
           "path": "evidence/archive-03/expected-inventory.json",
           "sha256": "e68d07aa5a80d27385d481204a8762d9195d3f7c0d1f03aee17262507ee14fc0",
-          "kind": "inventory"
+          "kind": "reference"
         },
         {
           "path": "evidence/archive-03/native-source-1.md",
@@ -101,7 +101,57 @@
         {
           "path": "evidence/archive-03/browser-admission.json",
           "sha256": "56738402965e2fa4857adb9c55bc52eb5ebbe2ed3ffa4d87b0d73077c990a69c",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/README.md",
+          "sha256": "4e6a3521be57ef65f58921961986e9812dea4ee3a97900cc04b0d1325614d1de",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/browser-admission.json",
+          "sha256": "e76a8eed389125e7215166be3c5f33b191907a49d58bdbfe6a19015213d3105b",
           "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/expected-inventory.json",
+          "sha256": "627292662e8589d3c2efab7cb008ca26a22bf434f000472885208876fa8cad65",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/hosted-completion.json",
+          "sha256": "c61c446d72eb62e92fc4894647372f7a867bd9bcadef4aa0b8062d8ea7f13860",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/http-report.json",
+          "sha256": "cff5f518e7b6b701a49bfa893ed0ea9d3f0edddc6a10afc25bb052eb9093f93b",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/native/explorer-corrected.json",
+          "sha256": "2acbad271d06e589ec71a1e0af900f32439635dcc47743a2210c3ec449879408",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/originals-index.json",
+          "sha256": "76e6d97f8a0a084d27decdde2a927a82eb6b1d9038d91e71c0c131331d6d786d",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/originals.zip",
+          "sha256": "74ac309c7d7d6e123f91dd2a059432dcecf908ef12be3f28c756f1ff6e067528",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/row-review.json",
+          "sha256": "43194cc677c4698a16d8fd4b3817b2abb3a12cf51ee122a067add028cf30f713",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-03/append-v0602/source-lock.json",
+          "sha256": "014978f1f3b8117f1f4e5996a1d901b38b33f1cb2c0bb566afaf5f6a3cf0aea1",
+          "kind": "reference"
         }
       ]
     },
@@ -2668,8 +2718,8 @@
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v0602/source-qualification.json",
-    "sha256": "b56a5c5ee65e498671e1e296cddc816c6949488f476a5543cbac16e3d70de94f"
+    "path": "evidence/current-v0603/source-qualification.json",
+    "sha256": "fca84f8d1343fea105ed182a6a6f000df6a0a47181296424fd012447ae65a20d"
   },
   "retainedReleasesPerMajor": 100,
   "testingRoutes": {}
