@@ -696,6 +696,8 @@ kbd {
 }
 .coop-tools label,
 .coop-tools select,
+#coop-options label,
+#coop-options select,
 #coop-pads {
   display: block;
   margin-block: var(--fk-space-2);
@@ -728,6 +730,9 @@ kbd {
 .masthead a {
   display: flex;
   align-items: center;
+  min-height: var(--fk-target-size);
+}
+#coop-quick-sound {
   min-height: var(--fk-target-size);
 }
 

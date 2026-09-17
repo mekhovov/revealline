@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <link rel="stylesheet" href="../ui/mode-choice.css" />
     <link rel="stylesheet" href="../ui/menu-appearance.css" />
+    <link rel="stylesheet" href="../ui/settings.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
@@ -305,8 +306,103 @@
             </div>
           </div>
         </details>
-        <details id="coop-options">
-          <summary id="coop-options-toggle">Options</summary>
+        <button id="coop-settings-open" type="button">Settings</button>
+        <button id="coop-quick-sound" type="button" aria-pressed="false">Sound: off</button>
+      </aside>
+      <dialog id="coop-options" class="shared-settings" aria-labelledby="coop-settings-title">
+        <div class="shared-settings-heading">
+          <h2 id="coop-settings-title">Settings</h2>
+          <button id="coop-settings-close" type="button">Back</button>
+        </div>
+        <p class="setting-note">
+          Sound and appearance apply across game modes. Controls below are for this Team visit.
+        </p>
+        <div class="field-kit-settings-tabs" role="tablist" aria-label="Settings categories">
+          <button
+            id="coop-settings-tab-controls"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-controls"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Controls
+          </button>
+          <button
+            id="coop-settings-tab-audio"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-audio"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Audio
+          </button>
+          <button
+            id="coop-settings-tab-display"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-display"
+            aria-selected="true"
+            tabindex="0"
+          >
+            Appearance &amp; accessibility
+          </button>
+          <button
+            id="coop-settings-tab-data"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-data"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Game data
+          </button>
+        </div>
+        <section
+          id="coop-settings-panel-controls"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-controls"
+          hidden
+        >
+          <h3>Controls</h3>
+          <label for="coop-touch">Touch controls</label>
+          <select id="coop-touch">
+            <option value="auto" selected>Auto · touch players without a controller</option>
+            <option value="on">Show both players</option>
+            <option value="off">Hide touch controls</option>
+          </select>
+          <p class="setting-note">
+            Touch controls appear only while playing. Auto follows this screen's touch capability
+            and each player's actual controller assignment. Show and Hide override that choice for
+            this visit.
+          </p>
+          <span id="coop-pads" role="status"></span>
+        </section>
+        <section
+          id="coop-settings-panel-audio"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-audio"
+          hidden
+        >
+          <h3>Audio</h3>
+          <button id="coop-audio" type="button">Unmute sound</button>
+          <label for="coop-master-volume">Master sound volume</label>
+          <input id="coop-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
+          <p id="coop-audio-note" class="setting-note">
+            Shared with Solo, Versus and previews. This Team chapter currently uses visual feedback.
+          </p>
+          <p id="coop-audio-status" class="setting-note" role="status"></p>
+        </section>
+        <section
+          id="coop-settings-panel-display"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-display"
+        >
+          <h3>Appearance &amp; accessibility</h3>
           <label for="coop-text-face">Text style</label>
           <select id="coop-text-face">
             <option value="pixel">Theme font</option>
@@ -331,30 +427,27 @@
             </select></label
           >
           <p id="coop-menu-style-status" class="micro-note" role="status"></p>
-          <label for="coop-touch">Touch controls</label>
-          <select id="coop-touch">
-            <option value="auto" selected>Auto · touch players without a controller</option>
-            <option value="on">Show both players</option>
-            <option value="off">Hide touch controls</option>
-          </select>
-          <p class="setting-note">
-            Touch controls appear only while playing. Auto follows this screen's touch capability
-            and each player's actual controller assignment. Show and Hide override that choice for
-            this visit.
-          </p>
           <label><input id="coop-reduced" type="checkbox" /> Reduce effects</label>
           <p id="coop-system-reduction" class="setting-note"></p>
           <p id="coop-display-status" class="setting-note" role="status"></p>
-          <button id="coop-audio" type="button">Unmute sound</button>
-          <label for="coop-master-volume">Master sound volume</label>
-          <input id="coop-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
-          <p id="coop-audio-note" class="setting-note">
-            Shared with Solo, Versus and previews. This Team chapter currently uses visual feedback.
+        </section>
+        <section
+          id="coop-settings-panel-data"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-data"
+          hidden
+        >
+          <h3>Game data</h3>
+          <p>
+            Team attempts stay on this page. Closing or reloading it discards the current attempt.
           </p>
-          <p id="coop-audio-status" class="setting-note" role="status"></p>
-          <span id="coop-pads" role="status"></span>
-        </details>
-      </aside>
+          <p>
+            Team play does not write Solo saves, campaign progress, scores or earned pictures.
+            Shared sound and appearance preferences are saved separately on this device.
+          </p>
+        </section>
+      </dialog>
     </main>
     <script
       defer
