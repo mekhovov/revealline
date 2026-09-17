@@ -383,9 +383,12 @@ export function bootCoop() {
       if (settingsDialog.open || departure || run?.status === 'paused') back();
     },
     onHint: (message, context) => {
-      if (context?.kind === 'reading' && context.regionId === 'coop-help-reading') {
+      if (
+        context?.kind === 'reading' &&
+        ['coop-help-reading', 'coop-data-reading'].includes(context.regionId)
+      ) {
         menuHint = '';
-        const hint = $('coop-help-reading-hint');
+        const hint = $(`${context.regionId}-hint`);
         if (hint.textContent !== message) hint.textContent = message;
       } else menuHint = message;
     },
@@ -398,6 +401,7 @@ export function bootCoop() {
     revealOnResize: true,
     surfaceDefinitions: [
       ['coop-help-reading', 'coop-help-read', 'Relay Rescue controls', 'coop-help-unit'],
+      ['coop-data-reading', 'coop-data-read', 'Team game data', 'coop-data-unit'],
     ],
   });
   function clear() {

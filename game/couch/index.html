@@ -358,14 +358,33 @@
             inert
           >
             <h2>Game data</h2>
-            <p>
-              This Couch match stays in this page. It does not replace your Solo flight, pictures or
-              records.
-            </p>
-            <p>
-              Finish this match before leaving. Installed campaigns and Solo backups are managed
-              from Solo Settings → Game data.
-            </p>
+            <div id="race-data-unit" class="settings-reading-unit">
+              <div class="reading-toolbar">
+                <button id="race-data-read" type="button">Read game data</button>
+                <button id="race-data-reading-done" type="button" disabled>Done reading</button>
+              </div>
+              <p id="race-data-reading-hint" class="reading-hint" role="status">
+                Read without starting or resuming.
+              </p>
+              <div
+                id="race-data-reading"
+                class="settings-reading-region"
+                role="region"
+                aria-label="Versus game data"
+                aria-describedby="race-data-reading-hint"
+                tabindex="0"
+                data-game-reading
+              >
+                <p>
+                  This Couch match stays in this page. It does not replace your Solo flight,
+                  pictures or records.
+                </p>
+                <p>
+                  Finish this match before leaving. Installed campaigns and Solo backups are managed
+                  from Solo Settings → Game data.
+                </p>
+              </div>
+            </div>
           </section>
         </section>
         <section

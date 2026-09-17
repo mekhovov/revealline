@@ -115,6 +115,8 @@ async function journey(t, mode, version) {
   });
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  assert.equal(page.$('settings-panel-audio').hidden, false);
   page.$('soundtrack-open').click();
   await settle(
     () => /Saved library loaded|Music library ready/.test(page.$('soundtrack-status')?.textContent),
