@@ -1,0 +1,15 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PENDING",
+  "archiveId": "archive-18",
+  "infrastructureCommit": "eaaf9844f7294be17bd97672de3c5b483e7c1620",
+  "deploymentId": 6476315337,
+  "versions": [
+    "v0.58.0",
+    "v0.58.1"
+  ],
+  "evidence": [],
+  "scope": "Draft only. Historical online preservation scope requires actual successor public byte and canonical browser observations. No offline, physical-device, acoustic or game-phase acceptance.",
+  "observationScopes": [],
+  "phaseAccepted": false
+}
