@@ -56,3 +56,17 @@ A failed full source family cannot qualify a candidate even when preflight/build
 When a heavy-content wait times out, preserve its original state and actual elapsed timing before calling it a performance or logic defect. Scope any revised test allowance to the measured operation; never relax success predicates, omit failed tests or reuse an older successful shard for a new source. Browser tab selection alone does not prove a document visibility/focus transition. Retain unestablished native lifecycle checks separately from a reproduced callback race and its corrected regression.
 
 For a release touching More worlds, verify same-chapter preservation and different-chapter Stay/Replace through all three chapter adapters. Press Stay both after verification and while its checked-save lock is pending; require immediate exact-opener availability and prevent late settlement from disturbing newer work. Keep failed-save/readback and delayed/background callback evidence separate from actual browser input observations. A passing direct `selectEntry` or installation test does not establish safe player selection.
+
+
+For an ambiguous original upload, inspect the bounded `uploadDiagnostics` receipt
+and fresh draft assets before proposing recovery. The completed client-send count
+is not proof of server receipt; an absent HTTP status is not an HTTP failure code.
+Preserve the failed attempt and never log raw exceptions, credentials, headers or
+response bodies as diagnostics. Keep utility revision and frozen game identity
+separate. The reviewed shared API lifetime is 5,400 seconds (90 minutes), including
+inspection, both original uploads and final reconciliation, within the existing
+180-minute hosted upload-job timeout. Keep the per-socket timeout at 120 seconds.
+This finite allowance does not prove that an earlier failure was a timeout or
+authorize another POST. Preserve all pin/asset limits and require explicit review
+for any later budget change; never infer a server limit or retry from elapsed
+time alone.
