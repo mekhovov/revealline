@@ -1,0 +1,5 @@
+# Evidence selection
+
+Originals were copied byte-for-byte from the completed v0.60.6 public audit cache; `retained-files.json` records every original path, byte length and SHA-256. Root acceptance is copied as `acceptance.json`. Its six referenced pins were independently rehashed before copying. Requests, original API responses, the small receipt ZIP, complete HTTP attempt/result rows, before/after authorities, published descriptors, source qualification and the scoped browser transcription remain separate. Historical pending/unreviewed wording is intentionally retained.
+
+No public game-body payload, source/distribution archive, user profile/database, fabricated raw browser export or screenshot is included. The original ZIP here is only the bounded two-member Pages verification receipt. Source upload failures remain in their existing qualification/release records; this packet does not reconstruct or certify omitted transport history. Authored README/progress text and this curation note are successor explanations, not original observations.
