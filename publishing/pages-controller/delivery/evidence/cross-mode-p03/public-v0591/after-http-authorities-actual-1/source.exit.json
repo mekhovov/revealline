@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-17T05:17:05.555898+00:00",
+  "command": [
+    "gh",
+    "api",
+    "repos/mekhovov/revealline/git/commits/206c4b9bdd7bc53aecf818f85a1cbf680814a4e5"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "stdoutBytes": 1175,
+  "stderrBytes": 0,
+  "acceptedBytesLessThan": 2000000,
+  "timeoutSeconds": 35
+}
