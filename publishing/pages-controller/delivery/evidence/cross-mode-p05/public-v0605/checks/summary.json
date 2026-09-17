@@ -1,0 +1,32 @@
+{
+  "status": "PASS_FINITE_MOCKED_HELPER_CHECKS",
+  "wrapperTests": 9,
+  "wrapperFailures": 0,
+  "nodeVersion": "20.19.5",
+  "nodeHeapMiB": 1024,
+  "coreSelfCheck": "HELPER_SELF_CHECK_PASS",
+  "realNetworkRequests": 0,
+  "publicBindingsCreated": false,
+  "phaseAccepted": false,
+  "publicAuditRun": false,
+  "receiptPins": [
+    {
+      "path": "checks/wrappers.receipt.json",
+      "bytes": 640,
+      "sha256": "3969c44d6cb3c7f143cd5c9f7527c9b4664057331414e832e568369260a92e8a"
+    },
+    {
+      "path": "checks/core.receipt.json",
+      "bytes": 654,
+      "sha256": "2c5e2bf6fbb2e5c9ce06e8fb06db123c1f28e05642d827dcd4db1d7677ad5021"
+    }
+  ],
+  "sourceMergeOriginal": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/root-release/source-merge-commit.stdout",
+    "bytes": 2706,
+    "sha256": "3f357e9cffb638e803a2bb904afdcadf62bca5238efcf8704d0dafc249275141"
+  },
+  "mergeCommit": "3f94acc62cf6d85fd7c930616747e524e06f8d63",
+  "tree": "b80ee2c1ccf455609a6834af14c6760ecce868e3",
+  "note": "Existing root API original read only; merge Git object was not yet present in this local object database, so no fetch was performed."
+}
