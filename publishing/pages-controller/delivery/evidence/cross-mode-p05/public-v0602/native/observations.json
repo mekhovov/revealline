@@ -1,0 +1,68 @@
+{
+  "format": "revealline-public-browser-observations.v1",
+  "at": "2026-09-17T11:38:31.319576+00:00",
+  "version": "v0.60.2",
+  "publisher": "082ef33adbb97f3b508a6ec4359294e7ae5e2663",
+  "status": "PASS_SCOPED_PRACTICE_PLAYGROUND",
+  "browser": "Codex in-app Chromium browser; native UI actions, DOM reads; no injected game state",
+  "observations": [
+    {
+      "id": "ENTRY",
+      "result": "PASS",
+      "actions": "Canonical /game/ redirects to releases/v0.60.2/site/game/index.html; visible title Version v0.60.2. Keyboard Down/Return opens Settings; Tab/Right selects Display; keyboard Workshop and ten Tabs/Return reaches Controller Practice."
+    },
+    {
+      "id": "PREFS",
+      "result": "PASS",
+      "actions": "Practice loads Theme/Large from shared settings. Connect virtual pad, Hold button11; changing Text size to Standard preserves pressed=true and exact iframe session/revision. Explicit Release all then Disconnect. This virtual pad is not a physical controller."
+    },
+    {
+      "id": "HISTORY",
+      "result": "PASS",
+      "actions": "From Practice Large, Home\u2192Settings\u2192Display\u2192Plain/Standard/reduced\u2192Close\u2192actual browser Back. Practice body plain/standard/reduced AND selectorstandard agree. Child session changes after Back; no BFCache claim."
+    },
+    {
+      "id": "LAYOUT",
+      "result": "PASS_WITH_BOUNDARIES",
+      "actions": "Practice and Playground Theme/Large/full and Plain/Standard/reduced inspected at390x844 and844x390; document scrollWidth equals viewportwidth. Actual inline screenshots inspected for Practice and Playground portrait. No physical-device, complete style matrix or200%zoom claim."
+    },
+    {
+      "id": "UNDO",
+      "result": "PASS",
+      "actions": "Playground Scout\u2192Fiber draft\u2192last Undo restoresScout, disablesUndo, focusesWall, preserves preview../?practice=1&revision=1. No naturally occurring non-owner/background Undo tested."
+    },
+    {
+      "id": "ROUNDTRIP",
+      "result": "PASS",
+      "actions": "Real filechooser imports owned signal-01.xonix.json with background/fpv-body.png. Export produces actual signal-01.xonix (1).json:862703bytes, SHA9a436fa7b78fd28f16e2bb4ba21b048a5d48a1b61cc2a75e82dd753995228683, byte-identical entirepack. Malformed JSON rejected while priorbackground/Undo/previewrev1preserved. Reimport actual exportedfile decoded; explicit Playconfiguration incrementsrevision2."
+    },
+    {
+      "id": "PLAY",
+      "result": "PASS",
+      "actions": "Importedpractice Startmission\u2192oneDownkey\u2192actual win52.2%,8160points,0:04,3lives, threepractice stars; no campaign awards. Tryagain startsfresh0%/0points; keyboardEscape pauses0:17, ReturnexplicitResume advances0:18, Escape pausesagain. No simulatedcore substituted forbrowserplay."
+    },
+    {
+      "id": "DIAGNOSTICS",
+      "result": "PASS_SCOPED",
+      "actions": "Visible launch actions and whole arena reported; empty live-action sets explicitly labelled no measurable action boxes. Nonemptyoffscreen diagnosticset remainsunobserved."
+    },
+    {
+      "id": "RESTORE",
+      "result": "PASS",
+      "actions": "After real browserBack toPlayground Theme/Large/full, restored original Theme/Standard/full via HomeSettings; master mute and volumes unchanged. Viewportreset. Canonical Play reachesv0602title; newtab24kept asdeliverable. No campaign save modified."
+    }
+  ],
+  "retainedAttempts": [
+    "Pre-deployment404 retained separately; post-successreloadloadsactualv0602.",
+    "A getByLabel locator had no match; corrected to observed accessiblecombobox role. Later assumption that Settings reopened Display was false; actualAudio category inspected and Tab/Right selected Display before continuation. These are automation lookup misses, not diagnosedproductdefects."
+  ],
+  "limitations": [
+    "No physicaltouch/controller/Safari/device qualification",
+    "No200%browserzoom or completeEN/UA/stylematrix",
+    "No BFCache proof",
+    "No native non-ownerUndo or nonemptyoffscreenactionset",
+    "No fresh offline/media/save-migration or humanfun assessment",
+    "No wholeP03/P05/P18acceptance"
+  ],
+  "screenshots": "Visually inspected inline, not retained as image artifacts"
+}
