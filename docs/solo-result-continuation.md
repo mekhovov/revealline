@@ -1,0 +1,15 @@
+# Solo result continuation
+
+P07-A1 is a source candidate for ordinary Solo campaigns. It does not complete P07, qualify other modes or establish browser/controller acceptance.
+
+Next prepares the destination while the completed result and exact picture remain available. A ready destination starts directly after the explicit Next action. Cancel or failed preparation retains the result; Retry, View picture and story playback can supersede preparation. Preparation feedback stays beside the result actions. Status changes do not take focus; cancelling a focused preparation returns to its visible initiating action. Failed preparation gives concise recovery guidance; original errors remain in local developer diagnostics, without external telemetry or technical paths in player status. Diagnostic callbacks cannot interrupt recovery or take an older operation back from its successor.
+
+Retry starts a fresh attempt with the accepted complete picture/story pins, including an explicit absent story. A changed media assignment is available to a separately selected fresh mission, not silently substituted into Retry. A queued difficulty change remains supported only when the validated destination resolves every media choice to the identical authored map identity. New run IDs do not change picture or story ownership. Missing originals or incompatible identities leave the preceding result usable.
+
+The Solo host owns one cancellable result-preparation ticket. Capture the run, recorder, media owner, setup, content and persistence authority. Recheck after asynchronous work and callbacks, including after adoption before direct Resume; stale work cannot adopt, clear successor status or return focus. The media owner prepares independently and releases the preceding drawable only after adoption. Focus return never resumes a cancelled operation. Do not reacquire a released profile-writing lease or change history-return saving policy.
+
+Practice/demo, courses, campaign-end Collection, Workshop restart and saved Continue retain their existing entry contracts. Music keeps its session transport. Completion records are written by the existing once-per-run path, never by result preparation or story replay.
+
+Verification uses legal cuts and real host actions with owned test media. Delay the destination decoder after earned thumbnails have finished, then check successful Next, explicit cancellation, failure, focus loss and supersession. Check complete retry pins and optional story playback, queued difficulty identity validation, old replay behavior and unchanged records. Browser presentation, real touch/controller input, physical hardware and full release qualification remain separate gates.
+
+Current acceptance limit: the precursor ordinary browser run recorded one Retry image-decode timeout after story playback. Diagnostic runs later completed with variable native storage and event-delivery latency; the cause remains unresolved. Keep those failures and timings. This candidate does not change decoder deadlines, storage semantics or decoded-image reuse. Final ordinary-browser and exact-source qualification are required before publication.

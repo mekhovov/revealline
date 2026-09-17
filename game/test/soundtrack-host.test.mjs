@@ -248,6 +248,7 @@ test('actual MP3 keeps its stream and position through menus, a real victory, re
   assert.equal(media.plays, plays);
   assert.equal(media.currentTime, 0.01);
   page.$('next-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
   assert.equal(page.rendered.run.levelId, 'music-map-2');
   assert.equal(media.src, url);

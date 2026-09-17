@@ -246,6 +246,14 @@ test('real A flight freezes before edit B; win records A before optional play, b
   const better = loadLibrary(p.storage, key).library;
   assert(better.gallery[0].time < first.gallery[0].time);
   assert.equal(better.storyReceipts[0].storyPin.revision, 1);
+  p.$('view-victory-story').click();
+  await ready(p);
+  assert.equal(
+    p.videos.findLast((item) => item.isConnected).currentTime,
+    2,
+    'The retried attempt itself keeps the accepted A story segment',
+  );
+  p.$('victory-story-dialog').querySelector('button').click();
   p.$('shell-collection').click();
   await settle(() => p.$('gallery-grid').querySelector('button'));
   p.$('gallery-grid').querySelector('button').click();

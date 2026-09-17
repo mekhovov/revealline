@@ -80,6 +80,17 @@ export function validateFlightPresentationPinsForRun(source, context) {
   return pins;
 }
 
+/** A fresh retry may change difficulty, never its accepted authored media.
+ * Validate every destination identity before reusing the complete picture/story refs. */
+export function retryFlightPresentationPins(source, context) {
+  const pins = snapshotFlightPresentationPins(source);
+  required(pins.levelId === context.level?.id, 'Retry pictures belong to a different mission.');
+  return validateFlightPresentationPinsForRun(
+    { ...pins, executionKey: context.campaignKey, levelRevision: context.level.revision },
+    context,
+  );
+}
+
 /** Own and verify the complete selected metadata before freezing a fresh attempt.
  * Missing video bytes retain a story reference; no codec is allocated here. */
 export async function createFlightPresentationPins(
