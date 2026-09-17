@@ -1,0 +1,81 @@
+{
+  "status": "READY_FOR_ROOT_REVIEW_AND_LATER_PUBLISHER_INTEGRATION",
+  "source": "65a6efcb3bfabf8458702cca452c8120fa756471",
+  "candidateFiles": 15,
+  "configFiles": 2,
+  "evidenceFiles": 13,
+  "currentVersionUnchanged": "v0.60.3",
+  "oldAdmissionsPreserved": 18,
+  "oldEvidencePinsPreserved": 517,
+  "catalogRecordsUnchanged": 74,
+  "productionFocusedValidation": "PASS",
+  "originalCopyValidation": "PASS",
+  "newGamePhaseAcceptance": false,
+  "pins": [
+    {
+      "path": "README.md",
+      "bytes": 4015,
+      "sha256": "6cbc3011b6e9d87e14a34782396bd32def36043df891fdf5b3a7e0ae719bfac5"
+    },
+    {
+      "path": "base.json",
+      "bytes": 192,
+      "sha256": "72323d0188a2288a4a8cb3907c602a4d5927c52d131747550daecfc990d30436"
+    },
+    {
+      "path": "configuration.patch",
+      "bytes": 4147,
+      "sha256": "1c92971c56a475f45945f67237ad9627c20d5eeaba35ab8660a578cfd5747246"
+    },
+    {
+      "path": "archive19-admission.fragment.json",
+      "bytes": 2679,
+      "sha256": "0a91535bfbac8cddceccbceed8dd0477e0be40bb850dfb07ea5668d062679faa"
+    },
+    {
+      "path": "proposal-manifest.json",
+      "bytes": 3728,
+      "sha256": "7cadb55444329018d7e85e43c32602285275a00b576a6d0f4e938d17332da605"
+    },
+    {
+      "path": "validation-engine-pins.json",
+      "bytes": 927,
+      "sha256": "2bf34c3a613a10232228c68b90d99b71fde5d73e273da4e9e053316fceb74d1e"
+    },
+    {
+      "path": "validate-focused.mjs",
+      "bytes": 3858,
+      "sha256": "2eda830f80ce564c61913e51fde60adde5bfadd069131214c7ec5b1132fc9af5"
+    },
+    {
+      "path": "verify-copies.py",
+      "bytes": 4197,
+      "sha256": "6e8131d6662eab461ca79c75f5bc9f59cc87320f0dbb70238dc4eae623a1cdfb"
+    },
+    {
+      "path": "copy-verification.json",
+      "bytes": 535,
+      "sha256": "f7586a061cb4f0f7e8d66d3240dd7e60eec4b3fe864d83eeea962392df4a21af"
+    },
+    {
+      "path": "focused-validation-final/stdout",
+      "bytes": 979,
+      "sha256": "a30a68c6f9370e1f31603cdf5abf7230973874ee82bd003990172e9c2ad0a798"
+    },
+    {
+      "path": "focused-validation-final/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused-validation-final/exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "focused-validation-final/command.json",
+      "bytes": 619,
+      "sha256": "4d2fd6b8a1149aba42e57f84fa61edaa37f83f453c64283336912a86e32d57a9"
+    }
+  ]
+}

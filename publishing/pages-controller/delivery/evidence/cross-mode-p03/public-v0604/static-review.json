@@ -1,0 +1,27 @@
+{
+  "status": "PASS_STATIC_LITERAL_ADAPTATION_REVIEW",
+  "sourceRevision": "d77ea4f5c2aeccf2ba3bdf483a3f25531f8095b6",
+  "sourceTree": "f3a02f9d9e38650f2f9f61ddacd358dfc1f64333",
+  "version": "v0.60.4",
+  "helperFiles": 9,
+  "identicalHelpers": [
+    "intake-live.py",
+    "refresh-after-http.py",
+    "review-public.py",
+    "observe-hosted.failure-retention.py",
+    "tools/http-engine.mjs"
+  ],
+  "changedHelperFiles": 4,
+  "exactLiteralSubstitutionsOnly": true,
+  "orchestrationTemplateUnchangedAndUnbound": true,
+  "sourceIdentityExactGit": true,
+  "retainedCatalogRows": 74,
+  "expectedRowsAfterSingleNewRelease": 75,
+  "mockedWrapperTests": 9,
+  "coreSelfCheck": "PASS",
+  "realNetworkRequests": 0,
+  "publicBindingsCreated": false,
+  "sourceOrIndexChanges": false,
+  "publicAcceptance": false,
+  "phaseAccepted": false
+}

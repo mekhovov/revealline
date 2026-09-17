@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-17T15:28:34.365089+00:00",
+  "command": [
+    "gh",
+    "api",
+    "repos/mekhovov/revealline/actions/artifacts/10504568890/zip"
+  ],
+  "exitCode": 0,
+  "timedOut": false
+}

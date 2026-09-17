@@ -1,0 +1,25 @@
+Browser tab: 39, Title: "Reveal / Line", URL: "https://mekhovov.github.io/revealline/releases/v0.60.4/site/game/index.html".
+1 AXWebArea Reveal / Line, URL: mekhovov.github.io/revealline/releases/v0.60.4/site/game/index.html
+	2 container REVEAL / LINE, ID: shell-home
+		3 container
+			4 text FPV FIELD KIT / FLIGHT READY
+			5 heading REVEAL / LINE, Value: 1, ID: shell-title
+				6 text REVEAL / LINE
+			7 container Description: Game mode, ID: shell-title-modes
+				8 container
+					9 text Solo One player
+				10 link Description: Versus Two rival boards, Value: mekhovov.github.io/revealline/releases/v0.60.4/site/game/couch/?return=solo, ID: shell-title-versus
+				11 link Description: Team One shared arena, Value: mekhovov.github.io/revealline/releases/v0.60.4/site/game/couch/relay-rescue.html?return=solo, ID: shell-title-team
+			12 container Main menu
+				13 button Continue, ID: shell-continue
+				14 button Missions, ID: shell-play
+				15 button Collection, ID: shell-gallery
+				16 button Settings, ID: shell-options
+				17 button Workshop, ID: shell-workshop
+				18 link Description: Release explorer Play another edition, Value: mekhovov.github.io/revealline/releases/, ID: shell-release-explorer
+			19 text Continue · First Signal · First Signal
+			20 text Choose a flight. Trace a path. Close the line.
+			21 container Description: Game version, ID: landing-version
+				22 text VERSION V0.60.4
+
+The focused UI element is 13 button Continue, ID: shell-continue

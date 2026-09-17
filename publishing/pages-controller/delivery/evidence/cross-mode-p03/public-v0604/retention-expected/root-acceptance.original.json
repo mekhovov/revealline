@@ -1,0 +1,34 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE19_V0603_RETENTION_ONLY",
+  "archiveCommit": "397a6069022ce1333ca332b07df86e05b239a2fd",
+  "archiveTree": "3766ae0adcea272d904ef8e96fbad012b1e00b8f",
+  "runId": 35233941351,
+  "deploymentId": 6505031581,
+  "deploymentStatusId": 18479344405,
+  "receiptArtifactId": 10502295801,
+  "verifiedFiles": 690,
+  "verifiedBytes": 313096970,
+  "pins": [
+    {
+      "path": "http/http-20260917T143818Z-558f1993/http-report.json",
+      "bytes": 1343,
+      "sha256": "62ace1926a8bf23e6b10cd1db1a256f16caaddb2b654be8e45170c8122970ae3"
+    },
+    {
+      "path": "row-review.json",
+      "bytes": 12341,
+      "sha256": "268b6e15a1f630c6a3331073772e5385a317fa93ac3456042ad4b1d044610f48"
+    },
+    {
+      "path": "root-native-review.json",
+      "bytes": 1689,
+      "sha256": "91a797e4d609508eef21a1e3160d18bf23380f01161b4fb8fb4e3753b0a0f769"
+    },
+    {
+      "path": "execution-request.reviewed.json",
+      "bytes": 1707,
+      "sha256": "baf648e589b6b33da7c2f68c4b35421718f407b9df1eb192b5aa0971c325c4b5"
+    }
+  ],
+  "scope": "Original v603 retention and scoped online UI route. Not a new game version, complete P03/P05, physical device, offline or migration acceptance. Main selector unchanged."
+}
