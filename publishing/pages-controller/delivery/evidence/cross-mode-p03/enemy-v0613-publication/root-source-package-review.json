@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-18T03:49:38.731743+00:00",
+  "status": "ROOT_REVIEWED_LOCAL_PACKAGE",
+  "source": {
+    "commit": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+    "tree": "8fad1311f1403e9134a3b60af029e238bd7cc98e",
+    "version": "v0.61.3"
+  },
+  "attachments": 7,
+  "archiveMembers": 436,
+  "originalMemberPins": 435,
+  "qualificationPins": 233,
+  "qualificationSha256": "08b34f039cf051fb5568cf30c3f52836da91720fa44cde853100d2d5596d4a44",
+  "publicAcceptance": false,
+  "nativeAcceptance": false,
+  "phaseAccepted": false
+}

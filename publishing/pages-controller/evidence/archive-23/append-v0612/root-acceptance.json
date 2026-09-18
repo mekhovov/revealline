@@ -1,0 +1,42 @@
+{
+  "status": "ROOT_ACCEPTED_SCOPED_ARCHIVE23_V0612_APPEND",
+  "at": "2026-09-18T08:49:22.438680+00:00",
+  "archiveCommit": "e83b34eaa5a34eb9965530dcff386fa80f645a6a",
+  "archiveTree": "408f2baf1f673ae3f8a12399290740636ed0d363",
+  "runId": 35324915841,
+  "deploymentId": 6520618287,
+  "deploymentStatusId": 18515212953,
+  "files": 1393,
+  "verifiedBytes": 626679348,
+  "failedFiles": 0,
+  "failedAttempts": 0,
+  "retries": 0,
+  "priorRowsPreserved": 697,
+  "versions": [
+    "v0.61.1",
+    "v0.61.2"
+  ],
+  "rootReview": "Root reviewed source/identity/helper diffs, executed the original receipt intake and full streamed HTTP audit, reconciled every row and original before/after authority, then exercised both version entries with native keyboard.",
+  "pins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive23-v0612-public-audit/row-review.json",
+      "bytes": 12700,
+      "sha256": "9e28295ca0003eb0a31a381b5b0165478d13396a81e4a606ce7d7a8ab09b45ae"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive23-v0612-public-audit/root-native-retention.json",
+      "bytes": 1354,
+      "sha256": "5f83fc0aed08c3dc4aa9e896f8086369d806d66e1a9c26bb0287066113d36bef"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive23-v0612-public-audit/execution-request.reviewed.json",
+      "bytes": 1629,
+      "sha256": "35375b776252d738d2f94506aa7da05113c8a1413dccd1bb04f03851ca1f1c4e"
+    }
+  ],
+  "limits": [
+    "Scoped retention admission only",
+    "Physical inputs, offline/media, full browser and phase gates remain open"
+  ],
+  "phaseAccepted": false
+}
