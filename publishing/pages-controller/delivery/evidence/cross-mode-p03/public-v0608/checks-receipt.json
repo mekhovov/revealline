@@ -1,0 +1,51 @@
+{
+  "status": "PASS_LITERAL_ONLY_SUCCESSOR_MOCKS",
+  "at": "2026-09-18T01:45:02.883274+00:00",
+  "pythonWrapperTests": 9,
+  "pythonExit": 0,
+  "nodeExit": 0,
+  "node": "20.19.5",
+  "nodeHeapMiB": 1024,
+  "realNetworkRequestsInChecks": 0,
+  "helperInputsUnchanged": true,
+  "pythonASTStructureIdentical": [
+    "wrapper_contract.py",
+    "intake-live.py",
+    "refresh-after-http.py",
+    "observe-hosted.failure-retention.py",
+    "review-public.py",
+    "test_wrappers.py"
+  ],
+  "unchangedHelpers": [
+    "intake-live.py",
+    "refresh-after-http.py",
+    "observe-hosted.failure-retention.py",
+    "review-public.py",
+    "tools/http-engine.mjs"
+  ],
+  "logs": [
+    {
+      "path": "checks-python.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "checks-python.stderr",
+      "bytes": 1590,
+      "sha256": "8f84ef2e2bd5390aef9eea12a7a514f6446de13f36cb2fcaec4de8a671de73b3"
+    },
+    {
+      "path": "checks-node.stdout",
+      "bytes": 136,
+      "sha256": "6c4204382b11da86aab8668d7013b41d767b248ef74e0da8178da0096ad54ee5"
+    },
+    {
+      "path": "checks-node.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reserveBytes": 536870912,
+  "preparationCapBytes": 33554432,
+  "scope": "Mocked helper contract checks only; no hosted observation, artifact intake or real public audit has run."
+}

@@ -1,0 +1,29 @@
+{
+  "reportedBy": "root release coordinator",
+  "publisherPR": 109,
+  "previewRun": 35296364491,
+  "previewConclusion": "success",
+  "controllerCommit": "36d9e9fa14601ae1ae11a737dda0279e27f909da",
+  "controllerTree": "5af98e177d58b102d805041341901e682a55370b",
+  "pagesRunId": null,
+  "deploymentId": null,
+  "rootReportOnlyUntilIntake": true,
+  "localGitTreeVerified": true,
+  "localGitPublisherOriginalsMatch": [
+    {
+      "path": "catalog.json",
+      "bytes": 35254,
+      "sha256": "773f4c8f28622778b562dc86dc26b83c5f003e381cfeaa731259a036156fedf1"
+    },
+    {
+      "path": "publication.json",
+      "bytes": 128962,
+      "sha256": "1e3ba9f898069165d57320f046826bd53f6c153b5bcf3aa6d0ef4ed84eb32b9f"
+    },
+    {
+      "path": "allocations.json",
+      "bytes": 4032,
+      "sha256": "d1774ac5f2bef619ea0f11ea6a302b51531e4499d38541348d77a0350f5ef07d"
+    }
+  ]
+}
