@@ -1,0 +1,129 @@
+{
+  "scope": "Original generation1 proposal; passes do not cover later no-ResizeObserver correction. Preserve unchanged.",
+  "files": {
+    "source-manifest.json": {
+      "bytes": 1715,
+      "sha256": "b65371e30b81e46fd1077c58b9f3c551c3574c48507aad5d7ababe630a6162f5"
+    },
+    "cohort-node20.stdout": {
+      "bytes": 78552,
+      "sha256": "ac3621d3fc7230cf4f9dde0d6f009d589fadbeb7274ba16075cb6a2c264fb456"
+    },
+    "cohort-node22.json": {
+      "bytes": 58690,
+      "sha256": "32d8386cda265ff4624494900a80d48104dea8e39f5c45ba2651f36fc46b2f21"
+    },
+    "source.patch": {
+      "bytes": 36210,
+      "sha256": "6c30fbbe9693be8e53abb4179f80eab0ffacd6f7f9603f0c3122dd532f9178df"
+    },
+    "cohort-node22.stdout": {
+      "bytes": 84008,
+      "sha256": "ce36df4072153673c78e31ee85d1a45c11b574487e19a453d14e53b0577744c9"
+    },
+    "cohort-node22.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format-final.json": {
+      "bytes": 624,
+      "sha256": "d5071450098a7006bb52ebae46702e7a49fec47b65258084fee2faba65107681"
+    },
+    "preservation.json": {
+      "bytes": 2209,
+      "sha256": "592a75fd243e5962807b17b94418631700256e19d5d1688701039816dfffb2ac"
+    },
+    "cohort-node20.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source-whitespace.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source-whitespace.json": {
+      "bytes": 144,
+      "sha256": "4c87c3c063d82e390b50d5ff89fbb2d4d450c387a83b0ffbd81440fb27ef7a8f"
+    },
+    "lint.json": {
+      "bytes": 512,
+      "sha256": "c0d351f55b198b5d023fea13725fba28518e25e376d219d856c41d552b11817a"
+    },
+    "format-final.stdout": {
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "lint.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lint.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cohort-node20.json": {
+      "bytes": 58690,
+      "sha256": "66f034569166451683f96f79e55a71ac131d2d53e67ce9de1be108fb5b455149"
+    },
+    "format-final.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source-whitespace.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fit-review/integrated-source-review.json": {
+      "bytes": 6665,
+      "sha256": "10d45391692c184ec132f6442f784a61c52bef131b44cb9b890bd65be414fe59"
+    },
+    "fit-review/design-note.md": {
+      "bytes": 7786,
+      "sha256": "d9add37643f0d9e19d603b37543975ea0202ceea23fcd821aeefdfe10ceea726"
+    },
+    "fit-review/helper-interim-review.json": {
+      "bytes": 3004,
+      "sha256": "490e440d50ac287afccf82c84e80ae07b0a362d45f1041c79c741e6380cad3b8"
+    },
+    "fit-review/host-test-skill-review.json": {
+      "bytes": 4412,
+      "sha256": "bae3e12478dd8ac8ed0dee56817d89dafbd6aea69842c5d78e7f07f618b9a23f"
+    },
+    "fit-review/design-pins.json": {
+      "bytes": 1362,
+      "sha256": "6e18cd8283adfc0f28e7e0b17ab3abfce4866030b088e6657c175bb684e654f4"
+    },
+    "source/docs/field-kit-surfaces.md": {
+      "bytes": 11291,
+      "sha256": "2bf15923ba4651ab893f0ebb1941c318e9b8a4554b2281ebc9e652b243f5c31b"
+    },
+    "source/authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "bytes": 216058,
+      "sha256": "0670cf9fd85b403c3239060e3cdafa51ab5f5287db3db5a575ae08fb0741b4f6"
+    },
+    "source/game/test/couch-board-footprint-host.test.mjs": {
+      "bytes": 13074,
+      "sha256": "450eab2d124b5bbb2eb210467ef1754f9a9fdb3459cb8ffa734656d4cc94528d"
+    },
+    "source/game/test/board-footprint.test.mjs": {
+      "bytes": 5438,
+      "sha256": "916c117b69c5f65136665210018474b38080d77147befe3224eb75a8b1b920bc"
+    },
+    "source/game/couch/couch.css": {
+      "bytes": 9496,
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af"
+    },
+    "source/game/couch/board-footprint.mjs": {
+      "bytes": 3478,
+      "sha256": "bca571a94cf2e734aadce518a72635376f7291374ea9f02b585489cb52cd1653"
+    },
+    "source/game/couch/couch.mjs": {
+      "bytes": 56730,
+      "sha256": "e7aaff69b39e35eff6a81d64d836c6700d1462b0a12602db42ab23e6ca09148a"
+    },
+    "source/game/test/helpers/couch-host.mjs": {
+      "bytes": 9329,
+      "sha256": "ba541219e1034b28976c98567f7cfe1b5ba863772e096d1e7ee86bde6d5f1bab"
+    }
+  }
+}

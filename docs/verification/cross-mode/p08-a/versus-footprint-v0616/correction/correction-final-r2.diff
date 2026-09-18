@@ -1,0 +1,165 @@
+--- revision1/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ revision2/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -293,7 +293,7 @@
+ 
+ For the bounded [P08-A static Versus parity candidate](../../../docs/shared-static-pictures.md), reuse exact fresh Solo assignment/baseline/release resolution through a read-only picture lease; never call the durable default-materialization path from Versus. Keep one accepted decoded original and fit for both boards. Retry retains the attempt and captured choice; setup changes alone establish a new choice. Confirm current metadata before Start, fence stale/cancelled completion, and release only owned resources. During a focused Retry or asynchronous Start confirmation, transfer only that action’s owned focus to visible Cancel; later navigation, foreground loss and stale completion must prevent focus restoration. Expire Start/Next intent on suspend or controller loss even if the page returns before preparation resolves; keep completed picture readiness and require a fresh Start gesture. Keep the [scoped evidence](../../../docs/verification/cross-mode/p08-a/README.md) distinct from full phase or release acceptance. A failed selected image must refuse Start visibly. Preserve the separate optional whole-release snapshot fallback and historical procedural/training behavior, with an explicit notice; do not infer a stricter global release policy. The shared store may perform its established schema initialization, but this lease must not commit media, assignments or Solo progress. Check user-original priority, saved/earned pin preservation, both aspect ratios and actual native fit independently of modeled source tests. Team adoption and new asset production remain separate.
+ 
+-For [Versus board fitting](../../../docs/field-kit-surfaces.md), measure each arena's content box and pass its fitted bitmap width to the shared painter; `object-fit: contain` alone does not make element width authoritative. Keep the canvas out of intrinsic grid sizing, suppress duplicate resize writes, fence stale observer callbacks and refresh cached-page restoration without resuming or replacing the match. Without ResizeObserver, refresh only on meaningful layout-state changes, including encounter visibility/copy, after both cues update and before either painter draws. Use the guide's two-seat touch/text/rotation prompt and retain the explicit narrow-board 64-logical-pixel cap limitation; modeled geometry is not native readability qualification.
++For [Versus board fitting](../../../docs/field-kit-surfaces.md), measure each arena's content box and pass its fitted bitmap width to the shared painter; `object-fit: contain` alone does not make element width authoritative. Keep the canvas out of intrinsic grid sizing, suppress duplicate resize writes, fence stale observer callbacks and refresh cached-page restoration without resuming or replacing the match. Without ResizeObserver, key meaningful wrapping content: both seats' statistics, state and input labels, encounter visibility/copy, and visible equipment labels. Settle both HUDs and the shell-owned labels before one signature-gated refresh and either painter draws. Keep the existing menu update once per frame; do not add focus, Resume or simulation work. Unchanged frames must not read geometry. Use the guide's two-seat touch/text/rotation prompt and retain the explicit narrow-board 64-logical-pixel cap limitation; modeled geometry is not native readability qualification.
+ 
+ When composing that adapter onto current P03/P05 hosts, preserve their fixed routes, display lifetime and ready-focus ownership; finish lobby boot cleanup before awaiting a required picture so Back and Cancel remain reachable. The [P05-A composition evidence](../../../docs/verification/cross-mode/p08-p05-integration/README.md) separates 210-case runtime coverage from the normal and exact-response-delay native journeys. It does not cover Team pictures, all assignments/devices or P05-B. The existing finished-to-Next path can replace prior results before picture readiness; P07 owns that remaining preservation requirement.
+ 
+--- revision1/docs/field-kit-surfaces.md
++++ revision2/docs/field-kit-surfaces.md
+@@ -8,9 +8,9 @@
+ 
+ Couch setup/results, Replay Theater, controller practice and About opt into the same supporting-page styles and independent Standard/Large controls. The replay/couch hosts and authoring tools already receive the shared compiled presentation through the phase-5 page host. Generated privacy/credits pages include the surface stylesheet. Workshop remains a single navigation destination for the existing editors and local Asset Studio.
+ 
+-Versus fits each complete 4:3 or 2:1 board inside its own arena and passes that visible CSS width to the shared painter. The canvas contributes no intrinsic size to the layout; arena observation handles touch-pad, typography and viewport reflow. Hosts without ResizeObserver also reconcile encounter visibility and copy before painting, so wrapped instructions cannot leave a stale footprint. Cached-page restoration refreshes the footprint without resuming play or changing the accepted picture. Maintenance prompt: “Test both seats at different width/height constraints, then change touch controls, Large text and orientation. Confirm unchanged checkpoints, picture identity and results while actor/cut sizing follows the visible board. Exercise hidden boards and late resize callbacks after restoration/disposal. Qualify actual native readability separately: the existing 64-logical-pixel enemy cap still limits a 240-pixel-wide 72-column board to 13.33 CSS pixels.”
++Versus fits each complete 4:3 or 2:1 board inside its own arena and passes that visible CSS width to the shared painter. The canvas contributes no intrinsic size to the layout; arena observation handles touch-pad, typography and viewport reflow. Hosts without ResizeObserver also reconcile wrapping statistics, state/input labels, encounter visibility/copy and visible equipment labels after both HUDs and the shell settle, before either board paints. This includes ordinary capture, score and life transitions. The existing menu update retains its single frame invocation and guarded focus ownership; unchanged layout signatures do not read geometry. Cached-page restoration refreshes the footprint without resuming play or changing the accepted picture. Maintenance prompt: “Test both seats at different width/height constraints, then change touch controls, Large text and orientation. Confirm unchanged checkpoints, picture identity and results while actor/cut sizing follows the visible board. Exercise hidden boards and late resize callbacks after restoration/disposal. Qualify actual native readability separately: the existing 64-logical-pixel enemy cap still limits a 240-pixel-wide 72-column board to 13.33 CSS pixels.”
+ 
+-Keep authored image fitting separate: [`object-fit: contain`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit) can leave a smaller bitmap inside a larger element box. That element width is not the board's displayed width.
++Keep authored image fitting separate: [`object-fit: contain`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit) can leave a smaller bitmap inside a larger element box. That element width is not the board's displayed width. The [Resize Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Resize_Observer_API) reports element-size changes independently of the viewport; the fallback tracks relevant content changes and avoids repeated geometry reads on unchanged frames.
+ 
+ Pages release and archive catalogs use the same fonts, tokens, compiled components and Standard/Large selector. Each version has a Play action, source identity, ZIP and manifest links. The controller copies a bounded presentation dependency graph, font notices and hash-verified compiled assets into `catalog-ui/`, outside every frozen edition. The current/archived play URLs and all original game files remain intact. Historical controllers without compiled presentation retain a readable fallback. Catalog bytes count toward the existing main/archive budgets.
+ 
+--- revision1/game/couch/couch.mjs
++++ revision2/game/couch/couch.mjs
+@@ -334,6 +334,9 @@
+   let selectedMapKey = null;
+   const contexts = [0, 1].map((i) => $(`race-canvas-${i}`).getContext('2d'));
+   const touchPads = [...document.querySelectorAll('.race-pad')];
++  const touchActions = touchPads.map((pad) =>
++    [...pad.querySelectorAll('button')].filter((button) => button.dataset.action),
++  );
+   boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
+   let boardLayoutKey = null;
+   let match,
+@@ -1100,7 +1103,7 @@
+   }
+   function refreshBoardLayout() {
+     // Observer-capable hosts receive the actual arena content box. The fallback
+-    // must also notice cue visibility/copy changes that can wrap above a board.
++    // must notice every changing HUD label that can consume the arena's space.
+     const layoutKey = JSON.stringify([
+       $('race-boards').hidden,
+       ...touchPads.map((pad) => pad.hidden),
+@@ -1109,9 +1112,18 @@
+       ...(boardFootprints.observesResize
+         ? []
+         : [0, 1].flatMap((i) => [
++            $(`racer-stats-${i}`).textContent,
++            $(`racer-state-${i}`).textContent,
++            $(`racer-input-${i}`).textContent,
+             $(`racer-encounter-${i}`).hidden,
+             $(`racer-encounter-title-${i}`).textContent,
+             $(`racer-encounter-instruction-${i}`).textContent,
++            ...(touchPads[i].hidden
++              ? []
++              : touchActions[i].flatMap((button) => [
++                  button.hidden,
++                  button.hidden ? '' : button.textContent,
++                ])),
+           ])),
+     ]);
+     if (layoutKey !== boardLayoutKey) {
+@@ -1461,8 +1473,9 @@
+         delete group.dataset.phase;
+       }
+     }
+-    // Both cues must settle before fallback measurement and either board draw.
+-    refreshBoardLayout();
++    // Both HUDs, including shell-owned input/equipment labels, settle before
++    // one signature-gated fallback measurement and either board draw.
++    updateMenu();
+     for (let i = 0; i < 2; i++) {
+       const run = match.runs[i];
+       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
+@@ -1480,7 +1493,6 @@
+       theme,
+       match.runs.find((r) => !['won', 'lost'].includes(r.status)) || match.runs[0],
+     );
+-    updateMenu();
+     frameId = requestAnimationFrame(frame);
+   }
+   const initialPreparation = prepare(),
+--- revision1/game/test/couch-board-footprint-host.test.mjs
++++ revision2/game/test/couch-board-footprint-host.test.mjs
+@@ -444,3 +444,77 @@
+   );
+   assert.deepEqual(page.checkpoint(), checkpoint);
+ });
++
++test('actual Versus fallback refits wrapping statistics after a normal capture before either seat paints', async (t) => {
++  let geometryReads = 0;
++  const { page, rendering } = await fixture(t, {
++    resizeObserver: false,
++    onMount({ document }) {
++      for (const seat of [0, 1]) {
++        const arena = document.getElementById(`race-canvas-${seat}`).parentElement;
++        arena.clientWidth = 600;
++        Object.defineProperty(arena, 'clientHeight', {
++          configurable: true,
++          get() {
++            geometryReads++;
++            const text = document.getElementById(`racer-stats-${seat}`).textContent;
++            // Finite layout boundary: earned points make the real HUD wrap.
++            // Neither the fixture nor this getter edits a run or a HUD label.
++            const points = Number(/(\d+) points/.exec(text)?.[1] || 0);
++            return points > 0 ? [225, 234][seat] : 300;
++          },
++        });
++      }
++    },
++  });
++  assert.equal(rendering.observers.length, 0);
++  assert.deepEqual(
++    page.drawOptions.map((options) => options.displayCSSWidth),
++    [400, 400],
++  );
++  const runs = [...page.renders],
++    pictures = page.drawOptions.map((options) => options.backdrop),
++    before = runs.map((run) => ({ score: run.score, coverage: run.coverage })),
++    capturePaints = [],
++    onDraw = rendering.onDraw;
++  rendering.onDraw = (frame) => {
++    onDraw(frame);
++    if (frame.run.score > before[frame.seat].score && capturePaints.length < 2)
++      capturePaints.push({
++        seat: frame.seat,
++        width: frame.options.displayCSSWidth,
++        points: [0, 1].map((seat) => page.$(`racer-stats-${seat}`).textContent),
++      });
++  };
++  function steer(keys, reached) {
++    for (const key of keys) page.key(key);
++    let frames = 0;
++    while (!reached() && frames++ < 120) page.frame(1000 / 120);
++    for (const key of keys) page.key(key, false);
++    assert.ok(reached(), 'The authored opening must be reachable through ordinary input.');
++  }
++  steer(['KeyS', 'ArrowDown'], () => runs.every((run) => run.player.y >= 5.5));
++  steer(['KeyD', 'ArrowRight'], () => runs.every((run) => run.player.x >= 30.5));
++  steer(['KeyW', 'ArrowUp'], () => runs.every((run) => run.score > 0));
++  for (const seat of [0, 1]) {
++    assert.equal(page.renders[seat], runs[seat]);
++    assert.equal(page.drawOptions[seat].backdrop, pictures[seat]);
++    assert.ok(runs[seat].score > before[seat].score);
++    assert.ok(runs[seat].coverage > before[seat].coverage);
++    assert.equal(runs[seat].lives, 3);
++  }
++  assert.deepEqual(
++    capturePaints.map(({ seat, width }) => ({ seat, width })),
++    [
++      { seat: 0, width: 300 },
++      { seat: 1, width: 312 },
++    ],
++  );
++  for (const paint of capturePaints)
++    assert.ok(paint.points.every((text) => Number(/(\d+) points/.exec(text)?.[1]) > 0));
++  const checkpoint = page.checkpoint(),
++    reads = geometryReads;
++  page.frames(3, 0);
++  assert.equal(geometryReads, reads, 'Unchanged HUD text must not measure on ordinary frames.');
++  assert.deepEqual(page.checkpoint(), checkpoint);
++});

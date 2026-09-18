@@ -1,0 +1,79 @@
+TAP version 13
+# Subtest: actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+ok 1 - actual Versus 4:3 boards fit each seat and render at the visible bitmap scale # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.468125
+  ...
+# Subtest: actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+ok 2 - actual Versus 2:1 boards fit each seat and render at the visible bitmap scale # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040917
+  ...
+# Subtest: actual Versus resize follows independent touch pads and Large text without replacing either run
+ok 3 - actual Versus resize follows independent touch pads and Large text without replacing either run # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039916
+  ...
+# Subtest: actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+ok 4 - actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032792
+  ...
+# Subtest: actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver
+ok 5 - actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.079375
+  ...
+# Subtest: actual Versus fallback refits wrapping statistics after a normal capture before either seat paints
+not ok 6 - actual Versus fallback refits wrapping statistics after a normal capture before either seat paints
+  ---
+  duration_ms: 895.359667
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/game/test/couch-board-footprint-host.test.mjs:448:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+          seat: 0,
+    +     width: 400
+    -     width: 300
+        },
+        {
+          seat: 1,
+    +     width: 400
+    -     width: 312
+        }
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      seat: 0
+      width: 300
+    1:
+      seat: 1
+      width: 312
+  actual:
+    0:
+      seat: 0
+      width: 400
+    1:
+      seat: 1
+      width: 400
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/game/test/couch-board-footprint-host.test.mjs:503:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 1227.603959

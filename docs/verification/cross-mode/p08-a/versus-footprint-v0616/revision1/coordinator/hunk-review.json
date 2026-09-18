@@ -1,0 +1,142 @@
+{
+  "status": "LOCAL_PATH_AND_HUNK_REVIEW_PASSED",
+  "reviewedAt": "2026-09-18T04:18:41.864630+00:00",
+  "scope": "11 feature/version paths plus 154 exact evidence/guide paths. No index staging or source commit.",
+  "hunks": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "hunks": [
+        "@@ -293,6 +293,8 @@"
+      ]
+    },
+    {
+      "path": "docs/field-kit-surfaces.md",
+      "hunks": [
+        "@@ -7,6 +7,10 @@"
+      ]
+    },
+    {
+      "path": "game/build-config.json",
+      "hunks": [
+        "@@ -1,5 +1,5 @@"
+      ]
+    },
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "hunks": [
+        "@@ -0,0 +1,106 @@"
+      ]
+    },
+    {
+      "path": "game/couch/couch.css",
+      "hunks": [
+        "@@ -257,7 +257,9 @@",
+        "@@ -266,9 +268,13 @@"
+      ]
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "hunks": [
+        "@@ -1,5 +1,6 @@",
+        "@@ -147,7 +148,7 @@",
+        "@@ -166,6 +167,7 @@",
+        "@@ -331,6 +333,9 @@",
+        "@@ -555,8 +560,8 @@",
+        "@@ -1093,6 +1098,27 @@",
+        "@@ -1121,6 +1147,9 @@",
+        "@@ -1431,7 +1460,13 @@"
+      ]
+    },
+    {
+      "path": "game/test/board-footprint.test.mjs",
+      "hunks": [
+        "@@ -0,0 +1,163 @@"
+      ]
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "hunks": [
+        "@@ -0,0 +1,446 @@"
+      ]
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "hunks": [
+        "@@ -70,11 +70,20 @@",
+        "@@ -110,6 +119,7 @@",
+        "@@ -155,6 +165,7 @@",
+        "@@ -169,15 +180,22 @@",
+        "@@ -252,6 +270,7 @@"
+      ]
+    },
+    {
+      "path": "package-lock.json",
+      "hunks": [
+        "@@ -1,12 +1,12 @@"
+      ]
+    },
+    {
+      "path": "package.json",
+      "hunks": [
+        "@@ -1,6 +1,6 @@"
+      ]
+    }
+  ],
+  "decisions": [
+    "All eight feature paths equal the independently reviewed generation-2 proposal, including complete new helper and two test files.",
+    "Three version files differ only in four 0.61.5 to 0.61.6 literals; no dependency, build list or gameplay identity change.",
+    "CSS and host own fitted presentation only; fixed-tick simulation, scoring, collision, input policy and accepted-picture owners are unchanged.",
+    "Both cue DOM updates precede shared fallback refresh and both painter calls; unchanged layout signatures do not measure.",
+    "139 originals and original manifest copied byte-exact. Historical source versions, failures and paths are preserved. No 73,757,243-byte fixture-cache duplication.",
+    "Guide/adoption/new check receipts explicitly identify local scope and remaining full/native/public gates.",
+    "The original proposal worktree eight feature hashes remain unchanged; its packet originals remain unchanged."
+  ],
+  "checks": [
+    {
+      "label": "focused-node20-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/focused-node20-r1/receipt.json",
+      "sha256": "85c0bdf30b27b46e389410152510eb7b3a8f2f6b91b8d4e112ceb21b66387ac1",
+      "totals": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "label": "focused-node22-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/focused-node22-r1/receipt.json",
+      "sha256": "057e519d74fd4b96aaf7584b36e5bb5d41d669c9b206cbad97a99c3d74dc47b9",
+      "totals": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "label": "lint-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/lint-r1/receipt.json",
+      "sha256": "c17d54e2833f9fd648eeed6729bca997864b5e9bd7b557d8a5ebed3ab4b43906"
+    },
+    {
+      "label": "format-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/format-r1/receipt.json",
+      "sha256": "e0151e39eb670da1b3e53dcbb2f108459c78b965e777de3489f33ca3118a1d94"
+    }
+  ],
+  "cachedDiffEmpty": true,
+  "allRelatedPathsExplicit": true
+}

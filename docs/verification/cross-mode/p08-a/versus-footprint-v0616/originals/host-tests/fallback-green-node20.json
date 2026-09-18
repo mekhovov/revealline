@@ -1,0 +1,51 @@
+{
+  "source_base": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "game/test/couch-board-footprint-host.test.mjs"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 5.302,
+  "source_unchanged": true,
+  "pins": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 57410,
+      "sha256": "54004fde57c8ca5f0d68af25ebefcb5f2c763524ffab1409f067335d246ede2c"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "bytes": 9496,
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af"
+    },
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "bytes": 3544,
+      "sha256": "33b1f325d7bbe97c59704dc525c6a0391bc330d83946b60fb765ccb0a1cb8a0f"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 34321,
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132"
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "bytes": 16423,
+      "sha256": "5899de39ae57849b006c677271a2447db9cde0809c294bbf19b7007ae72b6546"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "bytes": 9329,
+      "sha256": "ba541219e1034b28976c98567f7cfe1b5ba863772e096d1e7ee86bde6d5f1bab"
+    },
+    {
+      "path": "game/content/packs/sentinel-relay.json",
+      "bytes": 11416,
+      "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+    }
+  ],
+  "evidence": "Actual host, encounter view, simulation, and BoardPainter. Finite DOM/RO/Image/Canvas2D. Five full cases or one focused fallback; not native/device qualification.",
+  "remaining_limitation": "240px 2:1 body remains~13.33px due historical logical cap; not solved by board footprint."
+}

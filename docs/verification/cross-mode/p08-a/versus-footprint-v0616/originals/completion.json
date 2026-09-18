@@ -1,0 +1,41 @@
+{
+  "base": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "generation": 2,
+  "localVerification": "complete",
+  "independentReview": "PASS",
+  "sourcePatch": {
+    "bytes": 41240,
+    "sha256": "7717a9abf68cf18bd1f80c0dacd0e82d196ecd7c345a4beb5db73e8ea96113d1"
+  },
+  "cohorts": [
+    {
+      "family": 20,
+      "node": "v20.19.5",
+      "tests": 353,
+      "pass": 353,
+      "seconds": 310.68902004200027,
+      "sourceInputCount": 344,
+      "sourceInputBytes": 73757243,
+      "receipt": "cohort-node20.json",
+      "sha256": "f885f123a2c4a1b263fa362e4222c6c3d73a6d7eead0583cc739b9c6b1e86cfc"
+    },
+    {
+      "family": 22,
+      "node": "v22.22.2",
+      "tests": 353,
+      "pass": 353,
+      "seconds": 287.7772975839998,
+      "sourceInputCount": 344,
+      "sourceInputBytes": 73757243,
+      "receipt": "cohort-node22.json",
+      "sha256": "a804d475604db8490d54dee4a7efc2a67fe00e0988e12e144c58b22735c2965f"
+    }
+  ],
+  "version": "0.61.5 unchanged",
+  "staged": false,
+  "committed": false,
+  "nativeQualified": false,
+  "publicQualified": false,
+  "releaseOwner": "01a09328-21d8-7e93-9403-7e6793a4fac2",
+  "scope": "Bounded Versus footprint correction; not whole P08-A acceptance."
+}

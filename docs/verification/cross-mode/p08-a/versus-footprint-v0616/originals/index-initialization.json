@@ -1,0 +1,7 @@
+{
+  "scope": "New owned worktree index initialization only; no working files written, source staged, or other worktree touched",
+  "trackedEntries": 11555,
+  "presentTracked": 176,
+  "cachedDiffEmpty": true,
+  "status": " M game/test/helpers/couch-host.mjs\n?? game/couch/board-footprint.mjs\n?? game/test/board-footprint.test.mjs\n?? game/test/couch-board-footprint-host.test.mjs\n"
+}
