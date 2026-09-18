@@ -1,0 +1,37 @@
+[
+  {
+    "action": "Home",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+    "version": "v0.61.7",
+    "savedFlight": "Start First Signal; no main attempt started"
+  },
+  {
+    "action": "Practice capture and pause",
+    "coverage": "8.1%",
+    "score": 1920,
+    "lives": 3,
+    "time": "0:34",
+    "input": "ordinary S then A then P"
+  },
+  {
+    "action": "Return from practice",
+    "focus": "enemy-guide-play",
+    "campaign": "no rewards; existing main attempt not started"
+  },
+  {
+    "action": "Guide Close",
+    "focus": "shell-guide"
+  },
+  {
+    "action": "Motion Lab return",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+    "version": "v0.61.7",
+    "primary": "Start First Signal",
+    "settings": "Standard restored",
+    "mainAttempt": "never started"
+  },
+  {
+    "action": "Corrected Standard landscape screenshot",
+    "note": "Original07JPEG was180x390 while DOM844x390; retained as capture mismatch, excluded from visual proof.13 is a fresh settled capture. BrowserBack reinitializes preview; paused again before repeat; no cross-navigation pause retention claim."
+  }
+]

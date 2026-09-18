@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "01-archive-index.jpg",
+      "bytes": 20524,
+      "sha256": "5fa053abab94968ff87529546cf9ed70156583a439d7c80e9866d51b3f051b3e"
+    },
+    {
+      "path": "02-current-release-explorer.jpg",
+      "bytes": 44937,
+      "sha256": "dfd854c494c5d5eed28d37005bfaf81b5d119b4305c4a38bd04706054896dde6"
+    },
+    {
+      "path": "03-current-v617-home.jpg",
+      "bytes": 117189,
+      "sha256": "910694dd59eb465ee17c723bea628838405b99103ceae441e5c8106cd6e054fa"
+    },
+    {
+      "path": "observations.json",
+      "bytes": 397,
+      "sha256": "30735475e5ff66b3d781fe073a58fd778934dec7fa50f12ce62cfe89c1de8e01"
+    }
+  ]
+}
