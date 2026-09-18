@@ -53,6 +53,15 @@
       ],
       "scope": "Safe bounded Ambiguous phase/client-completed-send-count/observed-status diagnostics and receipt retention. Separately reviewed shared API lifetime changes from 1800 to 5400 seconds (90 minutes) within the unchanged 180-minute hosted upload-job timeout. Original provenance rows remain historical. Socket timeout stays 120 seconds; upload policy, member limits, preflight and final reconciliation remain unchanged. No timeout diagnosis of earlier attempts is established.",
       "regression": "test_upload_diagnostics.py adds real loopback send/response failures and hosted-result manifest checks."
+    },
+    {
+      "baseCommit": "77e1d61f040725a54ee3162a06cda0918b6e7139",
+      "paths": [
+        "upload_source.py",
+        "upload_distribution.py"
+      ],
+      "scope": "Add six standard SSL subtype names to the existing fixed safe diagnostic labels. No exception text, arbitrary class names or errno field; transport, timeouts, chunking, headers, preflight, POST, no-retry and reconciliation guards remain unchanged. Historical OtherError receipts do not establish a TLS failure or its subtype.",
+      "regression": "test_upload_diagnostics.py checks actual standard SSL subtype classification in both engines and suppression of arbitrary SSL subclass names and messages."
     }
   ]
 }
