@@ -218,7 +218,8 @@
       "id": "archive-23",
       "repository": "mekhovov/revealline-archive-23",
       "versions": [
-        "v0.61.1"
+        "v0.61.1",
+        "v0.61.2"
       ]
     }
   ]
