@@ -162,10 +162,12 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(profile.pictureReceipts.length, 1);
     assert.equal(profile.pictureReceipts[0].presentationPin.assetId, 'picture-a');
     assert.equal(p.rendered.backdrop.image, image);
+    const completed = p.rendered.run;
     p.$('retry-button').click();
-    await settle(() => p.doc.body.dataset.pictureState === 'ready');
+    await settle(() => p.doc.body.dataset.flightState === 'running');
     p.frame(0);
-    assert.equal(p.rendered.backdrop.pin.assetId, 'picture-b');
+    assert.notEqual(p.rendered.run, completed);
+    assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a', 'Retry keeps the accepted original');
     assert.deepEqual(p.errors, []);
   });
 
@@ -360,7 +362,8 @@ for (const launch of ['start', 'retry', 'restart'])
         error.message += ` ${JSON.stringify({ heldDecodes, state: p.doc.body.dataset.flightState, picture: p.doc.body.dataset.pictureState, preparation: p.$('flight-preparation-status').dataset.state, text: p.$('flight-preparation-status').textContent, errors: p.errors.map(String) })}`;
         throw error;
       }
-      // Render the newly prepared run and release the router's input-reset latch.
+      // Retry retains the won run; other launches retain their prepared run.
+      // Release the router's input-reset latch without advancing simulation.
       p.frame(0);
       assert.equal(p.$('flight-preparation-status').dataset.state, 'busy');
       const before = authoritativeCheckpoint(p.rendered.run),
@@ -372,7 +375,8 @@ for (const launch of ['start', 'retry', 'restart'])
       backInput(p, mode, pad);
       assert.equal(p.$('flight-preparation-status').dataset.state, 'cancelled');
       assert.equal(p.$('flight-preparation-cancel').hidden, true);
-      assert.equal(p.doc.activeElement, p.$('start-button'));
+      assert.equal(p.doc.activeElement, p.$(launch === 'retry' ? 'retry-button' : 'start-button'));
+      if (launch === 'retry') assert.equal(p.rendered.run.status, 'won');
       if (mode === 'keyboard') gate.resolve();
       else gate.reject(new Error('Late decoder failure after Back'));
       await new Promise((resolve) => setTimeout(resolve, 10));
@@ -392,7 +396,8 @@ for (const launch of ['start', 'retry', 'restart'])
         after.assets.map(({ sha256 }) => sha256),
         media.assets.map(({ sha256 }) => sha256),
       );
-      assert.equal(p.doc.activeElement, p.$('start-button'));
+      assert.equal(p.doc.activeElement, p.$(launch === 'retry' ? 'retry-button' : 'start-button'));
+      if (launch === 'retry') assert.equal(p.rendered.run.status, 'won');
       assert.deepEqual(p.errors, []);
     });
 
