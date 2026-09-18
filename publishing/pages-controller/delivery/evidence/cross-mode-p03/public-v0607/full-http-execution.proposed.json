@@ -1,0 +1,50 @@
+{
+  "status": "FULL_HTTP_EXECUTION_PROPOSAL_ROOT_REVIEW_PENDING",
+  "reviewed": false,
+  "bindingCandidate": {
+    "path": "tools/inputs/00a043d08c235422e9dbebef82dc5e0837da6667/binding.unreviewed.json",
+    "bytes": 2042,
+    "sha256": "aea771c7031d9e74479ca47d343318f71b3c80d3bc9ba1fee169921746dd3aeb"
+  },
+  "inventory": {
+    "files": 2847,
+    "bytes": 640138824,
+    "sha256": "b64ba8d7675e4b3f919bad13dd398d37d57f2276c0b91a09c831801bfb557ccd"
+  },
+  "controllerCommit": "00a043d08c235422e9dbebef82dc5e0837da6667",
+  "controllerTree": "53f7ddda49464f68a2dfc9112b46f8b8fda3eee6",
+  "runId": 35289348308,
+  "deploymentId": 6514586010,
+  "latestSuccessStatusId": 18501250583,
+  "requiredAction": "Root independently reviews actual nine authorities and saves separate reviewed binding.json; supply its exact new SHA. No automatic promotion.",
+  "approvedBindingPath": null,
+  "approvedBindingSha256": null,
+  "limits": {
+    "workers": 8,
+    "heapMiB": 1024,
+    "maxRows": 20000,
+    "aggregateBytes": 950000000,
+    "requestTimeoutSeconds": 300,
+    "maxTransientAttempts": 3,
+    "publicBodyStorage": false
+  },
+  "outputLabel": "complete-1",
+  "reconciliation": {
+    "path": "intake-reconciliation.json",
+    "bytes": 2412,
+    "sha256": "10df16161de24eb9d20e0ccda74babaea3fdb3d209de64781df35822db48a202"
+  },
+  "helperPins": {
+    "path": "helper-pins.json",
+    "bytes": 2694,
+    "sha256": "9c3c5759898581f926e9af83214ba3b58893eb99c4996ecdd74aece05ebc4aa4"
+  },
+  "commandsAfterRootPromotion": [
+    "NODE20 --max-old-space-size=1024 tools/audit-main.mjs --binding ACTUAL_ABSOLUTE_REVIEWED_BINDING --binding-sha ACTUAL_REVIEWED_BINDING_SHA --check",
+    "NODE20 --max-old-space-size=1024 tools/audit-main.mjs --binding ACTUAL_ABSOLUTE_REVIEWED_BINDING --binding-sha ACTUAL_REVIEWED_BINDING_SHA --out complete-1",
+    "python3 -B review-public.py 00a043d08c235422e9dbebef82dc5e0837da6667 complete-1",
+    "python3 -B observe-hosted.failure-retention.py after-1 00a043d08c235422e9dbebef82dc5e0837da6667 53f7ddda49464f68a2dfc9112b46f8b8fda3eee6 35289348308"
+  ],
+  "freshAfterAuthorityReviewRequired": true,
+  "nativeGateRootOwned": true
+}

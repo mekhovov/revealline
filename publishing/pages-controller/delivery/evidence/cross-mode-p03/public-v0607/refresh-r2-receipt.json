@@ -1,0 +1,18 @@
+{
+  "status": "PASS_LIVE_AUTHORITIES_UNCHANGED_AFTER_FULL_AUDIT",
+  "at": "2026-09-18T00:22:51.513241+00:00",
+  "controllerCommit": "00a043d08c235422e9dbebef82dc5e0837da6667",
+  "controllerTree": "53f7ddda49464f68a2dfc9112b46f8b8fda3eee6",
+  "deploymentId": 6514586010,
+  "runId": 35289348308,
+  "latestSuccessStatusId": 18501250583,
+  "latestStableVersion": "v0.60.7",
+  "releaseId": 391120699,
+  "exit": 0,
+  "resultBytes": 7490,
+  "resultSha256": "f704c9ee134db86c6f26f698b91e4066352ec82330acd894a1d1a7cd0d5a4fc3",
+  "pinsRehashed": 21,
+  "failedFirstRefreshPreserved": true,
+  "fullHTTPAuditRepeated": false,
+  "publicAcceptance": false
+}

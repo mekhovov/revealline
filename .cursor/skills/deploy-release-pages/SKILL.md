@@ -70,3 +70,9 @@ This finite allowance does not prove that an earlier failure was a timeout or
 authorize another POST. Preserve all pin/asset limits and require explicit review
 for any later budget change; never infer a server limit or retry from elapsed
 time alone.
+
+Standard SSL subtype names are fixed safe diagnostic labels; arbitrary subclass
+names and exception text remain suppressed. Do not infer a TLS failure or its
+subtype from an older `OtherError` receipt. This classification change adds no
+errno field and does not change transport, timeouts, chunking, headers or upload
+guards; it does not authorize another upload attempt.

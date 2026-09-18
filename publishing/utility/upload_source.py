@@ -37,6 +37,8 @@ def upload_diagnostics(phase, sent, error, status=None):
     safe_types = {'Refusal', 'OSError', 'BrokenPipeError', 'ConnectionResetError',
                   'ConnectionAbortedError', 'TimeoutError', 'RemoteDisconnected',
                   'BadStatusLine', 'IncompleteRead', 'HTTPException', 'SSLError',
+                  'SSLEOFError', 'SSLZeroReturnError', 'SSLSyscallError',
+                  'SSLWantReadError', 'SSLWantWriteError', 'SSLCertVerificationError',
                   'ValueError', 'KeyboardInterrupt', 'SystemExit'}
     kind = type(error).__name__
     return {'phase': phase, 'sentBytes': sent,
