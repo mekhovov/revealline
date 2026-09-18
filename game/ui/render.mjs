@@ -14,11 +14,14 @@ import {
 } from './classic-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
+import { playerBodyOffset } from './player-body-layout.mjs';
 import { createSceneArt } from './scene-art.mjs';
 import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
   createActorPresentation,
   actorDiameter,
+  actorScreenScale,
+  actorLogicalLimit,
   drawPresentedActor,
   drawActiveTrail,
   drawCapturePulse,
@@ -44,7 +47,7 @@ const paintSize = ({ width, height }) => ({
 export const boardPaintSizeForLevel = (level) => paintSize(geometryForLevel(level));
 export const boardPaintSizeForRun = (run) => paintSize(geometryForRun(run));
 export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
-  const s = Math.max(0.1, Math.min(4, screenScale)),
+  const s = actorScreenScale(screenScale),
     fitted = fittedBodySize(body, image),
     // Keep the contained source rectangle and all attachment anchors intact.
     // Only explicitly registered compact body presets lift the small-screen
@@ -55,8 +58,11 @@ export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, styl
     compactMinimum = image && canvasCSSWidth < 480 && body.compactMinimumCSSPixels === 20 ? 20 : 16,
     minimum = canvasCSSWidth >= 480 ? 24 : compactMinimum,
     desired = actorDiameter({ screenScale: s, canvasCSSWidth, style, scale }) * 1.15,
-    logicalCap = compactMinimum === 20 ? Math.max(64, minimum / s) : 64,
-    diameter = Math.max(18, Math.min(logicalCap, 32 / s, Math.max(minimum / s, desired)));
+    logicalCap = actorLogicalLimit({ screenScale: s, minimumCSSSize: minimum }),
+    diameter = Math.max(
+      Math.min(18, 32 / s),
+      Math.min(logicalCap, 32 / s, Math.max(minimum / s, desired)),
+    );
   return { diameter, scale: diameter / (extent * CELL) };
 }
 const makeCanvas = (w, h) => {
@@ -831,24 +837,46 @@ export class BoardPainter {
         style: this.style,
         scale: playerScale,
       });
-      ctx.save();
-      ctx.scale(CELL, CELL);
-      if (state.status === 'respawning')
-        ctx.globalAlpha = reduced ? 0.6 : 0.35 + 0.35 * Math.sin(this.time * 15);
-      paintCharacter(ctx, {
+      const playerPose = {
         body: playerBody,
         image: playerImage,
         recipe: this.recipe,
         animation: this.animation,
-        colors: { body: p.safe, accent: p.accent },
         scale: playerSize.scale,
-        x: state.player.x,
-        y: state.player.y,
         heading: this.heading,
         bank: reduced ? 0 : this.bank || 0,
         speedRatio: this.speedRatio || 0,
         reducedMotion: reduced,
         pixel: 1 / CELL,
+      };
+      const bodyOffset = playerBodyOffset(playerPose, {
+        x: state.player.x,
+        y: state.player.y,
+        width: columns,
+        height: rows,
+        margin: W / (canvasCSSWidth * CELL),
+      });
+      if (bodyOffset.x !== 0 || bodyOffset.y !== 0) {
+        // A quiet connector identifies the real contact point, not a second hitbox.
+        ctx.save();
+        ctx.globalAlpha = 0.55;
+        ctx.strokeStyle = p.muted;
+        ctx.lineWidth = W / canvasCSSWidth;
+        ctx.beginPath();
+        ctx.moveTo(state.player.x * CELL, state.player.y * CELL);
+        ctx.lineTo((state.player.x + bodyOffset.x) * CELL, (state.player.y + bodyOffset.y) * CELL);
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.save();
+      ctx.scale(CELL, CELL);
+      if (state.status === 'respawning')
+        ctx.globalAlpha = reduced ? 0.6 : 0.35 + 0.35 * Math.sin(this.time * 15);
+      paintCharacter(ctx, {
+        ...playerPose,
+        colors: { body: p.safe, accent: p.accent },
+        x: state.player.x + bodyOffset.x,
+        y: state.player.y + bodyOffset.y,
       });
       ctx.restore();
       // This ring stays at the simulation contact radius, independent of body

@@ -114,3 +114,41 @@ The format permits up to 1,024 immutable theme revisions within the 4 MiB manife
 ## Complete-collection revision capacity
 
 The v0.51 Studio accepts at most 2,048 immutable asset records. The complete production ledger, its review successors and a coordinated 194-slot replacement exceed the former 1,024-record count; the real collection regression reproduces that failure. The manifest remains bounded to 4 MiB, each file to 4 MiB and the whole transfer to 32 MiB. This changes metadata revision capacity, not image/download/player-save budgets. Full collection replacement and export/import retain all previous records and bytes. Older Studio releases retain their original count limits and may reject a larger future bundle; current readers continue accepting historical bundles.
+
+### Narrow-board actor size
+
+Actor/player frames use the actual fitted bitmap scale. The normal 64-logical-pixel
+and boss 80-pixel limits are base limits: they expand only enough to preserve the
+16 CSS-pixel phone or 24-pixel desktop minimum. Registered compact player images
+retain their separate 20-pixel phone minimum. Contact radii, trails, scores and
+checkpoint identities remain simulation-owned.
+
+Scale is sanitized to 0.1–4. Normal/player frames stay within 32 CSS pixels and
+boss frames within 40 at that sanitized scale, including extreme enlargement
+where the old 18-logical-pixel floor could bypass the ceiling. Below a fitted
+115.2-pixel width on a 72-column board, the scale floor prevents a physical
+minimum guarantee; layout must address that case. Sampling remains limited to
+64 actors and three tail points.
+
+Render-host tests must cover both Versus seats through 240→320→240 fits, real
+player/enemy frame extents, Team edge offsets, exact contact/trail geometry and
+unchanged checkpoints. Native readability still needs Standard/Large and
+compact/detailed review over bright/dark art and crowded cuts; transparent
+padding and enlarged-body occlusion are not proven by a frame-size assertion.
+
+Solo and Versus also inset only the player illustration when its complete paint
+envelope would cross the canvas edge. The bounds follow the Motion renderer’s
+contained source rectangle, pivot, heading offset, shear/bank and recipe
+attachments; Team’s different transform and rotor geometry are not reused.
+Rotor/effect envelopes cover their full animation cycle so phase changes do not
+jiggle the origin. A one CSS-pixel margin leaves the body and rotors inside the
+board; diffuse glow is not part of the silhouette guarantee. A muted connector
+under the body leads to the unchanged true contact ring, drawn last. Cut/head,
+shield/ability centers and simulation remain untouched. Interior fractional
+positions do not move. If an oversized custom rig cannot fit, placement centers
+its envelope deterministically; it is not a promise that arbitrary artwork fits.
+
+Verify actual paint primitives at all edges/corners through cardinal/diagonal
+headings, both bank signs, reduced motion, asymmetric pivots, wide/tall sources
+and missing-image fallback. Preserve original clipped native observations and
+repeat native craft/contact recognition after changing the visual origin.
