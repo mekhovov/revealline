@@ -1,0 +1,13 @@
+{
+  "status": "NATIVE_RELAY_YARD_ATTEMPT_NOT_A_WIN",
+  "at": "2026-09-18T09:55:38.720110+00:00",
+  "source": "ef1430174dfd35a9df441233988b8737d0401851",
+  "arena": "Relay Yard",
+  "challenge": "Gentle",
+  "observed": [
+    "Keyboard Change setup from the paused Retry opened discardconfirmation; explicitdiscardreturnedlobby. KeyboardselectedRelayYard andStartwasfocused.",
+    "Normal unboosted timed opening cut with Support lostSunflower at0:05; explicitResume continued, thenbothcraftrespawned at0:10 with4reserves0.0%0/2anchors.",
+    "Paused withResume focus. No nativeRelaywin/viewer qualification inferred."
+  ],
+  "meaning": "Gameplay timing and route pressure require independent tuning/playtesting. FirstConnection viewer win remains a separate passed observation."
+}
