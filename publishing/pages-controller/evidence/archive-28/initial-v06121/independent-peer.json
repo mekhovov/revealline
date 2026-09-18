@@ -1,0 +1,94 @@
+{
+  "status": "PASS_INDEPENDENT_ORIGINAL_ROW_AUTHORITY_AND_RECEIPT_REVIEW_ROOT_ACCEPTANCE_PENDING",
+  "at": "2026-09-18T20:24:21.904948+00:00",
+  "files": 701,
+  "verifiedBytes": 313396221,
+  "attempts": 701,
+  "failedFiles": 0,
+  "failedAttempts": 0,
+  "retries": 0,
+  "skipped": 0,
+  "priorRows": 0,
+  "preservedRows": 0,
+  "newRows": 701,
+  "releaseRows": 698,
+  "rootSupportRows": 3,
+  "allPathsFinalURLsMIMEsSizesHashesAndAttemptIdentityPassed": true,
+  "beforeAfterBodiesIdentical": true,
+  "rowReviewEvidencePinsRehashed": 55,
+  "receiptCRCOriginalMembers": 3,
+  "originalSourceTagDistributionManifestMatch": true,
+  "archiveCommit": "888cd5c5699af7399f8716183482be90adec87c9",
+  "archiveTree": "9a43107bf83f77985e77cdd83be73dc4b67520cf",
+  "runId": 35389813376,
+  "deploymentId": 6532056613,
+  "deploymentStatusId": 18541547471,
+  "receiptArtifactId": 10566195215,
+  "pins": [
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/row-review.json",
+      "bytes": 12690,
+      "sha256": "47c7a9456d43e04f78066ee565f421df8cb84c96a0adbdd8130697a951067819"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/http/http-20260918T202146Z-abf4cef9/http-report.json",
+      "bytes": 1542,
+      "sha256": "15989766bfc5f84b5c169550d68f2202a5f202388de5ca3fbc64d55c31730cb8"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/http/http-20260918T202146Z-abf4cef9/http-results.jsonl",
+      "bytes": 557475,
+      "sha256": "f1760297d1362cdbf026685d8f21d0948e9325d63bc9f9deb347beff9ca2e1ae"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/http/http-20260918T202146Z-abf4cef9/http-attempts.jsonl",
+      "bytes": 557475,
+      "sha256": "f1760297d1362cdbf026685d8f21d0948e9325d63bc9f9deb347beff9ca2e1ae"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/http/http-20260918T202146Z-abf4cef9/expected-inventory.json",
+      "bytes": 145014,
+      "sha256": "3b7703c28662cc7b879153fdd94866d1f59c585ead185dc44b1158cc225905d9"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/execution-request.reviewed.json",
+      "bytes": 1655,
+      "sha256": "adb0e03380d718f4f74339bc1ec3afc62c1e32c840a6236e97f75ca67f19c766"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/live-authorities/before-20260918T202145Z-ab19a42c/result.json",
+      "bytes": 2369,
+      "sha256": "8b81d5bfee8992b01f7969158c31ff8c51fb83d039b858fb91c885ba5449d639"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/live-authorities/after-20260918T202243Z-2d9e586c/result.json",
+      "bytes": 2367,
+      "sha256": "47e3a40f75db8c1f5ec84eabec9bbcee93d0f11f31a4c93609aac4668189c9f6"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/intake/hosted-originals/verification-receipts-original.zip",
+      "bytes": 37367,
+      "sha256": "387a2560c44cc1bff8465c589ed4b8d5264a606cc3de783f86b09c76ca5bdad6"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/intake/hosted-originals/completion.json",
+      "bytes": 2151,
+      "sha256": "7bf5183c9037a2d8502377b70836457852b6ee3810c4514a75ccd655dab11d9c"
+    },
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/inputs/source-lock.json",
+      "bytes": 1430,
+      "sha256": "89b711e69affc59b50dbe67337213775780ac936633f1477a0fe29d62ef9aa5c"
+    },
+    {
+      "path": ".cache/archive28-v06121-root/native-retention-r1.json",
+      "bytes": 1339,
+      "sha256": "1f57e21c5ed0d4e2692e63b81a48ef4645d20277f58e03c714df8bc556bc6ff2"
+    }
+  ],
+  "nativeScope": "Reviewed root original only: desktop keyboard Archive Play, Team First Connection input/cuts/Pause/Resume/Change Setup, Solo title, main explorer. No archived win or picture-dialog test.",
+  "rootAcceptance": null,
+  "networkCalls": 0,
+  "browserActions": 0,
+  "parentPhasesAccepted": false
+}
