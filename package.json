@@ -1,6 +1,6 @@
 {
   "name": "revealline",
-  "version": "0.61.9",
+  "version": "0.61.20",
   "private": true,
   "type": "module",
   "description": "Configurable territory-capture game and authoring playground",

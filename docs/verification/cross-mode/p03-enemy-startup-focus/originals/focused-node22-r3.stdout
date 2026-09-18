@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: catalog close preserves the actual invoker and an explicit startup return target
+ok 1 - catalog close preserves the actual invoker and an explicit startup return target
+  ---
+  duration_ms: 2.543416
+  type: 'test'
+  ...
+# Subtest: catalog return target cannot override hidden
+ok 2 - catalog return target cannot override hidden
+  ---
+  duration_ms: 0.425583
+  type: 'test'
+  ...
+# Subtest: catalog return target cannot override blurred
+ok 3 - catalog return target cannot override blurred
+  ---
+  duration_ms: 0.270792
+  type: 'test'
+  ...
+# Subtest: catalog return target cannot override newer close focus
+ok 4 - catalog return target cannot override newer close focus
+  ---
+  duration_ms: 0.308542
+  type: 'test'
+  ...
+# Subtest: a close callback that reopens the catalog retains the newer visit and return target
+ok 5 - a close callback that reopens the catalog retains the newer visit and return target
+  ---
+  duration_ms: 0.68125
+  type: 'test'
+  ...
+# Subtest: actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+ok 6 - actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+  ---
+  duration_ms: 2.706458
+  type: 'test'
+  ...
+# Subtest: failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+ok 7 - failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+  ---
+  duration_ms: 1.190375
+  type: 'test'
+  ...
+# Subtest: cancelled catalog file reads cannot replace a draft or unlock a newer operation
+ok 8 - cancelled catalog file reads cannot replace a draft or unlock a newer operation
+  ---
+  duration_ms: 1.212625
+  type: 'test'
+  ...
+# Subtest: Stop waiting keeps an authoring save locked and reconciles its actual outcome
+ok 9 - Stop waiting keeps an authoring save locked and reconciles its actual outcome
+  ---
+  duration_ms: 1.741375
+  type: 'test'
+  ...
+# Subtest: shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+ok 10 - shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+  ---
+  duration_ms: 21.147
+  type: 'test'
+  ...
+# Subtest: workshop native input clears held D-pad repeats until neutral and a fresh press
+ok 11 - workshop native input clears held D-pad repeats until neutral and a fresh press
+  ---
+  duration_ms: 2.49625
+  type: 'test'
+  ...
+# Subtest: workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+ok 12 - workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+  ---
+  duration_ms: 2.306417
+  type: 'test'
+  ...
+# Subtest: role detail reader stays controller scrollable and Back returns to its own button
+ok 13 - role detail reader stays controller scrollable and Back returns to its own button
+  ---
+  duration_ms: 0.983541
+  type: 'test'
+  ...
+# Subtest: file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting
+ok 14 - file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting
+  ---
+  duration_ms: 0.632459
+  type: 'test'
+  ...
+# Subtest: native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+ok 15 - native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+  ---
+  duration_ms: 33.893208
+  type: 'test'
+  ...
+# Subtest: native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+ok 16 - native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+  ---
+  duration_ms: 8.743458
+  type: 'test'
+  ...
+# Subtest: workshop modal Back keeps its draft before a separate keyboard Return to game
+ok 17 - workshop modal Back keeps its draft before a separate keyboard Return to game
+  ---
+  duration_ms: 9.662834
+  type: 'test'
+  ...
+# Subtest: ready controller navigation keeps modal ownership then activates the page Return link explicitly
+ok 18 - ready controller navigation keeps modal ownership then activates the page Return link explicitly
+  ---
+  duration_ms: 23.08925
+  type: 'test'
+  ...
+# Subtest: focused practice keeps parent controls idle and authenticated return restores the draft
+ok 19 - focused practice keeps parent controls idle and authenticated return restores the draft
+  ---
+  duration_ms: 18.167542
+  type: 'test'
+  ...
+# Subtest: ordinary foreground startup still opens the panel once and retires loading listeners
+ok 20 - ordinary foreground startup still opens the panel once and retires loading listeners
+  ---
+  duration_ms: 8.085083
+  type: 'test'
+  ...
+# Subtest: startup catalog Escape returns to Open workshop before forward Tab
+ok 21 - startup catalog Escape returns to Open workshop before forward Tab
+  ---
+  duration_ms: 9.4315
+  type: 'test'
+  ...
+# Subtest: startup catalog Back returns to Open workshop before forward Tab
+ok 22 - startup catalog Back returns to Open workshop before forward Tab
+  ---
+  duration_ms: 8.682
+  type: 'test'
+  ...
+# Subtest: successful readiness preserves Return focus chosen before module
+ok 23 - successful readiness preserves Return focus chosen before module
+  ---
+  duration_ms: 7.855625
+  type: 'test'
+  ...
+# Subtest: successful readiness preserves Return focus chosen during loading
+ok 24 - successful readiness preserves Return focus chosen during loading
+  ---
+  duration_ms: 7.553542
+  type: 'test'
+  ...
+# Subtest: late readiness cannot revive retired opening after focus then return to body
+ok 25 - late readiness cannot revive retired opening after focus then return to body
+  ---
+  duration_ms: 7.848167
+  type: 'test'
+  ...
+# Subtest: late readiness cannot revive retired opening after keyboard intent
+ok 26 - late readiness cannot revive retired opening after keyboard intent
+  ---
+  duration_ms: 8.207
+  type: 'test'
+  ...
+# Subtest: late readiness cannot revive retired opening after pointer intent
+ok 27 - late readiness cannot revive retired opening after pointer intent
+  ---
+  duration_ms: 8.330791
+  type: 'test'
+  ...
+# Subtest: late readiness cannot revive retired opening after blur and refocus
+ok 28 - late readiness cannot revive retired opening after blur and refocus
+  ---
+  duration_ms: 6.943833
+  type: 'test'
+  ...
+# Subtest: late readiness cannot revive retired opening after hide and show
+ok 29 - late readiness cannot revive retired opening after hide and show
+  ---
+  duration_ms: 8.119208
+  type: 'test'
+  ...
+# Subtest: late readiness cannot revive retired opening after pagehide and pageshow
+ok 30 - late readiness cannot revive retired opening after pagehide and pageshow
+  ---
+  duration_ms: 7.043375
+  type: 'test'
+  ...
+# Subtest: theme failure retires the startup lease and retains the existing reload/Return recovery
+ok 31 - theme failure retires the startup lease and retains the existing reload/Return recovery
+  ---
+  duration_ms: 8.288167
+  type: 'test'
+  ...
+# Subtest: terminal departure prevents late startup and feedback after theme status 200
+ok 32 - terminal departure prevents late startup and feedback after theme status 200
+  ---
+  duration_ms: 1.880417
+  type: 'test'
+  ...
+# Subtest: terminal departure prevents late startup and feedback after theme status 503
+ok 33 - terminal departure prevents late startup and feedback after theme status 503
+  ---
+  duration_ms: 1.84375
+  type: 'test'
+  ...
+# Subtest: persisted departure defers theme status 200 until restoration without auto-open
+ok 34 - persisted departure defers theme status 200 until restoration without auto-open
+  ---
+  duration_ms: 8.122917
+  type: 'test'
+  ...
+# Subtest: persisted departure defers theme status 503 until restoration without auto-open
+ok 35 - persisted departure defers theme status 503 until restoration without auto-open
+  ---
+  duration_ms: 7.960083
+  type: 'test'
+  ...
+# Subtest: terminal departure during theme body decoding prevents late owner initialization
+ok 36 - terminal departure during theme body decoding prevents late owner initialization
+  ---
+  duration_ms: 7.869541
+  type: 'test'
+  ...
+# Subtest: return authority rejects outsiders, stale launches, malformed messages and repeats
+ok 37 - return authority rejects outsiders, stale launches, malformed messages and repeats
+  ---
+  duration_ms: 1.98
+  type: 'test'
+  ...
+# Subtest: actual practice controller pause and Return reopens the unsaved parent draft with no flight progress
+ok 38 - actual practice controller pause and Return reopens the unsaved parent draft with no flight progress
+  ---
+  duration_ms: 1033.66225
+  type: 'test'
+  ...
+# Subtest: ordinary and unrelated embedded game pages never receive a workshop return action
+ok 39 - ordinary and unrelated embedded game pages never receive a workshop return action
+  ---
+  duration_ms: 277.223167
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2068.531209
