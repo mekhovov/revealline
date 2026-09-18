@@ -1,0 +1,64 @@
+{
+  "status": "ROOT_PUBLIC_BYTES_ACCEPTED_NATIVE_PARTIAL",
+  "at": "2026-09-18T18:42:32.956989+00:00",
+  "version": "v0.61.20",
+  "gameSource": "d51acab59232edc4e7f77ab5df491f2c403de709",
+  "publisher": "cb5699291108958ebf773ceecbf807a0078eada4",
+  "runId": 35380080948,
+  "deploymentId": 6530504966,
+  "releaseId": 391660904,
+  "playableURL": "https://mekhovov.github.io/revealline/releases/v0.61.20/site/game/",
+  "bytesAcceptance": {
+    "files": 3178,
+    "bytes": 642414414,
+    "failures": 0,
+    "retries": 0,
+    "skips": 0,
+    "freshAuthoritiesMatch": true
+  },
+  "nativeAcceptance": {
+    "keyboardStartupCloseFocus": true,
+    "backFocus": true,
+    "completePhonePresentation": false,
+    "physicalTouchController": false
+  },
+  "phaseAcceptance": false,
+  "remaining": [
+    "390x844 wrapped Enemy Workshop Return button obscures part of Open workshop focus outline; separate spacing correction required.",
+    "Inherited Large/Plain picker border-clearance issue remains until separately qualified v0.61.23 is deployed.",
+    "Physical controller/touch, full offline and broader player journeys remain outside this scoped check."
+  ],
+  "originals": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v06120-preparation/root-binding-review.json",
+      "bytes": 466,
+      "sha256": "52a845715df42f7833dcef2748b4a1ab93adc4218c5efe4ed16dbe213a544093"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v06120-preparation/tools/inputs/cb5699291108958ebf773ceecbf807a0078eada4/binding.json",
+      "bytes": 2043,
+      "sha256": "f02f8f1664880637ae137588b01e13884df97535848544b63b01ed1502417ad4"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v06120-preparation/tools/runs/main-r1/report.json",
+      "bytes": 5993,
+      "sha256": "b6a13d83f48965a02fcd7a44e4a76366d97286041af27e0d047bd89143e0d60b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v06120-preparation/public-row-review-main-r1.json",
+      "bytes": 3377,
+      "sha256": "a0394a2ab302bf9e178c2671ea00b489177146f39a509874d44f3847252a0ac7"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v06120-preparation/after-http-authorities-main-r1/result.json",
+      "bytes": 7523,
+      "sha256": "cad776a607a841298ac7e3dc4a95b256a16273bbe2cfce2aa78d4ad57dd23971"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v06120-preparation/root-native-review.json",
+      "bytes": 2677,
+      "sha256": "2b2b1bff9c9199e05754cc076cb8351240970496a9730f121d0d10941fa65df1"
+    }
+  ],
+  "note": "This receipt describes the actual cb569929 deployment and does not overwrite earlier preparation or failed native evidence. Release/publication succeeds; whole-feature and phase acceptance remain open."
+}

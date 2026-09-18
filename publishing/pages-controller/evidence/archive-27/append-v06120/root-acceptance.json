@@ -1,0 +1,60 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE_RETENTION_ONLY",
+  "at": "2026-09-18T19:12:32.809819+00:00",
+  "archive": "archive-27",
+  "versions": [
+    "v0.61.9",
+    "v0.61.20"
+  ],
+  "archiveCommit": "3ecdbdcb2126f28c8697bc087614143105905ea5",
+  "archiveTree": "04d7ff726e3413eceacbd174c1b2ec6d1d88d14e",
+  "runId": 35382793928,
+  "deploymentId": 6530925625,
+  "deploymentStatusId": 18538951035,
+  "receiptArtifactId": 10562923008,
+  "files": 1399,
+  "verifiedBytes": 626793669,
+  "attempts": 1399,
+  "failedAttempts": 0,
+  "retries": 0,
+  "newRows": 698,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "preservedOldCanonicalRows": 700,
+  "preservedPriorReleaseRows": 698,
+  "preservedRootSupportRows": 2,
+  "scope": "Full1399file public byte audit and scoped actual keyboard retention of both editions; Enemy Workshop startup/opener restoration observed in620.",
+  "nativeLimits": [
+    "Retention and scoped keyboard navigation only; no whole-feature or phase acceptance.",
+    "v0.61.9 known Large/Plain portrait return outline clipping1.765625px remains; v0.61.20 known390portrait wrapped Open/Return gap clips full focus outline. Archive retention does not fix either.",
+    "No fresh full win, actual offline install/play, audio listening, BFCache, real touch or physical controller qualification.",
+    "Screenshots were inline only; no exported screenshot hashes. Natural1258x720 viewport, not device certification.",
+    "All GitHub project paths share an origin; no isolated storage claim. v0.61.20 Start reported session-only saving due to another game tab. v0.61.9 continued an existing run; native saved-data compatibility/ownership is not fully qualified.",
+    "Authorized gameplay may update continuation; no media edit/save/import/export/delete or catalog Apply was performed."
+  ],
+  "pins": [
+    {
+      "path": ".cache/archive27-v06120-append-preparation/audit-tools-r1/root-native-observation.json",
+      "bytes": 2290,
+      "sha256": "c5af5e2a4b0b653d4eba0a4daa5ebe365fde487642bfb1b71affaabf14483ae7"
+    },
+    {
+      "path": ".cache/archive27-v06120-append-preparation/audit-tools-r1/http/row-review.json",
+      "bytes": 12777,
+      "sha256": "2f7152ba3453d18aa147545abf10d57d19e2ad7a5377e6b9f338d74a015afe3d"
+    },
+    {
+      "path": ".cache/archive27-v06120-append-preparation/audit-tools-r1/intake/hosted-originals/completion.json",
+      "bytes": 2335,
+      "sha256": "a6dd1947fa300771c5fced077db6d7250e30c1ebe7f94071f334c59685d96a27"
+    },
+    {
+      "path": ".cache/archive27-v06120-append-preparation/audit-tools-r1/http/internal-review.json",
+      "bytes": 1055,
+      "sha256": "ea25f1776e5c3b45020734ae39b6510295b8b7cfbcb4e36cfe41121e3794f7d3"
+    }
+  ],
+  "currentDefaultChanged": false,
+  "wholePhaseAccepted": false
+}
