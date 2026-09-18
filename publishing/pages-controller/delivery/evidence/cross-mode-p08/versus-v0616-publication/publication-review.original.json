@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-18T12:18:16.165826+00:00",
+  "releaseId": 391439978,
+  "tag": "v0.61.6",
+  "tagObject": "e8c11ea668e40028e650eec42bdd004f3f7e607c",
+  "source": {
+    "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+    "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+    "version": "v0.61.6"
+  },
+  "nineOriginalAssetsExact": true,
+  "receiptReconciliationSha256": "26ea0fa5302f308a7c21a7b1c2528093ada58feb38d6d1e7831bc47ec1202e79",
+  "scope": "Reviewed original publication only; Pages and player acceptance remain pending."
+}
