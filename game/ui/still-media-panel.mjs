@@ -1,4 +1,5 @@
 import { createOperationStatus } from './operation-status.mjs';
+import { captureOperationFocus } from './operation-focus.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createMediaIdentityCatalog, MEDIA_PRESENTATION_FORMAT } from '../media-library.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
@@ -107,9 +108,11 @@ export function attachStillMediaPanel({
     return item;
   };
   const inspect = button('preview', 'Preview chosen file', () => upload());
-  const showSaved = button('show-saved', 'Preview saved revision', () => savedPreview());
+  const showSaved = button('show-saved', 'Preview saved revision', () =>
+    savedPreview(false, showSaved),
+  );
   const showAuthored = button('show-authored', 'Preview authored picture', () =>
-    savedPreview(true),
+    savedPreview(true, showAuthored),
   );
   const save = button('save', 'Save assignment', () => commit(false));
   const unassign = button('unassign', 'Use authored picture', () => commit(true));
@@ -422,10 +425,12 @@ export function attachStillMediaPanel({
     draft = null;
     sync();
   };
-  async function work(text, action) {
+  async function work(text, action, { opener } = {}) {
     if (disposed || task) return false;
     const own = new AbortController(),
-      id = ++serial;
+      id = ++serial,
+      focus = opener ? captureOperationFocus(opener, { document: doc }) : null;
+    if (focus) own.signal.addEventListener('abort', focus.cancel, { once: true });
     task = own;
     const lease = feedback.begin({ message: text, isCurrent: () => !disposed && id === serial });
     activity = lease;
@@ -447,10 +452,17 @@ export function attachStillMediaPanel({
         });
       return false;
     } finally {
-      if (activity === lease) activity = null;
-      if (id === serial) {
-        task = null;
-        sync();
+      try {
+        if (activity === lease) activity = null;
+        if (id === serial) {
+          task = null;
+          sync();
+        }
+        // Enabling controls may itself retire this operation or move focus.
+        if (!disposed && id === serial && !own.signal.aborted) focus?.restore();
+      } finally {
+        focus?.cancel();
+        if (focus) own.signal.removeEventListener('abort', focus.cancel);
       }
     }
   }
@@ -533,34 +545,39 @@ export function attachStillMediaPanel({
           `${prepared.asset.width} × ${prepared.asset.height} · ${prepared.asset.bytes} original bytes verified. Preview only; choose Save assignment to retain them.`,
         );
       },
+      { opener: inspect },
     );
   }
-  async function savedPreview(authored = false) {
+  async function savedPreview(authored = false, opener = null) {
     if (!ready || !current()) return false;
     const selected = current();
     discardBundles();
-    return work('Loading the selected preview…', async (signal, check) => {
-      const p =
-        !authored &&
-        saved.document.library.presentations.find(
-          (p) =>
-            JSON.stringify([p.id, p.revision]) === history.value &&
-            canonicalJSON(p.identity) === canonicalJSON(selected.identity),
+    return work(
+      'Loading the selected preview…',
+      async (signal, check) => {
+        const p =
+          !authored &&
+          saved.document.library.presentations.find(
+            (p) =>
+              JSON.stringify([p.id, p.revision]) === history.value &&
+              canonicalJSON(p.identity) === canonicalJSON(selected.identity),
+          );
+        const asset = p && saved.document.library.assets.find((a) => a.id === p.poster.assetId);
+        const blob = asset && saved.assets.find((a) => a.sha256 === asset.sha256)?.blob;
+        if (asset && !blob)
+          throw new Error('The saved original is unavailable. Prior preview is kept.');
+        const shown = await preview.show(view(selected, asset || null, blob || null), { signal });
+        check();
+        if (!shown) throw new Error('Preview cancelled.');
+        draft = p ? { existing: p, identity: selected.identity } : null;
+        setStatus(
+          p
+            ? `Saved revision ${p.revision} previewed. Save assignment to select it.`
+            : 'Authored picture previewed. Use authored picture removes only the assignment, keeping originals.',
         );
-      const asset = p && saved.document.library.assets.find((a) => a.id === p.poster.assetId);
-      const blob = asset && saved.assets.find((a) => a.sha256 === asset.sha256)?.blob;
-      if (asset && !blob)
-        throw new Error('The saved original is unavailable. Prior preview is kept.');
-      const shown = await preview.show(view(selected, asset || null, blob || null), { signal });
-      check();
-      if (!shown) throw new Error('Preview cancelled.');
-      draft = p ? { existing: p, identity: selected.identity } : null;
-      setStatus(
-        p
-          ? `Saved revision ${p.revision} previewed. Save assignment to select it.`
-          : 'Authored picture previewed. Use authored picture removes only the assignment, keeping originals.',
-      );
-    });
+      },
+      { opener },
+    );
   }
   async function commit(remove) {
     if (!ready || !current() || (!remove && !draft)) return false;
