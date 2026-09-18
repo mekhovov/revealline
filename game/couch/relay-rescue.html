@@ -174,6 +174,7 @@
                 <button id="coop-resume" class="primary field-kit-primary" type="button">
                   Resume together
                 </button>
+                <button id="coop-view-picture" type="button" hidden>View picture</button>
                 <button id="coop-retry" type="button">Retry same arena</button>
                 <button id="coop-lobby" type="button">Change setup</button>
               </div>
@@ -325,6 +326,20 @@
         <button id="coop-settings-open" type="button">Settings</button>
         <button id="coop-quick-sound" type="button" aria-pressed="false">Sound: off</button>
       </aside>
+      <dialog id="coop-earned-picture" aria-labelledby="coop-earned-picture-title">
+        <header class="earned-picture-header">
+          <h2 id="coop-earned-picture-title">Your shared picture</h2>
+          <button id="coop-picture-return" type="button">Back to results</button>
+        </header>
+        <canvas
+          id="coop-earned-picture-canvas"
+          width="0"
+          height="0"
+          role="img"
+          aria-label="The complete picture earned by this Team attempt"
+        ></canvas>
+      </dialog>
+
       <dialog id="coop-options" class="shared-settings" aria-labelledby="coop-settings-title">
         <div class="shared-settings-heading">
           <h2 id="coop-settings-title">Settings</h2>
