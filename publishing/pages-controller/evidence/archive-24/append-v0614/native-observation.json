@@ -1,0 +1,44 @@
+{
+  "format": "revealline-archive-native-observation.v1",
+  "observer": "root via cua_repl actual deployed browser",
+  "at": "2026-09-18T11:04:52.450943+00:00",
+  "archiveCommit": "2ead35c57856ef8948058a1df21788383a6385ed",
+  "deploymentId": 6522823756,
+  "viewport": "1280x720 desktop in-app browser; no device emulation or physical controller claim",
+  "entry": "https://mekhovov.github.io/revealline-archive-24/",
+  "versions": {
+    "v0.61.3": {
+      "source": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+      "journey": [
+        "archive index Tab/Enter \u2192 title Start",
+        "Enter launch; Down tap",
+        "Escape pause at0:04; explicit Return resume",
+        "win52.2%,8160points,0:08,3lives,3stars",
+        "keyboard Main menu \u2192 Release explorer resolves current main explorer"
+      ],
+      "pass": true
+    },
+    "v0.61.4": {
+      "source": "d6800fa53d1d9166fe8f310d44aec9c7240b62fc",
+      "journey": [
+        "actual retained title VERSION V0.61.4",
+        "Missions \u2192 First Signal \u2192 Deploy with targeted keyboard locator presses",
+        "Down tap \u2192 win52.2%,8160points,0:08,3lives,3stars",
+        "Tab/Enter View picture shows full picture; Results \u2192 Main menu",
+        "keyboard Settings Escape restores opener; next Tab Workshop",
+        "Sound & game extras \u2192 About, Escape focuses RETURN TO GAME; Enter returns same retained edition"
+      ],
+      "pass": true,
+      "storageLimit": "Another game tab owns saving. Session-only outcome explicitly displayed; no new persistence/export acceptance."
+    }
+  },
+  "retainedFailedAttempts": [
+    "AX classified pressed mission as checkbox; exact Playwright checkbox locator had no match. DOM showed button; corrected role and keyboard activation worked. Automation locator mismatch is not a gameplay failure."
+  ],
+  "screenshots": "Two actual inline screenshots inspected; no exported image files or invented screenshot hashes.",
+  "limits": [
+    "Archive retention play/navigation smoke only; no full phase acceptance.",
+    "No physical touch/controller, audible listening, offline, export/import or performance/difficulty qualification.",
+    "Targeted keyboard locator presses do not establish complete Tab-order coverage."
+  ]
+}

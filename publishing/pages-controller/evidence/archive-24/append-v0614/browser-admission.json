@@ -1,0 +1,41 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-24",
+  "infrastructureCommit": "2ead35c57856ef8948058a1df21788383a6385ed",
+  "deploymentId": 6522823756,
+  "versions": [
+    "v0.61.3",
+    "v0.61.4"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-24/append-v0614/root-acceptance.json",
+      "sha256": "4e25c6dbebc6817528f7e7296f71c4f0183c7f159fb8972d7ec02b7917d7db7a"
+    },
+    {
+      "path": "evidence/archive-24/append-v0614/native-observation.json",
+      "sha256": "907cc0377e27d35509c1c105203dd92ae21c72fb6a1930aee33f7144afa79eba"
+    },
+    {
+      "path": "evidence/archive-24/append-v0614/originals.zip",
+      "sha256": "40a0337300b89410be6f5ecd032a30d8475788afc8dcb59f0f5ee75457b9f75e"
+    },
+    {
+      "path": "evidence/archive-24/append-v0614/originals-index.json",
+      "sha256": "e89c5746ad8bae9fc5a972fc0d879a98eea7c61d9698d0c5ab0c569b88fef7f3"
+    }
+  ],
+  "scope": "Root-accepted retention: actual keyboard play and legitimate wins in both versions, v613 Pause/Resume and Release explorer return, v614 picture and Settings/About navigation. Complete public bytes were verified separately.",
+  "observationProvenance": "Root original native observations; some v614 controls used targeted keyboard locator presses. Screenshots inspected inline only.",
+  "limits": [
+    "Targeted keyboard activations do not certify complete Tab order or controller hardware.",
+    "Shared GitHub Pages origin; v614 displayed session-only saving because another game tab owned saving.",
+    "No durable saves, migration, physical touch/controller, audible listening, offline, export/import or whole-phase qualification."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}
