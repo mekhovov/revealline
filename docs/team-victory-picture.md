@@ -1,5 +1,9 @@
 # Team victory picture
 
+## Unobscured earned-picture view
+
+The current candidate adds an explicit **View picture** action to won results with an accepted image. A native dialog shows that exact image in a separate canvas, with **Back to results** in its own header row. Keyboard Escape and controller Back return to View picture; viewing never retries, restarts, changes coverage or reserves, or writes progress. Retry and Change setup retain their existing result actions. See [the picture-view contract and verification boundaries](team-result-picture-view.md). This source candidate still requires root native and public qualification. Earlier observations below remain historical.
+
 ## Current source composition
 
 The teaser, won-picture branch, lobby return and picture recovery are composed on v0.61.1 source `d2455ebfa444a8692d2694790afa6e4199af64e0`, retaining its exact fpv28 bindings and current Settings owner. The lobby remains a concealed border teaser. Both authored arenas retain the previous actual-host public-command win/Retry tests; held artwork must finish behind Settings without taking its selector focus or starting a run. New composed-source test results and browser qualification must be recorded separately before release. No new assets, collision geometry, scoring, saved awards or strict level-format fields are introduced.

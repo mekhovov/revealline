@@ -77,6 +77,17 @@ export async function page(
     }
   }
   const drawImages = [];
+  const earnedDrawImages = [];
+  let failEarnedPaint = false;
+  $('coop-earned-picture-canvas').getContext = () => ({
+    drawImage(...args) {
+      if (failEarnedPaint) {
+        failEarnedPaint = false;
+        throw new Error('Modeled earned picture paint failure');
+      }
+      earnedDrawImages.push(args);
+    },
+  });
   // Lobby preview owns a separate recorder. It must never add arena draws or
   // perturb capture hashes used by historical play/Retry tests.
   const previewDrawImages = [],
@@ -314,6 +325,10 @@ export async function page(
   return {
     artwork,
     drawImages,
+    earnedDrawImages,
+    failNextEarnedPaint() {
+      failEarnedPaint = true;
+    },
     previewDrawImages,
     previewOperations,
     failNextPreviewPaint,
