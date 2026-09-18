@@ -194,7 +194,8 @@
       "id": "archive-20",
       "repository": "mekhovov/revealline-archive-20",
       "versions": [
-        "v0.60.5"
+        "v0.60.5",
+        "v0.60.6"
       ]
     }
   ]
