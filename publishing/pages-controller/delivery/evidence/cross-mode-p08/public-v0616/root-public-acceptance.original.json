@@ -1,0 +1,87 @@
+{
+  "status": "ROOT_ACCEPTED_SCOPED_PUBLIC_RELEASE",
+  "acceptedAt": "2026-09-18T13:00:47.213040+00:00",
+  "version": "v0.61.6",
+  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "sourcePR": 119,
+  "publisherPR": 135,
+  "controller": "159fe22a533048b6d22468a158f4c7cc7c527212",
+  "controllerTree": "105ef41f3c76c617c0a544752129822cbdf420ce",
+  "run": 35346028731,
+  "deployment": 6524513496,
+  "deploymentSuccessStatus": 18524228657,
+  "publicURL": "https://mekhovov.github.io/revealline/releases/v0.61.6/site/game/",
+  "affectedPublicURL": "https://mekhovov.github.io/revealline/releases/v0.61.6/site/game/couch/",
+  "files": 3078,
+  "bytes": 641814783,
+  "attempts": 3080,
+  "retries": 2,
+  "failures": 0,
+  "sourceTestsPerFamily": 5865,
+  "sourceTestFiles": 464,
+  "pins": [
+    {
+      "path": "tools/inputs/159fe22a533048b6d22468a158f4c7cc7c527212/binding.json",
+      "bytes": 2042,
+      "sha256": "d2831b1ce0f5ffd363e57de6b1657039816917084c801d7facc727429e4ed734"
+    },
+    {
+      "path": "tools/runs/public-root-r1/report.json",
+      "bytes": 5822,
+      "sha256": "3305dec0a6c6ab0b0fb0cd4adbe4233db86d03431cade515d4bac35d03b8319f"
+    },
+    {
+      "path": "public-row-review-public-root-r1.json",
+      "bytes": 3335,
+      "sha256": "dbe5acf3c8791659f3d60ff655170675c4f51dbc0c18d726ab18d2bd618a297f"
+    },
+    {
+      "path": "after-http-authorities-public-root-r1/result.json",
+      "bytes": 7659,
+      "sha256": "c9b69b4727b4f1093d875aa29bb675e1e640860a15a120444940e83458bbce37"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/record.json",
+      "bytes": 3703,
+      "sha256": "03706d25972d55e19894a3041ab21979ad26f3e5d69fa008a5883ca235200f4c"
+    },
+    {
+      "path": "root-helper-review.json",
+      "bytes": 4482,
+      "sha256": "885036ad0276ae477acb7e0d13d5eb1cd5c720a8b702d5d9ea5efe05531c71b5"
+    },
+    {
+      "path": "root-native-plan.json",
+      "bytes": 1789,
+      "sha256": "a2bc93c7360a50b24f0e330474f3e395835a377eb351c7e3cba4c935997ec70c"
+    },
+    {
+      "path": "browser-interruption-r1.json",
+      "bytes": 636,
+      "sha256": "3d551c4b352d637b46f8d8ddac694a97ce4a24bd53491e9661a34e23b8c680c8"
+    },
+    {
+      "path": "../v0616-delegated-native/manifest.json",
+      "bytes": 1989,
+      "sha256": "d728c013e506a49a266b687f5240231c940db1d46910ae0a26537b214555bf0a"
+    }
+  ],
+  "scope": "Versus board fitting uses each visible arena, preserves wide/classic aspect ratio, centers both complete boards and settles after HUD/text/layout changes. Seven primary live geometry cases passed; six portrait/short-landscape visual cases inspected. Actual keyboard Start, independent direction taps, live cuts, loss/recovery, Pause, Settings/Large, Back and explicit Resume passed. Solo Missions mode return restored the exact Versus opener. Full public byte audit and fresh original authorities agree.",
+  "nativeObserver": "Delegated task01a0a0be-e184-7c03-ba2b-59dc179a9800 with actual browser UI; root independently reviewed raw geometry, file pins and mobile screenshot cohort.",
+  "desktopVisualStatus": "INCONCLUSIVE_PROVIDER_CAPTURE: 1280x720 DOM geometry passes, but actual exported captures1258px or half-scale/banded are retained unchanged; no clean desktop screenshot pass and no product clipping defect inferred.",
+  "retainedObservations": [
+    "Two initial503 attempts on historical v0.40.0 playground and v0.44.0 design-atlas recovered to exact bytes on bounded retries.",
+    "Root CUA connection failed after an auxiliary local Team call; delegated dedicated browser completed public checks.",
+    "Capacity guards refused before metadata requests; recovered only14 byte-identical reproducible fresh Git archive copies, preserving frozen releases, source, all logs and evidence.",
+    "Actual ordinary reload during Solo return; no BFCache inference."
+  ],
+  "remaining": [
+    "WholeP03/P05/P07/P08/P18 and overallgame remain incomplete.",
+    "Desktop visual capture requalification; physical controller/touch; actual Always-touch and no-ResizeObserver fallback browser journeys.",
+    "64-logical-pixel actor cap, small actor readability, Team narrow-label owner association, full visual/motion cohort.",
+    "No audible listening, offline, fullmatch victory or allcontent acceptance is claimed by this correction.",
+    "v0.61.7,v0.61.8,v0.61.9,v0.61.20,v0.61.21 source-qualified follow-ups remain separately queued for public acceptance."
+  ],
+  "phaseAccepted": false
+}
