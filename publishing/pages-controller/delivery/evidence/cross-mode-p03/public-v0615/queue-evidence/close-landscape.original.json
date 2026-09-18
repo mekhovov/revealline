@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-18T11:32:42.626187+00:00",
+  "version": "v0.61.4",
+  "viewport": {
+    "width": 844,
+    "height": 390
+  },
+  "input": "actual keyboard CUA, no controller simulation",
+  "sequence": "Open local media \u2192 wait real visible Preview saved revision \u2192 Enter preview \u2192 Escape \u2192 Tab Close local connections \u2192 Return \u2192 inspect AX and subsequent inline screenshot \u2192 Shift+Tab Back",
+  "result": "PASS_CURRENT_SHORT_LANDSCAPE_KEYBOARD_ROUTE",
+  "focus": "Escape and Close each restore enabled still-host-open; cyan ring visible at844x390; ShiftTab reaches Back",
+  "storage": "Visible2retainedrecords/2immutable revisions/generation2 afterpreview; noSave/Restore/assignmentchange invoked; exactbyteexport notperformed",
+  "priorFailure": "v611original remains retained. Fresh desktop and shortlandscape did not reproduce; no runtime repair inferred.",
+  "limits": [
+    "Inline screenshot only",
+    "No physicalcontroller/touch/lifecycle race acceptance"
+  ],
+  "viewportReset": true
+}

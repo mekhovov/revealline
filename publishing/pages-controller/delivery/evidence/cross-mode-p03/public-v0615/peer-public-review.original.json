@@ -1,0 +1,161 @@
+{
+  "status": "INDEPENDENT_FINITE_REVIEW_PASS_NOT_ROOT_ACCEPTANCE",
+  "at": "2026-09-18T11:47:14.454551+00:00",
+  "reviewer": "/root/qualify_media_final/review_intake_bounds",
+  "currentVersion": "v0.61.5",
+  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "sourceTree": "3af511259e14ed2af11a2e2498535744450a378f",
+  "controllerCommit": "8f4f395272f78a74b6b5ae40f0126b811491e05e",
+  "controllerTree": "bae67e16d5510ba5fbc8b807c2470fd7a99c71d4",
+  "runId": 35340056708,
+  "deploymentId": 6523401020,
+  "latestSuccessStatusId": 18521652587,
+  "completeResultReview": {
+    "files": 3051,
+    "bytes": 641652183,
+    "attempts": 3052,
+    "finalFailures": 0,
+    "recoveredFailures": [
+      {
+        "path": "releases/v0.27.0/site/distribution.zip.sha256",
+        "initialStatus": 503,
+        "initialAttempt": 1,
+        "finalStatus": 200
+      }
+    ],
+    "verified": "All unique result paths, canonical encoded URLs, exact bytes/SHA256, runtime MIME categories, timestamps, attempt sequences and final-result/last-attempt equality independently reconciled against the original hosted inventory."
+  },
+  "authorityReview": {
+    "nineBindingInputPins": true,
+    "fivePublisherTreeGitBodies": true,
+    "beforeAfterHostedOriginalPinsAndActualIdentities": true,
+    "freshLatestAndReleaseNineAssetsExact": true,
+    "annotatedTagAndSourceTreeExact": true,
+    "originalReceiptZipBytes": 143581,
+    "originalReceiptZipMembers": 2,
+    "zipCRCAndExtractedOriginalEquality": true,
+    "priorCatalogRowsUnchanged": 85,
+    "currentCatalogRows": 86,
+    "helperPins": 10,
+    "helperBodiesStillByteEqualToPreparation": 9,
+    "intakeRunner": "The sole current helper change normalizes exactly to its retained preparation pin after substituting actual artifact 10544687112 and reviewed request SHA 181de6f15024520fa181f432469024e62cc753a87f01c02e15d5e5d5183c185f back to the original placeholders. Guards and algorithms unchanged."
+  },
+  "preservedRefusals": [
+    "Root strict request-schema refusal happened before any GET; extra review metadata moved to the retained sidecar.",
+    "Reviewer first local assertion abbreviated the recovered checksum path by omitting site/. The original attempt names releases/v0.27.0/site/distribution.zip.sha256; this was a review expectation error, not an evidence or product failure. No source/original changed."
+  ],
+  "nativeEvidenceRead": {
+    "path": "native/studio-guide.json",
+    "scopedResult": "PASS",
+    "observed": "Public Guide open during collection loading, Escape/opener focus, temporary draft/preview retention and cleanup, keyboard Close focus.",
+    "limitation": "Collection completed before first Escape observation; no long-running cancellation claim. Original semantic lookup mismatch retained without product-failure inference."
+  },
+  "pendingRootAcceptance": true,
+  "limitations": [
+    "Read-only verification of retained originals; no independent network fetch, artifact download, browser operation or rerun of tests.",
+    "HTTP byte/MIME evidence does not establish play, offline, storage, migration, audio or physical-device behavior.",
+    "Root owns ordinary game/history native observations and final public acceptance. No whole-phase acceptance is claimed."
+  ],
+  "pins": [
+    {
+      "path": "intake-request.reviewed.json",
+      "bytes": 1026,
+      "sha256": "181de6f15024520fa181f432469024e62cc753a87f01c02e15d5e5d5183c185f"
+    },
+    {
+      "path": "root-intake-review.json",
+      "bytes": 411,
+      "sha256": "26c41f6a42220dcc5464908c1c51cd5411c9c4583d1cebc3dd2555d0f6c16f77"
+    },
+    {
+      "path": "intake-request.refused-extra-review-metadata.json",
+      "bytes": 1102,
+      "sha256": "b157e739bd1f8de3ee60e6d29ac56046fabcdef0ac7d7ba76b73837018cac646"
+    },
+    {
+      "path": "run-capacity-bounded-intake.py",
+      "bytes": 2957,
+      "sha256": "4638abb327a29cbc4cd57c4fe0c08bb2a5cf6b3aeb3c3a7e1433917c1cd01222"
+    },
+    {
+      "path": "helper-pins.json",
+      "bytes": 2672,
+      "sha256": "2b7b34a668941554dbf2a22deddd2e5186431f703187591bda8a9c14eb3b0f78"
+    },
+    {
+      "path": "receipt-intake-main-r1/original.zip",
+      "bytes": 143581,
+      "sha256": "c659e273e651678cfa3e7c5a3c13d129a6fa40a3a2d7b3b71d0137648718b481"
+    },
+    {
+      "path": "receipt-intake-main-r1/download-exit.json",
+      "bytes": 192,
+      "sha256": "305f34856d135a337bf41d8d90bf8631877f934f5f84f44b5f4c7a5ac8d6f259"
+    },
+    {
+      "path": "receipt-intake-main-r1/zip-receipt.json",
+      "bytes": 407,
+      "sha256": "fe0e057f25874bf03ac70cab6242d0b2311dddc6dd0fab3002c1df996dac8767"
+    },
+    {
+      "path": "intake-capacity-review.json",
+      "bytes": 285,
+      "sha256": "c07545ebf4a967809edc72faf613561f0fb5c1e04b4367e1dc80e53826497582"
+    },
+    {
+      "path": "tools/inputs/8f4f395272f78a74b6b5ae40f0126b811491e05e/binding.json",
+      "bytes": 2042,
+      "sha256": "72608f0831b1ae3458ca0d6c316b10900c5bc3aa85030fbaec48997079dec796"
+    },
+    {
+      "path": "tools/runs/public-main-r1/report.json",
+      "bytes": 3862,
+      "sha256": "8a33e8eda522be326400dec075f438ee690d43b3d31adea5f4b15d3b8ca6aeee"
+    },
+    {
+      "path": "tools/runs/public-main-r1/inventory.json",
+      "bytes": 769232,
+      "sha256": "f48a80b292a3a63706f49320b1b37a50fe6b700dc8ddb7290d90869e13086ed7"
+    },
+    {
+      "path": "tools/runs/public-main-r1/results.jsonl",
+      "bytes": 1978189,
+      "sha256": "eee6866e3f62543bb76641cb33b98ef4c81a2174750aac11d656ae3f79b0414e"
+    },
+    {
+      "path": "tools/runs/public-main-r1/attempts.jsonl",
+      "bytes": 1978728,
+      "sha256": "36ad3899f2d5f61caf27544bebfa865a006af18ac37767cacc1d18ac7a20a058"
+    },
+    {
+      "path": "public-row-review-public-main-r1.json",
+      "bytes": 1613,
+      "sha256": "9d7ed15efd4369f14329c13e5d3cd4abbda5ba916a544f17fc340fcca7c5ef2a"
+    },
+    {
+      "path": "hosted-observation-pages-r2/record.json",
+      "bytes": 3703,
+      "sha256": "03bd559cedac2a2ee5aa19bcbc91ae47524f35c881d1172258b32843f2f452b6"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/record.json",
+      "bytes": 3703,
+      "sha256": "9805d2a1215b9abcd5701b9de9ba84b476bf8702b79b755ac9268dee14aac07f"
+    },
+    {
+      "path": "refresh-request.reviewed.json",
+      "bytes": 1042,
+      "sha256": "ab0b5271a63b32c54f2f6c55295f5a49461f8303f4306919ed5872e447063bfa"
+    },
+    {
+      "path": "after-http-authorities-after-full-r1/result.json",
+      "bytes": 7638,
+      "sha256": "76ad0c7a6efcfad334638166c50417093b8b2815b5f3b16cc07b7ac74df26acf"
+    },
+    {
+      "path": "native/studio-guide.json",
+      "bytes": 1560,
+      "sha256": "921c05e61bf022b11752d2c36f6d9369aea813dc773a1766af7dfdbd0bba8b74"
+    }
+  ]
+}

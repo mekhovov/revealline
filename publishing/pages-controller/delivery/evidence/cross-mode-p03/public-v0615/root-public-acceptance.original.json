@@ -1,0 +1,77 @@
+{
+  "status": "ROOT_ACCEPTED_SCOPED_PUBLIC_RELEASE",
+  "acceptedAt": "2026-09-18T11:49:40.615148+00:00",
+  "version": "v0.61.5",
+  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "tree": "3af511259e14ed2af11a2e2498535744450a378f",
+  "sourcePR": 116,
+  "publisherPR": 133,
+  "controller": "8f4f395272f78a74b6b5ae40f0126b811491e05e",
+  "controllerTree": "bae67e16d5510ba5fbc8b807c2470fd7a99c71d4",
+  "run": 35340056708,
+  "deployment": 6523401020,
+  "deploymentSuccessStatus": 18521652587,
+  "publicURL": "https://mekhovov.github.io/revealline/releases/v0.61.5/site/game/",
+  "files": 3051,
+  "bytes": 641652183,
+  "attempts": 3052,
+  "retries": 1,
+  "failures": 0,
+  "sourceTestsPerFamily": 5853,
+  "sourceTestFiles": 462,
+  "pins": [
+    {
+      "path": "production-terminal-review.json",
+      "bytes": 20744,
+      "sha256": "c7b314cce252ed7aa0f99155b6979a37a1555be4032cfa9bc7e0c713ab06d710"
+    },
+    {
+      "path": "tools/runs/public-main-r1/report.json",
+      "bytes": 3862,
+      "sha256": "8a33e8eda522be326400dec075f438ee690d43b3d31adea5f4b15d3b8ca6aeee"
+    },
+    {
+      "path": "public-row-review-public-main-r1.json",
+      "bytes": 1613,
+      "sha256": "9d7ed15efd4369f14329c13e5d3cd4abbda5ba916a544f17fc340fcca7c5ef2a"
+    },
+    {
+      "path": "after-http-authorities-after-full-r1/result.json",
+      "bytes": 7638,
+      "sha256": "76ad0c7a6efcfad334638166c50417093b8b2815b5f3b16cc07b7ac74df26acf"
+    },
+    {
+      "path": "peer-public-review-r1.json",
+      "bytes": 6701,
+      "sha256": "39aa7399ced6fc899834108b8bddadc36ee8536f85de6ccc5a0a2d9b9336753c"
+    },
+    {
+      "path": "native/studio-guide.json",
+      "bytes": 1560,
+      "sha256": "921c05e61bf022b11752d2c36f6d9369aea813dc773a1766af7dfdbd0bba8b74"
+    },
+    {
+      "path": "native/solo-collection.json",
+      "bytes": 1014,
+      "sha256": "4bf86a49c5bfd330a4541e8dbaf3ab8b9d7b588ba659b9add6275c392784d803"
+    },
+    {
+      "path": "native/history.json",
+      "bytes": 531,
+      "sha256": "0591065e569b05b4af7ede194e0e0ebb3e8e4a152d3615d5e4aee7b5ed05622b"
+    }
+  ],
+  "scope": "Studio guide remains keyboard reachable during collection loading; closing restores visible opener focus and retains temporary edits and preview state. Actual public keyboard Solo pause/explicit resume, a completed mission, full picture, Next and Collection playback passed. Release explorer routes to preserved v0.61.4 and current v0.61.5 passed. Exact public HTTP inventory and fresh deployment/release authorities independently reconciled.",
+  "retainedObservations": [
+    "One initial 503 for historical v0.27.0/site/distribution.zip.sha256 recovered on retry; original attempt preserved.",
+    "Studio guide actual SUMMARY was labelled button by native accessibility but not by DOM role lookup; later known-ID/native input succeeded. Broad Collection role query matched two controls; native Tab selection succeeded. Neither lookup failure establishes a product defect.",
+    "Collection loading completed before the guide Escape observation; no actual long-running cancellation claim."
+  ],
+  "remaining": [
+    "Physical controller and touch, audible listening, offline/media recovery and complete P03/P05/P07/P08/P18 gates remain open.",
+    "Guide held-Escape protection has source-test evidence, not a native repeat observation in this public check.",
+    "No Studio file upload, crop, pixel edit, full export/import or exact media-backup acceptance is implied.",
+    "v0.61.6 through v0.61.21 source candidates and the unversioned Team Large / Close regression proposals remain separate from this release.",
+    "This is a scoped correction release, not completion of a whole phase or the complete game."
+  ]
+}
