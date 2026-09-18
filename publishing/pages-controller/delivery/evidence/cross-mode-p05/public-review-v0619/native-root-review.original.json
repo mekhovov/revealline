@@ -1,0 +1,56 @@
+{
+  "at": "2026-09-18T16:57:33.627158+00:00",
+  "status": "ROOT_REVIEWED_PUBLIC_NATIVE_PARTIAL_REQUIRED_FOCUS_FAILURE",
+  "version": "v0.61.9",
+  "manifestSha256": "cf0ee6fae938aaa32b4626fd0b4f04a555462bc5a6ef2e3f44b8d6ad7add74dc",
+  "rehashed": [
+    {
+      "manifest": ".cache/p05-public-native-v0619/manifest.json",
+      "rows": 20,
+      "bytes": 1204920
+    },
+    {
+      "manifest": ".cache/p05-public-native-v0619/identity/manifest.json",
+      "rows": 23,
+      "bytes": 94325
+    },
+    {
+      "manifest": ".cache/p05-public-native-v0619/focus-analysis/manifest.json",
+      "rows": 4,
+      "bytes": 14824
+    }
+  ],
+  "viewedOriginals": [
+    "08-portrait-picker-return.jpg",
+    "10-open-draft-adopts-standard-theme.jpg",
+    "12-open-draft-readopts-large-plain.jpg"
+  ],
+  "confirmedScope": "Recorded shared Large/Plain and Standard/Theme preference adoption with retained unsaved owned-image preview; Escape/Close opener restoration. Computed font stacks are observed; glyph fallback identity not certified.",
+  "remainingFailure": {
+    "id": "still-media-return-portrait-focus-clipped",
+    "observation": "08-portrait-picker-return",
+    "result": "FAIL",
+    "viewport": [
+      390,
+      844
+    ],
+    "activeElement": "still-media-file",
+    "pickerBottom": 819.765625,
+    "outlineWidth": 3,
+    "outlineOffset": 4,
+    "paintedOutlineBottom": 826.765625,
+    "actualDialogScrollportBottom": 825.0,
+    "clippedCssPixels": 1.765625,
+    "dialogOuterBottom": 828,
+    "focusAndDraftRetained": true,
+    "blocksCompleteFocusClearanceAcceptance": true,
+    "analysisManifest": "focus-analysis/manifest.json",
+    "analysisSHA256": "015ce2c47e60e3cd7d12498a5299d97eb9efee6bfb50a1d290e6f03644a38905",
+    "cause": "The existing helper uses the dialog border box instead of the actual bordered scrollport when checking clearance. See the independent source analysis; this packet does not implement its proposed fix.",
+    "requiredNextEvidence": "A separately versioned correction and exact retained-focus portrait to landscape to portrait retest, plus affected shared-helper consumers. Do not change immutable v0.61.9 bytes."
+  },
+  "fullNativeAcceptance": false,
+  "phaseAccepted": false,
+  "physicalHardwareAccepted": false,
+  "unchangedOriginals": true
+}

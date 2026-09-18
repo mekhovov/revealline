@@ -1,0 +1,81 @@
+{
+  "files": [
+    {
+      "path": "01-missions-initial.jpg",
+      "bytes": 49360,
+      "sha256": "51668705734adf1f68d3fea57cd1f0fb3fadf0c7982cb640e106dd64de5d6256"
+    },
+    {
+      "path": "02-missions-lower-disclosure.jpg",
+      "bytes": 39338,
+      "sha256": "2176e53dcd6a6d83aaace92313857a9842e95f938615102328ead2fd8415f06e"
+    },
+    {
+      "path": "03-missions-landscape-disclosure.jpg",
+      "bytes": 32739,
+      "sha256": "bab9f69aa905478b717b6f88808db2a3337dc1e65288635feb03a8afa5a553a4"
+    },
+    {
+      "path": "04-focused-chapter-horizontal-edge.jpg",
+      "bytes": 50034,
+      "sha256": "662bbcfe1635e01ab81e038f4e3b9ef80f483881d1304caf1f097e7aa9e66978"
+    },
+    {
+      "path": "05-forward-chapter-horizontal-edge.jpg",
+      "bytes": 49377,
+      "sha256": "b5267902f7a95f07958136807a56de07e8605008eee09101187e7787a3a65d16"
+    },
+    {
+      "path": "06-missions-return.jpg",
+      "bytes": 61305,
+      "sha256": "90789f80509aaacadc73eaf073d14e8fbd02c180f3bd1047d6b93a5dc5c32ebf"
+    },
+    {
+      "path": "07-replay-portrait-focused.jpg",
+      "bytes": 56817,
+      "sha256": "d6cd92f15be619c67294d88a5faf2aeb302edb6a933921800bd6ec5a848d5bda"
+    },
+    {
+      "path": "08-replay-landscape-focused.jpg",
+      "bytes": 45015,
+      "sha256": "616a2699d830f28b91fa89740fa7e09609225d60cc8636730d653e47f1c07d2c"
+    },
+    {
+      "path": "09-replay-landscape-actual-field.jpg",
+      "bytes": 41793,
+      "sha256": "fe554ac43ce0cb76c887a373ba77c1a86b0f966a935902301a27dcbc58aeea7c"
+    },
+    {
+      "path": "10-replay-portrait-actual-field.jpg",
+      "bytes": 61036,
+      "sha256": "147d3a34f2d6179b573cf7c67f97e9dda37ea485f81746862e2feb03bd447794"
+    },
+    {
+      "path": "11-replay-manual-reading-scroll.jpg",
+      "bytes": 62051,
+      "sha256": "ab9d11de1b18ce14d7c7e94bbb48b5fb77265c7652f76176b4fa5ef3d1ed3fd3"
+    },
+    {
+      "path": "12-replay-return-opener.jpg",
+      "bytes": 49760,
+      "sha256": "76faaaa7db6194d1386aabf63c6ecd0ae328bd015146151695e049d3e1a47e0b"
+    },
+    {
+      "path": "observations.json",
+      "bytes": 83847,
+      "sha256": "b8cb6f5f10118cb99fa368b757a4ae2541495e0b2fd8f451637ff6aec0974984"
+    },
+    {
+      "path": "replay-observations.json",
+      "bytes": 31966,
+      "sha256": "643243f1096e4a171ff440213471b535505fcdd717a7d006c6d1f260a14c2535"
+    },
+    {
+      "path": "review.json",
+      "bytes": 4327,
+      "sha256": "7c529434a70f94c1ca8c22a3659d0a9d59d443d8e9c666dedd41f6708ed1595d"
+    }
+  ],
+  "totalBytes": 718765,
+  "status": "SHARED VERTICAL-FOCUS SMOKE PASSES; SEPARATE MENU/READABILITY FINDINGS OPEN"
+}

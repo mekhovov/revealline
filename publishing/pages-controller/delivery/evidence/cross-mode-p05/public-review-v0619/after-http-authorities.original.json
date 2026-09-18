@@ -1,0 +1,195 @@
+{
+  "status": "PASS_LIVE_AUTHORITIES_UNCHANGED_AFTER_FULL_AUDIT",
+  "at": "2026-09-18T16:54:21.382974+00:00",
+  "controllerCommit": "b88b0e4c63dddcc5339076e29606b2fb1700553f",
+  "controllerTree": "9456449f0b6ea304c6d2c3ba2b590782e6e3a484",
+  "deploymentId": 6528856630,
+  "runId": 35370220934,
+  "latestSuccessStatusId": 18534250830,
+  "latestStableVersion": "v0.61.9",
+  "releaseId": 391596705,
+  "assets": [
+    {
+      "id": 572944107,
+      "name": "distribution.zip",
+      "size": 313405535,
+      "digest": "sha256:5ac70e707cbe01c75e54ccdc5b298fb34ec7af1026f7346ca7ef983cc66ca6ea",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/distribution.zip"
+    },
+    {
+      "id": 572937051,
+      "name": "distribution.zip.sha256",
+      "size": 83,
+      "digest": "sha256:54c336c0f241ccf91dffe3a2a1087354cfc214da29dfb5e2072a0ae409e47962",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/distribution.zip.sha256"
+    },
+    {
+      "id": 572937049,
+      "name": "manifest.json",
+      "size": 127872,
+      "digest": "sha256:d996b4eae3d5283bdeca43545616000957c64b1541a28f72e441d24223ecb2f0",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/manifest.json"
+    },
+    {
+      "id": 572937052,
+      "name": "qualification-evidence-record.json",
+      "size": 11914,
+      "digest": "sha256:f850603422ef4c839f8fb1e48a224e7d97e1072e422bc6cc471306926ddd4549",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/qualification-evidence-record.json"
+    },
+    {
+      "id": 572937050,
+      "name": "release.json",
+      "size": 465,
+      "digest": "sha256:84d3834ec22b67328c19b15f36f914c541afa402ea87410a20c1ad2b4f853132",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/release.json"
+    },
+    {
+      "id": 572937048,
+      "name": "source-qualification-evidence.zip",
+      "size": 4793141,
+      "digest": "sha256:e4b0429e7979f271053371e73ac6b7caf4129ef2c21a6b031a0622440aebf320",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/source-qualification-evidence.zip"
+    },
+    {
+      "id": 572937196,
+      "name": "source-qualification.json",
+      "size": 117972,
+      "digest": "sha256:8424d1fa8a44a3fd834c892db930ad4c3ef8e85a4bdfbe77e590e14a2058703b",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/source-qualification.json"
+    },
+    {
+      "id": 572943047,
+      "name": "source.tar",
+      "size": 1115719680,
+      "digest": "sha256:2f4013a6bc636e03dd01926c7139314a0b5dc050eff926784cbbd503e451c742",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/source.tar"
+    },
+    {
+      "id": 572937197,
+      "name": "verification.json",
+      "size": 1914,
+      "digest": "sha256:a46e8e58150956a44f391d0243a9cb3894a145782c3a7869b88542f0e3400084",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.61.9/verification.json"
+    }
+  ],
+  "pins": [
+    {
+      "path": "after-http-authorities-main-r1/all-deployments.exit.json",
+      "bytes": 311,
+      "sha256": "626318dee9ac4b192ac20cffca81115475cf6e7578e641c323dddeacb3bf697d"
+    },
+    {
+      "path": "after-http-authorities-main-r1/all-deployments.json",
+      "bytes": 38241,
+      "sha256": "a02ddbea6d930a484b80484214c60474b8663d42f1ba302cd97c92a0a457437e"
+    },
+    {
+      "path": "after-http-authorities-main-r1/all-deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/collection-started.json",
+      "bytes": 490,
+      "sha256": "4c89afa0d0fc5233ce16ef52b419be0361b7d5963dea8271c1b03dd0dc76f700"
+    },
+    {
+      "path": "after-http-authorities-main-r1/latest.exit.json",
+      "bytes": 278,
+      "sha256": "5dc88c5abf4b4a77bd2e715fcbd5ba80d40785df160a000bb380789065a3ecd3"
+    },
+    {
+      "path": "after-http-authorities-main-r1/latest.json",
+      "bytes": 16215,
+      "sha256": "682d2e75e858a81bc39c22d7c77cebf19bf1eabf9e85d449a5c931fa1947b4d3"
+    },
+    {
+      "path": "after-http-authorities-main-r1/latest.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/original-published-release.json",
+      "bytes": 16215,
+      "sha256": "c1f34aaf92fe1ca8d574115e041e45053f4d4c072b67289798406f685312aeb4"
+    },
+    {
+      "path": "after-http-authorities-main-r1/release.exit.json",
+      "bytes": 284,
+      "sha256": "c7c4b4bfff666355c725da5128030a6965ae2919432c77105758413064a9a10e"
+    },
+    {
+      "path": "after-http-authorities-main-r1/release.json",
+      "bytes": 16215,
+      "sha256": "682d2e75e858a81bc39c22d7c77cebf19bf1eabf9e85d449a5c931fa1947b4d3"
+    },
+    {
+      "path": "after-http-authorities-main-r1/release.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/request.original.json",
+      "bytes": 1035,
+      "sha256": "de92955a3e43d4be9072ddfcd51ec0181eea189600c5853c8c8c6bec9a52899c"
+    },
+    {
+      "path": "after-http-authorities-main-r1/source.exit.json",
+      "bytes": 314,
+      "sha256": "55384acde3f60d49fddb3b66153aed6a939daec5fc419f3ba3f435dba11ba1fc"
+    },
+    {
+      "path": "after-http-authorities-main-r1/source.json",
+      "bytes": 1179,
+      "sha256": "9a9ec8ab8282707437fc06a3cd3c1bd91b7e5bab834c15e02b7175c02a3be886"
+    },
+    {
+      "path": "after-http-authorities-main-r1/source.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag-object.exit.json",
+      "bytes": 310,
+      "sha256": "65f09440166b78f095b8d738641c7d6d911f3c589ffd5425d188cab503ceac3c"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag-object.json",
+      "bytes": 731,
+      "sha256": "cd114eae73bd2eabbfc3e3863dde9f0b46134e084c53548cc462a4a202ffbf3b"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag-object.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag.exit.json",
+      "bytes": 281,
+      "sha256": "42c93004f9096c46e5c80087638d4bffef12b2fe0662e8e5b65c08b1f414cf89"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag.json",
+      "bytes": 337,
+      "sha256": "c611d7818e2a97bd97d3d955e8b3ae982d0616e5bc519ea3fa7651f0ef1560f2"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "requestSha256": "de92955a3e43d4be9072ddfcd51ec0181eea189600c5853c8c8c6bec9a52899c",
+  "phaseAccepted": false,
+  "scope": "Fresh bounded API originals after full byte audit and independent row reconciliation; browser, offline and physical-device acceptance remain separate."
+}
