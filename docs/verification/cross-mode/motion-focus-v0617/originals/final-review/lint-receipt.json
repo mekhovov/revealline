@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+    "--config",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/final-review/eslint-scoped.config.mjs",
+    "authoring/motion-lab/display.mjs",
+    "game/test/motion-lab-display-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation",
+  "exitCode": 0,
+  "at": "2026-09-18T05:31:53.221198+00:00",
+  "configuration": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/final-review/eslint-scoped.config.mjs",
+    "bytes": 459,
+    "sha256": "2dbf23af1a0b4f146aa5da90f5a3dd36db0f9ac58e2459892eca429772f1f7ac"
+  },
+  "note": "Same no-undef/no-unreachable project rules; browser globals explicitly applied to the authoring module, Node globals to test. Dependency import absolute to existing shared install, no installation."
+}

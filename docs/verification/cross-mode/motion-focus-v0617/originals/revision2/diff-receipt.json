@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-18T05:50:53.361602+00:00",
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation",
+  "exitCode": 0,
+  "stdout": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/diff.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/diff.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

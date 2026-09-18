@@ -1,0 +1,40 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--experimental-vm-modules",
+    "--test",
+    "game/test/motion-lab-display-host.test.mjs",
+    "game/test/motion-lab-display-restoration.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation",
+  "startedAt": "2026-09-18T05:47:49.549870+00:00",
+  "seconds": 1.4230010509490967,
+  "exitCode": 0,
+  "inputs": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/authoring/motion-lab/display.mjs",
+      "bytes": 7823,
+      "sha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/game/test/motion-lab-display-host.test.mjs",
+      "bytes": 62761,
+      "sha256": "53dc3804da926541d7ad88ec48577e274aac54527b5345a7beab0ae46dceeea8"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/game/test/motion-lab-display-restoration.test.mjs",
+      "bytes": 6923,
+      "sha256": "90da611836f8976c2f85413b44e03e7f754dcdde09fe80f813731052830140a0"
+    }
+  ],
+  "stdout": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/revision2-focused-node22/stdout",
+    "bytes": 14313,
+    "sha256": "806bbbaec0166af8153aba3ba6960463a003fb4dfd035dedf3a1a334aeb5a0e9"
+  },
+  "stderr": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/revision2-focused-node22/stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

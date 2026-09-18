@@ -1,0 +1,101 @@
+{
+  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "version": "0.61.6 unchanged",
+  "paths": [
+    {
+      "path": "authoring/motion-lab/README.md",
+      "baseBlob": "2e0036f09e77fcced75a18521b77dbb01b1d0596",
+      "after": {
+        "path": ".cache/worktrees/p03-motion-focus-rotation/authoring/motion-lab/README.md",
+        "bytes": 44849,
+        "sha256": "666719770ea94bc63f0a237d4ae3edefbc1626e571aedbd3dc71ea1026468ca2"
+      },
+      "hunks": [
+        "@@ -243,7 +243,6 @@ If preset download or validation fails after the module attaches, an ordinary **",
+        "@@ -253,3 +252,9 @@ The v0.60.5 browser record exposed an implicit-label error: the first labelable"
+      ]
+    },
+    {
+      "path": "authoring/motion-lab/display.mjs",
+      "baseBlob": "07f9d24e031a3ccc8e6599214c092e1bbc8e21e0",
+      "after": {
+        "path": ".cache/worktrees/p03-motion-focus-rotation/authoring/motion-lab/display.mjs",
+        "bytes": 7823,
+        "sha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4"
+      },
+      "hunks": [
+        "@@ -16,6 +16,7 @@ export function getMotionDisplay(",
+        "@@ -29,6 +30,95 @@ export function getMotionDisplay(",
+        "@@ -76,6 +166,7 @@ export function getMotionDisplay(",
+        "@@ -90,6 +181,7 @@ export function getMotionDisplay("
+      ]
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "baseBlob": "0571fc5e12a51a367f45e08524bd282f9d5e354f",
+      "after": {
+        "path": ".cache/worktrees/p03-motion-focus-rotation/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "bytes": 217362,
+        "sha256": "c0fdde546e9508315053e5db87fdf1dc52e33f290c84694211e2e616e08c08b3"
+      },
+      "hunks": [
+        "@@ -633,6 +633,8 @@ Keep each native range explicitly associated with a stable visible purpose label"
+      ]
+    },
+    {
+      "path": "game/test/motion-lab-display-host.test.mjs",
+      "baseBlob": "bfd243aa4093fb00a73d34f8e8594e272939307b",
+      "after": {
+        "path": ".cache/worktrees/p03-motion-focus-rotation/game/test/motion-lab-display-host.test.mjs",
+        "bytes": 62761,
+        "sha256": "53dc3804da926541d7ad88ec48577e274aac54527b5345a7beab0ae46dceeea8"
+      },
+      "hunks": [
+        "@@ -1503,3 +1503,177 @@ test('Motion recipe replacement refreshes the rotor value text after a manual ra"
+      ]
+    }
+  ],
+  "sourcePatch": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/source.patch",
+    "bytes": 19180,
+    "sha256": "731e1fbf6f3ebdc6bbe4ace95c8ab0df9981571d1ae21c0740d8f6d31dea1858"
+  },
+  "revisionDelta": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/revision1-to-2.patch",
+    "bytes": 7911,
+    "sha256": "c289d73b668a0e42ebf44f8054ea4b24a280d9504dc08b2ded344f738591611c"
+  },
+  "nativeFailure": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/native-rotation-failure-r1.json",
+    "bytes": 1243,
+    "sha256": "2f8a878869401c524a0c938155ca34abd015beb67a33bed12f68c9ee0c7dbe81"
+  },
+  "previousCandidate": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/revision1/ready.json",
+    "bytes": 4306,
+    "sha256": "2226b173a2f0ff000f0c6f7c747a33ef44822b4b27a4b22af867b3387e5c4cba"
+  },
+  "checks": [
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/lint-receipt.json",
+      "bytes": 985,
+      "sha256": "e52ced5da4d4612a9d2fa38f8088f4418ad90ccbd76b2ff5de6a3c60230d1983"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/format-receipt.json",
+      "bytes": 1090,
+      "sha256": "36385901f54b9123d312f19bb6429dc383bcf4185f8f850e843b00f4d4c20f3a"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/diff-receipt.json",
+      "bytes": 609,
+      "sha256": "9183901d7d19009acbda9a2fe9fe67b731648b7bbdba8dce0f71b03c28f4ff06"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/revision2/index-receipt.json",
+      "bytes": 631,
+      "sha256": "35e37bede15362b85378ad6332ea805df7372095c7e10ecb7c9b8978c12c5999"
+    }
+  ]
+}

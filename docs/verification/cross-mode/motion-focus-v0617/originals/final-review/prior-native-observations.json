@@ -1,0 +1,73 @@
+{
+  "version": "v0.60.9",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "observer": "root via CUA actual public browser, keyboard actions and read-only visible DOM",
+  "observedAt": "2026-09-18T03:07:35.938548+00:00",
+  "urls": [
+    "https://mekhovov.github.io/revealline/releases/v0.60.9/site/authoring/motion-lab/",
+    "https://mekhovov.github.io/revealline/releases/v0.60.9/site/game/",
+    "https://mekhovov.github.io/revealline/game/"
+  ],
+  "input": "Browser keyboard via native Tab, Shift+Tab, arrows, Home, End, Return, Escape. No physical controller or touch claim.",
+  "sliders": [
+    {
+      "name": "Rotor radius",
+      "initial": "16 percent of body",
+      "Home": "4 percent of body",
+      "Right": "5 percent of body",
+      "End": "28 percent of body",
+      "Left": "27 percent of body"
+    },
+    {
+      "name": "Character scale",
+      "initial": "1.00 times",
+      "Home": "0.60 times",
+      "Right": "0.65 times",
+      "End": "2.20 times",
+      "Left": "2.15 times"
+    },
+    {
+      "name": "Background opacity",
+      "initial": "28 percent",
+      "Home": "0 percent",
+      "Right": "2 percent",
+      "End": "70 percent",
+      "Left": "68 percent"
+    },
+    {
+      "name": "Cruise speed",
+      "initial": "9 cells per second",
+      "Home": "3 cells per second",
+      "Right": "3.5 cells per second",
+      "End": "16 cells per second",
+      "Left": "15.5 cells per second"
+    },
+    {
+      "name": "Body turn response",
+      "initial": "540 degrees per second",
+      "Home": "90 degrees per second",
+      "Right": "120 degrees per second",
+      "End": "720 degrees per second",
+      "Left": "690 degrees per second"
+    }
+  ],
+  "journeys": [
+    "All five sliders reached in actual Tab order; each Home/Right/End/Left updated native input and aria-valuetext while focus stayed on the slider.",
+    "Initial Motion preview paused with Escape on arena; range edits and two-blade recipe selection left it paused. Two-blade tapered recipe reset rotor radius from27 to16percent without changing other edited ranges.",
+    "Changing Immediate to Grid center + buffer explicitly reset to6.50,6.50 and remained paused, buffer empty. This was not a new full grid-steering test.",
+    "Theme font Standard desktop1280x720, Large390x844portrait and844x390shortlandscape inspected. Portrait and landscape document width equalled viewport width. Keyboard-focused rotor label/currentvalue/slider and short-landscape speed/turn controls readable.",
+    "Keyboard Return to game reached same immutable609 edition. Start openedFirstSignal; downpress/release beganlivecut. Afteridle time beforeinput, actual win50.0percent,7820points,1:54,3lives,1star; fullpicture unlocked. This is onboarding smoke, not a challenge-quality measurement.",
+    "Results Tab/Return Viewpicture; Results Return restoredViewpicture focus with unchangedscore; TabReturnRetry openedfresh0:00,0percent,0score,3lives. Down thenEscape retainedpaused0:00. Missionbrief viaTab/Return thenEscape restoredbriefopener; noimplicitresume.",
+    "Mainmenu Settings viaTab; selectedPlain text. Workshop->Motionlab viafourTabs/Return. SharedLarge preference and Plain rendering visibly applied; rotorlabel/readout inspected. RestoredStandard viaMotionLab, returnedgame, restoredThemefont viaSettings and confirmedStandard.",
+    "Public /game/ entry navigated to /releases/v0.60.9/site/game/index.html with VERSION V0.60.9 and Continue visible."
+  ],
+  "remainingObservations": [
+    "Resize from390x844 to844x390 left existing rotor focus offscreen; Right changedvalue without scrolling. Tab thenShift+Tab broughtslider into view. Retain as responsive focus-follow-up; scope does not claim wholeP03/P05 completion.",
+    "Exact Playwright getByLabel(Animation recipe) returned no_matches; nativeAX exposednamedselect and actualShift+Tab/Down/Return successfully selectedtwo-blade recipe. Retain original toolfailure and check remainingselect labeling separately."
+  ],
+  "limits": [
+    "Screenshots displayed inline only; no exported screenshots or invented screenshot hashes.",
+    "No assistive-technology announcement, physicalcontroller/touch, audiblelistening, offline/server-stopped, fullcrossmodeorhumanplaytest qualification.",
+    "Toy MotionLab does not establish tactical game mechanics."
+  ]
+}

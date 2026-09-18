@@ -1,0 +1,63 @@
+{
+  "status": "NATIVE_ROTATION_CONTROL_VISIBLE_MINOR_OUTLINE_CLEARANCE_OPEN",
+  "at": "2026-09-18T05:54:34.155624+00:00",
+  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "candidateDisplaySha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4",
+  "url": "http://127.0.0.1:53273/authoring/motion-lab/",
+  "observer": "root native CUA supported UI actions and read-only visible DOM",
+  "viewportTransition": [
+    "390x844",
+    "844x390"
+  ],
+  "results": [
+    {
+      "text": "Theme Standard",
+      "focus": "rotor-radius",
+      "value": ".27",
+      "control": [
+        61.4375,
+        105.4375
+      ],
+      "field": [
+        -0.15625,
+        105.4375
+      ],
+      "panelBottom": 105.390625,
+      "paused": true,
+      "rightKeyAfterResize": ".28"
+    },
+    {
+      "text": "Theme Large",
+      "focus": "rotor-radius",
+      "value": ".27",
+      "control": [
+        72.171875,
+        116.171875
+      ],
+      "field": [
+        0.171875,
+        116.171875
+      ],
+      "panelBottom": 116.359375,
+      "paused": true
+    },
+    {
+      "text": "Plain Large",
+      "focus": "rotor-radius",
+      "value": ".27",
+      "control": [
+        69.171875,
+        113.171875
+      ],
+      "field": [
+        0.171875,
+        113.171875
+      ],
+      "font": "system-ui, -apple-system, system-ui, Segoe UI, sans-serif",
+      "paused": true
+    }
+  ],
+  "journey": "Native Return to game; keyboard Start focus threeTabs Settings; selectPlain through realcombobox; Escape restoresSettings,TabWorkshop, fourTabs MotionLab. SharedLargeandPlain applied. Each preview paused through visiblePause beforeEnd/Left; nofocusinputduringrotation.",
+  "remaining": "Bottom focus-outline at scrollport boundary remains visibly clipped, despite visible label/value/control. Request minimal clearance followup. Physicaldevice/controller, zoom andcompletefieldmatrix notcertified.",
+  "screenshots": "Displayed inline only, no exported image/hashes."
+}

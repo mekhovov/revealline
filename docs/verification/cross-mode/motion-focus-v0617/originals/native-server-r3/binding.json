@@ -1,0 +1,30 @@
+{
+  "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "pid": 33258,
+  "port": 54246,
+  "url": "http://127.0.0.1:54246/authoring/motion-lab/",
+  "scope": "Exact616 source plus unchanged r2 Motion display.mjs and r3 Motion CSS8px wrapper scroll margin. Native retest only, no app-state or preference fixtures. Earlier candidate bindings preserved.",
+  "runtimeOverrides": {
+    "authoring/motion-lab/display.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/native-server-r3/candidate-display.mjs",
+      "bytes": 7823,
+      "sha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4"
+    },
+    "authoring/motion-lab/styles.css": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/native-server-r3/candidate-styles.css",
+      "bytes": 30321,
+      "sha256": "1b266e5c7059ce17bfa4705f5810cccd976e1ec80dbce9fe5d6bbf1effe988d4"
+    }
+  },
+  "limits": {
+    "extraDiskBytes": 16777216,
+    "reserveBytes": 536870912,
+    "memoryCacheBytes": 8388608,
+    "singleBlobBytes": 8388608,
+    "requestLogBytes": 1048576,
+    "requestEvents": 4000
+  },
+  "overrideSpecSHA256": "9bde8fc96f0df322c3ef7a408b59c847444583b5453f00dc507431a4dcb38ace",
+  "serverSHA256": "d1a4bf38bcce8b8f271356167963256d93f99a6c17ecad7f5981d1a5925d16d6"
+}

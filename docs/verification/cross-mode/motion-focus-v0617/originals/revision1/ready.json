@@ -1,0 +1,108 @@
+{
+  "status": "CANDIDATE_READY_FOR_ROOT_REVIEW_NOT_VERSIONED_OR_RELEASED",
+  "at": "2026-09-18T05:33:38.677236+00:00",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation",
+  "sourceManifest": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/source-manifest.json",
+    "bytes": 3772,
+    "sha256": "99a3ce567f73f587525fc68764edce4a1c2cc9f654237db9b1c796a53914c3eb"
+  },
+  "sourcePatch": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/source.patch",
+    "bytes": 17210,
+    "sha256": "4829ff864e4bb50ee51ca3ea69b2b814fad21170157bca3e8a7f7b021a727553"
+  },
+  "predecessorNativeOriginal": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/prior-native-observations.json",
+    "bytes": 4320,
+    "sha256": "4109efacfdeb04f57fd18fe5bb59189083b86ed62d4294cd6ee8b6b21969ddf2"
+  },
+  "tests": {
+    "node20": {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/focused-node20/receipt.json",
+      "bytes": 1782,
+      "sha256": "5d949c24b83d8ba5e8e301a1441cdc850c7c43c0dc83e8d44d54619ebcd0d3f2"
+    },
+    "node22": {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/focused-node22/receipt.json",
+      "bytes": 1782,
+      "sha256": "33f5948f5cf2edf5d51d9c41acc8f3caba63b030afc0c1bd7616a56af2b8f373"
+    },
+    "resultsPerRuntime": {
+      "pass": 56,
+      "fail": 0,
+      "skip": 0
+    },
+    "red": {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/red-node20/receipt.json",
+      "bytes": 832,
+      "sha256": "56dd3c31e85871ff9ff680363dbb0503b8f759382d35dcbed0d571b9d8ec884a"
+    },
+    "scope": "Complete Motion actual-host and display-restoration files; modeled DOM geometry, not native layout. Test inputs predate whitespace-only formatting; both module ASTs were independently compared after formatting."
+  },
+  "checks": [
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/format-receipt.json",
+      "bytes": 2962,
+      "sha256": "cdadfb74da733c583df0be89d50850374d5f23d41245cf780728b5a69c6f3b96"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/format-check-receipt.json",
+      "bytes": 1108,
+      "sha256": "05c48b4fbe0a655df68512cfe02529e58e84fe25820cdeb44449758a721be5ea"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/format-ast-receipt.json",
+      "bytes": 803,
+      "sha256": "943be03a928f396d2d2a61f586e063a5d219e39aa5d4f9a202f82e040cc353d1"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/lint-receipt.json",
+      "bytes": 1081,
+      "sha256": "4ea646ccf7effed575a4ecb68416fdfe913df6eb163f706447a5ac77b82f74d7"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/diff-check-receipt.json",
+      "bytes": 627,
+      "sha256": "334e52f8d26d8c1918183b4b0f249a3a9d6965158934c592b52739fcc029223a"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/index-check-receipt.json",
+      "bytes": 649,
+      "sha256": "5551d969d30ea9067418af877e63ba05791fd592a12fdfff6f60de841f0bd261"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/production-recipe-trace.json",
+      "bytes": 4410,
+      "sha256": "ca2434cc342ef3f79531e006efaa0f3e6d54f5b582528bfff278f2a34c8c9232"
+    },
+    {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/peer-review.json",
+      "bytes": 856,
+      "sha256": "bc2cd7d2dce65b064e92f8529a61324eb6d13aa5d515a190589e5a8709b3b641"
+    }
+  ],
+  "budget": {
+    "hydratedAndCandidateBytes": 1117022,
+    "evidenceBytes": 790224,
+    "combinedLimitBytes": 16777216,
+    "freeBytes": 1721356288,
+    "reserveBytes": 536870912
+  },
+  "remaining": [
+    "Root source review and version allocation",
+    "Six source gates, ordinary build and final source qualification after integration",
+    "Native browser rotation, Theme/Plain and Standard/Large visual focus checks",
+    "Physical touch/controller/device and visual-viewport checks remain separate",
+    "PR/release/deployed verification; this does not complete parent P03"
+  ],
+  "boundaries": {
+    "sourceVersionChanged": false,
+    "staged": false,
+    "committed": false,
+    "remoteMutations": false,
+    "browserUsed": false,
+    "generatedAssetsChanged": false,
+    "qualifiedWorktreesChanged": false
+  }
+}
