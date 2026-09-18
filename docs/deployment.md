@@ -55,6 +55,15 @@ default game. See the [controller contract](../publishing/pages-controller/READM
 checks, capacity limits, and the distinction between the controller commit and the frozen game
 source.
 
+When publishing the newest intended stable release, explicitly set `make_latest: "true"`.
+After publication, read `GET /repos/mekhovov/revealline/releases/latest` and confirm the
+exact release ID and tag. GitHub's Latest pointer and the reviewed Pages selector are
+separate: a correct Pages deployment does not prove the release badge is current. If
+Latest is stale, reverify the existing release, immutable tag and all nine uploaded
+asset descriptors, update only that release's `make_latest` field, and repeat the
+readback. Preserve the initial attempt and original payloads. Drafts and prereleases
+cannot be Latest. See [GitHub release updates](https://docs.github.com/en/rest/releases/releases#update-a-release).
+
 Set the repository Pages source to **GitHub Actions** once. Both workflows use `GITHUB_TOKEN`; no
 additional secret is required. Source checks and publication have separate concurrency groups,
 and neither cancels a healthy deployment. The publisher rechecks the latest stable release before
