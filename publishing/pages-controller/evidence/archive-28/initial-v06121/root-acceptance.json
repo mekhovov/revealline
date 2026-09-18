@@ -1,0 +1,40 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE_RETENTION",
+  "at": "2026-09-18T20:23:23.155377+00:00",
+  "version": "v0.61.21",
+  "archiveId": "archive-28",
+  "archiveCommit": "888cd5c5699af7399f8716183482be90adec87c9",
+  "archiveTree": "9a43107bf83f77985e77cdd83be73dc4b67520cf",
+  "runId": 35389813376,
+  "deploymentId": 6532056613,
+  "deploymentStatusId": 18541547471,
+  "files": 701,
+  "bytes": 313396221,
+  "failedFiles": 0,
+  "failedAttempts": 0,
+  "skipped": 0,
+  "priorRows": 0,
+  "publicByteAndAuthorityAccepted": true,
+  "nativeRetentionAccepted": true,
+  "evidence": [
+    {
+      "path": ".cache/archive28-v06121-audit-preparation/http/row-review.json",
+      "bytes": 12690,
+      "sha256": "47c7a9456d43e04f78066ee565f421df8cb84c96a0adbdd8130697a951067819"
+    },
+    {
+      "path": ".cache/archive28-v06121-root/native-retention-r1.json",
+      "bytes": 1339,
+      "sha256": "1f57e21c5ed0d4e2692e63b81a48ef4645d20277f58e03c714df8bc556bc6ff2"
+    }
+  ],
+  "scope": "Original archived621 bytes; keyboard root/title/Team setup, real two-player flight/cuts, explicit pause/resume/discardtemporarytest, Solo and currentexplorer navigation.",
+  "limits": [
+    "No archive win or picture-dialog test; prior main621 accepted result remains separate.",
+    "No physical controller/touch, offline, audio or BFcache claim.",
+    "No screenshot files exported. No isolated-storage claim.",
+    "No saved Solo attempt opened/replaced."
+  ],
+  "wholePhaseAccepted": false,
+  "wholeGameComplete": false
+}
