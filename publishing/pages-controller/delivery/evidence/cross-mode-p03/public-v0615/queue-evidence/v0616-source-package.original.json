@@ -1,0 +1,70 @@
+{
+  "status": "ROOT_ACCEPTED_EXACT_SOURCE_QUALIFICATION_AND_SMALL_RELEASE_ATTACHMENTS",
+  "at": "2026-09-18T06:23:58.359558+00:00",
+  "source": {
+    "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+    "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+    "version": "v0.61.6"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/qualification/source-qualification.json",
+    "bytes": 102335,
+    "sha256": "65101af99081508d016ae6e8596449438117bc404a45e40a459a4165b40e34e1"
+  },
+  "attachments": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "c540395ddfd85eefcf08222ceee5d55da0ddd734ced857446ccca6bbc1e0c822"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/manifest.json",
+      "bytes": 127872,
+      "sha256": "bc777fcde5ae6d8a35b5f7dd6fac418d57a44fb145c45ab6dffb0bb78908333e"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/qualification-evidence-record.json",
+      "bytes": 12031,
+      "sha256": "e46ab8a498f83ccd2055dcfda0675d624613eb8756ea1a3a7d95939f2982ca6b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/release.json",
+      "bytes": 465,
+      "sha256": "1127a05dea1f3f24a74bc40f476d9089e9c5b5cfaf5192c2581c0a5c3ec53826"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/source-qualification-evidence.zip",
+      "bytes": 3796187,
+      "sha256": "c4d57a66b8035129fbacd940309b6bd25c703732f2c27d522970ef646b5dee36"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/source-qualification.json",
+      "bytes": 102335,
+      "sha256": "65101af99081508d016ae6e8596449438117bc404a45e40a459a4165b40e34e1"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/release-attachments/verification.json",
+      "bytes": 1914,
+      "sha256": "82c9751944f469c54ee2ddfcf2cc56fec564691dd29e57d1683f11cde976b3a4"
+    }
+  ],
+  "pinsRehashed": 228,
+  "archiveMembersCRCChecked": 489,
+  "archiveOriginalsMatchedLocal": 488,
+  "sourceTests": {
+    "tests": 5865,
+    "pass": 5865,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sixGates": true,
+  "sourceIndexClean": true,
+  "notAccepted": [
+    "native candidate feature journeys",
+    "release publication",
+    "public byte/browser qualification",
+    "parent P08-A completion"
+  ]
+}
