@@ -1,0 +1,18 @@
+{
+  "reviewer": "/root/installed_parity_peer",
+  "type": "Read-only code/test review; no execution or browser by reviewer",
+  "runtime": {
+    "bytes": 63875,
+    "sha256": "5709387a4b4afab60f9ee67eb7cb314bd2a6b9ce6941854dbe8bd5f8173993cb"
+  },
+  "result": "No blocking finding",
+  "observations": [
+    "Direct selection/run/generation/Settings lifetimes checked through focus and layout.",
+    "Direct exceptions close focus ownership without blocking pending reads.",
+    "Explicit Cancel preserves legitimate same-selection Retry while operation pointer is cleared.",
+    "Terminal finish and repeated cleanup cannot resurrect focus.",
+    "Successful function-target navigation behavior is unchanged and not overclaimed.",
+    "Three prior raw UI error assertions now retain diagnostics and original rejection/read/release checks."
+  ],
+  "qualificationLimit": "Initial16 red/green receipts checked; final expanded cohort completed after reviewer inspection and is separately pinned."
+}

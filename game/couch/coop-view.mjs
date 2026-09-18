@@ -131,6 +131,9 @@ export function createCoopPainter(canvas) {
       if (picture?.image) {
         ctx.imageSmoothingEnabled = false;
         ctx.drawImage(picture.image, 0, 0, 1152, 576, 0, 0, run.width, run.height);
+        // The accepted original is the victory reward. Keep the actual captured
+        // cells and score intact while retiring the live arena's concealment/cues.
+        if (run.status === 'won') return;
       }
       for (let y = 0; y < run.height; y++) {
         for (let x = 0; x < run.width; x++) {

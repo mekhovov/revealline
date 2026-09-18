@@ -1,5 +1,13 @@
 # Reveal Line: whole-game UX and production execution
 
+**Implementation checkpoint (18 September 2026):** public **v0.60.6** is accepted for shared Settings and quick Sound in Solo, Versus and Team. Its exact source `9c89f997` passed 5,673 tests in each hosted family. Public acceptance binds 2,822 files / 639,924,677 bytes, zero failures or retries, and the scoped browser journeys. Source PR #94, publisher PR #104 and acceptance PR #105 are merged. [Accepted delivery and remaining work](https://github.com/mekhovov/revealline/blob/79b94bf8d713ed44a3a713c2dfd685d8051e0ccd/publishing/pages-controller/delivery/evidence/cross-mode-p03/public-v0606/planning/progress-and-next.md). P00, P01 and P02-A retain their accepted scopes; full P03, P05 and P18 remain open.
+
+**Active corrections:** Replay/Team bindings v0.60.7, Missions/backup feedback v0.60.8 and Motion range names v0.60.9 have passing final-source qualifications; their individual public gates remain separate. Solo Retry/Next v0.61.0 passed both final-source families (5,707 tests / 454 files each), build and freeze; artifact inspection and publication remain pending. The v0.61.1 candidate combines readable native file controls, narrow-screen Still Media sizing and exact Preview focus return. Candidate tests and local browser observations are not release or phase acceptance.
+
+**Next in order:** finish these navigation/readability corrections and P07-A/P16-A continuation/data safeguards, then P08-A artwork/actor parity; complete discovery/journey and Studio/themes; finish action feedback/audio and fair challenge before Team encounters and bulk campaigns. Keep the whole-game plan's content, physical-device, listening, offline and human-playtest gates. Newer public acceptance must be recorded explicitly; dated statements below are history.
+
+## Historical Settings implementation checkpoint
+
 Updated 17 September 2026. This is the current implementation order approved by the user. It replaces the previous ordering; historical release records remain unchanged. Source inspection began at `a53d646153fc9dfb2d8f152fdc9dbde607782777` (accepted Recovery v0.60.4). Settings PR #94 merged as `7db26c148cced9b51315dc24902569234061b17d`, following Motion acceptance PR #99. This checkpoint incorporates the reviewed Replay/navigation production-metadata and Team revision-binding repairs; frozen source commits and historical release evidence remain unchanged.
 
 ## Accepted work and current feature

@@ -28373,6 +28373,606 @@
       },
       "recipe": { "id": "scene.menu.v1" },
       "revision": 15
+    },
+    {
+      "description": "Panel frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.panel.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.panel.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit panel frame for slot ui.panel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Dialog frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.dialog.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.dialog.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit dialog frame for slot ui.dialog. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Tooltip frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.tooltip.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.tooltip.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit tooltip frame for slot ui.tooltip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Status message frame: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.toast.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.toast.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit status message frame for slot ui.toast. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.panel.v1" },
+      "revision": 10
+    },
+    {
+      "description": "primary button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.primary.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.primary.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit primary button for slot ui.button.primary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 10
+    },
+    {
+      "description": "secondary button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.secondary.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.secondary.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit secondary button for slot ui.button.secondary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 10
+    },
+    {
+      "description": "danger button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.danger.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.danger.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit danger button for slot ui.button.danger. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 10
+    },
+    {
+      "description": "icon button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.icon.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.icon.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit icon button for slot ui.button.icon. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 10
+    },
+    {
+      "description": "tab button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.tab.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.tab.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit tab button for slot ui.button.tab. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 10
+    },
+    {
+      "description": "chip button: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.button.chip.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.button.chip.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit chip button for slot ui.button.chip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.button.v1" },
+      "revision": 10
+    },
+    {
+      "description": "checkbox control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.checkbox.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.checkbox.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit checkbox control for slot ui.input.checkbox. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "radio control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.radio.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.radio.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit radio control for slot ui.input.radio. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "toggle control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.toggle.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.toggle.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit toggle control for slot ui.input.toggle. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "slider control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.slider.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.slider.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit slider control for slot ui.input.slider. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "select control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.select.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.select.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit select control for slot ui.input.select. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "text control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.text.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.text.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit text control for slot ui.input.text. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "scrollbar control: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.input.scrollbar.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.input.scrollbar.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit scrollbar control for slot ui.input.scrollbar. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.input.v1" },
+      "revision": 10
+    },
+    {
+      "description": "coverage meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.coverage.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.coverage.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit coverage meter for slot ui.meter.coverage. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 10
+    },
+    {
+      "description": "progress meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.progress.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.progress.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit progress meter for slot ui.meter.progress. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 10
+    },
+    {
+      "description": "time meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.time.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.time.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit time meter for slot ui.meter.time. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 10
+    },
+    {
+      "description": "ability meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.ability.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.ability.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit ability meter for slot ui.meter.ability. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 10
+    },
+    {
+      "description": "volume meter: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.meter.volume.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.meter.volume.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit volume meter for slot ui.meter.volume. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.meter.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Focus brackets: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.focus.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.focus.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit focus brackets for slot ui.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.focus.v1" },
+      "revision": 10
+    },
+    {
+      "description": "Selection cursor: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "ui.cursor.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "ui.cursor.field-kit", "revision": 9 },
+        "prompt": "Create one original FPV Field Kit selection cursor for slot ui.cursor. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.",
+          "The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.",
+          "This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "ui.cursor.v1" },
+      "revision": 10
     }
   ],
   "collections": [
@@ -29348,11 +29948,11 @@
   ],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 27,
+  "revision": 28,
   "selection": {
     "base": { "id": "base", "revision": 1 },
     "collection": null,
-    "theme": { "id": "fpv", "revision": 27 }
+    "theme": { "id": "fpv", "revision": 28 }
   },
   "slots": [
     {
@@ -46483,6 +47083,40 @@
       "name": "FPV Field Kit",
       "parent": { "id": "fpv", "revision": 26 },
       "revision": 27,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 10 },
+        "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 10 },
+        "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 10 },
+        "ui.button.primary": { "id": "ui.button.primary.field-kit", "revision": 10 },
+        "ui.button.secondary": { "id": "ui.button.secondary.field-kit", "revision": 10 },
+        "ui.button.tab": { "id": "ui.button.tab.field-kit", "revision": 10 },
+        "ui.cursor": { "id": "ui.cursor.field-kit", "revision": 10 },
+        "ui.dialog": { "id": "ui.dialog.field-kit", "revision": 10 },
+        "ui.focus": { "id": "ui.focus.field-kit", "revision": 10 },
+        "ui.input.checkbox": { "id": "ui.input.checkbox.field-kit", "revision": 10 },
+        "ui.input.radio": { "id": "ui.input.radio.field-kit", "revision": 10 },
+        "ui.input.scrollbar": { "id": "ui.input.scrollbar.field-kit", "revision": 10 },
+        "ui.input.select": { "id": "ui.input.select.field-kit", "revision": 10 },
+        "ui.input.slider": { "id": "ui.input.slider.field-kit", "revision": 10 },
+        "ui.input.text": { "id": "ui.input.text.field-kit", "revision": 10 },
+        "ui.input.toggle": { "id": "ui.input.toggle.field-kit", "revision": 10 },
+        "ui.meter.ability": { "id": "ui.meter.ability.field-kit", "revision": 10 },
+        "ui.meter.coverage": { "id": "ui.meter.coverage.field-kit", "revision": 10 },
+        "ui.meter.progress": { "id": "ui.meter.progress.field-kit", "revision": 10 },
+        "ui.meter.time": { "id": "ui.meter.time.field-kit", "revision": 10 },
+        "ui.meter.volume": { "id": "ui.meter.volume.field-kit", "revision": 10 },
+        "ui.panel": { "id": "ui.panel.field-kit", "revision": 10 },
+        "ui.toast": { "id": "ui.toast.field-kit", "revision": 10 },
+        "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 10 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 27 },
+      "revision": 28,
       "tokens": {}
     }
   ]
