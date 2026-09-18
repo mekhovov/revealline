@@ -8101,20 +8101,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.collection.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.collection.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.couch.background": {
         "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8126,20 +8126,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.couch.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.couch.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.hangar.background": {
         "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8151,20 +8151,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.hangar.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.hangar.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.missions.background": {
         "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8176,20 +8176,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.missions.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.missions.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.results.background": {
         "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8201,20 +8201,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.results.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.results.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.settings.background": {
         "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8226,20 +8226,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.settings.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.settings.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.studio.background": {
         "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -8251,20 +8251,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "screen.studio.background.field-kit", "revision": 14 },
+          "parent": { "id": "screen.studio.background.field-kit", "revision": 16 },
           "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7"
         },
         "quality": {
           "evidence": [
-            "Scoped P03 source review: docs/verification/cross-mode/replay-disabled-actions/recipe-review.md; screen recipe inputs sha256:4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d. The only screen-input change from accepted fpv26 is the enabled-only primary-action guard in game/ui/field-kit-surfaces.css. Disabled and aria-disabled controls retain muted component styling; enabled and focus behavior remain unchanged. Previous screen approvals remain in immutable history.",
-            "Exact Replay source 965f2049 retains the scoped CSS review, 29 passing navigation/display cases on each Node runtime and actual browser completion-to-Restart evidence in docs/verification/cross-mode/replay-disabled-actions/. The native Copper Crossing replay completed at tick 1305; disabled Play was muted, Tab skipped Step, and Restart returned to tick zero. Theme/Standard and Plain/Large were checked at a 1280x720 viewport.",
-            "This declaration covers the bounded Replay screen-state correction, not full P03/P05 completion. Empty/loading/error states, physical input, full responsive/zoom, audio and final exact-source/public qualification remain separate. The matching legacy theater CSS guard is reviewed alongside the shared rule but is outside this recipe input list. Original artwork and all other recipe groups are unchanged."
+            "Scoped P03 Pause source review: docs/verification/cross-mode/solo-pause-layout/recipe-review.md; screen recipe inputs sha256:18c153b6443e96b59dc3c1253eba9c011dbd3fad45341288cd0b3b2ec044dbb7. The only screen-input change from accepted fpv30 excludes the Pause state from the later narrow generic overlay grid in game/ui/field-kit-surfaces.css. Existing portrait one-column and short-landscape two-column Pause rules regain precedence. Ready, Lost and Won selector matching is unchanged. Earlier screen approvals remain in immutable history.",
+            "The scoped root browser review in docs/verification/cross-mode/solo-pause-layout/root-native-layout-review.json sha256:ed64c647190397231f799b7a80d319dc4b8b1ad06d71d1e9b650a779c687825c binds base 2f1074a37ade9c731ea7be37a6e56e533b51d1ac and candidate CSS sha256:43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624. Actual browser observations cover 280x800 Theme/Standard, Theme/Large and Plain/Large; portrait widths 600/601/680/681; short landscape 844x390 and 600x400; and the 540/541 height boundary. Keyboard Restart/Cancel, Brief/Back and Main menu/Continue preserve the examined state; paused rotations retain focus and counters.",
+            "This declaration covers only the one-rule Pause layout correction, not a renewed review of every screen or complete P03/P05 acceptance. The exact source-stage fpv31 and scoped reviewed fpv32 successors preserve original history. Narrow Large HUD score clipping and Mission Brief Done reading wrapping remain open. Actual browser zoom, physical touch/controller, screen reader, audio/offline/lifecycle, native Lost/Won and final committed-source/public qualification remain separate. Original payloads, both selected title images, typography tokens and all other recipe groups are unchanged."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "scene.menu.v1" },
-        "revision": 15
+        "revision": 17
       },
       "screen.title.background": {
         "description": "title backdrop",
@@ -9873,20 +9873,20 @@
       "scene.reveal.wide": { "id": "scene.reveal.wide.field-kit", "revision": 2 },
       "screen.collection.background": {
         "id": "screen.collection.background.field-kit",
-        "revision": 15
+        "revision": 17
       },
-      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 15 },
-      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 15 },
+      "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 17 },
+      "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 17 },
       "screen.missions.background": {
         "id": "screen.missions.background.field-kit",
-        "revision": 15
+        "revision": 17
       },
-      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 15 },
+      "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 17 },
       "screen.settings.background": {
         "id": "screen.settings.background.field-kit",
-        "revision": 15
+        "revision": 17
       },
-      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 15 },
+      "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 17 },
       "screen.title.background": { "id": "screen.title.background.field-kit-scene", "revision": 3 },
       "screen.title.portrait": { "id": "screen.title.portrait.field-kit-scene", "revision": 3 },
       "terrain.lethal": { "id": "terrain.lethal.field-kit", "revision": 2 },
@@ -9921,7 +9921,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 10 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 30 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 32 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -9949,7 +9949,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 30 },
+  "source": { "id": "field-kit", "revision": 32 },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
     "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65": "./assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",
