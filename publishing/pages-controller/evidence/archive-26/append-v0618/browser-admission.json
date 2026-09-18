@@ -1,0 +1,61 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-26",
+  "infrastructureCommit": "93df1a6ee4dcf1c9a5eda6591d6c30e06a3cceff",
+  "deploymentId": 6528078392,
+  "versions": [
+    "v0.61.7",
+    "v0.61.8"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-26/append-v0618/root-acceptance.json",
+      "sha256": "2dd34a843bd97ffb25d3e692b207501e94d80eeace6124a058e21d3fe2d65c90"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/independent-peer.json",
+      "sha256": "7c0c5ec48520770e8ba624f74372cc78fd59b1e1b20296e16f079b043b83889f"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/row-review.json",
+      "sha256": "c22b15c1a76f9f9d67ba3839a9ef1a975a22993bed1f4dea2089fb7abf94393c"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/native-root-review.json",
+      "sha256": "11fc2b4dc9e291084ab63af31589ccc0dc54756374722bd1216d1659f8d49cb5"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/native-review.json",
+      "sha256": "7ac654f9c0c053acbcfa19560f900e44669fbe087f39465202f114ffb4099f73"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/native-observation.json",
+      "sha256": "3f915f07d6d51795cec2e01632586f9e4dcc77c0b15ac898da22d77f505634c4"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/native-manifest.json",
+      "sha256": "ce9123374c022f6e40b698d78660def3b61493b493e8223edcc6682070ab66c3"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/originals.zip",
+      "sha256": "ad8fe442bb65deebd1f3a834b5ca607830077a775d0e12df6cb06bb712f849a9"
+    },
+    {
+      "path": "evidence/archive-26/append-v0618/originals-index.json",
+      "sha256": "f0ed0ba77157480c8a40df637b056b64a9ed96e9090968cf21cfd4165fd549b9"
+    }
+  ],
+  "scope": "Root-accepted both-version practice capture, Pause/explicit Resume, Guide/Workshop opener and explorer return; Standard v0.61.8 owned preview and full picker label/focus through portrait/landscape/portrait, Escape and Close. Complete public bytes independently verified.",
+  "observationProvenance": "Actual native browser record with visible navigation, keyboard gameplay and viewport resizing. Exact raw captures and provider/refusal limits retained.",
+  "limits": [
+    "No main campaign or full win, complete keyboard/controller/physical-device, Large, audio or offline acceptance.",
+    "Visible media counts preserved, not zero-write, durable-save or migration proof. All Pages project paths share one origin.",
+    "Earlier safe writer refusal and screenshot/provider discrepancies are retained; previous Motion outline limitation remains open."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}
