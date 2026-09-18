@@ -1,0 +1,25 @@
+{
+  "format": "revealline-archive-native-retention.v1",
+  "at": "2026-09-18T21:13:05.857847+00:00",
+  "observer": "root via Codex in-app browser and actual keyboard",
+  "archiveCommit": "0a0a95abcae2211386f62a24c41c46a9ff02a1ee",
+  "deploymentId": 6532547942,
+  "viewport": "1280x720 actual desktop; temporary overrides reset",
+  "observations": [
+    "Archive root exposes original v0.61.21 and v0.61.22 and current release explorer.",
+    "Keyboard entry to v0.61.21 reaches its correct versioned title; no new Solo attempt opened. Prior accepted v621 native scope remains separate.",
+    "Keyboard entry to v0.61.22 reaches its correct versioned title with preexisting root-test First Signal continuation intact.",
+    "Entered v622 Versus Orchard Crossing, Immediate steering,90 seconds; Enter started; s/Down then d/Right moved both players and made actual captures. Both boards reached51.5%,12060 points,3 lives,1:25.",
+    "Escape Pause,Return explicit Resume and Escape Pause passed with same displayed scores/time.",
+    "A screenshot appeared right-cropped; actual live DOM geometry showed width/clientWidth/scrollWidth1280 and both618px canvases at13..631 and649..1267, within viewport. Earlier hidden paused-canvas zero rectangles are not a live layout measurement.",
+    "Returned through explicit discard of only this root-created unsaved Versus attempt; Solo Continue First Signal remained.",
+    "Keyboard activated current explorer from archive root; explorer reported current v0.61.22. Temporary archive tab14 closed; public deliverable tab8 retained."
+  ],
+  "limits": [
+    "Inline screenshots only; no exported image files or screenshot hashes.",
+    "No archived win, Team v622 flight, audible listening,offline lifecycle,physical touch or controller acceptance.",
+    "Known public v622 280px Large Pause fragmentation remains open; archive retention does not close native UX phase."
+  ],
+  "nativeRetentionAccepted": true,
+  "parentPhaseComplete": false
+}
