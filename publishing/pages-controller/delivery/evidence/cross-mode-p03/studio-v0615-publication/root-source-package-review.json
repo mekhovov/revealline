@@ -1,0 +1,24 @@
+{
+  "status": "ROOT_REVIEWED_QUALIFIED_PACKAGE_ONLY",
+  "at": "2026-09-18T05:20:10.800225+00:00",
+  "source": {
+    "commit": "d34e283819376eb43e4942287d9767b22a4f6487",
+    "tree": "3af511259e14ed2af11a2e2498535744450a378f",
+    "version": "v0.61.5"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-studio-guide-v0615/.cache/p03-qualified/studio-guide-v0615-d34e2838/qualification/source-qualification.json",
+    "bytes": 101239,
+    "sha256": "1f56a442e24b7da51a91332366a76c3ea0e1e2968ce11067fc61c94a023ace53"
+  },
+  "attachmentsRehashed": 7,
+  "qualificationPinsRehashed": 228,
+  "zipMembersCRC": 391,
+  "zipMembersComparedWithLocal": 390,
+  "testsPerHostedFamily": 5853,
+  "testFilesPerFamily": 462,
+  "sourceAndIndexClean": true,
+  "nativeAcceptance": false,
+  "publicAcceptance": false,
+  "parentPhaseComplete": false
+}
