@@ -384,7 +384,7 @@ test('the unchanged source-pinned feedback recipe reviews remain selected', asyn
   }
 });
 
-test('P01 UI and P02-A audio reviews cover exact current inputs', async () => {
+test('P05 UI and P02-A audio reviews cover exact current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
@@ -392,12 +392,18 @@ test('P01 UI and P02-A audio reviews cover exact current inputs', async () => {
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
     assert.equal(asset.quality.stage, 'reviewed', slot.id);
-    const review = slot.group === 'ui' ? 'Scoped P01 source review' : 'Scoped P02-A source review';
+    const review = slot.group === 'ui' ? 'Scoped P05 source review' : 'Scoped P02-A source review';
     assert.ok(
       asset.quality.evidence.some((entry) => entry.includes(review)),
       slot.id,
     );
     if (slot.group === 'ui') {
+      assert.ok(
+        asset.provenance.source.endsWith(
+          'sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766',
+        ),
+        slot.id,
+      );
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.css/);
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
     } else {
