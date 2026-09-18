@@ -1,0 +1,51 @@
+{
+  "status": "PEER_READ_ONLY_ALL_2997_ROWS_PASS",
+  "recordedAt": "2026-09-18T09:28:36.807827+00:00",
+  "source": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "controller": "68f9ebdfe13ef7ac76a75e59204c1b972c5c8606",
+  "run": 35328869979,
+  "deployment": 6521346394,
+  "files": 2997,
+  "bytes": 641315704,
+  "failures": 0,
+  "retries": 0,
+  "pins": [
+    {
+      "path": "tools/inputs/68f9ebdfe13ef7ac76a75e59204c1b972c5c8606/binding.json",
+      "bytes": 2042,
+      "sha256": "93f90c77dac6797f0b70ef4ad00f0566d82946a794b748c4249537ea7bfe51a5"
+    },
+    {
+      "path": "tools/inputs/68f9ebdfe13ef7ac76a75e59204c1b972c5c8606/receipt.json",
+      "bytes": 572272,
+      "sha256": "20430f66476e937b6f40217147ece70076534f1ef2bf33bb6d4b45d1b7009101"
+    },
+    {
+      "path": "tools/runs/full-r1/report.json",
+      "bytes": 3829,
+      "sha256": "d862dbd21a4d0eaeb3ff19748cb43e4c6155877e92ac1d3894d77e85913e6949"
+    },
+    {
+      "path": "tools/runs/full-r1/inventory.json",
+      "bytes": 756360,
+      "sha256": "9c8d03920364148917d0d2274afc30caa9392c070f2e5949fdcf89b7fb665d77"
+    },
+    {
+      "path": "tools/runs/full-r1/results.jsonl",
+      "bytes": 1943821,
+      "sha256": "55b65c6545ca7077965e96d5fd165c357e5864545febe2505962f61425ad4089"
+    },
+    {
+      "path": "tools/runs/full-r1/attempts.jsonl",
+      "bytes": 1943821,
+      "sha256": "55b65c6545ca7077965e96d5fd165c357e5864545febe2505962f61425ad4089"
+    },
+    {
+      "path": "root-native-final-deployment.json",
+      "bytes": 1423,
+      "sha256": "7f00312b86f23918fb3b1ebc2b245619dd5abc37c373933a68f698fa0b3e522d"
+    }
+  ],
+  "networkRequests": 0,
+  "scope": "Independent local reconciliation of all original HTTP result and attempt rows and unchanged binding/helper bytes. Native original hash checked, not independently replayed. Post-audit authority refresh remains root-owned. No whole-phase, hardware, audio or offline acceptance."
+}
