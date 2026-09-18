@@ -1,0 +1,7 @@
+# v0.61.0 publication candidate
+
+The selected Solo result continuation prepares the next mission while keeping completed results usable, starts a ready mission directly, and preserves full accepted picture/story identity on Retry. Cancellation, failure and stale preparation preserve the prior result and foreground intent. Exact frozen source is `fc2c7af6b22c703cc3bb2c081579878b7510f667`, tree `bf11a670ac53a31d58b79540650229160bacd486`, source qualification SHA `c8f3f40e34ed7e26bcfda123423ddc59e2bf01044d0ade69f9da04b6b895e191`. Each actual hosted family passed 5,707 tests across 454 files; all six source gates and frozen payload inspection passed. This does not establish a new public journey.
+
+GitHub Release 391186371 was published at 2026-09-18T03:38:14Z with all nine original asset descriptors unchanged. This selector keeps all 80 previous catalog records and all 21 admissions, adds accepted Archive22 retention for v0.60.9, and selects v0.61.0. Root's Archive22 audit verified all 698 files / 313,221,998 bytes plus actual keyboard play/full-picture reward/navigation. Its session-only save warning and shared-origin storage limitation remain recorded.
+
+v0.60.9 remains the last accepted main-site player baseline until this candidate's intended deployment, complete public-byte audit and actual current Solo result/Retry/Next journeys pass. Historical source observations are not final deployed-source acceptance. P03/P05/P07/P08/P18, physical controllers/touch, listening/offline, larger campaign content and human playtests remain open.
