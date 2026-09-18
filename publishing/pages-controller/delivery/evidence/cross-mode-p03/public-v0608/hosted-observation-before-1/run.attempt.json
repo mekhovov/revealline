@@ -1,0 +1,45 @@
+{
+  "format": "revealline-bounded-api-attempt.v1",
+  "requestName": "run",
+  "command": [
+    "gh",
+    "api",
+    "repos/mekhovov/revealline/actions/runs/35296490635"
+  ],
+  "recordedAt": "2026-09-18T01:48:19.696718+00:00",
+  "status": "COMPLETE_API_RESPONSE",
+  "returnCode": 0,
+  "timedOut": false,
+  "timeoutSeconds": 35,
+  "acceptedStreamBytesLessThan": 2000000,
+  "streams": {
+    "stdout": {
+      "path": "run.json",
+      "captureAvailable": true,
+      "capturedBytes": 12165,
+      "capturedSha256": "be56149b972e7b45846e2ec4c759bc707bd624c60cd817b1e32b8e4fbb431f5d",
+      "retainedBytes": 12165,
+      "retainedSha256": "be56149b972e7b45846e2ec4c759bc707bd624c60cd817b1e32b8e4fbb431f5d",
+      "completeCapture": true,
+      "completeOriginalRetained": true,
+      "retentionTruncated": false,
+      "scope": "Complete subprocess stream"
+    },
+    "stderr": {
+      "path": "run.stderr",
+      "captureAvailable": true,
+      "capturedBytes": 0,
+      "capturedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retainedBytes": 0,
+      "retainedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "completeCapture": true,
+      "completeOriginalRetained": true,
+      "retentionTruncated": false,
+      "scope": "Complete subprocess stream"
+    }
+  },
+  "failures": [],
+  "usableJson": true,
+  "attempts": 1,
+  "publicationAcceptance": false
+}

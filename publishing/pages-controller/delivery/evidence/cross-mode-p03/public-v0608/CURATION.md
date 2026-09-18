@@ -1,0 +1,11 @@
+# Evidence curation
+
+The finite originals in `retained-files.json` were copied byte for byte from the completed v0.60.8 audit cache and the explicitly identified planning sources. Root acceptance is retained as `acceptance.json`; all seven referenced pins were rehashed before copying. The preparation README becomes `preparation-README.original.md`. Its pending-at-preparation wording remains intact. The earlier plan-status draft and original onboarding research note are preserved separately under `planning/`.
+
+The packet contains the complete 2,872 HTTP result rows and 2,872 attempt rows; nine binding authorities; the exact two-member hosted receipt ZIP; before/after hosted observations; final live-release authorities; root browser observations and the owned 974-byte import fixture; source metadata/qualification; unchanged predecessor helpers, adaptation and mocked checks. The original initial navigation detours and mistimed actions remain in their observation records. No preparation proposal is relabeled as original acceptance.
+
+The capacity-only intake runner invokes the unchanged intake helper through its existing runner parameter. It inspects central-directory expansion after the one original receipt GET and refuses before extraction if the stricter 32 MiB cumulative allowance or 512 MiB reserve could be exceeded. Its source, four local guard checks and actual pre-extraction review are retained. The exact root-approved binding is copied to the established `binding.json` locator for the unchanged row reviewer; no approval or helper body changes.
+
+No public response payload, game source TAR, distribution ZIP, player database/profile or browser cache is copied. Python bytecode is excluded. Screenshots exist only as the recorded root inline observations. Authored README, curation and progress text are summaries, not raw observations.
+
+Only the current paragraph of the existing delivery README changes. Its historical paragraphs, `delivery.json` and `evidence-index.json` remain unchanged. Every new path is under `publishing/pages-controller/delivery/`. Runtime, top-level source documentation, version fields, skills, selector, catalog, allocations and workflows remain unchanged. The accepted publisher remains `36d9e9fa14601ae1ae11a737dda0279e27f909da`; this evidence-only patch does not claim its own merge or another game deployment.
