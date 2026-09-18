@@ -1,0 +1,70 @@
+{
+  "status": "READY_FOR_ROOT_SCOPED_PUBLIC_ACCEPTANCE_REVIEW",
+  "at": "2026-09-18T05:32:11.546190+00:00",
+  "version": "v0.61.1",
+  "gameSourceRevision": "a7a4e2d7090e2fe9d1843d88b63bc334b95bf61e",
+  "controllerCommit": "c7770eda1dbdf6d241c11496d80faa28dbcb9b2b",
+  "controllerTree": "eadfba82450df0eee820f265c405193bac5f4072",
+  "runId": 35310328369,
+  "deploymentId": 6518109203,
+  "latestSuccessStatusId": 18509395004,
+  "files": 2947,
+  "bytes": 640997923,
+  "failedAttempts": 0,
+  "retries": 0,
+  "skipped": 0,
+  "allRowsReconciled": true,
+  "liveAuthoritiesUnchangedAfterAudit": true,
+  "releaseId": 391216363,
+  "originalReceiptDownloads": 1,
+  "fullPublicAudits": 1,
+  "cacheBytes": 8670280,
+  "pins": [
+    {
+      "path": "tools/runs/main-r1/report.json",
+      "bytes": 3802,
+      "sha256": "8150f551393c913c6da9ac3858732189e80cb486a712d31d86a768f299b90aa7"
+    },
+    {
+      "path": "public-row-review-main-r1.json",
+      "bytes": 1585,
+      "sha256": "c41bbc316e36f070695d06f8c91365174ca797b3d9eb4730599b642e7c166929"
+    },
+    {
+      "path": "after-http-authorities-main-r1/result.json",
+      "bytes": 7512,
+      "sha256": "0ed5f8c28648df32b9f005416a7d3b13886298ab756b8fc93fc3b21dc9d8d7a7"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/record.json",
+      "bytes": 3703,
+      "sha256": "2b0f85d8a721bc83b54339b2c6824f54e41c46141867c80fcb1fed1bf7807bc6"
+    },
+    {
+      "path": "execution-audit.exit.json",
+      "bytes": 815,
+      "sha256": "972677bcf46fe00b6edff38ad829666bb01e8eaccae52036cb94cbc6170be2ee"
+    },
+    {
+      "path": "execution-refresh.exit.json",
+      "bytes": 571,
+      "sha256": "2747bcc33f28c8b67beab8f53080cac2924bbd55d531dbc0b383d15bf23ed94d"
+    },
+    {
+      "path": "receipt-intake-pages-r1/result.json",
+      "bytes": 732,
+      "sha256": "847eff40130d004f5bf5ea3b72fbf15a051bf7bb5fd9ddb2244eb52413c8d992"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/binding.json",
+      "bytes": 2041,
+      "sha256": "d2fcd2fbd6d674251e4b01e7df7c7c73f9e4cde2b1b4d5074adeabb0f13047d1"
+    }
+  ],
+  "limits": [
+    "Root owns native public-media and gameplay observations and any acceptance statement.",
+    "No complete P05, offline audio, physical-controller/touch, store or parent-phase acceptance is claimed by this byte audit.",
+    "The root-reported phone picker sticky-control occlusion remains a separate follow-up defect.",
+    "No game source, source index, release assets or remote state was mutated by this reviewer/intake/audit."
+  ]
+}
