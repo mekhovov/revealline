@@ -1,0 +1,24 @@
+{
+  "status": "ROOT_ACCEPTED_EXACT_SOURCE_PACKAGE_ONLY",
+  "at": "2026-09-18T10:58:38.083138+00:00",
+  "source": {
+    "commit": "d51acab59232edc4e7f77ab5df491f2c403de709",
+    "tree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+    "version": "v0.61.20"
+  },
+  "pinsRehashed": 257,
+  "evidenceZIPMembersCRCVerified": 291,
+  "testsPerHostedFamily": 5895,
+  "testFiles": 465,
+  "shippedEnemyWorkshop": true,
+  "nativeEvidence": "exact-source preview only; desktop, portrait and short landscape",
+  "canonicalLocatorCorrectionReviewed": true,
+  "allFailedAttemptsRetained": true,
+  "publication": false,
+  "publicAcceptance": false,
+  "wholePhaseComplete": false,
+  "researchChecked": [
+    "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112"
+  ]
+}

@@ -146,3 +146,7 @@ names and exception text remain suppressed. Do not infer a TLS failure or its
 subtype from an older `OtherError` receipt. This classification change adds no
 errno field and does not change transport, timeouts, chunking, headers or upload
 guards; it does not authorize another upload attempt.
+
+### Retention of a partially accepted edition
+
+Archive admission may preserve exact original bytes and a scoped navigation result while a required feature-native check remains open. Carry the actual unresolved issue and its provenance into the archive admission and next publisher report. Do not turn retention, a successful workflow or a later source correction into full feature acceptance of the retained edition; keep the prior scoped accepted baseline explicit.

@@ -1,0 +1,41 @@
+{
+  "status": "SCOPED_NATIVE_BROWSER_PASS",
+  "observedAt": "2026-09-18T09:10:01.018040+00:00",
+  "source": "d51acab59232edc4e7f77ab5df491f2c403de709",
+  "tree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+  "url": "http://127.0.0.1:61331/authoring/enemy-catalog/",
+  "method": "Native keyboard through cua_repl; DOM read-only focus/geometry inspection.",
+  "journey": "Untouched startup opens Role; Tab reaches Presentation; Escape closes and restores Open workshop with visible 3px cyan outline.",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "focusedId": "open-catalog",
+      "rect": {
+        "x": 28,
+        "y": 223.390625,
+        "width": 150.5390625,
+        "height": 44
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "focusedId": "open-catalog",
+      "rect": {
+        "x": 28,
+        "y": 168.59375,
+        "width": 150.5390625,
+        "height": 44
+      }
+    }
+  ],
+  "screenshot": "Landscape inspected inline; no exported image or image hash claimed.",
+  "viewportReset": true,
+  "limits": [
+    "Keyboard browser resizing, not physical touch or controller.",
+    "No Apply, Import, Export or Try role activated.",
+    "No forced-delay, hidden-document, BFCache, audible or offline qualification.",
+    "Source workspace tool; no public runtime route claimed."
+  ]
+}
