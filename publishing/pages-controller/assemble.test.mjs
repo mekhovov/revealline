@@ -6,7 +6,7 @@ import path from 'node:path';
 import { assemble, loadCatalog, validateAdmissions } from './assemble.mjs';
 import { digest, jsonBytes, retainRecentMetadata } from './metadata.mjs';
 
-async function fixture(t) {
+async function fixture(t, versions = ['v0.1.0', 'v0.44.0']) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-assemble-'));
   t.after(() => fs.rm(dir, { recursive: true, force: true }));
   const directory = path.join(dir, 'config'),
@@ -16,10 +16,12 @@ async function fixture(t) {
     await fs.mkdir(path.dirname(name), { recursive: true });
     await fs.writeFile(name, bytes);
   };
-  const releases = [],
+  const currentVersion = versions.at(-1),
+    historicalVersions = versions.slice(0, -1),
+    releases = [],
     records = [],
     archiveFiles = [];
-  for (const version of ['v0.1.0', 'v0.44.0']) {
+  for (const version of versions) {
     const payload = new Map([
       ['index.html', Buffer.from(`root ${version}`)],
       ['game/index.html', Buffer.from(`game ${version}`)],
@@ -72,7 +74,7 @@ async function fixture(t) {
       '.xonix-build.json',
       Buffer.from('{\n  "tool": "xonix-game-cli",\n  "formatVersion": 1\n}\n'),
     );
-    if (version === 'v0.44.0')
+    if (version === currentVersion)
       for (const [name, bytes] of payload) await write(path.join(currentSite, name), bytes);
     else {
       archiveFiles.push({
@@ -96,7 +98,11 @@ async function fixture(t) {
   const allocationBytes = jsonBytes({
     formatVersion: 1,
     shards: [
-      { id: 'archive-01', repository: 'mekhovov/revealline-archive-01', versions: ['v0.1.0'] },
+      {
+        id: 'archive-01',
+        repository: 'mekhovov/revealline-archive-01',
+        versions: historicalVersions,
+      },
       {
         id: 'archive-08',
         repository: 'mekhovov/revealline-archive-08',
@@ -125,11 +131,11 @@ async function fixture(t) {
     archiveId: 'archive-01',
     infrastructureCommit: 'e'.repeat(40),
     deploymentId: 42,
-    versions: ['v0.1.0'],
+    versions: historicalVersions,
   });
   const qualificationBytes = jsonBytes({
     format: 'revealline-source-qualification.v1',
-    version: 'v0.44.0',
+    version: currentVersion,
     sourceRevision: 'a'.repeat(40),
     sourceTree: 'f'.repeat(40),
     passed: true,
@@ -145,7 +151,7 @@ async function fixture(t) {
     deploymentEnabled: true,
     retainedReleasesPerMajor: 5,
     testingRoutes: {},
-    currentVersion: 'v0.44.0',
+    currentVersion,
     catalogSha256: digest(catalogBytes),
     allocationSha256: digest(allocationBytes),
     admissions: [
@@ -333,4 +339,123 @@ test('current source admission refuses a failed gate or borrowed source even wit
       /Current source/,
     );
   }
+});
+
+test('all retains more than 100 major-zero editions, their order and every original archive route', async (t) => {
+  const historical = Array.from({ length: 101 }, (_, index) => `v0.61.${100 - index}`),
+    versions = [...historical, 'v0.62.0'],
+    f = await fixture(t, versions);
+  f.configuration.retainedReleasesPerMajor = 'all';
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  const { metadata } = await loadCatalog(f.directory),
+    retained = retainRecentMetadata(metadata, 'all');
+  assert.deepEqual([...retained], [...metadata]); // Preserve input order and row identity.
+  const admissions = await validateAdmissions({ ...f, metadata: retained });
+  assert.deepEqual(admissions.admissions, f.configuration.admissions);
+  const receipt = await assemble(f),
+    index = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/index.json'))),
+    routing = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'archive-routing.json')));
+  assert.equal(index.latest, 'v0.62.0');
+  assert.deepEqual(
+    index.releases.map((release) => release.version),
+    ['v0.62.0', ...historical],
+  );
+  assert.equal(receipt.historicalBridges, 101);
+  for (const version of historical) {
+    const prefix = `releases/${version}/`,
+      canonical = `https://mekhovov.github.io/revealline-archive-01/${prefix}site/`,
+      release = index.releases.find((row) => row.version === version);
+    assert.equal(release.canonicalPlay, canonical + 'game/');
+    assert.equal(routing.canonicalSites[version], canonical);
+    assert.equal(
+      release.download,
+      `https://github.com/mekhovov/revealline/releases/download/${version}/distribution.zip`,
+    );
+    for (const [outputName, originalName] of [
+      ['release.json', 'release.json'],
+      ['site/manifest.json', 'manifest.json'],
+      ['site/distribution.zip.sha256', 'distribution.zip.sha256'],
+    ])
+      assert.deepEqual(
+        await fs.readFile(path.join(f.outputDirectory, prefix + outputName)),
+        await fs.readFile(path.join(f.directory, 'metadata', version, originalName)),
+      );
+    assert.ok(
+      (
+        await fs.readFile(path.join(f.outputDirectory, prefix + 'site/game/index.html'), 'utf8')
+      ).includes(canonical + 'game/index.html'),
+    );
+  }
+  // The oldest version still needs its authenticated archive, unlike numeric retirement.
+  await assert.rejects(
+    validateAdmissions({
+      ...f,
+      metadata: retained,
+      configuration: { ...f.configuration, admissions: [] },
+    }),
+    /archive|historical/i,
+  );
+  const inventoryPath = path.join(f.directory, 'inventory.json'),
+    inventory = JSON.parse(await fs.readFile(inventoryPath));
+  inventory.files.find((row) => row.path === 'releases/v0.61.0/site/game/index.html').sha256 =
+    '0'.repeat(64);
+  const inventoryBytes = jsonBytes(inventory),
+    httpPath = path.join(f.directory, 'http.json'),
+    http = JSON.parse(await fs.readFile(httpPath));
+  http.expectedInventorySha256 = digest(inventoryBytes);
+  const httpBytes = jsonBytes(http);
+  await f.write(inventoryPath, inventoryBytes);
+  await f.write(httpPath, httpBytes);
+  for (const pin of f.configuration.admissions[0].evidence) {
+    if (pin.kind === 'inventory') pin.sha256 = digest(inventoryBytes);
+    if (pin.kind === 'http') pin.sha256 = digest(httpBytes);
+  }
+  await assert.rejects(validateAdmissions({ ...f, metadata: retained }), /pinned original/);
+});
+
+test('numeric retention remains semantic and all does not admit invalid policies', async (t) => {
+  const versions = ['v0.10.0', 'v1.1.0', 'v0.2.0', 'v1.0.9', 'v0.9.10'],
+    metadata = new Map(versions.map((version) => [version, { version }]));
+  assert.deepEqual([...retainRecentMetadata(metadata, 1).keys()], ['v0.10.0', 'v1.1.0']);
+  assert.deepEqual([...retainRecentMetadata(metadata, 100)], [...metadata]);
+  assert.deepEqual([...retainRecentMetadata(metadata, 'all')], [...metadata]);
+  assert.throws(() => retainRecentMetadata(new Map([['invalid', {}]]), 'all'), /version/);
+  const f = await fixture(t),
+    { metadata: frozen } = await loadCatalog(f.directory);
+  for (const value of [
+    undefined,
+    null,
+    false,
+    true,
+    0,
+    -1,
+    101,
+    1.5,
+    NaN,
+    Infinity,
+    '100',
+    'ALL',
+    ' all',
+    {},
+    [],
+  ]) {
+    assert.throws(() => retainRecentMetadata(metadata, value), /retention policy/);
+    await assert.rejects(
+      validateAdmissions({
+        ...f,
+        metadata: frozen,
+        configuration: { ...f.configuration, retainedReleasesPerMajor: value },
+      }),
+      /configuration/,
+    );
+  }
+});
+
+test('all leaves the 1024-catalog entry bound intact', async (t) => {
+  const f = await fixture(t),
+    catalogPath = path.join(f.directory, 'catalog.json'),
+    catalog = JSON.parse(await fs.readFile(catalogPath));
+  catalog.releases = Array.from({ length: 1025 }, () => catalog.releases[0]);
+  await f.write(catalogPath, jsonBytes(catalog));
+  await assert.rejects(loadCatalog(f.directory), /Invalid frozen catalog/);
 });

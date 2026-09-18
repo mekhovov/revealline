@@ -22,6 +22,7 @@ import {
   COMMIT,
   SHA,
   retainRecentMetadata,
+  validReleaseRetention,
 } from './metadata.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -90,9 +91,7 @@ export async function validateAdmissions({
     !SHA.test(configuration.allocationSha256) ||
     !Array.isArray(configuration.admissions) ||
     configuration.admissions.length > 64 ||
-    !Number.isSafeInteger(configuration.retainedReleasesPerMajor) ||
-    configuration.retainedReleasesPerMajor < 1 ||
-    configuration.retainedReleasesPerMajor > 100 ||
+    !validReleaseRetention(configuration.retainedReleasesPerMajor) ||
     !configuration.testingRoutes ||
     typeof configuration.testingRoutes !== 'object' ||
     Array.isArray(configuration.testingRoutes) ||
