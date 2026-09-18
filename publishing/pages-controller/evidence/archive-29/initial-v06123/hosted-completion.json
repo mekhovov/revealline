@@ -1,0 +1,60 @@
+{
+  "status": "ORIGINAL_SMALL_RECEIPT_VALIDATED_NO_PUBLIC_AUDIT",
+  "archiveCommit": "09c84ec4c468d7c78cf73e2f880420ecbf314c43",
+  "archiveTree": "b28634fa2778ae74fb24a0e8ae4f7f1d33df83ac",
+  "runId": 35401123744,
+  "deploymentId": 6533857735,
+  "deploymentStatusId": 18545765331,
+  "receiptArtifactId": 10570730927,
+  "receiptBytes": 37433,
+  "receiptSha256": "ae9b074b8ff92c64bca579331486076bf639b84c5c3e5d768db370b8e7020c42",
+  "files": 702,
+  "bytes": 313450172,
+  "inventorySha256": "bd13f97933342c271fbdac98554ef473288ae4bcc8cd606edbe28a32c3470ced",
+  "crcAndExactThreeMembersPassed": true,
+  "exactCandidateInventoryAndSourceChainPassed": true,
+  "pins": [
+    {
+      "path": "hosted-originals/download.attempt.json",
+      "bytes": 439,
+      "sha256": "f925d8755c558fec3b9e844cdcf6aa8a3f9f1199b533fae45e3f3b163b084fc9"
+    },
+    {
+      "path": "hosted-originals/download.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "hosted-originals/download.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-originals/receipts/expected-inventory.json",
+      "bytes": 145202,
+      "sha256": "bd13f97933342c271fbdac98554ef473288ae4bcc8cd606edbe28a32c3470ced"
+    },
+    {
+      "path": "hosted-originals/receipts/receipt.json",
+      "bytes": 1090,
+      "sha256": "1532ab4ca87d9314594e87f29b00c4140ce3e6bfc8ca8a7363adaae802d53582"
+    },
+    {
+      "path": "hosted-originals/receipts/zip-receipt-v0.61.23.json",
+      "bytes": 408,
+      "sha256": "cc3db32bbba8a799890c0d5b57ad08c424fe0989e3c57a9c05ef9242a8d97cc0"
+    },
+    {
+      "path": "hosted-originals/reviewed-download-request.json",
+      "bytes": 7949,
+      "sha256": "5c672dd1e7da6b04238e741865c5e6dd117a08444dd2eb1605f5d4435020c2ab"
+    },
+    {
+      "path": "hosted-originals/verification-receipts-original.zip",
+      "bytes": 37433,
+      "sha256": "ae9b074b8ff92c64bca579331486076bf639b84c5c3e5d768db370b8e7020c42"
+    }
+  ],
+  "publicByteAcceptance": false,
+  "nativeAcceptanceNotAltered": true
+}
