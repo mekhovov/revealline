@@ -1,0 +1,2212 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.61.20",
+  "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+  "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+  "actualCheckoutCommit": "d51acab59232edc4e7f77ab5df491f2c403de709",
+  "actualCheckoutTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+  "qualifiedAt": "2026-09-18T10:51:20.843546+00:00",
+  "passed": true,
+  "qualificationBasis": "hosted-exact-source-with-verified-frozen-originals",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "root": "/home/runner/work/revealline/revealline",
+    "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+    "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+    "files": 12293,
+    "bytes": 1105798039,
+    "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35327266029",
+  "runId": 35327266029,
+  "runAttempt": 1,
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "workflowRevision": "757bbf18ffc58a2de783e25f2207a8f5f166843c",
+  "workflowTree": "95260ed563095906fbc67d400c0415eb28694fad",
+  "sourceWorkflowSha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+  "automationAuthority": {
+    "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/receipt.json",
+    "bytes": 2747,
+    "sha256": "39f0167def119a93ad95ad5abc7d16f2cd924e5fd3b0b5f13783dda5825df4b5"
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 105543124587,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T09:01:07Z",
+        "completed_at": "2026-09-18T09:01:34Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 105543124587,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T09:01:07Z",
+        "completed_at": "2026-09-18T09:01:34Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 105543124587,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T09:01:07Z",
+        "completed_at": "2026-09-18T09:01:34Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 105543124587,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T09:01:07Z",
+        "completed_at": "2026-09-18T09:01:34Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 105543124587,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T09:01:07Z",
+        "completed_at": "2026-09-18T09:01:34Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "test",
+      "jobId": 105543541590,
+      "step": {
+        "name": "Run test shard 4/4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T09:02:30Z",
+        "completed_at": "2026-09-18T09:37:10Z"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 105543541674,
+          "step": {
+            "name": "Run test shard 1/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T09:02:31Z",
+            "completed_at": "2026-09-18T09:25:12Z"
+          },
+          "counts": {
+            "tests": 1486,
+            "pass": 1486,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541674.log.gz",
+            "bytes": 110299,
+            "sha256": "232aa0bb5c729095ca7d7bc4c5c4f80935bc48933ce66cdb792b22ebd6ee0194"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 1/4 --root ."
+        },
+        {
+          "shard": 2,
+          "jobId": 105543541523,
+          "step": {
+            "name": "Run test shard 2/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T09:02:30Z",
+            "completed_at": "2026-09-18T09:14:02Z"
+          },
+          "counts": {
+            "tests": 1386,
+            "pass": 1386,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541523.log.gz",
+            "bytes": 107884,
+            "sha256": "84cfe24cb6b30827d4f288dc40c7d95c9f6fbc888079ac257218dd7855369ba2"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 2/4 --root ."
+        },
+        {
+          "shard": 3,
+          "jobId": 105543541451,
+          "step": {
+            "name": "Run test shard 3/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T09:02:34Z",
+            "completed_at": "2026-09-18T09:19:11Z"
+          },
+          "counts": {
+            "tests": 1352,
+            "pass": 1352,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541451.log.gz",
+            "bytes": 104099,
+            "sha256": "7f82be188465a27da4d5fb74919a2971f217003ca174fe204693938c049d4eb0"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 3/4 --root ."
+        },
+        {
+          "shard": 4,
+          "jobId": 105543541590,
+          "step": {
+            "name": "Run test shard 4/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T09:02:30Z",
+            "completed_at": "2026-09-18T09:37:10Z"
+          },
+          "counts": {
+            "tests": 1671,
+            "pass": 1671,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541590.log.gz",
+            "bytes": 121269,
+            "sha256": "02cdeb3a4d34ef0b1a47b25495fa5f61c86a82f2d975d8784677f7ce1a90cdf2"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 4/4 --root ."
+        }
+      ],
+      "counts": {
+        "tests": 5895,
+        "pass": 5895,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "partition": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/partition-coverage.json",
+        "bytes": 23760,
+        "sha256": "48c91f25b7eb4ff3ca8b047af629f14ed36785b4667c953c8076b023ec70c215"
+      },
+      "scope": "Actual last-completed successful shard is representative; all four actual completed shards and exact partition are required."
+    }
+  ],
+  "tests": {
+    "tests": 5895,
+    "pass": 5895,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 465,
+  "observations": [
+    {
+      "path": "pr-source/job-105543124587.log.gz",
+      "line": 342,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543124587.log.gz",
+      "line": 788,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541674.log.gz",
+      "line": 362,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541674.log.gz",
+      "line": 7864,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541523.log.gz",
+      "line": 361,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541523.log.gz",
+      "line": 7345,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541451.log.gz",
+      "line": 364,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541451.log.gz",
+      "line": 7199,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541590.log.gz",
+      "line": 369,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541590.log.gz",
+      "line": 8796,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541489.log.gz",
+      "line": 584,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105543541489.log.gz",
+      "line": 622,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "d51acab59232edc4e7f77ab5df491f2c403de709",
+        "sourceTree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+        "files": 12293,
+        "bytes": 1105798039,
+        "aggregateSha256": "7e38a77e33370538cfd066c10d8d28df950081701eab6708bc0d2b7205e2d007",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    }
+  ],
+  "hostedSourceReview": {
+    "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/review.json",
+    "bytes": 864,
+    "sha256": "b2f7a1bcf015d947a7621a9802629dabae8ca041560d37b334710059e5cf83a7"
+  },
+  "hostedEvidenceManifest": {
+    "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/final-evidence-manifest.json",
+    "bytes": 11152,
+    "sha256": "761bd5037c5f93bacb3933377b250db4dd6e936bfbd9ea9c2469915f888eee23"
+  },
+  "publisherPreviewObservation": {
+    "status": "not-part-of-this-source-qualification",
+    "reason": "No publisher workflow changes; main-only publication remains a later separate gate."
+  },
+  "hostedNodeVersion": "v20.19.6",
+  "additionalManualQualification": {
+    "run": {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/run.json",
+      "bytes": 12635,
+      "sha256": "52bbb90b763e88cf0a67b6c793ad09c56fbd677c282523bdb994ec4c91131eb9"
+    },
+    "jobs": {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/jobs.json",
+      "bytes": 18687,
+      "sha256": "e644058a4853d3576aa419322096b7f09e3bef9a3d24e408358211f7537cfaa3"
+    },
+    "preflight": {
+      "id": 105543109061,
+      "run_id": 35327259106,
+      "workflow_name": "Qualify release source",
+      "head_branch": "codex/p03-enemy-startup-focus-v06120",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/35327259106",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAYktwJxQ",
+      "head_sha": "d51acab59232edc4e7f77ab5df491f2c403de709",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/105543109061",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/35327259106/job/105543109061",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-18T09:00:24Z",
+      "started_at": "2026-09-18T09:00:26Z",
+      "completed_at": "2026-09-18T09:01:55Z",
+      "name": "qualify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-18T09:00:27Z",
+          "completed_at": "2026-09-18T09:00:27Z"
+        },
+        {
+          "name": "Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-18T09:00:27Z",
+          "completed_at": "2026-09-18T09:00:43Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-18T09:00:43Z",
+          "completed_at": "2026-09-18T09:00:47Z"
+        },
+        {
+          "name": "Record source identity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-09-18T09:00:47Z",
+          "completed_at": "2026-09-18T09:00:47Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-09-18T09:00:47Z",
+          "completed_at": "2026-09-18T09:00:49Z"
+        },
+        {
+          "name": "Check hosted artifact utility locally",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-18T09:00:49Z",
+          "completed_at": "2026-09-18T09:01:12Z"
+        },
+        {
+          "name": "Validate source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T09:01:12Z",
+          "completed_at": "2026-09-18T09:01:23Z"
+        },
+        {
+          "name": "Lint source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-09-18T09:01:23Z",
+          "completed_at": "2026-09-18T09:01:30Z"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-09-18T09:01:30Z",
+          "completed_at": "2026-09-18T09:01:45Z"
+        },
+        {
+          "name": "Check native formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-09-18T09:01:45Z",
+          "completed_at": "2026-09-18T09:01:46Z"
+        },
+        {
+          "name": "Check motion lab syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-09-18T09:01:46Z",
+          "completed_at": "2026-09-18T09:01:46Z"
+        },
+        {
+          "name": "Reproduce production collection when available",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-09-18T09:01:46Z",
+          "completed_at": "2026-09-18T09:01:50Z"
+        },
+        {
+          "name": "Require reviewed production slots in the committed ledger",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-09-18T09:01:50Z",
+          "completed_at": "2026-09-18T09:01:51Z"
+        },
+        {
+          "name": "Verify qualified tracked source is unchanged",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-09-18T09:01:51Z",
+          "completed_at": "2026-09-18T09:01:52Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-09-18T09:01:52Z",
+          "completed_at": "2026-09-18T09:01:53Z"
+        },
+        {
+          "name": "Post Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-09-18T09:01:53Z",
+          "completed_at": "2026-09-18T09:01:53Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-09-18T09:01:53Z",
+          "completed_at": "2026-09-18T09:01:53Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/105543109061",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000001700,
+      "runner_name": "GitHub Actions 1000001700",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 105543554762,
+        "step": {
+          "name": "Run test shard 1/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T09:02:25Z",
+          "completed_at": "2026-09-18T09:30:23Z"
+        },
+        "counts": {
+          "tests": 1486,
+          "pass": 1486,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554762.log.gz",
+          "bytes": 114626,
+          "sha256": "94bd1ae2cccc0abe8fc30c92bb32b8098cc19030ea26444d28cae4e7b0aa0406"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 1/4"
+      },
+      {
+        "shard": 2,
+        "jobId": 105543554794,
+        "step": {
+          "name": "Run test shard 2/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T09:02:22Z",
+          "completed_at": "2026-09-18T09:11:48Z"
+        },
+        "counts": {
+          "tests": 1386,
+          "pass": 1386,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554794.log.gz",
+          "bytes": 110680,
+          "sha256": "782b3d76adc81000a5f60dae56c2f24a44fcaf7a837acb97a2011d5cf3e35c3e"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 2/4"
+      },
+      {
+        "shard": 3,
+        "jobId": 105543554828,
+        "step": {
+          "name": "Run test shard 3/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T09:02:21Z",
+          "completed_at": "2026-09-18T09:24:49Z"
+        },
+        "counts": {
+          "tests": 1352,
+          "pass": 1352,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554828.log.gz",
+          "bytes": 108366,
+          "sha256": "674fb917946a34a34e4ad74c0e199fad1f30c37b53a040ae0fca5faafaa5d1e2"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 3/4"
+      },
+      {
+        "shard": 4,
+        "jobId": 105543554773,
+        "step": {
+          "name": "Run test shard 4/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T09:02:20Z",
+          "completed_at": "2026-09-18T09:37:41Z"
+        },
+        "counts": {
+          "tests": 1671,
+          "pass": 1671,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554773.log.gz",
+          "bytes": 124743,
+          "sha256": "7d74df547509b7873394746353518b5b3e474d9b919276efc37386b78c10d2e6"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 4/4"
+      }
+    ],
+    "counts": {
+      "tests": 5895,
+      "pass": 5895,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "manualFreezeObservation": {
+    "runId": 35327259106,
+    "jobPresent": true,
+    "jobId": 105553577040,
+    "conclusion": "success",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-09-18T09:37:48Z",
+        "completed_at": "2026-09-18T09:37:49Z"
+      },
+      {
+        "name": "Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-09-18T09:37:49Z",
+        "completed_at": "2026-09-18T09:38:04Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-09-18T09:38:04Z",
+        "completed_at": "2026-09-18T09:38:08Z"
+      },
+      {
+        "name": "Freeze the exact qualified commit",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-09-18T09:38:08Z",
+        "completed_at": "2026-09-18T09:40:45Z"
+      },
+      {
+        "name": "Retain original release assets",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-09-18T09:40:45Z",
+        "completed_at": "2026-09-18T09:40:52Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-09-18T09:40:52Z",
+        "completed_at": "2026-09-18T09:40:52Z"
+      },
+      {
+        "name": "Post Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-09-18T09:40:52Z",
+        "completed_at": "2026-09-18T09:40:53Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-09-18T09:40:53Z",
+        "completed_at": "2026-09-18T09:40:53Z"
+      }
+    ],
+    "artifactMetadata": {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/artifacts-final.json",
+      "bytes": 760,
+      "sha256": "32c0f2de29de4f6d0ca67b29addea5632730625a736dddc9198d5cf497fa17d7"
+    },
+    "observedArtifacts": [
+      {
+        "id": 10540733253,
+        "node_id": "MDg6QXJ0aWZhY3QxMDU0MDczMzI1Mw==",
+        "name": "qualified-release-snapshot",
+        "size_in_bytes": 1429418853,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10540733253",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10540733253/zip",
+        "expired": false,
+        "digest": "sha256:a63991cdefc953c4fbe9cf7301cc90fd76799fd259c85b24933e9224659cde1d",
+        "created_at": "2026-09-18T09:40:52Z",
+        "updated_at": "2026-09-18T09:40:52Z",
+        "expires_at": "2026-10-02T09:40:45Z",
+        "workflow_run": {
+          "id": 35327259106,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/p03-enemy-startup-focus-v06120",
+          "head_sha": "d51acab59232edc4e7f77ab5df491f2c403de709"
+        }
+      }
+    ],
+    "scope": "Actual freeze outcome and artifact API metadata; separate from six source gates. Matching whole original payload inspection is now required before qualification."
+  },
+  "localFullTest": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local Enemy Workshop startup close focus cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+  },
+  "localOrdinaryBuild": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local Enemy Workshop startup close focus cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+  },
+  "localCorroboration": {
+    "status": "not-run-on-final-source",
+    "checks": 0,
+    "scope": "Earlier local Enemy Workshop startup close focus cohorts remain separate; no local command gates are inferred for the final source."
+  },
+  "localAdditionalChecks": [],
+  "ordinaryBuildCorroboration": {
+    "runId": 35327266029,
+    "jobId": 105543541489,
+    "step": {
+      "name": "Build pull-request artifact",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-09-18T09:02:30Z",
+      "completed_at": "2026-09-18T09:04:58Z"
+    },
+    "command": "npm run build",
+    "log": {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541489.log.gz",
+      "bytes": 11974,
+      "sha256": "da9b10b0ec4c329ee20264cb7e45d9d7a1fea4e55bf5847abc86606ab42fde21"
+    },
+    "scope": "Actual successful hosted PR ordinary build command on exact source, bounded by raw source identities. No local build or loose ordinary-byte inspection claimed."
+  },
+  "frozenArtifactCorroboration": {
+    "hostedUtility": {
+      "inputs": {
+        "inspection": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+          "bytes": 1918,
+          "sha256": "e8ea097e2fe12db855f56fa19f3c642c8ce98512a780d85dfa134dce5972935b"
+        },
+        "download": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-original.download.json",
+          "bytes": 594,
+          "sha256": "213a69b486628a2a5f60af5c7e6bf0d4a58ed2ae6d22b6950e686642e21efc4b"
+        },
+        "releaseRecord": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/release.json",
+          "bytes": 468,
+          "sha256": "51da93d11ee53dcff10e09bc4d5c50814d6fc7229ceb99edd025247bb954ce3c"
+        },
+        "manifest": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+          "bytes": 127873,
+          "sha256": "35943908e97e0141085338f521ba35a0cc16a7758ce0f45e8405014e49cd716f"
+        },
+        "checksum": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "eb22dd8d88dc6ed1d060b4d98e94d8dffe8a0d3186a248d7993e1cca61f704d1"
+        },
+        "inspector": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+          "bytes": 25776,
+          "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+        },
+        "frozenOfflineReview": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/review.json",
+          "bytes": 3413,
+          "sha256": "f095cc893cb4d5ab48532917ab5d2b6eeeeeb134b7241ea571f6950bd40cffb5"
+        },
+        "frozenOfflineManifest": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+          "bytes": 120820,
+          "sha256": "99f44add20ab66f2c8dafcee88503f6f522097f91d6a0c981be20a011218d467"
+        },
+        "frozenBuildInfo": {
+          "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+          "bytes": 144,
+          "sha256": "bffb3b039ad41bd7498ad7fcc13e4a9d0af23e31e6b36981e3ca931f35a7ebab"
+        }
+      },
+      "artifactAuthority": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/artifact-authority.json",
+        "bytes": 811,
+        "sha256": "2cb2ff0872a9fd62292086bf6afa8d55b5d0f0e8ec477cf2ce5892442ed3c9b5"
+      },
+      "execution": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/execution.json",
+        "bytes": 2442,
+        "sha256": "ef71cf4ec7a3bbb4e44a18fe03babb4b6d4de9ec65a47f5d4ec9ba8049a92a93"
+      },
+      "run": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/run.json",
+        "bytes": 12148,
+        "sha256": "4e0df8ca04dceae3042fcef9a789795da39ee9333ad69a4f706ce29cf17a8a19"
+      },
+      "jobs": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/jobs.json",
+        "bytes": 6314,
+        "sha256": "35a5bde21648a80cdd855a9ce5d103dae69bfa3764fa3011623da3c9d43df6c7"
+      },
+      "retainedManifest": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/retained-manifest.json",
+        "bytes": 6782,
+        "sha256": "5ae14d89e1615c7909b8437fcad459cd2591d9d6dea849dad02821be8d5e1e06"
+      },
+      "bindingProvenance": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/manifest.json",
+        "bytes": 70245,
+        "sha256": "b83b3b90a6103464348b163689514d6b661afeb61579bfcf5bf673c3e37f6542"
+      },
+      "scope": "Hosted original-byte inspection; separate from source command qualification."
+    },
+    "binding": {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2637,
+      "sha256": "1f0ea4af1c67bca1f8dac8faf360efaa9d572496a228892613e209915e3f0874"
+    },
+    "inputs": {
+      "inspection": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+        "bytes": 1918,
+        "sha256": "e8ea097e2fe12db855f56fa19f3c642c8ce98512a780d85dfa134dce5972935b"
+      },
+      "download": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-original.download.json",
+        "bytes": 594,
+        "sha256": "213a69b486628a2a5f60af5c7e6bf0d4a58ed2ae6d22b6950e686642e21efc4b"
+      },
+      "releaseRecord": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/release.json",
+        "bytes": 468,
+        "sha256": "51da93d11ee53dcff10e09bc4d5c50814d6fc7229ceb99edd025247bb954ce3c"
+      },
+      "manifest": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+        "bytes": 127873,
+        "sha256": "35943908e97e0141085338f521ba35a0cc16a7758ce0f45e8405014e49cd716f"
+      },
+      "checksum": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "eb22dd8d88dc6ed1d060b4d98e94d8dffe8a0d3186a248d7993e1cca61f704d1"
+      },
+      "inspector": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+        "bytes": 25776,
+        "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+      },
+      "frozenOfflineReview": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/review.json",
+        "bytes": 3413,
+        "sha256": "f095cc893cb4d5ab48532917ab5d2b6eeeeeb134b7241ea571f6950bd40cffb5"
+      },
+      "frozenOfflineManifest": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+        "bytes": 120820,
+        "sha256": "99f44add20ab66f2c8dafcee88503f6f522097f91d6a0c981be20a011218d467"
+      },
+      "frozenBuildInfo": {
+        "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+        "bytes": 144,
+        "sha256": "bffb3b039ad41bd7498ad7fcc13e4a9d0af23e31e6b36981e3ca931f35a7ebab"
+      }
+    },
+    "artifactId": 10540733253,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "scope": "Existing reviewed streaming inspector checked original TAR Git blobs/types/modes/commit, outer digest and every inner ZIP byte; public delivery remains separate."
+  },
+  "evidencePins": [
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/expected-test-partitions.json",
+      "bytes": 23537,
+      "sha256": "184decde908d27698fcf24c95d9c52349f904ca0c644a62844203415eb0e7545"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/final-evidence-manifest.json",
+      "bytes": 11152,
+      "sha256": "761bd5037c5f93bacb3933377b250db4dd6e936bfbd9ea9c2469915f888eee23"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/job-step-records.json",
+      "bytes": 35498,
+      "sha256": "b7b303ae67ae00f0fa8d52de2e87f4097e0598289a2d17d2c62cfb0215cf61e3"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/artifacts-final.json",
+      "bytes": 760,
+      "sha256": "32c0f2de29de4f6d0ca67b29addea5632730625a736dddc9198d5cf497fa17d7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543109061-receipt.json",
+      "bytes": 693,
+      "sha256": "59063f32cf4f6541ee0c51eed7065010a5e449c15426b8205419c1270d870427"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543109061.json",
+      "bytes": 3755,
+      "sha256": "47ce2be35fc0898f106108e2c48fee12b46e052bd16d34ed0b2e8c96f397e8f4"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543109061.log.gz",
+      "bytes": 11246,
+      "sha256": "d0059571b2dd6f5fdd88ba29b39b124c66710792c6e9c86b8246e28b9c78fc62"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543110565.json",
+      "bytes": 898,
+      "sha256": "fcc163d100499eb6cd16a1ead9681992e09338fb54ad939b865a3d43e42107c0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543110677.json",
+      "bytes": 898,
+      "sha256": "e312ab8f0233aa5b24e6cc55d93eb2cf09088aa50f564a79f0fe15f5a10a214d"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554762-receipt.json",
+      "bytes": 696,
+      "sha256": "5107b688c70a3b2ded57f1973076560de6abcee9beec858a83d8778c07371f22"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554762.json",
+      "bytes": 2716,
+      "sha256": "2f50b2975c0a4e70f4f6656a7e03f3ecc9b7f4221110538b3f17e7d709c46a1f"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554762.log.gz",
+      "bytes": 114626,
+      "sha256": "94bd1ae2cccc0abe8fc30c92bb32b8098cc19030ea26444d28cae4e7b0aa0406"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554773-receipt.json",
+      "bytes": 696,
+      "sha256": "ccc6c47870231b91b2297b58f9f90b5f410d61c51c83028f5b150d09aef613e5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554773.json",
+      "bytes": 2716,
+      "sha256": "e3a6c0d4659f2bc260fbc66c0bff68a4cc0e682c139e2587e48fd8afd6479e02"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554773.log.gz",
+      "bytes": 124743,
+      "sha256": "7d74df547509b7873394746353518b5b3e474d9b919276efc37386b78c10d2e6"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554794-receipt.json",
+      "bytes": 696,
+      "sha256": "1be7891249b3d7c5613561befcee541a1856ac13517d4cf2849387a8a1fc5871"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554794.json",
+      "bytes": 2716,
+      "sha256": "0a79784ebb773f7430694377ffd25928c9f6dd87c3cc5f93527bd85a6289783a"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554794.log.gz",
+      "bytes": 110680,
+      "sha256": "782b3d76adc81000a5f60dae56c2f24a44fcaf7a837acb97a2011d5cf3e35c3e"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554828-receipt.json",
+      "bytes": 696,
+      "sha256": "4e6edf1fe6bb46def54abf86d965ce7e45d4c06ecee2b0f8d3cce891c6a695e5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554828.json",
+      "bytes": 2716,
+      "sha256": "afa3a9da1cf10e793cc9b3c7695b5d6d3b266dc5fd7673ee12b4d49acda04ff8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105543554828.log.gz",
+      "bytes": 108366,
+      "sha256": "674fb917946a34a34e4ad74c0e199fad1f30c37b53a040ae0fca5faafaa5d1e2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105553577040-receipt.json",
+      "bytes": 692,
+      "sha256": "676647f893df865de85997bafcc27cf98845a518cd58fc9d5ef83417572ccd25"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105553577040.json",
+      "bytes": 2238,
+      "sha256": "d00bb032f1f2df891586d0db01dff3ec2f47142a6695017eb76851ddfcbd33ab"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/job-105553577040.log.gz",
+      "bytes": 12476,
+      "sha256": "b309664c5047305b6365658ab1ddca2918b868a6a28cf3e9b075358a728c1d0e"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/jobs.json",
+      "bytes": 18687,
+      "sha256": "e644058a4853d3576aa419322096b7f09e3bef9a3d24e408358211f7537cfaa3"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/manual/run.json",
+      "bytes": 12635,
+      "sha256": "52bbb90b763e88cf0a67b6c793ad09c56fbd677c282523bdb994ec4c91131eb9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/partition-coverage.json",
+      "bytes": 23760,
+      "sha256": "48c91f25b7eb4ff3ca8b047af629f14ed36785b4667c953c8076b023ec70c215"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/.github__workflows__deploy-pages.yml.api.json",
+      "bytes": 12158,
+      "sha256": "0d8ab1454cd06976d7afe3be163f6fad0e1d335b877167e60392f0be874f15db"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml.api.json",
+      "bytes": 7266,
+      "sha256": "c3dc138148b853559fc2dc6d1b5b73ebb2fbae3c38dc9ab1e2dbc32b6d52eda2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/commit.json",
+      "bytes": 2648,
+      "sha256": "c694e7afba5ad53e719cb264c5880475b652ca011527dbde5591177bbb7841e5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/receipt.json",
+      "bytes": 2747,
+      "sha256": "39f0167def119a93ad95ad5abc7d16f2cd924e5fd3b0b5f13783dda5825df4b5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/scripts__check-source-identity.mjs.api.json",
+      "bytes": 11139,
+      "sha256": "8d53bdff999e1f6bd7ff60e885dd3d46cadc7503b1c4aaec2491c59d9072eff6"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-automation/scripts__run-test-shard.mjs.api.json",
+      "bytes": 4816,
+      "sha256": "5b8ff9d28f950f239de2201ff0b7f2e78d129632a8009175b54d348097977ea1"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-partition-coverage.json",
+      "bytes": 26527,
+      "sha256": "89875f547ee268d8ff4af9f89af8dab815d28639697cbebd5a9292e7f8732889"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543124587-receipt.json",
+      "bytes": 698,
+      "sha256": "ec5e7b4f31a043d7dbb8b420ecbd7438177caa51ff60f6cc3ca62d7a8703aa68"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543124587.json",
+      "bytes": 3319,
+      "sha256": "7431d6f4a47223f89bf4c5da63f61f56d5d7ac1bead370a201d08554644501de"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543124587.log.gz",
+      "bytes": 14479,
+      "sha256": "b65cbe0a537163e1ac10f0ebd23e72896ad2366997a3fde4bdbc3dce540de232"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543126494.json",
+      "bytes": 901,
+      "sha256": "de1d02112cace35a04af95372ccbc4b042fa644a154271fb7bddf3b1d6482d95"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541451-receipt.json",
+      "bytes": 699,
+      "sha256": "af37f46d91a72f5b499ed21e47624599346cc44e09ffbbf0ac45cbee9133b7a0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541451.json",
+      "bytes": 2918,
+      "sha256": "5d8d4b3e3875304b76f1e730172f90e54506c751c832ba19d2c96db18e8f0c01"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541451.log.gz",
+      "bytes": 104099,
+      "sha256": "7f82be188465a27da4d5fb74919a2971f217003ca174fe204693938c049d4eb0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541489-receipt.json",
+      "bytes": 694,
+      "sha256": "4c12a0b1834379e1a175b49d797e485485e447b0f3c160c74bb5961f7ddf6f60"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541489.json",
+      "bytes": 2965,
+      "sha256": "7568fd5e1f929c3290d7026f9015a024f72e0183ac7c22256dc369780d02c55f"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541489.log.gz",
+      "bytes": 11974,
+      "sha256": "da9b10b0ec4c329ee20264cb7e45d9d7a1fea4e55bf5847abc86606ab42fde21"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541523-receipt.json",
+      "bytes": 699,
+      "sha256": "1e7a48c9467bf2caeb98413c9bfdfa97e53965921a1736028b6bbca530bfd77d"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541523.json",
+      "bytes": 2918,
+      "sha256": "b769ff7530bc293e1416e32e305283739c2b9cc791c196f1b36cec5fefe64394"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541523.log.gz",
+      "bytes": 107884,
+      "sha256": "84cfe24cb6b30827d4f288dc40c7d95c9f6fbc888079ac257218dd7855369ba2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541590-receipt.json",
+      "bytes": 699,
+      "sha256": "dd41bc16e386c3e638c3edb63fbcf6f181c6389c0311e6988d1143d37f6ca7e7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541590.json",
+      "bytes": 2918,
+      "sha256": "1c71d031a779aedb776a62abde89b28a7f7fc73388ee9a0b4bdff97ddbef2feb"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541590.log.gz",
+      "bytes": 121269,
+      "sha256": "02cdeb3a4d34ef0b1a47b25495fa5f61c86a82f2d975d8784677f7ce1a90cdf2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541674-receipt.json",
+      "bytes": 699,
+      "sha256": "e9db3d760f8a56e5773e4742089bc45e80616313292623497f435aa39e1239ae"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541674.json",
+      "bytes": 2918,
+      "sha256": "e3f59233fee1ab423b493084cb492ad4c098002f7b14789c93df2122c1055b68"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/job-105543541674.log.gz",
+      "bytes": 110299,
+      "sha256": "232aa0bb5c729095ca7d7bc4c5c4f80935bc48933ce66cdb792b22ebd6ee0194"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/jobs.json",
+      "bytes": 18890,
+      "sha256": "162cccf925d4107f3ad8c236b8095ddb0aaae374df496a538d9e9af3c87f4b15"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/pr-source/run.json",
+      "bytes": 12667,
+      "sha256": "0a3791cab6ada36b9cd17267f790cd91850fb06a07e4532a7a8c644d2704f716"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/review.json",
+      "bytes": 864,
+      "sha256": "b2f7a1bcf015d947a7621a9802629dabae8ca041560d37b334710059e5cf83a7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/source-executed/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/source-executed/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/source-executed/receipt.json",
+      "bytes": 1353,
+      "sha256": "03b5188e86a2355f830b7838ae913c32dd24f95575188e74e773d0e0351833ac"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/source-executed/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/source-executed/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/hosted/source-identities.json",
+      "bytes": 7863,
+      "sha256": "fbe7b69f8a78076cbd6b991dd42345312cdf1050f61e7465b2436bd4a4226486"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-bindings/automation-binding.json",
+      "bytes": 484,
+      "sha256": "102d90cce663f53da5ec0c4cd7bd6cecd62ccefe6ba55711f592f7ae6c16a9b8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2637,
+      "sha256": "1f0ea4af1c67bca1f8dac8faf360efaa9d572496a228892613e209915e3f0874"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/assemble.py",
+      "bytes": 35052,
+      "sha256": "1b198e227425136ffc779033b2d1ede1cff9abe8dd1af7e4abfa6c1164641fcc"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/manifest.json",
+      "bytes": 70245,
+      "sha256": "b83b3b90a6103464348b163689514d6b661afeb61579bfcf5bf673c3e37f6542"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/0077d7a10d98a92ea49861d134e90041dd8ae2d4d9166f01ad56f2949290379c.bin",
+      "bytes": 326,
+      "sha256": "0077d7a10d98a92ea49861d134e90041dd8ae2d4d9166f01ad56f2949290379c"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/02cdeb3a4d34ef0b1a47b25495fa5f61c86a82f2d975d8784677f7ce1a90cdf2.bin",
+      "bytes": 121269,
+      "sha256": "02cdeb3a4d34ef0b1a47b25495fa5f61c86a82f2d975d8784677f7ce1a90cdf2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/03b5188e86a2355f830b7838ae913c32dd24f95575188e74e773d0e0351833ac.bin",
+      "bytes": 1353,
+      "sha256": "03b5188e86a2355f830b7838ae913c32dd24f95575188e74e773d0e0351833ac"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/0a3791cab6ada36b9cd17267f790cd91850fb06a07e4532a7a8c644d2704f716.bin",
+      "bytes": 12667,
+      "sha256": "0a3791cab6ada36b9cd17267f790cd91850fb06a07e4532a7a8c644d2704f716"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/0a79784ebb773f7430694377ffd25928c9f6dd87c3cc5f93527bd85a6289783a.bin",
+      "bytes": 2716,
+      "sha256": "0a79784ebb773f7430694377ffd25928c9f6dd87c3cc5f93527bd85a6289783a"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/0d8ab1454cd06976d7afe3be163f6fad0e1d335b877167e60392f0be874f15db.bin",
+      "bytes": 12158,
+      "sha256": "0d8ab1454cd06976d7afe3be163f6fad0e1d335b877167e60392f0be874f15db"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/162cccf925d4107f3ad8c236b8095ddb0aaae374df496a538d9e9af3c87f4b15.bin",
+      "bytes": 18890,
+      "sha256": "162cccf925d4107f3ad8c236b8095ddb0aaae374df496a538d9e9af3c87f4b15"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/184decde908d27698fcf24c95d9c52349f904ca0c644a62844203415eb0e7545.bin",
+      "bytes": 23537,
+      "sha256": "184decde908d27698fcf24c95d9c52349f904ca0c644a62844203415eb0e7545"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/1be7891249b3d7c5613561befcee541a1856ac13517d4cf2849387a8a1fc5871.bin",
+      "bytes": 696,
+      "sha256": "1be7891249b3d7c5613561befcee541a1856ac13517d4cf2849387a8a1fc5871"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/1c71d031a779aedb776a62abde89b28a7f7fc73388ee9a0b4bdff97ddbef2feb.bin",
+      "bytes": 2918,
+      "sha256": "1c71d031a779aedb776a62abde89b28a7f7fc73388ee9a0b4bdff97ddbef2feb"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/1d78528fcff5a71dff396ff9294445e2eb8aebaad5280b416390951c6357cf00.bin",
+      "bytes": 1015,
+      "sha256": "1d78528fcff5a71dff396ff9294445e2eb8aebaad5280b416390951c6357cf00"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/1e7a48c9467bf2caeb98413c9bfdfa97e53965921a1736028b6bbca530bfd77d.bin",
+      "bytes": 699,
+      "sha256": "1e7a48c9467bf2caeb98413c9bfdfa97e53965921a1736028b6bbca530bfd77d"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/213a69b486628a2a5f60af5c7e6bf0d4a58ed2ae6d22b6950e686642e21efc4b.bin",
+      "bytes": 594,
+      "sha256": "213a69b486628a2a5f60af5c7e6bf0d4a58ed2ae6d22b6950e686642e21efc4b"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7.bin",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/232aa0bb5c729095ca7d7bc4c5c4f80935bc48933ce66cdb792b22ebd6ee0194.bin",
+      "bytes": 110299,
+      "sha256": "232aa0bb5c729095ca7d7bc4c5c4f80935bc48933ce66cdb792b22ebd6ee0194"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/2395583a54dd690f1dcf9c5560f9d0e1ce826b59d36ff9fa0d1989724637e189.bin",
+      "bytes": 109,
+      "sha256": "2395583a54dd690f1dcf9c5560f9d0e1ce826b59d36ff9fa0d1989724637e189"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/2cb2ff0872a9fd62292086bf6afa8d55b5d0f0e8ec477cf2ce5892442ed3c9b5.bin",
+      "bytes": 811,
+      "sha256": "2cb2ff0872a9fd62292086bf6afa8d55b5d0f0e8ec477cf2ce5892442ed3c9b5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/2f50b2975c0a4e70f4f6656a7e03f3ecc9b7f4221110538b3f17e7d709c46a1f.bin",
+      "bytes": 2716,
+      "sha256": "2f50b2975c0a4e70f4f6656a7e03f3ecc9b7f4221110538b3f17e7d709c46a1f"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/32c0f2de29de4f6d0ca67b29addea5632730625a736dddc9198d5cf497fa17d7.bin",
+      "bytes": 760,
+      "sha256": "32c0f2de29de4f6d0ca67b29addea5632730625a736dddc9198d5cf497fa17d7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/35943908e97e0141085338f521ba35a0cc16a7758ce0f45e8405014e49cd716f.bin",
+      "bytes": 127873,
+      "sha256": "35943908e97e0141085338f521ba35a0cc16a7758ce0f45e8405014e49cd716f"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/35a5bde21648a80cdd855a9ce5d103dae69bfa3764fa3011623da3c9d43df6c7.bin",
+      "bytes": 6314,
+      "sha256": "35a5bde21648a80cdd855a9ce5d103dae69bfa3764fa3011623da3c9d43df6c7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/37252c3774029006c7f0fa13771c22bc47a33f40f54fd37eda7d85ff4cd66bf2.bin",
+      "bytes": 16344,
+      "sha256": "37252c3774029006c7f0fa13771c22bc47a33f40f54fd37eda7d85ff4cd66bf2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/37a7578fe02d531f69ff8d86cebee40e94d0c2a72d71377e00f394a4a96210c9.bin",
+      "bytes": 395,
+      "sha256": "37a7578fe02d531f69ff8d86cebee40e94d0c2a72d71377e00f394a4a96210c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/39f0167def119a93ad95ad5abc7d16f2cd924e5fd3b0b5f13783dda5825df4b5.bin",
+      "bytes": 2747,
+      "sha256": "39f0167def119a93ad95ad5abc7d16f2cd924e5fd3b0b5f13783dda5825df4b5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/3d26ffc17bd09a54bff16424d0a73c0f0b0a1a43bcdebf27887d332746d726c8.bin",
+      "bytes": 509,
+      "sha256": "3d26ffc17bd09a54bff16424d0a73c0f0b0a1a43bcdebf27887d332746d726c8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/41e18088dd04896fd3c4e5aa988166796a2a70ec200c45bf55818e0b3d1d72a1.bin",
+      "bytes": 4094,
+      "sha256": "41e18088dd04896fd3c4e5aa988166796a2a70ec200c45bf55818e0b3d1d72a1"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/45c51002c8af802aed864f62cb400eab1973f68438dc9515799baea00b7c8b35.bin",
+      "bytes": 28016,
+      "sha256": "45c51002c8af802aed864f62cb400eab1973f68438dc9515799baea00b7c8b35"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/47ce2be35fc0898f106108e2c48fee12b46e052bd16d34ed0b2e8c96f397e8f4.bin",
+      "bytes": 3755,
+      "sha256": "47ce2be35fc0898f106108e2c48fee12b46e052bd16d34ed0b2e8c96f397e8f4"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/48c91f25b7eb4ff3ca8b047af629f14ed36785b4667c953c8076b023ec70c215.bin",
+      "bytes": 23760,
+      "sha256": "48c91f25b7eb4ff3ca8b047af629f14ed36785b4667c953c8076b023ec70c215"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/4a14fb25b4783fdd48e6e407671aabfa556e8ee027ef9fd90ddce8837ab1a0ba.bin",
+      "bytes": 221,
+      "sha256": "4a14fb25b4783fdd48e6e407671aabfa556e8ee027ef9fd90ddce8837ab1a0ba"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/4c12a0b1834379e1a175b49d797e485485e447b0f3c160c74bb5961f7ddf6f60.bin",
+      "bytes": 694,
+      "sha256": "4c12a0b1834379e1a175b49d797e485485e447b0f3c160c74bb5961f7ddf6f60"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/4dd834056b3e280767f7c4176be6978180e4d9efa57cb76f84924d51b5f48347.bin",
+      "bytes": 301,
+      "sha256": "4dd834056b3e280767f7c4176be6978180e4d9efa57cb76f84924d51b5f48347"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/4e0df8ca04dceae3042fcef9a789795da39ee9333ad69a4f706ce29cf17a8a19.bin",
+      "bytes": 12148,
+      "sha256": "4e0df8ca04dceae3042fcef9a789795da39ee9333ad69a4f706ce29cf17a8a19"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/4e6edf1fe6bb46def54abf86d965ce7e45d4c06ecee2b0f8d3cce891c6a695e5.bin",
+      "bytes": 696,
+      "sha256": "4e6edf1fe6bb46def54abf86d965ce7e45d4c06ecee2b0f8d3cce891c6a695e5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/5107b688c70a3b2ded57f1973076560de6abcee9beec858a83d8778c07371f22.bin",
+      "bytes": 696,
+      "sha256": "5107b688c70a3b2ded57f1973076560de6abcee9beec858a83d8778c07371f22"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/51c74a9303a99d1f289fa739be308e9b49b51d3ff9a475aef94c117fbff5e09b.bin",
+      "bytes": 22780,
+      "sha256": "51c74a9303a99d1f289fa739be308e9b49b51d3ff9a475aef94c117fbff5e09b"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/51da93d11ee53dcff10e09bc4d5c50814d6fc7229ceb99edd025247bb954ce3c.bin",
+      "bytes": 468,
+      "sha256": "51da93d11ee53dcff10e09bc4d5c50814d6fc7229ceb99edd025247bb954ce3c"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/52bbb90b763e88cf0a67b6c793ad09c56fbd677c282523bdb994ec4c91131eb9.bin",
+      "bytes": 12635,
+      "sha256": "52bbb90b763e88cf0a67b6c793ad09c56fbd677c282523bdb994ec4c91131eb9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/560a44f341d8de82911006123ee03068633a0e0f5083d4811b7b91bbfe4c2833.bin",
+      "bytes": 301,
+      "sha256": "560a44f341d8de82911006123ee03068633a0e0f5083d4811b7b91bbfe4c2833"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/59063f32cf4f6541ee0c51eed7065010a5e449c15426b8205419c1270d870427.bin",
+      "bytes": 693,
+      "sha256": "59063f32cf4f6541ee0c51eed7065010a5e449c15426b8205419c1270d870427"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/5ae14d89e1615c7909b8437fcad459cd2591d9d6dea849dad02821be8d5e1e06.bin",
+      "bytes": 6782,
+      "sha256": "5ae14d89e1615c7909b8437fcad459cd2591d9d6dea849dad02821be8d5e1e06"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/5b8ff9d28f950f239de2201ff0b7f2e78d129632a8009175b54d348097977ea1.bin",
+      "bytes": 4816,
+      "sha256": "5b8ff9d28f950f239de2201ff0b7f2e78d129632a8009175b54d348097977ea1"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/5c0f5ff198597a9e7a0c83ab0d6f3a76b0b0bf3991f6aa838b7f8ff5e3cb314d.bin",
+      "bytes": 591,
+      "sha256": "5c0f5ff198597a9e7a0c83ab0d6f3a76b0b0bf3991f6aa838b7f8ff5e3cb314d"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/5d8d4b3e3875304b76f1e730172f90e54506c751c832ba19d2c96db18e8f0c01.bin",
+      "bytes": 2918,
+      "sha256": "5d8d4b3e3875304b76f1e730172f90e54506c751c832ba19d2c96db18e8f0c01"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/5fe25e8c15851d03579f84c81f04824d47c693e292221b1b9290eb929f433f83.bin",
+      "bytes": 159,
+      "sha256": "5fe25e8c15851d03579f84c81f04824d47c693e292221b1b9290eb929f433f83"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/6504ef73f1900da50d67e4a245cd2fc7c03ba248669c52c2c6dead68d1040b10.bin",
+      "bytes": 194,
+      "sha256": "6504ef73f1900da50d67e4a245cd2fc7c03ba248669c52c2c6dead68d1040b10"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/654c01cf5b2d31a32f46a845db48c7d617a77b82f0928e2c6292c917ace384ce.bin",
+      "bytes": 1178,
+      "sha256": "654c01cf5b2d31a32f46a845db48c7d617a77b82f0928e2c6292c917ace384ce"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/674fb917946a34a34e4ad74c0e199fad1f30c37b53a040ae0fca5faafaa5d1e2.bin",
+      "bytes": 108366,
+      "sha256": "674fb917946a34a34e4ad74c0e199fad1f30c37b53a040ae0fca5faafaa5d1e2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/676647f893df865de85997bafcc27cf98845a518cd58fc9d5ef83417572ccd25.bin",
+      "bytes": 692,
+      "sha256": "676647f893df865de85997bafcc27cf98845a518cd58fc9d5ef83417572ccd25"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/6c5e4acfae04b2893dff303955aff993a0d6ccafbf6fb8a0bbe17e0cc7896108.bin",
+      "bytes": 111578,
+      "sha256": "6c5e4acfae04b2893dff303955aff993a0d6ccafbf6fb8a0bbe17e0cc7896108"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/6eca64722e1301d1f7a482be9f7708fd519541cab206282555da37e14a3dfcd8.bin",
+      "bytes": 422,
+      "sha256": "6eca64722e1301d1f7a482be9f7708fd519541cab206282555da37e14a3dfcd8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/7431d6f4a47223f89bf4c5da63f61f56d5d7ac1bead370a201d08554644501de.bin",
+      "bytes": 3319,
+      "sha256": "7431d6f4a47223f89bf4c5da63f61f56d5d7ac1bead370a201d08554644501de"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/7568fd5e1f929c3290d7026f9015a024f72e0183ac7c22256dc369780d02c55f.bin",
+      "bytes": 2965,
+      "sha256": "7568fd5e1f929c3290d7026f9015a024f72e0183ac7c22256dc369780d02c55f"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/761bd5037c5f93bacb3933377b250db4dd6e936bfbd9ea9c2469915f888eee23.bin",
+      "bytes": 11152,
+      "sha256": "761bd5037c5f93bacb3933377b250db4dd6e936bfbd9ea9c2469915f888eee23"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/7746191862345dfe3d722bb543d021b5a498d6ef9113ce32219e190ee44416b8.bin",
+      "bytes": 11799,
+      "sha256": "7746191862345dfe3d722bb543d021b5a498d6ef9113ce32219e190ee44416b8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/782b3d76adc81000a5f60dae56c2f24a44fcaf7a837acb97a2011d5cf3e35c3e.bin",
+      "bytes": 110680,
+      "sha256": "782b3d76adc81000a5f60dae56c2f24a44fcaf7a837acb97a2011d5cf3e35c3e"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/7a4ed71075f333a21e88bf8c9b8c07231fb3ee6af21803c00c565cd33b31ace6.bin",
+      "bytes": 7295,
+      "sha256": "7a4ed71075f333a21e88bf8c9b8c07231fb3ee6af21803c00c565cd33b31ace6"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/7d74df547509b7873394746353518b5b3e474d9b919276efc37386b78c10d2e6.bin",
+      "bytes": 124743,
+      "sha256": "7d74df547509b7873394746353518b5b3e474d9b919276efc37386b78c10d2e6"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/7f82be188465a27da4d5fb74919a2971f217003ca174fe204693938c049d4eb0.bin",
+      "bytes": 104099,
+      "sha256": "7f82be188465a27da4d5fb74919a2971f217003ca174fe204693938c049d4eb0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/834e92872aed5779fd4e2a52dde5260f4d06737ce75b9b0ad9356a472ca7dd02.bin",
+      "bytes": 5774,
+      "sha256": "834e92872aed5779fd4e2a52dde5260f4d06737ce75b9b0ad9356a472ca7dd02"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/84cfe24cb6b30827d4f288dc40c7d95c9f6fbc888079ac257218dd7855369ba2.bin",
+      "bytes": 107884,
+      "sha256": "84cfe24cb6b30827d4f288dc40c7d95c9f6fbc888079ac257218dd7855369ba2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/8681c7dcbdbec9abcf9df0d27e2be0b5a41e48d717a0f8aa19c84edecd8ceef9.bin",
+      "bytes": 580,
+      "sha256": "8681c7dcbdbec9abcf9df0d27e2be0b5a41e48d717a0f8aa19c84edecd8ceef9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/87338aacbb1d7565922294bfab3de959f7b776514922764a9991c9685dd87d82.bin",
+      "bytes": 127,
+      "sha256": "87338aacbb1d7565922294bfab3de959f7b776514922764a9991c9685dd87d82"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/89614d13a6a86b6862352dd2493c5d7376a03af6acc6c1090320e97630467fa0.bin",
+      "bytes": 6861,
+      "sha256": "89614d13a6a86b6862352dd2493c5d7376a03af6acc6c1090320e97630467fa0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/89875f547ee268d8ff4af9f89af8dab815d28639697cbebd5a9292e7f8732889.bin",
+      "bytes": 26527,
+      "sha256": "89875f547ee268d8ff4af9f89af8dab815d28639697cbebd5a9292e7f8732889"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/8bf875e65adf8e419f34d28e027833f55567ba2cf0981e65e0eb1f978f7a1307.bin",
+      "bytes": 4597,
+      "sha256": "8bf875e65adf8e419f34d28e027833f55567ba2cf0981e65e0eb1f978f7a1307"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/8d53bdff999e1f6bd7ff60e885dd3d46cadc7503b1c4aaec2491c59d9072eff6.bin",
+      "bytes": 11139,
+      "sha256": "8d53bdff999e1f6bd7ff60e885dd3d46cadc7503b1c4aaec2491c59d9072eff6"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/8eca6985b0e74b48b6e9b0f6da7a40f72fb98ba23e585745ddf4f18549ebaae8.bin",
+      "bytes": 366,
+      "sha256": "8eca6985b0e74b48b6e9b0f6da7a40f72fb98ba23e585745ddf4f18549ebaae8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/94bd1ae2cccc0abe8fc30c92bb32b8098cc19030ea26444d28cae4e7b0aa0406.bin",
+      "bytes": 114626,
+      "sha256": "94bd1ae2cccc0abe8fc30c92bb32b8098cc19030ea26444d28cae4e7b0aa0406"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/984da224d600c8437ab86237454eb626cd3883ddff4912daacacf32759154472.bin",
+      "bytes": 873,
+      "sha256": "984da224d600c8437ab86237454eb626cd3883ddff4912daacacf32759154472"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/998e4c44b08abd5050b85242bff587e9a062e58b58d6c816b525f5fe7fd09f08.bin",
+      "bytes": 362,
+      "sha256": "998e4c44b08abd5050b85242bff587e9a062e58b58d6c816b525f5fe7fd09f08"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/99f44add20ab66f2c8dafcee88503f6f522097f91d6a0c981be20a011218d467.bin",
+      "bytes": 120820,
+      "sha256": "99f44add20ab66f2c8dafcee88503f6f522097f91d6a0c981be20a011218d467"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4.bin",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/aa3a8e3c9339c988ca71c96cd138a18ebebc0b1fba4f0186f53cd323dca859ff.bin",
+      "bytes": 41,
+      "sha256": "aa3a8e3c9339c988ca71c96cd138a18ebebc0b1fba4f0186f53cd323dca859ff"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/ab70685d317b567035cb5280bf49bef272fdb2700c7a02f0e7cd01c47b4413bb.bin",
+      "bytes": 326,
+      "sha256": "ab70685d317b567035cb5280bf49bef272fdb2700c7a02f0e7cd01c47b4413bb"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/af37f46d91a72f5b499ed21e47624599346cc44e09ffbbf0ac45cbee9133b7a0.bin",
+      "bytes": 699,
+      "sha256": "af37f46d91a72f5b499ed21e47624599346cc44e09ffbbf0ac45cbee9133b7a0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/afa3a9da1cf10e793cc9b3c7695b5d6d3b266dc5fd7673ee12b4d49acda04ff8.bin",
+      "bytes": 2716,
+      "sha256": "afa3a9da1cf10e793cc9b3c7695b5d6d3b266dc5fd7673ee12b4d49acda04ff8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b2f7a1bcf015d947a7621a9802629dabae8ca041560d37b334710059e5cf83a7.bin",
+      "bytes": 864,
+      "sha256": "b2f7a1bcf015d947a7621a9802629dabae8ca041560d37b334710059e5cf83a7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b309664c5047305b6365658ab1ddca2918b868a6a28cf3e9b075358a728c1d0e.bin",
+      "bytes": 12476,
+      "sha256": "b309664c5047305b6365658ab1ddca2918b868a6a28cf3e9b075358a728c1d0e"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b3888466f320147025d0322ec753373e78d2fbafe4c133d9b1b8134822d547c0.bin",
+      "bytes": 728,
+      "sha256": "b3888466f320147025d0322ec753373e78d2fbafe4c133d9b1b8134822d547c0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b436c6e41079e3d6b776ff81b141703915c94b1431bad83253a3954febb4ea94.bin",
+      "bytes": 5341,
+      "sha256": "b436c6e41079e3d6b776ff81b141703915c94b1431bad83253a3954febb4ea94"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b65cbe0a537163e1ac10f0ebd23e72896ad2366997a3fde4bdbc3dce540de232.bin",
+      "bytes": 14479,
+      "sha256": "b65cbe0a537163e1ac10f0ebd23e72896ad2366997a3fde4bdbc3dce540de232"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b769ff7530bc293e1416e32e305283739c2b9cc791c196f1b36cec5fefe64394.bin",
+      "bytes": 2918,
+      "sha256": "b769ff7530bc293e1416e32e305283739c2b9cc791c196f1b36cec5fefe64394"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/b7b303ae67ae00f0fa8d52de2e87f4097e0598289a2d17d2c62cfb0215cf61e3.bin",
+      "bytes": 35498,
+      "sha256": "b7b303ae67ae00f0fa8d52de2e87f4097e0598289a2d17d2c62cfb0215cf61e3"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/bee1ed042cc8fe432ee18f6e84466d549bfbe502ddb5f8ebf5a42f4b644a15ff.bin",
+      "bytes": 549,
+      "sha256": "bee1ed042cc8fe432ee18f6e84466d549bfbe502ddb5f8ebf5a42f4b644a15ff"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/bffb3b039ad41bd7498ad7fcc13e4a9d0af23e31e6b36981e3ca931f35a7ebab.bin",
+      "bytes": 144,
+      "sha256": "bffb3b039ad41bd7498ad7fcc13e4a9d0af23e31e6b36981e3ca931f35a7ebab"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/c3dc138148b853559fc2dc6d1b5b73ebb2fbae3c38dc9ab1e2dbc32b6d52eda2.bin",
+      "bytes": 7266,
+      "sha256": "c3dc138148b853559fc2dc6d1b5b73ebb2fbae3c38dc9ab1e2dbc32b6d52eda2"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/c694e7afba5ad53e719cb264c5880475b652ca011527dbde5591177bbb7841e5.bin",
+      "bytes": 2648,
+      "sha256": "c694e7afba5ad53e719cb264c5880475b652ca011527dbde5591177bbb7841e5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9.bin",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/cbaf27b163727e6c38de9cc8daa0bb1028855e723b0d5c55a30db137218ee1cf.bin",
+      "bytes": 304,
+      "sha256": "cbaf27b163727e6c38de9cc8daa0bb1028855e723b0d5c55a30db137218ee1cf"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/cc50f75057b106d036b51f7fdc970a47329cee6b43b25849a4ffd5d39b3776f0.bin",
+      "bytes": 8458,
+      "sha256": "cc50f75057b106d036b51f7fdc970a47329cee6b43b25849a4ffd5d39b3776f0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/ccc6c47870231b91b2297b58f9f90b5f410d61c51c83028f5b150d09aef613e5.bin",
+      "bytes": 696,
+      "sha256": "ccc6c47870231b91b2297b58f9f90b5f410d61c51c83028f5b150d09aef613e5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/d0059571b2dd6f5fdd88ba29b39b124c66710792c6e9c86b8246e28b9c78fc62.bin",
+      "bytes": 11246,
+      "sha256": "d0059571b2dd6f5fdd88ba29b39b124c66710792c6e9c86b8246e28b9c78fc62"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/d00bb032f1f2df891586d0db01dff3ec2f47142a6695017eb76851ddfcbd33ab.bin",
+      "bytes": 2238,
+      "sha256": "d00bb032f1f2df891586d0db01dff3ec2f47142a6695017eb76851ddfcbd33ab"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/d687d19367e26cb16b01456600b471a7508eda81c24d8e21e1ca27158d9c2d3e.bin",
+      "bytes": 25333,
+      "sha256": "d687d19367e26cb16b01456600b471a7508eda81c24d8e21e1ca27158d9c2d3e"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/d6fd27c3c5aaf08290022bea0777ee0b7c105b249ec03adb5d95bd8fe059de11.bin",
+      "bytes": 74710,
+      "sha256": "d6fd27c3c5aaf08290022bea0777ee0b7c105b249ec03adb5d95bd8fe059de11"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/da9b10b0ec4c329ee20264cb7e45d9d7a1fea4e55bf5847abc86606ab42fde21.bin",
+      "bytes": 11974,
+      "sha256": "da9b10b0ec4c329ee20264cb7e45d9d7a1fea4e55bf5847abc86606ab42fde21"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/dd41bc16e386c3e638c3edb63fbcf6f181c6389c0311e6988d1143d37f6ca7e7.bin",
+      "bytes": 699,
+      "sha256": "dd41bc16e386c3e638c3edb63fbcf6f181c6389c0311e6988d1143d37f6ca7e7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/de1d02112cace35a04af95372ccbc4b042fa644a154271fb7bddf3b1d6482d95.bin",
+      "bytes": 901,
+      "sha256": "de1d02112cace35a04af95372ccbc4b042fa644a154271fb7bddf3b1d6482d95"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730.bin",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e06ab5c0f0d3b54042c91753b526f2a154977e776f5414d0ac9c4af3253382e7.bin",
+      "bytes": 304,
+      "sha256": "e06ab5c0f0d3b54042c91753b526f2a154977e776f5414d0ac9c4af3253382e7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e19424496713d309b6a7caec936ce6e61b252559e8ce3f09beccd9f9ba50f508.bin",
+      "bytes": 16383,
+      "sha256": "e19424496713d309b6a7caec936ce6e61b252559e8ce3f09beccd9f9ba50f508"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e1b626a2afc6ed3c4d549a56c3831562386ec3593e383b169fe33855ab1ae961.bin",
+      "bytes": 469,
+      "sha256": "e1b626a2afc6ed3c4d549a56c3831562386ec3593e383b169fe33855ab1ae961"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e312ab8f0233aa5b24e6cc55d93eb2cf09088aa50f564a79f0fe15f5a10a214d.bin",
+      "bytes": 898,
+      "sha256": "e312ab8f0233aa5b24e6cc55d93eb2cf09088aa50f564a79f0fe15f5a10a214d"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e3a6c0d4659f2bc260fbc66c0bff68a4cc0e682c139e2587e48fd8afd6479e02.bin",
+      "bytes": 2716,
+      "sha256": "e3a6c0d4659f2bc260fbc66c0bff68a4cc0e682c139e2587e48fd8afd6479e02"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e3f59233fee1ab423b493084cb492ad4c098002f7b14789c93df2122c1055b68.bin",
+      "bytes": 2918,
+      "sha256": "e3f59233fee1ab423b493084cb492ad4c098002f7b14789c93df2122c1055b68"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e644058a4853d3576aa419322096b7f09e3bef9a3d24e408358211f7537cfaa3.bin",
+      "bytes": 18687,
+      "sha256": "e644058a4853d3576aa419322096b7f09e3bef9a3d24e408358211f7537cfaa3"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e8ea097e2fe12db855f56fa19f3c642c8ce98512a780d85dfa134dce5972935b.bin",
+      "bytes": 1918,
+      "sha256": "e8ea097e2fe12db855f56fa19f3c642c8ce98512a780d85dfa134dce5972935b"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/e9db3d760f8a56e5773e4742089bc45e80616313292623497f435aa39e1239ae.bin",
+      "bytes": 699,
+      "sha256": "e9db3d760f8a56e5773e4742089bc45e80616313292623497f435aa39e1239ae"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/eb22dd8d88dc6ed1d060b4d98e94d8dffe8a0d3186a248d7993e1cca61f704d1.bin",
+      "bytes": 83,
+      "sha256": "eb22dd8d88dc6ed1d060b4d98e94d8dffe8a0d3186a248d7993e1cca61f704d1"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/ec5e7b4f31a043d7dbb8b420ecbd7438177caa51ff60f6cc3ca62d7a8703aa68.bin",
+      "bytes": 698,
+      "sha256": "ec5e7b4f31a043d7dbb8b420ecbd7438177caa51ff60f6cc3ca62d7a8703aa68"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/ef71cf4ec7a3bbb4e44a18fe03babb4b6d4de9ec65a47f5d4ec9ba8049a92a93.bin",
+      "bytes": 2442,
+      "sha256": "ef71cf4ec7a3bbb4e44a18fe03babb4b6d4de9ec65a47f5d4ec9ba8049a92a93"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/f095cc893cb4d5ab48532917ab5d2b6eeeeeb134b7241ea571f6950bd40cffb5.bin",
+      "bytes": 3413,
+      "sha256": "f095cc893cb4d5ab48532917ab5d2b6eeeeeb134b7241ea571f6950bd40cffb5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/fbe7b69f8a78076cbd6b991dd42345312cdf1050f61e7465b2436bd4a4226486.bin",
+      "bytes": 7863,
+      "sha256": "fbe7b69f8a78076cbd6b991dd42345312cdf1050f61e7465b2436bd4a4226486"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/fc4ec9cdda3cc726af07d799c64a6bb332d3221a701fa17779875763455f6857.bin",
+      "bytes": 2327,
+      "sha256": "fc4ec9cdda3cc726af07d799c64a6bb332d3221a701fa17779875763455f6857"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/binding-provenance/originals/fcc163d100499eb6cd16a1ead9681992e09338fb54ad939b865a3d43e42107c0.bin",
+      "bytes": 898,
+      "sha256": "fcc163d100499eb6cd16a1ead9681992e09338fb54ad939b865a3d43e42107c0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/context.canonical.reviewed.json",
+      "bytes": 5625,
+      "sha256": "eadefe13f2d44f0d68eb3d79cd38156e1d1c3a692f09742c5c215fa5af6a38c8"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/prepared_binding.py",
+      "bytes": 9193,
+      "sha256": "f5222144de0b7d5a091498e0e72beecf42522fab70333f4e5a476ea51f46c6c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/qualification_context.py",
+      "bytes": 19687,
+      "sha256": "05c2231b2120cde3e4e42a2ac8e1c69008acd8ca1c82c59f587ce4aec0e27fdd"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/review-final-qualification.py",
+      "bytes": 19749,
+      "sha256": "113acf58d3831667ec04e2e4599fdba6d3ea76d08cde56c435aafd907648d58b"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/source-identity-original.json",
+      "bytes": 452,
+      "sha256": "d2ee04f336266a5c3d53679a815ca809b60c575dbd1c28df56818f104da7f4db"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/qualification-tools/utility-source-pins.json",
+      "bytes": 3247,
+      "sha256": "c5e3307dc63d01022c0db24ec52824b1f7a29d814de01a402c660655532077c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/001.json",
+      "bytes": 728,
+      "sha256": "b3888466f320147025d0322ec753373e78d2fbafe4c133d9b1b8134822d547c0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/001.request.json",
+      "bytes": 304,
+      "sha256": "e06ab5c0f0d3b54042c91753b526f2a154977e776f5414d0ac9c4af3253382e7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/002.json",
+      "bytes": 12635,
+      "sha256": "52bbb90b763e88cf0a67b6c793ad09c56fbd677c282523bdb994ec4c91131eb9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/002.request.json",
+      "bytes": 301,
+      "sha256": "4dd834056b3e280767f7c4176be6978180e4d9efa57cb76f84924d51b5f48347"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/003.json",
+      "bytes": 18687,
+      "sha256": "e644058a4853d3576aa419322096b7f09e3bef9a3d24e408358211f7537cfaa3"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/003.request.json",
+      "bytes": 326,
+      "sha256": "0077d7a10d98a92ea49861d134e90041dd8ae2d4d9166f01ad56f2949290379c"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/004.json",
+      "bytes": 728,
+      "sha256": "b3888466f320147025d0322ec753373e78d2fbafe4c133d9b1b8134822d547c0"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/004.request.json",
+      "bytes": 304,
+      "sha256": "cbaf27b163727e6c38de9cc8daa0bb1028855e723b0d5c55a30db137218ee1cf"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/005.json",
+      "bytes": 12635,
+      "sha256": "52bbb90b763e88cf0a67b6c793ad09c56fbd677c282523bdb994ec4c91131eb9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/005.request.json",
+      "bytes": 301,
+      "sha256": "560a44f341d8de82911006123ee03068633a0e0f5083d4811b7b91bbfe4c2833"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/006.json",
+      "bytes": 18687,
+      "sha256": "e644058a4853d3576aa419322096b7f09e3bef9a3d24e408358211f7537cfaa3"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/api/006.request.json",
+      "bytes": 326,
+      "sha256": "ab70685d317b567035cb5280bf49bef272fdb2700c7a02f0e7cd01c47b4413bb"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/artifact-authority.json",
+      "bytes": 811,
+      "sha256": "2cb2ff0872a9fd62292086bf6afa8d55b5d0f0e8ec477cf2ce5892442ed3c9b5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/binding.json",
+      "bytes": 395,
+      "sha256": "37a7578fe02d531f69ff8d86cebee40e94d0c2a72d71377e00f394a4a96210c9"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/execution.json",
+      "bytes": 2442,
+      "sha256": "ef71cf4ec7a3bbb4e44a18fe03babb4b6d4de9ec65a47f5d4ec9ba8049a92a93"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+      "bytes": 144,
+      "sha256": "bffb3b039ad41bd7498ad7fcc13e4a9d0af23e31e6b36981e3ca931f35a7ebab"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/game/index.html",
+      "bytes": 74710,
+      "sha256": "d6fd27c3c5aaf08290022bea0777ee0b7c105b249ec03adb5d95bd8fe059de11"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+      "bytes": 120820,
+      "sha256": "99f44add20ab66f2c8dafcee88503f6f522097f91d6a0c981be20a011218d467"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/originals/service-worker.js",
+      "bytes": 111578,
+      "sha256": "6c5e4acfae04b2893dff303955aff993a0d6ccafbf6fb8a0bbe17e0cc7896108"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/frozen-offline-review/review.json",
+      "bytes": 3413,
+      "sha256": "f095cc893cb4d5ab48532917ab5d2b6eeeeeb134b7241ea571f6950bd40cffb5"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/inspection.log",
+      "bytes": 4094,
+      "sha256": "41e18088dd04896fd3c4e5aa988166796a2a70ec200c45bf55818e0b3d1d72a1"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/offline-review.log",
+      "bytes": 194,
+      "sha256": "6504ef73f1900da50d67e4a245cd2fc7c03ba248669c52c2c6dead68d1040b10"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "213a69b486628a2a5f60af5c7e6bf0d4a58ed2ae6d22b6950e686642e21efc4b"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "eb22dd8d88dc6ed1d060b4d98e94d8dffe8a0d3186a248d7993e1cca61f704d1"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+      "bytes": 1918,
+      "sha256": "e8ea097e2fe12db855f56fa19f3c642c8ce98512a780d85dfa134dce5972935b"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+      "bytes": 127873,
+      "sha256": "35943908e97e0141085338f521ba35a0cc16a7758ce0f45e8405014e49cd716f"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/qualified-artifact-verified/release.json",
+      "bytes": 468,
+      "sha256": "51da93d11ee53dcff10e09bc4d5c50814d6fc7229ceb99edd025247bb954ce3c"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/result.json",
+      "bytes": 549,
+      "sha256": "bee1ed042cc8fe432ee18f6e84466d549bfbe502ddb5f8ebf5a42f4b644a15ff"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/retained-manifest.json",
+      "bytes": 6782,
+      "sha256": "5ae14d89e1615c7909b8437fcad459cd2591d9d6dea849dad02821be8d5e1e06"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/source-after.json",
+      "bytes": 159,
+      "sha256": "5fe25e8c15851d03579f84c81f04824d47c693e292221b1b9290eb929f433f83"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/evidence/source-before.json",
+      "bytes": 159,
+      "sha256": "5fe25e8c15851d03579f84c81f04824d47c693e292221b1b9290eb929f433f83"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/.github/workflows/qualify-release-source.yml",
+      "bytes": 9779,
+      "sha256": "1556a65202bc0e70ce84e10333df711fc863aec0f261c710b9216eb7d5b4af83"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/release_artifact.py",
+      "bytes": 32143,
+      "sha256": "53662aae608f6245bb40f6468427c5825c3eed233b095d4df190a7fbc2ac3698"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/test_release_artifact.py",
+      "bytes": 35031,
+      "sha256": "abc3d7e480ddbef330a264594b79f5c783fb05ddc041d950f995798540561098"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/test_upload_diagnostics.py",
+      "bytes": 12712,
+      "sha256": "14a87102a09eabeba741d19e7839b9320ac5b634bc2d790baf14ebb7f8687045"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/test_upload_distribution.py",
+      "bytes": 14627,
+      "sha256": "463537b0d7e6ecdc8a852134e0b1084e037f82f0d8e894167fdadee919836eda"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/test_upload_source.py",
+      "bytes": 14451,
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/upload_distribution.py",
+      "bytes": 20002,
+      "sha256": "5ed2a8940e4c862763ee4dfc34394e2ac1825c40cdbe5e68ad0674af707cfa27"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/upload_source.py",
+      "bytes": 19932,
+      "sha256": "993fcc897682277998df54c40dee83335d9d4b6746611084731c6af63abac6e6"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/executed-helpers/publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/jobs.json",
+      "bytes": 6314,
+      "sha256": "35a5bde21648a80cdd855a9ce5d103dae69bfa3764fa3011623da3c9d43df6c7"
+    },
+    {
+      "path": ".cache/p03-enemy-startup-close-focus-v06120/utility-inspection/run.json",
+      "bytes": 12148,
+      "sha256": "4e0df8ca04dceae3042fcef9a789795da39ee9333ad69a4f706ce29cf17a8a19"
+    }
+  ],
+  "limits": [
+    "Source qualification uses complete hosted suites/build and already verified frozen originals; release publication, public HTTP/browser/offline and physical-device acceptance remain separate.",
+    "Five source commands share one actual successful preflight step; no per-command exit codes or timestamps are invented.",
+    "PR coverage is authenticated exact runner semantics plus complete deterministic file partitions; no direct per-file execution event trace is claimed.",
+    "Twelve raw hosted identity boundaries verify tracked bytes/modes; these are not a continuous filesystem lock.",
+    "The game checkout is exact bound release; the separately observed executed PR workflow/automation checkout is recorded in workflowRevision/workflowTree with exact retained API/blob authority.",
+    "Literal unsharded npm test and ordinary build were not run locally. Both hosted shard families cover every pinned test file; no unsharded scheduling equivalence or local ordinary-byte/browser carry-forward is claimed."
+  ]
+}
