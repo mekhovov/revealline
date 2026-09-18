@@ -594,15 +594,26 @@ export function bootCoop() {
   // move its opener to BODY; a later deliberate choice or loss of foreground
   // permanently vetoes the completion handoff.
   function pictureFocus(origin, initial = false) {
-    let moved = false,
-      shifting = false,
-      pending = null;
-    const beforeScope = scope();
+    let moved = inactive || !foreground(),
+      retired = false,
+      pending = null,
+      handoff = null;
+    const beforeScope = scope(),
+      selection = pictureSelection,
+      attempt = run,
+      epoch = generation,
+      visit = settingsVisit;
     const started =
       document.activeElement === origin &&
       (visibleAction(origin) || (initial && unclaimedFocus(origin)));
     const observe = (event) => {
-      if (!shifting && !unclaimedFocus(event.target) && event.target !== origin) moved = true;
+      if (
+        !unclaimedFocus(event.target) &&
+        event.target !== origin &&
+        event.target !== pending &&
+        event.target !== handoff
+      )
+        moved = true;
     };
     const lost = () => {
       moved = true;
@@ -615,51 +626,159 @@ export function bootCoop() {
     document.addEventListener('keydown', lost, true);
     document.addEventListener('visibilitychange', hidden);
     window.addEventListener('blur', lost);
+    window.addEventListener('pagehide', lost);
     const owns = () =>
+      !retired &&
       !disposed &&
+      !inactive &&
       started &&
       !moved &&
       foreground() &&
+      pictureSelection === selection &&
+      run === attempt &&
+      generation === epoch &&
+      settingsVisit === visit &&
       scope() === beforeScope &&
       (document.activeElement === origin ||
         document.activeElement === pending ||
+        document.activeElement === handoff ||
         unclaimedFocus(document.activeElement));
     const close = () => {
+      retired = true;
       document.removeEventListener('focusin', observe);
       document.removeEventListener('pointerdown', lost, true);
       document.removeEventListener('keydown', lost, true);
       document.removeEventListener('visibilitychange', hidden);
       window.removeEventListener('blur', lost);
+      window.removeEventListener('pagehide', lost);
+    };
+    const direct = (target, remember = false) => {
+      try {
+        if (!owns() || !visibleAction(target) || !owns()) return;
+        if (remember) pending = target;
+        handoff = target;
+        if (document.activeElement !== target) target.focus({ preventScroll: true });
+        const focused = () => owns() && document.activeElement === target;
+        if (!focused() || !visibleAction(target) || !focused()) return;
+        const rect = target.getBoundingClientRect(),
+          width = document.documentElement.clientWidth || window.innerWidth,
+          height = document.documentElement.clientHeight || window.innerHeight;
+        if (
+          ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
+          rect.width <= 0 ||
+          rect.height <= 0 ||
+          width <= 16 ||
+          height <= 16 ||
+          (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+        )
+          return;
+        if (!focused() || !visibleAction(target) || !focused()) return;
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+      } catch {
+        // A browser focus/reveal failure must not prevent the picture reader
+        // from starting or strand its existing Cancel/Retry operation.
+        close();
+      } finally {
+        handoff = null;
+      }
     };
     return {
       pending(target) {
-        if (!owns() || !visibleAction(target)) return;
-        pending = target;
-        shifting = true;
-        try {
-          target.focus({ preventScroll: true });
-        } finally {
-          shifting = false;
-        }
+        direct(target, true);
       },
       finish(target, current = true) {
-        close();
-        if (!current || !owns()) return;
-        if (typeof target === 'function') target();
-        else if (visibleAction(target)) target.focus({ preventScroll: true });
+        if (typeof target === 'function') {
+          // Successful navigation retains its existing focus/scroll contract.
+          const allowed = current && owns();
+          close();
+          if (allowed) target();
+          return;
+        }
+        try {
+          if (current) direct(target);
+        } finally {
+          close();
+        }
       },
     };
   }
+  let previewBinding = null,
+    previewState = 'preparing',
+    pictureMessage = '';
+  function clearPicturePreview() {
+    previewBinding = null;
+    const canvas = $('coop-preview-canvas');
+    canvas.hidden = true;
+    // Reset pixels without obtaining a second image or releasing the shared lease.
+    // Preview failure must not interrupt the original lease's terminal cleanup.
+    try {
+      canvas.width = 576;
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function picturePreview({ retry = false } = {}) {
+    if (run) return;
+    const selection = pictureSelection,
+      binding = selection?.state === 'ready' ? selection.binding : null,
+      canvas = $('coop-preview-canvas'),
+      message = $('coop-preview-message'),
+      name = selection?.pack.levels.find((level) => level.id === selection.levelId)?.name;
+    $('coop-preview-caption').textContent = name
+      ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
+      : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
+    if (binding && previewBinding === binding && !retry) return;
+    const cleared = clearPicturePreview();
+    message.hidden = false;
+    if (binding) {
+      previewBinding = binding;
+      try {
+        if (!cleared) throw new Error('Preview canvas unavailable.');
+        const context = canvas.getContext('2d');
+        if (!context) throw new Error('Preview canvas unavailable.');
+        context.imageSmoothingEnabled = false;
+        context.globalAlpha = 1;
+        context.globalCompositeOperation = 'source-over';
+        context.drawImage(binding.image, 0, 0, canvas.width, canvas.height);
+        // One-cell border teaser only. The full original remains an earned reward.
+        context.fillStyle = '#000';
+        context.fillRect(8, 8, canvas.width - 16, canvas.height - 16);
+        canvas.hidden = false;
+        message.hidden = true;
+        previewState = 'ready';
+      } catch {
+        previewState = 'unavailable';
+        message.textContent = 'Artwork preview unavailable.';
+      }
+    } else {
+      previewState = selection?.state ?? 'empty';
+      if (previewState === 'ready') previewState = 'procedural';
+      message.textContent =
+        previewState === 'procedural'
+          ? 'Procedural arena · no picture preview.'
+          : previewState === 'preparing'
+            ? 'Preparing artwork…'
+            : 'No artwork ready.';
+    }
+    $('coop-picture-preview').dataset.state = previewState;
+  }
   function pictureUI(messageText) {
+    picturePreview();
     const busy = Boolean(pictureOperation),
-      ready = pictureSelection?.state === 'ready';
+      ready = pictureSelection?.state === 'ready',
+      retryPreview = !run && ready && previewState === 'unavailable';
     $('coop-start').disabled = !startPermitted || !ready || busy;
     $('coop-picture-cancel').hidden = !busy;
-    $('coop-picture-retry').hidden = busy || ready;
+    $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
+    $('coop-picture-retry').textContent = retryPreview ? 'Retry preview' : 'Retry picture';
     $('coop-picture-status').dataset.state = busy
       ? 'preparing'
       : (pictureSelection?.state ?? 'cancelled');
-    if (messageText) $('coop-picture-status').textContent = messageText;
+    if (messageText) pictureMessage = messageText;
+    $('coop-picture-status').textContent = retryPreview
+      ? `${pictureMessage} Artwork preview unavailable. Retry preview or Start with the prepared picture.`
+      : pictureMessage;
   }
   function retirePicture() {
     const operation = pictureOperation;
@@ -668,6 +787,7 @@ export function bootCoop() {
     operation?.focus.finish(null, false);
     if (pictureSelection && pictureSelection !== acceptedPicture) pictureSelection.lease?.dispose();
     pictureSelection = null;
+    clearPicturePreview();
   }
   function cancelPicture({ restore = true } = {}) {
     const operation = pictureOperation;
@@ -757,11 +877,13 @@ export function bootCoop() {
         focus.finish(run ? $('coop-retry') : () => navigation.focusAvailable());
       } catch (error) {
         if (!current()) return;
+        try {
+          console.error('Team picture preparation failed.', error);
+        } catch {}
+        if (!current()) return;
         selection.state = 'error';
         pictureOperation = null;
-        pictureUI(
-          `Team picture unavailable: ${error.message} Retry picture or choose another arena.`,
-        );
+        pictureUI('Team picture unavailable. Retry picture or choose another arena.');
         focus.finish($('coop-picture-retry'));
       } finally {
         focus.finish(null, false);
@@ -770,7 +892,18 @@ export function bootCoop() {
     return operation.promise;
   }
   $('coop-picture-cancel').onclick = () => cancelPicture();
-  $('coop-picture-retry').onclick = () => preparePicture({ retry: true });
+  $('coop-picture-retry').onclick = () => {
+    if (!run && pictureSelection?.state === 'ready' && previewState === 'unavailable') {
+      const focus = pictureFocus($('coop-picture-retry'));
+      picturePreview({ retry: true });
+      pictureUI();
+      focus.finish(
+        previewState === 'ready' ? () => navigation.focusAvailable() : $('coop-picture-retry'),
+      );
+      return;
+    }
+    return preparePicture({ retry: true });
+  };
   function currentRecipe() {
     if (run)
       return {
@@ -826,6 +959,7 @@ export function bootCoop() {
     if (pictureSelection && pictureSelection !== selection) retirePicture();
     pictureSelection = selection;
     if (previousPicture && previousPicture !== selection) previousPicture.lease?.dispose();
+    pictureUI();
     generation++;
     startCoop(run);
     document.body.classList.add('playing');
@@ -901,31 +1035,112 @@ export function bootCoop() {
     input.focus();
     message('Choose fresh directions when you are ready.');
   }
+  // This synchronous handoff owns only the return from an attempt to its lobby.
+  // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
+  function lobbyFocus() {
+    const origin = document.activeElement,
+      epoch = generation + 1,
+      visit = settingsVisit;
+    let target = null,
+      moved = inactive || !foreground();
+    const lose = () => {
+      moved = true;
+    };
+    const focusChanged = (event) => {
+      if (!unclaimedFocus(event.target) && event.target !== origin && event.target !== target)
+        lose();
+    };
+    const blurred = (event) => {
+      if (event.target === window) lose();
+    };
+    const hidden = () => {
+      if (document.hidden) lose();
+    };
+    const observers = [
+      [document, 'focusin', focusChanged],
+      [document, 'keydown', lose],
+      [document, 'pointerdown', lose],
+      [document, 'visibilitychange', hidden],
+      [window, 'blur', blurred],
+      [window, 'pagehide', lose],
+    ];
+    for (const [node, type, callback] of observers) node.addEventListener(type, callback, true);
+    const current = () =>
+      !moved &&
+      !disposed &&
+      !inactive &&
+      foreground() &&
+      !run &&
+      generation === epoch &&
+      settingsVisit === visit &&
+      !settingsDialog.open &&
+      !departure &&
+      !$('coop-menu').hidden;
+    return {
+      finish() {
+        target = primary();
+        const owns = () =>
+          current() &&
+          primary() === target &&
+          (document.activeElement === origin ||
+            document.activeElement === target ||
+            unclaimedFocus(document.activeElement));
+        if (!owns() || !visibleAction(target) || !owns()) return;
+        if (document.activeElement !== target) target.focus({ preventScroll: true });
+        const focused = () =>
+          current() && primary() === target && document.activeElement === target;
+        if (!focused() || !visibleAction(target) || !focused()) return;
+        const rect = target.getBoundingClientRect(),
+          width = document.documentElement.clientWidth || window.innerWidth,
+          height = document.documentElement.clientHeight || window.innerHeight;
+        if (
+          ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
+          rect.width <= 0 ||
+          rect.height <= 0 ||
+          width <= 16 ||
+          height <= 16 ||
+          (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+        )
+          return;
+        if (!focused() || !visibleAction(target) || !focused()) return;
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+      },
+      cancel() {
+        for (const [node, type, callback] of observers)
+          node.removeEventListener(type, callback, true);
+      },
+    };
+  }
   function lobby() {
     if (disposed || departure) return;
-    cancelImport();
-    importRequest++;
-    clear();
-    const retainedPicture = acceptedPicture;
-    retirePicture();
-    acceptedPicture = null;
-    run = null;
-    attemptLevel = null;
-    attemptPack = null;
-    generation++;
-    document.body.classList.remove('playing');
-    $('coop-play').hidden = true;
-    $('coop-menu').hidden = false;
-    showPackStatus();
-    placeTools(false);
-    if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
-      pictureSelection = retainedPicture;
-      pictureUI('Team picture ready. Start remains a separate action.');
-    } else {
-      retainedPicture?.lease?.dispose();
-      void preparePicture();
+    const focus = lobbyFocus();
+    try {
+      cancelImport();
+      importRequest++;
+      clear();
+      const retainedPicture = acceptedPicture;
+      retirePicture();
+      acceptedPicture = null;
+      run = null;
+      attemptLevel = null;
+      attemptPack = null;
+      generation++;
+      document.body.classList.remove('playing');
+      $('coop-play').hidden = true;
+      $('coop-menu').hidden = false;
+      showPackStatus();
+      placeTools(false);
+      if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
+        pictureSelection = retainedPicture;
+        pictureUI('Team picture ready. Start remains a separate action.');
+      } else {
+        retainedPicture?.lease?.dispose();
+        void preparePicture();
+      }
+      focus.finish();
+    } finally {
+      focus.cancel();
     }
-    primary().focus({ preventScroll: true });
   }
   const unfinished = () => run && ['running', 'paused'].includes(run.status);
   const departureLabels = {
