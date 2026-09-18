@@ -39,10 +39,15 @@ A named feature release inside an unfinished phase still needs exact-source qual
 
 When browser screenshots are available only inline, identify that limitation and the observer. Retain actual source/HTTP records and written observations without inventing exported images or their hashes. Such evidence does not close raw-image, physical-device or full-phase acceptance. Preserve unsupported/failed attempts and verify the final public source independently.
 
-Before choosing an affected public journey, check the frozen manifest: a source-only
-workshop cannot be exercised through a public runtime route that was not shipped.
-Record its source-workspace journey separately, then verify the actual shipped
-navigation and game. For shipped About or reward dialogs, check that closing or
+Before choosing an affected public journey, inspect the complete original frozen
+manifest and retain the full positive path/byte/hash entries. Paths are relative
+to the artifact root: do not assume a `site/` prefix or infer exclusion from a
+failed prefix search. Match those entries to the actual hosted inventory and
+public route. Enemy Workshop is shipped at `authoring/enemy-catalog/index.html`
+and `authoring/enemy-catalog/workshop.mjs`; it requires an affected public check.
+Source-preview observations remain separate from actual deployed verification.
+If a previous packaging statement was wrong, preserve its original record and
+add a dated explicit correction to current summaries and qualification prose. For shipped About or reward dialogs, check that closing or
 Back restores visible focus to a logical opener and that content leaves Back
 visible. Follow [Xbox navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112)
 and the [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
