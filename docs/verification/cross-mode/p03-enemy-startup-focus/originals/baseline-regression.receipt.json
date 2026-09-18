@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-name-pattern",
+    "startup",
+    "game/test/enemy-workshop-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-startup-focus-v06120",
+  "exitCode": 1,
+  "productionSourceUnchanged": true,
+  "newRegressionTestsIncluded": true
+}
