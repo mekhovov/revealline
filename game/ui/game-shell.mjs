@@ -31,7 +31,8 @@ export function attachGameShell({
     workshop = $('shell-workshop-dialog');
   if (!home || !missions) return null;
   let destroyed = false,
-    returnToHome = false,
+    missionsVisit = null,
+    missionsRevision = 0,
     homeVisit = 0,
     titleModeIntent = null;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
@@ -107,21 +108,70 @@ export function attachGameShell({
     }
   };
   missions.addEventListener('close', closedMissions);
-  const openMissions = () => {
-    returnToHome = home.open;
+  const retireMissionsVisit = () => {
+    if (missionsVisit) {
+      missionsVisit = null;
+      missionsRevision++;
+    }
+  };
+  const beginMissionsVisit = (opener = null) => {
+    // Re-entering an open picker from Collection keeps the original parent.
+    if (!missions.open) {
+      missionsRevision++;
+      missionsVisit = {
+        home: home.open,
+        opener,
+        originFocus: doc.activeElement,
+      };
+    }
+  };
+  const availableReturn = (element, parent) => {
+    if (
+      !element?.isConnected ||
+      element.disabled ||
+      element.closest('[hidden],[inert],[aria-hidden="true"]') ||
+      (parent ? !parent.contains(element) : element.closest('dialog'))
+    )
+      return false;
+    for (let node = element; node && node !== doc; node = node.parentElement) {
+      if (node.tagName === 'DIALOG' && !node.open) return false;
+      if (
+        node.tagName === 'DETAILS' &&
+        !node.open &&
+        !node.querySelector('summary')?.contains(element)
+      )
+        return false;
+      const style = doc.defaultView?.getComputedStyle?.(node);
+      if (style?.display === 'none' || style?.visibility === 'hidden') return false;
+    }
+    return typeof element.getClientRects !== 'function' || element.getClientRects().length > 0;
+  };
+  const openMissions = ({ opener = null } = {}) => {
+    if (destroyed) return;
+    beginMissionsVisit(opener);
+    const visit = missionsVisit;
     pause(true);
+    if (destroyed || missionsVisit !== visit) return;
     restoreMissionView();
     closeHome();
+    if (destroyed || missionsVisit !== visit) return;
     showCraftFeedback();
-    if (!missions.open) missions.showModal();
+    if (!missions.open) {
+      missionsVisit.closeOrigin = doc.activeElement;
+      missions.showModal();
+    }
     syncPreparation();
     focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
   };
-  const openHome = ({ focus = true } = {}) => {
+  const openHome = ({ focus = true, returnGuard = null } = {}) => {
     titleModeIntent = null;
+    retireMissionsVisit();
+    const revision = missionsRevision;
     pause(true);
+    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
     if (missions.open) missions.close();
+    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
     restoreMissionView();
     const continued = !training && canContinue();
     $('shell-continue').hidden = !continued;
@@ -168,11 +218,70 @@ export function attachGameShell({
       workshop?.querySelector('button,a')?.focus();
     };
   const backFromMissions = () => {
-    if (!briefing && returnToHome) openHome();
-    else {
-      missions.close();
+    if (destroyed || !missions.open) return;
+    const visit = missionsVisit,
+      previousFocus = doc.activeElement;
+    retireMissionsVisit();
+    const revision = missionsRevision;
+    const canReturn = () =>
+      !destroyed &&
+      missionsRevision === revision &&
+      !missions.open &&
+      !topDialog() &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      (doc.activeElement === previousFocus ||
+        doc.activeElement === doc.body ||
+        doc.activeElement === visit?.opener ||
+        doc.activeElement === visit?.originFocus ||
+        doc.activeElement === visit?.closeOrigin ||
+        !availableReturn(doc.activeElement, null));
+    missions.close();
+    // Close/pause callbacks may establish a newer dialog or deliberate focus.
+    // Check before reopening Home so its native autofocus cannot cover them.
+    if (!canReturn()) return;
+    if (visit?.home) openHome({ focus: false, returnGuard: canReturn });
+    const parent = visit?.home ? home : null;
+    if (
+      destroyed ||
+      missionsRevision !== revision ||
+      missions.open ||
+      topDialog() !== parent ||
+      doc.hidden ||
+      doc.hasFocus?.() === false
+    )
+      return;
+    const nativeHomeFocus = parent
+      ? [...parent.querySelectorAll('button,a,select,input,summary')].find((node) =>
+          availableReturn(node, parent),
+        )
+      : null;
+    const primary = parent
+      ? [training ? $('shell-course-return') : $('shell-continue'), $('shell-featured')].find(
+          (node) => availableReturn(node, parent),
+        )
+      : ['show-result', 'skip-celebration', 'next-button', 'retry-button', 'start-button']
+          .map($)
+          .find((node) => availableReturn(node, null));
+    // Native showModal autofocus is expected. A deliberate newer target wins.
+    if (
+      doc.activeElement !== previousFocus &&
+      doc.activeElement !== doc.body &&
+      doc.activeElement !== visit?.opener &&
+      doc.activeElement !== nativeHomeFocus &&
+      doc.activeElement !== primary &&
+      availableReturn(doc.activeElement, parent)
+    )
+      return;
+    // No explicit same-document opener exists for legacy/programmatic field entry.
+    if (!parent && !visit?.opener) {
       focusGame();
+      return;
     }
+    const target = [visit?.opener, $(parent ? 'shell-play' : 'shell-packs'), primary].find((node) =>
+      availableReturn(node, parent),
+    );
+    target?.focus({ preventScroll: true });
   };
   if ($('shell-missions-back')) $('shell-missions-back').onclick = backFromMissions;
   const cancelMissions = (event) => {
@@ -197,9 +306,13 @@ export function attachGameShell({
   const overlayBrief = $('overlay-brief');
   if (overlayBrief)
     overlayBrief.onclick = () => {
-      returnToHome = false;
+      if (destroyed) return;
+      beginMissionsVisit(overlayBrief);
+      const visit = missionsVisit;
       pause(true);
+      if (destroyed || missionsVisit !== visit) return;
       closeHome();
+      if (destroyed || missionsVisit !== visit) return;
       const brief = $('mission-brief'),
         unit = $('mission-brief-unit'),
         slot = $('shell-brief-content');
@@ -233,12 +346,15 @@ export function attachGameShell({
       }
       if (brief) brief.open = true;
       showCraftFeedback();
-      if (!missions.open) missions.showModal();
+      if (!missions.open) {
+        missionsVisit.closeOrigin = doc.activeElement;
+        missions.showModal();
+      }
       focusClearance.refresh();
       if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
     };
-  $('shell-packs').onclick = openMissions;
-  $('shell-play').onclick = openMissions;
+  $('shell-packs').onclick = () => openMissions({ opener: $('shell-packs') });
+  $('shell-play').onclick = () => openMissions({ opener: $('shell-play') });
   const featured = $('shell-featured');
   let titleAction = null;
   const cancelTitle = () => {
@@ -381,6 +497,7 @@ export function attachGameShell({
     };
   if (featured && onTitleStart) featured.onclick = () => launchTitle(featured, onTitleStart);
   $('shell-briefing').onclick = () => {
+    retireMissionsVisit();
     missions.close();
     focusGame();
   };
@@ -398,6 +515,7 @@ export function attachGameShell({
     $('shell-deploy').onclick = () => {
       syncPreparation();
       if ($('shell-deploy').disabled) return;
+      retireMissionsVisit();
       missions.close();
       $('start-button').click();
       focusGame();
@@ -501,6 +619,7 @@ export function attachGameShell({
     openMissions,
     destroy() {
       destroyed = true;
+      retireMissionsVisit();
       titleModeIntent = null;
       cancelTitle();
       for (const kind of ['versus', 'team']) {

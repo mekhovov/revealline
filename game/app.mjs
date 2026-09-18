@@ -3115,7 +3115,8 @@ try {
     contentSwitchBusy = false;
     $('pack-select').disabled = courseSession;
     $('level-select').disabled = courseSession;
-    if (announce && interrupted)
+    // Backup adoption shares this busy flag; it is not a pending pack launch.
+    if (announce && interrupted && !backupBusy)
       contentStatus('Pending pack launch cancelled; your newer play choice is kept.');
     else if (interrupted)
       for (const feedback of contentFeedback)

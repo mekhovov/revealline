@@ -99,6 +99,7 @@ test('title has five game destinations, quick sound and the release catalog; Wor
   assert.equal(page.doc.activeElement.id, 'pack-select');
   page.$('shell-missions-back').click();
   assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.doc.activeElement.id, 'shell-play', 'Back restores the actual title entry');
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
   assert.deepEqual(page.errors, []);
@@ -226,7 +227,7 @@ for (const origin of ['home', 'flight', 'brief']) {
         page.frame();
         page.frame(); // Real controller adoption requires neutral samples.
         pad.buttons[1] = { pressed: true, value: 1 };
-        page.frame();
+        for (let held = 0; held < 35; held++) page.frame();
         pad.buttons[1] = { pressed: false, value: 0 };
         page.frame();
       }
@@ -236,7 +237,7 @@ for (const origin of ['home', 'flight', 'brief']) {
       assert.equal(page.$('shell-home').open, origin === 'home');
       assert.equal(
         page.doc.activeElement.id,
-        origin === 'home' ? 'shell-continue' : 'start-button',
+        { home: 'shell-play', flight: 'shell-packs', brief: 'overlay-brief' }[origin],
       );
       assert.equal(page.rendered.paused, true);
       assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
