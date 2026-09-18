@@ -1,0 +1,417 @@
+diff --git a/authoring/prompts/cross-mode-delivery.md b/authoring/prompts/cross-mode-delivery.md
+--- a/authoring/prompts/cross-mode-delivery.md
++++ b/authoring/prompts/cross-mode-delivery.md
+@@ -190,7 +190,6 @@
+ 
+ “For P03 saved Continue, use an actual played-and-saved flight and the visible title Cancel action, then enter Team, leave its lobby without starting and return to Solo. Compare the saved HUD/checkpoint before explicit continuation. Record late decoder rejection and busy-cleanup timing only if actually observed; HTTP cannot delay the saved blob decode. Keep genuine Team victory and multi-page Collection/score journeys as separate remaining gates, and retain preliminary actions that missed the intended cancellation window.”
+ 
+-
+ ## Shared Settings and quick sound qualification
+ 
+ “Use the current whole-game UX plan. Open Solo Home, Versus Ready/paused and Team Ready/paused through their actual routes. Toggle quick Sound and confirm the same master state in Settings without starting or replacing an attempt. Enter each category with keyboard, modeled controller and pointer; Left/Right/Home/End must have one category owner. Leave Controls during key capture through the existing cancellation action. Close Settings and prove the actual opener, both checkpoints and explicit Resume remain intact. Change Plain/Large, menu palette and ornaments in one mode, then return to another. Compare saved authority with visible selectors; retain failed-save intent. Record actual cached admission separately from cold Back and modeled persisted events. Measure portrait, short landscape and handheld categories and reduced-effects rows at 44 pixels or larger. Confirm new modules ship recursively in both game and release-catalogue runtimes. Keep physical input, meaningful 200% zoom, full themes and final exact-source/public gates explicit.”
+@@ -214,3 +213,7 @@
+ ### Keep Team artwork an earned reward
+ 
+ “Use the exact prepared Team picture for a narrow lobby border teaser with an opaque black centre and an explicit Win to reveal the full picture caption. Retain its 2:1 identity, existing lease and current selection; invent no run or captured state. Confirm both ready arenas and retained Change setup remain concealed, then earn actual wins and inspect full-picture rendering with unchanged coverage. Preserve the missing-mask failure, earlier candidate bytes and complete affected runtime results; qualify native pixels and layout separately.”
++
++### Keep the Team lobby return action visible
++
++“On the exact composed Team candidate, earn a win and choose Change setup; also pause a real attempt and explicitly confirm Change setup. Preserve the concealed teaser, accepted image lease, selected arena and separate Start action. After final lobby layout, focus the current available primary action and reveal it only when outside the viewport. Veto the old handoff after newer focus, input, Settings visit, attempt or lifecycle intent, including reentrant focus/layout callbacks. Keep cleanup synchronous and retire all temporary listeners; do not add a delayed focus task or broaden asynchronous picture recovery. Retain the original offscreen failure, actual-host red/green regressions and native geometry/hit-test evidence separately. Check Plain/Large at 844×390 and portrait size; no simulated route or finite layout establishes physical-device or public acceptance.”
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -4,7 +4,6 @@
+ ---
+ 
+ # Xonix Runtime Maintainer
+-
+ 
+ Current sequencing is [the revised whole-game UX plan](../../../docs/whole-game-ux-plan.md). Settings is a host-local surface with shared Controls, Audio, Appearance & accessibility and Game data categories. Use `attachSettingsPanels` for categories and compose `settingsTabOwnsKey` into the host navigation capture boundary; never add a second preference or controller owner. Enter the real category before editing or asserting control reachability. Preserve input release, paused checkpoints, actual opener return, retained category and explicit Resume. Team Settings is a native dialog, not an Options disclosure; model native Tab/default cancel locally in host fixtures without inventing application return focus. Quick Sound controls operate the existing master authority; their visible labels and pressed state agree across modes.
+ 
+@@ -578,7 +577,6 @@
+ 
+ For [Recovery startup navigation](../../../docs/recovery-startup-navigation.md), keep Back/Reload navigable before version/catalog readiness with one page-owned router. Retry replaces the read generation and deadline, not controller assignment. Background or stale completion must neither adopt data nor restore focus. Retire focused Reload to Find only synchronously for the same current foreground startup; clear stale navigation focus so later neutral polling cannot revive that handoff. Keep the existing reader's close-before-Back guarantee, explicit discovery and zero-write scope. Test actual held, failed, timed-out and late startup with the real router/navigation entry and distinguish modeled pad edges from physical controller acceptance.
+ 
+-
+ When Recovery Back awaits reader close, capture its originating view and read generation. Permit the deferred host callback only for that same current foreground owner; invalidate the final navigation after pagehide. Preserve close-before-Back and allow a fresh current Back after a cancelled stale request. Test the actual host/view/reader with a held readonly transaction abort, both legitimate closure and history/background supersession. Keep modeled storage events separate from native IndexedDB and BFCache evidence; see the deferred Back correction in [Recovery startup navigation](../../../docs/recovery-startup-navigation.md).
+ 
+ When a Recovery read disables its focused Find, Review or preparation action, pass that exact origin into the current operation. Transfer only its foreground focus synchronously to Cancel; never use body focus alone as ownership evidence. Return only while Cancel still owns focus, the operation remains current and background cancellation has not invalidated that return. Keep Find's result-aware Find/Review destination, other enabled origins and the existing successful download-link destination. Preserve newer focus, unowned/background starts and closed views. Test the real view with the observed disabled-control blur, empty/error/channel outcomes and original preparation; retain native focus and downloaded-byte evidence separately. Recovery is currently an explicit troubleshooting URL, not an advertised Library destination. Do not silently add navigation or fabricate eligible profiles to complete a test. See [ready-action focus continuity](../../../docs/recovery-startup-navigation.md#ready-action-focus-continuity).
+@@ -644,3 +642,5 @@
+ A lobby preview is not an earned reward. Keep the exact prepared image identity and full 2:1 mapping, but cover its centre with opaque #000 and expose only a narrow border teaser. State that winning reveals the full picture. Do not create a fake run, claim captured cells or change ownership/progress to render the teaser. Prove ready and retained Change setup stay concealed, with opaque source-over drawing; pair those checks with actual authored-win full-picture tests. Keep the earlier full-lobby candidate and its missing-mask discriminator as history, not product authority. Native pixel/layout evidence remains separate.
+ 
+ When composing the Team teaser onto shared Settings, retain `modelTeamDialogs()` in the finite host fixture and keep preview/arena recordings separate. Test a held original finishing behind the current Settings selector without focus or run adoption. Use each authored route in actual-host victory tests: `coverageClear` for First Connection, `yardOpening` for Relay Yard. The route defaults correspond to Full teamwork; do not substitute another play-style label or count simulated wins as native input qualification.
++
++For [visible Team lobby return](../../../docs/team-victory-picture.md#visible-lobby-return-action), finish retained-teaser layout before handing focus to the current primary. Reveal only an offscreen action with nearest scrolling; preserve already visible placement. Keep the synchronous handoff bound to its lobby generation and Settings visit, with newer focus/input/lifecycle intent permanently vetoing its remaining work. Recheck after focus and layout callbacks and remove temporary listeners on every exit. Reuse actual-host confirmation and earned-win journeys; finite rectangles verify requested scrolling, not native viewport or hit-target results. This does not alter asynchronous picture recovery, start a run, reacquire artwork or award Solo progress.
+diff --git a/docs/team-victory-picture.md b/docs/team-victory-picture.md
+--- a/docs/team-victory-picture.md
++++ b/docs/team-victory-picture.md
+@@ -25,3 +25,11 @@
+ Cache originals are retained under `.cache/p08a-team-win-picture-ece40093/`, including the original failing output, source preimages, patch, input pins and bounded run receipts. Native rasterization, real winning/result journeys, bright-art contrast, physical controllers/touch, offline/public qualification and full P03/P05/P08-A acceptance remain open. Do not transfer this candidate's results to a later composed source without checking its exact changes.
+ 
+ The lobby does not pre-award this result: its exact prepared original has an opaque black centre and only a narrow border teaser. Tests must pair ready/retained-lobby concealment with the real authored-win renderer, which alone removes the gameplay mask. The teaser changes no progress or image ownership.
++
++## Visible lobby return action
++
++Returning from a won attempt or a confirmed Change setup keeps the prepared picture and concealed lobby teaser. Once the lobby has finished rendering, its current primary action receives focus and is scrolled into the nearest visible viewport position only when needed. An already visible action does not move the page. This handoff does not start a flight or reacquire artwork.
++
++The synchronous handoff belongs to that lobby generation and Settings visit. A newer focus choice, input, attempt, dialog visit or loss of foreground retires it, including when such a change occurs during focus or layout callbacks. Remove its temporary listeners on every exit. Keep the existing asynchronous picture preparation/Cancel/Retry focus contracts separate; this correction does not claim to fix offscreen recovery controls.
++
++Qualify a real earned win → Change setup and a paused attempt → confirmed Change setup with the actual host. Use finite offscreen/visible geometry to test ordering, cancellation and retained artwork without pretending to implement browser scrolling. Separately inspect the entire focused action and its hit target on short landscape and portrait screens with Plain/Large text. First Connection native victory, physical controls and public qualification remain independent gates.
+diff --git a/game/couch/relay-rescue.mjs b/game/couch/relay-rescue.mjs
+--- a/game/couch/relay-rescue.mjs
++++ b/game/couch/relay-rescue.mjs
+@@ -981,31 +981,112 @@
+     input.focus();
+     message('Choose fresh directions when you are ready.');
+   }
++  // This synchronous handoff owns only the return from an attempt to its lobby.
++  // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
++  function lobbyFocus() {
++    const origin = document.activeElement,
++      epoch = generation + 1,
++      visit = settingsVisit;
++    let target = null,
++      moved = inactive || !foreground();
++    const lose = () => {
++      moved = true;
++    };
++    const focusChanged = (event) => {
++      if (!unclaimedFocus(event.target) && event.target !== origin && event.target !== target)
++        lose();
++    };
++    const blurred = (event) => {
++      if (event.target === window) lose();
++    };
++    const hidden = () => {
++      if (document.hidden) lose();
++    };
++    const observers = [
++      [document, 'focusin', focusChanged],
++      [document, 'keydown', lose],
++      [document, 'pointerdown', lose],
++      [document, 'visibilitychange', hidden],
++      [window, 'blur', blurred],
++      [window, 'pagehide', lose],
++    ];
++    for (const [node, type, callback] of observers) node.addEventListener(type, callback, true);
++    const current = () =>
++      !moved &&
++      !disposed &&
++      !inactive &&
++      foreground() &&
++      !run &&
++      generation === epoch &&
++      settingsVisit === visit &&
++      !settingsDialog.open &&
++      !departure &&
++      !$('coop-menu').hidden;
++    return {
++      finish() {
++        target = primary();
++        const owns = () =>
++          current() &&
++          primary() === target &&
++          (document.activeElement === origin ||
++            document.activeElement === target ||
++            unclaimedFocus(document.activeElement));
++        if (!owns() || !visibleAction(target) || !owns()) return;
++        if (document.activeElement !== target) target.focus({ preventScroll: true });
++        const focused = () =>
++          current() && primary() === target && document.activeElement === target;
++        if (!focused() || !visibleAction(target) || !focused()) return;
++        const rect = target.getBoundingClientRect(),
++          width = document.documentElement.clientWidth || window.innerWidth,
++          height = document.documentElement.clientHeight || window.innerHeight;
++        if (
++          ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
++          rect.width <= 0 ||
++          rect.height <= 0 ||
++          width <= 16 ||
++          height <= 16 ||
++          (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
++        )
++          return;
++        if (!focused() || !visibleAction(target) || !focused()) return;
++        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
++      },
++      cancel() {
++        for (const [node, type, callback] of observers)
++          node.removeEventListener(type, callback, true);
++      },
++    };
++  }
+   function lobby() {
+     if (disposed || departure) return;
+-    cancelImport();
+-    importRequest++;
+-    clear();
+-    const retainedPicture = acceptedPicture;
+-    retirePicture();
+-    acceptedPicture = null;
+-    run = null;
+-    attemptLevel = null;
+-    attemptPack = null;
+-    generation++;
+-    document.body.classList.remove('playing');
+-    $('coop-play').hidden = true;
+-    $('coop-menu').hidden = false;
+-    showPackStatus();
+-    placeTools(false);
+-    if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
+-      pictureSelection = retainedPicture;
+-      pictureUI('Team picture ready. Start remains a separate action.');
+-    } else {
+-      retainedPicture?.lease?.dispose();
+-      void preparePicture();
+-    }
+-    primary().focus({ preventScroll: true });
++    const focus = lobbyFocus();
++    try {
++      cancelImport();
++      importRequest++;
++      clear();
++      const retainedPicture = acceptedPicture;
++      retirePicture();
++      acceptedPicture = null;
++      run = null;
++      attemptLevel = null;
++      attemptPack = null;
++      generation++;
++      document.body.classList.remove('playing');
++      $('coop-play').hidden = true;
++      $('coop-menu').hidden = false;
++      showPackStatus();
++      placeTools(false);
++      if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
++        pictureSelection = retainedPicture;
++        pictureUI('Team picture ready. Start remains a separate action.');
++      } else {
++        retainedPicture?.lease?.dispose();
++        void preparePicture();
++      }
++      focus.finish();
++    } finally {
++      focus.cancel();
++    }
+   }
+   const unfinished = () => run && ['running', 'paused'].includes(run.status);
+   const departureLabels = {
+diff --git a/game/test/coop-lobby-focus.test.mjs b/game/test/coop-lobby-focus.test.mjs
+new file mode 100644
+--- /dev/null
++++ b/game/test/coop-lobby-focus.test.mjs
+@@ -0,0 +1,189 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { page } from './helpers/coop-host.mjs';
++
++const nearest = { block: 'nearest', inline: 'nearest', behavior: 'instant' };
++const offscreen = { x: 118, y: 1080, width: 300, height: 47 };
++const inside = { x: 118, y: 180, width: 300, height: 47 };
++
++// Actual host/controls/confirmation with finite layout inputs from the observed
++// 844×390 lobby. Browser scroll position and hit testing remain native checks.
++async function returning(t, rect = offscreen) {
++  const f = await page(t, {
++    nativeFocus: true,
++    nativeVisibility: true,
++    beforeImport({ doc, win }) {
++      Object.assign(win, doc.defaultView, { innerWidth: 844, innerHeight: 390 });
++      doc.defaultView = win;
++      doc.documentElement.clientWidth = 844;
++      doc.documentElement.clientHeight = 390;
++    },
++  });
++  f.$('coop-start').focus();
++  f.tap('Enter');
++  f.tick(120);
++  f.$('coop-pause').click();
++  f.$('coop-lobby').focus();
++  f.tap('Enter');
++  assert.equal(f.$('coop-discard-dialog').open, true);
++  f.$('coop-discard-confirm').focus();
++  const target = f.$('coop-start'),
++    calls = [],
++    picture = f.drawImages.at(-1),
++    reads = f.artwork.calls.reads.length,
++    urls = [...f.artwork.calls.urls],
++    releases = [...f.artwork.calls.releases];
++  target._rect = rect;
++  t.mock.method(target, 'scrollIntoView', (options) => {
++    calls.push({
++      options,
++      active: f.doc.activeElement.id,
++      ready: f.$('coop-picture-status').dataset.state,
++      menuVisible: !f.$('coop-menu').hidden,
++      teaserVisible: !f.$('coop-preview-canvas').hidden,
++    });
++  });
++  const listeners = [f.doc, f.win].map((node) => ({
++    node,
++    before: new Map([...node.captureListeners].map(([type, values]) => [type, new Set(values)])),
++  }));
++  const finish = () => {
++    f.tap('Enter');
++    for (const { node, before } of listeners)
++      for (const [type, values] of node.captureListeners)
++        for (const listener of values)
++          assert.ok(
++            before.get(type)?.has(listener),
++            'The synchronous handoff retires every observer',
++          );
++  };
++  return { ...f, target, calls, picture, reads, urls, releases, finish };
++}
++
++function unchangedPicture(f) {
++  assert.equal(f.artwork.calls.reads.length, f.reads);
++  assert.deepEqual(f.artwork.calls.urls, f.urls);
++  assert.deepEqual(f.artwork.calls.releases, f.releases);
++  assert.equal(f.previewDrawImages.at(-1), f.picture);
++}
++
++test('confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser', async (t) => {
++  const f = await returning(t);
++  f.finish();
++  assert.equal(f.doc.activeElement, f.target);
++  assert.equal(f.$('coop-discard-dialog').open, false);
++  assert.equal(f.$('coop-play').hidden, true);
++  assert.equal(f.$('coop-menu').hidden, false);
++  assert.deepEqual(f.calls, [
++    {
++      options: nearest,
++      active: 'coop-start',
++      ready: 'ready',
++      menuVisible: true,
++      teaserVisible: true,
++    },
++  ]);
++  unchangedPicture(f);
++  const clock = f.$('coop-clock').textContent;
++  f.tick(120);
++  assert.equal(
++    f.$('coop-clock').textContent,
++    clock,
++    'Returning to setup does not start an attempt',
++  );
++  assert.equal(f.calls.length, 1, 'No delayed scroll task survives the handoff');
++  f.tap('Enter');
++  assert.equal(f.doc.activeElement.id, 'coop-canvas');
++  assert.equal(f.$('coop-coverage').textContent, '0.0%');
++  assert.equal(f.$('coop-clock').textContent, '0:00');
++  assert.equal(f.drawImages.at(-1), f.picture);
++});
++
++test('return to an already visible Start preserves the current viewport', async (t) => {
++  const f = await returning(t, inside);
++  f.finish();
++  assert.equal(f.doc.activeElement, f.target);
++  assert.deepEqual(f.calls, []);
++  unchangedPicture(f);
++});
++
++for (const newer of [
++  'focus',
++  'focus-then-body',
++  'settings',
++  'start',
++  'blur-return',
++  'hidden-return',
++  'pagehide',
++  'pointer-intent',
++  'key-intent',
++])
++  test(`a newer ${newer} during the lobby focus handoff vetoes its reveal`, async (t) => {
++    const f = await returning(t);
++    let changed = false;
++    f.target.addEventListener('focusin', () => {
++      if (changed) return;
++      changed = true;
++      if (newer === 'focus' || newer === 'focus-then-body') f.$('coop-level').focus();
++      if (newer === 'focus-then-body') f.doc.body.focus();
++      if (newer === 'settings') f.$('coop-settings-open').click();
++      if (newer === 'start') f.target.click();
++      if (newer === 'blur-return') {
++        f.win.emit('blur');
++        f.win.emit('focus');
++      }
++      if (newer === 'hidden-return') {
++        f.doc.hidden = true;
++        f.doc.emit('visibilitychange');
++        f.doc.hidden = false;
++        f.doc.emit('visibilitychange');
++      }
++      if (newer === 'pagehide') f.win.emit('pagehide');
++      if (newer === 'pointer-intent') f.doc.body.emit('pointerdown', { pointerId: 9, button: 0 });
++      if (newer === 'key-intent') f.doc.body.emit('keydown', { key: 'F9', code: 'F9' });
++    });
++    f.finish();
++    assert.equal(changed, true);
++    assert.deepEqual(f.calls, []);
++    if (newer === 'focus') assert.equal(f.doc.activeElement.id, 'coop-level');
++    if (newer === 'focus-then-body') assert.equal(f.doc.activeElement, f.doc.body);
++    if (newer === 'settings') assert.equal(f.$('coop-options').open, true);
++    if (newer === 'start') {
++      assert.equal(f.$('coop-play').hidden, false);
++      assert.equal(f.doc.activeElement.id, 'coop-canvas');
++    }
++  });
++
++test('a newer selection during layout prevents the lobby from taking focus back', async (t) => {
++  const f = await returning(t);
++  const read = f.target.getBoundingClientRect.bind(f.target);
++  let changed = false;
++  t.mock.method(f.target, 'getBoundingClientRect', () => {
++    if (!changed) {
++      changed = true;
++      f.$('coop-level').focus();
++    }
++    return read();
++  });
++  f.finish();
++  assert.equal(changed, true);
++  assert.equal(f.doc.activeElement.id, 'coop-level');
++  assert.deepEqual(f.calls, []);
++});
++
++for (const invalid of ['disabled', 'hidden', 'invalid-viewport'])
++  test(`an ${invalid} lobby target is not revealed`, async (t) => {
++    const f = await returning(t);
++    const original = f.target.focus.bind(f.target);
++    t.mock.method(f.target, 'focus', (...args) => {
++      original(...args);
++      if (invalid === 'disabled') f.target.disabled = true;
++      if (invalid === 'hidden') f.target.hidden = true;
++      if (invalid === 'invalid-viewport') {
++        f.doc.documentElement.clientHeight = Number.NaN;
++        f.win.innerHeight = Number.NaN;
++      }
++    });
++    f.finish();
++    assert.deepEqual(f.calls, []);
++  });
+diff --git a/game/test/coop-won-terminal-host.test.mjs b/game/test/coop-won-terminal-host.test.mjs
+--- a/game/test/coop-won-terminal-host.test.mjs
++++ b/game/test/coop-won-terminal-host.test.mjs
+@@ -142,7 +142,20 @@
+ test('earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start', async (t) => {
+   const { f, first } = await win(t);
+   tabTo(f, 'coop-lobby');
+-  f.tap('Enter');
++  f.doc.documentElement.clientWidth = 844;
++  f.doc.documentElement.clientHeight = 390;
++  f.$('coop-start')._rect = { x: 118, y: 1080, width: 300, height: 47 };
++  const reveals = [];
++  t.mock.method(f.$('coop-start'), 'scrollIntoView', (options) => {
++    reveals.push({ options, active: f.doc.activeElement.id });
++  });
++  f.tap('Enter');
++  assert.deepEqual(reveals, [
++    {
++      options: { block: 'nearest', inline: 'nearest', behavior: 'instant' },
++      active: 'coop-start',
++    },
++  ]);
+   assert.equal(f.$('coop-discard-dialog').open, false);
+   assert.equal(f.$('coop-menu').hidden, false);
+   assert.equal(f.$('coop-play').hidden, true);

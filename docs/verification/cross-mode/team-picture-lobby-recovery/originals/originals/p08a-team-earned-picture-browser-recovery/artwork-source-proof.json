@@ -1,0 +1,46 @@
+{
+  "commit": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "bindingsSource": {
+    "path": "game/couch/coop-picture-bindings.mjs",
+    "bytes": 1763,
+    "sha256": "42d98b2c2b0d23ea9953aeabf65357ce486e0f63a19ccbce2d55cd92629aee8a",
+    "gitBlob": "363c2a91cba5f29a54e1e24b7337b1ed30b37382"
+  },
+  "readPictureSource": {
+    "path": "game/presentation/host.mjs",
+    "bytes": 27939,
+    "sha256": "f63aae713bad754ca826fa3d7c0ea2455db4f5d56b55882cd2ef6f196ec13798",
+    "lines": {
+      "readOriginal": [
+        403,
+        426
+      ],
+      "hashDerivedURL": [
+        405,
+        409
+      ]
+    }
+  },
+  "artworks": [
+    {
+      "levelId": "first-connection",
+      "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+      "bytes": 52720,
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "width": 1152,
+      "height": 576,
+      "gitBlob": "dbee30d6db5a88c41cc36e13b92c68d0e9d4e476"
+    },
+    {
+      "levelId": "relay-yard",
+      "path": "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+      "bytes": 38090,
+      "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+      "width": 1152,
+      "height": 576,
+      "gitBlob": "de545aa195ac6cc06ca4f6296b983d48e42b2083"
+    }
+  ],
+  "authority": "Exact starter-pack bindings specify these SHA256s; actual Git PNG bodies match their identities, sizes and 1152x576 IHDR geometry. readPicture fetches the hash-derived original URL. No PNG body was copied into this harness."
+}

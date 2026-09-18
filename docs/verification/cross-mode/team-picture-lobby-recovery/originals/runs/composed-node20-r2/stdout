@@ -1,0 +1,1896 @@
+TAP version 13
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 1 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 5.274292
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 2 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 3.272417
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 3 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 19.951667
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 4 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 13.769125
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 5 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.813833
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 6 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 1.827125
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 7 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 1.772833
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 8 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 0.213084
+  ...
+# Subtest: five approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 9 - five approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 3.553042
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 10 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 1.911375
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 11 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.961125
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 12 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.332458
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 13 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.970625
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 14 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.823125
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 15 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 3.771042
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 16 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 0.605958
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 17 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 2.768417
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 18 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 0.965542
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 19 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 0.946
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 20 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 0.723791
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues
+ok 21 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues
+  ---
+  duration_ms: 9.978208
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope
+ok 22 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope
+  ---
+  duration_ms: 1.362709
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 23 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 19.927
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 24 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 1.431917
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 25 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 1.156125
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art
+ok 26 - exposed and secured strongholds retain functional labels and anchors over stationary body art
+  ---
+  duration_ms: 2.25625
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 27 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 1.269333
+  ...
+# Subtest: First Connection gentle: public-command teamwork route wins and replays after exchanging seats
+ok 28 - First Connection gentle: public-command teamwork route wins and replays after exchanging seats
+  ---
+  duration_ms: 94.734458
+  ...
+# {"rehearsedSeconds":9.825,"coverage":0.653781512605042,"withoutSupport":{"status":"won","downs":0,"coverage":0.653781512605042},"actualSlowEvents":0}
+# Subtest: Relay Yard gentle: public-command teamwork route wins and replays after exchanging seats
+ok 29 - Relay Yard gentle: public-command teamwork route wins and replays after exchanging seats
+  ---
+  duration_ms: 46.674625
+  ...
+# {"rehearsedSeconds":6.933333333333334,"coverage":0.30664395229982966,"withoutSupport":{"status":"won","downs":0,"coverage":0.30664395229982966},"actualSlowEvents":3}
+# Subtest: Relay Yard gentle: walking, a safe waiting window, and local cover can win without Boost
+ok 30 - Relay Yard gentle: walking, a safe waiting window, and local cover can win without Boost
+  ---
+  duration_ms: 34.189375
+  ...
+# Rehearsed walking clear: 12.88 seconds, no knockdowns.
+# Subtest: First Connection gentle: short unboosted corner cuts provide a lower-risk opening
+ok 31 - First Connection gentle: short unboosted corner cuts provide a lower-risk opening
+  ---
+  duration_ms: 6.440709
+  ...
+# Subtest: Relay Yard gentle: short unboosted corner cuts provide a lower-risk opening
+ok 32 - Relay Yard gentle: short unboosted corner cuts provide a lower-risk opening
+  ---
+  duration_ms: 5.808917
+  ...
+# Subtest: Relay Yard gentle: upper patrol guards stop the former unopposed core shortcut
+ok 33 - Relay Yard gentle: upper patrol guards stop the former unopposed core shortcut
+  ---
+  duration_ms: 7.526792
+  ...
+# Subtest: First Connection standard: public-command teamwork route wins and replays after exchanging seats
+ok 34 - First Connection standard: public-command teamwork route wins and replays after exchanging seats
+  ---
+  duration_ms: 59.786958
+  ...
+# {"rehearsedSeconds":9.825,"coverage":0.653781512605042,"withoutSupport":{"status":"running","downs":4,"coverage":0},"actualSlowEvents":0}
+# Subtest: Relay Yard standard: public-command teamwork route wins and replays after exchanging seats
+ok 35 - Relay Yard standard: public-command teamwork route wins and replays after exchanging seats
+  ---
+  duration_ms: 50.638708
+  ...
+# {"rehearsedSeconds":6.933333333333334,"coverage":0.30664395229982966,"withoutSupport":{"status":"won","downs":0,"coverage":0.30664395229982966},"actualSlowEvents":2}
+# Subtest: Relay Yard standard: walking, a safe waiting window, and local cover can win without Boost
+ok 36 - Relay Yard standard: walking, a safe waiting window, and local cover can win without Boost
+  ---
+  duration_ms: 40.135667
+  ...
+# Rehearsed walking clear: 12.88 seconds, no knockdowns.
+# Subtest: First Connection standard: short unboosted corner cuts provide a lower-risk opening
+ok 37 - First Connection standard: short unboosted corner cuts provide a lower-risk opening
+  ---
+  duration_ms: 5.339208
+  ...
+# Subtest: Relay Yard standard: short unboosted corner cuts provide a lower-risk opening
+ok 38 - Relay Yard standard: short unboosted corner cuts provide a lower-risk opening
+  ---
+  duration_ms: 5.171875
+  ...
+# Subtest: Relay Yard standard: upper patrol guards stop the former unopposed core shortcut
+ok 39 - Relay Yard standard: upper patrol guards stop the former unopposed core shortcut
+  ---
+  duration_ms: 6.189083
+  ...
+# Subtest: First Connection expert: public-command teamwork route wins and replays after exchanging seats
+ok 40 - First Connection expert: public-command teamwork route wins and replays after exchanging seats
+  ---
+  duration_ms: 48.92425
+  ...
+# {"rehearsedSeconds":9.825,"coverage":0.653781512605042,"withoutSupport":{"status":"lost","downs":4,"coverage":0},"actualSlowEvents":2}
+# Subtest: Relay Yard expert: public-command teamwork route wins and replays after exchanging seats
+ok 41 - Relay Yard expert: public-command teamwork route wins and replays after exchanging seats
+  ---
+  duration_ms: 35.606667
+  ...
+# {"rehearsedSeconds":6.933333333333334,"coverage":0.30664395229982966,"withoutSupport":{"status":"lost","downs":4,"coverage":0},"actualSlowEvents":3}
+# Subtest: Relay Yard expert: walking, a safe waiting window, and local cover can win without Boost
+ok 42 - Relay Yard expert: walking, a safe waiting window, and local cover can win without Boost
+  ---
+  duration_ms: 31.40075
+  ...
+# Rehearsed walking clear: 12.88 seconds, no knockdowns.
+# Subtest: First Connection expert: short unboosted corner cuts provide a lower-risk opening
+ok 43 - First Connection expert: short unboosted corner cuts provide a lower-risk opening
+  ---
+  duration_ms: 4.399042
+  ...
+# Subtest: Relay Yard expert: short unboosted corner cuts provide a lower-risk opening
+ok 44 - Relay Yard expert: short unboosted corner cuts provide a lower-risk opening
+  ---
+  duration_ms: 4.073
+  ...
+# Subtest: Relay Yard expert: upper patrol guards stop the former unopposed core shortcut
+ok 45 - Relay Yard expert: upper patrol guards stop the former unopposed core shortcut
+  ---
+  duration_ms: 6.621583
+  ...
+# Subtest: Expert walking guard window supports a real spark interception before the core is secured
+ok 46 - Expert walking guard window supports a real spark interception before the core is secured
+  ---
+  duration_ms: 17.72475
+  ...
+# Subtest: Standard Yard supports unequal movement speeds and the same route after exchanging seats
+ok 47 - Standard Yard supports unequal movement speeds and the same route after exchanging seats
+  ---
+  duration_ms: 28.280959
+  ...
+# Rehearsed unequal-speed clear: 11.775 seconds; one boosted player, one walking player; no knockdowns.
+# Subtest: Large reflow reveals the current Team control clipped inside the Settings scroller
+ok 48 - Large reflow reveals the current Team control clipped inside the Settings scroller
+  ---
+  duration_ms: 354.995375
+  ...
+# Subtest: a fully visible Team control is not scrolled by a display change
+ok 49 - a fully visible Team control is not scrolled by a display change
+  ---
+  duration_ms: 201.457625
+  ...
+# Subtest: reveal reserves the focus ring even when the control rectangle fits
+ok 50 - reveal reserves the focus ring even when the control rectangle fits
+  ---
+  duration_ms: 187.943125
+  ...
+# Subtest: denied preference saving retains Large and the active paused action
+ok 51 - denied preference saving retains Large and the active paused action
+  ---
+  duration_ms: 186.103
+  ...
+# Subtest: shared stored display updates reveal only the current paused action
+ok 52 - shared stored display updates reveal only the current paused action
+  ---
+  duration_ms: 182.405417
+  ...
+# Subtest: a newer new-focus during layout wins over the old display action
+ok 53 - a newer new-focus during layout wins over the old display action
+  ---
+  duration_ms: 182.640417
+  ...
+# Subtest: a newer closed-options during layout wins over the old display action
+ok 54 - a newer closed-options during layout wins over the old display action
+  ---
+  duration_ms: 179.157042
+  ...
+# Subtest: a newer background during layout wins over the old display action
+ok 55 - a newer background during layout wins over the old display action
+  ---
+  duration_ms: 174.064875
+  ...
+# Subtest: a newer hidden-document during layout wins over the old display action
+ok 56 - a newer hidden-document during layout wins over the old display action
+  ---
+  duration_ms: 172.249834
+  ...
+# Subtest: a newer resumed during layout wins over the old display action
+ok 57 - a newer resumed during layout wins over the old display action
+  ---
+  duration_ms: 176.115417
+  ...
+# Subtest: display reflow leaves a disabled action alone
+ok 58 - display reflow leaves a disabled action alone
+  ---
+  duration_ms: 182.219166
+  ...
+# Subtest: display reflow leaves a hidden action alone
+ok 59 - display reflow leaves a hidden action alone
+  ---
+  duration_ms: 179.267541
+  ...
+# Subtest: display reflow leaves a inert action alone
+ok 60 - display reflow leaves a inert action alone
+  ---
+  duration_ms: 178.694375
+  ...
+# Subtest: display reflow leaves a invisible action alone
+ok 61 - display reflow leaves a invisible action alone
+  ---
+  duration_ms: 168.093458
+  ...
+# Subtest: display reflow leaves a invalid-size action alone
+ok 62 - display reflow leaves a invalid-size action alone
+  ---
+  duration_ms: 168.72175
+  ...
+# Subtest: a terminal page cannot reveal a stale display action on later storage delivery
+ok 63 - a terminal page cannot reveal a stale display action on later storage delivery
+  ---
+  duration_ms: 168.330291
+  ...
+# Subtest: a newer shared display choice during layout keeps its own selection
+ok 64 - a newer shared display choice during layout keeps its own selection
+  ---
+  duration_ms: 169.293958
+  ...
+# Subtest: the same Team mode choices belong to the lobby and active pause panel, never the live arena
+ok 65 - the same Team mode choices belong to the lobby and active pause panel, never the live arena
+  ---
+  duration_ms: 65.646625
+  ...
+# Subtest: a file selected before Start cannot replace setup after returning from an attempt
+ok 66 - a file selected before Start cannot replace setup after returning from an attempt
+  ---
+  duration_ms: 32.863917
+  ...
+# Subtest: invalid or oversized imports preserve the selected custom pack and challenge
+ok 67 - invalid or oversized imports preserve the selected custom pack and challenge
+  ---
+  duration_ms: 28.6315
+  ...
+# Subtest: the latest file selection wins when earlier reads finish out of order
+ok 68 - the latest file selection wins when earlier reads finish out of order
+  ---
+  duration_ms: 22.588458
+  ...
+# Subtest: returning to built-ins cancels an outstanding file read
+ok 69 - returning to built-ins cancels an outstanding file read
+  ---
+  duration_ms: 24.464958
+  ...
+# Subtest: custom fractional coverage and multiple required cores drive the actual briefing and HUD
+ok 70 - custom fractional coverage and multiple required cores drive the actual briefing and HUD
+  ---
+  duration_ms: 30.093875
+  ...
+# Subtest: lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads
+ok 71 - lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads
+  ---
+  duration_ms: 86.5585
+  ...
+# Subtest: the selected cut rules agree across the briefing and actual start message
+ok 72 - the selected cut rules agree across the briefing and actual start message
+  ---
+  duration_ms: 40.904416
+  ...
+# Subtest: real keyboard self-crossings explain the shared recovery and cause-aware retry
+ok 73 - real keyboard self-crossings explain the shared recovery and cause-aware retry
+  ---
+  duration_ms: 176.939333
+  ...
+# Subtest: retry feedback counts required objectives and distinguishes enemy and spark causes
+ok 74 - retry feedback counts required objectives and distinguishes enemy and spark causes
+  ---
+  duration_ms: 0.31975
+  ...
+# Subtest: a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires
+ok 75 - a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires
+  ---
+  duration_ms: 5.369458
+  ...
+# Subtest: Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative
+ok 76 - Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative
+  ---
+  duration_ms: 37.142667
+  ...
+# Subtest: paused Help reading and Back return to an action without resuming the shared simulation
+ok 77 - paused Help reading and Back return to an action without resuming the shared simulation
+  ---
+  duration_ms: 305.546083
+  ...
+# Subtest: assigning a controller releases hidden held touch; disconnect stays paused until Resume
+ok 78 - assigning a controller releases hidden held touch; disconnect stays paused until Resume
+  ---
+  duration_ms: 86.726542
+  ...
+# Subtest: Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus
+ok 79 - Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus
+  ---
+  duration_ms: 29.127
+  ...
+# Subtest: Back and closing the Team pack picker detach a read before reopening
+ok 80 - Back and closing the Team pack picker detach a read before reopening
+  ---
+  duration_ms: 22.588458
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=solo
+ok 81 - Team lobby uses only its code-owned return destination ?return=solo
+  ---
+  duration_ms: 141.604667
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=versus
+ok 82 - Team lobby uses only its code-owned return destination ?return=versus
+  ---
+  duration_ms: 128.998875
+  ...
+# Subtest: Team lobby uses only its code-owned return destination (default)
+ok 83 - Team lobby uses only its code-owned return destination (default)
+  ---
+  duration_ms: 134.978209
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=https://other.invalid/
+ok 84 - Team lobby uses only its code-owned return destination ?return=https://other.invalid/
+  ---
+  duration_ms: 130.220042
+  ...
+# Subtest: Team lobby uses only its code-owned return destination ?return=solo&return=versus
+ok 85 - Team lobby uses only its code-owned return destination ?return=solo&return=versus
+  ---
+  duration_ms: 128.300417
+  ...
+# Subtest: the existing Solo and Versus Team entry links declare their code-owned return context
+ok 86 - the existing Solo and Versus Team entry links declare their code-owned return context
+  ---
+  duration_ms: 0.725833
+  ...
+# Subtest: actual Team lobby preserves the bounded Solo return token through native Back without consuming it
+ok 87 - actual Team lobby preserves the bounded Solo return token through native Back without consuming it
+  ---
+  duration_ms: 19.109542
+  ...
+# Subtest: fresh Team lobby focuses enabled Start only after actual ready, without starting play
+ok 88 - fresh Team lobby focuses enabled Start only after actual ready, without starting play
+  ---
+  duration_ms: 21.625125
+  ...
+# Subtest: a deliberate preload coop-race focus is kept through Team readiness
+ok 89 - a deliberate preload coop-race focus is kept through Team readiness
+  ---
+  duration_ms: 17.402208
+  ...
+# Subtest: a deliberate preload coop-level focus is kept through Team readiness
+ok 90 - a deliberate preload coop-level focus is kept through Team readiness
+  ---
+  duration_ms: 17.806625
+  ...
+# Subtest: a late deliberate menu choice at ready is not replaced by Team initial focus
+ok 91 - a late deliberate menu choice at ready is not replaced by Team initial focus
+  ---
+  duration_ms: 18.475042
+  ...
+# Subtest: a hidden Team page does not claim focus now or after returning
+ok 92 - a hidden Team page does not claim focus now or after returning
+  ---
+  duration_ms: 17.209209
+  ...
+# Subtest: a unfocused Team page does not claim focus now or after returning
+ok 93 - a unfocused Team page does not claim focus now or after returning
+  ---
+  duration_ms: 16.834458
+  ...
+# Subtest: a hidden Start uses the existing visible navigation fallback
+ok 94 - a hidden Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 17.905708
+  ...
+# Subtest: a disabled Start uses the existing visible navigation fallback
+ok 95 - a disabled Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 18.72075
+  ...
+# Subtest: a inert Start uses the existing visible navigation fallback
+ok 96 - a inert Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 23.11175
+  ...
+# Subtest: a invisible Start uses the existing visible navigation fallback
+ok 97 - a invisible Start uses the existing visible navigation fallback
+  ---
+  duration_ms: 18.423041
+  ...
+# Subtest: a loader recovery link hidden by attachment is not mistaken for untouched BODY
+ok 98 - a loader recovery link hidden by attachment is not mistaken for untouched BODY
+  ---
+  duration_ms: 17.212167
+  ...
+# Subtest: a real Canvas boot failure retains recovery focus and never runs the ready handoff
+ok 99 - a real Canvas boot failure retains recovery focus and never runs the ready handoff
+  ---
+  duration_ms: 5.149834
+  ...
+# Subtest: a deliberate ready-time choice that then blurs is not reclaimed by initial focus
+ok 100 - a deliberate ready-time choice that then blurs is not reclaimed by initial focus
+  ---
+  duration_ms: 17.433125
+  ...
+# Subtest: foreground loss during boot vetoes initial focus even if the page is focused again at ready
+ok 101 - foreground loss during boot vetoes initial focus even if the page is focused again at ready
+  ---
+  duration_ms: 16.721959
+  ...
+# Subtest: setup from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 102 - setup from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 865.056792
+  ...
+# Subtest: setup from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 103 - setup from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 875.657792
+  ...
+# Subtest: retry from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 104 - retry from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 865.079875
+  ...
+# Subtest: retry from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 105 - retry from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 873.749333
+  ...
+# Subtest: return from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 106 - return from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 867.356333
+  ...
+# Subtest: return from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 107 - return from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 868.662792
+  ...
+# Subtest: home from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 108 - home from running requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 877.58775
+  ...
+# Subtest: home from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+ok 109 - home from paused requires a separate decision; Stay preserves painted/HUD flight without Resume
+  ---
+  duration_ms: 858.544833
+  ...
+# Subtest: native Escape reaches only the top confirmation cancel and keeps its paused opener
+ok 110 - native Escape reaches only the top confirmation cancel and keeps its paused opener
+  ---
+  duration_ms: 455.757792
+  ...
+# Subtest: confirmation Tab wraps both directions and editor defaults cannot start or discard
+ok 111 - confirmation Tab wraps both directions and editor defaults cannot start or discard
+  ---
+  duration_ms: 671.850959
+  ...
+# Subtest: controller adoption/held Confirm cannot discard; a separate Back stays paused
+ok 112 - controller adoption/held Confirm cannot discard; a separate Back stays paused
+  ---
+  duration_ms: 513.964459
+  ...
+# Subtest: confirmed setup discards once into lobby without starting the mutable setup choice
+ok 113 - confirmed setup discards once into lobby without starting the mutable setup choice
+  ---
+  duration_ms: 97.306584
+  ...
+# Subtest: confirmed retry uses the actual level/configuration, not edited hidden lobby selects
+ok 114 - confirmed retry uses the actual level/configuration, not edited hidden lobby selects
+  ---
+  duration_ms: 233.177167
+  ...
+# Subtest: confirmed return keeps only its fixed solo destination
+ok 115 - confirmed return keeps only its fixed solo destination
+  ---
+  duration_ms: 407.108708
+  ...
+# Subtest: confirmed return keeps only its fixed versus destination
+ok 116 - confirmed return keeps only its fixed versus destination
+  ---
+  duration_ms: 407.781083
+  ...
+# Subtest: confirmed home keeps only its fixed solo destination
+ok 117 - confirmed home keeps only its fixed solo destination
+  ---
+  duration_ms: 404.871791
+  ...
+# Subtest: confirmed home keeps only its fixed versus destination
+ok 118 - confirmed home keeps only its fixed versus destination
+  ---
+  duration_ms: 403.594833
+  ...
+# Subtest: blur cancels an open discard choice and stale Confirm cannot leave after return
+ok 119 - blur cancels an open discard choice and stale Confirm cannot leave after return
+  ---
+  duration_ms: 455.455875
+  ...
+# Subtest: hidden cancels an open discard choice and stale Confirm cannot leave after return
+ok 120 - hidden cancels an open discard choice and stale Confirm cannot leave after return
+  ---
+  duration_ms: 467.704042
+  ...
+# Subtest: pagehide cancels an open discard choice and stale Confirm cannot leave after return
+ok 121 - pagehide cancels an open discard choice and stale Confirm cannot leave after return
+  ---
+  duration_ms: 455.8285
+  ...
+# Subtest: faulted attempt cannot Resume and both native Back and header Stay return to visible Retry
+ok 122 - faulted attempt cannot Resume and both native Back and header Stay return to visible Retry
+  ---
+  duration_ms: 245.1785
+  ...
+# Subtest: failed native navigation retains an explicit paused attempt instead of silently clearing it
+ok 123 - failed native navigation retains an explicit paused attempt instead of silently clearing it
+  ---
+  duration_ms: 453.839917
+  ...
+# Subtest: modified link gestures retain native browser ownership without a discard or current-page mutation
+ok 124 - modified link gestures retain native browser ownership without a discard or current-page mutation
+  ---
+  duration_ms: 458.035167
+  ...
+# Subtest: paint failure while opening departure releases the invisible intent and exposes stopped Retry
+ok 125 - paint failure while opening departure releases the invisible intent and exposes stopped Retry
+  ---
+  duration_ms: 249.576625
+  ...
+# Subtest: a repeated Retry paint failure stops the new attempt truthfully until another explicit Retry
+ok 126 - a repeated Retry paint failure stops the new attempt truthfully until another explicit Retry
+  ---
+  duration_ms: 679.628459
+  ...
+# Subtest: in-panel coop-solo keyboard departure from pause preserves its exact Stay/Back opener
+ok 127 - in-panel coop-solo keyboard departure from pause preserves its exact Stay/Back opener
+  ---
+  duration_ms: 1125.365708
+  ...
+# Subtest: in-panel coop-solo keyboard departure from fault preserves its exact Stay/Back opener
+ok 128 - in-panel coop-solo keyboard departure from fault preserves its exact Stay/Back opener
+  ---
+  duration_ms: 271.79575
+  ...
+# Subtest: in-panel coop-versus keyboard departure from pause preserves its exact Stay/Back opener
+ok 129 - in-panel coop-versus keyboard departure from pause preserves its exact Stay/Back opener
+  ---
+  duration_ms: 1129.952416
+  ...
+# Subtest: in-panel coop-versus keyboard departure from fault preserves its exact Stay/Back opener
+ok 130 - in-panel coop-versus keyboard departure from fault preserves its exact Stay/Back opener
+  ---
+  duration_ms: 274.591
+  ...
+# Subtest: in-panel coop-solo is reachable by actual controller navigation and requires a separate discard
+ok 131 - in-panel coop-solo is reachable by actual controller navigation and requires a separate discard
+  ---
+  duration_ms: 756.014375
+  ...
+# Subtest: in-panel coop-versus is reachable by actual controller navigation and requires a separate discard
+ok 132 - in-panel coop-versus is reachable by actual controller navigation and requires a separate discard
+  ---
+  duration_ms: 774.543667
+  ...
+# Subtest: in-panel Solo keeps the exact existing one-use return context and does not consume or rewrite it
+ok 133 - in-panel Solo keeps the exact existing one-use return context and does not consume or rewrite it
+  ---
+  duration_ms: 450.906541
+  ...
+# Subtest: terminal in-panel coop-solo follows the refreshed fixed native route without another discard
+ok 134 - terminal in-panel coop-solo follows the refreshed fixed native route without another discard
+  ---
+  duration_ms: 417.299125
+  ...
+# Subtest: terminal in-panel coop-versus follows the refreshed fixed native route without another discard
+ok 135 - terminal in-panel coop-versus follows the refreshed fixed native route without another discard
+  ---
+  duration_ms: 442.757667
+  ...
+# Subtest: in-panel navigation failure keeps the paused attempt and explicit retryable actions
+ok 136 - in-panel navigation failure keeps the paused attempt and explicit retryable actions
+  ---
+  duration_ms: 458.252792
+  ...
+# Subtest: in-panel departure loses its authority on blur; background return cannot reuse Confirm
+ok 137 - in-panel departure loses its authority on blur; background return cannot reuse Confirm
+  ---
+  duration_ms: 454.5865
+  ...
+# Subtest: already-paused Team retires Help and controller intent on blur, then requires explicit foreground Resume
+ok 138 - already-paused Team retires Help and controller intent on blur, then requires explicit foreground Resume
+  ---
+  duration_ms: 691.045208
+  ...
+# Subtest: already-paused Team retires Help and controller intent on hidden, then requires explicit foreground Resume
+ok 139 - already-paused Team retires Help and controller intent on hidden, then requires explicit foreground Resume
+  ---
+  duration_ms: 693.325125
+  ...
+# Subtest: already-paused Team retires Help and controller intent on persisted pagehide, then requires explicit foreground Resume
+ok 140 - already-paused Team retires Help and controller intent on persisted pagehide, then requires explicit foreground Resume
+  ---
+  duration_ms: 687.561792
+  ...
+# Subtest: Team detects missed focus-loss notification before polling or stepping and returns paused
+ok 141 - Team detects missed focus-loss notification before polling or stepping and returns paused
+  ---
+  duration_ms: 642.765542
+  ...
+# Subtest: confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser
+ok 142 - confirmed Change setup reveals the offscreen focused Start after rendering its retained teaser
+  ---
+  duration_ms: 215.752542
+  ...
+# Subtest: return to an already visible Start preserves the current viewport
+ok 143 - return to an already visible Start preserves the current viewport
+  ---
+  duration_ms: 146.629458
+  ...
+# Subtest: a newer focus during the lobby focus handoff vetoes its reveal
+ok 144 - a newer focus during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 141.113459
+  ...
+# Subtest: a newer focus-then-body during the lobby focus handoff vetoes its reveal
+ok 145 - a newer focus-then-body during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 141.398125
+  ...
+# Subtest: a newer settings during the lobby focus handoff vetoes its reveal
+ok 146 - a newer settings during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 148.355
+  ...
+# Subtest: a newer start during the lobby focus handoff vetoes its reveal
+ok 147 - a newer start during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 145.901875
+  ...
+# Subtest: a newer blur-return during the lobby focus handoff vetoes its reveal
+ok 148 - a newer blur-return during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 130.043334
+  ...
+# Subtest: a newer hidden-return during the lobby focus handoff vetoes its reveal
+ok 149 - a newer hidden-return during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 133.925167
+  ...
+# Subtest: a newer pagehide during the lobby focus handoff vetoes its reveal
+ok 150 - a newer pagehide during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 133.51525
+  ...
+# Subtest: a newer pointer-intent during the lobby focus handoff vetoes its reveal
+ok 151 - a newer pointer-intent during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 143.4065
+  ...
+# Subtest: a newer key-intent during the lobby focus handoff vetoes its reveal
+ok 152 - a newer key-intent during the lobby focus handoff vetoes its reveal
+  ---
+  duration_ms: 138.253541
+  ...
+# Subtest: a newer selection during layout prevents the lobby from taking focus back
+ok 153 - a newer selection during layout prevents the lobby from taking focus back
+  ---
+  duration_ms: 132.416833
+  ...
+# Subtest: an disabled lobby target is not revealed
+ok 154 - an disabled lobby target is not revealed
+  ---
+  duration_ms: 128.599
+  ...
+# Subtest: an hidden lobby target is not revealed
+ok 155 - an hidden lobby target is not revealed
+  ---
+  duration_ms: 128.55275
+  ...
+# Subtest: an invalid-viewport lobby target is not revealed
+ok 156 - an invalid-viewport lobby target is not revealed
+  ---
+  duration_ms: 129.044334
+  ...
+# Subtest: Relay Yard preview and arena borrow one exact prepared image without preview reads or automatic Start
+ok 157 - Relay Yard preview and arena borrow one exact prepared image without preview reads or automatic Start
+  ---
+  duration_ms: 78.638834
+  ...
+# Subtest: First Connection preview and arena borrow one exact prepared image without preview reads or automatic Start
+ok 158 - First Connection preview and arena borrow one exact prepared image without preview reads or automatic Start
+  ---
+  duration_ms: 65.071208
+  ...
+# Subtest: relay-yard ready lobby hides the picture centre until an earned win
+ok 159 - relay-yard ready lobby hides the picture centre until an earned win
+  ---
+  duration_ms: 53.845
+  ...
+# Subtest: first-connection ready lobby hides the picture centre until an earned win
+ok 160 - first-connection ready lobby hides the picture centre until an earned win
+  ---
+  duration_ms: 61.601334
+  ...
+# Subtest: selecting another arena immediately hides and clears old lobby art until its owned read finishes
+ok 161 - selecting another arena immediately hides and clears old lobby art until its owned read finishes
+  ---
+  duration_ms: 36.061541
+  ...
+# Subtest: held artwork completes behind Settings without reclaiming its selector or starting an arena
+ok 162 - held artwork completes behind Settings without reclaiming its selector or starting an arena
+  ---
+  duration_ms: 35.433083
+  ...
+# Subtest: late superseded read cannot draw or clear the newer arena preview or reclaim focus
+ok 163 - late superseded read cannot draw or clear the newer arena preview or reclaim focus
+  ---
+  duration_ms: 29.535167
+  ...
+# Subtest: cancelled decode clears preview; late completion cannot change a successful explicit Retry
+ok 164 - cancelled decode clears preview; late completion cannot change a successful explicit Retry
+  ---
+  duration_ms: 47.897083
+  ...
+# Team picture preparation failed. Error: Controlled required picture refusal
+#     at decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/test/coop-lobby-preview.test.mjs:313:27)
+#     at PictureImage.decode (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/test/helpers/coop-presentation-fixture.mjs:86:21)
+#     at async image.onload (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/couch/coop-picture-image.mjs:42:11)
+# Subtest: required original decode failure shows no lobby art and Retry prepares the same exact slot
+ok 165 - required original decode failure shows no lobby art and Retry prepares the same exact slot
+  ---
+  duration_ms: 29.141375
+  ...
+# Subtest: Pause and confirmed Change setup leave preview in the lobby and reuse the accepted image without another read
+ok 166 - Pause and confirmed Change setup leave preview in the lobby and reuse the accepted image without another read
+  ---
+  duration_ms: 51.264875
+  ...
+# Subtest: legacy procedural import clears artwork, loss keeps preview outside Results, and reset restores exact starter art
+ok 167 - legacy procedural import clears artwork, loss keeps preview outside Results, and reset restores exact starter art
+  ---
+  duration_ms: 466.21775
+  ...
+# Subtest: persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw
+ok 168 - persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw
+  ---
+  duration_ms: 20.317833
+  ...
+# Subtest: lobby-only paint failure keeps Start ready and Retry preview repaints the same image without network, decode or focus theft
+ok 169 - lobby-only paint failure keeps Start ready and Retry preview repaints the same image without network, decode or focus theft
+  ---
+  duration_ms: 39.716959
+  ...
+# Subtest: missing preview Canvas context never blocks a fully prepared playable arena
+ok 170 - missing preview Canvas context never blocks a fully prepared playable arena
+  ---
+  duration_ms: 38.616292
+  ...
+# Subtest: fresh pointer intent during loading permits preview publication without adding a focus handoff
+ok 171 - fresh pointer intent during loading permits preview publication without adding a focus handoff
+  ---
+  duration_ms: 18.757583
+  ...
+# Subtest: earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease
+ok 172 - earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease
+  ---
+  duration_ms: 3219.312584
+  ...
+# Subtest: preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start
+ok 173 - preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start
+  ---
+  duration_ms: 63.479292
+  ...
+# Subtest: required read failure and a changed starter identity each clear old preview before exposing recovery
+ok 174 - required read failure and a changed starter identity each clear old preview before exposing recovery
+  ---
+  duration_ms: 45.292
+  ...
+# Subtest: preview reset failure cannot block a newly prepared arena or interrupt terminal image disposal
+ok 175 - preview reset failure cannot block a newly prepared arena or interrupt terminal image disposal
+  ---
+  duration_ms: 54.441792
+  ...
+# Subtest: the closed two-row authority is immutable and matches the complete authored starter pack
+ok 176 - the closed two-row authority is immutable and matches the complete authored starter pack
+  ---
+  duration_ms: 2.361209
+  ...
+# Subtest: First Connection verifies its real approved PNG and returns a full-frame contain/nearest lease
+ok 177 - First Connection verifies its real approved PNG and returns a full-frame contain/nearest lease
+  ---
+  duration_ms: 14.879917
+  ...
+# Subtest: Relay Yard verifies its real approved PNG and returns a full-frame contain/nearest lease
+ok 178 - Relay Yard verifies its real approved PNG and returns a full-frame contain/nearest lease
+  ---
+  duration_ms: 10.0535
+  ...
+# Subtest: same-ID pack rename has no picture authority before any reader or decoder
+ok 179 - same-ID pack rename has no picture authority before any reader or decoder
+  ---
+  duration_ms: 3.783458
+  ...
+# Subtest: same-ID selected level changed has no picture authority before any reader or decoder
+ok 180 - same-ID selected level changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 3.428792
+  ...
+# Subtest: same-ID other level changed has no picture authority before any reader or decoder
+ok 181 - same-ID other level changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 3.819166
+  ...
+# Subtest: pack revision changed has no picture authority before any reader or decoder
+ok 182 - pack revision changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 4.204334
+  ...
+# Subtest: level revision changed has no picture authority before any reader or decoder
+ok 183 - level revision changed has no picture authority before any reader or decoder
+  ---
+  duration_ms: 4.477583
+  ...
+# Subtest: unknown pack ID has no picture authority before any reader or decoder
+ok 184 - unknown pack ID has no picture authority before any reader or decoder
+  ---
+  duration_ms: 5.456541
+  ...
+# Subtest: theme revision cannot substitute a broader FPV asset or procedural fallback
+ok 185 - theme revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 4.178917
+  ...
+# Subtest: older theme revision cannot substitute a broader FPV asset or procedural fallback
+ok 186 - older theme revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.439875
+  ...
+# Subtest: different collection cannot substitute a broader FPV asset or procedural fallback
+ok 187 - different collection cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.862208
+  ...
+# Subtest: different theme cannot substitute a broader FPV asset or procedural fallback
+ok 188 - different theme cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.274334
+  ...
+# Subtest: asset ID cannot substitute a broader FPV asset or procedural fallback
+ok 189 - asset ID cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.124125
+  ...
+# Subtest: asset revision cannot substitute a broader FPV asset or procedural fallback
+ok 190 - asset revision cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.565708
+  ...
+# Subtest: asset hash cannot substitute a broader FPV asset or procedural fallback
+ok 191 - asset hash cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.503833
+  ...
+# Subtest: asset bytes cannot substitute a broader FPV asset or procedural fallback
+ok 192 - asset bytes cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.4595
+  ...
+# Subtest: asset MIME cannot substitute a broader FPV asset or procedural fallback
+ok 193 - asset MIME cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.543917
+  ...
+# Subtest: asset dimensions cannot substitute a broader FPV asset or procedural fallback
+ok 194 - asset dimensions cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 3.320542
+  ...
+# Subtest: unreviewed asset cannot substitute a broader FPV asset or procedural fallback
+ok 195 - unreviewed asset cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.479083
+  ...
+# Subtest: cropped frame cannot substitute a broader FPV asset or procedural fallback
+ok 196 - cropped frame cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.453375
+  ...
+# Subtest: missing allowed slot cannot substitute a broader FPV asset or procedural fallback
+ok 197 - missing allowed slot cannot substitute a broader FPV asset or procedural fallback
+  ---
+  duration_ms: 2.774208
+  ...
+# Subtest: a same-length changed original is rejected before decode and never becomes procedural
+ok 198 - a same-length changed original is rejected before decode and never becomes procedural
+  ---
+  duration_ms: 3.690666
+  ...
+# Subtest: initial exact Relay Yard preparation exposes Cancel, then Ready and only explicit Start draws the accepted original
+ok 199 - initial exact Relay Yard preparation exposes Cancel, then Ready and only explicit Start draws the accepted original
+  ---
+  duration_ms: 85.6075
+  ...
+# Subtest: actual arena selection prepares First Connection independently and releases the unadopted Yard picture once
+ok 200 - actual arena selection prepares First Connection independently and releases the unadopted Yard picture once
+  ---
+  duration_ms: 63.228958
+  ...
+# Subtest: Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity
+ok 201 - Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity
+  ---
+  duration_ms: 53.592792
+  ...
+# Subtest: Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry
+ok 202 - Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry
+  ---
+  duration_ms: 49.054458
+  ...
+# Subtest: a new actual arena choice supersedes a held old read without adopting or focusing from its late completion
+ok 203 - a new actual arena choice supersedes a held old read without adopting or focusing from its late completion
+  ---
+  duration_ms: 48.984917
+  ...
+# Subtest: blur retires preparation and cannot revive Start or focus after returning
+ok 204 - blur retires preparation and cannot revive Start or focus after returning
+  ---
+  duration_ms: 59.561541
+  ...
+# Subtest: hidden retires preparation and cannot revive Start or focus after returning
+ok 205 - hidden retires preparation and cannot revive Start or focus after returning
+  ---
+  duration_ms: 63.981708
+  ...
+# Subtest: pagehide retires preparation and cannot revive Start or focus after returning
+ok 206 - pagehide retires preparation and cannot revive Start or focus after returning
+  ---
+  duration_ms: 62.656292
+  ...
+# Subtest: deliberate keyboard traversal away from pending Cancel keeps its chosen mode link when Ready
+ok 207 - deliberate keyboard traversal away from pending Cancel keeps its chosen mode link when Ready
+  ---
+  duration_ms: 24.877333
+  ...
+# Subtest: fresh pointer intent without a focus change vetoes the pending Ready focus handoff
+ok 208 - fresh pointer intent without a focus change vetoes the pending Ready focus handoff
+  ---
+  duration_ms: 18.969542
+  ...
+# Subtest: fresh keyboard intent without a focus change vetoes the pending Ready focus handoff
+ok 209 - fresh keyboard intent without a focus change vetoes the pending Ready focus handoff
+  ---
+  duration_ms: 18.2925
+  ...
+# Subtest: required decode failure exposes Retry with no procedural fallback or automatic start
+ok 210 - required decode failure exposes Retry with no procedural fallback or automatic start
+  ---
+  duration_ms: 46.056875
+  ...
+# Subtest: confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation
+ok 211 - confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation
+  ---
+  duration_ms: 586.996458
+  ...
+# Subtest: changed accepted asset authority refuses Retry before replacing the paused run or image
+ok 212 - changed accepted asset authority refuses Retry before replacing the paused run or image
+  ---
+  duration_ms: 855.026459
+  ...
+# Subtest: same-ID changed starter imports are refused before reads, while a separately named legacy import is explicitly procedural
+ok 213 - same-ID changed starter imports are refused before reads, while a separately named legacy import is explicitly procedural
+  ---
+  duration_ms: 43.778
+  ...
+# Subtest: BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once
+ok 214 - BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once
+  ---
+  duration_ms: 959.457292
+  ...
+# Subtest: paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes
+ok 215 - paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes
+  ---
+  duration_ms: 591.774125
+  ...
+# Subtest: picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links
+ok 216 - picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links
+  ---
+  duration_ms: 15.540333
+  ...
+# Subtest: terminal pagehide during decode releases candidate resources and never focuses or adopts late completion
+ok 217 - terminal pagehide during decode releases candidate resources and never focuses or adopts late completion
+  ---
+  duration_ms: 18.471334
+  ...
+# Subtest: failed picture → Retry → pending Cancel is visible at 844×390 without starting a flight
+ok 218 - failed picture → Retry → pending Cancel is visible at 844×390 without starting a flight
+  ---
+  duration_ms: 74.275834
+  ...
+# Subtest: failed picture → Retry → pending Cancel is visible at 390×844 without starting a flight
+ok 219 - failed picture → Retry → pending Cancel is visible at 390×844 without starting a flight
+  ---
+  duration_ms: 48.333959
+  ...
+# Subtest: visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry
+ok 220 - visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry
+  ---
+  duration_ms: 25.118625
+  ...
+# Subtest: a failed picture can be replaced by a different arena through the real selector
+ok 221 - a failed picture can be replaced by a different arena through the real selector
+  ---
+  duration_ms: 46.180167
+  ...
+# Subtest: held artwork settling to ready behind Settings cannot focus or scroll recovery actions
+ok 222 - held artwork settling to ready behind Settings cannot focus or scroll recovery actions
+  ---
+  duration_ms: 27.292083
+  ...
+# Subtest: held artwork settling to error behind Settings cannot focus or scroll recovery actions
+ok 223 - held artwork settling to error behind Settings cannot focus or scroll recovery actions
+  ---
+  duration_ms: 27.258667
+  ...
+# Subtest: direct Retry reveal respects newer focus-then-body inside its focus callback
+ok 224 - direct Retry reveal respects newer focus-then-body inside its focus callback
+  ---
+  duration_ms: 25.169208
+  ...
+# Subtest: direct Retry reveal respects newer settings inside its focus callback
+ok 225 - direct Retry reveal respects newer settings inside its focus callback
+  ---
+  duration_ms: 23.82775
+  ...
+# Subtest: direct Retry reveal respects newer blur-return inside its focus callback
+ok 226 - direct Retry reveal respects newer blur-return inside its focus callback
+  ---
+  duration_ms: 26.279292
+  ...
+# Subtest: direct Retry reveal respects newer hidden-return inside its focus callback
+ok 227 - direct Retry reveal respects newer hidden-return inside its focus callback
+  ---
+  duration_ms: 25.380208
+  ...
+# Subtest: direct Retry reveal respects newer pagehide inside its focus callback
+ok 228 - direct Retry reveal respects newer pagehide inside its focus callback
+  ---
+  duration_ms: 24.269541
+  ...
+# Subtest: direct Retry reveal respects newer pointer-intent inside its focus callback
+ok 229 - direct Retry reveal respects newer pointer-intent inside its focus callback
+  ---
+  duration_ms: 24.872584
+  ...
+# Subtest: direct Retry reveal respects newer key-intent inside its focus callback
+ok 230 - direct Retry reveal respects newer key-intent inside its focus callback
+  ---
+  duration_ms: 25.384041
+  ...
+# Subtest: same-scope arena replacement during Retry geometry retires the old direct handoff
+ok 231 - same-scope arena replacement during Retry geometry retires the old direct handoff
+  ---
+  duration_ms: 30.693542
+  ...
+# Subtest: a pending reveal exception cannot prevent the real picture read or later recovery
+ok 232 - a pending reveal exception cannot prevent the real picture read or later recovery
+  ---
+  duration_ms: 35.652916
+  ...
+# Subtest: a completion reveal exception leaves explicit Retry usable
+ok 233 - a completion reveal exception leaves explicit Retry usable
+  ---
+  duration_ms: 38.352209
+  ...
+# Subtest: newer focus during pending Cancel remains authoritative even after returning to BODY
+ok 234 - newer focus during pending Cancel remains authoritative even after returning to BODY
+  ---
+  duration_ms: 24.862875
+  ...
+# Subtest: a fresh Retry retires all temporary focus observers after either terminal outcome
+ok 235 - a fresh Retry retires all temporary focus observers after either terminal outcome
+  ---
+  duration_ms: 51.823834
+  ...
+# Subtest: exact injected pack/theme/asset and original bytes prepare once; Retry and confirm preserve the same decoded image
+ok 236 - exact injected pack/theme/asset and original bytes prepare once; Retry and confirm preserve the same decoded image
+  ---
+  duration_ms: 12.048958
+  ...
+# Subtest: explicit procedural registration has no picture IO; absent required binding never silently falls back
+ok 237 - explicit procedural registration has no picture IO; absent required binding never silently falls back
+  ---
+  duration_ms: 3.04675
+  ...
+# Subtest: same IDs and revisions do not let changed level or other pack content borrow built-in picture approval
+ok 238 - same IDs and revisions do not let changed level or other pack content borrow built-in picture approval
+  ---
+  duration_ms: 4.126584
+  ...
+# Subtest: old strict game format rejects added image fields; binding tables reject URLs, duplicates and unbounded images
+ok 239 - old strict game format rejects added image fields; binding tables reject URLs, duplicates and unbounded images
+  ---
+  duration_ms: 1.146541
+  ...
+# Subtest: snapshot theme and collection revisions are exact and no unavailable snapshot is silently adopted
+ok 240 - snapshot theme and collection revisions are exact and no unavailable snapshot is silently adopted
+  ---
+  duration_ms: 3.850875
+  ...
+# Subtest: wrong selected asset revision, source-only quality or crop refuses before a reader is called
+ok 241 - wrong selected asset revision, source-only quality or crop refuses before a reader is called
+  ---
+  duration_ms: 4.596542
+  ...
+# Subtest: wrong returned asset, corrupted original or decode failure visibly fails without accepting or falling back
+ok 242 - wrong returned asset, corrupted original or decode failure visibly fails without accepting or falling back
+  ---
+  duration_ms: 5.060792
+  ...
+# Subtest: decoded dimensions must agree and a failed decode result releases its owned image
+ok 243 - decoded dimensions must agree and a failed decode result releases its owned image
+  ---
+  duration_ms: 1.956167
+  ...
+# Subtest: pack and binding metadata are captured before an injected status callback can mutate them
+ok 244 - pack and binding metadata are captured before an injected status callback can mutate them
+  ---
+  duration_ms: 3.04325
+  ...
+# Subtest: Retry cannot switch identity after failed acquisition; a new attempt may select the new snapshot
+ok 245 - Retry cannot switch identity after failed acquisition; a new attempt may select the new snapshot
+  ---
+  duration_ms: 3.924875
+  ...
+# Subtest: Cancel then Retry owns a new pending decode; a late old result only releases its own image
+ok 246 - Cancel then Retry owns a new pending decode; a late old result only releases its own image
+  ---
+  duration_ms: 3.543042
+  ...
+# Subtest: new attempt replacement is atomic and failed replacement preserves the previous decoded lease
+ok 247 - new attempt replacement is atomic and failed replacement preserves the previous decoded lease
+  ---
+  duration_ms: 4.442458
+  ...
+# Subtest: dispose while decoding rejects late completion and releases it exactly once
+ok 248 - dispose while decoding rejects late completion and releases it exactly once
+  ---
+  duration_ms: 1.794167
+  ...
+# Subtest: reentrant status selection cannot let the previous operation adopt or leak a picture
+ok 249 - reentrant status selection cannot let the previous operation adopt or leak a picture
+  ---
+  duration_ms: 3.68225
+  ...
+# Subtest: confirm rejects an interrupted gesture and mutable snapshot drift without reselecting or reading
+ok 250 - confirm rejects an interrupted gesture and mutable snapshot drift without reselecting or reading
+  ---
+  duration_ms: 2.731625
+  ...
+# Subtest: a ready-status cancellation preserves the prior working lease and releases only the new candidate
+ok 251 - a ready-status cancellation preserves the prior working lease and releases only the new candidate
+  ---
+  duration_ms: 3.463541
+  ...
+# Subtest: ready-status selection cannot release the prior picture before the newest candidate validates
+ok 252 - ready-status selection cannot release the prior picture before the newest candidate validates
+  ---
+  duration_ms: 4.965666
+  ...
+# Subtest: a ready-time snapshot reader cannot cancel and then let the candidate adopt
+ok 253 - a ready-time snapshot reader cannot cancel and then let the candidate adopt
+  ---
+  duration_ms: 3.297917
+  ...
+# Subtest: a ready-time snapshot reader cannot dispose and then let the candidate adopt
+ok 254 - a ready-time snapshot reader cannot dispose and then let the candidate adopt
+  ---
+  duration_ms: 3.324
+  ...
+# Subtest: an initial snapshot callback cannot cancel the request before pending ownership exists and still start reading
+ok 255 - an initial snapshot callback cannot cancel the request before pending ownership exists and still start reading
+  ---
+  duration_ms: 0.98
+  ...
+# Subtest: confirm rechecks gesture cancellation after its injected snapshot reader returns
+ok 256 - confirm rechecks gesture cancellation after its injected snapshot reader returns
+  ---
+  duration_ms: 2.648542
+  ...
+# Subtest: previous-image cleanup can dispose the resolver without returning a released candidate
+ok 257 - previous-image cleanup can dispose the resolver without returning a released candidate
+  ---
+  duration_ms: 3.241667
+  ...
+# Subtest: a throwing previous-image cleanup does not undo a successfully adopted picture
+ok 258 - a throwing previous-image cleanup does not undo a successfully adopted picture
+  ---
+  duration_ms: 3.335792
+  ...
+# Subtest: matching metadata hashes still require the actual PNG header dimensions
+ok 259 - matching metadata hashes still require the actual PNG header dimensions
+  ---
+  duration_ms: 4.349625
+  ...
+# Subtest: pre-aborted requests and invalid native blob type do not acquire decoded resources
+ok 260 - pre-aborted requests and invalid native blob type do not acquire decoded resources
+  ---
+  duration_ms: 2.32925
+  ...
+# Subtest: Team Settings has the same four categories, original controls, and exact lobby return without preparing or saving
+ok 261 - Team Settings has the same four categories, original controls, and exact lobby return without preparing or saving
+  ---
+  duration_ms: 55.353708
+  ...
+# Subtest: Settings stays above a retained paused Team attempt and reopens its selected category
+ok 262 - Settings stays above a retained paused Team attempt and reopens its selected category
+  ---
+  duration_ms: 1162.607959
+  ...
+# Subtest: Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+ok 263 - Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+  ---
+  duration_ms: 38.871459
+  ...
+# Subtest: a controller selects Team Settings and paused quick sound without resuming
+ok 264 - a controller selects Team Settings and paused quick sound without resuming
+  ---
+  duration_ms: 910.644709
+  ...
+# Subtest: closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+ok 265 - closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+  ---
+  duration_ms: 29.740667
+  ...
+# Subtest: Settings Back leaves a pending Team import under its existing operation owner
+ok 266 - Settings Back leaves a pending Team import under its existing operation owner
+  ---
+  duration_ms: 26.412583
+  ...
+# Subtest: a blur Settings close cannot focus or resume in the background
+ok 267 - a blur Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 208.488
+  ...
+# Subtest: a hidden Settings close cannot focus or resume in the background
+ok 268 - a hidden Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 203.987792
+  ...
+# Subtest: a pagehide Settings close cannot focus or resume in the background
+ok 269 - a pagehide Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 203.479709
+  ...
+# Subtest: queued old close and newer focus cannot replace the current Settings visit
+ok 270 - queued old close and newer focus cannot replace the current Settings visit
+  ---
+  duration_ms: 25.624708
+  ...
+# Subtest: paused keyboard quick Sound and Settings mute share one owner without resuming
+ok 271 - paused keyboard quick Sound and Settings mute share one owner without resuming
+  ---
+  duration_ms: 907.422375
+  ...
+# Subtest: terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+ok 272 - terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+  ---
+  duration_ms: 171.551959
+  ...
+# Subtest: a newer focus choice during native Settings opening wins over the default category focus
+ok 273 - a newer focus choice during native Settings opening wins over the default category focus
+  ---
+  duration_ms: 21.031333
+  ...
+# Subtest: a reopen during return visibility checking retires the old Settings close
+ok 274 - a reopen during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 20.695542
+  ...
+# Subtest: a background during return visibility checking retires the old Settings close
+ok 275 - a background during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 20.524625
+  ...
+# Subtest: First Connection: a real authored win shows the exact full picture without overwriting captured state
+ok 276 - First Connection: a real authored win shows the exact full picture without overwriting captured state
+  ---
+  duration_ms: 57.189208
+  ...
+# Subtest: Relay Yard: a real authored win shows the exact full picture without overwriting captured state
+ok 277 - Relay Yard: a real authored win shows the exact full picture without overwriting captured state
+  ---
+  duration_ms: 26.669542
+  ...
+# Subtest: running, paused and lost pictures retain opaque concealment, walls and gameplay cues
+ok 278 - running, paused and lost pictures retain opaque concealment, walls and gameplay cues
+  ---
+  duration_ms: 10.912083
+  ...
+# Subtest: won runs without an approved image keep the existing procedural arena
+ok 279 - won runs without an approved image keep the existing procedural arena
+  ---
+  duration_ms: 18.851958
+  ...
+# Subtest: winning cannot bypass lease validation and failed drawing restores borrowed state
+ok 280 - winning cannot bypass lease validation and failed drawing restores borrowed state
+  ---
+  duration_ms: 18.427584
+  ...
+# Subtest: legacy callers retain procedural painting and restoring the page snapshot restores that look
+ok 281 - legacy callers retain procedural painting and restoring the page snapshot restores that look
+  ---
+  duration_ms: 12.8195
+  ...
+# Subtest: the prepared original is drawn once with nearest sampling and only claimed land exposes it
+ok 282 - the prepared original is drawn once with nearest sampling and only claimed land exposes it
+  ---
+  duration_ms: 3.184709
+  ...
+# Subtest: an explicit procedural binding uses the selected palette without pretending an image exists
+ok 283 - an explicit procedural binding uses the selected palette without pretending an image exists
+  ---
+  duration_ms: 1.632958
+  ...
+# Subtest: wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+ok 284 - wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+  ---
+  duration_ms: 0.628917
+  ...
+# Subtest: snapshot validation is atomic and plain text keeps its existing system-font roles
+ok 285 - snapshot validation is atomic and plain text keeps its existing system-font roles
+  ---
+  duration_ms: 1.565833
+  ...
+# Subtest: all existing Team semantic cues and geometry remain above the picture in reduced paused paint
+ok 286 - all existing Team semantic cues and geometry remain above the picture in reduced paused paint
+  ---
+  duration_ms: 3.082542
+  ...
+# Subtest: motion scale affects only optional pulse while paused repetition and real simulation remain identical
+ok 287 - motion scale affects only optional pulse while paused repetition and real simulation remain identical
+  ---
+  duration_ms: 22.424542
+  ...
+# Subtest: drawing errors restore the borrowed canvas state without closing the supplied image
+ok 288 - drawing errors restore the borrowed canvas state without closing the supplied image
+  ---
+  duration_ms: 0.518709
+  ...
+# Subtest: the existing page lease applies/restores the Team snapshot without overriding a newer owner
+ok 289 - the existing page lease applies/restores the Team snapshot without overriding a newer owner
+  ---
+  duration_ms: 0.424791
+  ...
+# Subtest: First Connection: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+ok 290 - First Connection: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+  ---
+  duration_ms: 3331.781209
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":1179,"hostCommandTicks":1179,"terminalHUD":["FIRST CONNECTION","0:09","65.4%","3 reserves","Reveal 65% together","On safe ground","On safe ground"]}
+# Subtest: Relay Yard: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+ok 291 - Relay Yard: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+  ---
+  duration_ms: 2684.013917
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":832,"hostCommandTicks":832,"terminalHUD":["RELAY YARD","0:06","30.7%","3 reserves","Strongholds secured together","On safe ground","On safe ground"]}
+# Subtest: earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start
+ok 292 - earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start
+  ---
+  duration_ms: 3221.303458
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":1179,"hostCommandTicks":1179,"terminalHUD":["FIRST CONNECTION","0:09","65.4%","3 reserves","Reveal 65% together","On safe ground","On safe ground"]}
+# Subtest: earned Team victory → keyboard Return to Solo retains exact one-use return ownership without another discard
+ok 293 - earned Team victory → keyboard Return to Solo retains exact one-use return ownership without another discard
+  ---
+  duration_ms: 3274.760792
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":1179,"hostCommandTicks":1179,"terminalHUD":["FIRST CONNECTION","0:09","65.4%","3 reserves","Reveal 65% together","On safe ground","On safe ground"]}
+# Subtest: Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+    # Subtest: actual Versus controls
+    ok 1 - actual Versus controls
+      ---
+      duration_ms: 1305.192
+      ...
+    # Subtest: fresh Team receives settings, not music or progress
+    ok 2 - fresh Team receives settings, not music or progress
+      ---
+      duration_ms: 30.030542
+      ...
+    # Subtest: fresh Versus restores without context creation or playing
+    ok 3 - fresh Versus restores without context creation or playing
+      ---
+      duration_ms: 1259.101917
+      ...
+    1..3
+ok 294 - Versus keyboard master controls persist only the shared record; Team and another Versus restore without autoplay
+  ---
+  duration_ms: 2595.232416
+  ...
+# Subtest: Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+ok 295 - Versus starts muted, then master edits preserve active music intent and a paused duel checkpoint
+  ---
+  duration_ms: 1402.394709
+  ...
+# Subtest: Versus controller edits the actual master slider without starting either board
+ok 296 - Versus controller edits the actual master slider without starting either board
+  ---
+  duration_ms: 1307.832958
+  ...
+# Subtest: Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+ok 297 - Team keyboard master edits remain accessible while paused and preserve its live board and unrelated feedback
+  ---
+  duration_ms: 216.703791
+  ...
+# Subtest: Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+ok 298 - Team keeps its sound explanation through saved edits, storage failure and recovery without starting play
+  ---
+  duration_ms: 125.876166
+  ...
+# Subtest: Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 299 - Versus sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 1471.491458
+  ...
+# Subtest: Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+ok 300 - Team sound edits survive paused Help pan and keyboard return without replacing audio feedback
+  ---
+  duration_ms: 150.336958
+  ...
+# Subtest: couch markup mounts controls with bare body
+ok 301 - couch markup mounts controls with bare body
+  ---
+  duration_ms: 1.10525
+  ...
+# Subtest: couch markup mounts controls with body attributes
+ok 302 - couch markup mounts controls with body attributes
+  ---
+  duration_ms: 0.157417
+  ...
+# Subtest: couch markup mounts controls with quoted delimiters and case
+ok 303 - couch markup mounts controls with quoted delimiters and case
+  ---
+  duration_ms: 0.093834
+  ...
+# Subtest: couch markup rejects a missing or incomplete body with a controlled error
+ok 304 - couch markup rejects a missing or incomplete body with a controlled error
+  ---
+  duration_ms: 0.4555
+  ...
+# Subtest: appending parsed text preserves nested boot and game controls
+ok 305 - appending parsed text preserves nested boot and game controls
+  ---
+  duration_ms: 0.337875
+  ...
+# Subtest: ../couch/index.html has a visible static loading signal and a reachable exit before modules load
+ok 306 - ../couch/index.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 3.641833
+  ...
+# Subtest: ../couch/relay-rescue.html has a visible static loading signal and a reachable exit before modules load
+ok 307 - ../couch/relay-rescue.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 1.024709
+  ...
+# Subtest: ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load
+ok 308 - ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 0.764542
+  ...
+# Subtest: Versus keyboard Enter ends paused Help once without resuming
+ok 309 - Versus keyboard Enter ends paused Help once without resuming
+  ---
+  duration_ms: 1782.079375
+  ...
+# Subtest: Versus keyboard Space ends paused Help once without resuming
+ok 310 - Versus keyboard Space ends paused Help once without resuming
+  ---
+  duration_ms: 1715.090458
+  ...
+# Subtest: Versus keyboard Escape ends paused Help once without resuming
+ok 311 - Versus keyboard Escape ends paused Help once without resuming
+  ---
+  duration_ms: 1710.087625
+  ...
+# Subtest: Versus pointer and touch Done are stable end-only controls in lobby and pause
+ok 312 - Versus pointer and touch Done are stable end-only controls in lobby and pause
+  ---
+  duration_ms: 1603.448208
+  ...
+# Subtest: Versus native content scrolling retains Done and the same paused attempt
+ok 313 - Versus native content scrolling retains Done and the same paused attempt
+  ---
+  duration_ms: 1464.992875
+  ...
+# Subtest: Versus opted-in resize reveals the current reading unit without moving focus or resuming
+ok 314 - Versus opted-in resize reveals the current reading unit without moving focus or resuming
+  ---
+  duration_ms: 1501.45125
+  ...
+# Subtest: Versus fresh input changes reading copy while an idle pad preserves keyboard ownership
+ok 315 - Versus fresh input changes reading copy while an idle pad preserves keyboard ownership
+  ---
+  duration_ms: 1533.001208
+  ...
+# Subtest: Versus Help closure invalidates Done and terminal teardown removes reader listeners
+ok 316 - Versus Help closure invalidates Done and terminal teardown removes reader listeners
+  ---
+  duration_ms: 1242.5595
+  ...
+# Subtest: Team keyboard Enter ends paused Help once without resuming
+ok 317 - Team keyboard Enter ends paused Help once without resuming
+  ---
+  duration_ms: 449.172875
+  ...
+# Subtest: Team keyboard Space ends paused Help once without resuming
+ok 318 - Team keyboard Space ends paused Help once without resuming
+  ---
+  duration_ms: 425.661792
+  ...
+# Subtest: Team keyboard Escape ends paused Help once without resuming
+ok 319 - Team keyboard Escape ends paused Help once without resuming
+  ---
+  duration_ms: 413.942417
+  ...
+# Subtest: Team pointer and touch Done are stable end-only controls in lobby and pause
+ok 320 - Team pointer and touch Done are stable end-only controls in lobby and pause
+  ---
+  duration_ms: 251.661958
+  ...
+# Subtest: Team native content scrolling retains Done and the same paused attempt
+ok 321 - Team native content scrolling retains Done and the same paused attempt
+  ---
+  duration_ms: 236.750459
+  ...
+# Subtest: Team opted-in resize reveals the current reading unit without moving focus or resuming
+ok 322 - Team opted-in resize reveals the current reading unit without moving focus or resuming
+  ---
+  duration_ms: 220.840875
+  ...
+# Subtest: Team fresh input changes reading copy while an idle pad preserves keyboard ownership
+ok 323 - Team fresh input changes reading copy while an idle pad preserves keyboard ownership
+  ---
+  duration_ms: 43.339916
+  ...
+# Subtest: Team Help closure invalidates Done and terminal teardown removes reader listeners
+ok 324 - Team Help closure invalidates Done and terminal teardown removes reader listeners
+  ---
+  duration_ms: 26.22675
+  ...
+# Subtest: immediate: shared display edits preserve the actual paused Solo cut and replay
+ok 325 - immediate: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 981.336166
+  ...
+# Subtest: grid-center: shared display edits preserve the actual paused Solo cut and replay
+ok 326 - grid-center: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 888.668833
+  ...
+# Subtest: Solo to Team to Versus and back restores one display record without Couch profile writes
+    # Subtest: Solo explicitly opts into the shared record
+    ok 1 - Solo explicitly opts into the shared record
+      ---
+      duration_ms: 282.988667
+      ...
+    # Subtest: Team adopts and edits from its real paused Options
+    ok 2 - Team adopts and edits from its real paused Options
+      ---
+      duration_ms: 183.567125
+      ...
+    # Subtest: Versus adopts, exposes controls to keyboard and changes only display state
+    ok 3 - Versus adopts, exposes controls to keyboard and changes only display state
+      ---
+      duration_ms: 1514.444584
+      ...
+    # Subtest: fresh Solo prefers the shared record over its older profile
+    ok 4 - fresh Solo prefers the shared record over its older profile
+      ---
+      duration_ms: 277.716375
+      ...
+    1..4
+ok 327 - Solo to Team to Versus and back restores one display record without Couch profile writes
+  ---
+  duration_ms: 2259.635083
+  ...
+# Subtest: Team system reduction preserves a raw false choice and a denied shared save stays session-only
+ok 328 - Team system reduction preserves a raw false choice and a denied shared save stays session-only
+  ---
+  duration_ms: 22.616666
+  ...
+# Subtest: Versus controller selects the real display control without replacing or starting the duel
+ok 329 - Versus controller selects the real display control without replacing or starting the duel
+  ---
+  duration_ms: 1308.296791
+  ...
+# Subtest: immediate: menu edits preserve the actual paused Solo cut, saved slot and replay
+ok 330 - immediate: menu edits preserve the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 965.832292
+  ...
+# Subtest: grid-center: menu edits preserve the actual paused Solo cut, saved slot and replay
+ok 331 - grid-center: menu edits preserve the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 884.409334
+  ...
+# Subtest: one separate menu record survives Solo, Team, Versus and Solo return without altering display or progress
+    # Subtest: Solo opts into Ukrainian rich menus from the real Settings
+    ok 1 - Solo opts into Ukrainian rich menus from the real Settings
+      ---
+      duration_ms: 271.207292
+      ...
+    # Subtest: Team changes menu styling from paused Options without changing a single painter command
+    ok 2 - Team changes menu styling from paused Options without changing a single painter command
+      ---
+      duration_ms: 197.645792
+      ...
+    # Subtest: Versus Settings opens Appearance category, paused checkpoint and exact Back opener
+    ok 3 - Versus Settings opens Appearance category, paused checkpoint and exact Back opener
+      ---
+      duration_ms: 1512.240958
+      ...
+    # Subtest: fresh Solo adopts without an implicit save or start
+    ok 4 - fresh Solo adopts without an implicit save or start
+      ---
+      duration_ms: 279.438542
+      ...
+    1..4
+ok 332 - one separate menu record survives Solo, Team, Versus and Solo return without altering display or progress
+  ---
+  duration_ms: 2261.407584
+  ...
+# Subtest: controller editing the new native selectors changes only menu style and preserves Ready
+ok 333 - controller editing the new native selectors changes only menu style and preserves Ready
+  ---
+  duration_ms: 1344.443542
+  ...
+# Subtest: denied menu saving leaves Team local choice usable and does not replace the existing shared record
+ok 334 - denied menu saving leaves Team local choice usable and does not replace the existing shared record
+  ---
+  duration_ms: 23.597417
+  ...
+# Subtest: a real host storage notification updates menus without moving focus, resuming or accepting stale records
+ok 335 - a real host storage notification updates menus without moving focus, resuming or accepting stale records
+  ---
+  duration_ms: 1323.394709
+  ...
+# Subtest: Settings and arena assists synchronize, persist across app reload, and retain continuous direction
+ok 336 - Settings and arena assists synchronize, persist across app reload, and retain continuous direction
+  ---
+  duration_ms: 1540.773292
+  ...
+# Subtest: Solo pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 337 - Solo pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 567.258709
+  ...
+# Subtest: Solo the deferred pageshow task repairs form values restored after the event without writes
+ok 338 - Solo the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 484.975083
+  ...
+# Subtest: Solo a newer explicit setting before deferred restoration keeps its current authority
+ok 339 - Solo a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 547.156709
+  ...
+# Subtest: Solo terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 340 - Solo terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 503.400917
+  ...
+# Subtest: Versus pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 341 - Versus pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 1357.518666
+  ...
+# Subtest: Versus the deferred pageshow task repairs form values restored after the event without writes
+ok 342 - Versus the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 1345.478084
+  ...
+# Subtest: Versus a newer explicit setting before deferred restoration keeps its current authority
+ok 343 - Versus a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 1317.734125
+  ...
+# Subtest: Versus terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 344 - Versus terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 1300.0355
+  ...
+# Subtest: Team pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 345 - Team pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 112.165166
+  ...
+# Subtest: Team the deferred pageshow task repairs form values restored after the event without writes
+ok 346 - Team the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 96.863375
+  ...
+# Subtest: Team a newer explicit setting before deferred restoration keeps its current authority
+ok 347 - Team a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 96.569042
+  ...
+# Subtest: Team terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 348 - Team terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 73.057666
+  ...
+# Subtest: Versus Game data reveals its final hint layout after entry
+ok 349 - Versus Game data reveals its final hint layout after entry
+  ---
+  duration_ms: 1518.888959
+  ...
+# Subtest: Versus Back during the final reading hint cannot reveal or refocus the retired reader
+ok 350 - Versus Back during the final reading hint cannot reveal or refocus the retired reader
+  ---
+  duration_ms: 1470.623084
+  ...
+# Subtest: Versus disposal during the final reading hint cannot reveal or refocus the retired reader
+ok 351 - Versus disposal during the final reading hint cannot reveal or refocus the retired reader
+  ---
+  duration_ms: 1344.760167
+  ...
+# Subtest: Versus Game data is keyboard reachable and PageDown/Home/End read complete copy before Back
+ok 352 - Versus Game data is keyboard reachable and PageDown/Home/End read complete copy before Back
+  ---
+  duration_ms: 1454.236958
+  ...
+# Subtest: Versus controller enters Game data, scrolls and exits without resuming
+ok 353 - Versus controller enters Game data, scrolls and exits without resuming
+  ---
+  duration_ms: 1588.147292
+  ...
+# Subtest: Versus category changes and Settings Back retire the reader and its Done action
+ok 354 - Versus category changes and Settings Back retire the reader and its Done action
+  ---
+  duration_ms: 1446.41025
+  ...
+# Subtest: Versus touch scrolling and Done keep the complete copy and paused attempt
+ok 355 - Versus touch scrolling and Done keep the complete copy and paused attempt
+  ---
+  duration_ms: 1443.586375
+  ...
+# Subtest: Team Game data reveals its final hint layout after entry
+ok 356 - Team Game data reveals its final hint layout after entry
+  ---
+  duration_ms: 251.548083
+  ...
+# Subtest: Team Back during the final reading hint cannot reveal or refocus the retired reader
+ok 357 - Team Back during the final reading hint cannot reveal or refocus the retired reader
+  ---
+  duration_ms: 230.596084
+  ...
+# Subtest: Team disposal during the final reading hint cannot reveal or refocus the retired reader
+ok 358 - Team disposal during the final reading hint cannot reveal or refocus the retired reader
+  ---
+  duration_ms: 139.893834
+  ...
+# Subtest: Team Game data is keyboard reachable and PageDown/Home/End read complete copy before Back
+ok 359 - Team Game data is keyboard reachable and PageDown/Home/End read complete copy before Back
+  ---
+  duration_ms: 231.72875
+  ...
+# Subtest: Team controller enters Game data, scrolls and exits without resuming
+ok 360 - Team controller enters Game data, scrolls and exits without resuming
+  ---
+  duration_ms: 326.690167
+  ...
+# Subtest: Team category changes and Settings Back retire the reader and its Done action
+ok 361 - Team category changes and Settings Back retire the reader and its Done action
+  ---
+  duration_ms: 228.376125
+  ...
+# Subtest: Team touch scrolling and Done keep the complete copy and paused attempt
+ok 362 - Team touch scrolling and Done keep the complete copy and paused attempt
+  ---
+  duration_ms: 232.948042
+  ...
+1..362
+# tests 373
+# suites 0
+# pass 373
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 114561.928375

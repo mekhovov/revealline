@@ -1,0 +1,19 @@
+{
+  "reviewer": "/root/installed_parity_peer",
+  "reviewType": "Read-only source/test inspection; no test execution or browser operation by reviewer",
+  "runtime": {
+    "path": "game/couch/relay-rescue.mjs",
+    "bytes": 61847,
+    "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f"
+  },
+  "result": "No blocking finding",
+  "observations": [
+    "Generation, Settings visit, foreground, inactive, run and departure checks surround visibility/layout reads and explicit focus.",
+    "Newer focus, input and lifecycle events permanently veto reveal.",
+    "Synchronous finally retires all six observers.",
+    "Existing primary selection and retained-picture work remain intact.",
+    "Tests cover confirmed and earned-win returns, visible target no-op, no automatic Start or new image reads, reentrant focus/Settings/attempt, lifecycle/input intent and listener retirement.",
+    "Shared focused-control CSS already provides vertical scroll margin."
+  ],
+  "remaining": "Root must verify actual browser geometry and hit target; finite host tests are not native layout or physical input evidence."
+}

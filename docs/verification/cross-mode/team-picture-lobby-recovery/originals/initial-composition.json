@@ -1,0 +1,69 @@
+{
+  "base": "d2455ebfa444a8692d2694790afa6e4199af64e0",
+  "adoptedPacket": "p03-team-picture-recovery-628e95da",
+  "paths": {
+    "authoring/prompts/cross-mode-delivery.md": {
+      "bytes": 58215,
+      "sha256": "b258a9e5a313984b3473701a8ee2bbbc74bc44c4f5ad68cf5d94d2fb88c36c66"
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "bytes": 210244,
+      "sha256": "cec468341dedaed33973d40ec90e1cb049a96df18a4fa6e2ac826cd80ce1e28a"
+    },
+    "docs/team-picture-host.md": {
+      "bytes": 9987,
+      "sha256": "a4d069690f69689c0bd25b4aefac8b53a827acf3df019c04d7b4332f76324aa5"
+    },
+    "docs/team-victory-picture.md": {
+      "bytes": 5449,
+      "sha256": "dc5e7f0c385b3ebc71a396ac4dbc6c24145284f54704a3f91ed7aeded0db27de"
+    },
+    "game/couch/coop-view.mjs": {
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    "game/couch/relay-rescue.css": {
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    "game/couch/relay-rescue.html": {
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "bytes": 63875,
+      "sha256": "5709387a4b4afab60f9ee67eb7cb314bd2a6b9ce6941854dbe8bd5f8173993cb"
+    },
+    "game/test/coop-lobby-focus.test.mjs": {
+      "bytes": 6602,
+      "sha256": "e52c2f191916d6155dc244ff876a5877d97885bdfba7d0ab0ddf73eb24e19a7c"
+    },
+    "game/test/coop-lobby-preview.test.mjs": {
+      "bytes": 26481,
+      "sha256": "a3a24256d95e750f8821a33ff74091d02db5c3601fa84ffa3039aeb111647755"
+    },
+    "game/test/coop-picture-host.test.mjs": {
+      "bytes": 16681,
+      "sha256": "429f4301f6df7c7b10f2249d02bbeff5278316d7402f71fe08a5dd74b2dc8da0"
+    },
+    "game/test/coop-picture-recovery-focus.test.mjs": {
+      "bytes": 12510,
+      "sha256": "ab8779fbbcb3f48d57ff548a5d71b677957331c65b2c465bcd327277a380663d"
+    },
+    "game/test/coop-victory-picture.test.mjs": {
+      "bytes": 8757,
+      "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+    },
+    "game/test/coop-won-terminal-host.test.mjs": {
+      "bytes": 7912,
+      "sha256": "ed4d80728a0de8f854b11c050d7e973a0acd68a7ea7e8745e0acbadd80761bff"
+    },
+    "game/test/helpers/coop-host.mjs": {
+      "bytes": 11374,
+      "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+    }
+  },
+  "sharedGuidance": "Additive Team append only; complete d245 shared bodies retained as exact prefix.",
+  "versionChanged": false,
+  "compiledChanged": false
+}

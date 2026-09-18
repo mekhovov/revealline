@@ -1,0 +1,20 @@
+{
+  "commit": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "port": 60389,
+  "runtimeOverrides": {
+    "bytes": 1375,
+    "sha256": "1079aaa86841f09f109a443e699065cb6fd8d1819262f0a481485dd158bf74aa"
+  },
+  "limits": {
+    "requestLogBytes": 1000000,
+    "requestEvents": 2000
+  },
+  "urls": [
+    "http://127.0.0.1:60389/game/couch/relay-rescue.html"
+  ],
+  "faultPaths": [
+    "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+    "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png"
+  ]
+}

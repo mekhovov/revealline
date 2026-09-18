@@ -1,0 +1,136 @@
+{
+  "status": "LOCAL_TARGETED_PASS_BROWSER_PENDING",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "sourceTree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "branch": "codex/p08a-team-earned-picture",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-earned-picture",
+  "recordedAt": "2026-09-17T22:07:48.955850+00:00",
+  "candidatePatch": {
+    "path": ".cache/p08a-team-earned-picture-628e95da/candidate.patch",
+    "bytes": 69854,
+    "sha256": "5e848f71d5217f3775e7407bf597dac9a368e04d7e6dbbdd78167c981abd267b"
+  },
+  "candidatePins": {
+    "path": ".cache/p08a-team-earned-picture-628e95da/candidate-pins.json",
+    "bytes": 4484,
+    "sha256": "b6bbdceedee13999e55dfff86b41ccccdfba5244e23cc5ca090f20941c1b4be4"
+  },
+  "compositionReview": {
+    "path": ".cache/p08a-team-earned-picture-628e95da/composition-review.json",
+    "bytes": 48839,
+    "sha256": "721dc624d1733aab92d12aa9592f65dfb2399f38552e923029a97bc36da0b0cc"
+  },
+  "inputCount": 270,
+  "inputBytes": 16339920,
+  "runs": [
+    {
+      "receipt": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node20/receipt.json",
+        "bytes": 1541,
+        "sha256": "570dea1888261da68f216f535c4651fb9aa5362f85ff391c29749d62ae80eae1"
+      },
+      "stdout": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node20/stdout",
+        "bytes": 55397,
+        "sha256": "5340489c532fed4821b7f44e238f47d227eacfd54f7e6d01c81518214dc228b0"
+      },
+      "stderr": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node20/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inputManifest": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node20/inputs.json",
+        "bytes": 38145,
+        "sha256": "a86bfb77282c867cb6cde91976b75d745211420dfaf69d006af1954fe9606a77"
+      },
+      "runtime": "v20.19.5",
+      "elapsedSeconds": 69.834,
+      "counts": {
+        "tests": 231,
+        "pass": 231,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "receipt": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node22/receipt.json",
+        "bytes": 1541,
+        "sha256": "c56f74b1882ab459c509e092ca7483a416d60799667cdb91bcd45b2abe72ed02"
+      },
+      "stdout": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node22/stdout",
+        "bytes": 58860,
+        "sha256": "1379314fbdb5cffe7ed0b253976d596af1f427c7ce448cc32e6fcf8c311401a3"
+      },
+      "stderr": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node22/stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inputManifest": {
+        "path": ".cache/p08a-team-earned-picture-628e95da/runs/composed-node22/inputs.json",
+        "bytes": 38145,
+        "sha256": "a86bfb77282c867cb6cde91976b75d745211420dfaf69d006af1954fe9606a77"
+      },
+      "runtime": "v22.22.2",
+      "elapsedSeconds": 53.123,
+      "counts": {
+        "tests": 231,
+        "pass": 231,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  ],
+  "initialFailure": {
+    "receipt": {
+      "path": ".cache/p08a-team-earned-picture-628e95da/runs/initial-node20/receipt.json",
+      "bytes": 1540,
+      "sha256": "68193c65e9b53175507adfe86ced981a07fef23b73c9113cff55081110a7d4a5"
+    },
+    "reported": 231,
+    "passed": 225,
+    "failed": 6,
+    "causes": [
+      "Five Solo Settings cases lacked two exact tracked catalog JSON dependencies in sparse closure.",
+      "New Relay Yard host driver sent movement before Start consumed its mandatory neutral release tick. Core/runtime unchanged; corrected driver waits for real clock and release."
+    ]
+  },
+  "sourceChecks": {
+    "syntax": {
+      "path": ".cache/p08a-team-earned-picture-628e95da/syntax-review.json",
+      "bytes": 1524,
+      "sha256": "b00dad2e817be72de09788ac00d2b005613eeaffb325bfb7d63e1b7ea7202e2d"
+    },
+    "format": {
+      "path": ".cache/p08a-team-earned-picture-628e95da/final-format/receipt.json",
+      "bytes": 654,
+      "sha256": "47db7c4a63f11d7c1e0086fe0befae0a633e9b65e902d5261c01ac1e52d48672"
+    },
+    "markdown": {
+      "path": ".cache/p08a-team-earned-picture-628e95da/final-markdown/receipt.json",
+      "bytes": 517,
+      "sha256": "3105fd29fab23e483f3a3cbef3c42609f5fafc3092b026792850244ed2e146f1"
+    },
+    "diffCheck": "PASS",
+    "reversePatchCheck": "PASS",
+    "relativeDocumentationTargets": 188,
+    "emptyIndex": true
+  },
+  "originalIndex": {
+    "path": ".cache/p08a-team-earned-picture-628e95da/original-index.json",
+    "bytes": 8946,
+    "sha256": "3d3ce18701c13a899a5e6b22a9af45cd2b0b196a03c05d85547ee58e72231c8c"
+  },
+  "limits": [
+    "No version bump, commit, push, remote or browser action.",
+    "No full suite, production build, regenerated content, native pixels/layout, human/physical input, public/offline or phase acceptance.",
+    "Results dialog remains above completed image; unobstructed viewer and animation are separate work."
+  ]
+}
