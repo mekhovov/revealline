@@ -1,0 +1,609 @@
+{
+  "scope": "P03/P16 Studio in-page guide R2; local native verification only",
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "url": "http://127.0.0.1:60397/authoring/asset-studio/",
+  "evidenceCategory": "CUA in-app browser, locator keyboard and pointer actions, read-only DOM geometry and inline visual inspection; emulated viewport sizes",
+  "bindings": {
+    "commit": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+    "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+    "pid": 15566,
+    "port": 60397,
+    "url": "http://127.0.0.1:60397/game/",
+    "scope": "P03 Studio inline guide R2 above dynamic workspace; exact628 source+four runtime overrides. Preserves failed R1 native/source packets. Native qualification only.",
+    "runtimeOverrides": {
+      "authoring/asset-studio/guide.mjs": {
+        "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/guide.mjs",
+        "bytes": 1636,
+        "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+      },
+      "authoring/asset-studio/studio.mjs": {
+        "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/studio.mjs",
+        "bytes": 44250,
+        "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+      },
+      "authoring/asset-studio/studio.css": {
+        "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/studio.css",
+        "bytes": 20770,
+        "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+      },
+      "authoring/asset-studio/index.html": {
+        "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser-r2/index.html",
+        "bytes": 32362,
+        "sha256": "cddb29396cdff4181785b7a5024a6e2c296fd099e67c9b29be19f3e312a108d4"
+      }
+    },
+    "urls": [
+      "http://127.0.0.1:60397/authoring/asset-studio/"
+    ],
+    "faultPaths": [
+      "game/presentation/compiled/studio.json"
+    ],
+    "limits": {
+      "requestLogBytes": 512000,
+      "requestEvents": 1500
+    }
+  },
+  "pins": [
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/serve.py",
+      "bytes": 7022,
+      "sha256": "1383f58f93e17d53829c1c158c3319b9da490e0b351e7d1c54a07340af6166f4"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/binding.json",
+      "bytes": 1697,
+      "sha256": "8df2d307acd529cf8ee386e9e4915931e9602e86db56f74700153ec3b9b03328"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/runtime-overrides.json",
+      "bytes": 1400,
+      "sha256": "27e78738d9a5988d24323a1fe2f23314eb427b206df5c3e73cc027e90ce4d96d"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/requests-through-guide-verification.jsonl",
+      "bytes": 107858,
+      "sha256": "acd202738559c78f515026e4aaf896f20b7a417f8802159a24ce4bd46030971e"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": ".cache/p05-native-file-controls-browser-r2/p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+      "bytes": 243034,
+      "sha256": "70d0877f900a7a48f8a7a00e9248ca04d48077d3e81c37a42e9b8c8a6df87715"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/native-r1-finding.json",
+      "bytes": 3095,
+      "sha256": "c99282eb9527f2ef57e36c60d9012ed06ed3fcafae30d66c190ee99c0f97fe4f"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/qualification.json",
+      "bytes": 3329,
+      "sha256": "2007a77f11f79e77f4bc464bc57c6746e7e0f5dcd0251f26b00948754bf896ad"
+    }
+  ],
+  "nativeRows": [
+    {
+      "at": "2026-09-17T23:58:57.012Z",
+      "label": "native-open-before-registry",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        173.09375,
+        780,
+        44
+      ],
+      "guideOpen": true,
+      "cancelHidden": true,
+      "closeHidden": true,
+      "status": "Loading the Studio workspace and presentation registry\u2026",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-17T23:59:02.134Z",
+      "label": "guide-before-compiled-request",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        173.09375,
+        780,
+        44
+      ],
+      "guideOpen": true,
+      "cancelHidden": false,
+      "closeHidden": false,
+      "status": "Loading saved Studio workspace\u2026",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-17T23:59:02.157Z",
+      "label": "escape-closes-guide-keeps-loading",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        173.09375,
+        104.21875,
+        44
+      ],
+      "guideOpen": false,
+      "cancelHidden": false,
+      "closeHidden": false,
+      "status": "Loading saved Studio workspace\u2026",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-17T23:59:11.502Z",
+      "label": "guide-reopened-during-delay",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        173.09375,
+        780,
+        44
+      ],
+      "guideOpen": true,
+      "cancelHidden": false,
+      "closeHidden": false,
+      "status": "Loading and verifying the current release collection\u2026",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-17T23:59:44.097Z",
+      "label": "registry-ready-reader-visible",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        173.09375,
+        780,
+        44
+      ],
+      "guideOpen": true,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-17T23:59:44.128Z",
+      "label": "close-restores-summary",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        173.09375,
+        104.21875,
+        44
+      ],
+      "guideOpen": false,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:09.999Z",
+      "label": "large-plain-landscape-open",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        171.296875,
+        780,
+        47
+      ],
+      "guideOpen": true,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:12.907Z",
+      "label": "large-plain-landscape-tab-close",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-close",
+      "rect": [
+        32,
+        171.65625,
+        141.734375,
+        47
+      ],
+      "guideOpen": true,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-close",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:16.169Z",
+      "label": "large-plain-landscape-escape-return",
+      "viewport": [
+        844,
+        390
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        32,
+        171.296875,
+        130.2421875,
+        47
+      ],
+      "guideOpen": false,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:20.748Z",
+      "label": "large-plain-portrait-open",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        18,
+        398.296875,
+        354,
+        47
+      ],
+      "guideOpen": true,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:24.283Z",
+      "label": "large-plain-portrait-tab-close",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "studio-guide-close",
+      "rect": [
+        18,
+        398.25,
+        141.734375,
+        47
+      ],
+      "guideOpen": true,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-close",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:24.357Z",
+      "label": "large-plain-portrait-close-return",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "studio-guide-open",
+      "rect": [
+        18,
+        398.296875,
+        130.2421875,
+        47
+      ],
+      "guideOpen": false,
+      "cancelHidden": true,
+      "closeHidden": false,
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "fullyVisible": true,
+      "centerHit": "studio-guide-open",
+      "overflow": false,
+      "guideInert": false
+    },
+    {
+      "at": "2026-09-18T00:02:44.330Z",
+      "label": "prepared-upload-before-guide",
+      "active": "prepare-crop",
+      "guideOpen": false,
+      "upload": {
+        "filename": "p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+        "crop": [
+          "100",
+          "0",
+          "633",
+          "633"
+        ],
+        "nineSlice": "{\"bottom\":8,\"left\":8,\"right\":8,\"top\":8}",
+        "description": "QA guide preservation image",
+        "creator": "Local verification",
+        "source": "p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+        "previewMotion": "paused",
+        "originalCanvas": [
+          1280,
+          633
+        ],
+        "draftCanvas": [
+          24,
+          24
+        ],
+        "stageDisabled": false,
+        "status": "Derivative prepared. Check geometry and enter actual creator, source, and rights before staging."
+      }
+    },
+    {
+      "at": "2026-09-18T00:02:44.416Z",
+      "label": "prepared-upload-after-guide",
+      "active": "studio-guide-open",
+      "guideOpen": false,
+      "upload": {
+        "filename": "p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+        "crop": [
+          "100",
+          "0",
+          "633",
+          "633"
+        ],
+        "nineSlice": "{\"bottom\":8,\"left\":8,\"right\":8,\"top\":8}",
+        "description": "QA guide preservation image",
+        "creator": "Local verification",
+        "source": "p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+        "previewMotion": "paused",
+        "originalCanvas": [
+          1280,
+          633
+        ],
+        "draftCanvas": [
+          24,
+          24
+        ],
+        "stageDisabled": false,
+        "status": "Derivative prepared. Check geometry and enter actual creator, source, and rights before staging."
+      }
+    },
+    {
+      "at": "2026-09-18T00:03:01.243Z",
+      "label": "pixels-before-guide",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "sprite-canvas",
+      "guideOpen": false,
+      "canvas": [
+        24,
+        24
+      ],
+      "color": "#f4bf62",
+      "tool": "pencil",
+      "undoDisabled": false,
+      "redoDisabled": true,
+      "motion": "paused",
+      "upload": "No replacement selected.",
+      "cursor": "1, 0",
+      "status": "Prepared slot discarded. Staged workspace revisions are unchanged."
+    },
+    {
+      "at": "2026-09-18T00:03:05.666Z",
+      "label": "pixels-after-guide",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "studio-guide-open",
+      "guideOpen": false,
+      "canvas": [
+        24,
+        24
+      ],
+      "color": "#f4bf62",
+      "tool": "pencil",
+      "undoDisabled": false,
+      "redoDisabled": true,
+      "motion": "paused",
+      "upload": "No replacement selected.",
+      "cursor": "1, 0",
+      "status": "Prepared slot discarded. Staged workspace revisions are unchanged."
+    },
+    {
+      "at": "2026-09-18T00:03:06.306Z",
+      "label": "both-pixels-undone",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "",
+      "guideOpen": false,
+      "canvas": [
+        24,
+        24
+      ],
+      "color": "#f4bf62",
+      "tool": "pencil",
+      "undoDisabled": true,
+      "redoDisabled": false,
+      "motion": "paused",
+      "upload": "No replacement selected.",
+      "cursor": "1, 0",
+      "status": "Prepared slot discarded. Staged workspace revisions are unchanged."
+    },
+    {
+      "at": "2026-09-18T00:03:12.124Z",
+      "label": "pixels-redone-motion-preserved",
+      "viewport": [
+        390,
+        844
+      ],
+      "active": "studio-guide-open",
+      "guideOpen": false,
+      "canvas": [
+        24,
+        24
+      ],
+      "color": "#f4bf62",
+      "tool": "pencil",
+      "undoDisabled": false,
+      "redoDisabled": true,
+      "motion": "playing",
+      "upload": "No replacement selected.",
+      "cursor": "1, 0",
+      "status": "Prepared slot discarded. Staged workspace revisions are unchanged."
+    }
+  ],
+  "httpEvents": [
+    {
+      "path": "authoring/asset-studio/index.html",
+      "request": "/authoring/asset-studio/",
+      "at": "2026-09-17T23:58:56.706984+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 32362,
+      "sha256": "cddb29396cdff4181785b7a5024a6e2c296fd099e67c9b29be19f3e312a108d4",
+      "source": "candidate-override",
+      "faultConfigSha256": "66f37fc5baef05b7a776afac4b5cbd09922f3b44fc872bd411087ad4d270a812"
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "request": "/authoring/asset-studio/studio.css",
+      "at": "2026-09-17T23:58:56.723271+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 20770,
+      "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7",
+      "source": "candidate-override",
+      "faultConfigSha256": "66f37fc5baef05b7a776afac4b5cbd09922f3b44fc872bd411087ad4d270a812"
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "request": "/authoring/asset-studio/studio.mjs",
+      "at": "2026-09-17T23:58:56.938327+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 44250,
+      "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803",
+      "source": "candidate-override",
+      "faultConfigSha256": "66f37fc5baef05b7a776afac4b5cbd09922f3b44fc872bd411087ad4d270a812"
+    },
+    {
+      "path": "authoring/asset-studio/guide.mjs",
+      "request": "/authoring/asset-studio/guide.mjs",
+      "at": "2026-09-17T23:58:57.744212+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 1636,
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490",
+      "source": "candidate-override",
+      "faultConfigSha256": "66f37fc5baef05b7a776afac4b5cbd09922f3b44fc872bd411087ad4d270a812"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "request": "/game/presentation/compiled/studio.json",
+      "at": "2026-09-17T23:59:02.163097+00:00",
+      "delaySeconds": 20,
+      "source": "explicit-server-delay",
+      "faultConfigSha256": "66f37fc5baef05b7a776afac4b5cbd09922f3b44fc872bd411087ad4d270a812"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "request": "/game/presentation/compiled/studio.json",
+      "at": "2026-09-17T23:59:22.220727+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 3317736,
+      "sha256": "f5b47878028593ddfc33d12336ab354eade41745667889ab29cff03aadd94414",
+      "source": "exact-git",
+      "faultConfigSha256": "66f37fc5baef05b7a776afac4b5cbd09922f3b44fc872bd411087ad4d270a812"
+    }
+  ],
+  "delayedRegistrySeconds": 20.05763,
+  "findings": [
+    "R1 footer guide focus moved offscreen to y1218.03125 at844x390 as asynchronous inventory/inspector expanded. R1 failure evidence and frozen source are preserved.",
+    "R2 moves the unchanged guide block above the dynamic workspace. Summary stayed at y173.09375 before/during/after startup. Native summary Enter opened before JS mount; Close remained hidden until guide handlers mounted.",
+    "Escape at23:59:02.157Z closed the guide while Loading saved Studio workspace remained active. Compiled HTTP delay started6ms later; this is startup noncancellation evidence, not Escape during the exact HTTP delay. Reopening at23:59:11.502Z is within that delay.",
+    "Plain/Large guide and Close rows are47px; theme/Standard summary is44px. Focus ring and text were visually inspected in both phone orientations, with no horizontal page overflow. Tab reaches Close; Enter and owned Escape restore visible summary.",
+    "Real chooser uploaded an existing test PNG, cropX changed to100, derivative prepared. Guide Enter/Tab/Close preserved visible source dimensions, crop, provenance, preview dimensions and enabled Stage control. No production asset was staged or saved.",
+    "Explicitly discarded only the test prepared slot, created a24x24 blank sprite and used Space/ArrowRight/Space. Guide Enter/Escape retained undo. Two Undo actions exhausted the stack; two Redo actions restored it. Play cosmetic loop preference survived another guide cycle. Native observations do not inspect private pixel buffers; exact byte preservation is covered by host source tests."
+  ],
+  "closure": {
+    "faults": "{}",
+    "viewportOverride": "reset",
+    "tab": "marked for continuation; unsaved test sprite preserved",
+    "screenshotFiles": "none; visual screenshots inspected inline",
+    "requestLog": "Immutable prefix preserved through guide verification; server live log may append unrelated future requests."
+  },
+  "limits": [
+    "No native save/export/import, BFCache, screen-reader, physical-controller, physical-device, offline,200%zoom or public release assertion.",
+    "Playback preference retention observed; no listening/frame-timing or full animation continuity claim.",
+    "Keyboard actions were locator-focused; these checks do not prove a full keyboard-only navigation journey from page entry.",
+    "Full six source gates, exact merged source build and public deployment remain release coordinator work.",
+    "Old .md primary guide was shipped; helper served text/markdown and browser remained in Studio after GET200. No public404 or MIME behavior claim."
+  ],
+  "preservedPredecessor": {
+    "path": ".cache/p03-studio-inline-guide-browser-r2/cua-observation.json",
+    "bytes": 19673,
+    "sha256": "bb8c6fe6d5c8a4b318a6af640f35c2507ae71e3f3431457d28f84229a02f73ab",
+    "reason": "Live server log appended later unrelated Enemy Workshop baseline requests; this successor points at the exact verified immutable log prefix."
+  }
+}

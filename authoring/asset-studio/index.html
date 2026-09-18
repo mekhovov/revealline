@@ -114,6 +114,82 @@
           hidden
         ></p>
       </details>
+      <details id="studio-guide" class="studio-guide">
+        <summary id="studio-guide-open" data-studio-host="control">Studio guide</summary>
+        <div class="studio-guide-copy">
+          <h2 data-studio-host="heading">From an idea to a reusable asset</h2>
+          <p data-studio-host="body">
+            This guide stays in your workspace. You can read it while an asset is preparing without
+            losing your crop, pixel edits or staged changes.
+          </p>
+          <ol>
+            <li data-studio-host="body">
+              <strong>Select and inspect a slot.</strong> Use the inventory filters, then read its
+              dimensions, palette, transparency, geometry and usage requirements. Compare the
+              current asset with your draft. Copy an AI brief when you need a starting point.
+            </li>
+            <li data-studio-host="body">
+              <strong>Choose and prepare your replacement.</strong> Upload a supported image, font
+              or sound. For images, adjust the crop and choose Prepare derivative; the original
+              stays intact. For small sprites, edit pixels and choose Prepare edited sprite.
+              Recipe-only slots use supported theme tokens or reviewed source changes instead of
+              uploaded images.
+            </li>
+            <li data-studio-host="body">
+              <strong>Record provenance.</strong> Enter the actual creator, source, rights or
+              license, and the effective prompt when one was used. An upload or AI result does not
+              establish permission to use it. Inspect the pivot, rotor anchors or frame regions when
+              the slot needs them.
+            </li>
+            <li data-studio-host="body">
+              <strong>Validate and stage.</strong> Choose Validate and stage replacement. Fix any
+              reported requirement and try again. Preparation alone has not added the replacement to
+              your workspace; staging creates the draft revision.
+            </li>
+            <li data-studio-host="body">
+              <strong>Inspect, save and export.</strong> Check the comparison and applicable
+              previews. Save local revision keeps the workspace on this device. Export .rltheme
+              transfers the staged collection, original files and revision history for review and
+              release adoption. Neither action publishes the public game or changes player saves.
+            </li>
+          </ol>
+          <h3 data-studio-host="heading">Keep your work</h3>
+          <p data-studio-host="body">
+            Pixel Undo and Redo affect the sprite editor. Undo draft and Redo draft affect staged,
+            unsaved workspace revisions. A successful Save local revision clears the draft undo
+            stack. Prepare and stage an unfinished sprite or upload, or explicitly discard it,
+            before saving, exporting or switching assets.
+          </p>
+          <p data-studio-host="body">
+            If local saving is unavailable, finish and stage any pending edit, then export your
+            workspace. Keep that export before Reset to saved, which discards staged unsaved
+            changes. Reload saved requires you to resolve unfinished edits and staged changes first.
+            A stale save from another tab also needs this recovery path.
+          </p>
+          <p data-studio-host="body">
+            Import collection validates a .rltheme bundle and stages its assets for inspection. It
+            does not save or publish them. Use Undo draft to reverse the import before saving, or
+            Save local revision when you want to keep it on this device.
+          </p>
+          <h3 data-studio-host="heading">Review what the preview can show</h3>
+          <p data-studio-host="body">
+            Native pixels, enlarged pixels, transparency and field context help inspect an asset.
+            These are bounded previews, not a complete playthrough of every mode or screen.
+            Technical validation does not approve the art: record the checks you actually performed
+            before marking a revision reviewed.
+          </p>
+          <p data-studio-host="body">
+            Interface changes text face, size and reduced effects for the tools without staging a
+            theme change. Opening or closing this guide leaves preview playback as you chose it.
+            Press Escape while reading here to close the guide. Holding it will not cancel
+            preparation; release it before pressing Escape again to use the normal operation or
+            editor action.
+          </p>
+          <button id="studio-guide-close" data-studio-host="control" type="button" hidden>
+            Close guide
+          </button>
+        </div>
+      </details>
     </header>
     <div class="studio-audio" role="group" aria-label="Shared sound settings">
       <button data-studio-host="control" id="studio-audio-mute" type="button">Unmute sound</button>
@@ -642,7 +718,6 @@
     </main>
     <footer class="studio-footer">
       <a data-studio-host="control" href="../design-atlas/">Design atlas</a
-      ><a data-studio-host="control" href="../../docs/asset-studio.md">Studio guide</a
       ><a data-studio-host="control" href="../../game/">Return to game</a
       ><span data-studio-host="secondary"
         >Local authoring workspace · player saves stay separate</span

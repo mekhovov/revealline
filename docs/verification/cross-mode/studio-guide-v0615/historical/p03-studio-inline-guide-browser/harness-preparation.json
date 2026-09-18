@@ -1,0 +1,30 @@
+{
+  "state": "prepared only; no server started or runtime source bound",
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "proposedPort": 60395,
+  "sourceHelper": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser-recovery/serve.py",
+    "sha256": "5a205fa034758a772e414164df6e1eddd22828421b922ce59bde0925322b8cc1",
+    "bytes": 7187
+  },
+  "candidateHelper": {
+    "sha256": "1383f58f93e17d53829c1c158c3319b9da490e0b351e7d1c54a07340af6166f4",
+    "bytes": 7022
+  },
+  "changes": [
+    "One exact allowlisted fault path: game/presentation/compiled/studio.json.",
+    "Failure list cardinality restricted to one; descriptions renamed Studio collection.",
+    "All other helper code unchanged, including Git lazy-fetch protection, local Host binding, exclusive logs, exact overrides and byte validation."
+  ],
+  "plannedLimits": {
+    "requestLogBytes": 512000,
+    "requestEvents": 1500
+  },
+  "resource": {
+    "path": "game/presentation/compiled/studio.json",
+    "bytes": 3317736,
+    "sha256": "f5b47878028593ddfc33d12336ab354eade41745667889ab29cff03aadd94414"
+  },
+  "budget": "Source file copies+receipts+request log stay within root1MiB reserve; assets and compiled originals served exactGit in memory."
+}

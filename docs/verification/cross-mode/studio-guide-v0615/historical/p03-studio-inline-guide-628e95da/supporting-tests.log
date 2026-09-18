@@ -1,0 +1,180 @@
+TAP version 13
+# Subtest: Close collapses the inline reader and returns native focus to its summary
+ok 1 - Close collapses the inline reader and returns native focus to its summary
+  ---
+  duration_ms: 3.530291
+  ...
+# Subtest: guide Escape is consumed before the existing global cancellation listener
+ok 2 - guide Escape is consumed before the existing global cancellation listener
+  ---
+  duration_ms: 0.551625
+  ...
+# Subtest: an open guide does not consume Escape or other keys from the authoring controls
+ok 3 - an open guide does not consume Escape or other keys from the authoring controls
+  ---
+  duration_ms: 0.194625
+  ...
+# Subtest: programmatic Close cannot take focus from an unrelated control
+ok 4 - programmatic Close cannot take focus from an unrelated control
+  ---
+  duration_ms: 0.095709
+  ...
+# Subtest: closing a hidden guide never forces return focus
+ok 5 - closing a hidden guide never forces return focus
+  ---
+  duration_ms: 0.093458
+  ...
+# Subtest: closing a blurred guide never forces return focus
+ok 6 - closing a blurred guide never forces return focus
+  ---
+  duration_ms: 0.06675
+  ...
+# Subtest: closing a inert guide never forces return focus
+ok 7 - closing a inert guide never forces return focus
+  ---
+  duration_ms: 0.075375
+  ...
+# Subtest: closing a removed guide never forces return focus
+ok 8 - closing a removed guide never forces return focus
+  ---
+  duration_ms: 0.600959
+  ...
+# Subtest: a later focus choice is not revisited after closing the guide
+ok 9 - a later focus choice is not revisited after closing the guide
+  ---
+  duration_ms: 2.900458
+  ...
+# Subtest: terminal disposal removes Escape ownership and the scripted Close action
+ok 10 - terminal disposal removes Escape ownership and the scripted Close action
+  ---
+  duration_ms: 0.196625
+  ...
+# Subtest: crop uses an integer centered frame and never mutates source coordinates
+ok 11 - crop uses an integer centered frame and never mutates source coordinates
+  ---
+  duration_ms: 0.95325
+  ...
+# Subtest: occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+ok 12 - occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+  ---
+  duration_ms: 0.180542
+  ...
+# Subtest: inventory combines usage/state/media/readiness filters without treating source as produced
+ok 13 - inventory combines usage/state/media/readiness filters without treating source as produced
+  ---
+  duration_ms: 0.135916
+  ...
+# Subtest: mount applies stored preferences without writing or replacing the existing interface
+ok 14 - mount applies stored preferences without writing or replacing the existing interface
+  ---
+  duration_ms: 1.915083
+  ...
+# Subtest: three explicit controls use the shared record and preserve unrelated authoring state
+ok 15 - three explicit controls use the shared record and preserve unrelated authoring state
+  ---
+  duration_ms: 0.57025
+  ...
+# Subtest: valid external preferences update in place while stale and malformed events cannot replace them
+ok 16 - valid external preferences update in place while stale and malformed events cannot replace them
+  ---
+  duration_ms: 0.395
+  ...
+# Subtest: malformed initial storage keeps readable defaults without a read-time repair write
+ok 17 - malformed initial storage keeps readable defaults without a read-time repair write
+  ---
+  duration_ms: 0.853792
+  ...
+# Subtest: denied storage leaves explicit session preferences usable with a visible save warning
+ok 18 - denied storage leaves explicit session preferences usable with a visible save warning
+  ---
+  duration_ms: 0.522042
+  ...
+# Subtest: a failed preference write preserves unsaved local intent against later remote changes
+ok 19 - a failed preference write preserves unsaved local intent against later remote changes
+  ---
+  duration_ms: 0.408125
+  ...
+# Subtest: live system reduction changes effective preview policy without changing player intent or writing
+ok 20 - live system reduction changes effective preview policy without changing player intent or writing
+  ---
+  duration_ms: 0.349667
+  ...
+# Subtest: disposal removes control and authority observers and makes late changes inert
+ok 21 - disposal removes control and authority observers and makes late changes inert
+  ---
+  duration_ms: 0.957167
+  ...
+# Subtest: an invalid control value gives recovery feedback and restores the current choice without a write
+ok 22 - an invalid control value gives recovery feedback and restores the current choice without a write
+  ---
+  duration_ms: 0.803792
+  ...
+# Subtest: live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+ok 23 - live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+  ---
+  duration_ms: 1.448125
+  ...
+# Subtest: Paused inspection remains paused through both cap transitions and redraws essential state
+ok 24 - Paused inspection remains paused through both cap transitions and redraws essential state
+  ---
+  duration_ms: 0.099542
+  ...
+# Subtest: local Reduced inspection keeps its own cap when shared reduction is released
+ok 25 - local Reduced inspection keeps its own cap when shared reduction is released
+  ---
+  duration_ms: 0.524875
+  ...
+# Subtest: text-only preference updates preserve the pending frame and animation clock
+ok 26 - text-only preference updates preserve the pending frame and animation clock
+  ---
+  duration_ms: 0.185333
+  ...
+# Subtest: retiring a preview cancels its frame, removes its observer and fences an already queued callback
+ok 27 - retiring a preview cancels its frame, removes its observer and fences an already queued callback
+  ---
+  duration_ms: 0.075167
+  ...
+# Subtest: an already retired owner never subscribes or paints
+ok 28 - an already retired owner never subscribes or paints
+  ---
+  duration_ms: 0.06125
+  ...
+# Subtest: standalone callers observe live system reduction and release the media listener on cleanup
+ok 29 - standalone callers observe live system reduction and release the media listener on cleanup
+  ---
+  duration_ms: 0.096917
+  ...
+# Subtest: a synchronous initial draw can retire its owner without leaving the just-created subscription
+ok 30 - a synchronous initial draw can retire its owner without leaving the just-created subscription
+  ---
+  duration_ms: 0.074208
+  ...
+# Subtest: a cap change during drawing cannot queue an obsolete frame alongside its replacement
+ok 31 - a cap change during drawing cannot queue an obsolete frame alongside its replacement
+  ---
+  duration_ms: 0.223792
+  ...
+# Subtest: unavailable system-query capability retains local playback and its cleanup
+ok 32 - unavailable system-query capability retains local playback and its cleanup
+  ---
+  duration_ms: 0.146917
+  ...
+# Subtest: a queued callback from before a cap transition cannot replace or consume the resumed frame
+ok 33 - a queued callback from before a cap transition cannot replace or consume the resumed frame
+  ---
+  duration_ms: 0.125625
+  ...
+# Subtest: a preview starting under an effective cap never queues animation until that cap is released
+ok 34 - a preview starting under an effective cap never queues animation until that cap is released
+  ---
+  duration_ms: 0.074042
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 628.887083

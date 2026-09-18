@@ -1,0 +1,154 @@
+--- a/authoring/asset-studio/guide.mjs
++++ b/authoring/asset-studio/guide.mjs
+@@ -4,6 +4,7 @@
+   const summary = document.getElementById('studio-guide-open');
+   const close = document.getElementById('studio-guide-close');
+   let disposed = false;
++  let escapeCloseHeld = false;
+   const foreground = () => !document.hidden && document.hasFocus();
+   const available = () =>
+     guide.isConnected &&
+@@ -29,10 +30,28 @@
+   };
+   const keydown = (event) => {
+     if (disposed || !guide.open || event.key !== 'Escape' || !guide.contains(event.target)) return;
++    escapeCloseHeld = true;
+     event.preventDefault();
+     event.stopPropagation();
+     collapse();
+   };
++  const guardRepeat = (event) => {
++    if (disposed || event.key !== 'Escape') return;
++    // A fresh press also releases a missed keyup. Only repeats of the press
++    // that closed this guide stay owned, even if focus has since moved away.
++    if (!event.repeat) {
++      escapeCloseHeld = false;
++      return;
++    }
++    if (!escapeCloseHeld) return;
++    event.preventDefault();
++    event.stopPropagation();
++  };
++  const releaseKey = (event) => {
++    if (event.key === 'Escape') escapeCloseHeld = false;
++  };
++  document.addEventListener('keydown', guardRepeat, true);
++  document.addEventListener('keyup', releaseKey, true);
+   guide.addEventListener('keydown', keydown);
+   close.onclick = collapse;
+   close.hidden = false;
+@@ -40,6 +59,9 @@
+     dispose() {
+       if (disposed) return;
+       disposed = true;
++      escapeCloseHeld = false;
++      document.removeEventListener('keydown', guardRepeat, true);
++      document.removeEventListener('keyup', releaseKey, true);
+       guide.removeEventListener('keydown', keydown);
+       close.onclick = null;
+       close.hidden = true;
+--- a/game/test/asset-studio-guide.test.mjs
++++ b/game/test/asset-studio-guide.test.mjs
+@@ -41,10 +41,15 @@
+     outside,
+     owner,
+     cancellations: () => cancellations,
+-    key(target, key) {
+-      const event = target.emit('keydown', { key });
++    key(target, key, properties = {}) {
++      const event = target.emit('keydown', { key, ...properties });
+       // This fixture models element bubbling; finish the native document-to-window edge.
+       if (!event.cancelBubble) window.emit('keydown', event);
++      return event;
++    },
++    releaseKey(target, key) {
++      const event = target.emit('keyup', { key });
++      if (!event.cancelBubble) window.emit('keyup', event);
+       return event;
+     },
+     open() {
+@@ -78,6 +83,64 @@
+   const next = f.key(f.summary, 'Escape');
+   assert.equal(next.defaultPrevented, false);
+   assert.equal(f.cancellations(), 1, 'A second Escape follows the existing cancellation route.');
++});
++
++test('one held guide Escape cannot continue into authoring cancellation after collapse', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  assert.equal(f.guide.open, false);
++  assert.equal(f.document.activeElement, f.summary);
++  for (let index = 0; index < 3; index++) {
++    const repeated = f.key(f.summary, 'Escape', { repeat: true });
++    assert.equal(repeated.defaultPrevented, true);
++    assert.equal(repeated.cancelBubble, true);
++    assert.equal(f.cancellations(), 0, 'Repeated guide-close input is not a second action.');
++  }
++  const release = f.releaseKey(f.summary, 'Escape');
++  assert.equal(release.defaultPrevented, false);
++  const fresh = f.key(f.summary, 'Escape');
++  assert.equal(fresh.defaultPrevented, false);
++  assert.equal(f.cancellations(), 1, 'A released and freshly pressed Escape still cancels.');
++});
++
++test('a guide-owned held key stays consumed across a focus change without capturing other keys', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  f.outside.focus();
++  const tab = f.key(f.outside, 'Tab');
++  assert.equal(tab.defaultPrevented, false);
++  const repeated = f.key(f.outside, 'Escape', { repeat: true });
++  assert.equal(repeated.defaultPrevented, true);
++  assert.equal(f.cancellations(), 0);
++  assert.equal(f.document.activeElement, f.outside, 'The repeat guard never restores focus.');
++  f.releaseKey(f.outside, 'Escape');
++  assert.equal(f.key(f.outside, 'Escape').defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++});
++
++test('a fresh Escape recovers ordinary cancellation even if the prior keyup was missed', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  f.outside.focus();
++  assert.equal(f.key(f.outside, 'Escape', { repeat: false }).defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  assert.equal(f.key(f.outside, 'Escape', { repeat: true }).defaultPrevented, false);
++  assert.equal(f.cancellations(), 2, 'The guide does not retain ownership of the later press.');
++});
++
++test('an Escape repeat not owned by a guide close retains the existing outside route', () => {
++  const f = fixture();
++  f.open();
++  f.outside.focus();
++  assert.equal(f.key(f.outside, 'Escape', { repeat: true }).defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  assert.equal(f.guide.open, true);
+ });
+ 
+ test('an open guide does not consume Escape or other keys from the authoring controls', () => {
+@@ -141,3 +204,19 @@
+   assert.equal(event.defaultPrevented, false);
+   assert.equal(f.guide.open, true, 'Native disclosure state is independent of the retired owner.');
+ });
++
++test('terminal disposal retires a held guide Escape guard and its document listeners', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  f.owner.dispose();
++  const repeated = f.key(f.summary, 'Escape', { repeat: true });
++  assert.equal(repeated.defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  for (const listeners of [f.document.listeners, f.document.captureListeners])
++    assert.equal(
++      [...listeners.values()].reduce((total, handlers) => total + handlers.size, 0),
++      0,
++    );
++});
