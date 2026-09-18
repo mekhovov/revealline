@@ -1,0 +1,127 @@
+{
+  "at": "2026-09-18T17:41:37.906014+00:00",
+  "status": "PASS_SCOPED_EXACT_SOURCE_KEYBOARD_AND_ROTATION_CHECK",
+  "source": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "tree": "4e04fef2d0d37614149624392e316742a513bc8d",
+  "sourceOverrides": 0,
+  "url": "http://127.0.0.1:64174/authoring/still-media/",
+  "browser": "Codex in-app browser via cua_repl",
+  "observations": [
+    {
+      "case": "Theme font Standard portrait",
+      "viewport": [
+        390,
+        844
+      ],
+      "fieldBottom": 689.375,
+      "outlineWidth": 3,
+      "outlineOffset": 4,
+      "scrollportBottom": 825,
+      "inside": true
+    },
+    {
+      "case": "Theme font Standard landscape",
+      "viewport": [
+        844,
+        390
+      ],
+      "fieldBottom": 286.59375,
+      "outlineWidth": 3,
+      "outlineOffset": 4,
+      "scrollportBottom": 371,
+      "inside": true
+    },
+    {
+      "case": "Theme font Standard portrait return",
+      "viewport": [
+        390,
+        844
+      ],
+      "fieldBottom": 689.375,
+      "outlineWidth": 3,
+      "outlineOffset": 4,
+      "scrollportBottom": 825,
+      "inside": true
+    },
+    {
+      "case": "Live Large preference in portrait",
+      "viewport": [
+        390,
+        844
+      ],
+      "fieldBottom": 816.765625,
+      "outlineWidth": 3,
+      "outlineOffset": 4,
+      "scrollportBottom": 825,
+      "inside": true
+    },
+    {
+      "case": "Large actual landscape after targeting correction",
+      "viewport": [
+        844,
+        390
+      ],
+      "fieldBottom": 294.765625,
+      "outlineWidth": 3,
+      "outlineOffset": 4,
+      "scrollportBottom": 371,
+      "inside": true
+    },
+    {
+      "case": "Large actual portrait return",
+      "viewport": [
+        390,
+        844
+      ],
+      "fieldBottom": 816.765625,
+      "outlineWidth": 3,
+      "outlineOffset": 4,
+      "scrollportBottom": 825,
+      "inside": true
+    }
+  ],
+  "draft": {
+    "ownedOriginal": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/native-fixtures/revealline-owned-preview.png",
+      "bytes": 46655,
+      "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+    },
+    "credit": "RevealLine owned preview test",
+    "description": "Exact v0.61.23 unsaved rotation check",
+    "retainedAcrossRotation": true,
+    "savedAssignment": false,
+    "recordedGeneration": 0
+  },
+  "keyboard": [
+    "Shift Tab from preview to input",
+    "Escape closed workshop and restored still-host-open",
+    "Game Settings reached from Start by three Tab presses then Return",
+    "Escape settings restored shell-options"
+  ],
+  "cleanup": [
+    "Closed local media connections",
+    "Restored Text size Standard, Theme font unchanged",
+    "Reset temporary viewport",
+    "Closed own temporary tabs"
+  ],
+  "limitations": [
+    "Inline screenshots only; no exported raw-image hashes.",
+    "Plain typography was not additionally exercised in this exact-source pass; earlier donor evidence stays separate.",
+    "Source preview, not frozen public release; no physical controller/touch/audio/offline certification.",
+    "Open local media may create/upgrade the address database; no zero-write claim. No Save/Restore/Use authored or mission Start action."
+  ],
+  "retainedAttempts": [
+    "First preview lacked provenance and correctly displayed bounded declared-provenance error; supplied owned-source note and preview passed.",
+    "getByLabel Text size selector had no match; fresh DOM showed named combobox, semantic role selection passed.",
+    "read-only DOM parseFloat unavailable; retained plain computed-style values instead.",
+    "Viewport capability followed selected archive tab; intermediate Large landscape measurements remained390x844 and are excluded. Closed own archive/settings tabs, verified selected tab3 and actual844x390 before accepted rotation."
+  ],
+  "requestSnapshot": {
+    "path": ".cache/p03-focus-scrollport-v06123-native/root-served-snapshot.jsonl",
+    "bytes": 187120,
+    "sha256": "db45f4f3ece648d2a712a1a8070b1589e88f6f528261debc6e1471debac1cefe",
+    "rows": 825
+  },
+  "publicAcceptance": false,
+  "wholePhaseAccepted": false
+}
