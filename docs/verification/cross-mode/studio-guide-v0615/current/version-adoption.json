@@ -1,0 +1,21 @@
+{
+  "version": "0.61.5",
+  "previous": "0.61.4",
+  "files": [
+    {
+      "path": "package.json",
+      "beforeSha256": "61e60edc6d6ca057e694885fc8dc3d52317297259026c47e618450899bf64224",
+      "afterSha256": "5fa736356562556ab9c6e56057b808cffcfc116c241c0b271d4317bcfb6c571a"
+    },
+    {
+      "path": "package-lock.json",
+      "beforeSha256": "e3abad8dbb16bc2edcc521a0d08ab05532bf009ce0fa8f7692a8d89ffb9b47d3",
+      "afterSha256": "09d9ed659a5cc9eb9bef28ddb34573c557e0189ea58212db655772913786ac38"
+    },
+    {
+      "path": "game/build-config.json",
+      "beforeSha256": "f6748c26fc6bb3a3317b3c17ce10bcb39d5555c54ea930baeb3c5070ce9eb19e",
+      "afterSha256": "1755860a6ccc755169a0388587215fae3475b9d1c3d0f784fd62d3101b1957d7"
+    }
+  ]
+}

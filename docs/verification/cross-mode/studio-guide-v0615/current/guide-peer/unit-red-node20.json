@@ -1,0 +1,39 @@
+{
+  "phase": "RED: retained guide runtime with held-Escape unit regressions",
+  "base": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "version": "0.61.4",
+  "timeUtc": "2026-09-18T02:49:27.752164+00:00",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=512",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/asset-studio-guide.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-studio-guide-v0615",
+  "exitCode": 1,
+  "inputs": [
+    {
+      "path": "authoring/asset-studio/guide.mjs",
+      "bytes": 1636,
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+    },
+    {
+      "path": "game/test/asset-studio-guide.test.mjs",
+      "bytes": 7845,
+      "sha256": "612da49fd50e281bddc4366699fc0586304bbebec6525a15331ff43179c8dbe4"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 10172,
+      "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+    }
+  ],
+  "inputsUnchanged": true,
+  "output": {
+    "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-red-node20.tap",
+    "bytes": 4843,
+    "sha256": "5016c79f11ff827806a9cb76e0218ef25480e15f700d7c62b8a7f54dd340b7e5"
+  },
+  "scope": "Complete guide unit file only; no actual-host, build, browser or release claim."
+}

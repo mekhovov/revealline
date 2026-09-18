@@ -1,0 +1,83 @@
+{
+  "scope": "R1 native guide startup layout failure; blocks candidate acceptance",
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "runtimeOverrides": {
+    "authoring/asset-studio/guide.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/guide.mjs",
+      "bytes": 1636,
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+    },
+    "authoring/asset-studio/studio.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/studio.mjs",
+      "bytes": 44250,
+      "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+    },
+    "authoring/asset-studio/studio.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/studio.css",
+      "bytes": 20770,
+      "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+    },
+    "authoring/asset-studio/index.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-studio-inline-guide-browser/index.html",
+      "bytes": 32362,
+      "sha256": "c4352bd1d5edf04b8210a1cb0cbbb68035d5e9aff20359ac6e9a6da00a188776"
+    }
+  },
+  "steps": [
+    "Fresh60395origin in844x390.",
+    "Server delays exact compiled/studio.json by20s.",
+    "Enter on native Studio guide summary before module/registry loading completes.",
+    "Guide remains open and focused but async inventory/inspector expansion places summary below viewport.",
+    "Screenshot at settled stage shows upload area rather than focused guide."
+  ],
+  "observations": [
+    {
+      "at": "2026-09-17T23:55:45.110Z",
+      "status": "Loading and verifying the current release collection\u2026",
+      "cancelHidden": false,
+      "active": "studio-guide-open",
+      "rectXYWH": [
+        32,
+        1218.03125,
+        780,
+        44
+      ],
+      "fullyVisible": false,
+      "guideOpen": true,
+      "guideInert": false,
+      "closeHidden": false,
+      "horizontalOverflow": false,
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "at": "2026-09-17T23:56:12.784Z",
+      "status": "Current release assets loaded. Changes stay in this local studio.",
+      "cancelHidden": true,
+      "active": "studio-guide-open",
+      "rectXYWH": [
+        32,
+        1218.03125,
+        780,
+        44
+      ],
+      "fullyVisible": false,
+      "guideOpen": true,
+      "guideInert": false,
+      "closeHidden": false,
+      "horizontalOverflow": false,
+      "viewport": [
+        844,
+        390
+      ]
+    }
+  ],
+  "evidence": "CUA publiclocatoractions,DOMgeometry/accessibilityandinline screenshot. No privatepage mutation.",
+  "limits": [
+    "Not a claim about priorreleasedguide; this newlyintroducedR1disclosure is a sourcecandidate.",
+    "No physical-device,AT,fullkeyboardjourney,save orpublicationclaim."
+  ],
+  "next": "Move guide above asynchronously rebuilt workspace rather than introducing a scrolling observer. Preserve sourceR1andthisreceipt, qualifyR2separately."
+}

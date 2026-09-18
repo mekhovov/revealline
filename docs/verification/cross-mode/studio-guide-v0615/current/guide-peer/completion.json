@@ -1,0 +1,101 @@
+{
+  "scope": "Only guide helper and its whole unit test edited; actual-host test, docs/SKILL, source version, integration/release and remote actions belong to coordinator/other agent.",
+  "base": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "versionAtScopedChecks": "0.61.4",
+  "timeUtc": "2026-09-18T02:57:20.282548+00:00",
+  "status": "Ready for independent review and complete host/cohort checks",
+  "source": [
+    {
+      "path": "authoring/asset-studio/guide.mjs",
+      "retainedR2": {
+        "bytes": 1636,
+        "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+      },
+      "current": {
+        "bytes": 2480,
+        "sha256": "509e2c2dfcb22b3a7274b3e955474f2b6d3a4d1394b6b7934f8ba8e4582e6033"
+      }
+    },
+    {
+      "path": "game/test/asset-studio-guide.test.mjs",
+      "retainedR2": {
+        "bytes": 4726,
+        "sha256": "6189eb08c5d4199ecfa77b16d3dac22f04dc56e2da44059bdefa3ec7cf2a4b6e"
+      },
+      "current": {
+        "bytes": 7864,
+        "sha256": "4d971edf1da7eb10957be0789f72f49b948f43904e7ffe2375d3db38a4ef8da6"
+      }
+    }
+  ],
+  "correctionPatch": {
+    "path": ".cache/p03-studio-guide-v0615/guide-peer/guide-correction.patch",
+    "bytes": 6010,
+    "sha256": "aedf869c60a08620ff89f0d31e469dc85c58d713fc977bfe89bfcc1b7cdccffb"
+  },
+  "semantics": [
+    "Acquire Escape-press ownership only when the open guide consumes Escape and collapses.",
+    "Consume only repeated Escape keydowns from that press, including after focus moves; do not alter focus or other keys.",
+    "Escape keyup clears ownership. Any fresh Escape clears it before normal routing, so a missed keyup cannot swallow deliberate cancellation.",
+    "Terminal disposal clears state and removes both document capture listeners and existing guide handlers. No timers, storage or authoring operation owner added."
+  ],
+  "tests": {
+    "red": {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-red-node20.json",
+        "bytes": 1382,
+        "sha256": "136a8e065ce2c5cd0b9274f66df86c6cd766ce8a508ef724e56d13c8524ad252"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-red-node20.tap",
+        "bytes": 4843,
+        "sha256": "5016c79f11ff827806a9cb76e0218ef25480e15f700d7c62b8a7f54dd340b7e5"
+      },
+      "passed": 13,
+      "failed": 2,
+      "expectedFailures": [
+        "held Escape repeats after closed-summary focus",
+        "held guide-close repeats after focus changes outside guide"
+      ]
+    },
+    "green": [
+      {
+        "receipt": {
+          "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node20.json",
+          "bytes": 1377,
+          "sha256": "7d4921b86173ccc8548dd24e97f4fc0e47d8e6e5cdf74dcecccab3cf8eb86b12"
+        },
+        "log": {
+          "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node20.tap",
+          "bytes": 2997,
+          "sha256": "376b452611bc1352f25fdb6d3c82852393116a3483e1e66b265588f66df2db31"
+        },
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "receipt": {
+          "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node22.json",
+          "bytes": 1377,
+          "sha256": "7e2220868a919380d354683902be1adce0bfa0bed73ed69ebf73e532b81f1a29"
+        },
+        "log": {
+          "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node22.tap",
+          "bytes": 3227,
+          "sha256": "e00dcb62349ad265515f61375d0429fd426fa86a0c53cea31f216dfb7a94d202"
+        },
+        "passed": 15,
+        "failed": 0
+      }
+    ],
+    "redRuntimeWasRetainedR2": true,
+    "hostRedBeforeRuntimeMutation": ".cache/p03-studio-guide-v0615/host-peer/host-red-node20.json",
+    "note": "Unit RED test body preceded one formatting-only pass; receipt records its exact inputs. GREEN receipts pin formatted final bodies. Parent/host peer own subsequent complete host/cohort acceptance."
+  },
+  "format": "Scoped Prettier write on these two owned files completed; parent owns integrated lint/format checks.",
+  "limits": [
+    "No full source gates, build, browser/physical input, publication or versioned release acceptance by this agent.",
+    "No commits, index, version metadata or remote mutations.",
+    "The correction patch is against retained R2 candidate bodies, not against absent-new-file Git base61cf."
+  ]
+}

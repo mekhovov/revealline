@@ -1,0 +1,92 @@
+{
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "r1Packet": "../p03-studio-inline-guide-628e95da",
+  "r1ProposalBodiesVerified": true,
+  "r1Failure": "Parent native R1 at844x390 opened the guide during delayed startup. Subsequent inventory/inspector rendering displaced the footer guide below the viewport while its summary retained focus. Native failure remains evidence; R1 was not accepted.",
+  "correction": "Move the existing passive details as the final header child above dynamic workspace/main. Four-file delta: HTML, minimal host structural assertion, docs, maintainer guide. Existing flex-width CSS, scripted Close/Escape owner and all other runtime bodies remain byte-identical to R1. No asynchronous reveal or observer added.",
+  "checks": {
+    "node": "20.19.5",
+    "placementRed": {
+      "passed": 0,
+      "failed": 1,
+      "log": "host-placement-red.log"
+    },
+    "placementGreen": {
+      "passed": 1,
+      "failed": 0,
+      "log": "host-placement-green.log"
+    },
+    "finalFiveFiles": {
+      "passed": 35,
+      "failed": 0,
+      "log": "final-tests.log"
+    },
+    "lint": "Scoped four JS runtime/test paths passed.",
+    "format": "Eight source paths passed explicit-config Prettier.",
+    "diffCheck": true,
+    "bothPatchReverseChecks": true,
+    "indexEmpty": true
+  },
+  "candidatePins": {
+    "bytes": 4168,
+    "sha256": "0dd3fbc691a50e37c5aaa1d2910d3befdcc87ed1e0edcb93b218dfa36e95193d"
+  },
+  "delta": {
+    "bytes": 16684,
+    "sha256": "79cd0f6c70cb952ad3055355f9fd51487c0531cfc600a53bc7745484fc8cdcde"
+  },
+  "composed": {
+    "bytes": 34880,
+    "sha256": "480f4e02104f86bc5fef5b40b3543d634473406369137108016a48009334d284"
+  },
+  "packagingReview": {
+    "bytes": 613,
+    "sha256": "d219b9e67122c756c2719d34f2f4b2be2ccc4035af40e30225ef435f66f34fa5"
+  },
+  "receipts": [
+    {
+      "path": "final-tests.log",
+      "bytes": 7652,
+      "sha256": "9335680c7e1162d054bd6ded7a137814cd89aba2742216f21a2ccf10154999b4"
+    },
+    {
+      "path": "format-check.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "format-write.log",
+      "bytes": 158,
+      "sha256": "de61c04cc458dbd7392842a93b953ce28d1b3439d539df853e359466c40cf054"
+    },
+    {
+      "path": "host-placement-green.log",
+      "bytes": 434,
+      "sha256": "ff15b566e10c8ce82b6bcc65d58b09680eeed9ff60d3ad73ab05f01b9a6a0109"
+    },
+    {
+      "path": "host-placement-red.log",
+      "bytes": 2287,
+      "sha256": "bb00ea3a6a10302458d58c13e14f944588af9742c05775c28ef89189c3012850"
+    },
+    {
+      "path": "lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "budgetBytes": 8388608,
+  "parentReserveBytes": 1048576,
+  "allocatedBeforeQualification": {
+    "worktree": 2351104,
+    "gitMetadata": 1548288,
+    "r1Packet": 843776,
+    "r2Packet": 761856,
+    "total": 5505024
+  },
+  "limits": [
+    "R2 native displacement/layout/focus qualification remains with parent; no source-only acceptance claim.",
+    "No build, commit, version, deployment, remote changes or public/physical-device qualification.",
+    "Native summary activation is browser-owned; fixture open/toggle and document-to-window event propagation are explicitly modeled."
+  ]
+}
