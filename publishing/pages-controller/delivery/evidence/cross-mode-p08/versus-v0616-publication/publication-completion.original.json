@@ -1,0 +1,12 @@
+{
+  "status": "IMMUTABLE_RELEASE_PUBLISHED_LATEST_VERIFIED",
+  "source": {
+    "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+    "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+    "version": "v0.61.6"
+  },
+  "releaseId": 391439978,
+  "url": "https://github.com/mekhovov/revealline/releases/tag/v0.61.6",
+  "allNineAssetsUnchanged": true,
+  "pagesAcceptance": "PENDING"
+}
