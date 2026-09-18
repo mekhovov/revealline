@@ -1,0 +1,45 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "at": "2026-09-18T03:02:35.477659+00:00",
+  "dependency": "Root confirms its one complete-1 HTTP audit is complete; never start a duplicate audit.",
+  "afterObservationCommand": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/observe-hosted.failure-retention.py",
+    "after-1",
+    "d5e131081764d7547fdfa9d749e3a73b296e19a5",
+    "4252be1dbbb867e335f99468655bde56d5efe196",
+    "35300937871"
+  ],
+  "rowReviewCommand": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/review-public.py",
+    "d5e131081764d7547fdfa9d749e3a73b296e19a5",
+    "complete-1"
+  ],
+  "rowReviewPrecondition": "Root-authorized identical copy of reviewed binding at helper-required binding.json; preserve hash and record alias.",
+  "refreshCommand": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/refresh-after-http.py",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/refresh-request.reviewed.json",
+    "ROOT_REVIEWED_ACTUAL_REFRESH_REQUEST_SHA256"
+  ],
+  "refreshPreconditions": [
+    "Actual full report is PASS and each result/attempt reconciled.",
+    "After observation timestamp follows actual report finishedAt.",
+    "Populate actual file pins in proposed request; root reviews exact SHA before refresh."
+  ],
+  "limits": {
+    "cacheBudgetBytes": 33554432,
+    "reserveBytes": 536870912,
+    "remoteMutations": false,
+    "largePayloadFiles": false
+  },
+  "unchangedHelpers": {
+    "observe-hosted.failure-retention.py": "68e03a50898868735bc36bf59ced8be25aaa252e69f2cfa5ac0d6ffbd02f3cbe",
+    "review-public.py": "d0cd4fe568dc5b4295aafe8bae37f5b1a66e7609f5232d5d1236a85ce5391bdb",
+    "refresh-after-http.py": "21504be871c72e0a6e0c5cf7bf38dfcb69a72da761603f4dc79ddd1b8d3e0540"
+  }
+}

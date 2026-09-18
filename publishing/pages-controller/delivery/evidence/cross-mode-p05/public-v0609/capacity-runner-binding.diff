@@ -1,0 +1,20 @@
+--- run-capacity-bounded-intake.pre-binding.py
++++ run-capacity-bounded-intake.py
+@@ -13,7 +13,7 @@
+ # Conservative allowance for five small API originals, decoded metadata,
+ # request/response records and the final inventory-binding copies.
+ HEADROOM = 20 * 1024 * 1024
+-DOWNLOAD = ['gh', 'api', 'repos/mekhovov/revealline/actions/artifacts/UNBOUND_ACTUAL_RECEIPT_ARTIFACT_ID/zip']
++DOWNLOAD = ['gh', 'api', 'repos/mekhovov/revealline/actions/artifacts/10529652622/zip']
+ 
+ 
+ def budget_probe(allocated, expanded, free):
+@@ -57,7 +57,7 @@
+         return result
+ 
+     result = helper.intake(HOME, HOME / 'intake-request.reviewed.json',
+-                           'UNBOUND_ROOT_REVIEWED_INTAKE_SHA256',
++                           '57dced82d6de70f37fe29111a019d7d18be2678af13dc878fcf6568b84ba0756',
+                            runner=guarded_runner)
+     if downloads != 1:
+         raise ValueError('Original receipt intake did not execute exactly once')

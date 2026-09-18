@@ -1,0 +1,16 @@
+{
+  "status": "PUBLISHED_ORIGINALS_AND_LATEST_MATCH",
+  "at": "2026-09-18T02:55:53.171652+00:00",
+  "publishedRelease": {
+    "path": "release-observation-before-1/published-release.json",
+    "bytes": 16088,
+    "sha256": "34225356860f74d55a18874bafc55036a0da9ca6c3ee60fee07289fde73fdf27"
+  },
+  "releaseId": 391164971,
+  "assets": 9,
+  "priorPublicationOriginal": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-release-preflight-20260918/publication-r1/latest-after.json",
+    "sha256": "d4f1a0908cf5d79dabfd3e7a164726e36ec44e8cf7b006c78d08a20e070edfb4"
+  },
+  "publicDeploymentAccepted": false
+}
