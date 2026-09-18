@@ -45,6 +45,18 @@ When browser screenshots are available only inline, identify that limitation and
 
 ## Snapshot and integration checks
 
+For a bounded linked-worktree preparation, configure sparse checkout explicitly
+with `git -C <worktree> config --worktree core.sparseCheckout true`. Inspect both
+`--show-origin --get-all core.sparseCheckout` and the selected worktree's value
+before `read-tree`, checkout or hydration: a per-worktree `false` overrides a
+common `true`. Never change common repository configuration for a local sparse
+selection. Capture the selected paths and estimated bytes, the current source
+and index identity, and fresh free space before hydration. Apply the managed
+byte limit and reserve afterward as well. If unintended hydration occurs, stop
+and retain the failure; recover only the newly created clean worktree to its
+reviewed sparse paths. Do not reset, stash or remove files from other worktrees,
+and do not guess a prior common-config value that was not captured.
+
 Before appending a release to an archive, compare its workflow's explicit tag fetch
 against **every** release in that archive's final `source-lock.json`, including
 unchanged cohorts. Run the read-only check from the reviewed controller checkout:
