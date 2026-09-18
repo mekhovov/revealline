@@ -103,6 +103,9 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     getContext() {
       return new Proxy(
         {
+          putImageData: (value) => {
+            this.paintedPixels = new Uint8ClampedArray(value.data);
+          },
           getImageData: () => ({
             width: this.width,
             height: this.height,
@@ -213,8 +216,79 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   ])
     assert.equal($(id).disabled, true, `${id} is disabled before the Studio module owns it`);
   assert.equal($('studio-status').querySelector('.operation-status-signal').children.length, 3);
+  assert.equal(
+    $('studio-guide-close')?.hidden,
+    true,
+    'Close is unavailable before its helper mounts.',
+  );
   await import(`../../authoring/asset-studio/studio.mjs?loading-host=${Date.now()}`);
   assert.match(message(), /Loading saved Studio/);
+  const guide = $('studio-guide'),
+    guideOpen = $('studio-guide-open'),
+    guideClose = $('studio-guide-close');
+  assert.ok(guide, 'Studio has an in-page guide instead of navigating away from edits.');
+  assert.equal(guide.tagName, 'DETAILS');
+  assert.equal(guideOpen.tagName, 'SUMMARY');
+  assert.equal(
+    guide.closest('header'),
+    doc.querySelector('header'),
+    'Guide stays in the stable header above asynchronously populated workspace content.',
+  );
+  const inDocumentOrder = (element) => [element, ...element.children.flatMap(inDocumentOrder)];
+  const documentOrder = inDocumentOrder(doc.body);
+  for (const selector of ['.workspace-state', 'main']) {
+    const dynamicRegion = doc.querySelector(selector);
+    assert.ok(dynamicRegion);
+    assert.ok(documentOrder.indexOf(guide) < documentOrder.indexOf(dynamicRegion));
+  }
+  assert.equal(
+    guide.closest(
+      '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
+    ),
+    null,
+    'Stable placement does not put help inside an operation-owned mutation region.',
+  );
+  const openGuide = () => {
+    guideOpen.focus();
+    // Model only the browser's native <details> toggle boundary. Native
+    // Enter/Tab behavior and layout are qualified separately in the browser.
+    guide.open = true;
+    guide.emit('toggle');
+    assert.equal(guideClose.hidden, false);
+    assert.equal(guide.closest('[inert]'), null, 'Guide stays available during authoring work.');
+  };
+  const closeGuide = (escape = false) => {
+    guideClose.focus();
+    if (escape) {
+      const event = guideClose.emit('keydown', { key: 'Escape' });
+      // The minimal DOM omits the document-to-window edge. Only an
+      // unconsumed key reaches the real host's window cancellation owner.
+      if (!event.cancelBubble) window.dispatchEvent(event);
+      assert.equal(event.cancelBubble, true);
+      assert.equal(
+        event.defaultPrevented,
+        true,
+        'Guide owns Escape before operation cancellation.',
+      );
+    } else guideClose.click();
+    assert.equal(guide.open, false);
+    // Native closed details hides descendants without changing Close.hidden.
+    assert.equal(doc.activeElement, guideOpen, 'Close restores the actual disclosure opener.');
+  };
+  const escapeFrom = (target, repeat = false) => {
+    target.focus();
+    const event = target.emit('keydown', { key: 'Escape', repeat });
+    // Preserve the actual Studio's window cancellation handler. This is the
+    // same finite missing document-to-window edge as closeGuide above.
+    if (!event.cancelBubble) window.dispatchEvent(event);
+    return event;
+  };
+  const releaseEscape = () => doc.activeElement.emit('keyup', { key: 'Escape' });
+  const startupMessage = message();
+  openGuide();
+  closeGuide(true);
+  assert.equal(message(), startupMessage, 'Guide Escape does not cancel startup.');
+
   assert.equal($('cancel-studio-operation').hidden, false);
   assert.equal($('cancel-studio-operation').closest('[inert]'), null);
   assert.equal($('current-preview-cancel').closest('[inert]'), null);
@@ -342,7 +416,25 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   delayRead = true;
   $('asset-upload').onchange();
   assert.match(message(), /Reading the image header/);
-  $('cancel-studio-operation').onclick();
+  const readingMessage = message();
+  openGuide();
+  closeGuide(true);
+  for (const target of [guideOpen, $('studio-interface-size')]) {
+    escapeFrom(target, true);
+    assert.equal(
+      message(),
+      readingMessage,
+      'Held guide Escape must not cancel the pending upload read.',
+    );
+    assert.equal($('cancel-studio-operation').hidden, false);
+    assert.equal($('workspace-summary').textContent, summary);
+  }
+  releaseEscape();
+  assert.equal(
+    escapeFrom($('studio-interface-size')).defaultPrevented,
+    true,
+    'A fresh Escape deliberately reaches the Studio cancellation owner.',
+  );
   readGate.resolve();
   await flush();
   assert.equal(cancelledReads, 1);
@@ -362,6 +454,23 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     true,
     'No partial prepared asset is published during encode.',
   );
+  const encodingMessage = message();
+  openGuide();
+  closeGuide(true);
+  assert.equal(message(), encodingMessage, 'Guide Escape cannot cancel a held image encode.');
+  assert.equal($('cancel-studio-operation').hidden, false);
+  assert.equal($('replacement-panel').inert, true);
+  for (const target of [guideOpen, $('studio-interface-size')]) {
+    escapeFrom(target, true);
+    assert.equal(
+      message(),
+      encodingMessage,
+      'Repeats from the closed guide or another control cannot cancel encoding.',
+    );
+    assert.equal($('cancel-studio-operation').hidden, false);
+    assert.equal($('stage-asset').disabled, true);
+  }
+  releaseEscape();
   decodeGate.resolve();
   await flush();
   assert.equal(lateClosed, 1);
@@ -413,6 +522,38 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.equal(savedSurface.previewMarker, savedMarker);
   assert.equal(draftSurface.previewMarker, draftMarker);
   assert.equal($('stage-asset').disabled, false);
+  const preparedGuideState = {
+    crop: ['x', 'y', 'width', 'height'].map((key) => $(`crop-${key}`).value),
+    motion: $('preview-motion').value,
+    currentCleanup: savedSurface.previewCleanup,
+    draftCleanup: draftSurface.previewCleanup,
+    status: message(),
+    preferenceWrites: preferenceWrites.length,
+  };
+  openGuide();
+  closeGuide();
+  assert.equal($('slot-id').textContent, preparedSelection);
+  assert.equal($('asset-upload').files[0], original);
+  assert.equal($('source-image'), preparedImage);
+  assert.equal(creator.value, 'Fixture author');
+  assert.equal($('asset-source').value, 'Owned original fixture');
+  assert.equal($('asset-license').value, 'Fixture rights');
+  assert.deepEqual(
+    ['x', 'y', 'width', 'height'].map((key) => $(`crop-${key}`).value),
+    preparedGuideState.crop,
+  );
+  assert.equal($('upload-summary').textContent, preparedSummary);
+  assert.equal(message(), preparedGuideState.status);
+  assert.equal($('stage-asset').disabled, false);
+  assert.equal(savedSurface.previewMarker, savedMarker);
+  assert.equal(draftSurface.previewMarker, draftMarker);
+  assert.equal(savedSurface.previewCleanup, preparedGuideState.currentCleanup);
+  assert.equal(draftSurface.previewCleanup, preparedGuideState.draftCleanup);
+  assert.equal($('preview-motion').value, preparedGuideState.motion);
+  assert.equal(preferenceWrites.length, preparedGuideState.preferenceWrites);
+  assert.equal(doc.body.dataset.textFace, 'plain');
+  assert.equal(doc.body.dataset.textSize, 'large');
+  creator.focus();
   // Model a return after another page changed preferences while this document
   // was frozen. The real host may refresh preview leases, but its prepared
   // original, metadata, selected row and current editor focus must survive.
@@ -460,6 +601,14 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   await $('stage-asset').onclick();
   assert.match(message(), /validated and staged/);
   assert.match($('workspace-summary').textContent, /unsaved changes/);
+  const stagedSummary = $('workspace-summary').textContent,
+    stagedStatus = message(),
+    stagedHistory = [$('undo-draft').disabled, $('redo-draft').disabled];
+  openGuide();
+  closeGuide(true);
+  assert.equal($('workspace-summary').textContent, stagedSummary);
+  assert.equal(message(), stagedStatus);
+  assert.deepEqual([$('undo-draft').disabled, $('redo-draft').disabled], stagedHistory);
   await $('save-workspace').onclick();
   assert.match(message(), /saved atomically/);
   const saved = await createStudioStore({ indexedDB: db.indexedDB }).load();
@@ -469,7 +618,31 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.ok(saved.document.assets.some((asset) => asset.id.endsWith('.source')));
   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
   $('new-sprite').onclick();
+  const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
   $('sprite-canvas').emit('keydown', { code: 'Space' });
+  const editedSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels),
+    spriteCanvas = $('sprite-canvas'),
+    spriteCursor = $('sprite-cursor').textContent;
+  assert.notDeepEqual(editedSpritePixels, originalSpritePixels);
+  openGuide();
+  closeGuide();
+  assert.equal($('sprite-canvas'), spriteCanvas);
+  assert.equal($('sprite-cursor').textContent, spriteCursor);
+  assert.deepEqual(spriteCanvas.paintedPixels, editedSpritePixels);
+  assert.equal($('sprite-undo').disabled, false);
+  $('sprite-undo').click();
+  assert.deepEqual(
+    spriteCanvas.paintedPixels,
+    originalSpritePixels,
+    'Guide preserves real pixel undo.',
+  );
+  assert.equal($('sprite-redo').disabled, false);
+  $('sprite-redo').click();
+  assert.deepEqual(
+    spriteCanvas.paintedPixels,
+    editedSpritePixels,
+    'Guide preserves real pixel redo.',
+  );
   encodeGate = deferred();
   const preparingSprite = $('use-sprite').onclick();
   assert.match(message(), /Encoding the edited sprite/);
@@ -579,4 +752,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     preferenceWrites.every(([key]) => key === DISPLAY_PREFERENCES_KEY),
     'All attempted preference writes target only the separate shared display record.',
   );
+  window.emit('pagehide', { persisted: false });
+  assert.equal(guideClose.hidden, true, 'Terminal disposal removes the enhanced Close control.');
+  assert.equal(guideClose.onclick, null);
 });

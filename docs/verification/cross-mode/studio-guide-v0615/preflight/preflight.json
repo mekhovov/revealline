@@ -1,0 +1,554 @@
+{
+  "format": "revealline-candidate-preflight.v1",
+  "reviewer": "/root/queued_studio_review",
+  "reviewedAtUtc": "2026-09-18T02:45:45.144503+00:00",
+  "status": "Preflight complete; one behavior correction required before adoption",
+  "base": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "baseTree": "d39a9a200294dfb1a68460dfdc59c5f575708d6e",
+  "baseVersion": "0.61.4",
+  "originalCandidateBase": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "candidatePatch": {
+    "path": ".cache/p03-studio-inline-guide-r2-628e95da/composed-candidate.patch",
+    "bytes": 34880,
+    "sha256": "480f4e02104f86bc5fef5b40b3543d634473406369137108016a48009334d284"
+  },
+  "candidateManifest": {
+    "path": ".cache/p03-studio-inline-guide-r2-628e95da/candidate-pins.json",
+    "bytes": 4168,
+    "sha256": "0dd3fbc691a50e37c5aaa1d2910d3befdcc87ed1e0edcb93b218dfa36e95193d"
+  },
+  "pathComparison": [
+    {
+      "path": "authoring/asset-studio/guide.mjs",
+      "retainedBase": null,
+      "currentBase": null,
+      "candidate": {
+        "bytes": 1636,
+        "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "new file remains absent"
+    },
+    {
+      "path": "authoring/asset-studio/index.html",
+      "retainedBase": {
+        "bytes": 27771,
+        "sha256": "91d04d23995ee30fc1062818bfd67ac937c4d2f0a4818db2f52165603d01bd31"
+      },
+      "currentBase": {
+        "bytes": 27771,
+        "sha256": "91d04d23995ee30fc1062818bfd67ac937c4d2f0a4818db2f52165603d01bd31",
+        "gitBlob": "19e8b8561326488c07a92e1c2e7d2f8ed87f9300"
+      },
+      "candidate": {
+        "bytes": 32362,
+        "sha256": "cddb29396cdff4181785b7a5024a6e2c296fd099e67c9b29be19f3e312a108d4"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "exact source hunk applies"
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "retainedBase": {
+        "bytes": 20395,
+        "sha256": "9caa080a2ac2da60ea4ea5db3cf9eac5f9de4cadc18a29f95a6d1e49a62d5128"
+      },
+      "currentBase": {
+        "bytes": 20395,
+        "sha256": "9caa080a2ac2da60ea4ea5db3cf9eac5f9de4cadc18a29f95a6d1e49a62d5128",
+        "gitBlob": "39e5fe5dc7da71135bde4bc5f1f615b7c3a14e75"
+      },
+      "candidate": {
+        "bytes": 20770,
+        "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "exact source hunk applies"
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "retainedBase": {
+        "bytes": 44123,
+        "sha256": "2def0bc48bea7573be54aa917e52e6636da98d27314f8fa009056cfa60bf8c4e"
+      },
+      "currentBase": {
+        "bytes": 44123,
+        "sha256": "2def0bc48bea7573be54aa917e52e6636da98d27314f8fa009056cfa60bf8c4e",
+        "gitBlob": "2a5baf43c7f43055d3c946289934155c12185dec"
+      },
+      "candidate": {
+        "bytes": 44250,
+        "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "exact source hunk applies"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "retainedBase": {
+        "bytes": 201359,
+        "sha256": "5501e470b9e1fefab09168ad502c965d328c0ec326b2793cd4c101072b19e039"
+      },
+      "currentBase": {
+        "bytes": 214098,
+        "sha256": "2b5887d9521c33a2fd9f78860884f5942f729f651e9c703c8e862ba366640853",
+        "gitBlob": "246f296ef37c852baadc08e4954b03f5046e2e37"
+      },
+      "candidate": {
+        "bytes": 202240,
+        "sha256": "575bc69509d7d365e2a01e98a48536f80ff9445bdeaf5c8b56b368d97d062bd9"
+      },
+      "exactPreimageOrAbsentNewMatch": false,
+      "action": "recompose guidance-only hunk; preserve newer source"
+    },
+    {
+      "path": "docs/asset-studio.md",
+      "retainedBase": {
+        "bytes": 16430,
+        "sha256": "27387e17f34442773af796966fd8aefb3693631274a7782cdc58327e029a93f7"
+      },
+      "currentBase": {
+        "bytes": 16430,
+        "sha256": "27387e17f34442773af796966fd8aefb3693631274a7782cdc58327e029a93f7",
+        "gitBlob": "08cb2d77b375ace1cb2cf94d4fa72e5906888e1c"
+      },
+      "candidate": {
+        "bytes": 17805,
+        "sha256": "195d96ccd7b13046cb1c24f46b0f758536307362a18924199506d2ca565a47fb"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "exact source hunk applies"
+    },
+    {
+      "path": "game/test/asset-studio-guide.test.mjs",
+      "retainedBase": null,
+      "currentBase": null,
+      "candidate": {
+        "bytes": 4726,
+        "sha256": "6189eb08c5d4199ecfa77b16d3dac22f04dc56e2da44059bdefa3ec7cf2a4b6e"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "new file remains absent"
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "retainedBase": {
+        "bytes": 24248,
+        "sha256": "ca081b18954c21963503e97aa96af3507e7dc95408d208cc6093b3c8a4befa96"
+      },
+      "currentBase": {
+        "bytes": 24248,
+        "sha256": "ca081b18954c21963503e97aa96af3507e7dc95408d208cc6093b3c8a4befa96",
+        "gitBlob": "66cc46229133b694d7f4b65e3d24347072e5151c"
+      },
+      "candidate": {
+        "bytes": 30276,
+        "sha256": "486afccd353d3cb49ae5030a383a174fe0db4cd3e37d0ae569e5f2092340ddfe"
+      },
+      "exactPreimageOrAbsentNewMatch": true,
+      "action": "exact source hunk applies"
+    }
+  ],
+  "exactPathMatches": 7,
+  "onlyOverlappingFeaturePath": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+  "composition": {
+    "method": "Apply seven matching/new feature paths only after lane allocation. Recompose the retained guide paragraph into the current skill immediately before its unique shared-font-cache paragraph; retain all current Team, Enemy, About, delivery and recovery guidance.",
+    "skillDraftPatch": {
+      "path": "skill-guidance-only.patch",
+      "bytes": 3446,
+      "sha256": "377f84c0c73ad7404e85244476e80a79f992d3907c17f2e8c3eded0843c0b7b3"
+    },
+    "skillDraftResult": {
+      "bytes": 214981,
+      "sha256": "38b0135f0cb88c1de076999b656ea9dad6ac34e9ce03b260b4fa4ade1e56d58e"
+    },
+    "historicalWhitespaceDeletionHunks": "Do not replay the old candidate\u2019s two unrelated formatter-only blank-line deletions.",
+    "heldKeyFollowup": "This small skill patch preserves retained wording only; update its prompt and docs to describe the held-Escape correction actually selected by the implementation owner. It is a preflight artifact, not adopted source."
+  },
+  "actionableFindings": [
+    {
+      "priority": "P2",
+      "id": "studio-guide-held-escape",
+      "path": "authoring/asset-studio/guide.mjs",
+      "lines": [
+        31,
+        32,
+        35
+      ],
+      "title": "A held Escape can cancel the operation after closing its guide",
+      "trigger": "Start or encode remains pending; focus Close in the open guide; press and hold Escape. The first keydown closes the guide and moves focus to its summary. A repeat keydown now has guide.open=false, so the guide listener returns and Studio\u2019s window keydown handler calls operations.cancel().",
+      "impact": "A single intended guide-close press can abort preparation or detach waiting for an in-flight save. This violates the passive help/operation preservation contract.",
+      "sourceEvidence": "guide keydown returns for !guide.open and never distinguishes repeat; studio.mjs line114-115 cancels on every Escape. No test execution performed by reviewer.",
+      "requiredCorrection": "Keep a single held guide-close key from reaching authoring cancellation while retaining a separate fresh Escape outside/after the guide as normal operation cancellation. Use the smallest host-owned input boundary and clean it up on terminal departure.",
+      "requiredTests": "Add a meaningful held-operation actual-host sequence plus helper coverage: initial guide Escape, repeated Escape from the focused closed summary, release, then a fresh Escape. Repeats must preserve operation/status/prepared bytes; fresh Escape retains deliberate cancellation. Also preserve unrelated authoring input and terminal cleanup.",
+      "existingGap": "The existing helper test verifies a second fresh Escape but its helper supplies no repeat value; actual-host closeGuide(true) emits only one keydown."
+    }
+  ],
+  "behaviorReview": [
+    "Passive native disclosure sits before asynchronous inventory and inspector content, outside mutation/inert regions. It does not create storage, operation or preview ownership.",
+    "Close is hidden until its handler mounts. Current focus checks are synchronous, owned and foreground; external focus is preserved and handlers dispose only on terminal pagehide.",
+    "Retained guide copy correctly separates prepare, stage, save, export, import, review and publication. Original bytes/history and player saves remain explicit.",
+    "Guide provides native keyboard/pointer help, not new controller ownership. Full Studio controller authoring and physical-device navigation are not proven."
+  ],
+  "qualificationPlan": {
+    "completeCohort": [
+      "game/test/asset-studio-guide.test.mjs",
+      "game/test/asset-studio-host-loading.test.mjs",
+      "game/test/asset-studio-interface-preferences.test.mjs",
+      "game/test/asset-studio-preview-motion.test.mjs",
+      "game/test/asset-studio-helpers.test.mjs",
+      "game/test/asset-studio-loading.test.mjs",
+      "game/test/asset-studio-build.test.mjs"
+    ],
+    "runtimes": [
+      "Node20.19.5",
+      "Node22.22.2"
+    ],
+    "purpose": "Repeat full original five-file cohort and add actual operation/loading and static build-closure files on recomposed exact source. Do not add old/new pass counts.",
+    "historicalSourceEvidence": "R2 final five files35/35 on Node20.19.5 only; verified retained logs, no fresh test run. R1 native footer displacement failure and R2 correction are distinct.",
+    "releaseGates": "Coordinator owns six source gates, ordinary build, artifact/reproduction/readiness applicability, immutable release, Pages/public journey. Preflight does not run them or authorize a lane/version."
+  },
+  "buildInclusion": {
+    "configPath": "game/build-config.json",
+    "currentIncludeHas": [
+      "authoring/asset-studio",
+      "game",
+      "authoring/design-atlas",
+      "docs/asset-studio.md"
+    ],
+    "newStaticImport": "import { mountStudioGuide } from './guide.mjs';",
+    "staticImportGraphTest": "game/test/asset-studio-build.test.mjs traverses actual relative Studio imports and includes guide automatically once present.",
+    "readerOutgoingLinks": 0,
+    "footerRetainedLinks": [
+      "../design-atlas/",
+      "../../game/"
+    ],
+    "oldMarkdownGuideAlreadyIncluded": true,
+    "scope": "Read-only include/static-source review, not an assembled build."
+  },
+  "sourceClosure": {
+    "originalManifest": {
+      "path": ".cache/p03-studio-inline-guide-628e95da/source-pins.json",
+      "bytes": 19159,
+      "sha256": "a37f704be797e6c7f164ddaef114a79998d63fcddee6dad0393eda43ce4e575a"
+    },
+    "oldCount": 125,
+    "oldBytes": 2056342,
+    "unchangedCount": 122,
+    "changed": [
+      {
+        "old": {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "bytes": 201359,
+          "sha256": "5501e470b9e1fefab09168ad502c965d328c0ec326b2793cd4c101072b19e039"
+        },
+        "current": {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "bytes": 214098,
+          "sha256": "2b5887d9521c33a2fd9f78860884f5942f729f651e9c703c8e862ba366640853"
+        },
+        "unchanged": false
+      },
+      {
+        "old": {
+          "path": "game/flight-media-pins.mjs",
+          "bytes": 4875,
+          "sha256": "4e153e9e51579963782c83bcadbe62393b665f101111cb2651c8139e1f5d8be7"
+        },
+        "current": {
+          "path": "game/flight-media-pins.mjs",
+          "bytes": 5415,
+          "sha256": "e7fcc1e020ac3991d6947bc79487e54c13d6176356a177a45274a8ba6d64f241"
+        },
+        "unchanged": false
+      },
+      {
+        "old": {
+          "path": "package.json",
+          "bytes": 1819,
+          "sha256": "7fbabd6691d7609e7de6ee745d499041029ad3555721404a3bf24381d6ec2d4a"
+        },
+        "current": {
+          "path": "package.json",
+          "bytes": 1819,
+          "sha256": "61e60edc6d6ca057e694885fc8dc3d52317297259026c47e618450899bf64224"
+        },
+        "unchanged": false
+      }
+    ]
+  },
+  "nativeDependencyComparison": [
+    {
+      "path": "game/build-config.json",
+      "old": {
+        "bytes": 5474,
+        "sha256": "6190a1936e29291622076f0eb0e5d6712d652ba25b78132851136789688f2de7"
+      },
+      "current": {
+        "bytes": 5474,
+        "sha256": "f6748c26fc6bb3a3317b3c17ce10bcb39d5555c54ea930baeb3c5070ce9eb19e"
+      },
+      "unchanged": false
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "old": {
+        "bytes": 3317736,
+        "sha256": "f5b47878028593ddfc33d12336ab354eade41745667889ab29cff03aadd94414"
+      },
+      "current": {
+        "bytes": 3389442,
+        "sha256": "8eda42a0cc15d83a330464e70b7dba6436a194e0f1c23f0d9755826168060239"
+      },
+      "unchanged": false
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "old": {
+        "bytes": 10003,
+        "sha256": "52f2a5b524f5473b601d313bb4d0b5eaab49231fd9814e4075c494dae74fead8"
+      },
+      "current": {
+        "bytes": 11317,
+        "sha256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497"
+      },
+      "unchanged": false
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "old": {
+        "bytes": 22607,
+        "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01"
+      },
+      "current": {
+        "bytes": 22607,
+        "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "old": {
+        "bytes": 638,
+        "sha256": "6a71c7612bd5bc9a684b4865e0fafbd802d7c35128da2fff307cabd3e359b0db"
+      },
+      "current": {
+        "bytes": 638,
+        "sha256": "6a71c7612bd5bc9a684b4865e0fafbd802d7c35128da2fff307cabd3e359b0db"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "old": {
+        "bytes": 2713,
+        "sha256": "30d79b9ec13f845377d5ae80a1c0544ca2323fc7a8d65611fe6acced3a6db2e4"
+      },
+      "current": {
+        "bytes": 2713,
+        "sha256": "30d79b9ec13f845377d5ae80a1c0544ca2323fc7a8d65611fe6acced3a6db2e4"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "old": {
+        "bytes": 1889,
+        "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e"
+      },
+      "current": {
+        "bytes": 1889,
+        "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "game/flight-media-pins.mjs",
+      "old": {
+        "bytes": 4875,
+        "sha256": "4e153e9e51579963782c83bcadbe62393b665f101111cb2651c8139e1f5d8be7"
+      },
+      "current": {
+        "bytes": 5415,
+        "sha256": "e7fcc1e020ac3991d6947bc79487e54c13d6176356a177a45274a8ba6d64f241"
+      },
+      "unchanged": false
+    }
+  ],
+  "retainedEvidence": {
+    "r1Qualification": {
+      "path": ".cache/p03-studio-inline-guide-628e95da/qualification.json",
+      "bytes": 4416,
+      "sha256": "d44da6849125d76f8392639b3d56e0771ed1c52370af75499e48100bdb2b08bc"
+    },
+    "r2Qualification": {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/qualification.json",
+      "bytes": 3329,
+      "sha256": "2007a77f11f79e77f4bc464bc57c6746e7e0f5dcd0251f26b00948754bf896ad"
+    },
+    "verifiedSourceReceiptCount": 18,
+    "sourceReceipts": [
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/copy-format-final.log",
+        "bytes": 51,
+        "sha256": "9eacf53018d54ed8df095be0eddb18ffd0a3f5ff05ca6a97d15eafcc2ada4075"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/copy-format.log",
+        "bytes": 77,
+        "sha256": "daf3cc24525a3d2a2bf8c31f676f7dbc72061ac8b7e24866a7f27993eb01f965"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/final-tests.log",
+        "bytes": 7656,
+        "sha256": "4590cacb20d291a87a0d11e09933778a4254437d90a5fedd78d605faba1837ba"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/format-check.log",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/format-write.log",
+        "bytes": 342,
+        "sha256": "c32f186d3f0788b9af282934ca3eb0a6dfeb240d98e64d3abb3671a41d4a7ff6"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/guide-test.log",
+        "bytes": 1904,
+        "sha256": "b41bbad118f6b0306f64560d5fa5279da3c77930f3034f8cdb4c36a09b066b53"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/host-loading-baseline.log",
+        "bytes": 1127,
+        "sha256": "0fdf77ab366a41946a2fd66350d6cc7c6baf0f8dac0488bc4a1199f8a8c5016d"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/host-loading-candidate-r2.log",
+        "bytes": 435,
+        "sha256": "4b690473ff162afd4641e647b3f8a63edd33dc4cba342acadcbb5311d7acdedd"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/host-loading-candidate.log",
+        "bytes": 1310,
+        "sha256": "023693a43fa420f207f60a383a78d51540c87a4dbca8925ce7620ce81750341d"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/lint-final.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/lint.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-628e95da/supporting-tests.log",
+        "bytes": 7344,
+        "sha256": "c0cd89ac3756b305079bb3954750f83d6aae49bf2177e4c1e82d1929c838f360"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/final-tests.log",
+        "bytes": 7652,
+        "sha256": "9335680c7e1162d054bd6ded7a137814cd89aba2742216f21a2ccf10154999b4"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/format-check.log",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/format-write.log",
+        "bytes": 158,
+        "sha256": "de61c04cc458dbd7392842a93b953ce28d1b3439d539df853e359466c40cf054"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/host-placement-green.log",
+        "bytes": 434,
+        "sha256": "ff15b566e10c8ce82b6bcc65d58b09680eeed9ff60d3ad73ab05f01b9a6a0109"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/host-placement-red.log",
+        "bytes": 2287,
+        "sha256": "bb00ea3a6a10302458d58c13e14f944588af9742c05775c28ef89189c3012850"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/lint-final.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "nativeR2": {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/cua-observation-r2.json",
+      "bytes": 20200,
+      "sha256": "94ab75b33ac426c4b1cc9e5630aa51e41d0881dd70d6a2bee331e22afa3c0e61"
+    },
+    "nativeR2PinsVerified": [
+      {
+        "path": ".cache/p03-studio-inline-guide-browser-r2/serve.py",
+        "bytes": 7022,
+        "sha256": "1383f58f93e17d53829c1c158c3319b9da490e0b351e7d1c54a07340af6166f4"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-browser-r2/binding.json",
+        "bytes": 1697,
+        "sha256": "8df2d307acd529cf8ee386e9e4915931e9602e86db56f74700153ec3b9b03328"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-browser-r2/runtime-overrides.json",
+        "bytes": 1400,
+        "sha256": "27e78738d9a5988d24323a1fe2f23314eb427b206df5c3e73cc027e90ce4d96d"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-browser-r2/requests-through-guide-verification.jsonl",
+        "bytes": 107858,
+        "sha256": "acd202738559c78f515026e4aaf896f20b7a417f8802159a24ce4bd46030971e"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-browser-r2/faults.json",
+        "bytes": 3,
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+      },
+      {
+        "path": ".cache/p05-native-file-controls-browser-r2/p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+        "bytes": 243034,
+        "sha256": "70d0877f900a7a48f8a7a00e9248ca04d48077d3e81c37a42e9b8c8a6df87715"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-browser/native-r1-finding.json",
+        "bytes": 3095,
+        "sha256": "c99282eb9527f2ef57e36c60d9012ed06ed3fcafae30d66c190ee99c0f97fe4f"
+      },
+      {
+        "path": ".cache/p03-studio-inline-guide-r2-628e95da/qualification.json",
+        "bytes": 3329,
+        "sha256": "2007a77f11f79e77f4bc464bc57c6746e7e0f5dcd0251f26b00948754bf896ad"
+      }
+    ],
+    "fourRuntimeOverrideBodiesMatchRetainedR2": true,
+    "nativeScope": "P03/P16 Studio in-page guide R2; local native verification only",
+    "nativeBase": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+    "nativeRowCount": 18,
+    "nativeLimits": [
+      "No native save/export/import, BFCache, screen-reader, physical-controller, physical-device, offline,200%zoom or public release assertion.",
+      "Playback preference retention observed; no listening/frame-timing or full animation continuity claim.",
+      "Keyboard actions were locator-focused; these checks do not prove a full keyboard-only navigation journey from page entry.",
+      "Full six source gates, exact merged source build and public deployment remain release coordinator work.",
+      "Old .md primary guide was shipped; helper served text/markdown and browser remained in Studio after GET200. No public404 or MIME behavior claim."
+    ]
+  },
+  "claimsToPreserve": [
+    "Old Markdown guide was already part of the release include list; do not advertise this as fixing an established public404. The improvement is keeping help in the active workspace.",
+    "Retain native R2 as exact628 plus four overrides; current compiled Studio collection, shared component CSS and flight-media-pins changed. Old native observations cannot be relabelled as61cf/current release proof.",
+    "R2 native summary/Close target and portrait/landscape observations are locator-focused, not a complete keyboard-only entry journey. No physical controller, assistive-tech,200%zoom,offline,save/export/import/public claim.",
+    "Technical source or no-missing-bindings checks do not establish art quality, true cross-mode previews, full Studio framework, whole P03/P04/P05/P16 or public release readiness."
+  ],
+  "nextActions": [
+    "Allocate isolated implementation lane from exact61cf, preserving all original packets.",
+    "Compose seven matching paths and current-skill insertion, then fix held Escape with scoped regression and honest updated prompt.",
+    "Run affected whole-file cohort, inspect/review/fix, qualify actual versioned source; keep fresh results distinct from all retained source/native failures and prior passes.",
+    "Requalify native long-reader focus, held-key noncancellation, upload/sprite preservation and exact build/public links through coordinator release workflow."
+  ],
+  "limitations": "Read-only preflight and finite cache metadata/patch output only. No source/worktree/index/version changes, tests, full build, browser, fetch, commit or remote mutation performed."
+}

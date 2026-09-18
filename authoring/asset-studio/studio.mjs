@@ -32,6 +32,7 @@ import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
 import { mountInterfacePreferences } from './interface-preferences.mjs';
+import { mountStudioGuide } from './guide.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
@@ -92,6 +93,7 @@ const interfacePreferences = mountInterfacePreferences({
   window,
   getStorage: () => localStorage,
 });
+const studioGuide = mountStudioGuide({ document });
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
   audioMaster,
@@ -1216,6 +1218,7 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    studioGuide.dispose();
     interfacePreferences.dispose();
     stopMasterView();
     audioPreferences.dispose();
