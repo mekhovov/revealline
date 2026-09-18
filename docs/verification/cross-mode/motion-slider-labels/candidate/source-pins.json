@@ -1,0 +1,43 @@
+{
+  "base": "5f59f1dfdaca8df6fc737a1923631e120abdf580",
+  "paths": [
+    {
+      "path": "authoring/motion-lab/index.html",
+      "beforeBytes": 19887,
+      "beforeSha256": "67863c03f688241a40b22aa5e2a8fc3bc724f8cdbfbc680271b157ca13f42149",
+      "bytes": 21450,
+      "sha256": "9940a5d9265a52097a2101f07f2248323b44c3060964579da07d4785fa1f1d0d"
+    },
+    {
+      "path": "authoring/motion-lab/app.js",
+      "beforeBytes": 67787,
+      "beforeSha256": "cc4668e143c5c74320d99ba446031a291b6488fa6208c96a216a1a33363c1bd4",
+      "bytes": 68384,
+      "sha256": "743e218a25e8187bc8d42cb4dc5513334e0fd136f2103b75ddd80d6c1a4240bc"
+    },
+    {
+      "path": "game/test/motion-lab-display-host.test.mjs",
+      "beforeBytes": 51824,
+      "beforeSha256": "ad08aad89b7e47563e69a599ffe9f54d59a25b17e7175600e20e682dd9a71dbd",
+      "bytes": 55665,
+      "sha256": "047b582dcf50e06e2aa7855e5a7dac251a5ac225ec13494118ba6dad3890740e"
+    },
+    {
+      "path": "authoring/motion-lab/README.md",
+      "beforeBytes": 41512,
+      "beforeSha256": "df6b7fa451dcbfb3274cd9c851ca151a3ce185cc1c5c9814149fb1e37b04640b",
+      "bytes": 43445,
+      "sha256": "f921bddc21917fd5c19865aee1f66abb8703dddef6806807f411d9d48c2c7e58"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "beforeBytes": 199152,
+      "beforeSha256": "c8c913feed37dd1cf355274ab797c0c2720cfe04e00cc5b5c0d491c6f08985a5",
+      "bytes": 200118,
+      "sha256": "4ec11aaf7174aa4120ada2b2eea36c586aac05d1bedda1e36038f1e22e65754a"
+    }
+  ],
+  "patchBytes": 17707,
+  "patchSha256": "fde7a3948170d2d9b3ea0e5c96c5b26152450f95247f7e679dfa63046aa4958a",
+  "successor": "Adds only the narrow runtime-maintainer paragraph/prompt to the reviewed four-path candidate; all runtime/test bodies unchanged."
+}

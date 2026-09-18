@@ -1,0 +1,202 @@
+TAP version 13
+# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer
+ok 1 - Motion HTML adopts reading policy before held app startup with one explicit size writer
+  ---
+  duration_ms: 42.540541
+  ...
+# Subtest: Motion failed app startup retains independent size controls and failed-save intent
+ok 2 - Motion failed app startup retains independent size controls and failed-save intent
+  ---
+  duration_ms: 6.48975
+  ...
+# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values
+ok 3 - Motion saved and system reduction cap local choice without changing live run or authored values
+  ---
+  duration_ms: 54.66775
+  ...
+# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume
+ok 4 - Motion local reduced choice survives shared caps and paused preference edits do not resume
+  ---
+  duration_ms: 30.363125
+  ...
+# Subtest: Motion loaded body and local background survive reading changes and cached return
+ok 5 - Motion loaded body and local background survive reading changes and cached return
+  ---
+  duration_ms: 38.160042
+  ...
+# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return
+ok 6 - Motion interruption before pending startup prevents automatic start and stale frames cannot return
+  ---
+  duration_ms: 48.064375
+  ...
+# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners
+ok 7 - Motion terminal departure fences held initialization and leaves no authority or app listeners
+  ---
+  duration_ms: 4.613792
+  ...
+# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+ok 8 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+  ---
+  duration_ms: 26.323375
+  ...
+# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+ok 9 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+  ---
+  duration_ms: 22.109375
+  ...
+# Subtest: Motion application graph completing after terminal departure cannot remount or fetch
+ok 10 - Motion application graph completing after terminal departure cannot remount or fetch
+  ---
+  duration_ms: 3.691666
+  ...
+# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play
+ok 11 - Motion graph first arriving in an unfocused document starts paused until explicit Play
+  ---
+  duration_ms: 17.532417
+  ...
+# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return
+ok 12 - Motion cached interruption before first application delivery cannot autoplay before or after return
+  ---
+  duration_ms: 20.700917
+  ...
+# (node:88089) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+ok 13 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+  ---
+  duration_ms: 39.789667
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+ok 14 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+  ---
+  duration_ms: 32.176542
+  ...
+# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+ok 15 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+  ---
+  duration_ms: 17.060167
+  ...
+# Subtest: Motion network failure after actual delivery provides retry without taking current focus
+ok 16 - Motion network failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 16.016291
+  ...
+# Subtest: Motion validation failure after actual delivery provides retry without taking current focus
+ok 17 - Motion validation failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 16.881333
+  ...
+# Subtest: Motion terminal departure ignores a late failed preset read without exposing retry
+ok 18 - Motion terminal departure ignores a late failed preset read without exposing retry
+  ---
+  duration_ms: 17.447
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return
+ok 19 - Motion real launcher does not take Reload focus in an hidden document or defer it until return
+  ---
+  duration_ms: 28.352041
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+ok 20 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+  ---
+  duration_ms: 26.977125
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment
+ok 21 - Motion actual Reload retirement preserves navigation focus acquired before attachment
+  ---
+  duration_ms: 25.590583
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment
+ok 22 - Motion actual Reload retirement preserves navigation focus acquired during attachment
+  ---
+  duration_ms: 24.444708
+  ...
+# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+ok 23 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+  ---
+  duration_ms: 35.65725
+  ...
+# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+ok 24 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+  ---
+  duration_ms: 17.122375
+  ...
+# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+ok 25 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+  ---
+  duration_ms: 26.038167
+  ...
+# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+ok 26 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+  ---
+  duration_ms: 41.55825
+  ...
+# Subtest: Motion APNG upload derives exact static PNG bytes while retaining the original File
+ok 27 - Motion APNG upload derives exact static PNG bytes while retaining the original File
+  ---
+  duration_ms: 26.14825
+  ...
+# Subtest: Motion GIF and WebP keep the original File source and native-image path
+ok 28 - Motion GIF and WebP keep the original File source and native-image path
+  ---
+  duration_ms: 18.745167
+  ...
+# Subtest: Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+ok 29 - Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+  ---
+  duration_ms: 18.006834
+  ...
+# Subtest: Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+ok 30 - Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+  ---
+  duration_ms: 17.307791
+  ...
+# Subtest: Motion cached departure invalidates the pending PNG byte read
+ok 31 - Motion cached departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 25.487292
+  ...
+# Subtest: Motion terminal departure invalidates the pending PNG byte read
+ok 32 - Motion terminal departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 23.326917
+  ...
+# Subtest: Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+ok 33 - Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+  ---
+  duration_ms: 23.902916
+  ...
+# Subtest: Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+ok 34 - Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+  ---
+  duration_ms: 29.657917
+  ...
+# Subtest: Motion late PNG preparation rejection after a new image cannot overwrite current success
+ok 35 - Motion late PNG preparation rejection after a new image cannot overwrite current success
+  ---
+  duration_ms: 23.553667
+  ...
+# Subtest: Motion sliders keep stable visible labels while the actual study startup is held
+ok 36 - Motion sliders keep stable visible labels while the actual study startup is held
+  ---
+  duration_ms: 18.276792
+  ...
+# Subtest: Motion slider input updates current units without changing its name, focus or paused intent
+ok 37 - Motion slider input updates current units without changing its name, focus or paused intent
+  ---
+  duration_ms: 31.112833
+  ...
+# Subtest: Motion recipe replacement refreshes the rotor value text after a manual radius override
+ok 38 - Motion recipe replacement refreshes the rotor value text after a manual radius override
+  ---
+  duration_ms: 22.380083
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1282.077125

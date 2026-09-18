@@ -1408,3 +1408,98 @@ test('Motion late PNG preparation rejection after a new image cannot overwrite c
   assert.equal(h.$('background-status').textContent, status);
   assert.equal(h.revoked.includes(accepted.src), false);
 });
+
+const sliderLabels = [
+  ['rotor-radius', 'Rotor radius', 'rotor-radius-output', '16 percent of body'],
+  ['character-scale', 'Character scale', 'scale-output', '1.00 times'],
+  ['background-opacity', 'Background opacity', 'background-opacity-output', '28 percent'],
+  ['cruise-speed', 'Cruise speed', 'speed-output', '9 cells per second'],
+  ['turn-rate', 'Body turn response', 'turn-output', '360 degrees per second'],
+];
+function sliderLabel(h, id) {
+  const input = h.$(id);
+  const label = h.doc.querySelector(`label[for="${id}"]`);
+  assert.ok(label, `${id} must have its own explicit visible label`);
+  assert.equal(input.getAttribute('aria-labelledby'), label.id);
+  assert.equal(label.querySelectorAll('output,input').length, 0);
+  return label.textContent;
+}
+
+test('Motion sliders keep stable visible labels while the actual study startup is held', async (t) => {
+  const h = await harness(t, { holdBoot: true });
+  await h.start();
+  await h.entered.promise;
+  studyLocked(h, true);
+  for (const [id, name, output, initial] of sliderLabels) {
+    assert.equal(sliderLabel(h, id), name);
+    assert.equal(h.$(id).type, 'range', 'Native range semantics and key handling stay in use');
+    assert.equal(h.$(id).getAttribute('aria-valuetext'), initial);
+    assert.equal(h.$(output).getAttribute('aria-hidden'), 'true');
+  }
+  h.boot.resolve();
+  await h.ready();
+  assert.equal(sliderLabel(h, 'turn-rate'), 'Body turn response');
+  assert.equal(Number(h.$('turn-rate').value), 540, 'The actual preset replaces the HTML default');
+  assert.equal(h.$('turn-output').textContent, '540°/s');
+  assert.equal(h.$('turn-rate').getAttribute('aria-valuetext'), '540 degrees per second');
+});
+
+test('Motion slider input updates current units without changing its name, focus or paused intent', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.host.emit('blur');
+  assert.equal(h.frames.size, 0);
+  const writes = h.writes.length;
+  for (const [id, name, output, value, visible, spoken] of [
+    [
+      'rotor-radius',
+      'Rotor radius',
+      'rotor-radius-output',
+      '0.28',
+      '28% of body',
+      '28 percent of body',
+    ],
+    ['character-scale', 'Character scale', 'scale-output', '1.75', '1.75×', '1.75 times'],
+    [
+      'background-opacity',
+      'Background opacity',
+      'background-opacity-output',
+      '0.7',
+      '70%',
+      '70 percent',
+    ],
+    [
+      'cruise-speed',
+      'Cruise speed',
+      'speed-output',
+      '12.5',
+      '12.5 cells/s',
+      '12.5 cells per second',
+    ],
+    ['turn-rate', 'Body turn response', 'turn-output', '720', '720°/s', '720 degrees per second'],
+  ]) {
+    h.$(id).focus();
+    h.change(id, value, 'input');
+    assert.equal(sliderLabel(h, id), name);
+    assert.equal(h.$(output).textContent, visible);
+    assert.equal(h.$(id).getAttribute('aria-valuetext'), spoken);
+    assert.equal(h.doc.activeElement, h.$(id));
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.frames.size, 0);
+  }
+  assert.equal(h.writes.length, writes, 'Slider feedback does not save reading or player data');
+});
+
+test('Motion recipe replacement refreshes the rotor value text after a manual radius override', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.change('rotor-radius', '0.28', 'input');
+  assert.equal(h.$('rotor-radius').getAttribute('aria-valuetext'), '28 percent of body');
+  h.$('animation-recipe').focus();
+  h.change('animation-recipe', 'heavy-props');
+  assert.equal(Number(h.$('rotor-radius').value), 0.08);
+  assert.equal(h.$('rotor-radius-output').textContent, '8% of body');
+  assert.equal(h.$('rotor-radius').getAttribute('aria-valuetext'), '8 percent of body');
+  assert.equal(sliderLabel(h, 'rotor-radius'), 'Rotor radius');
+  assert.equal(h.doc.activeElement, h.$('animation-recipe'));
+});

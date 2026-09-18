@@ -1,0 +1,177 @@
+[
+  {
+    "path": "authoring/motion-lab/ability-labels.mjs",
+    "bytes": 5096,
+    "sha256": "1dd81603c28eead7cb8aa8dd25782434c78eed8bd5870e79303d7e26daac09ca"
+  },
+  {
+    "path": "authoring/motion-lab/ability-presets.json",
+    "bytes": 12087,
+    "sha256": "05e956de444eb4ff0ff9867f8438b5dcf18702868d42bf781a98ff7e92d7858a"
+  },
+  {
+    "path": "authoring/motion-lab/ability.mjs",
+    "bytes": 16262,
+    "sha256": "287f08add0aacfaf7f5ecb7bf686179f25716c489dbfaa3dc1a54e339af6daf5"
+  },
+  {
+    "path": "authoring/motion-lab/animation.mjs",
+    "bytes": 8068,
+    "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+  },
+  {
+    "path": "authoring/motion-lab/app.js",
+    "bytes": 68384,
+    "sha256": "743e218a25e8187bc8d42cb4dc5513334e0fd136f2103b75ddd80d6c1a4240bc"
+  },
+  {
+    "path": "authoring/motion-lab/collection-presets.json",
+    "bytes": 16627,
+    "sha256": "c553f4a554a5931a155bb231a477dffa49dd3d501db1cfe17e143d767ab654e8"
+  },
+  {
+    "path": "authoring/motion-lab/collection.mjs",
+    "bytes": 16779,
+    "sha256": "90df2634277af9d728087c6b624a6b463d797a8ce5d2df681b60131430b524a4"
+  },
+  {
+    "path": "authoring/motion-lab/display-entry.mjs",
+    "bytes": 151,
+    "sha256": "bde8a80ddcedf983ee3f94b16adf4f3343c08ec6a5758874bf5efd9e987644b2"
+  },
+  {
+    "path": "authoring/motion-lab/display.mjs",
+    "bytes": 3891,
+    "sha256": "54101f49687fbf289e7b0733597b491330ccf7825c8ba43a9bc07c2815fb6714"
+  },
+  {
+    "path": "authoring/motion-lab/grid-motion.mjs",
+    "bytes": 2234,
+    "sha256": "939ae0f5126612cf94c39fee0d08f6403d2c97057d8438675991af41aac5baed"
+  },
+  {
+    "path": "authoring/motion-lab/index.html",
+    "bytes": 21450,
+    "sha256": "9940a5d9265a52097a2101f07f2248323b44c3060964579da07d4785fa1f1d0d"
+  },
+  {
+    "path": "authoring/motion-lab/motion.mjs",
+    "bytes": 9933,
+    "sha256": "64eeff049089fbafe8064605ca0063b66f6bf903dec045674b79c559a7533390"
+  },
+  {
+    "path": "authoring/motion-lab/png-preview.mjs",
+    "bytes": 5329,
+    "sha256": "c3db29eb42550c36174014c7937cc6d52cc44cc6c01d77f65fb3229bc65d7dc6"
+  },
+  {
+    "path": "authoring/motion-lab/presets.json",
+    "bytes": 50888,
+    "sha256": "c1ad73a04e31f63eaa1244b5a73ba076160960746f57bf0944c53ee28e85d7ba"
+  },
+  {
+    "path": "authoring/motion-lab/preview-loop.mjs",
+    "bytes": 2961,
+    "sha256": "a5cba565b2c901fcded957a14fd2413aa620aa6ce80e853f93212bd14cba48d7"
+  },
+  {
+    "path": "authoring/motion-lab/render-ability.mjs",
+    "bytes": 5526,
+    "sha256": "b6cb2c121790e27c2d74e302d9b39f924a886624ec90312313f73312556174a2"
+  },
+  {
+    "path": "authoring/motion-lab/render-character.mjs",
+    "bytes": 6660,
+    "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71"
+  },
+  {
+    "path": "authoring/motion-lab/steering.mjs",
+    "bytes": 1208,
+    "sha256": "c649d30f10537db0868c7c671c832add99c961f1a3863807892ccb42c483f826"
+  },
+  {
+    "path": "game/display-preferences.mjs",
+    "bytes": 8285,
+    "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+  },
+  {
+    "path": "game/test/fixtures/motion-background/animated-first-frame.gif",
+    "bytes": 207,
+    "sha256": "c9709df1f237dd396de169b603f7172087920e1e2ba6ed36fd8e8d3f5786e14e"
+  },
+  {
+    "path": "game/test/fixtures/motion-background/animated-first-frame.webp",
+    "bytes": 164,
+    "sha256": "a20ab57d81db103b7388a06eddf8021b4a8590019fa223f6fe1759ee0f997954"
+  },
+  {
+    "path": "game/test/fixtures/motion-background/animated-separate-default.png",
+    "bytes": 377,
+    "sha256": "9f962f9e6c3a1fca97dbe157e86b1cc9450afc1ffe6fcfbb63dc5db82769d217"
+  },
+  {
+    "path": "game/test/fixtures/motion-background/invalid-signature-only.png",
+    "bytes": 8,
+    "sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+  },
+  {
+    "path": "game/test/fixtures/motion-background/static-default.png",
+    "bytes": 122,
+    "sha256": "ad2a181fedbac6319d00e2b243072c780bce885454fe8661561774bd05f36988"
+  },
+  {
+    "path": "game/test/helpers/couch-dom.mjs",
+    "bytes": 10172,
+    "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+  },
+  {
+    "path": "game/test/helpers/wait-for.mjs",
+    "bytes": 714,
+    "sha256": "b58dbf15157d4189828a9645e54ec442a7d11d3d76a204defb9f675a2209eeb6"
+  },
+  {
+    "path": "game/test/motion-lab-display-host.test.mjs",
+    "bytes": 55665,
+    "sha256": "047b582dcf50e06e2aa7855e5a7dac251a5ac225ec13494118ba6dad3890740e"
+  },
+  {
+    "path": "game/text-face.mjs",
+    "bytes": 807,
+    "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0"
+  },
+  {
+    "path": "game/text-size.mjs",
+    "bytes": 251,
+    "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+  },
+  {
+    "path": "game/ui/direct-tool-launch.js",
+    "bytes": 2507,
+    "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+  },
+  {
+    "path": "game/ui/field-kit-copy.mjs",
+    "bytes": 7159,
+    "sha256": "121d7252b783e2ecc0e835dd0c0c897f8746714d04568345ff7e47bcd3610c78"
+  },
+  {
+    "path": "game/ui/field-kit-surfaces.mjs",
+    "bytes": 2033,
+    "sha256": "1e400be4cbb37ed3a74b21797142953ced88d9d73a2a8e58352265288a68d5e5"
+  },
+  {
+    "path": "game/ui/operation-status.mjs",
+    "bytes": 4173,
+    "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab"
+  },
+  {
+    "path": "game/ui/settings-panels.mjs",
+    "bytes": 4427,
+    "sha256": "668407411e337bf5da1959b5c8d62e5b473bdbfec27d486767bee2c733d25e5b"
+  },
+  {
+    "path": "package.json",
+    "bytes": 1819,
+    "sha256": "7fbabd6691d7609e7de6ee745d499041029ad3555721404a3bf24381d6ec2d4a"
+  }
+]

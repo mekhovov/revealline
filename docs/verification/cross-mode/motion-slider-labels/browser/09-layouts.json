@@ -1,0 +1,297 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "12350180662ef15a4f1ca186440b1002d150337d6ae7d47a3e2407104a3c0f01",
+  "originalGitBlob": "f44b1fe83989679c9c9956516f202d8a0ad74b42",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "result": "PASS",
+    "landscapePlainLarge": {
+      "viewport": [
+        844,
+        390
+      ],
+      "bodyWidth": 844,
+      "face": "plain",
+      "size": "large",
+      "paused": true,
+      "storage": [
+        "revealline.display.v1",
+        "revealline.library.dev.v1"
+      ],
+      "ranges": [
+        {
+          "id": "rotor-radius",
+          "name": "Rotor radius",
+          "valueText": "16 percent of body",
+          "rect": {
+            "x": 622,
+            "y": -1807.828125,
+            "width": 203,
+            "height": 44,
+            "top": -1807.828125,
+            "right": 825,
+            "bottom": -1763.828125,
+            "left": 622
+          }
+        },
+        {
+          "id": "character-scale",
+          "name": "Character scale",
+          "valueText": "2.15 times",
+          "rect": {
+            "x": 622,
+            "y": -1015.078125,
+            "width": 203,
+            "height": 44,
+            "top": -1015.078125,
+            "right": 825,
+            "bottom": -971.078125,
+            "left": 622
+          }
+        },
+        {
+          "id": "background-opacity",
+          "name": "Background opacity",
+          "valueText": "70 percent",
+          "rect": {
+            "x": 622,
+            "y": -543.796875,
+            "width": 203,
+            "height": 44,
+            "top": -543.796875,
+            "right": 825,
+            "bottom": -499.796875,
+            "left": 622
+          }
+        },
+        {
+          "id": "cruise-speed",
+          "name": "Cruise speed",
+          "valueText": "15.5 cells per second",
+          "rect": {
+            "x": 622,
+            "y": 48.859375,
+            "width": 203,
+            "height": 44,
+            "top": 48.859375,
+            "right": 825,
+            "bottom": 92.859375,
+            "left": 622
+          }
+        },
+        {
+          "id": "turn-rate",
+          "name": "Body turn response",
+          "valueText": "690 degrees per second",
+          "rect": {
+            "x": 622,
+            "y": 172.859375,
+            "width": 203,
+            "height": 44,
+            "top": 172.859375,
+            "right": 825,
+            "bottom": 216.859375,
+            "left": 622
+          }
+        }
+      ]
+    },
+    "desktopPlainStandard": {
+      "viewport": [
+        1280,
+        800
+      ],
+      "bodyWidth": 1280,
+      "face": "plain",
+      "size": "standard",
+      "paused": true,
+      "storage": [
+        "revealline.display.v1",
+        "revealline.library.dev.v1"
+      ],
+      "ranges": [
+        {
+          "id": "rotor-radius",
+          "name": "Rotor radius",
+          "valueText": "16 percent of body",
+          "rect": {
+            "x": 910.328125,
+            "y": -1172.75,
+            "width": 240,
+            "height": 44,
+            "top": -1172.75,
+            "right": 1150.328125,
+            "bottom": -1128.75,
+            "left": 910.328125
+          }
+        },
+        {
+          "id": "character-scale",
+          "name": "Character scale",
+          "valueText": "2.15 times",
+          "rect": {
+            "x": 910.328125,
+            "y": -547.59375,
+            "width": 240,
+            "height": 44,
+            "top": -547.59375,
+            "right": 1150.328125,
+            "bottom": -503.59375,
+            "left": 910.328125
+          }
+        },
+        {
+          "id": "background-opacity",
+          "name": "Background opacity",
+          "valueText": "70 percent",
+          "rect": {
+            "x": 910.328125,
+            "y": -161.21875,
+            "width": 240,
+            "height": 44,
+            "top": -161.21875,
+            "right": 1150.328125,
+            "bottom": -117.21875,
+            "left": 910.328125
+          }
+        },
+        {
+          "id": "cruise-speed",
+          "name": "Cruise speed",
+          "valueText": "15.5 cells per second",
+          "rect": {
+            "x": 910.328125,
+            "y": 290.15625,
+            "width": 240,
+            "height": 44,
+            "top": 290.15625,
+            "right": 1150.328125,
+            "bottom": 334.15625,
+            "left": 910.328125
+          }
+        },
+        {
+          "id": "turn-rate",
+          "name": "Body turn response",
+          "valueText": "690 degrees per second",
+          "rect": {
+            "x": 910.328125,
+            "y": 377.75,
+            "width": 240,
+            "height": 44,
+            "top": 377.75,
+            "right": 1150.328125,
+            "bottom": 421.75,
+            "left": 910.328125
+          }
+        }
+      ]
+    },
+    "commands": [
+      {
+        "args": [
+          "set",
+          "viewport",
+          "844",
+          "390"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "scrollintoview",
+          "#turn-rate"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "eval",
+          "JSON.stringify({viewport:[innerWidth,innerHeight],bodyWidth:document.documentElement.scrollWidth,face:document.body.dataset.textFace,size:document.body.dataset.textSize,paused:document.querySelector('#play-pause').textContent==='Play',storage:Object.keys(localStorage),ranges:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,name:x.labels[0].textContent.trim(),valueText:x.getAttribute('aria-valuetext'),rect:x.getBoundingClientRect().toJSON()}))})"
+        ],
+        "exit": 0,
+        "stdout": "\"{\\\"viewport\\\":[844,390],\\\"bodyWidth\\\":844,\\\"face\\\":\\\"plain\\\",\\\"size\\\":\\\"large\\\",\\\"paused\\\":true,\\\"storage\\\":[\\\"revealline.display.v1\\\",\\\"revealline.library.dev.v1\\\"],\\\"ranges\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"name\\\":\\\"Rotor radius\\\",\\\"valueText\\\":\\\"16 percent of body\\\",\\\"rect\\\":{\\\"x\\\":622,\\\"y\\\":-1807.828125,\\\"width\\\":203,\\\"height\\\":44,\\\"top\\\":-1807.828125,\\\"right\\\":825,\\\"bottom\\\":-1763.828125,\\\"left\\\":622}},{\\\"id\\\":\\\"character-scale\\\",\\\"name\\\":\\\"Character scale\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"rect\\\":{\\\"x\\\":622,\\\"y\\\":-1015.078125,\\\"width\\\":203,\\\"height\\\":44,\\\"top\\\":-1015.078125,\\\"right\\\":825,\\\"bottom\\\":-971.078125,\\\"left\\\":622}},{\\\"id\\\":\\\"background-opacity\\\",\\\"name\\\":\\\"Background opacity\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"rect\\\":{\\\"x\\\":622,\\\"y\\\":-543.796875,\\\"width\\\":203,\\\"height\\\":44,\\\"top\\\":-543.796875,\\\"right\\\":825,\\\"bottom\\\":-499.796875,\\\"left\\\":622}},{\\\"id\\\":\\\"cruise-speed\\\",\\\"name\\\":\\\"Cruise speed\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"rect\\\":{\\\"x\\\":622,\\\"y\\\":48.859375,\\\"width\\\":203,\\\"height\\\":44,\\\"top\\\":48.859375,\\\"right\\\":825,\\\"bottom\\\":92.859375,\\\"left\\\":622}},{\\\"id\\\":\\\"turn-rate\\\",\\\"name\\\":\\\"Body turn response\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"rect\\\":{\\\"x\\\":622,\\\"y\\\":172.859375,\\\"width\\\":203,\\\"height\\\":44,\\\"top\\\":172.859375,\\\"right\\\":825,\\\"bottom\\\":216.859375,\\\"left\\\":622}}]}\"\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "screenshot",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/settings-v0606/browser-fallback-capability/motion-slider-check/09-landscape-plain-large.png"
+        ],
+        "exit": 0,
+        "stdout": "✓ Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/settings-v0606/browser-fallback-capability/motion-slider-check/09-landscape-plain-large.png\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "snapshot",
+          "-i"
+        ],
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "args": [
+          "scrollintoview",
+          "@e7"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "select",
+          "@e7",
+          "standard"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "set",
+          "viewport",
+          "1280",
+          "800"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "scrollintoview",
+          "#turn-rate"
+        ],
+        "exit": 0,
+        "stdout": "✓ Done\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "eval",
+          "JSON.stringify({viewport:[innerWidth,innerHeight],bodyWidth:document.documentElement.scrollWidth,face:document.body.dataset.textFace,size:document.body.dataset.textSize,paused:document.querySelector('#play-pause').textContent==='Play',storage:Object.keys(localStorage),ranges:[...document.querySelectorAll('input[type=range]')].map(x=>({id:x.id,name:x.labels[0].textContent.trim(),valueText:x.getAttribute('aria-valuetext'),rect:x.getBoundingClientRect().toJSON()}))})"
+        ],
+        "exit": 0,
+        "stdout": "\"{\\\"viewport\\\":[1280,800],\\\"bodyWidth\\\":1280,\\\"face\\\":\\\"plain\\\",\\\"size\\\":\\\"standard\\\",\\\"paused\\\":true,\\\"storage\\\":[\\\"revealline.display.v1\\\",\\\"revealline.library.dev.v1\\\"],\\\"ranges\\\":[{\\\"id\\\":\\\"rotor-radius\\\",\\\"name\\\":\\\"Rotor radius\\\",\\\"valueText\\\":\\\"16 percent of body\\\",\\\"rect\\\":{\\\"x\\\":910.328125,\\\"y\\\":-1172.75,\\\"width\\\":240,\\\"height\\\":44,\\\"top\\\":-1172.75,\\\"right\\\":1150.328125,\\\"bottom\\\":-1128.75,\\\"left\\\":910.328125}},{\\\"id\\\":\\\"character-scale\\\",\\\"name\\\":\\\"Character scale\\\",\\\"valueText\\\":\\\"2.15 times\\\",\\\"rect\\\":{\\\"x\\\":910.328125,\\\"y\\\":-547.59375,\\\"width\\\":240,\\\"height\\\":44,\\\"top\\\":-547.59375,\\\"right\\\":1150.328125,\\\"bottom\\\":-503.59375,\\\"left\\\":910.328125}},{\\\"id\\\":\\\"background-opacity\\\",\\\"name\\\":\\\"Background opacity\\\",\\\"valueText\\\":\\\"70 percent\\\",\\\"rect\\\":{\\\"x\\\":910.328125,\\\"y\\\":-161.21875,\\\"width\\\":240,\\\"height\\\":44,\\\"top\\\":-161.21875,\\\"right\\\":1150.328125,\\\"bottom\\\":-117.21875,\\\"left\\\":910.328125}},{\\\"id\\\":\\\"cruise-speed\\\",\\\"name\\\":\\\"Cruise speed\\\",\\\"valueText\\\":\\\"15.5 cells per second\\\",\\\"rect\\\":{\\\"x\\\":910.328125,\\\"y\\\":290.15625,\\\"width\\\":240,\\\"height\\\":44,\\\"top\\\":290.15625,\\\"right\\\":1150.328125,\\\"bottom\\\":334.15625,\\\"left\\\":910.328125}},{\\\"id\\\":\\\"turn-rate\\\",\\\"name\\\":\\\"Body turn response\\\",\\\"valueText\\\":\\\"690 degrees per second\\\",\\\"rect\\\":{\\\"x\\\":910.328125,\\\"y\\\":377.75,\\\"width\\\":240,\\\"height\\\":44,\\\"top\\\":377.75,\\\"right\\\":1150.328125,\\\"bottom\\\":421.75,\\\"left\\\":910.328125}}]}\"\n",
+        "stderr": ""
+      },
+      {
+        "args": [
+          "screenshot",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/settings-v0606/browser-fallback-capability/motion-slider-check/09-desktop-plain-standard.png"
+        ],
+        "exit": 0,
+        "stdout": "✓ Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/settings-v0606/browser-fallback-capability/motion-slider-check/09-desktop-plain-standard.png\n",
+        "stderr": ""
+      }
+    ]
+  }
+}
