@@ -1,0 +1,174 @@
+{
+  "format": "revealline-bounded-public-native-review.v1",
+  "result": "PARTIAL_PASS_REQUIRED_FOCUS_FAILURE",
+  "release": "v0.61.9",
+  "scope": "Actual public Still Media authoring visit, owned-file preview, responsive retained focus, cross-tab global reading preferences, close/reopen/return. Not full phase or release acceptance.",
+  "entryUrl": "https://mekhovov.github.io/revealline/releases/v0.61.9/site/game/",
+  "workshopUrl": "https://mekhovov.github.io/revealline/releases/v0.61.9/site/authoring/still-media/",
+  "identity": {
+    "separateManifest": "identity/manifest.json",
+    "sha256": "c58b1a71c2df678c605c3e2b42dbb72344e71237cfcf21b581ccd222d9e621ab",
+    "source": "6db978db40287151489803e915cb4ecb9ea232ee",
+    "publisher": "b88b0e4c63dddcc5339076e29606b2fb1700553f",
+    "pagesRun": "35370220934",
+    "deployment": "6528856630",
+    "deploymentStatus": "18534250830",
+    "limit": "Five retained metadata HTTP responses establish bounded identity. No full payload or deployed-byte audit is claimed."
+  },
+  "evidenceProvenance": "Parent performed the ordinary public browser actions. This sealing task read the retained observations, verified dimensions and hashes, and wrote only these three new JSON documents; no new browser interaction.",
+  "journeys": [
+    {
+      "evidence": [
+        "01",
+        "02",
+        "03",
+        "04"
+      ],
+      "result": "PASS for visible release/context and initial preference adoption",
+      "detail": "Entered v0.61.9 Home, selected Large/Plain through Settings, reached public Still Media Workshop and opened its dialog. Natural screenshots01/02 are excluded from geometry claims."
+    },
+    {
+      "evidence": [
+        "05",
+        "06",
+        "07",
+        "08"
+      ],
+      "result": "PARTIAL PASS",
+      "detail": "The exact owned filename, verified preview, unsaved provenance fields and saved counts remain unchanged through390x844 to844x390 and back. Initial portrait picker focus06 and landscape07 pass; return portrait08 retains focus but clips its painted outline."
+    },
+    {
+      "evidence": [
+        "09",
+        "10",
+        "11",
+        "12"
+      ],
+      "result": "PASS bounded actual cross-tab adoption",
+      "detail": "Ordinary Settings actions in the separate public Team tab wrote Standard/Theme and then Large/Plain while the editor in tab35 stayed open. Observations10/12 show the existing open draft adopt those preferences, with no reload, injection or replacement of its selected file/provenance values. Natural Settings screenshots09/11 are excluded from geometry claims."
+    },
+    {
+      "evidence": [
+        "13",
+        "14",
+        "15"
+      ],
+      "result": "PASS for bounded close/reopen focus and saved-count retention",
+      "detail": "Escape restores still-host-open. Enter reopens the Workshop with the same retained counts. Pointer Close again restores still-host-open. Reopened status reads Saved originals verified; it is not misreported as the prior settled-preview status."
+    },
+    {
+      "evidence": [
+        "16"
+      ],
+      "result": "PASS bounded return",
+      "detail": "Ordinary Back returns to v0.61.9 Home, with original Standard/Theme restored. Start was not activated."
+    }
+  ],
+  "retainedDraft": {
+    "observationNames": [
+      "05-portrait-owned-preview",
+      "06-portrait-picker-keyboard-focus",
+      "07-landscape-picker-retained",
+      "08-portrait-picker-return",
+      "10-open-draft-adopts-standard-theme",
+      "12-open-draft-readopts-large-plain"
+    ],
+    "filename": "C:\\fakepath\\revealline-owned-preview.png",
+    "credit": "RevealLine original game artwork · verification only",
+    "source": "Committed RevealLine asset 0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65; preview only.",
+    "description": "Public v0.61.9 Large/Plain preview and rotation verification. Unsaved local draft.",
+    "previewStatus": "768 × 576 · 46655 original bytes verified. Preview only; choose Save assignment to retain them.",
+    "savedCounts": "2 retained image records · 2 immutable revisions · saved generation 2",
+    "qualification": "UI value/count/status retention, not a proof that no database operation or schema upgrade occurred."
+  },
+  "readingPreferences": {
+    "standardTheme": {
+      "writer": "09-global-settings-standard-theme",
+      "adopter": "10-open-draft-adopts-standard-theme",
+      "adopterBodyFontSize": "18px",
+      "adopterSize": "standard",
+      "adopterFace": "pixel"
+    },
+    "largePlain": {
+      "writer": "11-global-settings-large-plain",
+      "adopter": "12-open-draft-readopts-large-plain",
+      "adopterBodyFontSize": "22px",
+      "adopterSize": "large",
+      "adopterFace": "plain"
+    },
+    "editorStayedOpen": true,
+    "reloadOrStateInjectionUsed": false,
+    "basis": "Parent ordinary-action account plus the paired retained DOM/AX observations."
+  },
+  "requiredFailure": {
+    "id": "still-media-return-portrait-focus-clipped",
+    "observation": "08-portrait-picker-return",
+    "result": "FAIL",
+    "viewport": [
+      390,
+      844
+    ],
+    "activeElement": "still-media-file",
+    "pickerBottom": 819.765625,
+    "outlineWidth": 3,
+    "outlineOffset": 4,
+    "paintedOutlineBottom": 826.765625,
+    "actualDialogScrollportBottom": 825.0,
+    "clippedCssPixels": 1.765625,
+    "dialogOuterBottom": 828,
+    "focusAndDraftRetained": true,
+    "blocksCompleteFocusClearanceAcceptance": true,
+    "analysisManifest": "focus-analysis/manifest.json",
+    "analysisSHA256": "015ce2c47e60e3cd7d12498a5299d97eb9efee6bfb50a1d290e6f03644a38905",
+    "cause": "The existing helper uses the dialog border box instead of the actual bordered scrollport when checking clearance. See the independent source analysis; this packet does not implement its proposed fix.",
+    "requiredNextEvidence": "A separately versioned correction and exact retained-focus portrait to landscape to portrait retest, plus affected shared-helper consumers. Do not change immutable v0.61.9 bytes."
+  },
+  "images": {
+    "manifest": "image-dimensions.json",
+    "rawJPEGCount": 16,
+    "responsiveCapturesExact": true,
+    "geometryExcluded": [
+      "01-home-version.jpg",
+      "02-settings-large-plain.jpg",
+      "09-global-settings-standard-theme.jpg",
+      "11-global-settings-large-plain.jpg"
+    ],
+    "reason": "Four natural screenshots are1258x720 despite DOM viewport1280x720. Preserve them for context and do not use their pixel geometry as viewport proof."
+  },
+  "recoverableToolAttempt": {
+    "action": "Initial getByLabel Text style selector",
+    "outcome": "Timed out. A fresh accessibility tree confirmed unchanged state; exact #text-face/#text-size controls then succeeded.",
+    "basis": "Parent action report; not classified as a game-state mutation or a successful selector action."
+  },
+  "console": {
+    "result": "Parent reports final bounded devlog sample contained no error or warning.",
+    "limit": "No separate raw devlog file is in this packet; not a claim of an error-free full session or full application."
+  },
+  "writesAndCleanup": {
+    "explicitAuthoringPersistenceActionsUsed": [],
+    "notPerformed": [
+      "Save assignment",
+      "Restore originals or stories",
+      "Use authored picture",
+      "Save prepared story",
+      "campaign progress changes",
+      "storage clear",
+      "lock bypass",
+      "Start"
+    ],
+    "globalPreferenceWrites": "Expected ordinary Settings writes occurred, followed by restoration of the original Standard/Theme.",
+    "storageWriteAbsenceClaimed": false,
+    "databaseLimit": "Opening the authored-media database may read or upgrade it; unchanged displayed counts and no Save actions do not prove zero storage writes.",
+    "unchangedPreferences": "Parent reports menu colours, ornaments and audio unchanged.",
+    "cleanup": "Parent reports local connections and the Team tab closed, original Standard/Theme restored, and tab35 parked on archive26 after the observed return to619Home."
+  },
+  "limits": [
+    "Required return-portrait focus failure remains open; no full item/phase acceptance.",
+    "No full deployed-byte or release artifact audit.",
+    "No physical-device or physical-controller qualification.",
+    "No200%zoom or spoken screen-reader qualification.",
+    "No BFCache qualification from ordinary cross-tab adoption.",
+    "No claim that every authoring path, level or asset works.",
+    "No saved draft/restore/campaign/play qualification; only the recorded unsaved-preview journey."
+  ]
+}
