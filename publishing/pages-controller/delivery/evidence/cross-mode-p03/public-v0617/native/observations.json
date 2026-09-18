@@ -1,0 +1,194 @@
+{
+  "cases": [
+    {
+      "name": "01-standard-portrait",
+      "control": {
+        "bottom": 444.0703125,
+        "height": 44,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 400.0703125
+      },
+      "focus": "blade-count",
+      "height": 844,
+      "label": "Blades\n                    2 blades\n                    3 blades\n                    4 blades",
+      "labelBox": {
+        "bottom": 444.0703125,
+        "height": 71.59375,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 372.4765625
+      },
+      "play": "Play",
+      "scrollY": 3939.5,
+      "selected": "3 blades",
+      "textSize": "standard",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+      "value": "3",
+      "width": 390
+    },
+    {
+      "name": "02-standard-landscape",
+      "control": {
+        "bottom": 79.75,
+        "height": 44,
+        "right": 825,
+        "width": 203,
+        "x": 622,
+        "y": 35.75
+      },
+      "focus": "blade-count",
+      "height": 390,
+      "label": "Blades\n                    2 blades\n                    3 blades\n                    4 blades",
+      "labelBox": {
+        "bottom": 79.75,
+        "height": 71.59375,
+        "right": 825,
+        "width": 203,
+        "x": 622,
+        "y": 8.15625
+      },
+      "play": "Play",
+      "scrollY": 445,
+      "selected": "3 blades",
+      "textSize": "standard",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+      "value": "3",
+      "width": 844
+    },
+    {
+      "name": "03-standard-return-portrait",
+      "control": {
+        "bottom": 836.0703125,
+        "height": 44,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 792.0703125
+      },
+      "focus": "blade-count",
+      "height": 844,
+      "label": "Blades\n                    2 blades\n                    3 blades\n                    4 blades",
+      "labelBox": {
+        "bottom": 836.0703125,
+        "height": 71.59375,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 764.4765625
+      },
+      "play": "Play",
+      "scrollY": 3547.5,
+      "selected": "3 blades",
+      "textSize": "standard",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+      "value": "3",
+      "width": 390
+    },
+    {
+      "name": "04-large-portrait",
+      "control": {
+        "bottom": 445.1171875,
+        "height": 46,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 399.1171875
+      },
+      "focus": "blade-count",
+      "height": 844,
+      "label": "Blades\n                    2 blades\n                    3 blades\n                    4 blades",
+      "labelBox": {
+        "bottom": 445.1171875,
+        "height": 79,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 366.1171875
+      },
+      "play": "Play",
+      "scrollY": 4747,
+      "selected": "3 blades",
+      "textSize": "large",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+      "value": "3",
+      "width": 390
+    },
+    {
+      "name": "05-large-landscape",
+      "control": {
+        "bottom": 87.171875,
+        "height": 46,
+        "right": 825,
+        "width": 203,
+        "x": 622,
+        "y": 41.171875
+      },
+      "focus": "blade-count",
+      "height": 390,
+      "label": "Blades\n                    2 blades\n                    3 blades\n                    4 blades",
+      "labelBox": {
+        "bottom": 87.171875,
+        "height": 79,
+        "right": 825,
+        "width": 203,
+        "x": 622,
+        "y": 8.171875
+      },
+      "play": "Play",
+      "scrollY": 559,
+      "selected": "3 blades",
+      "textSize": "large",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+      "value": "3",
+      "width": 844
+    },
+    {
+      "name": "06-large-return-portrait",
+      "control": {
+        "bottom": 836.1171875,
+        "height": 46,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 790.1171875
+      },
+      "focus": "blade-count",
+      "height": 844,
+      "label": "Blades\n                    2 blades\n                    3 blades\n                    4 blades",
+      "labelBox": {
+        "bottom": 836.1171875,
+        "height": 79,
+        "right": 376,
+        "width": 362,
+        "x": 14,
+        "y": 757.1171875
+      },
+      "play": "Play",
+      "scrollY": 4356,
+      "selected": "3 blades",
+      "textSize": "large",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+      "value": "3",
+      "width": 390
+    }
+  ],
+  "returnGame": {
+    "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/game/",
+    "ax": "Browser tab: 7, Title: \"Reveal / Line\", URL: \"https://mekhovov.github.io/revealline/releases/v0.61.7/site/game/\".\nThere has been no change in the accessibility tree.\nThe focused UI element is 13 button Start, ID: shell-featured"
+  },
+  "back": {
+    "url": "https://mekhovov.github.io/revealline/releases/v0.61.7/site/authoring/motion-lab/",
+    "note": "Browser Back performed a fresh Motion Lab initialization; paused again using visible Pause. Rotation preservation applies to six prior cases, not cross-navigation restoration."
+  },
+  "verdict": "PASS bounded focus/value/paused rotation gate; known right-edge outline clipping remains open",
+  "limitations": [
+    "No physical device/controller checks",
+    "No offline or listening checks",
+    "No main Solo attempt started, continued, reset or imported; landing was Start First Signal",
+    "Return/Back routes retained immutable v0.61.7; Back initialized preview afresh"
+  ],
+  "method": "Real CUA actions and read-only DOM metrics. No app-state or storage injection."
+}

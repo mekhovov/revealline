@@ -1,0 +1,897 @@
+{
+  "cases": [
+    {
+      "name": "01-280-large-theme",
+      "canvas": {
+        "bottom": 433.078125,
+        "height": 126,
+        "right": 266,
+        "text": "",
+        "width": 252,
+        "x": 14,
+        "y": 307.078125
+      },
+      "docHeight": 844,
+      "docWidth": 280,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 575.078125,
+        "height": 132,
+        "right": 268,
+        "text": "Watch the Hunter warnings. Cover a crossing or join after the charge passes.",
+        "width": 256,
+        "x": 12,
+        "y": 443.078125
+      },
+      "pause": {
+        "bottom": 630.078125,
+        "height": 47,
+        "right": 268,
+        "text": "Pause",
+        "width": 91.453125,
+        "x": 176.546875,
+        "y": 583.078125
+      },
+      "textFace": "pixel",
+      "textSize": "large",
+      "width": 280
+    },
+    {
+      "name": "02-280-large-plain",
+      "canvas": {
+        "bottom": 433.078125,
+        "height": 126,
+        "right": 266,
+        "text": "",
+        "width": 252,
+        "x": 14,
+        "y": 307.078125
+      },
+      "docHeight": 844,
+      "docWidth": 280,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 509.078125,
+        "height": 66,
+        "right": 268,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 256,
+        "x": 12,
+        "y": 443.078125
+      },
+      "pause": {
+        "bottom": 564.078125,
+        "height": 47,
+        "right": 268,
+        "text": "Pause",
+        "width": 90.578125,
+        "x": 177.421875,
+        "y": 517.078125
+      },
+      "textFace": "plain",
+      "textSize": "large",
+      "width": 280
+    },
+    {
+      "name": "03-320-large-plain",
+      "canvas": {
+        "bottom": 404.484375,
+        "height": 146,
+        "right": 306,
+        "text": "",
+        "width": 292,
+        "x": 14,
+        "y": 258.484375
+      },
+      "docHeight": 844,
+      "docWidth": 320,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 480.484375,
+        "height": 66,
+        "right": 308,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 296,
+        "x": 12,
+        "y": 414.484375
+      },
+      "pause": {
+        "bottom": 535.484375,
+        "height": 47,
+        "right": 308,
+        "text": "Pause",
+        "width": 90.578125,
+        "x": 217.421875,
+        "y": 488.484375
+      },
+      "textFace": "plain",
+      "textSize": "large",
+      "width": 320
+    },
+    {
+      "name": "04-390-large-plain",
+      "canvas": {
+        "bottom": 439.484375,
+        "height": 181,
+        "right": 376,
+        "text": "",
+        "width": 362,
+        "x": 14,
+        "y": 258.484375
+      },
+      "docHeight": 844,
+      "docWidth": 390,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 515.484375,
+        "height": 66,
+        "right": 378,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 366,
+        "x": 12,
+        "y": 449.484375
+      },
+      "pause": {
+        "bottom": 570.484375,
+        "height": 47,
+        "right": 378,
+        "text": "Pause",
+        "width": 90.578125,
+        "x": 287.421875,
+        "y": 523.484375
+      },
+      "textFace": "plain",
+      "textSize": "large",
+      "width": 390
+    },
+    {
+      "name": "05-280-standard-plain",
+      "canvas": {
+        "bottom": 350.59375,
+        "height": 126,
+        "right": 266,
+        "text": "",
+        "width": 252,
+        "x": 14,
+        "y": 224.59375
+      },
+      "docHeight": 844,
+      "docWidth": 280,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 414.59375,
+        "height": 54,
+        "right": 268,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 256,
+        "x": 12,
+        "y": 360.59375
+      },
+      "pause": {
+        "bottom": 466.59375,
+        "height": 44,
+        "right": 268,
+        "text": "Pause",
+        "width": 80.9921875,
+        "x": 187.0078125,
+        "y": 422.59375
+      },
+      "textFace": "plain",
+      "textSize": "standard",
+      "width": 280
+    },
+    {
+      "name": "06-320-standard-plain",
+      "canvas": {
+        "bottom": 370.59375,
+        "height": 146,
+        "right": 306,
+        "text": "",
+        "width": 292,
+        "x": 14,
+        "y": 224.59375
+      },
+      "docHeight": 844,
+      "docWidth": 320,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 434.59375,
+        "height": 54,
+        "right": 308,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 296,
+        "x": 12,
+        "y": 380.59375
+      },
+      "pause": {
+        "bottom": 486.59375,
+        "height": 44,
+        "right": 308,
+        "text": "Pause",
+        "width": 80.9921875,
+        "x": 227.0078125,
+        "y": 442.59375
+      },
+      "textFace": "plain",
+      "textSize": "standard",
+      "width": 320
+    },
+    {
+      "name": "07-390-standard-plain",
+      "canvas": {
+        "bottom": 378.59375,
+        "height": 181,
+        "right": 376,
+        "text": "",
+        "width": 362,
+        "x": 14,
+        "y": 197.59375
+      },
+      "docHeight": 844,
+      "docWidth": 390,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 415.59375,
+        "height": 27,
+        "right": 378,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 366,
+        "x": 12,
+        "y": 388.59375
+      },
+      "pause": {
+        "bottom": 467.59375,
+        "height": 44,
+        "right": 378,
+        "text": "Pause",
+        "width": 80.9921875,
+        "x": 297.0078125,
+        "y": 423.59375
+      },
+      "textFace": "plain",
+      "textSize": "standard",
+      "width": 390
+    },
+    {
+      "name": "08-390-standard-theme",
+      "canvas": {
+        "bottom": 378.59375,
+        "height": 181,
+        "right": 376,
+        "text": "",
+        "width": 362,
+        "x": 14,
+        "y": 197.59375
+      },
+      "docHeight": 844,
+      "docWidth": 390,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 415.59375,
+        "height": 27,
+        "right": 378,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 366,
+        "x": 12,
+        "y": 388.59375
+      },
+      "pause": {
+        "bottom": 467.59375,
+        "height": 44,
+        "right": 378,
+        "text": "Pause",
+        "width": 80.359375,
+        "x": 297.640625,
+        "y": 423.59375
+      },
+      "textFace": "pixel",
+      "textSize": "standard",
+      "width": 390
+    },
+    {
+      "name": "09-320-standard-theme",
+      "canvas": {
+        "bottom": 370.59375,
+        "height": 146,
+        "right": 306,
+        "text": "",
+        "width": 292,
+        "x": 14,
+        "y": 224.59375
+      },
+      "docHeight": 844,
+      "docWidth": 320,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 434.59375,
+        "height": 54,
+        "right": 308,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 296,
+        "x": 12,
+        "y": 380.59375
+      },
+      "pause": {
+        "bottom": 486.59375,
+        "height": 44,
+        "right": 308,
+        "text": "Pause",
+        "width": 80.359375,
+        "x": 227.640625,
+        "y": 442.59375
+      },
+      "textFace": "pixel",
+      "textSize": "standard",
+      "width": 320
+    },
+    {
+      "name": "10-280-standard-theme",
+      "canvas": {
+        "bottom": 350.59375,
+        "height": 126,
+        "right": 266,
+        "text": "",
+        "width": 252,
+        "x": 14,
+        "y": 224.59375
+      },
+      "docHeight": 844,
+      "docWidth": 280,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 414.59375,
+        "height": 54,
+        "right": 268,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 256,
+        "x": 12,
+        "y": 360.59375
+      },
+      "pause": {
+        "bottom": 466.59375,
+        "height": 44,
+        "right": 268,
+        "text": "Pause",
+        "width": 80.359375,
+        "x": 187.640625,
+        "y": 422.59375
+      },
+      "textFace": "pixel",
+      "textSize": "standard",
+      "width": 280
+    },
+    {
+      "name": "11-320-large-theme",
+      "canvas": {
+        "bottom": 404.484375,
+        "height": 146,
+        "right": 306,
+        "text": "",
+        "width": 292,
+        "x": 14,
+        "y": 258.484375
+      },
+      "docHeight": 844,
+      "docWidth": 320,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 480.484375,
+        "height": 66,
+        "right": 308,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 296,
+        "x": 12,
+        "y": 414.484375
+      },
+      "pause": {
+        "bottom": 535.484375,
+        "height": 47,
+        "right": 308,
+        "text": "Pause",
+        "width": 91.453125,
+        "x": 216.546875,
+        "y": 488.484375
+      },
+      "textFace": "pixel",
+      "textSize": "large",
+      "width": 320
+    },
+    {
+      "name": "12-390-large-theme",
+      "canvas": {
+        "bottom": 439.484375,
+        "height": 181,
+        "right": 376,
+        "text": "",
+        "width": 362,
+        "x": 14,
+        "y": 258.484375
+      },
+      "docHeight": 844,
+      "docWidth": 390,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 515.484375,
+        "height": 66,
+        "right": 378,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 366,
+        "x": 12,
+        "y": 449.484375
+      },
+      "pause": {
+        "bottom": 570.484375,
+        "height": 47,
+        "right": 378,
+        "text": "Pause",
+        "width": 91.453125,
+        "x": 286.546875,
+        "y": 523.484375
+      },
+      "textFace": "pixel",
+      "textSize": "large",
+      "width": 390
+    },
+    {
+      "name": "13-390-large-theme-touch",
+      "canvas": {
+        "bottom": 439.484375,
+        "height": 181,
+        "right": 376,
+        "text": "",
+        "width": 362,
+        "x": 14,
+        "y": 258.484375
+      },
+      "docHeight": 844,
+      "docWidth": 390,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 515.484375,
+        "height": 66,
+        "right": 378,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 366,
+        "x": 12,
+        "y": 449.484375
+      },
+      "pause": {
+        "bottom": 570.484375,
+        "height": 47,
+        "right": 378,
+        "text": "Pause",
+        "width": 91.453125,
+        "x": 286.546875,
+        "y": 523.484375
+      },
+      "textFace": "pixel",
+      "textSize": "large",
+      "width": 390,
+      "touch": [
+        {
+          "bottom": 623.484375,
+          "height": 44,
+          "label": "Player 1 up",
+          "right": 123.5,
+          "width": 44,
+          "x": 79.5,
+          "y": 579.484375
+        },
+        {
+          "bottom": 671.484375,
+          "height": 44,
+          "label": "Player 1 left",
+          "right": 75.5,
+          "width": 44,
+          "x": 31.5,
+          "y": 627.484375
+        },
+        {
+          "bottom": 671.484375,
+          "height": 44,
+          "label": "Player 1 right",
+          "right": 171.5,
+          "width": 44,
+          "x": 127.5,
+          "y": 627.484375
+        },
+        {
+          "bottom": 719.484375,
+          "height": 44,
+          "label": "Player 1 down",
+          "right": 123.5,
+          "width": 44,
+          "x": 79.5,
+          "y": 675.484375
+        },
+        {
+          "bottom": 786.3828125,
+          "height": 62.8984375,
+          "label": "Player 1 Boost",
+          "right": 99.5,
+          "width": 68,
+          "x": 31.5,
+          "y": 723.484375
+        },
+        {
+          "bottom": 786.3828125,
+          "height": 62.8984375,
+          "label": "Player 1 Support; hold beside a downed partner to rescue",
+          "right": 171.5,
+          "width": 68,
+          "x": 103.5,
+          "y": 723.484375
+        },
+        {
+          "bottom": 623.484375,
+          "height": 44,
+          "label": "Player 2 up",
+          "right": 310.5,
+          "width": 44,
+          "x": 266.5,
+          "y": 579.484375
+        },
+        {
+          "bottom": 671.484375,
+          "height": 44,
+          "label": "Player 2 left",
+          "right": 262.5,
+          "width": 44,
+          "x": 218.5,
+          "y": 627.484375
+        },
+        {
+          "bottom": 671.484375,
+          "height": 44,
+          "label": "Player 2 right",
+          "right": 358.5,
+          "width": 44,
+          "x": 314.5,
+          "y": 627.484375
+        },
+        {
+          "bottom": 719.484375,
+          "height": 44,
+          "label": "Player 2 down",
+          "right": 310.5,
+          "width": 44,
+          "x": 266.5,
+          "y": 675.484375
+        },
+        {
+          "bottom": 786.3828125,
+          "height": 62.8984375,
+          "label": "Player 2 Boost",
+          "right": 286.5,
+          "width": 68,
+          "x": 218.5,
+          "y": 723.484375
+        },
+        {
+          "bottom": 786.3828125,
+          "height": 62.8984375,
+          "label": "Player 2 Support; hold beside a downed partner to rescue",
+          "right": 358.5,
+          "width": 68,
+          "x": 290.5,
+          "y": 723.484375
+        }
+      ]
+    },
+    {
+      "name": "14-320-large-theme-touch",
+      "canvas": {
+        "bottom": 404.484375,
+        "height": 146,
+        "right": 306,
+        "text": "",
+        "width": 292,
+        "x": 14,
+        "y": 258.484375
+      },
+      "docHeight": 844,
+      "docWidth": 320,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 480.484375,
+        "height": 66,
+        "right": 308,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 296,
+        "x": 12,
+        "y": 414.484375
+      },
+      "pause": {
+        "bottom": 535.484375,
+        "height": 47,
+        "right": 308,
+        "text": "Pause",
+        "width": 91.453125,
+        "x": 216.546875,
+        "y": 488.484375
+      },
+      "textFace": "pixel",
+      "textSize": "large",
+      "width": 320,
+      "touch": [
+        {
+          "bottom": 588.484375,
+          "height": 44,
+          "label": "Player 1 up",
+          "right": 106,
+          "width": 44,
+          "x": 62,
+          "y": 544.484375
+        },
+        {
+          "bottom": 636.484375,
+          "height": 44,
+          "label": "Player 1 left",
+          "right": 58,
+          "width": 44,
+          "x": 14,
+          "y": 592.484375
+        },
+        {
+          "bottom": 636.484375,
+          "height": 44,
+          "label": "Player 1 right",
+          "right": 154,
+          "width": 44,
+          "x": 110,
+          "y": 592.484375
+        },
+        {
+          "bottom": 684.484375,
+          "height": 44,
+          "label": "Player 1 down",
+          "right": 106,
+          "width": 44,
+          "x": 62,
+          "y": 640.484375
+        },
+        {
+          "bottom": 751.3828125,
+          "height": 62.8984375,
+          "label": "Player 1 Boost",
+          "right": 82,
+          "width": 68,
+          "x": 14,
+          "y": 688.484375
+        },
+        {
+          "bottom": 751.3828125,
+          "height": 62.8984375,
+          "label": "Player 1 Support; hold beside a downed partner to rescue",
+          "right": 154,
+          "width": 68,
+          "x": 86,
+          "y": 688.484375
+        },
+        {
+          "bottom": 588.484375,
+          "height": 44,
+          "label": "Player 2 up",
+          "right": 258,
+          "width": 44,
+          "x": 214,
+          "y": 544.484375
+        },
+        {
+          "bottom": 636.484375,
+          "height": 44,
+          "label": "Player 2 left",
+          "right": 210,
+          "width": 44,
+          "x": 166,
+          "y": 592.484375
+        },
+        {
+          "bottom": 636.484375,
+          "height": 44,
+          "label": "Player 2 right",
+          "right": 306,
+          "width": 44,
+          "x": 262,
+          "y": 592.484375
+        },
+        {
+          "bottom": 684.484375,
+          "height": 44,
+          "label": "Player 2 down",
+          "right": 258,
+          "width": 44,
+          "x": 214,
+          "y": 640.484375
+        },
+        {
+          "bottom": 751.3828125,
+          "height": 62.8984375,
+          "label": "Player 2 Boost",
+          "right": 234,
+          "width": 68,
+          "x": 166,
+          "y": 688.484375
+        },
+        {
+          "bottom": 751.3828125,
+          "height": 62.8984375,
+          "label": "Player 2 Support; hold beside a downed partner to rescue",
+          "right": 306,
+          "width": 68,
+          "x": 238,
+          "y": 688.484375
+        }
+      ]
+    },
+    {
+      "name": "15-280-large-theme-touch",
+      "canvas": {
+        "bottom": 433.078125,
+        "height": 126,
+        "right": 266,
+        "text": "",
+        "width": 252,
+        "x": 14,
+        "y": 307.078125
+      },
+      "docHeight": 1019,
+      "docWidth": 280,
+      "focus": "coop-canvas",
+      "height": 844,
+      "message": {
+        "bottom": 509.078125,
+        "height": 66,
+        "right": 268,
+        "text": "Choose fresh directions when you are ready.",
+        "width": 256,
+        "x": 12,
+        "y": 443.078125
+      },
+      "pause": {
+        "bottom": 564.078125,
+        "height": 47,
+        "right": 268,
+        "text": "Pause",
+        "width": 91.453125,
+        "x": 176.546875,
+        "y": 517.078125
+      },
+      "textFace": "pixel",
+      "textSize": "large",
+      "width": 280,
+      "touch": [
+        {
+          "bottom": 617.078125,
+          "height": 44,
+          "label": "Player 1 up",
+          "right": 162,
+          "width": 44,
+          "x": 118,
+          "y": 573.078125
+        },
+        {
+          "bottom": 665.078125,
+          "height": 44,
+          "label": "Player 1 left",
+          "right": 114,
+          "width": 44,
+          "x": 70,
+          "y": 621.078125
+        },
+        {
+          "bottom": 665.078125,
+          "height": 44,
+          "label": "Player 1 right",
+          "right": 210,
+          "width": 44,
+          "x": 166,
+          "y": 621.078125
+        },
+        {
+          "bottom": 713.078125,
+          "height": 44,
+          "label": "Player 1 down",
+          "right": 162,
+          "width": 44,
+          "x": 118,
+          "y": 669.078125
+        },
+        {
+          "bottom": 779.9765625,
+          "height": 62.8984375,
+          "label": "Player 1 Boost",
+          "right": 138,
+          "width": 68,
+          "x": 70,
+          "y": 717.078125
+        },
+        {
+          "bottom": 779.9765625,
+          "height": 62.8984375,
+          "label": "Player 1 Support; hold beside a downed partner to rescue",
+          "right": 210,
+          "width": 68,
+          "x": 142,
+          "y": 717.078125
+        },
+        {
+          "bottom": 831.9765625,
+          "height": 44,
+          "label": "Player 2 up",
+          "right": 162,
+          "width": 44,
+          "x": 118,
+          "y": 787.9765625
+        },
+        {
+          "bottom": 879.9765625,
+          "height": 44,
+          "label": "Player 2 left",
+          "right": 114,
+          "width": 44,
+          "x": 70,
+          "y": 835.9765625
+        },
+        {
+          "bottom": 879.9765625,
+          "height": 44,
+          "label": "Player 2 right",
+          "right": 210,
+          "width": 44,
+          "x": 166,
+          "y": 835.9765625
+        },
+        {
+          "bottom": 927.9765625,
+          "height": 44,
+          "label": "Player 2 down",
+          "right": 162,
+          "width": 44,
+          "x": 118,
+          "y": 883.9765625
+        },
+        {
+          "bottom": 994.875,
+          "height": 62.8984375,
+          "label": "Player 2 Boost",
+          "right": 138,
+          "width": 68,
+          "x": 70,
+          "y": 931.9765625
+        },
+        {
+          "bottom": 994.875,
+          "height": 62.8984375,
+          "label": "Player 2 Support; hold beside a downed partner to rescue",
+          "right": 210,
+          "width": 68,
+          "x": 142,
+          "y": 931.9765625
+        }
+      ]
+    }
+  ],
+  "verdict": "Bounded narrow footer PASS: no horizontal overflow, Pause>=44px, full messages. Full touch-layout acceptance remains OPEN:280px Large stacks pads below viewport.",
+  "limitations": [
+    "Most cases used normal post-Resume message; only01 used longer opening warning",
+    "No induced failure/action-error native case",
+    "No physical touch/controller test",
+    "Touch320/390 actual buttons measured;280Large P2 extends to994.875px in844px viewport",
+    "No attempt to reduce or crop board, copy or touch targets"
+  ]
+}
