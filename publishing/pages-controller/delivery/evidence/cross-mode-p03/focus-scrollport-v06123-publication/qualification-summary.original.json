@@ -1,0 +1,251 @@
+{
+  "source": {
+    "commit": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+    "tree": "4e04fef2d0d37614149624392e316742a513bc8d",
+    "version": "v0.61.23"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-focus-scrollport-v06123/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/qualification/source-qualification.json",
+    "bytes": 109293,
+    "sha256": "482970f1a16bf12b8fa8da85959631b533426478dc81748ce8ebb7f93f731d35"
+  },
+  "rootSourcePackageAcceptance": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/final-execution/root-package-review.json",
+    "bytes": 1448,
+    "sha256": "cb7216bdfe467e854550de5a4b0398d2882404527675ad69d4c0291a78c77646"
+  },
+  "tests": {
+    "tests": 5925,
+    "pass": 5925,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 466,
+  "hostedPRRun": 35373327738,
+  "hostedManualRun": 35373354503,
+  "hostedSourceReview": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-focus-scrollport-v06123/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/parent-independent-qualification-review.json",
+    "bytes": 4718,
+    "sha256": "6c785d3ad9d3366543226677306a8fda925e2bf4a62dcd788c8352a85ea274a4"
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 105692176201,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T17:16:56Z",
+        "completed_at": "2026-09-18T17:17:42Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 105692176201,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T17:16:56Z",
+        "completed_at": "2026-09-18T17:17:42Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 105692176201,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T17:16:56Z",
+        "completed_at": "2026-09-18T17:17:42Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 105692176201,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T17:16:56Z",
+        "completed_at": "2026-09-18T17:17:42Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 105692176201,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T17:16:56Z",
+        "completed_at": "2026-09-18T17:17:42Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "test",
+      "jobId": 105692761619,
+      "step": {
+        "name": "Run test shard 4/4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T17:20:02Z",
+        "completed_at": "2026-09-18T17:50:58Z"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 105692761561,
+          "step": {
+            "name": "Run test shard 1/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T17:18:51Z",
+            "completed_at": "2026-09-18T17:46:25Z"
+          },
+          "counts": {
+            "tests": 1406,
+            "pass": 1406,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/hosted/pr-source/job-105692761561.log.gz",
+            "bytes": 106971,
+            "sha256": "e3231ad2ada952d83c7aadb7d3e9d3e16ee4e457cc46150a891ce61aee721f48"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 1/4 --root ."
+        },
+        {
+          "shard": 2,
+          "jobId": 105692761560,
+          "step": {
+            "name": "Run test shard 2/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T17:18:45Z",
+            "completed_at": "2026-09-18T17:34:16Z"
+          },
+          "counts": {
+            "tests": 1477,
+            "pass": 1477,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/hosted/pr-source/job-105692761560.log.gz",
+            "bytes": 112497,
+            "sha256": "95d5a7f008a155790f286c3655942b99c7e45438fa2a120e0a9159e3a0918656"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 2/4 --root ."
+        },
+        {
+          "shard": 3,
+          "jobId": 105692761626,
+          "step": {
+            "name": "Run test shard 3/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T17:18:48Z",
+            "completed_at": "2026-09-18T17:31:14Z"
+          },
+          "counts": {
+            "tests": 1362,
+            "pass": 1362,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/hosted/pr-source/job-105692761626.log.gz",
+            "bytes": 105673,
+            "sha256": "c3ae8fbde0116994315717809eeceacf40b322a4c21669c917658f13323ff2b7"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 3/4 --root ."
+        },
+        {
+          "shard": 4,
+          "jobId": 105692761619,
+          "step": {
+            "name": "Run test shard 4/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T17:20:02Z",
+            "completed_at": "2026-09-18T17:50:58Z"
+          },
+          "counts": {
+            "tests": 1680,
+            "pass": 1680,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/hosted/pr-source/job-105692761619.log.gz",
+            "bytes": 120837,
+            "sha256": "2b8c91f0390770209f582ac32f6193016922c61a091a8d2fc55013f7e7a2d17a"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 4/4 --root ."
+        }
+      ],
+      "counts": {
+        "tests": 5925,
+        "pass": 5925,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "partition": {
+        "path": ".cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/hosted/partition-coverage.json",
+        "bytes": 23809,
+        "sha256": "d23591fc3e463ff072d5c71f4561f93e1accc4d9cba59e29ad33a1b87922e3dc"
+      },
+      "scope": "Actual last-completed successful shard is representative; all four actual completed shards and exact partition are required."
+    }
+  ],
+  "fullTestsOrBuildsRepeated": false,
+  "localSourceAndIndexClean": true,
+  "releasePublication": false,
+  "publicAcceptance": false,
+  "wholePhaseAccepted": false,
+  "sevenAssetsRehashed": 7,
+  "sevenAssetBytes": 5821347,
+  "evidenceZIPCRCMemberCount": 259,
+  "guide": {
+    "gitCommit": "516d82fe276bf1b1aae3aa094d35b04d74d8082d",
+    "path": ".cursor/skills/deploy-release-pages/SKILL.md",
+    "bytes": 18344,
+    "sha256": "602f36d02615983836d7928e511e7b0a2d59e4ccfdae9441e14c4f607906129b"
+  }
+}
