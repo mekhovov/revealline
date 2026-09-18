@@ -1,0 +1,47 @@
+{
+  "base": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "scope": "Exact616 source plus unchanged r2 Motion display.mjs and r3 Motion CSS8px wrapper scroll margin. Native retest only, no app-state or preference fixtures. Earlier candidate bindings preserved.",
+  "candidateSource": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/authoring/motion-lab/display.mjs",
+    "bytes": 7823,
+    "sha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4"
+  },
+  "files": {
+    "authoring/motion-lab/display.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/native-server-r3/candidate-display.mjs",
+      "bytes": 7823,
+      "sha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4"
+    },
+    "authoring/motion-lab/styles.css": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/native-server-r3/candidate-styles.css",
+      "bytes": 30321,
+      "sha256": "1b266e5c7059ce17bfa4705f5810cccd976e1ec80dbce9fe5d6bbf1effe988d4"
+    }
+  },
+  "limits": {
+    "extraDiskBytes": 16777216,
+    "reserveBytes": 536870912,
+    "memoryCacheBytes": 8388608,
+    "singleBlobBytes": 8388608,
+    "requestLogBytes": 1048576,
+    "requestEvents": 4000
+  },
+  "predecessor": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-replay-jump-focus-native-9577b2cb/serve.py",
+    "bytes": 5283,
+    "sha256": "764c12e31f81f49cd68cdab2b3d531f0880354914d0c3dd3974ce4ca3e1ff965"
+  },
+  "at": "2026-09-18T05:56:18.782084+00:00",
+  "hydration": "On-demand local Git object reads with GIT_NO_LAZY_FETCH=1 and hash verification. No dependency payloads copied to disk.",
+  "predecessorCandidate": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/native-server-r2/binding.json",
+    "bytes": 1327,
+    "sha256": "fed460e3586bd7e1b9b38bc5781123fe747a6ed5ba58b369bf1c016afaef5400"
+  },
+  "nativeFailure": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/native-rotation-failure-r1.json",
+    "bytes": 1243,
+    "sha256": "2f8a878869401c524a0c938155ca34abd015beb67a33bed12f68c9ee0c7dbe81"
+  }
+}

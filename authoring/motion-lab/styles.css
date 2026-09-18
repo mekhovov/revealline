@@ -421,6 +421,10 @@ h1 {
   border-left: 1px solid var(--line);
   padding-left: 25px;
 }
+/* The grouped resize target must leave room for the native control focus ring. */
+.controls :is(.range-field, .field, .segmented label) {
+  scroll-margin-block: 8px;
+}
 .control-section + .control-section {
   margin-top: 20px;
   padding-top: 17px;

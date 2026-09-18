@@ -1503,3 +1503,177 @@ test('Motion recipe replacement refreshes the rotor value text after a manual ra
   assert.equal(sliderLabel(h, 'rotor-radius'), 'Rotor radius');
   assert.equal(h.doc.activeElement, h.$('animation-recipe'));
 });
+
+function rotationGeometry(h) {
+  h.host.innerWidth = h.doc.documentElement.clientWidth = 844;
+  h.host.innerHeight = h.doc.documentElement.clientHeight = 390;
+  h.host.getComputedStyle = (node) => ({
+    display: node.style.display || 'block',
+    visibility: node.style.visibility || 'visible',
+    overflowY: node.style.overflowY || 'visible',
+    overflowX: node.style.overflowX || 'visible',
+  });
+  const controls = h.doc.querySelector('.controls');
+  controls.style.overflowY = 'auto';
+  controls._rect = { x: 610, y: 55, width: 220, height: 325 };
+  const target = h.$('rotor-radius'),
+    field = target.closest('.range-field');
+  field._rect = { x: 624, y: 340, width: 180, height: 80 };
+  target._rect = { x: 624, y: 390, width: 180, height: 30 };
+  return { controls, target, field };
+}
+
+test('Motion rotation reveals the currently focused rotor field without changing its paused study', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.$('play-pause').click();
+  h.change('rotor-radius', '0.27', 'input');
+  const { target, field } = rotationGeometry(h);
+  target.focus();
+  const before = freezeView(h),
+    arena = h.$('arena'),
+    requests = h.requests.length,
+    images = [...h.images],
+    scrolls = [];
+  t.mock.method(target, 'focus', () => assert.fail('Rotation must not assign focus.'));
+  t.mock.method(field, 'scrollIntoView', (options) => {
+    scrolls.push(options);
+    // Model the ordinary nearest-scroll result, not a browser layout engine.
+    field._rect.y = 220;
+    target._rect.y = 270;
+  });
+  h.host.emit('resize');
+  assert.deepEqual(scrolls, [{ block: 'nearest', inline: 'nearest', behavior: 'instant' }]);
+  assert.equal(h.doc.activeElement, target);
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.$('arena'), arena);
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.requests.length, requests);
+  assert.deepEqual(h.images, images);
+  assert.deepEqual(h.writes, []);
+  h.host.emit('resize');
+  assert.equal(scrolls.length, 1, 'A visible field needs no second scroll.');
+});
+
+test('Motion rotation accounts for the settings clip even while a focused slider is inside the viewport', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const { controls, target, field } = rotationGeometry(h);
+  controls._rect.height = 165;
+  field._rect.y = 200;
+  target._rect.y = 250;
+  target.focus();
+  const calls = [];
+  t.mock.method(field, 'scrollIntoView', (options) => calls.push(options));
+  h.host.emit('resize');
+  assert.equal(calls.length, 1, 'The inner scroller clips a viewport-visible control.');
+  controls.style.overflowY = 'visible';
+  h.host.emit('resize');
+  assert.equal(calls.length, 1, 'Portrait flow has no inner clipping boundary.');
+  assert.equal(h.doc.activeElement, target);
+});
+
+test('Motion rotation reveals the rotor when its entire settings panel moves above the viewport', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.$('play-pause').click();
+  h.change('rotor-radius', '0.27', 'input');
+  const { controls, target, field } = rotationGeometry(h);
+  // Actual native portrait-to-landscape failure: document scroll retained while
+  // the settings panel became its own scroller, leaving both ancestors clipped.
+  controls._rect = { x: 610, y: -768.109375, width: 220, height: 330 };
+  field._rect = { x: 624, y: 1979.84375, width: 180, height: 105.59375 };
+  target._rect = { x: 624, y: 2041.4375, width: 180, height: 44 };
+  target.focus();
+  const before = freezeView(h),
+    scrolls = [];
+  t.mock.method(target, 'focus', () => assert.fail('Rotation must keep native focus.'));
+  t.mock.method(field, 'scrollIntoView', (options) => scrolls.push(options));
+  h.host.emit('resize');
+  assert.deepEqual(scrolls, [{ block: 'nearest', inline: 'nearest', behavior: 'instant' }]);
+  assert.equal(h.doc.activeElement, target);
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(h.frames.size, 0);
+  assert.deepEqual(h.writes, []);
+});
+
+for (const condition of [
+  'hidden',
+  'inert',
+  'disabled',
+  'fieldset',
+  'background',
+  'away',
+  'disposed',
+])
+  test(`Motion rotation cannot reveal an ${condition} current control`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    const { controls, target, field } = rotationGeometry(h);
+    target.focus();
+    if (condition === 'hidden') controls.hidden = true;
+    if (condition === 'inert') controls.setAttribute('inert', '');
+    if (condition === 'disabled') target.disabled = true;
+    if (condition === 'fieldset') h.$('motion-study').disabled = true;
+    if (condition === 'background') h.doc.focused = false;
+    if (condition === 'away') h.host.emit('pagehide', { persisted: true });
+    if (condition === 'disposed') h.host.emit('pagehide', { persisted: false });
+    t.mock.method(field, 'scrollIntoView', () =>
+      assert.fail('An ineligible control must not scroll.'),
+    );
+    const resize = [...(h.host.listeners.get('resize') || [])];
+    h.host.emit('resize');
+    for (const callback of resize) callback({ target: h.host });
+    assert.equal(h.doc.activeElement, target);
+    if (condition === 'away' || condition === 'disposed') {
+      assert.equal(h.frames.size, 0);
+      assert.equal(h.$('play-pause').textContent, 'Play');
+    }
+  });
+
+test('Motion resize cannot scroll after measurement changes the focused owner or loses foreground', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const { target, field } = rotationGeometry(h);
+  const rect = field.getBoundingClientRect.bind(field);
+  t.mock.method(field, 'scrollIntoView', () =>
+    assert.fail('Stale focus cannot reveal the old field.'),
+  );
+  let interruption = 'focus';
+  t.mock.method(field, 'getBoundingClientRect', () => {
+    if (interruption === 'focus') h.$('animation-recipe').focus();
+    else h.doc.focused = false;
+    return rect();
+  });
+  target.focus();
+  h.host.emit('resize');
+  assert.equal(h.doc.activeElement, h.$('animation-recipe'));
+  interruption = 'background';
+  target.focus();
+  h.host.emit('resize');
+  assert.equal(h.doc.activeElement, target);
+});
+
+test('Motion resize reveals the control when its labeled field is taller than the visible settings area', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const { controls, target, field } = rotationGeometry(h);
+  controls._rect.height = 60;
+  target.focus();
+  const calls = [];
+  t.mock.method(field, 'scrollIntoView', () =>
+    assert.fail('An oversized field cannot hide its control.'),
+  );
+  t.mock.method(target, 'scrollIntoView', (options) => calls.push(options));
+  const rect = target.getBoundingClientRect.bind(target);
+  t.mock.method(target, 'getBoundingClientRect', () => {
+    h.host.emit('resize');
+    return rect();
+  });
+  h.host.emit('resize');
+  assert.equal(calls.length, 1, 'Reentrant measurement does not schedule repeated scrolls.');
+  target.emit('resize');
+  assert.equal(calls.length, 1, 'Descendant events cannot pretend to be a viewport resize.');
+});
