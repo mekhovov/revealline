@@ -1,0 +1,31 @@
+{
+  "status": "ROOT_NATIVE_SCOPED_RETENTION_PASS",
+  "at": "2026-09-18T08:48:59.694120+00:00",
+  "observer": "Root CUA actual in-app browser, native keyboard; no injected game state",
+  "base": "https://mekhovov.github.io/revealline-archive-23/",
+  "archiveCommit": "e83b34eaa5a34eb9965530dcff386fa80f645a6a",
+  "viewport": [
+    1280,
+    720
+  ],
+  "checks": [
+    {
+      "version": "v0.61.2",
+      "entry": "Index Tab Return to explicit Play v0.61.2; title version confirmed",
+      "journey": "Start Return, tapDown,Escape,focusedResume,Return,Escape,Return; live trail and full arena painted",
+      "result": "Genuine First Signal win52.2%,8160points,0:08,3stars,Next focused; full picture granted by real play"
+    },
+    {
+      "version": "v0.61.1",
+      "entry": "Index Tab Tab Return to Play v0.61.1; title version confirmed",
+      "journey": "Continue restored First Signal0.0%/0:04/3lives; tapDown,Escape,Resume focused,Return; actual live trail and arena painted at0:11"
+    }
+  ],
+  "images": "Screenshots inspected inline; no exported screenshot hashes invented",
+  "limits": [
+    "Scoped retention smoke test only",
+    "No physical touch/controller certification",
+    "No audible/offline/media or whole-phase acceptance",
+    "Shared archive origin already contained saved test progress; not a fresh-profile migration test"
+  ]
+}

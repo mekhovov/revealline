@@ -1,0 +1,37 @@
+{
+  "status": "ROOT_ACCEPTED_SCOPED_V0612_PUBLIC_DELIVERY",
+  "at": "2026-09-18T08:18:31.459743+00:00",
+  "version": "v0.61.2",
+  "source": "bb5e6e7787bf81232368b96845d716a808c21309",
+  "sourcePR": 110,
+  "publisherPR": 126,
+  "controller": "54913604c31d9d287adb8d6afc9d96cb333229eb",
+  "files": 2972,
+  "verifiedBytes": 641163955,
+  "publicNativeWin": true,
+  "pins": [
+    {
+      "path": "root-public-native-team.json",
+      "bytes": 1954,
+      "sha256": "432031dbe20b9bad5267efc2670e7a1d19e059d5cc178f979317c4c35d7e1dca"
+    },
+    {
+      "path": "root-row-review.json",
+      "bytes": 480,
+      "sha256": "c58f4bf30b950d8e917430ad2ea55a46f1101304681902322ed01091cd69f24a"
+    },
+    {
+      "path": "root-binding-review.json",
+      "bytes": 405,
+      "sha256": "768bba03a2e82781fc78b5bf8aa51d00b8a1fa9c235834c6e57ead5cc90a30a8"
+    },
+    {
+      "path": "after-http-authorities-public-r1/result.json",
+      "bytes": 7554,
+      "sha256": "99b29c3cc80abd0c2f8608fa9d636d6401cccad0922642e8b39d2ae9f70bbb13"
+    }
+  ],
+  "fullPhaseAccepted": false,
+  "fullBrowserReleaseAccepted": false,
+  "remaining": "Physical device/controller/audio/offline and full cross-mode phase gates remain open; P07 unobscured reward follow-up retained."
+}

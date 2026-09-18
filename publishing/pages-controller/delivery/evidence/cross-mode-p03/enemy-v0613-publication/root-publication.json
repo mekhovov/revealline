@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-18T08:50:11.247810+00:00",
+  "status": "ROOT_PUBLISHED_ORIGINAL_RELEASE_LATEST_CONFIRMED",
+  "source": {
+    "commit": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+    "tree": "8fad1311f1403e9134a3b60af029e238bd7cc98e",
+    "version": "v0.61.3"
+  },
+  "releaseId": 391316337,
+  "nineOriginalsUnchanged": true,
+  "pagesAccepted": false
+}
