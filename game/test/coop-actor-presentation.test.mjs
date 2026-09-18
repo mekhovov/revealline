@@ -190,6 +190,8 @@ test('explicit Team roles reuse prepared slots without changing actual types or 
 });
 
 for (const [width, style, source] of [
+  [240, 'hybrid', 'compact'],
+  [200, 'props', 'compact'],
   [1152, 'hybrid', 'detailed'],
   [479, 'hybrid', 'compact'],
   [1152, 'microtile', 'compact'],

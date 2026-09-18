@@ -150,9 +150,9 @@ for (const detail of ['compact', 'detailed']) {
       geometry = prepared.geometry,
       adapter = createCoopActorPresentation();
     adapter.setPresentation(snapshot);
-    adapter.update(createCoop(FIRST_CONNECTION));
-    const original = adapter.frame('pilot', 0);
-    for (const width of [362, 1152, 1900])
+    for (const width of [240, 320, 362, 1152, 1900]) {
+      adapter.update(createCoop(FIRST_CONNECTION), { canvasCSSWidth: width });
+      const original = adapter.frame('pilot', 0);
       for (const [x, y] of [
         [8, 8],
         [1144, 8],
@@ -161,7 +161,7 @@ for (const detail of ['compact', 'detailed']) {
       ])
         for (const heading of [0, Math.PI / 4, Math.PI / 2, Math.PI, Math.PI * 1.5])
           for (const bank of [-0.15, 0, 0.15]) {
-            const frame = { x, y, heading, bank, diameter: width < 480 ? 51 : 30 };
+            const frame = { x, y, heading, bank, diameter: original.diameter };
             const margin = 1152 / width,
               offset = coopPilotBodyOffset(frame, geometry, 1152, 576, margin),
               box = coopBodyBounds(frame, geometry);
@@ -169,7 +169,7 @@ for (const detail of ['compact', 'detailed']) {
             assert.ok(x + offset.x + box.right <= 1152 - margin + 1e-9);
             assert.ok(y + offset.y + box.top >= margin - 1e-9);
             assert.ok(y + offset.y + box.bottom <= 576 - margin + 1e-9);
-            assert.deepEqual(frame, { x, y, heading, bank, diameter: width < 480 ? 51 : 30 });
+            assert.deepEqual(frame, { x, y, heading, bank, diameter: original.diameter });
             const v = surface(width);
             drawPresentedActor(
               v.ctx,
@@ -195,6 +195,7 @@ for (const detail of ['compact', 'detailed']) {
               );
             }
           }
+    }
   });
 }
 
