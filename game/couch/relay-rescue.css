@@ -475,6 +475,54 @@ canvas {
   gap: 10px;
   margin-top: 22px;
 }
+/* The return action has its own row: nothing covers the earned original.
+   The canvas remains a complete 2:1 frame, including in short landscape. */
+.field-kit #coop-earned-picture {
+  box-sizing: border-box;
+  inset: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  width: calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 32px);
+  max-width: 1440px;
+  height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px);
+  max-height: calc(
+    100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px
+  );
+  margin: auto;
+  padding: 16px;
+  color: var(--ink);
+  background: var(--bg);
+  border: var(--fk-border-width) solid var(--fk-line);
+  overflow: auto;
+  scroll-padding: 8px;
+}
+#coop-earned-picture[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+}
+#coop-earned-picture::backdrop {
+  background: #02050a;
+}
+.earned-picture-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.earned-picture-header h2 {
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fk-text-body);
+  overflow-wrap: anywhere;
+}
+#coop-earned-picture-canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 .field-kit #coop-pause-modes {
   margin-block-start: var(--fk-space-4, 16px);
 }

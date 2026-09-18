@@ -176,6 +176,9 @@ export function bootCoop() {
     departure = null;
   const departureDialog = $('coop-discard-dialog');
   const settingsDialog = $('coop-options');
+  const earnedDialog = $('coop-earned-picture');
+  const earnedCanvas = $('coop-earned-picture-canvas');
+  let earnedOwner = null;
   let settingsOwner = null,
     settingsVisit = 0,
     settingsPanels = null;
@@ -268,6 +271,10 @@ export function bootCoop() {
       closeSettings();
       return;
     }
+    if (earnedDialog.open) {
+      closeEarnedPicture();
+      return;
+    }
     if (departure) {
       cancelDeparture();
       return;
@@ -293,27 +300,31 @@ export function bootCoop() {
   const scope = () =>
     settingsDialog.open
       ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-      : departure
-        ? 'coop-discard'
-        : running()
-          ? 'flight'
-          : run
-            ? `coop-${run.status}`
-            : 'coop-lobby';
+      : earnedDialog.open
+        ? 'coop-earned-picture'
+        : departure
+          ? 'coop-discard'
+          : running()
+            ? 'flight'
+            : run
+              ? `coop-${run.status}`
+              : 'coop-lobby';
   const primary = () =>
     settingsDialog.open
       ? settingsPanels?.primary() || $('coop-settings-close')
-      : departure
-        ? $('coop-discard-stay')
-        : pictureOperation
-          ? $('coop-picture-cancel')
-          : !run && pictureSelection?.state !== 'ready'
-            ? $('coop-picture-retry')
-            : !run
-              ? $('coop-start')
-              : run.status === 'paused' && !loopStopped
-                ? $('coop-resume')
-                : $('coop-retry');
+      : earnedDialog.open
+        ? $('coop-picture-return')
+        : departure
+          ? $('coop-discard-stay')
+          : pictureOperation
+            ? $('coop-picture-cancel')
+            : !run && pictureSelection?.state !== 'ready'
+              ? $('coop-picture-retry')
+              : !run
+                ? $('coop-start')
+                : run.status === 'paused' && !loopStopped
+                  ? $('coop-resume')
+                  : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -383,11 +394,13 @@ export function bootCoop() {
     getRoot: () =>
       settingsDialog.open
         ? settingsDialog
-        : departure
-          ? departureDialog
-          : run
-            ? $('coop-overlay')
-            : $('coop-app'),
+        : earnedDialog.open
+          ? earnedDialog
+          : departure
+            ? departureDialog
+            : run
+              ? $('coop-overlay')
+              : $('coop-app'),
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
@@ -397,7 +410,7 @@ export function bootCoop() {
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
     onMenu: () => {
-      if (settingsDialog.open || departure || run?.status === 'paused') back();
+      if (settingsDialog.open || earnedDialog.open || departure || run?.status === 'paused') back();
     },
     onHint: (message, context) => {
       if (
@@ -443,7 +456,14 @@ export function bootCoop() {
     foreground();
   function openSettings() {
     const opener = $('coop-settings-open');
-    if (disposed || departure || settingsDialog.open || !foreground() || !visibleAction(opener))
+    if (
+      disposed ||
+      departure ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      !foreground() ||
+      !visibleAction(opener)
+    )
       return;
     const owner = { opener, run, generation, visit: ++settingsVisit, restore: true };
     settingsOwner = owner;
@@ -512,6 +532,101 @@ export function bootCoop() {
   settingsDialog.addEventListener('cancel', cancelSettings);
   settingsDialog.addEventListener('close', settingsClosed);
   settingsDialog.addEventListener('keydown', settingsKeydown);
+  const earnedCurrent = (owner) =>
+    !disposed &&
+    earnedOwner === owner &&
+    run === owner.run &&
+    generation === owner.generation &&
+    acceptedPicture === owner.picture &&
+    foreground();
+  function openEarnedPicture() {
+    const opener = $('coop-view-picture');
+    if (
+      disposed ||
+      inactive ||
+      !foreground() ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure ||
+      loopStopped ||
+      run?.status !== 'won' ||
+      !acceptedPicture?.binding?.image ||
+      !visibleAction(opener)
+    )
+      return;
+    const owner = { run, generation, picture: acceptedPicture, opener, restore: true };
+    earnedOwner = owner;
+    try {
+      // Borrow the exact accepted original; no decoder, lease or award is created.
+      const context = earnedCanvas.getContext('2d');
+      if (!context) throw new Error('Picture canvas unavailable');
+      earnedCanvas.width = 1152;
+      earnedCanvas.height = 576;
+      context.imageSmoothingEnabled = false;
+      context.drawImage(owner.picture.binding.image, 0, 0, 1152, 576);
+      if (!earnedCurrent(owner)) return;
+      $('coop-earned-picture-title').textContent = `${run.level.name} · Your shared picture`;
+      navigation.clear();
+      router.clear();
+      earnedDialog.showModal();
+      const active = document.activeElement;
+      if (
+        earnedCurrent(owner) &&
+        earnedDialog.open &&
+        (unclaimedFocus(active) ||
+          active === opener ||
+          active === earnedDialog ||
+          active === $('coop-picture-return'))
+      )
+        $('coop-picture-return').focus({ preventScroll: true });
+    } catch {
+      if (earnedOwner === owner) {
+        earnedOwner = null;
+        earnedCanvas.width = earnedCanvas.height = 0;
+        message('Picture view unavailable. Your earned result is unchanged.');
+      }
+    }
+  }
+  function closeEarnedPicture({ restore = true } = {}) {
+    if (!earnedDialog.open) return;
+    if (earnedOwner) earnedOwner.restore = restore && foreground();
+    earnedDialog.close();
+  }
+  const earnedClosed = () => {
+    if (earnedDialog.open) return;
+    const owner = earnedOwner;
+    if (!owner) return;
+    const restore = owner.restore && earnedCurrent(owner);
+    earnedOwner = null;
+    earnedCanvas.width = earnedCanvas.height = 0;
+    navigation.clear();
+    router.clear();
+    const active = document.activeElement;
+    if (
+      restore &&
+      !disposed &&
+      !earnedDialog.open &&
+      !earnedOwner &&
+      run === owner.run &&
+      generation === owner.generation &&
+      foreground() &&
+      visibleAction(owner.opener) &&
+      (unclaimedFocus(active) || earnedDialog.contains(active))
+    ) {
+      owner.opener.focus({ preventScroll: true });
+      if (document.activeElement === owner.opener)
+        owner.opener.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    }
+  };
+  const earnedCancelled = (event) => {
+    event.preventDefault();
+    closeEarnedPicture();
+  };
+  $('coop-view-picture').onclick = openEarnedPicture;
+  $('coop-picture-return').onclick = () => closeEarnedPicture();
+  earnedDialog.addEventListener('close', earnedClosed);
+  earnedDialog.addEventListener('cancel', earnedCancelled);
+  earnedDialog.addEventListener('keydown', settingsKeydown);
   function message(text) {
     if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
   }
@@ -524,6 +639,7 @@ export function bootCoop() {
     const won = run.status === 'won',
       lost = run.status === 'lost';
     $('coop-resume').hidden = won || lost;
+    $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
     $('coop-overlay-kicker').textContent = won
       ? 'A WORLD YOU REVEALED TOGETHER'
       : lost
@@ -927,6 +1043,7 @@ export function bootCoop() {
       disposed ||
       inactive ||
       departure ||
+      earnedDialog.open ||
       pictureOperation ||
       (!run && !startPermitted) ||
       !foreground()
@@ -1001,6 +1118,7 @@ export function bootCoop() {
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
     loopStopped = true;
+    closeEarnedPicture({ restore: false });
     cancelPicture({ restore: false });
     if (running()) pauseCoop(run);
     clear();
@@ -1179,6 +1297,7 @@ export function bootCoop() {
       disposed ||
       departure ||
       settingsDialog.open ||
+      earnedDialog.open ||
       pictureOperation ||
       !Object.hasOwn(departureLabels, kind)
     )
@@ -1582,6 +1701,14 @@ export function bootCoop() {
     // reenter. No terminal cleanup restores focus or resumes the attempt.
     settingsOwner = null;
     settingsVisit++;
+    earnedOwner = null;
+    $('coop-view-picture').onclick = null;
+    $('coop-picture-return').onclick = null;
+    earnedDialog.removeEventListener('close', earnedClosed);
+    earnedDialog.removeEventListener('cancel', earnedCancelled);
+    earnedDialog.removeEventListener('keydown', settingsKeydown);
+    if (earnedDialog.open) earnedDialog.close();
+    earnedCanvas.width = earnedCanvas.height = 0;
     $('coop-settings-open').onclick = null;
     $('coop-settings-close').onclick = null;
     settingsDialog.removeEventListener('cancel', cancelSettings);

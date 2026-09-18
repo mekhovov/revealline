@@ -1,0 +1,13 @@
+# Team result picture view
+
+A won Team attempt with an accepted image offers **View picture** alongside Retry and Change setup. Opening it copies the already decoded original into a separate 1152×576 canvas. A native dialog contains the complete picture and a separate **Back to results** header row; the results panel cannot cover the reward. The canvas uses nearest sampling and full-frame containment at portrait and short-landscape sizes. Paused, lost and procedural-only attempts do not expose an unearned or substituted picture.
+
+Keyboard Enter, controller Confirm and ordinary pointer/touch button activation open the view. Back to results, Escape and controller Back close it and return to the originating View picture action. Controller ownership changes scope and clears held navigation edges, so holding Confirm cannot immediately dismiss a newly opened view and holding Back cannot leave the completed attempt. The dialog's native modal boundary excludes background result actions. Retry and Change setup are available again after explicit Back.
+
+The accepted picture lease stays owned by the original Team attempt. Viewing does not fetch, decode, create a URL, dispose that lease, emit a win, alter cells/coverage/time/reserves or award Solo scores, saves or Collection records. The original Team host currently keeps attempts only on the page. Returning to results leaves the same won state frozen. A draw failure leaves results available and can be retried without replacing the picture. Background return never starts a flight; terminal departure retires the dialog and its pixels without a focus handoff.
+
+## Verification scope
+
+Use the actual host, unchanged authored Standard routes and ordinary direction commands to earn First Connection and Relay Yard wins. Compare the exact accepted image object/hash, terminal HUD and arena paint before and after repeated viewing; retain unchanged decoder/URL/resource counts and the existing no-storage-access fixture. Exercise keyboard traversal, controller neutral join/fresh Confirm/held edges/Back, modeled touch clicks, draw recovery, foreground return, terminal cleanup, Retry and Change setup. Keep result visibility and the full original mapping separate from collision and completion state.
+
+Finite DOM, inert Canvas, modeled gamepad and pointer tests prove host behavior only. Root must separately inspect actual native modal focus, complete artwork and Back hit target at desktop, 390×844 portrait and 844×390 landscape, with Standard and Plain/Large text. Physical controllers/touch, actual BFCache return, audible media, offline/public deployment and full P07/P18 remain separate gates. No new artwork, simulation rule or saved-record schema is introduced.
