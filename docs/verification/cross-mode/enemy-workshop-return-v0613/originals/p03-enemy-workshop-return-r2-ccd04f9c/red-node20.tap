@@ -1,0 +1,213 @@
+TAP version 13
+# Subtest: native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+ok 1 - native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+  ---
+  duration_ms: 45.230667
+  ...
+# Subtest: native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+ok 2 - native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+  ---
+  duration_ms: 7.614458
+  ...
+# Subtest: workshop modal Back keeps its draft before a separate keyboard Return to game
+ok 3 - workshop modal Back keeps its draft before a separate keyboard Return to game
+  ---
+  duration_ms: 7.853792
+  ...
+# Subtest: ready controller navigation keeps modal ownership then activates the page Return link explicitly
+ok 4 - ready controller navigation keeps modal ownership then activates the page Return link explicitly
+  ---
+  duration_ms: 21.009792
+  ...
+# Subtest: focused practice keeps parent controls idle and authenticated return restores the draft
+ok 5 - focused practice keeps parent controls idle and authenticated return restores the draft
+  ---
+  duration_ms: 16.252
+  ...
+# Subtest: ordinary foreground startup still opens the panel once and retires loading listeners
+ok 6 - ordinary foreground startup still opens the panel once and retires loading listeners
+  ---
+  duration_ms: 8.064709
+  ...
+# Subtest: successful readiness preserves Return focus chosen before module
+not ok 7 - successful readiness preserves Return focus chosen before module
+  ---
+  duration_ms: 7.320958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:371:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:381:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: successful readiness preserves Return focus chosen during loading
+not ok 8 - successful readiness preserves Return focus chosen during loading
+  ---
+  duration_ms: 7.141041
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:371:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:381:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late readiness cannot revive retired opening after focus then return to body
+not ok 9 - late readiness cannot revive retired opening after focus then return to body
+  ---
+  duration_ms: 7.792958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:398:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:406:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late readiness cannot revive retired opening after keyboard intent
+not ok 10 - late readiness cannot revive retired opening after keyboard intent
+  ---
+  duration_ms: 7.008834
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:398:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:406:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late readiness cannot revive retired opening after pointer intent
+not ok 11 - late readiness cannot revive retired opening after pointer intent
+  ---
+  duration_ms: 7.009292
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:398:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:406:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late readiness cannot revive retired opening after blur and refocus
+not ok 12 - late readiness cannot revive retired opening after blur and refocus
+  ---
+  duration_ms: 7.055584
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:398:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:406:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late readiness cannot revive retired opening after hide and show
+not ok 13 - late readiness cannot revive retired opening after hide and show
+  ---
+  duration_ms: 6.952917
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:398:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:406:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: late readiness cannot revive retired opening after pagehide and pageshow
+not ok 14 - late readiness cannot revive retired opening after pagehide and pageshow
+  ---
+  duration_ms: 7.077584
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:398:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-workshop-host.test.mjs:406:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: theme failure retires the startup lease and retains the existing reload/Return recovery
+ok 15 - theme failure retires the startup lease and retains the existing reload/Return recovery
+  ---
+  duration_ms: 7.263791
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 7
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 217.61575
