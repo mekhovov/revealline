@@ -201,3 +201,57 @@ test('short landscape keeps the focused control visible when its Large label can
   f.flush();
   assert.equal(f.container.scrollTop, deliberate, 'Reading the tall label stays a manual scroll.');
 });
+
+test('recorded Large portrait return keeps the entire picker outline inside a bordered scrollport', () => {
+  const f = fixture({ headingBottom: 292, includeControlLabel: true });
+  f.footer.hidden = true;
+  f.container.clientTop = 3;
+  f.container.clientHeight = 806;
+  f.control.absoluteTop = 952.765625;
+  f.control.height = 67;
+  f.label.getBoundingClientRect = () => {
+    const box = f.control.getBoundingClientRect();
+    return { top: box.top - 60, bottom: box.bottom };
+  };
+  // Exact public return geometry: border box bottom828, client clip825,
+  // field bottom819.765625, and outward focus painting3px+4px.
+  assert.equal(f.control.getBoundingClientRect().bottom, 819.765625);
+  const beforeFocus = f.doc.activeElement;
+  f.api.refresh();
+  f.flush();
+  assert.ok(f.control.getBoundingClientRect().bottom + 7 <= 825);
+  assert.ok(f.label.getBoundingClientRect().top >= 300);
+  assert.equal(f.doc.activeElement, beforeFocus);
+  assert.equal(f.container.style.scrollPaddingBlockEnd, '8px');
+  const settled = f.container.scrollTop;
+  f.api.refresh();
+  f.flush();
+  assert.equal(f.container.scrollTop, settled, 'Settled measured geometry causes no repeat drift.');
+});
+
+test('bordered scrollport clearance also protects the top edge when no sticky heading covers it', () => {
+  const f = fixture();
+  f.heading.hidden = true;
+  f.footer.hidden = true;
+  f.container.clientTop = 3;
+  f.container.clientHeight = 806;
+  f.control.absoluteTop = 224.5;
+  f.emit('focusin');
+  f.flush();
+  assert.ok(f.control.getBoundingClientRect().top - 7 >= 19);
+  assert.equal(f.doc.activeElement, f.control);
+});
+
+test('a legitimate zero-height client scrollport cannot scroll a focused form control', () => {
+  const f = fixture();
+  f.heading.hidden = true;
+  f.footer.hidden = true;
+  f.container.clientTop = 3;
+  f.container.clientHeight = 0;
+  f.control.absoluteTop = 1020;
+  const scroll = f.container.scrollTop;
+  f.api.refresh();
+  f.flush();
+  assert.equal(f.container.scrollTop, scroll);
+  assert.equal(f.doc.activeElement, f.control);
+});
