@@ -1,0 +1,66 @@
+{
+  "format": "revealline-public-direct-copies.v1",
+  "version": "v0.61.1",
+  "copies": [
+    {
+      "path": "root-acceptance.json",
+      "originalMember": "root-acceptance.json",
+      "bytes": 3280,
+      "sha256": "8c7ed1d83ad864cb3291534fc1a479d050dcc78728d7c6397e14bd4e285b1d58"
+    },
+    {
+      "path": "root-byte-review.json",
+      "originalMember": "root-byte-review.json",
+      "bytes": 563,
+      "sha256": "9241a2621f0013f113114edac66fb37c418edd2bf87ac7d0a065445e780859c7"
+    },
+    {
+      "path": "native-media-observation.json",
+      "originalMember": "native-media-observation.json",
+      "bytes": 2144,
+      "sha256": "e54ec43629983c5bac10b962424437ce36a2bd95082cf78e50d95ec39e33da8b"
+    },
+    {
+      "path": "native-picker-occlusion-finding.json",
+      "originalMember": "native-picker-occlusion-finding.json",
+      "bytes": 1813,
+      "sha256": "07427989cbc9bbe1cd912815dcaf5e29668c647a74bee6a19ceff9d8598ed28f"
+    },
+    {
+      "path": "native-play-observation.json",
+      "originalMember": "native-play-observation.json",
+      "bytes": 1537,
+      "sha256": "6fc100241ff4970928add1ef66ffbde2e88db288ad0e1d0581309610b16c58e1"
+    },
+    {
+      "path": "public-row-review-main-r1.json",
+      "originalMember": "public-row-review-main-r1.json",
+      "bytes": 1585,
+      "sha256": "c41bbc316e36f070695d06f8c91365174ca797b3d9eb4730599b642e7c166929"
+    },
+    {
+      "path": "handoff-v0611-public.json",
+      "originalMember": "handoff-v0611-public.json",
+      "bytes": 2547,
+      "sha256": "149330cb4f27baecfb67c24d8e996b6fd01edcbe454b4c025ae9b4c63b3e2b7a"
+    },
+    {
+      "path": "http-report.json",
+      "originalMember": "tools/runs/main-r1/report.json",
+      "bytes": 3802,
+      "sha256": "8150f551393c913c6da9ac3858732189e80cb486a712d31d86a768f299b90aa7"
+    },
+    {
+      "path": "live-authorities.json",
+      "originalMember": "after-http-authorities-main-r1/result.json",
+      "bytes": 7512,
+      "sha256": "0ed5f8c28648df32b9f005416a7d3b13886298ab756b8fc93fc3b21dc9d8d7a7"
+    },
+    {
+      "path": "source-qualification.json",
+      "originalMember": "source-originals/source-qualification.json",
+      "bytes": 93589,
+      "sha256": "ce94e595f0aa579fa5f64df57795cf49a8bc1404e71c2e861d4900ccc3347fb1"
+    }
+  ]
+}
