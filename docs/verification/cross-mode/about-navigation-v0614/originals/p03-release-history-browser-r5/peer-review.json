@@ -1,0 +1,39 @@
+{
+  "reviewer": "installed_parity_peer",
+  "method": "Independent read-only source and native receipt review; no browser actions/tests/file mutations by reviewer",
+  "source": {
+    "result": "pass",
+    "retainedOrLivePins": 65,
+    "gitPreimages": 11,
+    "liveProposalPaths": 12,
+    "patchReconstruction": [
+      "R1twelvepaths",
+      "R2threepathdelta",
+      "R2twelvepathcomposition"
+    ],
+    "tests": "R2 26/26; R1 source-links5/5 clearly inherited",
+    "sourceAllocation": 6901760,
+    "cap": 7340032
+  },
+  "native": {
+    "result": "pass within bounded scope",
+    "referencedBodyPins": 12,
+    "r4Events": 621,
+    "selectedHttpRows": 9,
+    "domRows": 19,
+    "delaySeconds": 20.011182,
+    "confirmed": [
+      "module503 hidden/zero boxes/Tabskip",
+      "Standard/Large delayed/completed rotation focus",
+      "dropdownselection no automatic navigation",
+      "preserved transient smooth-scroll observations",
+      "R1 native failure preserved"
+    ],
+    "firstReturn": "Harness log had209B remaining and rejected next request; not a production source failure claim.",
+    "r5": "310HTTP rows all200,124427B. Same2302B runtime manifest/base/tree/port asR4. HealthyHome sixvisibleactions/Startfocus/oneWorkshopAbout after explicitReload. No uninterrupted-return claim."
+  },
+  "limits": [
+    "No new native/physical/public acceptance by peer",
+    "Coordinator owns complete source gates and final public combined journey"
+  ]
+}

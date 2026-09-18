@@ -203,6 +203,10 @@ h1 em {
   gap: 12px;
 }
 
+#release-history[hidden] {
+  display: none;
+}
+
 .button {
   min-height: 52px;
   padding: 0 18px;
@@ -1867,4 +1871,48 @@ a.text-link:hover span,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.about-navigation-status {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 8px 28px;
+  color: var(--muted);
+  font-size: var(--fk-text-secondary, 14px);
+}
+
+#about-return {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+[data-field-kit-page='about'] .site-header,
+[data-field-kit-page='about'] .picker-row {
+  flex-wrap: wrap;
+}
+
+[data-field-kit-page='about'] .controller-editor {
+  min-width: 0;
+  max-width: 100%;
+  margin: 8px 0;
+  padding: 10px 12px;
+  border: 2px solid var(--fk-accent, var(--signal));
+  background: var(--fk-panel, var(--panel));
+  color: var(--site-text);
+  font: 600 max(14px, var(--fk-text-secondary, 14px)) / 1.5 var(--sans);
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+
+[data-field-kit-page='about'] .site-header > .controller-editor,
+[data-field-kit-page='about'] .picker-row > .controller-editor {
+  order: 1;
+  flex: 0 0 100%;
+}
+
+[data-field-kit-page='about'] .pack-launcher > .controller-editor {
+  order: 1;
+  grid-column: 1 / -1;
 }

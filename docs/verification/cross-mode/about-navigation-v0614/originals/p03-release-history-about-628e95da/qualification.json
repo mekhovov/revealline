@@ -1,0 +1,132 @@
+{
+  "feature": "P03/P16 software history in About \u2014 R1",
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about",
+  "status": "Source checks pass; native rotation failure blocks acceptance. Superseded by separately retained R2 structural correction.",
+  "candidate": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/candidate-pins.json",
+    "bytes": 7669,
+    "sha256": "fda8e2ab7db7a45283d12ba36775f3e1ad28002ba91ee4b19e8ca69e4dca4d4b"
+  },
+  "patch": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/candidate.patch",
+    "bytes": 32972,
+    "sha256": "d850409fa20c9ea53ec346e9d353b111008ca0ac269397e2f107195adf1879e1"
+  },
+  "sourcePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-pins.json",
+    "bytes": 61780,
+    "sha256": "325c7b49388b10c2f4aa37b5835e3d5f2810a18742143b027e35826ed5d3c379"
+  },
+  "runtimePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/runtime-pins-r2.json",
+    "bytes": 1755,
+    "sha256": "bd3d23ca2b6a8eaab64cb6a1d6930e565f3e0e8a8cad6949c2c84d105c381552"
+  },
+  "tests": [
+    {
+      "category": "Actual Solo/About hosts and strict URL cases",
+      "passed": 26,
+      "failed": 0,
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/history-full-final.log",
+        "bytes": 6192,
+        "sha256": "0a8d3c4caedc047234ec989fe219de0713dc71743411397fa80c59b2b680ebd9"
+      },
+      "sourceBinding": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/history-full-final.json",
+        "bytes": 3715,
+        "sha256": "b41f584c66ba24398b1b2e3c6d2d505d0e6dc0b29389ed4114509b808add5bb1"
+      }
+    },
+    {
+      "category": "Generated current-entry/source-link tests",
+      "passed": 5,
+      "failed": 0,
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-links-candidate.log",
+        "bytes": 1315,
+        "sha256": "5757f456002ea4b8929e8318fe651e5d78917876c780737f0de49c1b116d0f65"
+      }
+    }
+  ],
+  "quality": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/checks-final.json",
+    "bytes": 3755,
+    "sha256": "0441fb3491a63dedd90b0975be0452d94f99784d31efdf6d61e43635bc87cb17"
+  },
+  "invariants": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-invariants.json",
+    "bytes": 248,
+    "sha256": "206a588557466ab95c9f31bbba155e70d76bc2faeab3a6a64dd4cd1566ad62c3"
+  },
+  "retainedBaselines": [
+    {
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/host-history-red.log",
+        "bytes": 11940,
+        "sha256": "04a0483f5bf3a1f9adfdfcbe722cc30b84837a9fb54cda529f4a3fabb13a1745"
+      },
+      "meaning": "About missing-link and missing-wrapper failures; Home fixture prerequisite failed separately."
+    },
+    {
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/home-history-red.log",
+        "bytes": 6561,
+        "sha256": "253dd7c2ef85c99a9b159fd26ff48fea5f690732bb5aaf737b703a5c83c055ed"
+      },
+      "meaning": "Fixture prerequisite missing archive catalog, not feature evidence."
+    },
+    {
+      "log": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/home-history-feature-red.log",
+        "bytes": 5624,
+        "sha256": "e6d6bf18bd73b42aa33d767671f7151685c2556eb8c52e126e9b16684dcc4df3"
+      },
+      "meaning": "Actual Solo title rejects extra software-history Home action."
+    }
+  ],
+  "superseded": {
+    "runtimePins": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/runtime-pins.json",
+      "bytes": 1755,
+      "sha256": "f1fbec78a6a4ff7243e8038617498c46a0583a8bee3420a93afe7052668276dc"
+    },
+    "reason": "First game HTML pin retained stray text; corrected final HTML7537 and all final tests rebound.",
+    "preCorrectionGreen": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/history-full-candidate.log",
+      "bytes": 6206,
+      "sha256": "e62d32c61082ca0f70f1da2ddf6b8366f8efcedc8a258ad05470e2f280de77b0"
+    }
+  },
+  "temporarySourceAdmission": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-admission.json",
+    "bytes": 9556,
+    "sha256": "1d1d8f90b3a3bb7ed6b2afcd4fbfe0cfd3401f5744daef551f529a8e806adb3e"
+  },
+  "temporarySourceResult": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-admission-result.json",
+    "bytes": 71,
+    "sha256": "7da400f0c358f0b0935255ef0fef065fffc7e5e143a9c8383bf2515f75f4f3c5"
+  },
+  "verifiedDehydration": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-dehydration.json",
+    "bytes": 2057,
+    "sha256": "905727985faaa98c12d114ef90e51c66169ad6d773c98720c18b53894ddc2632"
+  },
+  "nativeFinding": {
+    "owner": "/root",
+    "viewportBefore": "844x390",
+    "viewportAfter": "390x844",
+    "focusedElement": "release-history",
+    "beforeY": 330.4375,
+    "afterY": 5135.78125,
+    "observation": "Long About content before versions reflows above focused link. Structural R2 required; no native/public acceptance claimed."
+  },
+  "limits": [
+    "No commit, staging, version change, build, fetch or publication.",
+    "No public/frozen catalog availability qualification; parent native synthetic catalog is explicitly a fixture.",
+    "Modeled source assertions are not CSS/native/physical controller qualification.",
+    "Existing strict archivedPlayHref body and game release resolver remain unchanged."
+  ]
+}

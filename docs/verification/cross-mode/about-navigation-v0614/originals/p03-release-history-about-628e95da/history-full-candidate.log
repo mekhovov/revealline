@@ -1,0 +1,140 @@
+TAP version 13
+# Subtest: Mission setup keeps the original craft status in its modal and restores it after closing
+ok 1 - Mission setup keeps the original craft status in its modal and restores it after closing
+  ---
+  duration_ms: 522.962541
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+ok 2 - direct briefing and disposal retain one craft presenter outside hidden mission content
+  ---
+  duration_ms: 390.828
+  ...
+# Subtest: title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight
+ok 3 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight
+  ---
+  duration_ms: 445.75625
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 4 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 549.705083
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+ok 5 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+  ---
+  duration_ms: 552.806333
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 6 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 488.498833
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+ok 7 - Missions button returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1324.166875
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+ok 8 - Missions escape returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1273.724917
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+ok 9 - Missions controller returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1815.764958
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+ok 10 - Missions button returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 1132.527584
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+ok 11 - Missions escape returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 1133.3735
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+ok 12 - Missions controller returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 2574.618041
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+ok 13 - Missions button returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1159.744417
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+ok 14 - Missions escape returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1172.852458
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+ok 15 - Missions controller returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 2674.936958
+  ...
+# Subtest: Back to flight remains an intentional exit from title Missions
+ok 16 - Back to flight remains an intentional exit from title Missions
+  ---
+  duration_ms: 379.652083
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+ok 17 - controller Back retains a cancellation warning when a transaction keeps its dialog open
+  ---
+  duration_ms: 410.367125
+  ...
+# Subtest: About exposes history while pending and only changes explicit links: https://example.test/revealline/site/about.html\#versions
+ok 18 - About exposes history while pending and only changes explicit links: https://example.test/revealline/site/about.html\#versions
+  ---
+  duration_ms: 33.451625
+  ...
+# Subtest: About exposes history while pending and only changes explicit links: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+ok 19 - About exposes history while pending and only changes explicit links: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+  ---
+  duration_ms: 12.764584
+  ...
+# Subtest: About exposes history while pending and only changes explicit links: https://example.test/preview/releases/v0.60.8/site/site/about.html
+ok 20 - About exposes history while pending and only changes explicit links: https://example.test/preview/releases/v0.60.8/site/site/about.html
+  ---
+  duration_ms: 10.200125
+  ...
+# Subtest: About retains current play and shared history when the archive request fails
+ok 21 - About retains current play and shared history when the archive request fails
+  ---
+  duration_ms: 7.50925
+  ...
+# Subtest: release explorer resolves to the shared catalog from source and frozen game URLs
+ok 22 - release explorer resolves to the shared catalog from source and frozen game URLs
+  ---
+  duration_ms: 1.101209
+  ...
+# Subtest: About accepts actual local and canonical archived play records without double-prefixing
+ok 23 - About accepts actual local and canonical archived play records without double-prefixing
+  ---
+  duration_ms: 8.353958
+  ...
+# Subtest: archive links reject script schemes, credentials, traversal and non-game destinations
+ok 24 - archive links reject script schemes, credentials, traversal and non-game destinations
+  ---
+  duration_ms: 0.188375
+  ...
+# Subtest: About history resolves the shared catalog from source and frozen sibling game routes
+ok 25 - About history resolves the shared catalog from source and frozen sibling game routes
+  ---
+  duration_ms: 0.094458
+  ...
+# Subtest: About rebases only validated local archive records against the fetched catalog URL
+ok 26 - About rebases only validated local archive records against the fetched catalog URL
+  ---
+  duration_ms: 0.129167
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18089.655791

@@ -1,0 +1,1004 @@
+{
+  "format": "revealline-scoped-evidence-intake.v1",
+  "version": "0.61.4",
+  "base": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "files": [
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/README.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/README.md",
+      "bytes": 3000,
+      "sha256": "2e789391ab048192457eeca0f68228a569100a1be86b011cc24f643cd852cecb",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/bootstrap-fixture-correction.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/bootstrap-fixture-correction.json",
+      "bytes": 596,
+      "sha256": "367fd110613ecb9421e4d54e4038ae1b81a3d1f822cceb7f80bf93a1ad6c1b66",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/candidate-pins.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/candidate-pins.json",
+      "bytes": 6638,
+      "sha256": "88edc51a75ea5ff9fd1e229e4c7c7a4df552d593d97d323912640dd1fedbd22f",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/candidate.patch",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/candidate.patch",
+      "bytes": 77959,
+      "sha256": "9fa7f72f889f3c73f172751b439bb41f4be3218541ae05af9f3477f729f5d410",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/check.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/check.py",
+      "bytes": 2900,
+      "sha256": "9e4aad0899cf61563644c805e97687fd121c900e5d84888546bc9369d3e10cd3",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/cohort-hydration.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/cohort-hydration.json",
+      "bytes": 7934,
+      "sha256": "1a57d11b2d53ca33cb363da4793bdfc3219ee504e523dddf22db5afb54402a60",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/composition.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/composition.json",
+      "bytes": 4470,
+      "sha256": "98b0a6d11f05237292e69f16ea5ec34d233a2f140f100f12e47a09f1eb3b392c",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/corrected-node20.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/corrected-node20.json",
+      "bytes": 47829,
+      "sha256": "07ea91f2b10d2706755b399ec0dd84ae66f3c8683ec0fcbb71553da32fc5fee8",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/corrected-node20.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/corrected-node20.tap",
+      "bytes": 45003,
+      "sha256": "9676a190b3890947ab56530b9f99edaf4dfdf1c87fee4dbf3c3f7667a4d868c8",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/corrected-node22.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/corrected-node22.json",
+      "bytes": 47829,
+      "sha256": "d0e05df21a27533fa3d2a2902e2ae284539952ab5fef7ba52bc67d7a411cdb11",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/corrected-node22.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/corrected-node22.tap",
+      "bytes": 48030,
+      "sha256": "3699ad7650e2d8d9066956d5d7525de730be0269767771828d82ad512ce4c7db",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/final-node20.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/final-node20.json",
+      "bytes": 47828,
+      "sha256": "ce014b4da7e07fdf4b8b820e096d0204ef87f1e0318db863e4269cf49aa42c4c",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/final-node20.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/final-node20.tap",
+      "bytes": 45739,
+      "sha256": "4fee8c5d2a966895ca8a9b872497192aea89b6f9fadca7b0e3f7b8e8d0ab9e76",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/final-source-inputs.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/final-source-inputs.json",
+      "bytes": 46702,
+      "sha256": "d4387d25fa4c008a6b70098e8a768ba3e594dec804cb796f7b4201c3a4cee1d3",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/format-final.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/format-final.json",
+      "bytes": 48018,
+      "sha256": "d60dfb300e50362b6da2771a7c491744699fa4793c11773f876a27bfec71e721",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/format-final.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/format-final.tap",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/independent-review/review.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/independent-review/review.json",
+      "bytes": 22562,
+      "sha256": "35244ef4431ae718e867e43080fc804ab8cfc0e50ca23cba57156a72ef1c2bf2",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/initial-node20.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/initial-node20.json",
+      "bytes": 47484,
+      "sha256": "ea4726db65cc44aeae26420fb1b773a71af97a30ed87b91e00d1f091302d1b27",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/initial-node20.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/initial-node20.tap",
+      "bytes": 79320,
+      "sha256": "3a5114bfc39d568733c61d74503badcb9f1c3e215fe85039a3e4fc2169605796",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/lint-final.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/lint-final.json",
+      "bytes": 47835,
+      "sha256": "5fc41898c7a684c803be0eec79624f22f087fc3ac237df6b4ae01fd478672f0a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/lint-final.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/lint-final.tap",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/navigation-guidance-review.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/navigation-guidance-review.md",
+      "bytes": 1824,
+      "sha256": "59d9acbf8300c87947278d065c2d6115acf6be7be0a50b15afd8957ef2a23e86",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/original-r2-preservation.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/original-r2-preservation.json",
+      "bytes": 3093,
+      "sha256": "4943a271772c1056797f00a8edb33e5366f06e86f298a874b984740842449fbd",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/preservation-review.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/preservation-review.json",
+      "bytes": 879,
+      "sha256": "e5c16097f3b1ed49752d951256517ea2992e686840ba6039a259c64e34ad9add",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/qualification.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/qualification.json",
+      "bytes": 15064,
+      "sha256": "74ed7977189b11b49ab381ea385dec052f6c498db050e8b568a72eac135fb02c",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/run.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-about-controller-58ff1b1/run.py",
+      "bytes": 2956,
+      "sha256": "eb2f1561058cbb532122ea0cd1309a24757cc60a76de59f8a2dd95f651716f96",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/README.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/README.md",
+      "bytes": 2088,
+      "sha256": "c6dcdc5e70332baee2967e87107869922e266e8902aee5ce36e49267cc3a25f9",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/about-history-candidate.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/about-history-candidate.log",
+      "bytes": 2428,
+      "sha256": "41fb53abd657e7e72a4409107b3073c73482a4f84310704b6ab55bdd38bbdb3a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/bootstrap-archive-catalog.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/bootstrap-archive-catalog.json",
+      "bytes": 207,
+      "sha256": "9f4377cb0c29fac91a5ad36b1ad7ffd97b031d57a9f98d22c8c07c84d9ec3089",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/bootstrap-preset.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/bootstrap-preset.json",
+      "bytes": 202,
+      "sha256": "efcb3b14ec1cf27d379c5cc252969bf36fbef28b1b9b834f13d04ac6b6fcef6c",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/candidate-pins.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/candidate-pins.json",
+      "bytes": 7669,
+      "sha256": "fda8e2ab7db7a45283d12ba36775f3e1ad28002ba91ee4b19e8ca69e4dca4d4b",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/candidate.patch",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/candidate.patch",
+      "bytes": 32972,
+      "sha256": "d850409fa20c9ea53ec346e9d353b111008ca0ac269397e2f107195adf1879e1",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/checks-final.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/checks-final.json",
+      "bytes": 3755,
+      "sha256": "0441fb3491a63dedd90b0975be0452d94f99784d31efdf6d61e43635bc87cb17",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/closure.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/closure.json",
+      "bytes": 8287,
+      "sha256": "3ffc82db9187d709ff722736182a5a85a50457c8343c9e377724ce28b13d1e8e",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/diff-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/diff-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/format-candidate.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/format-candidate.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/format-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/format-final.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/history-full-candidate.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/history-full-candidate.log",
+      "bytes": 6206,
+      "sha256": "e62d32c61082ca0f70f1da2ddf6b8366f8efcedc8a258ad05470e2f280de77b0",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/history-full-final.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/history-full-final.json",
+      "bytes": 3715,
+      "sha256": "b41f584c66ba24398b1b2e3c6d2d505d0e6dc0b29389ed4114509b808add5bb1",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/history-full-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/history-full-final.log",
+      "bytes": 6192,
+      "sha256": "0a8d3c4caedc047234ec989fe219de0713dc71743411397fa80c59b2b680ebd9",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/home-history-feature-red.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/home-history-feature-red.log",
+      "bytes": 5624,
+      "sha256": "e6d6bf18bd73b42aa33d767671f7151685c2556eb8c52e126e9b16684dcc4df3",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/home-history-red.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/home-history-red.log",
+      "bytes": 6561,
+      "sha256": "253dd7c2ef85c99a9b159fd26ff48fea5f690732bb5aaf737b703a5c83c055ed",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/host-history-red.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/host-history-red.log",
+      "bytes": 11940,
+      "sha256": "04a0483f5bf3a1f9adfdfcbe722cc30b84837a9fb54cda529f4a3fabb13a1745",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/lint-candidate.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/lint-candidate.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/lint-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 201359,
+      "sha256": "5501e470b9e1fefab09168ad502c965d328c0ec326b2793cd4c101072b19e039",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/docs/field-kit-surfaces.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/docs/field-kit-surfaces.md",
+      "bytes": 4820,
+      "sha256": "2b1d9ccbd5583a0d32459e2938b08b3ff3c1f15b7525b6c9b3bc93e4fbb6ef42",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/game/app.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/game/app.mjs",
+      "bytes": 269289,
+      "sha256": "8eded9082a16787c87a5e0507e69fd566e0a597405014f91934e6eaacc11f950",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/game/index.html",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/game/index.html",
+      "bytes": 72497,
+      "sha256": "bad5efb9832e732e89761f1224ad1abaa7fee78315dc74f9851e37ff3ab3b169",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/game/test/field-kit-flow.test.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/game/test/field-kit-flow.test.mjs",
+      "bytes": 13488,
+      "sha256": "8e141d308bba04a78e500f1cd1bf7a4beb766e2eee976c97a0e0e3b23f562100",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/game/test/site-release-links.test.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/game/test/site-release-links.test.mjs",
+      "bytes": 2792,
+      "sha256": "56d0de9ccbcf9607a8853d0c32208a849832d11e61aefaafef03005640e56123",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/scripts/test-pages-current-entry.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/scripts/test-pages-current-entry.mjs",
+      "bytes": 12965,
+      "sha256": "b889eccf062bb61bb1c9046d702a9fd1e984248385a0da7cd988ed0543628b19",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/site/about.html",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/site/about.html",
+      "bytes": 26734,
+      "sha256": "ce50eb89cad35b8a29995f085c7a68ae0fef9103f4cb9e836546c3f5059525b0",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/site/landing.css",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/site/landing.css",
+      "bytes": 33881,
+      "sha256": "51a73a456837e70777ceaefd10f62ae277d0841a348083a6e193f363b973f265",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/site/landing.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/site/landing.mjs",
+      "bytes": 4976,
+      "sha256": "a1c77b683da8d34bf6792e7e76ea22fadcbdd442244419b33ad741215b447855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/preimage/site/release-links.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/site/release-links.mjs",
+      "bytes": 746,
+      "sha256": "084d72d4d58e8ef11595e0a7857b5e338ee4ff8884eb43f859099bd22a0f2de0",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 202581,
+      "sha256": "d189b918d771d71909bce66777ff137529cc3c399bd9e95a4864efcb31abac27",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/docs/field-kit-surfaces.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/docs/field-kit-surfaces.md",
+      "bytes": 6981,
+      "sha256": "a5f0ed35009ea2e72e3900465688f287691726b2158f52e4b320d74da9a8ada0",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/app.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/game/app.mjs",
+      "bytes": 269100,
+      "sha256": "592bcb9d2a151e7f3a1b181976055c6b68a060bdb77c313427f7d14a62ab9d22",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/index.html",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/game/index.html",
+      "bytes": 72178,
+      "sha256": "7537d586c218a1ad5a0e93a8d6d37f909c17cfe4f6c6d14b3031905b1dd652fd",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/test/field-kit-flow.test.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/game/test/field-kit-flow.test.mjs",
+      "bytes": 13703,
+      "sha256": "3ecfd59516900871beb216f2914bb84d91f5831bca053d8c596d091ef8dc9c3f",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/test/landing-release-history-host.test.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/game/test/landing-release-history-host.test.mjs",
+      "bytes": 7772,
+      "sha256": "a9970a45fefcc0763b9baf78f3d5649c7170f2edeffbe7f3e09d1c491e42b5b5",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/test/site-release-links.test.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/game/test/site-release-links.test.mjs",
+      "bytes": 5123,
+      "sha256": "e03c2a022bed61c0e83c45d07c6bbc24ffba385c6228c255bcaf7daab42e6df5",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/scripts/test-pages-current-entry.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/scripts/test-pages-current-entry.mjs",
+      "bytes": 13000,
+      "sha256": "d63ad9a452ea0e2765ebc799895927f257071c3eff4fd28c7e0940c6a509e410",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/about.html",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/site/about.html",
+      "bytes": 27157,
+      "sha256": "83880918833b1cc558f0102cda55d3f2ca8cf741bcaa5795a06c77aac65e88c8",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/landing.css",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/site/landing.css",
+      "bytes": 33928,
+      "sha256": "0ed7e2220b436a6c08c1528a4f8fdefaf42bc1a1782e2cba94d2fce20d0034eb",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/landing.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/site/landing.mjs",
+      "bytes": 5494,
+      "sha256": "6ec652f513a9d994530eafb9633e912fc8680fa9bb4075c973ffb893d740eb0f",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/release-links.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/site/release-links.mjs",
+      "bytes": 1364,
+      "sha256": "0e9b734784b6af2222f552c82b133e6d57eee91f5e51bf2e3a347cdfe6036526",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/qualification.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/qualification.json",
+      "bytes": 6288,
+      "sha256": "6e98ef6b1383cd7e24350d06a6a46986c612237f02a04a1bae73b2a498edee0a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/runtime-pins-r2.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/runtime-pins-r2.json",
+      "bytes": 1755,
+      "sha256": "bd3d23ca2b6a8eaab64cb6a1d6930e565f3e0e8a8cad6949c2c84d105c381552",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/runtime-pins.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/runtime-pins.json",
+      "bytes": 1755,
+      "sha256": "f1fbec78a6a4ff7243e8038617498c46a0583a8bee3420a93afe7052668276dc",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-format.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/source-format.log",
+      "bytes": 244,
+      "sha256": "5570560e647ab2fea9ceb9e573486f9df010054ca98ec580269c3caba2df436c",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-invariants.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/source-invariants.json",
+      "bytes": 248,
+      "sha256": "206a588557466ab95c9f31bbba155e70d76bc2faeab3a6a64dd4cd1566ad62c3",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-links-candidate.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/source-links-candidate.log",
+      "bytes": 1315,
+      "sha256": "5757f456002ea4b8929e8318fe651e5d78917876c780737f0de49c1b116d0f65",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/source-pins.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/source-pins.json",
+      "bytes": 61780,
+      "sha256": "325c7b49388b10c2f4aa37b5835e3d5f2810a18742143b027e35826ed5d3c379",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/syntax-app-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/syntax-app-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/syntax-landing-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/syntax-landing-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/syntax-links-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/syntax-links-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-admission-result.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/temporary-admission-result.json",
+      "bytes": 71,
+      "sha256": "7da400f0c358f0b0935255ef0fef065fffc7e5e143a9c8383bf2515f75f4f3c5",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-admission.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/temporary-admission.json",
+      "bytes": 9556,
+      "sha256": "1d1d8f90b3a3bb7ed6b2afcd4fbfe0cfd3401f5744daef551f529a8e806adb3e",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-dehydration.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/temporary-dehydration.json",
+      "bytes": 2057,
+      "sha256": "905727985faaa98c12d114ef90e51c66169ad6d773c98720c18b53894ddc2632",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/temporary-sparse-before.txt",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/temporary-sparse-before.txt",
+      "bytes": 6656,
+      "sha256": "d23ad432aa697c8a91744d5b7676ee996930df871480fcfd77aa82a620391151",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/README.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/README.md",
+      "bytes": 1882,
+      "sha256": "b0a453eda58d7966efae5f6641b8d35b92a735c804ff341b7fe2fafe1645062d",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/candidate-pins.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/candidate-pins.json",
+      "bytes": 8630,
+      "sha256": "9ebb4ec0688183079b36d2f9ff29985844f0ef771dbdc02b36a6fe9686bdf025",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/candidate.patch",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/candidate.patch",
+      "bytes": 35243,
+      "sha256": "adca136dd39ee6caf542bc9b7fa91da88287c210b91326ca9f872a78527fcf9b",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/checks-final.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/checks-final.json",
+      "bytes": 1525,
+      "sha256": "5f3a5f35931fc33e49f9ff3947584278e093faf2cf2755ff0ca5eab520d63341",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/diff-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/diff-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/format-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/format-final.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/history-r2-final.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/history-r2-final.json",
+      "bytes": 3748,
+      "sha256": "ade29bd69b4d0e54c25be4d7468e16fb0f7d45ef6b7ee851a0187d63bb1ab1b9",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/history-r2-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/history-r2-final.log",
+      "bytes": 6201,
+      "sha256": "1f5acea3e5c231f120eee812553c28993fb81350a1a8411baaf7281d29a9fd6a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/lint-final.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/placement-invariants.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/placement-invariants.json",
+      "bytes": 419,
+      "sha256": "295e37c48df6007291fda75ef09901ee126f6aa8f8ae7b3dbeb82930f3011097",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/placement-red.log",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/placement-red.log",
+      "bytes": 2209,
+      "sha256": "96c3a4a5afbaffbc850305e9ed7856f5cf83c4d6c6d2231422f2b4499f88d5d5",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/proposal/docs/field-kit-surfaces.md",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/proposal/docs/field-kit-surfaces.md",
+      "bytes": 7174,
+      "sha256": "5e3ba8b9a736efaff2e4c12e96a8fe32a40bfc2f302b41218fe3e6f4750a885c",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/proposal/game/test/landing-release-history-host.test.mjs",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/proposal/game/test/landing-release-history-host.test.mjs",
+      "bytes": 8177,
+      "sha256": "cd09fd2de0cb8bff371174447635937ed73e9a8d048537a02d175a038b000183",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/proposal/site/about.html",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/proposal/site/about.html",
+      "bytes": 27157,
+      "sha256": "859ceaf4f78f0e74090ca4fd430ea98f29e085daa23392844eee525c78538df9",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/qualification.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/qualification.json",
+      "bytes": 4302,
+      "sha256": "0a5a9b5679b4c232486ebe22fd0a9c29827e4740dddf6ff66754157d29672eba",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/r2-delta.patch",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/r2-delta.patch",
+      "bytes": 5709,
+      "sha256": "a42030286c6136867a7cf1b8f0e73e5ef677be0a37560c8c961c724440946326",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/runtime-pins.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-r2-628e95da/runtime-pins.json",
+      "bytes": 1806,
+      "sha256": "00e44677d4e91cb7854a401c237e09c21712e8149b2d6cf9d84f3a7663089223",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/binding-proposal.json",
+      "bytes": 515,
+      "sha256": "ddca82fc34ace9db8107d903e650d670043493aa33dc8ab052f1374079f30877",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/binding.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/binding.json",
+      "bytes": 2643,
+      "sha256": "7f51caac8bcd95cc43ccd86a2dfc1412413d3133fefe852ba658591e551e4845",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/cua-observation-r1.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/cua-observation-r1.json",
+      "bytes": 2714,
+      "sha256": "c74ebd9d6c81450e098bad4181b8def3e1313fcaba8f13f47e8eec913be299f6",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/faults.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/requests-r1-prefix.jsonl",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/requests-r1-prefix.jsonl",
+      "bytes": 244976,
+      "sha256": "a5795ba93f6add9fabe31d347d2edc2f8f0d6e43460de1e3d338b6a2be8c8b82",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/requests.jsonl",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/requests.jsonl",
+      "bytes": 244976,
+      "sha256": "a5795ba93f6add9fabe31d347d2edc2f8f0d6e43460de1e3d338b6a2be8c8b82",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/runtime-overrides.json",
+      "bytes": 2304,
+      "sha256": "8ee72497a696902d6a711ebc32741d825b48910f90830e3df044e9f39c20638d",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r3/serve-r2.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r3/serve-r2.py",
+      "bytes": 7049,
+      "sha256": "a0d3f878693b3754fc2d35e83d2c91cbd01eabbbd085e2490fc2b5a818a6fa81",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/binding-proposal.json",
+      "bytes": 514,
+      "sha256": "18ad8c5e4e62ddf77238737578889481aec771f0e3ca6f3b2604cd579a987fd6",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/binding.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/binding.json",
+      "bytes": 2640,
+      "sha256": "19ba18d49daace0fd7e107ded135565c341b521b8a86dbb88583c386149cc71d",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/cua-observation-r2.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/cua-observation-r2.json",
+      "bytes": 20670,
+      "sha256": "e611fc85cd0269b372c1cc42c4016dbb80b1fcf586cff91c1e589976dc085024",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/faults.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/requests.jsonl",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/requests.jsonl",
+      "bytes": 259791,
+      "sha256": "d1757d7f8adf0aeffbf55b1c3b2bf94252fe6d42f438f59f82e221a7585ad654",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/runtime-overrides.json",
+      "bytes": 2302,
+      "sha256": "cea94a56f1b1bdf71889f91b92c5d92ca6a60ed326dfd3b82638bdb3cf96950a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/serve-r2.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r4/serve-r2.py",
+      "bytes": 7049,
+      "sha256": "a0d3f878693b3754fc2d35e83d2c91cbd01eabbbd085e2490fc2b5a818a6fa81",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/binding-proposal.json",
+      "bytes": 459,
+      "sha256": "7d2bad63e54870e8e23c0d10f46eccf1cb0bcebbcf13775768f6e2ddb2db0ecb",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/binding.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/binding.json",
+      "bytes": 2585,
+      "sha256": "d660971ab40a27d14a62f8c6035389879e44bd604684b3047ba7b48478794b56",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/cua-recovery.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/cua-recovery.json",
+      "bytes": 2213,
+      "sha256": "3ae2f5253131873e26d388ab13b6769daca939b99985d7c1f532f3ef829941e7",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/faults.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/peer-review.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/peer-review.json",
+      "bytes": 1454,
+      "sha256": "d7a0b2f6518f2747e4c8bbdb96115de0166ade6a835089a233881aff21d6c2dc",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/requests.jsonl",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/requests.jsonl",
+      "bytes": 124427,
+      "sha256": "2554cd05790f7a2521d9a19813117d91352e23406bae227dc046dfa554646252",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/runtime-overrides.json",
+      "bytes": 2302,
+      "sha256": "cea94a56f1b1bdf71889f91b92c5d92ca6a60ed326dfd3b82638bdb3cf96950a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/serve-r2.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser-r5/serve-r2.py",
+      "bytes": 7049,
+      "sha256": "a0d3f878693b3754fc2d35e83d2c91cbd01eabbbd085e2490fc2b5a818a6fa81",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/binding-proposal.json",
+      "bytes": 515,
+      "sha256": "15638762652956e02e34678cc5542a0b9ec53ae27b1bcab6b8ed468efa593cfb",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/catalogue-fixture.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/catalogue-fixture.json",
+      "bytes": 448,
+      "sha256": "601d3b069685046fd0deba9b0d561dbc31f93f23f799619b6d3d72c14bc0e076",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/faults.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/faults.json",
+      "bytes": 30,
+      "sha256": "4286383166b1869c0be207dec5178d25957a8ee9f2536f6eba8aced6468cac5e",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/requests.jsonl",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/requests.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/runtime-overrides.json",
+      "bytes": 2304,
+      "sha256": "8ee72497a696902d6a711ebc32741d825b48910f90830e3df044e9f39c20638d",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/serve-r2.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/serve-r2.py",
+      "bytes": 7049,
+      "sha256": "a0d3f878693b3754fc2d35e83d2c91cbd01eabbbd085e2490fc2b5a818a6fa81",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/serve.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-browser/serve.py",
+      "bytes": 7031,
+      "sha256": "ab66b266fadddb4d790e1f87f8cc1ca833913601a5719cd0d072ed5d2d2d9fd1",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/check.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/check.py",
+      "bytes": 2900,
+      "sha256": "9e4aad0899cf61563644c805e97687fd121c900e5d84888546bc9369d3e10cd3",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/production-boundary-pre-version.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/production-boundary-pre-version.json",
+      "bytes": 6063,
+      "sha256": "8369f4a94111bce07a0ea3d5fc4ffaaa464fca4645c9d0e2a9cda3c106beda53",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/run.py",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/run.py",
+      "bytes": 2956,
+      "sha256": "eb2f1561058cbb532122ea0cd1309a24757cc60a76de59f8a2dd95f651716f96",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/source-qualification.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/source-qualification.json",
+      "bytes": 2557,
+      "sha256": "ad99017d8f1b2eacf66fce67e4f60cf916f7b5e7bc082133af391cf2b0535886",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/version-adoption.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/version-adoption.json",
+      "bytes": 1107,
+      "sha256": "c2a4cc6751e02bb2b1e533e2679dd8b1345057f23c595faf0fee825a78c71403",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/version-availability.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/version-availability.json",
+      "bytes": 200,
+      "sha256": "a1c033030c346f9fce44f37efe11830fb00416d4ae176fc5b38f2a244e8a4e0a",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-format.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-format.json",
+      "bytes": 47560,
+      "sha256": "b50c0265a8a04b54a3596e7a741621512b127c6b15c26da7ad82440bc366eea5",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-format.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-format.tap",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node20.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-node20.json",
+      "bytes": 47827,
+      "sha256": "ee6f2ae1f6d85501face2417e1fef3dcf1614645ebc809982a94aba96db4db2e",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node20.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-node20.tap",
+      "bytes": 45042,
+      "sha256": "04dcf71115257452601fad635c933d3485303a884e4a5fbed7f8b628e9f23674",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node22.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-node22.json",
+      "bytes": 47828,
+      "sha256": "03a1ae05dfaa68c54f1d2d2bb4c0d5e58d7c843b04d947962ebd8e0b2c22020f",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node22.tap",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-node22.tap",
+      "bytes": 48047,
+      "sha256": "90904ce1c5361dec73e27257fbde60316f6b4813cd9a4b081f06d93a8cc42e88",
+      "mode": "100644"
+    },
+    {
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-source-inputs.json",
+      "destination": "docs/verification/cross-mode/about-navigation-v0614/versioned-source/versioned-source-inputs.json",
+      "bytes": 43620,
+      "sha256": "77f83dd8242a795beee6dd57020decc538da7fed26b009325b041a3549e4addc",
+      "mode": "100644"
+    }
+  ],
+  "totalFiles": 142,
+  "totalBytes": 3559228,
+  "scope": "Exact original historical/implementation/review/versioned-precommit receipts. Earlier failures remain; no transfer of old native or source acceptance to this new release."
+}

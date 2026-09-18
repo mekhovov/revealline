@@ -1,0 +1,21 @@
+{
+  "base": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "appPreservation": "Only exact release-explorer import and two-line link initialization removed; all current Next/Retry code preserved.",
+  "skillPreservation": "Removing only the new History/controller paragraph reconstructs the complete committed skill, including Team and Enemy guidance.",
+  "archivedPlayValidatorUnchanged": true,
+  "sharedReleaseExplorerUnchanged": true,
+  "buildInclusion": {
+    "config": "game/build-config.json",
+    "existingInclude": "site",
+    "newModule": "site/about-navigation.mjs",
+    "configUnchanged": true,
+    "version": "0.61.3",
+    "scope": "Source packaging contract only; no ordinary full build executed."
+  },
+  "recheckedAfterControllerAndArchiveCorrections": true,
+  "versionPathsUnchanged": [
+    "package.json",
+    "package-lock.json",
+    "game/build-config.json"
+  ]
+}

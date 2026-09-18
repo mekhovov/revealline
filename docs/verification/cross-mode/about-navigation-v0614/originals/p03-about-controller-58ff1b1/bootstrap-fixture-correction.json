@@ -1,0 +1,18 @@
+{
+  "initialRun": "initial-node20.json",
+  "result": "179 pass /17 fail; all17 failures identify missing motion presets at bootstrap",
+  "base": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "files": [
+    {
+      "path": "authoring/motion-lab/presets.json",
+      "bytes": 50888,
+      "sha256": "c1ad73a04e31f63eaa1244b5a73ba076160960746f57bf0944c53ee28e85d7ba"
+    },
+    {
+      "path": "game/content/packs/archive-catalog.json",
+      "bytes": 2600,
+      "sha256": "6da75db47524940c3d1469274faa652558137ef4ec55d3ef349f4c22ad70341a"
+    }
+  ],
+  "testAssertionsChangedForHydration": false
+}

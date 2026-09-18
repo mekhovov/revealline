@@ -1,0 +1,58 @@
+{
+  "commit": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "pid": 33689,
+  "port": 55189,
+  "url": "http://127.0.0.1:55189/game/",
+  "scope": "P03/P16 Home to About release history, six exact628 source overrides plus separately synthetic catalogue for loading/selection/failure only; no real archive availability claim.",
+  "runtimeOverrides": {
+    "game/index.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/game/index.html",
+      "bytes": 72178,
+      "sha256": "7537d586c218a1ad5a0e93a8d6d37f909c17cfe4f6c6d14b3031905b1dd652fd"
+    },
+    "game/app.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/game/app.mjs",
+      "bytes": 269100,
+      "sha256": "592bcb9d2a151e7f3a1b181976055c6b68a060bdb77c313427f7d14a62ab9d22"
+    },
+    "site/about.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/site/about.html",
+      "bytes": 27157,
+      "sha256": "83880918833b1cc558f0102cda55d3f2ca8cf741bcaa5795a06c77aac65e88c8"
+    },
+    "site/landing.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/site/landing.mjs",
+      "bytes": 5494,
+      "sha256": "6ec652f513a9d994530eafb9633e912fc8680fa9bb4075c973ffb893d740eb0f"
+    },
+    "site/release-links.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/site/release-links.mjs",
+      "bytes": 1364,
+      "sha256": "0e9b734784b6af2222f552c82b133e6d57eee91f5e51bf2e3a347cdfe6036526"
+    },
+    "site/landing.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/site/landing.css",
+      "bytes": 33928,
+      "sha256": "0ed7e2220b436a6c08c1528a4f8fdefaf42bc1a1782e2cba94d2fce20d0034eb"
+    },
+    "releases/index.json": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser/catalogue-fixture.json",
+      "bytes": 448,
+      "sha256": "601d3b069685046fd0deba9b0d561dbc31f93f23f799619b6d3d72c14bc0e076",
+      "provenance": "Explicit synthetic test catalogue; not published inventory. No historical destination navigation."
+    }
+  },
+  "urls": [
+    "http://127.0.0.1:55189/game/",
+    "http://127.0.0.1:55189/site/about.html#versions"
+  ],
+  "faultPaths": [
+    "releases/index.json",
+    "site/landing.mjs"
+  ],
+  "limits": {
+    "requestLogBytes": 450000,
+    "requestEvents": 1300
+  }
+}

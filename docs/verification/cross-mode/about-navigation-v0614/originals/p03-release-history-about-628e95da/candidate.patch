@@ -1,0 +1,603 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 62d0e1c2..5fd915ad 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -346,6 +346,8 @@ Craft switching must follow the active run’s roster and authored hangars, with
+ 
+ Route Missions Back, native cancel and controller cancel through the same origin-aware shell handler. Prevent the native default after handling cancel, but retain cancellation notices for transactions that remain open. Do not reopen Home from a generic close listener: Deploy and Back to flight deliberately leave Missions. Test title, flight and brief origins with the saved cut and explicit Resume unchanged. Capture the explicit title Missions, field Missions or Mission brief opener before closing its parent; a repeated open of the same Missions visit from Collection appearance setup must retain that original parent and opener. On Back, validate the complete return target and its parent, use the available parent Missions entry or primary only as fallback, and preserve newer dialogs, deliberate focus, background/disposal and close/pause callback ownership before reopening Home. Distinguish expected native close/showModal autofocus from a newer usable focus choice. Preserve the existing no-argument programmatic field handoff and its flight focus; this correction does not extend campaign-complete entry behavior. Test the actual shell/host plus queued native-close modeling, held controller Back, unchanged paused-cut/checkpoint/storage and intentional Deploy/Back to flight. Keep native and physical-device acceptance separate.
+ 
++Keep software release history in About’s Build information disclosure, separate from Home’s game destinations and its unchanged version label. Derive the About page’s sibling game URL before applying the shared catalog resolver; frozen About routes include `site/site/about.html`. Keep the history link hidden under the actual button CSS until its correct URL is initialized, before awaiting the catalog. Preserve the current-build fallback and explicit Open build action. Rebase only already-validated relative archived-play results against the fetched/requested catalog URL; retain the strict validator, exact canonical HTTPS URLs and invalid-canonical-to-valid-local fallback. Do not add automatic navigation, save writes or a new modal-return owner. Regression prompt: “Check first/continued Home, source/frozen About, held/failed catalog loads, relative/canonical/malformed records, and module failure with the history link truly unrendered; verify explicit navigation and original game state.” Record modeled URL/host tests, native focus/44-pixel layouts and actual public catalog qualification separately. See [Software build information](../../../docs/field-kit-surfaces.md#software-build-information).
++
+ Preserve the actual dialog hierarchy: Main menu stays beneath Settings or Collection; Workshop stays beneath Field Guide, with its menu parent retained. Let the existing modal stack restore that exact opener on Close, Escape or controller Back. An already-open Main menu remains the return screen even while its underlying flight is paused; a direct flight opener returns to that paused flight. Nested practice returns to the guide first. Preserve Settings → Music Studio → Close studio → Settings, transaction cancellation and neutral input gates. On a first Studio read, disabling the initially focused Close button can move browser focus to the document; restore it after the read only if that disabling displaced focus and no later focus choice or dialog exit superseded it. Remember the initial target before the read rather than requiring immediate BODY focus: native blur may arrive later. Exercise both immediate and deferred disabled blur during read success/failure separately from cached reopening; never steal focus after a user choice, close or disposal. Explicit Replay or mission/appearance selection closes the appropriate parent dialogs; simply inspecting Collection or its picture retains its entry screen. Read [Collection return behavior](../../../docs/collection-title-return.md). Regression prompt: “Open title Settings and Music Studio, return twice; then open Field Guide, enter and leave practice, and close the guide. Repeat from a real paused cut. Verify the original screen/focus, exact saved state and explicit Resume.” Inspect both keyboard and modeled controller paths, then native browser focus and compact illustration clipping separately. The browser milestone still needs complete source gates and packaged/native-browser/public qualification; source or preview success grants no gate waiver. Full physical-device comfort and supported-device qualification remain P7, with no certification inferred here.
+ 
+ The Field Guide keeps the canonical theme catalog captured before the active pack narrows the flight theme list. Restore an FPV-only pack before bootstrap, then exercise all four Guide names, palettes and practice handoffs. Do not repair the Guide by changing the live run theme, removing available themes or inventing fallback palettes.
+diff --git a/docs/field-kit-surfaces.md b/docs/field-kit-surfaces.md
+index 08a81ade..79d60a6d 100644
+--- a/docs/field-kit-surfaces.md
++++ b/docs/field-kit-surfaces.md
+@@ -16,6 +16,16 @@ Workshop links directly to Motion lab, the picture/story editor, video-poster wo
+ 
+ Validation covers keyboard category changes, cancellation through the existing key-capture handler, original Save/Pack/record routes, return focus, locale fallback and text substitution, normal pause/Continue behavior and build dependencies. Source screenshots under `docs/verification/fpv-redesign/phase6/` and the phase-5 combined-workspace review include portrait Large settings, controller practice and couch results. Actual native file transfer is separately recorded by the Asset Studio. These checks do not claim physical controllers, other browser engines, native 200% browser zoom or public/offline release qualification.
+ 
++## Software build information
++
++Home keeps gameplay destinations and the quick sound control. Software release history belongs under About’s existing Build information disclosure, reached through the same-edition About links. Preserved software builds are not campaigns, modes or presentation collections. The Home version label remains separate from navigation.
++
++About derives its sibling game entry before using the shared release-catalog resolver, including frozen editions whose About route ends in `site/site/about.html`. Its Release history link stays hidden, including under the button styles, until the page module initializes the correct destination synchronously. A failed or delayed catalog request leaves that initialized link and the current-build action usable. If the module itself cannot load, the history link stays hidden; the existing current-build fallback remains.
++
++Build choices retain the strict archived-play validator. Only a validated relative release record is resolved against the fetched catalog’s URL (or the requested index URL when a response does not supply one). Approved canonical HTTPS records keep their exact URL, including a separate archive host. An invalid canonical field can fall back to a valid local record. Selecting a build only updates the explicit Open build link; it never navigates automatically or writes player data.
++
++Maintenance prompt: “Check Home before a first flight and with a continued flight, retaining its Back, focus and checkpoint behavior. Open About from a source deployment and a frozen edition with query/hash state. Hold and fail the catalog request, then supply local and canonical records, including rejected inputs and canonical-to-local fallback. Verify the history link is unavailable before module initialization and correct before the request finishes; only explicit Open build activation may leave the page.” Keep modeled routing and URL tests distinct from native keyboard/controller journeys, compact Standard/Large layouts, 44-pixel target checks and public-release catalog qualification. A synthetic local catalog is not evidence that a frozen public catalog is deployed.
++
+ ## Results artwork and role specimens
+ 
+ The results reading region leads with a bounded still drawn from the completed attempt's already loaded image and fit. Desktop uses adjacent artwork/details; narrow and short views keep the existing reading scroll region and action ownership. The full-picture action returns focus to its originating button. Missing managed originals remain unavailable; old sessions and explicitly legacy worlds use their already loaded original. The still is cleared for ready/pause/loss, and no new media lookup or pin is created.
+diff --git a/game/app.mjs b/game/app.mjs
+index 2f2aea49..30b2c171 100644
+--- a/game/app.mjs
++++ b/game/app.mjs
+@@ -100,7 +100,6 @@ import {
+ import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
+ import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
+ import { attachLibraryPanel } from './ui/library-panel.mjs';
+-import { releaseExplorerHref } from './release-explorer.mjs';
+ import { masteryFor, masteryText } from './ui/mastery-view.mjs';
+ import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
+ import { createMasteryAwards } from './mastery-awards.mjs';
+@@ -274,8 +273,6 @@ try {
+     isRelease = true;
+   } catch {}
+   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
+-  for (const link of document.querySelectorAll('[data-release-explorer]'))
+-    link.href = releaseExplorerHref(location.href);
+   const versionLabel =
+     buildVersion === 'dev' ? 'DEV' : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
+   $('version').textContent = versionLabel;
+diff --git a/game/index.html b/game/index.html
+index 267c4f92..e1fcaf1a 100644
+--- a/game/index.html
++++ b/game/index.html
+@@ -213,8 +213,7 @@
+       <nav>
+         <a href="playground/">Playground ↗</a
+         ><a href="couch/relay-rescue.html?return=solo">Relay Rescue · co-op</a
+-        ><a href="couch/">Couch race</a
+-        ><a data-release-explorer href="../releases/">Release explorer</a
++        ><a href="couch/">Couch race</a><a href="../site/about.html#versions">Build information</a
+         ><button id="library-button" class="text-button" type="button">Library & saves</button
+         ><button id="settings-button" class="text-button" type="button">Settings</button
+         ><button id="help-button" class="text-button" type="button">How to play</button
+@@ -600,7 +599,7 @@
+         <nav>
+           <a href="../authoring/motion-lab/">Motion lab</a
+           ><a href="../authoring/design-atlas/">Reference atlas</a
+-          ><a data-release-explorer href="../releases/">Release explorer</a
++          ><a href="../site/about.html#versions">Build information</a
+           ><a href="replay-theater/">Replay Theater</a
+           ><a href="controller-lab/">Controller practice</a>
+         </nav>
+@@ -1559,13 +1558,6 @@
+           >
+             Sound: off
+           </button>
+-          <a
+-            id="shell-release-explorer"
+-            data-release-explorer
+-            href="../releases/"
+-            class="button secondary"
+-            >Release explorer <span>Play another edition</span></a
+-          >
+         </nav>
+         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
+         <p class="home-hint">Choose a flight. Trace a path. Close the line.</p>
+@@ -1651,8 +1643,7 @@
+           >
+             Restart mission
+           </button>
+-          <a href="../site/about.html">About &amp; build archive</a>
+-          <a data-release-explorer href="../releases/">Release explorer</a>
++          <a href="../site/about.html#versions">About &amp; build information</a>
+         </nav>
+       </details>
+       <button id="sound-button" hidden class="icon-button" type="button" aria-label="Enable sound">
+diff --git a/game/test/field-kit-flow.test.mjs b/game/test/field-kit-flow.test.mjs
+index 9f092210..fc7f8edc 100644
+--- a/game/test/field-kit-flow.test.mjs
++++ b/game/test/field-kit-flow.test.mjs
+@@ -64,7 +64,7 @@ test('direct briefing and disposal retain one craft presenter outside hidden mis
+   assert.deepEqual(page.errors, []);
+ });
+ 
+-test('title has five game destinations, quick sound and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
++test('title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight', async (t) => {
+   const page = await soloPage(t, { titleScreen: true });
+   assert.deepEqual(visibleActions(page), [
+     'shell-featured',
+@@ -73,18 +73,25 @@ test('title has five game destinations, quick sound and the release catalog; Wor
+     'shell-options',
+     'shell-workshop',
+     'shell-sound',
+-    'shell-release-explorer',
+   ]);
+-  const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
+-  assert.equal(catalog.tagName, 'A');
+-  assert.equal(catalog.href, 'http://localhost/releases/');
+-  assert.match(catalog.textContent, /Release explorer/);
+-  assert.equal(catalog.hidden, false);
+-  assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
++  assert.equal(
++    page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]'),
++    null,
++  );
++  assert.equal(page.$('shell-release-explorer'), null);
+   assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
+   page.$('shell-workshop').click();
+   assert.equal(page.$('shell-workshop-dialog').open, true);
+   assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
++  const buildInformation = [...page.$('shell-workshop-dialog').querySelectorAll('a')].filter(
++    (link) => link.getAttribute('href') === '../site/about.html#versions',
++  );
++  assert.equal(buildInformation.length, 1, 'Workshop has one About and build information route.');
++  assert.equal(
++    buildInformation[0].textContent.replaceAll('&amp;', '&'),
++    'About & build information',
++  );
++  assert.equal(page.$('shell-workshop-dialog').querySelector('[data-release-explorer]'), null);
+   assert.ok(
+     [...page.$('shell-workshop-dialog').querySelectorAll('a')].some(
+       (link) => link.getAttribute('href') === '../authoring/asset-studio/',
+@@ -158,7 +165,6 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a
+     'shell-options',
+     'shell-workshop',
+     'shell-sound',
+-    'shell-release-explorer',
+   ]);
+   assert.match(page.$('shell-destination').textContent, /Continue/);
+   const snapshot = [...page.storage.map];
+diff --git a/game/test/site-release-links.test.mjs b/game/test/site-release-links.test.mjs
+index 09ec9cc0..e5820fd4 100644
+--- a/game/test/site-release-links.test.mjs
++++ b/game/test/site-release-links.test.mjs
+@@ -1,6 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+-import { archivedPlayHref } from '../../site/release-links.mjs';
++import {
++  archivedPlayHref,
++  releaseHistoryHref,
++  archivedPlayHrefFromCatalog,
++} from '../../site/release-links.mjs';
+ import { publishedReleaseIndex } from '../../scripts/build-pages.mjs';
+ import { releaseExplorerHref } from '../release-explorer.mjs';
+ 
+@@ -71,3 +75,65 @@ test('archive links reject script schemes, credentials, traversal and non-game d
+   ])
+     assert.equal(archivedPlayHref(play), null, String(play));
+ });
++
++test('About history resolves the shared catalog from source and frozen sibling game routes', () => {
++  for (const [page, expected] of [
++    [
++      'https://mekhovov.github.io/revealline/site/about.html#versions',
++      'https://mekhovov.github.io/revealline/releases/',
++    ],
++    [
++      'https://mekhovov.github.io/revealline/releases/v0.51.0/site/site/about.html?view=history#versions',
++      'https://mekhovov.github.io/revealline/releases/',
++    ],
++    [
++      'http://127.0.0.1:8768/preview/releases/v0.51.0/site/site/about.html',
++      'http://127.0.0.1:8768/preview/releases/',
++    ],
++  ])
++    assert.equal(releaseHistoryHref(page), expected);
++});
++
++test('About rebases only validated local archive records against the fetched catalog URL', () => {
++  const canonical = 'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/game/';
++  for (const index of [
++    'https://mekhovov.github.io/revealline/releases/index.json',
++    'http://127.0.0.1:8768/preview/releases/index.json',
++  ]) {
++    assert.equal(
++      archivedPlayHrefFromCatalog('v0.28.0/site/game/', index),
++      new URL('v0.28.0/site/game/', index).href,
++    );
++    assert.equal(
++      archivedPlayHrefFromCatalog('v0.28.0/site/game/index.html', index),
++      new URL('v0.28.0/site/game/index.html', index).href,
++    );
++    assert.equal(archivedPlayHrefFromCatalog(canonical, index), canonical);
++  }
++  for (const rejected of [
++    undefined,
++    null,
++    {},
++    '',
++    '../v1/site/game/',
++    '//example.test/releases/v1/site/game/',
++    'javascript:alert(1)',
++    'https://user:password@example.test/releases/v1/site/game/',
++    'https://example.test/releases/v1/site/game/?next=https://other.test',
++    'https://example.test/x/%2e%2e/releases/v1/site/game/',
++  ]) {
++    assert.equal(
++      archivedPlayHrefFromCatalog(rejected, 'https://example.test/releases/index.json'),
++      null,
++    );
++  }
++  assert.equal(
++    archivedPlayHrefFromCatalog(
++      'javascript:alert(1)',
++      'https://example.test/releases/index.json',
++    ) ??
++      archivedPlayHrefFromCatalog('v0.28.0/site/game/', 'https://example.test/releases/index.json'),
++    'https://example.test/releases/v0.28.0/site/game/',
++    'Invalid canonical metadata still permits a separately validated local record.',
++  );
++});
+diff --git a/scripts/test-pages-current-entry.mjs b/scripts/test-pages-current-entry.mjs
+index aac2b2f3..281b4135 100644
+--- a/scripts/test-pages-current-entry.mjs
++++ b/scripts/test-pages-current-entry.mjs
+@@ -220,7 +220,7 @@ test('identical alias and worker bytes route localhost and project prefixes with
+   }
+ });
+ 
+-test('actual launcher and runtime links stay versioned; release explorer uses the generated root catalog', async (t) => {
++test('actual launcher and runtime links stay versioned; About history uses the generated root catalog', async (t) => {
+   const launch = await fs.readFile(new URL('../site/launch.mjs', import.meta.url), 'utf8'),
+     link = {};
+   let destination;
+@@ -275,10 +275,11 @@ test('actual launcher and runtime links stay versioned; release explorer uses th
+         assert.match(tag, /\bhidden\b/);
+         assert.equal(filename, 'diagnostics/index.html');
+       } else if (filename === 'releases/index.html') {
+-        // The app resolves these public links at runtime because the Pages catalog is
+-        // generated beside versioned sites, not inside one. A clean source archive
++        // About resolves this hidden link before awaiting its generated catalog.
++        // The catalog lives beside frozen editions, not inside one; a source archive
+         // correctly has no ignored local releases/index.html.
+-        assert.equal(relative, 'game/index.html');
++        assert.equal(relative, 'site/about.html');
++        assert.match(tag, /\bhidden\b/);
+         assert.equal(reference, '../releases/');
+         assert.match(tag, /\bdata-release-explorer\b/);
+         assert.doesNotMatch(tag, /\bdata-source-only\b/);
+@@ -301,5 +302,5 @@ test('actual launcher and runtime links stay versioned; release explorer uses th
+     }
+     assert.ok(checked > 0, relative);
+   }
+-  assert.equal(generatedCatalogLinks, 4);
++  assert.equal(generatedCatalogLinks, 1);
+ });
+diff --git a/site/about.html b/site/about.html
+index 0ce33847..d5a1782f 100644
+--- a/site/about.html
++++ b/site/about.html
+@@ -528,8 +528,22 @@
+       </section>
+ 
+       <details id="versions" class="build-tools">
+-        <summary><span>Build archive · QA</span><small>Previous playable versions</small></summary>
++        <summary>
++          <span>Build information</span><small>Release history and preserved builds</small>
++        </summary>
+         <div class="version-control">
++          <p>
++            Browse previous software builds with their original gameplay, saves and artwork. Choose
++            missions and packs inside the game.
++          </p>
++          <a
++            id="release-history"
++            data-release-explorer
++            href="../releases/"
++            class="button button-tertiary"
++            hidden
++            >Release history</a
++          >
+           <label for="version-picker">Choose a preserved build</label>
+           <div class="picker-row">
+             <select id="version-picker" aria-describedby="version-status">
+diff --git a/site/landing.css b/site/landing.css
+index 7c574db7..082f1ca9 100644
+--- a/site/landing.css
++++ b/site/landing.css
+@@ -203,6 +203,10 @@ h1 em {
+   gap: 12px;
+ }
+ 
++#release-history[hidden] {
++  display: none;
++}
++
+ .button {
+   min-height: 52px;
+   padding: 0 18px;
+diff --git a/site/landing.mjs b/site/landing.mjs
+index 0a8031bb..2e7b7040 100644
+--- a/site/landing.mjs
++++ b/site/landing.mjs
+@@ -1,5 +1,5 @@
+ import { preparePackCatalog, packLaunchHref } from '../game/content-launch.mjs';
+-import { archivedPlayHref } from './release-links.mjs';
++import { archivedPlayHrefFromCatalog, releaseHistoryHref } from './release-links.mjs';
+ 
+ const root = document.documentElement;
+ const currentVersion = root.dataset.currentVersion;
+@@ -15,6 +15,13 @@ const packSelect = document.querySelector('#landing-pack-select');
+ const levelSelect = document.querySelector('#landing-level-select');
+ const packPlay = document.querySelector('#landing-pack-play');
+ const packStatus = document.querySelector('#landing-pack-status');
++const historyHref = releaseHistoryHref(location.href);
++const catalogIndex = new URL('index.json', historyHref);
++const historyLink = document.querySelector('#release-history');
++// Resolve the shared catalog before any network wait; hidden markup avoids a
++// release-local fallback URL if this module never starts.
++historyLink.href = historyHref;
++historyLink.hidden = false;
+ 
+ for (const label of document.querySelectorAll('[data-current-label]')) {
+   label.textContent = currentLabel;
+@@ -53,9 +60,10 @@ picker.addEventListener('change', () => {
+ });
+ 
+ try {
+-  const response = await fetch('../releases/index.json', { cache: 'no-cache' });
++  const response = await fetch(catalogIndex, { cache: 'no-cache' });
+   if (!response.ok) throw new Error('archive unavailable');
+   const payload = await response.json();
++  const fetchedCatalog = response.url || catalogIndex.href;
+   const releases = Array.isArray(payload.releases) ? payload.releases : [];
+   releases.sort((a, b) =>
+     String(b.version).localeCompare(String(a.version), undefined, { numeric: true }),
+@@ -63,7 +71,9 @@ try {
+   let available = 0;
+   for (const record of releases) {
+     if (!record || typeof record.version !== 'string' || typeof record.play !== 'string') continue;
+-    const href = archivedPlayHref(record.canonicalPlay) ?? archivedPlayHref(record.play);
++    const href =
++      archivedPlayHrefFromCatalog(record.canonicalPlay, fetchedCatalog) ??
++      archivedPlayHrefFromCatalog(record.play, fetchedCatalog);
+     if (!href) continue;
+     addOption(`${record.version} · preserved`, href);
+     available++;
+diff --git a/site/release-links.mjs b/site/release-links.mjs
+index e5831e26..ca55f647 100644
+--- a/site/release-links.mjs
++++ b/site/release-links.mjs
+@@ -1,3 +1,5 @@
++import { releaseExplorerHref } from '../game/release-explorer.mjs';
++
+ /** Only explicit Open build links use this resolver; it never navigates. */
+ export function archivedPlayHref(play) {
+   if (typeof play !== 'string' || play.length > 2048 || /[\s\\%?#]/.test(play)) return null;
+@@ -19,3 +21,16 @@ export function archivedPlayHref(play) {
+     return null;
+   }
+ }
++
++/** About is alongside its edition's game entry, including frozen site/site URLs. */
++export function releaseHistoryHref(pageHref) {
++  return releaseExplorerHref(new URL('../game/', pageHref).href);
++}
++
++/** Rebase only the existing validator's local form; canonical archive URLs stay exact. */
++export function archivedPlayHrefFromCatalog(play, catalogIndexHref) {
++  const checked = archivedPlayHref(play);
++  if (checked?.startsWith('../releases/'))
++    return new URL(checked.slice('../releases/'.length), catalogIndexHref).href;
++  return checked;
++}
+diff --git a/game/test/landing-release-history-host.test.mjs b/game/test/landing-release-history-host.test.mjs
+new file mode 100644
+index 00000000..2d37a186
+--- /dev/null
++++ b/game/test/landing-release-history-host.test.mjs
+@@ -0,0 +1,206 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { Document } from './helpers/couch-dom.mjs';
++import { waitFor } from './helpers/wait-for.mjs';
++
++const html = await readFile(new URL('../../site/about.html', import.meta.url), 'utf8');
++let instance = 0;
++function mount(doc) {
++  doc.documentElement.dataset.currentVersion = html.match(/data-current-version="([^"]+)"/)[1];
++  const stack = [doc.body];
++  for (const [token] of html
++    .split(/<body\b[^>]*>/)[1]
++    .split('</body>')[0]
++    .matchAll(/<!--[\s\S]*?-->|<\/?[^>]+>|[^<]+/g)) {
++    if (token.startsWith('<!--')) continue;
++    if (token.startsWith('</')) {
++      stack.pop();
++      continue;
++    }
++    if (!token.startsWith('<')) {
++      stack.at(-1)._text = (stack.at(-1)._text || '') + token.trim();
++      continue;
++    }
++    const tag = token.match(/^<([\w-]+)/)[1],
++      el = doc.createElement(tag);
++    for (const [, name, quoted, bare] of token
++      .slice(tag.length + 1, -1)
++      .matchAll(/([^\s=]+)(?:\s*=\s*(?:"([^"]*)"|([^\s]+)))?/g)) {
++      const value = quoted ?? bare ?? '';
++      el.setAttribute(name, value);
++      if (['value', 'href', 'type'].includes(name)) el[name] = value;
++      if (name === 'class') el.className = value;
++      if (['hidden', 'disabled'].includes(name)) el[name] = true;
++    }
++    stack.at(-1).append(el);
++    if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(el);
++  }
++}
++
++async function about(t, pageHref) {
++  const doc = new Document();
++  mount(doc);
++  const requests = [],
++    navigations = [],
++    writes = [];
++  let resolveArchive, evaluation;
++  const archiveGate = new Promise((resolve) => {
++    resolveArchive = resolve;
++  });
++  const location = {
++    href: pageHref,
++    assign: (href) => navigations.push(href),
++    replace: (href) => navigations.push(href),
++  };
++  const globals = {
++    document: doc,
++    location,
++    localStorage: { getItem: () => null, setItem: (...args) => writes.push(args) },
++    fetch: async (url, options) => {
++      requests.push({ href: String(url), options });
++      if (requests.length === 1) return archiveGate;
++      assert.match(String(url), /\/game\/content\/packs\/catalog\.json$/);
++      // Pack-launch behavior is independent of the release-history change.
++      return new Response('', { status: 503 });
++    },
++  };
++  const previous = Object.fromEntries(
++    Object.keys(globals).map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
++  );
++  for (const [key, value] of Object.entries(globals))
++    Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
++  t.after(async () => {
++    resolveArchive(new Response('', { status: 503 }));
++    if (evaluation) await evaluation;
++    for (const [key, descriptor] of Object.entries(previous))
++      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
++      else delete globalThis[key];
++  });
++  for (const link of doc.querySelectorAll('a'))
++    link.addEventListener('click', (event) => {
++      event.preventDefault();
++      navigations.push(new URL(link.href, pageHref).href);
++    });
++  const $ = (id) => doc.getElementById(id);
++  return {
++    doc,
++    $,
++    location,
++    requests,
++    navigations,
++    writes,
++    async start() {
++      evaluation = import(`../../site/landing.mjs?history-host=${++instance}`);
++      await waitFor(() => requests.length > 0, {
++        message: 'About did not request its release index.',
++      });
++    },
++    async complete(payload = null, responseHref = '') {
++      const response = new Response(payload ? JSON.stringify(payload) : '', {
++        status: payload ? 200 : 503,
++      });
++      if (responseHref) Object.defineProperty(response, 'url', { value: responseHref });
++      resolveArchive(response);
++      await evaluation;
++    },
++  };
++}
++
++const payload = {
++  releases: [
++    { version: 'v0.28.0', play: 'v0.28.0/site/game/' },
++    { version: 'v0.29.0', play: 'v0.29.0/site/game/', canonicalPlay: 'javascript:alert(1)' },
++    {
++      version: 'v0.1.0',
++      play: 'v0.1.0/site/game/',
++      canonicalPlay: 'https://archive.example.test/releases/v0.1.0/site/game/',
++    },
++    {
++      version: 'v9.0.0',
++      play: '../unsafe/site/game/',
++      canonicalPlay: 'https://name:secret@example.test/releases/v9.0.0/site/game/',
++    },
++  ],
++};
++for (const [page, shared, responseHref] of [
++  [
++    'https://example.test/revealline/site/about.html#versions',
++    'https://example.test/revealline/releases/',
++    '',
++  ],
++  [
++    'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions',
++    'https://example.test/revealline/releases/',
++    '',
++  ],
++  [
++    'https://example.test/preview/releases/v0.60.8/site/site/about.html',
++    'https://example.test/preview/releases/',
++    'https://cdn.example.test/catalog/releases/index.json',
++  ],
++])
++  test(`About exposes history while pending and only changes explicit links: ${page}`, async (t) => {
++    const h = await about(t, page);
++    assert.equal(
++      h.$('release-history')?.hidden,
++      true,
++      'Archive link waits for its real URL, not a placeholder.',
++    );
++    await h.start();
++    const history = h.$('release-history'),
++      picker = h.$('version-picker'),
++      play = h.$('version-play');
++    assert.equal(history.hidden, false);
++    assert.equal(history.closest('#versions'), h.$('versions'));
++    assert.equal(history.href, shared);
++    assert.deepEqual(h.requests, [{ href: `${shared}index.json`, options: { cache: 'no-cache' } }]);
++    assert.equal(picker.value, '../game/');
++    assert.equal(play.href, '../game/');
++    assert.equal(h.location.href, page);
++    assert.deepEqual(h.navigations, []);
++    await h.complete(payload, responseHref);
++    const index = responseHref || `${shared}index.json`;
++    assert.deepEqual(
++      picker.options.map((option) => option.value),
++      [
++        '../game/',
++        new URL('v0.29.0/site/game/', index).href,
++        new URL('v0.28.0/site/game/', index).href,
++        'https://archive.example.test/releases/v0.1.0/site/game/',
++      ],
++    );
++    assert.match(h.$('version-status').textContent, /3 preserved builds.*remains the default/);
++    assert.equal(picker.value, '../game/');
++    assert.equal(play.href, '../game/');
++    picker.value = picker.options[1].value;
++    picker.emit('change');
++    assert.equal(play.href, picker.value);
++    assert.deepEqual(h.navigations, [], 'Choosing a preserved version never starts it.');
++    assert.equal(h.location.href, page);
++    assert.deepEqual(h.writes, []);
++    play.click();
++    assert.deepEqual(h.navigations, [new URL('v0.29.0/site/game/', index).href]);
++    history.click();
++    assert.deepEqual(h.navigations, [new URL('v0.29.0/site/game/', index).href, shared]);
++  });
++
++test('About retains current play and shared history when the archive request fails', async (t) => {
++  const page = 'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions';
++  const h = await about(t, page);
++  await h.start();
++  assert.ok(h.$('release-history'), 'About owns the release-history route.');
++  const href = h.$('release-history').href;
++  assert.equal(href, 'https://example.test/revealline/releases/');
++  await h.complete();
++  assert.match(h.$('version-status').textContent, /current build is ready.*archive is available/);
++  assert.equal(h.$('release-history').hidden, false);
++  assert.equal(h.$('release-history').href, href);
++  assert.equal(h.$('version-picker').options.length, 1);
++  assert.equal(h.$('version-play').href, '../game/');
++  assert.deepEqual(h.navigations, []);
++  assert.deepEqual(h.writes, []);
++  assert.equal(h.location.href, page);
++  h.$('version-play').click();
++  assert.deepEqual(h.navigations, ['https://example.test/revealline/releases/v0.60.8/site/game/']);
++});
