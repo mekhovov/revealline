@@ -1,0 +1,9 @@
+{
+  "at": "2026-09-18T00:22:12.301253+00:00",
+  "action": "Set existing published v0.60.7 as latest via make_latest true only",
+  "latestReleaseId": 391120699,
+  "allNineAssetsAndPublishedAtUnchanged": true,
+  "tagMutation": false,
+  "websiteRedeployment": false,
+  "source": "https://docs.github.com/en/rest/releases/releases#update-a-release"
+}

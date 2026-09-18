@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import select
 import socket
+import ssl
 import struct
 import sys
 import tempfile
@@ -162,6 +163,29 @@ class TransportTests(unittest.TestCase):
                 api = module.GitHub(SECRET)
                 self.assertEqual(api.deadline, 100 + 5400)
                 self.assertEqual(api.timeout, 120)
+
+    def test_standard_ssl_subtypes_keep_only_fixed_safe_labels(self):
+        error_types = (ssl.SSLError, ssl.SSLEOFError, ssl.SSLZeroReturnError,
+                       ssl.SSLSyscallError, ssl.SSLWantReadError,
+                       ssl.SSLWantWriteError, ssl.SSLCertVerificationError)
+        for module in ENGINES:
+            for error_type in error_types:
+                with self.subTest(module=module.__name__, error=error_type.__name__):
+                    diagnostic = module.upload_diagnostics('send-body', 1024,
+                                                           error_type(1, SECRET))
+                    error = module.Ambiguous('Upload outcome unconfirmed.', diagnostics=diagnostic)
+                    value = self.check_diagnostics(error, 'send-body', 1024, None)
+                    self.assertEqual(value['exceptionType'], error_type.__name__)
+
+    def test_arbitrary_ssl_subclass_names_and_text_remain_suppressed(self):
+        secret_type = type(SECRET, (ssl.SSLError,), {})
+        for module in ENGINES:
+            with self.subTest(module=module.__name__):
+                diagnostic = module.upload_diagnostics('send-body', 1024,
+                                                       secret_type(1, SECRET))
+                error = module.Ambiguous('Upload outcome unconfirmed.', diagnostics=diagnostic)
+                value = self.check_diagnostics(error, 'send-body', 1024, None)
+                self.assertEqual(value['exceptionType'], 'OtherError')
 
     def test_deadline_phase_and_unknown_exception_names_do_not_leak(self):
         for module in ENGINES:

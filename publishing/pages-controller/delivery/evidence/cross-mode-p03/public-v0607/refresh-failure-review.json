@@ -1,0 +1,321 @@
+{
+  "status": "REFRESH_REFUSED_AUTHORITY_DIFFERENCE",
+  "at": "2026-09-18T00:21:24.403430+00:00",
+  "exit": 1,
+  "noRetryExecuted": true,
+  "noNewAuditRequiredDecisionMade": true,
+  "differences": {
+    "latest": {
+      "id": 391034651,
+      "tag_name": "v0.60.6",
+      "draft": false,
+      "prerelease": false,
+      "published_at": "2026-09-17T22:37:10Z",
+      "assetCount": 9,
+      "comparedToOriginal": {
+        "id": 391120699,
+        "tag_name": "v0.60.7",
+        "draft": false,
+        "prerelease": false,
+        "published_at": "2026-09-17T23:49:33Z"
+      },
+      "changedAssetDescriptors": [
+        {
+          "name": "distribution.zip",
+          "before": {
+            "id": 571380745,
+            "name": "distribution.zip",
+            "size": 313257870,
+            "digest": "sha256:a0fe60ca036619240ccaf266efd9f2e41526d9c2f3b4b9529b8662b80ad59365",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/distribution.zip"
+          },
+          "after": {
+            "id": 571288368,
+            "name": "distribution.zip",
+            "size": 313235343,
+            "digest": "sha256:cc98d38942b556be9a45bfd5c59063a8f6437794acc5297314c0e54d6f535a08",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/distribution.zip"
+          }
+        },
+        {
+          "name": "distribution.zip.sha256",
+          "before": {
+            "id": 571375227,
+            "name": "distribution.zip.sha256",
+            "size": 83,
+            "digest": "sha256:63358cccc929235d0b843a636b8ab8bd9d84ce2a495bfc837149a6a92adda052",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/distribution.zip.sha256"
+          },
+          "after": {
+            "id": 571037438,
+            "name": "distribution.zip.sha256",
+            "size": 83,
+            "digest": "sha256:46ead1c6840e77149a8cb85dce4f5ce4fb42a6c09f3f58ddd5163160b789c544",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/distribution.zip.sha256"
+          }
+        },
+        {
+          "name": "manifest.json",
+          "before": {
+            "id": 571375228,
+            "name": "manifest.json",
+            "size": 127378,
+            "digest": "sha256:e0ede398594f9e5907e015abcec766800fcd3c89433a6ea9e19e2c220799fc3a",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/manifest.json"
+          },
+          "after": {
+            "id": 571037440,
+            "name": "manifest.json",
+            "size": 127378,
+            "digest": "sha256:db91b245c45f97d161e88f32ba5022d4a6d9baf1d0a70a2f9fa22562dfab042b",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/manifest.json"
+          }
+        },
+        {
+          "name": "qualification-evidence-record.json",
+          "before": {
+            "id": 571375293,
+            "name": "qualification-evidence-record.json",
+            "size": 12432,
+            "digest": "sha256:a7c470f4bdba0b9e5b32ded8bc98dc52cb64c7a87c215fd5870ced777b33cd84",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/qualification-evidence-record.json"
+          },
+          "after": {
+            "id": 571037522,
+            "name": "qualification-evidence-record.json",
+            "size": 11373,
+            "digest": "sha256:8a382b9a98cd011c9fad6f3654487bd8b8168caffa52c2fe7ba3fb421fc23d3c",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/qualification-evidence-record.json"
+          }
+        },
+        {
+          "name": "release.json",
+          "before": {
+            "id": 571375230,
+            "name": "release.json",
+            "size": 465,
+            "digest": "sha256:eeaf525f7b95cbc9d0044aeff702bf3ee365b3632bcb68ead88be8d41089bf15",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/release.json"
+          },
+          "after": {
+            "id": 571038255,
+            "name": "release.json",
+            "size": 465,
+            "digest": "sha256:2be06a680cb31d0d557e65ebb747582b3cb39c99e162244bbe40957a1943a338",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/release.json"
+          }
+        },
+        {
+          "name": "source-qualification-evidence.zip",
+          "before": {
+            "id": 571375231,
+            "name": "source-qualification-evidence.zip",
+            "size": 5789794,
+            "digest": "sha256:b809259bafbc56bf8dd6aefb8a01e464b80da9041f1ac66ff7b3bc70381a9367",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/source-qualification-evidence.zip"
+          },
+          "after": {
+            "id": 571037437,
+            "name": "source-qualification-evidence.zip",
+            "size": 1848158,
+            "digest": "sha256:d7b47da18d45ffc3933c753e456fade2df415399120a3de020188d7179e5c0fc",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/source-qualification-evidence.zip"
+          }
+        },
+        {
+          "name": "source-qualification.json",
+          "before": {
+            "id": 571375229,
+            "name": "source-qualification.json",
+            "size": 73661,
+            "digest": "sha256:f36b74728778dd014c5e814c9abcf55c1a37f5808241ea0a8c767a35c27c8c61",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/source-qualification.json"
+          },
+          "after": {
+            "id": 571037532,
+            "name": "source-qualification.json",
+            "size": 69214,
+            "digest": "sha256:6ffa1ff1c33d34fb96955bc98b01a896a5b05589576a8e9758d2e96f4f7a219e",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/source-qualification.json"
+          }
+        },
+        {
+          "name": "source.tar",
+          "before": {
+            "id": 571380046,
+            "name": "source.tar",
+            "size": 1051443200,
+            "digest": "sha256:34e139672bdc0dd449957b44eb2196698661f934ea63a52383f4099cfadbfb3e",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/source.tar"
+          },
+          "after": {
+            "id": 571197729,
+            "name": "source.tar",
+            "size": 1050859520,
+            "digest": "sha256:78ab7e57b6282c4c7bbe7602aefb3582386a0d049dd451bbb06a0006bc7f7559",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/source.tar"
+          }
+        },
+        {
+          "name": "verification.json",
+          "before": {
+            "id": 571375294,
+            "name": "verification.json",
+            "size": 1913,
+            "digest": "sha256:dd26fdb77bbb3cd9d6ff3e3060daf755f3df0858911700e28bc3b79c8c7f64b8",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.7/verification.json"
+          },
+          "after": {
+            "id": 571037507,
+            "name": "verification.json",
+            "size": 1913,
+            "digest": "sha256:55ebfd86e3ecdafbe83bc3337d3274cc3840364979ab7bbf024c9cae017ea1eb",
+            "state": "uploaded",
+            "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.60.6/verification.json"
+          }
+        }
+      ]
+    },
+    "release": {
+      "id": 391120699,
+      "tag_name": "v0.60.7",
+      "draft": false,
+      "prerelease": false,
+      "published_at": "2026-09-17T23:49:33Z",
+      "assetCount": 9,
+      "comparedToOriginal": {
+        "id": 391120699,
+        "tag_name": "v0.60.7",
+        "draft": false,
+        "prerelease": false,
+        "published_at": "2026-09-17T23:49:33Z"
+      },
+      "changedAssetDescriptors": []
+    }
+  },
+  "publicAcceptance": false,
+  "pins": [
+    {
+      "path": "after-http-authorities-main-1/all-deployments.exit.json",
+      "bytes": 311,
+      "sha256": "01727e9ebcf7f6fc75931c81737cd6f8e86e633c82b293e87947ee1d6dba94f2"
+    },
+    {
+      "path": "after-http-authorities-main-1/all-deployments.json",
+      "bytes": 38241,
+      "sha256": "186bc3a9ba17466e3fc8f5e377822cc2014ce83e9877cdff1ad16ba1fccdde64"
+    },
+    {
+      "path": "after-http-authorities-main-1/all-deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-1/collection-started.json",
+      "bytes": 490,
+      "sha256": "653f63d3b904a287eb5b1ebcb7fac47c8b63a27195301d87a25d1928c7aece88"
+    },
+    {
+      "path": "after-http-authorities-main-1/latest.exit.json",
+      "bytes": 278,
+      "sha256": "e4ab32bde16a25d5fa195b054c241f8a9202d4254567580c02f4ee6e8e1d2812"
+    },
+    {
+      "path": "after-http-authorities-main-1/latest.json",
+      "bytes": 18483,
+      "sha256": "f89fca33b3015d067697369277208ce68c072903d20e95f08e017710f168035f"
+    },
+    {
+      "path": "after-http-authorities-main-1/latest.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-1/original-published-release.json",
+      "bytes": 16780,
+      "sha256": "3271e7a172a65770b2ca820c00c27998f992fb666132ffa9a4c96b070ef5a715"
+    },
+    {
+      "path": "after-http-authorities-main-1/release.exit.json",
+      "bytes": 284,
+      "sha256": "85a812419bb65e4c2dc60ff7e42f543c334e2ffd1e03acc0d862771eef53c639"
+    },
+    {
+      "path": "after-http-authorities-main-1/release.json",
+      "bytes": 16780,
+      "sha256": "d401ee1f4044aa8d8e43aa502bdf671f36afce080ae52b66003293616ae0c97a"
+    },
+    {
+      "path": "after-http-authorities-main-1/release.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-1/request.original.json",
+      "bytes": 1004,
+      "sha256": "41a55fe1d483fd96d61c8de2b6640b801bddfb559aa4372afd0cfc5cc44c8147"
+    },
+    {
+      "path": "after-http-authorities-main-1/source.exit.json",
+      "bytes": 314,
+      "sha256": "72c477146569d439d64900a73ee4c5d0d11edf3648f09f67f7706e7a579df3da"
+    },
+    {
+      "path": "after-http-authorities-main-1/source.json",
+      "bytes": 1169,
+      "sha256": "67f35e6f1e1a54d255a6d1dc7ce0ce3891dbe291c15bad05013016b9b28a8a46"
+    },
+    {
+      "path": "after-http-authorities-main-1/source.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-1/tag-object.exit.json",
+      "bytes": 310,
+      "sha256": "bed89881f51f1c8c28f0b76af0e4be62090c6785b438ba69b1802a580219e09c"
+    },
+    {
+      "path": "after-http-authorities-main-1/tag-object.json",
+      "bytes": 750,
+      "sha256": "a69e0b36aefe731c9d80278ffd9767af1aa02b0c65664f9546f6080daabee705"
+    },
+    {
+      "path": "after-http-authorities-main-1/tag-object.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-1/tag.exit.json",
+      "bytes": 281,
+      "sha256": "1beede7890bff1afec0afb34f0217c23f304360d2e29a063173be6237b3e58c4"
+    },
+    {
+      "path": "after-http-authorities-main-1/tag.json",
+      "bytes": 337,
+      "sha256": "609512b7de82ca8e2dcedfbba9285dbeca08df2d67cbc12a4a92d1cf5d82619a"
+    },
+    {
+      "path": "after-http-authorities-main-1/tag.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
