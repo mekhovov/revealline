@@ -1,0 +1,744 @@
+{
+  "format": "revealline-append-only-node-coverage-clarification.v1",
+  "recordedAt": "2026-09-18T20:38:07.339517+00:00",
+  "status": "READ_ONLY_ORIGINAL_REVIEW_COMPLETE_APPEND_ONLY_CLARIFICATION",
+  "source": {
+    "commit": "ef1430174dfd35a9df441233988b8737d0401851",
+    "tree": "d6fbd2c8f2e7c549eeab602026ee80b3fa3af2d4",
+    "version": "v0.61.21"
+  },
+  "correction": "For v0.61.21, both complete hosted source families ran on Node v20.19.6. Each passed 5,902 tests across 465 files. These are not separate Node 20 and Node 22 full-suite runs. Separate pre-commit focused checks passed 144 tests across six files using the recorded Node 20.19.5 and Node 22.22.2 executable paths.",
+  "unchangedOriginals": true,
+  "sourcePackageAuthorities": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p07-team-picture-v06121/.cache/p07-qualified/team-picture-v06121-ef143017/qualification/source-qualification.json",
+      "bytes": 102156,
+      "sha256": "252b189a841bf748fc67920c85c52ef9d613db558d59c0c9aaf0f3911f49cc40"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/final-execution/package-ready.json",
+      "bytes": 4099,
+      "sha256": "b8e17004aa2ae385591c6563c0bed156666b17682e1233989708ebe7e95d7f6a"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/final-execution/root-package-review.json",
+      "bytes": 1682,
+      "sha256": "f71d098e750e8680bdc1ae4b68246eaea380bd8f328cde5c524ede40fdddec9a"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/candidate-ci-handoff.json",
+      "bytes": 4609,
+      "sha256": "82b68ac0327b0a0d12239bb27b0e1252bf3abed4862e38870e79823df3109c8e"
+    }
+  ],
+  "qualificationFields": {
+    "hostedNodeVersion": "v20.19.6",
+    "tests": {
+      "tests": 5902,
+      "pass": 5902,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "testFiles": 465,
+    "localFullTest": {
+      "status": "not-run",
+      "executed": false,
+      "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local Team earned-picture viewer cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+    },
+    "localOrdinaryBuild": {
+      "status": "not-run",
+      "executed": false,
+      "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local Team earned-picture viewer cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+    },
+    "localCorroboration": {
+      "status": "not-run-on-final-source",
+      "checks": 0,
+      "scope": "Earlier local Team earned-picture viewer cohorts remain separate; no local command gates are inferred for the final source."
+    }
+  },
+  "hostedFamilies": [
+    {
+      "family": "manual",
+      "runId": 35331722939,
+      "attempt": 1,
+      "event": "workflow_dispatch",
+      "conclusion": "success",
+      "runOriginal": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/manual/run.json",
+        "bytes": 12613,
+        "sha256": "22ba592618abff129c022863bd53f503aadd0f066c7ed06ef1f7f4ab656e0d92"
+      },
+      "nodeVersion": "v20.19.6",
+      "files": 465,
+      "totals": {
+        "tests": 5902,
+        "pass": 5902,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "shards": [
+        {
+          "shard": 1,
+          "jobId": 105557817782,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/manual/job-105557817782.log.gz",
+            "bytes": 114403,
+            "sha256": "7308ce5ef127938b1b3191ab58b7bc846ee913a10b8ea1c52b9a743e83306953"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 443,
+            "text": "2026-09-18T09:53:50.8356940Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1486,
+            "pass": 1486,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 8074,
+              "text": "2026-09-18T10:18:06.8827789Z # tests 1486"
+            },
+            {
+              "line": 8076,
+              "text": "2026-09-18T10:18:06.8828062Z # pass 1486"
+            },
+            {
+              "line": 8077,
+              "text": "2026-09-18T10:18:06.8828150Z # fail 0"
+            },
+            {
+              "line": 8078,
+              "text": "2026-09-18T10:18:06.8828249Z # cancelled 0"
+            },
+            {
+              "line": 8079,
+              "text": "2026-09-18T10:18:06.8828344Z # skipped 0"
+            },
+            {
+              "line": 8080,
+              "text": "2026-09-18T10:18:06.8828431Z # todo 0"
+            }
+          ],
+          "files": 117,
+          "fileSelectionLines": [
+            {
+              "line": 485,
+              "text": "2026-09-18T09:53:53.7535932Z Running 117/465 test files in shard 1/4."
+            },
+            {
+              "line": 608,
+              "text": "2026-09-18T09:53:53.9175540Z Running 117/465 test files in shard 1/4."
+            }
+          ]
+        },
+        {
+          "shard": 2,
+          "jobId": 105557817813,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/manual/job-105557817813.log.gz",
+            "bytes": 110187,
+            "sha256": "bebfd21de2a6c7dec0a713319ea489851a9717cf28bea1f1bc62c98628215654"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 416,
+            "text": "2026-09-18T09:53:46.3941979Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1386,
+            "pass": 1386,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 7528,
+              "text": "2026-09-18T10:02:33.0002041Z # tests 1386"
+            },
+            {
+              "line": 7530,
+              "text": "2026-09-18T10:02:33.0002255Z # pass 1386"
+            },
+            {
+              "line": 7531,
+              "text": "2026-09-18T10:02:33.0002361Z # fail 0"
+            },
+            {
+              "line": 7532,
+              "text": "2026-09-18T10:02:33.0002464Z # cancelled 0"
+            },
+            {
+              "line": 7533,
+              "text": "2026-09-18T10:02:33.0002573Z # skipped 0"
+            },
+            {
+              "line": 7534,
+              "text": "2026-09-18T10:02:33.0002674Z # todo 0"
+            }
+          ],
+          "files": 116,
+          "fileSelectionLines": [
+            {
+              "line": 458,
+              "text": "2026-09-18T09:53:49.3264198Z Running 116/465 test files in shard 2/4."
+            },
+            {
+              "line": 580,
+              "text": "2026-09-18T09:53:49.4103891Z Running 116/465 test files in shard 2/4."
+            }
+          ]
+        },
+        {
+          "shard": 3,
+          "jobId": 105557817726,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/manual/job-105557817726.log.gz",
+            "bytes": 108650,
+            "sha256": "5995f1c5d49ccbfd994429e603c68628768ed7486b02ed6087eee39cba673f21"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 441,
+            "text": "2026-09-18T09:53:45.3911481Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1359,
+            "pass": 1359,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 7445,
+              "text": "2026-09-18T10:16:52.4643038Z # tests 1359"
+            },
+            {
+              "line": 7447,
+              "text": "2026-09-18T10:16:52.4643784Z # pass 1359"
+            },
+            {
+              "line": 7448,
+              "text": "2026-09-18T10:16:52.4644104Z # fail 0"
+            },
+            {
+              "line": 7449,
+              "text": "2026-09-18T10:16:52.4644442Z # cancelled 0"
+            },
+            {
+              "line": 7450,
+              "text": "2026-09-18T10:16:52.4644802Z # skipped 0"
+            },
+            {
+              "line": 7451,
+              "text": "2026-09-18T10:16:52.4645158Z # todo 0"
+            }
+          ],
+          "files": 116,
+          "fileSelectionLines": [
+            {
+              "line": 483,
+              "text": "2026-09-18T09:53:48.3826737Z Running 116/465 test files in shard 3/4."
+            },
+            {
+              "line": 605,
+              "text": "2026-09-18T09:53:48.4464587Z Running 116/465 test files in shard 3/4."
+            }
+          ]
+        },
+        {
+          "shard": 4,
+          "jobId": 105557817767,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/manual/job-105557817767.log.gz",
+            "bytes": 124362,
+            "sha256": "7b1433919c5e3d9de2edfc15e3712d3a4d16e1923fc18c9344564b5c62e164d0"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 444,
+            "text": "2026-09-18T09:53:53.1772268Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1671,
+            "pass": 1671,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 8999,
+              "text": "2026-09-18T10:24:24.1027757Z # tests 1671"
+            },
+            {
+              "line": 9001,
+              "text": "2026-09-18T10:24:24.1028503Z # pass 1671"
+            },
+            {
+              "line": 9002,
+              "text": "2026-09-18T10:24:24.1028768Z # fail 0"
+            },
+            {
+              "line": 9003,
+              "text": "2026-09-18T10:24:24.1029047Z # cancelled 0"
+            },
+            {
+              "line": 9004,
+              "text": "2026-09-18T10:24:24.1029318Z # skipped 0"
+            },
+            {
+              "line": 9005,
+              "text": "2026-09-18T10:24:24.1029572Z # todo 0"
+            }
+          ],
+          "files": 116,
+          "fileSelectionLines": [
+            {
+              "line": 486,
+              "text": "2026-09-18T09:53:57.0484657Z Running 116/465 test files in shard 4/4."
+            },
+            {
+              "line": 608,
+              "text": "2026-09-18T09:53:57.1547310Z Running 116/465 test files in shard 4/4."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "runId": 35331723641,
+      "attempt": 1,
+      "event": "pull_request",
+      "conclusion": "success",
+      "runOriginal": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/pr-source/run.json",
+        "bytes": 12633,
+        "sha256": "0a98acf69a569701e173a2a9f476d839baab10264526f72c23b6086afee1d50b"
+      },
+      "nodeVersion": "v20.19.6",
+      "files": 465,
+      "totals": {
+        "tests": 5902,
+        "pass": 5902,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "shards": [
+        {
+          "shard": 1,
+          "jobId": 105557837457,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/pr-source/job-105557837457.log.gz",
+            "bytes": 111188,
+            "sha256": "3ca6674d4c46d2002d812e9400438766b0587110a65193682c0c5d685d5da885"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 349,
+            "text": "2026-09-18T09:54:26.3295376Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1486,
+            "pass": 1486,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 7856,
+              "text": "2026-09-18T10:22:53.6502689Z # tests 1486"
+            },
+            {
+              "line": 7858,
+              "text": "2026-09-18T10:22:53.6502862Z # pass 1486"
+            },
+            {
+              "line": 7859,
+              "text": "2026-09-18T10:22:53.6502948Z # fail 0"
+            },
+            {
+              "line": 7860,
+              "text": "2026-09-18T10:22:53.6503031Z # cancelled 0"
+            },
+            {
+              "line": 7861,
+              "text": "2026-09-18T10:22:53.6503118Z # skipped 0"
+            },
+            {
+              "line": 7862,
+              "text": "2026-09-18T10:22:53.6503200Z # todo 0"
+            }
+          ],
+          "files": 117,
+          "fileSelectionLines": [
+            {
+              "line": 390,
+              "text": "2026-09-18T09:54:40.4493649Z Running 117/465 test files in shard 1/4."
+            }
+          ]
+        },
+        {
+          "shard": 2,
+          "jobId": 105557837470,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/pr-source/job-105557837470.log.gz",
+            "bytes": 108913,
+            "sha256": "41a598f74bb51ead68891eb6498640a4c6d70447d22acfe4e798a82fe0fb17c2"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 349,
+            "text": "2026-09-18T09:53:54.5430145Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1386,
+            "pass": 1386,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 7338,
+              "text": "2026-09-18T10:10:21.8452826Z # tests 1386"
+            },
+            {
+              "line": 7340,
+              "text": "2026-09-18T10:10:21.8453222Z # pass 1386"
+            },
+            {
+              "line": 7341,
+              "text": "2026-09-18T10:10:21.8453411Z # fail 0"
+            },
+            {
+              "line": 7342,
+              "text": "2026-09-18T10:10:21.8453610Z # cancelled 0"
+            },
+            {
+              "line": 7343,
+              "text": "2026-09-18T10:10:21.8453813Z # skipped 0"
+            },
+            {
+              "line": 7344,
+              "text": "2026-09-18T10:10:21.8454005Z # todo 0"
+            }
+          ],
+          "files": 116,
+          "fileSelectionLines": [
+            {
+              "line": 390,
+              "text": "2026-09-18T09:54:08.8500144Z Running 116/465 test files in shard 2/4."
+            }
+          ]
+        },
+        {
+          "shard": 3,
+          "jobId": 105557837370,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/pr-source/job-105557837370.log.gz",
+            "bytes": 105247,
+            "sha256": "64f2c0c8e8bd1b1fd6c4673a685f42d689df409e1c9bea39264acad4c921cf5d"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 349,
+            "text": "2026-09-18T09:53:52.4972875Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1359,
+            "pass": 1359,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 7230,
+              "text": "2026-09-18T10:17:06.2737297Z # tests 1359"
+            },
+            {
+              "line": 7232,
+              "text": "2026-09-18T10:17:06.2737943Z # pass 1359"
+            },
+            {
+              "line": 7233,
+              "text": "2026-09-18T10:17:06.2738262Z # fail 0"
+            },
+            {
+              "line": 7234,
+              "text": "2026-09-18T10:17:06.2738569Z # cancelled 0"
+            },
+            {
+              "line": 7235,
+              "text": "2026-09-18T10:17:06.2738888Z # skipped 0"
+            },
+            {
+              "line": 7236,
+              "text": "2026-09-18T10:17:06.2739204Z # todo 0"
+            }
+          ],
+          "files": 116,
+          "fileSelectionLines": [
+            {
+              "line": 390,
+              "text": "2026-09-18T09:54:06.5240712Z Running 116/465 test files in shard 3/4."
+            }
+          ]
+        },
+        {
+          "shard": 4,
+          "jobId": 105557837376,
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/pr-source/job-105557837376.log.gz",
+            "bytes": 121153,
+            "sha256": "7f143c6adda1cbe4cd1417ded12b6449a9e04c331f122379d814c0a37accb339"
+          },
+          "lineNumberBasis": "One-based lines after in-memory gzip decompression; compressed original remains unchanged.",
+          "runtime": {
+            "line": 352,
+            "text": "2026-09-18T09:53:52.6951834Z node: v20.19.6"
+          },
+          "counts": {
+            "tests": 1671,
+            "pass": 1671,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "countLines": [
+            {
+              "line": 8784,
+              "text": "2026-09-18T10:29:07.2443813Z # tests 1671"
+            },
+            {
+              "line": 8786,
+              "text": "2026-09-18T10:29:07.2444242Z # pass 1671"
+            },
+            {
+              "line": 8787,
+              "text": "2026-09-18T10:29:07.2444464Z # fail 0"
+            },
+            {
+              "line": 8788,
+              "text": "2026-09-18T10:29:07.2444660Z # cancelled 0"
+            },
+            {
+              "line": 8789,
+              "text": "2026-09-18T10:29:07.2444861Z # skipped 0"
+            },
+            {
+              "line": 8790,
+              "text": "2026-09-18T10:29:07.2445052Z # todo 0"
+            }
+          ],
+          "files": 116,
+          "fileSelectionLines": [
+            {
+              "line": 393,
+              "text": "2026-09-18T09:54:06.0174155Z Running 116/465 test files in shard 4/4."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "coverageAuthorities": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/expected-test-partitions.json",
+      "bytes": 23537,
+      "sha256": "aae337241efc3d97af33fe342062d78e04113412f6a4341b2ad120e28137e656"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/partition-coverage.json",
+      "bytes": 23760,
+      "sha256": "a6baa0f6bc56e047c131655435fd6cfdf53c4fb68094e1064390aa8f9b69c96e"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-qualified/team-picture-v06121-ef143017/intake/hosted/pr-partition-coverage.json",
+      "bytes": 26527,
+      "sha256": "e5a1b40930b898b57d8f3117348cf79ce5168f74605a09a13296b6e5e44187ee"
+    }
+  ],
+  "focusedPreparationAuthority": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-team-picture-v06121/ready.json",
+    "bytes": 11623,
+    "sha256": "eee9bbe1536e13eb0be9e8463a4a0309270742d341d62ae113f2880ee4181071"
+  },
+  "focusedLocalChecks": [
+    {
+      "nodeMajor": 20,
+      "recordedExecutableVersion": "20.19.5",
+      "runtimeAuthority": "Exact retained command executable path; stdout does not separately print process.version. No new runtime invocation was performed.",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--max-old-space-size=1024",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/coop-won-terminal-host.test.mjs",
+        "game/test/coop-victory-picture.test.mjs",
+        "game/test/coop-picture-host.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-lobby-focus.test.mjs",
+        "game/test/coop-display-reflow.test.mjs"
+      ],
+      "receipt": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-team-picture-v06121/verification-r1/node20.json",
+        "bytes": 821,
+        "sha256": "ec64288cfb525939176035724f1c23eaac27e1486a9773907705528a9e09b46e"
+      },
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-team-picture-v06121/verification-r1/node20.stdout",
+        "bytes": 34736,
+        "sha256": "e8921760084f70f5be5dd5c635aa7bc44894a95207edc4f1090d81159d3b5585"
+      },
+      "counts": {
+        "tests": 144,
+        "pass": 144,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "countLines": [
+        {
+          "line": 733,
+          "text": "# tests 144"
+        },
+        {
+          "line": 735,
+          "text": "# pass 144"
+        },
+        {
+          "line": 736,
+          "text": "# fail 0"
+        },
+        {
+          "line": 737,
+          "text": "# cancelled 0"
+        },
+        {
+          "line": 738,
+          "text": "# skipped 0"
+        },
+        {
+          "line": 739,
+          "text": "# todo 0"
+        }
+      ],
+      "files": [
+        "game/test/coop-won-terminal-host.test.mjs",
+        "game/test/coop-victory-picture.test.mjs",
+        "game/test/coop-picture-host.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-lobby-focus.test.mjs",
+        "game/test/coop-display-reflow.test.mjs"
+      ],
+      "startedAt": "2026-09-18T09:29:13.449367+00:00",
+      "completedAt": "2026-09-18T09:30:39.405752+00:00",
+      "scope": "Actual host/core with finite DOM, inert Canvas, modeled input; not native browser, physical controllers/touch or public qualification."
+    },
+    {
+      "nodeMajor": 22,
+      "recordedExecutableVersion": "22.22.2",
+      "runtimeAuthority": "Exact retained command executable path; stdout does not separately print process.version. No new runtime invocation was performed.",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--max-old-space-size=1024",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/coop-won-terminal-host.test.mjs",
+        "game/test/coop-victory-picture.test.mjs",
+        "game/test/coop-picture-host.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-lobby-focus.test.mjs",
+        "game/test/coop-display-reflow.test.mjs"
+      ],
+      "receipt": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-team-picture-v06121/verification-r1/node22.json",
+        "bytes": 821,
+        "sha256": "e581a2a7a48b885bf2476b376b1cedcf4deba7d1e39e64d210ca165132d0681f"
+      },
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-team-picture-v06121/verification-r1/node22.stdout",
+        "bytes": 36878,
+        "sha256": "57f90d4a053a2772bbf38b0852b24d7e2a648ca52f4d1ab273695edf8a4a1bbe"
+      },
+      "counts": {
+        "tests": 144,
+        "pass": 144,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "countLines": [
+        {
+          "line": 877,
+          "text": "# tests 144"
+        },
+        {
+          "line": 879,
+          "text": "# pass 144"
+        },
+        {
+          "line": 880,
+          "text": "# fail 0"
+        },
+        {
+          "line": 881,
+          "text": "# cancelled 0"
+        },
+        {
+          "line": 882,
+          "text": "# skipped 0"
+        },
+        {
+          "line": 883,
+          "text": "# todo 0"
+        }
+      ],
+      "files": [
+        "game/test/coop-won-terminal-host.test.mjs",
+        "game/test/coop-victory-picture.test.mjs",
+        "game/test/coop-picture-host.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-lobby-focus.test.mjs",
+        "game/test/coop-display-reflow.test.mjs"
+      ],
+      "startedAt": "2026-09-18T09:30:39.406318+00:00",
+      "completedAt": "2026-09-18T09:31:42.241798+00:00",
+      "scope": "Actual host/core with finite DOM, inert Canvas, modeled input; not native browser, physical controllers/touch or public qualification."
+    }
+  ],
+  "limits": [
+    "This additive clarification changes no source, qualification, attachment, log, receipt or earlier acceptance body.",
+    "All eight compressed hosted log originals rehash exactly against the accepted qualification evidence pins. Counts and actual Node setup lines were independently read from those originals.",
+    "The local focused cohorts were pre-commit implementation corroboration. The final qualification expressly records local full tests/build not-run and local corroboration not-run-on-final-source.",
+    "Manual hosted logs include explicit shard file lists. PR coverage relies on authenticated exact runner semantics and deterministic complete partitions, not a direct per-file execution-event trace.",
+    "No complete Node 22 hosted or local suite is established for this exact source by these records. No unsharded scheduling equivalence is claimed.",
+    "No network, tests, builds, browser actions, source writes or original copies occurred in this review. Only this append-only cache clarification is written.",
+    "This record adds no publication, public/native, hardware or whole-phase acceptance."
+  ]
+}
