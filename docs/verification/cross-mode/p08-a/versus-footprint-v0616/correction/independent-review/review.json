@@ -1,0 +1,106 @@
+{
+  "status": "CHANGES_REQUESTED_SCOPED_FALLBACK",
+  "reviewedAt": "2026-09-18T04:23:26.708120+00:00",
+  "sourceBase": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "baseTree": "3af511259e14ed2af11a2e2498535744450a378f",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616",
+  "version": "0.61.6",
+  "candidateManifestSha256": "8bb5c0f4cbd884b4ecfb69c3b2fb7b50cdcba30e0f7cb642df6c05ac9fb2cf9d",
+  "candidatePathsRehashed": 165,
+  "candidateBytes": 2180363,
+  "sourcePathsReviewed": 11,
+  "trackedSourcePreimagesVerified": 8,
+  "generation2OriginalsRehashedAndByteCompared": 139,
+  "generation2OriginalBytes": 1572989,
+  "generation2FeatureBodiesExact": 8,
+  "versionsOnlyFourLiteralReplacements": true,
+  "indexUnchangedAndEmpty": true,
+  "remoteActions": false,
+  "browserActions": false,
+  "testExecutions": 0,
+  "findings": [
+    {
+      "priority": "P2",
+      "path": "game/couch/couch.mjs",
+      "line": 1102,
+      "title": "Fallback layout signature omits wrapping score text",
+      "detail": "Without ResizeObserver, racer-stats text changes during ordinary play at line1432 onward but is absent from the fallback layout key. The .racer-stats paragraph may wrap inside its auto grid row, shrinking the height-constrained arena while visibility, touch pads, text preferences and absent/unchanged encounter copy remain identical. refreshBoardLayout then skips measurement and the painter receives the prior fitted width. CSS max-height can contain the bitmap while leaving actor/trail scaling based on stale width. Observer-capable browsers are unaffected.",
+      "recommendation": "Include both stats strings and other variable wrapping host-owned HUD copy in the fallback layout signature, or otherwise observe those reflows. Add one bounded actual-host no-RO test driven by a normal score/capture text transition, and retain unchanged-frame no-measure coverage.",
+      "evidenceBasis": "Static source/CSS analysis; not a native reproduction.",
+      "relatedLines": [
+        "game/couch/couch.mjs:1432",
+        "game/couch/couch.css:237",
+        "game/couch/couch.css:286"
+      ]
+    }
+  ],
+  "passedReviewAreas": [
+    "fitBoardRect preserves 4:3/2:1 ratio and zero/invalid bounds are unavailable",
+    "Separate per-seat fitted widths; bitmap geometry remains host-owned",
+    "Absolute CSS footprint no longer contributes intrinsic canvas size to grid",
+    "Equal observer deliveries suppress duplicate writes",
+    "Both encounter cues settle before fallback measurement and painter calls",
+    "Generation fence rejects stale observer callbacks; terminal and cached-page ownership differ",
+    "Host disposal cancels RAF and footprint subscriptions without resuming or replacing the match",
+    "Accepted image owner, simulation, collision and score implementations not changed by this patch",
+    "64-logical-pixel narrow-board actor cap is explicitly retained as separate work",
+    "Eight generation2 feature bodies and139 originals preserved; four version literals only"
+  ],
+  "limits": [
+    "Scoped source review, not full six-gate or native/public acceptance",
+    "Finite host tests do not implement browser layout",
+    "No repeated353-case cohort or new tests were run"
+  ],
+  "reviewInputPins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/related-manifest.json",
+      "bytes": 50438,
+      "sha256": "8bb5c0f4cbd884b4ecfb69c3b2fb7b50cdcba30e0f7cb642df6c05ac9fb2cf9d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/related-paths.txt",
+      "bytes": 15453,
+      "sha256": "3de0ac94e008c4defd6aa807e3a358a19dd1cbc78dda4347421fff61e1bcfb5c"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/source-adoption.diff",
+      "bytes": 40624,
+      "sha256": "304a485f40681c4f87e01f8f1ef16fa6c35d079d89bc98a9bdf9fa2b5b89d5d4"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/hunk-review.json",
+      "bytes": 4507,
+      "sha256": "b24cbccbb4fe7dad5507449a917659792ac152fedcac9d54809c7fe7602e9793"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/application.json",
+      "bytes": 1853,
+      "sha256": "a96baeef177a96fbfd44e43bb58ab40e24549dacfd6504dcc4cc2fb1ceca66d3"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/new-file-whitespace-review.json",
+      "bytes": 921,
+      "sha256": "b47300caf9a3e9a6164f6ca1c38aa5a349e4068bbad62398c337d30cbfadec8f"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/focused-node20-r1/receipt.json",
+      "bytes": 42207,
+      "sha256": "85c0bdf30b27b46e389410152510eb7b3a8f2f6b91b8d4e112ceb21b66387ac1"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/focused-node22-r1/receipt.json",
+      "bytes": 42203,
+      "sha256": "057e519d74fd4b96aaf7584b36e5bb5d41d669c9b206cbad97a99c3d74dc47b9"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/lint-r1/receipt.json",
+      "bytes": 43682,
+      "sha256": "c17d54e2833f9fd648eeed6729bca997864b5e9bd7b557d8a5ebed3ab4b43906"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/format-r1/receipt.json",
+      "bytes": 44053,
+      "sha256": "e0151e39eb670da1b3e53dcbb2f108459c78b965e777de3489f33ca3118a1d94"
+    }
+  ]
+}

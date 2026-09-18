@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "path": "observed-roots.json",
+      "bytes": 1531,
+      "sha256": "2b3e3728cda1a323d0d32659f3645c94efd0882d77e2b212fa2feab22b058908"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2867,
+      "sha256": "c9b9246f0c95b0a3c1ad4c28c278e16e8f5c047e1ece604028cd5178a734f95d"
+    },
+    {
+      "path": "additional-inputs.json",
+      "bytes": 8161,
+      "sha256": "7129befd8c59736038ff2db8fad3a7c22ed65b79ca5a9e6c3edf15dc4a3113fe"
+    },
+    {
+      "path": "additional-paths.json",
+      "bytes": 1313,
+      "sha256": "f58ef88ed79e3ac6fc1b5d7adb5e26fe1bbd0e9521d762cf945364f44a1e9616"
+    }
+  ],
+  "reportLogicalBytes": 13872
+}

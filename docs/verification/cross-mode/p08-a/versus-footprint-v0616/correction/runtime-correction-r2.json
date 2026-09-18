@@ -1,0 +1,39 @@
+{
+  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "version": "0.61.6",
+  "scope": "Only runtime/test correction review at this checkpoint. Guides will be revised after running source-input-pin checks complete.",
+  "files": [
+    {
+      "path": "game/couch/couch.mjs",
+      "before": {
+        "bytes": 57410,
+        "sha256": "54004fde57c8ca5f0d68af25ebefcb5f2c763524ffab1409f067335d246ede2c"
+      },
+      "after": {
+        "bytes": 57949,
+        "sha256": "4d9df87a739f1f9d22cdd4d06cae8c18ec191ebeb6f12aa963f81033d3672b65"
+      }
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "before": {
+        "bytes": 16423,
+        "sha256": "5899de39ae57849b006c677271a2447db9cde0809c294bbf19b7007ae72b6546"
+      },
+      "after": {
+        "bytes": 19435,
+        "sha256": "87744ccc0619c39c357f5e612d0213f22a8a67d3d3ee0af75423a6330fd5beb7"
+      }
+    }
+  ],
+  "diff": {
+    "bytes": 5686,
+    "sha256": "2a7cc2c0db22992f6067c4702f44f6f73445be866acacacf544dfc04a0ec0547"
+  },
+  "red": "checks/stats-red-node20-r2/receipt.json",
+  "green": [
+    "checks/focused-node20-r2/receipt.json",
+    "checks/focused-node22-r2/receipt.json"
+  ],
+  "dependentCohorts": "Running seven focus/menu/reading consumer files on both Node versions; no final pass claimed."
+}

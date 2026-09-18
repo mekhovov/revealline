@@ -1,0 +1,58 @@
+{
+  "status": "APPLIED_AND_VERSIONED_UNSTAGED_NOT_QUALIFIED",
+  "at": "2026-09-18T04:13:27.801529+00:00",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616",
+  "base": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "branch": "codex/p08-versus-footprint-v0616",
+  "sourcePatch": {
+    "bytes": 41240,
+    "sha256": "7717a9abf68cf18bd1f80c0dacd0e82d196ecd7c345a4beb5db73e8ea96113d1"
+  },
+  "runtimeEqualsProposal": true,
+  "versions": [
+    {
+      "path": "package.json",
+      "before": {
+        "bytes": 1819,
+        "sha256": "5fa736356562556ab9c6e56057b808cffcfc116c241c0b271d4317bcfb6c571a"
+      },
+      "after": {
+        "bytes": 1819,
+        "sha256": "9f2942f73af89eaa9ea56c68328b41f07a3ef3c51752f8e7fc108bb90c2cc6d1"
+      }
+    },
+    {
+      "path": "package-lock.json",
+      "before": {
+        "bytes": 36138,
+        "sha256": "09d9ed659a5cc9eb9bef28ddb34573c557e0189ea58212db655772913786ac38"
+      },
+      "after": {
+        "bytes": 36138,
+        "sha256": "fd09da5dc330838d5475287afda29b0b3382bba7804cdada2f4a55d1e5015949"
+      }
+    },
+    {
+      "path": "game/build-config.json",
+      "before": {
+        "bytes": 5474,
+        "sha256": "1755860a6ccc755169a0388587215fae3475b9d1c3d0f784fd62d3101b1957d7"
+      },
+      "after": {
+        "bytes": 5474,
+        "sha256": "36596c6d26426b3d93a224f3913fb529de540c6b4c524a3a37150431c1104e0c"
+      }
+    }
+  ],
+  "retainedPacketFiles": 139,
+  "retainedPacketBytes": 1572989,
+  "originalPacketManifest": {
+    "bytes": 20981,
+    "sha256": "6dc1e89928c985e5a16690bd87b80949aebe308e623a5d7b585065bff883fd2b"
+  },
+  "fixtureCacheCopied": false,
+  "sourceStaged": false,
+  "committed": false,
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-footprint-d34e",
+  "freeBytes": 2681864192
+}

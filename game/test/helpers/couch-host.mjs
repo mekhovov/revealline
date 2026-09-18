@@ -70,11 +70,20 @@ export async function couchPage(
     URLImpl = globalThis.URL,
     expectBootFailure = false,
     audio,
+    rendering,
   } = {},
 ) {
   const doc = new Document(),
     win = new Events();
   doc.parentNode = win;
+  if (rendering) {
+    const createElement = doc.createElement.bind(doc);
+    doc.createElement = (tag) => {
+      const element = createElement(tag);
+      if (tag === 'canvas') element.getContext = () => rendering.contextFor(element);
+      return element;
+    };
+  }
   mountCouch(doc, html);
   if (audio?.createElement) {
     const createElement = doc.createElement.bind(doc);
@@ -110,6 +119,7 @@ export async function couchPage(
     URL: URLImpl,
     Image:
       ImageClass ||
+      rendering?.Image ||
       class {
         constructor() {
           images.push(this);
@@ -155,6 +165,7 @@ export async function couchPage(
       rafs.delete(id);
     },
   };
+  if (rendering?.ResizeObserver) globals.ResizeObserver = rendering.ResizeObserver;
   if (audio?.Context) globals.AudioContext = audio.Context;
   for (const [key, value] of Object.entries(globals)) {
     original.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
@@ -169,15 +180,22 @@ export async function couchPage(
     'draw',
   ]) {
     methods.set(key, BoardPainter.prototype[key]);
-    BoardPainter.prototype[key] =
-      key === 'draw'
-        ? (context, run, dt, options) => {
-            renders[Number(context.id.slice(-1))] = run;
-            drawOptions[Number(context.id.slice(-1))] = options;
-          }
-        : key === 'effectsFor'
-          ? (events) => observedEvents.push(...events.map((event) => ({ ...event })))
-          : () => {};
+    if (key === 'draw') {
+      BoardPainter.prototype[key] = function (context, run, dt, options) {
+        const seat = Number((context.canvas?.id || context.id).slice(-1));
+        renders[seat] = run;
+        drawOptions[seat] = options;
+        if (rendering) {
+          methods.get('draw').call(this, context, run, dt, options);
+          rendering.onDraw?.({ painter: this, context, run, dt, options, seat });
+        }
+      };
+    } else if (key === 'effectsFor') {
+      BoardPainter.prototype[key] = function (events, run) {
+        observedEvents.push(...events.map((event) => ({ ...event })));
+        if (rendering) methods.get(key).call(this, events, run);
+      };
+    } else if (!rendering) BoardPainter.prototype[key] = () => {};
   }
   t.after(() => {
     win.emit('pagehide', { persisted: false });
@@ -252,6 +270,7 @@ export async function couchPage(
     join,
     key,
     readCount: () => reads,
+    pendingFrames: () => rafs.size,
     pads: () => pads,
     setPads: (next) => {
       pads = next;

@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+ok 1 - actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+  ---
+  duration_ms: 156.727792
+  type: 'test'
+  ...
+# Subtest: actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+ok 2 - actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+  ---
+  duration_ms: 2053.853125
+  type: 'test'
+  ...
+# Subtest: actual Versus resize follows independent touch pads and Large text without replacing either run
+ok 3 - actual Versus resize follows independent touch pads and Large text without replacing either run
+  ---
+  duration_ms: 2214.604959
+  type: 'test'
+  ...
+# Subtest: actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+ok 4 - actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+  ---
+  duration_ms: 90.295583
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4867.312625

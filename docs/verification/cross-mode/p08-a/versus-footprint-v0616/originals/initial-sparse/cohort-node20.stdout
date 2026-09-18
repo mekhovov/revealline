@@ -1,0 +1,2277 @@
+TAP version 13
+# Subtest: BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+ok 1 - BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+  ---
+  duration_ms: 1.112875
+  ...
+# Subtest: facing uses newly observed tick positions instead of a stale velocity field
+ok 2 - facing uses newly observed tick positions instead of a stale velocity field
+  ---
+  duration_ms: 0.346625
+  ...
+# Subtest: contour and outer patrols face their measured path without velocity fields
+ok 3 - contour and outer patrols face their measured path without velocity fields
+  ---
+  duration_ms: 0.113667
+  ...
+# Subtest: pause and classic freeze retain heading, banking and animation clocks
+ok 4 - pause and classic freeze retain heading, banking and animation clocks
+  ---
+  duration_ms: 0.354416
+  ...
+# Subtest: stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+ok 5 - stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+  ---
+  duration_ms: 0.128375
+  ...
+# Subtest: stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+ok 6 - stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+  ---
+  duration_ms: 0.066833
+  ...
+# Subtest: cosmetic size targets desktop/phone readability without altering contact radius
+ok 7 - cosmetic size targets desktop/phone readability without altering contact radius
+  ---
+  duration_ms: 0.137916
+  ...
+# Subtest: four themes have distinct geometric silhouettes even with identical colors
+ok 8 - four themes have distinct geometric silhouettes even with identical colors
+  ---
+  duration_ms: 1.074333
+  ...
+# Subtest: compact and detailed recipes differ; custom families resolve to the matching visual theme
+ok 9 - compact and detailed recipes differ; custom families resolve to the matching visual theme
+  ---
+  duration_ms: 0.282542
+  ...
+# Subtest: every actor override keeps its own body slot, facing and unscaled collision cue
+ok 10 - every actor override keeps its own body slot, facing and unscaled collision cue
+  ---
+  duration_ms: 0.38
+  ...
+# Subtest: history is bounded and reset removes old headings; published frames cannot mutate history
+ok 11 - history is bounded and reset removes old headings; published frames cannot mutate history
+  ---
+  duration_ms: 0.631541
+  ...
+# Subtest: trail core and head remain visible with reduced effects; animated packet stays on the cut
+ok 12 - trail core and head remain visible with reduced effects; animated packet stays on the cut
+  ---
+  duration_ms: 0.198375
+  ...
+# Subtest: capture pulse touches only newly secured cells and is absent for reduced motion
+ok 13 - capture pulse touches only newly secured cells and is absent for reduced motion
+  ---
+  duration_ms: 0.152292
+  ...
+# Subtest: integrated renderer animates observed actors and capture effects without changing replay authority
+ok 14 - integrated renderer animates observed actors and capture effects without changing replay authority
+  ---
+  duration_ms: 36.356833
+  ...
+# Subtest: legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 15 - legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 27.809625
+  ...
+# Subtest: wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 16 - wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 27.818375
+  ...
+# Subtest: custom player art retains its aspect ratio and rotor anchor coordinates independently of enemy slots
+ok 17 - custom player art retains its aspect ratio and rotor anchor coordinates independently of enemy slots
+  ---
+  duration_ms: 2.574584
+  ...
+# Subtest: player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+ok 18 - player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+  ---
+  duration_ms: 3.850333
+  ...
+# Subtest: the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+ok 19 - the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+  ---
+  duration_ms: 5.109583
+  ...
+# Subtest: explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+ok 20 - explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+  ---
+  duration_ms: 9.172709
+  ...
+# Subtest: the whole 4:3 or 2:1 bitmap fits independently of its element slot
+ok 21 - the whole 4:3 or 2:1 bitmap fits independently of its element slot
+  ---
+  duration_ms: 1.122917
+  ...
+# Subtest: one seat resizing never substitutes the other seat or changes bitmap geometry
+ok 22 - one seat resizing never substitutes the other seat or changes bitmap geometry
+  ---
+  duration_ms: 0.304
+  ...
+# Subtest: observer delivery does not read layout, duplicate writes or retain a hidden scale
+ok 23 - observer delivery does not read layout, duplicate writes or retain a hidden scale
+  ---
+  duration_ms: 0.492083
+  ...
+# Subtest: cached-page restoration rejects old callbacks and measures again without resuming play
+ok 24 - cached-page restoration rejects old callbacks and measures again without resuming play
+  ---
+  duration_ms: 0.865375
+  ...
+# Subtest: fractional deliveries do not rewrite CSS values after browser serialization
+ok 25 - fractional deliveries do not rewrite CSS values after browser serialization
+  ---
+  duration_ms: 0.344166
+  ...
+# Subtest: explicit geometry and resize reconciliation work without ResizeObserver
+ok 26 - explicit geometry and resize reconciliation work without ResizeObserver
+  ---
+  duration_ms: 0.163041
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:16:7
+#     at async Promise.all (index 1)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:13:3 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-audio-master.test.mjs
+not ok 3 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-audio-master.test.mjs
+  ---
+  duration_ms: 103.175875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-audio-master.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+ok 28 - actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+  ---
+  duration_ms: 158.053833
+  ...
+# Subtest: actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+ok 29 - actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+  ---
+  duration_ms: 2062.378083
+  ...
+# Subtest: actual Versus resize follows independent touch pads and Large text without replacing either run
+ok 30 - actual Versus resize follows independent touch pads and Large text without replacing either run
+  ---
+  duration_ms: 2000.050541
+  ...
+# Subtest: actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+ok 31 - actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+  ---
+  duration_ms: 113.630875
+  ...
+# Subtest: fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations
+ok 32 - fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations
+  ---
+  duration_ms: 1668.610625
+  ...
+# Subtest: an offline optional featured download leaves base Couch maps playable and solo storage untouched
+ok 33 - an offline optional featured download leaves base Couch maps playable and solo storage untouched
+  ---
+  duration_ms: 131.159167
+  ...
+# Subtest: all three exact map pictures change together; explicit Tactical legacy choice clears the original binding
+ok 34 - all three exact map pictures change together; explicit Tactical legacy choice clears the original binding
+  ---
+  duration_ms: 1681.7215
+  ...
+# Subtest: wrong decoded dimensions and complete decode failure release every allocated original
+ok 35 - wrong decoded dimensions and complete decode failure release every allocated original
+  ---
+  duration_ms: 1759.226333
+  ...
+# Subtest: shipped artwork requires explicit contain fit and an original for each exact known level
+ok 36 - shipped artwork requires explicit contain fit and an original for each exact known level
+  ---
+  duration_ms: 1534.247625
+  ...
+# Subtest: cancellation during complete decode rejects promptly, disposes earlier images and ignores a late result
+ok 37 - cancellation during complete decode rejects promptly, disposes earlier images and ignores a late result
+  ---
+  duration_ms: 879.234458
+  ...
+# Subtest: failed original preparation leaves the real lobby Start disabled with its explicit error
+ok 38 - failed original preparation leaves the real lobby Start disabled with its explicit error
+  ---
+  duration_ms: 911.199375
+  ...
+# Subtest: terminal pagehide during installed authority opening cannot publish released pictures or start a race
+ok 39 - terminal pagehide during installed authority opening cannot publish released pictures or start a race
+  ---
+  duration_ms: 1174.782166
+  ...
+# Subtest: paused race-coop requires a fresh fixed decision and Stay retains both flights
+ok 40 - paused race-coop requires a fresh fixed decision and Stay retains both flights
+  ---
+  duration_ms: 1810.410791
+  ...
+# Subtest: paused race-solo-return requires a fresh fixed decision and Stay retains both flights
+ok 41 - paused race-solo-return requires a fresh fixed decision and Stay retains both flights
+  ---
+  duration_ms: 1798.868833
+  ...
+# Subtest: controller Team departure has its own neutral boundary and East returns to the in-panel opener
+ok 42 - controller Team departure has its own neutral boundary and East returns to the in-panel opener
+  ---
+  duration_ms: 1935.908167
+  ...
+# Subtest: blur invalidates pending Versus departure without resuming or choosing a destination
+ok 43 - blur invalidates pending Versus departure without resuming or choosing a destination
+  ---
+  duration_ms: 1641.440375
+  ...
+# Subtest: hidden invalidates pending Versus departure without resuming or choosing a destination
+ok 44 - hidden invalidates pending Versus departure without resuming or choosing a destination
+  ---
+  duration_ms: 1719.451459
+  ...
+# Subtest: pagehide invalidates pending Versus departure without resuming or choosing a destination
+ok 45 - pagehide invalidates pending Versus departure without resuming or choosing a destination
+  ---
+  duration_ms: 1630.589583
+  ...
+# Subtest: controller-loss invalidates pending Versus departure without resuming or choosing a destination
+ok 46 - controller-loss invalidates pending Versus departure without resuming or choosing a destination
+  ---
+  duration_ms: 1742.607333
+  ...
+# Subtest: a real terminal draw keeps both destination links direct and does not start another round
+ok 47 - a real terminal draw keeps both destination links direct and does not start another round
+  ---
+  duration_ms: 1763.888125
+  ...
+# Subtest: confirmation re-reads actual replace before allowing native departure
+ok 48 - confirmation re-reads actual replace before allowing native departure
+  ---
+  duration_ms: 14.88125
+  ...
+# Subtest: confirmation re-reads actual advanceGeneration before allowing native departure
+ok 49 - confirmation re-reads actual advanceGeneration before allowing native departure
+  ---
+  duration_ms: 18.416916
+  ...
+# Subtest: confirmation re-reads actual resume before allowing native departure
+ok 50 - confirmation re-reads actual resume before allowing native departure
+  ---
+  duration_ms: 10.273042
+  ...
+# Subtest: Solo departure captures one validated scalar token and never adopts a newer return at Confirm
+ok 51 - Solo departure captures one validated scalar token and never adopts a newer return at Confirm
+  ---
+  duration_ms: 11.165541
+  ...
+# Subtest: invalid scalar return reader keeps the fixed Solo Title fallback: () => null
+ok 52 - invalid scalar return reader keeps the fixed Solo Title fallback: () => null
+  ---
+  duration_ms: 10.437709
+  ...
+# Subtest: invalid scalar return reader keeps the fixed Solo Title fallback: () => '../?stolen=1'
+ok 53 - invalid scalar return reader keeps the fixed Solo Title fallback: () => '../?stolen=1'
+  ---
+  duration_ms: 10.465041
+  ...
+# Subtest: invalid scalar return reader keeps the fixed Solo Title fallback: () => 'A'.repeat(32)
+ok 54 - invalid scalar return reader keeps the fixed Solo Title fallback: () => 'A'.repeat(32)
+  ---
+  duration_ms: 9.547625
+  ...
+# Subtest: invalid scalar return reader keeps the fixed Solo Title fallback: () => {\\n    throw Error('unavailable');\\n  }
+ok 55 - invalid scalar return reader keeps the fixed Solo Title fallback: () => {\\n    throw Error('unavailable');\\n  }
+  ---
+  duration_ms: 9.583708
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/content/packs/sentinel-relay.json'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async read (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-encounter.test.mjs:7:41)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-encounter.test.mjs:8:14 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/content/packs/sentinel-relay.json'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-encounter.test.mjs
+not ok 7 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-encounter.test.mjs
+  ---
+  duration_ms: 324.464542
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-encounter.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: untouched prepared lobby focuses enabled Start once without controller ownership or starting
+ok 57 - untouched prepared lobby focuses enabled Start once without controller ownership or starting
+  ---
+  duration_ms: 156.831333
+  ...
+# Subtest: delayed initial preparation leaves loading focus alone, then hands off to Ready Start
+ok 58 - delayed initial preparation leaves loading focus alone, then hands off to Ready Start
+  ---
+  duration_ms: 69.640333
+  ...
+# Subtest: a deliberate current focus is never replaced by the initial handoff
+ok 59 - a deliberate current focus is never replaced by the initial handoff
+  ---
+  duration_ms: 70.469125
+  ...
+# Subtest: a deliberate moved-away focus is never replaced by the initial handoff
+ok 60 - a deliberate moved-away focus is never replaced by the initial handoff
+  ---
+  duration_ms: 58.643834
+  ...
+# Subtest: a deliberate pre-attached-recovery focus is never replaced by the initial handoff
+ok 61 - a deliberate pre-attached-recovery focus is never replaced by the initial handoff
+  ---
+  duration_ms: 52.895667
+  ...
+# Subtest: initial-background permanently relinquishes initial focus even when ready later
+ok 62 - initial-background permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 54.425791
+  ...
+# Subtest: blur-return permanently relinquishes initial focus even when ready later
+ok 63 - blur-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 49.461542
+  ...
+# Subtest: hidden-return permanently relinquishes initial focus even when ready later
+ok 64 - hidden-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 51.13225
+  ...
+# Subtest: pagehide-return permanently relinquishes initial focus even when ready later
+ok 65 - pagehide-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 48.959333
+  ...
+# Subtest: an initially disabled Start is never chosen as focus
+ok 66 - an initially disabled Start is never chosen as focus
+  ---
+  duration_ms: 46.401042
+  ...
+# Subtest: an initially no-rect Start is never chosen as focus
+ok 67 - an initially no-rect Start is never chosen as focus
+  ---
+  duration_ms: 49.013542
+  ...
+# Subtest: an initially css-hidden Start is never chosen as focus
+ok 68 - an initially css-hidden Start is never chosen as focus
+  ---
+  duration_ms: 49.202459
+  ...
+# Subtest: an initially aria-hidden Start is never chosen as focus
+ok 69 - an initially aria-hidden Start is never chosen as focus
+  ---
+  duration_ms: 51.842375
+  ...
+# Subtest: boot failure preserves recovery focus and cannot establish a Ready handoff
+ok 70 - boot failure preserves recovery focus and cannot establish a Ready handoff
+  ---
+  duration_ms: 5.888375
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async buildExternalPilot (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/authoring/library/external-chapter-pilot/build.mjs:34:18)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-installed-chapters.test.mjs:21:15 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-installed-chapters.test.mjs
+not ok 9 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-installed-chapters.test.mjs
+  ---
+  duration_ms: 85.188208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-installed-chapters.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: couch markup mounts controls with bare body
+ok 72 - couch markup mounts controls with bare body
+  ---
+  duration_ms: 1.324709
+  ...
+# Subtest: couch markup mounts controls with body attributes
+ok 73 - couch markup mounts controls with body attributes
+  ---
+  duration_ms: 0.367709
+  ...
+# Subtest: couch markup mounts controls with quoted delimiters and case
+ok 74 - couch markup mounts controls with quoted delimiters and case
+  ---
+  duration_ms: 0.567875
+  ...
+# Subtest: couch markup rejects a missing or incomplete body with a controlled error
+ok 75 - couch markup rejects a missing or incomplete body with a controlled error
+  ---
+  duration_ms: 0.787083
+  ...
+# Subtest: appending parsed text preserves nested boot and game controls
+ok 76 - appending parsed text preserves nested boot and game controls
+  ---
+  duration_ms: 0.5215
+  ...
+# Subtest: ../couch/index.html has a visible static loading signal and a reachable exit before modules load
+ok 77 - ../couch/index.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 4.610625
+  ...
+# Subtest: ../couch/relay-rescue.html has a visible static loading signal and a reachable exit before modules load
+ok 78 - ../couch/relay-rescue.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 2.512125
+  ...
+# Subtest: ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load
+not ok 79 - ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 0.532833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-markup.test.mjs:59:3'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/replay-theater/index.html'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-markup.test.mjs:61:21)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/content/packs/sentinel-relay.json'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async read (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-navigation.test.mjs:9:41)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-navigation.test.mjs:11:18 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/content/packs/sentinel-relay.json'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-navigation.test.mjs
+not ok 11 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-navigation.test.mjs
+  ---
+  duration_ms: 57.50825
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-navigation.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:16:7
+#     at async Promise.all (index 1)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:13:3 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-reading.test.mjs
+not ok 12 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-reading.test.mjs
+  ---
+  duration_ms: 102.965125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-reading.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: resize reveals current Ready Start beyond the left edge without activating it
+ok 82 - resize reveals current Ready Start beyond the left edge without activating it
+  ---
+  duration_ms: 1613.0775
+  ...
+# Subtest: resize reveals current Ready Start beyond the top edge without activating it
+ok 83 - resize reveals current Ready Start beyond the top edge without activating it
+  ---
+  duration_ms: 1480.339583
+  ...
+# Subtest: resize reveals current Ready Start beyond the right edge without activating it
+ok 84 - resize reveals current Ready Start beyond the right edge without activating it
+  ---
+  duration_ms: 1474.051458
+  ...
+# Subtest: resize reveals current Ready Start beyond the bottom edge without activating it
+ok 85 - resize reveals current Ready Start beyond the bottom edge without activating it
+  ---
+  duration_ms: 1480.621958
+  ...
+# Subtest: resize cannot reveal an action that is disabled
+ok 86 - resize cannot reveal an action that is disabled
+  ---
+  duration_ms: 1512.06225
+  ...
+# Subtest: resize cannot reveal an action that is hidden-ancestor
+ok 87 - resize cannot reveal an action that is hidden-ancestor
+  ---
+  duration_ms: 1470.3735
+  ...
+# Subtest: resize cannot reveal an action that is inert-ancestor
+ok 88 - resize cannot reveal an action that is inert-ancestor
+  ---
+  duration_ms: 1504.531083
+  ...
+# Subtest: resize cannot reveal an action that is aria-hidden-ancestor
+ok 89 - resize cannot reveal an action that is aria-hidden-ancestor
+  ---
+  duration_ms: 1741.9835
+  ...
+# Subtest: resize cannot reveal an action that is invisible
+ok 90 - resize cannot reveal an action that is invisible
+  ---
+  duration_ms: 1493.301834
+  ...
+# Subtest: resize cannot reveal an action that is foreign-root
+ok 91 - resize cannot reveal an action that is foreign-root
+  ---
+  duration_ms: 1457.60275
+  ...
+# Subtest: resize cannot reveal an action that is background
+ok 92 - resize cannot reveal an action that is background
+  ---
+  duration_ms: 1422.149417
+  ...
+# Subtest: resize cannot reveal an action that is hidden-document
+ok 93 - resize cannot reveal an action that is hidden-document
+  ---
+  duration_ms: 1520.754875
+  ...
+# Subtest: geometry publication cannot reveal the old action after other-focus
+ok 94 - geometry publication cannot reveal the old action after other-focus
+  ---
+  duration_ms: 1443.527458
+  ...
+# Subtest: geometry publication cannot reveal the old action after new-screen
+ok 95 - geometry publication cannot reveal the old action after new-screen
+  ---
+  duration_ms: 1462.181375
+  ...
+# Subtest: geometry publication cannot reveal the old action after background
+ok 96 - geometry publication cannot reveal the old action after background
+  ---
+  duration_ms: 1549.652042
+  ...
+# Subtest: resize ignores descendant events, invalid dimensions and recursive delivery
+ok 97 - resize ignores descendant events, invalid dimensions and recursive delivery
+  ---
+  duration_ms: 1458.340625
+  ...
+# Subtest: the final style read cannot authorize a scroll after foreground loss
+ok 98 - the final style read cannot authorize a scroll after foreground loss
+  ---
+  duration_ms: 1422.582042
+  ...
+# Subtest: resize reveals paused Resume while preserving a real started cut and live canvas ownership
+ok 99 - resize reveals paused Resume while preserving a real started cut and live canvas ownership
+  ---
+  duration_ms: 1602.498916
+  ...
+# Subtest: resize reveals a real finished round action without replacing either run or result
+ok 100 - resize reveals a real finished round action without replacing either run or result
+  ---
+  duration_ms: 1630.129542
+  ...
+# Subtest: resize stores no future focus intent and terminal disposal removes its listener
+ok 101 - resize stores no future focus intent and terminal disposal removes its listener
+  ---
+  duration_ms: 1560.666042
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's other-focus
+ok 102 - Couch return reveal cannot outlive a focus callback's other-focus
+  ---
+  duration_ms: 1792.127791
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's new-screen
+ok 103 - Couch return reveal cannot outlive a focus callback's new-screen
+  ---
+  duration_ms: 1520.071042
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's background
+ok 104 - Couch return reveal cannot outlive a focus callback's background
+  ---
+  duration_ms: 1511.465209
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's hidden
+ok 105 - Couch return reveal cannot outlive a focus callback's hidden
+  ---
+  duration_ms: 1824.166584
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's destroyed
+ok 106 - Couch return reveal cannot outlive a focus callback's destroyed
+  ---
+  duration_ms: 1517.808416
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's detached
+ok 107 - Couch return reveal cannot outlive a focus callback's detached
+  ---
+  duration_ms: 1466.921375
+  ...
+# Subtest: Couch main Back reveals the same already-focused action without activating it
+ok 108 - Couch main Back reveals the same already-focused action without activating it
+  ---
+  duration_ms: 1649.147708
+  ...
+# Subtest: lobby, setup and children use reachable native controls and Back restores the actual opener
+ok 109 - lobby, setup and children use reachable native controls and Back restores the actual opener
+  ---
+  duration_ms: 1538.095833
+  ...
+# Subtest: an embedded Couch route stays loading until its actual setup is prepared
+ok 110 - an embedded Couch route stays loading until its actual setup is prepared
+  ---
+  duration_ms: 1465.937917
+  ...
+# Subtest: pause children and cancelled new match preserve two different continuations; reset is explicit
+ok 111 - pause children and cancelled new match preserve two different continuations; reset is explicit
+  ---
+  duration_ms: 1678.509875
+  ...
+# Subtest: per-seat Auto expands on touch and defers collapse until pause without changing movement
+ok 112 - per-seat Auto expands on touch and defers collapse until pause without changing movement
+  ---
+  duration_ms: 1506.645416
+  ...
+# Subtest: Always supports independent pointer players; Off wins over coarse and later touch
+ok 113 - Always supports independent pointer players; Off wins over coarse and later touch
+  ---
+  duration_ms: 1555.829833
+  ...
+# Subtest: authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+ok 114 - authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+  ---
+  duration_ms: 1442.769833
+  ...
+# Subtest: controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+ok 115 - controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+  ---
+  duration_ms: 1703.977
+  ...
+# Subtest: markup keeps touch crosses outside both arenas and uses separate screen roots
+ok 116 - markup keeps touch crosses outside both arenas and uses separate screen roots
+  ---
+  duration_ms: 0.829916
+  ...
+# Subtest: controller can read and scroll Help without starting; Back exits reading then the child
+ok 117 - controller can read and scroll Help without starting; Back exits reading then the child
+  ---
+  duration_ms: 1608.518959
+  ...
+# Subtest: a real finished draw exposes both frozen boards, Results returns without a new round
+ok 118 - a real finished draw exposes both frozen boards, Results returns without a new round
+  ---
+  duration_ms: 1769.370375
+  ...
+# Subtest: an old held controller cannot reclaim a seat from accepted touch across pause and resume
+ok 119 - an old held controller cannot reclaim a seat from accepted touch across pause and resume
+  ---
+  duration_ms: 1620.6915
+  ...
+# Subtest: blocked pad input and held keyboard repeats never replace newer touch modality
+ok 120 - blocked pad input and held keyboard repeats never replace newer touch modality
+  ---
+  duration_ms: 1480.613583
+  ...
+# Subtest: accepted-input observer is optional and observer failures cannot reject or replay commands
+ok 121 - accepted-input observer is optional and observer failures cannot reject or replay commands
+  ---
+  duration_ms: 2.49825
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-static-picture-host.test.mjs:28:17 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-static-picture-host.test.mjs
+not ok 15 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-static-picture-host.test.mjs
+  ---
+  duration_ms: 339.152625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/couch-static-picture-host.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:16:7
+#     at async Promise.all (index 1)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:13:3 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/display-preferences-host.test.mjs
+not ok 16 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/display-preferences-host.test.mjs
+  ---
+  duration_ms: 371.72225
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/display-preferences-host.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: solo matching classes uses seven current starter bodies while manual old/new choices remain deliberate
+not ok 124 - solo matching classes uses seven current starter bodies while manual old/new choices remain deliberate
+  ---
+  duration_ms: 7.790625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:51:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: explicit new saved appearance and suspended checkpoint survive normal host reload and Load
+    # Subtest: save an unfinished flight using the selected new body
+    not ok 1 - save an unfinished flight using the selected new body
+      ---
+      duration_ms: 5.398917
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:88:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 125 - explicit new saved appearance and suspended checkpoint survive normal host reload and Load
+  ---
+  duration_ms: 6.399584
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:80:1'
+  failureType: 'testCodeFailure'
+  error: '"undefined" is not valid JSON'
+  code: 'ERR_TEST_FAILURE'
+  name: 'SyntaxError'
+  stack: |-
+    JSON.parse (<anonymous>)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:106:44)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: custom FPV class mapping and unknown explicit appearance keep existing host fallbacks
+    # Subtest: one authored class change disables the entire current recommendation guard
+    not ok 1 - one authored class change disables the entire current recommendation guard
+      ---
+      duration_ms: 4.536
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:132:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: a future body ID remains readable as data and displays the existing neutral fallback
+    not ok 2 - a future body ID remains readable as data and displays the existing neutral fallback
+      ---
+      duration_ms: 8.276167
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:147:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: an unearned registered appearance keeps the default without rewriting its stored ID
+    not ok 3 - an unearned registered appearance keeps the default without rewriting its stored ID
+      ---
+      duration_ms: 2.63225
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:161:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..3
+not ok 126 - custom FPV class mapping and unknown explicit appearance keep existing host fallbacks
+  ---
+  duration_ms: 16.401042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/fpv-role-host.test.mjs:131:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: actual Couch recommendation switches both independent painters without touching match physics or profile
+ok 127 - actual Couch recommendation switches both independent painters without touching match physics or profile
+  ---
+  duration_ms: 1727.711458
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:16:7
+#     at async Promise.all (index 1)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:13:3 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/menu-style-host.test.mjs
+not ok 18 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/menu-style-host.test.mjs
+  ---
+  duration_ms: 109.232417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/menu-style-host.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: actual Title Missions → team → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    not ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 9.540417
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:85:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 129 - actual Title Missions → team → Back restores exact menu without adoption
+  ---
+  duration_ms: 11.522959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:81:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    pagehide must not overwrite the checked handoff
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:115:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual paused cut Missions → team → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    not ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 4.621459
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:85:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 130 - actual paused cut Missions → team → Back restores exact menu without adoption
+  ---
+  duration_ms: 4.947167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:81:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    pagehide must not overwrite the checked handoff
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:115:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+    # Subtest: preserve an externally changed slot through Leave and pagehide
+    not ok 1 - preserve an externally changed slot through Leave and pagehide
+      ---
+      duration_ms: 5.065041
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:195:13'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 131 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+  ---
+  duration_ms: 5.485708
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:191:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:214:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+not ok 132 - storage failure after a successful check requires another deliberate Leave with truthful warning
+  ---
+  duration_ms: 7.407458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:217:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    not ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 2.357583
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:241:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 133 - unavailable return storage preserves ready title with an explicit fixed fallback
+  ---
+  duration_ms: 2.958208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:231:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Fallback departure keeps the checked bytes through pagehide.
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:261:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    not ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 2.319917
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:241:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 134 - unavailable return storage preserves verified flight with an explicit fixed fallback
+  ---
+  duration_ms: 2.617417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:231:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Fallback departure keeps the checked bytes through pagehide.
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:261:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+not ok 135 - Stay cancels a pending verified-save wait and late completion cannot navigate or write
+  ---
+  duration_ms: 5.252334
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:268:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: return with incompatible source falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    not ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 4.123334
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:300:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: reject stale context at the real receiving host
+    not ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 8.466042
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:312:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..2
+not ok 136 - return with incompatible source falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 13.318625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:296:5'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: return with incompatible selection falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    not ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 2.536
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:300:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: reject stale context at the real receiving host
+    not ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 1.699834
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:312:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..2
+not ok 137 - return with incompatible selection falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 4.653459
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:296:5'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: checked save quota failure never claims durable storage or navigates silently
+not ok 138 - checked save quota failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 1.917333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:328:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: checked save readback failure never claims durable storage or navigates silently
+not ok 139 - checked save readback failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 2.460208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:328:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: a newer slot after helper readback cannot become this departure’s saved authority
+not ok 140 - a newer slot after helper readback cannot become this departure’s saved authority
+  ---
+  duration_ms: 3.243416
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:357:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: pending theme preparation cannot depart with a stale visible selection
+not ok 141 - pending theme preparation cannot depart with a stale visible selection
+  ---
+  duration_ms: 1.839208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:381:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: blur retires a pending save decision before late locks can write or navigate
+not ok 142 - team: blur retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 3.202
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:400:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: hidden retires a pending save decision before late locks can write or navigate
+not ok 143 - team: hidden retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 3.892334
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:400:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: pagehide retires a pending save decision before late locks can write or navigate
+not ok 144 - team: pagehide retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 2.751791
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:400:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: foreground lost during hint write cannot navigate or leave a reusable owned hint
+not ok 145 - team: foreground lost during hint write cannot navigate or leave a reusable owned hint
+  ---
+  duration_ms: 1.569417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:437:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+not ok 146 - team: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+  ---
+  duration_ms: 1.899167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:453:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: modified gestures remain native and do not write or pause the existing flight
+not ok 147 - team: modified gestures remain native and do not write or pause the existing flight
+  ---
+  duration_ms: 3.385333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:466:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: team: rejected native dialog opening releases its owner and keeps the flight paused
+not ok 148 - team: rejected native dialog opening releases its owner and keeps the flight paused
+  ---
+  duration_ms: 6.87225
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:493:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: actual Title Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    not ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 7.64
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:85:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 149 - actual Title Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 7.96625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:81:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    pagehide must not overwrite the checked handoff
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:115:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual paused cut Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    not ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 2.571667
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:85:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 150 - actual paused cut Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 2.824042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:81:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    pagehide must not overwrite the checked handoff
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:115:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+    # Subtest: preserve an externally changed slot through Leave and pagehide
+    not ok 1 - preserve an externally changed slot through Leave and pagehide
+      ---
+      duration_ms: 2.833917
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:195:13'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 151 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+  ---
+  duration_ms: 3.054667
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:191:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:214:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+not ok 152 - storage failure after a successful check requires another deliberate Leave with truthful warning
+  ---
+  duration_ms: 1.470792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:217:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    not ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 1.374334
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:241:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 153 - unavailable return storage preserves ready title with an explicit fixed fallback
+  ---
+  duration_ms: 1.542958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:231:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Fallback departure keeps the checked bytes through pagehide.
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:261:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    not ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 4.278083
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:241:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 154 - unavailable return storage preserves verified flight with an explicit fixed fallback
+  ---
+  duration_ms: 4.515625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:231:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    Fallback departure keeps the checked bytes through pagehide.
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:261:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+not ok 155 - Stay cancels a pending verified-save wait and late completion cannot navigate or write
+  ---
+  duration_ms: 1.59325
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:268:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: return with incompatible source falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    not ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 1.71225
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:300:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: reject stale context at the real receiving host
+    not ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 4.795458
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:312:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..2
+not ok 156 - return with incompatible source falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 6.781208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:296:5'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: return with incompatible selection falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    not ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 1.691083
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:300:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: reject stale context at the real receiving host
+    not ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 1.796041
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:312:15'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..2
+not ok 157 - return with incompatible selection falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 3.703917
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:296:5'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: checked save quota failure never claims durable storage or navigates silently
+not ok 158 - checked save quota failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 2.607084
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:328:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: checked save readback failure never claims durable storage or navigates silently
+not ok 159 - checked save readback failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 3.3865
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:328:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: a newer slot after helper readback cannot become this departure’s saved authority
+not ok 160 - a newer slot after helper readback cannot become this departure’s saved authority
+  ---
+  duration_ms: 1.590166
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:357:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: pending theme preparation cannot depart with a stale visible selection
+not ok 161 - pending theme preparation cannot depart with a stale visible selection
+  ---
+  duration_ms: 1.358541
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:381:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: blur retires a pending save decision before late locks can write or navigate
+not ok 162 - versus: blur retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 4.79725
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:400:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: hidden retires a pending save decision before late locks can write or navigate
+not ok 163 - versus: hidden retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 1.815208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:400:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: pagehide retires a pending save decision before late locks can write or navigate
+not ok 164 - versus: pagehide retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 1.457125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:400:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: foreground lost during hint write cannot navigate or leave a reusable owned hint
+not ok 165 - versus: foreground lost during hint write cannot navigate or leave a reusable owned hint
+  ---
+  duration_ms: 2.903
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:437:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+not ok 166 - versus: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+  ---
+  duration_ms: 4.231209
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:453:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: modified gestures remain native and do not write or pause the existing flight
+not ok 167 - versus: modified gestures remain native and do not write or pause the existing flight
+  ---
+  duration_ms: 3.056458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:466:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: versus: rejected native dialog opening releases its owner and keeps the flight paused
+not ok 168 - versus: rejected native dialog opening releases its owner and keeps the flight paused
+  ---
+  duration_ms: 1.640834
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/mode-return-host.test.mjs:493:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:16:7
+#     at async Promise.all (index 0)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:13:3 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/settings-restoration-host.test.mjs
+not ok 20 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/settings-restoration-host.test.mjs
+  ---
+  duration_ms: 208.724083
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/settings-restoration-host.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:16:7
+#     at async Promise.all (index 0)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/coop-presentation-fixture.mjs:13:3 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/shared-settings-reading.test.mjs
+not ok 21 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/shared-settings-reading.test.mjs
+  ---
+  duration_ms: 130.1625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/shared-settings-reading.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Versus Settings uses native categories, consumes tab keys once and returns to its opener
+ok 171 - Versus Settings uses native categories, consumes tab keys once and returns to its opener
+  ---
+  duration_ms: 1622.36875
+  ...
+# Subtest: paused Versus keeps both runs and requires explicit Resume after appearance changes
+ok 172 - paused Versus keeps both runs and requires explicit Resume after appearance changes
+  ---
+  duration_ms: 1569.150792
+  ...
+# Subtest: Versus quick sound shares the Settings master without starting or replacing a match
+ok 173 - Versus quick sound shares the Settings master without starting or replacing a match
+  ---
+  duration_ms: 1459.628042
+  ...
+# Subtest: modeled controller selects Settings categories and Back preserves its Ready match
+ok 174 - modeled controller selects Settings categories and Back preserves its Ready match
+  ---
+  duration_ms: 1557.441542
+  ...
+# Subtest: solo matching classes uses seven current starter bodies while manual old/new choices remain deliberate
+not ok 175 - solo matching classes uses seven current starter bodies while manual old/new choices remain deliberate
+  ---
+  duration_ms: 7.688042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:54:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:283:11)
+    moduleResolve (node:internal/modules/esm/resolve:952:10)
+    defaultResolve (node:internal/modules/esm/resolve:1188:11)
+    ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+    ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+    importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+  ...
+# Subtest: explicit new saved appearance and suspended checkpoint survive normal host reload and Load
+    # Subtest: save an unfinished flight using the selected new body
+    not ok 1 - save an unfinished flight using the selected new body
+      ---
+      duration_ms: 4.799667
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:92:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..1
+not ok 176 - explicit new saved appearance and suspended checkpoint survive normal host reload and Load
+  ---
+  duration_ms: 6.179334
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:83:1'
+  failureType: 'testCodeFailure'
+  error: '"undefined" is not valid JSON'
+  code: 'ERR_TEST_FAILURE'
+  name: 'SyntaxError'
+  stack: |-
+    JSON.parse (<anonymous>)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:110:44)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: custom Ukraine class mapping and unknown explicit appearance keep existing host fallbacks
+    # Subtest: one authored class change disables the entire current recommendation guard
+    not ok 1 - one authored class change disables the entire current recommendation guard
+      ---
+      duration_ms: 4.667
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:136:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: a future body ID remains readable as data and displays the existing neutral fallback
+    not ok 2 - a future body ID remains readable as data and displays the existing neutral fallback
+      ---
+      duration_ms: 8.329542
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:151:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    # Subtest: an unearned registered appearance keeps the default without rewriting its stored ID
+    not ok 3 - an unearned registered appearance keeps the default without rewriting its stored ID
+      ---
+      duration_ms: 3.15075
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:166:11'
+      failureType: 'testCodeFailure'
+      error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/helpers/solo-dom.mjs"
+      code: 'ERR_MODULE_NOT_FOUND'
+      stack: |-
+        finalizeResolution (node:internal/modules/esm/resolve:283:11)
+        moduleResolve (node:internal/modules/esm/resolve:952:10)
+        defaultResolve (node:internal/modules/esm/resolve:1188:11)
+        ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+        #cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+        ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+        ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+        ModuleLoader.import (node:internal/modules/esm/loader:605:34)
+        defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:221:31)
+        importModuleDynamicallyCallback (node:internal/modules/esm/utils:260:12)
+      ...
+    1..3
+not ok 177 - custom Ukraine class mapping and unknown explicit appearance keep existing host fallbacks
+  ---
+  duration_ms: 16.88075
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/ukraine-role-host.test.mjs:135:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: actual Couch recommendation switches both independent painters without touching match physics or profile
+ok 178 - actual Couch recommendation switches both independent painters without touching match physics or profile
+  ---
+  duration_ms: 1891.371792
+  ...
+1..178
+# tests 204
+# suites 0
+# pass 121
+# fail 83
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 102261.5975

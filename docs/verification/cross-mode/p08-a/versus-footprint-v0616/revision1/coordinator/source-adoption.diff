@@ -1,0 +1,991 @@
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -293,6 +293,8 @@
+ 
+ For the bounded [P08-A static Versus parity candidate](../../../docs/shared-static-pictures.md), reuse exact fresh Solo assignment/baseline/release resolution through a read-only picture lease; never call the durable default-materialization path from Versus. Keep one accepted decoded original and fit for both boards. Retry retains the attempt and captured choice; setup changes alone establish a new choice. Confirm current metadata before Start, fence stale/cancelled completion, and release only owned resources. During a focused Retry or asynchronous Start confirmation, transfer only that action’s owned focus to visible Cancel; later navigation, foreground loss and stale completion must prevent focus restoration. Expire Start/Next intent on suspend or controller loss even if the page returns before preparation resolves; keep completed picture readiness and require a fresh Start gesture. Keep the [scoped evidence](../../../docs/verification/cross-mode/p08-a/README.md) distinct from full phase or release acceptance. A failed selected image must refuse Start visibly. Preserve the separate optional whole-release snapshot fallback and historical procedural/training behavior, with an explicit notice; do not infer a stricter global release policy. The shared store may perform its established schema initialization, but this lease must not commit media, assignments or Solo progress. Check user-original priority, saved/earned pin preservation, both aspect ratios and actual native fit independently of modeled source tests. Team adoption and new asset production remain separate.
+ 
++For [Versus board fitting](../../../docs/field-kit-surfaces.md), measure each arena's content box and pass its fitted bitmap width to the shared painter; `object-fit: contain` alone does not make element width authoritative. Keep the canvas out of intrinsic grid sizing, suppress duplicate resize writes, fence stale observer callbacks and refresh cached-page restoration without resuming or replacing the match. Without ResizeObserver, refresh only on meaningful layout-state changes, including encounter visibility/copy, after both cues update and before either painter draws. Use the guide's two-seat touch/text/rotation prompt and retain the explicit narrow-board 64-logical-pixel cap limitation; modeled geometry is not native readability qualification.
++
+ When composing that adapter onto current P03/P05 hosts, preserve their fixed routes, display lifetime and ready-focus ownership; finish lobby boot cleanup before awaiting a required picture so Back and Cancel remain reachable. The [P05-A composition evidence](../../../docs/verification/cross-mode/p08-p05-integration/README.md) separates 210-case runtime coverage from the normal and exact-response-delay native journeys. It does not cover Team pictures, all assignments/devices or P05-B. The existing finished-to-Next path can replace prior results before picture readiness; P07 owns that remaining preservation requirement.
+ 
+ ## Retain completed Results during Next
+--- a/docs/field-kit-surfaces.md
++++ b/docs/field-kit-surfaces.md
+@@ -7,6 +7,10 @@
+ Collection prioritizes artwork, medals and mastery, with an expanded picture viewer. Flight records use stable numeric text. Reading, help, soundtrack, recovery and installed-content panels share the same text sizes, panel frames, controls and spacing. Existing locked, empty, missing-original and unavailable states retain their explanations and actions.
+ 
+ Couch setup/results, Replay Theater, controller practice and About opt into the same supporting-page styles and independent Standard/Large controls. The replay/couch hosts and authoring tools already receive the shared compiled presentation through the phase-5 page host. Generated privacy/credits pages include the surface stylesheet. Workshop remains a single navigation destination for the existing editors and local Asset Studio.
++
++Versus fits each complete 4:3 or 2:1 board inside its own arena and passes that visible CSS width to the shared painter. The canvas contributes no intrinsic size to the layout; arena observation handles touch-pad, typography and viewport reflow. Hosts without ResizeObserver also reconcile encounter visibility and copy before painting, so wrapped instructions cannot leave a stale footprint. Cached-page restoration refreshes the footprint without resuming play or changing the accepted picture. Maintenance prompt: “Test both seats at different width/height constraints, then change touch controls, Large text and orientation. Confirm unchanged checkpoints, picture identity and results while actor/cut sizing follows the visible board. Exercise hidden boards and late resize callbacks after restoration/disposal. Qualify actual native readability separately: the existing 64-logical-pixel enemy cap still limits a 240-pixel-wide 72-column board to 13.33 CSS pixels.”
++
++Keep authored image fitting separate: [`object-fit: contain`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit) can leave a smaller bitmap inside a larger element box. That element width is not the board's displayed width.
+ 
+ Pages release and archive catalogs use the same fonts, tokens, compiled components and Standard/Large selector. Each version has a Play action, source identity, ZIP and manifest links. The controller copies a bounded presentation dependency graph, font notices and hash-verified compiled assets into `catalog-ui/`, outside every frozen edition. The current/archived play URLs and all original game files remain intact. Historical controllers without compiled presentation retain a readable fallback. Catalog bytes count toward the existing main/archive budgets.
+ 
+--- a/game/build-config.json
++++ b/game/build-config.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "0.61.5",
++  "version": "0.61.6",
+   "entry": "game/index.html",
+   "include": [
+     "game",
+--- /dev/null
++++ b/game/couch/board-footprint.mjs
+@@ -0,0 +1,106 @@
++/** Fit a complete board inside its available content box, in CSS pixels. */
++export function fitBoardRect(boxWidth, boxHeight, boardWidth, boardHeight) {
++  if (![boxWidth, boxHeight, boardWidth, boardHeight].every((n) => Number.isFinite(n) && n > 0))
++    return { width: 0, height: 0 };
++  const scale = Math.min(boxWidth / boardWidth, boxHeight / boardHeight),
++    width = boardWidth * scale,
++    height = boardHeight * scale;
++  return Number.isFinite(width) && Number.isFinite(height)
++    ? { width, height }
++    : { width: 0, height: 0 };
++}
++
++/** Own only the CSS footprint. Bitmap geometry, match state and artwork stay with the host. */
++export function createBoardFootprints(
++  canvases,
++  { window = globalThis.window, ResizeObserver = globalThis.ResizeObserver } = {},
++) {
++  const seats = canvases.map((canvas) => ({
++    canvas,
++    arena: canvas.parentElement ?? canvas.parentNode,
++    width: 0,
++    height: 0,
++    initialized: false,
++  }));
++  let observer = null,
++    generation = 0,
++    suspended = false,
++    disposed = false;
++
++  function apply(seat, boxWidth, boxHeight) {
++    if (disposed || suspended) return;
++    const fit = fitBoardRect(boxWidth, boxHeight, seat.canvas.width, seat.canvas.height);
++    if (seat.initialized && seat.width === fit.width && seat.height === fit.height) return;
++    seat.width = fit.width;
++    seat.height = fit.height;
++    seat.initialized = true;
++    // The absolutely positioned canvas contributes no intrinsic size to the
++    // observed grid slot. Equal deliveries must not cause resize/write loops.
++    for (const key of ['width', 'height']) {
++      seat.canvas.style[key] = `${fit[key]}px`;
++    }
++  }
++
++  function refresh() {
++    if (disposed || suspended) return;
++    // Targeted bootstrap/geometry/fallback reconciliation, never a frame-loop read.
++    // .race-arena has no padding; client dimensions exclude its decorative border.
++    for (const seat of seats) apply(seat, seat.arena?.clientWidth, seat.arena?.clientHeight);
++  }
++
++  function observe() {
++    observer?.disconnect();
++    observer = null;
++    const ticket = ++generation;
++    if (typeof ResizeObserver !== 'function') return;
++    observer = new ResizeObserver((entries) => {
++      if (disposed || suspended || ticket !== generation) return;
++      for (const entry of entries) {
++        const seat = seats.find((candidate) => candidate.arena === entry.target);
++        if (seat) apply(seat, entry.contentRect.width, entry.contentRect.height);
++      }
++    });
++    for (const seat of seats) if (seat.arena) observer.observe(seat.arena);
++  }
++
++  function hide(event) {
++    if (!event.persisted) return dispose();
++    suspended = true;
++    generation++;
++    observer?.disconnect();
++    observer = null;
++  }
++
++  function show() {
++    if (disposed) return;
++    suspended = false;
++    observe();
++    refresh();
++  }
++
++  function dispose() {
++    if (disposed) return;
++    disposed = true;
++    generation++;
++    observer?.disconnect();
++    observer = null;
++    window?.removeEventListener('resize', refresh);
++    window?.removeEventListener('pagehide', hide);
++    window?.removeEventListener('pageshow', show);
++  }
++
++  window?.addEventListener('resize', refresh);
++  window?.addEventListener('pagehide', hide);
++  window?.addEventListener('pageshow', show);
++  observe();
++  refresh();
++  return {
++    refresh,
++    get observesResize() {
++      return observer !== null;
++    },
++    // Zero/hidden bounds are unavailable, not a valid renderer scale.
++    width: (index) => (seats[index]?.width > 0 ? seats[index].width : undefined),
++    dispose,
++  };
++}
+--- a/game/couch/couch.css
++++ b/game/couch/couch.css
+@@ -257,7 +257,9 @@
+   font-size: 15px;
+ }
+ .race-arena {
+-  display: flex;
++  position: relative;
++  display: flex;
++  padding: 0;
+   min-height: 0;
+   justify-content: center;
+   align-items: center;
+@@ -266,9 +268,13 @@
+   border: 1px solid #344d71;
+ }
+ .race-arena canvas {
++  position: absolute;
++  left: 50%;
++  top: 50%;
++  transform: translate(-50%, -50%);
+   display: block;
+-  width: 100%;
+-  height: 100%;
++  width: 0;
++  height: 0;
+   min-width: 0;
+   min-height: 0;
+   max-width: 100%;
+--- a/game/couch/couch.mjs
++++ b/game/couch/couch.mjs
+@@ -1,5 +1,6 @@
+ import { mountPresentationPage } from '../presentation/page.mjs';
+ import { createCouchShell } from './couch-shell.mjs';
++import { createBoardFootprints } from './board-footprint.mjs';
+ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
+ import { prepareCouchChapter } from './couch-chapter.mjs';
+ import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
+@@ -147,7 +148,7 @@
+ });
+ // Cosmetic menu choice follows this same accepted release; it owns no board lease.
+ presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
+-let featured, installed, staticPictures, publishedAudio, publishedPlayer;
++let featured, installed, staticPictures, publishedAudio, publishedPlayer, boardFootprints;
+ const releaseArtwork = (event) => {
+   if (event.persisted) return;
+   stopMasterView();
+@@ -166,6 +167,7 @@
+   featured?.dispose();
+   installed?.dispose();
+   staticPictures?.dispose();
++  boardFootprints?.dispose();
+   window.removeEventListener('pagehide', releaseArtwork);
+ };
+ window.addEventListener('pagehide', releaseArtwork);
+@@ -331,6 +333,9 @@
+   }
+   let selectedMapKey = null;
+   const contexts = [0, 1].map((i) => $(`race-canvas-${i}`).getContext('2d'));
++  const touchPads = [...document.querySelectorAll('.race-pad')];
++  boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
++  let boardLayoutKey = null;
+   let match,
+     theme,
+     backdrop = null,
+@@ -555,8 +560,8 @@
+       const canvas = $(`race-canvas-${player}`);
+       canvas.width = width;
+       canvas.height = height;
+-      canvas.style.setProperty('--board-ratio', `${width} / ${height}`);
+-    }
++    }
++    boardFootprints.refresh();
+     sound.reset();
+     sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
+     publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
+@@ -1093,6 +1098,27 @@
+     menuHint = 'Choose the primary action with South when everyone is ready.';
+     updateMenu();
+   }
++  function refreshBoardLayout() {
++    // Observer-capable hosts receive the actual arena content box. The fallback
++    // must also notice cue visibility/copy changes that can wrap above a board.
++    const layoutKey = JSON.stringify([
++      $('race-boards').hidden,
++      ...touchPads.map((pad) => pad.hidden),
++      document.body.dataset.textSize,
++      document.body.dataset.textFace,
++      ...(boardFootprints.observesResize
++        ? []
++        : [0, 1].flatMap((i) => [
++            $(`racer-encounter-${i}`).hidden,
++            $(`racer-encounter-title-${i}`).textContent,
++            $(`racer-encounter-instruction-${i}`).textContent,
++          ])),
++    ]);
++    if (layoutKey !== boardLayoutKey) {
++      boardLayoutKey = layoutKey;
++      boardFootprints.refresh();
++    }
++  }
+   function updateMenu() {
+     if (!match || disposed) return;
+     const running = match.status === 'running';
+@@ -1121,6 +1147,9 @@
+       focusTransition,
+       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+     });
++    // Reconcile deliberate layout transitions immediately, including browsers
++    // without ResizeObserver. Ordinary frames only compare cheap state values.
++    refreshBoardLayout();
+     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
+     const text = running
+       ? shell.controllerHint()
+@@ -1431,7 +1460,13 @@
+         instruction.textContent = '';
+         delete group.dataset.phase;
+       }
++    }
++    // Both cues must settle before fallback measurement and either board draw.
++    refreshBoardLayout();
++    for (let i = 0; i < 2; i++) {
++      const run = match.runs[i];
+       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
++        displayCSSWidth: boardFootprints.width(i),
+         textFace: displayPreferences.snapshot().textFace,
+         paused: match.status !== 'running',
+         reduced: displayPreferences.snapshot().effectiveReducedEffects,
+--- /dev/null
++++ b/game/test/board-footprint.test.mjs
+@@ -0,0 +1,163 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { createBoardFootprints, fitBoardRect } from '../couch/board-footprint.mjs';
++
++test('the whole 4:3 or 2:1 bitmap fits independently of its element slot', () => {
++  assert.deepEqual(fitBoardRect(600, 180, 768, 576), { width: 240, height: 180 });
++  assert.deepEqual(fitBoardRect(600, 180, 1152, 576), { width: 360, height: 180 });
++  assert.deepEqual(fitBoardRect(320, 300, 768, 576), { width: 320, height: 240 });
++  assert.deepEqual(fitBoardRect(240, 180, 1152, 576), { width: 240, height: 120 });
++  assert.deepEqual(fitBoardRect(601.5, 180.75, 768, 576), { width: 241, height: 180.75 });
++  for (const unavailable of [0, -1, NaN, Infinity, undefined]) {
++    assert.deepEqual(fitBoardRect(unavailable, 180, 768, 576), { width: 0, height: 0 });
++    assert.deepEqual(fitBoardRect(600, unavailable, 768, 576), { width: 0, height: 0 });
++    assert.deepEqual(fitBoardRect(600, 180, unavailable, 576), { width: 0, height: 0 });
++    assert.deepEqual(fitBoardRect(600, 180, 768, unavailable), { width: 0, height: 0 });
++  }
++});
++
++function fixture(observe = true) {
++  const window = new EventTarget(),
++    observers = [],
++    canvases = [768, 1152].map((width) => ({
++      width,
++      height: 576,
++      parentElement: { clientWidth: 600, clientHeight: 180 },
++      style: {},
++    }));
++  class ResizeObserver {
++    constructor(callback) {
++      this.callback = callback;
++      this.targets = [];
++      this.disconnects = 0;
++      observers.push(this);
++    }
++    observe(target) {
++      this.targets.push(target);
++    }
++    disconnect() {
++      this.disconnects++;
++    }
++    deliver(index, width, height) {
++      this.callback([{ target: canvases[index].parentElement, contentRect: { width, height } }]);
++    }
++  }
++  const owner = createBoardFootprints(canvases, {
++    window,
++    ResizeObserver: observe ? ResizeObserver : undefined,
++  });
++  const emit = (type, persisted = false) => {
++    const event = new Event(type);
++    Object.defineProperty(event, 'persisted', { value: persisted });
++    window.dispatchEvent(event);
++  };
++  return { window, canvases, observers, owner, emit };
++}
++
++test('one seat resizing never substitutes the other seat or changes bitmap geometry', () => {
++  const { canvases, observers, owner } = fixture();
++  const geometry = canvases.map(({ width, height }) => ({ width, height }));
++  assert.equal(owner.width(0), 240);
++  assert.equal(owner.width(1), 360);
++  observers[0].deliver(0, 300, 100);
++  assert.ok(Math.abs(owner.width(0) - 400 / 3) < 1e-10);
++  assert.equal(owner.width(1), 360);
++  assert.deepEqual(
++    canvases.map(({ width, height }) => ({ width, height })),
++    geometry,
++  );
++  assert.equal(canvases[1].style.width, '360px');
++  owner.dispose();
++});
++
++test('observer delivery does not read layout, duplicate writes or retain a hidden scale', () => {
++  const { canvases, observers, owner } = fixture();
++  let writes = 0;
++  canvases[0].style = new Proxy(canvases[0].style, {
++    set(target, key, value) {
++      writes++;
++      target[key] = value;
++      return true;
++    },
++  });
++  Object.defineProperty(canvases[0].parentElement, 'clientWidth', {
++    get() {
++      throw new Error('observer callback must consume its delivered content box');
++    },
++  });
++  observers[0].deliver(0, 600, 180);
++  assert.equal(writes, 0);
++  observers[0].deliver(0, 0, 0);
++  assert.equal(owner.width(0), undefined);
++  assert.equal(canvases[0].style.width, '0px');
++  observers[0].deliver(0, 600, 180);
++  assert.equal(owner.width(0), 240);
++  assert.equal(writes, 4);
++  owner.dispose();
++});
++
++test('cached-page restoration rejects old callbacks and measures again without resuming play', () => {
++  const { canvases, observers, owner, emit } = fixture();
++  const previous = observers[0];
++  assert.equal(owner.observesResize, true);
++  emit('pagehide', true);
++  assert.equal(owner.observesResize, false);
++  previous.deliver(0, 900, 500);
++  assert.equal(owner.width(0), 240);
++  canvases[0].parentElement.clientHeight = 120;
++  emit('pageshow', true);
++  assert.equal(owner.observesResize, true);
++  assert.equal(owner.width(0), 160);
++  previous.deliver(0, 900, 500);
++  assert.equal(owner.width(0), 160);
++  assert.equal(observers.length, 2);
++  observers[1].deliver(0, 300, 90);
++  assert.equal(owner.width(0), 120);
++  emit('pagehide');
++  assert.equal(owner.observesResize, false);
++  const styles = canvases.map((canvas) => ({ ...canvas.style }));
++  observers[1].deliver(0, 900, 500);
++  emit('pageshow');
++  emit('resize');
++  owner.refresh();
++  owner.dispose();
++  assert.equal(observers.length, 2);
++  assert.deepEqual(
++    canvases.map((canvas) => canvas.style),
++    styles,
++  );
++});
++
++test('fractional deliveries do not rewrite CSS values after browser serialization', () => {
++  const { canvases, observers, owner } = fixture();
++  let writes = 0;
++  canvases[0].style = new Proxy(
++    {},
++    {
++      set(target, key, value) {
++        writes++;
++        target[key] = `${Number.parseFloat(value).toFixed(3)}px`;
++        return true;
++      },
++    },
++  );
++  observers[0].deliver(0, 600, 100);
++  assert.equal(canvases[0].style.width, '133.333px');
++  const firstWrites = writes;
++  observers[0].deliver(0, 600, 100);
++  assert.equal(writes, firstWrites);
++  assert.equal(firstWrites, 2);
++  owner.dispose();
++});
++
++test('explicit geometry and resize reconciliation work without ResizeObserver', () => {
++  const { canvases, owner, emit } = fixture(false);
++  assert.equal(owner.observesResize, false);
++  canvases[0].width = 1152;
++  owner.refresh();
++  assert.equal(owner.width(0), 360);
++  canvases[1].parentElement.clientWidth = 250;
++  emit('resize');
++  assert.equal(owner.width(1), 250);
++  owner.dispose();
++});
+--- /dev/null
++++ b/game/test/couch-board-footprint-host.test.mjs
+@@ -0,0 +1,446 @@
++import test from 'node:test';
++import { readFile } from 'node:fs/promises';
++import assert from 'node:assert/strict';
++import { couchPage } from './helpers/couch-host.mjs';
++import { inspectImageDataUrl } from '../content.mjs';
++import { waitFor } from './helpers/wait-for.mjs';
++
++// Actual Couch entry, BoardPainter and simulation; finite DOM, image dimensions,
++// ResizeObserver and Canvas2D commands. This does not implement browser layout.
++function renderingBoundary({ resizeObserver = true } = {}) {
++  const frames = [],
++    observers = [],
++    contexts = new WeakMap(),
++    styleWrites = [];
++  let draws = 0;
++  class ResizeObserver {
++    constructor(callback) {
++      this.callback = callback;
++      this.targets = new Set();
++      observers.push(this);
++    }
++    observe(target) {
++      this.targets.add(target);
++    }
++    unobserve(target) {
++      this.targets.delete(target);
++    }
++    disconnect() {
++      this.targets.clear();
++      this.disconnected = true;
++    }
++  }
++  return {
++    frames,
++    observers,
++    ResizeObserver: resizeObserver ? ResizeObserver : undefined,
++    styleWrites,
++    observeCanvas(canvas) {
++      for (const key of ['width', 'height']) {
++        let value = canvas.style[key];
++        Object.defineProperty(canvas.style, key, {
++          configurable: true,
++          get: () => value,
++          set(next) {
++            styleWrites.push({ canvas, key, value: next });
++            value = next;
++          },
++        });
++      }
++    },
++    Image: class {
++      width = 1280;
++      height = 1280;
++      naturalWidth = 1280;
++      naturalHeight = 1280;
++      set src(value) {
++        this.source = value;
++        if (value.startsWith('data:')) {
++          const header = inspectImageDataUrl(value);
++          assert.equal(header.valid, true);
++          this.width = this.naturalWidth = header.width;
++          this.height = this.naturalHeight = header.height;
++        }
++        queueMicrotask(() => this.onload?.());
++      }
++      get src() {
++        return this.source;
++      }
++      async decode() {}
++      removeAttribute(name) {
++        assert.equal(name, 'src');
++      }
++    },
++    contextFor(canvas) {
++      if (contexts.has(canvas)) return contexts.get(canvas);
++      const values = {},
++        calls = [],
++        stack = [];
++      const context = new Proxy(
++        { canvas, calls },
++        {
++          get(target, key) {
++            if (key in target) return target[key];
++            if (key in values) return values[key];
++            if (key === 'measureText') return (text) => ({ width: String(text).length * 8 });
++            if (key === 'createLinearGradient' || key === 'createRadialGradient')
++              return () => ({ addColorStop() {} });
++            return (...args) => {
++              if (key === 'clearRect') calls.length = 0;
++              calls.push({ op: key, args });
++              if (key === 'save') stack.push({ ...values });
++              if (key === 'restore') Object.assign(values, stack.pop());
++            };
++          },
++          set(_target, key, value) {
++            values[key] = value;
++            return true;
++          },
++        },
++      );
++      contexts.set(canvas, context);
++      return context;
++    },
++    onDraw(frame) {
++      frames[frame.seat] = frame;
++      draws++;
++    },
++    drawCount: () => draws,
++    notify(target, width, height) {
++      target.clientWidth = width;
++      target.clientHeight = height;
++      target._rect = { x: 0, y: 0, width, height };
++      for (const observer of observers)
++        if (observer.targets.has(target))
++          observer.callback([{ target, contentRect: { width, height } }]);
++    },
++  };
++}
++
++async function action(page, id, type = 'click') {
++  const element = page.$(id),
++    handler = element[`on${type}`];
++  let operation;
++  element[`on${type}`] = (event) => (operation = handler?.(event));
++  try {
++    element.emit(type);
++    await operation;
++  } finally {
++    element[`on${type}`] = handler;
++  }
++  page.frame(0);
++}
++
++async function fixture(t, { wide = false, campaign, resizeObserver = true, onMount } = {}) {
++  const rendering = renderingBoundary({ resizeObserver }),
++    boxes = [
++      { width: 600, height: 180 },
++      { width: 300, height: 400 },
++    ];
++  const page = await couchPage(t, {
++    rendering,
++    campaign,
++    initialLevel: campaign ? campaign.levels[0].id : wide ? null : 'signal-01',
++    fetchResponse(path) {
++      if (!wide && path === '../content/packs/fpv-arcade-r5.json') return { ok: false };
++      if (path instanceof URL && path.pathname.endsWith('/enemy-presentations.json'))
++        return { ok: false };
++    },
++    beforeImport({ document, window }) {
++      window.getComputedStyle = document.defaultView.getComputedStyle = (element) => ({
++        display: element.hidden ? 'none' : 'block',
++        visibility: 'visible',
++        paddingLeft: '0px',
++        paddingRight: '0px',
++        paddingTop: '0px',
++        paddingBottom: '0px',
++        boxSizing: 'content-box',
++        width: `${element.clientWidth || 0}px`,
++        height: `${element.clientHeight || 0}px`,
++      });
++      for (const [seat, box] of boxes.entries()) {
++        const canvas = document.getElementById(`race-canvas-${seat}`),
++          arena = canvas.parentElement;
++        rendering.observeCanvas(canvas);
++        Object.assign(arena, { clientWidth: box.width, clientHeight: box.height });
++        arena._rect = { x: 0, y: 0, ...box };
++        // Deliberately misleading old canvas box width. Only the real host's
++        // fitted displayCSSWidth handoff may correct the painter's scale.
++        canvas.clientWidth = box.width;
++        canvas.clientHeight = box.height;
++        canvas._rect = { x: 0, y: 0, ...box };
++      }
++      onMount?.({ document, window, rendering });
++    },
++  });
++  await waitFor(() => !page.$('race-start').disabled, { message: 'Actual map must prepare.' });
++  await action(page, 'race-start');
++  if (resizeObserver)
++    for (const [seat, box] of boxes.entries())
++      rendering.notify(page.$(`race-canvas-${seat}`).parentElement, box.width, box.height);
++  page.frame(0);
++  return { page, rendering, boxes };
++}
++
++function firstEnemySpan(frame, visibleWidth) {
++  const enemy = frame.run.enemies[0],
++    calls = frame.context.calls;
++  const start = calls.findIndex(
++    (call) =>
++      call.op === 'translate' &&
++      call.args[0] === Math.round(enemy.x * 16) &&
++      call.args[1] === Math.round(enemy.y * 16),
++  );
++  assert.ok(start >= 0, 'The actual painter must draw the simulation-owned enemy.');
++  const scale = calls.slice(start).filter((call) => call.op === 'scale')[1];
++  assert.ok(scale, 'Real shared enemy silhouette sizing must be exercised.');
++  return (scale.args[0] * 28 * visibleWidth) / (frame.run.width * 16);
++}
++
++for (const wide of [false, true])
++  test(`actual Versus ${wide ? '2:1' : '4:3'} boards fit each seat and render at the visible bitmap scale`, async (t) => {
++    const { page, rendering, boxes } = await fixture(t, { wide }),
++      checkpoint = page.checkpoint();
++    assert.deepEqual(
++      page.renders.map((run) => run.width / run.height),
++      [wide ? 2 : 4 / 3, wide ? 2 : 4 / 3],
++    );
++    for (const [seat, box] of boxes.entries()) {
++      const frame = rendering.frames[seat],
++        canvas = page.$(`race-canvas-${seat}`),
++        width = Math.min(box.width, (box.height * frame.run.width) / frame.run.height);
++      assert.equal(canvas.clientWidth, box.width);
++      assert.ok(frame.context.calls.some((call) => call.op === 'drawImage'));
++      assert.ok(
++        firstEnemySpan(frame, width) >= 16 - 1e-9,
++        'Height-constrained actors retain their real CSS minimum.',
++      );
++      assert.equal(
++        frame.options.displayCSSWidth,
++        width,
++        'Host hands off the fitted bitmap width, not the element width.',
++      );
++      assert.equal(parseFloat(canvas.style.width), width);
++      assert.equal(parseFloat(canvas.style.height), (width * frame.run.height) / frame.run.width);
++    }
++    page.frames(2, 0);
++    assert.deepEqual(
++      page.checkpoint(),
++      checkpoint,
++      'Zero-time presentation measurements do not advance the match.',
++    );
++  });
++
++test('actual Versus resize follows independent touch pads and Large text without replacing either run', async (t) => {
++  const { page, rendering } = await fixture(t, { wide: true }),
++    runs = [...page.renders],
++    checkpoint = page.checkpoint(),
++    pictures = page.drawOptions.map((options) => options.backdrop),
++    arenas = [0, 1].map((seat) => page.$(`race-canvas-${seat}`).parentElement);
++  await action(page, 'race-pause');
++  await action(page, 'race-options');
++  page.$('race-touch-0').value = 'always';
++  await action(page, 'race-touch-0', 'change');
++  page.$('race-touch-1').value = 'off';
++  await action(page, 'race-touch-1', 'change');
++  page.$('race-text-size').value = 'large';
++  await action(page, 'race-text-size', 'change');
++  assert.equal(page.doc.body.dataset.textSize, 'large');
++  await action(page, 'race-options-back');
++  await action(page, 'race-start');
++  assert.deepEqual(
++    page.doc.querySelectorAll('.race-pad').map((pad) => pad.hidden),
++    [false, true],
++  );
++
++  // Native layout is represented by independent observed content boxes, never
++  // calculated by this fake DOM. Seat 0 loses height to its visible touch pad.
++  rendering.notify(arenas[0], 600, 160);
++  rendering.notify(arenas[1], 300, 220);
++  page.frame(0);
++  assert.deepEqual(
++    page.drawOptions.map((options) => options.displayCSSWidth),
++    [320, 300],
++  );
++  for (const seat of [0, 1]) {
++    assert.equal(page.renders[seat], runs[seat]);
++    assert.equal(page.drawOptions[seat].backdrop, pictures[seat]);
++    assert.ok(firstEnemySpan(rendering.frames[seat], [320, 300][seat]) >= 16 - 1e-9);
++  }
++  const writes = rendering.styleWrites.length;
++  rendering.notify(arenas[0], 600, 160);
++  rendering.notify(arenas[1], 300, 220);
++  page.frames(3, 0);
++  assert.equal(
++    rendering.styleWrites.length,
++    writes,
++    'Equal deliveries/ordinary frames do not rewrite canvas sizes.',
++  );
++
++  // A separate existing limitation: below 288px on a 72-column board, the
++  // shared 64-pixel logical body cap wins over the desired 16 CSS px minimum.
++  // This regression records the correct handoff without claiming that the
++  // footprint correction also qualifies this narrower actor-readability case.
++  rendering.notify(arenas[0], 600, 120);
++  page.frame(0);
++  assert.equal(page.drawOptions[0].displayCSSWidth, 240);
++  const narrowSpan = firstEnemySpan(rendering.frames[0], 240);
++  assert.ok(
++    narrowSpan > 13.3 && narrowSpan < 13.4,
++    'The existing ~13.33px cap remains explicit follow-on work.',
++  );
++
++  // Rotation crosses the constraint for only one seat; both painters retain
++  // their original runs, picture bindings and independently fitted scale.
++  rendering.notify(arenas[0], 280, 400);
++  page.win.emit('resize');
++  page.frame(0);
++  assert.deepEqual(
++    page.drawOptions.map((options) => options.displayCSSWidth),
++    [280, 300],
++  );
++  assert.deepEqual(page.checkpoint(), checkpoint);
++});
++
++test('actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal', async (t) => {
++  const { page, rendering } = await fixture(t),
++    arenas = [0, 1].map((seat) => page.$(`race-canvas-${seat}`).parentElement),
++    runs = [...page.renders];
++  rendering.notify(arenas[0], 0, 0);
++  rendering.notify(arenas[1], 300, 0);
++  page.frame(0);
++  for (const seat of [0, 1]) {
++    assert.equal(
++      page.drawOptions[seat].displayCSSWidth,
++      undefined,
++      'Unavailable is not a zero/NaN renderer scale.',
++    );
++    assert.equal(page.$(`race-canvas-${seat}`).style.width, '0px');
++    assert.equal(page.$(`race-canvas-${seat}`).style.height, '0px');
++  }
++
++  page.doc.hidden = true;
++  page.doc.emit('visibilitychange');
++  page.win.emit('pagehide', { persisted: true });
++  const previous = rendering.observers.at(-1),
++    writes = rendering.styleWrites.length,
++    checkpoint = page.checkpoint();
++  assert.ok(previous.disconnected, 'A cached page retires its observer ownership.');
++  previous.callback([{ target: arenas[0], contentRect: { width: 999, height: 999 } }]);
++  assert.equal(rendering.styleWrites.length, writes);
++  page.doc.hidden = false;
++  page.win.emit('pageshow', { persisted: true });
++  assert.notEqual(rendering.observers.at(-1), previous);
++  await action(page, 'race-start');
++  rendering.notify(arenas[0], 300, 400);
++  rendering.notify(arenas[1], 600, 180);
++  page.frame(0);
++  assert.deepEqual(
++    page.drawOptions.map((options) => options.displayCSSWidth),
++    [300, 240],
++  );
++  assert.deepEqual(page.renders, runs);
++  assert.deepEqual(
++    page.checkpoint(),
++    checkpoint,
++    'Restoring the view does not simulate elapsed background time.',
++  );
++
++  const current = rendering.observers.at(-1);
++  page.win.emit('pagehide', { persisted: false });
++  assert.equal(page.pendingFrames(), 0, 'Terminal departure cancels the actual host RAF.');
++  assert.ok(current.disconnected);
++  const finalWrites = rendering.styleWrites.length,
++    finalDraws = rendering.drawCount();
++  for (const observer of [previous, current])
++    observer.callback([{ target: arenas[0], contentRect: { width: 500, height: 500 } }]);
++  page.win.emit('resize');
++  page.win.emit('pageshow', { persisted: true });
++  page.frames(3, 0);
++  assert.equal(rendering.styleWrites.length, finalWrites);
++  assert.equal(rendering.drawCount(), finalDraws);
++  assert.equal(page.pendingFrames(), 0);
++});
++
++test('actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver', async (t) => {
++  const pack = JSON.parse(
++    await readFile(new URL('../content/packs/sentinel-relay.json', import.meta.url), 'utf8'),
++  );
++  let geometryReads = 0;
++  const { page, rendering } = await fixture(t, {
++    campaign: pack.campaigns[0],
++    resizeObserver: false,
++    onMount({ document }) {
++      for (const seat of [0, 1]) {
++        const arena = document.getElementById(`race-canvas-${seat}`).parentElement;
++        arena.clientWidth = 600;
++        // A finite responsive layout boundary follows the real DOM cue state.
++        // No observer, resize event, or direct run/encounter mutation causes it.
++        Object.defineProperty(arena, 'clientHeight', {
++          configurable: true,
++          get() {
++            geometryReads++;
++            return document.getElementById(`racer-encounter-${seat}`).dataset.phase === 'warning'
++              ? [225, 234][seat]
++              : 300;
++          },
++        });
++      }
++    },
++  });
++  assert.equal(rendering.observers.length, 0);
++  assert.deepEqual(
++    page.drawOptions.map((options) => options.displayCSSWidth),
++    [400, 400],
++  );
++  const runs = [...page.renders],
++    pictures = page.drawOptions.map((options) => options.backdrop),
++    initialCopy = [0, 1].map((seat) => page.$(`racer-encounter-instruction-${seat}`).textContent),
++    transitionPaints = [],
++    onDraw = rendering.onDraw;
++  rendering.onDraw = (frame) => {
++    onDraw(frame);
++    if (frame.run.tick === 241)
++      transitionPaints.push({
++        seat: frame.seat,
++        width: frame.options.displayCSSWidth,
++        phases: [0, 1].map((seat) => page.$(`racer-encounter-${seat}`).dataset.phase),
++      });
++  };
++  while (page.renders[0].tick < 241) page.frame(1000 / 120);
++  assert.deepEqual(
++    [0, 1].map((seat) => page.$(`racer-encounter-${seat}`).dataset.phase),
++    ['warning', 'warning'],
++  );
++  assert.notDeepEqual(
++    [0, 1].map((seat) => page.$(`racer-encounter-instruction-${seat}`).textContent),
++    initialCopy,
++  );
++  assert.deepEqual(
++    page.drawOptions.map((options) => options.displayCSSWidth),
++    [300, 312],
++    'Changed encounter hints refresh both fitted widths without a window resize.',
++  );
++  assert.deepEqual(
++    transitionPaints,
++    [
++      { seat: 0, width: 300, phases: ['warning', 'warning'] },
++      { seat: 1, width: 312, phases: ['warning', 'warning'] },
++    ],
++    'Both HUDs settle before either real BoardPainter consumes the new scale.',
++  );
++  for (const seat of [0, 1]) {
++    assert.equal(page.renders[seat], runs[seat]);
++    assert.equal(page.drawOptions[seat].backdrop, pictures[seat]);
++    assert.ok(firstEnemySpan(rendering.frames[seat], [300, 312][seat]) >= 16 - 1e-9);
++  }
++  const checkpoint = page.checkpoint(),
++    reads = geometryReads;
++  page.frames(3, 0);
++  assert.equal(
++    geometryReads,
++    reads,
++    'An unchanged fallback layout key does not read geometry on every frame.',
++  );
++  assert.deepEqual(page.checkpoint(), checkpoint);
++});
+--- a/game/test/helpers/couch-host.mjs
++++ b/game/test/helpers/couch-host.mjs
+@@ -70,11 +70,20 @@
+     URLImpl = globalThis.URL,
+     expectBootFailure = false,
+     audio,
++    rendering,
+   } = {},
+ ) {
+   const doc = new Document(),
+     win = new Events();
+   doc.parentNode = win;
++  if (rendering) {
++    const createElement = doc.createElement.bind(doc);
++    doc.createElement = (tag) => {
++      const element = createElement(tag);
++      if (tag === 'canvas') element.getContext = () => rendering.contextFor(element);
++      return element;
++    };
++  }
+   mountCouch(doc, html);
+   if (audio?.createElement) {
+     const createElement = doc.createElement.bind(doc);
+@@ -110,6 +119,7 @@
+     URL: URLImpl,
+     Image:
+       ImageClass ||
++      rendering?.Image ||
+       class {
+         constructor() {
+           images.push(this);
+@@ -155,6 +165,7 @@
+       rafs.delete(id);
+     },
+   };
++  if (rendering?.ResizeObserver) globals.ResizeObserver = rendering.ResizeObserver;
+   if (audio?.Context) globals.AudioContext = audio.Context;
+   for (const [key, value] of Object.entries(globals)) {
+     original.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+@@ -169,15 +180,22 @@
+     'draw',
+   ]) {
+     methods.set(key, BoardPainter.prototype[key]);
+-    BoardPainter.prototype[key] =
+-      key === 'draw'
+-        ? (context, run, dt, options) => {
+-            renders[Number(context.id.slice(-1))] = run;
+-            drawOptions[Number(context.id.slice(-1))] = options;
+-          }
+-        : key === 'effectsFor'
+-          ? (events) => observedEvents.push(...events.map((event) => ({ ...event })))
+-          : () => {};
++    if (key === 'draw') {
++      BoardPainter.prototype[key] = function (context, run, dt, options) {
++        const seat = Number((context.canvas?.id || context.id).slice(-1));
++        renders[seat] = run;
++        drawOptions[seat] = options;
++        if (rendering) {
++          methods.get('draw').call(this, context, run, dt, options);
++          rendering.onDraw?.({ painter: this, context, run, dt, options, seat });
++        }
++      };
++    } else if (key === 'effectsFor') {
++      BoardPainter.prototype[key] = function (events, run) {
++        observedEvents.push(...events.map((event) => ({ ...event })));
++        if (rendering) methods.get(key).call(this, events, run);
++      };
++    } else if (!rendering) BoardPainter.prototype[key] = () => {};
+   }
+   t.after(() => {
+     win.emit('pagehide', { persisted: false });
+@@ -252,6 +270,7 @@
+     join,
+     key,
+     readCount: () => reads,
++    pendingFrames: () => rafs.size,
+     pads: () => pads,
+     setPads: (next) => {
+       pads = next;
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "revealline",
+-  "version": "0.61.5",
++  "version": "0.61.6",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "revealline",
+-      "version": "0.61.5",
++      "version": "0.61.6",
+       "dependencies": {
+         "phaser": "4.2.1"
+       },
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "revealline",
+-  "version": "0.61.5",
++  "version": "0.61.6",
+   "private": true,
+   "type": "module",
+   "description": "Configurable territory-capture game and authoring playground",

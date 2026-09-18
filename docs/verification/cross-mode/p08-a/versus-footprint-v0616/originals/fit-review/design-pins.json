@@ -1,0 +1,42 @@
+{
+  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "result": "Design guidance complete; implementation not yet reviewed.",
+  "scope": "Read-only source; no tests, browser, builds, source/index/version or remote changes.",
+  "sourcePins": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 55967,
+      "sha256": "fdbf76d0ea5998102111ab72b7514b04072ac856ba919a9c1bb852976a4da6a6"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "bytes": 9383,
+      "sha256": "b1773c41a8fccef89dde3bc9db40a8ead86d345576c5d88ed73681d8b77ba9a8"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 17277,
+      "sha256": "70d3f0e30a6fd8b0565a9072d3ceb17c8d7df3590e33c05727e9070902e22905"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 10172,
+      "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "bytes": 8520,
+      "sha256": "e08e9814ba61d09977481d475f392b93ae057f51af31e4d2234dbdf274f4c094"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 34321,
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132"
+    }
+  ],
+  "note": {
+    "path": "design-note.md",
+    "bytes": 7786,
+    "sha256": "d9add37643f0d9e19d603b37543975ea0202ceea23fcd821aeefdfe10ceea726"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/board-footprint.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 0.12071245799961616,
+  "inputs": {
+    "game/couch/board-footprint.mjs": "33b1f325d7bbe97c59704dc525c6a0391bc330d83946b60fb765ccb0a1cb8a0f",
+    "game/couch/couch.mjs": "54004fde57c8ca5f0d68af25ebefcb5f2c763524ffab1409f067335d246ede2c",
+    "game/test/board-footprint.test.mjs": "fb7001f5b2b94f1a2eb0dc85e3b2fcded77895964e23b39d42288a5b7d4c4fe3"
+  }
+}
