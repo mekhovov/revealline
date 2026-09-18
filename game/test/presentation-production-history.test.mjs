@@ -430,7 +430,7 @@ test('P03 screen and P08-A motion reviews bind only the inspected current inputs
     assert.ok(
       asset.quality.evidence.some((entry) =>
         entry.includes(
-          slot.group === 'motion' ? 'Scoped P08-A source review' : 'Scoped P03 source review',
+          slot.group === 'motion' ? 'Scoped P08-A source review' : 'Scoped P03 Pause source review',
         ),
       ),
       slot.id,
