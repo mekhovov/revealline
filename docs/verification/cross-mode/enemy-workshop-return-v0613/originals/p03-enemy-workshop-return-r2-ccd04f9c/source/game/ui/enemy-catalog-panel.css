@@ -1,0 +1,79 @@
+.enemy-catalog-dialog {
+  box-sizing: border-box;
+  width: min(760px, 96vw);
+  max-height: 94dvh;
+  padding: 20px;
+  border: 2px solid #81c6d2;
+  background: #101526;
+  color: #e5e9e2;
+  font: 18px/1.5 var(--pixel-font, monospace);
+  color-scheme: dark;
+  overflow: auto;
+}
+.enemy-catalog-dialog::backdrop {
+  background: #020510d9;
+}
+.enemy-catalog-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.enemy-catalog-fields label {
+  display: grid;
+  gap: 4px;
+}
+.enemy-catalog-dialog select,
+.enemy-catalog-dialog button,
+.enemy-catalog-dialog input {
+  font: inherit;
+  min-height: 44px;
+}
+.enemy-catalog-dialog button,
+.enemy-catalog-dialog select {
+  color: inherit;
+  background: #1a263b;
+  border: 1px solid #516680;
+  padding: 8px;
+}
+.enemy-catalog-dialog :focus-visible,
+.enemy-catalog-dialog .controller-focus {
+  outline: 3px solid #f5cc75;
+  outline-offset: 2px;
+}
+.enemy-catalog-dialog button:disabled {
+  opacity: 0.5;
+}
+.enemy-catalog-dialog canvas {
+  display: block;
+  width: 192px;
+  height: 128px;
+  max-width: 100%;
+  image-rendering: pixelated;
+  margin: 12px auto;
+  border: 1px solid #34465b;
+}
+.enemy-catalog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.enemy-catalog-actions input {
+  width: 100%;
+}
+#enemy-catalog-status {
+  min-height: 3em;
+  color: #f5cc75;
+}
+@media (max-width: 480px) {
+  .enemy-catalog-fields {
+    grid-template-columns: 1fr;
+  }
+  .enemy-catalog-dialog {
+    padding: 12px;
+  }
+}
+
+#enemy-catalog-details {
+  max-height: 14rem;
+  overflow: auto;
+}
