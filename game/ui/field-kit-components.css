@@ -279,6 +279,49 @@ body.field-kit.game-shell,
   accent-color: var(--fk-amber);
 }
 
+/* Keep the native chooser; its inner button needs an explicit colour pair. */
+.field-kit input[type='file']::file-selector-button {
+  box-sizing: border-box;
+  min-block-size: var(--fk-target-size);
+  min-inline-size: var(--fk-target-size);
+  max-inline-size: 100%;
+  margin: 0;
+  margin-inline-end: var(--fk-space-1);
+  padding: var(--fk-space-2);
+  border: var(--fk-border-width) solid var(--fk-control-line);
+  border-radius: var(--fk-corner);
+  color: var(--fk-text);
+  background: var(--fk-panel-raised);
+  font: inherit;
+  white-space: normal;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.field-kit
+  input[type='file']:not(:disabled):not([aria-disabled='true']):hover::file-selector-button {
+  border-color: var(--fk-cyan);
+}
+
+.field-kit
+  input[type='file']:not(:disabled):not([aria-disabled='true']):active::file-selector-button {
+  color: var(--fk-on-accent);
+  background: var(--fk-cyan);
+  border-color: var(--fk-cyan);
+  box-shadow: inset 0 3px 0 rgb(7 11 18 / 30%);
+}
+
+/* :disabled includes an input disabled by its owning fieldset. */
+.field-kit input[type='file']:is(:disabled, [aria-disabled='true'])::file-selector-button {
+  color: var(--fk-muted);
+  background: var(--fk-panel);
+  border-color: var(--fk-line);
+  border-style: dashed;
+  box-shadow: none;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
 .field-kit :is(input[type='checkbox'], input[type='radio']) {
   min-block-size: auto;
   inline-size: 20px;

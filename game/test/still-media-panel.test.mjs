@@ -6,7 +6,7 @@ import { createPresentationResolver } from '../media-presentation.mjs';
 import { createMediaIdentityCatalog } from '../media-library.mjs';
 import { attachStillMediaPanel } from '../ui/still-media-panel.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
-import { Document } from './helpers/couch-dom.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { mediaFixture, pngBytes, deferred } from './helpers/media-fixtures.mjs';
@@ -280,3 +280,218 @@ test('file picker cancellation preserves the Still Media draft, focus and pendin
   assert.equal(escape.defaultPrevented, true);
   assert.equal(h.panel.dialog.open, false);
 });
+
+// Model Chromium's observed disabled-control blur only at this test boundary.
+// The shared minimal DOM deliberately makes no native focus/layout claim.
+function nativeDisabled(element, onEnable = () => {}) {
+  let disabled = element.disabled;
+  Object.defineProperty(element, 'disabled', {
+    configurable: true,
+    get: () => disabled,
+    set(value) {
+      const was = disabled;
+      disabled = value;
+      if (value && element.ownerDocument.activeElement === element) {
+        element.blur();
+        element.emit('blur', { bubbles: false, relatedTarget: null });
+      }
+      if (was && !value) onEnable();
+    },
+  });
+}
+function focusWindow(h) {
+  h.doc.defaultView = Object.assign(new Events(), h.doc.defaultView);
+  return h.doc.defaultView;
+}
+function listenerCount(h) {
+  return [h.doc, h.doc.defaultView].reduce(
+    (count, node) =>
+      count +
+      [...node.listeners.values(), ...node.captureListeners.values()].reduce(
+        (sum, listeners) => sum + listeners.size,
+        0,
+      ),
+    0,
+  );
+}
+async function pendingPreview(t, action, { fail = false, onEnable } = {}) {
+  let gate = null;
+  const entered = deferred();
+  const h = await setup(t, {
+    show: () => {
+      if (!gate) return true;
+      entered.resolve();
+      return gate.promise;
+    },
+  });
+  h.choose();
+  await h.$('preview').onclick();
+  await h.$('save').onclick();
+  const before = await h.store.read();
+  const original = Buffer.from(await before.assets[0].blob.arrayBuffer());
+  const win = focusWindow(h);
+  const listenersBefore = listenerCount(h);
+  const opener = h.$(action);
+  nativeDisabled(opener, () => onEnable?.(h));
+  opener.focus();
+  gate = deferred();
+  t.after(() => gate.resolve(true));
+  const pending = opener.onclick();
+  await entered.promise;
+  assert.equal(opener.disabled, true);
+  assert.equal(h.doc.activeElement, h.doc.body, 'Native disable drops initiating focus');
+  return {
+    h,
+    win,
+    opener,
+    listenersBefore,
+    async complete() {
+      if (fail) gate.reject(new Error('Picture decoder refused the preview'));
+      else gate.resolve(true);
+      const result = await pending;
+      const after = await h.store.read();
+      assert.equal(after.generation, before.generation, 'Preview never writes local media');
+      assert.deepEqual(after.document, before.document);
+      assert.deepEqual(Buffer.from(await after.assets[0].blob.arrayBuffer()), original);
+      return result;
+    },
+  };
+}
+for (const action of ['preview', 'show-saved', 'show-authored']) {
+  for (const fail of [false, true]) {
+    test(`${action} ${fail ? 'failure' : 'completion'} restores its initiating control after native disabled blur`, async (t) => {
+      const { h, opener, complete, listenersBefore } = await pendingPreview(t, action, { fail });
+      assert.equal(await complete(), !fail);
+      assert.equal(opener.disabled, false);
+      assert.equal(h.doc.activeElement, opener, 'Return to the exact Preview action, never Save');
+      assert.equal(h.panel.dialog.open, true);
+      assert.equal(
+        listenerCount(h),
+        listenersBefore,
+        'Finished operation releases focus listeners',
+      );
+      if (fail) assert.match(h.$('status').textContent, /Picture decoder refused/);
+      else if (action !== 'show-authored') assert.equal(h.$('save').disabled, false);
+    });
+  }
+}
+test('chosen preview validation failure restores its opener without publishing a draft', async (t) => {
+  const h = await setup(t);
+  focusWindow(h);
+  h.choose();
+  h.$('description').value = '';
+  const opener = h.$('preview');
+  nativeDisabled(opener);
+  opener.focus();
+  const pending = opener.onclick();
+  assert.equal(h.doc.activeElement, h.doc.body);
+  assert.equal(await pending, false);
+  assert.equal(h.doc.activeElement, opener);
+  assert.equal(h.panel.snapshot().hasDraft, false);
+  assert.equal((await h.store.read()).generation, 0);
+  assert.match(h.$('status').textContent, /Add a picture description/);
+});
+for (const decision of [
+  'focus-away',
+  'body-key',
+  'body-pointer',
+  'window-blur',
+  'hidden',
+  'pagehide',
+  'new-dialog',
+]) {
+  test(`preview completion respects ${decision} even when focus returns to BODY`, async (t) => {
+    const { h, win, complete, listenersBefore } = await pendingPreview(t, 'show-authored');
+    if (decision === 'focus-away') {
+      h.$('close').focus();
+      h.$('close').blur();
+    } else if (decision === 'body-key') h.doc.body.emit('keydown', { key: 'Tab', code: 'Tab' });
+    else if (decision === 'body-pointer') h.doc.body.emit('pointerdown', { button: 0 });
+    else if (decision === 'window-blur') {
+      win.emit('blur');
+      win.emit('focus');
+    } else if (decision === 'hidden') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+      h.doc.hidden = false;
+      h.doc.emit('visibilitychange');
+    } else if (decision === 'pagehide') win.emit('pagehide', { persisted: true });
+    else {
+      const dialog = h.doc.createElement('dialog');
+      h.doc.body.append(dialog);
+      // SoloElement omits native beforetoggle; publish that boundary explicitly.
+      dialog.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
+      dialog.showModal();
+      dialog.close();
+    }
+    assert.equal(listenerCount(h), listenersBefore, 'Newer intent retires listeners promptly');
+    assert.equal(await complete(), true);
+    assert.equal(h.doc.activeElement, h.doc.body, 'Completion does not resurrect retired focus');
+  });
+}
+test('programmatic preview does not capture an unrelated focused action', async (t) => {
+  const h = await setup(t);
+  focusWindow(h);
+  h.choose();
+  h.$('close').focus();
+  const before = listenerCount(h);
+  assert.equal(await h.$('preview').onclick(), true);
+  assert.equal(h.doc.activeElement, h.$('close'));
+  assert.equal(listenerCount(h), before);
+});
+for (const stop of ['cancel', 'invalidate', 'close', 'dispose']) {
+  test(`${stop} retires a preview focus lease before its decoder settles`, async (t) => {
+    const { h, complete, listenersBefore, opener } = await pendingPreview(t, 'show-authored');
+    if (stop === 'cancel') h.$('cancel').onclick();
+    else if (stop === 'invalidate') h.panel.invalidateContext();
+    else if (stop === 'close') h.panel.close();
+    else h.panel.dispose();
+    assert.equal(
+      listenerCount(h),
+      listenersBefore,
+      'Abort removes ownership listeners immediately',
+    );
+    const acceptedFocus = h.doc.activeElement;
+    assert.equal(await complete(), false);
+    assert.equal(h.doc.activeElement, acceptedFocus);
+    assert.notEqual(h.doc.activeElement, opener);
+  });
+}
+test('a cancelled preview cannot steal focus from the next accepted preview', async (t) => {
+  const { h, complete, opener } = await pendingPreview(t, 'show-authored');
+  h.$('cancel').onclick();
+  await h.$('reload').onclick();
+  h.$('show-saved').focus();
+  const next = h.$('show-saved').onclick();
+  assert.equal(await complete(), false);
+  assert.equal(await next, true);
+  assert.equal(h.doc.activeElement, h.$('show-saved'));
+  assert.notEqual(h.doc.activeElement, opener);
+});
+test('close and reopen does not revive the earlier preview focus owner', async (t) => {
+  const { h, complete, opener } = await pendingPreview(t, 'show-authored');
+  h.panel.close();
+  await h.panel.open();
+  const acceptedFocus = h.doc.activeElement;
+  assert.equal(await complete(), false);
+  assert.equal(h.doc.activeElement, acceptedFocus);
+  assert.notEqual(h.doc.activeElement, opener);
+});
+for (const reentry of ['focus', 'invalidate']) {
+  test(`preview final enabling ${reentry} takes precedence over old focus`, async (t) => {
+    let handled = false;
+    const { h, complete, opener } = await pendingPreview(t, 'show-authored', {
+      onEnable(page) {
+        if (handled) return;
+        handled = true;
+        if (reentry === 'focus') page.$('close').focus();
+        else page.panel.invalidateContext();
+      },
+    });
+    await complete();
+    assert.equal(handled, true);
+    assert.notEqual(h.doc.activeElement, opener);
+    if (reentry === 'focus') assert.equal(h.doc.activeElement, h.$('close'));
+    else assert.equal(h.panel.snapshot().ready, false);
+  });
+}

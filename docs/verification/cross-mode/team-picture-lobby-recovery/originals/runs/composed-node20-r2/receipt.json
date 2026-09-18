@@ -1,0 +1,59 @@
+{
+  "base": "d2455ebfa444a8692d2694790afa6e4199af64e0",
+  "sourceScope": "Uncommitted composed Team source; not a release gate",
+  "label": "composed-node20-r2",
+  "runtime": "v20.19.5",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-actor-layout.test.mjs",
+    "game/test/coop-actor-presentation.test.mjs",
+    "game/test/coop-balanced-routes.test.mjs",
+    "game/test/coop-display-reflow.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/coop-lobby-focus.test.mjs",
+    "game/test/coop-lobby-preview.test.mjs",
+    "game/test/coop-picture-bindings.test.mjs",
+    "game/test/coop-picture-host.test.mjs",
+    "game/test/coop-picture-recovery-focus.test.mjs",
+    "game/test/coop-presentation.test.mjs",
+    "game/test/coop-shared-settings.test.mjs",
+    "game/test/coop-victory-picture.test.mjs",
+    "game/test/coop-view-presentation.test.mjs",
+    "game/test/coop-won-terminal-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs",
+    "game/test/couch-markup.test.mjs",
+    "game/test/couch-reading.test.mjs",
+    "game/test/display-preferences-host.test.mjs",
+    "game/test/menu-style-host.test.mjs",
+    "game/test/settings-assists-host.test.mjs",
+    "game/test/settings-restoration-host.test.mjs",
+    "game/test/shared-settings-reading.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245",
+  "startedAt": "2026-09-18T01:03:56.007322+00:00",
+  "elapsedSeconds": 114.92,
+  "exitCode": 0,
+  "stoppedByGuard": null,
+  "counts": {
+    "tests": 373,
+    "pass": 373,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "inputsUnchanged": true,
+  "inputCount": 290,
+  "inputBytes": 16572322,
+  "stdout": {
+    "bytes": 86763,
+    "sha256": "0a2c4b570eb03285e5a9ccadb8401ea0b8bba94b8388d7af0822a041c0292943"
+  },
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

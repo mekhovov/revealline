@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-17T23:28:23.358487+00:00",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "candidatePatchSha256": "5e848f71d5217f3775e7407bf597dac9a368e04d7e6dbbdd78167c981abd267b",
+  "url": "http://127.0.0.1:60385/game/couch/relay-rescue.html",
+  "status": "NATIVE_PARTIAL_PLAY_NO_WIN",
+  "attempt": "One additional ordinary Gentle/Fullteamwork attempt after prior failedopening, via confirmedRetry. No Boost or private state injection. Timed keyboard actions and normal Pause/Resume used.",
+  "steps": [
+    {
+      "action": "Fresh neutral120ms,W/Up710ms,D/Left1770ms,P2EnterSupport,2800ms,Pause",
+      "result": "2.9%,5reserves,0:05,JointCut; bothsafe"
+    },
+    {
+      "action": "Resume120ms,A/Right1120ms,S/Down2870ms,Pause",
+      "result": "21.4%,5reserves,0:09; bothsafe"
+    },
+    {
+      "action": "Resume120ms,W/Up1510ms,D/Left5850ms,Pause",
+      "result": "48.7%,5reserves,0:17; bothsafe, lowerartworkvisible"
+    },
+    {
+      "action": "Safe perimeter ascent then additional uppercut; Q/EnterSupport",
+      "result": "48.7%,5reserves,0:24; Skyline down; Sunflowerlineexposed"
+    },
+    {
+      "action": "Sunflower turns toward safe rail to bank",
+      "result": "Bothcraftrecover;48.7%,4reserves,0:26; attemptpaused"
+    }
+  ],
+  "meaning": "Shows real partialreveal,Support,capture,downedpartnerandteamrecovery in the native browser. Does not qualify FirstConnectionvictory, rescue success, earnedpictureorRetryfromwin. Failedadvancedcrossingretained; no game rule defect claimed.",
+  "followup": "NativeFirstConnectionwin remainsopen; no repeatsearch performed."
+}

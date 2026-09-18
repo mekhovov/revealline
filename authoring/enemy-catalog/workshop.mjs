@@ -23,11 +23,88 @@ let panel = null,
   menuInput = null,
   raf = null,
   last = 0;
+// Initial opening belongs only to an untouched foreground loading visit. A
+// later page action or lifecycle departure must not become modal-inert when
+// the themes request happens to finish.
+function claimStartupOpening() {
+  const idleFocus = () =>
+    !document.activeElement ||
+    document.activeElement === document.body ||
+    document.activeElement === document.documentElement;
+  let available = !document.hidden && document.hasFocus?.() !== false && idleFocus(),
+    terminal = false,
+    suspended = false,
+    resume = null;
+  const intentListeners = [],
+    lifecycleListeners = [];
+  const remove = (listeners) => {
+    for (const [target, type, handler] of listeners.splice(0))
+      target.removeEventListener(type, handler, true);
+  };
+  const retire = () => {
+    available = false;
+    remove(intentListeners);
+  };
+  const dispose = () => {
+    retire();
+    remove(lifecycleListeners);
+  };
+  const listen = (listeners, target, type, handler) => {
+    target.addEventListener(type, handler, true);
+    listeners.push([target, type, handler]);
+  };
+  if (available) {
+    for (const type of ['focusin', 'keydown', 'pointerdown'])
+      listen(intentListeners, document, type, retire);
+    listen(intentListeners, document, 'visibilitychange', () => {
+      if (document.hidden) retire();
+    });
+    listen(intentListeners, window, 'blur', retire);
+  }
+  listen(lifecycleListeners, window, 'pagehide', (event) => {
+    retire();
+    if (event.persisted) suspended = true;
+    else {
+      terminal = true;
+      resume?.(false);
+      resume = null;
+      dispose();
+    }
+  });
+  listen(lifecycleListeners, window, 'pageshow', (event) => {
+    if (!event.persisted || terminal) return;
+    suspended = false;
+    resume?.(true);
+    resume = null;
+  });
+  return {
+    current: () =>
+      available &&
+      !terminal &&
+      !suspended &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      idleFocus(),
+    whenActive: () =>
+      terminal
+        ? false
+        : suspended
+          ? new Promise((resolve) => {
+              resume = resolve;
+            })
+          : true,
+    dispose,
+  };
+}
+const startupOpening = claimStartupOpening();
+
 async function start() {
   report('Loading registered themes…', 'busy');
   const response = await fetch('../../game/content/themes.json');
+  if (!(await startupOpening.whenActive())) return;
   if (!response.ok) throw new Error('Registered themes could not be loaded.');
   const { themes } = await response.json();
+  if (!(await startupOpening.whenActive())) return;
   const practiceReturn = attachEnemyWorkshopReturnHost({
     frame,
     onReturn: () => {
@@ -139,9 +216,12 @@ async function start() {
     }
   });
   report('Seven behavior roles and four original presentation families ready.');
-  panel.open();
+  if (startupOpening.current()) panel.open();
   raf = requestAnimationFrame(loop);
 }
-start().catch((error) => {
-  report(`Workshop unavailable: ${error.message}. Reload this page to retry.`, 'error');
-});
+start()
+  .catch(async (error) => {
+    if (await startupOpening.whenActive())
+      report(`Workshop unavailable: ${error.message}. Reload this page to retry.`, 'error');
+  })
+  .finally(() => startupOpening.dispose());
