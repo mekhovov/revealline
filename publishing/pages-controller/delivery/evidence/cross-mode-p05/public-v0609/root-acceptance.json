@@ -1,0 +1,47 @@
+{
+  "status": "ACCEPTED_SCOPED_PUBLIC_MOTION_SLIDER_RELEASE",
+  "at": "2026-09-18T03:07:35.954538+00:00",
+  "version": "v0.60.9",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "controller": "d5e131081764d7547fdfa9d749e3a73b296e19a5",
+  "deploymentId": 6516490967,
+  "pagesRun": 35300937871,
+  "sourceTestsPerFamily": 5690,
+  "testFiles": 453,
+  "publicFiles": 2897,
+  "publicBytes": 640444329,
+  "httpFailures": 0,
+  "httpRetries": 0,
+  "scope": "Five MotionLab slider names, units and native keyboard bounds; actual public game smoke and same-edition return. WholeP03/P05/P18 remainpartial.",
+  "knownRemaining": [
+    "Resize from390x844 to844x390 left existing rotor focus offscreen; Right changedvalue without scrolling. Tab thenShift+Tab broughtslider into view. Retain as responsive focus-follow-up; scope does not claim wholeP03/P05 completion.",
+    "Exact Playwright getByLabel(Animation recipe) returned no_matches; nativeAX exposednamedselect and actualShift+Tab/Down/Return successfully selectedtwo-blade recipe. Retain original toolfailure and check remainingselect labeling separately."
+  ],
+  "limits": [
+    "Screenshots displayed inline only; no exported screenshots or invented screenshot hashes.",
+    "No assistive-technology announcement, physicalcontroller/touch, audiblelistening, offline/server-stopped, fullcrossmodeorhumanplaytest qualification.",
+    "Toy MotionLab does not establish tactical game mechanics."
+  ],
+  "pins": [
+    {
+      "path": "public-browser/observations.json",
+      "bytes": 4320,
+      "sha256": "4109efacfdeb04f57fd18fe5bb59189083b86ed62d4294cd6ee8b6b21969ddf2"
+    },
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3793,
+      "sha256": "9a789d39c8cf67c11d8ee5144a3a3c8f4b76ed2fcb5039407f60fc701cbb3a8e"
+    },
+    {
+      "path": "public-row-review-complete-1.json",
+      "bytes": 1597,
+      "sha256": "ff5c1649f9e53b2375b0502c8df062021fa54e5e77b638da215e9e0262a4e4af"
+    },
+    {
+      "path": "after-http-authorities-main-1/result.json",
+      "bytes": 7490,
+      "sha256": "e8b8aefcfd1e006ce58826d58708e6f9ee869d397434d0f6765da4b40d601b5f"
+    }
+  ]
+}

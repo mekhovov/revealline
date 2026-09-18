@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/observe-hosted.failure-retention.py",
+    "terminal-1",
+    "d5e131081764d7547fdfa9d749e3a73b296e19a5",
+    "4252be1dbbb867e335f99468655bde56d5efe196",
+    "35300937871"
+  ],
+  "start": "2026-09-18T02:56:23.985438+00:00",
+  "end": "2026-09-18T02:56:26.489899+00:00",
+  "exitCode": 0,
+  "stdout": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/observer-terminal-1.stdout",
+    "bytes": 1338,
+    "sha256": "2082dea85fbb7e2e746404a094984a2a9cbd0f4931bba53363e312f04a713aae"
+  },
+  "stderr": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/observer-terminal-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

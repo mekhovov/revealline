@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/review-public.py",
+    "d5e131081764d7547fdfa9d749e3a73b296e19a5",
+    "complete-1"
+  ],
+  "startedAt": "2026-09-18T03:03:43.216271+00:00",
+  "endedAt": "2026-09-18T03:03:43.634046+00:00",
+  "exitCode": 0,
+  "stdout": {
+    "path": "row-review-complete-1.stdout",
+    "bytes": 225,
+    "sha256": "34868d23e795d356d4fbfe155652f96d50a4f54a6c7d54942b439b407c1504b4"
+  },
+  "stderr": {
+    "path": "row-review-complete-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
