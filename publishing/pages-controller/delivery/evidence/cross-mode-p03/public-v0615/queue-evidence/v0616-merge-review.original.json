@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-18T11:58:00.179313+00:00",
+  "main": "8f4f395272f78a74b6b5ae40f0126b811491e05e",
+  "head": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "expectedMergedTree": "4345218b6b4a533351040b17e9e758ae7bad8f56",
+  "sourceChangedPaths": 254,
+  "mainChangedPaths": 960,
+  "overlap": 0,
+  "review": "Qualified source and runtime hunks reviewed. Exact merged tree resolves without conflict; all later publisher/delivery paths are preserved. Tag will use qualified game head, not integration commit. No game changes since qualification."
+}
