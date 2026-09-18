@@ -1,0 +1,17 @@
+# v0.61.4 — About return and controller navigation
+
+**v0.61.3 remains the latest accepted public baseline.** Its full public audit matched **2,997 files / 641,315,704 bytes**; actual keyboard Solo play, picture reward and Collection return passed. The source-only Enemy Workshop Return observation remains separate from that public runtime acceptance. [Accepted v0.61.3 scope](../public-v0613/README.md)
+
+**v0.61.4 is published; this Pages selector is pending acceptance.** About retains an explicit same-edition Return to game while the optional release catalog loads. A controller joining establishes visible focus without activating a link. Native selects, Escape and stale loading preserve input ownership. About is shipped in the frozen public package, so its affected return journey must be checked after this deployment.
+
+Exact source `d6800fa53d1d9166fe8f310d44aec9c7240b62fc`, tree `d4e0510955ca61d703361bd7ac6c7bffbc918ed2`, source PR114, passed **5,838 tests across 461 files in each full hosted family**, all six source gates, production checks, build/freeze and frozen artifact inspection. Release **391346740** was published on 18 September 2026 at **10:05 UTC**; its nine original asset identities and GitHub Latest readback were verified.
+
+Root's actual source-native keyboard test opened About, used Escape to focus Return, and confirmed Return to reach the game with Start focused. That source preview displayed DEV and lacked three generated/index resources; its original observation preserves these limits. It does not replace a public About check or physical controller/touch, native loading-failure/focus-loss, offline or audible-media qualification. Screenshots were inspected inline; no exported image evidence is invented.
+
+Archive24 separately passed its initial v0.61.3 retention gate: **698 files / 313,350,864 bytes**, actual keyboard Start/Pause/Resume, a legitimate 52.2% First Signal win and Release explorer return. The session-only saving warning remains recorded. This candidate adds that admission and the v0.61.4 selector while preserving all **84 prior catalog records and 23 existing archive admissions**. Game bytes, versions and historical release records are unchanged.
+
+Before public v0.61.4 acceptance, root must review and merge the publisher, verify actual deployment identities, audit every deployed byte and exercise About → Escape → Return to the ready same-edition game through normal input. Keep public game play and release-history navigation in the smoke check. [Prioritized phases and queue](planning/progress-and-next.md) remain explicit; P03/P05/P07/P08/P18 are unfinished.
+
+Navigation review follows the [Xbox focus/navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) and [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/), freshly checked by the root coordinator on 18 September 2026. Closing or going Back must return visible focus to a logical opener; image and dialog content must leave Back visible. Digital controller navigation evidence stays separate from physical hardware qualification.
+
+The finite originals ZIP retains exact root publication/readback, upload reconciliation, source/native review and prior accepted public observations. The published qualification package retains full source evidence; this smaller publication bundle does not replace it.

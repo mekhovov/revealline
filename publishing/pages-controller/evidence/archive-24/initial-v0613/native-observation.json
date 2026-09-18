@@ -1,0 +1,24 @@
+{
+  "status": "ROOT_NATIVE_ARCHIVE24_SCOPED_PASS",
+  "at": "2026-09-18T09:57:55.506191+00:00",
+  "archiveCommit": "6f1fbf7298eb6fee8c99199fa7be1b9c08cb775b",
+  "runId": 35331821258,
+  "version": "v0.61.3",
+  "entry": "https://mekhovov.github.io/revealline-archive-24/",
+  "game": "https://mekhovov.github.io/revealline-archive-24/releases/v0.61.3/site/game/",
+  "observed": [
+    "KeyboardTab/Return fromarchivePlay opensactualtitleVERSIONv0.61.3/Startfocus.",
+    "StartloadsFirstSignal0.0%,3lives. Downstartscontinuouscut; EscapePause0:05focusResume; Returnresumescurrentdirection.",
+    "Actualwin52.2%,8160,0:09,3lives3stars.",
+    "KeyboardMainmenu thenReleaseexplorer navigatesarchived/releases/ redirect to mainhttps://mekhovov.github.io/revealline/releases/ currentv0.61.3."
+  ],
+  "limitations": [
+    "Explicit session-only saving warning becauseanothergametabowns saving; no persistence/migration acceptance",
+    "No physicalcontroller/touch, offline or audibletest",
+    "Sourceidenticalarchive scopednavigation only; publicbyteauditseparate"
+  ],
+  "viewport": [
+    1280,
+    720
+  ]
+}
