@@ -1,0 +1,47 @@
+{
+  "status": "READY_FOR_ROOT_REVIEW_AND_LATER_INTEGRATION_AFTER_PICKER_V0618",
+  "at": "2026-09-18T06:30:34.512205+00:00",
+  "reviewed": false,
+  "manifest": {
+    "path": ".cache/p05-still-media-reading-b326/candidate-pins.json",
+    "bytes": 2157,
+    "sha256": "2d5907f73ca36deeb18509dfd12f68c0515db2c5e2a20c55a9e765ba4c86518d"
+  },
+  "scope": "One existing display-entry script in standalone Still Media HTML; four real host/store tests; guide and maintainer prompt. No new adapter, preference store, editor or picker modifications.",
+  "checks": {
+    "runtimeMissingEntryRed": "red-plain-node20-r2/receipt.json",
+    "ordinaryNode20": "green-plain-node20-r2/receipt.json",
+    "ordinaryNode22": "green-plain-node22-r2/receipt.json",
+    "testsPerNode": 54,
+    "failures": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "scopedFinal": "final-checks-r2/receipt.json"
+  },
+  "preservedHistory": [
+    "red-node20",
+    "green-node20-r1",
+    "green-node22-r1",
+    "format-r1",
+    "formatting-only",
+    "final-checks",
+    "plain-node-harness-r1"
+  ],
+  "historyNote": "Earlier SourceTextModule harness required an experimental flag. Ordinary node --test failure retained; final harness uses actual module imports without flags. Final RED and GREEN receipts pin final test/runtime bytes.",
+  "boundaries": [
+    "No staged changes, commit, version bump, remote action, browser or UI operation.",
+    "No picker helper/panel/CSS/test paths changed.",
+    "Modeled lifecycle tests do not certify native font metrics, actual BFCache, zoom, outline clearance or physical devices.",
+    "Full source qualification and release must run against eventual integrated source after picker v0.61.8."
+  ],
+  "next": [
+    "Integrate the four scoped paths after picker v0.61.8, resolving only the shared guide/skill additions.",
+    "Use the current combined source for native same-origin Settings Large/Plain \u2192 Workshop \u2192 Pictures & stories, actual font metrics and portrait/short-landscape file-picker clearance.",
+    "Retain native failure record separately; publish only through normal final-source/release gates."
+  ],
+  "managedBytesBeforeReady": 1547608,
+  "managedLimit": 33554432,
+  "freeBytesBeforeReady": 1783148544,
+  "freeReserve": 536870912
+}

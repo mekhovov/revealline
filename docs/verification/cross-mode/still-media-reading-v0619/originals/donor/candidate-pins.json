@@ -1,0 +1,50 @@
+{
+  "source": "b3262eb02a998c50354758ba922324d023138875",
+  "tree": "0f4815e7c4116aeb08bee9696828f143a1ef5479",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading",
+  "branch": "codex/p05-still-media-reading",
+  "paths": [
+    {
+      "path": ".cache/worktrees/p05-still-media-reading/authoring/still-media/index.html",
+      "bytes": 5435,
+      "sha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888",
+      "relativePath": "authoring/still-media/index.html"
+    },
+    {
+      "path": ".cache/worktrees/p05-still-media-reading/game/test/still-media-display-host.test.mjs",
+      "bytes": 7562,
+      "sha256": "8e253aafccf130ef586ab8230b70372449e30c83f2f68512271afa1677893657",
+      "relativePath": "game/test/still-media-display-host.test.mjs"
+    },
+    {
+      "path": ".cache/worktrees/p05-still-media-reading/docs/still-media-workshop.md",
+      "bytes": 13987,
+      "sha256": "124393dd95a16ed522372385fab1764ffdfac824a3ab069c09eff2d29fef39dd",
+      "relativePath": "docs/still-media-workshop.md"
+    },
+    {
+      "path": ".cache/worktrees/p05-still-media-reading/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 219158,
+      "sha256": "77f08d40ddc20b9f67df9723203083e22b65c138682739b74aca0fb56b531e1d",
+      "relativePath": "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+    }
+  ],
+  "diff": {
+    "path": ".cache/p05-still-media-reading-b326/candidate.diff",
+    "bytes": 14969,
+    "sha256": "183c450c45c81b1437eaa26eedce29052f5e0a32b79a6e55d982637eaeaafe69"
+  },
+  "nativeFindingOriginal": {
+    "upstream": {
+      "path": ".cache/p05-picker-clearance-next/root-native-r3.json",
+      "bytes": 2770,
+      "sha256": "7e28161ea3ad2ed673637f592662d885c8b4d31bfb049eb6b61085eefa84a815"
+    },
+    "retained": {
+      "path": ".cache/p05-still-media-reading-b326/native-finding-original.json",
+      "bytes": 2770,
+      "sha256": "7e28161ea3ad2ed673637f592662d885c8b4d31bfb049eb6b61085eefa84a815"
+    },
+    "scope": "Existing source v616 plus picker R3 finding; unchanged historical native record, not new candidate verification."
+  }
+}

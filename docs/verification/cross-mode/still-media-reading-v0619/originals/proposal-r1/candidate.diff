@@ -1,0 +1,270 @@
+--- a/authoring/still-media/index.html
++++ b/authoring/still-media/index.html
+@@ -10,6 +10,7 @@
+     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
+     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
+     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
++    <script type="module" src="../../game/ui/tool-display-entry.mjs"></script>
+     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+   </head>
+   <body class="still-media-host field-kit field-kit-support">
+--- /dev/null
++++ b/game/test/still-media-display-host.test.mjs
+@@ -0,0 +1,190 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
++import { Events } from './helpers/couch-dom.mjs';
++import { pngBytes } from './helpers/media-fixtures.mjs';
++import { workshop } from './helpers/still-workshop.mjs';
++
++// Execute the display entry selected by the real HTML alongside the real media
++// host and store. Geometry, native font metrics and BFCache remain browser gates.
++let entrySerial = 0;
++async function setup(t, initial = { textFace: 'plain', textSize: 'large', reducedEffects: true }) {
++  const h = await workshop(t),
++    media = Object.assign(new Events(), { matches: false }),
++    timers = new Map(),
++    writes = [];
++  let raw = JSON.stringify(initial),
++    serial = 0;
++  const storage = {
++    getItem(key) {
++      assert.equal(key, DISPLAY_PREFERENCES_KEY);
++      return raw;
++    },
++    setItem(key, value) {
++      writes.push({ key, value });
++      assert.fail('Reading a shared preference must not write it.');
++    },
++  };
++  h.win.localStorage = storage;
++  h.win.matchMedia = () => media;
++  h.win.setTimeout = (fn, ms) => {
++    assert.equal(ms, 0);
++    timers.set(++serial, fn);
++    return serial;
++  };
++  h.win.clearTimeout = (id) => timers.delete(id);
++  h.doc.defaultView = h.win;
++  const htmlURL = new URL('../../authoring/still-media/index.html', import.meta.url),
++    html = await readFile(htmlURL, 'utf8'),
++    entries = [...html.matchAll(/<script\s+type="module"\s+src="([^"]+)"/g)]
++      .map((match) => new URL(match[1], htmlURL))
++      .filter((url) => url.pathname.endsWith('/tool-display-entry.mjs'));
++  // These file-local tests run sequentially. Give the real entry its browser
++  // globals only during import; the mounted owner captures this document/host.
++  const descriptors = ['document', 'window'].map((key) => [
++    key,
++    Object.getOwnPropertyDescriptor(globalThis, key),
++  ]);
++  try {
++    Object.defineProperty(globalThis, 'document', { configurable: true, value: h.doc });
++    Object.defineProperty(globalThis, 'window', { configurable: true, value: h.win });
++    for (const url of entries) {
++      url.searchParams.set('still-media-display-test', String(++entrySerial));
++      await import(url.href);
++    }
++  } finally {
++    for (const [key, descriptor] of descriptors) {
++      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
++      else delete globalThis[key];
++    }
++  }
++  t.after(() => h.win.emit('pagehide', { persisted: false }));
++  return {
++    ...h,
++    entries,
++    media,
++    timers,
++    writes,
++    external(value, notify = true) {
++      raw = JSON.stringify(value);
++      if (notify)
++        h.win.emit('storage', {
++          key: DISPLAY_PREFERENCES_KEY,
++          newValue: raw,
++          storageArea: storage,
++        });
++    },
++    flush() {
++      for (const [id, fn] of [...timers]) {
++        timers.delete(id);
++        fn();
++      }
++    },
++  };
++}
++
++function reading(h, face, size, effects) {
++  assert.equal(h.doc.body.dataset.textFace, face);
++  assert.equal(h.doc.body.dataset.textSize, size);
++  assert.equal(h.doc.body.dataset.effects, effects);
++}
++
++test('Still Media actual entry adopts shared Large/Plain before local media is opened', async (t) => {
++  const h = await setup(t);
++  reading(h, 'plain', 'large', 'reduced');
++  assert.equal(h.entries.length, 1, 'One independent shared reading entry owns the document.');
++  assert.equal(h.memory.openCount, 0);
++  assert.equal(h.managers.length, 0);
++  assert.equal(h.host.panel, null);
++  assert.deepEqual(h.writes, []);
++});
++
++test('shared reading updates preserve the open Still Media draft, original, preview and focus', async (t) => {
++  const h = await setup(t);
++  await h.open();
++  const file = new Blob([pngBytes()]);
++  h.$('file').files = [file];
++  h.$('file').onchange();
++  h.$('credit').value = 'Owned fixture';
++  h.$('source').value = 'Retained original';
++  h.$('description').value = 'Uncommitted picture';
++  assert.equal(await h.$('preview').onclick(), true);
++  h.$('credit').focus();
++  const state = h.host.panel.snapshot(),
++    before = await h.store().read(),
++    dialog = h.host.panel.dialog,
++    canvas = h.$('preview-canvas'),
++    paints = [...h.paints],
++    clears = h.clears,
++    urls = [...h.urls];
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false });
++  reading(h, 'pixel', 'standard', 'full');
++  h.external({ textFace: 'plain', textSize: 'large', reducedEffects: false });
++  h.media.matches = true;
++  h.media.emit('change');
++  reading(h, 'plain', 'large', 'reduced');
++  assert.equal(h.doc.activeElement, h.$('credit'));
++  assert.equal(h.$('file').files[0], file);
++  assert.equal(h.$('credit').value, 'Owned fixture');
++  assert.equal(h.$('source').value, 'Retained original');
++  assert.equal(h.$('description').value, 'Uncommitted picture');
++  assert.equal(h.host.panel.dialog, dialog);
++  assert.equal(dialog.open, true);
++  assert.equal(h.$('preview-canvas'), canvas);
++  assert.deepEqual(h.host.panel.snapshot(), state);
++  assert.deepEqual(h.paints, paints);
++  assert.equal(h.clears, clears);
++  assert.deepEqual([...h.urls], urls);
++  assert.deepEqual(await h.store().read(), before);
++  assert.equal(before.generation, 0);
++  assert.equal(before.document.library.assets.length, 0);
++  assert.deepEqual(h.writes, []);
++});
++
++test('Still Media cached return refreshes missed reading changes without reopening media', async (t) => {
++  const h = await setup(t);
++  await h.open();
++  h.$('description').value = 'Keep this draft text';
++  h.win.emit('pagehide', { persisted: true });
++  assert.equal(h.host.panel.dialog.open, false, 'Existing host closes its panel on departure.');
++  const focus = h.doc.activeElement,
++    snapshot = h.host.panel.snapshot(),
++    opens = h.memory.openCount;
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false }, false);
++  h.win.emit('pageshow', { persisted: true });
++  h.flush();
++  reading(h, 'pixel', 'standard', 'full');
++  assert.equal(h.doc.activeElement, focus);
++  assert.equal(h.host.panel.dialog.open, false);
++  assert.deepEqual(h.host.panel.snapshot(), snapshot);
++  assert.equal(h.$('description').value, 'Keep this draft text');
++  assert.equal(h.memory.openCount, opens);
++  assert.deepEqual(h.writes, []);
++});
++
++test('terminal Still Media departure releases reading listeners and ignores retained callbacks', async (t) => {
++  const h = await setup(t);
++  h.win.emit('pageshow', { persisted: false });
++  const pending = [...h.timers.values()],
++    storageCallbacks = [...(h.win.listeners.get('storage') || [])],
++    showCallbacks = [...(h.win.listeners.get('pageshow') || [])],
++    motionCallbacks = [...(h.media.listeners.get('change') || [])];
++  h.win.emit('pagehide', { persisted: false });
++  const state = { ...h.doc.body.dataset },
++    focus = h.doc.activeElement;
++  assert.equal(h.timers.size, 0);
++  assert.equal(h.win.listeners.get('storage')?.size ?? 0, 0);
++  assert.equal(h.media.listeners.get('change')?.size ?? 0, 0);
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false });
++  h.media.matches = true;
++  for (const callback of pending) callback();
++  for (const callback of storageCallbacks) callback({ key: DISPLAY_PREFERENCES_KEY });
++  for (const callback of showCallbacks) callback({ persisted: true });
++  for (const callback of motionCallbacks) callback();
++  assert.deepEqual({ ...h.doc.body.dataset }, state);
++  assert.equal(h.doc.activeElement, focus);
++  assert.equal(h.timers.size, 0);
++  assert.equal(h.memory.openCount, 0);
++  assert.deepEqual(h.writes, []);
++});
+--- a/docs/still-media-workshop.md
++++ b/docs/still-media-workshop.md
+@@ -57,6 +57,16 @@
+ 
+ `.rlmedia` contains every referenced still and retained generic original plus exact owner metadata. It excludes audio-only files, player profiles, saved flights and installed pack payloads. It is an originals backup, not complete game-data backup by itself. Use the game's separate backup/transfer workflow and `.rlsound` alongside it where needed. Imported removed-pack owners retain provenance/history without installing content or granting an earned picture. See [binary bundle validation and bounds](media-bundle.md).
+ 
++## Shared reading preferences
++
++The standalone page loads the existing `tool-display-entry.mjs` independently of the media application. It applies the game's shared Standard/Large text, Theme/Plain font and reduced-effects preferences before **Open local media**, without opening the media database or saving a preference. The existing Field Kit tokens make Standard controls 16 px and Large controls 20 px; the page does not create a second settings store or another text-size selector.
++
++Shared preference and system-motion updates change only the document's reading attributes. The current editor, selected file, unsaved text, preview, focus and saved media stay intact. A cached-page return refreshes missed preference changes; the media host's existing departure policy still closes its panel, and reading restoration never reopens it. Terminal departure removes subscriptions and cancels pending display repair.
++
++The actual-entry/host regression covers saved preferences before database access, updates with a real unsaved picture preview, cached return and stale callbacks after disposal. It uses modeled DOM/history events and does not establish native font metrics, focus-outline clearance or physical-device behavior. In native verification, choose Large or Plain in the same-origin game Settings, enter **Workshop → Pictures & stories**, and verify actual control font size and file-picker clearance in portrait and short landscape. Preserve the picker fix's separate source identity when combining these changes.
++
++Maintainer prompt: “Reuse the independent shared tool-display entry for Still Media. Verify startup and live preference updates without media access or preference writes. While an original is selected and previewed, preserve its exact bytes, draft metadata, preview ownership, saved generation and current focus. Test cached return and terminal callbacks; then measure Standard/Large and Theme/Plain in the actual browser. Do not interpret an unchanged 16 px control as a Large-text pass.”
++
+ ## Bounds and remaining gates
+ 
+ Limits stay at 4 MiB per still, 8,192 pixels per side and 16 megapixels for source images; an assigned poster must be at most 1,920 × 1,080. Shared committed-plus-staging storage remains 256 MiB; rich metadata including owners 2 MiB; image records 512; retained presentation revisions 256. Append-only history consumes these limits. Reads verify all referenced originals sequentially and are cancellable, without a per-file progress meter yet.
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -670,3 +670,9 @@
+ For [visible Team lobby return](../../../docs/team-victory-picture.md#visible-lobby-return-action), finish retained-teaser layout before handing focus to the current primary. Reveal only an offscreen action with nearest scrolling; preserve already visible placement. Keep the synchronous handoff bound to its lobby generation and Settings visit, with newer focus/input/lifecycle intent permanently vetoing its remaining work. Recheck after focus and layout callbacks and remove temporary listeners on every exit. Reuse actual-host confirmation and earned-win journeys; finite rectangles verify requested scrolling, not native viewport or hit-target results. This does not alter asynchronous picture recovery, start a run, reacquire artwork or award Solo progress.
+ 
+ For [Team picture recovery](../../../docs/team-picture-host.md#picture-recovery-focus-and-player-copy), keep direct pending Cancel and recovery Retry within the existing picture-focus owner. Capture selection identity, run/generation and Settings visit, preserve explicit Cancel's same-selection handoff, and recheck ownership after focus/layout before nearest reveal. Ignore only the exact intended self-focus; nested newer focus or lifecycle intent retires the owner even if focus later returns to BODY. Retain observers until the direct handoff ends and clean them on exceptions. Reveal failure cannot prevent the reader from starting. Keep the existing function-target success navigation unchanged and outside the expanded direct-handoff guarantee. Friendly player copy must retain original technical exceptions only in current-failure local diagnostics; stale/cancelled failure stays silent. Test actual host selection, recovery and delayed Settings completion without altering simulation or picture leases.
++
++### Still Media shared reading
++
++For [Still Media reading preferences](../../../docs/still-media-workshop.md#shared-reading-preferences), reuse the existing independent `game/ui/tool-display-entry.mjs`. The cosmetic presentation loader does not adopt player reading preferences by itself. Apply the shared body attributes before opening media; do not add a second preference store, settings selector, database open or editor lifecycle owner. Keep selected original bytes, unsaved metadata, preview identity, saved generation and focus unchanged through preference/system-motion updates. Cached return refreshes reading authority without reopening the panel; terminal departure must retire subscriptions and deferred repair. Preserve the separate picker-clearance change when integrating. Run the actual HTML-selected entry with the real host/store, then separately verify computed Standard/Large sizes, Theme/Plain fonts and native portrait/landscape focus visibility. An attribute assertion or an unchanged 16 px control is not a native Large-text pass.
++
++Prompt: “Open Still Media after selecting Large and Plain in the same-origin game. Confirm the shared attributes and actual font metrics before Open local media; preview an owned file, change shared reading settings, and verify the draft, file, preview, focus and stored generation are unchanged. Cover missed updates during cached-page departure and retained callbacks after terminal disposal. Keep original RED/GREEN and native evidence scoped to their exact sources.”
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "revealline",
+-  "version": "0.61.8",
++  "version": "0.61.9",
+   "private": true,
+   "type": "module",
+   "description": "Configurable territory-capture game and authoring playground",
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "revealline",
+-  "version": "0.61.8",
++  "version": "0.61.9",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "revealline",
+-      "version": "0.61.8",
++      "version": "0.61.9",
+       "dependencies": {
+         "phaser": "4.2.1"
+       },
+--- a/game/build-config.json
++++ b/game/build-config.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "0.61.8",
++  "version": "0.61.9",
+   "entry": "game/index.html",
+   "include": [
+     "game",

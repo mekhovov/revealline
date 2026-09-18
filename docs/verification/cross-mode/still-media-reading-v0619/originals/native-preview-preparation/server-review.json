@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-18T06:39:56.014499+00:00",
+  "source": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+  "tree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+  "changes": [
+    "Exact committed source/tree assertions",
+    "Only Still Media HTML override",
+    "Permit exact Git site/ paths for ordinary same-origin navigation"
+  ],
+  "unchanged": [
+    "Loopback Host check",
+    "GET/HEAD only",
+    "Pinned override bytes",
+    "8 MiB object/memory and 1 MiB/4000-event log bounds",
+    "512 MiB disk reserve",
+    "No lazy fetch"
+  ],
+  "serverSHA256": "b044e6533cbbb5938753bb5b648c007048b09a543f7ee7157953c9d5ff59c0e0",
+  "specSHA256": "4d256264c2b41fa9a61202284142a1b27a10c2c8644dbe2ab88ccd515ac39b03",
+  "htmlSHA256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888"
+}
