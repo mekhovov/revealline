@@ -1,0 +1,1283 @@
+{
+  "status": "PASS_SCOPED_STATIC_COMPOSITION",
+  "recordedAt": "2026-09-17T22:05:10.059298+00:00",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "sourceTree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "branch": "codex/p08a-team-earned-picture",
+  "changedPaths": [
+    "authoring/prompts/cross-mode-delivery.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/team-picture-host.md",
+    "docs/team-victory-picture.md",
+    "game/couch/coop-view.mjs",
+    "game/couch/relay-rescue.css",
+    "game/couch/relay-rescue.html",
+    "game/couch/relay-rescue.mjs",
+    "game/test/coop-lobby-preview.test.mjs",
+    "game/test/coop-victory-picture.test.mjs",
+    "game/test/coop-won-terminal-host.test.mjs",
+    "game/test/helpers/coop-host.mjs"
+  ],
+  "indexEmpty": true,
+  "patch": {
+    "bytes": 69854,
+    "sha256": "5e848f71d5217f3775e7407bf597dac9a368e04d7e6dbbdd78167c981abd267b"
+  },
+  "pins": {
+    "bytes": 4484,
+    "sha256": "b6bbdceedee13999e55dfff86b41ccccdfba5244e23cc5ca090f20941c1b4be4"
+  },
+  "unchangedContracts": [
+    {
+      "path": "game/coop/core.mjs",
+      "bytes": 37008,
+      "sha256": "f3158679da2d0d1664f4a17d3e3e5cbb761f06e56140d171011fcf52ebfcb6bd",
+      "gitBlob": "d1020c92648aeb177b7fe7982f8a8b854e7836ee",
+      "materialized": true
+    },
+    {
+      "path": "game/coop/first-connection.mjs",
+      "bytes": 540,
+      "sha256": "41dda9601c43ae2387e6a04bde0517d97efba01a2897da89be296a161f22961a",
+      "gitBlob": "d91fed7fab8eeb3a975a23459c3a634fae0c74b7",
+      "materialized": true
+    },
+    {
+      "path": "game/coop/relay-yard.mjs",
+      "bytes": 797,
+      "sha256": "5fa25a3a39902e87dd0d043779f55a1305c393035208fef1fd30a70d50d905ef",
+      "gitBlob": "fe74f08962c70a953a0a63150e36df3e56c1ccb0",
+      "materialized": true
+    },
+    {
+      "path": "game/coop/recipes.mjs",
+      "bytes": 11916,
+      "sha256": "571d77f71f123c758288e33d4d81951ab40778c356e48e32792c44a7e67c9675",
+      "gitBlob": "3ae320835ad7e41bebdd194d0f28e69daabef88a",
+      "materialized": true
+    },
+    {
+      "path": "game/coop/input-policy.mjs",
+      "bytes": 1519,
+      "sha256": "89e0a28cf383d79ca3c56a3faf6dc3caf9bf6b5c129764fbcdc03612d6220528",
+      "gitBlob": "0dbb6e794a7c6c7cbaf8c6765119a9407a9fb0a1",
+      "materialized": true
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 1763,
+      "sha256": "42d98b2c2b0d23ea9953aeabf65357ce486e0f63a19ccbce2d55cd92629aee8a",
+      "gitBlob": "363c2a91cba5f29a54e1e24b7337b1ed30b37382",
+      "materialized": true
+    },
+    {
+      "path": "game/couch/coop-presentation.mjs",
+      "bytes": 16435,
+      "sha256": "9f5be9089850be505af01154acb59dfd8154415f4f6ff739200195441cc9b9b8",
+      "gitBlob": "e90005deddb399ff7b9d12c0823514a709aca112",
+      "materialized": true
+    },
+    {
+      "path": "game/couch/coop-picture-image.mjs",
+      "bytes": 1891,
+      "sha256": "bf70256dc4e2b6b5277c989cf5b0c38a8d22a140a947cf8f3a70442aa963fb48",
+      "gitBlob": "e84aa9ae1138090ee05f045065858d37d387c4fc",
+      "materialized": true
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "bytes": 17426,
+      "sha256": "4c53894d90fcf7b5a70b4fbe77d9cd535689bb983cbaab401ad3fd0b97c7827f",
+      "gitBlob": "dbd0686da77996ef7c01ba4caa8495ec0d736075",
+      "materialized": true
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 971838,
+      "sha256": "e13e6a8442a6b9e0cb2b2eb5db2b4a712fd469c15f5bf387a1d8aa1752d66b32",
+      "gitBlob": "04f1ab18386a73ed2ab7ef5b4042c32742ce04a0",
+      "materialized": true
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "7fbabd6691d7609e7de6ee745d499041029ad3555721404a3bf24381d6ec2d4a",
+      "gitBlob": "c46b6e684772d47c0ef1b70b62cd6a3d00938348",
+      "materialized": true
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "9df150846beb4159f072e164dd0c69e33122ffd0092e109bb363dd24ecacd393",
+      "gitBlob": "9670831e3fb84254624a6fba9ef46e0e40263d3b",
+      "materialized": false
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 5474,
+      "sha256": "6190a1936e29291622076f0eb0e5d6712d652ba25b78132851136789688f2de7",
+      "gitBlob": "7494b4f6f6a5c869c5deb88aa59e893e25eae799",
+      "materialized": false
+    }
+  ],
+  "unchangedImages": [
+    {
+      "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+      "bytes": 52720,
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "dimensions": [
+        1152,
+        576
+      ]
+    },
+    {
+      "path": "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+      "bytes": 38090,
+      "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+      "dimensions": [
+        1152,
+        576
+      ]
+    }
+  ],
+  "compiledTheme": {
+    "id": "fpv",
+    "name": "FPV Field Kit",
+    "revision": 27
+  },
+  "additiveGuidancePreservesEntireParent": true,
+  "relativeLinks": [
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/cross-mode-execution.md",
+      "target": "docs/cross-mode-execution.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/shared-master-audio.md",
+      "target": "docs/shared-master-audio.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/verification/cross-mode/p08-team-actors/README.md",
+      "target": "docs/verification/cross-mode/p08-team-actors/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/operation-focus.md",
+      "target": "docs/operation-focus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/verification/cross-mode/p05-team-hud/README.md",
+      "target": "docs/verification/cross-mode/p05-team-hud/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/supporting-screen-readability.md",
+      "target": "docs/supporting-screen-readability.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/team-display-clearance.md",
+      "target": "docs/team-display-clearance.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/prompts/cross-mode-delivery.md",
+      "reference": "../../docs/practice-playground-readability.md",
+      "target": "docs/practice-playground-readability.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/whole-game-ux-plan.md",
+      "target": "docs/whole-game-ux-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03/host-flow/README.md",
+      "target": "docs/verification/cross-mode/p03/host-flow/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/delivery-priorities.md",
+      "target": "docs/delivery-priorities.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/cross-mode-execution.md",
+      "target": "docs/cross-mode-execution.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/cross-mode-delivery.md",
+      "target": "authoring/prompts/cross-mode-delivery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p05-a/disabled-controls/README.md",
+      "target": "docs/verification/cross-mode/p05-a/disabled-controls/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/presentation-loading.md",
+      "target": "docs/presentation-loading.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p01/picture-recovery-return.md",
+      "target": "docs/verification/cross-mode/p01/picture-recovery-return.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p01/native-file-dialog-cancel.md",
+      "target": "docs/verification/cross-mode/p01/native-file-dialog-cancel.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p01/mastery-library-capacity-fixture.md",
+      "target": "docs/verification/cross-mode/p01/mastery-library-capacity-fixture.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/fpv-redesign-design.md",
+      "target": "docs/fpv-redesign-design.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/fpv-redesign-execution.md",
+      "target": "docs/fpv-redesign-execution.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/fpv-field-kit.md",
+      "target": "authoring/prompts/fpv-field-kit.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/development.md",
+      "target": "docs/development.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p01/history-picture-return.md",
+      "target": "docs/verification/cross-mode/p01/history-picture-return.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/delivery-priorities.md",
+      "target": "docs/delivery-priorities.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/current-delivery-plan.md",
+      "target": "docs/current-delivery-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/round-47/countercurrent-chapters.md",
+      "target": "docs/verification/round-47/countercurrent-chapters.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/implementation-roadmap.md",
+      "target": "docs/implementation-roadmap.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/delivery-priorities.md",
+      "target": "docs/delivery-priorities.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/continuous-steering.md",
+      "target": "docs/continuous-steering.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/wide-engine.md",
+      "target": "docs/wide-engine.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/first-light.md",
+      "target": "docs/first-light.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../xonix-audio-director/SKILL.md",
+      "target": "authoring/skills/xonix-audio-director/SKILL.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/shared-master-audio.md",
+      "target": "docs/shared-master-audio.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../publishing/pages-controller/delivery/evidence/cross-mode-p02-a/public-v0580/README.md",
+      "target": "publishing/pages-controller/delivery/evidence/cross-mode-p02-a/public-v0580/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/cross-mode-delivery.md",
+      "target": "authoring/prompts/cross-mode-delivery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/enemy-guide.md",
+      "target": "docs/enemy-guide.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/shared-display-preferences.md",
+      "target": "docs/shared-display-preferences.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/cross-mode-execution.md",
+      "target": "docs/cross-mode-execution.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/cross-mode-delivery.md",
+      "target": "authoring/prompts/cross-mode-delivery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/text-size.md",
+      "target": "docs/text-size.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/supporting-screen-readability.md",
+      "target": "docs/supporting-screen-readability.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/profile-recovery.md",
+      "target": "docs/profile-recovery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/round-47/profile-reader-native.md",
+      "target": "docs/verification/round-47/profile-reader-native.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/profile-recovery.md",
+      "target": "docs/profile-recovery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/story-workshop-authoring.md",
+      "target": "docs/story-workshop-authoring.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/story-workshop.md",
+      "target": "authoring/prompts/story-workshop.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/sentinel-relay.md",
+      "target": "docs/sentinel-relay.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../library/sentinel-relay/prompts.json",
+      "target": "authoring/library/sentinel-relay/prompts.json",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-navigation.md",
+      "target": "docs/controller-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-practice.md",
+      "target": "docs/controller-practice.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/round-15-controller-plan.md",
+      "target": "docs/round-15-controller-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-bindings-contract.md",
+      "target": "docs/controller-bindings-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-router-bindings.md",
+      "target": "docs/controller-router-bindings.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/round-22-controller-reading-plan.md",
+      "target": "docs/round-22-controller-reading-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-boost.md",
+      "target": "docs/controller-boost.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../game/controller-lab/index.html",
+      "target": "game/controller-lab/index.html",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-preference-migration.md",
+      "target": "docs/controller-preference-migration.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/couch-controller-navigation.md",
+      "target": "docs/couch-controller-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-29-couch-menus.md",
+      "target": "authoring/prompts/round-29-couch-menus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/relay-rescue-plan.md",
+      "target": "docs/relay-rescue-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/replay-theater.md",
+      "target": "docs/replay-theater.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p01/legacy-transfer-index.md",
+      "target": "docs/verification/cross-mode/p01/legacy-transfer-index.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/library-and-packs.md",
+      "target": "docs/library-and-packs.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/library-and-packs.md",
+      "target": "docs/library-and-packs.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/text-size.md",
+      "target": "docs/text-size.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/round-28-save-export-plan.md",
+      "target": "docs/round-28-save-export-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/round-28/attempt-export.md",
+      "target": "docs/verification/round-28/attempt-export.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/round-28/attempt-export-browser.md",
+      "target": "docs/verification/round-28/attempt-export-browser.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-28-attempt-exports.md",
+      "target": "authoring/prompts/round-28-attempt-exports.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/chapter-rewards.md",
+      "target": "docs/chapter-rewards.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-20-chapter-rewards.md",
+      "target": "authoring/prompts/round-20-chapter-rewards.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/continuity-transfer.md",
+      "target": "docs/continuity-transfer.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/authored-art.md",
+      "target": "docs/authored-art.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/round-17-mastery-increment.md",
+      "target": "docs/round-17-mastery-increment.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/round-18-equipment-mastery-plan.md",
+      "target": "docs/round-18-equipment-mastery-plan.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/mastery-verification-contract.md",
+      "target": "docs/mastery-verification-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/mastery-observer-contract.md",
+      "target": "docs/mastery-observer-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/mastery-session-contract.md",
+      "target": "docs/mastery-session-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/mastery-records-contract.md",
+      "target": "docs/mastery-records-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/pack-mastery-contract.md",
+      "target": "docs/pack-mastery-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-18-equipment-goals.md",
+      "target": "authoring/prompts/round-18-equipment-goals.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-17-optional-mastery.md",
+      "target": "authoring/prompts/round-17-optional-mastery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/mastery-catalog-contract.md",
+      "target": "docs/mastery-catalog-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/pack-mastery-contract.md",
+      "target": "docs/pack-mastery-contract.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../xonix-expansion-author/SKILL.md",
+      "target": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/campaign-difficulty.md",
+      "target": "docs/campaign-difficulty.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-30-gentle-difficulty.md",
+      "target": "authoring/prompts/round-30-gentle-difficulty.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/retry-feedback.md",
+      "target": "docs/retry-feedback.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/flight-controls.md",
+      "target": "docs/flight-controls.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-26-first-flight.md",
+      "target": "authoring/prompts/round-26-first-flight.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-15-controller-journeys.md",
+      "target": "authoring/prompts/round-15-controller-journeys.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/round-16-controller-layouts.md",
+      "target": "authoring/prompts/round-16-controller-layouts.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/versioning.md",
+      "target": "docs/versioning.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/deployment.md",
+      "target": "docs/deployment.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../xonix-native-packager/SKILL.md",
+      "target": "authoring/skills/xonix-native-packager/SKILL.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/native-distribution.md",
+      "target": "docs/native-distribution.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../publishing/utility/README.md",
+      "target": "publishing/utility/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/feature-delivery-workflow.md",
+      "target": "docs/feature-delivery-workflow.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/delivery-priorities.md",
+      "target": "docs/delivery-priorities.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/enemy-catalog.md",
+      "target": "docs/enemy-catalog.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../library/fpv-arcade-r3/README.md",
+      "target": "authoring/library/fpv-arcade-r3/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/enemy-workflows.json",
+      "target": "authoring/prompts/enemy-workflows.json",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/enemy-pressure.md",
+      "target": "docs/enemy-pressure.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/boot-launch.md",
+      "target": "docs/boot-launch.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/boot-launch.md",
+      "target": "docs/boot-launch.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/offline-release.md",
+      "target": "docs/offline-release.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/feature-delivery-workflow.md",
+      "target": "docs/feature-delivery-workflow.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/continuity-transfer.md",
+      "target": "docs/continuity-transfer.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/feature-delivery-workflow.md",
+      "target": "docs/feature-delivery-workflow.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/optional-worlds.md",
+      "target": "authoring/prompts/optional-worlds.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/more-worlds-browser.md",
+      "target": "docs/more-worlds-browser.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/feature-delivery-workflow.md",
+      "target": "docs/feature-delivery-workflow.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/media-presentation.md",
+      "target": "authoring/prompts/media-presentation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/shared-static-pictures.md",
+      "target": "docs/shared-static-pictures.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p08-a/README.md",
+      "target": "docs/verification/cross-mode/p08-a/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p08-p05-integration/README.md",
+      "target": "docs/verification/cross-mode/p08-p05-integration/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/retained-next-results.md",
+      "target": "docs/retained-next-results.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/research/round-43-next-milestone-review.md",
+      "target": "docs/research/round-43-next-milestone-review.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-navigation.md",
+      "target": "docs/controller-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/authored-story-bindings.md",
+      "target": "docs/authored-story-bindings.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/authored-story-bindings.md",
+      "target": "authoring/prompts/authored-story-bindings.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/device-controls.md",
+      "target": "docs/device-controls.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/story-runtime-adoption.md",
+      "target": "docs/story-runtime-adoption.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/selected-chapter.md",
+      "target": "docs/selected-chapter.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/device-controls.md",
+      "target": "docs/device-controls.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controls.md",
+      "target": "docs/controls.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p05-a/confirmations/README.md",
+      "target": "docs/verification/cross-mode/p05-a/confirmations/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/feature-delivery-workflow.md",
+      "target": "docs/feature-delivery-workflow.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/round-47/v039-native.md",
+      "target": "docs/verification/round-47/v039-native.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/field-kit-surfaces.md",
+      "target": "docs/field-kit-surfaces.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/field-kit-production.md",
+      "target": "docs/field-kit-production.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/fallback-body-derivatives.md",
+      "target": "docs/fallback-body-derivatives.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/collection-title-return.md",
+      "target": "docs/collection-title-return.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/text-presentation.md",
+      "target": "docs/text-presentation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/delivery-priorities.md",
+      "target": "docs/delivery-priorities.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/snapshot-staging.md",
+      "target": "docs/snapshot-staging.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/full-backup.md",
+      "target": "docs/full-backup.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p02-a/p01-composition/README.md",
+      "target": "docs/verification/cross-mode/p02-a/p01-composition/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/cross-mode-execution.md",
+      "target": "docs/cross-mode-execution.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/team-departure.md",
+      "target": "docs/team-departure.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-k/README.md",
+      "target": "docs/verification/cross-mode/p03-k/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/mode-departure.md",
+      "target": "docs/mode-departure.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-r3/README.md",
+      "target": "docs/verification/cross-mode/p03-r3/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/title-start-continuation.md",
+      "target": "docs/title-start-continuation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-r5-adaptation/README.md",
+      "target": "docs/verification/cross-mode/p03-r5-adaptation/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../prompts/cross-mode-delivery.md",
+      "target": "authoring/prompts/cross-mode-delivery.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/common-couch-lobby.md",
+      "target": "docs/common-couch-lobby.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/title-mode-entry.md",
+      "target": "docs/title-mode-entry.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-composed/README.md",
+      "target": "docs/verification/cross-mode/p03-composed/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/operation-focus.md",
+      "target": "docs/operation-focus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-operation-focus/README.md",
+      "target": "docs/verification/cross-mode/p03-operation-focus/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/operation-focus.md",
+      "target": "docs/operation-focus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-gallery-return/README.md",
+      "target": "docs/verification/cross-mode/p03-gallery-return/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p05-p03-integration/README.md",
+      "target": "docs/verification/cross-mode/p05-p03-integration/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p05-team-hud/README.md",
+      "target": "docs/verification/cross-mode/p05-team-hud/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/menu-appearance.md",
+      "target": "docs/menu-appearance.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/couch-visible-focus.md",
+      "target": "docs/couch-visible-focus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/couch-resize-focus.md",
+      "target": "docs/couch-resize-focus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/team-picture-host.md",
+      "target": "docs/team-picture-host.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p08-team-host/README.md",
+      "target": "docs/verification/cross-mode/p08-team-host/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/collection-records-return.md",
+      "target": "docs/collection-records-return.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/cross-mode-source-composition/README.md",
+      "target": "docs/verification/cross-mode/cross-mode-source-composition/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/team-actor-presentation.md",
+      "target": "docs/team-actor-presentation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/gameplay-presentation-composition.md",
+      "target": "docs/gameplay-presentation-composition.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/reading-input-prompts.md",
+      "target": "docs/reading-input-prompts.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/couch-reading.md",
+      "target": "docs/couch-reading.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/couch-reading.md",
+      "target": "docs/couch-reading.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03-reading-prompts/native/README.md",
+      "target": "docs/verification/cross-mode/p03-reading-prompts/native/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p03/recipe-review.md",
+      "target": "docs/verification/cross-mode/p03/recipe-review.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/more-worlds-flight-selection.md",
+      "target": "docs/more-worlds-flight-selection.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/controller-navigation.md",
+      "target": "docs/controller-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/team-display-clearance.md",
+      "target": "docs/team-display-clearance.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/practice-playground-readability.md",
+      "target": "docs/practice-playground-readability.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/verification/cross-mode/p05-practice-playground/history-restoration/README.md",
+      "target": "docs/verification/cross-mode/p05-practice-playground/history-restoration/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../production/README.md",
+      "target": "authoring/production/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../viewport-lab/README.md",
+      "target": "authoring/viewport-lab/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/recovery-display-readability.md",
+      "target": "docs/recovery-display-readability.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/recovery-startup-navigation.md",
+      "target": "docs/recovery-startup-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/recovery-startup-navigation.md",
+      "target": "docs/recovery-startup-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/recovery-startup-navigation.md",
+      "target": "docs/recovery-startup-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/recovery-startup-navigation.md",
+      "target": "docs/recovery-startup-navigation.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../authoring/motion-lab/README.md",
+      "target": "authoring/motion-lab/README.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/operation-focus.md",
+      "target": "docs/operation-focus.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/team-picture-host.md",
+      "target": "docs/team-picture-host.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "reference": "../../../docs/team-victory-picture.md",
+      "target": "docs/team-victory-picture.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "docs/team-picture-host.md",
+      "reference": "team-victory-picture.md",
+      "target": "docs/team-victory-picture.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "docs/team-picture-host.md",
+      "reference": "team-picture-bindings.md",
+      "target": "docs/team-picture-bindings.md",
+      "existsInCandidate": true
+    },
+    {
+      "from": "docs/team-picture-host.md",
+      "reference": "verification/cross-mode/p08-team-host/README.md",
+      "target": "docs/verification/cross-mode/p08-team-host/README.md",
+      "existsInCandidate": true
+    }
+  ],
+  "limits": [
+    "No full build, production command, browser, rasterization, hardware, release or phase acceptance.",
+    "Original historical candidate results are not evidence for this composition."
+  ]
+}

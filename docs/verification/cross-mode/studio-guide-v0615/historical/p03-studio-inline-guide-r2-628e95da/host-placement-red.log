@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+not ok 1 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 1830.01225
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-studio-inline-guide/game/test/asset-studio-host-loading.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Guide stays in the stable header above asynchronously populated workspace content.
+    + actual - expected ... Lines skipped
+    
+    + null
+    ...
+    - <ref *6> StudioElement {
+    -   _rect: [Object],
+    -   _text: '',
+    -   attributes: [Map],
+    -   captureListeners: Map(0) {},
+    -   captures: Set(0) {},
+    -   checked: false,
+    -   children: [
+    -     <ref *249> StudioElement {
+    -       _rect: {
+    -         height: 44,
+    -         width: 100,
+    -         x: 0,
+    -         y: 0
+    -       },
+    -       _text: '',
+    -       attributes: Map(0) {},
+    -       captureListeners: Map(0) {},
+    -       captures: Set(0) {},
+    -       checked: false,
+    -       children: [
+    -         StudioElement {
+    -           _rect: {
+    -             height: 44,
+    -             width: 100,
+    -             x: 0,
+    -             y: 0
+    -           },
+    -           _text: '',
+    -           attributes: Map(2) {
+    -             'data-studio-host' => 'control',
+    -             'href' => '../../game/'
+    -           },
+    -           captureListeners: Map(0) {},
+    -           captures: Set(0) {},
+    -           checked: false,
+    -           children: [],
+    -           classList: Classes {
+    -             values: Set(0) {}
+    -           },
+    -           clientHeight: 44,
+    -           dataset: {
+    -             studioHost: 'control'
+    -           },
+    -           disabled: false,
+    -           hidden: false,
+    -           id: '',
+    -           inert: false,
+    -           listeners: Map(0) {},
+    -           nodeName: 'A',
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1937.042625

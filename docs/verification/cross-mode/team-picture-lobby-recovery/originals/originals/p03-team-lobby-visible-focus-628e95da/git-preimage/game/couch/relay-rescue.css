@@ -1,0 +1,887 @@
+/* Layout only: Field Kit owns the shared typography, palette and controls. */
+:root {
+  color-scheme: dark;
+  --ink: var(--fk-text);
+  --muted: var(--fk-muted);
+  --bg: var(--fk-bg);
+  --panel: var(--fk-panel);
+  --sun: var(--fk-amber);
+  --sky: var(--fk-cyan);
+  --line: var(--fk-line);
+  font-family: var(--fk-font-ui);
+  color: var(--ink);
+  background: var(--bg);
+}
+.setup-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.pack-picker {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.pack-picker summary {
+  cursor: pointer;
+  padding: 10px 0;
+}
+.pack-picker label {
+  display: block;
+  margin: 8px 0;
+}
+.pack-picker input {
+  max-width: 100%;
+}
+.live-objective {
+  margin: 0 0 12px;
+  color: var(--sun);
+  font-size: 0.85rem;
+}
+.control-card .support-status {
+  color: inherit;
+  font-size: 0.75rem;
+  margin-top: 8px;
+  min-height: 1.7em;
+  line-height: 1.5;
+}
+.controller-focus {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+}
+.playing .masthead {
+  min-height: 56px;
+}
+/* During flight, Pause owns the mode exits. Keep the full arena and controls
+   in view at every size; menus and results restore their masthead normally. */
+.playing:has(#coop-overlay[hidden]) .masthead {
+  display: none;
+}
+.playing .controls {
+  padding-top: 8px;
+}
+.playing .control-card {
+  padding: 8px 12px;
+}
+.playing .control-card h2,
+.playing .control-card .support-status {
+  display: none;
+}
+.playing .help-footer {
+  padding-top: 4px;
+}
+.playing .help-footer p {
+  display: none;
+}
+@media (min-width: 761px) {
+  .playing .arena-wrap {
+    width: min(100%, max(240px, calc((100svh - 240px) * 2)));
+    margin-inline: auto;
+  }
+  .playing[data-coop-touch='visible'] .arena-wrap {
+    width: min(100%, max(240px, calc((100svh - 440px) * 2)));
+  }
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--fk-bg);
+}
+button,
+select,
+input {
+  font: inherit;
+}
+button,
+a,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+select {
+  border: 1px solid var(--line);
+  border-radius: var(--fk-corner);
+  background: #18323c;
+  color: var(--ink);
+  padding: 0.75rem 1rem;
+}
+button {
+  cursor: pointer;
+  font-weight: 650;
+  min-height: 44px;
+}
+button:hover {
+  background: #25434c;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+a {
+  color: var(--muted);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 4px;
+}
+[hidden] {
+  display: none !important;
+}
+#coop-app {
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 max(12px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+}
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 90px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8rem;
+}
+.brand {
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: var(--ink);
+}
+.brand span {
+  font-weight: 400;
+  color: var(--sun);
+}
+.mode-label {
+  display: flex;
+  gap: 28px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.mode-label b {
+  font-weight: 500;
+  color: var(--ink);
+}
+.menu {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 8%;
+  padding: clamp(30px, 5vw, 76px) 0 42px;
+}
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--sun);
+  font-weight: 700;
+}
+h1 {
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.055em;
+  margin: 20px 0;
+}
+h1 em {
+  font-style: normal;
+  color: var(--sun);
+}
+.lead {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 38rem;
+}
+.setup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+.setup label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.field-kit dialog.coop-confirm-dialog {
+  box-sizing: border-box;
+  inset: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  width: min(
+    520px,
+    calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 32px)
+  );
+  max-height: calc(
+    100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px
+  );
+  margin: auto;
+  padding: clamp(20px, 4vw, 32px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--fk-text);
+  background: var(--fk-panel);
+  border: 2px solid var(--fk-control-line);
+}
+.coop-confirm-dialog h2 {
+  margin-top: 0;
+}
+.coop-confirm-dialog p {
+  overflow-wrap: anywhere;
+  line-height: var(--fk-leading-body);
+}
+.coop-confirm-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.field-kit .coop-confirm-dialog .coop-confirm-actions button {
+  min-block-size: 50px;
+  width: 100%;
+}
+.primary {
+  background: var(--sun);
+  color: #172426;
+  border-color: var(--sun);
+  padding: 0.9rem 1.5rem;
+}
+.primary:hover {
+  background: #ffe6a3;
+}
+.briefing {
+  border: 1px solid var(--line);
+  border-radius: var(--fk-corner);
+  background: var(--fk-panel);
+  padding: 28px;
+  align-self: center;
+}
+.briefing ol {
+  padding-left: 1.5rem;
+  margin: 28px 0;
+  display: grid;
+  gap: 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.briefing li {
+  padding-left: 8px;
+}
+.briefing li::marker {
+  color: var(--sun);
+  font-weight: 700;
+}
+.briefing strong {
+  display: block;
+  color: var(--ink);
+}
+.objective {
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  line-height: 2;
+}
+.objective strong {
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+}
+.identity {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 10px;
+  font-size: 0.8rem;
+}
+.identity .player-number {
+  grid-row: span 3;
+  align-self: center;
+}
+.identity > span:last-child {
+  color: var(--muted);
+}
+.identity .charge-state {
+  grid-column: 2;
+  font-size: 0.7rem;
+}
+.player-number {
+  display: inline-grid;
+  place-items: center;
+  font-weight: 750;
+  width: 30px;
+  height: 30px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.sunflower {
+  color: var(--sun);
+}
+.skyline {
+  color: var(--sky);
+}
+.team-status {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 3px 12px;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.team-status > strong {
+  grid-column: 2;
+  grid-row: span 2;
+  font-size: 2rem;
+  letter-spacing: -0.07em;
+  color: var(--ink);
+}
+progress {
+  width: 100%;
+  height: 4px;
+  grid-column: span 2;
+  border: 0;
+  border-radius: 3px;
+  accent-color: var(--sun);
+}
+progress::-webkit-progress-bar {
+  background: var(--line);
+}
+progress::-webkit-progress-value {
+  background: var(--sun);
+}
+.arena-wrap {
+  position: relative;
+  border: var(--fk-border-width) solid var(--fk-line);
+  border-radius: var(--fk-corner);
+  overflow: hidden;
+  background: var(--fk-bg);
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/1;
+}
+.board-footer {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-height: 66px;
+  font-size: 0.8rem;
+}
+.board-footer p {
+  flex: 1;
+  color: var(--muted);
+}
+#coop-clock {
+  font-variant-numeric: tabular-nums;
+}
+.board-footer button {
+  padding: 0.5rem 0.8rem;
+  min-height: 36px;
+}
+.overlay {
+  position: fixed;
+  inset: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) auto
+    max(12px, env(safe-area-inset-left));
+  z-index: 2;
+  display: block;
+  max-width: 672px;
+  max-height: calc(
+    100svh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom))
+  );
+  margin-inline: auto;
+  border: var(--fk-border-width) solid var(--fk-line);
+  background: var(--fk-panel);
+  backdrop-filter: none;
+  padding: 16px;
+  overflow: auto;
+  /* Keep the shared 7px focus ring inside this bounded scroller. */
+  scroll-padding: 8px;
+  overscroll-behavior: contain;
+}
+.overlay-card {
+  text-align: center;
+  width: min(100%, 640px);
+  margin-inline: auto;
+}
+.overlay-card h2 {
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
+  letter-spacing: -0.04em;
+  margin: 14px 0;
+}
+.overlay-card > p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+.field-kit #coop-pause-modes {
+  margin-block-start: var(--fk-space-4, 16px);
+}
+.coop-mode-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-block: 14px;
+}
+.field-kit .coop-mode-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 50px;
+  max-inline-size: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--fk-corner);
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.control-card {
+  background: #11273190;
+  border: 1px solid var(--line);
+  border-radius: var(--fk-corner);
+  padding: 16px 20px;
+}
+.control-card h2 {
+  font-size: 1rem;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.control-card p {
+  font-size: 0.8rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 2.3;
+}
+kbd {
+  display: inline-block;
+  border: 1px solid #3c555c;
+  border-bottom-width: 3px;
+  border-radius: 4px;
+  padding: 0 5px;
+  line-height: 1.7;
+  margin-right: 3px;
+  font: inherit;
+  color: var(--ink);
+}
+.control-card p > span {
+  margin: 0 8px;
+}
+.race-pad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.race-cross {
+  display: grid;
+  grid-template-columns: repeat(3, var(--fk-target-size));
+  grid-template-rows: repeat(3, var(--fk-target-size));
+  grid-template-areas: '. up .' 'left center right' '. down .';
+  gap: 4px;
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+.race-cross [data-direction='up'] {
+  grid-area: up;
+}
+.race-cross [data-direction='left'] {
+  grid-area: left;
+}
+.race-cross [data-direction='right'] {
+  grid-area: right;
+}
+.race-cross [data-direction='down'] {
+  grid-area: down;
+}
+.cross-center {
+  grid-area: center;
+  display: grid;
+  place-items: center;
+  font-family: var(--fk-font-mono);
+  color: currentColor;
+}
+.race-pad button {
+  touch-action: none;
+  user-select: none;
+  min-width: 44px;
+}
+.race-pad .pressed {
+  background: var(--sun);
+  color: #0b1a24;
+}
+.skyline .race-pad .pressed {
+  background: var(--sky);
+}
+.help-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  padding-top: 14px;
+}
+.help-footer p {
+  width: 100%;
+  margin: 0;
+  line-height: 1.6;
+}
+.help-footer label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+}
+#coop-boot {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+@media (max-width: 760px) {
+  .mode-label {
+    display: none;
+  }
+  .masthead {
+    min-height: 64px;
+  }
+  .menu {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .briefing {
+    padding: 20px;
+  }
+  .briefing ol {
+    gap: 14px;
+  }
+  .controls {
+    gap: 10px;
+  }
+  .control-card {
+    padding: 12px;
+  }
+  .identity strong {
+    font-size: 0.66rem;
+  }
+  .hud {
+    gap: 8px;
+  }
+  .identity {
+    gap: 2px 5px;
+  }
+  .identity .player-number {
+    width: 24px;
+    height: 24px;
+  }
+  .team-status {
+    font-size: 0.6rem;
+    gap: 2px 6px;
+  }
+  .team-status > strong {
+    font-size: 1.5rem;
+  }
+  .help-footer {
+    font-size: 0.7rem;
+  }
+  .overlay-card > p {
+    font-size: 0.8rem;
+  }
+  .overlay-actions {
+    margin-top: 10px;
+  }
+  .overlay-actions button {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+  .overlay-card .eyebrow {
+    display: none;
+  }
+  .overlay-card h2 {
+    margin: 0;
+  }
+  .control-card p > span {
+    margin: 0 3px;
+  }
+  .race-pad {
+    gap: 6px;
+  }
+  .overlay-card > p {
+    margin: 8px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+  .overlay {
+    backdrop-filter: none;
+  }
+}
+
+/* Live controls contain only the actual touch targets. Desktop help lives in
+   the shared lobby/pause disclosures, never beneath a running arena. */
+.controls {
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 8px;
+  padding-top: 8px;
+}
+.playing .control-card {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.control-card[data-touch-visible='false'] {
+  visibility: hidden;
+}
+.race-pad {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(var(--fk-target-size), 1fr));
+  gap: 4px;
+  margin: 0 auto;
+  width: 140px;
+}
+.field-kit .race-pad button {
+  min-width: var(--fk-target-size);
+  min-height: var(--fk-target-size);
+  padding: var(--fk-space-1);
+  font-size: var(--fk-text-secondary);
+}
+.field-kit .race-pad .pressed {
+  color: var(--fk-on-accent);
+  background: var(--sun);
+  border-color: currentColor;
+}
+.field-kit .skyline .race-pad .pressed {
+  background: var(--sky);
+}
+.coop-tools {
+  margin-top: var(--fk-space-4);
+  text-align: left;
+}
+.coop-tools details {
+  border-top: 1px solid var(--fk-line);
+  padding-block: var(--fk-space-2);
+}
+.coop-tools summary {
+  cursor: pointer;
+  display: list-item;
+  padding: var(--fk-space-2);
+}
+.coop-tools label,
+.coop-tools select,
+#coop-options label,
+#coop-options select,
+#coop-pads {
+  display: block;
+  margin-block: var(--fk-space-2);
+}
+#coop-help-reading {
+  max-height: 38svh;
+  overflow: auto;
+  padding: var(--fk-space-2);
+}
+#coop-help-reading p {
+  margin: 0 0 var(--fk-space-3);
+}
+#coop-help-reading:focus-visible {
+  outline: 3px solid var(--fk-focus);
+  outline-offset: -3px;
+}
+#coop-clock,
+.team-status > strong {
+  font-family: var(--fk-font-mono);
+}
+@media (max-width: 319px) {
+  .controls {
+    grid-template-columns: minmax(140px, 1fr);
+  }
+  .control-card[data-touch-visible='false'] {
+    display: none;
+  }
+}
+
+.masthead a {
+  display: flex;
+  align-items: center;
+  min-height: var(--fk-target-size);
+}
+#coop-quick-sound {
+  min-height: var(--fk-target-size);
+}
+
+/* Short landscape gives each touch player a gutter beside the whole arena.
+   The existing wrappers and DOM order remain intact for menus and pause. */
+@media (orientation: landscape) and (min-width: 640px) and (max-height: 500px) {
+  .playing[data-coop-touch='visible'] #coop-app {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) 140px;
+    grid-template-rows: auto auto minmax(188px, 1fr) auto;
+    gap: 4px 12px;
+    height: 100svh;
+    max-width: none;
+    padding-block: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-bottom));
+  }
+  .playing[data-coop-touch='visible'] #coop-play,
+  .playing[data-coop-touch='visible'] #coop-controls {
+    display: contents;
+  }
+  .playing[data-coop-touch='visible'] .hud {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding: 0;
+    gap: 8px;
+  }
+  .playing[data-coop-touch='visible'] .live-objective {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+    font-size: var(--fk-text-secondary);
+    line-height: 1.3;
+  }
+  .playing[data-coop-touch='visible'] .arena-wrap {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
+    width: 100%;
+    max-width: calc(
+      (
+          100svh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom)) -
+            144px
+        ) *
+        2
+    );
+    margin: 0 auto;
+  }
+  .playing[data-coop-touch='visible'] .control-card {
+    grid-row: 3;
+    align-self: center;
+    min-width: 0;
+  }
+  .playing[data-coop-touch='visible'] .control-card:first-child {
+    grid-column: 1;
+  }
+  .playing[data-coop-touch='visible'] .control-card:last-child {
+    grid-column: 3;
+  }
+  .playing[data-coop-touch='visible'] .board-footer {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    min-height: var(--fk-target-size);
+    gap: 8px;
+  }
+  .playing[data-coop-touch='visible'] .board-footer p {
+    margin: 0;
+    font-size: var(--fk-text-secondary);
+    line-height: 1.3;
+  }
+}
+
+/* Shared display roles enlarge text without changing either player's geometry. */
+.field-kit[data-field-kit-page='relay-rescue']
+  :is(.identity, .identity strong, .identity > span, .team-status, .masthead, .eyebrow) {
+  font-size: var(--fk-text-secondary);
+  line-height: 1.35;
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.team-status > strong, #coop-clock) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-counter);
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.mode-label, .team-status) {
+  letter-spacing: normal;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity {
+  min-width: 0;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity strong {
+  overflow-wrap: anywhere;
+}
+
+/* Give each partner a readable half-row before the shared territory summary.
+   The HUD contains no controls; input order and the arena stay unchanged. */
+@media (max-width: 600px) {
+  .field-kit[data-field-kit-page='relay-rescue'] .hud {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'one two' 'team team';
+    align-items: start;
+    gap: 12px;
+    padding-block: 12px;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud > .sunflower {
+    grid-area: one;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud > .skyline {
+    grid-area: two;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud .player-number {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud .identity strong {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud .identity > span:not(.player-number) {
+    grid-column: 1 / -1;
+  }
+  .field-kit[data-field-kit-page='relay-rescue'] .hud > .team-status {
+    grid-area: team;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-width: 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--fk-line);
+  }
+}
+
+/* Picture controls share the movable lobby/pause tools and their current root. */
+.coop-picture {
+  min-inline-size: 0;
+}
+.coop-picture p {
+  overflow-wrap: anywhere;
+}
+.coop-picture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.coop-picture-actions button {
+  min-block-size: 50px;
+}
+
+#coop-help-unit .reading-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-2);
+}
+#coop-help-unit .reading-hint {
+  margin-block: var(--fk-space-2);
+  color: var(--fk-text);
+}

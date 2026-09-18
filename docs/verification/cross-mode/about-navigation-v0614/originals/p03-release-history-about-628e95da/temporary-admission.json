@@ -1,0 +1,260 @@
+{
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "beforeAllocated": 5214208,
+  "forecastAllocated": 7229440,
+  "capBytes": 7340032,
+  "paths": [
+    {
+      "path": "authoring/asset-studio/index.html",
+      "gitBlob": "19e8b8561326488c07a92e1c2e7d2f8ed87f9300",
+      "bytes": 27771,
+      "sha256": "91d04d23995ee30fc1062818bfd67ac937c4d2f0a4818db2f52165603d01bd31"
+    },
+    {
+      "path": "authoring/design-atlas/index.html",
+      "gitBlob": "29f65bfd28629e5ac7c042a978680c1112cce46d",
+      "bytes": 24947,
+      "sha256": "3ed4c0332eb2fdaf90b3a69a2bd4abf1c3bd0a9616aa1c48962be9277efd25e6"
+    },
+    {
+      "path": "authoring/enemy-catalog/index.html",
+      "gitBlob": "550038ee584003056a636a36674fce42c47781e1",
+      "bytes": 2315,
+      "sha256": "340a84ef02a9f059dd6d1ae28184a58b4d110c6f3c669dcb56f7facfe1bfc104"
+    },
+    {
+      "path": "authoring/motion-lab/index.html",
+      "gitBlob": "cd6c076f3c99c54b1d9dcaab3853ff231309f9ff",
+      "bytes": 21450,
+      "sha256": "9940a5d9265a52097a2101f07f2248323b44c3060964579da07d4785fa1f1d0d"
+    },
+    {
+      "path": "authoring/still-media/index.html",
+      "gitBlob": "68f8e92a8e57f336a9ad99a058450bf627a01b58",
+      "bytes": 5356,
+      "sha256": "b784ebba4c565dc8d814cbe2e81246a83890bdb4992d6b02a6ee1179762859f5"
+    },
+    {
+      "path": "authoring/video-poster/index.html",
+      "gitBlob": "ec8b399cbf3a32cd61b5a7105752489e004a8792",
+      "bytes": 4476,
+      "sha256": "88c15c14163a7ab839085d12df19dd5c84734eb294f67ae8b3076191339b8ec6"
+    },
+    {
+      "path": "game/boot.css",
+      "gitBlob": "f4859444e4c671085fa5ba828515c2337c1d8bab",
+      "bytes": 4734,
+      "sha256": "f458a234db449adcb1f08c126a3c2fec55264247952e901ec2eac5d13d6e2504"
+    },
+    {
+      "path": "game/boot.mjs",
+      "gitBlob": "168f0ad300a81f3df574438e2f245c15189f5796",
+      "bytes": 7772,
+      "sha256": "902b86a6ba9156697c865f7b055e246627c7b4081e797a5e032919ea2128aa11"
+    },
+    {
+      "path": "game/controller-lab/index.html",
+      "gitBlob": "42f3a5e1e3e2162ca90e068d2f82029ce22b8fd7",
+      "bytes": 12766,
+      "sha256": "73b555a8130d8e2c7197e1c41f517beeae786c9af692ac31bfae1a1d0bf4caf6"
+    },
+    {
+      "path": "game/couch/index.html",
+      "gitBlob": "407cd740a443d4da57f6a5c5b9f9fc36fdb96ce6",
+      "bytes": 21142,
+      "sha256": "8fa44752b10e79ba7ffd535965fb29d127de09ea2d6e2b5ef12f7e3704d19aaa"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "gitBlob": "32f9a6cafa4651d10a578c1a62224eee6231f1bd",
+      "bytes": 21586,
+      "sha256": "25076c69184ac46c5bf03a1a7cc779beb36c87de17584aa22901d4a31629a2e1"
+    },
+    {
+      "path": "game/playground/index.html",
+      "gitBlob": "e7968e35b7000efce46daacc4fe7ceb6e925cf3d",
+      "bytes": 27517,
+      "sha256": "39da96459b8efc9775d8bd303c0c58245293ff03aaf8e2a0c89a0bc2b3b7d703"
+    },
+    {
+      "path": "game/playground/playground.css",
+      "gitBlob": "cd39c01950e9edd66e1182b5647a8e65da349cfb",
+      "bytes": 8631,
+      "sha256": "465201e7fa2e95735fbf095c96cebc8dab859513776283eb571a9c1917aa36dd"
+    },
+    {
+      "path": "game/presentation/page-entry.mjs",
+      "gitBlob": "38300546c4bf81e7d77d2cb1f956fcad2287544a",
+      "bytes": 2745,
+      "sha256": "4bdbd4bacd1a3e2822c7f49130f8f802dee5eeebf0e194c3c08838a2ab156e5c"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "gitBlob": "43144c1651e9a156e24c96d8316030817c1d5eb6",
+      "bytes": 9037,
+      "sha256": "a63cd826a9e8bf041848c4fe214fa5fbe13b6df054dfa02e9dfb31ceb0d47b71"
+    },
+    {
+      "path": "game/replay-theater/theater.css",
+      "gitBlob": "8f936ca71aed0313f175ffe41a81e556ecf873a9",
+      "bytes": 9689,
+      "sha256": "ce8ea7c7f9cbd4f4a9a905e401cfa9a04179ce8ffe138b08e642bf0969d7d1c9"
+    },
+    {
+      "path": "game/style.css",
+      "gitBlob": "3c8bf0b474bccc6e0b36a37053fcd133e0aab2c8",
+      "bytes": 45729,
+      "sha256": "1e3c271f89ee4c559cece9518fb2dc75b6408295e459b97625780cc096dec6ba"
+    },
+    {
+      "path": "game/ui/backup-set.css",
+      "gitBlob": "3e22a8947e11a3ed959dff2aff07a85f26db93f8",
+      "bytes": 1622,
+      "sha256": "e4c5c1ee454f09ddd7b722f1ee1e9cb6b0122748ce21a89b22ebf998300ea41b"
+    },
+    {
+      "path": "game/ui/controller-settings.css",
+      "gitBlob": "0d7cab2ef53e1ede5a78700c9b8fd852c9ecc441",
+      "bytes": 2398,
+      "sha256": "cfdc4360b453dee456605e25cb42d2b570961d31b867f34600d7c6eba427c4cf"
+    },
+    {
+      "path": "game/ui/device-controls.css",
+      "gitBlob": "56071f93c958f822d4285d030f81a193e606b791",
+      "bytes": 20389,
+      "sha256": "07b568711533179efaecfb7785f9ceb6d412d0dd4f4a9b6a34718d38226f495a"
+    },
+    {
+      "path": "game/ui/direct-tool-launch.js",
+      "gitBlob": "088ec80d66932f946b51f8ae8303c5b1194b2626",
+      "bytes": 2507,
+      "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181"
+    },
+    {
+      "path": "game/ui/enemy-catalog-panel.css",
+      "gitBlob": "ff91723b7416d7d7a7c88eff44eca697e0b45820",
+      "bytes": 1534,
+      "sha256": "9def2f7013941af520a798ab68d2a75ebf1de360f56a80d915d3a36a4d83374a"
+    },
+    {
+      "path": "game/ui/enemy-guide.css",
+      "gitBlob": "46df56255277cf0bf4c6d3900a92f99113631be9",
+      "bytes": 2001,
+      "sha256": "0ac8c85b8c6048c7cd3f375880345c281459861836e594619dc5cf5b1858b8d4"
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "gitBlob": "3b198e87d8a0867a4f087e52f48a8ea7b692dbc0",
+      "bytes": 22607,
+      "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01"
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "gitBlob": "ed989f088e1e0a36407a1bafd361ed69fe46e888",
+      "bytes": 10003,
+      "sha256": "52f2a5b524f5473b601d313bb4d0b5eaab49231fd9814e4075c494dae74fead8"
+    },
+    {
+      "path": "game/ui/field-kit-flow.css",
+      "gitBlob": "52545071191639f65c7d0e740f9c2065af8e8f76",
+      "bytes": 11341,
+      "sha256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708"
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "gitBlob": "9e19817de49d95efb209e57f4d44c07a417116e5",
+      "bytes": 638,
+      "sha256": "6a71c7612bd5bc9a684b4865e0fafbd802d7c35128da2fff307cabd3e359b0db"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "gitBlob": "9d189175ba39f67e4772dd49daf5a9c49bfd63d7",
+      "bytes": 19324,
+      "sha256": "4f279f5bcb94e60cb1533814bb3078d708bc017841e025d7152515b3136c6f7b"
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "gitBlob": "e3e3ba7c2bcbec7f0f308129ceba7026ff075639",
+      "bytes": 2713,
+      "sha256": "30d79b9ec13f845377d5ae80a1c0544ca2323fc7a8d65611fe6acced3a6db2e4"
+    },
+    {
+      "path": "game/ui/game-shell.css",
+      "gitBlob": "4ea67bf1b162f8db8e6a4f1c4163ceaf6da03d5f",
+      "bytes": 12750,
+      "sha256": "0cb26b492d50dbd132b7cc287e9ef80b4092293df14cd36b86016a7b6daa19c5"
+    },
+    {
+      "path": "game/ui/menu-appearance.css",
+      "gitBlob": "958a1ee3b7e289a8d2010e26db4dcd0a37f1ad04",
+      "bytes": 4537,
+      "sha256": "c7eee049cafbdb5258201b742a6ecd07436dd7f715e85e2ace792401b27c18c3"
+    },
+    {
+      "path": "game/ui/mission-brief.css",
+      "gitBlob": "abb35f7ed880eaf298f65dab91270293530b29ef",
+      "bytes": 2690,
+      "sha256": "e2bb6384338d837cb536d59894364d488fc50256c11854389607e7dcdc77f194"
+    },
+    {
+      "path": "game/ui/mission-picker.css",
+      "gitBlob": "7ae02816038dad66dea1e83ab0fccca295df9f82",
+      "bytes": 3610,
+      "sha256": "5bdfb7446e69cb419267d864ba11e4ab9136e7a2bf9ae6b9d0cd90e9ff00570b"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "gitBlob": "9b213a4a01e496d6e19cf2c7cc059fe8a08dcf3d",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "gitBlob": "0fb541e1e5e2211fde429784eeffa1c91df57d1b",
+      "bytes": 1889,
+      "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e"
+    },
+    {
+      "path": "game/ui/optional-chapters-panel.css",
+      "gitBlob": "5707a8c1054800e983188fce5372b48299e2ab6b",
+      "bytes": 3487,
+      "sha256": "0b6babc8a4400496af2f0ac03afbd7dc7bd8d8b635296d79f1da5a55b7faf6de"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "gitBlob": "98c0bacd8450f9bf2ce379d0aac554495f15b733",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.css",
+      "gitBlob": "2e7fcc47c1c5947d5772137a4bf228ccaa305297",
+      "bytes": 1726,
+      "sha256": "542398fe48d3184e279c3bef3af0aa40aad98ad4ffb55d238884ee676c08ed58"
+    },
+    {
+      "path": "game/ui/settings.css",
+      "gitBlob": "e6096af6d687af2ccda1bdce26da05754ed4e41c",
+      "bytes": 2955,
+      "sha256": "ca56c34bd71a605d89606646d83a0eb42958a359189db3590bd9ca6d07961b1a"
+    },
+    {
+      "path": "game/ui/story-dialog.css",
+      "gitBlob": "331176a3ef7b9a00fcf6292ef98bfd1bb7c40f45",
+      "bytes": 1110,
+      "sha256": "ffdae66c28010c6865a889cad83351c6abc70bb6e908b58cfad4cc8de266d000"
+    },
+    {
+      "path": "game/ui/tool-display-entry.mjs",
+      "gitBlob": "b32edeed0b80cf1e34cb0f778a3417b1d95b775d",
+      "bytes": 233,
+      "sha256": "2428b9a1259b44f8ed48fcbeaf696a5b60d915c2a215717705b22a4b43094bf5"
+    },
+    {
+      "path": "game/vendor/phaser-4.2.1.min.js",
+      "gitBlob": "8d3fda95e9bb975c523747a688a7abb99115c662",
+      "bytes": 1375976,
+      "sha256": "66348b1b5141e49b7d5ebbe688cddcb502eab1cb00f21c538686a5b2c5abe4de"
+    }
+  ]
+}

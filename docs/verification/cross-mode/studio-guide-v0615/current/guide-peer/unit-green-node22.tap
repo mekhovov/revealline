@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: Close collapses the inline reader and returns native focus to its summary
+ok 1 - Close collapses the inline reader and returns native focus to its summary
+  ---
+  duration_ms: 11.477875
+  type: 'test'
+  ...
+# Subtest: guide Escape is consumed before the existing global cancellation listener
+ok 2 - guide Escape is consumed before the existing global cancellation listener
+  ---
+  duration_ms: 1.057958
+  type: 'test'
+  ...
+# Subtest: one held guide Escape cannot continue into authoring cancellation after collapse
+ok 3 - one held guide Escape cannot continue into authoring cancellation after collapse
+  ---
+  duration_ms: 0.303625
+  type: 'test'
+  ...
+# Subtest: a guide-owned held key stays consumed across a focus change without capturing other keys
+ok 4 - a guide-owned held key stays consumed across a focus change without capturing other keys
+  ---
+  duration_ms: 0.156542
+  type: 'test'
+  ...
+# Subtest: a fresh Escape recovers ordinary cancellation even if the prior keyup was missed
+ok 5 - a fresh Escape recovers ordinary cancellation even if the prior keyup was missed
+  ---
+  duration_ms: 0.221917
+  type: 'test'
+  ...
+# Subtest: an Escape repeat not owned by a guide close retains the existing outside route
+ok 6 - an Escape repeat not owned by a guide close retains the existing outside route
+  ---
+  duration_ms: 0.671458
+  type: 'test'
+  ...
+# Subtest: an open guide does not consume Escape or other keys from the authoring controls
+ok 7 - an open guide does not consume Escape or other keys from the authoring controls
+  ---
+  duration_ms: 0.629875
+  type: 'test'
+  ...
+# Subtest: programmatic Close cannot take focus from an unrelated control
+ok 8 - programmatic Close cannot take focus from an unrelated control
+  ---
+  duration_ms: 0.33575
+  type: 'test'
+  ...
+# Subtest: closing a hidden guide never forces return focus
+ok 9 - closing a hidden guide never forces return focus
+  ---
+  duration_ms: 0.559083
+  type: 'test'
+  ...
+# Subtest: closing a blurred guide never forces return focus
+ok 10 - closing a blurred guide never forces return focus
+  ---
+  duration_ms: 0.392541
+  type: 'test'
+  ...
+# Subtest: closing a inert guide never forces return focus
+ok 11 - closing a inert guide never forces return focus
+  ---
+  duration_ms: 0.141833
+  type: 'test'
+  ...
+# Subtest: closing a removed guide never forces return focus
+ok 12 - closing a removed guide never forces return focus
+  ---
+  duration_ms: 0.057291
+  type: 'test'
+  ...
+# Subtest: a later focus choice is not revisited after closing the guide
+ok 13 - a later focus choice is not revisited after closing the guide
+  ---
+  duration_ms: 3.529416
+  type: 'test'
+  ...
+# Subtest: terminal disposal removes Escape ownership and the scripted Close action
+ok 14 - terminal disposal removes Escape ownership and the scripted Close action
+  ---
+  duration_ms: 0.121708
+  type: 'test'
+  ...
+# Subtest: terminal disposal retires a held guide Escape guard and its document listeners
+ok 15 - terminal disposal retires a held guide Escape guard and its document listeners
+  ---
+  duration_ms: 0.140791
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 132.662292

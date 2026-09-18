@@ -2,9 +2,17 @@
 
 Asset Studio is the local presentation workbench at `authoring/asset-studio/`. It edits the versioned asset registry and theme bundles. It does not write player saves, change gameplay rules, publish a release, or upload files to a service. Save locally and export a `.rltheme` bundle to transfer work or submit it for review.
 
+## In-page guide
+
+Open **Studio guide** in the header for the select → prepare → provenance → stage → inspect/save/export workflow without leaving the workspace. The native disclosure works before the Studio module is ready. Its script-owned **Close guide** action appears only after mounting; Close or Escape from inside the guide collapses it and returns owned foreground focus to its summary. Holding that Escape does not cancel an asset operation, even if focus moves to another control. Release it before pressing Escape again to use the existing editor/operation action; an Escape press begun in other authoring controls keeps its normal behavior. The guide sits above the changing inventory and inspector, so startup rendering cannot push an open reader down the page. It remains available while authoring controls are busy and uses the existing Interface typography.
+
+Reading or closing the guide never changes prepared original/derivative bytes, crop/provenance fields, pixel undo/redo, staged history, or preview playback. A persisted history return retains the reader; terminal departure disposes only its scripted handlers. It is an in-page help surface, not a modal, navigation route or new operation owner.
+
+Maintenance prompt: “Open Studio guide while an upload is prepared and while sprite encoding is pending. Read and close it using the actual summary, Close and a held Escape; verify repeated keydowns do not cancel the operation, subsequent saved original/derivative bytes match, crop/provenance and real pixel undo/redo survive, and preview playback intent is unchanged. Release Escape, then press it again to verify deliberate operation cancellation still works. Check Plain/Large text, portrait and short landscape, and closing a scrolled reader in a native browser separately from modeled DOM tests.”
+
 ## Workspace and revisions
 
-The first visit opens the registered Field Kit source inventory. The baseline assets are labelled **source**, not finished production artwork. The inventory reports missing, source, produced, and reviewed counts separately. Filter by theme, screen, interaction state, media kind, readiness, or text. Selecting a theme stages a presentation selection; it does not change game type or campaign rules.
+The Studio restores a saved local workspace when one exists. Otherwise it loads and verifies the current compiled release collection; a checkout without that collection uses the source inventory. Source recipes are labelled **source**, not finished production artwork. The inventory reports missing, source, produced, and reviewed counts separately. Filter by theme, screen, interaction state, media kind, readiness, or text. Selecting a theme stages a presentation selection; it does not change game type or campaign rules.
 
 Every validated change appends immutable asset, theme, or collection records. **Save local revision** atomically saves the complete workspace in the isolated `revealline-presentation-studio-v1` IndexedDB database. **Undo draft** and **Redo draft** operate on unsaved workspace changes. A successful save clears this temporary undo stack. **Reset to saved** returns to the latest saved workspace. It never deletes earlier asset records from that saved workspace. Asset history can bind an earlier revision in a new theme revision.
 
@@ -18,9 +26,7 @@ Image and media files use their real bytes. Font uploads are decoded with the br
 
 Requirements include all usage screens and states, exact frame size, alpha policy, byte budget, palette, dependencies, and geometry. The complete machine-readable slot contract is visible beside the human-readable explanation.
 
-## Studio Interface — readability candidate
-
-This source adds the scoped [P05 Studio readability candidate](cross-mode-execution.md#p05-supporting-screen-readability). It is not an accepted Studio release or completion of P05.
+## Studio Interface
 
 Open **Interface** for Theme/Plain text, Standard/Large size and Reduced effects. Host body/control/secondary roles use 18/16/14px, or 22/20/18px in Large. These choices update the existing shared display record and existing controls; they do not stage a theme, rebuild a draft, replace prepared media or write player saves. Interface controls remain available during an authoring operation. A failed preference save keeps the visible session-only choice and reports it beside the controls.
 
@@ -35,7 +41,7 @@ A successful foreground inventory selection retains the replacement selected but
 1. Select a slot and choose an accepted PNG/JPEG/WebP image, WOFF2/TTF/OTF font, or WAV/OGG/MP3 audio file. The format must match the slot. The original must fit the presentation system's global byte and decoded-dimension limits.
 2. For an image, adjust the original-image crop rectangle. **Center crop to slot** selects the appropriate aspect ratio; **Prepare derivative** creates a separate PNG at the exact slot frame size using the registered sampling rule. The source file and its original dimensions remain intact. Download the original at any time.
 3. Inspect or edit the normalized pivot, rotor anchors, and nine-slice metadata. **Apply geometry to preview** runs the full binding validator before updating the preview. Frame dimensions and required hub count remain constrained by the slot. Occupied bounds are measured from visible pixels. **Edit current raster metadata** creates a new revision over existing bytes without recropping.
-4. Enter the actual creator, source, license/rights statement, and effective prompt. The Studio requires these fields and does not infer rights from an upload or an AI-generated image.
+4. Enter the actual creator, source, and license/rights statement; these fields are required. Record the effective prompt when one was used. The Studio does not infer rights from an upload or an AI-generated image.
 5. **Validate and stage replacement** checks the schema, geometry, dimensions, alpha requirement, byte budget, file headers, content hashes, and complete byte table. An empty transparent sprite is rejected. Font files also pass the browser font decoder. A failed check leaves the candidate editable and the prior workspace intact.
 6. Inspect the comparison, then save locally or export. Candidates enter the **produced** stage; successful technical validation alone does not establish a reviewed release. After performing real review, enter concrete evidence in revision history and use **Record reviewed revision**. This appends an immutable reviewed revision without overwriting the candidate.
 

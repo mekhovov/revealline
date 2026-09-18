@@ -225,18 +225,25 @@ for (const intent of ['pointer', 'keyboard']) {
 }
 
 test('required decode failure exposes Retry with no procedural fallback or automatic start', async (t) => {
+  const faults = [],
+    refusal = new Error('Modeled decoder refusal');
+  t.mock.method(console, 'error', (...args) => faults.push(args));
   let fail = true;
   const f = await page(t, {
     ...options,
     waitPicture: false,
     presentation: {
       decode: () => {
-        if (fail) throw new Error('Modeled decoder refusal');
+        if (fail) throw refusal;
       },
     },
   });
   await settle(f, 'error');
-  assert.match(f.$('coop-picture-status').textContent, /Modeled decoder refusal/);
+  assert.equal(
+    f.$('coop-picture-status').textContent,
+    'Team picture unavailable. Retry picture or choose another arena.',
+  );
+  assert.deepEqual(faults, [['Team picture preparation failed.', refusal]]);
   assert.equal(f.doc.activeElement.id, 'coop-picture-retry');
   assert.equal(f.$('coop-start').disabled, true);
   assert.equal(f.drawImages.length, 0);
@@ -299,12 +306,20 @@ test('changed accepted asset authority refuses Retry before replacing the paused
 });
 
 test('same-ID changed starter imports are refused before reads, while a separately named legacy import is explicitly procedural', async (t) => {
+  const faults = [];
+  t.mock.method(console, 'error', (...args) => faults.push(args));
   const f = await page(t, options),
     changed = structuredClone(COOP_STARTER_PACK);
   changed.name += ' changed';
   await f.selectFile(JSON.stringify(changed));
   assert.equal(state(f), 'error');
-  assert.match(f.$('coop-picture-status').textContent, /No exact Team picture binding/);
+  assert.equal(
+    f.$('coop-picture-status').textContent,
+    'Team picture unavailable. Retry picture or choose another arena.',
+  );
+  assert.equal(faults.length, 1);
+  assert.equal(faults[0][0], 'Team picture preparation failed.');
+  assert.match(faults[0][1].message, /No exact Team picture binding/);
   assert.equal(f.artwork.calls.reads.length, 1);
   assert.equal(f.$('coop-start').disabled, true);
   assert.equal(f.drawImages.length, 0);

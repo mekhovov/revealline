@@ -59,6 +59,22 @@
           <p id="coop-level-note" class="setup-note">
             One open field. Bait a Hunter, cover the crossing, then take the anchors together.
           </p>
+          <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
+            <div class="coop-preview-frame">
+              <canvas
+                id="coop-preview-canvas"
+                width="576"
+                height="288"
+                aria-hidden="true"
+                hidden
+              ></canvas>
+              <p id="coop-preview-message">Preparing artwork…</p>
+            </div>
+            <figcaption id="coop-preview-caption">
+              Selected arena preview. Win to reveal the full picture. Scenery does not mark
+              obstacles.
+            </figcaption>
+          </figure>
           <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
             Preparing arena…
           </button>

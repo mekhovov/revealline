@@ -1,0 +1,90 @@
+TAP version 13
+# Subtest: failed picture → Retry → pending Cancel is visible at 844×390 without starting a flight
+ok 1 - failed picture → Retry → pending Cancel is visible at 844×390 without starting a flight
+  ---
+  duration_ms: 88.484625
+  ...
+# Subtest: failed picture → Retry → pending Cancel is visible at 390×844 without starting a flight
+ok 2 - failed picture → Retry → pending Cancel is visible at 390×844 without starting a flight
+  ---
+  duration_ms: 54.380125
+  ...
+# Subtest: visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry
+ok 3 - visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry
+  ---
+  duration_ms: 28.025875
+  ...
+# Subtest: a failed picture can be replaced by a different arena through the real selector
+ok 4 - a failed picture can be replaced by a different arena through the real selector
+  ---
+  duration_ms: 52.254917
+  ...
+# Subtest: held artwork settling to ready behind Settings cannot focus or scroll recovery actions
+ok 5 - held artwork settling to ready behind Settings cannot focus or scroll recovery actions
+  ---
+  duration_ms: 34.754125
+  ...
+# Subtest: held artwork settling to error behind Settings cannot focus or scroll recovery actions
+ok 6 - held artwork settling to error behind Settings cannot focus or scroll recovery actions
+  ---
+  duration_ms: 30.765667
+  ...
+# Subtest: direct Retry reveal respects newer focus-then-body inside its focus callback
+ok 7 - direct Retry reveal respects newer focus-then-body inside its focus callback
+  ---
+  duration_ms: 27.962125
+  ...
+# Subtest: direct Retry reveal respects newer settings inside its focus callback
+ok 8 - direct Retry reveal respects newer settings inside its focus callback
+  ---
+  duration_ms: 27.331792
+  ...
+# Subtest: direct Retry reveal respects newer blur-return inside its focus callback
+ok 9 - direct Retry reveal respects newer blur-return inside its focus callback
+  ---
+  duration_ms: 27.428583
+  ...
+# Subtest: direct Retry reveal respects newer hidden-return inside its focus callback
+ok 10 - direct Retry reveal respects newer hidden-return inside its focus callback
+  ---
+  duration_ms: 27.127
+  ...
+# Subtest: direct Retry reveal respects newer pagehide inside its focus callback
+ok 11 - direct Retry reveal respects newer pagehide inside its focus callback
+  ---
+  duration_ms: 28.921125
+  ...
+# Subtest: direct Retry reveal respects newer pointer-intent inside its focus callback
+ok 12 - direct Retry reveal respects newer pointer-intent inside its focus callback
+  ---
+  duration_ms: 27.714959
+  ...
+# Subtest: direct Retry reveal respects newer key-intent inside its focus callback
+ok 13 - direct Retry reveal respects newer key-intent inside its focus callback
+  ---
+  duration_ms: 29.389375
+  ...
+# Subtest: same-scope arena replacement during Retry geometry retires the old direct handoff
+ok 14 - same-scope arena replacement during Retry geometry retires the old direct handoff
+  ---
+  duration_ms: 37.952667
+  ...
+# Subtest: a pending reveal exception cannot prevent the real picture read or later recovery
+ok 15 - a pending reveal exception cannot prevent the real picture read or later recovery
+  ---
+  duration_ms: 42.69425
+  ...
+# Subtest: a completion reveal exception retires its listeners and leaves explicit Retry usable
+ok 16 - a completion reveal exception retires its listeners and leaves explicit Retry usable
+  ---
+  duration_ms: 42.417166
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 707.1715
