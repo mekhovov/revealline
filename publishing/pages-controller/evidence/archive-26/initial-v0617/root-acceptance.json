@@ -1,0 +1,84 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE_RETENTION_ONLY",
+  "at": "2026-09-18T15:02:33.850991+00:00",
+  "archive": "archive-26",
+  "versions": [
+    "v0.61.7"
+  ],
+  "archiveCommit": "6189d37ed382fce79a28e7a464c5e7384429ab05",
+  "archiveTree": "abe08da1252515a5d084c93b7ee59b1f45348162",
+  "deploymentId": 6526678454,
+  "deploymentStatusId": 18529237124,
+  "runId": 35358010420,
+  "runAttempt": 1,
+  "files": 701,
+  "verifiedBytes": 313387929,
+  "preservedOldCanonicalRows": 0,
+  "preservedReleaseRows": 0,
+  "preservedRootSupportRows": 0,
+  "changedPriorPaths": [],
+  "newRows": 701,
+  "failedPublicFiles": 0,
+  "retries": 0,
+  "evidence": [
+    {
+      "path": ".cache/archive26-v0617-public-audit/http/http-20260918T144859Z-9396bc03/http-report.json",
+      "bytes": 1542,
+      "sha256": "ab563f4f90853aac51c7faa039b68d04f87ff9c8fdac4c627941806becdf6866"
+    },
+    {
+      "path": ".cache/archive26-v0617-public-audit/row-review.json",
+      "bytes": 12536,
+      "sha256": "21ffde6f8a387f7497314c919fc8b2578176b8f8d6ac63fec2ae8448d87a2195"
+    },
+    {
+      "path": ".cache/archive26-v0617-public-audit/independent-peer.json",
+      "bytes": 1055,
+      "sha256": "a65ca3017ac7f3ab341fa15325f7bb22ff84e7653f6d80d4518bec2a4ede4b09"
+    },
+    {
+      "path": ".cache/archive26-v0617-public-audit/execution-request.reviewed.json",
+      "bytes": 1629,
+      "sha256": "8655f37f7d13bcc8f448432fd31ec04da9e4d4b85dc5087feac227dc807f969a"
+    },
+    {
+      "path": ".cache/archive26-v0617-native/manifest.json",
+      "bytes": 2628,
+      "sha256": "6661454776cfed67f855925d4e9565b9f694c2b775d98702fef7ccedc4123a8c"
+    },
+    {
+      "path": ".cache/archive26-v0617-native/review.json",
+      "bytes": 1113,
+      "sha256": "30c1569abdcc0407d94272783567abb628579c27e315592c6d4a390df168d3ee"
+    },
+    {
+      "path": ".cache/archive26-v0617-native/observations.json",
+      "bytes": 1184,
+      "sha256": "27042721ca511e3ce01ab0d43613e0add686d62ebe7b7f73ebb832dcd0e80441"
+    },
+    {
+      "path": ".cache/archive26-v0617-native/motion-observations.json",
+      "bytes": 6323,
+      "sha256": "7b8df1055d9b019d371934e9f2e7cb3b244b36ca2701c9f373a9c0be04e4319e"
+    },
+    {
+      "path": ".cache/archive26-v0617-native/explorer-return/manifest.json",
+      "bytes": 655,
+      "sha256": "cff96ac22cd4660410539b93ba9460ad6ae7b1a428fc506248677bc7b15d6012"
+    },
+    {
+      "path": ".cache/archive26-v0617-native/explorer-return/observations.json",
+      "bytes": 397,
+      "sha256": "30735475e5ff66b3d781fe073a58fd778934dec7fa50f12ce62cfe89c1de8e01"
+    }
+  ],
+  "nativeProvenance": "Dedicated task01a0a0be-e184-7c03-ba2b-59dc179a9800 actual CUA practice/keyboard and ordinary visible navigation. Root reviewed observations and raw practice, corrected Motion landscape, Large portrait return and current main Home images. All16 original native and4 explorer-return file pins independently verified.",
+  "nativeScope": "Immutable v0.61.7 safe practice capture8.1%/1920/3lives;Pause/explicitResume;guide and Workshop opener return;Motion Standard/Large390x844 to844x390 andback retaining blade3 focus and paused preview;archive index to main release explorer to actual currentv0.61.7 Home without starting an attempt.",
+  "limits": [
+    "Original07Motion JPEG180x390 excluded from landscape proof; corrected13actual844x390 retained.",
+    "Known Motion right-edge focus outline remains open. BrowserBack reinitializes Motion; no cross-navigation pause claim.",
+    "No main campaign attempt started, continued, reset or imported. No byte-level save preservation or migration proof.",
+    "No physical controller/touch, full win, offline, audible listening or whole-phase acceptance."
+  ],
+  "mainSelectorChanged": false
+}

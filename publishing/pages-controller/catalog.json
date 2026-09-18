@@ -705,6 +705,14 @@
       "recordSha256": "f1b2088c9d8d384b602af5b491b3c31aa4f057381de69ec09f7532f1fd56029d",
       "manifestSha256": "b6fcf7902505615097dbd4684789f87e348d04064eb4e214ca120caa35df64f1",
       "checksumSha256": "b5df1aa1034c119145383666b2af91766a7cf6687e1f40913a640ca2f084e91b"
+    },
+    {
+      "version": "v0.61.8",
+      "sourceRevision": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+      "tagObject": "d6b9a83d1364c81f23251fae4c3d30241b2e36df",
+      "recordSha256": "142e6394e7b4c6b159a40e3b06ba18db06bc60637e7756000350e0c874f5ad5e",
+      "manifestSha256": "206ba0af671d0db861d93a5d68cb8628c4f25641d04e6705236cc3a8f2a323f7",
+      "checksumSha256": "eeef1465158b18699d0a9fd16e49d5538c0cf0d0f0a6fc99d441d2241bd140aa"
     }
   ]
 }
