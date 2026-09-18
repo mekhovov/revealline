@@ -1,0 +1,295 @@
+{
+  "format": "revealline-enemy-presentations.v1",
+  "entries": [
+    {
+      "type": "bouncer",
+      "skinId": "bouncer.fpv.v1",
+      "presentationId": "fpv-compact-hunter-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png",
+      "bytes": 65737,
+      "sha256": "e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [
+        {
+          "kind": "travel-glint",
+          "x": 0.16,
+          "y": 0.5,
+          "width": 0.025,
+          "height": 0.3,
+          "color": "#f1f7ed",
+          "rate": 6
+        },
+        {
+          "kind": "travel-glint",
+          "x": 0.84,
+          "y": 0.5,
+          "width": 0.025,
+          "height": 0.3,
+          "color": "#f1f7ed",
+          "rate": 6
+        }
+      ],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/bouncer.png",
+          "bytes": 865212,
+          "sha256": "35bab23818b3ab80e79a76bc54e7a0b2402ecfdeb922a6d417963c824c6a2282",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    {
+      "type": "border-patrol",
+      "skinId": "border-patrol.fpv.v1",
+      "presentationId": "fpv-compact-border-patrol-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png",
+      "bytes": 65737,
+      "sha256": "537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/border-patrol.png",
+          "bytes": 1051393,
+          "sha256": "4da8036ae2e48aa53b80cb05c3ae9808d9dd762385cadc1c5a2148d9428058d9",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    {
+      "type": "contour-patrol",
+      "skinId": "contour-patrol.fpv.v1",
+      "presentationId": "fpv-compact-contour-patrol-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png",
+      "bytes": 65737,
+      "sha256": "9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",
+          "bytes": 769992,
+          "sha256": "cf46a28c2573c9e486a17bb558dec51bb4e0882493360cf6a84bc3c452b404b8",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    {
+      "type": "claimed-rover",
+      "skinId": "claimed-rover.fpv.v1",
+      "presentationId": "fpv-compact-claimed-rover-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-claimed-rover-v1-ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106.png",
+      "bytes": 65737,
+      "sha256": "ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [
+        {
+          "kind": "travel-glint",
+          "x": 0.13,
+          "y": 0.25,
+          "width": 0.022,
+          "height": 0.065,
+          "color": "#f1f7ed",
+          "rate": 5
+        },
+        {
+          "kind": "travel-glint",
+          "x": 0.13,
+          "y": 0.5,
+          "width": 0.022,
+          "height": 0.065,
+          "color": "#f1f7ed",
+          "rate": 5
+        },
+        {
+          "kind": "travel-glint",
+          "x": 0.13,
+          "y": 0.75,
+          "width": 0.022,
+          "height": 0.065,
+          "color": "#f1f7ed",
+          "rate": 5
+        },
+        {
+          "kind": "travel-glint",
+          "x": 0.87,
+          "y": 0.25,
+          "width": 0.022,
+          "height": 0.065,
+          "color": "#f1f7ed",
+          "rate": 5
+        },
+        {
+          "kind": "travel-glint",
+          "x": 0.87,
+          "y": 0.5,
+          "width": 0.022,
+          "height": 0.065,
+          "color": "#f1f7ed",
+          "rate": 5
+        },
+        {
+          "kind": "travel-glint",
+          "x": 0.87,
+          "y": 0.75,
+          "width": 0.022,
+          "height": 0.065,
+          "color": "#f1f7ed",
+          "rate": 5
+        }
+      ],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/claimed-rover.png",
+          "bytes": 1138185,
+          "sha256": "88253efdf09af23d5d562e240adc1f3f7ba1db45dbfd88c721f053105cb02593",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    {
+      "type": "eroder",
+      "skinId": "eroder.fpv.v1",
+      "presentationId": "fpv-compact-eroder-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-eroder-v1-29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720.png",
+      "bytes": 65737,
+      "sha256": "29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [
+        {
+          "kind": "phase-sweep",
+          "x": 0.5,
+          "y": 0.35,
+          "width": 0.22,
+          "height": 0.018,
+          "color": "#f1f7ed",
+          "rate": 3
+        }
+      ],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/eroder.png",
+          "bytes": 644575,
+          "sha256": "94d40bc13f6ad8e62443c945e205903d6e75bc9f0f04d6fbc4ddcaf56b1f4d0b",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    {
+      "type": "lane-boss",
+      "skinId": "lane-boss.fpv.v1",
+      "presentationId": "fpv-compact-lane-boss-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-lane-boss-v1-e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd.png",
+      "bytes": 65737,
+      "sha256": "e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [
+        {
+          "kind": "phase-sweep",
+          "x": 0.5,
+          "y": 0.36,
+          "width": 0.46,
+          "height": 0.025,
+          "color": "#fff0b0",
+          "rate": 1.5
+        }
+      ],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/lane-boss.png",
+          "bytes": 846564,
+          "sha256": "7b9e6a5a7cf112ca88c7a35a051b1efab2da8175d2038ee9bd619ac4e8dd7a33",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    {
+      "type": "relay-sentinel",
+      "skinId": "relay-sentinel.fpv.v1",
+      "presentationId": "fpv-compact-relay-sentinel-v1",
+      "src": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-relay-sentinel-v1-9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db.png",
+      "bytes": 65737,
+      "sha256": "9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db",
+      "width": 128,
+      "height": 128,
+      "pivot": [0.5, 0.5],
+      "motion": [],
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "authoring/library/fpv-enemy-presentations/originals/relay-sentinel.png",
+          "bytes": 1206928,
+          "sha256": "fac474fa78d26d143c249f22a623c0f01267a71e08911e282ebb47dea859e489",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db",
+          "width": 128,
+          "height": 128
+        }
+      }
+    }
+  ]
+}

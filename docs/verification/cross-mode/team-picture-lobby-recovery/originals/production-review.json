@@ -1,0 +1,1427 @@
+{
+  "format": "revealline-team-production-review.v1",
+  "observedAt": "2026-09-18T01:03:21.371460+00:00",
+  "reviewer": "independent installed_parity_peer",
+  "status": "PASS: unchanged production inputs and strict FPV28 binding compatibility; composed runtime and native/public acceptance remain separate",
+  "source": {
+    "revision": "d2455ebfa444a8692d2694790afa6e4199af64e0",
+    "tree": "24cd4e69d3245d63892e05df735f705b7937efd7",
+    "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245",
+    "worktreeHead": "d2455ebfa444a8692d2694790afa6e4199af64e0",
+    "candidateRuntimeUncommitted": true
+  },
+  "scope": {
+    "fourRuntimePaths": [
+      "game/couch/coop-view.mjs",
+      "game/couch/relay-rescue.css",
+      "game/couch/relay-rescue.html",
+      "game/couch/relay-rescue.mjs"
+    ],
+    "compositionPacket": ".cache/p03-team-picture-recovery-628e95da/composed-candidate.patch",
+    "compositionBase": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+    "operation": "Read-only Git/worktree and byte inspection; only these two review records were written"
+  },
+  "producer": {
+    "path": "scripts/produce-field-kit-theme.mjs",
+    "gitBlob": "59976b7572315d5df5a14bc15b7247bef6e62fad",
+    "bytes": 21348,
+    "sha256": "d9f2e7ff833d15ba062583999893a641977dd7dfe1553d952649993f12663f53"
+  },
+  "productionLedger": {
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "gitBlob": "2a08a1e03b376f7bf004d59e77ed62842bf2239e",
+    "bytes": 6970057,
+    "sha256": "8c3472c6523de04eb5c5554ba853bb7aa6462301c3310678b448efe8bf30049c"
+  },
+  "compiled": {
+    "treePath": "game/presentation/compiled",
+    "gitTree": "d47c9a560f480012e6c25f86bb3d99b1082fd2a5",
+    "manifest": {
+      "path": "game/presentation/compiled/manifest.json",
+      "gitBlob": "63de4d514790c7cd9dd698f168b9fa47b7329098",
+      "bytes": 27214,
+      "sha256": "3b0d85cdc134d64afbc0d07d208ef5a53623ffe4282a8741323270888260d234"
+    },
+    "source": {
+      "id": "field-kit",
+      "revision": 28
+    },
+    "selectedTheme": {
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "revision": 28
+    },
+    "assetPayloadCount": 127,
+    "assetPayloadBytes": 4007816,
+    "manifestListedFiles": 130,
+    "manifestSelfExcludedFromListing": true,
+    "manifestListedBodiesVerifiedAgainstGit": 130,
+    "filePins": [
+      {
+        "path": "game/presentation/compiled/assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
+        "gitBlob": "a906a775a2e6ba1f43d50ebd99d4be0354d853e9",
+        "bytes": 107,
+        "sha256": "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",
+        "gitBlob": "aeeb19766a2ce4fa5159a83e3579a27397bfb6ac",
+        "bytes": 46655,
+        "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872.png",
+        "gitBlob": "28ccd222ea7b69010115a07c899a6afcdee0e7b0",
+        "bytes": 233,
+        "sha256": "02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/044bfaa980686917e6715e3919617a516ee1585e38dd8a63154301eba23d4118.png",
+        "gitBlob": "74e0e8f8267e660c8cbddf7e4aca4473197053ec",
+        "bytes": 102,
+        "sha256": "044bfaa980686917e6715e3919617a516ee1585e38dd8a63154301eba23d4118",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8.woff2",
+        "gitBlob": "7909818f4daf102a4a7c1973bf39394219c90451",
+        "bytes": 40080,
+        "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76.png",
+        "gitBlob": "d832c8ccf9cc38103d5a5b9fa3fb61b353f40c65",
+        "bytes": 275,
+        "sha256": "05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/0839e0cac64adad321fb07518b14673091bbc1a61a836ff15ebf48510480bbbc.png",
+        "gitBlob": "360185835deadffc96b593c7be9147f4bea9022a",
+        "bytes": 146,
+        "sha256": "0839e0cac64adad321fb07518b14673091bbc1a61a836ff15ebf48510480bbbc",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/084e63a13178e1736ac2eaa12af621d63a786eea4dc21ab5cae8c6acf96c8153.png",
+        "gitBlob": "91b3385bc39450e8e43305465cec628b201f4db8",
+        "bytes": 115,
+        "sha256": "084e63a13178e1736ac2eaa12af621d63a786eea4dc21ab5cae8c6acf96c8153",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/08512d067c5f322eb059dc45733fd61534b8bc530a9ebd8b33208d941a603922.png",
+        "gitBlob": "fc32347d50d1ecd451c002c2aea72fdce0a74436",
+        "bytes": 122,
+        "sha256": "08512d067c5f322eb059dc45733fd61534b8bc530a9ebd8b33208d941a603922",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7.png",
+        "gitBlob": "8489a085aaee5fd903987d60c2c2e9af8adb5d2e",
+        "bytes": 134,
+        "sha256": "0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/0b4b6717b5a2e7c27ad765544730193d1f798f8ccbc08879947f1a8b10e71121.png",
+        "gitBlob": "6148f17824d532b6bb50a4105d01f4fb259317ee",
+        "bytes": 66332,
+        "sha256": "0b4b6717b5a2e7c27ad765544730193d1f798f8ccbc08879947f1a8b10e71121",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/0b5106ea19db098b6cf6068142510fd373731532e5052983e58bb343038404e6.png",
+        "gitBlob": "1a0e439eaa66017984bf541327d7713bd3e28782",
+        "bytes": 46393,
+        "sha256": "0b5106ea19db098b6cf6068142510fd373731532e5052983e58bb343038404e6",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/150ebf2c0817461fda33425c885488da7f4566b16a83947e94799d8da2df05e5.png",
+        "gitBlob": "8d5552c98e42ae3786d85a5645bd8e634308e05d",
+        "bytes": 191,
+        "sha256": "150ebf2c0817461fda33425c885488da7f4566b16a83947e94799d8da2df05e5",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/1aa1245d987000c889a47cd242c9ca976d620e48323cdde2a60358006718cc51.png",
+        "gitBlob": "276c5d9ca2fe31964f280585c330e4a4d843da63",
+        "bytes": 130,
+        "sha256": "1aa1245d987000c889a47cd242c9ca976d620e48323cdde2a60358006718cc51",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/1bd3c9c57cc8790ccbf6f0fd33517d6d1a5520de93e38a99722ed4ee915758ab.png",
+        "gitBlob": "8a1c62d700e5cb5ed273d96b4669039cadd184d0",
+        "bytes": 62468,
+        "sha256": "1bd3c9c57cc8790ccbf6f0fd33517d6d1a5520de93e38a99722ed4ee915758ab",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/1e3b7ea46131dbee8ca4601fd75862b04fda8ca4aa4b088d9811f5845e05eb7d.png",
+        "gitBlob": "fed271e7a1b22340d07b182e7295fcda40401f78",
+        "bytes": 50028,
+        "sha256": "1e3b7ea46131dbee8ca4601fd75862b04fda8ca4aa4b088d9811f5845e05eb7d",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2033ce4e45c2b164edc31e8680244deaa475783dca1aebc6262bfffcd3980eb2.png",
+        "gitBlob": "3f0e1574fac8d2f7b30410e671b502cfbbb07579",
+        "bytes": 161,
+        "sha256": "2033ce4e45c2b164edc31e8680244deaa475783dca1aebc6262bfffcd3980eb2",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/210d3b2ab32eaef632751e0333321b7e3e2a8571de758e9a02d1f350c483cf61.png",
+        "gitBlob": "4d3513190edadbafcbed7010f6943732e4e07e2e",
+        "bytes": 139,
+        "sha256": "210d3b2ab32eaef632751e0333321b7e3e2a8571de758e9a02d1f350c483cf61",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/228285616ceb1d60be182f971790ee75a67c44a40a787d7d7ed275668a3005e4.png",
+        "gitBlob": "6834889260f439f4d205c735f7682708ba85d70d",
+        "bytes": 40399,
+        "sha256": "228285616ceb1d60be182f971790ee75a67c44a40a787d7d7ed275668a3005e4",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da.png",
+        "gitBlob": "d857a8f7dde9d5c714c4672a3c1acbce2700b1f0",
+        "bytes": 42982,
+        "sha256": "2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2617aa19f98e0a455046c229a9abcb678efeaa76c07ebe5ce07cb8b00d4d65bf.png",
+        "gitBlob": "ac8b0e23b34658f1668e9651d086d7d57f3577ba",
+        "bytes": 144,
+        "sha256": "2617aa19f98e0a455046c229a9abcb678efeaa76c07ebe5ce07cb8b00d4d65bf",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/27fca2383ecb60fe0019232ed3f384103f602e36fe583fbad4b018b0c20d08fe.png",
+        "gitBlob": "d5a813b0a343332b663b0273dc27a39b1f28c342",
+        "bytes": 90,
+        "sha256": "27fca2383ecb60fe0019232ed3f384103f602e36fe583fbad4b018b0c20d08fe",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2a50c451fdee7c54d8bccf7a098f12bcdbdc15905856dc100c8e0d9e99629c33.png",
+        "gitBlob": "1af0d14c02b99e37830db4dc329ac213d10b8246",
+        "bytes": 77493,
+        "sha256": "2a50c451fdee7c54d8bccf7a098f12bcdbdc15905856dc100c8e0d9e99629c33",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3.png",
+        "gitBlob": "fed0fc7b9d1879da9e8f8d11d52bfca6587d4284",
+        "bytes": 341,
+        "sha256": "2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png",
+        "gitBlob": "1239d1f91d6ec79d3e29dfe8b86f298038b75471",
+        "bytes": 515,
+        "sha256": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/2ff89ae01c04bfc698892ec3a35610b7975a6f36596ddd7ddeedbecef248d5d4.png",
+        "gitBlob": "7a7edfb5a37ef1da1fa0ec171ab09f8e0a0a49a4",
+        "bytes": 136,
+        "sha256": "2ff89ae01c04bfc698892ec3a35610b7975a6f36596ddd7ddeedbecef248d5d4",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/30957860bb1edac99c230a91a34eab8249b43497fda680707276c859f3bd5f0c.png",
+        "gitBlob": "ed1b9435ee2ef03dc74b81525395d514dcf438f3",
+        "bytes": 34535,
+        "sha256": "30957860bb1edac99c230a91a34eab8249b43497fda680707276c859f3bd5f0c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/3104d1433851b889c70bbf8fe4d4fecd2b99a3d57d099b402286948283711fb4.png",
+        "gitBlob": "729ed716c3b09582eb70d2e818f580b204a3553f",
+        "bytes": 37594,
+        "sha256": "3104d1433851b889c70bbf8fe4d4fecd2b99a3d57d099b402286948283711fb4",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db.png",
+        "gitBlob": "ff411288fd15f853755ab200ce981c0ddf084d2b",
+        "bytes": 146,
+        "sha256": "326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346.png",
+        "gitBlob": "f79d06493366254aeb536e88c6a2d74ecd24f968",
+        "bytes": 314,
+        "sha256": "33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/398eaf8dc2f88a2b1a3bc4d2ae5c603f54fd5daa96c9c9c02637bdd4c488e697.png",
+        "gitBlob": "87d6f224b753be210bb64cd62c9720b761b2185e",
+        "bytes": 51023,
+        "sha256": "398eaf8dc2f88a2b1a3bc4d2ae5c603f54fd5daa96c9c9c02637bdd4c488e697",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c.png",
+        "gitBlob": "4a9862988fa7e9959ea0688d4036361ae9e0185c",
+        "bytes": 600,
+        "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/40172d186e595959d100dd0e7e52a78906e904300d93c8c0958d82b6f3b91ff0.png",
+        "gitBlob": "4212c3521a0ee9a03f6686a6c1a9f50998ee65f7",
+        "bytes": 148,
+        "sha256": "40172d186e595959d100dd0e7e52a78906e904300d93c8c0958d82b6f3b91ff0",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc.png",
+        "gitBlob": "4695e615f7c2c0ebf86d1655b73a527e694eced8",
+        "bytes": 52317,
+        "sha256": "40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/4213f1ac958d600b68f4aa1aa0171d8f5e7a10ca2422154f88cc9b58bda9c0c1.png",
+        "gitBlob": "800af32836bf23aae7050b68e4a9794c84848063",
+        "bytes": 150,
+        "sha256": "4213f1ac958d600b68f4aa1aa0171d8f5e7a10ca2422154f88cc9b58bda9c0c1",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/43db178018db9727dc1d4f6f9231dbe2ad29fe6d75a6a84d5ed97b069e18e3a4.png",
+        "gitBlob": "50d0a855e047c01d594d49ddfc5309d20c253066",
+        "bytes": 125,
+        "sha256": "43db178018db9727dc1d4f6f9231dbe2ad29fe6d75a6a84d5ed97b069e18e3a4",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868.png",
+        "gitBlob": "fecf6dd401f5550fb8251451b99eb51b004240ee",
+        "bytes": 156,
+        "sha256": "44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/466b729b69035d65e5a95d5ef9c8d1c337e64a6af3b5fbdcf91cf74d3096d33b.png",
+        "gitBlob": "c8338e9cc1f749f814b8271ae71c9ec22a84b00d",
+        "bytes": 118,
+        "sha256": "466b729b69035d65e5a95d5ef9c8d1c337e64a6af3b5fbdcf91cf74d3096d33b",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/47033ec2cd3b56345394bc13bbb7b10579419559d1e41160d02f8f3eea368672.png",
+        "gitBlob": "139e58386bb21572b20fe8e15ff8b47ae6108ab6",
+        "bytes": 46277,
+        "sha256": "47033ec2cd3b56345394bc13bbb7b10579419559d1e41160d02f8f3eea368672",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145.woff2",
+        "gitBlob": "c303a79bb404f08950ff90dde89583c2f92e09a0",
+        "bytes": 38120,
+        "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68.png",
+        "gitBlob": "84a609a11ea674bb9e98a4668b60483dca7ecb18",
+        "bytes": 331,
+        "sha256": "4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9.png",
+        "gitBlob": "92866085c1fa0ec75adb5f86871755415feb081d",
+        "bytes": 269,
+        "sha256": "4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/4f56a78772cd7363a2992a8252e4dc629638dad705a9b981d4561830117f511e.png",
+        "gitBlob": "5608eb519de27969f8debed732c46c7fd1498d43",
+        "bytes": 790579,
+        "sha256": "4f56a78772cd7363a2992a8252e4dc629638dad705a9b981d4561830117f511e",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/526656d6f29126aaec7bc7d1abf0769d247b311039c8d069c7e2afc17d112747.png",
+        "gitBlob": "1678c74f5b93b96342fb8263a0e03d2422b09b61",
+        "bytes": 135,
+        "sha256": "526656d6f29126aaec7bc7d1abf0769d247b311039c8d069c7e2afc17d112747",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/535cf4dc9b21c9ff7f9c26d4bc0657e8d6820626551b4d34d82e332748e4d9e3.png",
+        "gitBlob": "f22485a843306a0092225cf53d4dc74d55ffe558",
+        "bytes": 38018,
+        "sha256": "535cf4dc9b21c9ff7f9c26d4bc0657e8d6820626551b4d34d82e332748e4d9e3",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+        "gitBlob": "dbee30d6db5a88c41cc36e13b92c68d0e9d4e476",
+        "bytes": 52720,
+        "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+        "manifestMatch": true,
+        "worktreePresent": true
+      },
+      {
+        "path": "game/presentation/compiled/assets/53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe.png",
+        "gitBlob": "05f3c607d061c6ebb6584510ccfd20c80c3ee74c",
+        "bytes": 159,
+        "sha256": "53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/53fff7055c1021c80f93590ed4e028c85d59ea4cb2f06ac71644d29989fa2bd7.png",
+        "gitBlob": "018539fd9d7f6e98e2684891a2c9c0bdb1b32406",
+        "bytes": 106,
+        "sha256": "53fff7055c1021c80f93590ed4e028c85d59ea4cb2f06ac71644d29989fa2bd7",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/5428ce32eb31d44ea4b04561d86cc65e31ce79fe50acce40beadfd1d2546b837.png",
+        "gitBlob": "6cf5b504a5be9c12b100a23c26e0478f644b0506",
+        "bytes": 47287,
+        "sha256": "5428ce32eb31d44ea4b04561d86cc65e31ce79fe50acce40beadfd1d2546b837",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48.png",
+        "gitBlob": "e42e33192133a464d092caa99746f442d71fc41b",
+        "bytes": 144,
+        "sha256": "544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/56fadf4288069b7f12e3e33b94c950baab873a1b576d87ad82673b0c5329dd76.png",
+        "gitBlob": "f3ba9b60322ce0ec71460aade9135462e3ded756",
+        "bytes": 74247,
+        "sha256": "56fadf4288069b7f12e3e33b94c950baab873a1b576d87ad82673b0c5329dd76",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0.png",
+        "gitBlob": "27c43f4d1238ef3bf597e30ea8ee7d0e6bab7779",
+        "bytes": 866080,
+        "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/57ee2976cb09f29863a4b3a2d8951574a93bf376eda64dbe2a171dc426d8391a.png",
+        "gitBlob": "c45800c2c06faf9612aa90685f641782a308450f",
+        "bytes": 57734,
+        "sha256": "57ee2976cb09f29863a4b3a2d8951574a93bf376eda64dbe2a171dc426d8391a",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683.png",
+        "gitBlob": "5442b8fa6458c5b89d28288a11bb152fae6b6add",
+        "bytes": 295,
+        "sha256": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420.png",
+        "gitBlob": "33df0fa809d95abca4ce28a17916fac78c92558d",
+        "bytes": 137,
+        "sha256": "5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/6b5afa33051459550ead8fee06fb5e14c9eecf9648906dc1abb7fe7a2c69455c.png",
+        "gitBlob": "82307312afddfc68f7c47fd052cac977f16a80d6",
+        "bytes": 30571,
+        "sha256": "6b5afa33051459550ead8fee06fb5e14c9eecf9648906dc1abb7fe7a2c69455c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/70dcff8faa588f074e529704a7d6024fe0a7590b18afa6059488fb505ce4a5f7.png",
+        "gitBlob": "6802e897c4fbac6a19d784d9ba6f79792ae6383f",
+        "bytes": 159,
+        "sha256": "70dcff8faa588f074e529704a7d6024fe0a7590b18afa6059488fb505ce4a5f7",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/713991ea5d2ba3bbc0f5115c6fdc98f337da90b657b0c43c7db1625073377f90.png",
+        "gitBlob": "b8713a883f29c7be2aaad51dd06a6aeedc8da42c",
+        "bytes": 46471,
+        "sha256": "713991ea5d2ba3bbc0f5115c6fdc98f337da90b657b0c43c7db1625073377f90",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59.png",
+        "gitBlob": "529e618709f9d461c126d6228f1c937574a0e5f7",
+        "bytes": 328,
+        "sha256": "7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052.png",
+        "gitBlob": "9abaecc8ed0f518accd566a125609b8998c50ee9",
+        "bytes": 25969,
+        "sha256": "72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/779f36cccce55fd90340acbad1a1cbe03639cd1f98f66d25eaac3c8b0036c31b.png",
+        "gitBlob": "5c6ed8556bfc3f199bdcde3f05b7ec2c0c5701d8",
+        "bytes": 46480,
+        "sha256": "779f36cccce55fd90340acbad1a1cbe03639cd1f98f66d25eaac3c8b0036c31b",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3.png",
+        "gitBlob": "d5aa30e339e65860926c80226c5e51b07244cd36",
+        "bytes": 567,
+        "sha256": "77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826.png",
+        "gitBlob": "ef14426fa479012142e4b6772cd309706999c4f1",
+        "bytes": 586,
+        "sha256": "78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/78294d66d340a9cc4036814defa9a291b8573949d79318823722b6f51c71fc14.png",
+        "gitBlob": "ba6639875a9c1ac4ef1840316268c5cbb5c7b21e",
+        "bytes": 123,
+        "sha256": "78294d66d340a9cc4036814defa9a291b8573949d79318823722b6f51c71fc14",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c.png",
+        "gitBlob": "93f2afa49e8e520a0f5659044172710aeed40521",
+        "bytes": 152,
+        "sha256": "7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192.png",
+        "gitBlob": "bdbaec6e1f77cb512a6c67623db44b81cfca799c",
+        "bytes": 185,
+        "sha256": "7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png",
+        "gitBlob": "4867ec62fcbf0c247eb4cbc24ac892890a5fff5a",
+        "bytes": 325,
+        "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c.png",
+        "gitBlob": "dabc0a9eac440a342bbdeaa30f2de307631de302",
+        "bytes": 327,
+        "sha256": "83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/84461bcb3aca9dc91ace6a836df87a153a6c58d75b6a46b8988d9d835f68ad9f.png",
+        "gitBlob": "6e8eb25634bac3e1e5a94773e6ee0f68d5a1ea2b",
+        "bytes": 48555,
+        "sha256": "84461bcb3aca9dc91ace6a836df87a153a6c58d75b6a46b8988d9d835f68ad9f",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb.png",
+        "gitBlob": "f85d5c226839be42fb35d6e647c95bf5488161e5",
+        "bytes": 639,
+        "sha256": "8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e.png",
+        "gitBlob": "8ca9c2aff0afdb5675daa87df13cd663d11e6e3d",
+        "bytes": 635,
+        "sha256": "85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8664f0283f54db86f6800fb2056045574ff79a5f490f415b3a8929112d8a7d26.png",
+        "gitBlob": "b4268030bc7fa2cdc6994748563177218a881537",
+        "bytes": 40671,
+        "sha256": "8664f0283f54db86f6800fb2056045574ff79a5f490f415b3a8929112d8a7d26",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8a652da0dfc053d85190a2a0a17a27c43144c90a1cce5ae7883cb70f73df7c50.png",
+        "gitBlob": "79fc645aa239868ca60e96280f5fe560131b8e7a",
+        "bytes": 166,
+        "sha256": "8a652da0dfc053d85190a2a0a17a27c43144c90a1cce5ae7883cb70f73df7c50",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8b557a3e23bcbf550c01b5fe77618bc6ab31cce51835e80ad807023f2fc8fa47.png",
+        "gitBlob": "76704a9018049aee714a02bfeb9a5736991a7902",
+        "bytes": 140,
+        "sha256": "8b557a3e23bcbf550c01b5fe77618bc6ab31cce51835e80ad807023f2fc8fa47",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8b5ebd66c72bc3a9ccc07c5dedaba2a8c556ea4e78ef1f17650cc99bc1eca666.png",
+        "gitBlob": "e42a706417c7f355b7ef4e91ab4c9747032ce4c9",
+        "bytes": 105,
+        "sha256": "8b5ebd66c72bc3a9ccc07c5dedaba2a8c556ea4e78ef1f17650cc99bc1eca666",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8d445857cc63417a2b4a9468c854e4ffed3828b3cd1a90cdd8d4f8c951be88f4.png",
+        "gitBlob": "e3bdadef1761aa7f95b67abc12a3a4fdd366c4e0",
+        "bytes": 169,
+        "sha256": "8d445857cc63417a2b4a9468c854e4ffed3828b3cd1a90cdd8d4f8c951be88f4",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27.png",
+        "gitBlob": "f892b1a5271425e5f72b0f622c4aa6a96fe30f35",
+        "bytes": 23827,
+        "sha256": "8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f.png",
+        "gitBlob": "8fbbab552ab3031dc3604d77014b2b5ebe83ca78",
+        "bytes": 41769,
+        "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/95b99a09686ab417503cd8444f6b485d1021b6ae3f8e9525a545faafd6254c9c.png",
+        "gitBlob": "6de06a5ac58f63372599baa84ac621f71af68bc6",
+        "bytes": 97,
+        "sha256": "95b99a09686ab417503cd8444f6b485d1021b6ae3f8e9525a545faafd6254c9c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c.png",
+        "gitBlob": "e5f6b84222621bec26d2f34c0361e264063e2922",
+        "bytes": 148,
+        "sha256": "963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/97986545bbd0dd978d7c5cd2b3511b800cb082caf4a584416306b6c3f4283b54.png",
+        "gitBlob": "a3946b8b312c91c83399ac9d20c6fb30f7540aee",
+        "bytes": 44852,
+        "sha256": "97986545bbd0dd978d7c5cd2b3511b800cb082caf4a584416306b6c3f4283b54",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9ad64ed82783ba763f61fe954e3cdc8c360df472c8d035ef74579670d2649bba.png",
+        "gitBlob": "f82de1114488c236bc6345db8f71dabd1e60c284",
+        "bytes": 190,
+        "sha256": "9ad64ed82783ba763f61fe954e3cdc8c360df472c8d035ef74579670d2649bba",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9b6313464e6e6f26dff9b98405fba899dcd0c6a614fde6df8ed1a2d835c73f34.png",
+        "gitBlob": "b9fef1cb16abdf3eca9b1e8cbedbbf5ae9a17f99",
+        "bytes": 105,
+        "sha256": "9b6313464e6e6f26dff9b98405fba899dcd0c6a614fde6df8ed1a2d835c73f34",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9bc684f5da99a255c09d7cd6aac452859d5ec370d344a092901576bdc9405911.png",
+        "gitBlob": "8c005c3bafcb8bda24f2fbcac04bb25e4461e01d",
+        "bytes": 37278,
+        "sha256": "9bc684f5da99a255c09d7cd6aac452859d5ec370d344a092901576bdc9405911",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9c181b9009de288e0ed3349ab0bda4908e67c92587946517115b9231d5ea65b8.png",
+        "gitBlob": "2a70847f01bb234b07b466041d5b6f5ae3df1dee",
+        "bytes": 143,
+        "sha256": "9c181b9009de288e0ed3349ab0bda4908e67c92587946517115b9231d5ea65b8",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9e865e30bb22014bc6cc20dd4038415f4b279164ab33c54d9682e7ffc9cf2c91.png",
+        "gitBlob": "62c616c78bcfc245cf58955a623ccfeca69f79da",
+        "bytes": 107,
+        "sha256": "9e865e30bb22014bc6cc20dd4038415f4b279164ab33c54d9682e7ffc9cf2c91",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9ef850d87a46eee28cbfa3df8f2d2945673b8bf5dc2fdcc4edf1840175e3f7a1.png",
+        "gitBlob": "6bdb70fde19431f35c77a6fa8c1d3ff9d6324faa",
+        "bytes": 36209,
+        "sha256": "9ef850d87a46eee28cbfa3df8f2d2945673b8bf5dc2fdcc4edf1840175e3f7a1",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/9f649ed85a5ff7d88996729975dfcb3b4df001474b02cd34114dcf4fc5e2b49c.png",
+        "gitBlob": "55d3c62d0cd071f51401bd72f1cd3adead603cea",
+        "bytes": 159,
+        "sha256": "9f649ed85a5ff7d88996729975dfcb3b4df001474b02cd34114dcf4fc5e2b49c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/a07fe2df221cb042a05a7ef78716ae1809e9df5dd54d7dd550c91bd265f7f7fb.png",
+        "gitBlob": "1258ba961e8177898ca92ad4ef231eefc7b87df8",
+        "bytes": 71144,
+        "sha256": "a07fe2df221cb042a05a7ef78716ae1809e9df5dd54d7dd550c91bd265f7f7fb",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/a25dc0c7e2f24a5451f3fbb0d24e90fdce796b274d8b54f238cbee0a26e8b857.png",
+        "gitBlob": "4ade668f20c2cfeabb7fa94618b281c75a9432c4",
+        "bytes": 111,
+        "sha256": "a25dc0c7e2f24a5451f3fbb0d24e90fdce796b274d8b54f238cbee0a26e8b857",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/a3ad1f5a90f71164d77039f7052ce3403e684f1e9acecb0d3c86a7d456e9d509.png",
+        "gitBlob": "87809855aa4088fa4c062f97dc7ecb620413cfd9",
+        "bytes": 119,
+        "sha256": "a3ad1f5a90f71164d77039f7052ce3403e684f1e9acecb0d3c86a7d456e9d509",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/aa2e8583a56b36b5357e5462aee6b010b5b894626929afbc553c683462ce42cf.png",
+        "gitBlob": "c48b5d42847b31d15297bedecc151d1949d753ad",
+        "bytes": 138,
+        "sha256": "aa2e8583a56b36b5357e5462aee6b010b5b894626929afbc553c683462ce42cf",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35.png",
+        "gitBlob": "113f4e1e3a1e4bfd69a1f025ada9f06478e41c29",
+        "bytes": 303,
+        "sha256": "ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/b0e9acf3605b9c5440328ef0bea6c0959efd03acdddbc4ac2cc5520e036457b6.png",
+        "gitBlob": "c31aa4da0cf87b639fa747951bf3c80cd9e1d4e9",
+        "bytes": 113,
+        "sha256": "b0e9acf3605b9c5440328ef0bea6c0959efd03acdddbc4ac2cc5520e036457b6",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/b65d23a488db2a276f1332680fbf394b1aee685fffc42f0b093c01506041f143.png",
+        "gitBlob": "5f96ceeac06e23e831ddb30ecf8dd4c0b6a93783",
+        "bytes": 116,
+        "sha256": "b65d23a488db2a276f1332680fbf394b1aee685fffc42f0b093c01506041f143",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/bd423baa7b3b4f073251d5c8291aa78ee11c341926d27f9f211aa278bc7557f6.png",
+        "gitBlob": "9e308450e034a2bc10d63e655a6b8df831989b09",
+        "bytes": 46214,
+        "sha256": "bd423baa7b3b4f073251d5c8291aa78ee11c341926d27f9f211aa278bc7557f6",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/c0f4e7ca9de3a9f06637dbc8d5972b69b7e804f1bbd9579f5724d99a02c5c86b.png",
+        "gitBlob": "1d22d1da852d55af66244f80fba6d790a44384eb",
+        "bytes": 147,
+        "sha256": "c0f4e7ca9de3a9f06637dbc8d5972b69b7e804f1bbd9579f5724d99a02c5c86b",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png",
+        "gitBlob": "0f07684afcb8a7fdb9810496b1c751e9f91e4b64",
+        "bytes": 40810,
+        "sha256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/c234ea41a080121e73eeea20e3e3db5cfedcd4d4793bc31cf7cdfb2dad2a96ca.png",
+        "gitBlob": "c37a54eb8274e0ca63d3379dd64960184515720f",
+        "bytes": 36951,
+        "sha256": "c234ea41a080121e73eeea20e3e3db5cfedcd4d4793bc31cf7cdfb2dad2a96ca",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/c3cd0a0f9997f28d1a295de1c8995ebe81bf782acb1c033036371c49fc40a08e.png",
+        "gitBlob": "6967abbfe30fb345bf27247f400c34a813dbc2d1",
+        "bytes": 109,
+        "sha256": "c3cd0a0f9997f28d1a295de1c8995ebe81bf782acb1c033036371c49fc40a08e",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/cae1523d150bbe69f65028676129ba9c51958f4561671c5d6dee1eecfb48b3b5.png",
+        "gitBlob": "8cdea40e694d59178c7590fb16d03bae2399a220",
+        "bytes": 49664,
+        "sha256": "cae1523d150bbe69f65028676129ba9c51958f4561671c5d6dee1eecfb48b3b5",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/cc1bc2077c62d4cea9aeba86c00d0185b3c93f7c7dfceaede414dc105859196f.png",
+        "gitBlob": "e11e4677593cadb3bc164240a6a165317689ea1b",
+        "bytes": 111,
+        "sha256": "cc1bc2077c62d4cea9aeba86c00d0185b3c93f7c7dfceaede414dc105859196f",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/cca9df45b2dde64684489deab8f8d2ab8d5a08dab0ec0efc8455786a231c2a04.png",
+        "gitBlob": "fcfd5a17ebd415aa72013d647e4d37c607c0fa77",
+        "bytes": 61879,
+        "sha256": "cca9df45b2dde64684489deab8f8d2ab8d5a08dab0ec0efc8455786a231c2a04",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/ccdfe41a2adaf920c64d99f665d19d9ca6ddc2ea5251ea24bdd63beb2dfc68bd.png",
+        "gitBlob": "47f3825491a6d66e5831c70f801f9b4ebc945a7a",
+        "bytes": 31289,
+        "sha256": "ccdfe41a2adaf920c64d99f665d19d9ca6ddc2ea5251ea24bdd63beb2dfc68bd",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb.png",
+        "gitBlob": "6c7e8299f33b9bad2609507f464064dab9e9305f",
+        "bytes": 446,
+        "sha256": "cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/d22b1070efad07ed1e6f9d8e42d3dc7e19922478e7abedad3f08d55e53cf065c.png",
+        "gitBlob": "93559c13031415ced9c51a9da8dae83f44230b42",
+        "bytes": 40454,
+        "sha256": "d22b1070efad07ed1e6f9d8e42d3dc7e19922478e7abedad3f08d55e53cf065c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/d4690eb2839e8f90a4ac105502c5b22c1b1cceb643c5d2593ca3a4e61d6aa008.png",
+        "gitBlob": "f8e33a5b6192f91bea485c3258a454f6fc2ddd8e",
+        "bytes": 44881,
+        "sha256": "d4690eb2839e8f90a4ac105502c5b22c1b1cceb643c5d2593ca3a4e61d6aa008",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11.png",
+        "gitBlob": "75c54bce4d13a4a118195b8140e7258ce97da145",
+        "bytes": 162,
+        "sha256": "d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/d74c2e8c5713201203f7decea8d57881b657a2aa7b24ea00d182cbe4efa51b8d.png",
+        "gitBlob": "9f8e0167afc4fbe242d14abb12efe9646604c40b",
+        "bytes": 42831,
+        "sha256": "d74c2e8c5713201203f7decea8d57881b657a2aa7b24ea00d182cbe4efa51b8d",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+        "gitBlob": "de545aa195ac6cc06ca4f6296b983d48e42b2083",
+        "bytes": 38090,
+        "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+        "manifestMatch": true,
+        "worktreePresent": true
+      },
+      {
+        "path": "game/presentation/compiled/assets/d9ee53a1cc344517624e80785e764da99fa8bd9b90d7f2b9b5d2ac52ff236a4b.png",
+        "gitBlob": "a3e4082f63380f2b18f247358601867ff9297b24",
+        "bytes": 188,
+        "sha256": "d9ee53a1cc344517624e80785e764da99fa8bd9b90d7f2b9b5d2ac52ff236a4b",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f.png",
+        "gitBlob": "2b7bb4256154dda3eb01b95dc3960269f8b4b237",
+        "bytes": 32275,
+        "sha256": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c.png",
+        "gitBlob": "3f9c7745cfb2785be8240318cfc7071cae35c2aa",
+        "bytes": 564,
+        "sha256": "de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/df6e1a2a114dce2da1643a39d608d87ca79d1eaba70cfd62ac02892d0fadec6e.png",
+        "gitBlob": "fa7a0184b02ee5df637cc765d4fd1e3b173e483f",
+        "bytes": 47294,
+        "sha256": "df6e1a2a114dce2da1643a39d608d87ca79d1eaba70cfd62ac02892d0fadec6e",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/e033d8a3118b42b870e2f6350f7ae960b6085b46beb32ae235881a53bfbdc066.png",
+        "gitBlob": "851c518ed5158335e0a02c23ced0733870da6bf9",
+        "bytes": 42638,
+        "sha256": "e033d8a3118b42b870e2f6350f7ae960b6085b46beb32ae235881a53bfbdc066",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/e325a3a5b3647614bffa5432779f4ade7e865158e384888888f83b073aff033c.png",
+        "gitBlob": "877cea6e79379fd729cc08d5c79129206ce8b7b9",
+        "bytes": 123,
+        "sha256": "e325a3a5b3647614bffa5432779f4ade7e865158e384888888f83b073aff033c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e.png",
+        "gitBlob": "60977fc262053fad8c967d3ebefe338491e75bab",
+        "bytes": 290,
+        "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9.png",
+        "gitBlob": "14992e585604ef73c835e35008e0f17871753d72",
+        "bytes": 40846,
+        "sha256": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/ee156b11b8102f73615260895e66be4e420bd3d7c70aec7150b556cdc9999a1c.png",
+        "gitBlob": "5206edd40f8866872dffd6c65066118f34af83f3",
+        "bytes": 115,
+        "sha256": "ee156b11b8102f73615260895e66be4e420bd3d7c70aec7150b556cdc9999a1c",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/ee325025999edc73751f62ee92adc73c02fe06d29680da5816f4785e014ef730.png",
+        "gitBlob": "cbace733d0607c1ad4d6b82413d469d74f4d1b2a",
+        "bytes": 69492,
+        "sha256": "ee325025999edc73751f62ee92adc73c02fe06d29680da5816f4785e014ef730",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/efef00b62e24bc89315f26fe888d64658bb63cfcce3eeb047645c812903d3e3f.png",
+        "gitBlob": "a4f32c88d194bf9605e16a4d2fde0c57736f0a7b",
+        "bytes": 45086,
+        "sha256": "efef00b62e24bc89315f26fe888d64658bb63cfcce3eeb047645c812903d3e3f",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa.png",
+        "gitBlob": "dcd5875d8d24f5e9aac3a8cc4694b200a9910342",
+        "bytes": 583,
+        "sha256": "f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/f3f58d09752c8e635e06145abc2460909f90ce2df664a8034a799e0bbe59c3ee.png",
+        "gitBlob": "d53fd5a53f86cdb5fbf9760385186b50f7139cac",
+        "bytes": 51056,
+        "sha256": "f3f58d09752c8e635e06145abc2460909f90ce2df664a8034a799e0bbe59c3ee",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/f7495ea7b56215ba88c7d465fa6ad9ab22121695e4c674cf183b65ef6d400ae0.png",
+        "gitBlob": "9bbd9cbc0e478d2c4c52df23f7624cff7fe08664",
+        "bytes": 106,
+        "sha256": "f7495ea7b56215ba88c7d465fa6ad9ab22121695e4c674cf183b65ef6d400ae0",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2",
+        "gitBlob": "abcdd1aab70fc0137c27c932972ca51adbbdfab6",
+        "bytes": 76652,
+        "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc.png",
+        "gitBlob": "d89895c5f7b518aa4c10ea27083afb8baa572ca7",
+        "bytes": 282,
+        "sha256": "fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/assets/ff2e2defa02d62198a0be240fb16c8328d8be7c6aa9e3ec4516c7589edd83b22.png",
+        "gitBlob": "d4f332969c644d45583ecdf626b664c9420b5295",
+        "bytes": 162,
+        "sha256": "ff2e2defa02d62198a0be240fb16c8328d8be7c6aa9e3ec4516c7589edd83b22",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/runtime.json",
+        "gitBlob": "7ea938a289762b058b2ab1e50c18f6596e6bd337",
+        "bytes": 976734,
+        "sha256": "652a82316cce82bd796ebd1ea6bdcbb4feadcec50e1a2f5697e429396c6a836d",
+        "manifestMatch": true,
+        "worktreePresent": true
+      },
+      {
+        "path": "game/presentation/compiled/studio.json",
+        "gitBlob": "873f8bea262ed80d3b56f47d0c7999d0e7809043",
+        "bytes": 3389442,
+        "sha256": "8eda42a0cc15d83a330464e70b7dba6436a194e0f1c23f0d9755826168060239",
+        "manifestMatch": true,
+        "worktreePresent": false
+      },
+      {
+        "path": "game/presentation/compiled/theme.css",
+        "gitBlob": "71ae9c4084be1ce1a6ec8b63c72c0c63e39d1796",
+        "bytes": 2057,
+        "sha256": "8b3baca084d898773986c1e3691855f92572c6db39901e8e4f9138e23470f9b3",
+        "manifestMatch": true,
+        "worktreePresent": false
+      }
+    ],
+    "runtimeSelectedAssetURLCount": 124,
+    "urlCountIsNotHistoricalPayloadCount": true
+  },
+  "recipeFingerprints": [
+    {
+      "group": "ui",
+      "concatenation": "UTF-8 source file bytes concatenated in the listed order, no inserted delimiter",
+      "inputs": [
+        {
+          "path": "game/ui/field-kit-components.css",
+          "gitBlob": "c03b9825b58e2510049d4a7bfa07674c41e4366e",
+          "bytes": 11317,
+          "sha256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        },
+        {
+          "path": "game/ui/field-kit-compiled.css",
+          "gitBlob": "3b198e87d8a0867a4f087e52f48a8ea7b692dbc0",
+          "bytes": 22607,
+          "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        },
+        {
+          "path": "game/presentation/host.mjs",
+          "gitBlob": "934a3e4069b30fa983f0f58b66e6d6af651f2efb",
+          "bytes": 27939,
+          "sha256": "f63aae713bad754ca826fa3d7c0ea2455db4f5d56b55882cd2ef6f196ec13798",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        },
+        {
+          "path": "game/ui/operation-status.css",
+          "gitBlob": "0fb541e1e5e2211fde429784eeffa1c91df57d1b",
+          "bytes": 1889,
+          "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        },
+        {
+          "path": "game/ui/operation-status.mjs",
+          "gitBlob": "f1aed1bda7ae9c32cfaaaa2869774fb2c1bde757",
+          "bytes": 4173,
+          "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        }
+      ],
+      "approvedSha256": "c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766",
+      "currentSha256": "c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766",
+      "match": true,
+      "overlapWithFourTeamRuntimePaths": []
+    },
+    {
+      "group": "screens",
+      "concatenation": "UTF-8 source file bytes concatenated in the listed order, no inserted delimiter",
+      "inputs": [
+        {
+          "path": "game/ui/field-kit-flow.css",
+          "gitBlob": "52545071191639f65c7d0e740f9c2065af8e8f76",
+          "bytes": 11341,
+          "sha256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        },
+        {
+          "path": "game/ui/field-kit-surfaces.css",
+          "gitBlob": "9d189175ba39f67e4772dd49daf5a9c49bfd63d7",
+          "bytes": 19324,
+          "sha256": "4f279f5bcb94e60cb1533814bb3078d708bc017841e025d7152515b3136c6f7b",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        },
+        {
+          "path": "game/ui/field-kit-compiled.css",
+          "gitBlob": "3b198e87d8a0867a4f087e52f48a8ea7b692dbc0",
+          "bytes": 22607,
+          "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        },
+        {
+          "path": "site/release-catalog.css",
+          "gitBlob": "8ef4e7e91d3f1ebbea0f86c67214ea053b2799b2",
+          "bytes": 1018,
+          "sha256": "18736359cd160a144d09a157719e22519819923f1072079586f05debb0852640",
+          "currentMaterialization": "sparse-absent: exact HEAD Git blob, no hydration"
+        }
+      ],
+      "approvedSha256": "4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d",
+      "currentSha256": "4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d",
+      "match": true,
+      "overlapWithFourTeamRuntimePaths": []
+    },
+    {
+      "group": "motion",
+      "concatenation": "UTF-8 source file bytes concatenated in the listed order, no inserted delimiter",
+      "inputs": [
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "gitBlob": "7a5edad2472ff03253a0e3a7db36588bc1e9ec50",
+          "bytes": 6660,
+          "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "gitBlob": "cb58489035f6b20cd4cbb91b7e98b62b6ae5f467",
+          "bytes": 26660,
+          "sha256": "5d4c40cbcebeb738526dbdb31fa95b36a368da8930d14de04a9600118aea54c7",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        }
+      ],
+      "approvedSha256": "39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554",
+      "currentSha256": "39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554",
+      "match": true,
+      "overlapWithFourTeamRuntimePaths": []
+    },
+    {
+      "group": "effects",
+      "concatenation": "UTF-8 source file bytes concatenated in the listed order, no inserted delimiter",
+      "inputs": [
+        {
+          "path": "game/ui/classic-view.mjs",
+          "gitBlob": "7abceb3bca78e842729cbc7660b18357ff71b3e9",
+          "bytes": 21584,
+          "sha256": "3af76e5a99f7753bef065d5322144f541b50985cf47877738f85be191cb35dc1",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        },
+        {
+          "path": "game/ui/event-feedback.mjs",
+          "gitBlob": "6e6415c13d96ca68a0c8cb9e6c495b984a3eb22f",
+          "bytes": 5824,
+          "sha256": "c558dbe6fbdc91e6e9aae51cf355e557cdebf6f9319cb5ab6d886c75b5760307",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        }
+      ],
+      "approvedSha256": "e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4",
+      "currentSha256": "e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4",
+      "match": true,
+      "overlapWithFourTeamRuntimePaths": []
+    },
+    {
+      "group": "audio",
+      "concatenation": "UTF-8 source file bytes concatenated in the listed order, no inserted delimiter",
+      "inputs": [
+        {
+          "path": "game/ui/audio.mjs",
+          "gitBlob": "f628b370371d6752ce0b13cfeecf151658d49201",
+          "bytes": 26731,
+          "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        },
+        {
+          "path": "game/ui/published-audio.mjs",
+          "gitBlob": "ce6461104d278a3ab08f513a11232708a47bc0dd",
+          "bytes": 5718,
+          "sha256": "3e9e7c163fcd936661fa609870b4b5dfb9099139c8c87e261d966908637c73d0",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "gitBlob": "07aa85669952f0d37933894a544e7f19bdcf090b",
+          "bytes": 24085,
+          "sha256": "6b45ab2c75fc313443c97ec3a64ed8e1526d89052292c6c3ab2c9817b1465932",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        },
+        {
+          "path": "game/ui/audio-master.mjs",
+          "gitBlob": "184b754536c35e850b690d88b3aea3496e018011",
+          "bytes": 5277,
+          "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+          "currentMaterialization": "worktree ordinary file verified equal to Git blob"
+        }
+      ],
+      "approvedSha256": "ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130",
+      "currentSha256": "ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130",
+      "match": true,
+      "overlapWithFourTeamRuntimePaths": []
+    }
+  ],
+  "disjointness": {
+    "maintainedGroups": 5,
+    "allCurrentFingerprintsMatchApproved": true,
+    "allGroupInputsDisjointFromFourRuntimeChanges": true,
+    "productionPathDiffAgainstHeadEmpty": true,
+    "sameProducerDoesNotFingerprintTeamRuntime": true
+  },
+  "teamBindings": {
+    "file": {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "gitBlob": "ba693e247509f79a023a8e1e2f6c3fd7fc9ef039",
+      "bytes": 1763,
+      "sha256": "05f51635f1c6813b1228c13c3bb8e12110adf9ca38865a0b7ff667737527d11a"
+    },
+    "rows": [
+      {
+        "packId": "relay-rescue-starter",
+        "packRevision": 2,
+        "packSha256": "51735f71d1ac5c7f9dfe72d3032ea78d48a8113179385132fb4aec03078a32d5",
+        "levelId": "first-connection",
+        "levelRevision": 2,
+        "levelSha256": "31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246",
+        "themeId": "fpv",
+        "themeRevision": 28,
+        "collection": null,
+        "picture": {
+          "slot": "scene.reveal.wide",
+          "assetId": "scene.reveal.wide.field-kit",
+          "assetRevision": 2,
+          "bytes": 52720,
+          "height": 576,
+          "mime": "image/png",
+          "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+          "width": 1152
+        }
+      },
+      {
+        "packId": "relay-rescue-starter",
+        "packRevision": 2,
+        "packSha256": "51735f71d1ac5c7f9dfe72d3032ea78d48a8113179385132fb4aec03078a32d5",
+        "levelId": "relay-yard",
+        "levelRevision": 2,
+        "levelSha256": "fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7",
+        "themeId": "fpv",
+        "themeRevision": 28,
+        "collection": null,
+        "picture": {
+          "slot": "picture.fpv.adf5c9eea274ba7f",
+          "assetId": "picture.fpv.adf5c9eea274ba7f.field-kit",
+          "assetRevision": 2,
+          "bytes": 38090,
+          "height": 576,
+          "mime": "image/png",
+          "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+          "width": 1152
+        }
+      }
+    ],
+    "bindingChangeRequired": false,
+    "contractReferences": [
+      "game/couch/coop-presentation.mjs:97-135",
+      "game/couch/coop-presentation.mjs:225-239"
+    ],
+    "meaning": "Exact theme revision equality remains mandatory; complete pack/level/collection/picture identity and reviewed artwork are unchanged."
+  },
+  "composedRuntime": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "base": {
+        "path": "game/couch/coop-view.mjs",
+        "gitBlob": "a4f5f3736e4c7b6323323d13f68b6ed2578923f2",
+        "bytes": 21213,
+        "sha256": "a8cd3d76514864eb31c8853b24b6391ee5540189c7495f237112b9752524b85c"
+      },
+      "composed": {
+        "absolutePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/couch/coop-view.mjs",
+        "bytes": 21420,
+        "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+      },
+      "changedFromBase": true,
+      "stableAcrossReview": true
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "base": {
+        "path": "game/couch/relay-rescue.css",
+        "gitBlob": "fe83be36cb5ed6b84833b6da11cfd0f0e734d98e",
+        "bytes": 18442,
+        "sha256": "530f365949cfe27ef189654c7d191e14dd4908f13249f3ada5f2f2a96ac1a195"
+      },
+      "composed": {
+        "absolutePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/couch/relay-rescue.css",
+        "bytes": 19284,
+        "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+      },
+      "changedFromBase": true,
+      "stableAcrossReview": true
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "base": {
+        "path": "game/couch/relay-rescue.html",
+        "gitBlob": "32f9a6cafa4651d10a578c1a62224eee6231f1bd",
+        "bytes": 21586,
+        "sha256": "25076c69184ac46c5bf03a1a7cc779beb36c87de17584aa22901d4a31629a2e1"
+      },
+      "composed": {
+        "absolutePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/couch/relay-rescue.html",
+        "bytes": 22232,
+        "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+      },
+      "changedFromBase": true,
+      "stableAcrossReview": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "base": {
+        "path": "game/couch/relay-rescue.mjs",
+        "gitBlob": "47ae5a11577a103271adf9ae3684417452277b36",
+        "bytes": 55585,
+        "sha256": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93"
+      },
+      "composed": {
+        "absolutePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/game/couch/relay-rescue.mjs",
+        "bytes": 63875,
+        "sha256": "5709387a4b4afab60f9ee67eb7cb314bd2a6b9ce6941854dbe8bd5f8173993cb"
+      },
+      "changedFromBase": true,
+      "stableAcrossReview": true
+    }
+  ],
+  "requiredFollowThrough": [
+    "Retain fresh review and qualification bound to the four composed runtime hashes; existing recipe declarations do not approve these changed host/painter bodies.",
+    "Keep producer, ledger, compiled output and both FPV28 rows unchanged for this isolated feature.",
+    "Run production reproduction and committed readiness gates in final exact-source qualification; compare the complete compiled tree and ledger to d245.",
+    "Run affected Team host/painter/recovery tests plus current compiled binding and presentation tests; preserve older/newer theme rejection and real-PNG checks.",
+    "Complete separately owned native and public qualification, including First Connection victory and post-victory Retry."
+  ],
+  "testReferences": [
+    "game/test/coop-picture-bindings.test.mjs:86-106",
+    "game/test/coop-picture-bindings.test.mjs:114-180",
+    "game/test/presentation-production-history.test.mjs:387-499",
+    "game/test/presentation-readiness.test.mjs"
+  ],
+  "conditionalFutureChange": "Expanding Team runtime ownership into production recipe provenance would be a separate source change. It requires explicit source-stage/review successors, regenerated ledger/output and synchronization of both Team rows to the resulting actual revision. Preserve all earlier records and all 127 payloads; do not replace FPV28 approval in place.",
+  "limitations": [
+    "No producer/compiler execution, tests, build, browser, network or source/index edits performed for this review.",
+    "SHA-256 and PNG payload identity checks establish bytes, not image decoding, appearance, input usability, gameplay or native/public acceptance.",
+    "Current recipe input lists exclude all four Team runtime paths; reproduction/readiness success cannot qualify their new presentation behavior.",
+    "The four current composed runtime files are uncommitted working bodies. This record does not describe an immutable release source.",
+    "First Connection native win/post-victory Retry remains pending in this review; prior source/native packets are not relabelled as integrated-source acceptance."
+  ]
+}

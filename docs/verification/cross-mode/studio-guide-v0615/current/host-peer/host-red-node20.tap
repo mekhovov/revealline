@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+not ok 1 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 2790.686333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-studio-guide-v0615/game/test/asset-studio-host-loading.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Held guide Escape must not cancel the pending upload read.
+    + actual - expected
+    
+    + 'Cancelled. The workspace and pixel edits are unchanged.'
+    - 'Reading the image header…'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Reading the image header…'
+  actual: 'Cancelled. The workspace and pixel edits are unchanged.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-studio-guide-v0615/game/test/asset-studio-host-loading.test.mjs:424:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2902.379291

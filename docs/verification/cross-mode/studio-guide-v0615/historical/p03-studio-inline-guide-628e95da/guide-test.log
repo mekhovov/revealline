@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: Close collapses the inline reader and returns native focus to its summary
+ok 1 - Close collapses the inline reader and returns native focus to its summary
+  ---
+  duration_ms: 2.537917
+  ...
+# Subtest: guide Escape is consumed before the existing global cancellation listener
+ok 2 - guide Escape is consumed before the existing global cancellation listener
+  ---
+  duration_ms: 0.39025
+  ...
+# Subtest: an open guide does not consume Escape or other keys from the authoring controls
+ok 3 - an open guide does not consume Escape or other keys from the authoring controls
+  ---
+  duration_ms: 0.161916
+  ...
+# Subtest: programmatic Close cannot take focus from an unrelated control
+ok 4 - programmatic Close cannot take focus from an unrelated control
+  ---
+  duration_ms: 0.085541
+  ...
+# Subtest: closing a hidden guide never forces return focus
+ok 5 - closing a hidden guide never forces return focus
+  ---
+  duration_ms: 0.087917
+  ...
+# Subtest: closing a blurred guide never forces return focus
+ok 6 - closing a blurred guide never forces return focus
+  ---
+  duration_ms: 0.065125
+  ...
+# Subtest: closing a inert guide never forces return focus
+ok 7 - closing a inert guide never forces return focus
+  ---
+  duration_ms: 0.070208
+  ...
+# Subtest: closing a removed guide never forces return focus
+ok 8 - closing a removed guide never forces return focus
+  ---
+  duration_ms: 0.532917
+  ...
+# Subtest: a later focus choice is not revisited after closing the guide
+ok 9 - a later focus choice is not revisited after closing the guide
+  ---
+  duration_ms: 2.917791
+  ...
+# Subtest: terminal disposal removes Escape ownership and the scripted Close action
+ok 10 - terminal disposal removes Escape ownership and the scripted Close action
+  ---
+  duration_ms: 0.197791
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46.332

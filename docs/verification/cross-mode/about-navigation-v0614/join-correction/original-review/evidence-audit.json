@@ -1,0 +1,122 @@
+{
+  "status": "PASS_EXACT_COMMIT_AND_ORIGINAL_PINS",
+  "at": "2026-09-18T02:52:25.567911+00:00",
+  "source": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "tree": "d39a9a200294dfb1a68460dfdc59c5f575708d6e",
+  "parent": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "sourceBeforeAfter": {
+    "head": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+    "tree": "d39a9a200294dfb1a68460dfdc59c5f575708d6e",
+    "status": "",
+    "index": ""
+  },
+  "commitReceipt": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/commit-receipt.json",
+    "bytes": 791,
+    "sha256": "517333f513cdb293b4d83fbf7b7f72a0fd3a18e01f7851703f86b27437cffadc"
+  },
+  "manifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/staged-index-manifest.json",
+    "bytes": 43579,
+    "sha256": "b7d59f5af5019bf2f944d0d3f790ab7449d794c52e6b2e403d3169803fc047cc"
+  },
+  "featurePatch": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-feature.patch",
+    "bytes": 78147,
+    "sha256": "5aac19f9a71455e8212d45e57b5787af9523df1cdf279dd1be4080fcbacf7c7e"
+  },
+  "sourceInputMap": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-source-inputs.json",
+    "bytes": 43620,
+    "sha256": "77f83dd8242a795beee6dd57020decc538da7fed26b009325b041a3549e4addc"
+  },
+  "testedInputBodiesGitMatched": 287,
+  "cohorts": [
+    {
+      "node": "v20.19.5",
+      "counts": {
+        "tests": 199,
+        "pass": 199,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "files": [
+        "game/test/about-navigation-host.test.mjs",
+        "game/test/landing-release-history-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/site-release-links.test.mjs",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/controller-router-bindings.test.mjs",
+        "scripts/test-pages-current-entry.mjs"
+      ],
+      "record": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node20.json",
+        "bytes": 47827,
+        "sha256": "ee6f2ae1f6d85501face2417e1fef3dcf1614645ebc809982a94aba96db4db2e"
+      },
+      "originalOutput": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node20.tap",
+        "bytes": 45042,
+        "sha256": "04dcf71115257452601fad635c933d3485303a884e4a5fbed7f8b628e9f23674"
+      },
+      "scope": "Actual scoped precommit versioned source cohort; 287 tested input bodies match reviewed commit. Not hosted final-source qualification or a new test execution."
+    },
+    {
+      "node": "v22.22.2",
+      "counts": {
+        "tests": 199,
+        "pass": 199,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "files": [
+        "game/test/about-navigation-host.test.mjs",
+        "game/test/landing-release-history-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/site-release-links.test.mjs",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/controller-router-bindings.test.mjs",
+        "scripts/test-pages-current-entry.mjs"
+      ],
+      "record": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node22.json",
+        "bytes": 47828,
+        "sha256": "03a1ae05dfaa68c54f1d2d2bb4c0d5e58d7c843b04d947962ebd8e0b2c22020f"
+      },
+      "originalOutput": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-node22.tap",
+        "bytes": 48047,
+        "sha256": "90904ce1c5361dec73e27257fbde60316f6b4813cd9a4b081f06d93a8cc42e88"
+      },
+      "scope": "Actual scoped precommit versioned source cohort; 287 tested input bodies match reviewed commit. Not hosted final-source qualification or a new test execution."
+    }
+  ],
+  "versionedFormat": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-v0614/versioned-format.json",
+    "bytes": 47560,
+    "sha256": "b50c0265a8a04b54a3596e7a741621512b127c6b15c26da7ad82440bc366eea5"
+  },
+  "historicalOriginals": 103,
+  "historicalBytes": 2561897,
+  "completeCopiedOriginals": 142,
+  "completeCopiedOriginalBytes": 3559228,
+  "allOriginalAndCommittedCopiesEqual": true,
+  "unchangedBoundaries": [
+    "game/ui/controller-navigation.mjs",
+    "game/ui/controller-router.mjs",
+    "game/release-explorer.mjs",
+    "game/controller-bindings.mjs",
+    "game/ui/field-kit-compiled.css",
+    "authoring/library/fpv-field-kit/production.rltheme"
+  ],
+  "newFullSuite": false,
+  "browserOrPhysicalAcceptance": false,
+  "remoteActions": false,
+  "sourceEdits": false
+}

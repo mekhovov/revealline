@@ -220,7 +220,7 @@ test('identical alias and worker bytes route localhost and project prefixes with
   }
 });
 
-test('actual launcher and runtime links stay versioned; release explorer uses the generated root catalog', async (t) => {
+test('actual launcher and runtime links stay versioned; About history uses the generated root catalog', async (t) => {
   const launch = await fs.readFile(new URL('../site/launch.mjs', import.meta.url), 'utf8'),
     link = {};
   let destination;
@@ -275,10 +275,11 @@ test('actual launcher and runtime links stay versioned; release explorer uses th
         assert.match(tag, /\bhidden\b/);
         assert.equal(filename, 'diagnostics/index.html');
       } else if (filename === 'releases/index.html') {
-        // The app resolves these public links at runtime because the Pages catalog is
-        // generated beside versioned sites, not inside one. A clean source archive
+        // About resolves this hidden link before awaiting its generated catalog.
+        // The catalog lives beside frozen editions, not inside one; a source archive
         // correctly has no ignored local releases/index.html.
-        assert.equal(relative, 'game/index.html');
+        assert.equal(relative, 'site/about.html');
+        assert.match(tag, /\bhidden\b/);
         assert.equal(reference, '../releases/');
         assert.match(tag, /\bdata-release-explorer\b/);
         assert.doesNotMatch(tag, /\bdata-source-only\b/);
@@ -301,5 +302,5 @@ test('actual launcher and runtime links stay versioned; release explorer uses th
     }
     assert.ok(checked > 0, relative);
   }
-  assert.equal(generatedCatalogLinks, 4);
+  assert.equal(generatedCatalogLinks, 1);
 });

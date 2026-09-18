@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: Mission setup keeps the original craft status in its modal and restores it after closing
+ok 1 - Mission setup keeps the original craft status in its modal and restores it after closing # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.631875
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+ok 2 - direct briefing and disposal retain one craft presenter outside hidden mission content # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0485
+  ...
+# Subtest: title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight
+not ok 3 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight
+  ---
+  duration_ms: 493.074709
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/game/test/field-kit-flow.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      [
+        'shell-featured',
+    ...
+        'shell-workshop',
+        'shell-sound',
+    +   'shell-release-explorer'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'shell-featured'
+    1: 'shell-play'
+    2: 'shell-gallery'
+    3: 'shell-options'
+    4: 'shell-workshop'
+    5: 'shell-sound'
+  actual:
+    0: 'shell-featured'
+    1: 'shell-play'
+    2: 'shell-gallery'
+    3: 'shell-options'
+    4: 'shell-workshop'
+    5: 'shell-sound'
+    6: 'shell-release-explorer'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about/game/test/field-kit-flow.test.mjs:69:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 4 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.774042
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+ok 5 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050334
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 6 - an accepted world change rebuilds mission thumbnails without starting the existing flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033667
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+ok 7 - Missions button returns to home without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032291
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+ok 8 - Missions escape returns to home without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.125583
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+ok 9 - Missions controller returns to home without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.113333
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+ok 10 - Missions button returns to flight without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040667
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+ok 11 - Missions escape returns to flight without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0335
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+ok 12 - Missions controller returns to flight without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024125
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+ok 13 - Missions button returns to brief without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028667
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+ok 14 - Missions escape returns to brief without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022542
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+ok 15 - Missions controller returns to brief without resuming or changing a saved cut # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065
+  ...
+# Subtest: Back to flight remains an intentional exit from title Missions
+ok 16 - Back to flight remains an intentional exit from title Missions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050084
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+ok 17 - controller Back retains a cancellation warning when a transaction keeps its dialog open # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.128167
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 16
+# todo 0
+# duration_ms 586.627875

@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: First Connection: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+ok 1 - First Connection: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+  ---
+  duration_ms: 4100.181625
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":1179,"hostCommandTicks":1179,"terminalHUD":["FIRST CONNECTION","0:09","65.4%","3 reserves","Reveal 65% together","On safe ground","On safe ground"]}
+# Subtest: Relay Yard: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+ok 2 - Relay Yard: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture
+  ---
+  duration_ms: 3132.314917
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":832,"hostCommandTicks":832,"terminalHUD":["RELAY YARD","0:06","30.7%","3 reserves","Strongholds secured together","On safe ground","On safe ground"]}
+# Subtest: earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start
+ok 3 - earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start
+  ---
+  duration_ms: 4041.780625
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":1179,"hostCommandTicks":1179,"terminalHUD":["FIRST CONNECTION","0:09","65.4%","3 reserves","Reveal 65% together","On safe ground","On safe ground"]}
+# Subtest: earned Team victory → keyboard Return to Solo retains exact one-use return ownership without another discard
+ok 4 - earned Team victory → keyboard Return to Solo retains exact one-use return ownership without another discard
+  ---
+  duration_ms: 3646.225125
+  ...
+# {"boundary":"rehearsed keyboard host, finite DOM/inert Canvas; not native or human performance","coreReferenceCommands":1179,"hostCommandTicks":1179,"terminalHUD":["FIRST CONNECTION","0:09","65.4%","3 reserves","Reveal 65% together","On safe ground","On safe ground"]}
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15297.570291

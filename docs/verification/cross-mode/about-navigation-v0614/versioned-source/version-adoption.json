@@ -1,0 +1,30 @@
+{
+  "base": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "version": "0.61.4",
+  "sourceCandidate": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/candidate.patch",
+    "bytes": 77959,
+    "sha256": "9fa7f72f889f3c73f172751b439bb41f4be3218541ae05af9f3477f729f5d410"
+  },
+  "changes": [
+    {
+      "path": "package.json",
+      "beforeSha256": "90a6441ff0c4deac432a8cf0ae9a9148fb380928b0ca3b2051977ea66ae98371",
+      "afterSha256": "61e60edc6d6ca057e694885fc8dc3d52317297259026c47e618450899bf64224",
+      "bytes": 1819
+    },
+    {
+      "path": "package-lock.json",
+      "beforeSha256": "8fbca33a81cfac34dd02d7a3fccb573a69e2eb3b7d2fe8861f8072dcb3f943cb",
+      "afterSha256": "e3abad8dbb16bc2edcc521a0d08ab05532bf009ce0fa8f7692a8d89ffb9b47d3",
+      "bytes": 36138
+    },
+    {
+      "path": "game/build-config.json",
+      "beforeSha256": "edffd3a9663804af806dc43fca0d42899e38d681d1fb2f001040ea517bc14fff",
+      "afterSha256": "f6748c26fc6bb3a3317b3c17ce10bcb39d5555c54ea930baeb3c5070ce9eb19e",
+      "bytes": 5474
+    }
+  ],
+  "staged": false
+}

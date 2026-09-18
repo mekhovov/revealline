@@ -1,0 +1,19 @@
+TAP version 13
+# Subtest: controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/site/about.html
+ok 1 - controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/site/about.html
+  ---
+  duration_ms: 54.568292
+  type: 'test'
+  ...
+# Subtest: controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+ok 2 - controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+  ---
+  duration_ms: 20.078083
+  type: 'test'
+  ...
+# Subtest: controller Return is ready before catalogue completion and stays in the same build: https://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/site/about.html
+ok 3 - controller Return is ready before catalogue completion and stays in the same build: https://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/site/about.html
+  ---
+  duration_ms: 17.720917
+  type: 'test'
+  ...

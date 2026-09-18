@@ -1,0 +1,167 @@
+TAP version 13
+# (node:23495) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a missing static dependency reports module failure and leaves a same-page Reload link
+ok 1 - a missing static dependency reports module failure and leaves a same-page Reload link
+  ---
+  duration_ms: 10.762458
+  ...
+# Subtest: slow module observation is truthful and cannot overwrite a later attached host
+ok 2 - slow module observation is truthful and cannot overwrite a later attached host
+  ---
+  duration_ms: 3.725333
+  ...
+# Subtest: actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+ok 3 - actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role
+  ---
+  duration_ms: 3.926958
+  ...
+# Subtest: failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+ok 4 - failed Apply retains the last saved draft; malformed or oversize imports cannot replace it
+  ---
+  duration_ms: 1.150875
+  ...
+# Subtest: cancelled catalog file reads cannot replace a draft or unlock a newer operation
+ok 5 - cancelled catalog file reads cannot replace a draft or unlock a newer operation
+  ---
+  duration_ms: 1.748292
+  ...
+# Subtest: Stop waiting keeps an authoring save locked and reconciles its actual outcome
+ok 6 - Stop waiting keeps an authoring save locked and reconciles its actual outcome
+  ---
+  duration_ms: 0.624
+  ...
+# Subtest: shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+ok 7 - shared keyboard/controller navigation reaches native catalog controls; Back cancels select edit before closing
+  ---
+  duration_ms: 21.89925
+  ...
+# Subtest: workshop native input clears held D-pad repeats until neutral and a fresh press
+ok 8 - workshop native input clears held D-pad repeats until neutral and a fresh press
+  ---
+  duration_ms: 2.88925
+  ...
+# Subtest: workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+ok 9 - workshop ignores a focused game iframe even when parent hasFocus is true, and requires neutral on return
+  ---
+  duration_ms: 2.684208
+  ...
+# Subtest: role detail reader stays controller scrollable and Back returns to its own button
+ok 10 - role detail reader stays controller scrollable and Back returns to its own button
+  ---
+  duration_ms: 1.1265
+  ...
+# Subtest: file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting
+ok 11 - file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting
+  ---
+  duration_ms: 2.02125
+  ...
+# Subtest: catalog data is owned, strict and separate from run authority; selection never filters live actors
+ok 12 - catalog data is owned, strict and separate from run authority; selection never filters live actors
+  ---
+  duration_ms: 10.870917
+  ...
+# Subtest: fpv: seven role body geometries differ before badges, with the same colors
+ok 13 - fpv: seven role body geometries differ before badges, with the same colors
+  ---
+  duration_ms: 0.993666
+  ...
+# Subtest: ukraine: seven role body geometries differ before badges, with the same colors
+ok 14 - ukraine: seven role body geometries differ before badges, with the same colors
+  ---
+  duration_ms: 0.522625
+  ...
+# Subtest: retro: seven role body geometries differ before badges, with the same colors
+ok 15 - retro: seven role body geometries differ before badges, with the same colors
+  ---
+  duration_ms: 0.154542
+  ...
+# Subtest: coupa: seven role body geometries differ before badges, with the same colors
+ok 16 - coupa: seven role body geometries differ before badges, with the same colors
+  ---
+  duration_ms: 0.131041
+  ...
+# Subtest: fpv: all seven catalog practice routes validate and execute ordinary inputs
+ok 17 - fpv: all seven catalog practice routes validate and execute ordinary inputs
+  ---
+  duration_ms: 29.087084
+  ...
+# Subtest: ukraine: all seven catalog practice routes validate and execute ordinary inputs
+ok 18 - ukraine: all seven catalog practice routes validate and execute ordinary inputs
+  ---
+  duration_ms: 14.351083
+  ...
+# Subtest: retro: all seven catalog practice routes validate and execute ordinary inputs
+ok 19 - retro: all seven catalog practice routes validate and execute ordinary inputs
+  ---
+  duration_ms: 10.220417
+  ...
+# Subtest: coupa: all seven catalog practice routes validate and execute ordinary inputs
+ok 20 - coupa: all seven catalog practice routes validate and execute ordinary inputs
+  ---
+  duration_ms: 12.047375
+  ...
+# Subtest: selected procedural skins alter body family, while a custom role image and collision radius remain independent
+ok 21 - selected procedural skins alter body family, while a custom role image and collision radius remain independent
+  ---
+  duration_ms: 0.487125
+  ...
+# Subtest: four pixel pickup glyphs keep dark plates and original type badges in inverted and ordinary palettes
+ok 22 - four pixel pickup glyphs keep dark plates and original type badges in inverted and ordinary palettes
+  ---
+  duration_ms: 0.415875
+  ...
+# Subtest: contact pickups copy positions before collection disappears; current timers read fixed ticks
+ok 23 - contact pickups copy positions before collection disappears; current timers read fixed ticks
+  ---
+  duration_ms: 7.187417
+  ...
+# Subtest: failure feedback stays at the failed tick, never later respawn; reduced effects still explain loss and recovery
+ok 24 - failure feedback stays at the failed tick, never later respawn; reduced effects still explain loss and recovery
+  ---
+  duration_ms: 1.493792
+  ...
+# Subtest: real line strike projects authoritative front positions unchanged under repeated pause/reduced painting
+ok 25 - real line strike projects authoritative front positions unchanged under repeated pause/reduced painting
+  ---
+  duration_ms: 11.942375
+  ...
+# Subtest: painter event feedback is bounded and frozen by pause; rendering cannot change authority
+ok 26 - painter event feedback is bounded and frozen by pause; rendering cannot change authority
+  ---
+  duration_ms: 17.564459
+  ...
+# Subtest: native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+ok 27 - native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+  ---
+  duration_ms: 39.423292
+  ...
+# Subtest: native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+ok 28 - native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+  ---
+  duration_ms: 8.976708
+  ...
+# Subtest: workshop modal Back keeps its draft before a separate keyboard Return to game
+ok 29 - workshop modal Back keeps its draft before a separate keyboard Return to game
+  ---
+  duration_ms: 10.646125
+  ...
+# Subtest: ready controller navigation keeps modal ownership then activates the page Return link explicitly
+ok 30 - ready controller navigation keeps modal ownership then activates the page Return link explicitly
+  ---
+  duration_ms: 25.07875
+  ...
+# Subtest: focused practice keeps parent controls idle and authenticated return restores the draft
+ok 31 - focused practice keeps parent controls idle and authenticated return restores the draft
+  ---
+  duration_ms: 19.18925
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 813.460792
