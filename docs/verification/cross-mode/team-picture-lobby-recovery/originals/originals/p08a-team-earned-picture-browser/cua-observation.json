@@ -1,0 +1,333 @@
+{
+  "status": "SCOPED_NATIVE_RELAY_WIN_RETRY_PASS_LOBBY_FOCUS_DEFECT_FIRST_CONNECTION_WIN_OPEN",
+  "at": "2026-09-17T23:18:08.438847+00:00",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "candidatePatchSha256": "5e848f71d5217f3775e7407bf597dac9a368e04d7e6dbbdd78167c981abd267b",
+  "url": "http://127.0.0.1:60385/game/couch/relay-rescue.html",
+  "sourceMode": "exact Git plus four pinned candidate runtime files; no app state injection",
+  "observedHttp200": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "request": "/game/couch/coop-view.mjs",
+      "at": "2026-09-17T23:11:47.004679+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342",
+      "source": "candidate-override",
+      "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "request": "/game/couch/relay-rescue.css",
+      "at": "2026-09-17T23:11:45.983297+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc",
+      "source": "candidate-override",
+      "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "request": "/game/couch/relay-rescue.html",
+      "at": "2026-09-17T23:11:45.963143+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7",
+      "source": "candidate-override",
+      "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "request": "/game/couch/relay-rescue.mjs",
+      "at": "2026-09-17T23:11:46.663448+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 58894,
+      "sha256": "d82669dad630c9a8d1577006b29ba4ca8a645fe45c1cfb7188861baf50c014d8",
+      "source": "candidate-override",
+      "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+      "request": "/game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+      "at": "2026-09-17T23:11:54.009168+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 38090,
+      "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+      "source": "exact-git",
+      "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+      "request": "/game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+      "at": "2026-09-17T23:16:19.592711+00:00",
+      "method": "GET",
+      "status": 200,
+      "bytes": 52720,
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "source": "exact-git",
+      "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    }
+  ],
+  "input": "CUA ordinary locator keyboard press for gameplay, Pause/Resume/Retry. Semantic selectOption for setup/preferences; viewport emulation. Explicit timed waits allowed simulation to advance between public direction/Support commands. No whole keyboard-only/physical-input claim.",
+  "relayYard": {
+    "difficulty": "Gentle",
+    "teamwork": "Full teamwork",
+    "result": {
+      "heading": "You brought it home.",
+      "coverage": "18.0%",
+      "reserves": 5,
+      "time": "0:16",
+      "jointCuts": 2,
+      "rescues": 0,
+      "interceptedSparks": 0,
+      "focus": "coop-retry"
+    },
+    "visual": "Original industrial artwork fills arena behind Results. Live mask/actors/walls no longer visible. Results obscures much of image; no unobstructed viewer claim.",
+    "winningRoute": [
+      "Retry then neutral120ms, W/Up710ms, D/Left2800ms, Q/Enter Support,1750ms,Pause:3.0% and5reserves JointCut",
+      "Resume2500ms,A/Right1460ms,W/Up450ms,Q/Enter,1150ms,Pause:3.9%,5reserves; columns one cell inside anchors",
+      "Resume120ms,A/Right460ms,S/Down1550ms,Pause:7.7%,5reserves,Shield down",
+      "Resume120ms,W/Up710ms,D/Left,Q/Enter,2150ms:legal18.0%stronghold win"
+    ],
+    "retry": {
+      "action": "Enter on Retry same arena from results",
+      "coverage": "0.0%",
+      "reserves": 5,
+      "time": "0:00",
+      "focus": "coop-canvas",
+      "visual": "Normal concealment, anchors, core and actors return.",
+      "confirmationRequired": false
+    },
+    "retention": "No new picture HTTP request during Retry or lobby return; only later FirstConnection selection fetched its other original. Source/test review establishes exact accepted-binding ownership; browser does not inspect private image object."
+  },
+  "failedRehearsals": [
+    "Unstructured turn overshot to top edge;0%,5reserves; normal Retry reset.",
+    "Turn after delayed start missed timely Support;both recovered,0%,4reserves; normal Retry.",
+    "Fresh timed crossing inspected at2.2s; next tool Support arrived late;both recovered,0%,4reserves; normal Retry."
+  ],
+  "firstConnection": {
+    "teaser": "Ready black-centre border preview and matching caption; no award from preview.",
+    "nativeAttempt": "One unboosted timed opening left Skyline down at0%,5reserves,0:05; paused and preserved. No native win claim.",
+    "coreProbe": "Separate unchanged-source boost:false model reached48.74%,0downs,5reserves then stalled; does not establish native win."
+  },
+  "geometryColumns": [
+    "label",
+    "viewportWidthHeight",
+    "textFace",
+    "textSize",
+    "actualFocus",
+    "primaryRectXYWH",
+    "visibleCanvasRectXYWH"
+  ],
+  "geometry": [
+    [
+      "relay-yard-win-desktop",
+      [
+        1280,
+        800
+      ],
+      "pixel",
+      "standard",
+      "coop-retry",
+      [
+        485.109375,
+        224.8984375,
+        164.3203125,
+        44
+      ],
+      [
+        82,
+        195.6953125,
+        1116,
+        558
+      ]
+    ],
+    [
+      "relay-yard-win-portrait",
+      [
+        390,
+        844
+      ],
+      "pixel",
+      "standard",
+      "coop-retry",
+      [
+        112.8359375,
+        210,
+        164.3203125,
+        44
+      ],
+      [
+        14,
+        253.59375,
+        362,
+        181
+      ]
+    ],
+    [
+      "relay-yard-results-portrait",
+      [
+        390,
+        844
+      ],
+      "plain",
+      "large",
+      "coop-settings-open",
+      [
+        98.8515625,
+        292.796875,
+        192.296875,
+        47
+      ],
+      [
+        14,
+        281.484375,
+        362,
+        181
+      ]
+    ],
+    [
+      "relay-yard-results-landscape",
+      [
+        844,
+        390
+      ],
+      "plain",
+      "large",
+      "coop-settings-open",
+      [
+        240.2265625,
+        262.6953125,
+        192.296875,
+        47
+      ],
+      [
+        274,
+        217.890625,
+        296,
+        148
+      ]
+    ],
+    [
+      "relay-yard-retry",
+      [
+        844,
+        390
+      ],
+      "plain",
+      "large",
+      "coop-canvas",
+      null,
+      [
+        274,
+        161.890625,
+        296,
+        148
+      ]
+    ],
+    [
+      "relay-yard-returned-lobby-OFFSCREEN",
+      [
+        844,
+        390
+      ],
+      "plain",
+      "large",
+      "coop-start",
+      [
+        40,
+        1080.3828125,
+        188.1484375,
+        47
+      ],
+      [
+        92.2421875,
+        867.3828125,
+        286,
+        142
+      ]
+    ],
+    [
+      "first-connection-ready-tab-portrait",
+      [
+        390,
+        844
+      ],
+      "plain",
+      "large",
+      "coop-start",
+      [
+        40,
+        780.8828125,
+        188.1484375,
+        47
+      ],
+      [
+        41,
+        556.8828125,
+        308,
+        153
+      ]
+    ],
+    [
+      "first-connection-ready-tab-landscape",
+      [
+        844,
+        390
+      ],
+      "pixel",
+      "standard",
+      "coop-start",
+      [
+        40,
+        329.765625,
+        154.3203125,
+        44
+      ],
+      [
+        92.2421875,
+        116.765625,
+        286,
+        142
+      ]
+    ]
+  ],
+  "horizontalOverflow": "documentElement.scrollWidth equals clientWidth in every recorded row",
+  "settings": "Global Plain/Large applied on results; Back restored Settings opener and retained18%terminal result. Restored Theme/Standard before FirstConnection play.",
+  "defects": [
+    {
+      "id": "team-lobby-focused-start-offscreen",
+      "journey": "win\u2192Retry\u2192Pause\u2192Change setup\u2192Discard and change setup",
+      "viewport": [
+        844,
+        390
+      ],
+      "text": "Plain/Large",
+      "active": "coop-start",
+      "rect": [
+        40,
+        1080.3828125,
+        188.1484375,
+        47
+      ],
+      "scrollY": 112,
+      "confirmation": "Stable later screenshot/DOM read, not transient resize screenshot.",
+      "source": "Inherited exact628 lobby focus({preventScroll:true}) without reveal; preview adds height. Exact baseline geometry not measured."
+    }
+  ],
+  "limitations": [
+    "No public deployment, offline or whole source gates.",
+    "No physical touch/controller, assistive technology,zoom,full mode/edition inventory.",
+    "Canvas visual inspection uses CUA screenshots displayed in tool transcript; no screenshot files saved.",
+    "Native preparation failures/cancellation and held Settings completion not yet covered here.",
+    "No saved media mutation or Solo progression invocation; no byte-exact browserstorage comparison.",
+    "FirstConnection native win and unobstructed picture viewer remain open.",
+    "Two immediate resize screenshots were visually stale; stable later screenshots and DOM geometry used for conclusions."
+  ]
+}
