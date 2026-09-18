@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-09-18T01:29:37.474212+00:00",
+  "status": "PASS_SCOPED_ARCHIVE_ADMISSION",
+  "archive": "mekhovov/revealline-archive-21",
+  "source": "a36d62f2fc3af67e3fffcafda3656c413ca77341",
+  "version": "v0.60.7",
+  "httpAudit": {
+    "path": ".cache/v0608-archive21-public-audit/byte-audit-completion.json",
+    "files": 698,
+    "bytes": 313213410,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native": ".cache/v0608-archive21-public-audit/native-20260918/observations.json",
+  "pins": [
+    {
+      "path": ".cache/v0608-archive21-public-audit/native-20260918/archive-deployment.json",
+      "bytes": 3856,
+      "sha256": "40a5049f3672c001f6a51d5859917ef5b7e5ca5c7c423c63c28543ee5aa46c69"
+    },
+    {
+      "path": ".cache/v0608-archive21-public-audit/native-20260918/archive-main.json",
+      "bytes": 358,
+      "sha256": "33d3cd9c6e65fcb56806fb3f79af10a8d1f922721c73d92580eebafc1139c1f3"
+    },
+    {
+      "path": ".cache/v0608-archive21-public-audit/native-20260918/archive-run.json",
+      "bytes": 13144,
+      "sha256": "3392ab292f2f73cd9b0d4900ea450b948e5fb31d0f58184aa63ed97d29cb3c88"
+    },
+    {
+      "path": ".cache/v0608-archive21-public-audit/native-20260918/archive-status.json",
+      "bytes": 8507,
+      "sha256": "a839eede4801e53bd307b234cf4f80694c323f1ff45b2af21d6b5c532fc2a80e"
+    },
+    {
+      "path": ".cache/v0608-archive21-public-audit/native-20260918/observations.json",
+      "bytes": 2861,
+      "sha256": "95983b6c614309e084abeb87d5f9fa9dcb6d1676764869ff3531b00f9668a248"
+    }
+  ],
+  "archiveAdmissionAccepted": true,
+  "wholePhaseAccepted": false
+}
