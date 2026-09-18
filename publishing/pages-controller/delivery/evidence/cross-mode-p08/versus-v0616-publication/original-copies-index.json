@@ -1,0 +1,84 @@
+{
+  "format": "revealline-finite-original-copies.v1",
+  "copies": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/final-execution/root-package-review.json",
+      "bytes": 3364,
+      "sha256": "c845688c3e571f0a6056374a24d8a0dee2cec9a2910b082eeae7d035cf48565d",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/source-package.original.json",
+      "purpose": "Exact-source qualification authority; no public claim"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-native-v0616/root-native-layout-r1.json",
+      "bytes": 6079,
+      "sha256": "8bb914f42cce226cb967fabd603ed5e4f82ec48ac0f6f6356f4086170a27c2e6",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/source-native-geometry.original.json",
+      "purpose": "Actual source-preview cases and retained limitations"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/root-publish-r1/after-release.json",
+      "bytes": 19949,
+      "sha256": "1dafa5358afff29971966f5346653b2faf6e508b89269e03ce005da79a444e0b",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/published-release.original.json",
+      "purpose": "Actual root publication/tag original; preserve exact bytes"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/root-publish-r1/after-latest.json",
+      "bytes": 19949,
+      "sha256": "1dafa5358afff29971966f5346653b2faf6e508b89269e03ce005da79a444e0b",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/latest-release.original.json",
+      "purpose": "Actual root publication/tag original; preserve exact bytes"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/root-publish-r1/completion.json",
+      "bytes": 384,
+      "sha256": "1d9f0b6aade55ccd85aa0413f5f6dbe24bd41d2a7eabb065ddb04bcac44b7dd8",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/publication-completion.original.json",
+      "purpose": "Actual root publication/tag original; preserve exact bytes"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/root-publish-r1/review.json",
+      "bytes": 540,
+      "sha256": "12e8ea461840c078aa965deaa10580ab5a8d200ba877e58b3bbfa0fe11f7154f",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/publication-review.original.json",
+      "purpose": "Actual root publication/tag original; preserve exact bytes"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/root-publish-r1/before-tag.json",
+      "bytes": 337,
+      "sha256": "be9a263499a65e1a91f083a0cdeb8695f45dba0d71186e28aeccbb601355fbd1",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/tag-ref.original.json",
+      "purpose": "Actual root publication/tag original; preserve exact bytes"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/root-publish-r1/before-tag-object.json",
+      "bytes": 927,
+      "sha256": "e9d3f8f25b2582b4e81002faa6a969a76de323bfaa746a4ea6cd4faed5aa6f93",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/tag-object.original.json",
+      "purpose": "Actual root publication/tag original; preserve exact bytes"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-upload-receipt-preparation/reconciliation/v0.61.6-reconciliation.json",
+      "bytes": 15488,
+      "sha256": "26ea0fa5302f308a7c21a7b1c2528093ada58feb38d6d1e7831bc47ec1202e79",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/upload-reconciliation.original.json",
+      "purpose": "Verified 124 members and original assets without copying payload ZIP"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-upload-observation/terminal-review.json",
+      "bytes": 19308,
+      "sha256": "2fb3c6c4d85f51837c78ee0e6cc4e87a724db02cc0a203ccb35e83cf4105319b",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/upload-terminal.original.json",
+      "purpose": "Actual terminal logs/binding/asset descriptor review"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0616-release-preparation/upload-binding.reviewed.json",
+      "bytes": 2037,
+      "sha256": "8219d140e04ba73e2ba66d06dad7acc46f4c30d9404c8dd8ff77ac3c44b5d214",
+      "destination": "publishing/pages-controller/delivery/evidence/cross-mode-p08/versus-v0616-publication/upload-binding.original.json",
+      "purpose": "Exact root-requested source and nine asset identities"
+    }
+  ],
+  "allBodiesMatchedOriginals": true,
+  "noDuplicateFrozenZIPOrPublicBody": true
+}

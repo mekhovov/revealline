@@ -98,6 +98,18 @@ the failed first attempt if an omitted tag already caused a deployment failure.
 Do not remove old cohorts, move tags, infer archive acceptance from a successful
 workflow, or change the live selector while publication/retention is pending.
 
+Derive archive preservation counts from the accepted inventory: a new archive has
+zero previously accepted paths; an append must preserve the exact prior path set
+and bytes, with any mutable index exception stated explicitly. Check the count in
+both prepared inputs and final summaries instead of carrying an earlier literal.
+If only a summary field is wrong, preserve executed helpers, reports and all rows;
+attach an explicit correction backed by independent complete-row reconciliation.
+Do not silently rewrite originals or repeat payload requests for that metadata error.
+
+Example prompt: “Retain this release in a new archive. Report zero prior accepted
+paths, derive every total from the exact inventory, and keep native play separate
+from byte acceptance. For an append, prove the stated prior paths remain unchanged.”
+
 Before committing verification evidence, check every manifest-pinned original with `git ls-files --error-unmatch`. Repository ignore rules can omit original `.log` files even when their JSON manifest is staged. Add only those explicitly reviewed original paths with `git add -f`, then verify all recorded sizes and hashes against the index. Preserve original log/diff bytes, including whitespace; never normalize evidence to satisfy a source-format check. Run exact-source qualification only after that evidence-complete commit.
 
 Use the selected immutable source and its own frozen builder. Follow [snapshot staging](../../../docs/snapshot-staging.md) for the rename-first source-TAR transfer; EXDEV still needs space for the temporary copy. Confirm fresh capacity and filesystem placement before building. Integration must retain the chosen main cutoff and the next release version; earlier candidate checks cannot qualify a later merge. Retire only verified generated previews, preserving the original Git/release assets and verification receipts.
