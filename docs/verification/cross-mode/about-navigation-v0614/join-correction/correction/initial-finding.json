@@ -1,0 +1,9 @@
+{
+  "base": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "probe": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/first-focus-probe.stdout",
+    "bytes": 966,
+    "sha256": "bb1398daa6b63438e47ac757a4042a14d8fd4cd947abe6fd4a7c74c62c79a000"
+  },
+  "scope": "Read-only coordinator probe; finite modeled DOM/pad, not native browser. Source fix remains unpublished v0.61.4."
+}

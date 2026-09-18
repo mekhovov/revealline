@@ -1,0 +1,96 @@
+{
+  "schema": "revealline.independent-source-review.v1",
+  "createdAt": "2026-09-18T02:55:23.875114+00:00",
+  "reviewer": "/root/qualify_media_final",
+  "status": "CHANGES_REQUIRED_ONE_P2",
+  "source": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "tree": "d39a9a200294dfb1a68460dfdc59c5f575708d6e",
+  "parent": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "scope": {
+    "changedPaths": 162,
+    "feature": 14,
+    "version": 3,
+    "evidence": 145,
+    "pathBytes": 4423630,
+    "child613Included": false,
+    "child615Included": false
+  },
+  "pinAudit": "Passed all 162 committed modes/body pins and physical bodies; 287 tested source input bodies match this commit. Index and source were clean and exact before and after audit.",
+  "testEvidence": "Original scoped eight-file cohorts are 199/199 on Node 20.19.5 and Node 22.22.2, with zero failures/skips/cancelled/todo. These precommit runs are bound by their exact input bodies; they are not hosted final-source CI. No full suite was rerun.",
+  "historicalEvidence": "103 historical originals (2,561,897 bytes) remain labeled historical. Complete copied intake is 142 originals (3,559,228 bytes), each matched to its committed copy. Historical results are not current controller acceptance.",
+  "findings": [
+    {
+      "id": "V0614-REVIEW-P2-001",
+      "priority": 2,
+      "path": "site/about-navigation.mjs",
+      "line": 82,
+      "title": "Controller join has no visible focus before Confirm activates Return",
+      "trigger": "Fresh About page with BODY focus; neutral standard pad, South to join, release, then a fresh South press.",
+      "actual": "Join and release leave BODY active without a controller focus mark. The next Confirm both focuses Return and activates it, leaving the page before a visible selection existed.",
+      "expected": "Joining establishes a visible default focus without activation, and meaningful existing focus is preserved.",
+      "recommendation": "On the fresh joined status, engage the existing navigation owner in the foreground. Add actual About-host tests asserting focused Return immediately after join/release, no held-Confirm activation, and preservation of meaningful prior focus.",
+      "evidence": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/first-focus-probe.mjs",
+          "bytes": 1849,
+          "sha256": "370f181d04d6915b1efce7a76530275661da8efedaa3a6bdaad2b67db7cd239c"
+        },
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/first-focus-probe.stdout",
+          "bytes": 966,
+          "sha256": "bb1398daa6b63438e47ac757a4042a14d8fd4cd947abe6fd4a7c74c62c79a000"
+        },
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/first-focus-probe.stderr",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "evidenceScope": "Finite modeled DOM/pad probe importing actual About/router/navigation modules; not physical-controller or browser qualification.",
+      "disposition": "Parent acknowledged and assigned correction to the source owner. The correction must be a successor commit; this review does not approve that unreviewed successor."
+    }
+  ],
+  "reviewedBoundaries": [
+    "Exact archive-origin/namespace/version/About-path routing; same-edition Return and current-build fallbacks; unchanged strict archivedPlayHref validator.",
+    "No newly automatic history navigation or storage mutation. Selection updates the explicit Open link; catalog loads respect terminal page departure.",
+    "Controller-native SELECT Escape sequencing, unchanged repeat/edge behavior, deliberate pointer/keyboard focus, one RAF owner, blur/hidden/cached-page neutral gating, and terminal listener disposal.",
+    "Source/version partition, generated production tree and ledger unchanged, current versus historical evidence separation, feature documentation and runtime skill changes."
+  ],
+  "acceptance": {
+    "sourcePins": true,
+    "boundedCodeReview": true,
+    "firstFocusContract": false,
+    "readyForUnconditionalSourceApproval": false,
+    "hostedFinalSourceCI": false,
+    "browser": false,
+    "physicalController": false,
+    "release": false
+  },
+  "actions": {
+    "sourceEdits": false,
+    "staging": false,
+    "commit": false,
+    "remote": false,
+    "browser": false,
+    "build": false,
+    "newFullSuite": false,
+    "cacheOnlyReviewOutputs": true
+  },
+  "attachments": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/audit.py",
+      "bytes": 6530,
+      "sha256": "9d962903b3088e47f1551cc09b69292beb46df3bd6df272249874059d5c6c457"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/path-pins.json",
+      "bytes": 60534,
+      "sha256": "312fb5835eef2ed2cb1ee1abcf233e91cccbd247cf3c51c1501247f4f960ee94"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/evidence-audit.json",
+      "bytes": 4988,
+      "sha256": "a1219cede0d4da70f96cb225e5c4918510b1c77eb35a6217cd034baa92b5f54e"
+    }
+  ]
+}

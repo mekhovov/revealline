@@ -79,6 +79,9 @@ export function attachAboutNavigation({
           : sample.status.message,
       );
     }
+    // Joining establishes a visible selection but carries no page activation.
+    // engage() preserves an already focused control; the router gates the hold.
+    if (sample.status.code === 'joined') navigation.engage();
     navigation.handle(sample.ui);
     schedule();
   }
