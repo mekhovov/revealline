@@ -1,0 +1,15 @@
+# v0.61.21 — public Team earned-picture feature accepted
+
+[Play the immutable edition](https://mekhovov.github.io/revealline/releases/v0.61.21/site/game/) · [Current phased plan](planning/progress-and-next.md)
+
+The [root acceptance](root-acceptance.original.json) accepts the named Team earned-picture feature. It does not close P07, P10, P18 or the complete game. Source `ef1430174dfd35a9df441233988b8737d0401851` was published by `e7fadae470003b0eb700ae0e2f3969d0614f59c1`, workflow `35386384695`, deployment `6531542960`, from immutable release `391707127`.
+
+The [complete byte audit](public-report.original.json) verified all **3,203 files / 642,573,907 bytes**, with two automatic retries, zero final failures and no skips. The [independent row review](row-review.original.json) reconciles all 3,205 attempts. It confirms 91 prior catalog authorities plus one new authority; this is not a comparison proving every historical HTTP body unchanged. [Fresh authority readbacks](after-http-authorities.original.json) found the deployment, source, tag and nine release assets unchanged after the audit.
+
+The [actual public keyboard journey](native-team.original.json) earned a First Connection Gentle win: **67.5%, 0:24, three joint cuts and five reserves**. View picture showed the complete artwork without gameplay or results over it. Back and Escape restored View picture focus and the unchanged result; reopening did not replay the attempt. Portrait 390×844 and short landscape 844×390 Plain/Large checks retained the whole picture and a separate visible Back control. Retry started at 0%, 0:00 and five reserves; explicit Pause focused Resume. Earlier unsuccessful native attempts remain in the original record and tool history. The [later attempt-label correction](native-attempt-label-correction.original.json) clarifies that the four failed attempts were two centre crossings and two upper-opening crossings; the successful result and acceptance scope are unchanged. Screenshots were inspected inline; no exported screenshot files or invented image hashes are claimed.
+
+Relay Yard native reward, real touch/gamepads, audible listening, offline/BFCache, tight joint-cut and Support playtesting, and broader phase requirements remain open. The known predecessor phone focus issues remain open. The [original source/publication evidence](../team-picture-v06121-publication/README.md), including the earlier failed Relay Yard attempt, keeps its original scope.
+
+[Original evidence ZIP](originals.zip) and [member index](originals-index.json) preserve the finite audit inputs, helpers, requests, hosted observations, receipt, result and attempt rows, failed attempts, authority readbacks and root/native records. All members retain their original bytes and names. Historical pending proposals inside the bundle are not the final acceptance authority. Public game payloads and browser profile data are not included.
+
+The current catalogue contains 92 versions. The [plan](planning/progress-and-next.md#near-term-release-history-correction) requires all-history publication before the 101st major-0 entry; that correction is not part of this documentation change.
