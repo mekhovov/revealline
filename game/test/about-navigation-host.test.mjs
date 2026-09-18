@@ -284,18 +284,67 @@ for (const [page, target] of [
     assert.deepEqual(h.writes, []);
   });
 
+test('first controller join establishes visible Return focus before a later Confirm can activate it', async (t) => {
+  const h = await about(t);
+  await h.start();
+  h.setPad();
+  h.tick();
+  assert.ok(h.doc.activeElement === h.doc.body, 'Neutral arrival is not a focus request.');
+  h.setPad([0]);
+  h.tick();
+  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
+  assert.ok(h.$('about-return').classList.contains('controller-focus'));
+  h.tick();
+  h.tick();
+  assert.deepEqual(h.navigations, [], 'Joining and holding Confirm cannot activate Return.');
+  h.setPad();
+  h.tick();
+  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
+  assert.ok(h.$('about-return').classList.contains('controller-focus'));
+  assert.deepEqual(h.navigations, [], 'Releasing the join keeps the visible selection inert.');
+  h.tap(0);
+  assert.deepEqual(h.navigations, ['https://example.test/revealline/releases/v0.60.8/site/game/']);
+  assert.deepEqual(h.writes, []);
+});
+
+test('controller join marks a previously focused disclosure without changing or activating it', async (t) => {
+  const h = await about(t);
+  await h.start();
+  const summary = h.$('versions').querySelector('summary');
+  summary.focus();
+  h.setPad();
+  h.tick();
+  h.setPad([0]);
+  h.tick();
+  assert.ok(h.doc.activeElement === summary, 'The previously focused summary keeps focus.');
+  assert.ok(summary.classList.contains('controller-focus'));
+  assert.equal(h.$('about-return').classList.contains('controller-focus'), false);
+  h.tick();
+  h.setPad();
+  h.tick();
+  assert.ok(h.doc.activeElement === summary, 'The previously focused summary keeps focus.');
+  assert.equal(h.$('versions').open, false, 'Join, hold and release do not toggle disclosure.');
+  assert.deepEqual(h.navigations, []);
+  h.tap(0);
+  assert.equal(h.$('versions').open, true, 'Only a subsequent Confirm activates its selection.');
+  assert.deepEqual(h.writes, []);
+});
+
 test('held arrival Confirm waits for neutral and join before any page action', async (t) => {
   const h = await about(t);
   h.setPad([0]);
   await h.start();
   h.tick();
   h.tick();
+  assert.ok(h.doc.activeElement === h.doc.body, 'Held arrival has not joined or claimed focus.');
   assert.deepEqual(h.navigations, []);
   assert.equal(h.$('versions').open, false);
   h.join();
+  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
+  assert.ok(h.$('about-return').classList.contains('controller-focus'));
   assert.deepEqual(h.navigations, []);
   h.tap(1);
-  assert.equal(h.doc.activeElement, h.$('about-return'));
+  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
 });
 
 test('D-pad and Confirm operate the real disclosure and preserved-build select without automatic navigation', async (t) => {
