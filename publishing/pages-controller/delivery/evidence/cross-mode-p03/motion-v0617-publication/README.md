@@ -1,0 +1,15 @@
+# v0.61.7 publication candidate — Motion Lab focus after rotation
+
+Select the published [v0.61.7 release](https://github.com/mekhovov/revealline/releases/tag/v0.61.7) from exact source `b3262eb02a998c50354758ba922324d023138875`, tree `0f4815e7c4116aeb08bee9696828f143a1ef5479`. [Source PR 122](https://github.com/mekhovov/revealline/pull/122) corrects focused-field vertical visibility when rotation leaves the settings panel outside the viewport. The control, label, value and paused preview remain intact; late resize callbacks cannot affect a departed or disposed page.
+
+Both exact-source CI families passed **5,877 tests across 464 files**, all six source gates, production reproduction/readiness and ordinary build. The [source-package review](source-package-review.original.json) remains separate from publication. All nine frozen assets match the actual published release, ID `391486325`, and its Latest readback. The first overly broad comparison of draft and published download URLs is retained; only the expected URLs changed, and root issued one publication PATCH. Original bytes were not rebuilt or replaced.
+
+[Exact-source native observations](source-native-rotation.original.json) passed vertical visibility at **390×844 and 844×390**, with Standard and Large text, focused blade count `3` and paused Play state. A small right-edge focus-outline clip in narrow landscape remains open. Setup used pointer actions and keyboard focus; this does not establish a complete keyboard-only journey, Plain text on the final source, physical-device/controller, offline, audible or full-phase acceptance.
+
+The [accepted Archive25 append](../../../../evidence/archive-25/append-v0616/README.md) preserves v0.61.5 and v0.61.6: **1,398 files / 626,758,906 bytes**, zero failures/retries, 699 unchanged prior rows and only the root index changed. Its separate native practice scope does not establish main campaign or save qualification.
+
+**v0.61.6 remains the accepted public baseline.** This candidate still requires the publisher PR preview and merge, protected Pages deployment, complete public byte audit and actual shipped Motion Lab rotation/focus journey. The intended [v0.61.7 play URL](https://mekhovov.github.io/revealline/releases/v0.61.7/site/game/) is an upcoming deployment target, not an acceptance claim. Keep the right-edge limitation and parent P03/P05/P18 gates open.
+
+[Originals](originals.zip), their [hash index](originals-index.json), and the [prioritized plan](planning/progress-and-next.md) preserve the exact source, native and release records. This publishing change preserves all 87 previous catalog entries and the 24 other archive admissions. It changes no game, version, release payload or publisher runtime helper.
+
+Local publisher validation passed 43 tests on Node 20.19.5 and 43 on Node 22.22.2, plus four Python extraction tests. All 88 metadata chains, the selected exact qualification and the changed archive admission passed bounded validation. Preservation rehashed 922 prior bodies from Git without hydrating old evidence. Full publisher assembly remains the hosted preview gate.

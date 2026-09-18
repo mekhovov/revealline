@@ -1,0 +1,41 @@
+{
+  "scope": "Native CUA practice/session-only archive-retention smoke. No Playwright, injected state, storage clearing, main-flight replacement or network audit.",
+  "archivePublishingRevisionProvidedByCoordinator": "dff3007d35edb7a1b528884f673219d0e6b8d7d6",
+  "input": "CUA keyboard direction taps and Escape; pointer activation of ordinary visible controls. Not keyboard-only menu qualification or physical device testing.",
+  "viewport": "Default browser viewport after clearing temporary override. Raw screenshot dimensions are not a DOM geometry qualification.",
+  "v0.61.5": {
+    "url": "https://mekhovov.github.io/revealline-archive-25/releases/v0.61.5/site/game/",
+    "home": "Visible VERSION V0.61.5; existing Continue First Signal / Relay Orchard left intact. Missions Back focuses Missions.",
+    "route": [
+      "Home",
+      "Workshop",
+      "Sound & game extras",
+      "About & build information",
+      "Build information expanded",
+      "Return to game",
+      "Workshop",
+      "Field guide & practice",
+      "Play practice",
+      "Start mission"
+    ],
+    "play": "Down direction tap/release; paused at 0:06; explicit Resume; second Down tap/release closed cut: 8.6%, score 02040, 3 lives, 0:18. Paused again.",
+    "return": "Return to field guide -> Play practice focused; Close guide -> Workshop Field guide & practice focused; Back -> Home Workshop focused. Same Continue Relay Orchard and v0.61.5 visible.",
+    "history": "Build picker current v0.61.5, Open build targets immutable archive-25 v0.61.5. Return to game retained v0.61.5."
+  },
+  "v0.61.6": {
+    "url": "https://mekhovov.github.io/revealline-archive-25/releases/v0.61.6/site/game/",
+    "home": "Visible VERSION V0.61.6; Home shows Start / First Signal. No main flight was started.",
+    "route": [
+      "Home",
+      "Workshop",
+      "Field guide & practice",
+      "Play practice",
+      "Start mission"
+    ],
+    "play": "Down direction tap/release completed cut: 8.6%, score 02040, 3 lives, 0:13. Escape paused, explicit Resume continued from 0:13, Escape paused at 0:16.",
+    "return": "Return to field guide -> Play practice focused; Close guide -> Workshop Field guide & practice focused. Practice-end status says no campaign progress awarded.",
+    "history": "Workshop extras -> About build information current v0.61.6; central Release history loaded, listed v0.61.6 current and source 4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9. Browser Back returned immutable v0.61.6 About; Return to game retained Home VERSION V0.61.6 and Start."
+  },
+  "result": "PASS for bounded practice play, explicit pause/resume, visible version and menu/history return paths. No full win, save-migration, save-byte preservation, offline, audio, touch or physical controller claim.",
+  "evidenceLimit": "No screenshot recorded for the first short v0.61.5 moving trail; successful cut and paused images are retained. Both practice sessions ended through UI. Existing v0.61.5 saved destination was only observed, not loaded or modified."
+}
