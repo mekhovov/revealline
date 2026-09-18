@@ -242,7 +242,8 @@
       "id": "archive-26",
       "repository": "mekhovov/revealline-archive-26",
       "versions": [
-        "v0.61.7"
+        "v0.61.7",
+        "v0.61.8"
       ]
     }
   ]
