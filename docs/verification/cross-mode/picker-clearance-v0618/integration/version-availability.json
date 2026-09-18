@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-18T06:21:06.924074+00:00",
+  "version": "0.61.8",
+  "status": "EXACT_CHECKED_LOCAL_REMOTE_REFS_AND_RELEASE_ABSENT",
+  "checks": [
+    {
+      "name": "local",
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname) %(objectname)",
+        "refs/tags/v0.61.8",
+        "refs/heads/codex/p05-picker-clearance-v0618"
+      ],
+      "exitCode": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "remote",
+      "command": [
+        "git",
+        "ls-remote",
+        "--heads",
+        "--tags",
+        "origin",
+        "refs/tags/v0.61.8",
+        "refs/tags/v0.61.8^{}",
+        "refs/heads/codex/p05-picker-clearance-v0618"
+      ],
+      "exitCode": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "release",
+      "command": [
+        "gh",
+        "api",
+        "--method",
+        "GET",
+        "repos/mekhovov/revealline/releases/tags/v0.61.8"
+      ],
+      "exitCode": 1,
+      "stdoutSHA256": "010563d2cfb8f1e87f700936ce59ee3a33364da46e3db41b0049227918ece74d",
+      "stderrSHA256": "d2c8985c89b29a842ac4946d13bdbc297709f44f20bb968faf9682664b211db6"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ export function attachFocusClearance({
   container,
   heading,
   footer,
+  includeControlLabel = false,
   document: doc = globalThis.document,
 }) {
   const view = doc.defaultView ?? globalThis;
@@ -29,7 +30,13 @@ export function attachFocusClearance({
       !visible(focused)
     )
       return;
-    const target = focused.getBoundingClientRect();
+    const label = includeControlLabel ? focused.closest?.('label') : null;
+    const labelBox =
+      label && container.contains(label) && visible(label) ? label.getBoundingClientRect() : null;
+    const target =
+      labelBox && labelBox.bottom - labelBox.top <= bottom - top
+        ? labelBox
+        : focused.getBoundingClientRect();
     if (target.top < top) container.scrollTop += target.top - top;
     else if (target.bottom > bottom)
       container.scrollTop += Math.min(target.bottom - bottom, target.top - top);

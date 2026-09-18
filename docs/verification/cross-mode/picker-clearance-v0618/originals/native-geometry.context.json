@@ -1,0 +1,34 @@
+{
+  "source": "Parent-provided measured public v0.61.1 geometry, not a new candidate browser run",
+  "portrait": {
+    "viewport": [
+      390,
+      844
+    ],
+    "dialog": {
+      "x": 21,
+      "y": 16,
+      "width": 348,
+      "height": 812,
+      "scrollTop": 881.5
+    },
+    "operations": {
+      "x": 36,
+      "y": 31,
+      "width": 318,
+      "height": 205.59375
+    },
+    "focusedFile": {
+      "x": 36,
+      "y": 45.375,
+      "width": 318,
+      "height": 64
+    }
+  },
+  "rotation": [
+    844,
+    390
+  ],
+  "unchangedObservedFlow": "Preview succeeded and restored focus; Escape Close workshop returned Open local media. No assignment write.",
+  "separateUnfixedFinding": "Close local connections drops focus to BODY; kept outside this correction."
+}

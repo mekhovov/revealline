@@ -1,0 +1,390 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 0571fc5e1..2f627a3a6 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -47,6 +47,10 @@ The Library sticky operation area moves original status and Cancel nodes without
+ 
+ Measure sticky feedback's actual bottom when exposing the live focused control; also measure a sticky footer's top when it bounds the reading area. Missions keeps heading and feedback in one box and uses `attachFocusClearance` for both boundaries. Replay uses the same helper with its operation rail, measured scroll padding and a small textarea scroll margin; keep the first JSON line clear after Tab/PageUp and text reflow while the textarea retains its own scrolling. Do not follow a remembered opener or react to ordinary scrolling. Keep Close above the feedback reachable, and clamp a tall editor's adjustment so its beginning remains visible. Verify painted focus and hit targets; viewport bounds alone cannot detect one element covering another.
+ 
++For the still-picture workshop, bind the existing `attachFocusClearance` to the dialog and its actual operations rail, opting into `includeControlLabel` so the field purpose stays visible with its native control. Preserve the default control-only behavior for other dialogs. If the complete wrapper cannot fit between the measured rails, fall back to the focused control so a tall label cannot move it below the viewport; keep ordinary reading scroll available. Keep status, Cancel and Close together through pending, settled and failed work; do not replace their operation owner or remove sticky feedback to expose a field. Test the focused file input after successful preview and reverse traversal using the recorded overlapping rectangles for the entire label/control wrapper, then resize with that same live focus. Ordinary scrolling must remain deliberate, closed panels ignore queued work, and disposal removes the observer/listeners and resets insets. Layout alone must not decode, save or change an assignment. Keep mounted geometry checks separate from native painted focus and physical input; see [the workshop guide](../../../docs/still-media-workshop.md).
++
++Prompt: “After previewing a chosen image, reverse-traverse to the original file picker at 390×844, rotate to short landscape, and verify both its label and control clear the measured status rail without changing focus or media. During a held preview keep Cancel visible and authoritative; close/dispose before a queued layout pass and preserve original bytes. Record actual browser bounds separately from the source regression.”
++
+ For Controller Apply, capture focus ownership before disabling the initiating action. Native blur to body does not by itself relinquish ownership; subsequent user input, focus choice, hidden document or window blur does. Restore the existing Edit action only on current successful completion, clean up observers on abort/settlement, and retain transaction and binding identity. Native evidence must identify the active element/action, `:focus` and next Tab destination: unnamed buttons can have an empty ID while correctly focused.
+ 
+ Check the active top-layer owner as well as viewport bounds. Craft feedback uses its original renderer status node inside Missions while selection or direct briefing is open; restore that exact node on actual close/disposal and ignore a queued close from an earlier visit. Keep one presenter and the renderer's existing load-token guards. Cosmetic readiness must not block Deploy or create a second cancellation owner. Verify the sticky slot with real selector changes at portrait/landscape and Large text.
+diff --git a/docs/still-media-workshop.md b/docs/still-media-workshop.md
+index f7519badf..11e70bca9 100644
+--- a/docs/still-media-workshop.md
++++ b/docs/still-media-workshop.md
+@@ -38,6 +38,8 @@ The preview uses separate `BoardPainter.drawGallery` rendering with one decoded
+ 
+ Existing controller navigation operates native controls and dialog focus. Back closes the active editor/dialog; it never starts a game. Native file dialogs may blur without invalidating the selected file; genuinely hiding the page cancels its pending context. File picking and text entry rely on browser/OS controls, with no controller virtual keyboard. Modeled inputs do not certify physical hardware.
+ 
++The still-picture dialog keeps its original status, Cancel and Close controls in one sticky rail. `attachFocusClearance` measures that rail after focus or layout changes and reveals only the current control together with its containing label below it. This workshop opts into `includeControlLabel`; other dialogs retain their established control-only measurement. If the complete label/control wrapper is taller than the available space, reveal the focused control instead so the label cannot push it out of view; the player can still scroll deliberately to read the label. A file picker can lie within the viewport and still be covered by the status; check the complete label/control wrapper against the rail, including after a successful preview, reverse traversal, rotation and larger text. Preserve ordinary reading scroll, pending-operation ownership and original bytes. Closing prevents queued layout changes; disposal removes the observer/listeners and resets the scroll insets. The mounted finite-geometry regression is not browser paint or physical-device qualification.
++
+ ## Portable originals: prepare, download, review, restore
+ 
+ Inside the modal, **Prepare originals download** performs a fresh full store read and `.rlmedia` verification. It prepares one retained Blob URL and focuses the visible native **Download originals** link. There is no automatic click. Native keyboard, pointer/touch or controller activation requests the download; only the browser can confirm the destination and disk completion. The same prepared copy supports retry. Repreparation, draft/context changes, review, cancellation, close, hiding or disposal invalidate it and revoke its URL.
+diff --git a/game/test/focus-clearance.test.mjs b/game/test/focus-clearance.test.mjs
+index 35e66a7d0..c13ed976d 100644
+--- a/game/test/focus-clearance.test.mjs
++++ b/game/test/focus-clearance.test.mjs
+@@ -3,7 +3,12 @@ import assert from 'node:assert/strict';
+ import { attachFocusClearance } from '../ui/focus-clearance.mjs';
+ 
+ // Recorded sticky-header/footer geometry with a scrolling form. No raster claim.
+-function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}) {
++function fixture({
++  headingBottom = 294.359,
++  footerTop = 700,
++  height = 844,
++  includeControlLabel = false,
++} = {}) {
+   const queue = [],
+     events = new Map();
+   let resized;
+@@ -49,6 +54,12 @@ function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}
+       throw new Error('Layout must not move focus');
+     },
+   };
++  const label = region(0, 0);
++  label.getBoundingClientRect = () => {
++    const box = control.getBoundingClientRect();
++    return { top: box.top - 28, bottom: box.bottom };
++  };
++  control.closest = (selector) => (selector === 'label' ? label : null);
+   doc.activeElement = control;
+   doc.defaultView = {
+     requestAnimationFrame: (fn) => queue.push(fn),
+@@ -64,13 +75,20 @@ function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}
+       }
+     },
+   };
+-  const api = attachFocusClearance({ container, heading, footer, document: doc });
++  const api = attachFocusClearance({
++    container,
++    heading,
++    footer,
++    includeControlLabel,
++    document: doc,
++  });
+   return {
+     doc,
+     container,
+     heading,
+     footer,
+     control,
++    label,
+     api,
+     resize: () => resized?.(),
+     emit: (type) => events.get(`container:${type}`)?.(),
+@@ -136,3 +154,50 @@ for (const reason of ['closed', 'hidden', 'blurred', 'outside', 'disposed'])
+     assert.equal(f.container.scrollTop, 200);
+     assert.equal(f.doc.activeElement, focused);
+   });
++
++test('opt-in label clearance keeps the field purpose visible with its focused control', () => {
++  const f = fixture({ headingBottom: 136, footerTop: 374, height: 390, includeControlLabel: true });
++  f.control.absoluteTop = 344.09375;
++  f.control.height = 64;
++  f.emit('focusin');
++  f.flush();
++  assert.equal(f.label.getBoundingClientRect().top, 144);
++  assert.equal(f.control.getBoundingClientRect().top, 172);
++  assert.equal(f.control.getBoundingClientRect().bottom, 236);
++  assert.equal(f.doc.activeElement, f.control);
++});
++
++test('other dialogs retain control-only clearance unless they opt into labels', () => {
++  const f = fixture({ headingBottom: 136, footerTop: 374, height: 390 });
++  f.control.absoluteTop = 344.09375;
++  f.emit('focusin');
++  f.flush();
++  assert.equal(f.container.scrollTop, 200);
++  assert.equal(f.control.getBoundingClientRect().top, 144.09375);
++  assert.equal(f.doc.activeElement, f.control);
++});
++
++test('label clearance cannot target a label outside the current dialog', () => {
++  const f = fixture({ includeControlLabel: true });
++  f.label.parent = null;
++  f.emit('focusin');
++  f.flush();
++  assert.ok(Math.abs(f.control.getBoundingClientRect().top - 302.359) < 0.001);
++  assert.equal(f.doc.activeElement, f.control);
++});
++
++test('short landscape keeps the focused control visible when its Large label cannot fit', () => {
++  const f = fixture({ headingBottom: 282, footerTop: 374, height: 390, includeControlLabel: true });
++  f.control.height = 64;
++  assert.equal(f.label.getBoundingClientRect().bottom - f.label.getBoundingClientRect().top, 92);
++  f.emit('focusin');
++  f.flush();
++  assert.equal(f.control.getBoundingClientRect().top, 290);
++  assert.equal(f.control.getBoundingClientRect().bottom, 354);
++  assert.equal(f.doc.activeElement, f.control);
++  const deliberate = f.container.scrollTop + 20;
++  f.container.scrollTop = deliberate;
++  f.emit('scroll');
++  f.flush();
++  assert.equal(f.container.scrollTop, deliberate, 'Reading the tall label stays a manual scroll.');
++});
+diff --git a/game/test/still-media-panel.test.mjs b/game/test/still-media-panel.test.mjs
+index ea6691341..a5cbd4556 100644
+--- a/game/test/still-media-panel.test.mjs
++++ b/game/test/still-media-panel.test.mjs
+@@ -15,6 +15,7 @@ const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
+ async function setup(t, options = {}) {
+   const doc = new Document();
+   doc.createElement = (tag) => new SoloElement(doc, tag);
++  options.configureDocument?.(doc);
+   const f = mediaFixture(true),
+     memory = memoryIndexedDB();
+   const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, richStillMedia: true });
+@@ -495,3 +496,178 @@ for (const reentry of ['focus', 'invalidate']) {
+     else assert.equal(h.panel.snapshot().ready, false);
+   });
+ }
++
++// Finite rectangles from the public portrait obstruction and recorded r1
++// landscape label obstruction. These establish the mounted owner, not browser paint.
++function pickerLayout() {
++  const queue = [],
++    events = new Events(),
++    observers = [];
++  return {
++    configureDocument(doc) {
++      Object.assign(doc.defaultView, {
++        requestAnimationFrame: (fn) => queue.push(fn),
++        addEventListener: events.addEventListener.bind(events),
++        removeEventListener: events.removeEventListener.bind(events),
++        ResizeObserver: class {
++          constructor(callback) {
++            this.callback = callback;
++            observers.push(this);
++          }
++          observe(target) {
++            this.target = target;
++          }
++          disconnect() {
++            this.disconnected = true;
++          }
++        },
++      });
++    },
++    mount(h) {
++      const dialog = h.panel.dialog,
++        operations = h.$('operations'),
++        file = h.$('file');
++      dialog._rect = { x: 21, y: 16, width: 348, height: 812 };
++      dialog.scrollTop = 881.5;
++      operations._rect = { x: 36, y: 31, width: 318, height: 205.59375 };
++      file.getBoundingClientRect = () => {
++        const top = 926.875 - dialog.scrollTop;
++        return {
++          x: 36,
++          y: top,
++          left: 36,
++          top,
++          right: 354,
++          bottom: top + 64,
++          width: 318,
++          height: 64,
++        };
++      };
++      file.parentNode.getBoundingClientRect = () => {
++        const box = file.getBoundingClientRect();
++        return { ...box, top: box.top - 27.59375, height: box.height + 27.59375 };
++      };
++    },
++    flush() {
++      for (const fn of queue.splice(0)) fn();
++    },
++    resize() {
++      events.emit('resize');
++    },
++    reflow() {
++      for (const observer of observers) if (!observer.disconnected) observer.callback();
++    },
++    observers,
++  };
++}
++
++test('settled chosen preview keeps the focused original picker and label below its sticky status rail', async (t) => {
++  const layout = pickerLayout(),
++    h = await setup(t, { configureDocument: layout.configureDocument });
++  h.choose();
++  h.$('preview').focus();
++  assert.equal(await h.$('preview').onclick(), true);
++  const before = await h.store.read(),
++    paints = h.paints.length;
++  layout.mount(h);
++  h.$('file').focus();
++  assert.equal(h.$('file').getBoundingClientRect().top, 45.375, 'Original recorded occlusion.');
++  layout.flush();
++  assert.equal(h.panel.dialog.scrollTop, 654.6875);
++  assert.equal(h.$('file').parentNode.getBoundingClientRect().top, 244.59375);
++  assert.equal(h.$('file').getBoundingClientRect().top, 272.1875);
++  assert.equal(h.doc.activeElement, h.$('file'));
++  assert.equal(h.panel.dialog.style.scrollPaddingBlockStart, '228.59375px');
++  assert.equal(h.panel.snapshot().hasDraft, true);
++  assert.equal(h.paints.length, paints, 'Layout does not decode or repaint a picture.');
++  assert.deepEqual(await h.store.read(), before, 'Layout does not assign or write media.');
++
++  h.panel.dialog._rect = { x: 24, y: 16, width: 796, height: 358 };
++  h.$('operations')._rect = { x: 36, y: 39, width: 772, height: 97 };
++  h.panel.dialog.scrollTop = 782.78125;
++  assert.equal(h.$('file').getBoundingClientRect().top, 144.09375);
++  assert.equal(h.$('file').parentNode.getBoundingClientRect().top, 116.5);
++  layout.resize();
++  layout.flush();
++  assert.equal(h.$('file').parentNode.getBoundingClientRect().top, 144);
++  assert.equal(h.$('file').getBoundingClientRect().top, 171.59375);
++  assert.equal(h.doc.activeElement, h.$('file'), 'Rotation preserves the actual current control.');
++  h.panel.dialog.scrollTop += 50;
++  const intentional = h.panel.dialog.scrollTop;
++  h.panel.dialog.emit('scroll');
++  layout.flush();
++  assert.equal(
++    h.panel.dialog.scrollTop,
++    intentional,
++    'Ordinary reading scroll remains deliberate.',
++  );
++});
++
++test('media clearance preserves the live operation rail and Cancel ownership', async (t) => {
++  const gate = deferred(),
++    layout = pickerLayout();
++  const h = await setup(t, {
++    configureDocument: layout.configureDocument,
++    show: () => gate.promise,
++  });
++  h.choose();
++  const pending = h.$('preview').onclick();
++  await new Promise(setImmediate);
++  layout.mount(h);
++  assert.equal(h.panel.snapshot().busy, true);
++  assert.equal(h.$('file').disabled, true);
++  assert.equal(h.$('cancel').disabled, false);
++  assert.equal(h.$('status').parentNode, h.$('operations'));
++  assert.equal(h.$('cancel').parentNode, h.$('operations'));
++  h.$('cancel').focus();
++  h.$('operations')._rect.height = 260;
++  layout.reflow();
++  layout.flush();
++  assert.equal(h.panel.dialog.scrollTop, 881.5, 'Sticky actions are not scrolled away.');
++  assert.equal(h.doc.activeElement, h.$('cancel'));
++  assert.equal(
++    layout.observers.filter((observer) => observer.target === h.$('operations')).length,
++    1,
++  );
++  h.$('cancel').onclick();
++  gate.resolve(true);
++  assert.equal(await pending, false);
++  assert.equal(h.panel.snapshot().hasDraft, false);
++  assert.equal((await h.store.read()).document.library.assets.length, 0);
++});
++
++test('closed and disposed media panels retire queued clearance without refocusing an old picker', async (t) => {
++  const layout = pickerLayout(),
++    h = await setup(t, { configureDocument: layout.configureDocument });
++  layout.mount(h);
++  h.$('file').focus();
++  h.panel.close();
++  const afterClose = h.doc.activeElement;
++  layout.flush();
++  assert.equal(h.panel.dialog.scrollTop, 881.5);
++  assert.equal(h.doc.activeElement, afterClose);
++  await h.panel.open();
++  h.$('file').focus();
++  layout.flush();
++  assert.equal(
++    h.panel.dialog.scrollTop,
++    654.6875,
++    'Reopening retains exactly one live clearance owner.',
++  );
++  assert.equal(layout.observers.length, 1);
++  h.$('file').focus();
++  h.panel.dispose();
++  const afterDispose = h.doc.activeElement,
++    scroll = h.panel.dialog.scrollTop;
++  layout.flush();
++  layout.resize();
++  layout.flush();
++  assert.equal(h.panel.dialog.scrollTop, scroll);
++  assert.equal(h.doc.activeElement, afterDispose);
++  assert.equal(
++    layout.observers.every((observer) => observer.disconnected),
++    true,
++  );
++  assert.equal(h.panel.dialog.style.scrollPaddingBlockStart, '0px');
++  assert.equal(h.panel.dialog.style.scrollPaddingBlockEnd, '0px');
++});
+diff --git a/game/ui/focus-clearance.mjs b/game/ui/focus-clearance.mjs
+index 69e2fb235..5fac38ea2 100644
+--- a/game/ui/focus-clearance.mjs
++++ b/game/ui/focus-clearance.mjs
+@@ -3,6 +3,7 @@ export function attachFocusClearance({
+   container,
+   heading,
+   footer,
++  includeControlLabel = false,
+   document: doc = globalThis.document,
+ }) {
+   const view = doc.defaultView ?? globalThis;
+@@ -29,7 +30,13 @@ export function attachFocusClearance({
+       !visible(focused)
+     )
+       return;
+-    const target = focused.getBoundingClientRect();
++    const label = includeControlLabel ? focused.closest?.('label') : null;
++    const labelBox =
++      label && container.contains(label) && visible(label) ? label.getBoundingClientRect() : null;
++    const target =
++      labelBox && labelBox.bottom - labelBox.top <= bottom - top
++        ? labelBox
++        : focused.getBoundingClientRect();
+     if (target.top < top) container.scrollTop += target.top - top;
+     else if (target.bottom > bottom)
+       container.scrollTop += Math.min(target.bottom - bottom, target.top - top);
+diff --git a/game/ui/still-media-panel.mjs b/game/ui/still-media-panel.mjs
+index 824d22202..71b92c28e 100644
+--- a/game/ui/still-media-panel.mjs
++++ b/game/ui/still-media-panel.mjs
+@@ -1,5 +1,6 @@
+ import { createOperationStatus } from './operation-status.mjs';
+ import { captureOperationFocus } from './operation-focus.mjs';
++import { attachFocusClearance } from './focus-clearance.mjs';
+ import { canonicalJSON } from '../data-json.mjs';
+ import { createMediaIdentityCatalog, MEDIA_PRESENTATION_FORMAT } from '../media-library.mjs';
+ import { prepareStillAsset } from '../media-still.mjs';
+@@ -189,6 +190,12 @@ export function attachStillMediaPanel({
+   canvas.setAttribute('aria-label', 'Isolated still picture preview; no gameplay or rewards');
+   dialog.append(title, operations, note, stats, fields, canvas, actions, bundleSection);
+   doc.body.append(dialog);
++  const clearance = attachFocusClearance({
++    container: dialog,
++    heading: operations,
++    includeControlLabel: true,
++    document: doc,
++  });
+   let saved = null,
+     context = null,
+     identityCatalog = null,
+@@ -782,6 +789,7 @@ export function attachStillMediaPanel({
+         dialog.showModal();
+       }
+       reload.focus();
++      clearance.refresh();
+       return load();
+     },
+     close: closePanel,
+@@ -807,6 +815,7 @@ export function attachStillMediaPanel({
+       if (disposed) return;
+       closePanel();
+       disposed = true;
++      clearance.destroy();
+       feedback.dispose();
+       preview.dispose();
+       story?.dispose();

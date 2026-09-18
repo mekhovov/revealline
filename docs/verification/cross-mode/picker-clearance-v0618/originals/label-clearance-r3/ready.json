@@ -1,0 +1,49 @@
+{
+  "status": "R3_LABEL_AND_CONTROL_CLEARANCE_READY_FOR_ROOT_REVIEW",
+  "at": "2026-09-18T06:09:19.317545+00:00",
+  "base": {
+    "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+    "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+    "version": "v0.61.6"
+  },
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next",
+  "branch": "codex/p05-picker-clearance-next",
+  "changedPaths": 6,
+  "candidatePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate-pins.json",
+    "bytes": 2438,
+    "sha256": "4545d94a42d4e831da27219f705ee1b0e7c9a4e0e53d6e03145b2f4422547e2a"
+  },
+  "diff": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate.diff",
+    "bytes": 19953,
+    "sha256": "29de96e224d3c35f0e6220f869c297f9fe5f7e77b9af733cd7556ec30a2dcc9f"
+  },
+  "evidencePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/evidence-pins.json",
+    "bytes": 9006,
+    "sha256": "5eeaeba12a06b4752193b0ab7517bc42bb70aea532f51f54592527bc5a527ae9"
+  },
+  "verification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/verification-summary.json",
+    "bytes": 3366,
+    "sha256": "9120afba1fdbdde1408de32ad89d6ee3f14692fc8b7f6e13d7add95a81174b10"
+  },
+  "runtimeChange": "Opt-in includeControlLabel defaults false; Still Media uses complete containing label within its dialog as measured reveal target when it fits; otherwise preserve the focused control visibility. Existing sticky operation owner, focus and ordinary-scroll behavior remain.",
+  "nativeURL": "http://127.0.0.1:54662/authoring/still-media/",
+  "r1HistoryPreserved": true,
+  "remaining": [
+    "Root independent source/evidence review and actual r3 label/control focus paint and hit targets.",
+    "Version allocation, exact-source qualification and public release.",
+    "Separate Close local connections return-focus issue remains open."
+  ],
+  "managedBytes": 6527400,
+  "limits": {
+    "managedCapBytes": 16777216,
+    "freeReserveBytes": 536870912
+  },
+  "sourceExistingUnchanged": true,
+  "sourceIndexUnstaged": true,
+  "remoteMutation": false,
+  "browserRunByThisAgent": false
+}

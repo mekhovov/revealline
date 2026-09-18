@@ -1,0 +1,6 @@
+{
+  "status": "SPARSE_COMMAND_REFUSED_BEFORE_HYDRATION",
+  "command": "git sparse-checkout add --no-cone --stdin",
+  "exitCode": 129,
+  "reason": "add inherits existing non-cone mode and does not accept --no-cone; no content bodies changed"
+}

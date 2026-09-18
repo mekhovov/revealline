@@ -3,7 +3,12 @@ import assert from 'node:assert/strict';
 import { attachFocusClearance } from '../ui/focus-clearance.mjs';
 
 // Recorded sticky-header/footer geometry with a scrolling form. No raster claim.
-function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}) {
+function fixture({
+  headingBottom = 294.359,
+  footerTop = 700,
+  height = 844,
+  includeControlLabel = false,
+} = {}) {
   const queue = [],
     events = new Map();
   let resized;
@@ -49,6 +54,12 @@ function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}
       throw new Error('Layout must not move focus');
     },
   };
+  const label = region(0, 0);
+  label.getBoundingClientRect = () => {
+    const box = control.getBoundingClientRect();
+    return { top: box.top - 28, bottom: box.bottom };
+  };
+  control.closest = (selector) => (selector === 'label' ? label : null);
   doc.activeElement = control;
   doc.defaultView = {
     requestAnimationFrame: (fn) => queue.push(fn),
@@ -64,13 +75,20 @@ function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}
       }
     },
   };
-  const api = attachFocusClearance({ container, heading, footer, document: doc });
+  const api = attachFocusClearance({
+    container,
+    heading,
+    footer,
+    includeControlLabel,
+    document: doc,
+  });
   return {
     doc,
     container,
     heading,
     footer,
     control,
+    label,
     api,
     resize: () => resized?.(),
     emit: (type) => events.get(`container:${type}`)?.(),
@@ -136,3 +154,50 @@ for (const reason of ['closed', 'hidden', 'blurred', 'outside', 'disposed'])
     assert.equal(f.container.scrollTop, 200);
     assert.equal(f.doc.activeElement, focused);
   });
+
+test('opt-in label clearance keeps the field purpose visible with its focused control', () => {
+  const f = fixture({ headingBottom: 136, footerTop: 374, height: 390, includeControlLabel: true });
+  f.control.absoluteTop = 344.09375;
+  f.control.height = 64;
+  f.emit('focusin');
+  f.flush();
+  assert.equal(f.label.getBoundingClientRect().top, 144);
+  assert.equal(f.control.getBoundingClientRect().top, 172);
+  assert.equal(f.control.getBoundingClientRect().bottom, 236);
+  assert.equal(f.doc.activeElement, f.control);
+});
+
+test('other dialogs retain control-only clearance unless they opt into labels', () => {
+  const f = fixture({ headingBottom: 136, footerTop: 374, height: 390 });
+  f.control.absoluteTop = 344.09375;
+  f.emit('focusin');
+  f.flush();
+  assert.equal(f.container.scrollTop, 200);
+  assert.equal(f.control.getBoundingClientRect().top, 144.09375);
+  assert.equal(f.doc.activeElement, f.control);
+});
+
+test('label clearance cannot target a label outside the current dialog', () => {
+  const f = fixture({ includeControlLabel: true });
+  f.label.parent = null;
+  f.emit('focusin');
+  f.flush();
+  assert.ok(Math.abs(f.control.getBoundingClientRect().top - 302.359) < 0.001);
+  assert.equal(f.doc.activeElement, f.control);
+});
+
+test('short landscape keeps the focused control visible when its Large label cannot fit', () => {
+  const f = fixture({ headingBottom: 282, footerTop: 374, height: 390, includeControlLabel: true });
+  f.control.height = 64;
+  assert.equal(f.label.getBoundingClientRect().bottom - f.label.getBoundingClientRect().top, 92);
+  f.emit('focusin');
+  f.flush();
+  assert.equal(f.control.getBoundingClientRect().top, 290);
+  assert.equal(f.control.getBoundingClientRect().bottom, 354);
+  assert.equal(f.doc.activeElement, f.control);
+  const deliberate = f.container.scrollTop + 20;
+  f.container.scrollTop = deliberate;
+  f.emit('scroll');
+  f.flush();
+  assert.equal(f.container.scrollTop, deliberate, 'Reading the tall label stays a manual scroll.');
+});

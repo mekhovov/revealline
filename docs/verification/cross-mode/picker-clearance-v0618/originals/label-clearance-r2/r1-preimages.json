@@ -1,0 +1,37 @@
+{
+  "sourceBase": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "files": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 217658,
+      "sha256": "97619fe8d6e898878fa09682fdb6f454fb43fccc9e3349d9e1fe5c60b48f29db"
+    },
+    {
+      "path": "docs/still-media-workshop.md",
+      "bytes": 12674,
+      "sha256": "77d2f7d52a24a2daf2f02d9af217cebdef94fdabd783e1af11b9b906d2a65315"
+    },
+    {
+      "path": "game/test/still-media-panel.test.mjs",
+      "bytes": 24414,
+      "sha256": "778b745838800e2a7a75025c758d0bba29046766334996ba74860ec838d01098"
+    },
+    {
+      "path": "game/ui/still-media-panel.mjs",
+      "bytes": 30596,
+      "sha256": "7d7b7295cf8365558f8ae95fffefe194faa628043af9dbcf9b8f925bebf4ae22"
+    },
+    {
+      "path": "game/ui/focus-clearance.mjs",
+      "bytes": 2325,
+      "sha256": "71e67d4379cbf2687dda056cd95ffe41142d450e3e15074c3dd2e004426a4296"
+    },
+    {
+      "path": "game/test/focus-clearance.test.mjs",
+      "bytes": 4465,
+      "sha256": "0dead6ff5d6adf2516fdfa838b69b139e4fbe594b30db8378817598b491dddf0"
+    }
+  ],
+  "previousReadySha256": "ea3ee444b837b541a60a73f1fd1facfadae88ab388a2cb7e6daa55efec82e2f2",
+  "r1OverlayUnchanged": true
+}

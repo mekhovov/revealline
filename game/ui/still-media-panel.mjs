@@ -1,5 +1,6 @@
 import { createOperationStatus } from './operation-status.mjs';
 import { captureOperationFocus } from './operation-focus.mjs';
+import { attachFocusClearance } from './focus-clearance.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createMediaIdentityCatalog, MEDIA_PRESENTATION_FORMAT } from '../media-library.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
@@ -189,6 +190,12 @@ export function attachStillMediaPanel({
   canvas.setAttribute('aria-label', 'Isolated still picture preview; no gameplay or rewards');
   dialog.append(title, operations, note, stats, fields, canvas, actions, bundleSection);
   doc.body.append(dialog);
+  const clearance = attachFocusClearance({
+    container: dialog,
+    heading: operations,
+    includeControlLabel: true,
+    document: doc,
+  });
   let saved = null,
     context = null,
     identityCatalog = null,
@@ -782,6 +789,7 @@ export function attachStillMediaPanel({
         dialog.showModal();
       }
       reload.focus();
+      clearance.refresh();
       return load();
     },
     close: closePanel,
@@ -807,6 +815,7 @@ export function attachStillMediaPanel({
       if (disposed) return;
       closePanel();
       disposed = true;
+      clearance.destroy();
       feedback.dispose();
       preview.dispose();
       story?.dispose();
