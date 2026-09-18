@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "note": "The first wrapper incorrectly treated Git no-index exit 1 for a new file as a check failure. These read-only checks confirm no whitespace diagnostics; runtime and tests were untouched.",
+  "checks": [
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "game/test/board-footprint.test.mjs",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "docs/verification/cross-mode/p08-a/versus-footprint-v0616/README.md",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "path": "docs/verification/cross-mode/p08-a/versus-footprint-v0616/adoption.json",
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

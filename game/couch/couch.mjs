@@ -1,5 +1,6 @@
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
@@ -147,7 +148,7 @@ const presentationPage = mountPresentationPage({
 });
 // Cosmetic menu choice follows this same accepted release; it owns no board lease.
 presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
-let featured, installed, staticPictures, publishedAudio, publishedPlayer;
+let featured, installed, staticPictures, publishedAudio, publishedPlayer, boardFootprints;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
@@ -166,6 +167,7 @@ const releaseArtwork = (event) => {
   featured?.dispose();
   installed?.dispose();
   staticPictures?.dispose();
+  boardFootprints?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
 window.addEventListener('pagehide', releaseArtwork);
@@ -331,6 +333,12 @@ try {
   }
   let selectedMapKey = null;
   const contexts = [0, 1].map((i) => $(`race-canvas-${i}`).getContext('2d'));
+  const touchPads = [...document.querySelectorAll('.race-pad')];
+  const touchActions = touchPads.map((pad) =>
+    [...pad.querySelectorAll('button')].filter((button) => button.dataset.action),
+  );
+  boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
+  let boardLayoutKey = null;
   let match,
     theme,
     backdrop = null,
@@ -555,8 +563,8 @@ try {
       const canvas = $(`race-canvas-${player}`);
       canvas.width = width;
       canvas.height = height;
-      canvas.style.setProperty('--board-ratio', `${width} / ${height}`);
     }
+    boardFootprints.refresh();
     sound.reset();
     sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
     publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
@@ -1093,6 +1101,36 @@ try {
     menuHint = 'Choose the primary action with South when everyone is ready.';
     updateMenu();
   }
+  function refreshBoardLayout() {
+    // Observer-capable hosts receive the actual arena content box. The fallback
+    // must notice every changing HUD label that can consume the arena's space.
+    const layoutKey = JSON.stringify([
+      $('race-boards').hidden,
+      ...touchPads.map((pad) => pad.hidden),
+      document.body.dataset.textSize,
+      document.body.dataset.textFace,
+      ...(boardFootprints.observesResize
+        ? []
+        : [0, 1].flatMap((i) => [
+            $(`racer-stats-${i}`).textContent,
+            $(`racer-state-${i}`).textContent,
+            $(`racer-input-${i}`).textContent,
+            $(`racer-encounter-${i}`).hidden,
+            $(`racer-encounter-title-${i}`).textContent,
+            $(`racer-encounter-instruction-${i}`).textContent,
+            ...(touchPads[i].hidden
+              ? []
+              : touchActions[i].flatMap((button) => [
+                  button.hidden,
+                  button.hidden ? '' : button.textContent,
+                ])),
+          ])),
+    ]);
+    if (layoutKey !== boardLayoutKey) {
+      boardLayoutKey = layoutKey;
+      boardFootprints.refresh();
+    }
+  }
   function updateMenu() {
     if (!match || disposed) return;
     const running = match.status === 'running';
@@ -1121,6 +1159,9 @@ try {
       focusTransition,
       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
     });
+    // Reconcile deliberate layout transitions immediately, including browsers
+    // without ResizeObserver. Ordinary frames only compare cheap state values.
+    refreshBoardLayout();
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
       ? shell.controllerHint()
@@ -1431,7 +1472,14 @@ try {
         instruction.textContent = '';
         delete group.dataset.phase;
       }
+    }
+    // Both HUDs, including shell-owned input/equipment labels, settle before
+    // one signature-gated fallback measurement and either board draw.
+    updateMenu();
+    for (let i = 0; i < 2; i++) {
+      const run = match.runs[i];
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
+        displayCSSWidth: boardFootprints.width(i),
         textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
@@ -1445,7 +1493,6 @@ try {
       theme,
       match.runs.find((r) => !['won', 'lost'].includes(r.status)) || match.runs[0],
     );
-    updateMenu();
     frameId = requestAnimationFrame(frame);
   }
   const initialPreparation = prepare(),

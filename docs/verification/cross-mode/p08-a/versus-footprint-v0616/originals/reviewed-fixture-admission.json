@@ -1,0 +1,213 @@
+{
+  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "scope": "Exact finite existing test inputs only; no asset producer/output edit or directory expansion",
+  "bytes": 44789594,
+  "reserveBytes": 536870912,
+  "files": [
+    {
+      "path": "authoring/library/countercurrent-art/manifest.json",
+      "gitObject": "75cb7c15c3adf86a89f77452267c9e658c85f995",
+      "bytes": 9279,
+      "reasons": [
+        "builder literal/input table: authoring/library/countercurrent-chapters/build.mjs"
+      ],
+      "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/crossing-watch-coupa.png",
+      "gitObject": "5a27c5be5bc6686ed65a2e08703ad91f437ad129",
+      "bytes": 2897299,
+      "reasons": [
+        "selected coupa original decoded by couch-installed-chapters"
+      ],
+      "sha256": "1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/offset-docks-coupa.png",
+      "gitObject": "68af138eecd9fab195a5a509142abdb8b64f7e58",
+      "bytes": 2735312,
+      "reasons": [
+        "selected coupa original decoded by couch-installed-chapters"
+      ],
+      "sha256": "87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/originals/sandbar-braid-coupa.png",
+      "gitObject": "21661cc316260c655fe0100f780b6c25a3b73859",
+      "bytes": 2884014,
+      "reasons": [
+        "selected coupa original decoded by couch-installed-chapters"
+      ],
+      "sha256": "ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14"
+    },
+    {
+      "path": "authoring/library/countercurrent-art/provenance.json",
+      "gitObject": "5ac12022e7406ca64b33b145f7cd7ef1d0568f0e",
+      "bytes": 25236,
+      "reasons": [
+        "all-edition metadata validation: authoring/library/countercurrent-chapters/editions.json",
+        "builder literal/input table: authoring/library/countercurrent-chapters/build.mjs"
+      ],
+      "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+    },
+    {
+      "path": "authoring/library/countercurrent-chapters/editions.json",
+      "gitObject": "c04d2d10017c5d58b0090886edfce0ee4a27d62c",
+      "bytes": 6719,
+      "reasons": [
+        "builder literal/input table: authoring/library/countercurrent-chapters/build.mjs",
+        "selected edition metadata"
+      ],
+      "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+    },
+    {
+      "path": "authoring/library/countercurrent/controls.mjs",
+      "gitObject": "eecd65f3cd049ae2789038c3bc9fcf64db46e1ac",
+      "bytes": 12927,
+      "reasons": [
+        "builder literal/input table: authoring/library/countercurrent-chapters/build.mjs"
+      ],
+      "sha256": "cffb060cbe1132ce4987820d3d5bd0bff47392b3dd10a42bd85486470f29d4eb"
+    },
+    {
+      "path": "authoring/library/countercurrent/routes.json",
+      "gitObject": "c98dd952a04f3b6d5cf5f11b8120a68df2951b93",
+      "bytes": 3167761,
+      "reasons": [
+        "builder literal/input table: authoring/library/countercurrent-chapters/build.mjs"
+      ],
+      "sha256": "e729ead2a1014b7edf2809d2d32dfd2958f66441194468d36b9e9f7b534ba856"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "gitObject": "25d3d8c5008d512e69c2211844c5164615efd463",
+      "bytes": 11949780,
+      "reasons": [
+        "builder literal/input table: authoring/library/fracture-lines/build.mjs"
+      ],
+      "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+    },
+    {
+      "path": "authoring/library/fracture-coupa-art/provenance.json",
+      "gitObject": "4fa84d1dfe089dee1561fb7c26dd5f95e9b19069",
+      "bytes": 9538,
+      "reasons": [
+        "all-edition metadata validation: authoring/library/fracture-theme-chapters/editions.json",
+        "builder literal/input table: authoring/library/fracture-theme-chapters/build.mjs"
+      ],
+      "sha256": "3709b1a56f5e88f2335c8fcd50b82c3f7efa4de8f89585db6b6af3325c7898d8"
+    },
+    {
+      "path": "authoring/library/fracture-lines/controls.mjs",
+      "gitObject": "c81c5a526fefb3de84227215c770d9a90a39b96d",
+      "bytes": 26562,
+      "reasons": [
+        "builder literal/input table: authoring/library/fracture-theme-chapters/build.mjs"
+      ],
+      "sha256": "a1a1f027838affecc164e239c7f1bc259ba0040f65550be196b47ca9be2008f7"
+    },
+    {
+      "path": "authoring/library/fracture-lines/routes.json",
+      "gitObject": "a7f6f71dc7de76528d4c3958609c1732deb47321",
+      "bytes": 675146,
+      "reasons": [
+        "builder literal/input table: authoring/library/fracture-theme-chapters/build.mjs"
+      ],
+      "sha256": "83f2eef3395a3a28070b25aa663e6e82db6626d8ab65ba5809aa798785231e67"
+    },
+    {
+      "path": "authoring/library/fracture-retro-art/provenance.json",
+      "gitObject": "959e76f9de658860f8cd2ec509cbe2c0d0d2337c",
+      "bytes": 9146,
+      "reasons": [
+        "all-edition metadata validation: authoring/library/fracture-theme-chapters/editions.json",
+        "builder literal/input table: authoring/library/fracture-theme-chapters/build.mjs"
+      ],
+      "sha256": "0838b853611aa53f97336e8971b9ec429ec48c13b0b91c91df3a212d7cff2197"
+    },
+    {
+      "path": "authoring/library/fracture-theme-chapters/editions.json",
+      "gitObject": "ae2f412c2b9e5548be97d35d4cdb407e2fbfa4c6",
+      "bytes": 5806,
+      "reasons": [
+        "builder literal/input table: authoring/library/fracture-theme-chapters/build.mjs",
+        "selected edition metadata"
+      ],
+      "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/fault-fan-ukraine.png",
+      "gitObject": "6db325ab34d106b1b6329895bf923daf09f862c6",
+      "bytes": 2981883,
+      "reasons": [
+        "selected ukraine original decoded by couch-installed-chapters"
+      ],
+      "sha256": "ad53eeeb26cd508212d5dff1893688ba0aed9cf3ce12efc236d93fb0db4b8822"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/frayed-causeway-ukraine.png",
+      "gitObject": "04d0851b97b12d17c3dd7086566c4b9bf72e2ea7",
+      "bytes": 2983333,
+      "reasons": [
+        "selected ukraine original decoded by couch-installed-chapters"
+      ],
+      "sha256": "65dc84fbb7fcd068cf4bb7ad4b13193f0f9c1393e71b85fa629c1a16b9e717ab"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/originals/split-ring-ukraine.png",
+      "gitObject": "4fe9ce548b14ecb16314b409760370e15b7f5f2e",
+      "bytes": 2756776,
+      "reasons": [
+        "selected ukraine original decoded by couch-installed-chapters"
+      ],
+      "sha256": "1771010fd554d44713b7fc644f8ab8cbd42a41accfc16e6a564771dffcc59ac9"
+    },
+    {
+      "path": "authoring/library/fracture-ukraine-art/provenance.json",
+      "gitObject": "531dcabfc265863b3f2b6be7c0889e943c252ab8",
+      "bytes": 10895,
+      "reasons": [
+        "all-edition metadata validation: authoring/library/fracture-theme-chapters/editions.json",
+        "builder literal/input table: authoring/library/fracture-theme-chapters/build.mjs"
+      ],
+      "sha256": "f8a0f11cc6facfb14b3b1e70de0c2ca3005ce46f2e3a197a15e50e0f2212fe2f"
+    },
+    {
+      "path": "game/build-config.json",
+      "gitObject": "9c29a46d4bd73fcf964fdf721d93d4de56740b83",
+      "bytes": 5474,
+      "reasons": [
+        "actual Solo app boot or version request"
+      ],
+      "sha256": "1755860a6ccc755169a0388587215fae3475b9d1c3d0f784fd62d3101b1957d7"
+    },
+    {
+      "path": "game/content/packs/archive-catalog.json",
+      "gitObject": "eec906cea096b03c84f62bdff8138674a7c440e5",
+      "bytes": 2600,
+      "reasons": [
+        "actual Solo app boot or version request"
+      ],
+      "sha256": "6da75db47524940c3d1469274faa652558137ef4ec55d3ef349f4c22ad70341a"
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "gitObject": "2dadcf901beb298d1ef4dc856e66ae01d59b942f",
+      "bytes": 11377254,
+      "reasons": [
+        "builder literal/input table: authoring/library/fracture-lines/build.mjs"
+      ],
+      "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+    },
+    {
+      "path": "game/replays/sentinel-routes.json",
+      "gitObject": "dc9e89d14a7136b74277440618fa772e5a95049b",
+      "bytes": 256854,
+      "reasons": [
+        "test/helper literal candidate: game/test/couch-encounter.test.mjs",
+        "test/helper literal candidate: game/test/couch-navigation.test.mjs"
+      ],
+      "sha256": "b704c71879c29810f42dca6e94857c6728d2439c08d1807edc008114bdb85a70"
+    }
+  ]
+}
