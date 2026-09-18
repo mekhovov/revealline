@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en" data-tool-state="loading">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b1a24" />
+    <title>Relay Rescue · RevealLine</title>
+    <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="relay-rescue.css" />
+    <link rel="stylesheet" href="../ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+    <link rel="stylesheet" href="../ui/operation-status.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/menu-appearance.css" />
+    <link rel="stylesheet" href="../ui/settings.css" />
+  </head>
+  <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
+    <main id="coop-app">
+      <header class="masthead">
+        <a id="coop-home" href="../" class="brand">REVEAL<span>LINE</span></a>
+        <span class="mode-label">COUCH CO-OP <b id="coop-stage">FIRST CONNECTION</b></span>
+        <a id="coop-race" href="./">Race mode ↗</a>
+      </header>
+
+      <section id="coop-menu" class="menu" aria-labelledby="coop-title">
+        <div class="menu-copy">
+          <div id="coop-lobby-modes"></div>
+          <p class="eyebrow">ONE ARENA. TWO PARTNERS.</p>
+          <h1 id="coop-title" class="field-kit-display">Find your<br /><em>common ground.</em></h1>
+          <p id="coop-intro" class="lead">
+            Start with a small loop. Cover each other, then meet to join a larger cut.
+          </p>
+          <div class="setup">
+            <label
+              >Arena<select id="coop-level">
+                <option value="first-connection">First Connection · territory challenge</option>
+                <option value="relay-yard" selected>Relay Yard · stronghold challenge</option>
+              </select></label
+            >
+            <label
+              >Play style<select id="coop-experiment">
+                <option value="full">Full teamwork</option>
+                <option value="joint">Joint Cuts + ordinary cover</option>
+                <option value="independent">Individual cuts + ordinary cover</option>
+              </select></label
+            >
+            <label
+              >Challenge<select id="coop-difficulty">
+                <option value="gentle">Gentle</option>
+                <option value="standard" selected>Standard</option>
+                <option value="expert">Expert</option>
+              </select></label
+            >
+          </div>
+          <p id="coop-setup-note" class="setup-note">
+            Captures recharge both players’ Support and can rescue a downed partner.
+          </p>
+          <p id="coop-level-note" class="setup-note">
+            One open field. Bait a Hunter, cover the crossing, then take the anchors together.
+          </p>
+          <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
+            Preparing arena…
+          </button>
+          <p id="coop-boot" class="operation-status" data-state="busy" role="status">
+            <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i></span
+            ><span>Loading Relay Rescue.</span>
+          </p>
+          <details class="pack-picker">
+            <summary>Play a created co-op pack</summary>
+            <label for="coop-pack-file">Open a co-op pack JSON file</label>
+            <input id="coop-pack-file" type="file" accept=".json,application/json" />
+            <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
+            <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
+            <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
+          </details>
+          <div id="coop-lobby-tools"></div>
+        </div>
+        <div class="briefing field-kit-panel">
+          <p class="eyebrow" id="coop-briefing-title">YOUR FIRST CONNECTION</p>
+          <ol>
+            <li>
+              <strong>Start small.</strong> Draw a short loop back to safe ground to claim it.
+              Banking stops your craft; steer again for your next cut.
+            </li>
+            <li>
+              <strong id="coop-cut-title">Join when ready.</strong>
+              <span id="coop-cut-help">
+                Steer both moving heads together to bank a shared cut. Crossing an old part of a
+                partner’s line is harmless.
+              </span>
+            </li>
+            <li>
+              <strong>Watch the red shapes.</strong> Enemies can hit your craft and unfinished line.
+              Hunters mark a route before charging. Wait for recovery or use Support to protect the
+              crossing. Both approaches face the same enemy tools.
+            </li>
+            <li>
+              <strong>Cover each other.</strong> Tap Support to slow nearby enemies and intercept
+              sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed
+              partner for one second to rescue them for free.
+            </li>
+            <li id="coop-stronghold-help" hidden>
+              <strong>Open both approaches.</strong> Capture anchors A and B to expose the core.
+              Then make a new cut that captures the core itself. The shield blocks entry. Bait the
+              Hunter’s warning and cut during recovery; banking its cell clears it.
+            </li>
+          </ol>
+          <p class="objective">
+            TEAM OBJECTIVE <strong id="coop-menu-goal">Reveal 65% of the field</strong>
+          </p>
+        </div>
+      </section>
+
+      <section id="coop-play" aria-label="Shared Relay Rescue arena" hidden>
+        <div class="hud">
+          <div class="identity sunflower">
+            <span class="player-number">1</span><strong>SUNFLOWER</strong
+            ><span id="coop-state-0">Ready</span>
+            <span id="coop-charge-0" class="charge-state">Support ready</span>
+          </div>
+          <div class="team-status">
+            <span>TEAM TERRITORY</span><strong id="coop-coverage">0%</strong
+            ><span id="coop-reserves">3 reserves</span
+            ><progress id="coop-progress" max="65" value="0" aria-label="Team territory"></progress>
+          </div>
+          <div class="identity skyline">
+            <span class="player-number">2</span><strong>SKYLINE</strong
+            ><span id="coop-state-1">Ready</span>
+            <span id="coop-charge-1" class="charge-state">Support ready</span>
+          </div>
+        </div>
+        <p id="coop-objective" class="live-objective">Reveal 65% together</p>
+        <div class="arena-wrap">
+          <canvas
+            id="coop-canvas"
+            width="1152"
+            height="576"
+            tabindex="-1"
+            role="img"
+            aria-label="One shared arena. Sunflower is marked 1 and Skyline is marked 2."
+          ></canvas>
+          <div id="coop-overlay" class="overlay" hidden>
+            <div class="overlay-card">
+              <p class="eyebrow" id="coop-overlay-kicker">PAUSED</p>
+              <h2 id="coop-overlay-title" class="field-kit-display">Both players paused</h2>
+              <p id="coop-overlay-copy">Release your controls, then choose Resume together.</p>
+              <div class="overlay-actions">
+                <button id="coop-resume" class="primary field-kit-primary" type="button">
+                  Resume together
+                </button>
+                <button id="coop-retry" type="button">Retry same arena</button>
+                <button id="coop-lobby" type="button">Change setup</button>
+              </div>
+              <div id="coop-pause-modes"></div>
+              <nav id="coop-mode-actions" class="coop-mode-actions" aria-label="Other game modes">
+                <a id="coop-solo" href="../">Return to Solo</a>
+                <a id="coop-versus" href="./">Go to Versus</a>
+              </nav>
+              <div id="coop-pause-tools"></div>
+            </div>
+          </div>
+        </div>
+        <div class="board-footer">
+          <p id="coop-message" role="status" aria-live="polite">
+            Try a cut from opposite edges. Agree on a meeting point first.
+          </p>
+          <span id="coop-clock">0:00</span><button id="coop-pause" type="button">Pause</button>
+        </div>
+      </section>
+
+      <section id="coop-controls" class="controls" aria-label="Two player touch controls" hidden>
+        <article class="control-card sunflower">
+          <h2><span class="player-number">1</span> Sunflower</h2>
+          <div class="race-pad" data-player="0" aria-label="Player 1 touch controls" hidden>
+            <div class="race-cross" role="group" aria-label="Player 1 directions">
+              <button type="button" data-direction="up" aria-label="Player 1 up">↑</button>
+              <button type="button" data-direction="left" aria-label="Player 1 left">←</button>
+              <span class="cross-center" aria-hidden="true">1</span>
+              <button type="button" data-direction="right" aria-label="Player 1 right">→</button>
+              <button type="button" data-direction="down" aria-label="Player 1 down">↓</button>
+            </div>
+            <button
+              type="button"
+              data-action="boost"
+              aria-pressed="false"
+              aria-label="Player 1 Boost"
+            >
+              Boost
+            </button>
+            <button
+              type="button"
+              data-action="action"
+              aria-pressed="false"
+              aria-label="Player 1 Support; hold beside a downed partner to rescue"
+            >
+              Support
+            </button>
+          </div>
+        </article>
+        <article class="control-card skyline">
+          <h2><span class="player-number">2</span> Skyline</h2>
+          <div class="race-pad" data-player="1" aria-label="Player 2 touch controls" hidden>
+            <div class="race-cross" role="group" aria-label="Player 2 directions">
+              <button type="button" data-direction="up" aria-label="Player 2 up">↑</button>
+              <button type="button" data-direction="left" aria-label="Player 2 left">←</button>
+              <span class="cross-center" aria-hidden="true">2</span>
+              <button type="button" data-direction="right" aria-label="Player 2 right">→</button>
+              <button type="button" data-direction="down" aria-label="Player 2 down">↓</button>
+            </div>
+            <button
+              type="button"
+              data-action="boost"
+              aria-pressed="false"
+              aria-label="Player 2 Boost"
+            >
+              Boost
+            </button>
+            <button
+              type="button"
+              data-action="action"
+              aria-pressed="false"
+              aria-label="Player 2 Support; hold beside a downed partner to rescue"
+            >
+              Support
+            </button>
+          </div>
+        </article>
+      </section>
+      <dialog
+        id="coop-discard-dialog"
+        class="coop-confirm-dialog"
+        role="alertdialog"
+        aria-labelledby="coop-discard-title"
+        aria-describedby="coop-discard-copy"
+      >
+        <h2 id="coop-discard-title">Discard this Team attempt?</h2>
+        <p id="coop-discard-copy">
+          Team progress is only kept on this page; this attempt is not saved.
+        </p>
+        <div class="coop-confirm-actions">
+          <button id="coop-discard-stay" type="button" autofocus>Stay</button>
+          <button id="coop-discard-confirm" type="button">Discard this attempt</button>
+        </div>
+      </dialog>
+      <aside id="coop-tools" class="coop-tools" aria-label="Help, Settings and sound">
+        <section class="coop-picture" aria-label="Arena picture">
+          <p id="coop-picture-status" role="status" aria-live="polite">
+            Preparing the Team picture…
+          </p>
+          <div class="coop-picture-actions">
+            <button id="coop-picture-cancel" type="button" hidden>Cancel picture loading</button>
+            <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
+          </div>
+        </section>
+        <details id="coop-help">
+          <summary id="coop-help-toggle">How to play and controls</summary>
+          <div id="coop-help-unit">
+            <div class="reading-toolbar">
+              <button id="coop-help-read" type="button">Read controls</button>
+              <button id="coop-help-reading-done" type="button" disabled>Done reading</button>
+            </div>
+            <p id="coop-help-reading-hint" class="reading-hint" role="status">
+              Read without starting or resuming.
+            </p>
+            <div
+              id="coop-help-reading"
+              aria-describedby="coop-help-reading-hint"
+              role="region"
+              aria-label="Relay Rescue controls"
+              tabindex="0"
+              data-game-reading
+            >
+              <p>
+                Tap a direction to keep moving. Banking a cut stops your craft; steer again to
+                leave. Escape or Menu pauses both players. Resume together is always explicit.
+              </p>
+              <p>
+                <strong>Sunflower:</strong> <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer,
+                <kbd>Left Shift</kbd> Boost, <kbd>Q</kbd> Support.
+              </p>
+              <p>
+                <strong>Skyline:</strong> arrow keys steer, <kbd>Right Shift</kbd> Boost,
+                <kbd>Enter</kbd> Support.
+              </p>
+              <p>
+                Controllers: stick or D-pad steers, right shoulder holds Boost, South uses Support,
+                and Menu pauses. Each player keeps their controller assignment.
+              </p>
+              <p>
+                Tap Support to slow nearby enemies and intercept sparks. Hold it beside a downed
+                partner on safe ground for one second to rescue them. A new direction cancels a
+                rescue. A downed player can crawl along safe ground to meet their partner.
+              </p>
+              <p id="coop-support-0" class="support-status">Sunflower: Support ready</p>
+              <p id="coop-support-1" class="support-status">Skyline: Support ready</p>
+            </div>
+          </div>
+        </details>
+        <button id="coop-settings-open" type="button">Settings</button>
+        <button id="coop-quick-sound" type="button" aria-pressed="false">Sound: off</button>
+      </aside>
+      <dialog id="coop-options" class="shared-settings" aria-labelledby="coop-settings-title">
+        <div class="shared-settings-heading">
+          <h2 id="coop-settings-title">Settings</h2>
+          <button id="coop-settings-close" type="button">Back</button>
+        </div>
+        <p class="setting-note">
+          Sound and appearance apply across game modes. Controls below are for this Team visit.
+        </p>
+        <div class="field-kit-settings-tabs" role="tablist" aria-label="Settings categories">
+          <button
+            id="coop-settings-tab-controls"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-controls"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Controls
+          </button>
+          <button
+            id="coop-settings-tab-audio"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-audio"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Audio
+          </button>
+          <button
+            id="coop-settings-tab-display"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-display"
+            aria-selected="true"
+            tabindex="0"
+          >
+            Appearance &amp; accessibility
+          </button>
+          <button
+            id="coop-settings-tab-data"
+            type="button"
+            role="tab"
+            aria-controls="coop-settings-panel-data"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Game data
+          </button>
+        </div>
+        <section
+          id="coop-settings-panel-controls"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-controls"
+          hidden
+        >
+          <h3>Controls</h3>
+          <label for="coop-touch">Touch controls</label>
+          <select id="coop-touch">
+            <option value="auto" selected>Auto · touch players without a controller</option>
+            <option value="on">Show both players</option>
+            <option value="off">Hide touch controls</option>
+          </select>
+          <p class="setting-note">
+            Touch controls appear only while playing. Auto follows this screen's touch capability
+            and each player's actual controller assignment. Show and Hide override that choice for
+            this visit.
+          </p>
+          <span id="coop-pads" role="status"></span>
+        </section>
+        <section
+          id="coop-settings-panel-audio"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-audio"
+          hidden
+        >
+          <h3>Audio</h3>
+          <button id="coop-audio" type="button">Unmute sound</button>
+          <label for="coop-master-volume">Master sound volume</label>
+          <input id="coop-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
+          <p id="coop-audio-note" class="setting-note">
+            Shared with Solo, Versus and previews. This Team chapter currently uses visual feedback.
+          </p>
+          <p id="coop-audio-status" class="setting-note" role="status"></p>
+        </section>
+        <section
+          id="coop-settings-panel-display"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-display"
+        >
+          <h3>Appearance &amp; accessibility</h3>
+          <label for="coop-text-face">Text style</label>
+          <select id="coop-text-face">
+            <option value="pixel">Theme font</option>
+            <option value="plain">Plain</option>
+          </select>
+          <label for="coop-text-size">Text size</label>
+          <select id="coop-text-size">
+            <option value="standard">Standard</option>
+            <option value="large">Large</option>
+          </select>
+          <label class="field-kit-page-text"
+            >Menu colours<select id="coop-menu-palette">
+              <option value="auto">Automatic</option>
+              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
+            >Menu ornaments<select id="coop-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="coop-menu-style-status" class="micro-note" role="status"></p>
+          <label><input id="coop-reduced" type="checkbox" /> Reduce effects</label>
+          <p id="coop-system-reduction" class="setting-note"></p>
+          <p id="coop-display-status" class="setting-note" role="status"></p>
+        </section>
+        <section
+          id="coop-settings-panel-data"
+          class="field-kit-settings-panel"
+          role="tabpanel"
+          aria-labelledby="coop-settings-tab-data"
+          hidden
+        >
+          <h3>Game data</h3>
+          <div id="coop-data-unit" class="settings-reading-unit">
+            <div class="reading-toolbar">
+              <button id="coop-data-read" type="button">Read game data</button>
+              <button id="coop-data-reading-done" type="button" disabled>Done reading</button>
+            </div>
+            <p id="coop-data-reading-hint" class="reading-hint" role="status">
+              Read without starting or resuming.
+            </p>
+            <div
+              id="coop-data-reading"
+              class="settings-reading-region"
+              role="region"
+              aria-label="Team game data"
+              aria-describedby="coop-data-reading-hint"
+              tabindex="0"
+              data-game-reading
+            >
+              <p>
+                Team attempts stay on this page. Closing or reloading it discards the current
+                attempt.
+              </p>
+              <p>
+                Team play does not write Solo saves, campaign progress, scores or earned pictures.
+                Shared sound and appearance preferences are saved separately on this device.
+              </p>
+            </div>
+          </div>
+        </section>
+      </dialog>
+    </main>
+    <script
+      defer
+      src="../ui/direct-tool-launch.js"
+      data-module="./relay-rescue.mjs"
+      data-status="coop-boot"
+    ></script>
+  </body>
+</html>

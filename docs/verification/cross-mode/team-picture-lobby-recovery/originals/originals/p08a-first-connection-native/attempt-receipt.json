@@ -1,0 +1,88 @@
+{
+  "feature": "P08-A First Connection actual native victory/Retry qualification attempt",
+  "status": "INCOMPLETE: native browser disconnected; no victory or post-victory Retry observed",
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "binding": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-first-connection-native/binding.json",
+    "bytes": 1912,
+    "sha256": "5a3a3ceb9501047bbfa23dee23c26e500f75f8af489c9a4744461dd6b2f65841"
+  },
+  "runtimeManifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-first-connection-native/runtime-overrides.json",
+    "bytes": 1436,
+    "sha256": "3a3eed5a3dc24aab1f61021d0190ce25357de8de6b77ab34d80f7267fd65b978"
+  },
+  "helper": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-first-connection-native/serve.py",
+    "bytes": 7187,
+    "sha256": "5a205fa034758a772e414164df6e1eddd22828421b922ce59bde0925322b8cc1"
+  },
+  "http": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-first-connection-native/requests.jsonl",
+    "bytes": 76113,
+    "sha256": "939ffecf362f03a112b751d10abe1b7b2f52362935bd4b97ece8700560d2b39d"
+  },
+  "httpEvents": 177,
+  "method": "Automated ordinary CUA native keyboard/menu actions and explicit short wall-clock waits for continuous movement. DOM/HUD and inline canvas screenshots only. No private simulation state, injected events, custom pack, changed coverage/timers, or source edits.",
+  "configuration": {
+    "arena": "First Connection",
+    "challenge": "Gentle",
+    "playStyle": "Full teamwork",
+    "target": "65%",
+    "initialReserves": 5
+  },
+  "attempts": [
+    {
+      "number": 1,
+      "route": "Start, pause at0:04, resume; P1D/P2ArrowLeft centre crossing. P2 Hunter catch then both craft restored.",
+      "observed": [
+        "0:08:0%,5reserves,P1lineexposed,P2rescue16s",
+        "paused0:13:0%,4reserves,bothsafe,one reserve used"
+      ],
+      "end": "Explicit Retry same arena then Discard and retry."
+    },
+    {
+      "number": 2,
+      "route": "P1W/P2ArrowUp safe top corners; pause0:09. Resume, inward750ms, down1000ms, outward1000ms; pause.",
+      "observed": [
+        "paused0:12:4.0%,5reserves,bothsafe",
+        "Extension:inward750ms,Q/EnterSupport,down1000ms,outward1000ms",
+        "paused0:15:4.0%,4reserves,recovery shields/Support5.6s;one reserve used"
+      ],
+      "end": "Explicit Retry same arena then Discard and retry."
+    },
+    {
+      "number": 3,
+      "route": "P1W/P2ArrowDown2600ms to opposite safe corners;pause0:02. Resume,inward4350ms,screenshot,pause0:07. Resume,P1S/P2ArrowUp2350ms,screenshot,pause0:10.",
+      "observed": [
+        "0%,5reserves through all observations",
+        "Both lines exposed in neighbouring columns;heads passed without joint closure",
+        "Right Hunter visibly charging toward the top line"
+      ],
+      "end": "Paused; attempted fourth Retry did not execute because browser2 was unavailable."
+    }
+  ],
+  "failure": {
+    "tool": "CUA",
+    "message": "Browser is not available:2",
+    "recovery": "Read documented browser troubleshooting and cua.getState; browsers array empty. No alternate automation or state injection attempted.",
+    "effect": "Paused third attempt unavailable; victory gate remains open."
+  },
+  "sourceReadOnlyContext": [
+    "Exact628 core/recipes/threats/input;no source edits",
+    "Known unboosted corner opening has tests; full retained source route usesheldBoost",
+    "No verified ordinary Boost-toggle UI; special assistiveclick path was not emulated"
+  ],
+  "acceptance": [
+    "Partial native capture/loss/menuRetry evidence only",
+    "No FirstConnection nativewin,earnedpicture orpostvictoryRetry acceptance",
+    "No public/physical-controller/touchhardware/human-fairness/AT/offline qualification"
+  ],
+  "resources": {
+    "newEvidenceCap": 2097152,
+    "screenshots": "Inline only; no screenshots saved",
+    "serverStopped": true,
+    "faultsCleared": true
+  }
+}

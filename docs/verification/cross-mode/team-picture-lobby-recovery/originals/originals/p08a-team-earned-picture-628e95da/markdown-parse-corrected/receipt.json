@@ -1,0 +1,14 @@
+{
+  "cwd": ".cache/worktrees/p08a-team-earned-picture",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+    "--debug-check",
+    "docs/team-picture-host.md",
+    "docs/team-victory-picture.md",
+    "authoring/prompts/cross-mode-delivery.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+  ],
+  "exitCode": 0,
+  "recordedAt": "2026-09-17T21:57:52.505784+00:00"
+}

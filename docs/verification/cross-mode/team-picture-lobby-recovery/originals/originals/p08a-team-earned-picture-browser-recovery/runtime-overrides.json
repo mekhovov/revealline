@@ -1,0 +1,27 @@
+{
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "baseTree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "scope": "P08-A Team earned picture source candidate. Four pinned runtime overrides only on exact628; browser qualification, no public acceptance.",
+  "files": {
+    "game/couch/coop-view.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    "game/couch/relay-rescue.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    "game/couch/relay-rescue.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.mjs",
+      "bytes": 58894,
+      "sha256": "d82669dad630c9a8d1577006b29ba4ca8a645fe45c1cfb7188861baf50c014d8"
+    }
+  }
+}

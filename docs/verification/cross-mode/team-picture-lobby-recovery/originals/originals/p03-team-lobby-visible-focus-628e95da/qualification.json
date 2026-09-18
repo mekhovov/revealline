@@ -1,0 +1,334 @@
+{
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-team-lobby-visible-focus",
+  "branch": "codex/p03-team-lobby-visible-focus",
+  "originalCandidatePathsPreserved": [
+    "authoring/prompts/cross-mode-delivery.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/team-picture-host.md",
+    "docs/team-victory-picture.md",
+    "game/couch/coop-view.mjs",
+    "game/couch/relay-rescue.css",
+    "game/couch/relay-rescue.html",
+    "game/couch/relay-rescue.mjs",
+    "game/test/coop-lobby-preview.test.mjs",
+    "game/test/coop-victory-picture.test.mjs",
+    "game/test/coop-won-terminal-host.test.mjs",
+    "game/test/helpers/coop-host.mjs"
+  ],
+  "deltaPaths": [
+    "authoring/prompts/cross-mode-delivery.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/team-victory-picture.md",
+    "game/couch/relay-rescue.mjs",
+    "game/test/coop-lobby-focus.test.mjs",
+    "game/test/coop-won-terminal-host.test.mjs"
+  ],
+  "composedPaths": [
+    {
+      "sourcePath": "authoring/prompts/cross-mode-delivery.md",
+      "base": {
+        "path": "git-preimage/authoring/prompts/cross-mode-delivery.md",
+        "bytes": 51910,
+        "sha256": "dea0409cc864c78aa078b8b2b0a0fb51536e1bf5b9f5507e065ff8f2a10c5b9d"
+      },
+      "originalCandidate": {
+        "path": "authoring/prompts/cross-mode-delivery.md",
+        "bytes": 54328,
+        "sha256": "80fe86fc8933933a60ef1cb8ad1d154ec116a8eb5b302a964d13c164b5a5d031"
+      },
+      "candidate": {
+        "path": "proposal/authoring/prompts/cross-mode-delivery.md",
+        "bytes": 55257,
+        "sha256": "ec29dbd9d58f22d62b5ab710b6b7daaf6885a13efcfcf0c87362d4f982e53b52"
+      }
+    },
+    {
+      "sourcePath": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "base": {
+        "path": "git-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "bytes": 201359,
+        "sha256": "5501e470b9e1fefab09168ad502c965d328c0ec326b2793cd4c101072b19e039"
+      },
+      "originalCandidate": {
+        "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "bytes": 204290,
+        "sha256": "ceedb32c3f0384ca94c3cffe12ba608a0a5bf312902ae458885d80cfcab77c8f"
+      },
+      "candidate": {
+        "path": "proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "bytes": 205053,
+        "sha256": "0ab3caa8699eaa3aa5368616e5207eb238f824cd25a33f58aa20cc940bb4d4bb"
+      }
+    },
+    {
+      "sourcePath": "docs/team-picture-host.md",
+      "base": {
+        "path": "git-preimage/docs/team-picture-host.md",
+        "bytes": 4719,
+        "sha256": "0591079322d6c4e169c89eee0567a32352dc817dcf2499f0014fe6b96cdaed53"
+      },
+      "originalCandidate": {
+        "path": "docs/team-picture-host.md",
+        "bytes": 7788,
+        "sha256": "dd6667158d9e6a7440e795199530f6b73c40339a348012b6361b789726a297ef"
+      },
+      "candidate": {
+        "path": "proposal/docs/team-picture-host.md",
+        "bytes": 7788,
+        "sha256": "dd6667158d9e6a7440e795199530f6b73c40339a348012b6361b789726a297ef"
+      }
+    },
+    {
+      "sourcePath": "docs/team-victory-picture.md",
+      "base": null,
+      "originalCandidate": {
+        "path": "docs/team-victory-picture.md",
+        "bytes": 4117,
+        "sha256": "b88d1f18f70db6aba776d541e9614acb14dcc9786c737473170c78db753e3e79"
+      },
+      "candidate": {
+        "path": "proposal/docs/team-victory-picture.md",
+        "bytes": 5449,
+        "sha256": "dc5e7f0c385b3ebc71a396ac4dbc6c24145284f54704a3f91ed7aeded0db27de"
+      }
+    },
+    {
+      "sourcePath": "game/couch/coop-view.mjs",
+      "base": {
+        "path": "git-preimage/game/couch/coop-view.mjs",
+        "bytes": 21213,
+        "sha256": "a8cd3d76514864eb31c8853b24b6391ee5540189c7495f237112b9752524b85c"
+      },
+      "originalCandidate": {
+        "path": "game/couch/coop-view.mjs",
+        "bytes": 21420,
+        "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+      },
+      "candidate": {
+        "path": "proposal/game/couch/coop-view.mjs",
+        "bytes": 21420,
+        "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+      }
+    },
+    {
+      "sourcePath": "game/couch/relay-rescue.css",
+      "base": {
+        "path": "git-preimage/game/couch/relay-rescue.css",
+        "bytes": 18442,
+        "sha256": "530f365949cfe27ef189654c7d191e14dd4908f13249f3ada5f2f2a96ac1a195"
+      },
+      "originalCandidate": {
+        "path": "game/couch/relay-rescue.css",
+        "bytes": 19284,
+        "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+      },
+      "candidate": {
+        "path": "proposal/game/couch/relay-rescue.css",
+        "bytes": 19284,
+        "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+      }
+    },
+    {
+      "sourcePath": "game/couch/relay-rescue.html",
+      "base": {
+        "path": "git-preimage/game/couch/relay-rescue.html",
+        "bytes": 21586,
+        "sha256": "25076c69184ac46c5bf03a1a7cc779beb36c87de17584aa22901d4a31629a2e1"
+      },
+      "originalCandidate": {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 22232,
+        "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+      },
+      "candidate": {
+        "path": "proposal/game/couch/relay-rescue.html",
+        "bytes": 22232,
+        "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+      }
+    },
+    {
+      "sourcePath": "game/couch/relay-rescue.mjs",
+      "base": {
+        "path": "git-preimage/game/couch/relay-rescue.mjs",
+        "bytes": 55585,
+        "sha256": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93"
+      },
+      "originalCandidate": {
+        "path": "game/couch/relay-rescue.mjs",
+        "bytes": 58894,
+        "sha256": "d82669dad630c9a8d1577006b29ba4ca8a645fe45c1cfb7188861baf50c014d8"
+      },
+      "candidate": {
+        "path": "proposal/game/couch/relay-rescue.mjs",
+        "bytes": 61847,
+        "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f"
+      }
+    },
+    {
+      "sourcePath": "game/test/coop-lobby-focus.test.mjs",
+      "base": null,
+      "originalCandidate": null,
+      "candidate": {
+        "path": "proposal/game/test/coop-lobby-focus.test.mjs",
+        "bytes": 6602,
+        "sha256": "e52c2f191916d6155dc244ff876a5877d97885bdfba7d0ab0ddf73eb24e19a7c"
+      }
+    },
+    {
+      "sourcePath": "game/test/coop-lobby-preview.test.mjs",
+      "base": null,
+      "originalCandidate": {
+        "path": "game/test/coop-lobby-preview.test.mjs",
+        "bytes": 26070,
+        "sha256": "f5757a75aa04808562be2f09d3b237f88190314fca491d5252dd8a62d4e4f703"
+      },
+      "candidate": {
+        "path": "proposal/game/test/coop-lobby-preview.test.mjs",
+        "bytes": 26070,
+        "sha256": "f5757a75aa04808562be2f09d3b237f88190314fca491d5252dd8a62d4e4f703"
+      }
+    },
+    {
+      "sourcePath": "game/test/coop-victory-picture.test.mjs",
+      "base": null,
+      "originalCandidate": {
+        "path": "game/test/coop-victory-picture.test.mjs",
+        "bytes": 8757,
+        "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+      },
+      "candidate": {
+        "path": "proposal/game/test/coop-victory-picture.test.mjs",
+        "bytes": 8757,
+        "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+      }
+    },
+    {
+      "sourcePath": "game/test/coop-won-terminal-host.test.mjs",
+      "base": {
+        "path": "git-preimage/game/test/coop-won-terminal-host.test.mjs",
+        "bytes": 7079,
+        "sha256": "8f506c71d5fe4eab4b20075e98a16006e260cd6f0a30295e56ade3706761ea51"
+      },
+      "originalCandidate": {
+        "path": "game/test/coop-won-terminal-host.test.mjs",
+        "bytes": 7439,
+        "sha256": "e789da2ccfa5af78de8a38fa96e26817bf6c44fbe0d8da261251f372345cc5a1"
+      },
+      "candidate": {
+        "path": "proposal/game/test/coop-won-terminal-host.test.mjs",
+        "bytes": 7912,
+        "sha256": "ed4d80728a0de8f854b11c050d7e973a0acd68a7ea7e8745e0acbadd80761bff"
+      }
+    },
+    {
+      "sourcePath": "game/test/helpers/coop-host.mjs",
+      "base": {
+        "path": "git-preimage/game/test/helpers/coop-host.mjs",
+        "bytes": 9550,
+        "sha256": "3263a658ee743a9431c4b169fea58e66e668cc627241c753e3ccc51efed5d709"
+      },
+      "originalCandidate": {
+        "path": "game/test/helpers/coop-host.mjs",
+        "bytes": 11374,
+        "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+      },
+      "candidate": {
+        "path": "proposal/game/test/helpers/coop-host.mjs",
+        "bytes": 11374,
+        "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+      }
+    }
+  ],
+  "patches": {
+    "lobby-focus-delta.patch": {
+      "path": "lobby-focus-delta.patch",
+      "bytes": 24232,
+      "sha256": "16b454a1a757c833afadb0d64d99680d24b0e8956fade65ea377a1ae46b906ee"
+    },
+    "composed-candidate.patch": {
+      "path": "composed-candidate.patch",
+      "bytes": 88896,
+      "sha256": "144789b1db523fb047daa2179a4e7b5d2e4237e38a86f713e309f54ff4b9f032"
+    }
+  },
+  "qualification": {
+    "node": "20.19.5",
+    "redBefore": {
+      "total": 17,
+      "pass": 14,
+      "fail": 3,
+      "source": "Original12path Team candidate with focused regressions"
+    },
+    "initialGreen": {
+      "total": 17,
+      "pass": 17,
+      "fail": 0
+    },
+    "affected": {
+      "total": 151,
+      "pass": 151,
+      "fail": 0,
+      "files": [
+        "game/test/coop-lobby-focus.test.mjs",
+        "game/test/coop-won-terminal-host.test.mjs",
+        "game/test/coop-lobby-preview.test.mjs",
+        "game/test/coop-picture-host.test.mjs",
+        "game/test/coop-display-reflow.test.mjs",
+        "game/test/coop-host.test.mjs"
+      ]
+    },
+    "scopedESLint": 0,
+    "scopedPrettier": 0,
+    "diffCheck": 0,
+    "reversePatchChecks": 0
+  },
+  "evidence": {
+    "red-before.tap": {
+      "path": "red-before.tap",
+      "bytes": 7696,
+      "sha256": "abdf77fb79dd57619595de522e0340192fb0ecbe544a567e2ae16b98fd2a0beb"
+    },
+    "green-tests.tap": {
+      "path": "green-tests.tap",
+      "bytes": 4697,
+      "sha256": "3702b02bd4430aac5408fe4f930a939b82f4dab3de3153f09504adbce923d567"
+    },
+    "affected-node20.tap": {
+      "path": "affected-node20.tap",
+      "bytes": 35102,
+      "sha256": "af99d38f74faab13fb0dbb86a128d1667ae15d6c2b519db7236633b12e2f028d"
+    },
+    "lint.txt": {
+      "path": "lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format.txt": {
+      "path": "format.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "diff-check.txt": {
+      "path": "diff-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "setup.json": {
+      "path": "setup.json",
+      "bytes": 12588,
+      "sha256": "e9b59b8c568ebb5bda05356617219a658ef09d60a00ad47787659fce0f3d5583"
+    }
+  },
+  "whitespaceOnlyBaselineCleanup": [
+    "Two pre-existing redundant blank lines in maintainer SKILL",
+    "One pre-existing redundant blank line in cross-mode delivery prompts"
+  ],
+  "limits": [
+    "Finite host geometry proves requested scroll and ownership, not native scroll result or hit testing.",
+    "Root owns native browser checks separately. First Connection native victory gate remains open.",
+    "Failed-download recovery Retry visibility and technical error copy remain outside this lobby correction.",
+    "No full build, version change, commit, source staging, remote operation or release acceptance."
+  ],
+  "peerReview": "Requested; separate independent receipt/finding to follow."
+}

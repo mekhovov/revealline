@@ -1,0 +1,137 @@
+{
+  "at": "2026-09-17T23:30:59.262346+00:00",
+  "status": "SCOPED_NATIVE_LOBBY_RETURN_VISIBLE_PASS_TERMINAL_RETURN_MODEL_ONLY",
+  "source": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "runtimeOverrides": {
+    "game/couch/coop-view.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    "game/couch/relay-rescue.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    "game/couch/relay-rescue.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-team-lobby-visible-focus-browser/relay-rescue.mjs",
+      "bytes": 61847,
+      "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f"
+    }
+  },
+  "observedRuntimeHttp200": {
+    "path": "game/couch/relay-rescue.mjs",
+    "request": "/game/couch/relay-rescue.mjs",
+    "at": "2026-09-17T23:28:08.731287+00:00",
+    "method": "GET",
+    "status": 200,
+    "bytes": 61847,
+    "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f",
+    "source": "candidate-override",
+    "faultConfigSha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+  },
+  "deltaPatchSha256": "16b454a1a757c833afadb0d64d99680d24b0e8956fade65ea377a1ae46b906ee",
+  "composedPatchSha256": "144789b1db523fb047daa2179a4e7b5d2e4237e38a86f713e309f54ff4b9f032",
+  "url": "http://127.0.0.1:60391/game/couch/relay-rescue.html",
+  "comparison": "Predecessor exact4overridecandidate had focusedStarty1080.3828125 at844x390 Plain/Large, scrollY112. Successor repeats normal pausedattempt\u2192Change setup\u2192Discard using keyboard activation; native terminalwinprecedingRetry was not reproduced in this successor run.",
+  "checks": [
+    {
+      "case": "confirmedreturn-plain-large-landscape",
+      "viewport": [
+        844,
+        390
+      ],
+      "focus": "coop-start",
+      "rect": [
+        40,
+        326.8828125,
+        188.1484375,
+        47
+      ],
+      "scrollY": 865.5,
+      "centreHit": "coop-start",
+      "insideWith8px": true,
+      "previewState": "ready",
+      "playing": false,
+      "startDisabled": false
+    },
+    {
+      "case": "ordinaryTabafterreturn",
+      "viewport": [
+        844,
+        390
+      ],
+      "focusText": "Play a created co-op pack",
+      "rect": [
+        40,
+        275.1796875,
+        390.484375,
+        47
+      ],
+      "scrollY": 1021,
+      "insideWith8px": true,
+      "playing": false
+    },
+    {
+      "case": "ordinaryShiftTabback",
+      "viewport": [
+        844,
+        390
+      ],
+      "focus": "coop-start",
+      "rect": [
+        40,
+        67.8828125,
+        188.1484375,
+        47
+      ],
+      "scrollY": 1124.5,
+      "centreHit": "coop-start",
+      "insideWith8px": true,
+      "playing": false
+    },
+    {
+      "case": "explicitStartafterreturn",
+      "result": "Canvasfocused,0.0%,5reserves,0:00; noautoStartbeforeactivation."
+    },
+    {
+      "case": "confirmedreturn-plain-large-portrait",
+      "viewport": [
+        390,
+        844
+      ],
+      "focus": "coop-start",
+      "rect": [
+        40,
+        780.8828125,
+        188.1484375,
+        47
+      ],
+      "scrollY": 558,
+      "centreHit": "coop-start",
+      "insideWith8px": true,
+      "previewState": "ready",
+      "playing": false,
+      "startDisabled": false
+    }
+  ],
+  "keyboard": "Enter activated Pause/Change setup/Discard/Start; ordinary Tab and Shift+Tab traversed existing controls. Semantic selectOption used for Gentle and Plain/Large preferences, so this is not wholejourneykeyboard-only evidence.",
+  "artwork": "Ready RelayYard teaser retained without new originalfetch during returnedlobby/restart. Only one observed RelayoriginalGET at this origin before runs. No browser private object inspection.",
+  "unsuccessfulRehearsals": [
+    "Two freshGentle/Fullteamwork opening rehearsals on successor were stoppedafterSkylineknockdownat0%,5reserves,0:05. NormalconfirmationRetry usedbetween. They didnotqualifywin and were notusedtoinfermechanicsregression."
+  ],
+  "limits": [
+    "LegalRelayYard18%win+earnedRetry is retained on exactpredecessor candidate; not transferred as a fresh successor nativewin.",
+    "Successor terminalwin\u2192Change setup/reentrantfocus/lifecycle checks are151-case modeledcohort evidence, not nativeclaims.",
+    "No physicaltouch/controller,AT,zoom,offline/public/build or fullsourcegate claim.",
+    "No source/version/commit/remote mutation by native check; packets remain uncommitted queue candidates.",
+    "Native screenshots displayed in CUA transcript; no screenshotfiles retained.",
+    "AsyncpicturefailedRetryfocus/recoverycopy remainseparate openissues."
+  ]
+}
