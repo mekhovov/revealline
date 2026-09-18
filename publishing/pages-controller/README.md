@@ -1,8 +1,10 @@
 # Frozen Pages publication controller
 
-This directory publishes one explicitly selected immutable game and the semantic release explorer. It does not rebuild historical games or change their release records, tags, assets, original workers, saved-data keys or ZIP files. The current `retainedReleasesPerMajor: 100` setting includes all 61 pinned semantic releases. The root and `/game/` select only the newest published stable release; historical and comparison entries link to their own canonical archives. A canonical archive URL satisfies each earlier phase's Pages testing; main does not need to cycle through those phases.
+This directory publishes one explicitly selected immutable game and the semantic release explorer. It does not rebuild historical games or change their release records, tags, assets, original workers, saved-data keys or ZIP files. The current `retainedReleasesPerMajor: 100` setting includes all 80 pinned semantic releases. The root and `/game/` select only the newest published stable release; historical and comparison entries link to their own canonical archives. A canonical archive URL satisfies each earlier phase's Pages testing; main does not need to cycle through those phases.
 
 The publishing controller commit is different from `gameSourceRevision`. For example, v0.42.0 is frozen source `e9928cdaad2f55d912aadd2ef25f635fb99e938c`; the main merge `f56ce9d98f0ce5d77a8f3c7dc310bf1a7e6b795c` was its publishing controller. The same distinction applies here. Infrastructure changes do not increment a frozen game version.
+
+The selector now proposes published **v0.60.9** from exact source `628e95daf403082768cdcf900a8ea1d1ef4629a2`. Archive21 retains v0.60.7 and v0.60.8 through its accepted 1,393-file append. Source qualification and archive acceptance precede publication; this selector change still requires its own Pages deployment, complete public audit and current-edition browser acceptance.
 
 ## Inputs and admission
 
