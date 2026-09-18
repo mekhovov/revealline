@@ -45,11 +45,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: 'e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450',
+    sha256: 'c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766',
     evidence: [
-      'Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.',
-      'game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.',
-      'Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance.',
+      'Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.',
+      'The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.',
+      'This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required.',
     ],
   },
   audio: {
