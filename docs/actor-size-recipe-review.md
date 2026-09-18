@@ -56,3 +56,10 @@ The [production-correction evidence](verification/cross-mode/actor-readability-v
 retains the original hosted failures, append/reproduction checks, focused red and
 green cohorts, and peer/native reference records. Those local checks do not
 replace committed-source qualification or native public acceptance.
+
+The [current-theme frame assertion correction](verification/cross-mode/actor-readability-v06122/theme-assertion-correction/README.md)
+retains the later full-CI failure at source `80efcc3ddda302a014c3409c248892f36b3a12a9`.
+Its one-line test update pins fpv30 while preserving every original frame ID,
+asset revision, PNG hash, dimension and gameplay-state assertion. When the
+producer appends a current theme, check both strict runtime consumers and
+current-theme test contracts; preserve historical fixture identities unchanged.
