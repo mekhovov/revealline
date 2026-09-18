@@ -1,0 +1,20 @@
+{
+  "base": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+  "tree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+  "scope": "Exact committed v0.61.8 Git source with only the pinned Still Media HTML reading entry added. Existing tool-display owner adopts shared preferences. No fixtures, writes, fault injection or v0.61.9 release claim. GET/HEAD loopback only. Root owns native browser observations.",
+  "files": {
+    "authoring/still-media/index.html": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-still-media-reading-b326/native-v0618-r1/index.html",
+      "bytes": 5435,
+      "sha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888"
+    }
+  },
+  "limits": {
+    "extraDiskBytes": 16777216,
+    "reserveBytes": 536870912,
+    "memoryCacheBytes": 8388608,
+    "singleBlobBytes": 8388608,
+    "requestLogBytes": 1048576,
+    "requestEvents": 4000
+  }
+}
