@@ -39,6 +39,21 @@ A named feature release inside an unfinished phase still needs exact-source qual
 
 When browser screenshots are available only inline, identify that limitation and the observer. Retain actual source/HTTP records and written observations without inventing exported images or their hashes. Such evidence does not close raw-image, physical-device or full-phase acceptance. Preserve unsupported/failed attempts and verify the final public source independently.
 
+Before choosing an affected public journey, check the frozen manifest: a source-only
+workshop cannot be exercised through a public runtime route that was not shipped.
+Record its source-workspace journey separately, then verify the actual shipped
+navigation and game. For shipped About or reward dialogs, check that closing or
+Back restores visible focus to a logical opener and that content leaves Back
+visible. Follow [Xbox navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112)
+and the [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+Keep digital controller input checks separate from physical hardware acceptance.
+
+If main advances after a successful Pages run, preserve the resulting authority
+mismatch. Do not relax the current-main comparison or substitute a new commit in
+old receipts. Review the unchanged frozen selector and explicitly authorize a new
+workflow run on the actual main revision; retain both deployment records and
+verify the final public binding before acceptance.
+
 ## Example publishing prompt
 
 “Publish the exact qualified frozen release selected on main. Preserve every immutable source/tag/asset pin, the complete semantic release explorer and direct archive routes. Keep comparison-only testing routes distinct from full byte/browser admissions and the stable root default. Verify original ZIP and all output/public bytes, latest stable selection, GitHub Latest ID/tag readback and actual current play/offline; keep failed attempts and successful retries in the evidence.”

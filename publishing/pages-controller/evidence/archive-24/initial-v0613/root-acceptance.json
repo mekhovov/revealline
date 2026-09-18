@@ -1,0 +1,27 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE24_V0613_RETENTION",
+  "at": "2026-09-18T10:04:18.104077+00:00",
+  "archiveCommit": "6f1fbf7298eb6fee8c99199fa7be1b9c08cb775b",
+  "archiveTree": "31f79bdfb6a658eb136dce197cd1cfa86a8362f5",
+  "runId": 35331821258,
+  "files": 698,
+  "bytes": 313350864,
+  "failedFiles": 0,
+  "retries": 0,
+  "allRowsAndEvidencePinsRechecked": true,
+  "rowReviewSha256": "7757d38a3b98df9e61d5df3e28b456c3d9a20655d1f9950335183c41812f6648",
+  "nativeOriginalSha256": "fc1cf1dcb872415c190c22c46ce8438eeabe63086b72a7e7bd2948cd819c4beb",
+  "browserScope": [
+    "KeyboardTab/Return fromarchivePlay opensactualtitleVERSIONv0.61.3/Startfocus.",
+    "StartloadsFirstSignal0.0%,3lives. Downstartscontinuouscut; EscapePause0:05focusResume; Returnresumescurrentdirection.",
+    "Actualwin52.2%,8160,0:09,3lives3stars.",
+    "KeyboardMainmenu thenReleaseexplorer navigatesarchived/releases/ redirect to mainhttps://mekhovov.github.io/revealline/releases/ currentv0.61.3."
+  ],
+  "limitations": [
+    "Explicit session-only saving warning becauseanothergametabowns saving; no persistence/migration acceptance",
+    "No physicalcontroller/touch, offline or audibletest",
+    "Sourceidenticalarchive scopednavigation only; publicbyteauditseparate"
+  ],
+  "admissionReady": true,
+  "fullPhaseComplete": false
+}
