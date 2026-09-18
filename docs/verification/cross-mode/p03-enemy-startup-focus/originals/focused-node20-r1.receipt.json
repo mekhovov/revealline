@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/enemy-workshop-host.test.mjs",
+    "game/test/enemy-catalog-panel.test.mjs",
+    "game/test/enemy-workshop-return.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-startup-focus-v06120",
+  "exitCode": 1,
+  "stdoutBytes": 12713,
+  "stdoutSha256": "4120d6800b7ae2156331673fef07d975021edaef045959ed803486923032be85"
+}
