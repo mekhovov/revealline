@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/tools/self-check.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 0.32431626319885254,
+  "stdoutSha256": "6c4204382b11da86aab8668d7013b41d767b248ef74e0da8178da0096ad54ee5",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "networkRequests": 0
+}
