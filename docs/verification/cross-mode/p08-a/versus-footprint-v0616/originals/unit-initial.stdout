@@ -1,0 +1,57 @@
+TAP version 13
+# Subtest: the whole 4:3 or 2:1 bitmap fits independently of its element slot
+ok 1 - the whole 4:3 or 2:1 bitmap fits independently of its element slot
+  ---
+  duration_ms: 1.736792
+  ...
+# Subtest: one seat resizing never substitutes the other seat or changes bitmap geometry
+not ok 2 - one seat resizing never substitutes the other seat or changes bitmap geometry
+  ---
+  duration_ms: 0.994959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/board-footprint.test.mjs:57:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 133.33333333333331
+    - 133.33333333333334
+                       ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 133.33333333333334
+  actual: 133.33333333333331
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint/game/test/board-footprint.test.mjs:63:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: observer delivery does not read layout, duplicate writes or retain a hidden scale
+ok 3 - observer delivery does not read layout, duplicate writes or retain a hidden scale
+  ---
+  duration_ms: 0.245958
+  ...
+# Subtest: cached-page restoration rejects old callbacks and measures again without resuming play
+ok 4 - cached-page restoration rejects old callbacks and measures again without resuming play
+  ---
+  duration_ms: 0.614583
+  ...
+# Subtest: explicit geometry and resize reconciliation work without ResizeObserver
+ok 5 - explicit geometry and resize reconciliation work without ResizeObserver
+  ---
+  duration_ms: 0.156041
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 297.5435

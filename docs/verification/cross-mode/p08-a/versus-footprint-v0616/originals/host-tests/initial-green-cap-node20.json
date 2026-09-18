@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/couch-board-footprint-host.test.mjs"
+  ],
+  "exit": 1,
+  "pins": [
+    {
+      "path": "game/couch/couch.mjs",
+      "sha256": "e7aaff69b39e35eff6a81d64d836c6700d1462b0a12602db42ab23e6ca09148a"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af"
+    },
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "sha256": "bca571a94cf2e734aadce518a72635376f7291374ea9f02b585489cb52cd1653"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132"
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "sha256": "0f8a0daaac95f657c8c0ac43290df3e66d1e3de83a1ba04eaf2b499336cd27bc"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "sha256": "ba541219e1034b28976c98567f7cfe1b5ba863772e096d1e7ee86bde6d5f1bab"
+    }
+  ],
+  "finding": "Three passes; one existing logical actor cap at a 240 CSS px wide 2:1 board. Correct footprint 240 passed; requested 16px body minimum was not met. Parent excludes cap changes from this feature."
+}

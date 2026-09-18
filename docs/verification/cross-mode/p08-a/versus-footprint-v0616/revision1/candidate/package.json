@@ -1,0 +1,37 @@
+{
+  "name": "revealline",
+  "version": "0.61.6",
+  "private": true,
+  "type": "module",
+  "description": "Configurable territory-capture game and authoring playground",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "scripts": {
+    "dev": "node scripts/game-cli.mjs serve --port 8768",
+    "test": "node scripts/game-cli.mjs test",
+    "validate": "node scripts/game-cli.mjs validate",
+    "lint": "eslint \"game/**/*.mjs\" \"scripts/**/*.mjs\" \"site/**/*.mjs\" \"platforms/**/*.{mjs,js}\" eslint.config.mjs --max-warnings 0",
+    "build": "node scripts/game-cli.mjs build",
+    "build:pages": "node scripts/build-pages.mjs",
+    "release": "node scripts/game-cli.mjs release-snapshot",
+    "format": "prettier --write \"game/**/*.{mjs,css,html,json}\" \"scripts/*.mjs\" \"site/**/*.{mjs,css,html}\"",
+    "format:check": "prettier --check \"game/**/*.{mjs,css,html,json}\" \"scripts/*.mjs\" \"site/**/*.{mjs,css,html}\"",
+    "native:stage": "node scripts/native-cli.mjs stage",
+    "native:verify": "node scripts/native-cli.mjs verify",
+    "desktop:start": "npm --prefix platforms/desktop start",
+    "desktop:package": "npm --prefix platforms/desktop run package",
+    "ios:doctor": "npm --prefix platforms/ios run doctor",
+    "ios:sync": "npm --prefix platforms/ios run native:sync",
+    "format:native": "prettier --write \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\"",
+    "format:native:check": "prettier --check \"platforms/desktop/*.mjs\" \"platforms/desktop/test/*.mjs\" \"platforms/ios/{bridge,scripts,test,diagnostics}/*.{mjs,js,html,css}\""
+  },
+  "dependencies": {
+    "phaser": "4.2.1"
+  },
+  "devDependencies": {
+    "eslint": "10.10.0",
+    "globals": "17.12.0",
+    "prettier": "3.6.2"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "status": "LOCAL_CANDIDATE_READY_FOR_ROOT_REVIEW",
+  "source": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "version": "0.61.6",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-versus-footprint-v0616",
+  "branch": "codex/p08-versus-footprint-v0616",
+  "paths": 165,
+  "sourcePaths": 11,
+  "evidencePaths": 154,
+  "managedBytes": 15968924,
+  "freeBytes": 2657804288,
+  "pinned": {
+    "related-manifest.json": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/related-manifest.json",
+      "bytes": 50438,
+      "sha256": "8bb5c0f4cbd884b4ecfb69c3b2fb7b50cdcba30e0f7cb642df6c05ac9fb2cf9d"
+    },
+    "related-paths.txt": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/related-paths.txt",
+      "bytes": 15453,
+      "sha256": "3de0ac94e008c4defd6aa807e3a358a19dd1cbc78dda4347421fff61e1bcfb5c"
+    },
+    "source-adoption.diff": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/source-adoption.diff",
+      "bytes": 40624,
+      "sha256": "304a485f40681c4f87e01f8f1ef16fa6c35d079d89bc98a9bdf9fa2b5b89d5d4"
+    },
+    "hunk-review.json": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/hunk-review.json",
+      "bytes": 4507,
+      "sha256": "b24cbccbb4fe7dad5507449a917659792ac152fedcac9d54809c7fe7602e9793"
+    },
+    "application.json": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/application.json",
+      "bytes": 1853,
+      "sha256": "a96baeef177a96fbfd44e43bb58ab40e24549dacfd6504dcc4cc2fb1ceca66d3"
+    },
+    "new-file-whitespace-review.json": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/new-file-whitespace-review.json",
+      "bytes": 921,
+      "sha256": "b47300caf9a3e9a6164f6ca1c38aa5a349e4068bbad62398c337d30cbfadec8f"
+    }
+  },
+  "checks": [
+    {
+      "label": "focused-node20-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/focused-node20-r1/receipt.json",
+      "sha256": "85c0bdf30b27b46e389410152510eb7b3a8f2f6b91b8d4e112ceb21b66387ac1",
+      "totals": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "label": "focused-node22-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/focused-node22-r1/receipt.json",
+      "sha256": "057e519d74fd4b96aaf7584b36e5bb5d41d669c9b206cbad97a99c3d74dc47b9",
+      "totals": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "label": "lint-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/lint-r1/receipt.json",
+      "sha256": "c17d54e2833f9fd648eeed6729bca997864b5e9bd7b557d8a5ebed3ab4b43906"
+    },
+    {
+      "label": "format-r1",
+      "exitCode": 0,
+      "scope": "post-integration only",
+      "receipt": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-v0616-integration/checks/format-r1/receipt.json",
+      "sha256": "e0151e39eb670da1b3e53dcbb2f108459c78b965e777de3489f33ca3118a1d94"
+    }
+  ],
+  "qualificationRemaining": [
+    "Full six source gates, ordinary build and production checks on intended commit",
+    "Root line/hunk review and source commit/PR",
+    "Exact-source freeze, original inspection and final qualification",
+    "Native responsive/input journeys and immutable public release/Pages/inventory acceptance"
+  ],
+  "staged": false,
+  "committed": false,
+  "remoteActions": false,
+  "browserActions": false
+}

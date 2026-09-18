@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-name-pattern=actual Versus fallback",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-versus-footprint-d34e/host-tests/no-observer-cache-test.mjs"
+  ],
+  "exit": 1,
+  "pins": [
+    {
+      "path": "game/couch/couch.mjs",
+      "sha256": "e7aaff69b39e35eff6a81d64d836c6700d1462b0a12602db42ab23e6ca09148a"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af"
+    },
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "sha256": "bca571a94cf2e734aadce518a72635376f7291374ea9f02b585489cb52cd1653"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132"
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "sha256": "450eab2d124b5bbb2eb210467ef1754f9a9fdb3459cb8ffa734656d4cc94528d"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "sha256": "ba541219e1034b28976c98567f7cfe1b5ba863772e096d1e7ee86bde6d5f1bab"
+    },
+    {
+      "path": "game/content/packs/sentinel-relay.json",
+      "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+    }
+  ],
+  "worktree_unchanged": true,
+  "cache_adapter": "Only imports/new URL are rewritten to absolute worktree fixture URLs; portable draft retained alongside.",
+  "portable_sha256": "e1beee063f5dc70c69ffb14c49d1222c2666ac9260f6df2b42f59a77dba10734",
+  "adapter_sha256": "14ab44eb54f10482d006ce04300021e3e33b5324f7ec25dd0c1536fcbc0a93b8"
+}

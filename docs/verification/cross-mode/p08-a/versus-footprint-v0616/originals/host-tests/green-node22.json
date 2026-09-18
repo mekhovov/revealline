@@ -1,0 +1,46 @@
+{
+  "source_base": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "game/test/couch-board-footprint-host.test.mjs"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 5.175,
+  "source_unchanged": true,
+  "pins": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 56730,
+      "sha256": "e7aaff69b39e35eff6a81d64d836c6700d1462b0a12602db42ab23e6ca09148a"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "bytes": 9496,
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af"
+    },
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "bytes": 3478,
+      "sha256": "bca571a94cf2e734aadce518a72635376f7291374ea9f02b585489cb52cd1653"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 34321,
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132"
+    },
+    {
+      "path": "game/test/couch-board-footprint-host.test.mjs",
+      "bytes": 13074,
+      "sha256": "450eab2d124b5bbb2eb210467ef1754f9a9fdb3459cb8ffa734656d4cc94528d"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "bytes": 9329,
+      "sha256": "ba541219e1034b28976c98567f7cfe1b5ba863772e096d1e7ee86bde6d5f1bab"
+    }
+  ],
+  "evidence": "Actual host and BoardPainter; modeled DOM/RO/Image/Canvas2D. Four tests. Not native or physical-device qualification.",
+  "remaining_limitation": "240px 2:1 actor remains about13.33px due historical logical cap; explicit passing regression documents handoff only."
+}

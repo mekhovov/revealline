@@ -1,0 +1,139 @@
+{
+  "format": "revealline-independent-source-review.v1",
+  "createdAtUTC": "2026-09-18T03:36:16.473941+00:00",
+  "reviewer": "/root/queued_studio_review",
+  "base": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "version": "Unversioned feature over source v0.61.5; version files unchanged.",
+  "result": "PASS for reviewed helper, host, CSS, unit source and guide bodies.",
+  "actionableFindings": [],
+  "reviewedFiles": [
+    {
+      "path": "game/couch/board-footprint.mjs",
+      "bytes": 3478,
+      "sha256": "bca571a94cf2e734aadce518a72635376f7291374ea9f02b585489cb52cd1653"
+    },
+    {
+      "path": "game/test/board-footprint.test.mjs",
+      "bytes": 5438,
+      "sha256": "916c117b69c5f65136665210018474b38080d77147befe3224eb75a8b1b920bc"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 56730,
+      "sha256": "e7aaff69b39e35eff6a81d64d836c6700d1462b0a12602db42ab23e6ca09148a"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "bytes": 9496,
+      "sha256": "12fa3c08661acae7212654971dee8ae01ebcd86b6b2085fb6a0d9940fbdf85af"
+    },
+    {
+      "path": "docs/field-kit-surfaces.md",
+      "bytes": 11291,
+      "sha256": "2bf15923ba4651ab893f0ebb1941c318e9b8a4554b2281ebc9e652b243f5c31b"
+    }
+  ],
+  "preservation": [
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 34321,
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 26660,
+      "sha256": "5d4c40cbcebeb738526dbdb31fa95b36a368da8930d14de04a9600118aea54c7",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-static-pictures.mjs",
+      "bytes": 19052,
+      "sha256": "19729c09e2377a8f0b27aafb54509cdff292be50fedb1a86b02213aea640d7a2",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-installed-chapters.mjs",
+      "bytes": 16042,
+      "sha256": "68b5839371398b56b91ba48782b578e50f19e95542bf1e9238860820c678d6d5",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 17277,
+      "sha256": "70d3f0e30a6fd8b0565a9072d3ceb17c8d7df3590e33c05727e9070902e22905",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "bytes": 17426,
+      "sha256": "4c53894d90fcf7b5a70b4fbe77d9cd535689bb983cbaab401ad3fd0b97c7827f",
+      "unchanged": true
+    },
+    {
+      "path": "game/multiplayer.mjs",
+      "bytes": 4315,
+      "sha256": "9addd37b1b5b460019c4cfa365692d4157ede9bb89e749f2e855d2247b4581f1",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "5fa736356562556ab9c6e56057b808cffcfc116c241c0b271d4317bcfb6c571a",
+      "unchanged": true
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "09d9ed659a5cc9eb9bef28ddb34573c557e0189ea58212db655772913786ac38",
+      "unchanged": true
+    },
+    {
+      "path": "game/build-config.json",
+      "note": "Sparse worktree body unavailable; no equality claim."
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 215464,
+      "sha256": "e0a8eaaa650c2ae283f617a05a88cb40b4d270b95cd9272c663fcaf11420c7f9",
+      "unchanged": true
+    }
+  ],
+  "conclusions": [
+    {
+      "area": "Fit and CSS sizing",
+      "finding": "fitBoardRect preserves each finite positive board aspect ratio. Each observed arena is relative, explicitly unpadded and remains an existing minmax grid slot; the centered absolutely positioned canvas cannot determine that slot intrinsic size. CSS starts at zero and helper writes only fitted child width/height. Existing contain/nearest sampling remains unchanged."
+    },
+    {
+      "area": "Painter ownership and cost",
+      "finding": "Host passes each seat cached width through the existing displayCSSWidth option. Geometry refresh follows setting both internal bitmap sizes; updateMenu refreshes only when boards visibility, actual pad visibility or body text settings change. Ordinary frames read cheap state/cache values only. RO delivers subsequent content-box reflows without a frame-loop layout read."
+    },
+    {
+      "area": "Lifecycle",
+      "finding": "Helper observer closures are generation-fenced. Persisted pagehide suspends/disconnects; pageshow reinstalls one observer and refreshes without gameplay calls. Terminal disposal removes resize/pagehide/pageshow listeners and rejects old callbacks. The host outer releaseArtwork now calls helper disposal, so post-creation startup failures that enter the existing catch also reach cleanup."
+    },
+    {
+      "area": "Unavailable dimensions and fallbacks",
+      "finding": "Invalid/zero measurement clears the CSS footprint and returns undefined renderer width. It does not pass zero or NaN as a usable scale, and positive deliveries recover. In absence of RO, explicit board/layout refresh and window resize remain supported; no claim is made that an old browser without RO observes every asynchronous font/content change."
+    },
+    {
+      "area": "Fractional equality correction",
+      "finding": "The initial string-serialization concern is resolved with cached numeric width/height and initialized state. A new source test models browser-normalized style strings and repeated fractional deliveries. No test execution was performed by this reviewer."
+    },
+    {
+      "area": "Minimal behavior and documentation",
+      "finding": "Runtime delta does not modify match/simulation, input, score, actor, artwork, picture ownership or controller routing functions. Guide documents fitting versus authored image fitting, restoration, native qualification and the independent 64-logical-pixel cap at 240 CSS width. It does not claim a completed public release or new same-attempt Versus Retry."
+    }
+  ],
+  "evidenceLimits": [
+    "Read-only source/hunk review; no tests, native browser, physical devices, build, remote, index or version changes by this lane.",
+    "Actual-host fixture/tests were still being completed by their separate owner and were not included in this review.",
+    "CSS layout feedback, gutter appearance and player recognition require actual native verification; source absence of intrinsic feedback is not a browser-performance measurement.",
+    "Guide/source acceptance here does not qualify a release, all viewport readability, P08-A/P08-B completion or source gates.",
+    "The independent 64-logical-pixel cap remains: correct fit width alone yields 13.33 CSS px for an ordinary enemy on a 240-CSS-pixel wide 1152-pixel board."
+  ],
+  "relatedRecords": [
+    "design-note.md",
+    "helper-interim-review.json"
+  ]
+}

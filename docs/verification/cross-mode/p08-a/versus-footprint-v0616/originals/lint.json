@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+    "game/couch/board-footprint.mjs",
+    "game/couch/couch.mjs",
+    "game/test/board-footprint.test.mjs",
+    "game/test/couch-board-footprint-host.test.mjs",
+    "game/test/helpers/couch-host.mjs",
+    "--max-warnings",
+    "0"
+  ],
+  "exitCode": 0,
+  "scope": "Seven affected files only; no full-source gate claim"
+}

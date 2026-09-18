@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+    "--check",
+    "game/couch/board-footprint.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/couch.css",
+    "game/test/board-footprint.test.mjs",
+    "game/test/couch-board-footprint-host.test.mjs",
+    "game/test/helpers/couch-host.mjs",
+    "docs/field-kit-surfaces.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+  ],
+  "exitCode": 0,
+  "scope": "Eight affected source files only; not full-source gates"
+}

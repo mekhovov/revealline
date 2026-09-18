@@ -1,0 +1,68 @@
+{
+  "base": "d34e283819376eb43e4942287d9767b22a4f6487",
+  "paths": [
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 34321,
+      "sha256": "93d69f62cfbed4b70a395bf44cd802be5a0f700fd20be6a7187e3c6fe9eaf132",
+      "unchanged": true
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 26660,
+      "sha256": "5d4c40cbcebeb738526dbdb31fa95b36a368da8930d14de04a9600118aea54c7",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "bytes": 17426,
+      "sha256": "4c53894d90fcf7b5a70b4fbe77d9cd535689bb983cbaab401ad3fd0b97c7827f",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-static-pictures.mjs",
+      "bytes": 19052,
+      "sha256": "19729c09e2377a8f0b27aafb54509cdff292be50fedb1a86b02213aea640d7a2",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/couch-installed-chapters.mjs",
+      "bytes": 16042,
+      "sha256": "68b5839371398b56b91ba48782b578e50f19e95542bf1e9238860820c678d6d5",
+      "unchanged": true
+    },
+    {
+      "path": "game/multiplayer.mjs",
+      "bytes": 4315,
+      "sha256": "9addd37b1b5b460019c4cfa365692d4157ede9bb89e749f2e855d2247b4581f1",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 976734,
+      "sha256": "652a82316cce82bd796ebd1ea6bdcbb4feadcec50e1a2f5697e429396c6a836d",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "5fa736356562556ab9c6e56057b808cffcfc116c241c0b271d4317bcfb6c571a",
+      "unchanged": true
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "09d9ed659a5cc9eb9bef28ddb34573c557e0189ea58212db655772913786ac38",
+      "unchanged": true
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 5474,
+      "sha256": "1755860a6ccc755169a0388587215fae3475b9d1c3d0f784fd62d3101b1957d7",
+      "unchanged": true
+    }
+  ],
+  "compiledTree": "d47c9a560f480012e6c25f86bb3d99b1082fd2a5",
+  "cachedDiffEmpty": true,
+  "scope": "These existing working bodies equal exactbase; fullproposal limitedto8paths in source-manifest. No versions, sourceart, geometry, input, leases or simulation edits."
+}
