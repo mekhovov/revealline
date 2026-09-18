@@ -1,0 +1,35 @@
+{
+  "status": "PASS_FOUR_OFFLINE_CASES",
+  "cases": [
+    {
+      "allocated": 0,
+      "expanded": 0,
+      "free": 1073741824,
+      "allowed": true,
+      "required": 20971520
+    },
+    {
+      "allocated": 15728640,
+      "expanded": 0,
+      "free": 1073741824,
+      "allowed": false,
+      "required": null
+    },
+    {
+      "allocated": 0,
+      "expanded": 1,
+      "free": 536870912,
+      "allowed": false,
+      "required": null
+    },
+    {
+      "allocated": 2097152,
+      "expanded": 1048576,
+      "free": 1073741824,
+      "allowed": true,
+      "required": 24117248
+    }
+  ],
+  "networkRequests": 0,
+  "intakeExecuted": false
+}

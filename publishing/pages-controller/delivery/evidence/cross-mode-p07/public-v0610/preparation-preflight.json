@@ -1,0 +1,56 @@
+{
+  "status": "SOURCE_AND_PREDECESSOR_PINNED_NO_DEPLOYMENT_GUESSED",
+  "time": "2026-09-18T03:45:29.957221+00:00",
+  "source": "fc2c7af6b22c703cc3bb2c081579878b7510f667",
+  "tree": "bf11a670ac53a31d58b79540650229160bacd486",
+  "version": "v0.61.0",
+  "publishedReleaseId": 391186371,
+  "originalReleaseObservation": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/source-originals/published-after.json",
+    "bytes": 18947,
+    "sha256": "e027fb90a8e70c071b52cc986cbdeb2d670304ec2becbbc7a75d613787c8a807"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/source-originals/source-qualification.json",
+    "bytes": 78105,
+    "sha256": "c8f3f40e34ed7e26bcfda123423ddc59e2bf01044d0ade69f9da04b6b895e191"
+  },
+  "predecessorAcceptance": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/predecessor-root-acceptance.json",
+    "bytes": 2151,
+    "sha256": "6893dee8cd16b0c1a05887ee07db8bf57b69ef120134cb3129e6ac26f3f486e8"
+  },
+  "archive22Acceptance": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/source-originals/archive22-root-acceptance.json",
+    "bytes": 1313,
+    "sha256": "af3abf6197cd0ee57d55efd76b7cc0a7513d827edcf538ccbf2ae333d4c3f92d"
+  },
+  "archive22RecheckedOriginalPins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive22-public-audit/row-review.json",
+      "bytes": 12344,
+      "sha256": "21256b758a64fc73025c7c2c1fa679d7b9fbdd9f9fa52284cb63eb2b4cbde931"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive22-root-actions/native-observations.json",
+      "bytes": 1289,
+      "sha256": "a98cd6fa33a3b15455010ef57ab226bd117c24e813b7a5e634a3b5a70c07ba65"
+    }
+  ],
+  "retainedCatalog": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/tools/retained-catalog.json",
+    "bytes": 35699,
+    "sha256": "c4ee6fa04b53654e6dee1bc162d2aaefb09bd18eaf4af6b4989c3adc23a6c57a"
+  },
+  "retainedCatalogRows": 80,
+  "plannedCatalogRows": 81,
+  "previousArchives": 21,
+  "plannedArchives": 22,
+  "publisherCommit": null,
+  "pagesRunId": null,
+  "deploymentId": null,
+  "receiptArtifact": null,
+  "realNetworkRequests": 0,
+  "cacheCapBytes": 33554432,
+  "freeReserveBytes": 536870912
+}

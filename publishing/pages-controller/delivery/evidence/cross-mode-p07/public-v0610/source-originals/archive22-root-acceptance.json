@@ -1,0 +1,31 @@
+{
+  "status": "ROOT_ACCEPTED_SCOPED_ARCHIVE22_V0609_RETENTION",
+  "acceptedAt": "2026-09-18T03:37:48.080825+00:00",
+  "repository": "mekhovov/revealline-archive-22",
+  "commit": "625fb9aeeef8915f65c3a14cf5d9525bda911778",
+  "tree": "c6cdbee1fba5e6392db8038fb575fdf37a9833f4",
+  "runId": 35303375888,
+  "deploymentId": 6516903825,
+  "statusId": 18506581381,
+  "files": 698,
+  "bytes": 313221998,
+  "zeroFailuresRetriesSkips": true,
+  "pins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive22-public-audit/row-review.json",
+      "bytes": 12344,
+      "sha256": "21256b758a64fc73025c7c2c1fa679d7b9fbdd9f9fa52284cb63eb2b4cbde931"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive22-root-actions/native-observations.json",
+      "bytes": 1289,
+      "sha256": "a98cd6fa33a3b15455010ef57ab226bd117c24e813b7a5e634a3b5a70c07ba65"
+    }
+  ],
+  "actualBrowser": "Keyboardtitle/Continue/flight/PauseResume, legitimatewin52.2percent8160points0:08/fullpicture,Resultsreturn,Mainmenu,Releaseexplorer/maincurrentcatalog/Back",
+  "limits": [
+    "Session-only saving warning observed; no savedwinmigration claim",
+    "No physicaltouch/controller/AT/offline/listening acceptance",
+    "Does not complete gameplay or presentation phases"
+  ]
+}
