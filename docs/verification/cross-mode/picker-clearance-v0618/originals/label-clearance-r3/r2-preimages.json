@@ -1,0 +1,27 @@
+{
+  "sourceBase": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "files": [
+    {
+      "path": "game/ui/focus-clearance.mjs",
+      "bytes": 2529,
+      "sha256": "7b3b59f9bd1d3244eef44ab9fa98b418652688f1f0d5849952859e119d745544"
+    },
+    {
+      "path": "game/test/focus-clearance.test.mjs",
+      "bytes": 6057,
+      "sha256": "9c05c235f04aa2f6a1f08963ab16c0f3751936f9acca5fed7571ba228be4573f"
+    },
+    {
+      "path": "docs/still-media-workshop.md",
+      "bytes": 12837,
+      "sha256": "25214f34dedcd43e0c46c56b259d408dc2b91e3cb11d50c4eef18bc75ef859e3"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 217874,
+      "sha256": "16ca08077a05515fd428af8c44314a4bef8d356363e4c82d85e0c224100fb9b9"
+    }
+  ],
+  "r2ReadySha256": "9cde2ad9e048ee267d38e4bc9a0b205a95cde5747fa179a9930a89d07f341bdc",
+  "reason": "Root review requires focused control fallback when its containing label is taller than available viewport clearance."
+}

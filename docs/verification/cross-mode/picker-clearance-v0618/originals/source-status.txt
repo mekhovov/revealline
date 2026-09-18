@@ -1,0 +1,4 @@
+ M authoring/skills/xonix-runtime-maintainer/SKILL.md
+ M docs/still-media-workshop.md
+ M game/test/still-media-panel.test.mjs
+ M game/ui/still-media-panel.mjs

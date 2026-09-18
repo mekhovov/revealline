@@ -1,0 +1,112 @@
+{
+  "status": "FOCUSED_SOURCE_REGRESSIONS_PASS_NATIVE_CANDIDATE_REVIEW_PENDING",
+  "tests": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-media-host.test.mjs",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/operation-focus-host.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "counts": {
+        "tests": 100,
+        "pass": 100,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 14.299,
+      "bytes": 22303,
+      "sha256": "9f6c6e225114974737e1cc11a2c534ad6db41cb371c16ac23144dbe0513e5bdd",
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/focused-final-node20.19.5.log",
+        "bytes": 22303,
+        "sha256": "9f6c6e225114974737e1cc11a2c534ad6db41cb371c16ac23144dbe0513e5bdd"
+      }
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-media-host.test.mjs",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/operation-focus-host.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "counts": {
+        "tests": 100,
+        "pass": 100,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 11.309,
+      "bytes": 23790,
+      "sha256": "e8c1209cc65b29a19cc14b33ae52ea4553808291e02d2938648dc2f0a66f22ca",
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/focused-final-node22.22.2.log",
+        "bytes": 23790,
+        "sha256": "e8c1209cc65b29a19cc14b33ae52ea4553808291e02d2938648dc2f0a66f22ca"
+      }
+    }
+  ],
+  "red": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/regression-red-node22.log",
+    "bytes": 3005,
+    "sha256": "b27f97dc265589bab9906b48b1d34ffdcb3c7c3c63a0b063e3808d5894307927"
+  },
+  "redTests": 3,
+  "setupFailures": [
+    {
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/focused-node20.19.5.log",
+        "bytes": 52992,
+        "sha256": "1db8760e5fcfbc68ca86313f3ef06c2a41d6f17093ffb6799e5e3b1d0085d7f5"
+      },
+      "failures": 27,
+      "scope": "Sparse local fixture inputs missing; retained originals. No runtime/test assertion changed to resolve."
+    },
+    {
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/focused-node22.22.2.log",
+        "bytes": 54133,
+        "sha256": "045f7dab9288ce2dcc3911e807e9f5cb9e2215af9f13269e8ecd605d532f2da5"
+      },
+      "failures": 27,
+      "scope": "Sparse local fixture inputs missing; retained originals. No runtime/test assertion changed to resolve."
+    },
+    {
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/focused-r2-node20.19.5.log",
+        "bytes": 82980,
+        "sha256": "bd8d48acbc1b1eba3ab4c196665f2920e7a7109e816eff237bcf4a109a7ebb97"
+      },
+      "failures": 27,
+      "scope": "Sparse local fixture inputs missing; retained originals. No runtime/test assertion changed to resolve."
+    },
+    {
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/focused-r2-node22.22.2.log",
+        "bytes": 84502,
+        "sha256": "7c58ff07073736bbb65b46e47bfab43050e6ddf0cbea19f9d09aba73f82c7ef9"
+      },
+      "failures": 27,
+      "scope": "Sparse local fixture inputs missing; retained originals. No runtime/test assertion changed to resolve."
+    }
+  ],
+  "nativeBrowserRun": false,
+  "fullSuiteRun": false,
+  "buildRun": false,
+  "versionChanged": false,
+  "commitCreated": false
+}

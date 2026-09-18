@@ -1,0 +1,41 @@
+{
+  "source": "Parent message with actual r1 overlay browser observations; this agent did not run browser",
+  "portrait": {
+    "viewport": [
+      390,
+      844
+    ],
+    "fileBounds": [
+      500.375,
+      564.375
+    ],
+    "railBounds": [
+      31,
+      236.59375
+    ],
+    "controlVisible": true
+  },
+  "landscape": {
+    "viewport": [
+      844,
+      390
+    ],
+    "fileBounds": [
+      144.09375,
+      208.09375
+    ],
+    "railBounds": [
+      39,
+      136
+    ],
+    "labelWrapperBounds": [
+      116.5,
+      208.09375
+    ],
+    "sameFileFocus": true,
+    "controlVisible": true,
+    "labelTextObscured": true
+  },
+  "preserved": "Actual owned46655B image preview, no assignment write; retain status/Cancel and original focus/scroll ownership.",
+  "requiredCorrection": "Opt-in complete label+control clearance, not control-only native acceptance."
+}

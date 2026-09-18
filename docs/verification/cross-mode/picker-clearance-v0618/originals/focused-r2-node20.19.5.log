@@ -1,0 +1,1185 @@
+TAP version 13
+# Subtest: Large portrait selector is fully below the measured expanded heading
+ok 1 - Large portrait selector is fully below the measured expanded heading
+  ---
+  duration_ms: 0.739333
+  ...
+# Subtest: Large landscape selector clears the measured bottom action bar
+ok 2 - Large landscape selector clears the measured bottom action bar
+  ---
+  duration_ms: 0.083959
+  ...
+# Subtest: queued reflow reads current focus and leaves the heading action alone
+ok 3 - queued reflow reads current focus and leaves the heading action alone
+  ---
+  duration_ms: 0.065083
+  ...
+# Subtest: large reading region retains its beginning and manual scrolling is not undone
+ok 4 - large reading region retains its beginning and manual scrolling is not undone
+  ---
+  duration_ms: 0.504542
+  ...
+# Subtest: queued layout cannot alter a closed owner's scroll or focus
+ok 5 - queued layout cannot alter a closed owner's scroll or focus
+  ---
+  duration_ms: 0.131083
+  ...
+# Subtest: queued layout cannot alter a hidden owner's scroll or focus
+ok 6 - queued layout cannot alter a hidden owner's scroll or focus
+  ---
+  duration_ms: 0.064792
+  ...
+# Subtest: queued layout cannot alter a blurred owner's scroll or focus
+ok 7 - queued layout cannot alter a blurred owner's scroll or focus
+  ---
+  duration_ms: 0.177333
+  ...
+# Subtest: queued layout cannot alter a outside owner's scroll or focus
+ok 8 - queued layout cannot alter a outside owner's scroll or focus
+  ---
+  duration_ms: 0.133541
+  ...
+# Subtest: queued layout cannot alter a disposed owner's scroll or focus
+ok 9 - queued layout cannot alter a disposed owner's scroll or focus
+  ---
+  duration_ms: 0.214875
+  ...
+# Subtest: chapter completion restores its still-owned actual button after native disable
+not ok 10 - chapter completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 56.130042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=1:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=1:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:95:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter error restores its still-owned actual button after native disable
+not ok 11 - chapter error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 12.395875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=2:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=2:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:95:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after focus, even after returning to BODY
+not ok 12 - chapter completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 12.93775
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=3:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=3:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after blur, even after returning to BODY
+not ok 13 - chapter completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 10.07125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=4:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=4:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after hidden, even after returning to BODY
+not ok 14 - chapter completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 13.036042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=5:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=5:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after pagehide, even after returning to BODY
+not ok 15 - chapter completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 10.531833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=6:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=6:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after close, even after returning to BODY
+not ok 16 - chapter completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 11.017875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=7:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=7:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+not ok 17 - chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 12.786167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=8:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=8:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter completion does not reclaim focus after body-key, even after returning to BODY
+not ok 18 - chapter completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 12.892291
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=9:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=9:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: chapter enable callback choosing another control is not overwritten
+not ok 19 - chapter enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 10.01625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:161:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=10:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=10:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:162:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion restores its still-owned actual button after native disable
+not ok 20 - install completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 12.889083
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=11:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=11:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:95:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install error restores its still-owned actual button after native disable
+not ok 21 - install error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 12.574208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=12:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=12:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:95:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after focus, even after returning to BODY
+not ok 22 - install completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 16.606667
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=13:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=13:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after blur, even after returning to BODY
+not ok 23 - install completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 10.522792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=14:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=14:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after hidden, even after returning to BODY
+not ok 24 - install completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 12.067583
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=15:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=15:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after pagehide, even after returning to BODY
+not ok 25 - install completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 10.346625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=16:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=16:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after close, even after returning to BODY
+not ok 26 - install completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 12.44325
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=17:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=17:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after new-dialog, even after returning to BODY
+not ok 27 - install completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 9.956166
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=18:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=18:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install completion does not reclaim focus after body-key, even after returning to BODY
+not ok 28 - install completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 13.871042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=19:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=19:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:132:45)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: install enable callback choosing another control is not overwritten
+not ok 29 - install enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 9.102333
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:161:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=20:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=20:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:162:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: explicit Library Cancel after three native Tabs renews return to the actual Install action
+not ok 30 - explicit Library Cancel after three native Tabs renews return to the actual Install action
+  ---
+  duration_ms: 13.128208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:225:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=21:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=21:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:226:41)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after background
+not ok 31 - fresh explicit Cancel cannot restore after background
+  ---
+  duration_ms: 10.335166
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=22:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=22:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:236:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after closed-root
+not ok 32 - fresh explicit Cancel cannot restore after closed-root
+  ---
+  duration_ms: 12.88475
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=23:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=23:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:236:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-focus
+not ok 33 - fresh explicit Cancel cannot restore after cleanup-focus
+  ---
+  duration_ms: 8.551459
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=24:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=24:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:236:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-blur
+not ok 34 - fresh explicit Cancel cannot restore after cleanup-blur
+  ---
+  duration_ms: 12.467417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=25:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=25:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:236:43)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Cancel while actual pack commit is finishing remains detached and cannot restore focus
+not ok 35 - Cancel while actual pack commit is finishing remains detached and cannot restore focus
+  ---
+  duration_ms: 8.609959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:258:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=26:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=26:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:259:35)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh return intent refuses a target outside its captured dialog
+not ok 36 - fresh return intent refuses a target outside its captured dialog
+  ---
+  duration_ms: 13.744541
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:292:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=27:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs?difficultyHost=27:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs:402:10)
+    async pending (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:32:13)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:293:35)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual workshop reviews without writes, explicitly restores all originals, and prepares a separate native download
+ok 37 - actual workshop reviews without writes, explicitly restores all originals, and prepares a separate native download
+  ---
+  duration_ms: 289.778375
+  ...
+# Subtest: actual preserve review distinguishes assignments while retaining current and incoming history
+ok 38 - actual preserve review distinguishes assignments while retaining current and incoming history
+  ---
+  duration_ms: 317.610041
+  ...
+# Subtest: actual restore review distinguishes assignments while retaining current and incoming history
+ok 39 - actual restore review distinguishes assignments while retaining current and incoming history
+  ---
+  duration_ms: 303.696042
+  ...
+# Subtest: corrupt bundle, quota refusal, and stale writer keep exact prior storage and preview
+ok 40 - corrupt bundle, quota refusal, and stale writer keep exact prior storage and preview
+  ---
+  duration_ms: 509.579625
+  ...
+# Subtest: review binds the exact installed catalog, selected file and explicit assignment policy
+ok 41 - review binds the exact installed catalog, selected file and explicit assignment policy
+  ---
+  duration_ms: 117.901625
+  ...
+# Subtest: cancelled late review and double commands cannot publish stale restore or download
+ok 42 - cancelled late review and double commands cannot publish stale restore or download
+  ---
+  duration_ms: 106.0145
+  ...
+# Subtest: allocation-time cancellation and hidden lifecycle release prepared download without late artifacts
+ok 43 - allocation-time cancellation and hidden lifecycle release prepared download without late artifacts
+  ---
+  duration_ms: 11.63475
+  ...
+# Subtest: shared v3 MP3 recovery is byte-identical after originals restore
+ok 44 - shared v3 MP3 recovery is byte-identical after originals restore
+  ---
+  duration_ms: 100.716417
+  ...
+# Subtest: actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file
+ok 45 - actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file
+  ---
+  duration_ms: 107.252292
+  ...
+# Subtest: actual classic entry gives file-URL guidance before module/storage access
+ok 46 - actual classic entry gives file-URL guidance before module/storage access
+  ---
+  duration_ms: 3.215292
+  ...
+# Subtest: actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+ok 47 - actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+  ---
+  duration_ms: 122.694
+  ...
+# Subtest: cold workshop Escape restores the invoker blurred by its disabled loading state
+ok 48 - cold workshop Escape restores the invoker blurred by its disabled loading state
+  ---
+  duration_ms: 19.18875
+  ...
+# Subtest: closing a pending workshop read restores the invoker before settling and preserves later focus
+ok 49 - closing a pending workshop read restores the invoker before settling and preserves later focus
+  ---
+  duration_ms: 11.051125
+  ...
+# Subtest: v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation
+ok 50 - v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation
+  ---
+  duration_ms: 88.878667
+  ...
+# Subtest: file URL and cancelled late source load do not open or upgrade media
+ok 51 - file URL and cancelled late source load do not open or upgrade media
+  ---
+  duration_ms: 7.456084
+  ...
+# Subtest: rejected shared-store access remains visible and cannot become an empty media save
+ok 52 - rejected shared-store access remains visible and cannot become an empty media save
+  ---
+  duration_ms: 5.86475
+  ...
+# Subtest: persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+ok 53 - persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+  ---
+  duration_ms: 10.915542
+  ...
+# Subtest: existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+ok 54 - existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+  ---
+  duration_ms: 26.518916
+  ...
+# Subtest: actual shared router prevents held Confirm across modal close and native pointer handoff
+ok 55 - actual shared router prevents held Confirm across modal close and native pointer handoff
+  ---
+  duration_ms: 26.148958
+  ...
+# Subtest: opening announces the held catalogue read and Close fences its late failure
+ok 56 - opening announces the held catalogue read and Close fences its late failure
+  ---
+  duration_ms: 4.138875
+  ...
+# Subtest: classic picture workshop exposes loading and Back before storage explanation
+ok 57 - classic picture workshop exposes loading and Back before storage explanation
+  ---
+  duration_ms: 0.78825
+  ...
+# Subtest: native panel prepares original bytes, saves exact theme assignment, reloads and unassigns without losing history
+ok 58 - native panel prepares original bytes, saves exact theme assignment, reloads and unassigns without losing history
+  ---
+  duration_ms: 188.959834
+  ...
+# Subtest: failed candidate decode or preview leaves the prior preview and saved assignment intact
+ok 59 - failed candidate decode or preview leaves the prior preview and saved assignment intact
+  ---
+  duration_ms: 69.962417
+  ...
+# Subtest: double commands, cancellation and stale completion cannot save or overwrite a newer preview
+ok 60 - double commands, cancellation and stale completion cannot save or overwrite a newer preview
+  ---
+  duration_ms: 49.194042
+  ...
+# Subtest: stale installed context and concurrent media writer refuse the whole save
+ok 61 - stale installed context and concurrent media writer refuse the whole save
+  ---
+  duration_ms: 49.216041
+  ...
+# Subtest: context switching discards an unsaved binding and close restores focus without late publication
+ok 62 - context switching discards an unsaved binding and close restores focus without late publication
+  ---
+  duration_ms: 7.344958
+  ...
+# Subtest: transaction refusal keeps the previous preview/draft and stored bytes; notification failure cannot erase a successful save
+ok 63 - transaction refusal keeps the previous preview/draft and stored bytes; notification failure cannot erase a successful save
+  ---
+  duration_ms: 66.417416
+  ...
+# Subtest: existing keyboard/controller navigation edits native selects and Back closes only the workshop
+ok 64 - existing keyboard/controller navigation edits native selects and Back closes only the workshop
+  ---
+  duration_ms: 9.463
+  ...
+# Subtest: file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes
+ok 65 - file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes
+  ---
+  duration_ms: 7.679875
+  ...
+# Subtest: preview completion restores its initiating control after native disabled blur
+ok 66 - preview completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 65.270125
+  ...
+# Subtest: preview failure restores its initiating control after native disabled blur
+ok 67 - preview failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 57.237208
+  ...
+# Subtest: show-saved completion restores its initiating control after native disabled blur
+ok 68 - show-saved completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 55.450875
+  ...
+# Subtest: show-saved failure restores its initiating control after native disabled blur
+ok 69 - show-saved failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 57.828125
+  ...
+# Subtest: show-authored completion restores its initiating control after native disabled blur
+ok 70 - show-authored completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 62.017333
+  ...
+# Subtest: show-authored failure restores its initiating control after native disabled blur
+ok 71 - show-authored failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 59.758125
+  ...
+# Subtest: chosen preview validation failure restores its opener without publishing a draft
+ok 72 - chosen preview validation failure restores its opener without publishing a draft
+  ---
+  duration_ms: 5.842
+  ...
+# Subtest: preview completion respects focus-away even when focus returns to BODY
+ok 73 - preview completion respects focus-away even when focus returns to BODY
+  ---
+  duration_ms: 52.783833
+  ...
+# Subtest: preview completion respects body-key even when focus returns to BODY
+ok 74 - preview completion respects body-key even when focus returns to BODY
+  ---
+  duration_ms: 48.933917
+  ...
+# Subtest: preview completion respects body-pointer even when focus returns to BODY
+ok 75 - preview completion respects body-pointer even when focus returns to BODY
+  ---
+  duration_ms: 49.575917
+  ...
+# Subtest: preview completion respects window-blur even when focus returns to BODY
+ok 76 - preview completion respects window-blur even when focus returns to BODY
+  ---
+  duration_ms: 52.709375
+  ...
+# Subtest: preview completion respects hidden even when focus returns to BODY
+ok 77 - preview completion respects hidden even when focus returns to BODY
+  ---
+  duration_ms: 50.97375
+  ...
+# Subtest: preview completion respects pagehide even when focus returns to BODY
+ok 78 - preview completion respects pagehide even when focus returns to BODY
+  ---
+  duration_ms: 65.071334
+  ...
+# Subtest: preview completion respects new-dialog even when focus returns to BODY
+ok 79 - preview completion respects new-dialog even when focus returns to BODY
+  ---
+  duration_ms: 51.419042
+  ...
+# Subtest: programmatic preview does not capture an unrelated focused action
+ok 80 - programmatic preview does not capture an unrelated focused action
+  ---
+  duration_ms: 5.287666
+  ...
+# Subtest: cancel retires a preview focus lease before its decoder settles
+ok 81 - cancel retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 50.128083
+  ...
+# Subtest: invalidate retires a preview focus lease before its decoder settles
+ok 82 - invalidate retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 50.299833
+  ...
+# Subtest: close retires a preview focus lease before its decoder settles
+ok 83 - close retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 49.514333
+  ...
+# Subtest: dispose retires a preview focus lease before its decoder settles
+ok 84 - dispose retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 49.504666
+  ...
+# Subtest: a cancelled preview cannot steal focus from the next accepted preview
+ok 85 - a cancelled preview cannot steal focus from the next accepted preview
+  ---
+  duration_ms: 62.275375
+  ...
+# Subtest: close and reopen does not revive the earlier preview focus owner
+ok 86 - close and reopen does not revive the earlier preview focus owner
+  ---
+  duration_ms: 62.343917
+  ...
+# Subtest: preview final enabling focus takes precedence over old focus
+ok 87 - preview final enabling focus takes precedence over old focus
+  ---
+  duration_ms: 50.125292
+  ...
+# Subtest: preview final enabling invalidate takes precedence over old focus
+ok 88 - preview final enabling invalidate takes precedence over old focus
+  ---
+  duration_ms: 49.26
+  ...
+# Subtest: settled chosen preview keeps the focused original picker below its sticky status rail
+ok 89 - settled chosen preview keeps the focused original picker below its sticky status rail
+  ---
+  duration_ms: 5.480875
+  ...
+# Subtest: media clearance preserves the live operation rail and Cancel ownership
+ok 90 - media clearance preserves the live operation rail and Cancel ownership
+  ---
+  duration_ms: 4.637708
+  ...
+# Subtest: closed and disposed media panels retire queued clearance without refocusing an old picker
+ok 91 - closed and disposed media panels retire queued clearance without refocusing an old picker
+  ---
+  duration_ms: 4.593625
+  ...
+# Subtest: no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+ok 92 - no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+  ---
+  duration_ms: 71.487167
+  ...
+# Subtest: Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+ok 93 - Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+  ---
+  duration_ms: 815.958583
+  ...
+# Subtest: historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+ok 94 - historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+  ---
+  duration_ms: 1089.893417
+  ...
+# Subtest: unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+ok 95 - unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+  ---
+  duration_ms: 230.414417
+  ...
+# Subtest: stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+ok 96 - stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+  ---
+  duration_ms: 1442.079792
+  ...
+# Subtest: native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+ok 97 - native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+  ---
+  duration_ms: 1421.80725
+  ...
+# Subtest: fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+ok 98 - fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+  ---
+  duration_ms: 725.3545
+  ...
+# Subtest: Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+ok 99 - Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+  ---
+  duration_ms: 263.985166
+  ...
+# Subtest: the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+ok 100 - the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+  ---
+  duration_ms: 358.834916
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 73
+# fail 27
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7149.73425

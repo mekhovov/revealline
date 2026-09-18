@@ -1,0 +1,30 @@
+{
+  "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "pid": 37845,
+  "port": 54662,
+  "url": "http://127.0.0.1:54662/authoring/still-media/",
+  "scope": "Exact v616 Git source plus two pinned picker label-clearance candidate modules. Still Media opts into containing-label measurement when it fits; oversized labels fall back to the focused control. Other consumers retain default control-only behavior. No fixtures, preference writes or fault injection. GET/HEAD and loopback only. R1/R2 remain separate historical observations.",
+  "runtimeOverrides": {
+    "game/ui/still-media-panel.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/native-server-r3/still-media-panel.mjs",
+      "bytes": 30642,
+      "sha256": "0e8f6c1bed8be4452ef6b16186b1dc9e1aa6ff3a40daa5e1fca61125cfeca48d"
+    },
+    "game/ui/focus-clearance.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/native-server-r3/focus-clearance.mjs",
+      "bytes": 2645,
+      "sha256": "bc2118b05e683d0fb473760bde98d8ea0900d5af9217405df1d0954967bf0c58"
+    }
+  },
+  "limits": {
+    "extraDiskBytes": 16777216,
+    "reserveBytes": 536870912,
+    "memoryCacheBytes": 8388608,
+    "singleBlobBytes": 8388608,
+    "requestLogBytes": 1048576,
+    "requestEvents": 4000
+  },
+  "overrideSpecSHA256": "fd27bc8e608dd5253badf43c8e4eb35febbcd0fbd1a4534db5586d6a2021dd88",
+  "serverSHA256": "9653d0ab87fa4d53d38c452bd54dff88c3072224101aa9f0f52c96d9c60bb3b2"
+}

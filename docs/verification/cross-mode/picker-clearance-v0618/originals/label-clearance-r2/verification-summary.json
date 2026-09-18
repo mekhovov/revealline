@@ -1,0 +1,82 @@
+{
+  "status": "EXACT_PORTRAIT_AND_LANDSCAPE_SOURCE_REGRESSIONS_PASS_NATIVE_REVIEW_PENDING",
+  "tests": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-media-host.test.mjs",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/operation-focus-host.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "counts": {
+        "tests": 103,
+        "pass": 103,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 13.45,
+      "bytes": 22911,
+      "sha256": "6665fe08c1d87b24d4c39c8bc23d5dda0ec5264fda37baadba9cb17ada48367c",
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r2/exact-rectangles-node20.19.5.log",
+        "bytes": 22911,
+        "sha256": "6665fe08c1d87b24d4c39c8bc23d5dda0ec5264fda37baadba9cb17ada48367c"
+      }
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/still-media-panel.test.mjs",
+        "game/test/still-media-host.test.mjs",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/operation-focus-host.test.mjs",
+        "game/test/still-story-panel.test.mjs",
+        "game/test/still-media-bundle-ui.test.mjs"
+      ],
+      "exitCode": 0,
+      "counts": {
+        "tests": 103,
+        "pass": 103,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 11.406,
+      "bytes": 24443,
+      "sha256": "fa53f60f5da362b6ad72c79369a95edc9bdd6d1d5bae1957fba915c55ca5bfd5",
+      "original": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r2/exact-rectangles-node22.22.2.log",
+        "bytes": 24443,
+        "sha256": "fa53f60f5da362b6ad72c79369a95edc9bdd6d1d5bae1957fba915c55ca5bfd5"
+      }
+    }
+  ],
+  "retainedRed": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r2/label-regression-red-node22.log",
+    "bytes": 1129,
+    "sha256": "e81b0d787668b819846a6c3904022e04bf94357838715b4477ed1548a7fd41d5"
+  },
+  "originalNativeFinding": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r2/root-native-r1.original.json",
+    "bytes": 1365,
+    "sha256": "bf925ce8fda42ff9bc5382819d98b6e51753af19fb85a8017881773d4d291ecd"
+  },
+  "originalR1Candidate": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/ready.json",
+    "bytes": 2566,
+    "sha256": "ea3ee444b837b541a60a73f1fd1facfadae88ab388a2cb7e6daa55efec82e2f2"
+  },
+  "nativeCandidateRunByThisAgent": false,
+  "fullSuiteRun": false,
+  "buildRun": false,
+  "sourceVersionChanged": false
+}

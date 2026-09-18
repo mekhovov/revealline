@@ -1,0 +1,961 @@
+TAP version 13
+# Subtest: Large portrait selector is fully below the measured expanded heading
+ok 1 - Large portrait selector is fully below the measured expanded heading
+  ---
+  duration_ms: 0.643041
+  type: 'test'
+  ...
+# Subtest: Large landscape selector clears the measured bottom action bar
+ok 2 - Large landscape selector clears the measured bottom action bar
+  ---
+  duration_ms: 0.112459
+  type: 'test'
+  ...
+# Subtest: queued reflow reads current focus and leaves the heading action alone
+ok 3 - queued reflow reads current focus and leaves the heading action alone
+  ---
+  duration_ms: 0.206625
+  type: 'test'
+  ...
+# Subtest: large reading region retains its beginning and manual scrolling is not undone
+ok 4 - large reading region retains its beginning and manual scrolling is not undone
+  ---
+  duration_ms: 0.1475
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a closed owner's scroll or focus
+ok 5 - queued layout cannot alter a closed owner's scroll or focus
+  ---
+  duration_ms: 0.184417
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a hidden owner's scroll or focus
+ok 6 - queued layout cannot alter a hidden owner's scroll or focus
+  ---
+  duration_ms: 0.061792
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a blurred owner's scroll or focus
+ok 7 - queued layout cannot alter a blurred owner's scroll or focus
+  ---
+  duration_ms: 0.145458
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a outside owner's scroll or focus
+ok 8 - queued layout cannot alter a outside owner's scroll or focus
+  ---
+  duration_ms: 0.0665
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a disposed owner's scroll or focus
+ok 9 - queued layout cannot alter a disposed owner's scroll or focus
+  ---
+  duration_ms: 0.279125
+  type: 'test'
+  ...
+# Subtest: chapter completion restores its still-owned actual button after native disable
+not ok 10 - chapter completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 7.77025
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter error restores its still-owned actual button after native disable
+not ok 11 - chapter error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 3.942083
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after focus, even after returning to BODY
+not ok 12 - chapter completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 5.460709
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after blur, even after returning to BODY
+not ok 13 - chapter completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 6.582416
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after hidden, even after returning to BODY
+not ok 14 - chapter completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 2.228542
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after pagehide, even after returning to BODY
+not ok 15 - chapter completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 1.843583
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after close, even after returning to BODY
+not ok 16 - chapter completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 3.366375
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+not ok 17 - chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 2.631125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter completion does not reclaim focus after body-key, even after returning to BODY
+not ok 18 - chapter completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 1.88825
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: chapter enable callback choosing another control is not overwritten
+not ok 19 - chapter enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 4.695625
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:161:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion restores its still-owned actual button after native disable
+not ok 20 - install completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 1.502542
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install error restores its still-owned actual button after native disable
+not ok 21 - install error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 1.369209
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:94:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after focus, even after returning to BODY
+not ok 22 - install completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 2.492667
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after blur, even after returning to BODY
+not ok 23 - install completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 3.093125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after hidden, even after returning to BODY
+not ok 24 - install completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 1.43725
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after pagehide, even after returning to BODY
+not ok 25 - install completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 1.368833
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after close, even after returning to BODY
+not ok 26 - install completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 4.127625
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after new-dialog, even after returning to BODY
+not ok 27 - install completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 1.376625
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install completion does not reclaim focus after body-key, even after returning to BODY
+not ok 28 - install completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 1.356
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:131:5'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: install enable callback choosing another control is not overwritten
+not ok 29 - install enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 1.186125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:161:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: explicit Library Cancel after three native Tabs renews return to the actual Install action
+not ok 30 - explicit Library Cancel after three native Tabs renews return to the actual Install action
+  ---
+  duration_ms: 4.603625
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:225:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after background
+not ok 31 - fresh explicit Cancel cannot restore after background
+  ---
+  duration_ms: 1.340583
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after closed-root
+not ok 32 - fresh explicit Cancel cannot restore after closed-root
+  ---
+  duration_ms: 1.41375
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-focus
+not ok 33 - fresh explicit Cancel cannot restore after cleanup-focus
+  ---
+  duration_ms: 3.933333
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-blur
+not ok 34 - fresh explicit Cancel cannot restore after cleanup-blur
+  ---
+  duration_ms: 1.459167
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:235:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: Cancel while actual pack commit is finishing remains detached and cannot restore focus
+not ok 35 - Cancel while actual pack commit is finishing remains detached and cannot restore focus
+  ---
+  duration_ms: 1.249375
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:258:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: fresh return intent refuses a target outside its captured dialog
+not ok 36 - fresh return intent refuses a target outside its captured dialog
+  ---
+  duration_ms: 2.772791
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/operation-focus-host.test.mjs:292:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot find module '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/app.mjs' imported from /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/test/helpers/solo-dom.mjs"
+  code: 'ERR_MODULE_NOT_FOUND'
+  stack: |-
+    finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    moduleResolve (node:internal/modules/esm/resolve:861:10)
+    defaultResolve (node:internal/modules/esm/resolve:985:11)
+    #cachedDefaultResolve (node:internal/modules/esm/loader:731:20)
+    ModuleLoader.resolve (node:internal/modules/esm/loader:708:38)
+    ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:310:38)
+    onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:664:36)
+    TracingChannel.tracePromise (node:diagnostics_channel:350:14)
+    ModuleLoader.import (node:internal/modules/esm/loader:663:21)
+    defaultImportModuleDynamicallyForModule (node:internal/modules/esm/utils:222:31)
+  ...
+# Subtest: actual classic entry gives file-URL guidance before module/storage access
+ok 37 - actual classic entry gives file-URL guidance before module/storage access
+  ---
+  duration_ms: 2.566833
+  type: 'test'
+  ...
+# Subtest: actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+ok 38 - actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+  ---
+  duration_ms: 99.630459
+  type: 'test'
+  ...
+# Subtest: cold workshop Escape restores the invoker blurred by its disabled loading state
+ok 39 - cold workshop Escape restores the invoker blurred by its disabled loading state
+  ---
+  duration_ms: 13.289709
+  type: 'test'
+  ...
+# Subtest: closing a pending workshop read restores the invoker before settling and preserves later focus
+ok 40 - closing a pending workshop read restores the invoker before settling and preserves later focus
+  ---
+  duration_ms: 5.090416
+  type: 'test'
+  ...
+# Subtest: v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation
+ok 41 - v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation
+  ---
+  duration_ms: 85.490708
+  type: 'test'
+  ...
+# Subtest: file URL and cancelled late source load do not open or upgrade media
+ok 42 - file URL and cancelled late source load do not open or upgrade media
+  ---
+  duration_ms: 7.818833
+  type: 'test'
+  ...
+# Subtest: rejected shared-store access remains visible and cannot become an empty media save
+ok 43 - rejected shared-store access remains visible and cannot become an empty media save
+  ---
+  duration_ms: 4.286708
+  type: 'test'
+  ...
+# Subtest: persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+ok 44 - persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+  ---
+  duration_ms: 9.402208
+  type: 'test'
+  ...
+# Subtest: existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+ok 45 - existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+  ---
+  duration_ms: 17.563875
+  type: 'test'
+  ...
+# Subtest: actual shared router prevents held Confirm across modal close and native pointer handoff
+ok 46 - actual shared router prevents held Confirm across modal close and native pointer handoff
+  ---
+  duration_ms: 22.442791
+  type: 'test'
+  ...
+# Subtest: opening announces the held catalogue read and Close fences its late failure
+ok 47 - opening announces the held catalogue read and Close fences its late failure
+  ---
+  duration_ms: 2.975375
+  type: 'test'
+  ...
+# Subtest: classic picture workshop exposes loading and Back before storage explanation
+ok 48 - classic picture workshop exposes loading and Back before storage explanation
+  ---
+  duration_ms: 0.55025
+  type: 'test'
+  ...
+# Subtest: native panel prepares original bytes, saves exact theme assignment, reloads and unassigns without losing history
+ok 49 - native panel prepares original bytes, saves exact theme assignment, reloads and unassigns without losing history
+  ---
+  duration_ms: 145.1735
+  type: 'test'
+  ...
+# Subtest: failed candidate decode or preview leaves the prior preview and saved assignment intact
+ok 50 - failed candidate decode or preview leaves the prior preview and saved assignment intact
+  ---
+  duration_ms: 55.407583
+  type: 'test'
+  ...
+# Subtest: double commands, cancellation and stale completion cannot save or overwrite a newer preview
+ok 51 - double commands, cancellation and stale completion cannot save or overwrite a newer preview
+  ---
+  duration_ms: 49.497709
+  type: 'test'
+  ...
+# Subtest: stale installed context and concurrent media writer refuse the whole save
+ok 52 - stale installed context and concurrent media writer refuse the whole save
+  ---
+  duration_ms: 37.750917
+  type: 'test'
+  ...
+# Subtest: context switching discards an unsaved binding and close restores focus without late publication
+ok 53 - context switching discards an unsaved binding and close restores focus without late publication
+  ---
+  duration_ms: 5.43175
+  type: 'test'
+  ...
+# Subtest: transaction refusal keeps the previous preview/draft and stored bytes; notification failure cannot erase a successful save
+ok 54 - transaction refusal keeps the previous preview/draft and stored bytes; notification failure cannot erase a successful save
+  ---
+  duration_ms: 51.111208
+  type: 'test'
+  ...
+# Subtest: existing keyboard/controller navigation edits native selects and Back closes only the workshop
+ok 55 - existing keyboard/controller navigation edits native selects and Back closes only the workshop
+  ---
+  duration_ms: 7.755042
+  type: 'test'
+  ...
+# Subtest: file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes
+ok 56 - file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes
+  ---
+  duration_ms: 6.878625
+  type: 'test'
+  ...
+# Subtest: preview completion restores its initiating control after native disabled blur
+ok 57 - preview completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 48.231167
+  type: 'test'
+  ...
+# Subtest: preview failure restores its initiating control after native disabled blur
+ok 58 - preview failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 47.530416
+  type: 'test'
+  ...
+# Subtest: show-saved completion restores its initiating control after native disabled blur
+ok 59 - show-saved completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 50.558875
+  type: 'test'
+  ...
+# Subtest: show-saved failure restores its initiating control after native disabled blur
+ok 60 - show-saved failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 46.523167
+  type: 'test'
+  ...
+# Subtest: show-authored completion restores its initiating control after native disabled blur
+ok 61 - show-authored completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 45.34675
+  type: 'test'
+  ...
+# Subtest: show-authored failure restores its initiating control after native disabled blur
+ok 62 - show-authored failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 44.16575
+  type: 'test'
+  ...
+# Subtest: chosen preview validation failure restores its opener without publishing a draft
+ok 63 - chosen preview validation failure restores its opener without publishing a draft
+  ---
+  duration_ms: 4.543625
+  type: 'test'
+  ...
+# Subtest: preview completion respects focus-away even when focus returns to BODY
+ok 64 - preview completion respects focus-away even when focus returns to BODY
+  ---
+  duration_ms: 46.7475
+  type: 'test'
+  ...
+# Subtest: preview completion respects body-key even when focus returns to BODY
+ok 65 - preview completion respects body-key even when focus returns to BODY
+  ---
+  duration_ms: 45.152583
+  type: 'test'
+  ...
+# Subtest: preview completion respects body-pointer even when focus returns to BODY
+ok 66 - preview completion respects body-pointer even when focus returns to BODY
+  ---
+  duration_ms: 46.973083
+  type: 'test'
+  ...
+# Subtest: preview completion respects window-blur even when focus returns to BODY
+ok 67 - preview completion respects window-blur even when focus returns to BODY
+  ---
+  duration_ms: 47.66725
+  type: 'test'
+  ...
+# Subtest: preview completion respects hidden even when focus returns to BODY
+ok 68 - preview completion respects hidden even when focus returns to BODY
+  ---
+  duration_ms: 45.809375
+  type: 'test'
+  ...
+# Subtest: preview completion respects pagehide even when focus returns to BODY
+ok 69 - preview completion respects pagehide even when focus returns to BODY
+  ---
+  duration_ms: 49.56275
+  type: 'test'
+  ...
+# Subtest: preview completion respects new-dialog even when focus returns to BODY
+ok 70 - preview completion respects new-dialog even when focus returns to BODY
+  ---
+  duration_ms: 47.082125
+  type: 'test'
+  ...
+# Subtest: programmatic preview does not capture an unrelated focused action
+ok 71 - programmatic preview does not capture an unrelated focused action
+  ---
+  duration_ms: 4.398166
+  type: 'test'
+  ...
+# Subtest: cancel retires a preview focus lease before its decoder settles
+ok 72 - cancel retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 45.90575
+  type: 'test'
+  ...
+# Subtest: invalidate retires a preview focus lease before its decoder settles
+ok 73 - invalidate retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 44.908333
+  type: 'test'
+  ...
+# Subtest: close retires a preview focus lease before its decoder settles
+ok 74 - close retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 47.679375
+  type: 'test'
+  ...
+# Subtest: dispose retires a preview focus lease before its decoder settles
+ok 75 - dispose retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 48.090042
+  type: 'test'
+  ...
+# Subtest: a cancelled preview cannot steal focus from the next accepted preview
+ok 76 - a cancelled preview cannot steal focus from the next accepted preview
+  ---
+  duration_ms: 60.0945
+  type: 'test'
+  ...
+# Subtest: close and reopen does not revive the earlier preview focus owner
+ok 77 - close and reopen does not revive the earlier preview focus owner
+  ---
+  duration_ms: 61.737167
+  type: 'test'
+  ...
+# Subtest: preview final enabling focus takes precedence over old focus
+ok 78 - preview final enabling focus takes precedence over old focus
+  ---
+  duration_ms: 43.543541
+  type: 'test'
+  ...
+# Subtest: preview final enabling invalidate takes precedence over old focus
+ok 79 - preview final enabling invalidate takes precedence over old focus
+  ---
+  duration_ms: 43.820625
+  type: 'test'
+  ...
+# Subtest: settled chosen preview keeps the focused original picker below its sticky status rail
+ok 80 - settled chosen preview keeps the focused original picker below its sticky status rail
+  ---
+  duration_ms: 5.056917
+  type: 'test'
+  ...
+# Subtest: media clearance preserves the live operation rail and Cancel ownership
+ok 81 - media clearance preserves the live operation rail and Cancel ownership
+  ---
+  duration_ms: 3.498916
+  type: 'test'
+  ...
+# Subtest: closed and disposed media panels retire queued clearance without refocusing an old picker
+ok 82 - closed and disposed media panels retire queued clearance without refocusing an old picker
+  ---
+  duration_ms: 5.777917
+  type: 'test'
+  ...
+# Subtest: no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+ok 83 - no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+  ---
+  duration_ms: 60.505167
+  type: 'test'
+  ...
+# Subtest: Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+ok 84 - Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+  ---
+  duration_ms: 662.513167
+  type: 'test'
+  ...
+# Subtest: historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+ok 85 - historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+  ---
+  duration_ms: 995.232
+  type: 'test'
+  ...
+# Subtest: unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+ok 86 - unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+  ---
+  duration_ms: 211.931
+  type: 'test'
+  ...
+# Subtest: stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+ok 87 - stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+  ---
+  duration_ms: 1334.741167
+  type: 'test'
+  ...
+# Subtest: native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+ok 88 - native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+  ---
+  duration_ms: 1338.921209
+  type: 'test'
+  ...
+# Subtest: fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+ok 89 - fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+  ---
+  duration_ms: 666.62725
+  type: 'test'
+  ...
+# Subtest: Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+ok 90 - Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+  ---
+  duration_ms: 236.235125
+  type: 'test'
+  ...
+# Subtest: the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+ok 91 - the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+  ---
+  duration_ms: 333.699917
+  type: 'test'
+  ...
+1..91
+# tests 91
+# suites 0
+# pass 64
+# fail 27
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6610.459625
