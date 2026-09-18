@@ -1,0 +1,127 @@
+--- /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/wrapper_contract.py
++++ /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/wrapper_contract.py
+@@ -7,9 +7,9 @@
+ import stat
+ import subprocess
+ 
+-VERSION = 'v0.60.9'
+-SOURCE = '628e95daf403082768cdcf900a8ea1d1ef4629a2'
+-TREE = '304acdf23c8ef9c465e61e8338b43a69aebfdca5'
++VERSION = 'v0.61.0'
++SOURCE = 'fc2c7af6b22c703cc3bb2c081579878b7510f667'
++TREE = 'bf11a670ac53a31d58b79540650229160bacd486'
+ BASE = 'https://mekhovov.github.io/revealline/'
+ API_LIMIT = 2_000_000
+ ASSETS = {'distribution.zip', 'distribution.zip.sha256', 'manifest.json', 'release.json',
+--- /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/test_wrappers.py
++++ /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/test_wrappers.py
+@@ -35,8 +35,8 @@
+         self.publisher = 'c' * 40
+         self.tree = 'd' * 40
+         self.authorities = {
+-            'metadata/v0.60.9/manifest.json': contract.encode({'mock': 'manifest'}),
+-            'metadata/v0.60.9/release.json': contract.encode({'mock': 'record'}),
++            'metadata/v0.61.0/manifest.json': contract.encode({'mock': 'manifest'}),
++            'metadata/v0.61.0/release.json': contract.encode({'mock': 'record'}),
+             'evidence/current-v0602/source-qualification.json': contract.encode({'mock': 'qualification'}),
+             'catalog.json': contract.encode({'releases': [{'version': contract.VERSION, 'tagObject': 'e' * 40}]}),
+             'publication.json': contract.encode({'currentVersion': contract.VERSION,
+@@ -50,13 +50,13 @@
+                                  'zip-receipt.json': contract.encode({'mock': True})})
+         assets = []
+         for index, name in enumerate(sorted(contract.ASSETS)):
+-            path = {'manifest.json': 'metadata/v0.60.9/manifest.json',
+-                    'release.json': 'metadata/v0.60.9/release.json',
++            path = {'manifest.json': 'metadata/v0.61.0/manifest.json',
++                    'release.json': 'metadata/v0.61.0/release.json',
+                     'source-qualification.json': 'evidence/current-v0602/source-qualification.json'}.get(name)
+             body = self.authorities[path] if path else ('mock original ' + name).encode()
+             assets.append({'id': 200 + index, 'name': name, 'size': len(body),
+                            'digest': 'sha256:' + contract.sha(body), 'state': 'uploaded',
+-                           'browser_download_url': f'https://github.com/mekhovov/revealline/releases/download/v0.60.9/{name}'})
++                           'browser_download_url': f'https://github.com/mekhovov/revealline/releases/download/v0.61.0/{name}'})
+         self.release = {'id': 300, 'tag_name': contract.VERSION, 'draft': False, 'prerelease': False,
+                         'published_at': '2000-01-01T00:00:00Z', 'assets': assets}
+         self.models = {
+@@ -201,8 +201,8 @@
+     def refresh_runner(self, command, **kwargs):
+         self.calls.append(command)
+         endpoint = command[2].split('repos/mekhovov/revealline/', 1)[1]
+-        values = {'releases/latest': self.release, 'releases/tags/v0.60.9': self.release,
+-                  'git/ref/tags/v0.60.9': {'object': {'type': 'tag', 'sha': 'e' * 40}},
++        values = {'releases/latest': self.release, 'releases/tags/v0.61.0': self.release,
++                  'git/ref/tags/v0.61.0': {'object': {'type': 'tag', 'sha': 'e' * 40}},
+                   'git/tags/' + 'e' * 40: {'sha': 'e' * 40, 'object': {'type': 'commit', 'sha': contract.SOURCE}},
+                   'deployments?environment=github-pages&per_page=10': [{'id': 102, 'sha': self.publisher}],
+                   'git/commits/' + contract.SOURCE: {'sha': contract.SOURCE, 'tree': {'sha': contract.TREE}}}
+--- /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/tools/audit-main.mjs
++++ /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/tools/audit-main.mjs
+@@ -7,10 +7,10 @@
+ import { BASE, expectedTypes, inspect } from './http-engine.mjs';
+ 
+ export const HOME = path.dirname(fileURLToPath(import.meta.url));
+-export const SOURCE = '628e95daf403082768cdcf900a8ea1d1ef4629a2';
+-export const TREE = '304acdf23c8ef9c465e61e8338b43a69aebfdca5';
+-export const VERSION = 'v0.60.9';
+-export const RETAINED_CATALOG_SHA = '773f4c8f28622778b562dc86dc26b83c5f003e381cfeaa731259a036156fedf1';
++export const SOURCE = 'fc2c7af6b22c703cc3bb2c081579878b7510f667';
++export const TREE = 'bf11a670ac53a31d58b79540650229160bacd486';
++export const VERSION = 'v0.61.0';
++export const RETAINED_CATALOG_SHA = 'c4ee6fa04b53654e6dee1bc162d2aaefb09bd18eaf4af6b4989c3adc23a6c57a';
+ export const sha = (raw) => createHash('sha256').update(raw).digest('hex');
+ const encode = (value) => JSON.stringify(value, null, 2) + '\n';
+ const require = (ok, message) => { if (!ok) throw new Error(message); };
+--- /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/tools/self-check.mjs
++++ /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/tools/self-check.mjs
+@@ -5,12 +5,12 @@
+ import { SOURCE, TREE, VERSION, RETAINED_CATALOG_SHA, sha, safePath, validateRows, validateModels, auditRows, isTransient, loadAuthority } from './audit-main.mjs';
+ import { inspect, expectedTypes } from './http-engine.mjs';
+ const home = path.dirname(fileURLToPath(import.meta.url));
+-assert.equal(SOURCE, '628e95daf403082768cdcf900a8ea1d1ef4629a2');
+-assert.equal(TREE, '304acdf23c8ef9c465e61e8338b43a69aebfdca5');
+-assert.equal(VERSION, 'v0.60.9');
++assert.equal(SOURCE, 'fc2c7af6b22c703cc3bb2c081579878b7510f667');
++assert.equal(TREE, 'bf11a670ac53a31d58b79540650229160bacd486');
++assert.equal(VERSION, 'v0.61.0');
+ const retainedRaw = await readFile(path.join(home, 'retained-catalog.json'));
+ assert.equal(sha(retainedRaw), RETAINED_CATALOG_SHA);
+-assert.equal(JSON.parse(retainedRaw).releases.length, 79);
++assert.equal(JSON.parse(retainedRaw).releases.length, 80);
+ for (const candidate of [{reviewed:false}, {}]) assert.throws(() => validateModels(candidate, {}, {}, {}), /Explicitly reviewed binding required/);
+ for (const p of ['../x.json', '/x.json', 'x//y.json', 'x/./y.json', 'x/../y.json', 'x\\y.json', 'x\0.json']) assert.throws(() => safePath(p));
+ assert.equal(safePath('.nojekyll'), '.nojekyll');
+--- /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/intake-request.pending.json
++++ /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/intake-request.pending.json
+@@ -2,9 +2,9 @@
+   "format": "revealline-public-intake-request.v1",
+   "reviewed": false,
+   "outputLabel": "UNBOUND_INTAKE_LABEL",
+-  "currentVersion": "v0.60.9",
+-  "gameSourceRevision": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+-  "qualifiedSourceTree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
++  "currentVersion": "v0.61.0",
++  "gameSourceRevision": "fc2c7af6b22c703cc3bb2c081579878b7510f667",
++  "qualifiedSourceTree": "bf11a670ac53a31d58b79540650229160bacd486",
+   "controllerCommit": null,
+   "controllerTree": null,
+   "runId": null,
+--- /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/run-capacity-bounded-intake.py
++++ /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p07-public-audit-fc2c7af6/run-capacity-bounded-intake.py
+@@ -13,7 +13,7 @@
+ # Conservative allowance for five small API originals, decoded metadata,
+ # request/response records and the final inventory-binding copies.
+ HEADROOM = 20 * 1024 * 1024
+-DOWNLOAD = ['gh', 'api', 'repos/mekhovov/revealline/actions/artifacts/10529652622/zip']
++DOWNLOAD = ['gh', 'api', 'repos/mekhovov/revealline/actions/artifacts/UNBOUND_RECEIPT_ID/zip']
+ 
+ 
+ def budget_probe(allocated, expanded, free):
+@@ -57,7 +57,7 @@
+         return result
+ 
+     result = helper.intake(HOME, HOME / 'intake-request.reviewed.json',
+-                           '57dced82d6de70f37fe29111a019d7d18be2678af13dc878fcf6568b84ba0756',
++                           'UNBOUND_REVIEWED_INTAKE_SHA',
+                            runner=guarded_runner)
+     if downloads != 1:
+         raise ValueError('Original receipt intake did not execute exactly once')
