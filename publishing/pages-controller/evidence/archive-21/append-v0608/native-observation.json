@@ -1,0 +1,31 @@
+{
+  "status": "ROOT_SCOPED_NATIVE_ARCHIVE_CHECK_PASS",
+  "recordedAt": "2026-09-18T02:38:10.242951+00:00",
+  "observer": "root via actual CUA in-app browser; native key events plus one visible release-explorer link click",
+  "archive": {
+    "commit": "44d383dbae4c1d95cf59512b21d2524e191937e6",
+    "tree": "668e425a0f4fa0dc0cf7d0376e581482c5213767",
+    "runId": 35298846214,
+    "deploymentId": 6516114363
+  },
+  "v0608": [
+    "Outer archive title showed both edition links; Tab/Enter opened v0.60.8 title with version label.",
+    "Continue opened actual First Signal flight. Down then Escape paused at0:49; Mission brief opened via Tab/Enter; Escape returned exact brief opener at unchanged0:49.",
+    "Explicit Resume restored LIVE LINE / EXPOSED without another direction. Cut completed52.2%,8160points,0:52,3lives,2stars.",
+    "Tab/Enter View picture removed result panel; Results returned exact View picture focus without changing score; keyboard Main menu returned title.",
+    "Keyboard Release explorer routed archive /releases/ to current main explorer; v608current and v607historical displayed."
+  ],
+  "v0607": [
+    "Visible explorer v607 Play link opened exact retained v607 route/title.",
+    "Continue + Down + Escape paused at0:11,0%,3lives. Explicit Resume restored live cut.",
+    "Enemy impact reduced lives to2; Safe ground and line-caught explanation visible,0%/0points. Escape paused0:26.",
+    "Keyboard Main menu returned v607title with Continue focused."
+  ],
+  "storageObservation": "v608 honestly displayed another game tab owns saving/session-only and reward text accordingly. This is not backup/restore qualification. Main and archive paths share the same HTTPS origin; no storage migration is inferred.",
+  "limits": [
+    "No physical controller/touch, audio audition, offline, alternate engine or complete phase acceptance.",
+    "Screenshots viewed inline; no exported screenshot files or hashes claimed.",
+    "Prior v607 native victory evidence retains earlier deployment identity; current post-append v607 check observed loss, not victory."
+  ],
+  "wholePhaseAccepted": false
+}

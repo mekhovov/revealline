@@ -1,0 +1,43 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-21",
+  "infrastructureCommit": "44d383dbae4c1d95cf59512b21d2524e191937e6",
+  "deploymentId": 6516114363,
+  "versions": [
+    "v0.60.7",
+    "v0.60.8"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-21/append-v0608/root-acceptance.json",
+      "sha256": "ae933f92a55cd347e7be42beedb24812463520f14f854ab3d484e94e73482332"
+    },
+    {
+      "path": "evidence/archive-21/append-v0608/native-observation.json",
+      "sha256": "db3689fa26866866184d89ad4217a4842781638a3230d2b62d26c3ec448f4f1b"
+    },
+    {
+      "path": "evidence/archive-21/append-v0608/originals.zip",
+      "sha256": "e8d2fb1f6adf9ed93921cd22337d66ed0b1aafb1be8304068fdcfe0125427a3f"
+    },
+    {
+      "path": "evidence/archive-21/append-v0608/originals-index.json",
+      "sha256": "2bc8a061473f3f3d17fa24584d6131e10fd23cd6ebacf7825b2278a31a6c6e3a"
+    }
+  ],
+  "scope": "Root accepted scoped actual online archive retention after the append. v608 keyboard title/Continue, explicit Pause/Resume, brief return, 52.2% picture win, results focus and release explorer passed. v607 retained title/Continue, explicit Pause/Resume, enemy-impact loss/recovery and keyboard Main menu passed. Older v607 victory evidence keeps its earlier infrastructure identity.",
+  "observationProvenance": "Root actual CUA key events and one visible release-explorer link click. Screenshots inspected inline only; no exported screenshot or invented hash.",
+  "limits": [
+    "No physical touch/controller certification",
+    "No offline/server-stopped check",
+    "No audio audition",
+    "Saving-lease/session-only notice observed; no durable backup/restore or migration acceptance",
+    "No full P03/P05/P08/P18 or whole-game acceptance"
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}
