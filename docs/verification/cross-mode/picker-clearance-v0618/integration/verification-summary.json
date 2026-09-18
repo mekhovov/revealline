@@ -1,0 +1,145 @@
+{
+  "status": "INTEGRATED_FOCUSED_CHECKS_PASS",
+  "checks": [
+    {
+      "name": "focused-node20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/still-media-panel.test.mjs"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-v0618",
+      "startedAt": "2026-09-18T06:27:03.379884+00:00",
+      "finishedAt": "2026-09-18T06:27:06.142153+00:00",
+      "elapsedSeconds": 2.762,
+      "exitCode": 0,
+      "stdout": {
+        "bytes": 9859,
+        "sha256": "4ab99d5fadcb850cc611e7aa7de2ef0d02b0f41c986b8ce4fc48afe6b1cbbaa9"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "counts": {
+        "tests": 47,
+        "pass": 47,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "name": "focused-node22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/still-media-panel.test.mjs"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-v0618",
+      "startedAt": "2026-09-18T06:27:06.143230+00:00",
+      "finishedAt": "2026-09-18T06:27:08.474130+00:00",
+      "elapsedSeconds": 2.331,
+      "exitCode": 0,
+      "stdout": {
+        "bytes": 10559,
+        "sha256": "05015907c848a238b7d1102dc25727ae7ee80543acd0c08527f2f54f81deb1fa"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "counts": {
+        "tests": 47,
+        "pass": 47,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "name": "format",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+        "docs/still-media-workshop.md",
+        "game/build-config.json",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/still-media-panel.test.mjs",
+        "game/ui/focus-clearance.mjs",
+        "game/ui/still-media-panel.mjs",
+        "package-lock.json",
+        "package.json"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-v0618",
+      "startedAt": "2026-09-18T06:27:08.474469+00:00",
+      "finishedAt": "2026-09-18T06:27:08.955621+00:00",
+      "elapsedSeconds": 0.481,
+      "exitCode": 0,
+      "stdout": {
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "lint",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "--config",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-v0618-integration/eslint.config.mjs",
+        "game/test/focus-clearance.test.mjs",
+        "game/test/still-media-panel.test.mjs",
+        "game/ui/focus-clearance.mjs",
+        "game/ui/still-media-panel.mjs"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-v0618",
+      "startedAt": "2026-09-18T06:27:08.955902+00:00",
+      "finishedAt": "2026-09-18T06:27:09.266302+00:00",
+      "elapsedSeconds": 0.31,
+      "exitCode": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-v0618",
+      "startedAt": "2026-09-18T06:27:09.266791+00:00",
+      "finishedAt": "2026-09-18T06:27:09.294290+00:00",
+      "elapsedSeconds": 0.027,
+      "exitCode": 0,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "donorSixFile104EachPreservedSeparately": true,
+  "fullSourceGatesRun": false,
+  "nativeRetestedByThisAgent": false
+}

@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-18T06:25:35.046350+00:00",
+  "rows": [
+    {
+      "path": "package.json",
+      "beforeSHA256": "5b556a095015554168de9f3070e107d1506ad3502cd5852d1feebc742c1c01e8",
+      "afterSHA256": "f3d27fe586f802e40387a9a8c61e98577f237154b2b38afaa4531a4406d77e85",
+      "replacements": 1
+    },
+    {
+      "path": "package-lock.json",
+      "beforeSHA256": "9f5525831b15c7a703d02addfa3452ca50754bd343d63fc3c5d915d528d36ff4",
+      "afterSHA256": "4ce47b9fed667496e3014653c15c6b7a74a3fd94929b6daf14d025b4c902be83",
+      "replacements": 2
+    },
+    {
+      "path": "game/build-config.json",
+      "beforeSHA256": "b22429d9874229fd604dae47f39060461954c98890086adf09f598abf6ddfc83",
+      "afterSHA256": "307ce7f116ec783327e18dc2c641dc6ed7552fbdb7c05e6061f5e548707d7dd4",
+      "replacements": 1
+    }
+  ]
+}

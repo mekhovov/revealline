@@ -1,0 +1,8 @@
+{
+  "status": "CAP_REFUSED_BEFORE_WRITE",
+  "proposedAddedBytes": 94068035,
+  "existingWorktreeBytes": 1577451,
+  "cacheBytes": 137784,
+  "capBytes": 16777216,
+  "reason": "Selecting all content included eight optional 11 MiB packs. Narrow fixture inputs to bounded starter/catalog packs, retaining full tests unchanged."
+}

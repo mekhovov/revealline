@@ -1,0 +1,610 @@
+TAP version 13
+# Subtest: Large portrait selector is fully below the measured expanded heading
+ok 1 - Large portrait selector is fully below the measured expanded heading
+  ---
+  duration_ms: 1.348084
+  type: 'test'
+  ...
+# Subtest: Large landscape selector clears the measured bottom action bar
+ok 2 - Large landscape selector clears the measured bottom action bar
+  ---
+  duration_ms: 0.412625
+  type: 'test'
+  ...
+# Subtest: queued reflow reads current focus and leaves the heading action alone
+ok 3 - queued reflow reads current focus and leaves the heading action alone
+  ---
+  duration_ms: 0.180417
+  type: 'test'
+  ...
+# Subtest: large reading region retains its beginning and manual scrolling is not undone
+ok 4 - large reading region retains its beginning and manual scrolling is not undone
+  ---
+  duration_ms: 0.112583
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a closed owner's scroll or focus
+ok 5 - queued layout cannot alter a closed owner's scroll or focus
+  ---
+  duration_ms: 0.152584
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a hidden owner's scroll or focus
+ok 6 - queued layout cannot alter a hidden owner's scroll or focus
+  ---
+  duration_ms: 0.047292
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a blurred owner's scroll or focus
+ok 7 - queued layout cannot alter a blurred owner's scroll or focus
+  ---
+  duration_ms: 0.138292
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a outside owner's scroll or focus
+ok 8 - queued layout cannot alter a outside owner's scroll or focus
+  ---
+  duration_ms: 0.070375
+  type: 'test'
+  ...
+# Subtest: queued layout cannot alter a disposed owner's scroll or focus
+ok 9 - queued layout cannot alter a disposed owner's scroll or focus
+  ---
+  duration_ms: 0.281083
+  type: 'test'
+  ...
+# Subtest: chapter completion restores its still-owned actual button after native disable
+ok 10 - chapter completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 655.941084
+  type: 'test'
+  ...
+# Subtest: chapter error restores its still-owned actual button after native disable
+ok 11 - chapter error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 296.465875
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after focus, even after returning to BODY
+ok 12 - chapter completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 509.742292
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after blur, even after returning to BODY
+ok 13 - chapter completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 298.3945
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after hidden, even after returning to BODY
+ok 14 - chapter completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 288.501167
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after pagehide, even after returning to BODY
+ok 15 - chapter completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 298.77325
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after close, even after returning to BODY
+ok 16 - chapter completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 475.114542
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+ok 17 - chapter completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 563.282625
+  type: 'test'
+  ...
+# Subtest: chapter completion does not reclaim focus after body-key, even after returning to BODY
+ok 18 - chapter completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 505.262375
+  type: 'test'
+  ...
+# Subtest: chapter enable callback choosing another control is not overwritten
+ok 19 - chapter enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 471.115583
+  type: 'test'
+  ...
+# Subtest: install completion restores its still-owned actual button after native disable
+ok 20 - install completion restores its still-owned actual button after native disable
+  ---
+  duration_ms: 402.436584
+  type: 'test'
+  ...
+# Subtest: install error restores its still-owned actual button after native disable
+ok 21 - install error restores its still-owned actual button after native disable
+  ---
+  duration_ms: 304.843292
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after focus, even after returning to BODY
+ok 22 - install completion does not reclaim focus after focus, even after returning to BODY
+  ---
+  duration_ms: 396.680125
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after blur, even after returning to BODY
+ok 23 - install completion does not reclaim focus after blur, even after returning to BODY
+  ---
+  duration_ms: 411.43225
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after hidden, even after returning to BODY
+ok 24 - install completion does not reclaim focus after hidden, even after returning to BODY
+  ---
+  duration_ms: 409.717667
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after pagehide, even after returning to BODY
+ok 25 - install completion does not reclaim focus after pagehide, even after returning to BODY
+  ---
+  duration_ms: 324.300167
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after close, even after returning to BODY
+ok 26 - install completion does not reclaim focus after close, even after returning to BODY
+  ---
+  duration_ms: 310.448209
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after new-dialog, even after returning to BODY
+ok 27 - install completion does not reclaim focus after new-dialog, even after returning to BODY
+  ---
+  duration_ms: 394.359041
+  type: 'test'
+  ...
+# Subtest: install completion does not reclaim focus after body-key, even after returning to BODY
+ok 28 - install completion does not reclaim focus after body-key, even after returning to BODY
+  ---
+  duration_ms: 390.851375
+  type: 'test'
+  ...
+# Subtest: install enable callback choosing another control is not overwritten
+ok 29 - install enable callback choosing another control is not overwritten
+  ---
+  duration_ms: 393.117291
+  type: 'test'
+  ...
+# Subtest: explicit Library Cancel after three native Tabs renews return to the actual Install action
+ok 30 - explicit Library Cancel after three native Tabs renews return to the actual Install action
+  ---
+  duration_ms: 302.91425
+  type: 'test'
+  ...
+# Subtest: fresh explicit Cancel cannot restore after background
+ok 31 - fresh explicit Cancel cannot restore after background
+  ---
+  duration_ms: 299.715042
+  type: 'test'
+  ...
+# Subtest: fresh explicit Cancel cannot restore after closed-root
+ok 32 - fresh explicit Cancel cannot restore after closed-root
+  ---
+  duration_ms: 307.191583
+  type: 'test'
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-focus
+ok 33 - fresh explicit Cancel cannot restore after cleanup-focus
+  ---
+  duration_ms: 310.130583
+  type: 'test'
+  ...
+# Subtest: fresh explicit Cancel cannot restore after cleanup-blur
+ok 34 - fresh explicit Cancel cannot restore after cleanup-blur
+  ---
+  duration_ms: 323.556166
+  type: 'test'
+  ...
+# Subtest: Cancel while actual pack commit is finishing remains detached and cannot restore focus
+ok 35 - Cancel while actual pack commit is finishing remains detached and cannot restore focus
+  ---
+  duration_ms: 433.1875
+  type: 'test'
+  ...
+# Subtest: fresh return intent refuses a target outside its captured dialog
+ok 36 - fresh return intent refuses a target outside its captured dialog
+  ---
+  duration_ms: 325.120875
+  type: 'test'
+  ...
+# Subtest: actual workshop reviews without writes, explicitly restores all originals, and prepares a separate native download
+ok 37 - actual workshop reviews without writes, explicitly restores all originals, and prepares a separate native download
+  ---
+  duration_ms: 267.214208
+  type: 'test'
+  ...
+# Subtest: actual preserve review distinguishes assignments while retaining current and incoming history
+ok 38 - actual preserve review distinguishes assignments while retaining current and incoming history
+  ---
+  duration_ms: 274.952791
+  type: 'test'
+  ...
+# Subtest: actual restore review distinguishes assignments while retaining current and incoming history
+ok 39 - actual restore review distinguishes assignments while retaining current and incoming history
+  ---
+  duration_ms: 276.209584
+  type: 'test'
+  ...
+# Subtest: corrupt bundle, quota refusal, and stale writer keep exact prior storage and preview
+ok 40 - corrupt bundle, quota refusal, and stale writer keep exact prior storage and preview
+  ---
+  duration_ms: 486.041167
+  type: 'test'
+  ...
+# Subtest: review binds the exact installed catalog, selected file and explicit assignment policy
+ok 41 - review binds the exact installed catalog, selected file and explicit assignment policy
+  ---
+  duration_ms: 118.031958
+  type: 'test'
+  ...
+# Subtest: cancelled late review and double commands cannot publish stale restore or download
+ok 42 - cancelled late review and double commands cannot publish stale restore or download
+  ---
+  duration_ms: 104.022375
+  type: 'test'
+  ...
+# Subtest: allocation-time cancellation and hidden lifecycle release prepared download without late artifacts
+ok 43 - allocation-time cancellation and hidden lifecycle release prepared download without late artifacts
+  ---
+  duration_ms: 9.017916
+  type: 'test'
+  ...
+# Subtest: shared v3 MP3 recovery is byte-identical after originals restore
+ok 44 - shared v3 MP3 recovery is byte-identical after originals restore
+  ---
+  duration_ms: 97.176042
+  type: 'test'
+  ...
+# Subtest: actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file
+ok 45 - actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file
+  ---
+  duration_ms: 103.960375
+  type: 'test'
+  ...
+# Subtest: actual classic entry gives file-URL guidance before module/storage access
+ok 46 - actual classic entry gives file-URL guidance before module/storage access
+  ---
+  duration_ms: 2.922042
+  type: 'test'
+  ...
+# Subtest: actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+ok 47 - actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+  ---
+  duration_ms: 102.814292
+  type: 'test'
+  ...
+# Subtest: cold workshop Escape restores the invoker blurred by its disabled loading state
+ok 48 - cold workshop Escape restores the invoker blurred by its disabled loading state
+  ---
+  duration_ms: 13.300292
+  type: 'test'
+  ...
+# Subtest: closing a pending workshop read restores the invoker before settling and preserves later focus
+ok 49 - closing a pending workshop read restores the invoker before settling and preserves later focus
+  ---
+  duration_ms: 6.344333
+  type: 'test'
+  ...
+# Subtest: v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation
+ok 50 - v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation
+  ---
+  duration_ms: 94.372166
+  type: 'test'
+  ...
+# Subtest: file URL and cancelled late source load do not open or upgrade media
+ok 51 - file URL and cancelled late source load do not open or upgrade media
+  ---
+  duration_ms: 7.412084
+  type: 'test'
+  ...
+# Subtest: rejected shared-store access remains visible and cannot become an empty media save
+ok 52 - rejected shared-store access remains visible and cannot become an empty media save
+  ---
+  duration_ms: 5.829208
+  type: 'test'
+  ...
+# Subtest: persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+ok 53 - persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+  ---
+  duration_ms: 11.120583
+  type: 'test'
+  ...
+# Subtest: existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+ok 54 - existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+  ---
+  duration_ms: 20.456625
+  type: 'test'
+  ...
+# Subtest: actual shared router prevents held Confirm across modal close and native pointer handoff
+ok 55 - actual shared router prevents held Confirm across modal close and native pointer handoff
+  ---
+  duration_ms: 26.079875
+  type: 'test'
+  ...
+# Subtest: opening announces the held catalogue read and Close fences its late failure
+ok 56 - opening announces the held catalogue read and Close fences its late failure
+  ---
+  duration_ms: 2.918625
+  type: 'test'
+  ...
+# Subtest: classic picture workshop exposes loading and Back before storage explanation
+ok 57 - classic picture workshop exposes loading and Back before storage explanation
+  ---
+  duration_ms: 0.582959
+  type: 'test'
+  ...
+# Subtest: native panel prepares original bytes, saves exact theme assignment, reloads and unassigns without losing history
+ok 58 - native panel prepares original bytes, saves exact theme assignment, reloads and unassigns without losing history
+  ---
+  duration_ms: 159.267167
+  type: 'test'
+  ...
+# Subtest: failed candidate decode or preview leaves the prior preview and saved assignment intact
+ok 59 - failed candidate decode or preview leaves the prior preview and saved assignment intact
+  ---
+  duration_ms: 59.365459
+  type: 'test'
+  ...
+# Subtest: double commands, cancellation and stale completion cannot save or overwrite a newer preview
+ok 60 - double commands, cancellation and stale completion cannot save or overwrite a newer preview
+  ---
+  duration_ms: 59.228083
+  type: 'test'
+  ...
+# Subtest: stale installed context and concurrent media writer refuse the whole save
+ok 61 - stale installed context and concurrent media writer refuse the whole save
+  ---
+  duration_ms: 41.88225
+  type: 'test'
+  ...
+# Subtest: context switching discards an unsaved binding and close restores focus without late publication
+ok 62 - context switching discards an unsaved binding and close restores focus without late publication
+  ---
+  duration_ms: 5.794834
+  type: 'test'
+  ...
+# Subtest: transaction refusal keeps the previous preview/draft and stored bytes; notification failure cannot erase a successful save
+ok 63 - transaction refusal keeps the previous preview/draft and stored bytes; notification failure cannot erase a successful save
+  ---
+  duration_ms: 51.80575
+  type: 'test'
+  ...
+# Subtest: existing keyboard/controller navigation edits native selects and Back closes only the workshop
+ok 64 - existing keyboard/controller navigation edits native selects and Back closes only the workshop
+  ---
+  duration_ms: 8.651459
+  type: 'test'
+  ...
+# Subtest: file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes
+ok 65 - file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes
+  ---
+  duration_ms: 6.951375
+  type: 'test'
+  ...
+# Subtest: preview completion restores its initiating control after native disabled blur
+ok 66 - preview completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 49.762917
+  type: 'test'
+  ...
+# Subtest: preview failure restores its initiating control after native disabled blur
+ok 67 - preview failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 50.216459
+  type: 'test'
+  ...
+# Subtest: show-saved completion restores its initiating control after native disabled blur
+ok 68 - show-saved completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 47.39125
+  type: 'test'
+  ...
+# Subtest: show-saved failure restores its initiating control after native disabled blur
+ok 69 - show-saved failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 49.051041
+  type: 'test'
+  ...
+# Subtest: show-authored completion restores its initiating control after native disabled blur
+ok 70 - show-authored completion restores its initiating control after native disabled blur
+  ---
+  duration_ms: 50.549958
+  type: 'test'
+  ...
+# Subtest: show-authored failure restores its initiating control after native disabled blur
+ok 71 - show-authored failure restores its initiating control after native disabled blur
+  ---
+  duration_ms: 49.897375
+  type: 'test'
+  ...
+# Subtest: chosen preview validation failure restores its opener without publishing a draft
+ok 72 - chosen preview validation failure restores its opener without publishing a draft
+  ---
+  duration_ms: 3.897
+  type: 'test'
+  ...
+# Subtest: preview completion respects focus-away even when focus returns to BODY
+ok 73 - preview completion respects focus-away even when focus returns to BODY
+  ---
+  duration_ms: 46.373291
+  type: 'test'
+  ...
+# Subtest: preview completion respects body-key even when focus returns to BODY
+ok 74 - preview completion respects body-key even when focus returns to BODY
+  ---
+  duration_ms: 47.007916
+  type: 'test'
+  ...
+# Subtest: preview completion respects body-pointer even when focus returns to BODY
+ok 75 - preview completion respects body-pointer even when focus returns to BODY
+  ---
+  duration_ms: 51.003208
+  type: 'test'
+  ...
+# Subtest: preview completion respects window-blur even when focus returns to BODY
+ok 76 - preview completion respects window-blur even when focus returns to BODY
+  ---
+  duration_ms: 52.165042
+  type: 'test'
+  ...
+# Subtest: preview completion respects hidden even when focus returns to BODY
+ok 77 - preview completion respects hidden even when focus returns to BODY
+  ---
+  duration_ms: 51.394958
+  type: 'test'
+  ...
+# Subtest: preview completion respects pagehide even when focus returns to BODY
+ok 78 - preview completion respects pagehide even when focus returns to BODY
+  ---
+  duration_ms: 52.847875
+  type: 'test'
+  ...
+# Subtest: preview completion respects new-dialog even when focus returns to BODY
+ok 79 - preview completion respects new-dialog even when focus returns to BODY
+  ---
+  duration_ms: 50.443458
+  type: 'test'
+  ...
+# Subtest: programmatic preview does not capture an unrelated focused action
+ok 80 - programmatic preview does not capture an unrelated focused action
+  ---
+  duration_ms: 5.142416
+  type: 'test'
+  ...
+# Subtest: cancel retires a preview focus lease before its decoder settles
+ok 81 - cancel retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 50.949416
+  type: 'test'
+  ...
+# Subtest: invalidate retires a preview focus lease before its decoder settles
+ok 82 - invalidate retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 46.918417
+  type: 'test'
+  ...
+# Subtest: close retires a preview focus lease before its decoder settles
+ok 83 - close retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 46.9865
+  type: 'test'
+  ...
+# Subtest: dispose retires a preview focus lease before its decoder settles
+ok 84 - dispose retires a preview focus lease before its decoder settles
+  ---
+  duration_ms: 46.247791
+  type: 'test'
+  ...
+# Subtest: a cancelled preview cannot steal focus from the next accepted preview
+ok 85 - a cancelled preview cannot steal focus from the next accepted preview
+  ---
+  duration_ms: 60.563667
+  type: 'test'
+  ...
+# Subtest: close and reopen does not revive the earlier preview focus owner
+ok 86 - close and reopen does not revive the earlier preview focus owner
+  ---
+  duration_ms: 60.953125
+  type: 'test'
+  ...
+# Subtest: preview final enabling focus takes precedence over old focus
+ok 87 - preview final enabling focus takes precedence over old focus
+  ---
+  duration_ms: 47.4965
+  type: 'test'
+  ...
+# Subtest: preview final enabling invalidate takes precedence over old focus
+ok 88 - preview final enabling invalidate takes precedence over old focus
+  ---
+  duration_ms: 49.7255
+  type: 'test'
+  ...
+# Subtest: settled chosen preview keeps the focused original picker below its sticky status rail
+ok 89 - settled chosen preview keeps the focused original picker below its sticky status rail
+  ---
+  duration_ms: 6.052875
+  type: 'test'
+  ...
+# Subtest: media clearance preserves the live operation rail and Cancel ownership
+ok 90 - media clearance preserves the live operation rail and Cancel ownership
+  ---
+  duration_ms: 4.290666
+  type: 'test'
+  ...
+# Subtest: closed and disposed media panels retire queued clearance without refocusing an old picker
+ok 91 - closed and disposed media panels retire queued clearance without refocusing an old picker
+  ---
+  duration_ms: 6.198333
+  type: 'test'
+  ...
+# Subtest: no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+ok 92 - no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+  ---
+  duration_ms: 65.45625
+  type: 'test'
+  ...
+# Subtest: Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+ok 93 - Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+  ---
+  duration_ms: 712.042625
+  type: 'test'
+  ...
+# Subtest: historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+ok 94 - historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+  ---
+  duration_ms: 1049.100208
+  type: 'test'
+  ...
+# Subtest: unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+ok 95 - unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+  ---
+  duration_ms: 225.945
+  type: 'test'
+  ...
+# Subtest: stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+ok 96 - stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+  ---
+  duration_ms: 1506.32575
+  type: 'test'
+  ...
+# Subtest: native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+ok 97 - native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+  ---
+  duration_ms: 1358.607209
+  type: 'test'
+  ...
+# Subtest: fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+ok 98 - fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+  ---
+  duration_ms: 686.661792
+  type: 'test'
+  ...
+# Subtest: Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+ok 99 - Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+  ---
+  duration_ms: 259.025542
+  type: 'test'
+  ...
+# Subtest: the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+ok 100 - the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+  ---
+  duration_ms: 343.611875
+  type: 'test'
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 100
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11013.332084
