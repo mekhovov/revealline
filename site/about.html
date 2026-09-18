@@ -35,11 +35,47 @@
       <nav class="header-nav" aria-label="Main navigation">
         <a href="#modes">Ways to play</a>
         <a href="#packs">Packs</a>
-        <a class="header-play" href="../game/">Play now <span aria-hidden="true">↗</span></a>
+        <a id="about-return" class="header-play" href="../game/"
+          >Return to game <span aria-hidden="true">↗</span></a
+        >
       </nav>
     </header>
+    <p id="about-navigation-status" class="about-navigation-status" role="status">
+      Keyboard and touch are ready. Release controller controls, then press a face button to join.
+    </p>
 
     <main>
+      <details id="versions" class="build-tools">
+        <summary>
+          <span>Build information</span><small>Release history and preserved builds</small>
+        </summary>
+        <div class="version-control">
+          <p>
+            Browse previous software builds with their original gameplay, saves and artwork. Choose
+            missions and packs inside the game.
+          </p>
+          <a
+            id="release-history"
+            data-release-explorer
+            href="../releases/"
+            class="button button-tertiary"
+            hidden
+            >Release history</a
+          >
+          <label for="version-picker">Choose a preserved build</label>
+          <div class="picker-row">
+            <select id="version-picker" aria-describedby="version-status">
+              <option value="../game/">__REVEALLINE_VERSION__ · current</option>
+            </select>
+            <a id="version-play" class="button button-tertiary" href="../game/"
+              >Open build <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <p id="version-status" class="version-status" role="status">Loading preserved builds…</p>
+          <a href="../authoring/enemy-catalog/">Enemy workshop · preview, configure and practice</a>
+        </div>
+      </details>
+
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow">
@@ -526,23 +562,6 @@
           ><strong data-current-label>__REVEALLINE_VERSION__</strong><i aria-hidden="true">↗</i>
         </a>
       </section>
-
-      <details id="versions" class="build-tools">
-        <summary><span>Build archive · QA</span><small>Previous playable versions</small></summary>
-        <div class="version-control">
-          <label for="version-picker">Choose a preserved build</label>
-          <div class="picker-row">
-            <select id="version-picker" aria-describedby="version-status">
-              <option value="../game/">__REVEALLINE_VERSION__ · current</option>
-            </select>
-            <a id="version-play" class="button button-tertiary" href="../game/"
-              >Open build <span aria-hidden="true">↗</span></a
-            >
-          </div>
-          <p id="version-status" class="version-status" role="status">Loading preserved builds…</p>
-          <a href="../authoring/enemy-catalog/">Enemy workshop · preview, configure and practice</a>
-        </div>
-      </details>
     </main>
 
     <footer class="site-footer">

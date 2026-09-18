@@ -1,0 +1,543 @@
+{
+  "format": "revealline-independent-source-review.v1",
+  "reviewer": "/root/queued_studio_review",
+  "reviewedAtUtc": "2026-09-18T02:35:33.607392+00:00",
+  "status": "PASS: bounded About/controller source review",
+  "base": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614",
+  "frozenFeatureVersion": "0.61.3",
+  "currentCoordinatorVersion": "0.61.4",
+  "versionedQualification": "Separate coordinator-owned cohort in progress; this review does not transfer pre-version test acceptance.",
+  "candidatePatch": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-about-controller-58ff1b1/candidate.patch",
+    "bytes": 77959,
+    "sha256": "9fa7f72f889f3c73f172751b439bb41f4be3218541ae05af9f3477f729f5d410"
+  },
+  "candidateManifest": {
+    "path": ".cache/p03-about-controller-58ff1b1/candidate-pins.json",
+    "bytes": 6638,
+    "sha256": "88edc51a75ea5ff9fd1e229e4c7c7a4df552d593d97d323912640dd1fedbd22f"
+  },
+  "finalSourceManifest": {
+    "path": ".cache/p03-about-controller-58ff1b1/final-source-inputs.json",
+    "bytes": 46702,
+    "sha256": "d4387d25fa4c008a6b70098e8a768ba3e594dec804cb796f7b4201c3a4cee1d3"
+  },
+  "verifiedFeaturePathCount": 14,
+  "verifiedBasePreimageCount": 11,
+  "frozenInputCount": 287,
+  "frozenInputBytes": 5085484,
+  "frozenInputsStillExactInWorktree": 284,
+  "expectedVersionMetadataDeltas": [
+    {
+      "path": "game/build-config.json",
+      "frozen": {
+        "bytes": 5474,
+        "sha256": "edffd3a9663804af806dc43fca0d42899e38d681d1fb2f001040ea517bc14fff"
+      },
+      "current": {
+        "bytes": 5474,
+        "sha256": "f6748c26fc6bb3a3317b3c17ce10bcb39d5555c54ea930baeb3c5070ce9eb19e"
+      },
+      "delta": "Only 0.61.3 -> 0.61.4 version values changed by coordinator after feature freeze."
+    },
+    {
+      "path": "package-lock.json",
+      "frozen": {
+        "bytes": 36138,
+        "sha256": "8fbca33a81cfac34dd02d7a3fccb573a69e2eb3b7d2fe8861f8072dcb3f943cb"
+      },
+      "current": {
+        "bytes": 36138,
+        "sha256": "e3abad8dbb16bc2edcc521a0d08ab05532bf009ce0fa8f7692a8d89ffb9b47d3"
+      },
+      "delta": "Only 0.61.3 -> 0.61.4 version values changed by coordinator after feature freeze."
+    },
+    {
+      "path": "package.json",
+      "frozen": {
+        "bytes": 1819,
+        "sha256": "90a6441ff0c4deac432a8cf0ae9a9148fb380928b0ca3b2051977ea66ae98371"
+      },
+      "current": {
+        "bytes": 1819,
+        "sha256": "61e60edc6d6ca057e694885fc8dc3d52317297259026c47e618450899bf64224"
+      },
+      "delta": "Only 0.61.3 -> 0.61.4 version values changed by coordinator after feature freeze."
+    }
+  ],
+  "candidatePaths": [
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "preimage": {
+        "bytes": 211571,
+        "sha256": "b12bc327b0df467580c5fcfcd8a222ecf09e61201220f615d97b61721063d60f",
+        "gitBlob": "d7c1a5d447841dd13c2a6ea199d571f2f9395146"
+      },
+      "candidate": {
+        "bytes": 214098,
+        "sha256": "2b5887d9521c33a2fd9f78860884f5942f729f651e9c703c8e862ba366640853"
+      }
+    },
+    {
+      "path": "docs/field-kit-surfaces.md",
+      "preimage": {
+        "bytes": 4820,
+        "sha256": "2b1d9ccbd5583a0d32459e2938b08b3ff3c1f15b7525b6c9b3bc93e4fbb6ef42",
+        "gitBlob": "08a81ade42cd81118099ab83b8dad4e458355e72"
+      },
+      "candidate": {
+        "bytes": 9927,
+        "sha256": "6e2e268931e91ae67d1e509a0c23b5bfaddcb80460e146694bf2dd70d56684c8"
+      }
+    },
+    {
+      "path": "game/app.mjs",
+      "preimage": {
+        "bytes": 281216,
+        "sha256": "e4ecc924eaa24877d25c72c209e9723ba118370292063997daa1601d9e275d84",
+        "gitBlob": "f314c01f0bec16f7f58e945a930b0c591a78ba01"
+      },
+      "candidate": {
+        "bytes": 281027,
+        "sha256": "e4cef90b6593435c30def4501d1c2e2aa2062bfe330bc2d920abc364bff84cfe"
+      }
+    },
+    {
+      "path": "game/index.html",
+      "preimage": {
+        "bytes": 72497,
+        "sha256": "bad5efb9832e732e89761f1224ad1abaa7fee78315dc74f9851e37ff3ab3b169",
+        "gitBlob": "267c4f9243b19a7c0a45a753e3edb894bf8f93ae"
+      },
+      "candidate": {
+        "bytes": 72178,
+        "sha256": "7537d586c218a1ad5a0e93a8d6d37f909c17cfe4f6c6d14b3031905b1dd652fd"
+      }
+    },
+    {
+      "path": "game/test/about-navigation-host.test.mjs",
+      "preimage": null,
+      "candidate": {
+        "bytes": 21151,
+        "sha256": "f539584c53423c1802776dcc66a9468f4c29780a0cf02ab4f8ba2dfaf21f09a1"
+      }
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "preimage": {
+        "bytes": 13488,
+        "sha256": "8e141d308bba04a78e500f1cd1bf7a4beb766e2eee976c97a0e0e3b23f562100",
+        "gitBlob": "9f0922100023cb12510811d3bd83e57319bf8035"
+      },
+      "candidate": {
+        "bytes": 13703,
+        "sha256": "3ecfd59516900871beb216f2914bb84d91f5831bca053d8c596d091ef8dc9c3f"
+      }
+    },
+    {
+      "path": "game/test/landing-release-history-host.test.mjs",
+      "preimage": null,
+      "candidate": {
+        "bytes": 8691,
+        "sha256": "0ed62a3315481b592197a75a0a13b5abd31e7ce67adcd67c081e923ebbbca479"
+      }
+    },
+    {
+      "path": "game/test/site-release-links.test.mjs",
+      "preimage": {
+        "bytes": 2792,
+        "sha256": "56d0de9ccbcf9607a8853d0c32208a849832d11e61aefaafef03005640e56123",
+        "gitBlob": "09ec9cc09d5de3042e4a40aa2f8d5ed73e53f814"
+      },
+      "candidate": {
+        "bytes": 6358,
+        "sha256": "cabb01d368a34d275e390cc38e3ba2e87939d9cb404712aa00b618c1f30ced85"
+      }
+    },
+    {
+      "path": "scripts/test-pages-current-entry.mjs",
+      "preimage": {
+        "bytes": 12965,
+        "sha256": "b889eccf062bb61bb1c9046d702a9fd1e984248385a0da7cd988ed0543628b19",
+        "gitBlob": "aac2b2f3a3bf1ff3a3a39209e346d06a1e1795bc"
+      },
+      "candidate": {
+        "bytes": 13000,
+        "sha256": "d63ad9a452ea0e2765ebc799895927f257071c3eff4fd28c7e0940c6a509e410"
+      }
+    },
+    {
+      "path": "site/about-navigation.mjs",
+      "preimage": null,
+      "candidate": {
+        "bytes": 4651,
+        "sha256": "55486c07a129b77271cb769a52a9734a917cf19507c9d795a28c8c424423d6f3"
+      }
+    },
+    {
+      "path": "site/about.html",
+      "preimage": {
+        "bytes": 26734,
+        "sha256": "ce50eb89cad35b8a29995f085c7a68ae0fef9103f4cb9e836546c3f5059525b0",
+        "gitBlob": "0ce33847ca0cb71820f2ed5ca9cdfceb7da6ceae"
+      },
+      "candidate": {
+        "bytes": 27392,
+        "sha256": "2a89c674db356acc9d780929f1b8b5412301e6eed3a3eae7533425a82ddf81e6"
+      }
+    },
+    {
+      "path": "site/landing.css",
+      "preimage": {
+        "bytes": 33881,
+        "sha256": "51a73a456837e70777ceaefd10f62ae277d0841a348083a6e193f363b973f265",
+        "gitBlob": "7c574db7ac4678094eb86856e3ce16396ad245e4"
+      },
+      "candidate": {
+        "bytes": 34949,
+        "sha256": "045cc9cd3367a177efbbc402a5b94357e55d8c75a8026488dc7574195bb0e6f3"
+      }
+    },
+    {
+      "path": "site/landing.mjs",
+      "preimage": {
+        "bytes": 4976,
+        "sha256": "a1c77b683da8d34bf6792e7e76ea22fadcbdd442244419b33ad741215b447855",
+        "gitBlob": "0a8031bbdf81159eb53d586762a412deaae9e2e8"
+      },
+      "candidate": {
+        "bytes": 6116,
+        "sha256": "87e3daa9076e23bfc3c6ba10b3095c4a1e2fccd467d76c171ac040d3a95eb887"
+      }
+    },
+    {
+      "path": "site/release-links.mjs",
+      "preimage": {
+        "bytes": 746,
+        "sha256": "084d72d4d58e8ef11595e0a7857b5e338ee4ff8884eb43f859099bd22a0f2de0",
+        "gitBlob": "e5831e269fedae26c5bddff8d389ee888810fbd3"
+      },
+      "candidate": {
+        "bytes": 1841,
+        "sha256": "e64dec48042ba2f48bfe51147455838eb9e6bb13ba591b4d9749eb08357a99db"
+      }
+    }
+  ],
+  "scope": [
+    "Home archive removal and About Build information, explicit preserved-build actions and same-edition Return.",
+    "Shared controller lifecycle before catalogue awaits, stale async completion, SELECT/SUMMARY, keyboard defaults, hints and local preview CSS.",
+    "Source/main-frozen/numbered-archive routing, historical app and skill preservation, strict URL validation, production input preservation and source build inclusion."
+  ],
+  "resolvedFindings": [
+    {
+      "finding": "Native SELECT Escape was intercepted as page Back.",
+      "resolution": "Shared controller edit cancels first; native editor Escape retains browser dismissal. Non-editor fresh Escape focuses Return without navigating.",
+      "evidence": "Actual-host regression distinguishes ordinary SELECT, first controller-edit Escape, subsequent native SELECT Escape and SUMMARY page Back."
+    },
+    {
+      "finding": "Numbered archive About requested nonexistent archive-local releases/index.json.",
+      "resolution": "Only exact HTTPS mekhovov.github.io numbered archive immutable About routes use the canonical main releases catalogue. Return remains same edition and generic/custom/HTTP/lookalike routes retain prior scope.",
+      "evidence": "URL adversarial tests plus actual archive-host catalogue and Return cases."
+    },
+    {
+      "finding": "Controller preview was unstyled and competed within nowrap preserved-build controls.",
+      "resolution": "About-local shared-token preview style; complete final row in wrapping header/picker and spanning pack grid. Shared producer CSS is untouched.",
+      "evidence": "Source inspection of actual insertion points and CSS. Native layout acceptance remains separate."
+    },
+    {
+      "finding": "SELECT draft text could be announced by adjacent preview and page status.",
+      "resolution": "Single-owner About suppresses only exact current role=status preview duplicates, retaining connection/cancel/navigation feedback.",
+      "evidence": "Actual-host test counts page-status writes through changing draft text; actual screen-reader listening remains separate."
+    }
+  ],
+  "actionableFindingsRemaining": [],
+  "sourceReview": [
+    "Single foreground animation loop starts before either fetch. Blur, hidden and persisted departure stop sampling and clear edits/input; foreground restoration schedules at most one loop and requires neutral input. Terminal departure destroys owners/listeners.",
+    "Current guards after fetch and body completion fence terminal mutations. Persisted pages may finish catalogue DOM updates without restoring focus or polling. This distinction is explicit in tests and documentation.",
+    "Real shared SELECT draft signatures invalidate changed options without committing them or stealing usable focus. SUMMARY retains native disclosure behavior. Back cancels edit before page Return and Confirm is separate.",
+    "Pending/failing release catalogues preserve current-build fallback and correctly initialized history action. Choosing a build only changes the Open link. No automatic navigation or player-data writes were added.",
+    "Strict archived-play validator and generic game release resolver are unchanged. Valid relative records rebase against fetched/requested catalogue URL; canonical HTTPS destinations retain exact identity.",
+    "About loads shared focus/theme styling. New local previews use readable theme tokens and complete rows; dedicated page status honors Large secondary text. Source structure is consistent, but actual layout/input/accessibility acceptance is not inferred.",
+    "Docs and maintainer prompt describe the implemented contract and preserve existing guidance. They keep modeled, native, physical-device and public qualifications separate."
+  ],
+  "preservation": {
+    "appExactlyBaseMinusExpectedReleaseImportAndLoop": true,
+    "skillExactlyBaseAfterRemovingOneAddedParagraph": true,
+    "strictArchivedPlayValidatorUnchanged": true,
+    "sharedGameReleaseResolverUnchanged": true,
+    "sharedRecipeInputCount": 16,
+    "sharedRecipeInputs": [
+      {
+        "path": "authoring/motion-lab/render-character.mjs",
+        "bytes": 6660,
+        "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/presentation/host.mjs",
+        "bytes": 27939,
+        "sha256": "f63aae713bad754ca826fa3d7c0ea2455db4f5d56b55882cd2ef6f196ec13798",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/actor-presentation.mjs",
+        "bytes": 26660,
+        "sha256": "5d4c40cbcebeb738526dbdb31fa95b36a368da8930d14de04a9600118aea54c7",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/audio-master.mjs",
+        "bytes": 5277,
+        "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/audio.mjs",
+        "bytes": 26731,
+        "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/classic-view.mjs",
+        "bytes": 21584,
+        "sha256": "3af76e5a99f7753bef065d5322144f541b50985cf47877738f85be191cb35dc1",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/event-feedback.mjs",
+        "bytes": 5824,
+        "sha256": "c558dbe6fbdc91e6e9aae51cf355e557cdebf6f9319cb5ab6d886c75b5760307",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/field-kit-compiled.css",
+        "bytes": 22607,
+        "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/field-kit-components.css",
+        "bytes": 11317,
+        "sha256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/field-kit-flow.css",
+        "bytes": 11341,
+        "sha256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/field-kit-surfaces.css",
+        "bytes": 19324,
+        "sha256": "4f279f5bcb94e60cb1533814bb3078d708bc017841e025d7152515b3136c6f7b",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/operation-status.css",
+        "bytes": 1889,
+        "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/operation-status.mjs",
+        "bytes": 4173,
+        "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/published-audio.mjs",
+        "bytes": 5718,
+        "sha256": "3e9e7c163fcd936661fa609870b4b5dfb9099139c8c87e261d966908637c73d0",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "bytes": 24085,
+        "sha256": "6b45ab2c75fc313443c97ec3a64ed8e1526d89052292c6c3ab2c9817b1465932",
+        "equalToBase": true,
+        "read": "worktree and exact Git base"
+      },
+      {
+        "path": "site/release-catalog.css",
+        "bytes": 1018,
+        "sha256": "18736359cd160a144d09a157719e22519819923f1072079586f05debb0852640",
+        "equalToBase": true,
+        "read": "exact local Git base; sparse file absent and not modified"
+      }
+    ],
+    "buildIncludesSiteAndGame": true,
+    "buildMetadataDeltaOnlyVersion": true,
+    "packLaunchAndSaveReadBehaviorRetained": true
+  },
+  "retainedValidation": [
+    {
+      "receipt": {
+        "path": ".cache/p03-about-controller-58ff1b1/corrected-node20.json",
+        "bytes": 47829,
+        "sha256": "07ea91f2b10d2706755b399ec0dd84ae66f3c8683ec0fcbb71553da32fc5fee8"
+      },
+      "log": {
+        "path": ".cache/p03-about-controller-58ff1b1/corrected-node20.tap",
+        "bytes": 45003,
+        "sha256": "9676a190b3890947ab56530b9f99edaf4dfdf1c87fee4dbf3c3f7667a4d868c8"
+      },
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--max-old-space-size=1024",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/about-navigation-host.test.mjs",
+        "game/test/landing-release-history-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/site-release-links.test.mjs",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/controller-router-bindings.test.mjs",
+        "scripts/test-pages-current-entry.mjs"
+      ],
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "tests": 199,
+      "passing": 199
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-about-controller-58ff1b1/corrected-node22.json",
+        "bytes": 47829,
+        "sha256": "d0e05df21a27533fa3d2a2902e2ae284539952ab5fef7ba52bc67d7a411cdb11"
+      },
+      "log": {
+        "path": ".cache/p03-about-controller-58ff1b1/corrected-node22.tap",
+        "bytes": 48030,
+        "sha256": "3699ad7650e2d8d9066956d5d7525de730be0269767771828d82ad512ce4c7db"
+      },
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--max-old-space-size=1024",
+        "--test",
+        "--test-concurrency=1",
+        "game/test/about-navigation-host.test.mjs",
+        "game/test/landing-release-history-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/site-release-links.test.mjs",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/controller-router-bindings.test.mjs",
+        "scripts/test-pages-current-entry.mjs"
+      ],
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "tests": 199,
+      "passing": 199
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-about-controller-58ff1b1/lint-final.json",
+        "bytes": 47835,
+        "sha256": "5fc41898c7a684c803be0eec79624f22f087fc3ac237df6b4ae01fd478672f0a"
+      },
+      "log": {
+        "path": ".cache/p03-about-controller-58ff1b1/lint-final.tap",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "--max-warnings",
+        "0",
+        "site/about-navigation.mjs",
+        "site/landing.mjs",
+        "site/release-links.mjs",
+        "game/app.mjs",
+        "game/test/about-navigation-host.test.mjs",
+        "game/test/landing-release-history-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/site-release-links.test.mjs",
+        "scripts/test-pages-current-entry.mjs"
+      ],
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "tests": null,
+      "passing": null
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-about-controller-58ff1b1/format-final.json",
+        "bytes": 48018,
+        "sha256": "d60dfb300e50362b6da2771a7c491744699fa4793c11773f876a27bfec71e721"
+      },
+      "log": {
+        "path": ".cache/p03-about-controller-58ff1b1/format-final.tap",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      },
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--ignore-path",
+        "/dev/null",
+        "--check",
+        "site/about-navigation.mjs",
+        "site/landing.mjs",
+        "site/release-links.mjs",
+        "site/landing.css",
+        "site/about.html",
+        "game/app.mjs",
+        "game/index.html",
+        "game/test/about-navigation-host.test.mjs",
+        "game/test/landing-release-history-host.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/site-release-links.test.mjs",
+        "scripts/test-pages-current-entry.mjs",
+        "docs/field-kit-surfaces.md",
+        "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+      ],
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "tests": null,
+      "passing": null
+    }
+  ],
+  "priorFailureRecords": [
+    {
+      "record": {
+        "path": ".cache/p03-about-controller-58ff1b1/initial-node20.json",
+        "bytes": 47484,
+        "sha256": "ea4726db65cc44aeae26420fb1b773a71af97a30ed87b91e00d1f091302d1b27"
+      },
+      "result": "179/196 pass; 17 missing sparse-bootstrap preset failures. Exact base fixture restoration recorded; assertions were not relaxed."
+    },
+    {
+      "record": {
+        "path": ".cache/p03-about-controller-58ff1b1/final-node20.json",
+        "bytes": 47828,
+        "sha256": "ce014b4da7e07fdf4b8b820e096d0204ef87f1e0318db863e4269cf49aa42c4c"
+      },
+      "result": "198/199 pass. Native-valid compound selector unsupported by finite DOM; equivalent single-owner role check corrected runtime without changing assertion."
+    }
+  ],
+  "reviewerActions": "Read-only source/diff/evidence inspection and local Git/body hash comparisons; only this review record written. No tests, builds, browser, fetch, source edits, commits, publication or remote mutation by reviewer.",
+  "limitations": [
+    "PASS is for these exact 14 feature paths and source compatibility, not a release or whole-phase acceptance. Coordinator separately qualifies the versioned commit and release.",
+    "199/199 per Node runtime and lint/format are independently hash-verified implementer receipts, not reviewer executions. Three subsequent version-only metadata changes are shown explicitly.",
+    "Native SELECT popup dismissal, responsive preview/44px targets, screen-reader listening, zoom, touch, physical controller, scrolling, offline and actual public catalogue bytes remain separate checks.",
+    "No claim of complete P03/P05/P16/P18, new challenge quality, whole-game completion or platform certification."
+  ]
+}

@@ -100,7 +100,6 @@ import {
 import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
-import { releaseExplorerHref } from './release-explorer.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
 import { createMasteryAwards } from './mastery-awards.mjs';
@@ -274,8 +273,6 @@ try {
     isRelease = true;
   } catch {}
   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
-  for (const link of document.querySelectorAll('[data-release-explorer]'))
-    link.href = releaseExplorerHref(location.href);
   const versionLabel =
     buildVersion === 'dev' ? 'DEV' : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
   $('version').textContent = versionLabel;

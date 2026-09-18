@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { archivedPlayHref } from '../../site/release-links.mjs';
+import {
+  archivedPlayHref,
+  releaseHistoryHref,
+  archivedPlayHrefFromCatalog,
+} from '../../site/release-links.mjs';
 import { publishedReleaseIndex } from '../../scripts/build-pages.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
 
@@ -70,4 +74,90 @@ test('archive links reject script schemes, credentials, traversal and non-game d
     'x'.repeat(2049),
   ])
     assert.equal(archivedPlayHref(play), null, String(play));
+});
+
+test('About history resolves the shared catalog from source and frozen sibling game routes', () => {
+  for (const [page, expected] of [
+    [
+      'https://mekhovov.github.io/revealline/site/about.html#versions',
+      'https://mekhovov.github.io/revealline/releases/',
+    ],
+    [
+      'https://mekhovov.github.io/revealline/releases/v0.51.0/site/site/about.html?view=history#versions',
+      'https://mekhovov.github.io/revealline/releases/',
+    ],
+    [
+      'http://127.0.0.1:8768/preview/releases/v0.51.0/site/site/about.html',
+      'http://127.0.0.1:8768/preview/releases/',
+    ],
+  ])
+    assert.equal(releaseHistoryHref(page), expected);
+});
+
+test('About rebases only validated local archive records against the fetched catalog URL', () => {
+  const canonical = 'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/game/';
+  for (const index of [
+    'https://mekhovov.github.io/revealline/releases/index.json',
+    'http://127.0.0.1:8768/preview/releases/index.json',
+  ]) {
+    assert.equal(
+      archivedPlayHrefFromCatalog('v0.28.0/site/game/', index),
+      new URL('v0.28.0/site/game/', index).href,
+    );
+    assert.equal(
+      archivedPlayHrefFromCatalog('v0.28.0/site/game/index.html', index),
+      new URL('v0.28.0/site/game/index.html', index).href,
+    );
+    assert.equal(archivedPlayHrefFromCatalog(canonical, index), canonical);
+  }
+  for (const rejected of [
+    undefined,
+    null,
+    {},
+    '',
+    '../v1/site/game/',
+    '//example.test/releases/v1/site/game/',
+    'javascript:alert(1)',
+    'https://user:password@example.test/releases/v1/site/game/',
+    'https://example.test/releases/v1/site/game/?next=https://other.test',
+    'https://example.test/x/%2e%2e/releases/v1/site/game/',
+  ]) {
+    assert.equal(
+      archivedPlayHrefFromCatalog(rejected, 'https://example.test/releases/index.json'),
+      null,
+    );
+  }
+  assert.equal(
+    archivedPlayHrefFromCatalog(
+      'javascript:alert(1)',
+      'https://example.test/releases/index.json',
+    ) ??
+      archivedPlayHrefFromCatalog('v0.28.0/site/game/', 'https://example.test/releases/index.json'),
+    'https://example.test/releases/v0.28.0/site/game/',
+    'Invalid canonical metadata still permits a separately validated local record.',
+  );
+});
+
+test('only this project’s HTTPS immutable archive About routes use the canonical JSON catalogue', () => {
+  for (const number of ['01', '21'])
+    assert.equal(
+      releaseHistoryHref(
+        `https://mekhovov.github.io/revealline-archive-${number}/releases/v0.61.3/site/site/about.html?view=history#versions`,
+      ),
+      'https://mekhovov.github.io/revealline/releases/',
+    );
+  for (const page of [
+    'http://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/site/about.html',
+    'https://example.test/revealline-archive-21/releases/v0.61.3/site/site/about.html',
+    'https://mekhovov.github.io.example.test/revealline-archive-21/releases/v0.61.3/site/site/about.html',
+    'https://mekhovov.github.io/revealline-archive-21-extra/releases/v0.61.3/site/site/about.html',
+    'https://mekhovov.github.io/another-game-archive-21/releases/v0.61.3/site/site/about.html',
+    'https://mekhovov.github.io/revealline-archive-21/site/about.html',
+    'https://mekhovov.github.io/revealline-archive-21/releases/version-next/site/site/about.html',
+  ])
+    assert.equal(
+      releaseHistoryHref(page),
+      releaseExplorerHref(new URL('../game/', page).href),
+      `Keep generic routing for ${page}`,
+    );
 });

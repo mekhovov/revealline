@@ -1,0 +1,61 @@
+{
+  "feature": "P03/P16 release history R2 current-game recovery continuation",
+  "status": "Same-pinned runtime game boots successfully after explicit Reload.",
+  "prior": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r4/cua-observation-r2.json",
+    "bytes": 20670,
+    "sha256": "e611fc85cd0269b372c1cc42c4016dbb80b1fcf586cff91c1e589976dc085024"
+  },
+  "binding": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/binding.json",
+    "bytes": 2585,
+    "sha256": "d660971ab40a27d14a62f8c6035389879e44bd604684b3047ba7b48478794b56"
+  },
+  "requestLog": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-browser-r5/requests.jsonl",
+    "bytes": 124427,
+    "sha256": "2554cd05790f7a2521d9a19813117d91352e23406bae227dc046dfa554646252"
+  },
+  "httpEvents": 310,
+  "runtimeIdentity": "Identical runtime-overrides.json bytes/hash to R4; separate request log, same localhost port. R4 capacity failure retained unchanged.",
+  "observations": [
+    {
+      "at": "2026-09-18T00:32:29.299Z",
+      "url": "http://127.0.0.1:55817/game/",
+      "active": "shell-featured",
+      "bootVisible": false,
+      "version": "Version DEV"
+    },
+    {
+      "at": "2026-09-18T00:32:35.093Z",
+      "case": "Workshop native Enter then extras click",
+      "about": [
+        {
+          "text": "About & build information",
+          "href": "../site/about.html#versions"
+        }
+      ]
+    },
+    {
+      "at": "2026-09-18T00:32:40.809Z",
+      "case": "visible-only Home buttons",
+      "actions": [
+        "Start",
+        "Missions",
+        "Collection",
+        "Settings",
+        "Workshop",
+        "Sound: off"
+      ],
+      "archiveLinks": []
+    }
+  ],
+  "limits": [
+    "Recovery used Reload after the R4 harness capacity interruption; no claim that interrupted first return completed uninterrupted.",
+    "R2 bounded About module/delay/failure checks remain in prior receipt.",
+    "No public acceptance, physical devices, full controller journey or whole-game phase completion."
+  ],
+  "serverStopped": true,
+  "faultsCleared": true,
+  "viewportReset": true
+}

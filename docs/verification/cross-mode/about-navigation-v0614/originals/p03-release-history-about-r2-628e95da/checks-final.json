@@ -1,0 +1,39 @@
+{
+  "checks": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "site/about.html",
+        "docs/field-kit-surfaces.md",
+        "game/test/landing-release-history-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "output": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/format-final.log",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "game/test/landing-release-history-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "output": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/lint-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/diff-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "all12CandidateBodiesMatch": true,
+  "indexEmpty": true
+}
