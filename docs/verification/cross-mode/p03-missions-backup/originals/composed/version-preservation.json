@@ -1,0 +1,23 @@
+[
+  {
+    "path": "package.json",
+    "version": "0.60.7",
+    "rootLockVersion": null,
+    "sha256": "d7a62f32c9cbf5f48731f95c0bb374e1955d289004ec99494def430f4eb33946",
+    "unchangedFromBase": true
+  },
+  {
+    "path": "package-lock.json",
+    "version": "0.60.7",
+    "rootLockVersion": "0.60.7",
+    "sha256": "b2f65fe285a487fa7ec54dda58eeb12ff94f26061062d177f03a85628105d55c",
+    "unchangedFromBase": true
+  },
+  {
+    "path": "game/build-config.json",
+    "version": "0.60.7",
+    "rootLockVersion": null,
+    "sha256": "5df885e6457c38626bf41f1c2433aaab5f324615c181d0ad9d1af063c3fc8bb4",
+    "unchangedFromBase": true
+  }
+]

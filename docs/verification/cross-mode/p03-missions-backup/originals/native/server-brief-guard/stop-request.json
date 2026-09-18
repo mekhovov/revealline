@@ -1,0 +1,5 @@
+{
+  "pid": 36780,
+  "command": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -B .cache/p03-navigation-backup-native-965f2049/server-brief-guard/serve.py --commit 965f2049cb273b93d0258ee43cd806c62d479421",
+  "reason": "Native scope complete"
+}

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
+import { attachGameShell } from '../ui/game-shell.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
@@ -1082,3 +1083,134 @@ test('actual nested Collection picture Tab wraps only its current modal and clos
   assert.equal(h.rendered.paused, true);
   assert.deepEqual(h.errors, []);
 });
+
+// Native autofocus and queued close events are modeled by the existing adapter.
+// This follows actual source handlers; no display or physical device claim.
+for (const nested of [false, true]) {
+  test(`Missions preserves its Home opener after ${nested ? 'nested' : 'direct'} Collection appearance setup`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: true });
+    const checkpoint = authoritativeCheckpoint(h.rendered.run);
+    if (nested) {
+      // Touch-like activation: the title primary still owns DOM focus.
+      h.$('shell-featured').focus();
+      h.$('shell-play').click();
+      h.$('collection-button').focus();
+      h.$('collection-button').click();
+    } else openTitleCollection(h);
+    h.$('collection-progress').querySelector('summary').click();
+    h.$('collection-choose-appearance').click();
+    await Promise.resolve();
+    assert.equal(h.$('shell-missions').open, true);
+    assert.equal(h.doc.activeElement.id, 'body-select');
+    h.$('shell-missions-back').click();
+    await Promise.resolve();
+    h.frame(0);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.doc.activeElement.id, 'shell-play');
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual(h.errors, []);
+  });
+}
+
+for (const unavailable of ['disabled', 'hidden', 'detached']) {
+  test(`Missions Back uses an available Home fallback when its opener is ${unavailable}`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: true });
+    h.$('shell-play').click();
+    const opener = h.$('shell-play');
+    if (unavailable === 'detached') opener.remove();
+    else opener[unavailable] = true;
+    h.$('shell-missions-back').click();
+    await Promise.resolve();
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.doc.activeElement.id, 'shell-featured');
+    assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
+}
+for (const replacement of ['dialog', 'focus', 'background']) {
+  test(`Missions close callback retains newer ${replacement} ownership before reopening Home`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: true });
+    h.$('shell-play').click();
+    const close = h.$('shell-missions').close;
+    h.$('shell-missions').close = function () {
+      close.call(this);
+      if (replacement === 'dialog') {
+        h.$('settings-dialog').showModal();
+        h.$('settings-dialog').querySelector('button').focus();
+      } else if (replacement === 'focus') h.$('shell-settings').focus();
+      else h.doc.hidden = true;
+    };
+    h.$('shell-missions-back').click();
+    const focused = h.doc.activeElement;
+    await Promise.resolve();
+    assert.equal(h.$('shell-home').open, false);
+    assert.equal(h.doc.activeElement, focused);
+    if (replacement === 'dialog') assert.equal(h.$('settings-dialog').open, true);
+    if (replacement === 'focus') assert.equal(focused.id, 'shell-settings');
+    h.doc.hidden = false;
+    assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
+}
+test('Missions return cannot cover a newer dialog established by its Home pause callback', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: true });
+  // Dispose the complete host first: this component-only callback boundary has
+  // one actual shell/navigation owner and no second simulation/controller loop.
+  h.win.emit('pagehide', { persisted: false });
+  let replace = false;
+  const shell = attachGameShell({
+    document: h.doc,
+    initial: false,
+    canContinue: () => false,
+    pause() {
+      if (!replace) return;
+      h.$('settings-dialog').showModal();
+      h.$('settings-dialog').querySelector('button').focus();
+    },
+  });
+  t.after(() => shell.destroy());
+  h.$('shell-play').click();
+  replace = true;
+  h.$('shell-missions-back').click();
+  const focused = h.doc.activeElement;
+  await Promise.resolve();
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.doc.activeElement, focused);
+  assert.ok(h.$('settings-dialog').contains(focused));
+});
+
+for (const replacement of ['dispose', 'home']) {
+  test(`direct Mission brief stops before moving its view after a ${replacement} pause callback`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t);
+    h.win.emit('pagehide', { persisted: false });
+    let shell,
+      replace = true;
+    const originalParent = h.$('mission-brief-unit').parentNode;
+    shell = attachGameShell({
+      document: h.doc,
+      initial: false,
+      canContinue: () => false,
+      pause() {
+        if (!replace) return;
+        replace = false;
+        if (replacement === 'dispose') shell.destroy();
+        else shell.openHome();
+      },
+    });
+    t.after(() => shell.destroy());
+    assert.doesNotThrow(() => h.$('overlay-brief').click());
+    await Promise.resolve();
+    assert.equal(h.$('shell-missions').open, false);
+    assert.equal(h.$('shell-missions').dataset.view, undefined);
+    assert.equal(h.$('mission-brief-unit').parentNode, originalParent);
+    assert.equal(h.$('shell-home').open, replacement === 'home');
+    assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
+}

@@ -1,0 +1,87 @@
+{
+  "status": "COMPOSED_SCOPED_CHECKS_PASS_BOTH_RUNTIMES",
+  "base": "965f2049cb273b93d0258ee43cd806c62d479421",
+  "branch": "codex/p03-backup-feedback",
+  "sourcePaths": 9,
+  "patch": {
+    "path": "composed.patch",
+    "bytes": 34018,
+    "sha256": "3dae8dac61c33ea4aa7a16ebbd9a63dce3182df241d1dbec03a62c315c79d5f0"
+  },
+  "sourcePins": {
+    "path": "composed-pins.json",
+    "bytes": 2839,
+    "sha256": "aa8580cbe2eb094a75c245cb73b119f4618f37cd358fee3fbed0bd88728c5e6b"
+  },
+  "runtimePins": {
+    "game/app.mjs": "8eded9082a16787c87a5e0507e69fd566e0a597405014f91934e6eaacc11f950",
+    "game/ui/game-shell.mjs": "f36217b0338d105e3c12f2df139cff26adc6143fdbc8cdb4698cef687bd50cab"
+  },
+  "runs": [
+    {
+      "receipt": {
+        "path": "runs/node20/receipt.json",
+        "bytes": 1118,
+        "sha256": "f56a2de2d362acff8dc0debfb1c4bf084ac1879c6682327fe9612fdc09a63e18"
+      },
+      "counts": {
+        "tests": 102,
+        "pass": 102,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 106.34050162500353,
+      "inputCount": 324,
+      "inputBytes": 32325539,
+      "inputManifestSha256": "1c27fdb1d957e1c32f108a7b30e83d7500fcb1d2f8ce4bc61f720ae66d718089"
+    },
+    {
+      "receipt": {
+        "path": "runs/node22/receipt.json",
+        "bytes": 1116,
+        "sha256": "19c2270364c3ac337f7a142c19350be405209c12838a5eb8786239c96292059f"
+      },
+      "counts": {
+        "tests": 102,
+        "pass": 102,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "elapsedSeconds": 87.2651696249959,
+      "inputCount": 324,
+      "inputBytes": 32325539,
+      "inputManifestSha256": "1c27fdb1d957e1c32f108a7b30e83d7500fcb1d2f8ce4bc61f720ae66d718089"
+    }
+  ],
+  "preservation": {
+    "backupFourOtherBodiesUnchanged": true,
+    "backupSkillAppendByteExact": true,
+    "missionsFourOtherBodiesByteExact": true,
+    "onlySkillComposition": "One existing Missions line replacement plus exact backup append",
+    "version": "0.60.7 unchanged; proposed 0.60.8 remains parent-owned",
+    "indexEmpty": true,
+    "commitsOrRemoteMutations": false
+  },
+  "staticChecks": {
+    "path": "static/receipt.json",
+    "bytes": 1974,
+    "sha256": "e9ea67443e504cd51c8ccd9f084e6fd28f2a92311a8c97cb81560a0fc13aae86"
+  },
+  "nativeReferences": {
+    "path": "native-references.json",
+    "bytes": 1243,
+    "sha256": "e9d506e23c6e4a7e5e63c1fa1b0e4dc294d5074e6a2c0101e59e9be2ef2b0316"
+  },
+  "evidenceBoundaries": "Original baseline failures and 80de predecessor checks remain separately retained. Final f362 Missions successor passed 74/74 before composition. This actual composed tree then passed 102/102 on both runtimes. Root native reports distinguish predecessor Import/Undo and nested return from final shell Home/Brief returns. No whole-phase, physical input, offline or public acceptance claimed.",
+  "remaining": [
+    "Parent final hunk review and version approval",
+    "Integrate required source ancestry and retain finite evidence",
+    "Commit and full hosted gates for the final intended source",
+    "Immutable release and public byte/player verification",
+    "Physical input and full P03/P05/P18 remain separate"
+  ]
+}

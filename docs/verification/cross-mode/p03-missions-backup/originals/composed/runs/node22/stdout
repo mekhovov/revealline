@@ -1,0 +1,627 @@
+TAP version 13
+# Subtest: Collection file Import and Undo return Home without inventing a cancelled pack launch
+ok 1 - Collection file Import and Undo return Home without inventing a cancelled pack launch
+  ---
+  duration_ms: 1228.571459
+  type: 'test'
+  ...
+# Subtest: blur during the actual held backup lock does not announce a pack cancellation or autoplay
+ok 2 - blur during the actual held backup lock does not announce a pack cancellation or autoplay
+  ---
+  duration_ms: 941.37675
+  type: 'test'
+  ...
+# Subtest: coordinated import journals original bytes before writes and commits profile in replace mode
+ok 3 - coordinated import journals original bytes before writes and commits profile in replace mode
+  ---
+  duration_ms: 5.040167
+  type: 'test'
+  ...
+# Subtest: explicit guarded replacement repairs corrupt prior packs and profile while preserving original recovery bytes
+ok 4 - explicit guarded replacement repairs corrupt prior packs and profile while preserving original recovery bytes
+  ---
+  duration_ms: 2.562083
+  type: 'test'
+  ...
+# Subtest: failed finalization after guarded corrupt-profile replacement restores exact prior profile and pack bytes
+ok 5 - failed finalization after guarded corrupt-profile replacement restores exact prior profile and pack bytes
+  ---
+  duration_ms: 0.87825
+  type: 'test'
+  ...
+# Subtest: a journal write failure performs no player-data writes
+ok 6 - a journal write failure performs no player-data writes
+  ---
+  duration_ms: 0.419709
+  type: 'test'
+  ...
+# Subtest: each apply-stage failure rolls back exact raw values and absent entries
+ok 7 - each apply-stage failure rolls back exact raw values and absent entries
+  ---
+  duration_ms: 2.793083
+  type: 'test'
+  ...
+# Subtest: startup recovery rolls back crashes after journal, packs, session or profile stages
+ok 8 - startup recovery rolls back crashes after journal, packs, session or profile stages
+  ---
+  duration_ms: 0.323875
+  type: 'test'
+  ...
+# Subtest: rollback failure retains journal and ownership until a later successful recovery
+ok 9 - rollback failure retains journal and ownership until a later successful recovery
+  ---
+  duration_ms: 0.533209
+  type: 'test'
+  ...
+# Subtest: an uncertain journal-clear error restores its record before rollback
+ok 10 - an uncertain journal-clear error restores its record before rollback
+  ---
+  duration_ms: 0.51375
+  type: 'test'
+  ...
+# Subtest: uncertain journal creation leaves recoverable metadata without changing player values
+ok 11 - uncertain journal creation leaves recoverable metadata without changing player values
+  ---
+  duration_ms: 1.555583
+  type: 'test'
+  ...
+# Subtest: malformed, wrong-target and executable journal data are preserved without game writes
+ok 12 - malformed, wrong-target and executable journal data are preserved without game writes
+  ---
+  duration_ms: 0.614625
+  type: 'test'
+  ...
+# Subtest: orphan lock cleanup requires exclusive ownership, and unprepared imports never write
+ok 13 - orphan lock cleanup requires exclusive ownership, and unprepared imports never write
+  ---
+  duration_ms: 0.667417
+  type: 'test'
+  ...
+# Subtest: same-page concurrent import is rejected while exclusive operation retains ownership
+ok 14 - same-page concurrent import is rejected while exclusive operation retains ownership
+  ---
+  duration_ms: 0.380917
+  type: 'test'
+  ...
+# Subtest: journal captures profile after ordinary writers are blocked, including concurrent pre-lock edits
+ok 15 - journal captures profile after ordinary writers are blocked, including concurrent pre-lock edits
+  ---
+  duration_ms: 0.299042
+  type: 'test'
+  ...
+# Subtest: a valid large portable attempt cannot bypass the smaller local-slot budget
+ok 16 - a valid large portable attempt cannot bypass the smaller local-slot budget
+  ---
+  duration_ms: 493.02975
+  type: 'test'
+  ...
+# Subtest: a host without exclusive locking can export but cannot mutate through full import
+ok 17 - a host without exclusive locking can export but cannot mutate through full import
+  ---
+  duration_ms: 0.476791
+  type: 'test'
+  ...
+# Subtest: uncached optional chapter failure preserves the real cut; explicit retry installs it and later offline selection uses stored content
+ok 18 - uncached optional chapter failure preserves the real cut; explicit retry installs it and later offline selection uses stored content
+  ---
+  duration_ms: 5457.053417
+  type: 'test'
+  ...
+# fpv-arcade chapter install and exact picture must become ready: settled in 3974 ms
+# Stored First Light chapter selection must settle without a new download: settled in 485 ms
+# Subtest: explicit chapter download failure stays visible on return to Title and Missions can deliberately retry
+ok 19 - explicit chapter download failure stays visible on return to Title and Missions can deliberately retry
+  ---
+  duration_ms: 4354.670375
+  type: 'test'
+  ...
+# fpv-arcade-r5 chapter install and exact picture must become ready: settled in 4007 ms
+# Subtest: a late failed chapter request cannot replace the status or run from a newer confirmed restart
+ok 20 - a late failed chapter request cannot replace the status or run from a newer confirmed restart
+  ---
+  duration_ms: 694.02175
+  type: 'test'
+  ...
+# Subtest: a successful delayed chapter choice leaves a newer Settings visit in place
+ok 21 - a successful delayed chapter choice leaves a newer Settings visit in place
+  ---
+  duration_ms: 4370.546
+  type: 'test'
+  ...
+# fpv-arcade-r5 chapter install and exact picture must become ready: settled in 286 ms
+# Subtest: blur announces a deferred Missions download cancellation and its late response cannot adopt or persist the chapter
+ok 22 - blur announces a deferred Missions download cancellation and its late response cannot adopt or persist the chapter
+  ---
+  duration_ms: 329.141917
+  type: 'test'
+  ...
+# Subtest: Mission setup keeps the original craft status in its modal and restores it after closing
+ok 23 - Mission setup keeps the original craft status in its modal and restores it after closing
+  ---
+  duration_ms: 426.283292
+  type: 'test'
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+ok 24 - direct briefing and disposal retain one craft presenter outside hidden mission content
+  ---
+  duration_ms: 306.2725
+  type: 'test'
+  ...
+# Subtest: title has five game destinations, quick sound and the release catalog; Workshop and mission Back preserve an unstarted flight
+ok 25 - title has five game destinations, quick sound and the release catalog; Workshop and mission Back preserve an unstarted flight
+  ---
+  duration_ms: 309.95525
+  type: 'test'
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 26 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 402.803833
+  type: 'test'
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+ok 27 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+  ---
+  duration_ms: 422.276958
+  type: 'test'
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 28 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 364.099
+  type: 'test'
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+ok 29 - Missions button returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 888.075708
+  type: 'test'
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+ok 30 - Missions escape returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 869.163833
+  type: 'test'
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+ok 31 - Missions controller returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1327.578208
+  type: 'test'
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+ok 32 - Missions button returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 835.804792
+  type: 'test'
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+ok 33 - Missions escape returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 820.850792
+  type: 'test'
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+ok 34 - Missions controller returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 1912.805
+  type: 'test'
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+ok 35 - Missions button returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 825.468333
+  type: 'test'
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+ok 36 - Missions escape returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1057.918292
+  type: 'test'
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+ok 37 - Missions controller returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1867.672834
+  type: 'test'
+  ...
+# Subtest: Back to flight remains an intentional exit from title Missions
+ok 38 - Back to flight remains an intentional exit from title Missions
+  ---
+  duration_ms: 278.525041
+  type: 'test'
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+ok 39 - controller Back retains a cancellation warning when a transaction keeps its dialog open
+  ---
+  duration_ms: 315.69925
+  type: 'test'
+  ...
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 40 - opening order owns controller scope across reversed DOM order, Back and fresh reopen
+  ---
+  duration_ms: 2.749834
+  type: 'test'
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 41 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+  ---
+  duration_ms: 0.796458
+  type: 'test'
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus hidden/at-close
+ok 42 - modal close keeps stack cleanup but does not restore focus hidden/at-close
+  ---
+  duration_ms: 0.261917
+  type: 'test'
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus hidden/after-close
+ok 43 - modal close keeps stack cleanup but does not restore focus hidden/after-close
+  ---
+  duration_ms: 0.126
+  type: 'test'
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus blur/at-close
+ok 44 - modal close keeps stack cleanup but does not restore focus blur/at-close
+  ---
+  duration_ms: 0.217
+  type: 'test'
+  ...
+# Subtest: modal close keeps stack cleanup but does not restore focus blur/after-close
+ok 45 - modal close keeps stack cleanup but does not restore focus blur/after-close
+  ---
+  duration_ms: 0.147291
+  type: 'test'
+  ...
+# Subtest: actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+ok 46 - actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+  ---
+  duration_ms: 584.096042
+  type: 'test'
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 47 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+  ---
+  duration_ms: 388.137709
+  type: 'test'
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 48 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 872.249084
+  type: 'test'
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 49 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 875.83025
+  type: 'test'
+  ...
+# Subtest: Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+ok 50 - Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+  ---
+  duration_ms: 461.857333
+  type: 'test'
+  ...
+# Subtest: Collection disclosure ends reading on collapse without stealing later focus
+ok 51 - Collection disclosure ends reading on collapse without stealing later focus
+  ---
+  duration_ms: 450.781125
+  type: 'test'
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 52 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+  ---
+  duration_ms: 943.203916
+  type: 'test'
+  ...
+# Subtest: title Settings returns to its title opener after controller Back or native Escape
+ok 53 - title Settings returns to its title opener after controller Back or native Escape
+  ---
+  duration_ms: 405.582958
+  type: 'test'
+  ...
+# Subtest: opening Settings during a flight keeps its paused-flight return instead of opening the title
+ok 54 - opening Settings during a flight keeps its paused-flight return instead of opening the title
+  ---
+  duration_ms: 727.77575
+  type: 'test'
+  ...
+# Subtest: title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+ok 55 - title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+  ---
+  duration_ms: 513.018083
+  type: 'test'
+  ...
+# Subtest: Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+ok 56 - Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+  ---
+  duration_ms: 652.358042
+  type: 'test'
+  ...
+# Subtest: title picture controller returns through Collection to its exact title opener
+ok 57 - title picture controller returns through Collection to its exact title opener
+  ---
+  duration_ms: 283.689959
+  type: 'test'
+  ...
+# Subtest: title picture escape returns through Collection to its exact title opener
+ok 58 - title picture escape returns through Collection to its exact title opener
+  ---
+  duration_ms: 249.630833
+  type: 'test'
+  ...
+# Subtest: title picture close button returns through Collection to its exact title opener
+ok 59 - title picture close button returns through Collection to its exact title opener
+  ---
+  duration_ms: 253.17
+  type: 'test'
+  ...
+# Subtest: picture Replay deliberately leaves title and Collection for the selected ready briefing
+ok 60 - picture Replay deliberately leaves title and Collection for the selected ready briefing
+  ---
+  duration_ms: 284.297875
+  type: 'test'
+  ...
+# Subtest: Collection Choose appearance deliberately leaves title for Missions setup
+ok 61 - Collection Choose appearance deliberately leaves title for Missions setup
+  ---
+  duration_ms: 297.038959
+  type: 'test'
+  ...
+# Subtest: Collection resets its return label from title to a direct paused-flight visit
+ok 62 - Collection resets its return label from title to a direct paused-flight visit
+  ---
+  duration_ms: 836.940208
+  type: 'test'
+  ...
+# Subtest: programmatic Collection after a real win does not refocus a hidden opener
+ok 63 - programmatic Collection after a real win does not refocus a hidden opener
+  ---
+  duration_ms: 8222.550375
+  type: 'test'
+  ...
+# Subtest: title Workshop shell-library returns through actual openers for button, Escape and controller Back
+ok 64 - title Workshop shell-library returns through actual openers for button, Escape and controller Back
+  ---
+  duration_ms: 563.171167
+  type: 'test'
+  ...
+# Subtest: title Workshop shell-help returns through actual openers for button, Escape and controller Back
+ok 65 - title Workshop shell-help returns through actual openers for button, Escape and controller Back
+  ---
+  duration_ms: 505.181458
+  type: 'test'
+  ...
+# Subtest: paused flight Workshop shell-library returns through actual openers for button, Escape and controller Back
+ok 66 - paused flight Workshop shell-library returns through actual openers for button, Escape and controller Back
+  ---
+  duration_ms: 1317.082458
+  type: 'test'
+  ...
+# Subtest: paused flight Workshop shell-help returns through actual openers for button, Escape and controller Back
+ok 67 - paused flight Workshop shell-help returns through actual openers for button, Escape and controller Back
+  ---
+  duration_ms: 1243.66575
+  type: 'test'
+  ...
+# Subtest: Workshop Library explicit challenge selection leaves retained parents from title
+ok 68 - Workshop Library explicit challenge selection leaves retained parents from title
+  ---
+  duration_ms: 807.719167
+  type: 'test'
+  ...
+# Subtest: Workshop Library explicit challenge selection leaves retained parents from paused flight
+ok 69 - Workshop Library explicit challenge selection leaves retained parents from paused flight
+  ---
+  duration_ms: 1401.7225
+  type: 'test'
+  ...
+# Subtest: Workshop Library resume-save returns a verified saved cut to its paused field
+ok 70 - Workshop Library resume-save returns a verified saved cut to its paused field
+  ---
+  duration_ms: 1462.981042
+  type: 'test'
+  ...
+# Subtest: Workshop Library import-save returns a verified saved cut to its paused field
+ok 71 - Workshop Library import-save returns a verified saved cut to its paused field
+  ---
+  duration_ms: 2177.191458
+  type: 'test'
+  ...
+# Subtest: Team departure button stays at the actual Missions opener without resuming the saved cut
+ok 72 - Team departure button stays at the actual Missions opener without resuming the saved cut
+  ---
+  duration_ms: 1380.916709
+  type: 'test'
+  ...
+# Subtest: Team departure escape stays at the actual Missions opener without resuming the saved cut
+ok 73 - Team departure escape stays at the actual Missions opener without resuming the saved cut
+  ---
+  duration_ms: 1402.272292
+  type: 'test'
+  ...
+# Subtest: Team departure controller stays at the actual Missions opener without resuming the saved cut
+ok 74 - Team departure controller stays at the actual Missions opener without resuming the saved cut
+  ---
+  duration_ms: 1356.761042
+  type: 'test'
+  ...
+# Subtest: actual nested Collection picture Tab wraps only its current modal and close restores the earned card
+ok 75 - actual nested Collection picture Tab wraps only its current modal and close restores the earned card
+  ---
+  duration_ms: 209.26875
+  type: 'test'
+  ...
+# Subtest: Missions preserves its Home opener after direct Collection appearance setup
+ok 76 - Missions preserves its Home opener after direct Collection appearance setup
+  ---
+  duration_ms: 328.390208
+  type: 'test'
+  ...
+# Subtest: Missions preserves its Home opener after nested Collection appearance setup
+ok 77 - Missions preserves its Home opener after nested Collection appearance setup
+  ---
+  duration_ms: 328.838958
+  type: 'test'
+  ...
+# Subtest: Missions Back uses an available Home fallback when its opener is disabled
+ok 78 - Missions Back uses an available Home fallback when its opener is disabled
+  ---
+  duration_ms: 295.933917
+  type: 'test'
+  ...
+# Subtest: Missions Back uses an available Home fallback when its opener is hidden
+ok 79 - Missions Back uses an available Home fallback when its opener is hidden
+  ---
+  duration_ms: 357.814417
+  type: 'test'
+  ...
+# Subtest: Missions Back uses an available Home fallback when its opener is detached
+ok 80 - Missions Back uses an available Home fallback when its opener is detached
+  ---
+  duration_ms: 291.640208
+  type: 'test'
+  ...
+# Subtest: Missions close callback retains newer dialog ownership before reopening Home
+ok 81 - Missions close callback retains newer dialog ownership before reopening Home
+  ---
+  duration_ms: 303.837583
+  type: 'test'
+  ...
+# Subtest: Missions close callback retains newer focus ownership before reopening Home
+ok 82 - Missions close callback retains newer focus ownership before reopening Home
+  ---
+  duration_ms: 321.64525
+  type: 'test'
+  ...
+# Subtest: Missions close callback retains newer background ownership before reopening Home
+ok 83 - Missions close callback retains newer background ownership before reopening Home
+  ---
+  duration_ms: 313.771625
+  type: 'test'
+  ...
+# Subtest: Missions return cannot cover a newer dialog established by its Home pause callback
+ok 84 - Missions return cannot cover a newer dialog established by its Home pause callback
+  ---
+  duration_ms: 312.90925
+  type: 'test'
+  ...
+# Subtest: direct Mission brief stops before moving its view after a dispose pause callback
+ok 85 - direct Mission brief stops before moving its view after a dispose pause callback
+  ---
+  duration_ms: 323.344291
+  type: 'test'
+  ...
+# Subtest: direct Mission brief stops before moving its view after a home pause callback
+ok 86 - direct Mission brief stops before moving its view after a home pause callback
+  ---
+  duration_ms: 438.691417
+  type: 'test'
+  ...
+# Subtest: immediate: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+ok 87 - immediate: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+  ---
+  duration_ms: 1909.330042
+  type: 'test'
+  ...
+# Subtest: immediate: controller brief/read/Back and held direction retain the paused flight
+ok 88 - immediate: controller brief/read/Back and held direction retain the paused flight
+  ---
+  duration_ms: 2337.311
+  type: 'test'
+  ...
+# Subtest: grid-center: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+ok 89 - grid-center: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+  ---
+  duration_ms: 1755.618667
+  type: 'test'
+  ...
+# Subtest: grid-center: controller brief/read/Back and held direction retain the paused flight
+ok 90 - grid-center: controller brief/read/Back and held direction retain the paused flight
+  ---
+  duration_ms: 2346.476834
+  type: 'test'
+  ...
+# Subtest: focused brief restores exact picker placement, native Back and normal missions across repeated openings
+ok 91 - focused brief restores exact picker placement, native Back and normal missions across repeated openings
+  ---
+  duration_ms: 422.855292
+  type: 'test'
+  ...
+# Subtest: long brief has scoped fluid reading layout, explicit body sizes and Large preference without simulation changes
+ok 92 - long brief has scoped fluid reading layout, explicit body sizes and Large preference without simulation changes
+  ---
+  duration_ms: 325.051375
+  type: 'test'
+  ...
+# Subtest: an imported authored arcade scenario is still labeled practice
+ok 93 - an imported authored arcade scenario is still labeled practice
+  ---
+  duration_ms: 258.160417
+  type: 'test'
+  ...
+# Subtest: First Flight keeps its own lesson reader and contextual label
+ok 94 - First Flight keeps its own lesson reader and contextual label
+  ---
+  duration_ms: 223.66075
+  type: 'test'
+  ...
+# Subtest: ordinary manual missions show the Tactical edition label
+ok 95 - ordinary manual missions show the Tactical edition label
+  ---
+  duration_ms: 269.037875
+  type: 'test'
+  ...
+# Subtest: only an ordinary validated Arcade action policy receives the Arcade label
+ok 96 - only an ordinary validated Arcade action policy receives the Arcade label
+  ---
+  duration_ms: 4964.018708
+  type: 'test'
+  ...
+# Validated Arcade chapter install and exact picture must become ready: settled in 4693 ms
+# Subtest: startup adopts persisted Large and a deliberate Standard change survives an actual app reload
+ok 97 - startup adopts persisted Large and a deliberate Standard change survives an actual app reload
+  ---
+  duration_ms: 716.696916
+  type: 'test'
+  ...
+# Subtest: immediate: changing text size in Settings preserves the paused live cut and its recorded continuation
+ok 98 - immediate: changing text size in Settings preserves the paused live cut and its recorded continuation
+  ---
+  duration_ms: 838.511334
+  type: 'test'
+  ...
+# Subtest: grid-center: changing text size in Settings preserves the paused live cut and its recorded continuation
+ok 99 - grid-center: changing text size in Settings preserves the paused live cut and its recorded continuation
+  ---
+  duration_ms: 853.86275
+  type: 'test'
+  ...
+# Subtest: a failed preference write keeps the selected session size and old stored bytes until a later successful save
+ok 100 - a failed preference write keeps the selected session size and old stored bytes until a later successful save
+  ---
+  duration_ms: 569.815208
+  type: 'test'
+  ...
+# Subtest: an unrelated host preference change applies the actual merged stored size before an explicit override
+ok 101 - an unrelated host preference change applies the actual merged stored size before an explicit override
+  ---
+  duration_ms: 573.498042
+  type: 'test'
+  ...
+# Subtest: actual complete-backup import and Undo adopt text size while preserving the verified suspended flight
+ok 102 - actual complete-backup import and Undo adopt text size while preserving the verified suspended flight
+  ---
+  duration_ms: 1565.030083
+  type: 'test'
+  ...
+1..102
+# tests 102
+# suites 0
+# pass 102
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86872.84325
