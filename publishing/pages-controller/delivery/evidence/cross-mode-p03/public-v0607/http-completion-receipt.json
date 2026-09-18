@@ -1,0 +1,72 @@
+{
+  "status": "PASS_FULL_HTTP_AND_ROW_RECONCILIATION_WITH_FRESH_AFTER_OBSERVATION",
+  "at": "2026-09-18T00:19:32.390653+00:00",
+  "checkExit": 0,
+  "auditExit": 0,
+  "rowReviewExit": 0,
+  "afterObserverExit": 0,
+  "files": 2847,
+  "bytes": 640138824,
+  "attempts": 2849,
+  "failedAttempts": 2,
+  "retries": 2,
+  "failedFiles": 0,
+  "uninspectedFiles": 0,
+  "skipped": [],
+  "reportSha256": "31b3246110287f140e2a83fae0df7285abfdebb838af40fd3ab97a01727f9e10",
+  "rowReviewSha256": "2611edcf7025d1cfdd8e3a9fa8795a956528b0f307a5c8ba15932cb276a312b9",
+  "afterObservationSha256": "b9dbb59362e9bcac134464abac82947799b0248e5eb5fef667c43916abca0ca0",
+  "afterObservedAt": "2026-09-18T00:18:50.430514+00:00",
+  "beforeAfterRawBodiesEqual": {
+    "main.json": true,
+    "wrapper.json": true,
+    "run.json": true,
+    "deployment.json": true,
+    "statuses.json": true
+  },
+  "refreshRequestSha256": "63049ad1078b0fccde145488f6175f0a1e4ae7f7f3dd736dd42038205e90adaa",
+  "freshReleaseTagRefreshPendingRootRequestReview": true,
+  "publicAcceptance": false,
+  "pins": [
+    {
+      "path": "audit-check.stdout",
+      "bytes": 2360,
+      "sha256": "2f813ba1450407faced4a1378e294b849643109d49598c2f4d2efe5f6467017d"
+    },
+    {
+      "path": "audit-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit-complete-1.stdout",
+      "bytes": 3763,
+      "sha256": "31b3246110287f140e2a83fae0df7285abfdebb838af40fd3ab97a01727f9e10"
+    },
+    {
+      "path": "audit-complete-1.stderr",
+      "bytes": 1542,
+      "sha256": "9b191b107b247adcf67595f3ca9277c0250f71ec0589ea72c704c11580f6bc8d"
+    },
+    {
+      "path": "review-public-complete-1.stdout",
+      "bytes": 225,
+      "sha256": "27bb147ce7838a0449e17349d1791251411bdb00d18554891bcc596d7ced9324"
+    },
+    {
+      "path": "review-public-complete-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "observer-after-1.stdout",
+      "bytes": 1335,
+      "sha256": "c7f8a38d9652c2571c77205564aeea85930e607db379b8730fa21b3ed1570ffa"
+    },
+    {
+      "path": "observer-after-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

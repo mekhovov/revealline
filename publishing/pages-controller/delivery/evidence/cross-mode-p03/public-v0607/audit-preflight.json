@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-18T00:16:09.302014+00:00",
+  "status": "PASS_EXACT_ROOT_BINDING_AND_HELPERS",
+  "bindingSha256": "df58f47e609a0ea91c574af1846334a12212f22d2718564134d24b1d4bf8b481",
+  "authorityPins": 9,
+  "helperPins": 10,
+  "freeBytes": 806981632,
+  "reserveBytes": 536870912,
+  "bodyPayloadStorage": false
+}
