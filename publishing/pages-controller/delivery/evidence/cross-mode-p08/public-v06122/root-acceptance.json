@@ -1,0 +1,56 @@
+{
+  "status": "ROOT_ACCEPTED_PUBLIC_ACTOR_PRESENTATION_CORRECTION",
+  "at": "2026-09-18T20:49:37.572546+00:00",
+  "version": "v0.61.22",
+  "source": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+  "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+  "sourcePullRequest": 139,
+  "publisher": "f5ecf8e165441f49bf47f0ae5c33e064f6303347",
+  "publisherTree": "85bd7f887568a20120cfe1e6c1cda7a4c29440d6",
+  "publisherPullRequest": 147,
+  "releaseId": 391751801,
+  "runId": 35392056689,
+  "deploymentId": 6532365920,
+  "publicURL": "https://mekhovov.github.io/revealline/releases/v0.61.22/site/game/",
+  "byteAudit": {
+    "files": 3230,
+    "bytes": 642851363,
+    "failedFiles": 0,
+    "retries": 0,
+    "skippedFiles": 0
+  },
+  "scope": "Named P08-A readability/inset correction in actual Solo/Versus/Team play. Keep existing enemy minimums16CSSpx phone/24desktop; player illustration inset does not change collision, trail endpoints, scoring or simulation. Team separately adopts approved art revision30. Not all actor bodies grow.",
+  "qualification": "5922tests/466files in each of two hosted families, both Node20.19.6; focused Node20/22 evidence separate. Prior ambiguous full-Node20/22 prose is corrected in explicit sidecars, never by replacing original qualification.",
+  "featureAccepted": true,
+  "parentPhaseAccepted": false,
+  "gameComplete": false,
+  "records": [
+    {
+      "path": "tools/runs/public-r1/report.json",
+      "bytes": 6061,
+      "sha256": "d22ae047e10aa6721a90482ecf8fc805ab391f43cc2a4ba373936d9f86c7b3ee"
+    },
+    {
+      "path": "public-row-review-public-r1.json",
+      "bytes": 3421,
+      "sha256": "6945c0462417e0f9e2464b463014017b2ce63fdb7083ae8095fde311e56c84db"
+    },
+    {
+      "path": "after-http-authorities-public-r1/result.json",
+      "bytes": 7564,
+      "sha256": "43ba91c18e8b8820baaab3812b7aae153f4a2baf0577461379b992c7d6f9fce1"
+    },
+    {
+      "path": "root-public-native-actors.json",
+      "bytes": 3538,
+      "sha256": "79fa3123ac1cf66ce24eae4b2c3eff0e030a8fecdca3093e8be13b4d4bce3028"
+    }
+  ],
+  "remaining": [
+    "P03/P05 narrow Pause Large-text wrapping",
+    "v0.61.23 qualified focus correction not yet released",
+    "All-role/detail/contrast/reduced-effects parity",
+    "Complete input and physical hardware qualification",
+    "Content, audio, authoring, progression, campaigns and remaining approved phases"
+  ]
+}
