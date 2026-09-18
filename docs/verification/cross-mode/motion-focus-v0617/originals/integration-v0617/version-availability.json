@@ -1,0 +1,72 @@
+{
+  "at": "2026-09-18T06:00:06.823032+00:00",
+  "status": "UNUSED_IN_EXACT_CHECKED_LOCAL_AND_REMOTE_REFS_AND_RELEASE_DESCRIPTOR",
+  "version": "0.61.7",
+  "checks": [
+    {
+      "name": "local-refs",
+      "command": [
+        "git",
+        "for-each-ref",
+        "--format=%(refname) %(objectname)",
+        "refs/tags/v0.61.7",
+        "refs/heads/codex/p03-motion-focus-v0617"
+      ],
+      "exitCode": 0,
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/integration-v0617/local-refs.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/integration-v0617/local-refs.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "remote-refs",
+      "command": [
+        "git",
+        "ls-remote",
+        "--heads",
+        "--tags",
+        "origin",
+        "refs/tags/v0.61.7",
+        "refs/tags/v0.61.7^{}",
+        "refs/heads/codex/p03-motion-focus-v0617"
+      ],
+      "exitCode": 0,
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/integration-v0617/remote-refs.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/integration-v0617/remote-refs.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "release-descriptor",
+      "command": [
+        "/opt/homebrew/bin/gh",
+        "api",
+        "repos/mekhovov/revealline/releases/tags/v0.61.7"
+      ],
+      "exitCode": 1,
+      "stdout": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/integration-v0617/release-descriptor.stdout",
+        "bytes": 133,
+        "sha256": "010563d2cfb8f1e87f700936ce59ee3a33364da46e3db41b0049227918ece74d"
+      },
+      "stderr": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-motion-focus-rotation-4fd8/integration-v0617/release-descriptor.stderr",
+        "bytes": 25,
+        "sha256": "d2c8985c89b29a842ac4946d13bdbc297709f44f20bb968faf9682664b211db6"
+      }
+    }
+  ],
+  "mutation": false
+}

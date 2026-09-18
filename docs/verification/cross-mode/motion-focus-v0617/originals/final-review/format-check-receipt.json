@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+    "--config",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.prettierrc.json",
+    "--check",
+    "authoring/motion-lab/README.md",
+    "authoring/motion-lab/display.mjs",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "game/test/motion-lab-display-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation",
+  "at": "2026-09-18T05:33:37.938711+00:00",
+  "exitCode": 0,
+  "stdout": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/format-check.stdout",
+    "bytes": 66,
+    "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+  },
+  "stderr": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/final-review/format-check.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
