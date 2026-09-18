@@ -1,0 +1,7 @@
+{
+  "at": "2026-09-18T00:07:20.999955+00:00",
+  "status": "ROOT_REVIEWED_EXACT_SMALL_INTAKE",
+  "helperChanges": "Literal identities only; unchanged receipt and HTTP engines",
+  "requestSha256": "07d933fbbfdeec10790d4c952b40fdf16dc8e8f3c2de123bb481eea379861e47",
+  "phaseAccepted": false
+}

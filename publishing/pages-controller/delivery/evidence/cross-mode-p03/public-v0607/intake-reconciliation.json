@@ -1,0 +1,72 @@
+{
+  "status": "PASS_SCOPED_UNREVIEWED_INTAKE_RECONCILIATION",
+  "at": "2026-09-18T00:14:36.143468+00:00",
+  "intakeExit": 0,
+  "artifactGetCount": 1,
+  "receiptZipBytes": 134919,
+  "receiptMembers": 2,
+  "authorityPinsRehashed": 9,
+  "publishedAssetDescriptors": 9,
+  "files": 2847,
+  "bytes": 640138824,
+  "canonicalCurrentRows": 693,
+  "priorCatalogRowsPreserved": 77,
+  "catalogRows": 78,
+  "archiveAdmissions": 20,
+  "archive20Pins": 25,
+  "frozenManifestFiles": 690,
+  "sourceRevision": "a36d62f2fc3af67e3fffcafda3656c413ca77341",
+  "sourceTree": "eaa76580e442311e87e6761a7d442f38f8f06652",
+  "controllerCommit": "00a043d08c235422e9dbebef82dc5e0837da6667",
+  "controllerTree": "53f7ddda49464f68a2dfc9112b46f8b8fda3eee6",
+  "runId": 35289348308,
+  "deploymentId": 6514586010,
+  "latestSuccessStatusId": 18501250583,
+  "bindingSha256": "aea771c7031d9e74479ca47d343318f71b3c80d3bc9ba1fee169921746dd3aeb",
+  "inventorySha256": "b64ba8d7675e4b3f919bad13dd398d37d57f2276c0b91a09c831801bfb557ccd",
+  "bindingRemainsUnreviewed": true,
+  "httpAuditExecuted": false,
+  "publicAcceptance": false,
+  "pins": [
+    {
+      "path": "intake-live.stdout",
+      "bytes": 739,
+      "sha256": "2953775e9894871b61ba4bb2d76abf26622305f8599b38faa5151bfb18d69d81"
+    },
+    {
+      "path": "intake-live.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "intake-preflight.json",
+      "bytes": 267,
+      "sha256": "79575401f0892f7683567d399f5147b943e8cf0b3c602cf83a335c4f2bfd9116"
+    },
+    {
+      "path": "receipt-intake-main-1/result.json",
+      "bytes": 739,
+      "sha256": "2953775e9894871b61ba4bb2d76abf26622305f8599b38faa5151bfb18d69d81"
+    },
+    {
+      "path": "receipt-intake-main-1/original.zip",
+      "bytes": 134919,
+      "sha256": "ba4fd02899526287edda1fb6b76f9885352b8dced6e3cde33d9c56f6ef28dd2e"
+    },
+    {
+      "path": "receipt-intake-main-1/artifact-receipt.json",
+      "bytes": 544320,
+      "sha256": "d648d6b7eab88a856efcf383fdd4f3eea5f2d73a6908a73a0014f88130714bed"
+    },
+    {
+      "path": "receipt-intake-main-1/zip-receipt.json",
+      "bytes": 407,
+      "sha256": "4b4d206668e3fb09d546e9e2e6372a905e52c9f04b667bdd3afe6131ac9fa2fc"
+    },
+    {
+      "path": "inventory-precheck.json",
+      "bytes": 148,
+      "sha256": "43da29149e8c5f800412bf40a5b383833eca5a66a55b5ffa4af46c4819870e1e"
+    }
+  ]
+}
