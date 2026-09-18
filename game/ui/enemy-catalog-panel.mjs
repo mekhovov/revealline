@@ -299,13 +299,13 @@ export function attachEnemyCatalogPanel({
       muted: '#687b91',
     });
   }
-  function open({ draft: next } = {}) {
+  function open({ draft: next, returnFocus: opener = doc.activeElement } = {}) {
     if (disposed || busy) return false;
     if (next) {
       saved = validateEnemyCatalogDraft(next);
       draft = structuredClone(saved);
     }
-    returnFocus = doc.activeElement;
+    returnFocus = opener;
     if (!dialog.open) dialog.showModal();
     role.el.value ||= ENEMY_CATALOG[0].type;
     render();
@@ -329,8 +329,25 @@ export function attachEnemyCatalogPanel({
       report('Preparation cancelled. Your draft is unchanged.', 'cancelled');
       syncBusy();
     }
+    const previousFocus = doc.activeElement,
+      ownsFocus =
+        dialog.open &&
+        (previousFocus === doc.body ||
+          previousFocus === doc.documentElement ||
+          dialog.contains(previousFocus));
     if (dialog.open) dialog.close();
-    if (returnFocus?.isConnected) returnFocus.focus();
+    if (
+      ownsFocus &&
+      !dialog.open &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      (doc.activeElement === previousFocus ||
+        doc.activeElement === doc.body ||
+        doc.activeElement === doc.documentElement ||
+        doc.activeElement === returnFocus) &&
+      returnFocus?.isConnected
+    )
+      returnFocus.focus();
     onClose();
     return true;
   }
