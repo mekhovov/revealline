@@ -1,0 +1,23 @@
+{
+  "status": "INVENTORY_COMPARISON_ONLY_PENDING_TARGETED_HTTP",
+  "at": "2026-09-18T07:48:05.388935+00:00",
+  "oldController": "c7770eda1dbdf6d241c11496d80faa28dbcb9b2b",
+  "newController": "2b88a88681586783e80b120925a25ca3ba5d5588",
+  "files": 2947,
+  "bytes": 640997923,
+  "unchangedRows": 2947,
+  "changedRows": [],
+  "removedRows": [],
+  "pins": [
+    {
+      "path": ".cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/receipt.json",
+      "bytes": 562955,
+      "sha256": "896eef022a1a2262f3c849026e0719bed2a7a7bcc8d41a8c1d612bf7cf0c40f3"
+    },
+    {
+      "path": ".cache/archive23-main-retention-check/tools/inputs/2b88a88681586783e80b120925a25ca3ba5d5588/receipt.json",
+      "bytes": 563144,
+      "sha256": "c4462e3ff79e55ea14f873d750805c089c322c20b07332fb732f002d75d06653"
+    }
+  ]
+}

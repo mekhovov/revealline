@@ -1,0 +1,65 @@
+{
+  "status": "READY_FOR_REQUIRED_ROOT_INPUT_REVIEW_NOT_FINAL_QUALIFIED",
+  "at": "2026-09-18T07:41:23.238839+00:00",
+  "preparedBy": "/root/prepare_v608_publisher",
+  "source": {
+    "commit": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+    "tree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+    "version": "v0.61.8"
+  },
+  "files": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-input-proposal/binding.context.proposed.json",
+      "bytes": 21318,
+      "sha256": "58eb4ac5c9deb93ac867ac1f232d82be37547c78f95d1649ef8efc665857cecf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-input-proposal/root-source-review.proposed.json",
+      "bytes": 27434,
+      "sha256": "fc433aa6bbaeba0bb3ae868959bc463efd1896361d4e3a6c6cf26d7ea031de4b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-input-proposal/root-inspection-review.proposed.json",
+      "bytes": 11923,
+      "sha256": "21f5d958138e851f7d7aa043572aca651305ae67a9bf30e7e53639fbe0ba5111"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-input-proposal/source-scope.proposed.json",
+      "bytes": 48942,
+      "sha256": "5a83f49ddb7a105d1e671077c9c401c3c2a2b6509639d20381afc1cb7c9f0696"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-input-proposal/source-native-context.proposed.json",
+      "bytes": 2064,
+      "sha256": "285ce05b4e1dc52520614044eef993b89ca0c95c2d7989d0e12749817650dadc"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-input-proposal/retention-requirements.proposed.json",
+      "bytes": 1022,
+      "sha256": "4d3e774579afb853d2dd2d930972587717a4f69ea895a633c59f2bf318f9d9ff"
+    }
+  ],
+  "adapterReview": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/final-adapter-review/preparation.json",
+    "bytes": 17536,
+    "sha256": "197945a7d009df46f536df28239817e7881a66572fccd6fb03f80a0e071a67eb"
+  },
+  "completeSourceRows": 166,
+  "completeSourceBytes": 3522041,
+  "sourceOriginalPins": 93,
+  "inspectionOriginalPins": 37,
+  "uniqueOriginalsRehashed": 130,
+  "uniqueOriginalBytes": 2224429,
+  "actualCountsPerFamily": 5884,
+  "actualTestFilesPerFamily": 464,
+  "runtimeFilesInspected": 693,
+  "runtimeBytesInspected": 313157064,
+  "requiredAction": "Root must review/promote these six proposed authority files and pins before the unchanged helper can derive executable qualification context. Existing small-receipt GET authorization and agent intake reconciliation do not independently satisfy the root source/inspection-input guards.",
+  "rootApprovalFabricated": false,
+  "nativeAcceptance": false,
+  "publicAcceptance": false,
+  "finalQualificationAssembled": false,
+  "sourceAndIndexUnchanged": true,
+  "managedBytes": 4011378,
+  "freeBytes": 1271545856
+}

@@ -1,0 +1,40 @@
+{
+  "status": "ROOT_NATIVE_SCOPED_WIN_AND_CONTINUATION_PASS",
+  "observedAt": "2026-09-18T07:19:53.054667+00:00",
+  "source": "bb5e6e7787bf81232368b96845d716a808c21309",
+  "url": "http://127.0.0.1:8812/game/couch/relay-rescue.html",
+  "input": "CUA native keyboard press/release; real adapters; no injected simulation state",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "arena": "First Connection",
+  "difficulty": "Gentle",
+  "style": "Full teamwork",
+  "result": {
+    "title": "You brought it home.",
+    "coverage": 77.8,
+    "time": "0:30",
+    "jointCuts": 2,
+    "rescues": 1,
+    "interceptedSparks": 0,
+    "reserves": 5
+  },
+  "observed": [
+    "Full picture visible behind results",
+    "Retry same arena initially focused",
+    "Tab/Return Change setup returned lobby with Start focused",
+    "Three Shift+Tab reached Arena; initial Down/Return did not select, retained",
+    "Space/Down/Return selected Relay Yard; preview ready, Start focused",
+    "Return started Relay Yard, W/Up moved both craft; Escape paused",
+    "Relay Yard shows 0 / 2 anchors, 0.0%, five reserves, Resume together focused"
+  ],
+  "earlierAttemptR5": "Reached57.5%; final Escape returned lobby before result observed; terminal result unestablished, not accepted",
+  "screenshots": "Inline CUA screenshots only, not exported",
+  "limitations": [
+    "No physical-controller/touch certification",
+    "No complete Team phase acceptance",
+    "No audible listening/offline/native-store certification",
+    "Current public game remainsv0.61.1"
+  ]
+}
