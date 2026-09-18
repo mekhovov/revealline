@@ -42,5 +42,17 @@
       "originalSha256": "9c84716e7a93eefff319a609f998cb89064b335b61415cd7ed5cad2899e03f0b",
       "adaptation": "Explicit repo/base/source/tree/version CLI; absolute receipt locators. Inventory/budget/worker/entry and raw-byte checks unchanged."
     }
+  ],
+  "successorAdaptations": [
+    {
+      "baseCommit": "7db26c148cced9b51315dc24902569234061b17d",
+      "paths": [
+        "upload_source.py",
+        "upload_distribution.py",
+        "release_artifact.py"
+      ],
+      "scope": "Safe bounded Ambiguous phase/client-completed-send-count/observed-status diagnostics and receipt retention. Separately reviewed shared API lifetime changes from 1800 to 5400 seconds (90 minutes) within the unchanged 180-minute hosted upload-job timeout. Original provenance rows remain historical. Socket timeout stays 120 seconds; upload policy, member limits, preflight and final reconciliation remain unchanged. No timeout diagnosis of earlier attempts is established.",
+      "regression": "test_upload_diagnostics.py adds real loopback send/response failures and hosted-result manifest checks."
+    }
   ]
 }

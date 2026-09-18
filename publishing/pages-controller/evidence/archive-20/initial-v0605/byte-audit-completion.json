@@ -1,0 +1,67 @@
+{
+  "status": "PASS_COMPLETE_PUBLIC_BYTES_ONLY",
+  "at": "2026-09-17T20:22:27.486106+00:00",
+  "files": 695,
+  "verifiedBytes": 313159164,
+  "attempts": 695,
+  "failedAttempts": 0,
+  "failedFiles": 0,
+  "retries": 0,
+  "sourcePinsUnchanged": true,
+  "authorityBodiesBeforeAfterUnchanged": true,
+  "nativeAccepted": false,
+  "phaseAccepted": false,
+  "archiveAdmissionCreated": false,
+  "nativeGate": "Open: root reports browser provider unavailable. Full byte evidence alone does not admit archive.",
+  "pins": [
+    {
+      "path": "http/http-20260917T202103Z-cd15e93f/http-report.json",
+      "bytes": 1343,
+      "sha256": "3e801d5b95ade65a7ad50a8b5297dc5545eb5765e88e6f9b920eace64fed8ba5"
+    },
+    {
+      "path": "row-review.json",
+      "bytes": 12340,
+      "sha256": "1fe6595b3076e613dbb3ccb9ba9f3d40adc598c74b7518e52a351b7aea25681a"
+    },
+    {
+      "path": "execution-request.reviewed.json",
+      "bytes": 1726,
+      "sha256": "58135a50e15e07342c5850a9adc22c69934a2989e1a10ddd3aeaf3cacd483a94"
+    },
+    {
+      "path": "root-review.json",
+      "bytes": 480,
+      "sha256": "6e1f8bcfdbb02ab0628dc26995c92934015d534942571665ea532916f5587765"
+    },
+    {
+      "path": "root-bound-wrapper-pins.json",
+      "bytes": 306,
+      "sha256": "8f61537731315b860c2886b034470bc2e48b9d4909565378d3a163dad36934cb"
+    },
+    {
+      "path": "reconciliation.receipt.json",
+      "bytes": 238,
+      "sha256": "1e71cd60d2c31ec2d908d959f849adcf5463e059f3f8ef4c39d306446cf24241"
+    },
+    {
+      "path": "live-authorities/before-20260917T202103Z-f0706269/result.json",
+      "bytes": 2358,
+      "sha256": "67df3247738f070eaafac4c9d0e37aa946a3893b8c8f4454f4fcecdae62868e7"
+    },
+    {
+      "path": "live-authorities/after-20260917T202157Z-9f32dbec/result.json",
+      "bytes": 2356,
+      "sha256": "6dae062c1ea862b7c9b8f86457fbf1fe7d3987254c81adf51edac138bc2be937"
+    }
+  ],
+  "actualAuthorities": {
+    "archiveCommit": "861182677647a1678064b64b0d46c11999a0e731",
+    "archiveTree": "351e6b6dbfcc040dfe8ca50041dff5b4a50085a0",
+    "sourceCheckoutCommit": "e907e816b12f54475011ae23c3a4a406959a0857",
+    "runId": 35269408835,
+    "deploymentId": 6511264098,
+    "deploymentStatusId": 18493688092,
+    "receiptArtifactId": 10518087424
+  }
+}

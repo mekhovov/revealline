@@ -1,0 +1,221 @@
+{
+  "status": "AFFECTED_ROUTE_REQUIREMENTS_ONLY_NOT_BROWSER_EVIDENCE",
+  "source": "9c89f997cdbf0c8266fa65247832dcf2281d61ba",
+  "manifestSha256": "db91b245c45f97d161e88f32ba5022d4a6d9baf1d0a70a2f9fa22562dfab042b",
+  "canonicalSite": "https://mekhovov.github.io/revealline/releases/v0.60.6/site/",
+  "rows": [
+    {
+      "frozenRow": {
+        "path": "game/index.html",
+        "bytes": 75025,
+        "sha256": "98d9e31e831ca53b075e87f9545a5347bfca515ab525b612a09a928fe44dd99f"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/index.html",
+      "sourceGit": {
+        "bytes": 72497,
+        "sha256": "bad5efb9832e732e89761f1224ad1abaa7fee78315dc74f9851e37ff3ab3b169"
+      },
+      "sourceEqualsFrozen": false
+    },
+    {
+      "frozenRow": {
+        "path": "game/app.mjs",
+        "bytes": 269195,
+        "sha256": "456f845f4c104cb064abcbf23f4104aaa0aa33f0feb3384e776f05bb728b2168"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/app.mjs",
+      "sourceGit": {
+        "bytes": 269195,
+        "sha256": "456f845f4c104cb064abcbf23f4104aaa0aa33f0feb3384e776f05bb728b2168"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/ui/game-shell.mjs",
+        "bytes": 19991,
+        "sha256": "e415ef40c6879788676db9f1020c70701135d4b1b7d3b1c7677985351b01a106"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/ui/game-shell.mjs",
+      "sourceGit": {
+        "bytes": 19991,
+        "sha256": "e415ef40c6879788676db9f1020c70701135d4b1b7d3b1c7677985351b01a106"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/ui/settings-panels.mjs",
+        "bytes": 4427,
+        "sha256": "668407411e337bf5da1959b5c8d62e5b473bdbfec27d486767bee2c733d25e5b"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/ui/settings-panels.mjs",
+      "sourceGit": {
+        "bytes": 4427,
+        "sha256": "668407411e337bf5da1959b5c8d62e5b473bdbfec27d486767bee2c733d25e5b"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/ui/settings.css",
+        "bytes": 2955,
+        "sha256": "ca56c34bd71a605d89606646d83a0eb42958a359189db3590bd9ca6d07961b1a"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/ui/settings.css",
+      "sourceGit": {
+        "bytes": 2955,
+        "sha256": "ca56c34bd71a605d89606646d83a0eb42958a359189db3590bd9ca6d07961b1a"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/audio-preferences.mjs",
+        "bytes": 5918,
+        "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/audio-preferences.mjs",
+      "sourceGit": {
+        "bytes": 5918,
+        "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/display-preferences.mjs",
+        "bytes": 8285,
+        "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/display-preferences.mjs",
+      "sourceGit": {
+        "bytes": 8285,
+        "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/ui/audio-master.mjs",
+        "bytes": 5277,
+        "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/ui/audio-master.mjs",
+      "sourceGit": {
+        "bytes": 5277,
+        "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/ui/preference-restoration.mjs",
+        "bytes": 1992,
+        "sha256": "ea3bffcf8faf2c0ad508a0a92d65cd2748acb340736e01268bd933b424d1eee2"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/ui/preference-restoration.mjs",
+      "sourceGit": {
+        "bytes": 1992,
+        "sha256": "ea3bffcf8faf2c0ad508a0a92d65cd2748acb340736e01268bd933b424d1eee2"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/couch/index.html",
+        "bytes": 23912,
+        "sha256": "0c247675c2efcd545d0747d2ae209682d92ae364fb1fa59d708c23c7a93bd995"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/couch/index.html",
+      "sourceGit": {
+        "bytes": 21142,
+        "sha256": "8fa44752b10e79ba7ffd535965fb29d127de09ea2d6e2b5ef12f7e3704d19aaa"
+      },
+      "sourceEqualsFrozen": false
+    },
+    {
+      "frozenRow": {
+        "path": "game/couch/couch.mjs",
+        "bytes": 55967,
+        "sha256": "fdbf76d0ea5998102111ab72b7514b04072ac856ba919a9c1bb852976a4da6a6"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/couch/couch.mjs",
+      "sourceGit": {
+        "bytes": 55967,
+        "sha256": "fdbf76d0ea5998102111ab72b7514b04072ac856ba919a9c1bb852976a4da6a6"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/couch/couch-shell.mjs",
+        "bytes": 17277,
+        "sha256": "70d3f0e30a6fd8b0565a9072d3ceb17c8d7df3590e33c05727e9070902e22905"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/couch/couch-shell.mjs",
+      "sourceGit": {
+        "bytes": 17277,
+        "sha256": "70d3f0e30a6fd8b0565a9072d3ceb17c8d7df3590e33c05727e9070902e22905"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 24356,
+        "sha256": "87d8d0d76bfc58ec404d94fa17f8654a6d159758bb021ef457b82b234ee4af27"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/couch/relay-rescue.html",
+      "sourceGit": {
+        "bytes": 21586,
+        "sha256": "25076c69184ac46c5bf03a1a7cc779beb36c87de17584aa22901d4a31629a2e1"
+      },
+      "sourceEqualsFrozen": false
+    },
+    {
+      "frozenRow": {
+        "path": "game/couch/relay-rescue.mjs",
+        "bytes": 55585,
+        "sha256": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/couch/relay-rescue.mjs",
+      "sourceGit": {
+        "bytes": 55585,
+        "sha256": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93"
+      },
+      "sourceEqualsFrozen": true
+    },
+    {
+      "frozenRow": {
+        "path": "game/couch/relay-rescue.css",
+        "bytes": 18442,
+        "sha256": "530f365949cfe27ef189654c7d191e14dd4908f13249f3ada5f2f2a96ac1a195"
+      },
+      "requiredPublicPath": "releases/v0.60.6/site/game/couch/relay-rescue.css",
+      "sourceGit": {
+        "bytes": 18442,
+        "sha256": "530f365949cfe27ef189654c7d191e14dd4908f13249f3ada5f2f2a96ac1a195"
+      },
+      "sourceEqualsFrozen": true
+    }
+  ],
+  "requiredJourneys": [
+    "Home Settings and category navigation/Back",
+    "Home quick Sound and Settings Audio synchronization",
+    "Solo Pause \u2192 Settings \u2192 Back \u2192 explicit Resume",
+    "Versus Settings and paused quick Sound without restarting either run",
+    "Team Settings and paused quick Sound without restarting retained attempt",
+    "Game data readable complete copy and Done/Back",
+    "Archive20 retained v0.60.5 explorer \u2192 main current edition"
+  ],
+  "futureNativeRecords": [
+    "native/observations.md",
+    "native/original-pins.json"
+  ],
+  "limits": [
+    "These are required routes, not completed browser observations.",
+    "Frozen manifest rows, including built version substitutions, are authoritative; source Git pins are traceability only.",
+    "No physical input, audible listening, browser offline, 200% zoom or true BFCache claim is implied."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "status": "CACHE_ONLY_ARCHIVE20_ADMISSION_SUCCESSOR_READY_FOR_ROOT_REVIEW",
+  "base": "7db26c148cced9b51315dc24902569234061b17d",
+  "candidatePaths": 16,
+  "candidateBytes": 2247158,
+  "existingAllocationsAdmissionsPreserved": 19,
+  "existingEvidencePinsPreserved": 543,
+  "catalogRowsUnchanged": 76,
+  "archive20EvidencePins": 14,
+  "totalEvidencePins": 557,
+  "existingCandidateBodiesUnchanged": [
+    "publishing/pages-controller/allocations.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/byte-audit-completion.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/expected-inventory.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/hosted-completion.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/http-report.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/originals-index.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/originals.zip",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/row-review.json",
+    "publishing/pages-controller/evidence/archive-20/initial-v0605/source-lock.json"
+  ],
+  "browserOriginals": {
+    "files": 248,
+    "bytes": 1515264,
+    "zipBytes": 1465901,
+    "zipSha256": "cb404c41dc6d3986faf982e310f53ce16dddc4fd7f44cec1bf482bbfdebce798",
+    "crcAndEveryMemberHashVerified": true
+  },
+  "rootAcceptanceSha256": "afa69a595beb781d68f6554bb746543a68c3591e5189236d6dc2209ce24d259c",
+  "browserAdmissionSha256": "7cd71e5a89c9a0535f93742b3a48b3864f0870400668ec12c540cb5224aa713a",
+  "currentSelector": "v0.60.5",
+  "pendingPacketUnchanged": true,
+  "v0606MetadataImported": false,
+  "v0606PublicationAccepted": false,
+  "futureReleaseAndPagesBindingsRemainNull": true,
+  "validation": "Exact pin, schema/identity/reference conditions from unchanged assemble.mjs:153\u2013235 checked statically; full composed runtime validator is deferred to actual publisher integration. No historical evidence body hydration or validator relaxation.",
+  "worktreeIndexRemoteMutations": false,
+  "candidatePinsSha256": "002a6e5ca39a01823f7cc2ee6dd47eedbba1b2bb9c836730a272191f116570a7"
+}

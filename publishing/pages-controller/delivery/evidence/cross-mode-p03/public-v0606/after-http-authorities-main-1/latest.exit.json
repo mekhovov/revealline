@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-17T23:07:04.774115+00:00",
+  "command": [
+    "gh",
+    "api",
+    "repos/mekhovov/revealline/releases/latest"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "stdoutBytes": 18483,
+  "stderrBytes": 0,
+  "acceptedBytesLessThan": 2000000,
+  "timeoutSeconds": 35
+}
