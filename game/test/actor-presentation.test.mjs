@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
-import { BoardPainter } from '../ui/render.mjs';
+import { BoardPainter, playerPaintSize } from '../ui/render.mjs';
 import { rotorAnchors } from '../../authoring/motion-lab/animation.mjs';
 import {
   createActorPresentation,
@@ -147,7 +147,7 @@ test('stationary tread/walking phase stays still while idle rotor/antenna clock 
   assert.ok(c.travelPhase > b.travelPhase);
 });
 test('cosmetic size targets desktop/phone readability without altering contact radius', () => {
-  for (const css of [320, 390, 600, 1152]) {
+  for (const css of [240, 280, 288, 320, 390, 600, 1152]) {
     const scale = css / 1152,
       diameter = actorDiameter({ screenScale: scale, canvasCSSWidth: css });
     assert.ok(diameter * scale >= (css >= 480 ? 24 : 16) - 1e-9);
@@ -158,7 +158,50 @@ test('cosmetic size targets desktop/phone readability without altering contact r
     .get(actor.id);
   assert.equal(small.radius, actor.radius * 16);
   assert.ok(small.diameter > 30);
-  assert.ok(actorDiameter({ screenScale: 0.01, scale: 100 }) <= 64);
+  assert.equal(actorDiameter({ screenScale: 0.01, scale: 100 }), 240);
+});
+test('minimum-aware normal, boss and compact player frames remain finite and bounded', () => {
+  for (const [width, role, expected] of [
+    [240, 'enemy', 76.8],
+    [200, 'boss', 92.16],
+  ]) {
+    const diameter = actorDiameter({ screenScale: width / 1152, canvasCSSWidth: width, role });
+    assert.ok(Math.abs(diameter - expected) < 1e-9);
+    assert.ok(Math.abs((diameter * width) / 1152 - 16) < 1e-9);
+  }
+  const body = presets.characters['fpv-body'];
+  const image = { naturalWidth: 40, naturalHeight: 80 };
+  const options = { screenScale: 240 / 1152, canvasCSSWidth: 240, style: 'hybrid', scale: 1 };
+  const normal = playerPaintSize(body, image, options);
+  const compact = playerPaintSize({ ...body, compactMinimumCSSPixels: 20 }, image, options);
+  assert.equal(normal.diameter, 76.8);
+  assert.equal(compact.diameter, 96);
+  assert.equal(
+    playerPaintSize({ ...body, compactMinimumCSSPixels: 20 }, null, options).diameter,
+    76.8,
+  );
+  const ordinary = { ...options, screenScale: 1 };
+  for (const screenScale of [undefined, NaN, Infinity, -Infinity, null]) {
+    assert.deepEqual(
+      playerPaintSize(body, image, { ...options, screenScale }),
+      playerPaintSize(body, image, ordinary),
+    );
+    assert.equal(actorDiameter({ ...options, screenScale }), actorDiameter(ordinary));
+  }
+  for (const screenScale of [0, -1, 0.01, 0.1, 4, 1e9]) {
+    const frame = playerPaintSize(body, image, { ...options, screenScale });
+    assert.ok(Number.isFinite(frame.diameter) && frame.diameter >= 8 && frame.diameter <= 240);
+    assert.ok(Number.isFinite(frame.scale) && frame.scale > 0);
+    assert.ok(actorDiameter({ ...options, screenScale }) <= 240);
+  }
+  for (const screenScale of [2, 4]) {
+    assert.equal(actorDiameter({ ...options, screenScale }) * screenScale, 32);
+    assert.equal(actorDiameter({ ...options, screenScale, role: 'boss' }) * screenScale, 40);
+    assert.equal(
+      playerPaintSize(body, image, { ...options, screenScale }).diameter * screenScale,
+      32,
+    );
+  }
 });
 test('four themes have distinct geometric silhouettes even with identical colors', () => {
   const palette = themes[0].palette,
@@ -327,7 +370,7 @@ function playerFixture({ wide = true, css = 600, bodyId = 'fpv-body', image } = 
 for (const wide of [false, true]) {
   test(`${wide ? 'wide' : 'legacy'}: all four player rigs keep a readable bounded size across phone and desktop canvases`, () => {
     for (const bodyId of ['fpv-body', 'ukrainian-bird', 'retro-craft', 'navi-avatar']) {
-      for (const css of [320, 390, 600, 1152]) {
+      for (const css of [240, 280, 288, 320, 390, 600, 1152]) {
         const { p, s, run } = playerFixture({ wide, css, bodyId }),
           checkpoint = authoritativeCheckpoint(run);
         p.draw(s.ctx, run, FIXED_DT, { paused: true });
@@ -336,7 +379,7 @@ for (const wide of [false, true]) {
           cssSpan = (span * css) / (run.width * 16);
         assert.ok(cssSpan >= (css >= 480 ? 24 : 16) - 1e-9, `${bodyId}, ${css}px: ${cssSpan}`);
         assert.ok(cssSpan <= 32 + 1e-9);
-        assert.ok(span <= 64);
+        assert.ok(span <= Math.max(64, (16 * run.width * 16) / css) + 1e-9);
         assert.ok(
           s.calls.some(
             (call) =>
@@ -392,7 +435,7 @@ test('player scale is cosmetic, independent of actor scale, and bounded even on 
   assert.ok(span({ playerScale: 0.75 }) < ordinary);
   assert.ok(span({ playerScale: 1e9 }) <= 32);
   s.ctx.canvas.clientWidth = 160;
-  assert.ok(span({ playerScale: 1e9 }) <= 64);
+  assert.ok(Math.abs(span({ playerScale: 1e9 }) - 115.2) < 1e-9);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
 });
 

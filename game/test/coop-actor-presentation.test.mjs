@@ -141,7 +141,7 @@ const labels = (calls) => calls.filter((call) => call.name === 'fillText');
 test('five approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
   assert.deepEqual(compiled.resolved.theme, {
     id: 'fpv',
-    revision: 28,
+    revision: 30,
     name: compiled.resolved.theme.name,
   });
   assert.equal(compiled.resolved.collection, null);
@@ -190,6 +190,8 @@ test('explicit Team roles reuse prepared slots without changing actual types or 
 });
 
 for (const [width, style, source] of [
+  [240, 'hybrid', 'compact'],
+  [200, 'props', 'compact'],
   [1152, 'hybrid', 'detailed'],
   [479, 'hybrid', 'compact'],
   [1152, 'microtile', 'compact'],

@@ -17,12 +17,24 @@ const family = (id, fallback) =>
 export const ACTOR_PRESENTATION_LIMITS = Object.freeze({
   actors: 64,
   tailPoints: 3,
-  maximumLogicalSize: 64,
-  maximumBossSize: 80,
+  baseLogicalSize: 64,
+  baseBossLogicalSize: 80,
   desktopMinimum: 24,
   phoneMinimum: 16,
   maximumCSSSize: 32,
 });
+
+// Presentation scale is bounded independently of simulation/world geometry.
+export const actorScreenScale = (value) => clamp(finite(value, 1), 0.1, 4);
+export function actorLogicalLimit({ screenScale, minimumCSSSize, boss = false }) {
+  const minimum = clamp(finite(minimumCSSSize, 16), 16, 24);
+  return Math.max(
+    boss
+      ? ACTOR_PRESENTATION_LIMITS.baseBossLogicalSize
+      : ACTOR_PRESENTATION_LIMITS.baseLogicalSize,
+    minimum / actorScreenScale(screenScale),
+  );
+}
 
 export function actorRole(type) {
   return (
@@ -43,12 +55,16 @@ export function actorDiameter({
   canvasCSSWidth = 1152,
   scale = 1,
 } = {}) {
-  const s = clamp(finite(screenScale, 1), 0.1, 4),
+  const s = actorScreenScale(screenScale),
     boss = role === 'boss';
   const base = (style === 'microtile' ? 26 : style === 'props' ? 34 : 30) * (boss ? 1.3 : 1);
   const desired = base * clamp(finite(scale, 1), 0.75, 1.5);
   const minimum = canvasCSSWidth >= 480 ? 24 : 16;
-  return clamp(clamp(desired, minimum / s, (boss ? 40 : 32) / s), 18, boss ? 80 : 64);
+  return clamp(
+    clamp(desired, minimum / s, (boss ? 40 : 32) / s),
+    Math.min(18, (boss ? 40 : 32) / s),
+    actorLogicalLimit({ screenScale: s, minimumCSSSize: minimum, boss }),
+  );
 }
 
 /** Retain only previous observed positions and cosmetic clocks, never entity references. */

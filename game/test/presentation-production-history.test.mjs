@@ -412,12 +412,12 @@ test('P05 UI and P02-A audio reviews cover exact current inputs', async () => {
   }
 });
 
-test('P03 screen and motion reviews bind only the inspected current inputs', async () => {
+test('P03 screen and P08-A motion reviews bind only the inspected current inputs', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const fingerprints = {
     screens: '4f9a3429dd418dc2376c6d2b871280fd8866e4a23f1f2acc30d4775ecb013e0d',
-    motion: '39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554',
+    motion: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
   };
   const reviewed = production.document.slots.filter(
     (slot) => slot.group in fingerprints && resolved.assets[slot.id].kind === 'recipe',
@@ -428,7 +428,11 @@ test('P03 screen and motion reviews bind only the inspected current inputs', asy
     assert.equal(asset.quality.stage, 'reviewed', slot.id);
     assert.ok(asset.provenance.source.endsWith(`sha256:${fingerprints[slot.group]}`), slot.id);
     assert.ok(
-      asset.quality.evidence.some((entry) => entry.includes('Scoped P03 source review')),
+      asset.quality.evidence.some((entry) =>
+        entry.includes(
+          slot.group === 'motion' ? 'Scoped P08-A source review' : 'Scoped P03 source review',
+        ),
+      ),
       slot.id,
     );
   }
