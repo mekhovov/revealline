@@ -1,0 +1,55 @@
+{
+  "status": "PASS_NATIVE_VERTICAL_OUTLINE_CLEARANCE",
+  "at": "2026-09-18T06:00:42.662953+00:00",
+  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "displaySha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4",
+  "url": "http://127.0.0.1:54246/authoring/motion-lab/",
+  "observer": "root CUA actual browser and read-only DOM",
+  "steps": [
+    "Pause preview using visible button;390x844 portrait",
+    "NativeEnd/Left rotor27%; rotate844x390 without focus input",
+    "Repeat withLarge text via actual native combobox"
+  ],
+  "standard": {
+    "control": [
+      172.9375,
+      216.9375
+    ],
+    "field": [
+      111.34375,
+      216.9375
+    ],
+    "panel": [
+      29.890625,
+      359.890625
+    ],
+    "focus": "rotor-radius",
+    "value": ".27",
+    "pause": "Play",
+    "scrollMarginBlock": "8px"
+  },
+  "large": {
+    "control": [
+      173.171875,
+      217.171875
+    ],
+    "field": [
+      101.171875,
+      217.171875
+    ],
+    "panel": [
+      30.359375,
+      360.359375
+    ],
+    "focus": "rotor-radius",
+    "value": ".27",
+    "pause": "Play"
+  },
+  "limits": [
+    "Screenshots inline only; no exported image hashes",
+    "R2 Plain+Large native pass remains predecessor evidence; finalr3 Plain not repeated yet",
+    "Small horizontal outline right-edge clipping is not closed by vertical-margin scope",
+    "Physical rotation/touch/controller/zoom/wholeP03 remains open"
+  ],
+  "frozenBindingPath": ".cache/p03-motion-focus-rotation-4fd8/native-server-r3/binding.json"
+}

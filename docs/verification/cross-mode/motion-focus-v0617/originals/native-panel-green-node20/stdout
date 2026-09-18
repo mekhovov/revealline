@@ -1,0 +1,260 @@
+TAP version 13
+# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer
+ok 1 - Motion HTML adopts reading policy before held app startup with one explicit size writer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.538833
+  ...
+# Subtest: Motion failed app startup retains independent size controls and failed-save intent
+ok 2 - Motion failed app startup retains independent size controls and failed-save intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04875
+  ...
+# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values
+ok 3 - Motion saved and system reduction cap local choice without changing live run or authored values # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04525
+  ...
+# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume
+ok 4 - Motion local reduced choice survives shared caps and paused preference edits do not resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036875
+  ...
+# Subtest: Motion loaded body and local background survive reading changes and cached return
+ok 5 - Motion loaded body and local background survive reading changes and cached return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092125
+  ...
+# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return
+ok 6 - Motion interruption before pending startup prevents automatic start and stale frames cannot return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031084
+  ...
+# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners
+ok 7 - Motion terminal departure fences held initialization and leaves no authority or app listeners # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029208
+  ...
+# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+ok 8 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035083
+  ...
+# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+ok 9 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.08025
+  ...
+# Subtest: Motion application graph completing after terminal departure cannot remount or fetch
+ok 10 - Motion application graph completing after terminal departure cannot remount or fetch # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.089958
+  ...
+# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play
+ok 11 - Motion graph first arriving in an unfocused document starts paused until explicit Play # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.092
+  ...
+# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return
+ok 12 - Motion cached interruption before first application delivery cannot autoplay before or after return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.108833
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+ok 13 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045041
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+ok 14 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.14125
+  ...
+# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+ok 15 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045958
+  ...
+# Subtest: Motion network failure after actual delivery provides retry without taking current focus
+ok 16 - Motion network failure after actual delivery provides retry without taking current focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.171417
+  ...
+# Subtest: Motion validation failure after actual delivery provides retry without taking current focus
+ok 17 - Motion validation failure after actual delivery provides retry without taking current focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.048167
+  ...
+# Subtest: Motion terminal departure ignores a late failed preset read without exposing retry
+ok 18 - Motion terminal departure ignores a late failed preset read without exposing retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.1365
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return
+ok 19 - Motion real launcher does not take Reload focus in an hidden document or defer it until return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040375
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+ok 20 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.094667
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment
+ok 21 - Motion actual Reload retirement preserves navigation focus acquired before attachment # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032625
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment
+ok 22 - Motion actual Reload retirement preserves navigation focus acquired during attachment # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024917
+  ...
+# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+ok 23 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02175
+  ...
+# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+ok 24 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021042
+  ...
+# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+ok 25 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020375
+  ...
+# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+ok 26 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021417
+  ...
+# Subtest: Motion APNG upload derives exact static PNG bytes while retaining the original File
+ok 27 - Motion APNG upload derives exact static PNG bytes while retaining the original File # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020417
+  ...
+# Subtest: Motion GIF and WebP keep the original File source and native-image path
+ok 28 - Motion GIF and WebP keep the original File source and native-image path # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020625
+  ...
+# Subtest: Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+ok 29 - Motion superseded PNG byte read cannot allocate a URL or replace the newer preview # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019791
+  ...
+# Subtest: Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+ok 30 - Motion Clear while reading PNG bytes prevents late URL, image and status resurrection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0195
+  ...
+# Subtest: Motion cached departure invalidates the pending PNG byte read
+ok 31 - Motion cached departure invalidates the pending PNG byte read # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01975
+  ...
+# Subtest: Motion terminal departure invalidates the pending PNG byte read
+ok 32 - Motion terminal departure invalidates the pending PNG byte read # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062625
+  ...
+# Subtest: Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+ok 33 - Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0745
+  ...
+# Subtest: Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+ok 34 - Motion prepared replacement native decode failure preserves prior image and retires derivative URL # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021917
+  ...
+# Subtest: Motion late PNG preparation rejection after a new image cannot overwrite current success
+ok 35 - Motion late PNG preparation rejection after a new image cannot overwrite current success # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02
+  ...
+# Subtest: Motion sliders keep stable visible labels while the actual study startup is held
+ok 36 - Motion sliders keep stable visible labels while the actual study startup is held # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022417
+  ...
+# Subtest: Motion slider input updates current units without changing its name, focus or paused intent
+ok 37 - Motion slider input updates current units without changing its name, focus or paused intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01975
+  ...
+# Subtest: Motion recipe replacement refreshes the rotor value text after a manual radius override
+ok 38 - Motion recipe replacement refreshes the rotor value text after a manual radius override # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022542
+  ...
+# Subtest: Motion rotation reveals the currently focused rotor field without changing its paused study
+ok 39 - Motion rotation reveals the currently focused rotor field without changing its paused study # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021041
+  ...
+# Subtest: Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+ok 40 - Motion rotation accounts for the settings clip even while a focused slider is inside the viewport # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021209
+  ...
+# Subtest: Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+ok 41 - Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+  ---
+  duration_ms: 71.84975
+  ...
+# Subtest: Motion rotation cannot reveal an hidden current control
+ok 42 - Motion rotation cannot reveal an hidden current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.076458
+  ...
+# Subtest: Motion rotation cannot reveal an inert current control
+ok 43 - Motion rotation cannot reveal an inert current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025375
+  ...
+# Subtest: Motion rotation cannot reveal an disabled current control
+ok 44 - Motion rotation cannot reveal an disabled current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019208
+  ...
+# Subtest: Motion rotation cannot reveal an fieldset current control
+ok 45 - Motion rotation cannot reveal an fieldset current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016875
+  ...
+# Subtest: Motion rotation cannot reveal an background current control
+ok 46 - Motion rotation cannot reveal an background current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015375
+  ...
+# Subtest: Motion rotation cannot reveal an away current control
+ok 47 - Motion rotation cannot reveal an away current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014459
+  ...
+# Subtest: Motion rotation cannot reveal an disposed current control
+ok 48 - Motion rotation cannot reveal an disposed current control # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016917
+  ...
+# Subtest: Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+ok 49 - Motion resize cannot scroll after measurement changes the focused owner or loses foreground # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014958
+  ...
+# Subtest: Motion resize reveals the control when its labeled field is taller than the visible settings area
+ok 50 - Motion resize reveals the control when its labeled field is taller than the visible settings area # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015333
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 49
+# todo 0
+# duration_ms 386.558

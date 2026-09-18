@@ -1,0 +1,34 @@
+{
+  "reportedAt": "2026-09-18T05:55:33.138022+00:00",
+  "observer": "Root via actual native browser; retained from collaboration message",
+  "candidate": "revision2",
+  "url": "http://127.0.0.1:53273/authoring/motion-lab/",
+  "status": "CONTROL_VISIBILITY_VALUE_AND_PAUSED_PRESERVATION_PASS_WITH_FOCUS_RING_CLIPPING",
+  "journey": "390x844 portrait ->844x390 landscape, focused Rotor27percent, previewPlay/paused",
+  "observations": [
+    {
+      "mode": "Standard",
+      "controlTop": 61.4375,
+      "controlBottom": 105.4375,
+      "panelBottom": 105.390625,
+      "fieldTop": -0.15625
+    },
+    {
+      "mode": "Large",
+      "controlTop": 72.171875,
+      "controlBottom": 116.171875,
+      "fieldTop": 0.171875,
+      "fieldBottom": 116.171875,
+      "panelBottom": 116.359375
+    },
+    {
+      "mode": "Plain+Large",
+      "controlTop": 69.171875,
+      "controlBottom": 113.171875,
+      "fieldTop": 0.171875,
+      "fieldBottom": 113.171875,
+      "font": "system-ui"
+    }
+  ],
+  "remaining": "Label, value and thumb visible; bottom focus outline clips at panel edge. No image hash asserted."
+}

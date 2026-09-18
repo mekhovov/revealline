@@ -1,0 +1,58 @@
+{
+  "at": "2026-09-18T05:56:51.476267+00:00",
+  "status": "R3_CSS_CANDIDATE_READY_FOR_ROOT_NATIVE_RETEST",
+  "url": "http://127.0.0.1:54246/authoring/motion-lab/",
+  "pid": 33258,
+  "session": 14316,
+  "css": {
+    "path": ".cache/worktrees/p03-motion-focus-rotation/authoring/motion-lab/styles.css",
+    "bytes": 30321,
+    "sha256": "1b266e5c7059ce17bfa4705f5810cccd976e1ec80dbce9fe5d6bbf1effe988d4"
+  },
+  "runtime": {
+    "path": ".cache/worktrees/p03-motion-focus-rotation/authoring/motion-lab/display.mjs",
+    "bytes": 7823,
+    "sha256": "139ed2bc53fb9beae4a79934a9a9f12f0c588d87b4beda3a24fca487eba7acb4"
+  },
+  "nativeR2Original": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/revision3/root-native-r2.original.json",
+    "bytes": 1983,
+    "sha256": "2b476a233b02d8a1584bd8fe02ee59acca4a3c68ebf9d7999506d542d3f82de1"
+  },
+  "sourceScopeAssertion": "Exactly one five-line CSS rule/comment added to preservedr2 CSS; JS and current57/57 tests unchanged",
+  "format": {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+      "--config",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.prettierrc.json",
+      "--check",
+      "authoring/motion-lab/styles.css"
+    ],
+    "exitCode": 0,
+    "stdout": {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/revision3/format.stdout",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "stderr": {
+      "path": ".cache/p03-motion-focus-rotation-4fd8/revision3/format.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "binding": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/native-server-r3/binding.json",
+    "bytes": 1415,
+    "sha256": "a96b0efd6f29ebcac840bd2fe89dd445e6ac39a220b53c1d69ca0e299407e1cd"
+  },
+  "smoke": {
+    "path": ".cache/p03-motion-focus-rotation-4fd8/native-server-r3/http-smoke.json",
+    "bytes": 774,
+    "sha256": "359fc2ed6a6d4e07529278294df6305b4db8f70d1193e9d907bc840e0cb45e0e"
+  },
+  "serverAdaptation": "One singleton-override assertion changed to allow the exacttwo candidate paths. Allother bounds/serving unchanged.",
+  "freeBytes": 1695219712,
+  "versionAllocated": false,
+  "nativeAccepted": false
+}

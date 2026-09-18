@@ -1,0 +1,29 @@
+{
+  "status": "FAIL_ROTATION_FOCUSED_FIELD_OFFSCREEN",
+  "observedAt": "2026-09-18T05:46:26.014410+00:00",
+  "observer": "root via CUA native browser actions and read-only visible DOM",
+  "url": "http://127.0.0.1:52863/authoring/motion-lab/",
+  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "candidatePatchSha256": "4829ff864e4bb50ee51ca3ea69b2b814fad21170157bca3e8a7f7b021a727553",
+  "steps": [
+    "Open exact-source overlay with candidate display.mjs; click Pause",
+    "Set390x844portrait; native slider End then Left set rotor radius0.27, displayed27percent; screenshot shows visible focusedslider andlabel",
+    "Resize844x390 without changing focus; read DOM and screenshot"
+  ],
+  "after": {
+    "focus": "rotor-radius",
+    "value": "0.27",
+    "controlTop": 2041.4375,
+    "controlBottom": 2085.4375,
+    "fieldTop": 1979.84375,
+    "fieldBottom": 2085.4375,
+    "panelTop": -768.109375,
+    "panelBottom": -438.109375,
+    "viewportWidth": 844,
+    "viewportHeight": 390,
+    "documentScrollWidth": 844,
+    "playButton": "Play"
+  },
+  "visual": "Screenshot showed lower stage controls and footer, with focused rotor offscreen. Screenshots inline only; no exported screenshot hashes.",
+  "scope": "No physical device or complete keyboard journey claim; range targeted through native supported locator then actual key. No injected state."
+}
