@@ -141,7 +141,7 @@ const labels = (calls) => calls.filter((call) => call.name === 'fillText');
 test('five approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
   assert.deepEqual(compiled.resolved.theme, {
     id: 'fpv',
-    revision: 30,
+    revision: 32,
     name: compiled.resolved.theme.name,
   });
   assert.equal(compiled.resolved.collection, null);
