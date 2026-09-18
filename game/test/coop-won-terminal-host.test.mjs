@@ -201,3 +201,167 @@ test('earned Team victory → keyboard Return to Solo retains exact one-use retu
   assert.deepEqual([...entries], recorded, 'Receiving Solo remains the sole token consumer');
   assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
 });
+
+for (const level of ['first-connection', 'relay-yard'])
+  test(`${level}: keyboard View picture and Back preserve the earned original and frozen result`, async (t) => {
+    const { f, terminal } = await win(t, { level });
+    const earned = image(f),
+      copy = f.$('coop-overlay-copy').textContent,
+      resources = {
+        reads: [...f.artwork.calls.reads],
+        urls: [...f.artwork.calls.urls],
+        releases: [...f.artwork.calls.releases],
+      };
+    tabTo(f, 'coop-view-picture');
+    for (let attempt = 0; attempt < 3; attempt++) {
+      f.tap('Enter');
+      assert.equal(f.$('coop-earned-picture').open, true);
+      assert.equal(f.doc.activeElement.id, 'coop-picture-return');
+      assert.deepEqual(f.earnedDrawImages.at(-1), [earned, 0, 0, 1152, 576]);
+      assert.equal(f.$('coop-earned-picture-canvas').width, 1152);
+      assert.equal(f.$('coop-earned-picture-canvas').height, 576);
+      assert.equal(f.$('coop-earned-picture').contains(f.$('coop-overlay')), false);
+      f.tick(30);
+      assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
+      assert.equal(f.$('coop-overlay-copy').textContent, copy);
+      f.tap(attempt === 1 ? 'Escape' : 'Enter');
+      assert.equal(f.$('coop-earned-picture').open, false);
+      assert.equal(f.doc.activeElement.id, 'coop-view-picture');
+      assert.equal(f.$('coop-earned-picture-canvas').width, 0);
+      assert.deepEqual(
+        {
+          reads: f.artwork.calls.reads,
+          urls: f.artwork.calls.urls,
+          releases: f.artwork.calls.releases,
+        },
+        resources,
+        'Viewing never acquires or retires the accepted original',
+      );
+    }
+    tabTo(f, 'coop-retry');
+    f.tap('Enter');
+    assert.equal(f.$('coop-overlay').hidden, true);
+    assert.equal(f.$('coop-earned-picture').open, false);
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+    assert.equal(f.$('coop-coverage').textContent, '0.0%');
+    assert.equal(image(f), earned);
+  });
+
+test('Team earned picture: controller Back and Confirm require fresh edges and never restart the win', async (t) => {
+  const { f, terminal } = await win(t);
+  const pad = {
+    index: 0,
+    id: 'Standard test controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  f.pads.push(pad);
+  f.tick(2);
+  const edge = (button, pressed) => {
+    pad.buttons[button] = { pressed, value: Number(pressed) };
+    f.tick(2);
+  };
+  edge(0, true);
+  edge(0, false);
+  assert.equal(
+    f.doc.activeElement.id,
+    'coop-retry',
+    'First deliberate edge joins without activation',
+  );
+  edge(14, true);
+  edge(14, false);
+  assert.equal(f.doc.activeElement.id, 'coop-view-picture');
+  edge(0, true);
+  assert.equal(f.$('coop-earned-picture').open, true);
+  f.tick(40);
+  assert.equal(f.$('coop-earned-picture').open, true, 'Held Confirm cannot close the new dialog');
+  edge(0, false);
+  edge(1, true);
+  assert.equal(f.$('coop-earned-picture').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-view-picture');
+  f.tick(40);
+  assert.equal(f.$('coop-menu').hidden, true, 'Held Back cannot leave the finished attempt');
+  edge(1, false);
+  edge(0, true);
+  assert.equal(f.$('coop-earned-picture').open, true);
+  edge(0, false);
+  assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
+});
+
+test('Team earned picture: touch actions return to results, then Change setup retains its existing route', async (t) => {
+  const { f, terminal } = await win(t, { touch: true });
+  const earned = image(f);
+  f.$('coop-view-picture').emit('pointerdown', { pointerType: 'touch' });
+  f.$('coop-view-picture').click();
+  assert.equal(f.$('coop-earned-picture').open, true);
+  assert.equal(f.$('coop-controls').hidden, true);
+  f.$('coop-lobby').click();
+  f.$('coop-retry').click();
+  assert.deepEqual(
+    { hud: hud(f), paint: f.lastPaint },
+    terminal,
+    'Background actions remain inert',
+  );
+  assert.equal(f.$('coop-menu').hidden, true);
+  f.$('coop-picture-return').emit('pointerdown', { pointerType: 'touch' });
+  f.$('coop-picture-return').click();
+  assert.equal(f.doc.activeElement.id, 'coop-view-picture');
+  f.$('coop-lobby').click();
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.$('coop-earned-picture').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-start');
+  f.$('coop-start').click();
+  assert.equal(image(f), earned);
+});
+
+test('Team picture draw failure keeps results, Retry and the accepted image available', async (t) => {
+  const { f, terminal } = await win(t);
+  tabTo(f, 'coop-view-picture');
+  f.failNextEarnedPaint();
+  f.tap('Enter');
+  assert.equal(f.$('coop-earned-picture').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-view-picture');
+  assert.match(f.$('coop-message').textContent, /earned result is unchanged/);
+  assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
+  f.tap('Enter');
+  assert.equal(f.$('coop-earned-picture').open, true);
+  assert.equal(f.earnedDrawImages.length, 1);
+});
+
+test('Team picture view never exposes an unearned paused arena', async (t) => {
+  const f = await page(t, { nativeFocus: true });
+  f.$('coop-start').click();
+  f.$('coop-pause').click();
+  assert.equal(f.$('coop-view-picture').hidden, true);
+  f.$('coop-view-picture').click();
+  assert.equal(f.$('coop-earned-picture').open, false);
+  assert.equal(f.earnedDrawImages.length, 0);
+});
+
+test('Team earned picture survives foreground return without focus theft and retires on departure', async (t) => {
+  const { f, terminal } = await win(t);
+  tabTo(f, 'coop-view-picture');
+  f.tap('Enter');
+  f.win.emit('blur');
+  f.tick(4);
+  f.win.emit('focus');
+  f.tick(4);
+  assert.equal(f.$('coop-earned-picture').open, true);
+  assert.equal(f.doc.activeElement.id, 'coop-picture-return');
+  assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
+  f.tap('Escape');
+  assert.equal(f.doc.activeElement.id, 'coop-view-picture');
+  f.tap('Enter');
+  f.win.emit('pagehide', { persisted: false });
+  assert.equal(f.$('coop-earned-picture').open, false);
+  assert.equal(f.$('coop-earned-picture-canvas').width, 0);
+  assert.notEqual(
+    f.doc.activeElement.id,
+    'coop-view-picture',
+    'Terminal cleanup never returns focus',
+  );
+  f.$('coop-picture-return').click();
+  assert.equal(f.$('coop-earned-picture').open, false);
+});
