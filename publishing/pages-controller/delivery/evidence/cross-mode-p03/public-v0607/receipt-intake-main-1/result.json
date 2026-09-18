@@ -1,0 +1,16 @@
+{
+  "status": "ACTUAL_PUBLIC_BINDING_PREPARED_UNREVIEWED",
+  "at": "2026-09-18T00:12:31.419471+00:00",
+  "requestSha256": "07d933fbbfdeec10790d4c952b40fdf16dc8e8f3c2de123bb481eea379861e47",
+  "binding": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-replay-public-audit-a36d62f2/tools/inputs/00a043d08c235422e9dbebef82dc5e0837da6667/binding.unreviewed.json",
+  "bindingSha256": "aea771c7031d9e74479ca47d343318f71b3c80d3bc9ba1fee169921746dd3aeb",
+  "controllerCommit": "00a043d08c235422e9dbebef82dc5e0837da6667",
+  "deploymentId": 6514586010,
+  "runId": 35289348308,
+  "releaseId": 391120699,
+  "files": 2847,
+  "bytes": 640138824,
+  "publicAcceptance": false,
+  "productionAuditExecuted": false,
+  "phaseAccepted": false
+}
