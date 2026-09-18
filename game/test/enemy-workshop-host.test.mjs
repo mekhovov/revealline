@@ -14,8 +14,9 @@ const until = (predicate) =>
   waitFor(predicate, { message: 'Enemy workshop did not reach the expected state.' });
 
 // Finite DOM/native-default boundary for the actual workshop module. Canvas
-// painting, browser layout, native Tab traversal and child gameplay are outside
-// this fixture; the existing practice-return test exercises the actual child.
+// painting, browser layout, modal Tab traversal and child gameplay are outside
+// this fixture. Page Tab models the visible controls' DOM order only; the
+// existing practice-return test exercises the actual child.
 function mount(doc) {
   const stack = [doc.body];
   for (const [token] of html
@@ -69,7 +70,14 @@ async function workshop(
     close() {
       this.open = false;
       this.removeAttribute('open');
+      if (this.contains(doc.activeElement)) doc.activeElement = doc.body;
       this.emit('close');
+    }
+    focus() {
+      if (this.disabled || this.closest('[hidden],[inert]')) return;
+      const dialog = this.closest('dialog');
+      if (dialog && !dialog.open) return;
+      super.focus();
     }
   }
   doc.createElement = (tag) => new HostElement(doc, tag);
@@ -165,6 +173,13 @@ async function workshop(
       target.click();
     if (!event.defaultPrevented && value === 'Escape')
       doc.querySelector('dialog[open]')?.emit('cancel');
+    if (!event.defaultPrevented && value === 'Tab' && !doc.querySelector('dialog[open]')) {
+      const controls = doc
+        .querySelectorAll('button,a[href]')
+        .filter((element) => !element.disabled && !element.closest('dialog,[hidden],[inert]'));
+      const current = controls.indexOf(target);
+      if (current >= 0) controls[(current + 1) % controls.length].focus();
+    }
     return event;
   };
   const start = () =>
@@ -378,8 +393,40 @@ test('ordinary foreground startup still opens the panel once and retires loading
   h.frame();
   h.frame();
   assert.equal(h.$('enemy-catalog-dialog').open, false);
+  assert.equal(h.doc.activeElement, h.$('open-catalog'));
   assert.deepEqual(h.navigations, []);
 });
+
+for (const close of ['Escape', 'Back'])
+  test(`startup catalog ${close} returns to Open workshop before forward Tab`, async (t) => {
+    const h = await workshop(t);
+    await h.start();
+    h.resolve();
+    await until(() => h.$('enemy-catalog-dialog')?.open);
+    h.$('enemy-catalog-skin').focus();
+    if (close === 'Escape') h.key('Escape');
+    else h.$('enemy-catalog-back').click();
+    assert.equal(h.$('enemy-catalog-dialog').open, false);
+    assert.equal(h.doc.activeElement, h.$('open-catalog'));
+    h.key('ArrowRight');
+    assert.equal(h.doc.activeElement, h.$('open-catalog'), 'The page keeps native arrow behavior.');
+    h.key('Tab');
+    assert.equal(h.doc.activeElement.getAttribute('href'), '../../game/playground/');
+    h.key('Tab');
+    assert.equal(h.doc.activeElement, h.back);
+    h.key('Escape');
+    h.frame();
+    h.tap(1);
+    h.tap(1);
+    assert.equal(
+      h.doc.activeElement,
+      h.back,
+      'A repeated Back cannot revive the closed return target.',
+    );
+    assert.deepEqual(h.local.writes, []);
+    assert.deepEqual(h.session.writes, []);
+    assert.deepEqual(h.navigations, []);
+  });
 
 for (const timing of ['before module', 'during loading'])
   test(`successful readiness preserves Return focus chosen ${timing}`, async (t) => {

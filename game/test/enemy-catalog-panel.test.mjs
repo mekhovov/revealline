@@ -55,6 +55,62 @@ function setup(t, options = {}) {
     $: (id) => doc.getElementById(`enemy-catalog-${id}`),
   };
 }
+test('catalog close preserves the actual invoker and an explicit startup return target', (t) => {
+  const h = setup(t),
+    opener = h.doc.createElement('button'),
+    later = h.doc.createElement('a');
+  h.doc.body.append(opener, later);
+  h.panel.close();
+  opener.focus();
+  h.panel.open();
+  h.panel.close();
+  assert.equal(h.doc.activeElement, opener);
+  h.doc.body.focus();
+  h.panel.open({ returnFocus: opener });
+  h.panel.close();
+  assert.equal(h.doc.activeElement, opener);
+  later.focus();
+  h.panel.close();
+  assert.equal(h.doc.activeElement, later, 'An already closed panel has no focus authority.');
+});
+
+for (const departure of ['hidden', 'blurred', 'newer close focus'])
+  test(`catalog return target cannot override ${departure}`, (t) => {
+    const h = setup(t),
+      opener = h.doc.createElement('button'),
+      later = h.doc.createElement('button');
+    h.doc.body.append(opener, later);
+    h.panel.close();
+    h.panel.open({ returnFocus: opener });
+    if (departure === 'hidden') h.doc.hidden = true;
+    if (departure === 'blurred') h.doc.focused = false;
+    if (departure === 'newer close focus')
+      h.panel.dialog.addEventListener('close', () => later.focus());
+    h.panel.close();
+    assert.notEqual(h.doc.activeElement, opener);
+    if (departure === 'newer close focus') assert.equal(h.doc.activeElement, later);
+    assert.equal(h.panel.dialog.open, false);
+  });
+
+test('a close callback that reopens the catalog retains the newer visit and return target', (t) => {
+  const h = setup(t),
+    first = h.doc.createElement('button'),
+    second = h.doc.createElement('button');
+  h.doc.body.append(first, second);
+  h.panel.close();
+  h.panel.open({ returnFocus: first });
+  const reopen = () => {
+    h.panel.dialog.removeEventListener('close', reopen);
+    h.panel.open({ returnFocus: second });
+  };
+  h.panel.dialog.addEventListener('close', reopen);
+  h.panel.close();
+  assert.equal(h.panel.dialog.open, true);
+  assert.equal(h.doc.activeElement, h.$('role'));
+  h.panel.close();
+  assert.equal(h.doc.activeElement, second);
+});
+
 test('actual catalog handlers isolate unsaved choices, save enabled/skin selections, restore and preview the chosen role', async (t) => {
   const h = setup(t);
   h.$('role').value = 'eroder';

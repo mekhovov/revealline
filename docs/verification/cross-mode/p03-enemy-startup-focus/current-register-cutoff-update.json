@@ -1,0 +1,39 @@
+{
+  "format": "revealline-current-register-cutoff-update.v1",
+  "recordedAt": "2026-09-18T08:55:54.308107+00:00",
+  "scope": "Current header only; root-reported release/archive and inspection status at final source-candidate cutoff. This receipt does not independently requalify those external records.",
+  "rootReportedUpdate": {
+    "v0613": {
+      "releasePublishedAt": "2026-09-18T08:50:10Z",
+      "releaseAssetsVerified": 9,
+      "archiveAppend": 23,
+      "archiveFiles": 1393,
+      "priorRowsRetained": 697,
+      "bothNativeVersionRecordsRetained": true,
+      "pagesSelection": "pending",
+      "publicAcceptance": "pending"
+    },
+    "v0619": {
+      "frozenArtifactInspection": "passed",
+      "artifactBodyGets": 1,
+      "members": 31,
+      "pinnedHelpers": 9,
+      "finalQualificationAssembly": "pending"
+    }
+  },
+  "registerBefore": {
+    "bytes": 128197,
+    "sha256": "53a6a009327ea6b5fec8cada662463ee8d4a526d7c8b5de6d62cdd4859f45611"
+  },
+  "registerAfter": {
+    "bytes": 128405,
+    "sha256": "d1d7732ab07bc304d4205c91ad3b27427cd1be0b24c3febf5e329879b6bafeb4"
+  },
+  "historicalBody": {
+    "bytes": 120755,
+    "sha256": "596447c61226feda91f4d3e71c86d43f7324c08d964c3a5281677448ad0400b3",
+    "byteExact": true
+  },
+  "runtimeTestGuidanceVersionInputsChanged": false,
+  "priorRegisterIntegrationReceipt": "originals/current-register-integration.json"
+}
