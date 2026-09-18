@@ -1,0 +1,70 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE_RETENTION_ONLY",
+  "at": "2026-09-18T16:16:54.917650+00:00",
+  "archive": "archive-26",
+  "versions": [
+    "v0.61.7",
+    "v0.61.8"
+  ],
+  "archiveCommit": "93df1a6ee4dcf1c9a5eda6591d6c30e06a3cceff",
+  "archiveTree": "c086f46401ceeffadc3b2e63b0483d66cf497f32",
+  "runId": 35365854149,
+  "deploymentId": 6528078392,
+  "deploymentStatusId": 18532460318,
+  "receiptArtifactId": 10556890521,
+  "files": 1399,
+  "verifiedBytes": 626777746,
+  "attempts": 1399,
+  "failedPublicFiles": 0,
+  "failedAttempts": 0,
+  "retries": 0,
+  "skipped": 0,
+  "preservedOldCanonicalRows": 700,
+  "preservedPriorReleaseRows": 698,
+  "preservedRootSupportRows": 2,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "newRows": 698,
+  "newBytes": 313389738,
+  "priorInventoryRows": 701,
+  "scope": "Immutable original617and618 archive deployment, complete1399publicbyte audit and scoped native retention journeys. Previous700 descriptors retained; mutableindexonlyexception.",
+  "pins": [
+    {
+      "path": ".cache/archive26-v0618-public-audit/independent-peer.json",
+      "bytes": 3457,
+      "sha256": "7c0c5ec48520770e8ba624f74372cc78fd59b1e1b20296e16f079b043b83889f"
+    },
+    {
+      "path": ".cache/archive26-v0618-public-audit/row-review.json",
+      "bytes": 12776,
+      "sha256": "c22b15c1a76f9f9d67ba3839a9ef1a975a22993bed1f4dea2089fb7abf94393c"
+    },
+    {
+      "path": ".cache/archive26-v0618-public-audit/root-original-pin-review.json",
+      "bytes": 264,
+      "sha256": "697ac115d5248d501866afd032e89280b932a52ef8de58224f67bf8aa69f3c9e"
+    },
+    {
+      "path": ".cache/archive26-v0618-native/root-review.json",
+      "bytes": 1237,
+      "sha256": "11fc2b4dc9e291084ab63af31589ccc0dc54756374722bd1216d1659f8d49cb5"
+    },
+    {
+      "path": ".cache/archive26-v0618-native/manifest.json",
+      "bytes": 3809,
+      "sha256": "ce9123374c022f6e40b698d78660def3b61493b493e8223edcc6682070ab66c3"
+    },
+    {
+      "path": ".cache/archive26-v0618-hosted-intake/hosted-originals/completion.json",
+      "bytes": 2334,
+      "sha256": "40aa9e90e06d755e82318bedaaf5a12ed523fab78c76a944e681572bd6ca81d7"
+    }
+  ],
+  "nativeLimits": [
+    "Practice captures/Pause/explicitResume and Standard618picker only; physicalhardware, fullcampaignwin, offline, Large and Motion remain outside thisappend gate.",
+    "Visible media record counts retained, notzero-writeclaim. Prior safe writer refusal and exactscreenshotlimits retained."
+  ],
+  "currentDefaultChanged": false,
+  "wholePhaseAccepted": false
+}
