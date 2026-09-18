@@ -1,0 +1,27 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE21_V0608_APPEND_WITH_RETAINED_V0607",
+  "archive": {
+    "commit": "44d383dbae4c1d95cf59512b21d2524e191937e6",
+    "tree": "668e425a0f4fa0dc0cf7d0376e581482c5213767",
+    "runId": 35298846214,
+    "deploymentId": 6516114363
+  },
+  "byteAudit": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/byte-audit-completion.json",
+    "bytes": 2765,
+    "sha256": "4aeab5c242dce1a744ca576c56b2b138c84930597d9cf00d40d37937c753777f"
+  },
+  "nativeObservation": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/public-browser/observations.json",
+    "bytes": 2120,
+    "sha256": "db3689fa26866866184d89ad4217a4842781638a3230d2b62d26c3ec448f4f1b"
+  },
+  "files": 1393,
+  "bytes": 626433016,
+  "oldCanonicalRowsPreserved": 695,
+  "oldPublicRowsPreserved": 697,
+  "rootIndexOnlyEarlierChange": true,
+  "publicArchiveAccepted": true,
+  "wholePhaseAccepted": false,
+  "reviewNote": "Root rehashed55 row-review originals. Initial review resolved a cache-relative evidence path against cwd and stopped; corrected resolution against audit root passed. No audit output was changed."
+}
