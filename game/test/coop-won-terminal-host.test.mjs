@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
-import { coverageClear } from './helpers/coop-route-search.mjs';
+import { coverageClear, yardOpening } from './helpers/coop-route-search.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { createModeReturn } from '../mode-return.mjs';
 
@@ -53,9 +53,14 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
     reads: f.artwork.calls.reads.length,
     urls: [...f.artwork.calls.urls],
   };
-  const route = coverageClear('standard', { boost: true, cover: true });
+  const route = (level === 'relay-yard' ? yardOpening : coverageClear)('standard', {
+    boost: true,
+    cover: true,
+  });
   assert.equal(route.run.status, 'won', 'The unchanged authored core route is legal');
-  f.tick(); // First animation callback establishes the host clock.
+  // Start clears both seats. Let the real host establish its clock and consume
+  // that neutral release before sending fresh route commands.
+  f.tick(2);
   let hostCommandTicks = 0;
   for (const commands of route.log) {
     hostCommandTicks++;
@@ -104,36 +109,53 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
   return { f, first, terminal };
 }
 
-test('First Connection: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture', async (t) => {
-  const { f, first } = await win(t);
-  // Hidden setup values are not authority for Retry of the terminal attempt.
-  f.$('coop-level').value = 'relay-yard';
-  f.$('coop-difficulty').value = 'expert';
-  f.$('coop-experiment').value = 'independent';
-  f.tap('Enter');
-  assert.equal(f.$('coop-discard-dialog').open, false);
-  assert.equal(f.$('coop-overlay').hidden, true);
-  assert.equal(f.doc.activeElement.id, 'coop-canvas');
-  assert.deepEqual(hud(f), first.hud);
-  assert.equal(
-    f.lastPaint,
-    first.paint,
-    'Retry recreates the authored initial arena, actors and HUD',
-  );
-  assert.equal(image(f), first.image, 'Exact accepted original is reused');
-  assert.equal(f.artwork.calls.reads.length, first.reads);
-  assert.deepEqual(f.artwork.calls.urls, first.urls);
-  assert.equal(f.artwork.calls.releases.includes(first.image.src), false);
-  f.tick(4);
-  assert.equal(f.$('coop-coverage').textContent, '0.0%');
-  assert.equal(f.$('coop-overlay').hidden, true);
-  assert.deepEqual(f.visits, []);
-});
+for (const [level, name] of [
+  ['first-connection', 'First Connection'],
+  ['relay-yard', 'Relay Yard'],
+])
+  test(`${name}: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture`, async (t) => {
+    const { f, first } = await win(t, { level });
+    // Hidden setup values are not authority for Retry of the terminal attempt.
+    f.$('coop-level').value = level === 'relay-yard' ? 'first-connection' : 'relay-yard';
+    f.$('coop-difficulty').value = 'expert';
+    f.$('coop-experiment').value = 'independent';
+    f.tap('Enter');
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.equal(f.$('coop-overlay').hidden, true);
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+    assert.deepEqual(hud(f), first.hud);
+    assert.equal(
+      f.lastPaint,
+      first.paint,
+      'Retry recreates the authored initial arena, actors and HUD',
+    );
+    assert.equal(image(f), first.image, 'Exact accepted original is reused');
+    assert.equal(f.artwork.calls.reads.length, first.reads);
+    assert.deepEqual(f.artwork.calls.urls, first.urls);
+    assert.equal(f.artwork.calls.releases.includes(first.image.src), false);
+    f.tick(4);
+    assert.equal(f.$('coop-coverage').textContent, '0.0%');
+    assert.equal(f.$('coop-overlay').hidden, true);
+    assert.deepEqual(f.visits, []);
+  });
 
 test('earned Team victory → keyboard Change setup returns to Ready without discard or automatic Start', async (t) => {
   const { f, first } = await win(t);
   tabTo(f, 'coop-lobby');
+  f.doc.documentElement.clientWidth = 844;
+  f.doc.documentElement.clientHeight = 390;
+  f.$('coop-start')._rect = { x: 118, y: 1080, width: 300, height: 47 };
+  const reveals = [];
+  t.mock.method(f.$('coop-start'), 'scrollIntoView', (options) => {
+    reveals.push({ options, active: f.doc.activeElement.id });
+  });
   f.tap('Enter');
+  assert.deepEqual(reveals, [
+    {
+      options: { block: 'nearest', inline: 'nearest', behavior: 'instant' },
+      active: 'coop-start',
+    },
+  ]);
   assert.equal(f.$('coop-discard-dialog').open, false);
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-play').hidden, true);

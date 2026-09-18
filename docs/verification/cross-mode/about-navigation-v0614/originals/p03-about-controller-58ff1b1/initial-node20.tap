@@ -1,0 +1,1400 @@
+TAP version 13
+# Subtest: controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/site/about.html
+ok 1 - controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/site/about.html
+  ---
+  duration_ms: 61.889334
+  ...
+# Subtest: controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+ok 2 - controller Return is ready before catalogue completion and stays in the same build: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+  ---
+  duration_ms: 29.794458
+  ...
+# Subtest: held arrival Confirm waits for neutral and join before any page action
+ok 3 - held arrival Confirm waits for neutral and join before any page action
+  ---
+  duration_ms: 12.733875
+  ...
+# Subtest: D-pad and Confirm operate the real disclosure and preserved-build select without automatic navigation
+ok 4 - D-pad and Confirm operate the real disclosure and preserved-build select without automatic navigation
+  ---
+  duration_ms: 87.47025
+  ...
+# Subtest: late preserved-build options retire an active edit without moving focus or applying it
+ok 5 - late preserved-build options retire an active edit without moving focus or applying it
+  ---
+  duration_ms: 41.368292
+  ...
+# Subtest: actual pack catalogue replacement retires its stale select edit and preserves explicit play
+ok 6 - actual pack catalogue replacement retires its stale select edit and preserves explicit play
+  ---
+  duration_ms: 78.169584
+  ...
+# Subtest: catalogue failure retains Return, disclosure and current-build actions
+ok 7 - catalogue failure retains Return, disclosure and current-build actions
+  ---
+  duration_ms: 42.163542
+  ...
+# Subtest: catalogue completion keeps a deliberately focused Return and its operation status
+ok 8 - catalogue completion keeps a deliberately focused Return and its operation status
+  ---
+  duration_ms: 8.679667
+  ...
+# Subtest: native Tab, select arrows and disclosure activation retain defaults; Escape cancels before page Back
+ok 9 - native Tab, select arrows and disclosure activation retain defaults; Escape cancels before page Back
+  ---
+  duration_ms: 10.410417
+  ...
+# Subtest: keyboard intent retires a controller select draft without committing it
+ok 10 - keyboard intent retires a controller select draft without committing it
+  ---
+  duration_ms: 42.06
+  ...
+# Subtest: pointer intent retires a controller select draft without committing it
+ok 11 - pointer intent retires a controller select draft without committing it
+  ---
+  duration_ms: 47.910958
+  ...
+# Subtest: blur clears edit/input and restoration requires neutral without a duplicate loop
+ok 12 - blur clears edit/input and restoration requires neutral without a duplicate loop
+  ---
+  duration_ms: 46.122542
+  ...
+# Subtest: hidden clears edit/input and restoration requires neutral without a duplicate loop
+ok 13 - hidden clears edit/input and restoration requires neutral without a duplicate loop
+  ---
+  duration_ms: 45.048333
+  ...
+# Subtest: persisted pagehide clears edit/input and restoration requires neutral without a duplicate loop
+ok 14 - persisted pagehide clears edit/input and restoration requires neutral without a duplicate loop
+  ---
+  duration_ms: 42.539709
+  ...
+# Subtest: persisted departure during loading may complete catalogues without reviving focus or polling
+ok 15 - persisted departure during loading may complete catalogues without reviving focus or polling
+  ---
+  duration_ms: 8.388125
+  ...
+# Subtest: terminal departure before headers completion prevents late updates and owner restart
+ok 16 - terminal departure before headers completion prevents late updates and owner restart
+  ---
+  duration_ms: 7.904417
+  ...
+# Subtest: terminal departure before body completion prevents late updates and owner restart
+ok 17 - terminal departure before body completion prevents late updates and owner restart
+  ---
+  duration_ms: 13.701125
+  ...
+# Subtest: terminal departure before packs completion prevents late updates and owner restart
+ok 18 - terminal departure before packs completion prevents late updates and owner restart
+  ---
+  duration_ms: 14.587625
+  ...
+# Subtest: disconnect retires edits and reconnect requires neutral and a fresh join
+ok 19 - disconnect retires edits and reconnect requires neutral and a fresh join
+  ---
+  duration_ms: 43.500333
+  ...
+# Subtest: Boost preference previews cancel without writes and commit once through the native setting
+ok 20 - Boost preference previews cancel without writes and commit once through the native setting
+  ---
+  duration_ms: 4.465292
+  ...
+# Subtest: select browsing uses a separate preview, and Back cancels without changing or firing native handlers
+ok 21 - select browsing uses a separate preview, and Back cancels without changing or firing native handlers
+  ---
+  duration_ms: 0.507375
+  ...
+# Subtest: selection previews describe the configured menu buttons without changing draft semantics
+ok 22 - selection previews describe the configured menu buttons without changing draft semantics
+  ---
+  duration_ms: 0.407666
+  ...
+# Subtest: select Confirm commits once through the existing change handler and ignores disabled choices
+ok 23 - select Confirm commits once through the existing change handler and ignores disabled choices
+  ---
+  duration_ms: 1.369542
+  ...
+# Subtest: stale disabled cancels a select preview without activating its replacement on the same Confirm
+ok 24 - stale disabled cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 1.417958
+  ...
+# Subtest: stale hidden cancels a select preview without activating its replacement on the same Confirm
+ok 25 - stale hidden cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.601667
+  ...
+# Subtest: stale detached cancels a select preview without activating its replacement on the same Confirm
+ok 26 - stale detached cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.42625
+  ...
+# Subtest: stale options cancels a select preview without activating its replacement on the same Confirm
+ok 27 - stale options cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.486084
+  ...
+# Subtest: stale value cancels a select preview without activating its replacement on the same Confirm
+ok 28 - stale value cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.87475
+  ...
+# Subtest: stale focus cancels a select preview without activating its replacement on the same Confirm
+ok 29 - stale focus cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.406042
+  ...
+# Subtest: stale scope cancels a select preview without activating its replacement on the same Confirm
+ok 30 - stale scope cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.613209
+  ...
+# Subtest: modal root traps navigation and delegates protected Back without closing or touching background actions
+ok 31 - modal root traps navigation and delegates protected Back without closing or touching background actions
+  ---
+  duration_ms: 2.247166
+  ...
+# Subtest: linear navigation skips hidden, disabled, inert, closed disclosure and host-rejected controls
+ok 32 - linear navigation skips hidden, disabled, inert, closed disclosure and host-rejected controls
+  ---
+  duration_ms: 2.002792
+  ...
+# Subtest: gallery-grid uses geometric neighbors within a two-column layout
+ok 33 - gallery-grid uses geometric neighbors within a two-column layout
+  ---
+  duration_ms: 1.44525
+  ...
+# Subtest: missions uses geometric neighbors within a two-column layout
+ok 34 - missions uses geometric neighbors within a two-column layout
+  ---
+  duration_ms: 0.866083
+  ...
+# Subtest: slider draft clamps and commits one input/change pair; cancellation never writes the real value
+ok 35 - slider draft clamps and commits one input/change pair; cancellation never writes the real value
+  ---
+  duration_ms: 2.896792
+  ...
+# Subtest: buttons and checkboxes activate through their existing handlers once per logical edge
+ok 36 - buttons and checkboxes activate through their existing handlers once per logical edge
+  ---
+  duration_ms: 0.481584
+  ...
+# Subtest: file and text controls explain the host limitation without opening a picker or changing text
+ok 37 - file and text controls explain the host limitation without opening a picker or changing text
+  ---
+  duration_ms: 1.225542
+  ...
+# Subtest: pointerdown relinquishes controller focus and cancels an uncommitted edit
+ok 38 - pointerdown relinquishes controller focus and cancels an uncommitted edit
+  ---
+  duration_ms: 0.36575
+  ...
+# Subtest: keydown relinquishes controller focus and cancels an uncommitted edit
+ok 39 - keydown relinquishes controller focus and cancels an uncommitted edit
+  ---
+  duration_ms: 0.2175
+  ...
+# Subtest: external focus changes cancel editing and a flight scope suppresses all menu actions
+ok 40 - external focus changes cancel editing and a flight scope suppresses all menu actions
+  ---
+  duration_ms: 0.255375
+  ...
+# Subtest: destroy removes listeners and prevents all later controller actions
+ok 41 - destroy removes listeners and prevents all later controller actions
+  ---
+  duration_ms: 0.166708
+  ...
+# Subtest: sync cancels a stale editor immediately, and an unchanged scope token cannot retain the old modal root
+ok 42 - sync cancels a stale editor immediately, and an unchanged scope token cannot retain the old modal root
+  ---
+  duration_ms: 0.499333
+  ...
+# Subtest: a slider range change invalidates the draft before Confirm can commit an obsolete value
+ok 43 - a slider range change invalidates the draft before Confirm can commit an obsolete value
+  ---
+  duration_ms: 0.268709
+  ...
+# Subtest: Menu cancels an editor first; clear relinquishes navigation without destroying normal DOM controls
+ok 44 - Menu cancels an editor first; clear relinquishes navigation without destroying normal DOM controls
+  ---
+  duration_ms: 0.421959
+  ...
+# Subtest: a disabled focused button cannot redirect its Confirm into a neighboring destructive action
+ok 45 - a disabled focused button cannot redirect its Confirm into a neighboring destructive action
+  ---
+  duration_ms: 0.192542
+  ...
+# Subtest: returning from a picture preserves the newly restored gallery origin instead of the modal default
+ok 46 - returning from a picture preserves the newly restored gallery origin instead of the modal default
+  ---
+  duration_ms: 0.281833
+  ...
+# Subtest: joining engages the default focus without activating it or leaking the join into Confirm
+ok 47 - joining engages the default focus without activating it or leaking the join into Confirm
+  ---
+  duration_ms: 0.727959
+  ...
+# Subtest: engaging a new scope preserves a host-restored gallery card without opening it
+ok 48 - engaging a new scope preserves a host-restored gallery card without opening it
+  ---
+  duration_ms: 0.26925
+  ...
+# Subtest: engage never enters menu navigation during flight or after destruction
+ok 49 - engage never enters menu navigation during flight or after destruction
+  ---
+  duration_ms: 0.208833
+  ...
+# Subtest: select previews stay outside the enclosing label and preserve its name source
+ok 50 - select previews stay outside the enclosing label and preserve its name source
+  ---
+  duration_ms: 0.5495
+  ...
+# Subtest: range previews stay outside the enclosing label and preserve its name source
+ok 51 - range previews stay outside the enclosing label and preserve its name source
+  ---
+  duration_ms: 0.455291
+  ...
+# Subtest: reading entry focuses a named region before notification and returns owned metadata
+ok 52 - reading entry focuses a named region before notification and returns owned metadata
+  ---
+  duration_ms: 0.760416
+  ...
+# Subtest: reading hint refresh changes current copy without focus, transitions or stale scope publication
+ok 53 - reading hint refresh changes current copy without focus, transitions or stale scope publication
+  ---
+  duration_ms: 0.324417
+  ...
+# Subtest: reader scrolls vertically to both endpoints without moving focus, wrapping or repeating edge announcements
+ok 54 - reader scrolls vertically to both endpoints without moving focus, wrapping or repeating edge announcements
+  ---
+  duration_ms: 0.622584
+  ...
+# Subtest: small and nonoverflowing readers have bounded steps and always permit immediate exit
+ok 55 - small and nonoverflowing readers have bounded steps and always permit immediate exit
+  ---
+  duration_ms: 0.755916
+  ...
+# Subtest: reading back ends once and consumes the complete gesture before host actions
+ok 56 - reading back ends once and consumes the complete gesture before host actions
+  ---
+  duration_ms: 1.751125
+  ...
+# Subtest: reading confirm ends once and consumes the complete gesture before host actions
+ok 57 - reading confirm ends once and consumes the complete gesture before host actions
+  ---
+  duration_ms: 0.271417
+  ...
+# Subtest: reading menu ends once and consumes the complete gesture before host actions
+ok 58 - reading menu ends once and consumes the complete gesture before host actions
+  ---
+  duration_ms: 0.15825
+  ...
+# Subtest: entry validates the entire surface before replacing a reader or cancelling an editor
+ok 59 - entry validates the entire surface before replacing a reader or cancelling an editor
+  ---
+  duration_ms: 1.513291
+  ...
+# Subtest: removed region cancels reading and cannot redirect the invalidating Confirm to another action
+ok 60 - removed region cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.373208
+  ...
+# Subtest: changed region identity cancels reading and cannot redirect the invalidating Confirm to another action
+ok 61 - changed region identity cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.271166
+  ...
+# Subtest: hidden region cancels reading and cannot redirect the invalidating Confirm to another action
+ok 62 - hidden region cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.194916
+  ...
+# Subtest: inert region cancels reading and cannot redirect the invalidating Confirm to another action
+ok 63 - inert region cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.191
+  ...
+# Subtest: removed origin cancels reading and cannot redirect the invalidating Confirm to another action
+ok 64 - removed origin cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.188667
+  ...
+# Subtest: disabled origin cancels reading and cannot redirect the invalidating Confirm to another action
+ok 65 - disabled origin cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.187375
+  ...
+# Subtest: replaced content cancels reading and cannot redirect the invalidating Confirm to another action
+ok 66 - replaced content cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.208083
+  ...
+# Subtest: removed marker cancels reading and cannot redirect the invalidating Confirm to another action
+ok 67 - removed marker cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.220958
+  ...
+# Subtest: collapsed viewport cancels reading and cannot redirect the invalidating Confirm to another action
+ok 68 - collapsed viewport cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.208959
+  ...
+# Subtest: scope and root changes cancel reading without restoring stale focus or activating the next dialog
+ok 69 - scope and root changes cancel reading without restoring stale focus or activating the next dialog
+  ---
+  duration_ms: 0.178917
+  ...
+# Subtest: native focus, pointer and keyboard relinquish reading without stealing focus or swallowing native keys
+ok 70 - native focus, pointer and keyboard relinquish reading without stealing focus or swallowing native keys
+  ---
+  duration_ms: 1.004541
+  ...
+# Subtest: an end-only Done button stays harmless after pointerdown already cancelled reading
+ok 71 - an end-only Done button stays harmless after pointerdown already cancelled reading
+  ---
+  duration_ms: 0.414292
+  ...
+# Subtest: lifecycle clear cancels reading once, preserves scroll position and consumes stale input
+ok 72 - lifecycle clear cancels reading once, preserves scroll position and consumes stale input
+  ---
+  duration_ms: 0.309458
+  ...
+# Subtest: real remapped router drives reading repeats and gates held buttons/sticks across entry and exit
+ok 73 - real remapped router drives reading repeats and gates held buttons/sticks across entry and exit
+  ---
+  duration_ms: 2.944458
+  ...
+# Subtest: held Retry Confirm cannot leave the loss reader or leak ability and Toggle Boost into flight
+ok 74 - held Retry Confirm cannot leave the loss reader or leak ability and Toggle Boost into flight
+  ---
+  duration_ms: 4.243416
+  ...
+# Subtest: reopening changed content starts at the top while unchanged content keeps its reading position
+ok 75 - reopening changed content starts at the top while unchanged content keeps its reading position
+  ---
+  duration_ms: 1.136084
+  ...
+# Subtest: registered Done preserves the reader until native click and restores the origin after host disables Done
+ok 76 - registered Done preserves the reader until native click and restores the origin after host disables Done
+  ---
+  duration_ms: 0.557334
+  ...
+# Subtest: Done descendant taps keep click semantics; pointercancel and other pointer gestures still relinquish
+ok 77 - Done descendant taps keep click semantics; pointercancel and other pointer gestures still relinquish
+  ---
+  duration_ms: 0.602208
+  ...
+# Subtest: native scroll opt-in retains reading through primary pan adoption and the real Done click
+ok 78 - native scroll opt-in retains reading through primary pan adoption and the real Done click
+  ---
+  duration_ms: 0.387167
+  ...
+# Subtest: native scrolling opt-in leaves the default pointer relinquish policy unchanged
+ok 79 - native scrolling opt-in leaves the default pointer relinquish policy unchanged
+  ---
+  duration_ms: 0.157
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"button":2}
+ok 80 - native scroll opt-in does not retain a rejected primary gesture: {"button":2}
+  ---
+  duration_ms: 0.127792
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"isPrimary":false}
+ok 81 - native scroll opt-in does not retain a rejected primary gesture: {"isPrimary":false}
+  ---
+  duration_ms: 0.098125
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"defaultPrevented":true}
+ok 82 - native scroll opt-in does not retain a rejected primary gesture: {"defaultPrevented":true}
+  ---
+  duration_ms: 0.102375
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"cancelable":false}
+ok 83 - native scroll opt-in does not retain a rejected primary gesture: {"cancelable":false}
+  ---
+  duration_ms: 0.098625
+  ...
+# Subtest: native pointerdown cannot retain reading with stale scope
+ok 84 - native pointerdown cannot retain reading with stale scope
+  ---
+  duration_ms: 0.123334
+  ...
+# Subtest: native pointerdown cannot retain reading with stale root
+ok 85 - native pointerdown cannot retain reading with stale root
+  ---
+  duration_ms: 0.094417
+  ...
+# Subtest: native pointerdown cannot retain reading with stale content
+ok 86 - native pointerdown cannot retain reading with stale content
+  ---
+  duration_ms: 0.198
+  ...
+# Subtest: native pointerdown cannot retain reading with stale focus
+ok 87 - native pointerdown cannot retain reading with stale focus
+  ---
+  duration_ms: 0.120709
+  ...
+# Subtest: native pointerdown cannot retain reading with stale hidden-region
+ok 88 - native pointerdown cannot retain reading with stale hidden-region
+  ---
+  duration_ms: 0.208709
+  ...
+# Subtest: native pointerdown cannot retain reading with stale background
+ok 89 - native pointerdown cannot retain reading with stale background
+  ---
+  duration_ms: 0.255583
+  ...
+# Subtest: native pointerdown cannot retain reading with stale hidden-document
+ok 90 - native pointerdown cannot retain reading with stale hidden-document
+  ---
+  duration_ms: 0.133833
+  ...
+# Subtest: native pointercancel cannot retain reading with stale scope
+ok 91 - native pointercancel cannot retain reading with stale scope
+  ---
+  duration_ms: 0.157791
+  ...
+# Subtest: native pointercancel cannot retain reading with stale root
+ok 92 - native pointercancel cannot retain reading with stale root
+  ---
+  duration_ms: 0.562417
+  ...
+# Subtest: native pointercancel cannot retain reading with stale content
+ok 93 - native pointercancel cannot retain reading with stale content
+  ---
+  duration_ms: 0.181833
+  ...
+# Subtest: native pointercancel cannot retain reading with stale focus
+ok 94 - native pointercancel cannot retain reading with stale focus
+  ---
+  duration_ms: 0.285917
+  ...
+# Subtest: native pointercancel cannot retain reading with stale hidden-region
+ok 95 - native pointercancel cannot retain reading with stale hidden-region
+  ---
+  duration_ms: 0.19825
+  ...
+# Subtest: native pointercancel cannot retain reading with stale background
+ok 96 - native pointercancel cannot retain reading with stale background
+  ---
+  duration_ms: 0.129041
+  ...
+# Subtest: native pointercancel cannot retain reading with stale hidden-document
+ok 97 - native pointercancel cannot retain reading with stale hidden-document
+  ---
+  duration_ms: 0.115167
+  ...
+# Subtest: only the pending region pointer can survive cancellation; Done, outside and ended gestures still cancel
+ok 98 - only the pending region pointer can survive cancellation; Done, outside and ended gestures still cancel
+  ---
+  duration_ms: 0.59575
+  ...
+# Subtest: native scroll retention is retired if input or acceptance callbacks invalidate its reader
+ok 99 - native scroll retention is retired if input or acceptance callbacks invalidate its reader
+  ---
+  duration_ms: 0.299125
+  ...
+# Subtest: native wheel remains unhandled and keyboard reading keeps its existing scroll and exit behavior
+ok 100 - native wheel remains unhandled and keyboard reading keeps its existing scroll and exit behavior
+  ---
+  duration_ms: 0.494958
+  ...
+# Subtest: native scroll opt-in does not change unowned keyboard defaults or retain gestures after destruction
+ok 101 - native scroll opt-in does not change unowned keyboard defaults or retain gestures after destruction
+  ---
+  duration_ms: 0.307542
+  ...
+# Subtest: reading hint metadata identifies entry, refresh, boundaries and ended messages after state retirement
+ok 102 - reading hint metadata identifies entry, refresh, boundaries and ended messages after state retirement
+  ---
+  duration_ms: 0.413125
+  ...
+# Subtest: non-reading hints retain their one-argument callback contract
+ok 103 - non-reading hints retain their one-argument callback contract
+  ---
+  duration_ms: 0.226542
+  ...
+# Subtest: exit registration rejects unrelated or hidden controls without replacing a current reader
+ok 104 - exit registration rejects unrelated or hidden controls without replacing a current reader
+  ---
+  duration_ms: 0.975458
+  ...
+# Subtest: actual two-surface host preserves a native Done click through document capture and returns focus
+ok 105 - actual two-surface host preserves a native Done click through document capture and returns focus
+  ---
+  duration_ms: 1.019708
+  ...
+# Subtest: embedded practice Tab edges return to parent controls; interior keys keep their menu owner
+ok 106 - embedded practice Tab edges return to parent controls; interior keys keep their menu owner
+  ---
+  duration_ms: 0.7045
+  ...
+# Subtest: practice boundary never bypasses a real modal, active reader, native field or unregistered game
+ok 107 - practice boundary never bypasses a real modal, active reader, native field or unregistered game
+  ---
+  duration_ms: 0.682333
+  ...
+# Subtest: stale, loading, unfocused or disposed practice contexts cannot move parent focus or clear newer input
+    # Subtest: session
+    ok 1 - session
+      ---
+      duration_ms: 0.146167
+      ...
+    # Subtest: loading
+    ok 2 - loading
+      ---
+      duration_ms: 0.130375
+      ...
+    # Subtest: parent-focus
+    ok 3 - parent-focus
+      ---
+      duration_ms: 0.092833
+      ...
+    # Subtest: hidden
+    ok 4 - hidden
+      ---
+      duration_ms: 0.269291
+      ...
+    # Subtest: wrong-frame
+    ok 5 - wrong-frame
+      ---
+      duration_ms: 0.164167
+      ...
+    # Subtest: disposed
+    ok 6 - disposed
+      ---
+      duration_ms: 0.132834
+      ...
+    1..6
+ok 108 - stale, loading, unfocused or disposed practice contexts cannot move parent focus or clear newer input
+  ---
+  duration_ms: 1.15825
+  ...
+# Subtest: an accepted practice exit cannot wrap the child after a callback changes session or parent focus
+    # Subtest: onSuspend: session
+    ok 1 - onSuspend: session
+      ---
+      duration_ms: 0.423584
+      ...
+    # Subtest: onSuspend: focus
+    ok 2 - onSuspend: focus
+      ---
+      duration_ms: 0.23825
+      ...
+    # Subtest: onRelease: session
+    ok 3 - onRelease: session
+      ---
+      duration_ms: 0.143459
+      ...
+    # Subtest: onRelease: focus
+    ok 4 - onRelease: focus
+      ---
+      duration_ms: 0.849458
+      ...
+    1..4
+ok 109 - an accepted practice exit cannot wrap the child after a callback changes session or parent focus
+  ---
+  duration_ms: 1.86575
+  ...
+# Subtest: all remapped flight buttons emit the existing normalized command fields
+ok 110 - all remapped flight buttons emit the existing normalized command fields
+  ---
+  duration_ms: 5.685666
+  ...
+# Subtest: all remapped menu actions remain scoped and edge-triggered with original priority
+ok 111 - all remapped menu actions remain scoped and edge-triggered with original priority
+  ---
+  duration_ms: 3.554875
+  ...
+# Subtest: fixed physical join controls remain available even when none is a mapped menu action
+ok 112 - fixed physical join controls remain available even when none is a mapped menu action
+  ---
+  duration_ms: 1.957625
+  ...
+# Subtest: custom analog axes/inversion are context-specific and digital directions still win
+ok 113 - custom analog axes/inversion are context-specific and digital directions still win
+  ---
+  duration_ms: 0.367833
+  ...
+# Subtest: configured stick hysteresis resists threshold chatter and releases at equality
+ok 114 - configured stick hysteresis resists threshold chatter and releases at equality
+  ---
+  duration_ms: 0.241291
+  ...
+# Subtest: pause clears stick history and requires physical release before the next command
+ok 115 - pause clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.376291
+  ...
+# Subtest: hangar clears stick history and requires physical release before the next command
+ok 116 - hangar clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.581875
+  ...
+# Subtest: stop clears stick history and requires physical release before the next command
+ok 117 - stop clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.188708
+  ...
+# Subtest: clear clears stick history and requires physical release before the next command
+ok 118 - clear clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.209
+  ...
+# Subtest: scope clears stick history and requires physical release before the next command
+ok 119 - scope clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.174791
+  ...
+# Subtest: remap clears stick history and requires physical release before the next command
+ok 120 - remap clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.209
+  ...
+# Subtest: neutral gating includes both contexts and fixed join buttons before a remapped action can fire
+ok 121 - neutral gating includes both contexts and fixed join buttons before a remapped action can fire
+  ---
+  duration_ms: 0.857917
+  ...
+# Subtest: buttons-only configurations ignore analog drift while keeping mapped movement available
+ok 122 - buttons-only configurations ignore analog drift while keeping mapped movement available
+  ---
+  duration_ms: 0.209875
+  ...
+# Subtest: successful adoption retains ownership and blocks a held newly mapped input without reading hardware
+ok 123 - successful adoption retains ownership and blocks a held newly mapped input without reading hardware
+  ---
+  duration_ms: 0.466667
+  ...
+# Subtest: invalid adoption preserves bindings, held UI edges, repeat deadlines and active hysteresis
+ok 124 - invalid adoption preserves bindings, held UI edges, repeat deadlines and active hysteresis
+  ---
+  duration_ms: 1.037625
+  ...
+# Subtest: successful adoption clears repeat timing and consumes a fresh neutral frame before UI resumes
+ok 125 - successful adoption clears repeat timing and consumes a fresh neutral frame before UI resumes
+  ---
+  duration_ms: 0.50125
+  ...
+# Subtest: adoption owns its maps and sampling does not revisit caller configuration getters
+ok 126 - adoption owns its maps and sampling does not revisit caller configuration getters
+  ---
+  duration_ms: 0.39925
+  ...
+# Subtest: legacy constructor deadZone stays compatible while explicit documents and later reset own thresholds
+ok 127 - legacy constructor deadZone stays compatible while explicit documents and later reset own thresholds
+  ---
+  duration_ms: 0.437916
+  ...
+# Subtest: remapped flight emergency priority suppresses equipment and analog triggers retain threshold semantics
+ok 128 - remapped flight emergency priority suppresses equipment and analog triggers retain threshold semantics
+  ---
+  duration_ms: 0.978083
+  ...
+# Subtest: hysteresis is per connection and loss requires neutral plus an explicit new join
+ok 129 - hysteresis is per connection and loss requires neutral plus an explicit new join
+  ---
+  duration_ms: 0.406125
+  ...
+# Subtest: invalid initial bindings install no listener and a destroyed router cannot be revived by adoption
+ok 130 - invalid initial bindings install no listener and a destroyed router cannot be revived by adoption
+  ---
+  duration_ms: 0.219083
+  ...
+# Subtest: joining needs an observed neutral then a deliberate button; join never activates UI or flight
+ok 131 - joining needs an observed neutral then a deliberate button; join never activates UI or flight
+  ---
+  duration_ms: 3.256875
+  ...
+# Subtest: one sample reads hardware once, uses the latest object, and never retains mutable snapshots
+ok 132 - one sample reads hardware once, uses the latest object, and never retains mutable snapshots
+  ---
+  duration_ms: 1.673208
+  ...
+# Subtest: only exact flight scope emits held gameplay actions; other scopes emit UI edges
+ok 133 - only exact flight scope emits held gameplay actions; other scopes emit UI edges
+  ---
+  duration_ms: 1.303125
+  ...
+# Subtest: scope changes and clear suppress held directions/buttons until a neutral sample
+ok 134 - scope changes and clear suppress held directions/buttons until a neutral sample
+  ---
+  duration_ms: 0.313291
+  ...
+# Subtest: special flight buttons are single actions with priority and cannot leak held equipment
+ok 135 - special flight buttons are single actions with priority and cannot leak held equipment
+  ---
+  duration_ms: 0.383833
+  ...
+# Subtest: UI activation/back/menu never repeat and suppress same-sample direction changes
+ok 136 - UI activation/back/menu never repeat and suppress same-sample direction changes
+  ---
+  duration_ms: 0.241583
+  ...
+# Subtest: UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst
+ok 137 - UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst
+  ---
+  duration_ms: 0.192875
+  ...
+# Subtest: direction repeat remains bounded at slow and fast sampling rates
+ok 138 - direction repeat remains bounded at slow and fast sampling rates
+  ---
+  duration_ms: 1.956041
+  ...
+# Subtest: finite axes, threshold and digital priority yield reliable cardinal input
+ok 139 - finite axes, threshold and digital priority yield reliable cardinal input
+  ---
+  duration_ms: 0.3
+  ...
+# Subtest: assignment follows the deliberate joining pad and ignores later lower-index arrivals
+ok 140 - assignment follows the deliberate joining pad and ignores later lower-index arrivals
+  ---
+  duration_ms: 0.294333
+  ...
+# Subtest: selected pad loss pauses ownership even while another pad remains; rejoin is explicit
+ok 141 - selected pad loss pauses ownership even while another pad remains; rejoin is explicit
+  ---
+  duration_ms: 0.588833
+  ...
+# Subtest: descriptor replacement and same-model explicit disconnect invalidate a reused slot
+ok 142 - descriptor replacement and same-model explicit disconnect invalidate a reused slot
+  ---
+  duration_ms: 0.232666
+  ...
+# Subtest: disconnecting an unassigned second pad never disrupts the assigned controller
+ok 143 - disconnecting an unassigned second pad never disrupts the assigned controller
+  ---
+  duration_ms: 0.2415
+  ...
+# Subtest: API denial clears assignment once and distinguishes unsupported from absent controllers
+ok 144 - API denial clears assignment once and distinguishes unsupported from absent controllers
+  ---
+  duration_ms: 1.416459
+  ...
+# Subtest: invalidate requires rejoin; destroyed router removes its listener and performs no more reads
+ok 145 - invalidate requires rejoin; destroyed router removes its listener and performs no more reads
+  ---
+  duration_ms: 0.196542
+  ...
+# Subtest: invalid configuration rejects and malformed clocks never cause repeating activations
+ok 146 - invalid configuration rejects and malformed clocks never cause repeating activations
+  ---
+  duration_ms: 0.343708
+  ...
+# Subtest: solo auto-join accepts the first action after neutral without consuming a join press
+ok 147 - solo auto-join accepts the first action after neutral without consuming a join press
+  ---
+  duration_ms: 0.33675
+  ...
+# Subtest: solo cannot start from held discovery input, scope changes, or a reconnected controller
+ok 148 - solo cannot start from held discovery input, scope changes, or a reconnected controller
+  ---
+  duration_ms: 0.210167
+  ...
+# Subtest: Xbox Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 149 - Xbox Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.34475
+  ...
+# Subtest: DualSense Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 150 - DualSense Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.271875
+  ...
+# Subtest: DualShock 4: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 151 - DualShock 4: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.203125
+  ...
+# Subtest: Steam Deck (standard gamepad): both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 152 - Steam Deck (standard gamepad): both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.185458
+  ...
+# Subtest: Generic USB Gamepad: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 153 - Generic USB Gamepad: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.167
+  ...
+# Subtest: menu face aliases and shoulders/triggers work with edge detection and repeat
+ok 154 - menu face aliases and shoulders/triggers work with edge detection and repeat
+  ---
+  duration_ms: 0.200125
+  ...
+# Subtest: saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority
+ok 155 - saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority
+  ---
+  duration_ms: 0.780584
+  ...
+# Subtest: Mission setup keeps the original craft status in its modal and restores it after closing
+not ok 156 - Mission setup keeps the original craft status in its modal and restores it after closing
+  ---
+  duration_ms: 57.873625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=1:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=1:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:13:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+not ok 157 - direct briefing and disposal retain one craft presenter outside hidden mission content
+  ---
+  duration_ms: 15.765167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:49:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=2:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=2:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:50:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight
+not ok 158 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight
+  ---
+  duration_ms: 13.455917
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=3:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=3:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:68:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+not ok 159 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 11.569833
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:115:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=4:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=4:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:116:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+not ok 160 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+  ---
+  duration_ms: 18.311583
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:145:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=5:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=5:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:146:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+not ok 161 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 13.062458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:178:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=6:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=6:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:179:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+not ok 162 - Missions button returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 12.304042
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=7:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=7:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+not ok 163 - Missions escape returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 11.837625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=8:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=8:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+not ok 164 - Missions controller returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 12.904875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=9:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=9:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+not ok 165 - Missions button returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 10.297958
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=10:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=10:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+not ok 166 - Missions escape returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 11.99925
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=11:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=11:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+not ok 167 - Missions controller returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 17.302875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=12:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=12:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+not ok 168 - Missions button returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 15.722541
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=13:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=13:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+not ok 169 - Missions escape returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 14.8825
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=14:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=14:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+not ok 170 - Missions controller returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 9.528166
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:195:5'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=15:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=15:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:204:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Back to flight remains an intentional exit from title Missions
+not ok 171 - Back to flight remains an intentional exit from title Missions
+  ---
+  duration_ms: 11.752292
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:274:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=16:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=16:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:275:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+not ok 172 - controller Back retains a cancellation warning when a transaction keeps its dialog open
+  ---
+  duration_ms: 12.690916
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:287:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The game could not load.: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+    Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/authoring/motion-lab/presets.json'
+        at async open (node:internal/fs/promises:639:25)
+        at async readFile (node:internal/fs/promises:1246:14)
+        at async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+        at async Promise.all (index 2)
+        at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=17:197:5
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    async open (node:internal/fs/promises:639:25)
+    async readFile (node:internal/fs/promises:1246:14)
+    async Object.json (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:284:26)
+    async Promise.all (index 2)
+    async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/app.mjs?difficultyHost=17:197:5
+    soloPage (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/helpers/solo-dom.mjs:402:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/game/test/field-kit-flow.test.mjs:296:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: About exposes history while pending and only changes explicit links: https://example.test/revealline/site/about.html\#versions
+ok 173 - About exposes history while pending and only changes explicit links: https://example.test/revealline/site/about.html\#versions
+  ---
+  duration_ms: 49.839084
+  ...
+# Subtest: About exposes history while pending and only changes explicit links: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+ok 174 - About exposes history while pending and only changes explicit links: https://example.test/revealline/releases/v0.60.8/site/site/about.html\#versions
+  ---
+  duration_ms: 9.14725
+  ...
+# Subtest: About exposes history while pending and only changes explicit links: https://example.test/preview/releases/v0.60.8/site/site/about.html
+ok 175 - About exposes history while pending and only changes explicit links: https://example.test/preview/releases/v0.60.8/site/site/about.html
+  ---
+  duration_ms: 9.028042
+  ...
+# Subtest: About retains current play and shared history when the archive request fails
+ok 176 - About retains current play and shared history when the archive request fails
+  ---
+  duration_ms: 7.910542
+  ...
+# Subtest: release explorer resolves to the shared catalog from source and frozen game URLs
+ok 177 - release explorer resolves to the shared catalog from source and frozen game URLs
+  ---
+  duration_ms: 1.796625
+  ...
+# Subtest: About accepts actual local and canonical archived play records without double-prefixing
+ok 178 - About accepts actual local and canonical archived play records without double-prefixing
+  ---
+  duration_ms: 8.414167
+  ...
+# Subtest: archive links reject script schemes, credentials, traversal and non-game destinations
+ok 179 - archive links reject script schemes, credentials, traversal and non-game destinations
+  ---
+  duration_ms: 0.369666
+  ...
+# Subtest: About history resolves the shared catalog from source and frozen sibling game routes
+ok 180 - About history resolves the shared catalog from source and frozen sibling game routes
+  ---
+  duration_ms: 0.155375
+  ...
+# Subtest: About rebases only validated local archive records against the fetched catalog URL
+ok 181 - About rebases only validated local archive records against the fetched catalog URL
+  ---
+  duration_ms: 0.1745
+  ...
+# Subtest: all current HTML aliases preserve queries/fragments with auditable source and output hashes
+ok 182 - all current HTML aliases preserve queries/fragments with auditable source and output hashes
+  ---
+  duration_ms: 31.988792
+  ...
+# Subtest: root retirement navigates only explicit HTML routes and never claims clients or touches saved/cache data
+ok 183 - root retirement navigates only explicit HTML routes and never claims clients or touches saved/cache data
+  ---
+  duration_ms: 99.5075
+  ...
+# Subtest: retirement rejects a different registration scope without unregistering it
+ok 184 - retirement rejects a different registration scope without unregistering it
+  ---
+  duration_ms: 30.963291
+  ...
+# Subtest: identical alias and worker bytes route localhost and project prefixes without crossing origins
+ok 185 - identical alias and worker bytes route localhost and project prefixes without crossing origins
+  ---
+  duration_ms: 41.197208
+  ...
+# Subtest: actual launcher and runtime links stay versioned; About history uses the generated root catalog
+ok 186 - actual launcher and runtime links stay versioned; About history uses the generated root catalog
+  ---
+  duration_ms: 44.599833
+  ...
+1..186
+# tests 196
+# suites 0
+# pass 179
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1965.748334

@@ -1,0 +1,21 @@
+{
+  "commit": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "tree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "port": 55189,
+  "runtimeOverrides": {
+    "bytes": 2304,
+    "sha256": "8ee72497a696902d6a711ebc32741d825b48910f90830e3df044e9f39c20638d"
+  },
+  "urls": [
+    "http://127.0.0.1:55189/game/",
+    "http://127.0.0.1:55189/site/about.html#versions"
+  ],
+  "faultPaths": [
+    "releases/index.json",
+    "site/landing.mjs"
+  ],
+  "limits": {
+    "requestLogBytes": 450000,
+    "requestEvents": 1300
+  }
+}

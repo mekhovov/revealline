@@ -48,6 +48,7 @@ export async function page(
     capturePaint = false,
     presentation = {},
     waitPicture = true,
+    previewContextAvailable = true,
   } = {},
 ) {
   const doc = new Document(),
@@ -76,6 +77,57 @@ export async function page(
     }
   }
   const drawImages = [];
+  // Lobby preview owns a separate recorder. It must never add arena draws or
+  // perturb capture hashes used by historical play/Retry tests.
+  const previewDrawImages = [],
+    previewOperations = [];
+  let failPreviewPaint = false,
+    failPreviewReset = false;
+  const setPreviewResetFailure = (value) => {
+    failPreviewReset = Boolean(value);
+  };
+  const failNextPreviewPaint = () => {
+    failPreviewPaint = true;
+  };
+  const previewContext = new Proxy(
+    {},
+    {
+      get(target, key) {
+        if (Object.hasOwn(target, key)) return target[key];
+        return (...args) => {
+          previewOperations.push([key, ...args]);
+          if (key === 'drawImage') {
+            if (failPreviewPaint) {
+              failPreviewPaint = false;
+              throw new Error('Modeled lobby preview paint failure');
+            }
+            previewDrawImages.push(args[0]);
+          }
+        };
+      },
+      set(target, key, value) {
+        target[key] = value;
+        previewOperations.push(['set', key, value]);
+        return true;
+      },
+    },
+  );
+  const previewCanvas = $('coop-preview-canvas');
+  if (previewCanvas) {
+    previewCanvas.width = 576;
+    previewCanvas.height = 288;
+    let previewWidth = previewCanvas.width;
+    Object.defineProperty(previewCanvas, 'width', {
+      configurable: true,
+      get: () => previewWidth,
+      set(value) {
+        previewOperations.push(['resize', 'width', value]);
+        if (failPreviewReset) throw new Error('Modeled lobby preview reset failure');
+        previewWidth = value;
+      },
+    });
+    previewCanvas.getContext = () => (previewContextAvailable ? previewContext : null);
+  }
   let failPaint = false,
     paintDepth = 0,
     paintHash = null,
@@ -186,7 +238,7 @@ export async function page(
     },
   });
   const artwork = installCoopPresentation({ doc, win, install, ...presentation });
-  beforeImport({ $, doc, win, install });
+  beforeImport({ $, doc, win, install, failNextPreviewPaint });
   await import(`../../couch/relay-rescue.mjs?host-test=${++sequence}`);
   if (!expectError) {
     if (waitPicture)
@@ -262,6 +314,10 @@ export async function page(
   return {
     artwork,
     drawImages,
+    previewDrawImages,
+    previewOperations,
+    failNextPreviewPaint,
+    setPreviewResetFailure,
     $,
     doc,
     win,

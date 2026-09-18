@@ -1,0 +1,19 @@
+{
+  "base": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0614-root-independent-review/first-focus-probe.mjs"
+  ],
+  "source": {
+    "path": "site/about-navigation.mjs",
+    "bytes": 4873,
+    "sha256": "e1bdf3d5e106ec750890c35ae66959f7ca225e474bbd5c4996416c24a2819f3b"
+  },
+  "probeOriginalSha256": "370f181d04d6915b1efce7a76530275661da8efedaa3a6bdaad2b67db7cd239c",
+  "outputBytes": 980,
+  "outputSha256": "3d5fce613a71a5820ba1f466c0ef802e77b9a26cdc337f9e4a9fe6a8367aeac3",
+  "exitCode": 0,
+  "elapsedSeconds": 0.2992707089997566,
+  "inputsUnchanged": true,
+  "limitations": "Original finite rootreviewprobe rerunagainstcorrectedworktree; no browser/hardware/releaseclaim."
+}

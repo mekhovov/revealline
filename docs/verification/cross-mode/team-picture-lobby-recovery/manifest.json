@@ -1,0 +1,1589 @@
+{
+  "format": "revealline-team-composition-adoption.v1",
+  "createdAt": "2026-09-18T01:14:15.880305+00:00",
+  "sourceBase": "d2455ebfa444a8692d2694790afa6e4199af64e0",
+  "version": "0.61.2",
+  "reviewAuthorization": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/root-adoption-review.json",
+  "sourcePatch": {
+    "path": "composed-d245.patch",
+    "bytes": 111926,
+    "sha256": "f6cab4afdb8f308fbf1c9a7f51c8471f358758bd8ccc4d25987ad20991a054a9"
+  },
+  "originalCount": 256,
+  "originalBytes": 4964818,
+  "records": [
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/README.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/README.md",
+      "bytes": 6338,
+      "sha256": "324e7fc3cca24593041acdb6d348db50c1865ff491ff4a33f1f87aadd6e4ef02"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/cohort-hydration.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/cohort-hydration.json",
+      "bytes": 9865,
+      "sha256": "7fd142a76dbfefbc6f95b6ea24913ee3593c89d9b31456f250c23852616c55b2"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/cohort-sparse.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/cohort-sparse.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/cohort.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/cohort.json",
+      "bytes": 1419,
+      "sha256": "a4cbfdf2a34aa08cd17c52fd5f21f7663c2d57a3205875914b56c9c943db6850"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/composed-d245.patch",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/composed-d245.patch",
+      "bytes": 111926,
+      "sha256": "f6cab4afdb8f308fbf1c9a7f51c8471f358758bd8ccc4d25987ad20991a054a9"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/expanded-hydration.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/expanded-hydration.json",
+      "bytes": 10309,
+      "sha256": "eadadd0328fd66358f8d6c8c0b142c343e410b8fb7e0b7e1b0fcc8a000d3afb3"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/expanded-sparse.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/expanded-sparse.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/fixture-correction.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/fixture-correction.json",
+      "bytes": 1877,
+      "sha256": "ec8b021f765250ef811d731acfb00d988db4e21503b1e21ae4b68523b11199fb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/initial-composition.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/initial-composition.json",
+      "bytes": 2630,
+      "sha256": "17ff5961b69d4744469f94057631104941e23db6996a1c566131849d3690b42a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/input-stages.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/input-stages.json",
+      "bytes": 1347,
+      "sha256": "5f9270795d676fdd5b31d53c47577c29d1504a0f0589fb33714a18272b053a6a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/affected-node20.tap",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/affected-node20.tap",
+      "bytes": 35102,
+      "sha256": "af99d38f74faab13fb0dbb86a128d1667ae15d6c2b519db7236633b12e2f028d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/authoring/prompts/cross-mode-delivery.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/authoring/prompts/cross-mode-delivery.md",
+      "bytes": 54328,
+      "sha256": "80fe86fc8933933a60ef1cb8ad1d154ec116a8eb5b302a964d13c164b5a5d031"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 204290,
+      "sha256": "ceedb32c3f0384ca94c3cffe12ba608a0a5bf312902ae458885d80cfcab77c8f"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/docs/team-picture-host.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/docs/team-picture-host.md",
+      "bytes": 7788,
+      "sha256": "dd6667158d9e6a7440e795199530f6b73c40339a348012b6361b789726a297ef"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/docs/team-victory-picture.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/docs/team-victory-picture.md",
+      "bytes": 4117,
+      "sha256": "b88d1f18f70db6aba776d541e9614acb14dcc9786c737473170c78db753e3e79"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/coop-view.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/relay-rescue.css",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/relay-rescue.html",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/couch/relay-rescue.mjs",
+      "bytes": 58894,
+      "sha256": "d82669dad630c9a8d1577006b29ba4ca8a645fe45c1cfb7188861baf50c014d8"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/coop-lobby-preview.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/coop-lobby-preview.test.mjs",
+      "bytes": 26070,
+      "sha256": "f5757a75aa04808562be2f09d3b237f88190314fca491d5252dd8a62d4e4f703"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/coop-victory-picture.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/coop-victory-picture.test.mjs",
+      "bytes": 8757,
+      "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/coop-won-terminal-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/coop-won-terminal-host.test.mjs",
+      "bytes": 7439,
+      "sha256": "e789da2ccfa5af78de8a38fa96e26817bf6c44fbe0d8da261251f372345cc5a1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/helpers/coop-host.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/candidate-preimage/game/test/helpers/coop-host.mjs",
+      "bytes": 11374,
+      "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/composed-candidate.patch",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/composed-candidate.patch",
+      "bytes": 88896,
+      "sha256": "144789b1db523fb047daa2179a4e7b5d2e4237e38a86f713e309f54ff4b9f032"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/diff-check.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/diff-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/format.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/format.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/authoring/prompts/cross-mode-delivery.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/authoring/prompts/cross-mode-delivery.md",
+      "bytes": 51910,
+      "sha256": "dea0409cc864c78aa078b8b2b0a0fb51536e1bf5b9f5507e065ff8f2a10c5b9d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 201359,
+      "sha256": "5501e470b9e1fefab09168ad502c965d328c0ec326b2793cd4c101072b19e039"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/docs/team-picture-host.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/docs/team-picture-host.md",
+      "bytes": 4719,
+      "sha256": "0591079322d6c4e169c89eee0567a32352dc817dcf2499f0014fe6b96cdaed53"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/coop-view.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/coop-view.mjs",
+      "bytes": 21213,
+      "sha256": "a8cd3d76514864eb31c8853b24b6391ee5540189c7495f237112b9752524b85c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/relay-rescue.css",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/relay-rescue.css",
+      "bytes": 18442,
+      "sha256": "530f365949cfe27ef189654c7d191e14dd4908f13249f3ada5f2f2a96ac1a195"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/relay-rescue.html",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/relay-rescue.html",
+      "bytes": 21586,
+      "sha256": "25076c69184ac46c5bf03a1a7cc779beb36c87de17584aa22901d4a31629a2e1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/couch/relay-rescue.mjs",
+      "bytes": 55585,
+      "sha256": "6818f6cf60f9b32beb3ee7b610dc13535443f07745269edeb2bc7b0aaff1ff93"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/test/coop-won-terminal-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/test/coop-won-terminal-host.test.mjs",
+      "bytes": 7079,
+      "sha256": "8f506c71d5fe4eab4b20075e98a16006e260cd6f0a30295e56ade3706761ea51"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/test/helpers/coop-host.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/git-preimage/game/test/helpers/coop-host.mjs",
+      "bytes": 9550,
+      "sha256": "3263a658ee743a9431c4b169fea58e66e668cc627241c753e3ccc51efed5d709"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/green-tests.tap",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/green-tests.tap",
+      "bytes": 4697,
+      "sha256": "3702b02bd4430aac5408fe4f930a939b82f4dab3de3153f09504adbce923d567"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/lint.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/lobby-focus-delta.patch",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/lobby-focus-delta.patch",
+      "bytes": 24232,
+      "sha256": "16b454a1a757c833afadb0d64d99680d24b0e8956fade65ea377a1ae46b906ee"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/peer-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/peer-review.json",
+      "bytes": 1125,
+      "sha256": "0db38750761d289e07e38967dd5457438cdd14391648ba8c4bce0d2833c4ffe0"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/authoring/prompts/cross-mode-delivery.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/authoring/prompts/cross-mode-delivery.md",
+      "bytes": 55257,
+      "sha256": "ec29dbd9d58f22d62b5ab710b6b7daaf6885a13efcfcf0c87362d4f982e53b52"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 205053,
+      "sha256": "0ab3caa8699eaa3aa5368616e5207eb238f824cd25a33f58aa20cc940bb4d4bb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/docs/team-picture-host.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/docs/team-picture-host.md",
+      "bytes": 7788,
+      "sha256": "dd6667158d9e6a7440e795199530f6b73c40339a348012b6361b789726a297ef"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/docs/team-victory-picture.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/docs/team-victory-picture.md",
+      "bytes": 5449,
+      "sha256": "dc5e7f0c385b3ebc71a396ac4dbc6c24145284f54704a3f91ed7aeded0db27de"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/coop-view.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/relay-rescue.css",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/relay-rescue.html",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/couch/relay-rescue.mjs",
+      "bytes": 61847,
+      "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-lobby-focus.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-lobby-focus.test.mjs",
+      "bytes": 6602,
+      "sha256": "e52c2f191916d6155dc244ff876a5877d97885bdfba7d0ab0ddf73eb24e19a7c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-lobby-preview.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-lobby-preview.test.mjs",
+      "bytes": 26070,
+      "sha256": "f5757a75aa04808562be2f09d3b237f88190314fca491d5252dd8a62d4e4f703"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-victory-picture.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-victory-picture.test.mjs",
+      "bytes": 8757,
+      "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-won-terminal-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/coop-won-terminal-host.test.mjs",
+      "bytes": 7912,
+      "sha256": "ed4d80728a0de8f854b11c050d7e973a0acd68a7ea7e8745e0acbadd80761bff"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/helpers/coop-host.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/proposal/game/test/helpers/coop-host.mjs",
+      "bytes": 11374,
+      "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/qualification.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/qualification.json",
+      "bytes": 11925,
+      "sha256": "4507fd11d2a1f84103c1bb2b6b9b0ff791e05cf7694ae6710838530ba26db69b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/red-before.tap",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/red-before.tap",
+      "bytes": 7696,
+      "sha256": "abdf77fb79dd57619595de522e0340192fb0ecbe544a567e2ae16b98fd2a0beb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-628e95da/setup.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-628e95da/setup.json",
+      "bytes": 12588,
+      "sha256": "e9b59b8c568ebb5bda05356617219a658ef09d60a00ad47787659fce0f3d5583"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/binding-proposal.json",
+      "bytes": 411,
+      "sha256": "cc8f9860ef76e7f254e9e6ab5d84c9b8694dedd62930c90a35dbde4412b398e4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/binding.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/binding.json",
+      "bytes": 1738,
+      "sha256": "2d0bdf22dafaccc27142496c8901361e044ee5e9e5f562568d732ffebf2f4190"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/cua-observation.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/cua-observation.json",
+      "bytes": 5315,
+      "sha256": "deae5024f7e03fae1ca19f898c496587e4f925f307105bfb12258a189d913427"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/faults.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/relay-rescue.mjs",
+      "bytes": 61847,
+      "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/requests.jsonl",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/requests.jsonl",
+      "bytes": 76113,
+      "sha256": "81c5838b30cddfacc4ff86953f09685a2258cdf0ac2bb7a26f44346101b7d084"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/runtime-overrides.json",
+      "bytes": 1382,
+      "sha256": "0660a7694d6e2c84975a94f50c34f869e65cac896414faa0823afc3c787203aa"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-lobby-visible-focus-browser/serve.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-lobby-visible-focus-browser/serve.py",
+      "bytes": 6790,
+      "sha256": "fffed9cfd23b66cb706a311b11c370258b42ed0571c2e876494b271b5f79e96d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/affected-node20.tap",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/affected-node20.tap",
+      "bytes": 36495,
+      "sha256": "c54117530a0cfad6874b1e0f80656d1763221aad7dd224b10db9dd626106a691"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/budget.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/budget.json",
+      "bytes": 630,
+      "sha256": "c00098dbd35900a8852d302a45b3987b6a374bad1e78b7ca2633cb087ebe08ad"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/authoring/prompts/cross-mode-delivery.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/authoring/prompts/cross-mode-delivery.md",
+      "bytes": 55257,
+      "sha256": "ec29dbd9d58f22d62b5ab710b6b7daaf6885a13efcfcf0c87362d4f982e53b52"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 205053,
+      "sha256": "0ab3caa8699eaa3aa5368616e5207eb238f824cd25a33f58aa20cc940bb4d4bb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/docs/team-picture-host.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/docs/team-picture-host.md",
+      "bytes": 7788,
+      "sha256": "dd6667158d9e6a7440e795199530f6b73c40339a348012b6361b789726a297ef"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/docs/team-victory-picture.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/docs/team-victory-picture.md",
+      "bytes": 5449,
+      "sha256": "dc5e7f0c385b3ebc71a396ac4dbc6c24145284f54704a3f91ed7aeded0db27de"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/coop-view.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/relay-rescue.css",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/relay-rescue.html",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/couch/relay-rescue.mjs",
+      "bytes": 61847,
+      "sha256": "6fd7388ad0b7a6ece3bff9c61c61002c2f4f5e51a8a0660ea62b8f3da452b06f"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-lobby-focus.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-lobby-focus.test.mjs",
+      "bytes": 6602,
+      "sha256": "e52c2f191916d6155dc244ff876a5877d97885bdfba7d0ab0ddf73eb24e19a7c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-lobby-preview.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-lobby-preview.test.mjs",
+      "bytes": 26070,
+      "sha256": "f5757a75aa04808562be2f09d3b237f88190314fca491d5252dd8a62d4e4f703"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-picture-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-picture-host.test.mjs",
+      "bytes": 16132,
+      "sha256": "21f3b2f8eccd9dab0e00aadd2080eea158472059eec568dbac4654d5f89ee084"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-victory-picture.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-victory-picture.test.mjs",
+      "bytes": 8757,
+      "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-won-terminal-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/coop-won-terminal-host.test.mjs",
+      "bytes": 7912,
+      "sha256": "ed4d80728a0de8f854b11c050d7e973a0acd68a7ea7e8745e0acbadd80761bff"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/helpers/coop-host.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/candidate-preimage/game/test/helpers/coop-host.mjs",
+      "bytes": 11374,
+      "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/composed-candidate.patch",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/composed-candidate.patch",
+      "bytes": 114095,
+      "sha256": "d19acb509dfed6e0787c31436a6e97d5dbe0443833d0ac2b1eaa2c21c3c469a4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/diff-check.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/diff-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/format.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/format.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/green-tests.tap",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/green-tests.tap",
+      "bytes": 3597,
+      "sha256": "08cdca81d4e8b493b8fd30a00d957aac557eb1b97c82f305fc3ea0f1abb9ae97"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/lint.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/peer-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/peer-review.json",
+      "bytes": 992,
+      "sha256": "c1426f73f2e64ab2192461800be4b830250b5f2f2db90fe7b2aea7145a9daf46"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/picture-recovery-delta.patch",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/picture-recovery-delta.patch",
+      "bytes": 30014,
+      "sha256": "f8681c3a9d65c0bd6a0b3612a0fe277ac73a4b75f1edda5e1321a150d99a7fde"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/authoring/prompts/cross-mode-delivery.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/authoring/prompts/cross-mode-delivery.md",
+      "bytes": 56302,
+      "sha256": "ddbdfdecaabd47d201ce541d665308bafa697ed2c2280ef0e18075a1da65956d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 206067,
+      "sha256": "b0f5ae87159750a444c981dc2a45293b8026b9e9abb3a31640c127274c0c8b3b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/docs/team-picture-host.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/docs/team-picture-host.md",
+      "bytes": 9987,
+      "sha256": "a4d069690f69689c0bd25b4aefac8b53a827acf3df019c04d7b4332f76324aa5"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/docs/team-victory-picture.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/docs/team-victory-picture.md",
+      "bytes": 5449,
+      "sha256": "dc5e7f0c385b3ebc71a396ac4dbc6c24145284f54704a3f91ed7aeded0db27de"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/coop-view.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/relay-rescue.css",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/relay-rescue.html",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/couch/relay-rescue.mjs",
+      "bytes": 63875,
+      "sha256": "5709387a4b4afab60f9ee67eb7cb314bd2a6b9ce6941854dbe8bd5f8173993cb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-lobby-focus.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-lobby-focus.test.mjs",
+      "bytes": 6602,
+      "sha256": "e52c2f191916d6155dc244ff876a5877d97885bdfba7d0ab0ddf73eb24e19a7c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-lobby-preview.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-lobby-preview.test.mjs",
+      "bytes": 26481,
+      "sha256": "a3a24256d95e750f8821a33ff74091d02db5c3601fa84ffa3039aeb111647755"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-picture-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-picture-host.test.mjs",
+      "bytes": 16681,
+      "sha256": "429f4301f6df7c7b10f2249d02bbeff5278316d7402f71fe08a5dd74b2dc8da0"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-picture-recovery-focus.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-picture-recovery-focus.test.mjs",
+      "bytes": 12510,
+      "sha256": "ab8779fbbcb3f48d57ff548a5d71b677957331c65b2c465bcd327277a380663d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-victory-picture.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-victory-picture.test.mjs",
+      "bytes": 8757,
+      "sha256": "3d5fe255e923bf9f67b43fd0a168c1a56db06a2801c314616323b49bd5377737"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-won-terminal-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/coop-won-terminal-host.test.mjs",
+      "bytes": 7912,
+      "sha256": "ed4d80728a0de8f854b11c050d7e973a0acd68a7ea7e8745e0acbadd80761bff"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/proposal/game/test/helpers/coop-host.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/proposal/game/test/helpers/coop-host.mjs",
+      "bytes": 11374,
+      "sha256": "8e11dca89c4022334b5326282afbeda905a7fd281a091917e8278f89b6bc2034"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/qualification.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/qualification.json",
+      "bytes": 13231,
+      "sha256": "29a1531d569f500c04182c28f2cb9aafa8d361a9e049641cf94b2730da301ea2"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/red-before.tap",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/red-before.tap",
+      "bytes": 9491,
+      "sha256": "e344baa416c495cd821a8477583e650911abad475882518fa7efa9358b80df42"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-628e95da/setup.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-628e95da/setup.json",
+      "bytes": 9154,
+      "sha256": "79f18c4036898c6cf2930485337b1f87bdbf2df623cf59ecd684502728aca64e"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/binding-proposal.json",
+      "bytes": 653,
+      "sha256": "3c368171b430fdf655a2f26424502a088c073f7c51e45fcb2a658cb3a8d0c35d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/binding.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/binding.json",
+      "bytes": 1913,
+      "sha256": "e41989bc416cefb27f27d9531df8c93aae366040388884dc7573c534d7fde744"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/cua-observation.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/cua-observation.json",
+      "bytes": 19825,
+      "sha256": "f3c8bed0c9f378c3bd707fbc10e6c9ed6dd55a9e83beb001f88d2c8886af5222"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/faults.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/receipt-peer-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/receipt-peer-review.json",
+      "bytes": 966,
+      "sha256": "9b64ec1982ca4b773f051c18ef7e08ae5dea2690cd543a7aabe52c8211ebfbb0"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/relay-rescue.mjs",
+      "bytes": 63875,
+      "sha256": "5709387a4b4afab60f9ee67eb7cb314bd2a6b9ce6941854dbe8bd5f8173993cb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/requests.jsonl",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/requests.jsonl",
+      "bytes": 188223,
+      "sha256": "f0fadaa044a8e7e23e24f5aa280fc74501d88faf5c23e5a0547cd296489136ad"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/runtime-overrides.json",
+      "bytes": 1436,
+      "sha256": "3a3eed5a3dc24aab1f61021d0190ce25357de8de6b77ab34d80f7267fd65b978"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p03-team-picture-recovery-browser/serve.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p03-team-picture-recovery-browser/serve.py",
+      "bytes": 7187,
+      "sha256": "5a205fa034758a772e414164df6e1eddd22828421b922ce59bde0925322b8cc1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/attempt-receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/attempt-receipt.json",
+      "bytes": 4059,
+      "sha256": "464379d34012d51af03e13b36d90daf69b8f6c31a26713f768753b411112adf8"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/binding-proposal.json",
+      "bytes": 652,
+      "sha256": "032e25fc0c5070ff28e0a5ac1c4d49d4a65c655d8f3e72438eb5ffe0423cf41d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/binding.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/binding.json",
+      "bytes": 1912,
+      "sha256": "5a3a3ceb9501047bbfa23dee23c26e500f75f8af489c9a4744461dd6b2f65841"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/faults.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/peer-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/peer-review.json",
+      "bytes": 988,
+      "sha256": "a05d1ff7c9f99897a0cd19d56ddad889f3ee031273eb337594e3041a76b68756"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/reconnect-result.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/reconnect-result.json",
+      "bytes": 353,
+      "sha256": "f8e3a56ff7ab20f819b99efe45c763255aa2a529f1ff428475f37325f1beece1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/requests.jsonl",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/requests.jsonl",
+      "bytes": 76113,
+      "sha256": "939ffecf362f03a112b751d10abe1b7b2f52362935bd4b97ece8700560d2b39d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/runtime-overrides.json",
+      "bytes": 1436,
+      "sha256": "3a3eed5a3dc24aab1f61021d0190ce25357de8de6b77ab34d80f7267fd65b978"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-first-connection-native/serve.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-first-connection-native/serve.py",
+      "bytes": 7187,
+      "sha256": "5a205fa034758a772e414164df6e1eddd22828421b922ce59bde0925322b8cc1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/README.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/README.md",
+      "bytes": 5388,
+      "sha256": "1bcdcd8e87e2b1189b2c11bf435f0209539a3aa0ff059c159754c31f2437ced0"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/adoption-pins.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/adoption-pins.json",
+      "bytes": 3654,
+      "sha256": "9bdd5ec04d46eb10b80073fec697bd13a7c17d4a4bbfc529cc45286b3f49c323"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-apply-check.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-apply-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-apply-check.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-apply-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-apply.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-apply.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-apply.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-apply.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-inputs.composed.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-inputs.composed.json",
+      "bytes": 38145,
+      "sha256": "a86bfb77282c867cb6cde91976b75d745211420dfaf69d006af1954fe9606a77"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-inputs.initial.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-inputs.initial.json",
+      "bytes": 37849,
+      "sha256": "d2f5140e4e64b66a6114eeac1d770a0c48f526da6853da98f6374d2ea669b482"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate-pins.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate-pins.json",
+      "bytes": 4484,
+      "sha256": "b6bbdceedee13999e55dfff86b41ccccdfba5244e23cc5ca090f20941c1b4be4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/candidate.patch",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/candidate.patch",
+      "bytes": 69854,
+      "sha256": "5e848f71d5217f3775e7407bf597dac9a368e04d7e6dbbdd78167c981abd267b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/closure-template-additions.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/closure-template-additions.json",
+      "bytes": 3119,
+      "sha256": "a2ebea2bfd3637d4a669fda607e9fe8c27eb8c7ab6d7e5923eae5fb37fed884c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/cohort.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/cohort.json",
+      "bytes": 849,
+      "sha256": "75d678e5f5edee1caf7b25dcbc12aef017d65df39b5dfec64571fc02dffd3aaa"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/composition-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/composition-review.json",
+      "bytes": 48839,
+      "sha256": "721dc624d1733aab92d12aa9592f65dfb2399f38552e923029a97bc36da0b0cc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/create.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/create.stderr",
+      "bytes": 65,
+      "sha256": "05049afb54ca5482ab2f826f2f1bb77ea96e05aa2f45401b81582ba44a4bdf59"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/create.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/create.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/final-format/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/final-format/receipt.json",
+      "bytes": 654,
+      "sha256": "47db7c4a63f11d7c1e0086fe0befae0a633e9b65e902d5261c01ac1e52d48672"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/final-format/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/final-format/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/final-format/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/final-format/stdout",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/final-markdown/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/final-markdown/receipt.json",
+      "bytes": 517,
+      "sha256": "3105fd29fab23e483f3a3cbef3c42609f5fafc3092b026792850244ed2e146f1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/final-markdown/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/final-markdown/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/final-markdown/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/final-markdown/stdout",
+      "bytes": 147,
+      "sha256": "8cf24ce30226402b95882a93f2be887156674d3070b909fbc0a419f9aa21818a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/format-tests/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/format-tests/receipt.json",
+      "bytes": 430,
+      "sha256": "1a415bd15625c1fcc0ba42a2ab6c9d9f698fb3f304986fcba20b532cfbba43a8"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/format-tests/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/format-tests/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/format-tests/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/format-tests/stdout",
+      "bytes": 102,
+      "sha256": "cc20726ac5897b2df9c3a02d8681a4f3ef0cbee193691bef0a08b908f4811b01"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/handoff.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/handoff.json",
+      "bytes": 2392,
+      "sha256": "09db1d55127bb9b2f0211691ea7ac288e1fdbe51f3e31a8c8dc0edfecfd3097d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/independent-owner-review/review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/independent-owner-review/review.json",
+      "bytes": 2158,
+      "sha256": "2afc122190887bec18461befc736e08b9468b7be3e9ec7e07a99d6e13df6f0ab"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/initial-closure.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/initial-closure.json",
+      "bytes": 7060,
+      "sha256": "52005060cd9a548b25f18f57ecd859a957776110cfe44b9c9cc21621377a1dad"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/initial-source-paths.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/initial-source-paths.txt",
+      "bytes": 5514,
+      "sha256": "27f80534980cf84ec6c7d82502eb3dc767dcb7a2116c1a31d785f6ad2a69b7fb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/initial-won-terminal-host.test.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/initial-won-terminal-host.test.mjs",
+      "bytes": 7351,
+      "sha256": "15ea675cc27fbb4d62a87b3c4de602ae970b60b2719a5a6c6655de7251cef5ee"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/initialize.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/initialize.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/initialize.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/initialize.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/markdown-parse/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/markdown-parse/receipt.json",
+      "bytes": 519,
+      "sha256": "8c798d1915ef65070f591f3189d60b52d0485d65f2db0166f397b656e8b008c7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/markdown-parse/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/markdown-parse/stderr",
+      "bytes": 521,
+      "sha256": "20cf41b01b6fb0b05d58aa5272d9dc4e1d7d4711f465a8f7babb7ad57dab7825"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/markdown-parse/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/markdown-parse/stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/markdown-parse-corrected/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/markdown-parse-corrected/receipt.json",
+      "bytes": 517,
+      "sha256": "a8927807590ba2b03641fc379d1ec2acb99fe6bd11a6e12bf8b7f720a66d0a24"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/markdown-parse-corrected/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/markdown-parse-corrected/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/markdown-parse-corrected/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/markdown-parse-corrected/stdout",
+      "bytes": 147,
+      "sha256": "8cf24ce30226402b95882a93f2be887156674d3070b909fbc0a419f9aa21818a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/original-index.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/original-index.json",
+      "bytes": 8946,
+      "sha256": "3d3ce18701c13a899a5e6b22a9af45cd2b0b196a03c05d85547ee58e72231c8c"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/patch-reverse-check.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/patch-reverse-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/patch-reverse-check.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/patch-reverse-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/qualification.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/qualification.json",
+      "bytes": 5243,
+      "sha256": "9cd2e709eb7b810c34c88b97916a5ceeaf2b7816857eb27823bbce95a0b71542"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/review-composition.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/review-composition.py",
+      "bytes": 4770,
+      "sha256": "624ba4c7cafc39bc1e80f7871ec2c483404d08bed2fd249a2d3991d5a5d1aae1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/run-composed.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/run-composed.py",
+      "bytes": 2864,
+      "sha256": "2e8a0bc53324a2f38854274f8fd7d7477f8776bba9747c2060142404a82dd5cd"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/run.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/run.py",
+      "bytes": 2863,
+      "sha256": "b6f71e882370577726dd209ac0dbc916993460cac732f72effb4bb1b9bb9663a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/inputs.json",
+      "bytes": 38145,
+      "sha256": "a86bfb77282c867cb6cde91976b75d745211420dfaf69d006af1954fe9606a77"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/receipt.json",
+      "bytes": 1541,
+      "sha256": "570dea1888261da68f216f535c4651fb9aa5362f85ff391c29749d62ae80eae1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node20/stdout",
+      "bytes": 55397,
+      "sha256": "5340489c532fed4821b7f44e238f47d227eacfd54f7e6d01c81518214dc228b0"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/inputs.json",
+      "bytes": 38145,
+      "sha256": "a86bfb77282c867cb6cde91976b75d745211420dfaf69d006af1954fe9606a77"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/receipt.json",
+      "bytes": 1541,
+      "sha256": "c56f74b1882ab459c509e092ca7483a416d60799667cdb91bcd45b2abe72ed02"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/composed-node22/stdout",
+      "bytes": 58860,
+      "sha256": "1379314fbdb5cffe7ed0b253976d596af1f427c7ce448cc32e6fcf8c311401a3"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/host-neutral-start-node20/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/host-neutral-start-node20/receipt.json",
+      "bytes": 348,
+      "sha256": "d5e9bd47233affd303800204e3f33d0645d83cdd09e64fb208884d671d219400"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/host-neutral-start-node20/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/host-neutral-start-node20/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/host-neutral-start-node20/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/host-neutral-start-node20/stdout",
+      "bytes": 2288,
+      "sha256": "197d99533ccaaf494943f57e0fd8a1f1a4165f8cf87544b959900fff96c0b345"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/inputs.json",
+      "bytes": 37849,
+      "sha256": "d2f5140e4e64b66a6114eeac1d770a0c48f526da6853da98f6374d2ea669b482"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/receipt.json",
+      "bytes": 1540,
+      "sha256": "68193c65e9b53175507adfe86ced981a07fef23b73c9113cff55081110a7d4a5"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/runs/initial-node20/stdout",
+      "bytes": 71246,
+      "sha256": "2f1e26a44d742fee2631e56f9ea15b441444ef93c0df1e02bfd790fff17f02e4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/settings-catalog-closure.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/settings-catalog-closure.json",
+      "bytes": 538,
+      "sha256": "5393b3d3aebca2ae36920d9360fccccbe7ddea027421b71c5a94d6552c8fce01"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/source-format/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/source-format/receipt.json",
+      "bytes": 654,
+      "sha256": "43380a0b59f1d67281ef93605e2cfe81f94a2a86084a7302bf38071af2e5682d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/source-format/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/source-format/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/source-format/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/source-format/stdout",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/source-paths.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/source-paths.txt",
+      "bytes": 7900,
+      "sha256": "6ac7b167ec79eecd890f3dd53a81d177e9b94f1a64031bd70b38e5d67ec49fe9"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/sparse-init.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/sparse-init.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/sparse-init.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/sparse-init.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/sparse-set.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/sparse-set.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/sparse-set.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/sparse-set.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/syntax-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/syntax-review.json",
+      "bytes": 1524,
+      "sha256": "b00dad2e817be72de09788ac00d2b005613eeaffb325bfb7d63e1b7ea7202e2d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/template-closure.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/template-closure.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-628e95da/template-closure.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-628e95da/template-closure.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/binding-proposal.json",
+      "bytes": 411,
+      "sha256": "1eed4d7759417fa790e76f48483e22938dceaaba1af429bf7fffb77a1c20e00b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/binding.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/binding.json",
+      "bytes": 1731,
+      "sha256": "b2396b6db75b1f99212a914bad234f3ab803c654197f1cdee5cc54d27e92cd30"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/coop-view.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/cua-observation.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/cua-observation.json",
+      "bytes": 10064,
+      "sha256": "7f36cde82bee8427482877f1fe22028aa9695557fe1d2b9d1471844bdd117e58"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/faults.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/first-connection-followup.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/first-connection-followup.json",
+      "bytes": 1606,
+      "sha256": "4c67bf448ee11c141f56f7c0af742a345ec60e2e2902fb9fb3eaf04e3425b879"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/relay-rescue.css",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/relay-rescue.html",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/relay-rescue.mjs",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/relay-rescue.mjs",
+      "bytes": 58894,
+      "sha256": "d82669dad630c9a8d1577006b29ba4ca8a645fe45c1cfb7188861baf50c014d8"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/requests.jsonl",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/requests.jsonl",
+      "bytes": 76626,
+      "sha256": "9c6d0c79681ce220c50c2e61f907431b5332e1df47bf3e39f1108bbe8437ef6a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/runtime-overrides.json",
+      "bytes": 1375,
+      "sha256": "1079aaa86841f09f109a443e699065cb6fd8d1819262f0a481485dd158bf74aa"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser/serve.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser/serve.py",
+      "bytes": 6790,
+      "sha256": "fffed9cfd23b66cb706a311b11c370258b42ed0571c2e876494b271b5f79e96d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/README.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/README.md",
+      "bytes": 3072,
+      "sha256": "b2265b3e7292b1619d0331333d4dd51f561f8224426305d8fa07f65be2b2d98b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/artwork-source-proof.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/artwork-source-proof.json",
+      "bytes": 1675,
+      "sha256": "a6741956fed51a236f2b3859e566e6a117c5f408c904828fa3d0a0a3ca247a57"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/binding-proposal.json",
+      "bytes": 653,
+      "sha256": "737c4dc47e773c6a010004a0dd1d18bca882230821a747fe77014a44c8c86623"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/binding.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/binding.json",
+      "bytes": 1852,
+      "sha256": "13de2256727fb37ff9e31038a1397b85f3cb3bfaae52b363bc370a5ff8083567"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/cua-observation.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/cua-observation.json",
+      "bytes": 9232,
+      "sha256": "6ff636c261c2c5bc6d52d119241e78c26d7cdeb0974041e0042ae11ea7a6d5a8"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/fault-examples/delay-first-connection.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/fault-examples/delay-first-connection.json",
+      "bytes": 134,
+      "sha256": "f719e388bbaa5d4e61ee8a7482b3b85b28289b6336481e1dd178fa58c245d1cd"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/fault-examples/delay-relay-yard.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/fault-examples/delay-relay-yard.json",
+      "bytes": 134,
+      "sha256": "99a4dc038e0e69bfb560b20bfa8623c9cc6b0b464ecceff4d3f560d401542fd6"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/fault-examples/fail-first-connection.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/fault-examples/fail-first-connection.json",
+      "bytes": 129,
+      "sha256": "fea26291bed634b1e88689c35dbcdb0490b48251edcb2865cc0c0477838c331a"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/fault-examples/fail-relay-yard.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/fault-examples/fail-relay-yard.json",
+      "bytes": 129,
+      "sha256": "fda19a0e01fde7ed4213ca5340cca536bc426df0dfa7b9cf055dd76c3f472072"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/faults.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/originals/binding-proposal.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/originals/binding-proposal.json",
+      "bytes": 411,
+      "sha256": "1eed4d7759417fa790e76f48483e22938dceaaba1af429bf7fffb77a1c20e00b"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/originals/serve.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/originals/serve.py",
+      "bytes": 6790,
+      "sha256": "fffed9cfd23b66cb706a311b11c370258b42ed0571c2e876494b271b5f79e96d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/pins.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/pins.json",
+      "bytes": 3048,
+      "sha256": "ab9c8b5b47229017d4423856cd88d6f7094d9849e6961d0b387c154551feb291"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/requests.jsonl",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/requests.jsonl",
+      "bytes": 78921,
+      "sha256": "1e5bb90140b6b1b74579bd975689bc9eac56be1b032d59b2e3b096ea2bfdc402"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/review-receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/review-receipt.json",
+      "bytes": 4419,
+      "sha256": "a4191b52b1d43665c1835fcbc6d22cc50db003ffccfbd00b17538b25371cb6d9"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/runtime-overrides.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/runtime-overrides.json",
+      "bytes": 1375,
+      "sha256": "1079aaa86841f09f109a443e699065cb6fd8d1819262f0a481485dd158bf74aa"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/serve.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/serve.py",
+      "bytes": 7187,
+      "sha256": "5a205fa034758a772e414164df6e1eddd22828421b922ce59bde0925322b8cc1"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals/p08a-team-earned-picture-browser-recovery/server-adaptation.diff",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals/p08a-team-earned-picture-browser-recovery/server-adaptation.diff",
+      "bytes": 3216,
+      "sha256": "c0b0a4b639511d4aaa643ce59199127150420695a4c4ed3700d06affca1ea995"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals-manifest.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals-manifest.json",
+      "bytes": 118196,
+      "sha256": "42aa4cae5b6f6759f7b34a06e3055d3f1c899c080cbfec69a308b17fb0c25ed4"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/originals-readme.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/originals-readme.md",
+      "bytes": 3393,
+      "sha256": "61e23b94508e0c05382fc4e23859d82c8c629ad04704333f41614b0965f81423"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/production-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/production-review.json",
+      "bytes": 66006,
+      "sha256": "7b7a519b93da8e78b0628a8591587a4cc8d0526251a56080ac7dc662996bbe9d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/production-review.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/production-review.md",
+      "bytes": 4062,
+      "sha256": "cbbf9207764a74bf4ca56904451ea57618269a39929c828dd5552ab6282d17ac"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/qualification.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/qualification.json",
+      "bytes": 5907,
+      "sha256": "f12b9d1862c6d54329cf7c11e4384f034d8475b60da979a64f2b3013e22cc009"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/reverse-patch-check.txt",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/reverse-patch-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/root-adoption-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/root-adoption-review.json",
+      "bytes": 1809,
+      "sha256": "4a3a4b3e42fa282f9401b5963bf50d02a54d17412f852e1985d2b32d4615f37f"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/run-cohort.py",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/run-cohort.py",
+      "bytes": 3202,
+      "sha256": "f04a5326fc8961e9071d167906f1e2f7d0f2f87d2716674a45eaf7e0f6809177"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20/inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20/inputs.json",
+      "bytes": 40202,
+      "sha256": "5a5ea0df37404e940dc061110c365e5c44674744bb57804534aa8204a748149d"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20/receipt.json",
+      "bytes": 2076,
+      "sha256": "7ffc899a1089af242c9f7f4f54e2d83871c7fcfc33a1a8716e585c4f699a09ef"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20/stdout",
+      "bytes": 88404,
+      "sha256": "84ea80b6d2babe520c8ed37f47aeb9d7d3a36a5fea8a5fba37675db689fd9099"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20-r2/inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20-r2/inputs.json",
+      "bytes": 41415,
+      "sha256": "fe14ea87d95c471cccf9f85bdbb0c6ea323d37b435ff36453c79587f33e94ee9"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20-r2/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20-r2/receipt.json",
+      "bytes": 2078,
+      "sha256": "ed6be27d98fc2af165f4337d5ebea96c6b166520961aa693c366901137eeeddb"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20-r2/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20-r2/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node20-r2/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node20-r2/stdout",
+      "bytes": 86763,
+      "sha256": "0a2c4b570eb03285e5a9ccadb8401ea0b8bba94b8388d7af0822a041c0292943"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node22/inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node22/inputs.json",
+      "bytes": 41415,
+      "sha256": "fe14ea87d95c471cccf9f85bdbb0c6ea323d37b435ff36453c79587f33e94ee9"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node22/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node22/receipt.json",
+      "bytes": 2074,
+      "sha256": "8011eb9eff13475d7def219526d83d47063e6aaae097232141a1d77840db16a7"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node22/stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node22/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/runs/composed-node22/stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/runs/composed-node22/stdout",
+      "bytes": 92403,
+      "sha256": "a9febe9459e74e7c39785d9a9bc8c080cd1d0ad45e7ca3e55c894e9e337399b3"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/setup.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/setup.json",
+      "bytes": 35022,
+      "sha256": "aa4c2b9a69245681dd7e28598dc74aceb47acb18cd35d5a6c242e0994a00d362"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/source-manifest.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/source-manifest.json",
+      "bytes": 5093,
+      "sha256": "116d3611ea00b2b875c0447cb3bd9e69271c3852040bf93f4409bcc37c89f994"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/source-review.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/source-review.json",
+      "bytes": 7313,
+      "sha256": "b3cfa1519dc8693613065fa78ff2ac8e58fab1bf5d32ce0abab9e63e291619bd"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/source-review.md",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/source-review.md",
+      "bytes": 4369,
+      "sha256": "d12b3f7cdc565947af312afbdc0f02955b554c062c89920d5dce520ebe7eaa36"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/sparse.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/sparse.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/diff-check.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/diff-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/diff-check.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/diff-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/format.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/format.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/format.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/format.stdout",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/lint.stderr",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/lint.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/lint.stdout",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/lint.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/static/receipt.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/static/receipt.json",
+      "bytes": 2506,
+      "sha256": "0fbeedc912322db1af6b0411529dd2f5b43e35552c99b7a444c2037b46c054a9"
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-composed-d245/test-inputs.json",
+      "destination": "docs/verification/cross-mode/team-picture-lobby-recovery/originals/test-inputs.json",
+      "bytes": 38842,
+      "sha256": "8476f02b42a59fd8a3952d93910a5e484ac36c5019f6d10b0717ee6c7c02b7d7"
+    }
+  ],
+  "versionChanges": [
+    {
+      "path": "package.json",
+      "before": {
+        "bytes": 1819,
+        "sha256": "c52b63fc992835b74aa8f208c0a0f74385e7d8837d437538fde6e791d6a96eb9"
+      },
+      "after": {
+        "bytes": 1819,
+        "sha256": "98a7294d3333f2eec74d7376cdc56279f8ce4db446141c747c292082a4cec6f9"
+      }
+    },
+    {
+      "path": "package-lock.json",
+      "before": {
+        "bytes": 36138,
+        "sha256": "b54bcc8c8fc898c1fbeb87ec3b3064172569bbede3a24ec5203b14c37b2dfe83"
+      },
+      "after": {
+        "bytes": 36138,
+        "sha256": "97d279d47e53df1132c633eae6900cc28951449da359566cd23ddb8150c810d3"
+      }
+    },
+    {
+      "path": "game/build-config.json",
+      "before": {
+        "bytes": 5474,
+        "sha256": "c239dfb3a1925c5e3d764dbdcd2b970cfb24ccb3df18fdd77daab904f6bd906b"
+      },
+      "after": {
+        "bytes": 5474,
+        "sha256": "61a724395c11ec564594300af8e6ebd13172b88f3331ea77e08e3d2ec84a6630"
+      }
+    }
+  ],
+  "scope": "Exact related original records retained with literal paths and predecessor/current source boundaries; helper scripts are environment-bound evidence, not portable reproduction commands. The373/373families qualify pre-version composition only.",
+  "nativeAndPublicAccepted": false
+}
