@@ -1,0 +1,90 @@
+{
+  "status": "SOURCE_QUALIFICATION_AND_SEVEN_ATTACHMENTS_READY_FOR_INDEPENDENT_ROOT_REVIEW",
+  "source": {
+    "commit": "bb5e6e7787bf81232368b96845d716a808c21309",
+    "tree": "d8b19e99b762b1c4ac974118abc59935f6ca8e3a",
+    "version": "v0.61.2"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/qualification/source-qualification.json",
+    "bytes": 101681,
+    "sha256": "7c128f9685a8ecc395a80b2ee28a6ef30a5237109ad02ceb290bbef837b1c515"
+  },
+  "qualificationReview": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/parent-independent-qualification-review.json",
+    "bytes": 4639,
+    "sha256": "2687c6c9972742cf94e74ec99c1ad1386c3b4e23faf7be194ef08b96bd26513c"
+  },
+  "releaseEvidenceReceipt": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-evidence/receipt.json",
+    "bytes": 427,
+    "sha256": "798f7a8fbd72685114cbdf38b41ffa4b920cdb4c2287c02147723f488b30cb60"
+  },
+  "attachmentFiles": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "b5079e53819cdb22ace6d57aebbcc97b6c62889e6a45425c4523b6c4719dd497"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/manifest.json",
+      "bytes": 127378,
+      "sha256": "ccaef93a8d952fbf505cc58cfd567aee1960acba8e3b448345feba82ec06f7fd"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/qualification-evidence-record.json",
+      "bytes": 12028,
+      "sha256": "19d78e0d19c3fbead37fac17ca60fe2cba1933ab8037ef88e93417662c372475"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/release.json",
+      "bytes": 465,
+      "sha256": "e21c7b215281f99761d48016792528b3a66a4244985282cf01eb80572d5be9df"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/source-qualification-evidence.zip",
+      "bytes": 4225917,
+      "sha256": "8cfb3e50b474e6f214d10de6d3730691a149c426d29992dcd941f2b3d4e0afb7"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/source-qualification.json",
+      "bytes": 101681,
+      "sha256": "7c128f9685a8ecc395a80b2ee28a6ef30a5237109ad02ceb290bbef837b1c515"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-team-composed-d245/.cache/p08a-qualified/team-v0612-bb5e6e7/release-attachments/verification.json",
+      "bytes": 1914,
+      "sha256": "3deae6274d7721e0c1d7a6fb787b1a2defd93860728074d139d3ff369519e26b"
+    }
+  ],
+  "sourceBeforeAfter": {
+    "source": "bb5e6e7787bf81232368b96845d716a808c21309",
+    "tree": "d8b19e99b762b1c4ac974118abc59935f6ca8e3a",
+    "status": "?? node_modules\n",
+    "index": ""
+  },
+  "preservedUntrackedRuntimeLink": {
+    "target": "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules",
+    "device": 16777233,
+    "inode": 88222391,
+    "mode": 41453,
+    "bytes": 63,
+    "modifiedNs": 1789693135714877963
+  },
+  "sourceBoundary": "Tracked source and index unchanged; exact pre-existing untracked runtime symlink preserved.",
+  "counts": {
+    "tests": 5788,
+    "pass": 5788,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 458,
+  "managedBytes": 27743143,
+  "freeBytes": 3625717760,
+  "noLargeArtifactDownload": true,
+  "publication": false,
+  "publicAcceptance": false,
+  "wholePhaseAccepted": false
+}

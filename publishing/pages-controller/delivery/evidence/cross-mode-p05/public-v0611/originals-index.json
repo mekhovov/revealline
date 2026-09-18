@@ -1,0 +1,1308 @@
+{
+  "format": "revealline-public-originals-index.v1",
+  "version": "v0.61.1",
+  "capturedAt": "2026-09-18T05:39:23.794211+00:00",
+  "sourceRoot": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7",
+  "members": [
+    {
+      "path": "README.md",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/README.md",
+      "bytes": 4188,
+      "sha256": "1cd27ca726be874bf54f9a6f420482bb0df9626368506f369d57e4fd93b3c1e8"
+    },
+    {
+      "path": "actual-intake-binding-r1/receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/actual-intake-binding-r1/receipt.json",
+      "bytes": 419,
+      "sha256": "3b7e4691b7742c988fee30b2f440a960cd7c0eee23c9dd36aa3346e9f0026eba"
+    },
+    {
+      "path": "actual-intake-binding-r1/runner-binding.diff",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/actual-intake-binding-r1/runner-binding.diff",
+      "bytes": 918,
+      "sha256": "cfca07f04365a8c926729f05fd66107df34bbff745a6ca4448fd3a829d90721f"
+    },
+    {
+      "path": "actual-intake-binding-r1/runner-unbound.original.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/actual-intake-binding-r1/runner-unbound.original.py",
+      "bytes": 2927,
+      "sha256": "dc82653088cc6dd7f08d684758aa54e7a00b7dbd012ae7bc4a73442a148054cf"
+    },
+    {
+      "path": "adaptation.diff",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/adaptation.diff",
+      "bytes": 7691,
+      "sha256": "439c1298018e0066319f7af9bf15c449621e2cbd907b523082641d50dc4b74f8"
+    },
+    {
+      "path": "after-http-authorities-main-r1/all-deployments.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/all-deployments.exit.json",
+      "bytes": 311,
+      "sha256": "2178808fe19e1a0c9873bebbc0ed3b047d5c8e9c3f65b6ebea1ff04e0cdb684a"
+    },
+    {
+      "path": "after-http-authorities-main-r1/all-deployments.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/all-deployments.json",
+      "bytes": 38241,
+      "sha256": "200fada196df00c67f175715e092365baebbc22ea8fc477d0ea18394f76b36f0"
+    },
+    {
+      "path": "after-http-authorities-main-r1/all-deployments.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/all-deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/collection-started.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/collection-started.json",
+      "bytes": 490,
+      "sha256": "936e6da881c33f12313936a543154b8fc2d5383f871e6d65357f497247603891"
+    },
+    {
+      "path": "after-http-authorities-main-r1/latest.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/latest.exit.json",
+      "bytes": 278,
+      "sha256": "19f166f7b8263f2ef4f6005850c47e078cfe0ebdb609840bc6a3280243674067"
+    },
+    {
+      "path": "after-http-authorities-main-r1/latest.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/latest.json",
+      "bytes": 19444,
+      "sha256": "682b49987286b5f649a6090b3a1c28b1251753244e04bb07d1022620ebe8828c"
+    },
+    {
+      "path": "after-http-authorities-main-r1/latest.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/latest.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/original-published-release.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/original-published-release.json",
+      "bytes": 19444,
+      "sha256": "edb2c9d37d7a1dd2003833d600d985397d9ca6f359a171c79b2fe454c2ea7710"
+    },
+    {
+      "path": "after-http-authorities-main-r1/release.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/release.exit.json",
+      "bytes": 284,
+      "sha256": "ef09d233e6b2e501ef38a5dc6d156101bcc3240a8dec3f9fd6e822bbf64d51ed"
+    },
+    {
+      "path": "after-http-authorities-main-r1/release.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/release.json",
+      "bytes": 19444,
+      "sha256": "682b49987286b5f649a6090b3a1c28b1251753244e04bb07d1022620ebe8828c"
+    },
+    {
+      "path": "after-http-authorities-main-r1/release.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/release.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/request.original.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/request.original.json",
+      "bytes": 1022,
+      "sha256": "238a226f28f212617fc1d082a84bafb79abbde3c8d7cadc33ddc2737f10ff8dc"
+    },
+    {
+      "path": "after-http-authorities-main-r1/result.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/result.json",
+      "bytes": 7512,
+      "sha256": "0ed5f8c28648df32b9f005416a7d3b13886298ab756b8fc93fc3b21dc9d8d7a7"
+    },
+    {
+      "path": "after-http-authorities-main-r1/source.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/source.exit.json",
+      "bytes": 314,
+      "sha256": "6cc308934dd62efcf4cc3a4f11dbd53fd5ca74eee98e4c30c94ba0b696e267ef"
+    },
+    {
+      "path": "after-http-authorities-main-r1/source.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/source.json",
+      "bytes": 1728,
+      "sha256": "474bc9258089c5a2e748e85c59b5be4c4c897d98f07ae67ebca0a269cdff71ce"
+    },
+    {
+      "path": "after-http-authorities-main-r1/source.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/source.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag-object.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/tag-object.exit.json",
+      "bytes": 310,
+      "sha256": "8eb7e03a7d8e058d3429ca937ed9665219ade6b6d916d0cef5591e433f19424e"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag-object.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/tag-object.json",
+      "bytes": 742,
+      "sha256": "b81d191454b7f10ee9feaaa9c86133178d7f59f039aa8b7a55e319471f4a94cb"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag-object.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/tag-object.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/tag.exit.json",
+      "bytes": 281,
+      "sha256": "e92e6246ce7eaac080f06f3b461093448a94f4e73f45715a5bddeb375b2b7b03"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/tag.json",
+      "bytes": 337,
+      "sha256": "89f6f3f1174f78b64748b90a33a93293eb83fd1035e3533b971afd082fa3516e"
+    },
+    {
+      "path": "after-http-authorities-main-r1/tag.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/after-http-authorities-main-r1/tag.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "checks/capacity-adapter.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/capacity-adapter.json",
+      "bytes": 650,
+      "sha256": "8259dc0857a9fc02695f515bd1c0bf15aa12c9d3d1f17b9463eea08b26f19fa4"
+    },
+    {
+      "path": "checks/node-selfcheck-1.receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/node-selfcheck-1.receipt.json",
+      "bytes": 454,
+      "sha256": "ab465f97e5d2bdf122313a627cfe69969195b6b4656220215f9c064b9dce46dd"
+    },
+    {
+      "path": "checks/node-selfcheck-1.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/node-selfcheck-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "checks/node-selfcheck-1.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/node-selfcheck-1.stdout",
+      "bytes": 136,
+      "sha256": "6c4204382b11da86aab8668d7013b41d767b248ef74e0da8178da0096ad54ee5"
+    },
+    {
+      "path": "checks/predecessor-acceptance-pins.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/predecessor-acceptance-pins.json",
+      "bytes": 1908,
+      "sha256": "fee4db8c2b7f1ad4b47d8d33b401c3bd032127e2c56c65958dead18cae65cf0a"
+    },
+    {
+      "path": "checks/python-wrappers-1.receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/python-wrappers-1.receipt.json",
+      "bytes": 393,
+      "sha256": "14fdc72ac47bc2ea42f2235af56896a994022f8fb8bf6612d241fec400732ed9"
+    },
+    {
+      "path": "checks/python-wrappers-1.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/python-wrappers-1.stderr",
+      "bytes": 1590,
+      "sha256": "e5a7e20578493f6e39ca4d875c3bfe826e57e11ee9ff1e3fe65a2cf661e54562"
+    },
+    {
+      "path": "checks/python-wrappers-1.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/checks/python-wrappers-1.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "controller-candidate.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/controller-candidate.json",
+      "bytes": 199,
+      "sha256": "8c5f8bf18c1eda851e823b54fa8377f1254c87c2f1ee044dbfeb24757dd83c52"
+    },
+    {
+      "path": "execution-audit.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-audit.exit.json",
+      "bytes": 815,
+      "sha256": "972677bcf46fe00b6edff38ad829666bb01e8eaccae52036cb94cbc6170be2ee"
+    },
+    {
+      "path": "execution-audit.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-audit.stderr",
+      "bytes": 1642,
+      "sha256": "465075ef28a31eceea50cb22e5f7be9d0730ada1089d84447166a4b6276a1b76"
+    },
+    {
+      "path": "execution-audit.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-audit.stdout",
+      "bytes": 3802,
+      "sha256": "8150f551393c913c6da9ac3858732189e80cb486a712d31d86a768f299b90aa7"
+    },
+    {
+      "path": "execution-check.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-check.exit.json",
+      "bytes": 796,
+      "sha256": "6acce5c194bb9a72cbe5b8e92d2a7d304ffdfbe9913d812dc04d12f52d452853"
+    },
+    {
+      "path": "execution-check.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "execution-check.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-check.stdout",
+      "bytes": 2420,
+      "sha256": "54d55d0d9cd7459b56bc5e53d816f2fb63122deb8c66b25b14c7def7560fe1a7"
+    },
+    {
+      "path": "execution-refresh.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-refresh.exit.json",
+      "bytes": 571,
+      "sha256": "2747bcc33f28c8b67beab8f53080cac2924bbd55d531dbc0b383d15bf23ed94d"
+    },
+    {
+      "path": "execution-refresh.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-refresh.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "execution-refresh.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/execution-refresh.stdout",
+      "bytes": 7512,
+      "sha256": "0ed5f8c28648df32b9f005416a7d3b13886298ab756b8fc93fc3b21dc9d8d7a7"
+    },
+    {
+      "path": "full-audit-request.proposed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/full-audit-request.proposed.json",
+      "bytes": 5419,
+      "sha256": "35abe3885c22de21a7ac660d68931b46a91bedf64493e6d9f530c5d49f26056d"
+    },
+    {
+      "path": "full-audit-result-proposal.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/full-audit-result-proposal.json",
+      "bytes": 1269,
+      "sha256": "4b2d2df601d02cddfd70e4bf0795cf571d90c525ee503dafb3fc938f6d6d0f23"
+    },
+    {
+      "path": "handoff-v0611-public.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/handoff-v0611-public.json",
+      "bytes": 2547,
+      "sha256": "149330cb4f27baecfb67c24d8e996b6fd01edcbe454b4c025ae9b4c63b3e2b7a"
+    },
+    {
+      "path": "helper-pins.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/helper-pins.json",
+      "bytes": 6188,
+      "sha256": "bf9d9257e34d39536ff5f477db55fab5266435e7a528e8bf8eb80aae00501e95"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/artifacts.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/artifacts.attempt.json",
+      "bytes": 1449,
+      "sha256": "0b9603b0985723c9734cf3c11fffae480b9527830ca3363890ac525f29cf8c93"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/artifacts.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/artifacts.json",
+      "bytes": 1401,
+      "sha256": "3d07310770bb8938f175c68e2881a17fe8c8838e4f0b1b8ab5ad1268fb03dae6"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/artifacts.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/artifacts.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/deployment.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/deployment.attempt.json",
+      "bytes": 1440,
+      "sha256": "f585edd5cdc0577b1131028da11493741c9a2b36a82d3584ebe8dbdff73752ef"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/deployment.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/deployment.json",
+      "bytes": 3823,
+      "sha256": "7e709950c5534b664f3ba3d015ce1fe6a813f742a22e854d5fb7a31026e5a8a3"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/deployment.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/deployment.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/deployments.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/deployments.attempt.json",
+      "bytes": 1489,
+      "sha256": "5dad78ff20c15ed287c2f9b1998711c4d43be933b4e503a80968a9fcb58570b0"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/deployments.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/deployments.json",
+      "bytes": 3825,
+      "sha256": "161c4c417aa9e1dbaf62173ad274f9b6c119b3d397c4c90f352af140e8d240e6"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/deployments.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/jobs.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/jobs.attempt.json",
+      "bytes": 1429,
+      "sha256": "8ba1b732b92643e337192a00af46c23dab5a9ad19ddbcbe62c10d9f07bcbf33c"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/jobs.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/jobs.json",
+      "bytes": 5571,
+      "sha256": "add7e3aed0601168b969db6f30735461e9772753e1cdac6e22c58b933218bddb"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/jobs.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/jobs.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/main.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/main.attempt.json",
+      "bytes": 1416,
+      "sha256": "653552cb39e4159ac7688318078dbf827938e383420021d59137eb82c888ba67"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/main.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/main.json",
+      "bytes": 336,
+      "sha256": "5cbf0aae7fb45e481a72c94e129933de4035d68fde0de17c457916361668258d"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/main.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/record.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/record.json",
+      "bytes": 3703,
+      "sha256": "2b0f85d8a721bc83b54339b2c6824f54e41c46141867c80fcb1fed1bf7807bc6"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/run.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/run.attempt.json",
+      "bytes": 1423,
+      "sha256": "fd8c38e8a52a0beb2ce4670a6bc39447b2e31a5b6c34fc07f2058b2813c6daa9"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/run.json",
+      "bytes": 12212,
+      "sha256": "a5df6db240d571c79cfc586dbf4144b96042fe8916536c1eeb62e57d7dfeb9f8"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/run.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/statuses.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/statuses.attempt.json",
+      "bytes": 1443,
+      "sha256": "934da9a0a69ac0371e904ffed8eeb84fdf187d876fcc9cec516880b919bfe340"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/statuses.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/statuses.json",
+      "bytes": 8221,
+      "sha256": "664ac3f320054f01d570893b44f420e25f5a2dfdcea418f10102c671cc1b8bcf"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/statuses.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/statuses.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/wrapper.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/wrapper.attempt.json",
+      "bytes": 1461,
+      "sha256": "8ba730a176626c0192465e09b93eb64ce9c0edb0e7edb7c55cbe88f8ac248203"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/wrapper.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/wrapper.json",
+      "bytes": 2724,
+      "sha256": "7ec8b8814c14fd8e3d084b050c0fc2fff765b627bf7c4fa3c48dd09f6320fcba"
+    },
+    {
+      "path": "hosted-observation-after-http-r1/wrapper.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-after-http-r1/wrapper.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r1/artifacts.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/artifacts.attempt.json",
+      "bytes": 1447,
+      "sha256": "70574b2b8155a2065e0ceded06d8983532582207e0e9ab990ddc51d179ca9032"
+    },
+    {
+      "path": "hosted-observation-pages-r1/artifacts.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/artifacts.json",
+      "bytes": 719,
+      "sha256": "016d997baf7dabdf973e766fad36bb99d30841286073c8ef45056f5ed5d6a9b6"
+    },
+    {
+      "path": "hosted-observation-pages-r1/artifacts.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/artifacts.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r1/deployments.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/deployments.attempt.json",
+      "bytes": 1483,
+      "sha256": "3ea1ff18265163c41e308dcd413b876c4346e28414b80df95bed101be54e4d23"
+    },
+    {
+      "path": "hosted-observation-pages-r1/deployments.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/deployments.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "hosted-observation-pages-r1/deployments.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r1/jobs.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/jobs.attempt.json",
+      "bytes": 1429,
+      "sha256": "2333b672f4a9a4778c4754eead941093a727829e73db4ead3c86b78f6ed94f1b"
+    },
+    {
+      "path": "hosted-observation-pages-r1/jobs.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/jobs.json",
+      "bytes": 2948,
+      "sha256": "f8c7ce9a03c4645b02eedc5b00b5c8ae1b7f878b87f9e8e27cc6643da82990c9"
+    },
+    {
+      "path": "hosted-observation-pages-r1/jobs.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/jobs.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r1/main.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/main.attempt.json",
+      "bytes": 1416,
+      "sha256": "7d31f4d40a68693fb5d1a7ad38898dc6e17ec6b9204b8cfa4187065b5a4c22f1"
+    },
+    {
+      "path": "hosted-observation-pages-r1/main.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/main.json",
+      "bytes": 336,
+      "sha256": "5cbf0aae7fb45e481a72c94e129933de4035d68fde0de17c457916361668258d"
+    },
+    {
+      "path": "hosted-observation-pages-r1/main.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r1/record.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/record.json",
+      "bytes": 2791,
+      "sha256": "cb5aa3f9815d076f79cc3c2b671a79f261f0139bad021b0bdd022f37d11c800e"
+    },
+    {
+      "path": "hosted-observation-pages-r1/run.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/run.attempt.json",
+      "bytes": 1423,
+      "sha256": "bb703334644edcedefdcaa73fc3d5d53312f9e3725dbe6ccfc8c2c68b8ee1485"
+    },
+    {
+      "path": "hosted-observation-pages-r1/run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/run.json",
+      "bytes": 12209,
+      "sha256": "9fd0290506cd33e82a0b155d2208c68d40323906fb099470df77a4cee8052ea4"
+    },
+    {
+      "path": "hosted-observation-pages-r1/run.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r1/wrapper.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/wrapper.attempt.json",
+      "bytes": 1461,
+      "sha256": "f56e750b399f0afa06d17ca1923776da3607ab65e4d81ed1669897357de39ced"
+    },
+    {
+      "path": "hosted-observation-pages-r1/wrapper.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/wrapper.json",
+      "bytes": 2724,
+      "sha256": "7ec8b8814c14fd8e3d084b050c0fc2fff765b627bf7c4fa3c48dd09f6320fcba"
+    },
+    {
+      "path": "hosted-observation-pages-r1/wrapper.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r1/wrapper.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/artifacts.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/artifacts.attempt.json",
+      "bytes": 1449,
+      "sha256": "43b3772628fefe35fda415c2afd6682ebb0edb568ab7996b30a2239d4de68d1b"
+    },
+    {
+      "path": "hosted-observation-pages-r2/artifacts.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/artifacts.json",
+      "bytes": 1401,
+      "sha256": "3d07310770bb8938f175c68e2881a17fe8c8838e4f0b1b8ab5ad1268fb03dae6"
+    },
+    {
+      "path": "hosted-observation-pages-r2/artifacts.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/artifacts.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployment.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/deployment.attempt.json",
+      "bytes": 1440,
+      "sha256": "8ca32e4a90b0a6cc9ed73c14efffa1b952e5a0ffc8dbbb219fa51f853aed75d4"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployment.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/deployment.json",
+      "bytes": 3823,
+      "sha256": "7e709950c5534b664f3ba3d015ce1fe6a813f742a22e854d5fb7a31026e5a8a3"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployment.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/deployment.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployments.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/deployments.attempt.json",
+      "bytes": 1489,
+      "sha256": "d07841fd52e8a941c9bfa845ac01c4fda6b49f2d391af7514c34f7ddd9446114"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployments.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/deployments.json",
+      "bytes": 3825,
+      "sha256": "161c4c417aa9e1dbaf62173ad274f9b6c119b3d397c4c90f352af140e8d240e6"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployments.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/jobs.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/jobs.attempt.json",
+      "bytes": 1429,
+      "sha256": "1f581cf8ea51daff25d2b5ad3b827f6ebf15c1c68318d43b519c414402a2d510"
+    },
+    {
+      "path": "hosted-observation-pages-r2/jobs.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/jobs.json",
+      "bytes": 5571,
+      "sha256": "add7e3aed0601168b969db6f30735461e9772753e1cdac6e22c58b933218bddb"
+    },
+    {
+      "path": "hosted-observation-pages-r2/jobs.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/jobs.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/main.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/main.attempt.json",
+      "bytes": 1416,
+      "sha256": "8c36fa21b012f2de8e4cc79602da981b732b83b57c49e2733e37932e5739b33d"
+    },
+    {
+      "path": "hosted-observation-pages-r2/main.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/main.json",
+      "bytes": 336,
+      "sha256": "5cbf0aae7fb45e481a72c94e129933de4035d68fde0de17c457916361668258d"
+    },
+    {
+      "path": "hosted-observation-pages-r2/main.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/record.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/record.json",
+      "bytes": 3703,
+      "sha256": "84a805b0e07dbcf020e3c4773246038173f4231ba94e11e771985c2cdd785699"
+    },
+    {
+      "path": "hosted-observation-pages-r2/run.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/run.attempt.json",
+      "bytes": 1423,
+      "sha256": "953b231b1857ef490bf317375f9c2f93bf604ca87e33713f9553b719f5ff2549"
+    },
+    {
+      "path": "hosted-observation-pages-r2/run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/run.json",
+      "bytes": 12212,
+      "sha256": "a5df6db240d571c79cfc586dbf4144b96042fe8916536c1eeb62e57d7dfeb9f8"
+    },
+    {
+      "path": "hosted-observation-pages-r2/run.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/statuses.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/statuses.attempt.json",
+      "bytes": 1443,
+      "sha256": "8b67ebbdedf7fb6246fb4764732abd16720b5f327b1d3e1556d3591d1f9417ea"
+    },
+    {
+      "path": "hosted-observation-pages-r2/statuses.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/statuses.json",
+      "bytes": 8221,
+      "sha256": "664ac3f320054f01d570893b44f420e25f5a2dfdcea418f10102c671cc1b8bcf"
+    },
+    {
+      "path": "hosted-observation-pages-r2/statuses.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/statuses.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/wrapper.attempt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/wrapper.attempt.json",
+      "bytes": 1461,
+      "sha256": "d401d909e0e9b20a8b4da4cfc3a5fe847057d9ff80de2638e9096720837fa5ae"
+    },
+    {
+      "path": "hosted-observation-pages-r2/wrapper.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/wrapper.json",
+      "bytes": 2724,
+      "sha256": "7ec8b8814c14fd8e3d084b050c0fc2fff765b627bf7c4fa3c48dd09f6320fcba"
+    },
+    {
+      "path": "hosted-observation-pages-r2/wrapper.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/hosted-observation-pages-r2/wrapper.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "intake-capacity-review.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/intake-capacity-review.json",
+      "bytes": 285,
+      "sha256": "f1976deac35e33c53a5e952ffd98b34ec0fabd9df2274aeeb6057974c2e55b11"
+    },
+    {
+      "path": "intake-live.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/intake-live.py",
+      "bytes": 9641,
+      "sha256": "107db96f4d16a0bd543f8ddaa10e906e0618a73ff6811c0b4225a71284e206df"
+    },
+    {
+      "path": "intake-request-preparation.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/intake-request-preparation.json",
+      "bytes": 1960,
+      "sha256": "846f00560e00b3186b5d101cd8bf05d8df59dddb5217c4f503ea8b628e0977f8"
+    },
+    {
+      "path": "intake-request.pending.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/intake-request.pending.json",
+      "bytes": 496,
+      "sha256": "2ce237a1d5bbcbcfd46fd7179cbff80b87285a04347b637353224faf53e00108"
+    },
+    {
+      "path": "intake-request.proposed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/intake-request.proposed.json",
+      "bytes": 1028,
+      "sha256": "b72b0aab11d5e0ac411556a7e6a793a5290457c95a1294288eab5a49f0ad17f7"
+    },
+    {
+      "path": "intake-request.reviewed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/intake-request.reviewed.json",
+      "bytes": 1027,
+      "sha256": "978785438f448c0e9fd8ccf6d21f7f4953a2833fb5317387ed5bbf044b694152"
+    },
+    {
+      "path": "local-binding-contract.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/local-binding-contract.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local-binding-contract.stdout",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/local-binding-contract.stdout",
+      "bytes": 147,
+      "sha256": "5508e9e401754ec478f347ad36cef4a1fe7e0318c3e425d6379fc9b400b3541e"
+    },
+    {
+      "path": "native-fixtures/provenance.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/native-fixtures/provenance.json",
+      "bytes": 564,
+      "sha256": "97a22b5260fdbd089773044d243eca37b2ec9f858e97ffb45c0b3d60c5fa4ec4"
+    },
+    {
+      "path": "native-fixtures/revealline-owned-preview.png",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/native-fixtures/revealline-owned-preview.png",
+      "bytes": 46655,
+      "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+    },
+    {
+      "path": "native-media-observation.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/native-media-observation.json",
+      "bytes": 2144,
+      "sha256": "e54ec43629983c5bac10b962424437ce36a2bd95082cf78e50d95ec39e33da8b"
+    },
+    {
+      "path": "native-picker-occlusion-finding.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/native-picker-occlusion-finding.json",
+      "bytes": 1813,
+      "sha256": "07427989cbc9bbe1cd912815dcaf5e29668c647a74bee6a19ceff9d8598ed28f"
+    },
+    {
+      "path": "native-play-observation.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/native-play-observation.json",
+      "bytes": 1537,
+      "sha256": "6fc100241ff4970928add1ef66ffbde2e88db288ad0e1d0581309610b16c58e1"
+    },
+    {
+      "path": "observe-hosted.failure-retention.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/observe-hosted.failure-retention.py",
+      "bytes": 4978,
+      "sha256": "68e03a50898868735bc36bf59ced8be25aaa252e69f2cfa5ac0d6ffbd02f3cbe"
+    },
+    {
+      "path": "originals/intake-live.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/intake-live.py",
+      "bytes": 9641,
+      "sha256": "107db96f4d16a0bd543f8ddaa10e906e0618a73ff6811c0b4225a71284e206df"
+    },
+    {
+      "path": "originals/intake-request.pending.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/intake-request.pending.json",
+      "bytes": 496,
+      "sha256": "7f9ddd203c4ff03c38eb83616ea8194d0dace7735ce1d2119173edb109ff9e16"
+    },
+    {
+      "path": "originals/observe-hosted.failure-retention.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/observe-hosted.failure-retention.py",
+      "bytes": 4978,
+      "sha256": "68e03a50898868735bc36bf59ced8be25aaa252e69f2cfa5ac0d6ffbd02f3cbe"
+    },
+    {
+      "path": "originals/refresh-after-http.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/refresh-after-http.py",
+      "bytes": 7514,
+      "sha256": "21504be871c72e0a6e0c5cf7bf38dfcb69a72da761603f4dc79ddd1b8d3e0540"
+    },
+    {
+      "path": "originals/review-public.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/review-public.py",
+      "bytes": 4336,
+      "sha256": "d0cd4fe568dc5b4295aafe8bae37f5b1a66e7609f5232d5d1236a85ce5391bdb"
+    },
+    {
+      "path": "originals/run-capacity-bounded-intake.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/run-capacity-bounded-intake.py",
+      "bytes": 2957,
+      "sha256": "f750ab6bf2d88659950466ee1e44857c63b5d208baf41127bf4b64ddcff370a4"
+    },
+    {
+      "path": "originals/test_wrappers.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/test_wrappers.py",
+      "bytes": 14644,
+      "sha256": "9d919ea65edf2f18f40eee5d4f836af9b87ceefb03d6349ec40580ac3d148cf0"
+    },
+    {
+      "path": "originals/tools__audit-main.mjs",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/tools__audit-main.mjs",
+      "bytes": 21944,
+      "sha256": "5a862a7b20ebb4b939f904635efc8ef256d6ac711a9c5bc0d4a3487312da5f17"
+    },
+    {
+      "path": "originals/tools__http-engine.mjs",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/tools__http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "originals/tools__self-check.mjs",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/tools__self-check.mjs",
+      "bytes": 3958,
+      "sha256": "454e23d719d99d9b499b9ca88fc38399e94fb3405b27a5210cfaa5badab910c9"
+    },
+    {
+      "path": "originals/wrapper_contract.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/originals/wrapper_contract.py",
+      "bytes": 8315,
+      "sha256": "8861fb503f261d768cf70ecb503e40025baaffaa3cb716b13282c7adfa072276"
+    },
+    {
+      "path": "predecessor-root-acceptance.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/predecessor-root-acceptance.json",
+      "bytes": 2145,
+      "sha256": "7e69d6e117de3fc8f237d2c37fe4c17008aec7b94717936124412ad51a93aa83"
+    },
+    {
+      "path": "preparation-preflight.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/preparation-preflight.json",
+      "bytes": 1350,
+      "sha256": "7f833115e6ab81735ac81977fcc2fd2c0094ecd8d52f2bf171a918ec7c719563"
+    },
+    {
+      "path": "public-row-review-main-r1.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/public-row-review-main-r1.json",
+      "bytes": 1585,
+      "sha256": "c41bbc316e36f070695d06f8c91365174ca797b3d9eb4730599b642e7c166929"
+    },
+    {
+      "path": "ready.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/ready.json",
+      "bytes": 8128,
+      "sha256": "9b8e2869a4b2144fdac0e01c7c2c8af1101384ba0a4a53dc6f2b9e0986eb84ae"
+    },
+    {
+      "path": "receipt-intake-pages-r1/artifact-receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/artifact-receipt.json",
+      "bytes": 562955,
+      "sha256": "896eef022a1a2262f3c849026e0719bed2a7a7bcc8d41a8c1d612bf7cf0c40f3"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/catalog.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/catalog.exit.json",
+      "bytes": 357,
+      "sha256": "b236c7a68062e48607732089850b4e00b89d7a72749515166ec91cd8ceecc9ea"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/catalog.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/catalog.json",
+      "bytes": 51561,
+      "sha256": "a32caaa3d5420a90ab78b731a2bfee370aa9e1c330cd4d242f97f34ab6367546"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/catalog.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/catalog.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/configuration.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/configuration.exit.json",
+      "bytes": 362,
+      "sha256": "2e2e9502b0c63c41efad890a903fdee4059c88fdf4d4904cf9c5d69c560abd45"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/configuration.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/configuration.json",
+      "bytes": 186444,
+      "sha256": "f40c226df8598602588a26b8ffb0619908280fb2b3e4e36b48b187ce7eec74fd"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/configuration.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/configuration.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/manifest.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/manifest.exit.json",
+      "bytes": 376,
+      "sha256": "8fb0d604bc935f37452cc65daa181ddc58405fed447c7fb83c1ca72a7c72337b"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/manifest.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/manifest.json",
+      "bytes": 176757,
+      "sha256": "ec8264faccb6fb854a8308662476850728db91ac2b62c0898d176eb60bc2bd27"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/manifest.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/manifest.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/qualification.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/qualification.exit.json",
+      "bytes": 394,
+      "sha256": "1f782520c2121ce2912e66a79d49aeb9b32b7e64b326a8d8422fcf1964de9be0"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/qualification.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/qualification.json",
+      "bytes": 130322,
+      "sha256": "fa2f6de6f377d97a6f42f2fc867673bb5e9dcb87f9abc8e82168490cb8dd429b"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/qualification.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/qualification.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/record.exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/record.exit.json",
+      "bytes": 373,
+      "sha256": "592bbd5ad7f4f7cb8cc7b712ff1d866945693a87a2f8767dbce8113684dfddc2"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/record.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/record.json",
+      "bytes": 1887,
+      "sha256": "4c3f2b12699d7d6e0e3ad2cd538e2b95cce6b4e6c10c299d9481f0787dc0e31f"
+    },
+    {
+      "path": "receipt-intake-pages-r1/authority-api-originals/record.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/authority-api-originals/record.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipt-intake-pages-r1/download-exit.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/download-exit.json",
+      "bytes": 192,
+      "sha256": "df1c4f883b2a52a3c136df2b0819ec87ba837317ae685fd8a91dca6c954c196c"
+    },
+    {
+      "path": "receipt-intake-pages-r1/download.stderr",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/download.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipt-intake-pages-r1/original.zip",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/original.zip",
+      "bytes": 139223,
+      "sha256": "71b0b299de093b05f61e8a5076eac7d17f023b160b6551e6194a5fdc2f42e3bd"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/catalog.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/catalog.json",
+      "bytes": 36589,
+      "sha256": "8f6ccf5c0b4725c7e56a71a28a2bd64f6f90b709c28467cd62e7955108698745"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/configuration.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/configuration.json",
+      "bytes": 134468,
+      "sha256": "b3dba59427c3fb4377ccfce042f6f11d5fd212bf6d26fc74cec58367085b236d"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/deployment.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/deployment.json",
+      "bytes": 3823,
+      "sha256": "7e709950c5534b664f3ba3d015ce1fe6a813f742a22e854d5fb7a31026e5a8a3"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/manifest.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/manifest.json",
+      "bytes": 127378,
+      "sha256": "82f4aa743d0bc2472cf705fa2f1655e34b96f1821cb14ebdf2294265a25b9107"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/qualification.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/qualification.json",
+      "bytes": 93589,
+      "sha256": "ce94e595f0aa579fa5f64df57795cf49a8bc1404e71c2e861d4900ccc3347fb1"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/receipt.json",
+      "bytes": 562955,
+      "sha256": "896eef022a1a2262f3c849026e0719bed2a7a7bcc8d41a8c1d612bf7cf0c40f3"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/record.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/record.json",
+      "bytes": 465,
+      "sha256": "20860cf37691cc789bc66b4726ef9aaf6985c338a7e1eacc7e92baf20dc09942"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/run.json",
+      "bytes": 12212,
+      "sha256": "a5df6db240d571c79cfc586dbf4144b96042fe8916536c1eeb62e57d7dfeb9f8"
+    },
+    {
+      "path": "receipt-intake-pages-r1/prepared-inputs/statuses.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/prepared-inputs/statuses.json",
+      "bytes": 8221,
+      "sha256": "664ac3f320054f01d570893b44f420e25f5a2dfdcea418f10102c671cc1b8bcf"
+    },
+    {
+      "path": "receipt-intake-pages-r1/published-release.original.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/published-release.original.json",
+      "bytes": 19444,
+      "sha256": "edb2c9d37d7a1dd2003833d600d985397d9ca6f359a171c79b2fe454c2ea7710"
+    },
+    {
+      "path": "receipt-intake-pages-r1/request.original.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/request.original.json",
+      "bytes": 1027,
+      "sha256": "978785438f448c0e9fd8ccf6d21f7f4953a2833fb5317387ed5bbf044b694152"
+    },
+    {
+      "path": "receipt-intake-pages-r1/result.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/result.json",
+      "bytes": 732,
+      "sha256": "847eff40130d004f5bf5ea3b72fbf15a051bf7bb5fd9ddb2244eb52413c8d992"
+    },
+    {
+      "path": "receipt-intake-pages-r1/zip-receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/receipt-intake-pages-r1/zip-receipt.json",
+      "bytes": 407,
+      "sha256": "b90d7f936fca3a9371d7608c49795148b398def5fc28f283a49e7328436f49c7"
+    },
+    {
+      "path": "refresh-after-http.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/refresh-after-http.py",
+      "bytes": 7514,
+      "sha256": "21504be871c72e0a6e0c5cf7bf38dfcb69a72da761603f4dc79ddd1b8d3e0540"
+    },
+    {
+      "path": "refresh-request.proposed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/refresh-request.proposed.json",
+      "bytes": 1023,
+      "sha256": "3d4bad50d77d2c5b2f90c2dd3429095f867380a0e2d049369d5f104e72f64cec"
+    },
+    {
+      "path": "refresh-request.reviewed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/refresh-request.reviewed.json",
+      "bytes": 1022,
+      "sha256": "238a226f28f212617fc1d082a84bafb79abbde3c8d7cadc33ddc2737f10ff8dc"
+    },
+    {
+      "path": "review-public.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/review-public.py",
+      "bytes": 4336,
+      "sha256": "d0cd4fe568dc5b4295aafe8bae37f5b1a66e7609f5232d5d1236a85ce5391bdb"
+    },
+    {
+      "path": "root-acceptance.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/root-acceptance.json",
+      "bytes": 3280,
+      "sha256": "8c7ed1d83ad864cb3291534fc1a479d050dcc78728d7c6397e14bd4e285b1d58"
+    },
+    {
+      "path": "root-byte-review.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/root-byte-review.json",
+      "bytes": 563,
+      "sha256": "9241a2621f0013f113114edac66fb37c418edd2bf87ac7d0a065445e780859c7"
+    },
+    {
+      "path": "run-capacity-bounded-intake.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/run-capacity-bounded-intake.py",
+      "bytes": 2957,
+      "sha256": "558d70d45b4cd791407bdaf0b7777e282e05ad2d775ad883dff3acee25124d91"
+    },
+    {
+      "path": "source-originals/archive22-root-acceptance.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/archive22-root-acceptance.json",
+      "bytes": 1967,
+      "sha256": "285d40131ec73746d9085ec7123245d68f50f8df1fb381fcc7dcf68bd9527ca5"
+    },
+    {
+      "path": "source-originals/distribution.zip.sha256",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "d4783e5d05ca06d851225036bf9255d27f61c4fc96c2a286c051d4565380070d"
+    },
+    {
+      "path": "source-originals/manifest.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/manifest.json",
+      "bytes": 127378,
+      "sha256": "82f4aa743d0bc2472cf705fa2f1655e34b96f1821cb14ebdf2294265a25b9107"
+    },
+    {
+      "path": "source-originals/package-ready.original.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/package-ready.original.json",
+      "bytes": 4015,
+      "sha256": "593d99b325a829df441a486d4d311c8b5d2517efffc19f53ae43cedf1e4adf59"
+    },
+    {
+      "path": "source-originals/published-release-copy.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/published-release-copy.json",
+      "bytes": 708,
+      "sha256": "dfa6b683fba557c2f74035b7314db5b629433c7c94d6a7e07f86f10e44eff82b"
+    },
+    {
+      "path": "source-originals/published-release.original.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/published-release.original.json",
+      "bytes": 19444,
+      "sha256": "edb2c9d37d7a1dd2003833d600d985397d9ca6f359a171c79b2fe454c2ea7710"
+    },
+    {
+      "path": "source-originals/release.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/release.json",
+      "bytes": 465,
+      "sha256": "20860cf37691cc789bc66b4726ef9aaf6985c338a7e1eacc7e92baf20dc09942"
+    },
+    {
+      "path": "source-originals/source-qualification.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/source-originals/source-qualification.json",
+      "bytes": 93589,
+      "sha256": "ce94e595f0aa579fa5f64df57795cf49a8bc1404e71c2e861d4900ccc3347fb1"
+    },
+    {
+      "path": "test_wrappers.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/test_wrappers.py",
+      "bytes": 14644,
+      "sha256": "96d9e37cf38f95b00e9460acfc6d12638cb869498bff663fd2ad3ef3ef2ea8c0"
+    },
+    {
+      "path": "tools/audit-main.mjs",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/audit-main.mjs",
+      "bytes": 21944,
+      "sha256": "5de188bbe72885b655720de68915fa4b24139901069695036c7ffceee15713de"
+    },
+    {
+      "path": "tools/http-engine.mjs",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/binding.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/binding.json",
+      "bytes": 2041,
+      "sha256": "d2fcd2fbd6d674251e4b01e7df7c7c73f9e4cde2b1b4d5074adeabb0f13047d1"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/binding.unreviewed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/binding.unreviewed.json",
+      "bytes": 2042,
+      "sha256": "abf0470616501c7f9e4d2310f0fd2d1679c3552d88b7c9aa2925246608d75f24"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/catalog.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/catalog.json",
+      "bytes": 36589,
+      "sha256": "8f6ccf5c0b4725c7e56a71a28a2bd64f6f90b709c28467cd62e7955108698745"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/configuration.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/configuration.json",
+      "bytes": 134468,
+      "sha256": "b3dba59427c3fb4377ccfce042f6f11d5fd212bf6d26fc74cec58367085b236d"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/deployment.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/deployment.json",
+      "bytes": 3823,
+      "sha256": "7e709950c5534b664f3ba3d015ce1fe6a813f742a22e854d5fb7a31026e5a8a3"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/manifest.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/manifest.json",
+      "bytes": 127378,
+      "sha256": "82f4aa743d0bc2472cf705fa2f1655e34b96f1821cb14ebdf2294265a25b9107"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/qualification.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/qualification.json",
+      "bytes": 93589,
+      "sha256": "ce94e595f0aa579fa5f64df57795cf49a8bc1404e71c2e861d4900ccc3347fb1"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/receipt.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/receipt.json",
+      "bytes": 562955,
+      "sha256": "896eef022a1a2262f3c849026e0719bed2a7a7bcc8d41a8c1d612bf7cf0c40f3"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/record.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/record.json",
+      "bytes": 465,
+      "sha256": "20860cf37691cc789bc66b4726ef9aaf6985c338a7e1eacc7e92baf20dc09942"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/run.json",
+      "bytes": 12212,
+      "sha256": "a5df6db240d571c79cfc586dbf4144b96042fe8916536c1eeb62e57d7dfeb9f8"
+    },
+    {
+      "path": "tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/statuses.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/inputs/c7770eda1dbdf6d241c11496d80faa28dbcb9b2b/statuses.json",
+      "bytes": 8221,
+      "sha256": "664ac3f320054f01d570893b44f420e25f5a2dfdcea418f10102c671cc1b8bcf"
+    },
+    {
+      "path": "tools/preparation-provenance.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/preparation-provenance.json",
+      "bytes": 9660,
+      "sha256": "c930e1c5cc9ffb4d52cf23c7e6f4be14307f474fccb6d995534e358489e1d484"
+    },
+    {
+      "path": "tools/retained-catalog.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/retained-catalog.json",
+      "bytes": 36144,
+      "sha256": "9f4d1c8b70383e716d2f299426f5a3fd3e48c391fab9695346b13fc78e4f5c8f"
+    },
+    {
+      "path": "tools/runs/main-r1/attempts.jsonl",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/runs/main-r1/attempts.jsonl",
+      "bytes": 1911967,
+      "sha256": "38d306e8072ae67e1d04a70898a7418f8625634ed1756d87c719adf4a971c210"
+    },
+    {
+      "path": "tools/runs/main-r1/inventory.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/runs/main-r1/inventory.json",
+      "bytes": 744380,
+      "sha256": "d71ffb6519ddff1d96070107305b4ce79436ec15a5ffc2852368d6945b3971cb"
+    },
+    {
+      "path": "tools/runs/main-r1/report.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/runs/main-r1/report.json",
+      "bytes": 3802,
+      "sha256": "8150f551393c913c6da9ac3858732189e80cb486a712d31d86a768f299b90aa7"
+    },
+    {
+      "path": "tools/runs/main-r1/results.jsonl",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/runs/main-r1/results.jsonl",
+      "bytes": 1911967,
+      "sha256": "38d306e8072ae67e1d04a70898a7418f8625634ed1756d87c719adf4a971c210"
+    },
+    {
+      "path": "tools/self-check.mjs",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/tools/self-check.mjs",
+      "bytes": 3958,
+      "sha256": "b19a5e47f4febfdcd0a9e5e60d5dc445782e85070a804c16d611563793d23142"
+    },
+    {
+      "path": "wrapper_contract.py",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-a7a4e2d7/wrapper_contract.py",
+      "bytes": 8315,
+      "sha256": "48b5701481bc3c737fd019e87f82eef7a62052c488a1b57c83fe6aea7f5b1e76"
+    }
+  ],
+  "excluded": [
+    "Python __pycache__ bytecode only."
+  ],
+  "scope": "Finite public audit, original API bodies, helper histories, requests/proposals, failed or pending historical states, source metadata, native observations and final scoped acceptance. Every archived body is original and byte-exact."
+}
