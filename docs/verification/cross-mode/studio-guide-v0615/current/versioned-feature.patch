@@ -1,0 +1,796 @@
+diff --git a/authoring/asset-studio/index.html b/authoring/asset-studio/index.html
+index 19e8b8561..d3d973c9e 100644
+--- a/authoring/asset-studio/index.html
++++ b/authoring/asset-studio/index.html
+@@ -114,6 +114,82 @@
+           hidden
+         ></p>
+       </details>
++      <details id="studio-guide" class="studio-guide">
++        <summary id="studio-guide-open" data-studio-host="control">Studio guide</summary>
++        <div class="studio-guide-copy">
++          <h2 data-studio-host="heading">From an idea to a reusable asset</h2>
++          <p data-studio-host="body">
++            This guide stays in your workspace. You can read it while an asset is preparing without
++            losing your crop, pixel edits or staged changes.
++          </p>
++          <ol>
++            <li data-studio-host="body">
++              <strong>Select and inspect a slot.</strong> Use the inventory filters, then read its
++              dimensions, palette, transparency, geometry and usage requirements. Compare the
++              current asset with your draft. Copy an AI brief when you need a starting point.
++            </li>
++            <li data-studio-host="body">
++              <strong>Choose and prepare your replacement.</strong> Upload a supported image, font
++              or sound. For images, adjust the crop and choose Prepare derivative; the original
++              stays intact. For small sprites, edit pixels and choose Prepare edited sprite.
++              Recipe-only slots use supported theme tokens or reviewed source changes instead of
++              uploaded images.
++            </li>
++            <li data-studio-host="body">
++              <strong>Record provenance.</strong> Enter the actual creator, source, rights or
++              license, and the effective prompt when one was used. An upload or AI result does not
++              establish permission to use it. Inspect the pivot, rotor anchors or frame regions when
++              the slot needs them.
++            </li>
++            <li data-studio-host="body">
++              <strong>Validate and stage.</strong> Choose Validate and stage replacement. Fix any
++              reported requirement and try again. Preparation alone has not added the replacement to
++              your workspace; staging creates the draft revision.
++            </li>
++            <li data-studio-host="body">
++              <strong>Inspect, save and export.</strong> Check the comparison and applicable
++              previews. Save local revision keeps the workspace on this device. Export .rltheme
++              transfers the staged collection, original files and revision history for review and
++              release adoption. Neither action publishes the public game or changes player saves.
++            </li>
++          </ol>
++          <h3 data-studio-host="heading">Keep your work</h3>
++          <p data-studio-host="body">
++            Pixel Undo and Redo affect the sprite editor. Undo draft and Redo draft affect staged,
++            unsaved workspace revisions. A successful Save local revision clears the draft undo
++            stack. Prepare and stage an unfinished sprite or upload, or explicitly discard it,
++            before saving, exporting or switching assets.
++          </p>
++          <p data-studio-host="body">
++            If local saving is unavailable, finish and stage any pending edit, then export your
++            workspace. Keep that export before Reset to saved, which discards staged unsaved
++            changes. Reload saved requires you to resolve unfinished edits and staged changes first.
++            A stale save from another tab also needs this recovery path.
++          </p>
++          <p data-studio-host="body">
++            Import collection validates a .rltheme bundle and stages its assets for inspection. It
++            does not save or publish them. Use Undo draft to reverse the import before saving, or
++            Save local revision when you want to keep it on this device.
++          </p>
++          <h3 data-studio-host="heading">Review what the preview can show</h3>
++          <p data-studio-host="body">
++            Native pixels, enlarged pixels, transparency and field context help inspect an asset.
++            These are bounded previews, not a complete playthrough of every mode or screen.
++            Technical validation does not approve the art: record the checks you actually performed
++            before marking a revision reviewed.
++          </p>
++          <p data-studio-host="body">
++            Interface changes text face, size and reduced effects for the tools without staging a
++            theme change. Opening or closing this guide leaves preview playback as you chose it.
++            Press Escape while reading here to close the guide. Holding it will not cancel
++            preparation; release it before pressing Escape again to use the normal operation or
++            editor action.
++          </p>
++          <button id="studio-guide-close" data-studio-host="control" type="button" hidden>
++            Close guide
++          </button>
++        </div>
++      </details>
+     </header>
+     <div class="studio-audio" role="group" aria-label="Shared sound settings">
+       <button data-studio-host="control" id="studio-audio-mute" type="button">Unmute sound</button>
+@@ -642,7 +718,6 @@
+     </main>
+     <footer class="studio-footer">
+       <a data-studio-host="control" href="../design-atlas/">Design atlas</a
+-      ><a data-studio-host="control" href="../../docs/asset-studio.md">Studio guide</a
+       ><a data-studio-host="control" href="../../game/">Return to game</a
+       ><span data-studio-host="secondary"
+         >Local authoring workspace · player saves stay separate</span
+diff --git a/authoring/asset-studio/studio.css b/authoring/asset-studio/studio.css
+index 39e5fe5dc..b49a60c9f 100644
+--- a/authoring/asset-studio/studio.css
++++ b/authoring/asset-studio/studio.css
+@@ -518,6 +518,27 @@ body.field-kit {
+   border-top: 1px solid var(--fk-line);
+   padding: 24px 32px;
+ }
++.field-kit .studio-guide {
++  flex: 1 0 100%;
++  min-width: 0;
++  max-width: 100%;
++  padding: 0;
++  border-top: 0;
++}
++.studio-guide > summary {
++  padding-block: 10px;
++}
++.studio-guide-copy {
++  max-width: 72ch;
++  padding-block: 4px 16px;
++  overflow-wrap: anywhere;
++}
++.studio-guide-copy ol {
++  padding-inline-start: 1.5em;
++}
++.studio-guide-copy li + li {
++  margin-block-start: 1em;
++}
+ .studio-footer span {
+   margin-left: auto;
+   color: var(--fk-muted);
+diff --git a/authoring/asset-studio/studio.mjs b/authoring/asset-studio/studio.mjs
+index 2a5baf43c..d990d0201 100644
+--- a/authoring/asset-studio/studio.mjs
++++ b/authoring/asset-studio/studio.mjs
+@@ -32,6 +32,7 @@ import { createOperationStatus } from '../../game/ui/operation-status.mjs';
+ import { createAudioMaster } from '../../game/ui/audio-master.mjs';
+ import { createAudioPreferences } from '../../game/audio-preferences.mjs';
+ import { mountInterfacePreferences } from './interface-preferences.mjs';
++import { mountStudioGuide } from './guide.mjs';
+ const $ = (id) => document.getElementById(id);
+ const node = (tag, value = '', className = '', hostRole = null) => {
+   const el = document.createElement(tag);
+@@ -92,6 +93,7 @@ const interfacePreferences = mountInterfacePreferences({
+   window,
+   getStorage: () => localStorage,
+ });
++const studioGuide = mountStudioGuide({ document });
+ const audioMaster = createAudioMaster();
+ const audioPreferences = createAudioPreferences({
+   audioMaster,
+@@ -1216,6 +1218,7 @@ window.addEventListener('pagehide', (event) => {
+   }
+   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
+   if (!event.persisted) {
++    studioGuide.dispose();
+     interfacePreferences.dispose();
+     stopMasterView();
+     audioPreferences.dispose();
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 0043b23b5..71b67be34 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -97,6 +97,8 @@ For the isolated P05-A [shared display candidate](../../../docs/shared-display-p
+ 
+ For the scoped [Studio readability candidate](../../../docs/cross-mode-execution.md#p05-supporting-screen-readability), keep one Studio-owned display authority and a read-only motion view. Interface subscribers update existing datasets, values and notices only; never rebuild the inspector, draft, prepared media, sprite history or audio. Resolve host font/palette aliases on the body and mark real host text/actions at creation; selected-file fonts and authored component specimens retain their own identity. Retain raw reduction separately from the system cap, fence retired preview callbacks and reset only a changed effective-motion clock. Studio never writes Solo progress.
+ 
++Keep the Asset Studio guide in its native header disclosure, before the changing workspace/inspector and outside authoring busy/inert regions. Startup rendering below the reader must not displace its focused summary. Opening and closing help must not navigate, acquire an operation, require settled edits, rebuild previews, or alter draft/prepared bytes, provenance, sprite history or playback. Consume guide-close Escape and its held-key repeats before they reach global operation cancellation, including repeats after focus moves. Release ownership on keyup or a fresh press so a missed keyup cannot suppress a later action. A separate fresh Escape retains the normal editor/operation action, as does a press begun in other authoring controls; retain native summary Enter/Space behavior. Mount Close before exposing it, return only owned foreground focus, and dispose scripted handlers only on terminal departure. Verify held operations and subsequent exact saved bytes through the actual host, and qualify native long-reader focus/reflow separately. Use the [in-page guide maintenance prompt](../../../docs/asset-studio.md#in-page-guide).
++
+ Studio's shared font cache is keyed by original byte hash and accumulates compatible requested weight ranges. A failed descriptor update must retain the prior usable registration; Retry cannot duplicate successful loading. Inspect actual selected-role EN/UA specimens and real FontFace matching separately from modeled cache tests. Inventory selection replaces rows synchronously: remember whether the foreground trigger owned focus, then restore its selected replacement on desktop or retain the foreground narrow Inspector handoff. Rejected prepared-upload/dirty-sprite selections preserve the original trigger and work. Do not restore focus from a later Promise, timer or frame. Cold Back selection and disabled mutation-trigger focus remain separate P04 corrections.
+ 
+ Adopt only the reviewed font → Studio F2 → inventory-focus hunks against the current source; do not overwrite newer hosts or import unrelated P04 preview work. Preserve original receipts and failed attempts, do not add overlapping case counts, and qualify the actual composition. Use the [bounded Studio prompts](../../prompts/cross-mode-delivery.md#qualify-studio-readability-and-draft-preservation); native reflow, BFCache, device and public checks remain separate. No Studio candidate pass completes P05.
+diff --git a/docs/asset-studio.md b/docs/asset-studio.md
+index 08cb2d77b..49bccd83c 100644
+--- a/docs/asset-studio.md
++++ b/docs/asset-studio.md
+@@ -2,9 +2,17 @@
+ 
+ Asset Studio is the local presentation workbench at `authoring/asset-studio/`. It edits the versioned asset registry and theme bundles. It does not write player saves, change gameplay rules, publish a release, or upload files to a service. Save locally and export a `.rltheme` bundle to transfer work or submit it for review.
+ 
++## In-page guide
++
++Open **Studio guide** in the header for the select → prepare → provenance → stage → inspect/save/export workflow without leaving the workspace. The native disclosure works before the Studio module is ready. Its script-owned **Close guide** action appears only after mounting; Close or Escape from inside the guide collapses it and returns owned foreground focus to its summary. Holding that Escape does not cancel an asset operation, even if focus moves to another control. Release it before pressing Escape again to use the existing editor/operation action; an Escape press begun in other authoring controls keeps its normal behavior. The guide sits above the changing inventory and inspector, so startup rendering cannot push an open reader down the page. It remains available while authoring controls are busy and uses the existing Interface typography.
++
++Reading or closing the guide never changes prepared original/derivative bytes, crop/provenance fields, pixel undo/redo, staged history, or preview playback. A persisted history return retains the reader; terminal departure disposes only its scripted handlers. It is an in-page help surface, not a modal, navigation route or new operation owner.
++
++Maintenance prompt: “Open Studio guide while an upload is prepared and while sprite encoding is pending. Read and close it using the actual summary, Close and a held Escape; verify repeated keydowns do not cancel the operation, subsequent saved original/derivative bytes match, crop/provenance and real pixel undo/redo survive, and preview playback intent is unchanged. Release Escape, then press it again to verify deliberate operation cancellation still works. Check Plain/Large text, portrait and short landscape, and closing a scrolled reader in a native browser separately from modeled DOM tests.”
++
+ ## Workspace and revisions
+ 
+-The first visit opens the registered Field Kit source inventory. The baseline assets are labelled **source**, not finished production artwork. The inventory reports missing, source, produced, and reviewed counts separately. Filter by theme, screen, interaction state, media kind, readiness, or text. Selecting a theme stages a presentation selection; it does not change game type or campaign rules.
++The Studio restores a saved local workspace when one exists. Otherwise it loads and verifies the current compiled release collection; a checkout without that collection uses the source inventory. Source recipes are labelled **source**, not finished production artwork. The inventory reports missing, source, produced, and reviewed counts separately. Filter by theme, screen, interaction state, media kind, readiness, or text. Selecting a theme stages a presentation selection; it does not change game type or campaign rules.
+ 
+ Every validated change appends immutable asset, theme, or collection records. **Save local revision** atomically saves the complete workspace in the isolated `revealline-presentation-studio-v1` IndexedDB database. **Undo draft** and **Redo draft** operate on unsaved workspace changes. A successful save clears this temporary undo stack. **Reset to saved** returns to the latest saved workspace. It never deletes earlier asset records from that saved workspace. Asset history can bind an earlier revision in a new theme revision.
+ 
+@@ -18,9 +26,7 @@ Image and media files use their real bytes. Font uploads are decoded with the br
+ 
+ Requirements include all usage screens and states, exact frame size, alpha policy, byte budget, palette, dependencies, and geometry. The complete machine-readable slot contract is visible beside the human-readable explanation.
+ 
+-## Studio Interface — readability candidate
+-
+-This source adds the scoped [P05 Studio readability candidate](cross-mode-execution.md#p05-supporting-screen-readability). It is not an accepted Studio release or completion of P05.
++## Studio Interface
+ 
+ Open **Interface** for Theme/Plain text, Standard/Large size and Reduced effects. Host body/control/secondary roles use 18/16/14px, or 22/20/18px in Large. These choices update the existing shared display record and existing controls; they do not stage a theme, rebuild a draft, replace prepared media or write player saves. Interface controls remain available during an authoring operation. A failed preference save keeps the visible session-only choice and reports it beside the controls.
+ 
+@@ -35,7 +41,7 @@ A successful foreground inventory selection retains the replacement selected but
+ 1. Select a slot and choose an accepted PNG/JPEG/WebP image, WOFF2/TTF/OTF font, or WAV/OGG/MP3 audio file. The format must match the slot. The original must fit the presentation system's global byte and decoded-dimension limits.
+ 2. For an image, adjust the original-image crop rectangle. **Center crop to slot** selects the appropriate aspect ratio; **Prepare derivative** creates a separate PNG at the exact slot frame size using the registered sampling rule. The source file and its original dimensions remain intact. Download the original at any time.
+ 3. Inspect or edit the normalized pivot, rotor anchors, and nine-slice metadata. **Apply geometry to preview** runs the full binding validator before updating the preview. Frame dimensions and required hub count remain constrained by the slot. Occupied bounds are measured from visible pixels. **Edit current raster metadata** creates a new revision over existing bytes without recropping.
+-4. Enter the actual creator, source, license/rights statement, and effective prompt. The Studio requires these fields and does not infer rights from an upload or an AI-generated image.
++4. Enter the actual creator, source, and license/rights statement; these fields are required. Record the effective prompt when one was used. The Studio does not infer rights from an upload or an AI-generated image.
+ 5. **Validate and stage replacement** checks the schema, geometry, dimensions, alpha requirement, byte budget, file headers, content hashes, and complete byte table. An empty transparent sprite is rejected. Font files also pass the browser font decoder. A failed check leaves the candidate editable and the prior workspace intact.
+ 6. Inspect the comparison, then save locally or export. Candidates enter the **produced** stage; successful technical validation alone does not establish a reviewed release. After performing real review, enter concrete evidence in revision history and use **Record reviewed revision**. This appends an immutable reviewed revision without overwriting the candidate.
+ 
+diff --git a/game/build-config.json b/game/build-config.json
+index 9bbf7319e..9c29a46d4 100644
+--- a/game/build-config.json
++++ b/game/build-config.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "0.61.4",
++  "version": "0.61.5",
+   "entry": "game/index.html",
+   "include": [
+     "game",
+diff --git a/game/test/asset-studio-host-loading.test.mjs b/game/test/asset-studio-host-loading.test.mjs
+index 66cc46229..fbf7c1b40 100644
+--- a/game/test/asset-studio-host-loading.test.mjs
++++ b/game/test/asset-studio-host-loading.test.mjs
+@@ -103,6 +103,9 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+     getContext() {
+       return new Proxy(
+         {
++          putImageData: (value) => {
++            this.paintedPixels = new Uint8ClampedArray(value.data);
++          },
+           getImageData: () => ({
+             width: this.width,
+             height: this.height,
+@@ -213,8 +216,79 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+   ])
+     assert.equal($(id).disabled, true, `${id} is disabled before the Studio module owns it`);
+   assert.equal($('studio-status').querySelector('.operation-status-signal').children.length, 3);
++  assert.equal(
++    $('studio-guide-close')?.hidden,
++    true,
++    'Close is unavailable before its helper mounts.',
++  );
+   await import(`../../authoring/asset-studio/studio.mjs?loading-host=${Date.now()}`);
+   assert.match(message(), /Loading saved Studio/);
++  const guide = $('studio-guide'),
++    guideOpen = $('studio-guide-open'),
++    guideClose = $('studio-guide-close');
++  assert.ok(guide, 'Studio has an in-page guide instead of navigating away from edits.');
++  assert.equal(guide.tagName, 'DETAILS');
++  assert.equal(guideOpen.tagName, 'SUMMARY');
++  assert.equal(
++    guide.closest('header'),
++    doc.querySelector('header'),
++    'Guide stays in the stable header above asynchronously populated workspace content.',
++  );
++  const inDocumentOrder = (element) => [element, ...element.children.flatMap(inDocumentOrder)];
++  const documentOrder = inDocumentOrder(doc.body);
++  for (const selector of ['.workspace-state', 'main']) {
++    const dynamicRegion = doc.querySelector(selector);
++    assert.ok(dynamicRegion);
++    assert.ok(documentOrder.indexOf(guide) < documentOrder.indexOf(dynamicRegion));
++  }
++  assert.equal(
++    guide.closest(
++      '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
++    ),
++    null,
++    'Stable placement does not put help inside an operation-owned mutation region.',
++  );
++  const openGuide = () => {
++    guideOpen.focus();
++    // Model only the browser's native <details> toggle boundary. Native
++    // Enter/Tab behavior and layout are qualified separately in the browser.
++    guide.open = true;
++    guide.emit('toggle');
++    assert.equal(guideClose.hidden, false);
++    assert.equal(guide.closest('[inert]'), null, 'Guide stays available during authoring work.');
++  };
++  const closeGuide = (escape = false) => {
++    guideClose.focus();
++    if (escape) {
++      const event = guideClose.emit('keydown', { key: 'Escape' });
++      // The minimal DOM omits the document-to-window edge. Only an
++      // unconsumed key reaches the real host's window cancellation owner.
++      if (!event.cancelBubble) window.dispatchEvent(event);
++      assert.equal(event.cancelBubble, true);
++      assert.equal(
++        event.defaultPrevented,
++        true,
++        'Guide owns Escape before operation cancellation.',
++      );
++    } else guideClose.click();
++    assert.equal(guide.open, false);
++    // Native closed details hides descendants without changing Close.hidden.
++    assert.equal(doc.activeElement, guideOpen, 'Close restores the actual disclosure opener.');
++  };
++  const escapeFrom = (target, repeat = false) => {
++    target.focus();
++    const event = target.emit('keydown', { key: 'Escape', repeat });
++    // Preserve the actual Studio's window cancellation handler. This is the
++    // same finite missing document-to-window edge as closeGuide above.
++    if (!event.cancelBubble) window.dispatchEvent(event);
++    return event;
++  };
++  const releaseEscape = () => doc.activeElement.emit('keyup', { key: 'Escape' });
++  const startupMessage = message();
++  openGuide();
++  closeGuide(true);
++  assert.equal(message(), startupMessage, 'Guide Escape does not cancel startup.');
++
+   assert.equal($('cancel-studio-operation').hidden, false);
+   assert.equal($('cancel-studio-operation').closest('[inert]'), null);
+   assert.equal($('current-preview-cancel').closest('[inert]'), null);
+@@ -342,7 +416,25 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+   delayRead = true;
+   $('asset-upload').onchange();
+   assert.match(message(), /Reading the image header/);
+-  $('cancel-studio-operation').onclick();
++  const readingMessage = message();
++  openGuide();
++  closeGuide(true);
++  for (const target of [guideOpen, $('studio-interface-size')]) {
++    escapeFrom(target, true);
++    assert.equal(
++      message(),
++      readingMessage,
++      'Held guide Escape must not cancel the pending upload read.',
++    );
++    assert.equal($('cancel-studio-operation').hidden, false);
++    assert.equal($('workspace-summary').textContent, summary);
++  }
++  releaseEscape();
++  assert.equal(
++    escapeFrom($('studio-interface-size')).defaultPrevented,
++    true,
++    'A fresh Escape deliberately reaches the Studio cancellation owner.',
++  );
+   readGate.resolve();
+   await flush();
+   assert.equal(cancelledReads, 1);
+@@ -362,6 +454,23 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+     true,
+     'No partial prepared asset is published during encode.',
+   );
++  const encodingMessage = message();
++  openGuide();
++  closeGuide(true);
++  assert.equal(message(), encodingMessage, 'Guide Escape cannot cancel a held image encode.');
++  assert.equal($('cancel-studio-operation').hidden, false);
++  assert.equal($('replacement-panel').inert, true);
++  for (const target of [guideOpen, $('studio-interface-size')]) {
++    escapeFrom(target, true);
++    assert.equal(
++      message(),
++      encodingMessage,
++      'Repeats from the closed guide or another control cannot cancel encoding.',
++    );
++    assert.equal($('cancel-studio-operation').hidden, false);
++    assert.equal($('stage-asset').disabled, true);
++  }
++  releaseEscape();
+   decodeGate.resolve();
+   await flush();
+   assert.equal(lateClosed, 1);
+@@ -413,6 +522,38 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+   assert.equal(savedSurface.previewMarker, savedMarker);
+   assert.equal(draftSurface.previewMarker, draftMarker);
+   assert.equal($('stage-asset').disabled, false);
++  const preparedGuideState = {
++    crop: ['x', 'y', 'width', 'height'].map((key) => $(`crop-${key}`).value),
++    motion: $('preview-motion').value,
++    currentCleanup: savedSurface.previewCleanup,
++    draftCleanup: draftSurface.previewCleanup,
++    status: message(),
++    preferenceWrites: preferenceWrites.length,
++  };
++  openGuide();
++  closeGuide();
++  assert.equal($('slot-id').textContent, preparedSelection);
++  assert.equal($('asset-upload').files[0], original);
++  assert.equal($('source-image'), preparedImage);
++  assert.equal(creator.value, 'Fixture author');
++  assert.equal($('asset-source').value, 'Owned original fixture');
++  assert.equal($('asset-license').value, 'Fixture rights');
++  assert.deepEqual(
++    ['x', 'y', 'width', 'height'].map((key) => $(`crop-${key}`).value),
++    preparedGuideState.crop,
++  );
++  assert.equal($('upload-summary').textContent, preparedSummary);
++  assert.equal(message(), preparedGuideState.status);
++  assert.equal($('stage-asset').disabled, false);
++  assert.equal(savedSurface.previewMarker, savedMarker);
++  assert.equal(draftSurface.previewMarker, draftMarker);
++  assert.equal(savedSurface.previewCleanup, preparedGuideState.currentCleanup);
++  assert.equal(draftSurface.previewCleanup, preparedGuideState.draftCleanup);
++  assert.equal($('preview-motion').value, preparedGuideState.motion);
++  assert.equal(preferenceWrites.length, preparedGuideState.preferenceWrites);
++  assert.equal(doc.body.dataset.textFace, 'plain');
++  assert.equal(doc.body.dataset.textSize, 'large');
++  creator.focus();
+   // Model a return after another page changed preferences while this document
+   // was frozen. The real host may refresh preview leases, but its prepared
+   // original, metadata, selected row and current editor focus must survive.
+@@ -460,6 +601,14 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+   await $('stage-asset').onclick();
+   assert.match(message(), /validated and staged/);
+   assert.match($('workspace-summary').textContent, /unsaved changes/);
++  const stagedSummary = $('workspace-summary').textContent,
++    stagedStatus = message(),
++    stagedHistory = [$('undo-draft').disabled, $('redo-draft').disabled];
++  openGuide();
++  closeGuide(true);
++  assert.equal($('workspace-summary').textContent, stagedSummary);
++  assert.equal(message(), stagedStatus);
++  assert.deepEqual([$('undo-draft').disabled, $('redo-draft').disabled], stagedHistory);
+   await $('save-workspace').onclick();
+   assert.match(message(), /saved atomically/);
+   const saved = await createStudioStore({ indexedDB: db.indexedDB }).load();
+@@ -469,7 +618,31 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+   assert.ok(saved.document.assets.some((asset) => asset.id.endsWith('.source')));
+   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
+   $('new-sprite').onclick();
++  const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
+   $('sprite-canvas').emit('keydown', { code: 'Space' });
++  const editedSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels),
++    spriteCanvas = $('sprite-canvas'),
++    spriteCursor = $('sprite-cursor').textContent;
++  assert.notDeepEqual(editedSpritePixels, originalSpritePixels);
++  openGuide();
++  closeGuide();
++  assert.equal($('sprite-canvas'), spriteCanvas);
++  assert.equal($('sprite-cursor').textContent, spriteCursor);
++  assert.deepEqual(spriteCanvas.paintedPixels, editedSpritePixels);
++  assert.equal($('sprite-undo').disabled, false);
++  $('sprite-undo').click();
++  assert.deepEqual(
++    spriteCanvas.paintedPixels,
++    originalSpritePixels,
++    'Guide preserves real pixel undo.',
++  );
++  assert.equal($('sprite-redo').disabled, false);
++  $('sprite-redo').click();
++  assert.deepEqual(
++    spriteCanvas.paintedPixels,
++    editedSpritePixels,
++    'Guide preserves real pixel redo.',
++  );
+   encodeGate = deferred();
+   const preparingSprite = $('use-sprite').onclick();
+   assert.match(message(), /Encoding the edited sprite/);
+@@ -579,4 +752,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+     preferenceWrites.every(([key]) => key === DISPLAY_PREFERENCES_KEY),
+     'All attempted preference writes target only the separate shared display record.',
+   );
++  window.emit('pagehide', { persisted: false });
++  assert.equal(guideClose.hidden, true, 'Terminal disposal removes the enhanced Close control.');
++  assert.equal(guideClose.onclick, null);
+ });
+diff --git a/package-lock.json b/package-lock.json
+index 410132bd3..b21e7a9c5 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "revealline",
+-  "version": "0.61.4",
++  "version": "0.61.5",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "revealline",
+-      "version": "0.61.4",
++      "version": "0.61.5",
+       "dependencies": {
+         "phaser": "4.2.1"
+       },
+diff --git a/package.json b/package.json
+index 051718e06..76149f60e 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "revealline",
+-  "version": "0.61.4",
++  "version": "0.61.5",
+   "private": true,
+   "type": "module",
+   "description": "Configurable territory-capture game and authoring playground",
+diff --git a/authoring/asset-studio/guide.mjs b/authoring/asset-studio/guide.mjs
+new file mode 100644
+index 000000000..9d246e7ac
+--- /dev/null
++++ b/authoring/asset-studio/guide.mjs
+@@ -0,0 +1,70 @@
++// A passive disclosure: no workspace, operation, storage or preview ownership.
++export function mountStudioGuide({ document }) {
++  const guide = document.getElementById('studio-guide');
++  const summary = document.getElementById('studio-guide-open');
++  const close = document.getElementById('studio-guide-close');
++  let disposed = false;
++  let escapeCloseHeld = false;
++  const foreground = () => !document.hidden && document.hasFocus();
++  const available = () =>
++    guide.isConnected &&
++    summary.parentElement === guide &&
++    !summary.closest('[hidden],[inert]') &&
++    summary.getClientRects().length > 0;
++  const collapse = () => {
++    if (disposed || !guide.open) return;
++    const before = document.activeElement;
++    const owned = guide.contains(before);
++    guide.open = false;
++    // Native collapse can blur the hidden Close button to body. Preserve a newer
++    // focus choice; do not schedule a later return or alter native summary toggling.
++    if (
++      owned &&
++      !disposed &&
++      !guide.open &&
++      foreground() &&
++      available() &&
++      [before, document.body].includes(document.activeElement)
++    )
++      summary.focus();
++  };
++  const keydown = (event) => {
++    if (disposed || !guide.open || event.key !== 'Escape' || !guide.contains(event.target)) return;
++    escapeCloseHeld = true;
++    event.preventDefault();
++    event.stopPropagation();
++    collapse();
++  };
++  const guardRepeat = (event) => {
++    if (disposed || event.key !== 'Escape') return;
++    // A fresh press also releases a missed keyup. Only repeats of the press
++    // that closed this guide stay owned, even if focus has since moved away.
++    if (!event.repeat) {
++      escapeCloseHeld = false;
++      return;
++    }
++    if (!escapeCloseHeld) return;
++    event.preventDefault();
++    event.stopPropagation();
++  };
++  const releaseKey = (event) => {
++    if (event.key === 'Escape') escapeCloseHeld = false;
++  };
++  document.addEventListener('keydown', guardRepeat, true);
++  document.addEventListener('keyup', releaseKey, true);
++  guide.addEventListener('keydown', keydown);
++  close.onclick = collapse;
++  close.hidden = false;
++  return {
++    dispose() {
++      if (disposed) return;
++      disposed = true;
++      escapeCloseHeld = false;
++      document.removeEventListener('keydown', guardRepeat, true);
++      document.removeEventListener('keyup', releaseKey, true);
++      guide.removeEventListener('keydown', keydown);
++      close.onclick = null;
++      close.hidden = true;
++    },
++  };
++}
+diff --git a/game/test/asset-studio-guide.test.mjs b/game/test/asset-studio-guide.test.mjs
+new file mode 100644
+index 000000000..0f2a3be1d
+--- /dev/null
++++ b/game/test/asset-studio-guide.test.mjs
+@@ -0,0 +1,222 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { Document, Events } from './helpers/couch-dom.mjs';
++import { mountStudioGuide } from '../../authoring/asset-studio/guide.mjs';
++
++function fixture() {
++  const document = new Document();
++  const window = new Events();
++  const make = (tag, id, parent = document.body) => {
++    const element = document.createElement(tag);
++    element.id = id;
++    parent.append(element);
++    return element;
++  };
++  const guide = make('details', 'studio-guide');
++  const summary = make('summary', 'studio-guide-open', guide);
++  const copy = make('div', 'guide-copy', guide);
++  const close = make('button', 'studio-guide-close', copy);
++  close.hidden = true;
++  const outside = make('button', 'outside');
++  // Model the native focus loss when the focused details body becomes hidden.
++  let open = false;
++  Object.defineProperty(guide, 'open', {
++    get: () => open,
++    set(value) {
++      open = value;
++      if (!value && copy.contains(document.activeElement)) document.activeElement = document.body;
++    },
++  });
++  const owner = mountStudioGuide({ document });
++  let cancellations = 0;
++  window.addEventListener('keydown', (event) => {
++    if (event.key === 'Escape') cancellations++;
++  });
++  return {
++    document,
++    window,
++    guide,
++    summary,
++    close,
++    outside,
++    owner,
++    cancellations: () => cancellations,
++    key(target, key, properties = {}) {
++      const event = target.emit('keydown', { key, ...properties });
++      // This fixture models element bubbling; finish the native document-to-window edge.
++      if (!event.cancelBubble) window.emit('keydown', event);
++      return event;
++    },
++    releaseKey(target, key) {
++      const event = target.emit('keyup', { key });
++      if (!event.cancelBubble) window.emit('keyup', event);
++      return event;
++    },
++    open() {
++      summary.focus();
++      guide.open = true;
++      guide.emit('toggle');
++    },
++  };
++}
++
++test('Close collapses the inline reader and returns native focus to its summary', () => {
++  const f = fixture();
++  assert.equal(f.close.hidden, false, 'Close is available only after its handler is installed.');
++  f.open();
++  f.close.focus();
++  f.close.click();
++  assert.equal(f.guide.open, false);
++  assert.equal(f.document.activeElement, f.summary);
++  assert.equal(f.cancellations(), 0);
++});
++
++test('guide Escape is consumed before the existing global cancellation listener', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  const event = f.key(f.close, 'Escape');
++  assert.equal(event.defaultPrevented, true);
++  assert.equal(f.guide.open, false);
++  assert.equal(f.document.activeElement, f.summary);
++  assert.equal(f.cancellations(), 0);
++  const next = f.key(f.summary, 'Escape');
++  assert.equal(next.defaultPrevented, false);
++  assert.equal(f.cancellations(), 1, 'A second Escape follows the existing cancellation route.');
++});
++
++test('one held guide Escape cannot continue into authoring cancellation after collapse', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  assert.equal(f.guide.open, false);
++  assert.equal(f.document.activeElement, f.summary);
++  for (let index = 0; index < 3; index++) {
++    const repeated = f.key(f.summary, 'Escape', { repeat: true });
++    assert.equal(repeated.defaultPrevented, true);
++    assert.equal(repeated.cancelBubble, true);
++    assert.equal(f.cancellations(), 0, 'Repeated guide-close input is not a second action.');
++  }
++  const release = f.releaseKey(f.summary, 'Escape');
++  assert.equal(release.defaultPrevented, false);
++  const fresh = f.key(f.summary, 'Escape');
++  assert.equal(fresh.defaultPrevented, false);
++  assert.equal(f.cancellations(), 1, 'A released and freshly pressed Escape still cancels.');
++});
++
++test('a guide-owned held key stays consumed across a focus change without capturing other keys', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  f.outside.focus();
++  const tab = f.key(f.outside, 'Tab');
++  assert.equal(tab.defaultPrevented, false);
++  const repeated = f.key(f.outside, 'Escape', { repeat: true });
++  assert.equal(repeated.defaultPrevented, true);
++  assert.equal(f.cancellations(), 0);
++  assert.equal(f.document.activeElement, f.outside, 'The repeat guard never restores focus.');
++  f.releaseKey(f.outside, 'Escape');
++  assert.equal(f.key(f.outside, 'Escape').defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++});
++
++test('a fresh Escape recovers ordinary cancellation even if the prior keyup was missed', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  f.outside.focus();
++  assert.equal(f.key(f.outside, 'Escape', { repeat: false }).defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  assert.equal(f.key(f.outside, 'Escape', { repeat: true }).defaultPrevented, false);
++  assert.equal(f.cancellations(), 2, 'The guide does not retain ownership of the later press.');
++});
++
++test('an Escape repeat not owned by a guide close retains the existing outside route', () => {
++  const f = fixture();
++  f.open();
++  f.outside.focus();
++  assert.equal(f.key(f.outside, 'Escape', { repeat: true }).defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  assert.equal(f.guide.open, true);
++});
++
++test('an open guide does not consume Escape or other keys from the authoring controls', () => {
++  const f = fixture();
++  f.open();
++  f.outside.focus();
++  const outside = f.key(f.outside, 'Escape');
++  assert.equal(outside.defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  assert.equal(f.guide.open, true);
++  for (const key of ['Enter', ' ', 'Tab', 'ArrowDown']) {
++    const event = f.key(f.summary, key);
++    assert.equal(event.defaultPrevented, false, `${key} retains its native behavior.`);
++  }
++});
++
++test('programmatic Close cannot take focus from an unrelated control', () => {
++  const f = fixture();
++  f.open();
++  f.outside.focus();
++  f.close.click();
++  assert.equal(f.guide.open, false);
++  assert.equal(f.document.activeElement, f.outside);
++});
++
++for (const state of ['hidden', 'blurred', 'inert', 'removed']) {
++  test(`closing a ${state} guide never forces return focus`, () => {
++    const f = fixture();
++    f.open();
++    f.close.focus();
++    let focuses = 0;
++    f.summary.focus = () => focuses++;
++    if (state === 'hidden') f.document.hidden = true;
++    if (state === 'blurred') f.document.focused = false;
++    if (state === 'inert') f.guide.inert = true;
++    if (state === 'removed') f.guide.remove();
++    f.close.click();
++    assert.equal(focuses, 0);
++  });
++}
++
++test('a later focus choice is not revisited after closing the guide', async () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.close.click();
++  f.outside.focus();
++  await new Promise((resolve) => setImmediate(resolve));
++  assert.equal(f.document.activeElement, f.outside);
++});
++
++test('terminal disposal removes Escape ownership and the scripted Close action', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.owner.dispose();
++  f.owner.dispose();
++  assert.equal(f.close.hidden, true);
++  assert.equal(f.close.onclick, null);
++  const event = f.key(f.summary, 'Escape');
++  assert.equal(event.defaultPrevented, false);
++  assert.equal(f.guide.open, true, 'Native disclosure state is independent of the retired owner.');
++});
++
++test('terminal disposal retires a held guide Escape guard and its document listeners', () => {
++  const f = fixture();
++  f.open();
++  f.close.focus();
++  f.key(f.close, 'Escape');
++  f.owner.dispose();
++  const repeated = f.key(f.summary, 'Escape', { repeat: true });
++  assert.equal(repeated.defaultPrevented, false);
++  assert.equal(f.cancellations(), 1);
++  for (const listeners of [f.document.listeners, f.document.captureListeners])
++    assert.equal(
++      [...listeners.values()].reduce((total, handlers) => total + handlers.size, 0),
++      0,
++    );
++});

@@ -1,0 +1,240 @@
+TAP version 13
+# Subtest: Close collapses the inline reader and returns native focus to its summary
+ok 1 - Close collapses the inline reader and returns native focus to its summary
+  ---
+  duration_ms: 1.737208
+  ...
+# Subtest: guide Escape is consumed before the existing global cancellation listener
+ok 2 - guide Escape is consumed before the existing global cancellation listener
+  ---
+  duration_ms: 0.426416
+  ...
+# Subtest: one held guide Escape cannot continue into authoring cancellation after collapse
+ok 3 - one held guide Escape cannot continue into authoring cancellation after collapse
+  ---
+  duration_ms: 0.215833
+  ...
+# Subtest: a guide-owned held key stays consumed across a focus change without capturing other keys
+ok 4 - a guide-owned held key stays consumed across a focus change without capturing other keys
+  ---
+  duration_ms: 0.119875
+  ...
+# Subtest: a fresh Escape recovers ordinary cancellation even if the prior keyup was missed
+ok 5 - a fresh Escape recovers ordinary cancellation even if the prior keyup was missed
+  ---
+  duration_ms: 0.513542
+  ...
+# Subtest: an Escape repeat not owned by a guide close retains the existing outside route
+ok 6 - an Escape repeat not owned by a guide close retains the existing outside route
+  ---
+  duration_ms: 0.129709
+  ...
+# Subtest: an open guide does not consume Escape or other keys from the authoring controls
+ok 7 - an open guide does not consume Escape or other keys from the authoring controls
+  ---
+  duration_ms: 0.109667
+  ...
+# Subtest: programmatic Close cannot take focus from an unrelated control
+ok 8 - programmatic Close cannot take focus from an unrelated control
+  ---
+  duration_ms: 0.253958
+  ...
+# Subtest: closing a hidden guide never forces return focus
+ok 9 - closing a hidden guide never forces return focus
+  ---
+  duration_ms: 0.689167
+  ...
+# Subtest: closing a blurred guide never forces return focus
+ok 10 - closing a blurred guide never forces return focus
+  ---
+  duration_ms: 0.197958
+  ...
+# Subtest: closing a inert guide never forces return focus
+ok 11 - closing a inert guide never forces return focus
+  ---
+  duration_ms: 0.359583
+  ...
+# Subtest: closing a removed guide never forces return focus
+ok 12 - closing a removed guide never forces return focus
+  ---
+  duration_ms: 0.133625
+  ...
+# Subtest: a later focus choice is not revisited after closing the guide
+ok 13 - a later focus choice is not revisited after closing the guide
+  ---
+  duration_ms: 5.500417
+  ...
+# Subtest: terminal disposal removes Escape ownership and the scripted Close action
+ok 14 - terminal disposal removes Escape ownership and the scripted Close action
+  ---
+  duration_ms: 0.243417
+  ...
+# Subtest: terminal disposal retires a held guide Escape guard and its document listeners
+ok 15 - terminal disposal retires a held guide Escape guard and its document listeners
+  ---
+  duration_ms: 0.184625
+  ...
+# Subtest: crop uses an integer centered frame and never mutates source coordinates
+ok 16 - crop uses an integer centered frame and never mutates source coordinates
+  ---
+  duration_ms: 1.290542
+  ...
+# Subtest: occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+ok 17 - occupied bounds distinguish alpha from actual visible silhouette, including empty sprite
+  ---
+  duration_ms: 0.196792
+  ...
+# Subtest: inventory combines usage/state/media/readiness filters without treating source as produced
+ok 18 - inventory combines usage/state/media/readiness filters without treating source as produced
+  ---
+  duration_ms: 0.144166
+  ...
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+ok 19 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 3599.862458
+  ...
+# Subtest: mount applies stored preferences without writing or replacing the existing interface
+ok 20 - mount applies stored preferences without writing or replacing the existing interface
+  ---
+  duration_ms: 3.134667
+  ...
+# Subtest: three explicit controls use the shared record and preserve unrelated authoring state
+ok 21 - three explicit controls use the shared record and preserve unrelated authoring state
+  ---
+  duration_ms: 0.558875
+  ...
+# Subtest: valid external preferences update in place while stale and malformed events cannot replace them
+ok 22 - valid external preferences update in place while stale and malformed events cannot replace them
+  ---
+  duration_ms: 0.801209
+  ...
+# Subtest: malformed initial storage keeps readable defaults without a read-time repair write
+ok 23 - malformed initial storage keeps readable defaults without a read-time repair write
+  ---
+  duration_ms: 0.378834
+  ...
+# Subtest: denied storage leaves explicit session preferences usable with a visible save warning
+ok 24 - denied storage leaves explicit session preferences usable with a visible save warning
+  ---
+  duration_ms: 0.466834
+  ...
+# Subtest: a failed preference write preserves unsaved local intent against later remote changes
+ok 25 - a failed preference write preserves unsaved local intent against later remote changes
+  ---
+  duration_ms: 0.25
+  ...
+# Subtest: live system reduction changes effective preview policy without changing player intent or writing
+ok 26 - live system reduction changes effective preview policy without changing player intent or writing
+  ---
+  duration_ms: 0.27275
+  ...
+# Subtest: disposal removes control and authority observers and makes late changes inert
+ok 27 - disposal removes control and authority observers and makes late changes inert
+  ---
+  duration_ms: 0.339625
+  ...
+# Subtest: an invalid control value gives recovery feedback and restores the current choice without a write
+ok 28 - an invalid control value gives recovery feedback and restores the current choice without a write
+  ---
+  duration_ms: 0.27725
+  ...
+# Subtest: Studio announces before a delayed read; cancellation fences adoption and stale finally cannot unlock a retry
+ok 29 - Studio announces before a delayed read; cancellation fences adoption and stale finally cannot unlock a retry
+  ---
+  duration_ms: 1.781916
+  ...
+# Subtest: Stop waiting retains the non-abortable save lock and reconciles success or failure
+ok 30 - Stop waiting retains the non-abortable save lock and reconciles success or failure
+  ---
+  duration_ms: 0.330833
+  ...
+# Subtest: delayed failure keeps its error; a cached retry completes without a minimum delay
+ok 31 - delayed failure keeps its error; a cached retry completes without a minimum delay
+  ---
+  duration_ms: 0.199667
+  ...
+# Subtest: a cancelled real bundle import preserves the current document and exact original transfer bytes
+ok 32 - a cancelled real bundle import preserves the current document and exact original transfer bytes
+  ---
+  duration_ms: 225.664792
+  ...
+# Subtest: preview labels precede decode; superseded bitmaps close without replacing the newer canvas or status
+ok 33 - preview labels precede decode; superseded bitmaps close without replacing the newer canvas or status
+  ---
+  duration_ms: 46.241333
+  ...
+# Subtest: Stop waiting and retry preserve preview ownership through late success and failure
+ok 34 - Stop waiting and retry preserve preview ownership through late success and failure
+  ---
+  duration_ms: 43.996583
+  ...
+# Subtest: live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+ok 35 - live reduction pauses preview frames and resumes a retained Playing choice without a time jump
+  ---
+  duration_ms: 1.167292
+  ...
+# Subtest: Paused inspection remains paused through both cap transitions and redraws essential state
+ok 36 - Paused inspection remains paused through both cap transitions and redraws essential state
+  ---
+  duration_ms: 0.083042
+  ...
+# Subtest: local Reduced inspection keeps its own cap when shared reduction is released
+ok 37 - local Reduced inspection keeps its own cap when shared reduction is released
+  ---
+  duration_ms: 0.72125
+  ...
+# Subtest: text-only preference updates preserve the pending frame and animation clock
+ok 38 - text-only preference updates preserve the pending frame and animation clock
+  ---
+  duration_ms: 0.371083
+  ...
+# Subtest: retiring a preview cancels its frame, removes its observer and fences an already queued callback
+ok 39 - retiring a preview cancels its frame, removes its observer and fences an already queued callback
+  ---
+  duration_ms: 0.120042
+  ...
+# Subtest: an already retired owner never subscribes or paints
+ok 40 - an already retired owner never subscribes or paints
+  ---
+  duration_ms: 0.084083
+  ...
+# Subtest: standalone callers observe live system reduction and release the media listener on cleanup
+ok 41 - standalone callers observe live system reduction and release the media listener on cleanup
+  ---
+  duration_ms: 0.120375
+  ...
+# Subtest: a synchronous initial draw can retire its owner without leaving the just-created subscription
+ok 42 - a synchronous initial draw can retire its owner without leaving the just-created subscription
+  ---
+  duration_ms: 0.112
+  ...
+# Subtest: a cap change during drawing cannot queue an obsolete frame alongside its replacement
+ok 43 - a cap change during drawing cannot queue an obsolete frame alongside its replacement
+  ---
+  duration_ms: 0.213
+  ...
+# Subtest: unavailable system-query capability retains local playback and its cleanup
+ok 44 - unavailable system-query capability retains local playback and its cleanup
+  ---
+  duration_ms: 0.26875
+  ...
+# Subtest: a queued callback from before a cap transition cannot replace or consume the resumed frame
+ok 45 - a queued callback from before a cap transition cannot replace or consume the resumed frame
+  ---
+  duration_ms: 0.148375
+  ...
+# Subtest: a preview starting under an effective cap never queues animation until that cap is released
+ok 46 - a preview starting under an effective cap never queues animation until that cap is released
+  ---
+  duration_ms: 0.072667
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4737.408583

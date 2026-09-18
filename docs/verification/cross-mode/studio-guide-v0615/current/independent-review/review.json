@@ -1,0 +1,398 @@
+{
+  "format": "revealline-source-integration-review.v1",
+  "status": "PASS: eight-path Studio guide integration review; no remaining actionable finding",
+  "reviewer": "/root/queued_studio_review",
+  "authorshipBoundary": "This reviewer independently inspected parent inline/docs/SKILL composition and peer actual-host changes. Reviewer authored the held-Escape helper correction and its unit tests; these two paths are not presented as an independent review of the reviewer\u2019s own work. Parent separately reviewed their ownership semantics and peer actual-host tests exercise them.",
+  "reviewedAtUtc": "2026-09-18T02:59:49.249173+00:00",
+  "base": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "headAtReview": "61cf9c14e8f4a97eae81e7c30d0191029adc817a",
+  "versionAtReview": "0.61.4",
+  "candidatePathCount": 8,
+  "paths": [
+    {
+      "path": "authoring/asset-studio/guide.mjs",
+      "base": null,
+      "candidate": {
+        "bytes": 2480,
+        "sha256": "509e2c2dfcb22b3a7274b3e955474f2b6d3a4d1394b6b7934f8ba8e4582e6033"
+      }
+    },
+    {
+      "path": "authoring/asset-studio/index.html",
+      "base": {
+        "bytes": 27771,
+        "sha256": "91d04d23995ee30fc1062818bfd67ac937c4d2f0a4818db2f52165603d01bd31"
+      },
+      "candidate": {
+        "bytes": 32470,
+        "sha256": "3956c271df95bc48b6bcf3cc3e56aff917096499d3e422d2d74e8cb10ca37830"
+      }
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "base": {
+        "bytes": 20395,
+        "sha256": "9caa080a2ac2da60ea4ea5db3cf9eac5f9de4cadc18a29f95a6d1e49a62d5128"
+      },
+      "candidate": {
+        "bytes": 20770,
+        "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+      }
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "base": {
+        "bytes": 44123,
+        "sha256": "2def0bc48bea7573be54aa917e52e6636da98d27314f8fa009056cfa60bf8c4e"
+      },
+      "candidate": {
+        "bytes": 44250,
+        "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+      }
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "base": {
+        "bytes": 214098,
+        "sha256": "2b5887d9521c33a2fd9f78860884f5942f729f651e9c703c8e862ba366640853"
+      },
+      "candidate": {
+        "bytes": 215241,
+        "sha256": "4fad34bffd0347771d3b6123416293dfc30bf99515cbd0cff8e801526029b3e4"
+      }
+    },
+    {
+      "path": "docs/asset-studio.md",
+      "base": {
+        "bytes": 16430,
+        "sha256": "27387e17f34442773af796966fd8aefb3693631274a7782cdc58327e029a93f7"
+      },
+      "candidate": {
+        "bytes": 18215,
+        "sha256": "e0fce884d04a1cef6424a587f997d472110edb0039b41ead1ea73382d9f8674e"
+      }
+    },
+    {
+      "path": "game/test/asset-studio-guide.test.mjs",
+      "base": null,
+      "candidate": {
+        "bytes": 7864,
+        "sha256": "4d971edf1da7eb10957be0789f72f49b948f43904e7ffe2375d3db38a4ef8da6"
+      }
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "base": {
+        "bytes": 24248,
+        "sha256": "ca081b18954c21963503e97aa96af3507e7dc95408d208cc6093b3c8a4befa96"
+      },
+      "candidate": {
+        "bytes": 31678,
+        "sha256": "d9307468736f57148f44e990e0072b29b9e025de68fea69e783c03b3bb070842"
+      }
+    }
+  ],
+  "workingStatusExactlyEightExpectedPaths": true,
+  "unintendedChangesFound": false,
+  "findings": [],
+  "reviewedHunks": [
+    "Header disclosure stays outside authoring inert/busy regions and precedes workspace/inspector rendering. Native summary exists before startup; scripted Close remains hidden until its owner mounts. Footer keeps same-edition Return and atlas.",
+    "studio.mjs differs only by guide import, one synchronous mount and terminal-only disposal. Existing operation, prepared upload, pixel, preview, storage, copy and save code is byte-identical after removing those lines.",
+    "Guide closes and restores focus only synchronously for its owned foreground target. It never starts/cancels an authoring operation or changes working/saved records.",
+    "Only the Escape press consumed by guide close owns repeat protection. Document capture protects subsequent repeats after collapse/focus change, with no focus movement. Keyup or a fresh Escape releases it; unrelated input and an Escape begun outside help retain their prior route. Terminal disposal removes capture and guide listeners.",
+    "Current maintainer skill is preserved verbatim around one added guide paragraph; current Team/Enemy/About/recovery guidance is retained. Parent\u2019s wording correctly describes repeat protection across focus and a fresh-key fallback after missed keyup.",
+    "Guide copy describes prepare/stage/save/export/import separately, warns before losing unfinished work and distinguishes bounded previews from production review. New optional-effective-prompt wording matches validatePending, which requires creator/source/license only.",
+    "Documentation\u2019s saved-workspace -> verified compiled collection -> absent-collection source fallback matches loadWorkspace and does not imply invalid required collections silently load. Removal of stale candidate-status wording does not claim phase completion.",
+    "Actual-host test preserves real Studio window cancellation. It adds pending read/encode repeat sequences from closed summary and external Interface control, then deliberate keyup/fresh cancellation. Existing exact PNG storage/pixel/provenance assertions remain. Document-to-window propagation and native details behavior remain explicitly modeled."
+  ],
+  "preservation": {
+    "studioOnlyThreeIntegrationLines": true,
+    "skillOnlyOneAddedParagraph": true,
+    "versionFilesUnchangedAtReview": true,
+    "storeSessionBundleOperationSpriteAndInterfaceUnchanged": true,
+    "sharedRecipeInputCount": 16,
+    "protectedFiles": [
+      {
+        "path": "authoring/asset-studio/interface-preferences.mjs",
+        "bytes": 2699,
+        "sha256": "0fee8df458716a828e4f5562c412fd284c54af1b60c955b1c01b47be41153790",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "authoring/asset-studio/operation.mjs",
+        "bytes": 3500,
+        "sha256": "d000d43ce10a6a0dfeacfe0a7122e894a8816a6fa58c790229768fc019568c31",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "authoring/asset-studio/sprite-panel.mjs",
+        "bytes": 7997,
+        "sha256": "b662053558f8289922922ebad4eec14ebf51df4873a68a8882cd1a353c486d77",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "authoring/motion-lab/render-character.mjs",
+        "bytes": 6660,
+        "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/build-config.json",
+        "bytes": 5474,
+        "sha256": "f6748c26fc6bb3a3317b3c17ce10bcb39d5555c54ea930baeb3c5070ce9eb19e",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/presentation/bundle.mjs",
+        "bytes": 8883,
+        "sha256": "40f293fceb60c971d46f9069c91bc7594aa4065d23bfdbfc06a3b5db74cf3755",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/presentation/host.mjs",
+        "bytes": 27939,
+        "sha256": "f63aae713bad754ca826fa3d7c0ea2455db4f5d56b55882cd2ef6f196ec13798",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "game/presentation/studio-session.mjs",
+        "bytes": 11783,
+        "sha256": "b1646b0da0fbb4c9279d87104993260a4540a3ef62867b101524b68db160da53",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/presentation/studio-store.mjs",
+        "bytes": 6637,
+        "sha256": "bf7bd4a8e37b31402ab6415e2fc87332349e966fcb6e15c9d7b352ab879e7d38",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/actor-presentation.mjs",
+        "bytes": 26660,
+        "sha256": "5d4c40cbcebeb738526dbdb31fa95b36a368da8930d14de04a9600118aea54c7",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/audio-master.mjs",
+        "bytes": 5277,
+        "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/audio.mjs",
+        "bytes": 26731,
+        "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/classic-view.mjs",
+        "bytes": 21584,
+        "sha256": "3af76e5a99f7753bef065d5322144f541b50985cf47877738f85be191cb35dc1",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/event-feedback.mjs",
+        "bytes": 5824,
+        "sha256": "c558dbe6fbdc91e6e9aae51cf355e557cdebf6f9319cb5ab6d886c75b5760307",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/field-kit-compiled.css",
+        "bytes": 22607,
+        "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "game/ui/field-kit-components.css",
+        "bytes": 11317,
+        "sha256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "game/ui/field-kit-flow.css",
+        "bytes": 11341,
+        "sha256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "game/ui/field-kit-surfaces.css",
+        "bytes": 19324,
+        "sha256": "4f279f5bcb94e60cb1533814bb3078d708bc017841e025d7152515b3136c6f7b",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "game/ui/operation-status.css",
+        "bytes": 1889,
+        "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "game/ui/operation-status.mjs",
+        "bytes": 4173,
+        "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/published-audio.mjs",
+        "bytes": 5718,
+        "sha256": "3e9e7c163fcd936661fa609870b4b5dfb9099139c8c87e261d966908637c73d0",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "bytes": 24085,
+        "sha256": "6b45ab2c75fc313443c97ec3a64ed8e1526d89052292c6c3ab2c9817b1465932",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 36138,
+        "sha256": "e3abad8dbb16bc2edcc521a0d08ab05532bf009ce0fa8f7692a8d89ffb9b47d3",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "package.json",
+        "bytes": 1819,
+        "sha256": "61e60edc6d6ca057e694885fc8dc3d52317297259026c47e618450899bf64224",
+        "unchanged": true,
+        "read": "worktree+Git base"
+      },
+      {
+        "path": "site/release-catalog.css",
+        "bytes": 1018,
+        "sha256": "18736359cd160a144d09a157719e22519819923f1072079586f05debb0852640",
+        "unchanged": true,
+        "read": "exact local Git base; sparse path absent and not modified"
+      }
+    ],
+    "buildIncludesStudio": true
+  },
+  "retainedEvidence": [
+    {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-red-node20.json",
+        "bytes": 1382,
+        "sha256": "136a8e065ce2c5cd0b9274f66df86c6cd766ce8a508ef724e56d13c8524ad252"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-red-node20.tap",
+        "bytes": 4843,
+        "sha256": "5016c79f11ff827806a9cb76e0218ef25480e15f700d7c62b8a7f54dd340b7e5"
+      },
+      "exitCode": 1,
+      "inputsUnchanged": true,
+      "scope": "Complete guide unit file only; no actual-host, build, browser or release claim."
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node20.json",
+        "bytes": 1377,
+        "sha256": "7d4921b86173ccc8548dd24e97f4fc0e47d8e6e5cdf74dcecccab3cf8eb86b12"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node20.tap",
+        "bytes": 2997,
+        "sha256": "376b452611bc1352f25fdb6d3c82852393116a3483e1e66b265588f66df2db31"
+      },
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "scope": "Complete guide unit file only; no actual-host, build, browser or release claim."
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node22.json",
+        "bytes": 1377,
+        "sha256": "7e2220868a919380d354683902be1adce0bfa0bed73ed69ebf73e532b81f1a29"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/guide-peer/unit-green-node22.tap",
+        "bytes": 3227,
+        "sha256": "e00dcb62349ad265515f61375d0429fd426fa86a0c53cea31f216dfb7a94d202"
+      },
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "scope": "Complete guide unit file only; no actual-host, build, browser or release claim."
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/host-peer/host-red-node20.json",
+        "bytes": 22127,
+        "sha256": "f091fe64f0268349b26659e0e73448d068d364186050c1b174a305b9a2e48019"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/host-peer/host-red-node20.tap",
+        "bytes": 1343,
+        "sha256": "313631ece1fdc3b57cf9c86211034972d485eb0702f56df36865c4a71e3c7fad"
+      },
+      "exitCode": 1,
+      "inputsUnchanged": true,
+      "scope": "Complete actual-host file, finite DOM/network/image/storage boundaries; no browser, build or public release qualification."
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/host-peer/host-green-node20.json",
+        "bytes": 22136,
+        "sha256": "816a93f34bc7a82be38b2d406518649c19aabe2c496076e7c66173796a9d4bae"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/host-peer/host-green-node20.tap",
+        "bytes": 434,
+        "sha256": "3ed7607d0e2bfbef9641b6b36cbe9407c822ecd4c2ac1087a7bb6d0509736ca5"
+      },
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "scope": "Complete actual-host file, finite DOM/network/image/storage boundaries; no browser, build or public release qualification."
+    },
+    {
+      "receipt": {
+        "path": ".cache/p03-studio-guide-v0615/host-peer/host-green-node22.json",
+        "bytes": 22136,
+        "sha256": "aa27ae2369df9f3602a994272bf0a0d80ecfb9f81370da2277fc5e5d286f4151"
+      },
+      "log": {
+        "path": ".cache/p03-studio-guide-v0615/host-peer/host-green-node22.tap",
+        "bytes": 448,
+        "sha256": "f9fd7bc6133101157c35530ec8b796b2f18dddaeefc3d73728e142ef1b0f88db"
+      },
+      "exitCode": 0,
+      "inputsUnchanged": true,
+      "scope": "Complete actual-host file, finite DOM/network/image/storage boundaries; no browser, build or public release qualification."
+    }
+  ],
+  "evidenceInterpretation": [
+    "Guide unit RED13/15 on old runtime, then15/15 Node20/22 on guarded final helper.",
+    "Peer whole actual-host RED changed Reading the image header to Cancelled on a repeat; guarded host GREEN passes Node20/22. Retained host logs precede parent\u2019s final formatting and do not replace integrated-cohort qualification.",
+    "Parent reports lint passed and is running complete six-file qualification separately. This review does not rerun or claim that pending cohort.",
+    "Previous exact628 source/native R1/R2 packets remain predecessor evidence. Current source, repeated-key correction and changed presentation dependencies require their own qualification."
+  ],
+  "pendingSourceIdentity": "About v0.61.4 follow-up correction may update the parent source identity and shared maintainer-skill paragraph before final v0.61.5 integration. This review pins the exact current61cf candidate; preserve its record and recheck affected composition/identity rather than relabelling these pins.",
+  "limits": [
+    "Read-only final review: only this bounded cache record written; no worktree, index, version, remote or browser mutation.",
+    "No current native keyboard/touch/controller, 200% zoom, assistive technology, offline, production reproduction, full build or public-release acceptance inferred.",
+    "No complete Studio framework, cross-mode preview, theme collection or whole P03/P04/P05/P16 acceptance.",
+    "The separate static build-closure test requires a complete actual include environment; do not fake sparse assets to close it."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "scope": "Independent frozen Studio R2 receipt review; no live browser, tests or source mutations.",
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "reviewed": {
+    "path": ".cache/p03-studio-inline-guide-browser-r2/cua-observation-r2.json",
+    "bytes": 20200,
+    "sha256": "94ab75b33ac426c4b1cc9e5630aa51e41d0881dd70d6a2bee331e22afa3c0e61"
+  },
+  "result": "pass within recorded evidence scope; no blocker found",
+  "checks": [
+    "Eight evidence pins and four runtime override pins match. Overrides match independently reviewed R2 source.",
+    "All six selected HTTP events occur exactly in the immutable 107858-byte, 245-row journal. Its SHA-256 is acd202738559c78f515026e4aaf896f20b7a417f8802159a24ce4bd46030971e and it is an exact prefix of the later live journal.",
+    "The original 19673-byte receipt remains unchanged. The successor only changes the journal path and records the append/preservation explanation; all 18 native rows, findings and selected HTTP events are unchanged.",
+    "Delay derivation is 20.05763 seconds between explicit-delay and response journal timestamps. Escape precedes delay start by 6.097 milliseconds, accurately scoped as startup noncancellation, while reopening occurs inside the delay.",
+    "All 12 geometry observations fit their declared viewport and report focused hit target, no horizontal overflow and no inert guide. The five startup summary observations retain y=173.09375.",
+    "Upload before/after observation objects match exactly. Sprite observations support retained Undo/Redo availability and final playing preference; the receipt explicitly avoids private pixel-byte or animation-continuity claims.",
+    "The R1 native failure receipt remains pinned and intact. R2 source qualification remains separately pinned; no broad phase/public acceptance is inferred."
+  ],
+  "limits": [
+    "DOM/action and visual observations are retained execution-owner evidence, not an independently repeated native trace. Screenshots were inspected inline by the owner and are not retained files.",
+    "No physical-device/controller, assistive technology, BFCache, offline, 200% zoom, native save/export/import, full keyboard-only entry journey or public-release qualification.",
+    "HTTP journal identity alone does not prove decode; browser state observations provide the separate interaction evidence."
+  ]
+}

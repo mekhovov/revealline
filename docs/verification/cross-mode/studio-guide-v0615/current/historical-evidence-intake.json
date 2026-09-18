@@ -1,0 +1,481 @@
+{
+  "scope": "Historical source and local native guide candidates only; not successor-source qualification. R1placementfailure and R2native limits retained.",
+  "count": 79,
+  "bytes": 2306748,
+  "files": [
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/candidate-pins.json",
+      "destination": "historical/p03-studio-inline-guide-628e95da/candidate-pins.json",
+      "bytes": 2725,
+      "sha256": "d0398a70a87a38dc83691943bfb51103a93327597f1ce7b3d94edb5149e3c400"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/candidate.patch",
+      "destination": "historical/p03-studio-inline-guide-628e95da/candidate.patch",
+      "bytes": 33557,
+      "sha256": "dbacae53b31c41ca9d2c7cfeb0a6b5e53076035ae82625e8d42a28eed88a404e"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/closure.json",
+      "destination": "historical/p03-studio-inline-guide-628e95da/closure.json",
+      "bytes": 4664,
+      "sha256": "06f6312f7e2dcd52ad665b4ea39687ccba5ba0493eb33a985beb9df524aa3120"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/copy-format-final.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/copy-format-final.log",
+      "bytes": 51,
+      "sha256": "9eacf53018d54ed8df095be0eddb18ffd0a3f5ff05ca6a97d15eafcc2ada4075"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/copy-format.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/copy-format.log",
+      "bytes": 77,
+      "sha256": "daf3cc24525a3d2a2bf8c31f676f7dbc72061ac8b7e24866a7f27993eb01f965"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/final-tests.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/final-tests.log",
+      "bytes": 7656,
+      "sha256": "4590cacb20d291a87a0d11e09933778a4254437d90a5fedd78d605faba1837ba"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/format-check.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/format-check.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/format-write.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/format-write.log",
+      "bytes": 342,
+      "sha256": "c32f186d3f0788b9af282934ca3eb0a6dfeb240d98e64d3abb3671a41d4a7ff6"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/guide-test.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/guide-test.log",
+      "bytes": 1904,
+      "sha256": "b41bbad118f6b0306f64560d5fa5279da3c77930f3034f8cdb4c36a09b066b53"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/host-loading-baseline.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/host-loading-baseline.log",
+      "bytes": 1127,
+      "sha256": "0fdf77ab366a41946a2fd66350d6cc7c6baf0f8dac0488bc4a1199f8a8c5016d"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/host-loading-candidate-r2.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/host-loading-candidate-r2.log",
+      "bytes": 435,
+      "sha256": "4b690473ff162afd4641e647b3f8a63edd33dc4cba342acadcbb5311d7acdedd"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/host-loading-candidate.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/host-loading-candidate.log",
+      "bytes": 1310,
+      "sha256": "023693a43fa420f207f60a383a78d51540c87a4dbca8925ce7620ce81750341d"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/lint-final.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/lint.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/preimages/authoring/asset-studio/index.html",
+      "destination": "historical/p03-studio-inline-guide-628e95da/preimages/authoring/asset-studio/index.html",
+      "bytes": 27771,
+      "sha256": "91d04d23995ee30fc1062818bfd67ac937c4d2f0a4818db2f52165603d01bd31"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/preimages/authoring/asset-studio/studio.css",
+      "destination": "historical/p03-studio-inline-guide-628e95da/preimages/authoring/asset-studio/studio.css",
+      "bytes": 20395,
+      "sha256": "9caa080a2ac2da60ea4ea5db3cf9eac5f9de4cadc18a29f95a6d1e49a62d5128"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/preimages/authoring/asset-studio/studio.mjs",
+      "destination": "historical/p03-studio-inline-guide-628e95da/preimages/authoring/asset-studio/studio.mjs",
+      "bytes": 44123,
+      "sha256": "2def0bc48bea7573be54aa917e52e6636da98d27314f8fa009056cfa60bf8c4e"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/preimages/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "historical/p03-studio-inline-guide-628e95da/preimages/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 201359,
+      "sha256": "5501e470b9e1fefab09168ad502c965d328c0ec326b2793cd4c101072b19e039"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/preimages/docs/asset-studio.md",
+      "destination": "historical/p03-studio-inline-guide-628e95da/preimages/docs/asset-studio.md",
+      "bytes": 16430,
+      "sha256": "27387e17f34442773af796966fd8aefb3693631274a7782cdc58327e029a93f7"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/preimages/game/test/asset-studio-host-loading.test.mjs",
+      "destination": "historical/p03-studio-inline-guide-628e95da/preimages/game/test/asset-studio-host-loading.test.mjs",
+      "bytes": 24248,
+      "sha256": "ca081b18954c21963503e97aa96af3507e7dc95408d208cc6093b3c8a4befa96"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/guide.mjs",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/guide.mjs",
+      "bytes": 1636,
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/index.html",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/index.html",
+      "bytes": 32362,
+      "sha256": "c4352bd1d5edf04b8210a1cb0cbbb68035d5e9aff20359ac6e9a6da00a188776"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/studio.css",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/studio.css",
+      "bytes": 20770,
+      "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/studio.mjs",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/authoring/asset-studio/studio.mjs",
+      "bytes": 44250,
+      "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 202122,
+      "sha256": "962f72c7ccf3fbcd8426a7575e1ebc7f5e952dbb45c86bab6f9af3aed5d571c6"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/docs/asset-studio.md",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/docs/asset-studio.md",
+      "bytes": 17690,
+      "sha256": "038e5db74483bfcacd21a2e07af1592714009e0882fa9f14ba761b682f87aa6f"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/game/test/asset-studio-guide.test.mjs",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/game/test/asset-studio-guide.test.mjs",
+      "bytes": 4726,
+      "sha256": "6189eb08c5d4199ecfa77b16d3dac22f04dc56e2da44059bdefa3ec7cf2a4b6e"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/proposal/game/test/asset-studio-host-loading.test.mjs",
+      "destination": "historical/p03-studio-inline-guide-628e95da/proposal/game/test/asset-studio-host-loading.test.mjs",
+      "bytes": 29454,
+      "sha256": "04d06c499817197ff6e9ce4016d219e5b6ab507e283ea39cb12b1922f00f16e9"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/qualification.json",
+      "destination": "historical/p03-studio-inline-guide-628e95da/qualification.json",
+      "bytes": 4416,
+      "sha256": "d44da6849125d76f8392639b3d56e0771ed1c52370af75499e48100bdb2b08bc"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/source-pins.json",
+      "destination": "historical/p03-studio-inline-guide-628e95da/source-pins.json",
+      "bytes": 19159,
+      "sha256": "a37f704be797e6c7f164ddaef114a79998d63fcddee6dad0393eda43ce4e575a"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-628e95da/supporting-tests.log",
+      "destination": "historical/p03-studio-inline-guide-628e95da/supporting-tests.log",
+      "bytes": 7344,
+      "sha256": "c0cd89ac3756b305079bb3954750f83d6aae49bf2177e4c1e82d1929c838f360"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/basis.json",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/basis.json",
+      "bytes": 205,
+      "sha256": "f7385f51eb42dd9ca8ccc034c5e3f716ccdceb7142157cb3f1773f1d2a862941"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/candidate-pins.json",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/candidate-pins.json",
+      "bytes": 4168,
+      "sha256": "0dd3fbc691a50e37c5aaa1d2910d3befdcc87ed1e0edcb93b218dfa36e95193d"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/composed-candidate.patch",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/composed-candidate.patch",
+      "bytes": 34880,
+      "sha256": "480f4e02104f86bc5fef5b40b3543d634473406369137108016a48009334d284"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/final-tests.log",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/final-tests.log",
+      "bytes": 7652,
+      "sha256": "9335680c7e1162d054bd6ded7a137814cd89aba2742216f21a2ccf10154999b4"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/format-check.log",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/format-check.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/format-write.log",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/format-write.log",
+      "bytes": 158,
+      "sha256": "de61c04cc458dbd7392842a93b953ce28d1b3439d539df853e359466c40cf054"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/header-placement-delta.patch",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/header-placement-delta.patch",
+      "bytes": 16684,
+      "sha256": "79cd0f6c70cb952ad3055355f9fd51487c0531cfc600a53bc7745484fc8cdcde"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/host-placement-green.log",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/host-placement-green.log",
+      "bytes": 434,
+      "sha256": "ff15b566e10c8ce82b6bcc65d58b09680eeed9ff60d3ad73ab05f01b9a6a0109"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/host-placement-red.log",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/host-placement-red.log",
+      "bytes": 2287,
+      "sha256": "bb00ea3a6a10302458d58c13e14f944588af9742c05775c28ef89189c3012850"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/lint-final.log",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/lint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/preimages-r1/authoring/asset-studio/index.html",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/preimages-r1/authoring/asset-studio/index.html",
+      "bytes": 32362,
+      "sha256": "c4352bd1d5edf04b8210a1cb0cbbb68035d5e9aff20359ac6e9a6da00a188776"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/preimages-r1/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/preimages-r1/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 202122,
+      "sha256": "962f72c7ccf3fbcd8426a7575e1ebc7f5e952dbb45c86bab6f9af3aed5d571c6"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/preimages-r1/docs/asset-studio.md",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/preimages-r1/docs/asset-studio.md",
+      "bytes": 17690,
+      "sha256": "038e5db74483bfcacd21a2e07af1592714009e0882fa9f14ba761b682f87aa6f"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/preimages-r1/game/test/asset-studio-host-loading.test.mjs",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/preimages-r1/game/test/asset-studio-host-loading.test.mjs",
+      "bytes": 29454,
+      "sha256": "04d06c499817197ff6e9ce4016d219e5b6ab507e283ea39cb12b1922f00f16e9"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/guide.mjs",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/guide.mjs",
+      "bytes": 1636,
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/index.html",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/index.html",
+      "bytes": 32362,
+      "sha256": "cddb29396cdff4181785b7a5024a6e2c296fd099e67c9b29be19f3e312a108d4"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/studio.css",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/studio.css",
+      "bytes": 20770,
+      "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/studio.mjs",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/authoring/asset-studio/studio.mjs",
+      "bytes": 44250,
+      "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 202240,
+      "sha256": "575bc69509d7d365e2a01e98a48536f80ff9445bdeaf5c8b56b368d97d062bd9"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/docs/asset-studio.md",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/docs/asset-studio.md",
+      "bytes": 17805,
+      "sha256": "195d96ccd7b13046cb1c24f46b0f758536307362a18924199506d2ca565a47fb"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/game/test/asset-studio-guide.test.mjs",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/game/test/asset-studio-guide.test.mjs",
+      "bytes": 4726,
+      "sha256": "6189eb08c5d4199ecfa77b16d3dac22f04dc56e2da44059bdefa3ec7cf2a4b6e"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/proposal/game/test/asset-studio-host-loading.test.mjs",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/proposal/game/test/asset-studio-host-loading.test.mjs",
+      "bytes": 30276,
+      "sha256": "486afccd353d3cb49ae5030a383a174fe0db4cd3e37d0ae569e5f2092340ddfe"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/qualification.json",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/qualification.json",
+      "bytes": 3329,
+      "sha256": "2007a77f11f79e77f4bc464bc57c6746e7e0f5dcd0251f26b00948754bf896ad"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-r2-628e95da/scoped-packaging-review.json",
+      "destination": "historical/p03-studio-inline-guide-r2-628e95da/scoped-packaging-review.json",
+      "bytes": 613,
+      "sha256": "d219b9e67122c756c2719d34f2f4b2be2ccc4035af40e30225ef435f66f34fa5"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/binding-proposal.json",
+      "destination": "historical/p03-studio-inline-guide-browser/binding-proposal.json",
+      "bytes": 473,
+      "sha256": "8862204a7b7451914c28fd0ecb1e9058937b14d87216af2d36c31326073c8208"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/binding.json",
+      "destination": "historical/p03-studio-inline-guide-browser/binding.json",
+      "bytes": 1671,
+      "sha256": "a07a4b5257e220d6b74b59a0225b9294367c6ef19a500d841f3e5e3fb9438165"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/faults.json",
+      "destination": "historical/p03-studio-inline-guide-browser/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/guide.mjs",
+      "destination": "historical/p03-studio-inline-guide-browser/guide.mjs",
+      "bytes": 1636,
+      "sha256": "815e4b010660d3b1c3a73564ffbdc184d5f8b730ab248f383dfe78df6ac3b490"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/harness-preparation.json",
+      "destination": "historical/p03-studio-inline-guide-browser/harness-preparation.json",
+      "bytes": 1328,
+      "sha256": "2f3908976cd6c155b865b7c0ad7382cd4049039a6cb9ae33e8b8c4a57c0a7d9a"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/index.html",
+      "destination": "historical/p03-studio-inline-guide-browser/index.html",
+      "bytes": 32362,
+      "sha256": "c4352bd1d5edf04b8210a1cb0cbbb68035d5e9aff20359ac6e9a6da00a188776"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/native-r1-finding.json",
+      "destination": "historical/p03-studio-inline-guide-browser/native-r1-finding.json",
+      "bytes": 3095,
+      "sha256": "c99282eb9527f2ef57e36c60d9012ed06ed3fcafae30d66c190ee99c0f97fe4f"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/requests.jsonl",
+      "destination": "historical/p03-studio-inline-guide-browser/requests.jsonl",
+      "bytes": 107858,
+      "sha256": "cb8ecbea1c9eb702f8421243928ee33f07f31c1bd2e148285d2469ec378eab94"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/runtime-overrides.json",
+      "destination": "historical/p03-studio-inline-guide-browser/runtime-overrides.json",
+      "bytes": 1375,
+      "sha256": "baa58242d2ba162691eacbb7e7e28629f645cb47ac0dfd9297c4b1331ec9dcce"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/serve.py",
+      "destination": "historical/p03-studio-inline-guide-browser/serve.py",
+      "bytes": 7022,
+      "sha256": "1383f58f93e17d53829c1c158c3319b9da490e0b351e7d1c54a07340af6166f4"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/studio.css",
+      "destination": "historical/p03-studio-inline-guide-browser/studio.css",
+      "bytes": 20770,
+      "sha256": "5fa43b17e34478699ae52945c7faf36dcbd809871737d613866acfa90144eee7"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser/studio.mjs",
+      "destination": "historical/p03-studio-inline-guide-browser/studio.mjs",
+      "bytes": 44250,
+      "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/binding-proposal.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/binding-proposal.json",
+      "bytes": 473,
+      "sha256": "1fb1d7f2c850eb5249faff36ad0976a2fdc9c4389193e20b019962e41cc081d0"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/binding.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/binding.json",
+      "bytes": 1697,
+      "sha256": "8df2d307acd529cf8ee386e9e4915931e9602e86db56f74700153ec3b9b03328"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/cua-observation-r2.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/cua-observation-r2.json",
+      "bytes": 20200,
+      "sha256": "94ab75b33ac426c4b1cc9e5630aa51e41d0881dd70d6a2bee331e22afa3c0e61"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/cua-observation.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/cua-observation.json",
+      "bytes": 19673,
+      "sha256": "bb8c6fe6d5c8a4b318a6af640f35c2507ae71e3f3431457d28f84229a02f73ab"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/faults.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/faults.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/index.html",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/index.html",
+      "bytes": 32362,
+      "sha256": "cddb29396cdff4181785b7a5024a6e2c296fd099e67c9b29be19f3e312a108d4"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/peer-review-r2.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/peer-review-r2.json",
+      "bytes": 2371,
+      "sha256": "350602e61163128c08561cb27c8c4dd3b8ad011d66eaef2a39181065a25b1deb"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/requests-through-guide-verification.jsonl",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/requests-through-guide-verification.jsonl",
+      "bytes": 107858,
+      "sha256": "acd202738559c78f515026e4aaf896f20b7a417f8802159a24ce4bd46030971e"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/requests.jsonl",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/requests.jsonl",
+      "bytes": 170474,
+      "sha256": "b0fca047fc80c97cdd7bf399c76489c3210870a1c1a22b1b15aebdbc61964299"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/runtime-overrides.json",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/runtime-overrides.json",
+      "bytes": 1400,
+      "sha256": "27e78738d9a5988d24323a1fe2f23314eb427b206df5c3e73cc027e90ce4d96d"
+    },
+    {
+      "path": ".cache/p03-studio-inline-guide-browser-r2/serve.py",
+      "destination": "historical/p03-studio-inline-guide-browser-r2/serve.py",
+      "bytes": 7022,
+      "sha256": "1383f58f93e17d53829c1c158c3319b9da490e0b351e7d1c54a07340af6166f4"
+    },
+    {
+      "path": ".cache/p05-native-file-controls-browser-r2/p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+      "destination": "historical/native-upload/p05-a-readable-long-local-background-filename-for-preview-preservation.png",
+      "bytes": 243034,
+      "sha256": "70d0877f900a7a48f8a7a00e9248ca04d48077d3e81c37a42e9b8c8a6df87715"
+    }
+  ]
+}
