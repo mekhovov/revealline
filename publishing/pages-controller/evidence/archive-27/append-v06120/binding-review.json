@@ -1,0 +1,19 @@
+{
+  "status": "ROOT_REVIEWED_ACTUAL_ARCHIVE_APPEND_HTTP_REQUEST",
+  "at": "2026-09-18T19:08:41.161145+00:00",
+  "requestSha256": "cfec8991368a2aa97b734fc1a3686e1c0dc1d3031d1cd4bfcbd1684a8fe36a69",
+  "files": 1399,
+  "bytes": 626793669,
+  "preservedPriorRows": 700,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "intakeOriginalZIPVerified": true,
+  "adaptationReviewSHA": "157349d448f3c8916801aa9fac8408ab1029d7f6edff0e3736da5ea46cbc55f2",
+  "transportAndAssertionsUnchanged": true,
+  "rootWillRequireReportAndRowsNotWrapperExit": true,
+  "freeBytes": 654393344,
+  "publicAcceptance": false,
+  "preparationRefusal": "Request and both binding literals were reviewed and written before a free-space assertion stopped the supplemental review-file write. Existing finite streaming audit ran once, without payload persistence. Root rehashed and removed only two exact regenerated duplicates; this record is written after capacity recovery and does not backdate that check.",
+  "cleanupReceipt": ".cache/regenerated-archive-cleanup-root-r2-completion.json"
+}
