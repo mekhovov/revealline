@@ -1,0 +1,55 @@
+{
+  "status": "ROOT_ACCEPTED_SCOPED_ARCHIVE20_RETENTION",
+  "at": "2026-09-17T20:41:19.504633+00:00",
+  "archiveId": "archive-20",
+  "infrastructureCommit": "861182677647a1678064b64b0d46c11999a0e731",
+  "deploymentId": 6511264098,
+  "versions": [
+    "v0.60.5"
+  ],
+  "browserCategory": "Actual rendered browser UI with pointer/keyboard actions. Read-only DOM/URL inspection; no simulation or application-state injection.",
+  "engine": {
+    "engine": "Headless Chrome153.0.0.0",
+    "host": "macOS",
+    "tool": "agent-browser/CDP",
+    "session": "rl-settings606-fallback",
+    "viewport": [
+      1280,
+      800
+    ],
+    "profile": "Owned isolated profile; no existing player profile imported or reset"
+  },
+  "originals": {
+    "files": 248,
+    "bytes": 1515264,
+    "indexSha256": "b5edbd592fa95500a9483ef2fd464175c8ab82e08ae0cf3931858698f7090205",
+    "observationSha256": "a49c3b8689506596219617ad8e4c7184a7f47a22239afb94414e2632f34ba130"
+  },
+  "publicFiles": 695,
+  "publicBytes": 313159164,
+  "publicByteCompletionSha256": "40c9bb263d1b7f4a73a42076fa9535a8cede7bc667578decb5a667f1549ae6d7",
+  "reviewedScreenshots": [
+    "05-title.png",
+    "12-flight.png",
+    "79-recovered.png"
+  ],
+  "requiredJourney": "Rendered title, flight, explicit Pause/Resume, Motion ready/Pause/Play/Return, Release explorer to current main and ordinary Back observed. Source identity and byte audit bind exact retained release.",
+  "limitations": {
+    "warning": "The saving lease was released. Reload this tab to save again; export remains available.",
+    "persistentSaveResult": "Not passed; warning observed after ordinary Back, later explicit reload cleared warning but durable reward persistence was not tested.",
+    "separateEvidenceNotClaimed": [
+      "Physical touch/controller",
+      "CUA/foreground native window",
+      "Assistive technology",
+      "200percent zoom",
+      "BFCache admission",
+      "Offline cold start",
+      "Migration or full phase acceptance"
+    ]
+  },
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "phaseAccepted": false,
+  "wholeGameComplete": false,
+  "scope": "Playable retention admission only. Includes known released-save-lease warning after external navigation and explicit reload recovery; no new persistence guarantee."
+}

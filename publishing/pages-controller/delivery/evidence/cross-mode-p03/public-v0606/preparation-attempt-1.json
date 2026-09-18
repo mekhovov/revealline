@@ -1,0 +1,6 @@
+{
+  "status": "PREPARATION_SCRIPT_REFUSED",
+  "errorType": "KeyError",
+  "key": "archiveId",
+  "scope": "Cache-only preservation comparison used a wrong object key; helper bodies were already copied. No operational tool or audit executed; immutable originals unchanged."
+}

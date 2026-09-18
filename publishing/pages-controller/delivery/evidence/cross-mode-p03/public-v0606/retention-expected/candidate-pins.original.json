@@ -1,0 +1,82 @@
+[
+  {
+    "path": "publishing/pages-controller/allocations.json",
+    "bytes": 3874,
+    "sha256": "5a4750259aa18c55c14c268036139984013a00702a407a34da52b10f178fc8af"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/README.md",
+    "bytes": 1629,
+    "sha256": "0272dec59b96b93584994b3f87e3ad3995689a740c9c50bae1bb115c02278266"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/browser/observation.json",
+    "bytes": 4515,
+    "sha256": "a49c3b8689506596219617ad8e4c7184a7f47a22239afb94414e2632f34ba130"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/browser/originals-index.json",
+    "bytes": 39107,
+    "sha256": "b5edbd592fa95500a9483ef2fd464175c8ab82e08ae0cf3931858698f7090205"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/browser/originals.zip",
+    "bytes": 1465901,
+    "sha256": "cb404c41dc6d3986faf982e310f53ce16dddc4fd7f44cec1bf482bbfdebce798"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/browser-admission.json",
+    "bytes": 2757,
+    "sha256": "7cd71e5a89c9a0535f93742b3a48b3864f0870400668ec12c540cb5224aa713a"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/byte-audit-completion.json",
+    "bytes": 2250,
+    "sha256": "40c9bb263d1b7f4a73a42076fa9535a8cede7bc667578decb5a667f1549ae6d7"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/expected-inventory.json",
+    "bytes": 143203,
+    "sha256": "e08ae697385773dfe0d5265fcf593a347723c1c5b31eab768f5dd900f62b0a1d"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/hosted-completion.json",
+    "bytes": 2150,
+    "sha256": "7a1c2f54be286d238ab2870ae69e06bc4acf318cd724917278575c887102ec50"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/http-report.json",
+    "bytes": 1343,
+    "sha256": "3e801d5b95ade65a7ad50a8b5297dc5545eb5765e88e6f9b920eace64fed8ba5"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/originals-index.json",
+    "bytes": 22388,
+    "sha256": "42d82dc2eab4ab006fcaf5c1227f2bea7b8c7b91eb12a1a295439661d553c760"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/originals.zip",
+    "bytes": 419914,
+    "sha256": "38d828470d2c5b558dc6ed6fe18ca123a4e8a9cb3e7b3c39b2db04a6d5ef28e8"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/root-acceptance.json",
+    "bytes": 2291,
+    "sha256": "afa69a595beb781d68f6554bb746543a68c3591e5189236d6dc2209ce24d259c"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/row-review.json",
+    "bytes": 12340,
+    "sha256": "1fe6595b3076e613dbb3ccb9ba9f3d40adc598c74b7518e52a351b7aea25681a"
+  },
+  {
+    "path": "publishing/pages-controller/evidence/archive-20/initial-v0605/source-lock.json",
+    "bytes": 1428,
+    "sha256": "0c5bc2d92305176c3cc8f00fe850d79f000606b50a1b396ee913141f8235177a"
+  },
+  {
+    "path": "publishing/pages-controller/publication.json",
+    "bytes": 122068,
+    "sha256": "4722048c240fc4d343d6ed9383cc59b8b3f16ff85b54c176635270ad3757917b"
+  }
+]

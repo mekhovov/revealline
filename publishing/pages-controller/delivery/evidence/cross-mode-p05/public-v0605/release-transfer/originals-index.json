@@ -1,0 +1,434 @@
+{
+  "format": "revealline-selected-originals.v1",
+  "scope": "Finite release-transfer/publication originals, including all six failed result records and the successful seventh guarded attempt. This is not every byte of each old intake; original full manifests point to preserved cache originals. No game/site/source payloads.",
+  "files": [
+    {
+      "path": "local-curl-recovery/execution/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/execution/evidence/result.json",
+      "bytes": 370,
+      "sha256": "8239a54e68e7391a58acc4e4b56e1e920c0377b22fe6c4ffcffce8f5a3918147"
+    },
+    {
+      "path": "local-curl-recovery/execution/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/execution/evidence/retained-manifest.json",
+      "bytes": 20682,
+      "sha256": "aae478a6fdbd36c64951d3978bfe247630a8b5b1a4e290222bfdeaddb057d7ba"
+    },
+    {
+      "path": "local-curl-recovery/execution/evidence/source.tar.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/execution/evidence/source.tar.upload-result.json",
+      "bytes": 475,
+      "sha256": "a8a74ac9c1e441e32a6e6c258079dde4d5e7e1a3bc5af9c16e6bfb6efa413bdb"
+    },
+    {
+      "path": "local-curl-recovery/execution/evidence/upload-transport.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/execution/evidence/upload-transport.json",
+      "bytes": 375,
+      "sha256": "5529f9051cded42d4427aa7f5d8308ac214bd817be9c30519efba77918bc668b"
+    },
+    {
+      "path": "local-curl-recovery/upload-process-receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/upload-process-receipt.json",
+      "bytes": 90,
+      "sha256": "3246e975554e3a3c617c3f779611c87b02955852ca73d18355fe845719861958"
+    },
+    {
+      "path": "local-curl-recovery/upload.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/upload.stderr",
+      "bytes": 2397,
+      "sha256": "b55dc3319a437a89e32f9e0310e81bfad1297ba423ab96eebb7d0793fa4749d5"
+    },
+    {
+      "path": "local-curl-recovery/upload.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery/upload.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local-curl-recovery-1200/execution/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/execution/evidence/result.json",
+      "bytes": 370,
+      "sha256": "8239a54e68e7391a58acc4e4b56e1e920c0377b22fe6c4ffcffce8f5a3918147"
+    },
+    {
+      "path": "local-curl-recovery-1200/execution/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/execution/evidence/retained-manifest.json",
+      "bytes": 21047,
+      "sha256": "7f6a8751555255201ac8136300273bf1076ce018e623a2d88010fb6299e56076"
+    },
+    {
+      "path": "local-curl-recovery-1200/execution/evidence/source.tar.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/execution/evidence/source.tar.upload-result.json",
+      "bytes": 475,
+      "sha256": "a8a74ac9c1e441e32a6e6c258079dde4d5e7e1a3bc5af9c16e6bfb6efa413bdb"
+    },
+    {
+      "path": "local-curl-recovery-1200/execution/evidence/upload-transport.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/execution/evidence/upload-transport.json",
+      "bytes": 373,
+      "sha256": "4e0b0c1b4e8bddd879863ab50aa45958b31dfb675a3881e192348be3f1754c0d"
+    },
+    {
+      "path": "local-curl-recovery-1200/terminal-independent-review/review.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/terminal-independent-review/review.json",
+      "bytes": 3333,
+      "sha256": "367cf40f826b2dbde934cdb9a02b4d3524547116ab49c32be39de14aa152c4d7"
+    },
+    {
+      "path": "local-curl-recovery-1200/upload-process-receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/upload-process-receipt.json",
+      "bytes": 90,
+      "sha256": "fdb7febdcb78a088b66090668bc8d1491c45a9b8191d8d13314f8fb66c327ae6"
+    },
+    {
+      "path": "local-curl-recovery-1200/upload.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/upload.stderr",
+      "bytes": 2432,
+      "sha256": "77770ddad1fe0b90379e4bac2e17453f0c6695fa191c9a6fb4c3061ffb59eb33"
+    },
+    {
+      "path": "local-curl-recovery-1200/upload.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-recovery-1200/upload.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local-curl-response-diagnostic/adaptation.diff",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/adaptation.diff",
+      "bytes": 1328,
+      "sha256": "5ce2118633ba09a48dd972f43ff2f2c543c1dbc1b0c7fc087de5f72561553788"
+    },
+    {
+      "path": "local-curl-response-diagnostic/curl_transport.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/curl_transport.py",
+      "bytes": 9173,
+      "sha256": "a56d0949716939f21f2fb21691b3ebb490ca7c821ab392c7e3a6172e8ae03107"
+    },
+    {
+      "path": "local-curl-response-diagnostic/execution/evidence/distribution.zip.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/execution/evidence/distribution.zip.upload-result.json",
+      "bytes": 480,
+      "sha256": "a047b1299313e507b9f4dd0ff6bd53bd9ab833d7019979290a52f2956787572e"
+    },
+    {
+      "path": "local-curl-response-diagnostic/execution/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/execution/evidence/result.json",
+      "bytes": 331,
+      "sha256": "c4bcc30b7ac61b8c35458d07b5ea2a306d395a80595e4bf3498eda13bda194a1"
+    },
+    {
+      "path": "local-curl-response-diagnostic/execution/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/execution/evidence/retained-manifest.json",
+      "bytes": 28434,
+      "sha256": "bbb8b83c2e679a4dfeced9ef9962d394d6776b34602c2c03dce2a2db2d2c0354"
+    },
+    {
+      "path": "local-curl-response-diagnostic/execution/evidence/source.tar.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/execution/evidence/source.tar.upload-result.json",
+      "bytes": 475,
+      "sha256": "a8a74ac9c1e441e32a6e6c258079dde4d5e7e1a3bc5af9c16e6bfb6efa413bdb"
+    },
+    {
+      "path": "local-curl-response-diagnostic/execution/evidence/upload-transport.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/execution/evidence/upload-transport.json",
+      "bytes": 424,
+      "sha256": "c5f75576fd78f6e120257e8a61ac6133dff10a2bde0e5cadf866b67843a25ad4"
+    },
+    {
+      "path": "local-curl-response-diagnostic/input-pins.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/input-pins.json",
+      "bytes": 3794,
+      "sha256": "dc0df856ecb63b582a7d6274cbde0a5b8f196ca7ccf6e17e07b6d1ecd4e6cedd"
+    },
+    {
+      "path": "local-curl-response-diagnostic/local_recovery.py",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/local_recovery.py",
+      "bytes": 7072,
+      "sha256": "d53cb400e2da2d24542604f442e1989623dce5c4151d6b5dcf79ffc4b3456099"
+    },
+    {
+      "path": "local-curl-response-diagnostic/packet-pins.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/packet-pins.json",
+      "bytes": 4857,
+      "sha256": "435c4cf0db3f9db073334530bb5e3df9bf14fac706d96603689aca10df59a98c"
+    },
+    {
+      "path": "local-curl-response-diagnostic/preparation-review.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/preparation-review.json",
+      "bytes": 4090,
+      "sha256": "aaa008975573ab02bbf1d217065e2d1d2fcda2761755edecac5026e237367792"
+    },
+    {
+      "path": "local-curl-response-diagnostic/terminal-independent-review/first-review-attempt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/terminal-independent-review/first-review-attempt.json",
+      "bytes": 341,
+      "sha256": "fd2eccf43fbba9d15bdf48a0a57a7117cdb56dbd94c56c4e9ae82ef587a8d16e"
+    },
+    {
+      "path": "local-curl-response-diagnostic/terminal-independent-review/review.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-curl-response-diagnostic/terminal-independent-review/review.json",
+      "bytes": 6205,
+      "sha256": "7f3c2c7d79e6a59837ba8054cd38aa7603e5231eb4f53717484c4d1ac521d9ad"
+    },
+    {
+      "path": "local-original-recovery/execution/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/execution/evidence/result.json",
+      "bytes": 370,
+      "sha256": "8239a54e68e7391a58acc4e4b56e1e920c0377b22fe6c4ffcffce8f5a3918147"
+    },
+    {
+      "path": "local-original-recovery/execution/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/execution/evidence/retained-manifest.json",
+      "bytes": 20974,
+      "sha256": "a8a2314d67fd33fceb4250e3e97d624bb4a3624f402dc63cbfd137d8e85394ff"
+    },
+    {
+      "path": "local-original-recovery/execution/evidence/source.tar.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/execution/evidence/source.tar.upload-result.json",
+      "bytes": 475,
+      "sha256": "a8a74ac9c1e441e32a6e6c258079dde4d5e7e1a3bc5af9c16e6bfb6efa413bdb"
+    },
+    {
+      "path": "local-original-recovery/execution/evidence/upload-transport.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/execution/evidence/upload-transport.json",
+      "bytes": 144,
+      "sha256": "82d35bb7538bbb1422077409811fbbbeb65d11981e51c3e70601ad37ed1040f0"
+    },
+    {
+      "path": "local-original-recovery/upload-process-receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/upload-process-receipt.json",
+      "bytes": 72,
+      "sha256": "d58c85fc21b88ef8a878b13cec625652c0b6b5f99183f152befe44cf23b214e3"
+    },
+    {
+      "path": "local-original-recovery/upload.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/upload.stderr",
+      "bytes": 2724,
+      "sha256": "d94af39a34197250d67beb3b53f00416df60e40666e82a3549d9c1d085d9ae4d"
+    },
+    {
+      "path": "local-original-recovery/upload.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/local-original-recovery/upload.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/after.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/after.receipt.json",
+      "bytes": 130,
+      "sha256": "1e7e2761270334e7b50d02ce3863a8acdb3a7544df05ebac21fb6834ee4b04c2"
+    },
+    {
+      "path": "release-publication/after.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/after.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/after.stdout",
+      "bytes": 16962,
+      "sha256": "f07486dd588da478a207e48ce4ffffe809334141aa8e0bac3b847e6ac57f0e8d"
+    },
+    {
+      "path": "release-publication/before.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/before.receipt.json",
+      "bytes": 130,
+      "sha256": "bb84f4c03b0ea503027ecc6159a9f4e661b4b0e2bbc37df5b09ab7ea932c5732"
+    },
+    {
+      "path": "release-publication/before.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/before.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/before.stdout",
+      "bytes": 16978,
+      "sha256": "4f854a2c0ca5dce6192a2197f52f1dd71fb56d99cb34e834daf09f86d7e68f09"
+    },
+    {
+      "path": "release-publication/publish.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/publish.receipt.json",
+      "bytes": 127,
+      "sha256": "bd1368a1ab5c1f8696f626ad4952fd4c619912e1e06ba07aa63c28c163fb96c3"
+    },
+    {
+      "path": "release-publication/publish.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/publish.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/publish.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/publish.stdout",
+      "bytes": 60,
+      "sha256": "342beb96ee06027c04b182cd7a95060ed7deaa9884bfe5726e1825de7c290af3"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/001-jobs.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/001-jobs.receipt.json",
+      "bytes": 282,
+      "sha256": "a5abf03bf955994942dc00dd045d764e886df975bb8f78cb00f4906462311cd6"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/001-jobs.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/001-jobs.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/001-jobs.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/001-jobs.stdout",
+      "bytes": 4983,
+      "sha256": "f3e98e4a7878c05c91218a52f568343d626025d40f799dd063f8bd658df5772d"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/001-run.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/001-run.receipt.json",
+      "bytes": 265,
+      "sha256": "46e2a4a70faebd9b0e8f76c0c306898efc0741ffe84db349677e165692ce9b50"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/001-run.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/001-run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/001-run.stdout",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/001-run.stdout",
+      "bytes": 12134,
+      "sha256": "26218677ec163757308d4f5ae3047e66c5da7a0fcdc33bf4f8008b684a14558a"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/main-publication.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/main-publication.json",
+      "bytes": 116113,
+      "sha256": "0a149e8875709d7d0b23e57a17c653b1bee7b1d4b603a231b1ba1b18b1014f8b"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/main-release-policy.mjs",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/main-release-policy.mjs",
+      "bytes": 4083,
+      "sha256": "bbc788bfd287de25cbab06f3692c41515c01f08d8075cd4f9ede6e8a25cc7d46"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/release-gate.log",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/release-gate.log",
+      "bytes": 19365,
+      "sha256": "24ccc3de540b1b5b957b5401e99029c2d517a204cdc3895de744754c0381e7f3"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/release-gate.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/release-gate.receipt.json",
+      "bytes": 271,
+      "sha256": "1e0c24246333b6e93d0a087c5509bf4dd220a3a6eba0b919d247f5ddd83134b9"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/release-gate.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/release-gate.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "release-publication/release-event-35264781975/review.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/release-publication/release-event-35264781975/review.json",
+      "bytes": 3242,
+      "sha256": "eeac42d5fa32cf1feb21f1f630ced40c4e14fefff2a3ff1bf5bfd6b872dd0843"
+    },
+    {
+      "path": "transport-early-response-diagnostic/README.md",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/README.md",
+      "bytes": 2552,
+      "sha256": "5d930b3a2d297a115f68bb3c355c56cbbc318c886ec0f006c7610cad0794a5e2"
+    },
+    {
+      "path": "transport-early-response-diagnostic/diagnostic-only.patch",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/diagnostic-only.patch",
+      "bytes": 1328,
+      "sha256": "5ce2118633ba09a48dd972f43ff2f2c543c1dbc1b0c7fc087de5f72561553788"
+    },
+    {
+      "path": "transport-early-response-diagnostic/review.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/review.json",
+      "bytes": 4044,
+      "sha256": "033274c762bca1748de65210ccf7dd3117b81fab79912882c0eac2e079da4af8"
+    },
+    {
+      "path": "transport-early-response-diagnostic/runs/baseline.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/runs/baseline.receipt.json",
+      "bytes": 365,
+      "sha256": "c9172424a8a6b9c87cac30f2421c7a13f104b1b80a10f5c65b438c13ac00b236"
+    },
+    {
+      "path": "transport-early-response-diagnostic/runs/baseline.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/runs/baseline.stderr",
+      "bytes": 5474,
+      "sha256": "f3a96f1e91d3601252113554b0cf71517f9246f01bdf6568121f6542263063e6"
+    },
+    {
+      "path": "transport-early-response-diagnostic/runs/proposal.receipt.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/runs/proposal.receipt.json",
+      "bytes": 365,
+      "sha256": "5ac86db65461536d37cf13c8aedb521fd3188f1c15cb2e0d856253b8b3d2399c"
+    },
+    {
+      "path": "transport-early-response-diagnostic/runs/proposal.stderr",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/transport-early-response-diagnostic/runs/proposal.stderr",
+      "bytes": 1721,
+      "sha256": "61298a0b13a8147ac823176a902d098535558cceabf708c123f041ce7ea2f43a"
+    },
+    {
+      "path": "upload-proposal-35253264967/small-evidence-intake/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35253264967/small-evidence-intake/evidence/result.json",
+      "bytes": 586,
+      "sha256": "f0c1b880d4793f584bf60eb0a33984ff84e85a4c9bf5de516e535ce5372363d4"
+    },
+    {
+      "path": "upload-proposal-35253264967/small-evidence-intake/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35253264967/small-evidence-intake/evidence/retained-manifest.json",
+      "bytes": 12588,
+      "sha256": "142ca945de5150b4ef1c2e0db46793cf74a47c7cbe48a3096fcdb59a0a3a3426"
+    },
+    {
+      "path": "upload-proposal-35254217010/small-evidence-intake/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35254217010/small-evidence-intake/evidence/result.json",
+      "bytes": 586,
+      "sha256": "f0c1b880d4793f584bf60eb0a33984ff84e85a4c9bf5de516e535ce5372363d4"
+    },
+    {
+      "path": "upload-proposal-35254217010/small-evidence-intake/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35254217010/small-evidence-intake/evidence/retained-manifest.json",
+      "bytes": 16481,
+      "sha256": "276c88ab61fb7fb3cf21b71a677e3671a1fb916544d9a06bce011c5937f8ecb8"
+    },
+    {
+      "path": "upload-proposal-35254217010/small-evidence-intake/evidence/source.tar.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35254217010/small-evidence-intake/evidence/source.tar.upload-result.json",
+      "bytes": 475,
+      "sha256": "f4a97121ff97fb34a8f8c6f931aef8c9202399b151c977897a9b7d2bd2bfd0cb"
+    },
+    {
+      "path": "upload-proposal-35256321674/small-evidence-intake/evidence/result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35256321674/small-evidence-intake/evidence/result.json",
+      "bytes": 586,
+      "sha256": "f0c1b880d4793f584bf60eb0a33984ff84e85a4c9bf5de516e535ce5372363d4"
+    },
+    {
+      "path": "upload-proposal-35256321674/small-evidence-intake/evidence/retained-manifest.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35256321674/small-evidence-intake/evidence/retained-manifest.json",
+      "bytes": 16253,
+      "sha256": "945ff32ad8fb0b79f2d8d02ec4e855ef47eae9b27b8ad6cca42ec33ab4bc1e1a"
+    },
+    {
+      "path": "upload-proposal-35256321674/small-evidence-intake/evidence/source.tar.upload-result.json",
+      "original": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-qualified/motion-v0605-r2/upload-proposal-35256321674/small-evidence-intake/evidence/source.tar.upload-result.json",
+      "bytes": 475,
+      "sha256": "a8a74ac9c1e441e32a6e6c258079dde4d5e7e1a3bc5af9c16e6bfb6efa413bdb"
+    }
+  ],
+  "count": 71,
+  "bytes": 403276
+}

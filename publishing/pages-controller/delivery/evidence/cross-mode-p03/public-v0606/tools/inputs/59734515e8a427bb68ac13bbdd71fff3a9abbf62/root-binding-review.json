@@ -1,0 +1,11 @@
+{
+  "reviewedAt": "2026-09-17T23:02:49.679832+00:00",
+  "bindingSha256": "dd72fcb17c3a167c594df4c8d41015b8729742b2a81e049cc26366ce78d19d6f",
+  "authorityPins": 9,
+  "committedBodies": [
+    "configuration",
+    "catalog",
+    "qualification"
+  ],
+  "scope": "Approve unchanged streamed HTTP audit only; public UI and after-authority acceptance remain separate."
+}

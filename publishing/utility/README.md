@@ -57,4 +57,30 @@ Run the bounded local checks without credentials or external requests:
 python3 -m unittest discover -s publishing/utility -p 'test_*.py'
 ```
 
-These use tiny local Git/TAR/ZIP fixtures, mocked metadata/orchestration and loopback HTTP servers for the preserved upload engines. They do not qualify a real artifact or perform a GitHub write. `provenance.json` records the original reviewed engines, which remain byte-identical; only the offline verifier's input binding and receipt locators were made portable.
+These use tiny local Git/TAR/ZIP fixtures, mocked metadata/orchestration and loopback HTTP servers for the preserved upload engines. They do not qualify a real artifact or perform a GitHub write. `provenance.json` retains the original reviewed engine pins and records later scoped adaptations separately; historical originals are not relabeled as current bytes.
+
+
+## Safe evidence for an ambiguous upload
+
+An ambiguous upload retains `uploadDiagnostics` in its result receipt: the last
+transport phase, `sentBytes`, a fixed safe exception category, and `httpStatus`
+only when a response status was actually observed. `sentBytes` counts body send
+calls that returned completely on the client. It does **not** establish bytes
+received by GitHub; a failed send may also have transmitted additional bytes.
+A null count means it was unavailable. No exception text, token, request or
+response headers, URL or response body is included in these diagnostics.
+
+The transport and verification rules remain unchanged: no retry, redirect,
+automatic deletion or overwrite; both frozen members are verified before any
+POST, and completed originals remain subject to exact draft/tag/asset checks.
+A `check-deadline` failure identifies the existing finite operation deadline;
+elapsed time alone does not. Diagnose the retained phase/status and reread the
+actual draft inventory before proposing a separately reviewed recovery. These
+diagnostics do not establish a timeout diagnosis for an earlier attempt whose
+receipt lacks the phase and byte count. The separately reviewed shared API
+lifetime is 5,400 seconds (90 minutes), starting before artifact inspection and
+covering both original uploads and final reconciliation. It remains within the
+existing 180-minute hosted upload-job timeout. The per-socket timeout remains
+120 seconds; media/asset limits and the one-POST/no-retry rules are unchanged.
+A new lifetime does not authorize retrying an ambiguous attempt: first review its
+retained evidence and fresh complete draft inventory.
