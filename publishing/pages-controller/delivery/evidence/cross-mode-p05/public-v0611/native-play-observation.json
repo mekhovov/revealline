@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-18T05:32:32.066035+00:00",
+  "observer": "/root",
+  "version": "v0.61.1",
+  "source": "a7a4e2d7090e2fe9d1843d88b63bc334b95bf61e",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.61.1/site/game/",
+  "viewport": [
+    1280,
+    720
+  ],
+  "journey": [
+    "Returned from this edition\u2019s workshop using its explicit keyboard Back link.",
+    "Title Start opened a fresh First Signal attempt at 0%, 0 score, 3 lives.",
+    "One Down press/release produced a real cut and win: 52.2%, 8,160 points, 0:09, three lives and three stars.",
+    "Tab/Enter opened View picture; Enter returned to Results with View picture focused.",
+    "Tab/Enter chose Try again directly, restoring 0%, 0 score and 3 lives without a second launch prompt.",
+    "Escape paused explicitly at 0:04; Resume was focused.",
+    "Navigating ordinary /game/ resolved to /releases/v0.61.1/site/game/index.html, version v0.61.1 and Continue.",
+    "Temporary viewport override reset; current game tab retained as deliverable."
+  ],
+  "scope": "Actual browser keyboard regression through title, flight, win, picture, Results, Retry and Pause. Tutorial completion is not difficulty or replay-value qualification.",
+  "limits": [
+    "No synthetic run or in-page input injection.",
+    "No physical controller/touch, audible music, offline or story playback qualification.",
+    "Screenshots displayed inline only; no exported image files claimed.",
+    "Shared-origin live tabs and local data do not establish isolation or migration."
+  ]
+}
