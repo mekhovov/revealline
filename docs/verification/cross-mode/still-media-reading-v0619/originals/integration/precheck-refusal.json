@@ -1,0 +1,5 @@
+{
+  "at": "2026-09-18T06:43:54.188444+00:00",
+  "scope": "Before any test process: input pinning refused because newly inherited v618 focus-clearance.mjs was absent from the sparse hydration. No test executed and no source failure claimed.",
+  "missing": "game/ui/focus-clearance.mjs"
+}

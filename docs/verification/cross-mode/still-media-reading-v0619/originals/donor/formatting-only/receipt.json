@@ -1,0 +1,21 @@
+{
+  "at": "2026-09-18T06:24:04.020573+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+    "--write",
+    "game/test/still-media-display-host.test.mjs"
+  ],
+  "before": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-still-media-reading-b326/formatting-only/before.mjs",
+    "bytes": 7413,
+    "sha256": "0646bc1c73844c43f8ac7cd755fd4e94791b7de7a0e4d13ce630add5fd992b16"
+  },
+  "after": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading/game/test/still-media-display-host.test.mjs",
+    "bytes": 7452,
+    "sha256": "36c5f30b7cc34414ee60b97e2f35f080c9e437a67ce3aeb981eadef476e45efa"
+  },
+  "ASTEquivalent": true,
+  "scope": "Formatting only after 54/54 exact-runtime cohorts; test semantics unchanged. Original outputs preserved."
+}

@@ -1,0 +1,50 @@
+{
+  "at": "2026-09-18T06:29:02.514095+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+    "--check",
+    "game/test/still-media-display-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading",
+  "exitCode": 0,
+  "inputs": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading/authoring/still-media/index.html",
+      "bytes": 5435,
+      "sha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading/game/test/still-media-display-host.test.mjs",
+      "bytes": 7562,
+      "sha256": "8e253aafccf130ef586ab8230b70372449e30c83f2f68512271afa1677893657"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading/game/ui/tool-display-entry.mjs",
+      "bytes": 233,
+      "sha256": "2428b9a1259b44f8ed48fcbeaf696a5b60d915c2a215717705b22a4b43094bf5"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading/game/ui/tool-display.mjs",
+      "bytes": 3097,
+      "sha256": "22a0aa71832c15b8e094a6d10cf6e2d900ec2c89e145864ce5ed1fac07bf3849"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-still-media-reading/game/display-preferences.mjs",
+      "bytes": 8285,
+      "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-still-media-reading-b326/format-r2/stdout",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-still-media-reading-b326/format-r2/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

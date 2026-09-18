@@ -1,0 +1,102 @@
+{
+  "observedAt": "2026-09-18T06:49:52.476017+00:00",
+  "observer": "root using actual CUA keyboard, real file chooser and read-only DOM; screenshots inline only",
+  "status": "SCOPED_NATIVE_LARGE_PLAIN_REDUCED_PREVIEW_PASS",
+  "source": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+  "tree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+  "htmlOverrideSha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888",
+  "previewOrigin": "http://127.0.0.1:56361",
+  "journey": [
+    "Title keyboard Down\u00d73 Enter to Settings",
+    "Text style Plain, text size Large, reduced effects checked using keyboard",
+    "Escape restores Settings opener; Down Enter opens Workshop; Tab\u00d75 Enter Pictures & stories",
+    "Host before media open body textSize large, textFace plain, effects reduced; body font22px system-ui",
+    "Tab navigation opens local media; keyboard traverses dialog and returns to picker",
+    "Real file chooser selects owned46655B768x576 PNG",
+    "Keyboard enters credit/provenance/description; Preview chosen file verifies exact original size and dimensions",
+    "ShiftTab\u00d75 retains preview/draft and returns to picker",
+    "390x844 portrait then844x390 resize retain picker focus and all selected preferences"
+  ],
+  "cases": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "docWidth": 390,
+      "control": {
+        "x": 40,
+        "y": 425.265625,
+        "w": 310,
+        "h": 67,
+        "font": "20px"
+      },
+      "label": {
+        "y": 365.265625,
+        "bottom": 492.265625
+      },
+      "rail": {
+        "y": 31,
+        "bottom": 292
+      },
+      "active": "still-media-file",
+      "fullOutlineVisible": true
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "docWidth": 844,
+      "control": {
+        "x": 48,
+        "y": 227.765625,
+        "w": 368,
+        "h": 67,
+        "font": "20px"
+      },
+      "label": {
+        "y": 194.765625,
+        "bottom": 294.765625
+      },
+      "rail": {
+        "y": 39,
+        "bottom": 187
+      },
+      "active": "still-media-file",
+      "fullOutlineVisible": true
+    }
+  ],
+  "retainedCounts": "1 image record / 1 immutable revision / generation1 before preview; source game warmup had already initialized authored picture",
+  "mutations": "No Save assignment, Restore, Delete or earned award performed. Settings are saved preferences. Preview is local only.",
+  "limitations": [
+    "Exact committed618 plus pinned one-file reading override; not final619 public build",
+    "Initial Tab starting position was not established; no claim of full dialog tab journey coverage",
+    "Physical touch/controller, actual background return, fullphase not established"
+  ],
+  "serverBinding": {
+    "commit": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+    "tree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+    "pid": 51939,
+    "port": 56361,
+    "url": "http://127.0.0.1:56361/authoring/still-media/",
+    "scope": "Exact committed v0.61.8 Git source with only the pinned Still Media HTML reading entry added. Existing tool-display owner adopts shared preferences. No fixtures, writes, fault injection or v0.61.9 release claim. GET/HEAD loopback only. Root owns native browser observations.",
+    "runtimeOverrides": {
+      "authoring/still-media/index.html": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-still-media-reading-b326/native-v0618-r1/index.html",
+        "bytes": 5435,
+        "sha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888"
+      }
+    },
+    "limits": {
+      "extraDiskBytes": 16777216,
+      "reserveBytes": 536870912,
+      "memoryCacheBytes": 8388608,
+      "singleBlobBytes": 8388608,
+      "requestLogBytes": 1048576,
+      "requestEvents": 4000
+    },
+    "overrideSpecSHA256": "4d256264c2b41fa9a61202284142a1b27a10c2c8644dbe2ab88ccd515ac39b03",
+    "serverSHA256": "b044e6533cbbb5938753bb5b648c007048b09a543f7ee7157953c9d5ff59c0e0"
+  }
+}
