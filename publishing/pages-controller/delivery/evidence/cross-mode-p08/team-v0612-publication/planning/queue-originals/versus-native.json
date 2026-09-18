@@ -1,0 +1,312 @@
+{
+  "observer": "/root",
+  "at": "2026-09-18T06:31:00.660573+00:00",
+  "status": "PASS_SCOPED_NATIVE_EXACT_SOURCE_BOARD_FITTING",
+  "source": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "url": "http://127.0.0.1:56027/game/couch/",
+  "serverBindingSha256": "a9ffedf0fdd8a81d63fab09759db538ca83747e0899a30c18f11c2f2c892008c",
+  "httpSnapshot": {
+    "path": "requests-native-layout-r1.original.jsonl",
+    "bytes": 73508,
+    "sha256": "a119a4b526c45a22aa1573208953f2b44eb32253c3e2789aff21ceafaf5dbd12"
+  },
+  "method": "Actual CUA native keyboard and viewport changes; read-only DOM bounds and screenshots inline. No state injection. Server serves exact tracked616 bytes, nooverrides. This is source preview, not frozen/publicrelease.",
+  "cases": [
+    {
+      "shape": "wide",
+      "text": "standard",
+      "viewport": [
+        1280,
+        720
+      ],
+      "buffer": [
+        1152,
+        576
+      ],
+      "canvases": [
+        [
+          13,
+          212.59375,
+          618,
+          309
+        ],
+        [
+          649,
+          212.59375,
+          618,
+          309
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          102.1875,
+          620,
+          529.8125
+        ],
+        [
+          648,
+          102.1875,
+          620,
+          529.8125
+        ]
+      ]
+    },
+    {
+      "shape": "wide",
+      "text": "standard",
+      "viewport": [
+        844,
+        390
+      ],
+      "buffer": [
+        1152,
+        576
+      ],
+      "canvases": [
+        [
+          13,
+          120.59375,
+          400,
+          200
+        ],
+        [
+          431,
+          120.59375,
+          400,
+          200
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          102.1875,
+          402,
+          236.8125
+        ],
+        [
+          430,
+          102.1875,
+          402,
+          236.8125
+        ]
+      ]
+    },
+    {
+      "shape": "wide",
+      "text": "standard",
+      "viewport": [
+        390,
+        844
+      ],
+      "buffer": [
+        1152,
+        576
+      ],
+      "canvases": [
+        [
+          13,
+          162.9921875,
+          364,
+          182
+        ],
+        [
+          13,
+          550.1953125,
+          364,
+          182
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          96.1875,
+          366,
+          315.609375
+        ],
+        [
+          12,
+          483.390625,
+          366,
+          315.609375
+        ]
+      ]
+    },
+    {
+      "shape": "wide",
+      "text": "large",
+      "viewport": [
+        390,
+        844
+      ],
+      "buffer": [
+        1152,
+        576
+      ],
+      "canvases": [
+        [
+          13,
+          163.2734375,
+          364,
+          182
+        ],
+        [
+          13,
+          550.0234375,
+          364,
+          182
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          102.296875,
+          366,
+          303.953125
+        ],
+        [
+          12,
+          489.046875,
+          366,
+          303.953125
+        ]
+      ]
+    },
+    {
+      "shape": "wide",
+      "text": "large",
+      "viewport": [
+        844,
+        390
+      ],
+      "buffer": [
+        1152,
+        576
+      ],
+      "canvases": [
+        [
+          13,
+          120.6484375,
+          400,
+          200
+        ],
+        [
+          431,
+          120.6484375,
+          400,
+          200
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          108.296875,
+          402,
+          224.703125
+        ],
+        [
+          430,
+          108.296875,
+          402,
+          224.703125
+        ]
+      ]
+    },
+    {
+      "shape": "classic",
+      "text": "large",
+      "viewport": [
+        844,
+        390
+      ],
+      "buffer": [
+        768,
+        576
+      ],
+      "canvases": [
+        [
+          64.53125,
+          109.296875,
+          296.9375,
+          222.703125
+        ],
+        [
+          482.53125,
+          109.296875,
+          296.9375,
+          222.703125
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          108.296875,
+          402,
+          224.703125
+        ],
+        [
+          430,
+          108.296875,
+          402,
+          224.703125
+        ]
+      ]
+    },
+    {
+      "shape": "classic",
+      "text": "large",
+      "viewport": [
+        390,
+        844
+      ],
+      "buffer": [
+        768,
+        576
+      ],
+      "canvases": [
+        [
+          13,
+          117.7734375,
+          364,
+          273
+        ],
+        [
+          13,
+          504.5234375,
+          364,
+          273
+        ]
+      ],
+      "hosts": [
+        [
+          12,
+          102.296875,
+          366,
+          303.953125
+        ],
+        [
+          12,
+          489.046875,
+          366,
+          303.953125
+        ]
+      ]
+    }
+  ],
+  "observations": [
+    "Each canvas preserves complete2:1 or4:3 arena; same geometry onbothseats; pagewidth/height matches viewport at seven cases",
+    "Native keyboard Start/Pause/Resume,Settings/Back,Newmatch/confirmation/Setup/map selection/Back/Start all observed",
+    "Native select requires Space to open then Down/Return: first Down/Return-only attempt retained Standard; recovered using proper expanded native menu and confirmed Large in AX/bodyattribute",
+    "Source preview startsplayers stationary; no cut/win/gamepad/touch certification inferred",
+    "Pause explicitly hides playcanvas; layout observations taken in active visible round",
+    "Classic short-landscape firstcanvas focusoutline approaches heading; actorreadability64logicalcap remains separate openissue",
+    "Initial picker-server8MiB limit rejected11.7MBPressurepack with413; exact-source16MiBboundedserver resolved verification environment limit",
+    "Viewport reset and round left paused after checks"
+  ],
+  "limits": [
+    "No physical phone/controller/keyboardhardware test",
+    "No matchcompletion, offline, full P08 or public acceptance",
+    "Screenshots inline only; no exported image hashes"
+  ]
+}
