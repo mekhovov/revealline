@@ -1,0 +1,19 @@
+{
+  "status": "scoped native historical retention pass",
+  "version": "0.61.7",
+  "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+  "cases": [
+    "Safe Field guide practice: ordinary S/A capture8.1%,1920score,3lives;Pause0:34,explicitResume,Pause0:40",
+    "Return to Field guide restoresPlay practice; Close restoresWorkshopField guide opener",
+    "MotionLab Standard/Large390x844 to844x390 andback;blade-count focus/value3 retained,previewPlay/paused",
+    "Return to immutablearchivegame showsv0.61.7 andStartFirstSignal"
+  ],
+  "limits": [
+    "Original07JPEG180x390 didnotmatchDOM844x390; retained, excluded andcorrected13JPEG844x390.",
+    "Known MotionLab rightedgefocusoutline limitation remains separate.",
+    "BrowserBackreinitializesMotionLab; nopauseacrossnavigationclaim.",
+    "No maincampaign started/continued/reset/imported; no physicaldevices/fulloffline/fullgamequalification.",
+    "Exact deployedbyte audit is coordinator evidence, separate from native observations."
+  ],
+  "cleanup": "Standard restored; preview paused; defaultviewport restored"
+}
