@@ -1,0 +1,11 @@
+{
+  "status": "PUBLISHED_ORIGINALS_LATEST_READBACK_PASS",
+  "at": "2026-09-18T13:32:27.308301+00:00",
+  "releaseId": 391486325,
+  "tag": "v0.61.7",
+  "source": "b3262eb02a998c50354758ba922324d023138875",
+  "immutableAssetDescriptorsUnchanged": true,
+  "expectedURLTransition": "Only browser_download_url changed from untagged draft path to versioned publication path for all nine assets. Original overly-broad equality refusal retained. No second PATCH.",
+  "publicationPATCHCount": 1,
+  "pagesAccepted": false
+}
