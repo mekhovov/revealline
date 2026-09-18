@@ -1,0 +1,61 @@
+{
+  "base": "ccd04f9cccc321513483ba63f30e27d800b76a40",
+  "files": [
+    {
+      "path": "authoring/enemy-catalog/index.html",
+      "base": {
+        "bytes": 2315,
+        "sha256": "340a84ef02a9f059dd6d1ae28184a58b4d110c6f3c669dcb56f7facfe1bfc104"
+      },
+      "candidate": {
+        "bytes": 2496,
+        "sha256": "bad9b572099658506952017b2fa3285af417a7e0d008f599a3fe5e99a2085c4a"
+      }
+    },
+    {
+      "path": "authoring/enemy-catalog/workshop.mjs",
+      "base": {
+        "bytes": 5651,
+        "sha256": "05a2e36b1af834c42e3f783063d94a707db7b2fa3bf26aea4a4f93e0ade0ecdc"
+      },
+      "candidate": {
+        "bytes": 7000,
+        "sha256": "91195e3e6788ba8615809fb6446b0c5b3d240a0876e71d5ddac3f2662140fabc"
+      }
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "base": {
+        "bytes": 210244,
+        "sha256": "cec468341dedaed33973d40ec90e1cb049a96df18a4fa6e2ac826cd80ce1e28a"
+      },
+      "candidate": {
+        "bytes": 211384,
+        "sha256": "be0ee1146163e82d966d7f2b17159c3a61e621de7429775aab0595f130082550"
+      }
+    },
+    {
+      "path": "docs/enemy-catalog.md",
+      "base": {
+        "bytes": 11170,
+        "sha256": "a85fe032af8f5cae75602b645c64e46d8420acb1d4281d36461286c3390ac286"
+      },
+      "candidate": {
+        "bytes": 13354,
+        "sha256": "97a59fe665b996b0291adffb21d87026c298e5ff218d6171b14e095aa94c495e"
+      }
+    },
+    {
+      "path": "game/test/enemy-workshop-host.test.mjs",
+      "base": null,
+      "candidate": {
+        "bytes": 15823,
+        "sha256": "d098a177c9e8fa1c6dc79b89e809801b567cc38110be359d56455fbf7db5c79f"
+      }
+    }
+  ],
+  "patch": {
+    "bytes": 27942,
+    "sha256": "8a1e2ae64b6bb3415b0e71d0efeddcff6e566474a4e29a4550d2e32eb2036d94"
+  }
+}

@@ -1,0 +1,121 @@
+TAP version 13
+# Subtest: native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+not ok 1 - native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+  ---
+  duration_ms: 2.669458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:206:3'
+  failureType: 'testCodeFailure'
+  error: 'The actual workshop has an explicit native Return to game action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    workshop (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:142:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:207:21)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+not ok 2 - native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+  ---
+  duration_ms: 1.318792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:206:3'
+  failureType: 'testCodeFailure'
+  error: 'The actual workshop has an explicit native Return to game action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    workshop (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:142:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:207:21)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: workshop modal Back keeps its draft before a separate keyboard Return to game
+not ok 3 - workshop modal Back keeps its draft before a separate keyboard Return to game
+  ---
+  duration_ms: 0.41275
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:234:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual workshop has an explicit native Return to game action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    workshop (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:142:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:235:19)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: ready controller navigation keeps modal ownership then activates the page Return link explicitly
+not ok 4 - ready controller navigation keeps modal ownership then activates the page Return link explicitly
+  ---
+  duration_ms: 0.376708
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:260:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual workshop has an explicit native Return to game action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    workshop (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:142:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:261:19)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: focused practice keeps parent controls idle and authenticated return restores the draft
+not ok 5 - focused practice keeps parent controls idle and authenticated return restores the draft
+  ---
+  duration_ms: 0.362417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:282:1'
+  failureType: 'testCodeFailure'
+  error: 'The actual workshop has an explicit native Return to game action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    workshop (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:142:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return/game/test/enemy-workshop-host.test.mjs:283:19)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46.741459

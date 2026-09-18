@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — enemy workshop</title>
+    <link rel="stylesheet" href="../../game/ui/enemy-catalog-panel.css" />
+    <link rel="stylesheet" href="../../game/ui/pixel-theme.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
+    <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
+    <style>
+      #catalog-host-status + .button {
+        box-sizing: border-box;
+        padding-block: 0;
+      }
+      @media (max-height: 480px) {
+        body > p {
+          margin-block: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body class="field-kit field-kit-support" style="padding: 20px">
+    <h1 class="field-kit-display">Enemy workshop</h1>
+    <p>
+      Preview every registered role, prepare future generator choices and try a separate practice
+      map.
+    </p>
+    <button id="open-catalog" disabled type="button">Open workshop</button>
+    <a
+      href="../../game/playground/"
+      style="display: inline-flex; align-items: center; min-height: 44px"
+      >Level playground</a
+    >
+    <p id="catalog-host-status" class="operation-status" data-state="busy">
+      <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+      ><span class="operation-status-label" role="status">Loading registered themes…</span>
+    </p>
+    <p>
+      Keyboard: Tab/arrows and Enter. Controller: face button to join, D-pad, South to choose, East
+      to return. Touch and mouse use the same controls.
+    </p>
+    <iframe
+      id="catalog-practice"
+      title="Enemy workshop practice; no campaign rewards"
+      style="width: 100%; height: 72dvh; border: 1px solid #516680"
+      hidden
+    ></iframe>
+    <script
+      defer
+      src="../../game/ui/direct-tool-launch.js"
+      data-module="./workshop.mjs"
+      data-status="catalog-host-status"
+    ></script>
+  </body>
+</html>
