@@ -61,11 +61,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   motion: {
-    sha256: '39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554',
+    sha256: 'b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4',
     evidence: [
-      'Scoped P03 source review: docs/verification/cross-mode/p03/recipe-review.md; motion recipe inputs sha256:39127024d6fb37fb50e42a4d3e1e7034b633be8e7e31225b638963a577e63554. The only motion-input change adds optional finite cosmetic bodyOffset to drawPresentedActor. Body, rotor and badge translate together; the contact footprint remains at the real frame position. Ordinary callers retain their original transform path.',
-      'The retained Team cohort covers actual presentation bindings, layout and separate contact positions; 205/205 passed on Node20.19.5 and Node22.22.2 at the recorded working inputs. Source-browser Team and both Versus boards loaded the exact original artwork. These observations do not constitute a complete animation-set, physical-size or motion-comfort audit.',
-      'All original image payloads, rotor recipes, source sizes and previous approvals remain in immutable history. The measured fpv25 source stage is preserved before this scoped review successor. Full source and public qualification remain separate.',
+      'Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.',
+      'The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.',
+      'This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required.',
     ],
   },
   effects: {
