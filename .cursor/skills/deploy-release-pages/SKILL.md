@@ -45,6 +45,27 @@ When browser screenshots are available only inline, identify that limitation and
 
 ## Snapshot and integration checks
 
+Before appending a release to an archive, compare its workflow's explicit tag fetch
+against **every** release in that archive's final `source-lock.json`, including
+unchanged cohorts. Run the read-only check from the reviewed controller checkout:
+
+```sh
+node publishing/pages-controller/archive-tag-fetch.mjs --source-lock /path/to/archive/source-lock.json --workflow /path/to/archive/.github/workflows/deploy.yml
+node --test publishing/pages-controller/archive-tag-fetch.test.mjs
+```
+
+The supported archive template uses a direct `jobs/build/steps` named step with no step condition,
+`working-directory: source` and a one-line `git fetch --depth=1 origin` command,
+followed by `refs/tags/V:refs/tags/V` for each locked version. A checkout of the
+extractor's tooling commit alone does not fetch those release tags. Missing older
+or newly appended cohorts, another destination ref, forced refs, and dynamic or
+conditional fetch declarations must be corrected and reviewed before dispatch.
+The checker verifies declared coverage only; retain the hosted tag-object and
+peeled-source checks, complete byte audit and native archive admission. Preserve
+the failed first attempt if an omitted tag already caused a deployment failure.
+Do not remove old cohorts, move tags, infer archive acceptance from a successful
+workflow, or change the live selector while publication/retention is pending.
+
 Before committing verification evidence, check every manifest-pinned original with `git ls-files --error-unmatch`. Repository ignore rules can omit original `.log` files even when their JSON manifest is staged. Add only those explicitly reviewed original paths with `git add -f`, then verify all recorded sizes and hashes against the index. Preserve original log/diff bytes, including whitespace; never normalize evidence to satisfy a source-format check. Run exact-source qualification only after that evidence-complete commit.
 
 Use the selected immutable source and its own frozen builder. Follow [snapshot staging](../../../docs/snapshot-staging.md) for the rename-first source-TAR transfer; EXDEV still needs space for the temporary copy. Confirm fresh capacity and filesystem placement before building. Integration must retain the chosen main cutoff and the next release version; earlier candidate checks cannot qualify a later merge. Retire only verified generated previews, preserving the original Git/release assets and verification receipts.
