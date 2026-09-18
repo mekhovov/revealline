@@ -171,6 +171,7 @@ test('Classic traveling-front defeat, reduced effects, focus loss and explicit s
 });
 test('controller skip cannot carry held Confirm into Retry', async (t) => {
   const { page, run } = await setup(t),
+    checkpoint = authoritativeCheckpoint(run),
     pad = {
       index: 0,
       id: 'Defeat controller',
@@ -189,12 +190,31 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
   assert.equal(page.doc.activeElement.id, 'retry-button');
   for (let i = 0; i < 4; i++) page.frame(0);
   assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   pad.buttons[0] = { pressed: false, value: 0 };
   page.frame(0);
   pad.buttons[0] = { pressed: true, value: 1 };
   page.frame(0);
-  assert.notEqual(page.rendered.run, run);
-  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(
+    page.rendered.run,
+    run,
+    'The failed run stays owned during fresh Retry preparation.',
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(page.$('game-overlay').dataset.kind, 'lost');
+  await settle(() => {
+    page.frame(0);
+    return page.doc.body.dataset.flightState === 'running';
+  });
+  const retried = page.rendered.run;
+  assert.notEqual(retried, run);
+  assert.equal(retried.tick, 0);
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.activeElement.id, 'game-canvas');
+  for (let i = 0; i < 4; i++) page.frame(0);
+  assert.equal(page.rendered.run, retried, 'Held Confirm cannot trigger another Retry.');
+  assert.equal(retried.tick, 0);
+  assert.deepEqual(page.errors, []);
 });
 test('nonterminal wreck follows ordinary recovery; Pause holds both recovery and effect until explicit Resume', async (t) => {
   const { page, run, effect } = await setup(t, { lives: 2 });

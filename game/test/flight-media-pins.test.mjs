@@ -10,6 +10,7 @@ import {
   presentationPicturePins,
   storyPinForTheme,
   validateFlightPresentationPinsForRun,
+  retryFlightPresentationPins,
 } from '../flight-media-pins.mjs';
 import { suspendSession, restoreSession, snapshotSession } from '../sessions.mjs';
 import { prepareStoredStillMedia } from '../media-storage-record.mjs';
@@ -228,3 +229,43 @@ for (const difficulty of ['standard', 'gentle'])
         /versions differ/,
       );
     });
+
+test('Retry bridges only an identical authored map and preserves complete story/null and v1 choices', async () => {
+  const gentle = f.catalog.entries.find((entry) => entry.difficulty === 'gentle');
+  const context = {
+    identityCatalog: f.identityCatalog,
+    campaignKey: gentle.executionKey,
+    level: gentle.campaign.levels[0],
+    themeId: 'fpv',
+  };
+  for (const source of [await pins(), await pins(history), createPresentationPins(request())]) {
+    const before = JSON.stringify(source);
+    const retried = retryFlightPresentationPins(source, context);
+    assert.equal(retried.executionKey, gentle.executionKey);
+    assert.equal(retried.levelRevision, context.level.revision);
+    assert.deepEqual(retried.choices, source.choices);
+    assert.equal(retried.format, source.format);
+    assert.equal(JSON.stringify(source), before);
+    assert.deepEqual(storyPinForTheme(retried, 'fpv'), storyPinForTheme(source, 'fpv'));
+    assert.throws(
+      () =>
+        retryFlightPresentationPins(source, {
+          ...context,
+          level: { ...context.level, id: 'different-mission' },
+        }),
+      /different mission/,
+    );
+    assert.throws(
+      () =>
+        retryFlightPresentationPins(source, {
+          ...context,
+          level: { ...context.level, revision: 'foreign-revision' },
+        }),
+      /owner|catalog|map/,
+    );
+    assert.throws(
+      () => retryFlightPresentationPins(source, { ...context, campaignKey: 'foreign-campaign' }),
+      /owner|catalog|map/,
+    );
+  }
+});
