@@ -1,0 +1,14 @@
+test_bad_download_digest_retains_original_without_binding (test_wrappers.WrapperTests.test_bad_download_digest_retains_original_without_binding) ... ok
+test_git_api_failure_is_retained_and_cannot_expose_binding (test_wrappers.WrapperTests.test_git_api_failure_is_retained_and_cannot_expose_binding) ... ok
+test_intake_requires_explicit_review_identity_and_request_hash_before_network (test_wrappers.WrapperTests.test_intake_requires_explicit_review_identity_and_request_hash_before_network) ... ok
+test_missing_actual_field_and_changed_observation_refuse_before_network (test_wrappers.WrapperTests.test_missing_actual_field_and_changed_observation_refuse_before_network) ... ok
+test_original_receipt_and_git_bodies_produce_only_unreviewed_binding (test_wrappers.WrapperTests.test_original_receipt_and_git_bodies_produce_only_unreviewed_binding) ... ok
+test_refresh_changed_published_asset_never_writes_acceptance (test_wrappers.WrapperTests.test_refresh_changed_published_asset_never_writes_acceptance) ... ok
+test_refresh_rejects_partial_audit_and_stale_observation_before_network (test_wrappers.WrapperTests.test_refresh_rejects_partial_audit_and_stale_observation_before_network) ... ok
+test_refresh_uses_actual_bound_release_and_keeps_original_responses (test_wrappers.WrapperTests.test_refresh_uses_actual_bound_release_and_keeps_original_responses) ... ok
+test_unsafe_zip_member_refuses_without_binding (test_wrappers.WrapperTests.test_unsafe_zip_member_refuses_without_binding) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.078s
+
+OK

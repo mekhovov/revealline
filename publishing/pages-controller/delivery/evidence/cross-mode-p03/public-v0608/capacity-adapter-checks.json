@@ -1,0 +1,14 @@
+{
+  "status": "PASS_CAPACITY_ONLY_ADAPTER_CHECKS",
+  "at": "2026-09-18T01:51:49.498837+00:00",
+  "checks": [
+    "Small original receipt fits including all three retained copies and API headroom",
+    "expansion refused",
+    "reserve refused",
+    "invalid refused"
+  ],
+  "realRequests": 0,
+  "unchangedIntakeSha256": "107db96f4d16a0bd543f8ddaa10e906e0618a73ff6811c0b4225a71284e206df",
+  "runnerSha256": "79f50df9ca780a5bc2bd523f79de18bafb5224e7e5cfc73ef71082ae08714208",
+  "reviewedRequestSha256": "72d753ffa94d8f7648fc28b6517703caf08f58aba5b6123ea8ba5868e48d48f4"
+}
