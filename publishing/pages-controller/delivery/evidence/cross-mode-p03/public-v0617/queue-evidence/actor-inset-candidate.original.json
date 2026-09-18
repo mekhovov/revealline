@@ -1,0 +1,100 @@
+{
+  "status": "Local successor ready for independent review and native qualification; no version/staging/commit/remote mutation",
+  "source": "ef1430174dfd35a9df441233988b8737d0401851",
+  "tree": "d6fbd2c8f2e7c549eeab602026ee80b3fa3af2d4",
+  "worktree": ".cache/worktrees/p08-actor-minimum-next",
+  "branch": "codex/p08-actor-minimum-next",
+  "changedPaths": 11,
+  "sourceBytes": 204120,
+  "sourceManifest": {
+    "path": ".cache/p08-actor-minimum-next/inset-successor-r3/source-manifest.json",
+    "bytes": 4270,
+    "sha256": "c071cc61d42a9141acfce06e30f3adfd8592b95dc06e7780f43b95767e88ccf7"
+  },
+  "patch": {
+    "path": ".cache/p08-actor-minimum-next/inset-successor-r3/source.patch",
+    "bytes": 43669,
+    "sha256": "9afc10c47c2816774b670fc0684262647f1320b42b4262926d029b2499377f21"
+  },
+  "readme": {
+    "path": ".cache/p08-actor-minimum-next/inset-successor-r3/README.md",
+    "bytes": 2365,
+    "sha256": "29e391fb5aa74ceee5b088488628e7c41be8212d948c6e92103c61f330722674"
+  },
+  "evidence": {
+    "path": ".cache/p08-actor-minimum-next/inset-successor-r3/evidence-pins.json",
+    "bytes": 7277,
+    "sha256": "a3b4a377de937b0919a52681bb8c5d135100e00d2fcdcdedb45e086bd87319bc"
+  },
+  "retainedPredecessors": {
+    "path": ".cache/p08-actor-minimum-next/inset-successor-r3/retained-predecessors.json",
+    "bytes": 1467,
+    "sha256": "2e907d6fdedb12f1b90ddf9566c3b766c5bf306c4b4692e0010126136132852a"
+  },
+  "tests": {
+    "node20": 100,
+    "node22": 100,
+    "failed": 0,
+    "skipped": 0,
+    "files": 7
+  },
+  "checks": [
+    {
+      "name": "lint",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+        "game/ui/actor-presentation.mjs",
+        "game/ui/render.mjs",
+        "game/ui/player-body-layout.mjs",
+        "game/test/actor-presentation.test.mjs",
+        "game/test/couch-board-footprint-host.test.mjs",
+        "game/test/renderer-readability.test.mjs",
+        "game/test/coop-actor-presentation.test.mjs",
+        "game/test/coop-actor-layout.test.mjs",
+        "game/test/player-body-layout.test.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "format",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/ui/actor-presentation.mjs",
+        "game/ui/render.mjs",
+        "game/ui/player-body-layout.mjs",
+        "game/test/actor-presentation.test.mjs",
+        "game/test/couch-board-footprint-host.test.mjs",
+        "game/test/renderer-readability.test.mjs",
+        "game/test/coop-actor-presentation.test.mjs",
+        "game/test/coop-actor-layout.test.mjs",
+        "game/test/player-body-layout.test.mjs"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0
+    }
+  ],
+  "indexUnchanged": true,
+  "nativeAccepted": false,
+  "releaseAccepted": false,
+  "phaseAccepted": false,
+  "managedCacheBytes": 943285,
+  "selectedWorktreeBytes": 8628759,
+  "freeBytes": 3232104448,
+  "remaining": [
+    "Native whole-craft/rotor/contact association at edges/corners and active cuts; Standard/Large and compact/detailed.",
+    "No physical/touch/controller/audio/offline/full-P08 claim."
+  ]
+}

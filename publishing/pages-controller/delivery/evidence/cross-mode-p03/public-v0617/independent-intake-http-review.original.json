@@ -1,0 +1,155 @@
+{
+  "status": "PASS_INDEPENDENT_INTAKE_AND_ALL_HTTP_ROWS",
+  "at": "2026-09-18T14:08:41.617171+00:00",
+  "version": "v0.61.7",
+  "source": "b3262eb02a998c50354758ba922324d023138875",
+  "tree": "0f4815e7c4116aeb08bee9696828f143a1ef5479",
+  "publisher": "acd3ee806ec861660363a1b691ec2703032484f1",
+  "publisherTree": "445341e8df86c89ac63877935fffbbc7f3837a8b",
+  "runId": 35352681143,
+  "deploymentId": 6525736706,
+  "files": 3103,
+  "bytes": 641970187,
+  "attempts": 3104,
+  "recoveredRetries": 1,
+  "failedFiles": 0,
+  "failedAttempt": {
+    "path": "game/presentation/compiled/assets/40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc.png",
+    "url": "https://mekhovov.github.io/revealline/game/presentation/compiled/assets/40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc.png",
+    "attempt": 1,
+    "expectedBytes": 52317,
+    "expectedSha256": "40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc",
+    "startedAt": "2026-09-18T14:03:26.382Z",
+    "status": 503,
+    "contentType": "text/html; charset=utf-8",
+    "contentEncoding": null,
+    "etag": null,
+    "retryAfter": "0",
+    "ok": false,
+    "error": "Error: Expected direct HTTP 200, received 503",
+    "transportError": false,
+    "finishedAt": "2026-09-18T14:03:26.495Z"
+  },
+  "nineAuthorityFilesRehashed": true,
+  "fiveGitAPIOriginalBodiesReconciled": true,
+  "receiptZipCRCAndTwoMembersPassed": true,
+  "preservedCatalogRows": 87,
+  "catalogRows": 88,
+  "preservedOtherArchiveAdmissions": 24,
+  "archive25": {
+    "commit": "dff3007d35edb7a1b528884f673219d0e6b8d7d6",
+    "deploymentId": 6525128114,
+    "evidencePins": 13,
+    "versions": [
+      "v0.61.5",
+      "v0.61.6"
+    ]
+  },
+  "originalRuntimeRows": 693,
+  "networkRequests": 0,
+  "sourceOrAuthorityMutations": false,
+  "publicAcceptance": false,
+  "limits": "Independent local original-body and every result/attempt reconciliation. Live post-HTTP authorities and root native/public acceptance remain separate. Historical catalog preservation does not claim every archived payload was re-fetched here.",
+  "pins": [
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/binding.json",
+      "bytes": 2042,
+      "sha256": "b021a7d55a8cdcd75cdd1ebba0c083cb57d19e2018262c1331e00d8390931380"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/receipt.json",
+      "bytes": 591960,
+      "sha256": "dcc6646236147f8c6543c3d87dbe091ded8a42152fca190f836977d5a2592075"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/deployment.json",
+      "bytes": 3823,
+      "sha256": "429a190bb8c17c14c75fd01441a513fae04155046fbab06ce321cb0861d9f007"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/statuses.json",
+      "bytes": 6586,
+      "sha256": "9fcc062ad412991d7e22074158bc3db24fed373d619d7735c58048c05a182dc4"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/run.json",
+      "bytes": 12189,
+      "sha256": "efd5467e6dca58697f7fa8b01bb3fa6262a550d8aed59f8ac1d0950d1db8427d"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/manifest.json",
+      "bytes": 127872,
+      "sha256": "b6fcf7902505615097dbd4684789f87e348d04064eb4e214ca120caa35df64f1"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/record.json",
+      "bytes": 465,
+      "sha256": "f1b2088c9d8d384b602af5b491b3c31aa4f057381de69ec09f7532f1fd56029d"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/qualification.json",
+      "bytes": 101581,
+      "sha256": "b7cee153302a8702071cb80fe463ab39ad458cd284771dd8a1d601a9f4955c15"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/catalog.json",
+      "bytes": 39259,
+      "sha256": "bc122875db63c84f613531b2a947fde0f6cc06e8f88057c8016140087e4d302c"
+    },
+    {
+      "path": "tools/inputs/acd3ee806ec861660363a1b691ec2703032484f1/configuration.json",
+      "bytes": 142397,
+      "sha256": "c4784fb68f29862e0a9f83f65c44abf82b6cd7160c43f573f7ebf061e6e0b062"
+    },
+    {
+      "path": "receipt-intake-main-r1/authority-api-originals/configuration.json",
+      "bytes": 197368,
+      "sha256": "70bdbb5eb7641c08b3e45370c76b6eabde805534d1a29c947aa35d93c3c7cb89"
+    },
+    {
+      "path": "receipt-intake-main-r1/authority-api-originals/catalog.json",
+      "bytes": 55239,
+      "sha256": "536934b60fc2597d7c7884fc5950c9b213dfa30696382f1010262217a89af8f7"
+    },
+    {
+      "path": "receipt-intake-main-r1/authority-api-originals/manifest.json",
+      "bytes": 177435,
+      "sha256": "ac59a8bfd84e9a772ee1e9453515d44e462f3ee607597f43441af1aa96a477c1"
+    },
+    {
+      "path": "receipt-intake-main-r1/authority-api-originals/record.json",
+      "bytes": 1887,
+      "sha256": "8e59832b3b24ef256cdf7c3877b93ca5ebbc1738c74af2dd019fea205c4b8701"
+    },
+    {
+      "path": "receipt-intake-main-r1/authority-api-originals/qualification.json",
+      "bytes": 141335,
+      "sha256": "c553d4cde45e4efc9df6a91abb8fa21ae5acbfc801dc7f13ba5481f46fc7c3a0"
+    },
+    {
+      "path": "receipt-intake-main-r1/original.zip",
+      "bytes": 145766,
+      "sha256": "fbf2ba14619f42c4abf55ef04d131c0ecac27a0a0a21ca6f2dd2dd406510ab73"
+    },
+    {
+      "path": "tools/runs/public-main-r1/report.json",
+      "bytes": 5854,
+      "sha256": "dee161ae068766ba54bb15240053d1f03c74ed4dee59067d0c073dc7b6a8b077"
+    },
+    {
+      "path": "tools/runs/public-main-r1/inventory.json",
+      "bytes": 783401,
+      "sha256": "f39656a7691c48cf1deae71f52e06fba1dbae5d9461844ddf6a1608402249670"
+    },
+    {
+      "path": "tools/runs/public-main-r1/results.jsonl",
+      "bytes": 2011303,
+      "sha256": "e9ee355557bd0152090f32c1e7b9eeb7b18d475971d43f6121faf2b099f26d42"
+    },
+    {
+      "path": "tools/runs/public-main-r1/attempts.jsonl",
+      "bytes": 2011959,
+      "sha256": "06e3a47edcdc494c24a864c716b86c7f0f500c9d74c4720e4011d195960e0326"
+    }
+  ]
+}
