@@ -1,0 +1,36 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-22",
+  "infrastructureCommit": "b9cf5426cd148915196640bfb0bd958ec8e40ed8",
+  "deploymentId": 6517736260,
+  "versions": [
+    "v0.60.9",
+    "v0.61.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-22/append-v0610/root-acceptance.json",
+      "sha256": "285d40131ec73746d9085ec7123245d68f50f8df1fb381fcc7dcf68bd9527ca5"
+    },
+    {
+      "path": "evidence/archive-22/append-v0610/native-v0610-observation.json",
+      "sha256": "4ab4d5ea41b277ea671da2e7a2657aed7ef6a740e42daa9453e4d750a4875e88"
+    },
+    {
+      "path": "evidence/archive-22/append-v0610/native-v0609-retention-observation.json",
+      "sha256": "79cc14d5a88b5b049e2990dfb94b42617e67c8b9cee1737c98725eca55bc9782"
+    },
+    {
+      "path": "evidence/archive-22/append-v0610/row-review.json",
+      "sha256": "07e0e4fc43987fba86421a00224aabca3930e1bb02b9eb8fc3736c703ba77ecf"
+    }
+  ],
+  "acceptedScope": "Original v0.60.9 and v0.61.0 distribution retention, complete public byte verification, and root desktop v0.61.0 win, View picture, Results and Retry, plus the v0.60.9 route. No game files changed.",
+  "limits": [
+    "No physical input, offline or audio qualification.",
+    "No complete parent phase acceptance.",
+    "Same Pages origin; no save isolation or migration claim."
+  ],
+  "note": "Derived admission binds original root observations and later byte acceptance. Earlier native publicByteAuditPending remains unchanged in its original."
+}

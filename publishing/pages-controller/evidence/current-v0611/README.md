@@ -1,0 +1,9 @@
+# v0.61.1 current-source publication inputs
+
+The immutable media-controls source is `a7a4e2d7090e2fe9d1843d88b63bc334b95bf61e`, tree `8f81812d56299c2819ec083d919d9085a36d223c`, annotated tag `4dfdd664e3dab3f7837c86907e2cc26a29854472`. The [original source qualification](source-qualification.json) is unchanged from the reviewed release attachment.
+
+Root published GitHub release `391216363` at `2026-09-18T04:57:53Z`. Its [publication response](publication-originals/publish-response.json) and [Latest readback](publication-originals/latest-after-publish.json) name v0.61.1 and retain all nine original asset descriptors. The [small-body GET receipt](publication-originals/receipt.json) verifies the four published metadata/qualification bodies against those exact asset sizes and SHA-256 values before the no-clobber metadata sync. [Tag reference](publication-originals/fresh-tag-ref.json) and [tag object](publication-originals/fresh-tag-object.json) retain the original source binding.
+
+These inputs prepare the main selector. They do not assert a v0.61.1 Pages deployment, public byte audit, browser/audio/offline acceptance, physical-device qualification or completion of P05. Those gates remain separate after the reviewed publishing commit. [Archive22 retention](../archive-22/append-v0610/README.md) preserves v0.60.9 and v0.61.0 before the current selector advances.
+
+The [publisher preparation originals](publisher-preparation-originals.zip) and [member index](publisher-preparation-index.json) retain the final 43-test publisher cohort on each Node 20/22 runtime, four Python extraction checks, actual archive tag-fetch check, exact 82-tag validation, 855 predecessor body rehashes and changed-admission validation. The initial guard heredoc failure and earlier checks remain distinct originals. Full all-archive filesystem validation and assembly still belong to the hosted preview; local source-only checks are not a Pages acceptance.
