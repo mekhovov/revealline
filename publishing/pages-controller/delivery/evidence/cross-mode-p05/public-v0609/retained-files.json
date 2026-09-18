@@ -853,8 +853,8 @@
     },
     {
       "path": "planning/progress-and-next.md",
-      "bytes": 6429,
-      "sha256": "1ee98c0a6e645f2b1099ec7ef2ffd52d8a6456baa10d236238eb2d9c73ba058f",
+      "bytes": 7327,
+      "sha256": "b537ca91cd8a56a7b731a5338e8948f606fe9ab638b71f389fe28403d28d014e",
       "kind": "new-readable-report"
     },
     {
@@ -1410,6 +1410,6 @@
       "sourceCachePath": "wrapper_contract.py"
     }
   ],
-  "totalBytes": 8588486,
+  "totalBytes": 8589384,
   "scope": "Exact retained originals plus new current delivery prose; manifest excludes itself."
 }
