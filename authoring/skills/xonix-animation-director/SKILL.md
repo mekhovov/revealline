@@ -13,7 +13,9 @@ For animation applied to the playable `game/`, read [the implemented presentatio
 
 ## Readability and pressure presentation
 
-For current body/cut refinements also read [the occupied-raster findings](../../../docs/actor-presentation.md#occupied-raster-inspection-round-40) and `game/test/renderer-readability.test.mjs`. The normal enemy **box** targets 24–32 CSS pixels on desktop and at least 16 on ordinary phones, capped at 64 logical pixels (boss 40 CSS/80 logical). Do not call that box the visible silhouette: the measured body-only right-facing poses occupy 14–16 pixels at a 294-pixel arena, versus 9–12 in frozen v0.29.2. Those are 252 CPU-raster measurements across roles, themes, treatments and three display widths, not browser playback or physical-device approval. Uploaded art still needs its own alpha/bounds inspection.
+For current body/cut refinements also read [the occupied-raster findings](../../../docs/actor-presentation.md#occupied-raster-inspection-round-40) and `game/test/renderer-readability.test.mjs`. The normal enemy **box** follows the [narrow-board size contract](../../../docs/presentation-system.md#narrow-board-actor-size): 24–32 CSS pixels on desktop and at least 16 on ordinary phones. The 64/80 logical-pixel normal/boss limits are base limits that may rise to preserve the minimum at the actual fitted scale; the 32/40 CSS-pixel ceilings take precedence over the logical floor. Registered compact player images retain their 20-pixel phone minimum. Do not call that box the visible silhouette: the measured body-only right-facing poses occupy 14–16 pixels at a 294-pixel arena, versus 9–12 in frozen v0.29.2. Those are 252 CPU-raster measurements across roles, themes, treatments and three display widths, not browser playback or physical-device approval. Uploaded art still needs its own alpha/bounds inspection.
+
+Prompt: “Preserve actor sizing through each Versus seat’s actual 240→320→240 fits and Team edge poses. Reuse the shared finite sizing policy; keep contact radii, trails, checkpoints and the 64-actor/three-tail budgets unchanged. Separate frame bounds from occupied silhouette and inspect bright/dark art, crowded cuts and Standard/Large compact/detailed views natively before claiming readability.”
 
 Keep light functional ink and a dark plate independent of theme `ink`/`paper`; dark themes may reverse those tokens. Preserve the roughly 3-CSS-pixel live-cut accent and 1-pixel light core, bounded head and short highlight. Capture sweep/inner-rim decoration stays beneath current actors, hazards and the live line, inside still-SAFE claimed cells. Microtile keeps locomotion. Body images, light heading ticks, type badges and exact physical contact rings remain independent.
 
@@ -88,3 +90,12 @@ Imported Motion backgrounds are specified as still previews: Canvas 2D draws an 
 Browser APNG decoding can expose the first visible animation frame instead of a separate IDAT default; do not infer conformance from the Canvas specification alone. Motion’s local preview uses bounded PNG chunk/CRC validation and removes only APNG animation chunks from a derived Blob. Original bytes, color/transparency metadata and IDAT remain intact. Other formats retain their native path. Record the exact original, derived preview identity and actual native redraw result separately; a static wrong frame is not an animation defect.
 
 Prompt: “Check the separate-default APNG fixture against the static control at equal palette/opacity/fit. Preserve the original failure and verify Play, Pause, reading redraw and reduced effects after the parser correction. Do not claim natural decoder cancellation, BFCache or other browser engines from modeled events.”
+
+For Solo/Versus edge placement, follow `game/ui/player-body-layout.mjs` and the
+[narrow-board contract](../../../docs/presentation-system.md#narrow-board-actor-size).
+Prompt example: “Keep the complete craft and rotor sweep inside every arena edge
+using the actual Motion renderer pivot, heading offset and shear. Retain exact
+contact, cut/head and ability-center geometry; keep interior fractional placement
+unchanged. Verify actual paint commands across phases and reduced motion, then
+review the inset craft/contact association natively. Do not copy Team’s bounds
+formula or claim a new hitbox.”

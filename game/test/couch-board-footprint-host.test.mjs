@@ -277,18 +277,36 @@ test('actual Versus resize follows independent touch pads and Large text without
     'Equal deliveries/ordinary frames do not rewrite canvas sizes.',
   );
 
-  // A separate existing limitation: below 288px on a 72-column board, the
-  // shared 64-pixel logical body cap wins over the desired 16 CSS px minimum.
-  // This regression records the correct handoff without claiming that the
-  // footprint correction also qualifies this narrower actor-readability case.
-  rendering.notify(arenas[0], 600, 120);
-  page.frame(0);
-  assert.equal(page.drawOptions[0].displayCSSWidth, 240);
-  const narrowSpan = firstEnemySpan(rendering.frames[0], 240);
-  assert.ok(
-    narrowSpan > 13.3 && narrowSpan < 13.4,
-    'The existing ~13.33px cap remains explicit follow-on work.',
-  );
+  // The same real host/painter now preserves readable bodies through repeated
+  // narrow fits, independently for both seats, without changing a match or art.
+  const fittedHistory = [[], []];
+  for (const [width0, width1] of [
+    [240, 300],
+    [320, 240],
+    [240, 320],
+    [300, 240],
+  ]) {
+    rendering.notify(arenas[0], 600, width0 / 2);
+    rendering.notify(arenas[1], 600, width1 / 2);
+    page.frame(0);
+    assert.deepEqual(
+      page.drawOptions.map((options) => options.displayCSSWidth),
+      [width0, width1],
+    );
+    for (const [seat, width] of [width0, width1].entries()) {
+      fittedHistory[seat].push(width);
+      assert.ok(firstEnemySpan(rendering.frames[seat], width) >= 16 - 1e-9);
+      assert.ok(firstEnemySpan(rendering.frames[seat], width) <= 32 + 1e-9);
+      assert.equal(page.renders[seat], runs[seat]);
+      assert.equal(page.drawOptions[seat].backdrop, pictures[seat]);
+      assert.equal(parseFloat(page.$(`race-canvas-${seat}`).style.width), width);
+      assert.equal(parseFloat(page.$(`race-canvas-${seat}`).style.height), width / 2);
+    }
+    assert.deepEqual(page.checkpoint(), checkpoint);
+  }
+  assert.deepEqual(fittedHistory[0].slice(0, 3), [240, 320, 240]);
+  assert.deepEqual(fittedHistory[1].slice(1), [240, 320, 240]);
+  rendering.notify(arenas[1], 300, 220);
 
   // Rotation crosses the constraint for only one seat; both painters retain
   // their original runs, picture bindings and independently fitted scale.
