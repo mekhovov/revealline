@@ -13,12 +13,24 @@ export function attachFocusClearance({
   const update = () => {
     if (disposed || !container.open || doc.hidden || doc.hasFocus?.() === false) return;
     const box = container.getBoundingClientRect(),
+      // Overflow clips inside the border, not at the bounding rectangle.
+      // Minimal non-native surfaces may not expose client geometry.
+      hasClientBox =
+        Number.isFinite(container.clientTop) && Number.isFinite(container.clientHeight),
+      viewportTop = hasClientBox ? box.top + container.clientTop : box.top,
+      viewportBottom = hasClientBox ? viewportTop + container.clientHeight : box.bottom,
       top =
-        Math.max(box.top, visible(heading) ? heading.getBoundingClientRect().bottom : box.top) + 8,
+        Math.max(
+          viewportTop,
+          visible(heading) ? heading.getBoundingClientRect().bottom : viewportTop,
+        ) + 8,
       bottom =
-        Math.min(box.bottom, visible(footer) ? footer.getBoundingClientRect().top : box.bottom) - 8;
-    container.style.scrollPaddingBlockStart = `${Math.max(0, top - box.top)}px`;
-    container.style.scrollPaddingBlockEnd = `${Math.max(0, box.bottom - bottom)}px`;
+        Math.min(
+          viewportBottom,
+          visible(footer) ? footer.getBoundingClientRect().top : viewportBottom,
+        ) - 8;
+    container.style.scrollPaddingBlockStart = `${Math.max(0, top - viewportTop)}px`;
+    container.style.scrollPaddingBlockEnd = `${Math.max(0, viewportBottom - bottom)}px`;
     const focused = doc.activeElement;
     if (
       bottom <= top ||
