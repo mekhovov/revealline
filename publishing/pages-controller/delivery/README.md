@@ -1,6 +1,8 @@
 # Reveal Line — FPV Field Kit delivery
 
-**Latest public review: [v0.61.20 — verified bytes, phone layout correction open](evidence/cross-mode-p03/public-review-v06120/README.md).** All 3,178 deployed files / 642,414,414 bytes passed, with zero failures, retries or skips. Actual keyboard startup-close return works. A wrapped phone button obscures part of the focus outline; inherited media-picker clearance and broader phase checks remain open. [Current phased plan and immediate queue](evidence/cross-mode-p03/public-review-v06120/progress-and-next.md).
+**Latest public review: [v0.61.20 — verified bytes, phone layout correction open](evidence/cross-mode-p03/public-review-v06120/README.md).** All 3,178 deployed files / 642,414,414 bytes passed, with zero failures, retries or skips. Actual keyboard startup-close return works. A wrapped phone button obscures part of the focus outline; inherited media-picker clearance and broader phase checks remain open. [Current phased plan and immediate queue](evidence/cross-mode-p07/team-picture-v06121-publication/planning/progress-and-next.md).
+
+[Published v0.61.21](evidence/cross-mode-p07/team-picture-v06121-publication/README.md) is the current publisher selection candidate, with exact-source Team win/view/Back/Retry evidence. Pages and public acceptance remain pending. [Archive27 append](../evidence/archive-27/append-v06120/README.md) preserves both v0.61.9 and v0.61.20 with accepted bytes and scoped keyboard retention; their known phone focus defects remain open.
 
 The [original publication preparation](evidence/cross-mode-p03/enemy-startup-v06120-publication/README.md) and [v0.61.9 partial review](evidence/cross-mode-p05/public-review-v0619/README.md) retain their historical scopes. [Archive27](../evidence/archive-27/initial-v0619/README.md) retains v0.61.9 with complete bytes and scoped navigation, including its unresolved picker-outline failure.
 

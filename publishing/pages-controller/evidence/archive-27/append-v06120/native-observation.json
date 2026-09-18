@@ -1,0 +1,41 @@
+{
+  "status": "ROOT_SCOPED_NATIVE_RETENTION_OBSERVED",
+  "at": "2026-09-18T19:12:32.808409+00:00",
+  "archiveCommit": "3ecdbdcb2126f28c8697bc087614143105905ea5",
+  "deploymentId": 6530925625,
+  "versions": [
+    "v0.61.9",
+    "v0.61.20"
+  ],
+  "observer": "Root via Codex in-app browser tab11, keyboard through actual rendered controls",
+  "journeys": [
+    {
+      "version": "v0.61.20",
+      "observed": [
+        "Title displayedVERSIONV0.61.20 with Start focus.",
+        "Enter Start\u2192visible preparing/cancel\u2192First Signal flight0.0%,3lives,target45%.",
+        "Escape paused0:18 with Resume focus; Enter thenEscape returned to paused0:18.",
+        "Direct shipped Enemy Workshop opened Role focus; Tab moved to Presentation; Escape returned focus to Open workshop; Enter reopened Role; Escape closed again."
+      ]
+    },
+    {
+      "version": "v0.61.9",
+      "observed": [
+        "Title displayedVERSIONV0.61.9 and existing Continue focus.",
+        "Enter Continue loaded existing exposed First Signal line0:12; explicit user keyboard action initiated continuation.",
+        "A line catch occurred before Escape, resulting2lives0:17; Escape displayed PAUSED with Resume focus.",
+        "ThreeTabs\u2192Enter reachedMainmenu and restoredContinuefocus."
+      ]
+    }
+  ],
+  "limits": [
+    "Retention and scoped keyboard navigation only; no whole-feature or phase acceptance.",
+    "v0.61.9 known Large/Plain portrait return outline clipping1.765625px remains; v0.61.20 known390portrait wrapped Open/Return gap clips full focus outline. Archive retention does not fix either.",
+    "No fresh full win, actual offline install/play, audio listening, BFCache, real touch or physical controller qualification.",
+    "Screenshots were inline only; no exported screenshot hashes. Natural1258x720 viewport, not device certification.",
+    "All GitHub project paths share an origin; no isolated storage claim. v0.61.20 Start reported session-only saving due to another game tab. v0.61.9 continued an existing run; native saved-data compatibility/ownership is not fully qualified.",
+    "Authorized gameplay may update continuation; no media edit/save/import/export/delete or catalog Apply was performed."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false
+}

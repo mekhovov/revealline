@@ -1,0 +1,163 @@
+{
+  "status": "UNVERSIONED_LOCAL_CANDIDATE_READY_FOR_ROOT_REVIEW",
+  "createdAt": "2026-09-18T19:06:29.587405+00:00",
+  "worktree": ".cache/worktrees/p03-enemy-reading-next",
+  "branch": "codex/p03-enemy-reading-next",
+  "base": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "tree": "4e04fef2d0d37614149624392e316742a513bc8d",
+  "predecessor": {
+    "path": ".cache/p03-enemy-action-wrap-next/ready.json",
+    "bytes": 2511,
+    "sha256": "323894c05e6999a4709300d94b88c7563a7d6220dbac07b8b961df17aa4c02dc"
+  },
+  "candidateManifest": {
+    "path": ".cache/p03-enemy-reading-next/candidate-pins.json",
+    "bytes": 1392,
+    "sha256": "c41b1f4eade6f19dc386bf41ec419f257faf0af20cba3ed44bbd665e7fcbff27"
+  },
+  "records": [
+    {
+      "path": ".cache/p03-enemy-reading-next/candidate-pins.json",
+      "bytes": 1392,
+      "sha256": "c41b1f4eade6f19dc386bf41ec419f257faf0af20cba3ed44bbd665e7fcbff27"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/candidate-r2.patch",
+      "bytes": 23818,
+      "sha256": "ee3f31f4593af3aba2c4dc17abfd28b4469073ddbc7dc870d682422d19511b38"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/reading-only.patch",
+      "bytes": 18801,
+      "sha256": "894cd889450c4fadbe5e2af103dc868b54e264a972fa0f094cd3477725af6579"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/checks.json",
+      "bytes": 1393,
+      "sha256": "3303cb4ed74b182fbd73f3f8ae20b17c0e7ec197f80a9c45726a07b47c0ce52c"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/red.json",
+      "bytes": 1084,
+      "sha256": "22e5b418419c5ec90c2a79f0964835360faf6c85ec82cf7308fc52d7b4041924"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/red.stdout",
+      "bytes": 11243,
+      "sha256": "21344f2a0cb9da9130bb0e5221c7ce51e407d91a01586fc6a9f7613003a7d058"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/red.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/green-node20.stdout",
+      "bytes": 14712,
+      "sha256": "8526c5d2a4c517adaa6641cdbfae496b4c657a6dff5b9de5b507e4637361ebd6"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/green-node20.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/green-node22.stdout",
+      "bytes": 15701,
+      "sha256": "5d127ef3d9b4599b1bdb2637e5754d898ad185a0bc9c8e692b3609447afdb43d"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/green-node22.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/final-node20.stdout",
+      "bytes": 14742,
+      "sha256": "0e0c4c79cffec6ced51b55dffe60a42172cd0dc3ffea6cba3912c2d8a2d32081"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/final-node20.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/final-node22.stdout",
+      "bytes": 15703,
+      "sha256": "b736f5c194566c61bf5dc2c8b38370ef6018e6581b7e680d531c0aa4003c6fd1"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/final-node22.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/native-observation.json",
+      "bytes": 13566,
+      "sha256": "abb29984a3a3fa545163a68c279c095622d47b9f6e9318d56d13d6e8a40aaedd"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/format-record.json",
+      "bytes": 532,
+      "sha256": "e4ba30330f002003cb3a05765c869be6f0c171655d034135aa729d142c20e741"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/format-cwd.stdout",
+      "bytes": 186,
+      "sha256": "fdbfbfe0d7e5bc3ee7d1568e7a9f426baedfc91039cc2c0c12ca2d8956663cb2"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/format-cwd.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/README.md",
+      "bytes": 2779,
+      "sha256": "c7f1790e1babe1eabdc81c48666ea084d4e091b17e43c48d9e7ec2cef96d5a2b"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/pr-body.md",
+      "bytes": 913,
+      "sha256": "a2f43774560ab0d7b05e4bda8980e2d887b89102bb93dfcb1993554f222883b5"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/before.json",
+      "bytes": 2364,
+      "sha256": "2fb8fe644bcb03ba937671ee052f63c66ee3a954eb7d2cad3621cca9019d9b46"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/hydration-plan.json",
+      "bytes": 9989,
+      "sha256": "f6d3dfd1e7f263c8b61978f1233ab5dae37539631c6f46923093ce7f3c67343b"
+    }
+  ],
+  "preview": [
+    {
+      "path": ".cache/p03-enemy-reading-next/native-preview-r2/source.json",
+      "bytes": 1436,
+      "sha256": "3511da56abcd5f2ebf221c82b45f7c9062ce8ad7f01710447a6702d8dda949bb"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/native-preview-r2/serve.py",
+      "bytes": 4024,
+      "sha256": "5820c031b5738667a956b892d894c6c811232def15c0d0797ed3585e024c024d"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/native-preview-r2/server.json",
+      "bytes": 247,
+      "sha256": "b774bd716479a03ae437c32eb9427fafa839e502295e6347b83e5260e43e3036"
+    },
+    {
+      "path": ".cache/p03-enemy-reading-next/native-preview-r2/served-snapshot.jsonl",
+      "bytes": 467388,
+      "sha256": "80f8d1bed30cbd6fc82a694191c0a006685eeb819acb840ea5bfe94817e6e966"
+    }
+  ],
+  "previewURL": "http://127.0.0.1:56736/authoring/enemy-catalog/",
+  "previewSession": 48284,
+  "focusedTestsPerNode": 65,
+  "newRegressions": 5,
+  "nativeScope": "12 action-layout observations and 4 dialog390 typography observations; source overlay only, inline screenshots. No full phase or public acceptance.",
+  "next": "Root review; integrate separately on the chosen qualified source with version/production/full qualification gates if authorized. No stage/commit/remote action is prepared for automatic execution."
+}
