@@ -1,0 +1,89 @@
+{
+  "format": "revealline-scoped-public-acceptance.v1",
+  "acceptedAt": "2026-09-18T01:59:47.862732+00:00",
+  "version": "v0.60.8",
+  "status": "ACCEPTED_SCOPED_MISSIONS_RETURN_AND_BACKUP_FEEDBACK",
+  "sourceRevision": "a7fd646e40bd93268f56b714fdc5d8aa9b0b1f67",
+  "sourceTree": "fffcf886b4f1a0000fbfd062a931bbe1cb0fef64",
+  "sourcePR": 98,
+  "publisherPR": 109,
+  "publisherCommit": "36d9e9fa14601ae1ae11a737dda0279e27f909da",
+  "publisherTree": "5af98e177d58b102d805041341901e682a55370b",
+  "runId": 35296490635,
+  "deploymentId": 6515753918,
+  "deploymentStatusId": 18503991515,
+  "releaseId": 391137536,
+  "url": "https://mekhovov.github.io/revealline/releases/v0.60.8/site/game/",
+  "sourceTests": {
+    "perHostedFamily": 5687,
+    "files": 453,
+    "families": 2,
+    "sixGatesPassed": true,
+    "productionAndOrdinaryBuildPassed": true
+  },
+  "publicAudit": {
+    "files": 2872,
+    "bytes": 640294864,
+    "attempts": 2872,
+    "failures": 0,
+    "retries": 0,
+    "skipped": 0,
+    "uninspected": 0
+  },
+  "nativeScope": [
+    "Keyboard Home/field/Brief Missions Back/Escape preserves exact opener and paused clock",
+    "Collection appearance detour retains Home and Results parent",
+    "Owned file chooser Import/Undo gives accurate feedback and restores original empty test profile preferences",
+    "Actual52.2%/8160points/8s/3lives win, full earned picture, Retry and explicit Pause",
+    "Responsive390x844 and844x390 brief Back controls; default1280x720; override reset"
+  ],
+  "previousReleasePreserved": "https://mekhovov.github.io/revealline-archive-21/releases/v0.60.7/site/game/",
+  "publicExplorerVersionsAtDeployment": 79,
+  "draftReleaseExcluded": "v0.60.9 is an unpublished draft; it is not a tested public edition",
+  "pins": [
+    {
+      "path": "tools/runs/complete-1/report.json",
+      "bytes": 3784,
+      "sha256": "688d336d6923e5a3ceb2f66735cc6017915359f7755c3d15dfab4614ecee14ea"
+    },
+    {
+      "path": "public-row-review-complete-1.json",
+      "bytes": 1597,
+      "sha256": "19fc861fbbdcb41718f2f5169c9131beaeb900ab0faf5047a0194016a0175f2c"
+    },
+    {
+      "path": "after-http-authorities-main-1/result.json",
+      "bytes": 7490,
+      "sha256": "a6594a7101c7f9367b6524422111f99b3a69aeae95b8cd03b5aca8687cc8c29d"
+    },
+    {
+      "path": "public-browser/observations-navigation-backup.json",
+      "bytes": 2195,
+      "sha256": "0445fe86ba03508436942a962595c6ebd866ee015eede44e8245ce4815c2b16f"
+    },
+    {
+      "path": "public-browser/observations-victory-responsive.json",
+      "bytes": 1906,
+      "sha256": "c0db7ba6e1686816454fe52e92bcb400d415967b5ceaf3c82226126befea0ec1"
+    },
+    {
+      "path": "public-browser/owned-empty-large-backup.json",
+      "bytes": 974,
+      "sha256": "4eb31f0eac138699652820791089f3bc7961125c7a42ed5f51df07af3e4dbcc7"
+    },
+    {
+      "path": "root-intake-review.json",
+      "bytes": 279,
+      "sha256": "8f81c1b2007bd2150c059497518ec4fba7f76ab4bb8c6152290dec7a6fd53718"
+    }
+  ],
+  "wholePhaseAccepted": false,
+  "remaining": [
+    "Full P03 navigation matrix and physical controller/touch",
+    "P05 consistent presentation across every mode",
+    "P08 artwork/actor and feedback parity",
+    "P09 fair difficulty and human playtesting",
+    "Media/offline and P18 full device qualification",
+    "Remaining campaigns, authoring, audio and distribution programme"
+  ]
+}

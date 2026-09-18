@@ -1,0 +1,18 @@
+{
+  "format": "revealline-public-refresh-request.v1",
+  "reviewed": false,
+  "outputLabel": "main-1",
+  "binding": {
+    "path": "tools/inputs/d5e131081764d7547fdfa9d749e3a73b296e19a5/binding.reviewed.json",
+    "bytes": 2041,
+    "sha256": "b45d303fa8d7a67415bf52a1b48549eba18214a1fbde97c3ba34e8fc0aa1d67e"
+  },
+  "report": null,
+  "rowReview": null,
+  "hostedObservation": null,
+  "publishedRelease": {
+    "path": "release-observation-before-1/published-release.json",
+    "bytes": 16088,
+    "sha256": "34225356860f74d55a18874bafc55036a0da9ca6c3ee60fee07289fde73fdf27"
+  }
+}
