@@ -1,0 +1,47 @@
+{
+  "base": "d2455ebfa444a8692d2694790afa6e4199af64e0",
+  "initialRun": "runs/composed-node20/receipt.json",
+  "initialCounts": {
+    "tests": 373,
+    "pass": 371,
+    "fail": 2
+  },
+  "cause": "The sparse test workspace omitted five unchanged actor PNG originals and the Replay entry HTML. Two tests failed with ENOENT. Restore exact committed dependencies; no runtime, test assertions or expected identities changed.",
+  "added": [
+    {
+      "path": "game/presentation/compiled/assets/827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png",
+      "bytes": 325,
+      "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91"
+    },
+    {
+      "path": "game/presentation/compiled/assets/3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c.png",
+      "bytes": 600,
+      "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c"
+    },
+    {
+      "path": "game/presentation/compiled/assets/e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e.png",
+      "bytes": 290,
+      "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e"
+    },
+    {
+      "path": "game/presentation/compiled/assets/5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683.png",
+      "bytes": 295,
+      "sha256": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683"
+    },
+    {
+      "path": "game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png",
+      "bytes": 515,
+      "sha256": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "bytes": 9037,
+      "sha256": "a63cd826a9e8bf041848c4fe214fa5fbe13b6df054dfa02e9dfb31ceb0d47b71"
+    }
+  ],
+  "addedBytes": 11062,
+  "nextRuns": [
+    "composed-node20-r2",
+    "composed-node22"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "runtime": [
+    {
+      "path": "game/app.mjs",
+      "body": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/app.mjs",
+      "bytes": 269100,
+      "sha256": "592bcb9d2a151e7f3a1b181976055c6b68a060bdb77c313427f7d14a62ab9d22"
+    },
+    {
+      "path": "game/index.html",
+      "body": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/game/index.html",
+      "bytes": 72178,
+      "sha256": "7537d586c218a1ad5a0e93a8d6d37f909c17cfe4f6c6d14b3031905b1dd652fd"
+    },
+    {
+      "path": "site/about.html",
+      "body": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-r2-628e95da/proposal/site/about.html",
+      "bytes": 27157,
+      "sha256": "859ceaf4f78f0e74090ca4fd430ea98f29e085daa23392844eee525c78538df9"
+    },
+    {
+      "path": "site/landing.css",
+      "body": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/landing.css",
+      "bytes": 33928,
+      "sha256": "0ed7e2220b436a6c08c1528a4f8fdefaf42bc1a1782e2cba94d2fce20d0034eb"
+    },
+    {
+      "path": "site/landing.mjs",
+      "body": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/landing.mjs",
+      "bytes": 5494,
+      "sha256": "6ec652f513a9d994530eafb9633e912fc8680fa9bb4075c973ffb893d740eb0f"
+    },
+    {
+      "path": "site/release-links.mjs",
+      "body": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-release-history-about-628e95da/proposal/site/release-links.mjs",
+      "bytes": 1364,
+      "sha256": "0e9b734784b6af2222f552c82b133e6d57eee91f5e51bf2e3a347cdfe6036526"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "base": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "baseTree": "304acdf23c8ef9c465e61e8338b43a69aebfdca5",
+  "scope": "P03/P16 Enemy Workshop static same-edition Return to game; exact628 plus one reviewed HTML override; native verification only.",
+  "files": {
+    "authoring/enemy-catalog/index.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-enemy-workshop-return-browser/index.html",
+      "bytes": 2496,
+      "sha256": "bad9b572099658506952017b2fa3285af417a7e0d008f599a3fe5e99a2085c4a"
+    }
+  }
+}

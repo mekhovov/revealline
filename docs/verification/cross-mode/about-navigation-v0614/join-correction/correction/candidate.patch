@@ -1,0 +1,113 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 246f296ef37c852baadc08e4954b03f5046e2e37..0043b23b5ce5b99006fff70bdd371a4b3d59c1a7 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -351,7 +351,7 @@ Craft switching must follow the active run’s roster and authored hangars, with
+ 
+ Route Missions Back, native cancel and controller cancel through the same origin-aware shell handler. Prevent the native default after handling cancel, but retain cancellation notices for transactions that remain open. Do not reopen Home from a generic close listener: Deploy and Back to flight deliberately leave Missions. Test title, flight and brief origins with the saved cut and explicit Resume unchanged. Capture the explicit title Missions, field Missions or Mission brief opener before closing its parent; a repeated open of the same Missions visit from Collection appearance setup must retain that original parent and opener. On Back, validate the complete return target and its parent, use the available parent Missions entry or primary only as fallback, and preserve newer dialogs, deliberate focus, background/disposal and close/pause callback ownership before reopening Home. Distinguish expected native close/showModal autofocus from a newer usable focus choice. Preserve the existing no-argument programmatic field handoff and its flight focus; this correction does not extend campaign-complete entry behavior. Test the actual shell/host plus queued native-close modeling, held controller Back, unchanged paused-cut/checkpoint/storage and intentional Deploy/Back to flight. Keep native and physical-device acceptance separate.
+ 
+-Keep software release history in About’s Build information disclosure, separate from Home’s game destinations and its unchanged version label. Derive the About page’s sibling game URL before applying the shared catalog resolver; frozen About routes include `site/site/about.html`. Keep the history link hidden under the actual button CSS until its correct URL is initialized, before awaiting the catalog. Preserve the current-build fallback and explicit Open build action. Rebase only already-validated relative archived-play results against the fetched/requested catalog URL; retain the strict validator, exact canonical HTTPS URLs and invalid-canonical-to-valid-local fallback. Do not add automatic navigation, save writes or a new modal-return owner. Regression prompt: “Check first/continued Home, source/frozen About, held/failed catalog loads, relative/canonical/malformed records, and module failure with the history link truly unrendered; verify explicit navigation and original game state.” Record modeled URL/host tests, native focus/44-pixel layouts and actual public catalog qualification separately. See [Software build information](../../../docs/field-kit-surfaces.md#software-build-information). Initialize About’s shared controller owner before catalogue awaits with a stable page scope and an explicit same-edition Return link. Preserve native keyboard/touch defaults and SUMMARY behavior; use the existing SELECT draft/commit/cancel semantics. Controller Back cancels an edit first, otherwise focuses Return without navigating. Native-editor Escape must retain browser dismissal after any controller edit is cancelled; only non-editor Escape focuses Return. Loading completion must not steal focus, confirm a stale edit or restart disposed input. Keep hints separate from catalogue status and avoid repeating the adjacent live select preview in the page status. Style that preview locally as a readable full row in the header, build picker and pack launcher; About does not load the game stylesheet. Suspend the single frame loop on blur/hidden/cached departure, require neutral input on restoration, and destroy all owners/listeners on terminal departure while blocking late catalogue mutations. For exact HTTPS numbered Reveal Line archive immutable About routes, resolve the JSON catalogue to the canonical main-site releases path; keep this project-specific rule in the site helper, preserve generic/custom-host routing and same-edition Return, and do not weaken the archived-play validator.
++Keep software release history in About’s Build information disclosure, separate from Home’s game destinations and its unchanged version label. Derive the About page’s sibling game URL before applying the shared catalog resolver; frozen About routes include `site/site/about.html`. Keep the history link hidden under the actual button CSS until its correct URL is initialized, before awaiting the catalog. Preserve the current-build fallback and explicit Open build action. Rebase only already-validated relative archived-play results against the fetched/requested catalog URL; retain the strict validator, exact canonical HTTPS URLs and invalid-canonical-to-valid-local fallback. Do not add automatic navigation, save writes or a new modal-return owner. Regression prompt: “Check first/continued Home, source/frozen About, held/failed catalog loads, relative/canonical/malformed records, and module failure with the history link truly unrendered; verify explicit navigation and original game state.” Record modeled URL/host tests, native focus/44-pixel layouts and actual public catalog qualification separately. See [Software build information](../../../docs/field-kit-surfaces.md#software-build-information). Initialize About’s shared controller owner before catalogue awaits with a stable page scope and an explicit same-edition Return link. On a successful controller join, engage navigation to establish visible focus without activation, preserving any meaningful prior focus; verify BODY arrival, held input, release and a fresh Confirm through the actual host. Preserve native keyboard/touch defaults and SUMMARY behavior; use the existing SELECT draft/commit/cancel semantics. Controller Back cancels an edit first, otherwise focuses Return without navigating. Native-editor Escape must retain browser dismissal after any controller edit is cancelled; only non-editor Escape focuses Return. Loading completion must not steal focus, confirm a stale edit or restart disposed input. Keep hints separate from catalogue status and avoid repeating the adjacent live select preview in the page status. Style that preview locally as a readable full row in the header, build picker and pack launcher; About does not load the game stylesheet. Suspend the single frame loop on blur/hidden/cached departure, require neutral input on restoration, and destroy all owners/listeners on terminal departure while blocking late catalogue mutations. For exact HTTPS numbered Reveal Line archive immutable About routes, resolve the JSON catalogue to the canonical main-site releases path; keep this project-specific rule in the site helper, preserve generic/custom-host routing and same-edition Return, and do not weaken the archived-play validator.
+ 
+ Keep standalone Enemy workshop departure a static same-edition `../../game/` link beside the page actions, available before module startup and during failure. Do not route it through catalog Apply, implicit saving, history/referrer inference, or a new return-context owner. Modal Back still closes only the panel; the practice iframe retains its scoped return bridge and input ownership. The startup auto-open lease begins before the first await and belongs only to untouched foreground body/root focus. Existing meaningful focus, later focus/input, blur, hidden or pagehide retires it permanently; remove intent listeners on retirement and all startup listeners on settlement or terminal departure. Prevent late terminal responses from initializing owners; defer cached-page readiness/failure until pageshow without reviving auto-open. Ready status must not open a modal over a newer Return choice or engage navigation to force a default. Preserve ordinary untouched auto-open and explicit Open workshop. The existing controller owner starts only after themes load, so distinguish ready-state modeled controller routing from pre-ready/failure native-link availability. Use the [Enemy workshop return prompt](../../../docs/enemy-catalog.md#returning-to-the-game); native navigation and physical-device checks remain separate.
+ 
+diff --git a/docs/field-kit-surfaces.md b/docs/field-kit-surfaces.md
+index 692860ae68cfa786e370882b086ef79a45c1329c..636c57dbf5992145ef3a88aecca51e4f92f46639 100644
+--- a/docs/field-kit-surfaces.md
++++ b/docs/field-kit-surfaces.md
+@@ -28,7 +28,7 @@ Build choices retain the strict archived-play validator. Only a validated relati
+ 
+ Maintenance prompt: “Check Home before a first flight and with a continued flight, retaining its Back, focus and checkpoint behavior. Open About from a source deployment and a frozen edition with query/hash state. Hold and fail the catalog request, then supply local and canonical records, including rejected inputs and canonical-to-local fallback. Verify the history link is unavailable before module initialization and correct before the request finishes; only explicit Open build activation may leave the page.” Keep modeled routing and URL tests distinct from native keyboard/controller journeys, compact Standard/Large layouts, 44-pixel target checks and public-release catalog qualification. A synthetic local catalog is not evidence that a frozen public catalog is deployed.
+ 
+-About’s controller owner starts before either catalogue request and keeps one stable page scope across loading, success and failure. D-pad moves among visible native controls; Confirm toggles Build information or enters/commits the existing select editor. Back cancels an active edit; otherwise it focuses the explicit same-edition Return to game link, which requires a separate Confirm to leave. Native keyboard/touch retain ordinary link, disclosure and select behavior. Escape cancels a controller edit first; inside a native select, text/input editor or editable content it remains the browser’s dismissal key. Outside editors it focuses Return. Return goes to the game entry; it does not restore an in-memory Workshop opener.
++About’s controller owner starts before either catalogue request and keeps one stable page scope across loading, success and failure. A successful controller join immediately marks the already focused visible control, or selects Return when focus is outside the controls, without activating it. Held arrival input cannot join, and a held join cannot activate the selection; release and a fresh Confirm are required. D-pad moves among visible native controls; Confirm toggles Build information or enters/commits the existing select editor. Back cancels an active edit; otherwise it focuses the explicit same-edition Return to game link, which requires a separate Confirm to leave. Native keyboard/touch retain ordinary link, disclosure and select behavior. Escape cancels a controller edit first; inside a native select, text/input editor or editable content it remains the browser’s dismissal key. Outside editors it focuses Return. Return goes to the game entry; it does not restore an in-memory Workshop opener.
+ 
+ Controller hints have their own status region, separate from release and pack preparation. A select draft announces itself once in its adjacent live preview; the page hint does not repeat that announcement. About supplies local themed preview styling, with a full row after the header, preserved-build controls or pack-launch controls, so hints do not squeeze the native selectors and actions. Catalogue completion can invalidate a stale select draft but never confirms it, navigates or steals focus. Blur, hidden and cached-page departure clear edits and held input and stop the single controller frame loop. Foreground restoration starts at most one loop with neutral input required. Terminal departure destroys that owner and prevents late fetch/body success or failure from updating the departed page.
+ 
+diff --git a/game/test/about-navigation-host.test.mjs b/game/test/about-navigation-host.test.mjs
+index 2668c0f10eb7db02a42e5f085de433beef526560..9f5d1abdf12149c9a19e7c36c37e37496bbf71bc 100644
+--- a/game/test/about-navigation-host.test.mjs
++++ b/game/test/about-navigation-host.test.mjs
+@@ -284,18 +284,67 @@ for (const [page, target] of [
+     assert.deepEqual(h.writes, []);
+   });
+ 
++test('first controller join establishes visible Return focus before a later Confirm can activate it', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.setPad();
++  h.tick();
++  assert.ok(h.doc.activeElement === h.doc.body, 'Neutral arrival is not a focus request.');
++  h.setPad([0]);
++  h.tick();
++  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
++  assert.ok(h.$('about-return').classList.contains('controller-focus'));
++  h.tick();
++  h.tick();
++  assert.deepEqual(h.navigations, [], 'Joining and holding Confirm cannot activate Return.');
++  h.setPad();
++  h.tick();
++  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
++  assert.ok(h.$('about-return').classList.contains('controller-focus'));
++  assert.deepEqual(h.navigations, [], 'Releasing the join keeps the visible selection inert.');
++  h.tap(0);
++  assert.deepEqual(h.navigations, ['https://example.test/revealline/releases/v0.60.8/site/game/']);
++  assert.deepEqual(h.writes, []);
++});
++
++test('controller join marks a previously focused disclosure without changing or activating it', async (t) => {
++  const h = await about(t);
++  await h.start();
++  const summary = h.$('versions').querySelector('summary');
++  summary.focus();
++  h.setPad();
++  h.tick();
++  h.setPad([0]);
++  h.tick();
++  assert.ok(h.doc.activeElement === summary, 'The previously focused summary keeps focus.');
++  assert.ok(summary.classList.contains('controller-focus'));
++  assert.equal(h.$('about-return').classList.contains('controller-focus'), false);
++  h.tick();
++  h.setPad();
++  h.tick();
++  assert.ok(h.doc.activeElement === summary, 'The previously focused summary keeps focus.');
++  assert.equal(h.$('versions').open, false, 'Join, hold and release do not toggle disclosure.');
++  assert.deepEqual(h.navigations, []);
++  h.tap(0);
++  assert.equal(h.$('versions').open, true, 'Only a subsequent Confirm activates its selection.');
++  assert.deepEqual(h.writes, []);
++});
++
+ test('held arrival Confirm waits for neutral and join before any page action', async (t) => {
+   const h = await about(t);
+   h.setPad([0]);
+   await h.start();
+   h.tick();
+   h.tick();
++  assert.ok(h.doc.activeElement === h.doc.body, 'Held arrival has not joined or claimed focus.');
+   assert.deepEqual(h.navigations, []);
+   assert.equal(h.$('versions').open, false);
+   h.join();
++  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
++  assert.ok(h.$('about-return').classList.contains('controller-focus'));
+   assert.deepEqual(h.navigations, []);
+   h.tap(1);
+-  assert.equal(h.doc.activeElement, h.$('about-return'));
++  assert.ok(h.doc.activeElement === h.$('about-return'), 'Return owns the active focus.');
+ });
+ 
+ test('D-pad and Confirm operate the real disclosure and preserved-build select without automatic navigation', async (t) => {
+diff --git a/site/about-navigation.mjs b/site/about-navigation.mjs
+index 783743e4c34bfe07d8783eec7d7961358aa53da2..4190a210f174c2c9b90acb6d48ce961e50743a8f 100644
+--- a/site/about-navigation.mjs
++++ b/site/about-navigation.mjs
+@@ -79,6 +79,9 @@ export function attachAboutNavigation({
+           : sample.status.message,
+       );
+     }
++    // Joining establishes a visible selection but carries no page activation.
++    // engage() preserves an already focused control; the router gates the hold.
++    if (sample.status.code === 'joined') navigation.engage();
+     navigation.handle(sample.ui);
+     schedule();
+   }

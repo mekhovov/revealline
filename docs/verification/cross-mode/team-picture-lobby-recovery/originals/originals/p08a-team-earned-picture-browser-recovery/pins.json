@@ -1,0 +1,83 @@
+{
+  "server": {
+    "path": "serve.py",
+    "bytes": 7187,
+    "sha256": "5a205fa034758a772e414164df6e1eddd22828421b922ce59bde0925322b8cc1"
+  },
+  "reviewReceipt": {
+    "path": "review-receipt.json",
+    "bytes": 4419,
+    "sha256": "a4191b52b1d43665c1835fcbc6d22cc50db003ffccfbd00b17538b25371cb6d9"
+  },
+  "bindingProposal": {
+    "path": "binding-proposal.json",
+    "bytes": 653,
+    "sha256": "737c4dc47e773c6a010004a0dd1d18bca882230821a747fe77014a44c8c86623"
+  },
+  "runtimeOverrides": {
+    "path": "runtime-overrides.json",
+    "bytes": 1375,
+    "sha256": "1079aaa86841f09f109a443e699065cb6fd8d1819262f0a481485dd158bf74aa"
+  },
+  "adaptationDiff": {
+    "path": "server-adaptation.diff",
+    "bytes": 3216,
+    "sha256": "c0b0a4b639511d4aaa643ce59199127150420695a4c4ed3700d06affca1ea995"
+  },
+  "sourceProof": {
+    "path": "artwork-source-proof.json",
+    "bytes": 1675,
+    "sha256": "a6741956fed51a236f2b3859e566e6a117c5f408c904828fa3d0a0a3ca247a57"
+  },
+  "initialFaultConfiguration": {
+    "path": "faults.json",
+    "bytes": 3,
+    "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+  },
+  "faultExamples": [
+    {
+      "path": "fault-examples/fail-first-connection.json",
+      "bytes": 129,
+      "sha256": "fea26291bed634b1e88689c35dbcdb0490b48251edcb2865cc0c0477838c331a"
+    },
+    {
+      "path": "fault-examples/delay-first-connection.json",
+      "bytes": 134,
+      "sha256": "f719e388bbaa5d4e61ee8a7482b3b85b28289b6336481e1dd178fa58c245d1cd"
+    },
+    {
+      "path": "fault-examples/fail-relay-yard.json",
+      "bytes": 129,
+      "sha256": "fda19a0e01fde7ed4213ca5340cca536bc426df0dfa7b9cf055dd76c3f472072"
+    },
+    {
+      "path": "fault-examples/delay-relay-yard.json",
+      "bytes": 134,
+      "sha256": "99a4dc038e0e69bfb560b20bfa8623c9cc6b0b464ecceff4d3f560d401542fd6"
+    }
+  ],
+  "referencedCandidateFiles": {
+    "game/couch/coop-view.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/coop-view.mjs",
+      "bytes": 21420,
+      "sha256": "f54b0a83047606aa845209716cdd4ee6a952c892808606d2597539927b76e342"
+    },
+    "game/couch/relay-rescue.css": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.css",
+      "bytes": 19284,
+      "sha256": "315069d23962338346347c5cfb102249c3efbe380d99032baf207fef079e16dc"
+    },
+    "game/couch/relay-rescue.html": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.html",
+      "bytes": 22232,
+      "sha256": "95ea2552db1b2d3dceb26ac4f0f41ff2fab6addb8979acfbac1d768c810e1ea7"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "file": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-team-earned-picture-browser/relay-rescue.mjs",
+      "bytes": 58894,
+      "sha256": "d82669dad630c9a8d1577006b29ba4ca8a645fe45c1cfb7188861baf50c014d8"
+    }
+  },
+  "noCandidateCopiesAdded": true,
+  "totalBytesBeforeThisPinsFile": 29327
+}
