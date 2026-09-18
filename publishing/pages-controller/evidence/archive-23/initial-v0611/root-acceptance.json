@@ -1,0 +1,41 @@
+{
+  "status": "ROOT_ACCEPTED_IMMUTABLE_V0611_ARCHIVE_RETENTION",
+  "at": "2026-09-18T07:03:18.027019+00:00",
+  "archiveRepository": "mekhovov/revealline-archive-23",
+  "archiveCommit": "b5b0be38b2d5fd2eb5c7647ab1cdf026aa49b667",
+  "archiveTree": "0450f1ca681b595bcb06cf4f0d3a023030881821",
+  "runId": 35316681141,
+  "deploymentId": 6519185571,
+  "deploymentStatusId": 18511870331,
+  "source": "a7a4e2d7090e2fe9d1843d88b63bc334b95bf61e",
+  "version": "v0.61.1",
+  "files": 698,
+  "bytes": 313331293,
+  "failedAttempts": 0,
+  "retries": 0,
+  "publicOriginalsRehashed": 54,
+  "evidence": [
+    {
+      "path": "row-review.json",
+      "bytes": 12345,
+      "sha256": "814765496c486b8d1415ab71ba30c9541300fe1cc00668b71931d306d62596f9"
+    },
+    {
+      "path": "native-root.json",
+      "bytes": 1416,
+      "sha256": "10da4968a4c09a9c0ef3a1f5ba23d17e5769c7e7db5dfefc386c44124d9554eb"
+    },
+    {
+      "path": "execution-request.reviewed.json",
+      "bytes": 1629,
+      "sha256": "052a6153ac995a70ac0732e48087f4247760d8e2bf164c07f88b747b1df5e445"
+    }
+  ],
+  "acceptedScope": "Exact original611 retention onnewarchive path; completepublicbytes andactualnative title/cut/PauseResume/explorerreturn",
+  "notAccepted": [
+    "No new gamepatch ormainselectorchange",
+    "Known611picker/localconnectionsfocusgaps remain",
+    "No fullP03/P05/P18/hardware/offline/audio certification",
+    "Archive does not create an isolated saveorigin"
+  ]
+}
