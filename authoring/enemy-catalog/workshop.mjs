@@ -216,7 +216,8 @@ async function start() {
     }
   });
   report('Seven behavior roles and four original presentation families ready.');
-  if (startupOpening.current()) panel.open();
+  if (startupOpening.current())
+    panel.open({ returnFocus: document.getElementById('open-catalog') });
   raf = requestAnimationFrame(loop);
 }
 start()
