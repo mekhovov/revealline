@@ -28973,6 +28973,328 @@
       },
       "recipe": { "id": "ui.cursor.v1" },
       "revision": 10
+    },
+    {
+      "description": "scout rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.scout.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.scout.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit scout rotor recipe for slot player.scout.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "bomber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.bomber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.bomber.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit bomber rotor recipe for slot player.bomber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "carrier rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.carrier.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.carrier.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit carrier rotor recipe for slot player.carrier.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "interceptor rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.interceptor.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.interceptor.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit interceptor rotor recipe for slot player.interceptor.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "fiber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.fiber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.fiber.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit fiber rotor recipe for slot player.fiber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "impact rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.impact.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.impact.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit impact rotor recipe for slot player.impact.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "trapper rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.trapper.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.trapper.rotors.field-kit", "revision": 7 },
+        "prompt": "Create one original FPV Field Kit trapper rotor recipe for slot player.trapper.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": ["Connected runtime recipe; screen and state review remains required."],
+        "stage": "source"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 8
+    },
+    {
+      "description": "scout rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.scout.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.scout.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit scout rotor recipe for slot player.scout.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
+    },
+    {
+      "description": "bomber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.bomber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.bomber.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit bomber rotor recipe for slot player.bomber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
+    },
+    {
+      "description": "carrier rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.carrier.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.carrier.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit carrier rotor recipe for slot player.carrier.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
+    },
+    {
+      "description": "interceptor rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.interceptor.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.interceptor.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit interceptor rotor recipe for slot player.interceptor.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
+    },
+    {
+      "description": "fiber rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.fiber.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.fiber.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit fiber rotor recipe for slot player.fiber.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
+    },
+    {
+      "description": "impact rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.impact.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.impact.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit impact rotor recipe for slot player.impact.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
+    },
+    {
+      "description": "trapper rotor recipe: existing bounded component with Field Kit tokens and state styling.",
+      "file": null,
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "player.trapper.rotors.field-kit",
+      "kind": "recipe",
+      "provenance": {
+        "creator": "Reveal Line",
+        "license": "Project-authored runtime recipe",
+        "parent": { "id": "player.trapper.rotors.field-kit", "revision": 8 },
+        "prompt": "Create one original FPV Field Kit trapper rotor recipe for slot player.trapper.rotors. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+        "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4"
+      },
+      "quality": {
+        "evidence": [
+          "Scoped P08-A source review: docs/actor-size-recipe-review.md; motion recipe inputs sha256:b050a157f2fcffb3c3811776ded9f477dbec46e1f237fc28d2d1461f989c5cc4. The actor presentation input repairs fitted CSS minimum/maximum sizing while retaining source artwork, rotor recipes and finite actor/tail budgets. The unchanged Motion painter remains the second fingerprint input. The companion Solo/Versus body inset is separately pinned and leaves true contact, cut/head, ability centres and simulation unchanged.",
+          "The three runtime bodies committed in v0.61.22 source 307f46382a580b877a99123b3a7df7d9bc53dd40 match the reviewed candidate exactly. The retained cohort passed 100 tests each on Node20.19.5 and Node22.22.2, including actual-paint edge/transform envelopes, separate contact/trail geometry and checkpoint preservation. Original scoped native review sha256:c688971d7375f0e6fd0e361b6cd5b421f283a935ac2b5d62944e6221257a9b47 observed compact/detailed Solo and Versus craft at examined edges and exposed cuts; modeled geometry and browser observations remain distinct.",
+          "This is a bounded sizing/inset recipe declaration, not complete animation-set, all-role, all-theme, physical-input, brightness, fairness, audio, offline or public acceptance. Separate narrow Large HUD overflow remains open. Immutable fpv28 approval and the measured fpv29 source-stage successor are retained before this reviewed successor; all original payloads remain unchanged. Final integrated-source qualification and public verification are still required."
+        ],
+        "stage": "reviewed"
+      },
+      "recipe": { "id": "actor.rotors.v1" },
+      "revision": 9
     }
   ],
   "collections": [
@@ -29948,11 +30270,11 @@
   ],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 28,
+  "revision": 30,
   "selection": {
     "base": { "id": "base", "revision": 1 },
     "collection": null,
-    "theme": { "id": "fpv", "revision": 28 }
+    "theme": { "id": "fpv", "revision": 30 }
   },
   "slots": [
     {
@@ -47117,6 +47439,40 @@
       "name": "FPV Field Kit",
       "parent": { "id": "fpv", "revision": 27 },
       "revision": 28,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "player.bomber.rotors": { "id": "player.bomber.rotors.field-kit", "revision": 8 },
+        "player.carrier.rotors": { "id": "player.carrier.rotors.field-kit", "revision": 8 },
+        "player.fiber.rotors": { "id": "player.fiber.rotors.field-kit", "revision": 8 },
+        "player.impact.rotors": { "id": "player.impact.rotors.field-kit", "revision": 8 },
+        "player.interceptor.rotors": { "id": "player.interceptor.rotors.field-kit", "revision": 8 },
+        "player.scout.rotors": { "id": "player.scout.rotors.field-kit", "revision": 8 },
+        "player.trapper.rotors": { "id": "player.trapper.rotors.field-kit", "revision": 8 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 28 },
+      "revision": 29,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "player.bomber.rotors": { "id": "player.bomber.rotors.field-kit", "revision": 9 },
+        "player.carrier.rotors": { "id": "player.carrier.rotors.field-kit", "revision": 9 },
+        "player.fiber.rotors": { "id": "player.fiber.rotors.field-kit", "revision": 9 },
+        "player.impact.rotors": { "id": "player.impact.rotors.field-kit", "revision": 9 },
+        "player.interceptor.rotors": { "id": "player.interceptor.rotors.field-kit", "revision": 9 },
+        "player.scout.rotors": { "id": "player.scout.rotors.field-kit", "revision": 9 },
+        "player.trapper.rotors": { "id": "player.trapper.rotors.field-kit", "revision": 9 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 29 },
+      "revision": 30,
       "tokens": {}
     }
   ]

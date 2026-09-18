@@ -74,6 +74,50 @@ for (const width of [294, 390, 600, 1152])
     assert.ok(strokes.every((c) => c.globalAlpha === 1));
   });
 
+test('240px larger actor body leaves real contact and active-cut world coordinates unchanged', () => {
+  const s = surface(240),
+    frame = createActorPresentation()
+      .sample([actor], { screenScale: 240 / 1152, canvasCSSWidth: 240 })
+      .get(actor.id);
+  assert.ok(frame.diameter > 64);
+  drawPresentedActor(s.ctx, frame, theme.palette);
+  assert.ok(s.calls.some((call) => call.op === 'arc' && call.args[2] === actor.radius * 16));
+  const start = s.calls.length;
+  drawActiveTrail(
+    s.ctx,
+    [{ x1: 4.5, y1: 4.5, x2: 4.5, y2: 7.5 }],
+    [],
+    { x: 4.5, y: 7.5 },
+    theme.palette,
+    { screenScale: 240 / 1152, reduced: true },
+  );
+  const trail = s.calls.slice(start);
+  assert.deepEqual(
+    trail.filter((c) => c.op === 'moveTo').map((c) => c.args),
+    [
+      [72, 72],
+      [72, 72],
+      [72, 72],
+    ],
+  );
+  assert.deepEqual(
+    trail.filter((c) => c.op === 'lineTo').map((c) => c.args),
+    [
+      [72, 120],
+      [72, 120],
+      [72, 120],
+    ],
+  );
+  assert.deepEqual(
+    trail.filter((c) => c.op === 'stroke').map((c) => c.lineWidth),
+    [20, 12, 4],
+  );
+  assert.deepEqual(
+    trail.filter((c) => c.op === 'stroke').map((c) => c.strokeStyle),
+    [PRESENTATION_PLATE, theme.palette.accent, PRESENTATION_INK],
+  );
+});
+
 for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
   test(`${themeId}: actual observed movement animates microtile bodies; Pause holds the exact pose`, () => {
     const poses = createActorPresentation(),
