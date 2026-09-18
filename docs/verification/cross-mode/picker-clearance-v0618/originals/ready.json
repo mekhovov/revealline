@@ -1,0 +1,55 @@
+{
+  "status": "LOCAL_PICKER_CLEARANCE_CANDIDATE_READY_FOR_ROOT_REVIEW",
+  "preparedAt": "2026-09-18T05:47:17.222292+00:00",
+  "base": {
+    "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+    "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+    "version": "v0.61.6"
+  },
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next",
+  "branch": "codex/p05-picker-clearance-next",
+  "changedPaths": 4,
+  "productionChange": "Reuse existing measured focus clearance for still-picture dialog; preserve sticky operations and all transaction/focus ownership.",
+  "candidatePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/candidate-pins.json",
+    "bytes": 1679,
+    "sha256": "94aa5053a97cdd9c2551cdea30eabe8a5ad70d99f1f996b165022aa9a09630a4"
+  },
+  "diff": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/candidate.diff",
+    "bytes": 13526,
+    "sha256": "a1855d047125c67eeca290da3f91caf75d5f445ddcccd6a3eabf402c162e5397"
+  },
+  "evidencePins": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/evidence-pins.json",
+    "bytes": 10364,
+    "sha256": "3eeb06002dd49e431e671066734d2293f491e97708b42fa22a5785a950290289"
+  },
+  "verification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/verification-summary.json",
+    "bytes": 4232,
+    "sha256": "963b84f44fd80e49543ad8564c94ce0f3c2359f069bfebfd94661e0013753858"
+  },
+  "scope": [
+    "Current focused form control clears measured sticky feedback after focus or resize/reflow.",
+    "No ordinary-scroll following, refocusing, decoder, assignment, stored media or game changes.",
+    "One attached owner across reopen; closed callbacks inert, disposal retires callbacks and resets insets.",
+    "Original public finding and expected-red regression retained."
+  ],
+  "remaining": [
+    "Root independent code/evidence review.",
+    "Actual candidate portrait/landscape, Large/Plain and zoom hit/focus checks.",
+    "Version allocation, exact committed source gates, release/Pages and public acceptance by root.",
+    "Separate Close local connections return-focus finding remains open."
+  ],
+  "limits": {
+    "managedCapBytes": 16777216,
+    "managedBytes": 4279058,
+    "reserveBytes": 536870912,
+    "freeBytes": 1479643136,
+    "sourceExistingUnchanged": true,
+    "indexUnstaged": true,
+    "remoteMutation": false,
+    "browserRun": false
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "base": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+  "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+  "scope": "Exact v616 Git source plus two pinned picker label-clearance candidate modules. Still Media opts into containing-label measurement; all other consumers retain default control-only behavior. No state fixtures, preference changes or fault injection. GET/HEAD and loopback only. R1 remains separate historical observation.",
+  "files": {
+    "game/ui/still-media-panel.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/native-server-r2/still-media-panel.mjs",
+      "bytes": 30642,
+      "sha256": "0e8f6c1bed8be4452ef6b16186b1dc9e1aa6ff3a40daa5e1fca61125cfeca48d"
+    },
+    "game/ui/focus-clearance.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/native-server-r2/focus-clearance.mjs",
+      "bytes": 2529,
+      "sha256": "7b3b59f9bd1d3244eef44ab9fa98b418652688f1f0d5849952859e119d745544"
+    }
+  },
+  "limits": {
+    "extraDiskBytes": 16777216,
+    "reserveBytes": 536870912,
+    "memoryCacheBytes": 8388608,
+    "singleBlobBytes": 8388608,
+    "requestLogBytes": 1048576,
+    "requestEvents": 4000
+  },
+  "predecessor": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/native-server/serve.py",
+    "bytes": 6275,
+    "sha256": "5a39c4bb82f33943eea9a13880314c9b2dbfa9a93202f8442dc557fe0322d7cf"
+  },
+  "at": "2026-09-18T06:00:39.280021+00:00",
+  "hydration": "On-demand local Git object reads with GIT_NO_LAZY_FETCH=1 and hash verification. No dependency payloads copied to disk.",
+  "candidateSources": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/ui/still-media-panel.mjs",
+      "bytes": 30642,
+      "sha256": "0e8f6c1bed8be4452ef6b16186b1dc9e1aa6ff3a40daa5e1fca61125cfeca48d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-next/game/ui/focus-clearance.mjs",
+      "bytes": 2529,
+      "sha256": "7b3b59f9bd1d3244eef44ab9fa98b418652688f1f0d5849952859e119d745544"
+    }
+  ]
+}

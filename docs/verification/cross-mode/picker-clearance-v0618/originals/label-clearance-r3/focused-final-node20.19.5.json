@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/still-media-panel.test.mjs",
+    "game/test/still-media-host.test.mjs",
+    "game/test/focus-clearance.test.mjs",
+    "game/test/operation-focus-host.test.mjs",
+    "game/test/still-story-panel.test.mjs",
+    "game/test/still-media-bundle-ui.test.mjs"
+  ],
+  "exitCode": 0,
+  "counts": {
+    "tests": 104,
+    "pass": 104,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "elapsedSeconds": 13.379,
+  "bytes": 23132,
+  "sha256": "c8e3586af516a854077977ac809f9e02a0a5f7f36757baedfbcf74fa0682db57"
+}

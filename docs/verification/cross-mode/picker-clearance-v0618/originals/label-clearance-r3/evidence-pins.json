@@ -1,0 +1,169 @@
+{
+  "files": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/before/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 217874,
+      "sha256": "16ca08077a05515fd428af8c44314a4bef8d356363e4c82d85e0c224100fb9b9"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/before/docs/still-media-workshop.md",
+      "bytes": 12837,
+      "sha256": "25214f34dedcd43e0c46c56b259d408dc2b91e3cb11d50c4eef18bc75ef859e3"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/before/game/test/focus-clearance.test.mjs",
+      "bytes": 6057,
+      "sha256": "9c05c235f04aa2f6a1f08963ab16c0f3751936f9acca5fed7571ba228be4573f"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/before/game/ui/focus-clearance.mjs",
+      "bytes": 2529,
+      "sha256": "7b3b59f9bd1d3244eef44ab9fa98b418652688f1f0d5849952859e119d745544"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 218061,
+      "sha256": "5d1eec41590e13a062ef7327197b478bbf5d8b2995eec9e9e97ee5ecac7e257d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate/docs/still-media-workshop.md",
+      "bytes": 13047,
+      "sha256": "fde2f84812f7b256eb0bcdacc6c81d709b2ff164d6497efbaa9e8e29cb1caad8"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate/game/test/focus-clearance.test.mjs",
+      "bytes": 6809,
+      "sha256": "bf9c5c45b92d97d054f5122bbfad094764970e8c7abac4a2066c06b39e5b4721"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate/game/test/still-media-panel.test.mjs",
+      "bytes": 24922,
+      "sha256": "476f0fa102b5bc1b840466395ab49cc1be76e850bfb818102101a089f0821171"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate/game/ui/focus-clearance.mjs",
+      "bytes": 2645,
+      "sha256": "bc2118b05e683d0fb473760bde98d8ea0900d5af9217405df1d0954967bf0c58"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate/game/ui/still-media-panel.mjs",
+      "bytes": 30642,
+      "sha256": "0e8f6c1bed8be4452ef6b16186b1dc9e1aa6ff3a40daa5e1fca61125cfeca48d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate-pins.json",
+      "bytes": 2438,
+      "sha256": "4545d94a42d4e831da27219f705ee1b0e7c9a4e0e53d6e03145b2f4422547e2a"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/candidate.diff",
+      "bytes": 19953,
+      "sha256": "29de96e224d3c35f0e6220f869c297f9fe5f7e77b9af733cd7556ec30a2dcc9f"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/diff-check-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/finalize.py",
+      "bytes": 4823,
+      "sha256": "5ac097d6ec5a3b2cea572fb23684f628dff21e366f1ea05881289f11af86ace3"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/focused-final-node20.19.5.json",
+      "bytes": 650,
+      "sha256": "0c2b1610dee884554636c082273becd48bbeaef2b694aa2d0ad4a86922705f68"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/focused-final-node20.19.5.log",
+      "bytes": 23132,
+      "sha256": "c8e3586af516a854077977ac809f9e02a0a5f7f36757baedfbcf74fa0682db57"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/focused-final-node22.22.2.json",
+      "bytes": 650,
+      "sha256": "ccd16dc24a2ac77c879a6a1791bca8fc2ed04116b7ab0cca1a1f3c280889c0bf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/focused-final-node22.22.2.log",
+      "bytes": 24688,
+      "sha256": "878eafb82218d476b1ea7df36e552372fcfd49cad91482b06571e4b470f15dbf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/format-final.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/git-preimage/authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 216457,
+      "sha256": "c433e762eb85b585e64f50ba9e648ea6e2e9f6b01dc9ec79581b250b4a948eb7"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/git-preimage/docs/still-media-workshop.md",
+      "bytes": 11966,
+      "sha256": "466126762eba87fb8722087c623affd8ae1cfb72a8dd7d22ea768982d53ad71c"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/git-preimage/game/test/focus-clearance.test.mjs",
+      "bytes": 4465,
+      "sha256": "0dead6ff5d6adf2516fdfa838b69b139e4fbe594b30db8378817598b491dddf0"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/git-preimage/game/test/still-media-panel.test.mjs",
+      "bytes": 18636,
+      "sha256": "cafcafe4f542a167f6619f2aeff59be67fc9eb66c413292d79007d7dbf5fc5e8"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/git-preimage/game/ui/focus-clearance.mjs",
+      "bytes": 2325,
+      "sha256": "71e67d4379cbf2687dda056cd95ffe41142d450e3e15074c3dd2e004426a4296"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/git-preimage/game/ui/still-media-panel.mjs",
+      "bytes": 30379,
+      "sha256": "9a058555aa138cd6b14e1460c79b92c9ec5fde0ec756e4563a9828f38931d477"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/native-r3-server/binding.json",
+      "bytes": 1582,
+      "sha256": "c0145067d8096852cc9ef01e015c938a3b22a45a17fe9bb5ad380666d9694122"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/native-r3-server/runtime-overrides.json",
+      "bytes": 2274,
+      "sha256": "fd27bc8e608dd5253badf43c8e4eb35febbcd0fbd1a4534db5586d6a2021dd88"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/native-r3-server/serve.py",
+      "bytes": 6306,
+      "sha256": "9653d0ab87fa4d53d38c452bd54dff88c3072224101aa9f0f52c96d9c60bb3b2"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/oversize-regression-red-node22.log",
+      "bytes": 1141,
+      "sha256": "e5b792835f2c63ab83b297c0efe7947d62f98456f1dea331cc555af97af5bfa4"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/r2-preimages.json",
+      "bytes": 981,
+      "sha256": "2e69470a4735744452018d7bc71c00696bd819d1ff003e41faefa754d6bcaee0"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/root-native-r1.original.json",
+      "bytes": 1365,
+      "sha256": "bf925ce8fda42ff9bc5382819d98b6e51753af19fb85a8017881773d4d291ecd"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/source-status.txt",
+      "bytes": 228,
+      "sha256": "1e4bb06d8b94197b048de4d3dda807502714f71acafd9f89f30f6893551e4c21"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-picker-clearance-next/label-clearance-r3/verification-summary.json",
+      "bytes": 3366,
+      "sha256": "9120afba1fdbdde1408de32ad89d6ee3f14692fc8b7f6e13d7add95a81174b10"
+    }
+  ]
+}

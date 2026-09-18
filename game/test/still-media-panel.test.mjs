@@ -15,6 +15,7 @@ const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
 async function setup(t, options = {}) {
   const doc = new Document();
   doc.createElement = (tag) => new SoloElement(doc, tag);
+  options.configureDocument?.(doc);
   const f = mediaFixture(true),
     memory = memoryIndexedDB();
   const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, richStillMedia: true });
@@ -495,3 +496,178 @@ for (const reentry of ['focus', 'invalidate']) {
     else assert.equal(h.panel.snapshot().ready, false);
   });
 }
+
+// Finite rectangles from the public portrait obstruction and recorded r1
+// landscape label obstruction. These establish the mounted owner, not browser paint.
+function pickerLayout() {
+  const queue = [],
+    events = new Events(),
+    observers = [];
+  return {
+    configureDocument(doc) {
+      Object.assign(doc.defaultView, {
+        requestAnimationFrame: (fn) => queue.push(fn),
+        addEventListener: events.addEventListener.bind(events),
+        removeEventListener: events.removeEventListener.bind(events),
+        ResizeObserver: class {
+          constructor(callback) {
+            this.callback = callback;
+            observers.push(this);
+          }
+          observe(target) {
+            this.target = target;
+          }
+          disconnect() {
+            this.disconnected = true;
+          }
+        },
+      });
+    },
+    mount(h) {
+      const dialog = h.panel.dialog,
+        operations = h.$('operations'),
+        file = h.$('file');
+      dialog._rect = { x: 21, y: 16, width: 348, height: 812 };
+      dialog.scrollTop = 881.5;
+      operations._rect = { x: 36, y: 31, width: 318, height: 205.59375 };
+      file.getBoundingClientRect = () => {
+        const top = 926.875 - dialog.scrollTop;
+        return {
+          x: 36,
+          y: top,
+          left: 36,
+          top,
+          right: 354,
+          bottom: top + 64,
+          width: 318,
+          height: 64,
+        };
+      };
+      file.parentNode.getBoundingClientRect = () => {
+        const box = file.getBoundingClientRect();
+        return { ...box, top: box.top - 27.59375, height: box.height + 27.59375 };
+      };
+    },
+    flush() {
+      for (const fn of queue.splice(0)) fn();
+    },
+    resize() {
+      events.emit('resize');
+    },
+    reflow() {
+      for (const observer of observers) if (!observer.disconnected) observer.callback();
+    },
+    observers,
+  };
+}
+
+test('settled chosen preview keeps the focused original picker and label below its sticky status rail', async (t) => {
+  const layout = pickerLayout(),
+    h = await setup(t, { configureDocument: layout.configureDocument });
+  h.choose();
+  h.$('preview').focus();
+  assert.equal(await h.$('preview').onclick(), true);
+  const before = await h.store.read(),
+    paints = h.paints.length;
+  layout.mount(h);
+  h.$('file').focus();
+  assert.equal(h.$('file').getBoundingClientRect().top, 45.375, 'Original recorded occlusion.');
+  layout.flush();
+  assert.equal(h.panel.dialog.scrollTop, 654.6875);
+  assert.equal(h.$('file').parentNode.getBoundingClientRect().top, 244.59375);
+  assert.equal(h.$('file').getBoundingClientRect().top, 272.1875);
+  assert.equal(h.doc.activeElement, h.$('file'));
+  assert.equal(h.panel.dialog.style.scrollPaddingBlockStart, '228.59375px');
+  assert.equal(h.panel.snapshot().hasDraft, true);
+  assert.equal(h.paints.length, paints, 'Layout does not decode or repaint a picture.');
+  assert.deepEqual(await h.store.read(), before, 'Layout does not assign or write media.');
+
+  h.panel.dialog._rect = { x: 24, y: 16, width: 796, height: 358 };
+  h.$('operations')._rect = { x: 36, y: 39, width: 772, height: 97 };
+  h.panel.dialog.scrollTop = 782.78125;
+  assert.equal(h.$('file').getBoundingClientRect().top, 144.09375);
+  assert.equal(h.$('file').parentNode.getBoundingClientRect().top, 116.5);
+  layout.resize();
+  layout.flush();
+  assert.equal(h.$('file').parentNode.getBoundingClientRect().top, 144);
+  assert.equal(h.$('file').getBoundingClientRect().top, 171.59375);
+  assert.equal(h.doc.activeElement, h.$('file'), 'Rotation preserves the actual current control.');
+  h.panel.dialog.scrollTop += 50;
+  const intentional = h.panel.dialog.scrollTop;
+  h.panel.dialog.emit('scroll');
+  layout.flush();
+  assert.equal(
+    h.panel.dialog.scrollTop,
+    intentional,
+    'Ordinary reading scroll remains deliberate.',
+  );
+});
+
+test('media clearance preserves the live operation rail and Cancel ownership', async (t) => {
+  const gate = deferred(),
+    layout = pickerLayout();
+  const h = await setup(t, {
+    configureDocument: layout.configureDocument,
+    show: () => gate.promise,
+  });
+  h.choose();
+  const pending = h.$('preview').onclick();
+  await new Promise(setImmediate);
+  layout.mount(h);
+  assert.equal(h.panel.snapshot().busy, true);
+  assert.equal(h.$('file').disabled, true);
+  assert.equal(h.$('cancel').disabled, false);
+  assert.equal(h.$('status').parentNode, h.$('operations'));
+  assert.equal(h.$('cancel').parentNode, h.$('operations'));
+  h.$('cancel').focus();
+  h.$('operations')._rect.height = 260;
+  layout.reflow();
+  layout.flush();
+  assert.equal(h.panel.dialog.scrollTop, 881.5, 'Sticky actions are not scrolled away.');
+  assert.equal(h.doc.activeElement, h.$('cancel'));
+  assert.equal(
+    layout.observers.filter((observer) => observer.target === h.$('operations')).length,
+    1,
+  );
+  h.$('cancel').onclick();
+  gate.resolve(true);
+  assert.equal(await pending, false);
+  assert.equal(h.panel.snapshot().hasDraft, false);
+  assert.equal((await h.store.read()).document.library.assets.length, 0);
+});
+
+test('closed and disposed media panels retire queued clearance without refocusing an old picker', async (t) => {
+  const layout = pickerLayout(),
+    h = await setup(t, { configureDocument: layout.configureDocument });
+  layout.mount(h);
+  h.$('file').focus();
+  h.panel.close();
+  const afterClose = h.doc.activeElement;
+  layout.flush();
+  assert.equal(h.panel.dialog.scrollTop, 881.5);
+  assert.equal(h.doc.activeElement, afterClose);
+  await h.panel.open();
+  h.$('file').focus();
+  layout.flush();
+  assert.equal(
+    h.panel.dialog.scrollTop,
+    654.6875,
+    'Reopening retains exactly one live clearance owner.',
+  );
+  assert.equal(layout.observers.length, 1);
+  h.$('file').focus();
+  h.panel.dispose();
+  const afterDispose = h.doc.activeElement,
+    scroll = h.panel.dialog.scrollTop;
+  layout.flush();
+  layout.resize();
+  layout.flush();
+  assert.equal(h.panel.dialog.scrollTop, scroll);
+  assert.equal(h.doc.activeElement, afterDispose);
+  assert.equal(
+    layout.observers.every((observer) => observer.disconnected),
+    true,
+  );
+  assert.equal(h.panel.dialog.style.scrollPaddingBlockStart, '0px');
+  assert.equal(h.panel.dialog.style.scrollPaddingBlockEnd, '0px');
+});
