@@ -64,7 +64,7 @@ test('direct briefing and disposal retain one craft presenter outside hidden mis
   assert.deepEqual(page.errors, []);
 });
 
-test('title has five game destinations, quick sound and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
+test('title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
@@ -73,18 +73,25 @@ test('title has five game destinations, quick sound and the release catalog; Wor
     'shell-options',
     'shell-workshop',
     'shell-sound',
-    'shell-release-explorer',
   ]);
-  const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
-  assert.equal(catalog.tagName, 'A');
-  assert.equal(catalog.href, 'http://localhost/releases/');
-  assert.match(catalog.textContent, /Release explorer/);
-  assert.equal(catalog.hidden, false);
-  assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
+  assert.equal(
+    page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]'),
+    null,
+  );
+  assert.equal(page.$('shell-release-explorer'), null);
   assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
   assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
+  const buildInformation = [...page.$('shell-workshop-dialog').querySelectorAll('a')].filter(
+    (link) => link.getAttribute('href') === '../site/about.html#versions',
+  );
+  assert.equal(buildInformation.length, 1, 'Workshop has one About and build information route.');
+  assert.equal(
+    buildInformation[0].textContent.replaceAll('&amp;', '&'),
+    'About & build information',
+  );
+  assert.equal(page.$('shell-workshop-dialog').querySelector('[data-release-explorer]'), null);
   assert.ok(
     [...page.$('shell-workshop-dialog').querySelectorAll('a')].some(
       (link) => link.getAttribute('href') === '../authoring/asset-studio/',
@@ -158,7 +165,6 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
     'shell-options',
     'shell-workshop',
     'shell-sound',
-    'shell-release-explorer',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);
   const snapshot = [...page.storage.map];

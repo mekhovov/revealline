@@ -1,0 +1,1679 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index d7c1a5d447841dd13c2a6ea199d571f2f9395146..246f296ef37c852baadc08e4954b03f5046e2e37 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -351,6 +351,8 @@ Craft switching must follow the active run’s roster and authored hangars, with
+ 
+ Route Missions Back, native cancel and controller cancel through the same origin-aware shell handler. Prevent the native default after handling cancel, but retain cancellation notices for transactions that remain open. Do not reopen Home from a generic close listener: Deploy and Back to flight deliberately leave Missions. Test title, flight and brief origins with the saved cut and explicit Resume unchanged. Capture the explicit title Missions, field Missions or Mission brief opener before closing its parent; a repeated open of the same Missions visit from Collection appearance setup must retain that original parent and opener. On Back, validate the complete return target and its parent, use the available parent Missions entry or primary only as fallback, and preserve newer dialogs, deliberate focus, background/disposal and close/pause callback ownership before reopening Home. Distinguish expected native close/showModal autofocus from a newer usable focus choice. Preserve the existing no-argument programmatic field handoff and its flight focus; this correction does not extend campaign-complete entry behavior. Test the actual shell/host plus queued native-close modeling, held controller Back, unchanged paused-cut/checkpoint/storage and intentional Deploy/Back to flight. Keep native and physical-device acceptance separate.
+ 
++Keep software release history in About’s Build information disclosure, separate from Home’s game destinations and its unchanged version label. Derive the About page’s sibling game URL before applying the shared catalog resolver; frozen About routes include `site/site/about.html`. Keep the history link hidden under the actual button CSS until its correct URL is initialized, before awaiting the catalog. Preserve the current-build fallback and explicit Open build action. Rebase only already-validated relative archived-play results against the fetched/requested catalog URL; retain the strict validator, exact canonical HTTPS URLs and invalid-canonical-to-valid-local fallback. Do not add automatic navigation, save writes or a new modal-return owner. Regression prompt: “Check first/continued Home, source/frozen About, held/failed catalog loads, relative/canonical/malformed records, and module failure with the history link truly unrendered; verify explicit navigation and original game state.” Record modeled URL/host tests, native focus/44-pixel layouts and actual public catalog qualification separately. See [Software build information](../../../docs/field-kit-surfaces.md#software-build-information). Initialize About’s shared controller owner before catalogue awaits with a stable page scope and an explicit same-edition Return link. Preserve native keyboard/touch defaults and SUMMARY behavior; use the existing SELECT draft/commit/cancel semantics. Controller Back cancels an edit first, otherwise focuses Return without navigating. Native-editor Escape must retain browser dismissal after any controller edit is cancelled; only non-editor Escape focuses Return. Loading completion must not steal focus, confirm a stale edit or restart disposed input. Keep hints separate from catalogue status and avoid repeating the adjacent live select preview in the page status. Style that preview locally as a readable full row in the header, build picker and pack launcher; About does not load the game stylesheet. Suspend the single frame loop on blur/hidden/cached departure, require neutral input on restoration, and destroy all owners/listeners on terminal departure while blocking late catalogue mutations. For exact HTTPS numbered Reveal Line archive immutable About routes, resolve the JSON catalogue to the canonical main-site releases path; keep this project-specific rule in the site helper, preserve generic/custom-host routing and same-edition Return, and do not weaken the archived-play validator.
++
+ Keep standalone Enemy workshop departure a static same-edition `../../game/` link beside the page actions, available before module startup and during failure. Do not route it through catalog Apply, implicit saving, history/referrer inference, or a new return-context owner. Modal Back still closes only the panel; the practice iframe retains its scoped return bridge and input ownership. The startup auto-open lease begins before the first await and belongs only to untouched foreground body/root focus. Existing meaningful focus, later focus/input, blur, hidden or pagehide retires it permanently; remove intent listeners on retirement and all startup listeners on settlement or terminal departure. Prevent late terminal responses from initializing owners; defer cached-page readiness/failure until pageshow without reviving auto-open. Ready status must not open a modal over a newer Return choice or engage navigation to force a default. Preserve ordinary untouched auto-open and explicit Open workshop. The existing controller owner starts only after themes load, so distinguish ready-state modeled controller routing from pre-ready/failure native-link availability. Use the [Enemy workshop return prompt](../../../docs/enemy-catalog.md#returning-to-the-game); native navigation and physical-device checks remain separate.
+ 
+ Preserve the actual dialog hierarchy: Main menu stays beneath Settings or Collection; Workshop stays beneath Field Guide, with its menu parent retained. Let the existing modal stack restore that exact opener on Close, Escape or controller Back. An already-open Main menu remains the return screen even while its underlying flight is paused; a direct flight opener returns to that paused flight. Nested practice returns to the guide first. Preserve Settings → Music Studio → Close studio → Settings, transaction cancellation and neutral input gates. On a first Studio read, disabling the initially focused Close button can move browser focus to the document; restore it after the read only if that disabling displaced focus and no later focus choice or dialog exit superseded it. Remember the initial target before the read rather than requiring immediate BODY focus: native blur may arrive later. Exercise both immediate and deferred disabled blur during read success/failure separately from cached reopening; never steal focus after a user choice, close or disposal. Explicit Replay or mission/appearance selection closes the appropriate parent dialogs; simply inspecting Collection or its picture retains its entry screen. Read [Collection return behavior](../../../docs/collection-title-return.md). Regression prompt: “Open title Settings and Music Studio, return twice; then open Field Guide, enter and leave practice, and close the guide. Repeat from a real paused cut. Verify the original screen/focus, exact saved state and explicit Resume.” Inspect both keyboard and modeled controller paths, then native browser focus and compact illustration clipping separately. The browser milestone still needs complete source gates and packaged/native-browser/public qualification; source or preview success grants no gate waiver. Full physical-device comfort and supported-device qualification remain P7, with no certification inferred here.
+diff --git a/docs/field-kit-surfaces.md b/docs/field-kit-surfaces.md
+index 08a81ade42cd81118099ab83b8dad4e458355e72..692860ae68cfa786e370882b086ef79a45c1329c 100644
+--- a/docs/field-kit-surfaces.md
++++ b/docs/field-kit-surfaces.md
+@@ -16,6 +16,24 @@ Workshop links directly to Motion lab, the picture/story editor, video-poster wo
+ 
+ Validation covers keyboard category changes, cancellation through the existing key-capture handler, original Save/Pack/record routes, return focus, locale fallback and text substitution, normal pause/Continue behavior and build dependencies. Source screenshots under `docs/verification/fpv-redesign/phase6/` and the phase-5 combined-workspace review include portrait Large settings, controller practice and couch results. Actual native file transfer is separately recorded by the Asset Studio. These checks do not claim physical controllers, other browser engines, native 200% browser zoom or public/offline release qualification.
+ 
++## Software build information
++
++Home keeps gameplay destinations and the quick sound control. Software release history belongs under About’s existing Build information disclosure, reached through the same-edition About links. Preserved software builds are not campaigns, modes or presentation collections. The Home version label remains separate from navigation. The existing Build information disclosure is the first content in About’s main region, before the long game guide, so that content cannot reflow above a focused build action during rotation.
++
++About derives its sibling game entry before using the shared release-catalog resolver, including frozen editions whose About route ends in `site/site/about.html`. Its Release history link stays hidden, including under the button styles, until the page module initializes the correct destination synchronously. A failed or delayed catalog request leaves that initialized link and the current-build action usable. If the module itself cannot load, the history link stays hidden; the existing current-build fallback remains.
++
++For this project’s HTTPS numbered archive sites only (`mekhovov.github.io/revealline-archive-N/releases/vX.Y.Z/site/site/about.html`), About reads the JSON catalogue from `https://mekhovov.github.io/revealline/releases/`. Those archives preserve immutable sites but publish an HTML catalogue redirect rather than their own JSON index. This explicit project-specific authority does not change the same-edition Return link, other hosts/projects, non-HTTPS routes, or the shared game resolver.
++
++Build choices retain the strict archived-play validator. Only a validated relative release record is resolved against the fetched catalog’s URL (or the requested index URL when a response does not supply one). Approved canonical HTTPS records keep their exact URL, including a separate archive host. An invalid canonical field can fall back to a valid local record. Selecting a build only updates the explicit Open build link; it never navigates automatically or writes player data.
++
++Maintenance prompt: “Check Home before a first flight and with a continued flight, retaining its Back, focus and checkpoint behavior. Open About from a source deployment and a frozen edition with query/hash state. Hold and fail the catalog request, then supply local and canonical records, including rejected inputs and canonical-to-local fallback. Verify the history link is unavailable before module initialization and correct before the request finishes; only explicit Open build activation may leave the page.” Keep modeled routing and URL tests distinct from native keyboard/controller journeys, compact Standard/Large layouts, 44-pixel target checks and public-release catalog qualification. A synthetic local catalog is not evidence that a frozen public catalog is deployed.
++
++About’s controller owner starts before either catalogue request and keeps one stable page scope across loading, success and failure. D-pad moves among visible native controls; Confirm toggles Build information or enters/commits the existing select editor. Back cancels an active edit; otherwise it focuses the explicit same-edition Return to game link, which requires a separate Confirm to leave. Native keyboard/touch retain ordinary link, disclosure and select behavior. Escape cancels a controller edit first; inside a native select, text/input editor or editable content it remains the browser’s dismissal key. Outside editors it focuses Return. Return goes to the game entry; it does not restore an in-memory Workshop opener.
++
++Controller hints have their own status region, separate from release and pack preparation. A select draft announces itself once in its adjacent live preview; the page hint does not repeat that announcement. About supplies local themed preview styling, with a full row after the header, preserved-build controls or pack-launch controls, so hints do not squeeze the native selectors and actions. Catalogue completion can invalidate a stale select draft but never confirms it, navigates or steals focus. Blur, hidden and cached-page departure clear edits and held input and stop the single controller frame loop. Foreground restoration starts at most one loop with neutral input required. Terminal departure destroys that owner and prevents late fetch/body success or failure from updating the departed page.
++
++Navigation maintenance prompt: “Hold or fail each About catalogue request. Join using a neutral controller, toggle Build information, edit/commit/cancel the preserved-build selector, and use Back then Confirm to return to the same-edition game. Complete a catalogue while a selector is being edited; verify stale preview cancellation without navigation. Repeat blur/visibility/cached-page restoration with Confirm held, disconnect/rejoin, and terminal departure during fetch/body parsing. Keep ordinary keyboard/touch defaults, explicit links, loading messages, selected campaign data and the current-build fallback intact. Qualify native input, compact focus visibility and public source identity separately.”
++
+ ## Results artwork and role specimens
+ 
+ The results reading region leads with a bounded still drawn from the completed attempt's already loaded image and fit. Desktop uses adjacent artwork/details; narrow and short views keep the existing reading scroll region and action ownership. The full-picture action returns focus to its originating button. Missing managed originals remain unavailable; old sessions and explicitly legacy worlds use their already loaded original. The still is cleared for ready/pause/loss, and no new media lookup or pin is created.
+diff --git a/game/app.mjs b/game/app.mjs
+index f314c01f0bec16f7f58e945a930b0c591a78ba01..e0f6c5bb84bdfd8a2ec2c06e5b3b79abcd6fc915 100644
+--- a/game/app.mjs
++++ b/game/app.mjs
+@@ -100,7 +100,6 @@ import {
+ import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
+ import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
+ import { attachLibraryPanel } from './ui/library-panel.mjs';
+-import { releaseExplorerHref } from './release-explorer.mjs';
+ import { masteryFor, masteryText } from './ui/mastery-view.mjs';
+ import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
+ import { createMasteryAwards } from './mastery-awards.mjs';
+@@ -274,8 +273,6 @@ try {
+     isRelease = true;
+   } catch {}
+   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
+-  for (const link of document.querySelectorAll('[data-release-explorer]'))
+-    link.href = releaseExplorerHref(location.href);
+   const versionLabel =
+     buildVersion === 'dev' ? 'DEV' : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
+   $('version').textContent = versionLabel;
+diff --git a/game/index.html b/game/index.html
+index 267c4f9243b19a7c0a45a753e3edb894bf8f93ae..e1fcaf1a67c1e7b410959c35bf65d09c00bd9664 100644
+--- a/game/index.html
++++ b/game/index.html
+@@ -213,8 +213,7 @@
+       <nav>
+         <a href="playground/">Playground ↗</a
+         ><a href="couch/relay-rescue.html?return=solo">Relay Rescue · co-op</a
+-        ><a href="couch/">Couch race</a
+-        ><a data-release-explorer href="../releases/">Release explorer</a
++        ><a href="couch/">Couch race</a><a href="../site/about.html#versions">Build information</a
+         ><button id="library-button" class="text-button" type="button">Library & saves</button
+         ><button id="settings-button" class="text-button" type="button">Settings</button
+         ><button id="help-button" class="text-button" type="button">How to play</button
+@@ -600,7 +599,7 @@
+         <nav>
+           <a href="../authoring/motion-lab/">Motion lab</a
+           ><a href="../authoring/design-atlas/">Reference atlas</a
+-          ><a data-release-explorer href="../releases/">Release explorer</a
++          ><a href="../site/about.html#versions">Build information</a
+           ><a href="replay-theater/">Replay Theater</a
+           ><a href="controller-lab/">Controller practice</a>
+         </nav>
+@@ -1559,13 +1558,6 @@
+           >
+             Sound: off
+           </button>
+-          <a
+-            id="shell-release-explorer"
+-            data-release-explorer
+-            href="../releases/"
+-            class="button secondary"
+-            >Release explorer <span>Play another edition</span></a
+-          >
+         </nav>
+         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
+         <p class="home-hint">Choose a flight. Trace a path. Close the line.</p>
+@@ -1651,8 +1643,7 @@
+           >
+             Restart mission
+           </button>
+-          <a href="../site/about.html">About &amp; build archive</a>
+-          <a data-release-explorer href="../releases/">Release explorer</a>
++          <a href="../site/about.html#versions">About &amp; build information</a>
+         </nav>
+       </details>
+       <button id="sound-button" hidden class="icon-button" type="button" aria-label="Enable sound">
+diff --git a/game/test/field-kit-flow.test.mjs b/game/test/field-kit-flow.test.mjs
+index 9f0922100023cb12510811d3bd83e57319bf8035..fc7f8edcb8b049b515289db36cab98f1bad272cd 100644
+--- a/game/test/field-kit-flow.test.mjs
++++ b/game/test/field-kit-flow.test.mjs
+@@ -64,7 +64,7 @@ test('direct briefing and disposal retain one craft presenter outside hidden mis
+   assert.deepEqual(page.errors, []);
+ });
+ 
+-test('title has five game destinations, quick sound and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
++test('title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight', async (t) => {
+   const page = await soloPage(t, { titleScreen: true });
+   assert.deepEqual(visibleActions(page), [
+     'shell-featured',
+@@ -73,18 +73,25 @@ test('title has five game destinations, quick sound and the release catalog; Wor
+     'shell-options',
+     'shell-workshop',
+     'shell-sound',
+-    'shell-release-explorer',
+   ]);
+-  const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
+-  assert.equal(catalog.tagName, 'A');
+-  assert.equal(catalog.href, 'http://localhost/releases/');
+-  assert.match(catalog.textContent, /Release explorer/);
+-  assert.equal(catalog.hidden, false);
+-  assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
++  assert.equal(
++    page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]'),
++    null,
++  );
++  assert.equal(page.$('shell-release-explorer'), null);
+   assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
+   page.$('shell-workshop').click();
+   assert.equal(page.$('shell-workshop-dialog').open, true);
+   assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
++  const buildInformation = [...page.$('shell-workshop-dialog').querySelectorAll('a')].filter(
++    (link) => link.getAttribute('href') === '../site/about.html#versions',
++  );
++  assert.equal(buildInformation.length, 1, 'Workshop has one About and build information route.');
++  assert.equal(
++    buildInformation[0].textContent.replaceAll('&amp;', '&'),
++    'About & build information',
++  );
++  assert.equal(page.$('shell-workshop-dialog').querySelector('[data-release-explorer]'), null);
+   assert.ok(
+     [...page.$('shell-workshop-dialog').querySelectorAll('a')].some(
+       (link) => link.getAttribute('href') === '../authoring/asset-studio/',
+@@ -158,7 +165,6 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a
+     'shell-options',
+     'shell-workshop',
+     'shell-sound',
+-    'shell-release-explorer',
+   ]);
+   assert.match(page.$('shell-destination').textContent, /Continue/);
+   const snapshot = [...page.storage.map];
+diff --git a/game/test/site-release-links.test.mjs b/game/test/site-release-links.test.mjs
+index 09ec9cc09d5de3042e4a40aa2f8d5ed73e53f814..9b62e22a2ce73ce9ba1da800839dcf2d75067bad 100644
+--- a/game/test/site-release-links.test.mjs
++++ b/game/test/site-release-links.test.mjs
+@@ -1,6 +1,10 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+-import { archivedPlayHref } from '../../site/release-links.mjs';
++import {
++  archivedPlayHref,
++  releaseHistoryHref,
++  archivedPlayHrefFromCatalog,
++} from '../../site/release-links.mjs';
+ import { publishedReleaseIndex } from '../../scripts/build-pages.mjs';
+ import { releaseExplorerHref } from '../release-explorer.mjs';
+ 
+@@ -71,3 +75,89 @@ test('archive links reject script schemes, credentials, traversal and non-game d
+   ])
+     assert.equal(archivedPlayHref(play), null, String(play));
+ });
++
++test('About history resolves the shared catalog from source and frozen sibling game routes', () => {
++  for (const [page, expected] of [
++    [
++      'https://mekhovov.github.io/revealline/site/about.html#versions',
++      'https://mekhovov.github.io/revealline/releases/',
++    ],
++    [
++      'https://mekhovov.github.io/revealline/releases/v0.51.0/site/site/about.html?view=history#versions',
++      'https://mekhovov.github.io/revealline/releases/',
++    ],
++    [
++      'http://127.0.0.1:8768/preview/releases/v0.51.0/site/site/about.html',
++      'http://127.0.0.1:8768/preview/releases/',
++    ],
++  ])
++    assert.equal(releaseHistoryHref(page), expected);
++});
++
++test('About rebases only validated local archive records against the fetched catalog URL', () => {
++  const canonical = 'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/game/';
++  for (const index of [
++    'https://mekhovov.github.io/revealline/releases/index.json',
++    'http://127.0.0.1:8768/preview/releases/index.json',
++  ]) {
++    assert.equal(
++      archivedPlayHrefFromCatalog('v0.28.0/site/game/', index),
++      new URL('v0.28.0/site/game/', index).href,
++    );
++    assert.equal(
++      archivedPlayHrefFromCatalog('v0.28.0/site/game/index.html', index),
++      new URL('v0.28.0/site/game/index.html', index).href,
++    );
++    assert.equal(archivedPlayHrefFromCatalog(canonical, index), canonical);
++  }
++  for (const rejected of [
++    undefined,
++    null,
++    {},
++    '',
++    '../v1/site/game/',
++    '//example.test/releases/v1/site/game/',
++    'javascript:alert(1)',
++    'https://user:password@example.test/releases/v1/site/game/',
++    'https://example.test/releases/v1/site/game/?next=https://other.test',
++    'https://example.test/x/%2e%2e/releases/v1/site/game/',
++  ]) {
++    assert.equal(
++      archivedPlayHrefFromCatalog(rejected, 'https://example.test/releases/index.json'),
++      null,
++    );
++  }
++  assert.equal(
++    archivedPlayHrefFromCatalog(
++      'javascript:alert(1)',
++      'https://example.test/releases/index.json',
++    ) ??
++      archivedPlayHrefFromCatalog('v0.28.0/site/game/', 'https://example.test/releases/index.json'),
++    'https://example.test/releases/v0.28.0/site/game/',
++    'Invalid canonical metadata still permits a separately validated local record.',
++  );
++});
++
++test('only this project’s HTTPS immutable archive About routes use the canonical JSON catalogue', () => {
++  for (const number of ['01', '21'])
++    assert.equal(
++      releaseHistoryHref(
++        `https://mekhovov.github.io/revealline-archive-${number}/releases/v0.61.3/site/site/about.html?view=history#versions`,
++      ),
++      'https://mekhovov.github.io/revealline/releases/',
++    );
++  for (const page of [
++    'http://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/site/about.html',
++    'https://example.test/revealline-archive-21/releases/v0.61.3/site/site/about.html',
++    'https://mekhovov.github.io.example.test/revealline-archive-21/releases/v0.61.3/site/site/about.html',
++    'https://mekhovov.github.io/revealline-archive-21-extra/releases/v0.61.3/site/site/about.html',
++    'https://mekhovov.github.io/another-game-archive-21/releases/v0.61.3/site/site/about.html',
++    'https://mekhovov.github.io/revealline-archive-21/site/about.html',
++    'https://mekhovov.github.io/revealline-archive-21/releases/version-next/site/site/about.html',
++  ])
++    assert.equal(
++      releaseHistoryHref(page),
++      releaseExplorerHref(new URL('../game/', page).href),
++      `Keep generic routing for ${page}`,
++    );
++});
+diff --git a/scripts/test-pages-current-entry.mjs b/scripts/test-pages-current-entry.mjs
+index aac2b2f3a3bf1ff3a3a39209e346d06a1e1795bc..281b4135121a23c688432a30d86a7a4660f418c6 100644
+--- a/scripts/test-pages-current-entry.mjs
++++ b/scripts/test-pages-current-entry.mjs
+@@ -220,7 +220,7 @@ test('identical alias and worker bytes route localhost and project prefixes with
+   }
+ });
+ 
+-test('actual launcher and runtime links stay versioned; release explorer uses the generated root catalog', async (t) => {
++test('actual launcher and runtime links stay versioned; About history uses the generated root catalog', async (t) => {
+   const launch = await fs.readFile(new URL('../site/launch.mjs', import.meta.url), 'utf8'),
+     link = {};
+   let destination;
+@@ -275,10 +275,11 @@ test('actual launcher and runtime links stay versioned; release explorer uses th
+         assert.match(tag, /\bhidden\b/);
+         assert.equal(filename, 'diagnostics/index.html');
+       } else if (filename === 'releases/index.html') {
+-        // The app resolves these public links at runtime because the Pages catalog is
+-        // generated beside versioned sites, not inside one. A clean source archive
++        // About resolves this hidden link before awaiting its generated catalog.
++        // The catalog lives beside frozen editions, not inside one; a source archive
+         // correctly has no ignored local releases/index.html.
+-        assert.equal(relative, 'game/index.html');
++        assert.equal(relative, 'site/about.html');
++        assert.match(tag, /\bhidden\b/);
+         assert.equal(reference, '../releases/');
+         assert.match(tag, /\bdata-release-explorer\b/);
+         assert.doesNotMatch(tag, /\bdata-source-only\b/);
+@@ -301,5 +302,5 @@ test('actual launcher and runtime links stay versioned; release explorer uses th
+     }
+     assert.ok(checked > 0, relative);
+   }
+-  assert.equal(generatedCatalogLinks, 4);
++  assert.equal(generatedCatalogLinks, 1);
+ });
+diff --git a/site/about.html b/site/about.html
+index 0ce33847ca0cb71820f2ed5ca9cdfceb7da6ceae..83dc5b5f2abe89de3dd7cb28abe26ae29ccc3fba 100644
+--- a/site/about.html
++++ b/site/about.html
+@@ -35,11 +35,47 @@
+       <nav class="header-nav" aria-label="Main navigation">
+         <a href="#modes">Ways to play</a>
+         <a href="#packs">Packs</a>
+-        <a class="header-play" href="../game/">Play now <span aria-hidden="true">↗</span></a>
++        <a id="about-return" class="header-play" href="../game/"
++          >Return to game <span aria-hidden="true">↗</span></a
++        >
+       </nav>
+     </header>
++    <p id="about-navigation-status" class="about-navigation-status" role="status">
++      Keyboard and touch are ready. Release controller controls, then press a face button to join.
++    </p>
+ 
+     <main>
++      <details id="versions" class="build-tools">
++        <summary>
++          <span>Build information</span><small>Release history and preserved builds</small>
++        </summary>
++        <div class="version-control">
++          <p>
++            Browse previous software builds with their original gameplay, saves and artwork. Choose
++            missions and packs inside the game.
++          </p>
++          <a
++            id="release-history"
++            data-release-explorer
++            href="../releases/"
++            class="button button-tertiary"
++            hidden
++            >Release history</a
++          >
++          <label for="version-picker">Choose a preserved build</label>
++          <div class="picker-row">
++            <select id="version-picker" aria-describedby="version-status">
++              <option value="../game/">__REVEALLINE_VERSION__ · current</option>
++            </select>
++            <a id="version-play" class="button button-tertiary" href="../game/"
++              >Open build <span aria-hidden="true">↗</span></a
++            >
++          </div>
++          <p id="version-status" class="version-status" role="status">Loading preserved builds…</p>
++          <a href="../authoring/enemy-catalog/">Enemy workshop · preview, configure and practice</a>
++        </div>
++      </details>
++
+       <section class="hero" aria-labelledby="hero-title">
+         <div class="hero-copy">
+           <p class="eyebrow">
+@@ -526,23 +562,6 @@
+           ><strong data-current-label>__REVEALLINE_VERSION__</strong><i aria-hidden="true">↗</i>
+         </a>
+       </section>
+-
+-      <details id="versions" class="build-tools">
+-        <summary><span>Build archive · QA</span><small>Previous playable versions</small></summary>
+-        <div class="version-control">
+-          <label for="version-picker">Choose a preserved build</label>
+-          <div class="picker-row">
+-            <select id="version-picker" aria-describedby="version-status">
+-              <option value="../game/">__REVEALLINE_VERSION__ · current</option>
+-            </select>
+-            <a id="version-play" class="button button-tertiary" href="../game/"
+-              >Open build <span aria-hidden="true">↗</span></a
+-            >
+-          </div>
+-          <p id="version-status" class="version-status" role="status">Loading preserved builds…</p>
+-          <a href="../authoring/enemy-catalog/">Enemy workshop · preview, configure and practice</a>
+-        </div>
+-      </details>
+     </main>
+ 
+     <footer class="site-footer">
+diff --git a/site/landing.css b/site/landing.css
+index 7c574db7ac4678094eb86856e3ce16396ad245e4..34e318d937787b472a1c695798297afdb601cdbd 100644
+--- a/site/landing.css
++++ b/site/landing.css
+@@ -203,6 +203,10 @@ h1 em {
+   gap: 12px;
+ }
+ 
++#release-history[hidden] {
++  display: none;
++}
++
+ .button {
+   min-height: 52px;
+   padding: 0 18px;
+@@ -1868,3 +1872,47 @@ a.text-link:hover span,
+     transition-duration: 0.01ms !important;
+   }
+ }
++
++.about-navigation-status {
++  max-width: 1152px;
++  margin: 0 auto;
++  padding: 8px 28px;
++  color: var(--muted);
++  font-size: var(--fk-text-secondary, 14px);
++}
++
++#about-return {
++  display: inline-flex;
++  align-items: center;
++  min-height: 44px;
++}
++
++[data-field-kit-page='about'] .site-header,
++[data-field-kit-page='about'] .picker-row {
++  flex-wrap: wrap;
++}
++
++[data-field-kit-page='about'] .controller-editor {
++  min-width: 0;
++  max-width: 100%;
++  margin: 8px 0;
++  padding: 10px 12px;
++  border: 2px solid var(--fk-accent, var(--signal));
++  background: var(--fk-panel, var(--panel));
++  color: var(--site-text);
++  font: 600 max(14px, var(--fk-text-secondary, 14px)) / 1.5 var(--sans);
++  letter-spacing: 0;
++  overflow-wrap: anywhere;
++  text-transform: none;
++}
++
++[data-field-kit-page='about'] .site-header > .controller-editor,
++[data-field-kit-page='about'] .picker-row > .controller-editor {
++  order: 1;
++  flex: 0 0 100%;
++}
++
++[data-field-kit-page='about'] .pack-launcher > .controller-editor {
++  order: 1;
++  grid-column: 1 / -1;
++}
+diff --git a/site/landing.mjs b/site/landing.mjs
+index 0a8031bbdf81159eb53d586762a412deaae9e2e8..581a2f6345ae73d91ff4dc1fac2072fffb87fddf 100644
+--- a/site/landing.mjs
++++ b/site/landing.mjs
+@@ -1,6 +1,8 @@
++import { attachAboutNavigation } from './about-navigation.mjs';
+ import { preparePackCatalog, packLaunchHref } from '../game/content-launch.mjs';
+-import { archivedPlayHref } from './release-links.mjs';
++import { archivedPlayHrefFromCatalog, releaseHistoryHref } from './release-links.mjs';
+ 
++const navigation = attachAboutNavigation();
+ const root = document.documentElement;
+ const currentVersion = root.dataset.currentVersion;
+ const currentLabel = currentVersion.startsWith('__')
+@@ -15,6 +17,13 @@ const packSelect = document.querySelector('#landing-pack-select');
+ const levelSelect = document.querySelector('#landing-level-select');
+ const packPlay = document.querySelector('#landing-pack-play');
+ const packStatus = document.querySelector('#landing-pack-status');
++const historyHref = releaseHistoryHref(location.href);
++const catalogIndex = new URL('index.json', historyHref);
++const historyLink = document.querySelector('#release-history');
++// Resolve the shared catalog before any network wait; hidden markup avoids a
++// release-local fallback URL if this module never starts.
++historyLink.href = historyHref;
++historyLink.hidden = false;
+ 
+ for (const label of document.querySelectorAll('[data-current-label]')) {
+   label.textContent = currentLabel;
+@@ -52,78 +61,93 @@ picker.addEventListener('change', () => {
+   versionPlay.href = picker.value;
+ });
+ 
+-try {
+-  const response = await fetch('../releases/index.json', { cache: 'no-cache' });
+-  if (!response.ok) throw new Error('archive unavailable');
+-  const payload = await response.json();
+-  const releases = Array.isArray(payload.releases) ? payload.releases : [];
+-  releases.sort((a, b) =>
+-    String(b.version).localeCompare(String(a.version), undefined, { numeric: true }),
+-  );
+-  let available = 0;
+-  for (const record of releases) {
+-    if (!record || typeof record.version !== 'string' || typeof record.play !== 'string') continue;
+-    const href = archivedPlayHref(record.canonicalPlay) ?? archivedPlayHref(record.play);
+-    if (!href) continue;
+-    addOption(`${record.version} · preserved`, href);
+-    available++;
++async function loadCatalogs() {
++  try {
++    const response = await fetch(catalogIndex, { cache: 'no-cache' });
++    if (!navigation.current()) return;
++    if (!response.ok) throw new Error('archive unavailable');
++    const payload = await response.json();
++    if (!navigation.current()) return;
++    const fetchedCatalog = response.url || catalogIndex.href;
++    const releases = Array.isArray(payload.releases) ? payload.releases : [];
++    releases.sort((a, b) =>
++      String(b.version).localeCompare(String(a.version), undefined, { numeric: true }),
++    );
++    let available = 0;
++    for (const record of releases) {
++      if (!record || typeof record.version !== 'string' || typeof record.play !== 'string')
++        continue;
++      const href =
++        archivedPlayHrefFromCatalog(record.canonicalPlay, fetchedCatalog) ??
++        archivedPlayHrefFromCatalog(record.play, fetchedCatalog);
++      if (!href) continue;
++      addOption(`${record.version} · preserved`, href);
++      available++;
++    }
++    status.textContent = `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
++  } catch {
++    if (!navigation.current()) return;
++    status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
+   }
+-  status.textContent = `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
+-} catch {
+-  status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
+-}
+ 
+-try {
+-  const response = await fetch(new URL('../game/content/packs/catalog.json', import.meta.url));
+-  if (!response.ok) throw new Error('pack catalog unavailable');
+-  const catalog = preparePackCatalog(await response.json());
++  if (!navigation.current()) return;
++  try {
++    const response = await fetch(new URL('../game/content/packs/catalog.json', import.meta.url));
++    if (!navigation.current()) return;
++    if (!response.ok) throw new Error('pack catalog unavailable');
++    const payload = await response.json();
++    if (!navigation.current()) return;
++    const catalog = preparePackCatalog(payload);
+ 
+-  const populateLevels = () => {
+-    const pack = catalog.packs.find((item) => item.id === packSelect.value);
+-    levelSelect.replaceChildren(
+-      ...pack.campaigns.flatMap((campaign) => {
+-        const clears = savedClears(campaign);
+-        return campaign.levels.map((level, index) => {
+-          const available =
+-            index === 0 || clears.has(level.id) || clears.has(campaign.levels[index - 1].id);
+-          const option = new Option(
+-            `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
+-            level.id,
+-          );
+-          option.dataset.campaignId = campaign.id;
+-          option.disabled = !available;
+-          return option;
+-        });
+-      }),
+-    );
+-  };
+-  const updatePackLaunch = () => {
+-    const pack = catalog.packs.find((item) => item.id === packSelect.value);
+-    const level = levelSelect.selectedOptions[0];
+-    if (!pack || !level) return;
+-    packPlay.href = packLaunchHref('../game/', {
+-      packId: pack.id,
+-      campaignId: level.dataset.campaignId,
+-      levelId: level.value,
+-      play: true,
+-    });
+-    packStatus.textContent = `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`;
+-  };
++    const populateLevels = () => {
++      const pack = catalog.packs.find((item) => item.id === packSelect.value);
++      levelSelect.replaceChildren(
++        ...pack.campaigns.flatMap((campaign) => {
++          const clears = savedClears(campaign);
++          return campaign.levels.map((level, index) => {
++            const available =
++              index === 0 || clears.has(level.id) || clears.has(campaign.levels[index - 1].id);
++            const option = new Option(
++              `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
++              level.id,
++            );
++            option.dataset.campaignId = campaign.id;
++            option.disabled = !available;
++            return option;
++          });
++        }),
++      );
++    };
++    const updatePackLaunch = () => {
++      const pack = catalog.packs.find((item) => item.id === packSelect.value);
++      const level = levelSelect.selectedOptions[0];
++      if (!pack || !level) return;
++      packPlay.href = packLaunchHref('../game/', {
++        packId: pack.id,
++        campaignId: level.dataset.campaignId,
++        levelId: level.value,
++        play: true,
++      });
++      packStatus.textContent = `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`;
++    };
+ 
+-  packSelect.replaceChildren(
+-    ...catalog.packs.map(
+-      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r5'),
+-    ),
+-  );
+-  populateLevels();
+-  updatePackLaunch();
+-  packSelect.addEventListener('change', () => {
++    packSelect.replaceChildren(
++      ...catalog.packs.map(
++        (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r5'),
++      ),
++    );
+     populateLevels();
+     updatePackLaunch();
+-  });
+-  levelSelect.addEventListener('change', updatePackLaunch);
+-} catch {
+-  packSelect.disabled = true;
+-  levelSelect.disabled = true;
+-  packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
++    packSelect.addEventListener('change', () => {
++      populateLevels();
++      updatePackLaunch();
++    });
++    levelSelect.addEventListener('change', updatePackLaunch);
++  } catch {
++    if (!navigation.current()) return;
++    packSelect.disabled = true;
++    levelSelect.disabled = true;
++    packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
++  }
+ }
++await loadCatalogs();
+diff --git a/site/release-links.mjs b/site/release-links.mjs
+index e5831e269fedae26c5bddff8d389ee888810fbd3..53b0c6ca8c29c91f265453c4ee352355ff5312c5 100644
+--- a/site/release-links.mjs
++++ b/site/release-links.mjs
+@@ -1,3 +1,5 @@
++import { releaseExplorerHref } from '../game/release-explorer.mjs';
++
+ /** Only explicit Open build links use this resolver; it never navigates. */
+ export function archivedPlayHref(play) {
+   if (typeof play !== 'string' || play.length > 2048 || /[\s\\%?#]/.test(play)) return null;
+@@ -19,3 +21,28 @@ export function archivedPlayHref(play) {
+     return null;
+   }
+ }
++
++/** About is alongside its edition's game entry, including frozen site/site URLs. */
++export function releaseHistoryHref(pageHref) {
++  const page = new URL(pageHref);
++  // This project's numbered archives preserve immutable sites but publish only
++  // an HTML catalogue redirect. Its JSON catalogue belongs to the main site.
++  if (
++    page.origin === 'https://mekhovov.github.io' &&
++    !page.username &&
++    !page.password &&
++    /^\/revealline-archive-\d{2,}\/releases\/v\d+\.\d+\.\d+\/site\/site\/about\.html$/.test(
++      page.pathname,
++    )
++  )
++    return 'https://mekhovov.github.io/revealline/releases/';
++  return releaseExplorerHref(new URL('../game/', page).href);
++}
++
++/** Rebase only the existing validator's local form; canonical archive URLs stay exact. */
++export function archivedPlayHrefFromCatalog(play, catalogIndexHref) {
++  const checked = archivedPlayHref(play);
++  if (checked?.startsWith('../releases/'))
++    return new URL(checked.slice('../releases/'.length), catalogIndexHref).href;
++  return checked;
++}
+diff --git a/game/test/about-navigation-host.test.mjs b/game/test/about-navigation-host.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..2668c0f10eb7db02a42e5f085de433beef526560
+--- /dev/null
++++ b/game/test/about-navigation-host.test.mjs
+@@ -0,0 +1,606 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { Document, Element, Events } from './helpers/couch-dom.mjs';
++import { waitFor } from './helpers/wait-for.mjs';
++
++const html = await readFile(new URL('../../site/about.html', import.meta.url), 'utf8');
++const packCatalog = JSON.parse(
++  await readFile(new URL('../content/packs/catalog.json', import.meta.url), 'utf8'),
++);
++const releases = {
++  releases: [
++    { version: 'v0.28.0', play: 'v0.28.0/site/game/' },
++    { version: 'v0.29.0', play: 'v0.29.0/site/game/' },
++  ],
++};
++let serial = 0;
++const until = (predicate) =>
++  waitFor(predicate, { message: 'About did not reach the expected host state.' });
++
++// Mount real markup. DOM geometry, native SUMMARY/Enter defaults, hardware and
++// request completion are finite boundaries. Landing, the About host, router,
++// navigation, URL validation and catalogue preparation remain actual modules.
++// This is not native browser layout, scrolling or physical-controller evidence.
++function mount(doc) {
++  doc.documentElement.dataset.currentVersion = html.match(/data-current-version="([^"]+)"/)[1];
++  class NativeElement extends Element {
++    get label() {
++      return this.getAttribute('label') ?? this.textContent;
++    }
++    get selectedOptions() {
++      return this.options.filter((option) => option.value === this.value);
++    }
++    append(...nodes) {
++      super.append(...nodes);
++      if (this.tagName === 'SELECT') {
++        const selected = nodes.findLast((node) => node.selected);
++        if (selected) this.value = selected.value;
++      }
++    }
++    click() {
++      if (this.tagName !== 'SUMMARY') return super.click();
++      const event = this.emit('click');
++      if (!event.defaultPrevented && this.parentElement?.tagName === 'DETAILS') {
++        this.parentElement.open = !this.parentElement.open;
++        this.parentElement.emit('toggle');
++      }
++    }
++  }
++  doc.createElement = (tag) => new NativeElement(doc, tag);
++  const stack = [doc.body];
++  for (const [token] of html
++    .split(/<body\b[^>]*>/)[1]
++    .split('</body>')[0]
++    .matchAll(/<!--[\s\S]*?-->|<\/?[^>]+>|[^<]+/g)) {
++    if (token.startsWith('<!--')) continue;
++    if (token.startsWith('</')) {
++      stack.pop();
++      continue;
++    }
++    if (!token.startsWith('<')) {
++      stack.at(-1)._text = (stack.at(-1)._text || '') + token.trim();
++      continue;
++    }
++    const tag = token.match(/^<([\w-]+)/)[1],
++      element = doc.createElement(tag);
++    for (const [, name, quoted, bare] of token
++      .slice(tag.length + 1, -1)
++      .matchAll(/([^\s=]+)(?:\s*=\s*(?:"([^"]*)"|([^\s]+)))?/g)) {
++      const value = quoted ?? bare ?? '';
++      element.setAttribute(name, value);
++      if (['value', 'href', 'type'].includes(name)) element[name] = value;
++      if (name === 'class') element.className = value;
++      if (['hidden', 'disabled', 'open', 'inert'].includes(name)) element[name] = true;
++    }
++    stack.at(-1).append(element);
++    if (tag === 'option' && element.hasAttribute('selected'))
++      element.parentElement.value = element.value;
++    if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(element);
++  }
++}
++
++async function about(
++  t,
++  pageHref = 'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions',
++) {
++  const doc = new Document(),
++    win = new Events(),
++    callbacks = new Map(),
++    requests = [],
++    navigations = [],
++    writes = [];
++  mount(doc);
++  let resolveArchive,
++    resolvePacks,
++    resolveBody,
++    evaluation,
++    bodyPending = false,
++    nextFrame = 0,
++    now = 0,
++    reads = 0,
++    pads = [];
++  const archiveGate = new Promise((resolve) => (resolveArchive = resolve)),
++    packsGate = new Promise((resolve) => (resolvePacks = resolve)),
++    bodyGate = new Promise((resolve) => (resolveBody = resolve));
++  const device = {
++    index: 0,
++    id: 'Modeled About controller',
++    connected: true,
++    mapping: 'standard',
++    axes: [0, 0, 0, 0],
++    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
++  };
++  const location = { href: pageHref };
++  win.location = location;
++  const globals = {
++    document: doc,
++    window: win,
++    location,
++    navigator: {
++      getGamepads: () => {
++        reads++;
++        return pads;
++      },
++    },
++    localStorage: { getItem: () => null, setItem: (...values) => writes.push(values) },
++    sessionStorage: { getItem: () => null, setItem: (...values) => writes.push(values) },
++    requestAnimationFrame(callback) {
++      callbacks.set(++nextFrame, callback);
++      return nextFrame;
++    },
++    cancelAnimationFrame(id) {
++      callbacks.delete(id);
++    },
++    Option: function (text, value, defaultSelected = false, selected = false) {
++      const option = doc.createElement('option');
++      option.textContent = text;
++      option.value = value;
++      option.defaultSelected = defaultSelected;
++      option.selected = selected;
++      return option;
++    },
++    fetch: async (url, options) => {
++      const href = String(url);
++      requests.push({ href, options });
++      if (/\/releases\/index\.json$/.test(href)) return archiveGate;
++      assert.match(href, /\/game\/content\/packs\/catalog\.json$/);
++      return packsGate;
++    },
++  };
++  const previous = Object.fromEntries(
++    Object.keys(globals).map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
++  );
++  for (const [key, value] of Object.entries(globals))
++    Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
++  t.after(async () => {
++    win.emit('pagehide', { persisted: false });
++    resolveArchive(new Response('', { status: 503 }));
++    resolveBody(releases);
++    resolvePacks(new Response('', { status: 503 }));
++    if (evaluation) await evaluation;
++    for (const [key, descriptor] of Object.entries(previous))
++      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
++      else delete globalThis[key];
++  });
++  for (const anchor of doc.querySelectorAll('a'))
++    anchor.addEventListener('click', (event) => {
++      event.preventDefault();
++      navigations.push(new URL(anchor.href, pageHref).href);
++    });
++  const $ = (id) => doc.getElementById(id),
++    tick = () => {
++      assert.ok(callbacks.size <= 1, 'Exactly one About animation loop may be scheduled.');
++      const pending = [...callbacks.values()];
++      callbacks.clear();
++      now += 16;
++      pending.forEach((callback) => callback(now));
++    },
++    setPad = (pressed = []) => {
++      device.buttons = Array.from({ length: 17 }, (_, index) => ({
++        pressed: pressed.includes(index),
++        value: Number(pressed.includes(index)),
++      }));
++      pads = [device];
++    },
++    tap = (button) => {
++      setPad();
++      tick();
++      setPad([button]);
++      tick();
++      setPad();
++      tick();
++    },
++    walk = (element) => {
++      for (let index = 0; index < 100 && doc.activeElement !== element; index++) tap(13);
++      assert.equal(doc.activeElement, element, 'D-pad reaches the requested real control.');
++    };
++  const resolve = (fn, payload) =>
++    fn(new Response(payload ? JSON.stringify(payload) : '', { status: payload ? 200 : 503 }));
++  return {
++    doc,
++    win,
++    $,
++    navigations,
++    writes,
++    requests,
++    tick,
++    tap,
++    walk,
++    setPad,
++    readCount: () => reads,
++    pendingFrames: () => callbacks.size,
++    bodyPending: () => bodyPending,
++    releaseBody: () => resolveBody(releases),
++    async start() {
++      evaluation = import(`../../site/landing.mjs?about-navigation-host=${++serial}`);
++      await until(() => requests.length > 0);
++      assert.ok($('about-return'), 'The actual About page owns an explicit Return action.');
++    },
++    join() {
++      setPad();
++      tick();
++      tap(0);
++      assert.deepEqual(navigations, [], 'Joining is not activation of a page action.');
++    },
++    unplug() {
++      pads = [];
++      win.emit('gamepaddisconnected', { gamepad: device });
++      tick();
++    },
++    archive(payload = releases, { holdBody = false } = {}) {
++      if (!holdBody) return resolve(resolveArchive, payload);
++      const response = new Response('', { status: 200 });
++      response.json = () => {
++        bodyPending = true;
++        return bodyGate;
++      };
++      resolveArchive(response);
++    },
++    async finish(packPayload = null) {
++      resolve(resolveArchive, releases);
++      resolveBody(releases);
++      resolve(resolvePacks, packPayload);
++      await evaluation;
++    },
++    key(value) {
++      const element = doc.activeElement,
++        event = element.emit('keydown', { key: value });
++      if (
++        !event.defaultPrevented &&
++        value === 'Enter' &&
++        ['A', 'SUMMARY', 'BUTTON'].includes(element.tagName)
++      )
++        element.click();
++      return event;
++    },
++  };
++}
++
++for (const [page, target] of [
++  ['https://example.test/revealline/site/about.html', 'https://example.test/revealline/game/'],
++  [
++    'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions',
++    'https://example.test/revealline/releases/v0.60.8/site/game/',
++  ],
++  [
++    'https://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/site/about.html',
++    'https://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/game/',
++  ],
++])
++  test(`controller Return is ready before catalogue completion and stays in the same build: ${page}`, async (t) => {
++    const h = await about(t, page);
++    await h.start();
++    assert.equal(h.requests.length, 1);
++    assert.equal(h.$('about-return').getAttribute('href'), '../game/');
++    if (page.includes('/revealline-archive-21/'))
++      assert.equal(h.requests[0].href, 'https://mekhovov.github.io/revealline/releases/index.json');
++    h.join();
++    h.tap(1);
++    assert.equal(h.doc.activeElement, h.$('about-return'));
++    assert.deepEqual(h.navigations, [], 'Back focuses Return without navigating.');
++    h.tap(0);
++    assert.deepEqual(h.navigations, [target]);
++    assert.deepEqual(h.writes, []);
++  });
++
++test('held arrival Confirm waits for neutral and join before any page action', async (t) => {
++  const h = await about(t);
++  h.setPad([0]);
++  await h.start();
++  h.tick();
++  h.tick();
++  assert.deepEqual(h.navigations, []);
++  assert.equal(h.$('versions').open, false);
++  h.join();
++  assert.deepEqual(h.navigations, []);
++  h.tap(1);
++  assert.equal(h.doc.activeElement, h.$('about-return'));
++});
++
++test('D-pad and Confirm operate the real disclosure and preserved-build select without automatic navigation', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.join();
++  const summary = h.$('versions').querySelector('summary');
++  h.walk(summary);
++  h.tap(0);
++  assert.equal(h.$('versions').open, true);
++  h.archive();
++  await h.finish();
++  const picker = h.$('version-picker'),
++    original = picker.value;
++  h.walk(picker);
++  const pageStatus = h.$('about-navigation-status'),
++    statusText = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
++  let pageAnnouncements = 0;
++  Object.defineProperty(pageStatus, 'textContent', {
++    configurable: true,
++    get() {
++      return statusText.get.call(this);
++    },
++    set(value) {
++      pageAnnouncements++;
++      statusText.set.call(this, value);
++    },
++  });
++  h.tap(0);
++  assert.equal(picker.getAttribute('data-controller-editing'), 'true');
++  const preview = h.doc.querySelector('.controller-editor'),
++    initialPreview = preview.textContent;
++  assert.equal(preview.getAttribute('role'), 'status');
++  h.tap(13);
++  assert.notEqual(
++    preview.textContent,
++    initialPreview,
++    'The local live preview announces the changed draft.',
++  );
++  assert.equal(
++    pageAnnouncements,
++    0,
++    'Draft announcements are not duplicated in the page navigation status.',
++  );
++  assert.equal(picker.value, original, 'The select draft has not committed.');
++  assert.equal(h.$('version-play').href, '../game/');
++  h.tap(1);
++  assert.equal(picker.getAttribute('data-controller-editing'), null);
++  assert.equal(picker.value, original);
++  assert.equal(h.doc.activeElement, picker, 'Edit Back does not run page Back.');
++  h.tap(0);
++  h.tap(13);
++  h.tap(0);
++  assert.equal(picker.value, picker.options[1].value);
++  assert.equal(h.$('version-play').href, picker.value);
++  assert.deepEqual(h.navigations, []);
++  h.walk(h.$('version-play'));
++  h.tap(0);
++  assert.deepEqual(h.navigations, [picker.value]);
++  assert.deepEqual(h.writes, []);
++});
++
++test('late preserved-build options retire an active edit without moving focus or applying it', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.join();
++  h.walk(h.$('versions').querySelector('summary'));
++  h.tap(0);
++  const picker = h.$('version-picker');
++  h.walk(picker);
++  h.tap(0);
++  assert.equal(picker.getAttribute('data-controller-editing'), 'true');
++  h.archive();
++  await h.finish();
++  h.tick();
++  assert.equal(picker.getAttribute('data-controller-editing'), null);
++  assert.equal(h.doc.activeElement, picker);
++  assert.equal(picker.value, '../game/');
++  assert.equal(h.$('version-play').href, '../game/');
++  assert.deepEqual(h.navigations, []);
++});
++
++test('actual pack catalogue replacement retires its stale select edit and preserves explicit play', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.join();
++  h.archive();
++  await until(() => h.requests.length === 2);
++  const picker = h.$('landing-pack-select');
++  h.walk(picker);
++  h.tap(0);
++  assert.equal(picker.getAttribute('data-controller-editing'), 'true');
++  await h.finish(packCatalog);
++  h.tick();
++  assert.ok(
++    picker.options.length > 1,
++    'Actual catalogue preparation replaced the starter choices.',
++  );
++  assert.equal(picker.getAttribute('data-controller-editing'), null);
++  assert.equal(h.doc.activeElement, picker);
++  assert.deepEqual(h.navigations, []);
++  assert.deepEqual(h.writes, []);
++});
++
++test('catalogue failure retains Return, disclosure and current-build actions', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.archive(null);
++  await h.finish();
++  assert.match(h.$('version-status').textContent, /current build is ready/);
++  h.join();
++  h.walk(h.$('versions').querySelector('summary'));
++  h.tap(0);
++  h.walk(h.$('version-play'));
++  assert.equal(h.$('version-play').href, '../game/');
++  h.tap(1);
++  assert.equal(h.doc.activeElement, h.$('about-return'));
++  assert.deepEqual(h.navigations, []);
++});
++
++test('catalogue completion keeps a deliberately focused Return and its operation status', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.$('about-return').focus();
++  const focus = h.doc.activeElement;
++  h.archive();
++  await h.finish();
++  h.tick();
++  assert.equal(h.doc.activeElement, focus);
++  assert.match(h.$('version-status').textContent, /2 preserved builds/);
++  assert.deepEqual(h.navigations, []);
++});
++
++test('native Tab, select arrows and disclosure activation retain defaults; Escape cancels before page Back', async (t) => {
++  const h = await about(t);
++  await h.start();
++  const summary = h.$('versions').querySelector('summary');
++  summary.focus();
++  assert.equal(h.key('Tab').defaultPrevented, false);
++  assert.equal(h.key('Enter').defaultPrevented, false);
++  assert.equal(h.$('versions').open, true);
++  const picker = h.$('version-picker');
++  picker.focus();
++  assert.equal(h.key('ArrowDown').defaultPrevented, false);
++  assert.equal(h.key('Escape').defaultPrevented, false);
++  assert.equal(
++    h.doc.activeElement,
++    picker,
++    'Native select cancellation keeps its browser default.',
++  );
++  h.join();
++  h.walk(picker);
++  h.tap(0);
++  assert.equal(picker.getAttribute('data-controller-editing'), 'true');
++  assert.equal(h.key('Escape').defaultPrevented, true);
++  assert.equal(picker.getAttribute('data-controller-editing'), null);
++  assert.equal(h.doc.activeElement, picker, 'The first Escape cancels only the controller edit.');
++  assert.equal(h.key('Escape').defaultPrevented, false);
++  assert.equal(
++    h.doc.activeElement,
++    picker,
++    'After controller editing ends, Escape belongs to the native select.',
++  );
++  summary.focus();
++  assert.equal(h.key('Escape').defaultPrevented, true);
++  assert.equal(h.doc.activeElement, h.$('about-return'));
++  assert.deepEqual(h.navigations, []);
++});
++
++for (const input of ['keyboard', 'pointer'])
++  test(`${input} intent retires a controller select draft without committing it`, async (t) => {
++    const h = await about(t);
++    await h.start();
++    h.archive();
++    await h.finish();
++    h.join();
++    h.walk(h.$('versions').querySelector('summary'));
++    h.tap(0);
++    const picker = h.$('version-picker');
++    h.walk(picker);
++    h.tap(0);
++    h.tap(13);
++    assert.equal(picker.getAttribute('data-controller-editing'), 'true');
++    if (input === 'keyboard') h.key('Tab');
++    else h.$('about-return').emit('pointerdown');
++    assert.equal(picker.getAttribute('data-controller-editing'), null);
++    assert.equal(picker.value, '../game/');
++    assert.equal(h.$('version-play').href, '../game/');
++    assert.deepEqual(h.navigations, []);
++  });
++
++for (const lifecycle of ['blur', 'hidden', 'persisted pagehide'])
++  test(`${lifecycle} clears edit/input and restoration requires neutral without a duplicate loop`, async (t) => {
++    const h = await about(t);
++    await h.start();
++    h.archive();
++    await h.finish();
++    h.join();
++    h.walk(h.$('versions').querySelector('summary'));
++    h.tap(0);
++    h.walk(h.$('version-picker'));
++    h.tap(0);
++    h.tap(13);
++    if (lifecycle === 'blur') {
++      h.doc.focused = false;
++      h.win.emit('blur');
++    } else if (lifecycle === 'hidden') {
++      h.doc.hidden = true;
++      h.doc.emit('visibilitychange');
++    } else h.win.emit('pagehide', { persisted: true });
++    assert.equal(h.$('version-picker').getAttribute('data-controller-editing'), null);
++    const reads = h.readCount();
++    h.setPad([0]);
++    h.tick();
++    assert.equal(h.readCount(), reads, 'Inactive pages do not sample the controller.');
++    if (lifecycle === 'blur') {
++      h.doc.focused = true;
++      h.win.emit('focus');
++    } else if (lifecycle === 'hidden') {
++      h.doc.hidden = false;
++      h.doc.emit('visibilitychange');
++    } else h.win.emit('pageshow', { persisted: true });
++    h.win.emit('focus');
++    h.win.emit('pageshow', { persisted: true });
++    h.tick();
++    h.tick();
++    assert.equal(h.pendingFrames(), 1);
++    assert.equal(h.$('version-picker').value, '../game/');
++    assert.equal(h.$('version-picker').getAttribute('data-controller-editing'), null);
++    assert.deepEqual(h.navigations, [], 'Held Confirm after return is inert.');
++    h.setPad();
++    h.tick();
++    h.tap(1);
++    assert.equal(h.doc.activeElement, h.$('about-return'));
++  });
++
++test('persisted departure during loading may complete catalogues without reviving focus or polling', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.$('about-return').focus();
++  h.win.emit('pagehide', { persisted: true });
++  h.archive();
++  await h.finish();
++  assert.equal(h.pendingFrames(), 0);
++  assert.equal(h.doc.activeElement, h.$('about-return'));
++  assert.deepEqual(h.navigations, []);
++  h.setPad([0]);
++  h.win.emit('pageshow', { persisted: true });
++  h.tick();
++  assert.deepEqual(h.navigations, []);
++  assert.equal(h.pendingFrames(), 1);
++});
++
++for (const boundary of ['headers', 'body', 'packs'])
++  test(`terminal departure before ${boundary} completion prevents late updates and owner restart`, async (t) => {
++    const h = await about(t);
++    await h.start();
++    if (boundary === 'body') {
++      h.archive(releases, { holdBody: true });
++      await until(h.bodyPending);
++    } else if (boundary === 'packs') {
++      h.archive();
++      await until(() => h.requests.length === 2);
++    }
++    const before = {
++      version: h.$('version-status').textContent,
++      pack: h.$('landing-pack-status').textContent,
++      options: h.$('version-picker').options.length,
++    };
++    h.win.emit('pagehide', { persisted: false });
++    await h.finish(packCatalog);
++    h.win.emit('pageshow', { persisted: true });
++    h.win.emit('focus');
++    h.doc.emit('visibilitychange');
++    h.tick();
++    assert.equal(h.pendingFrames(), 0);
++    assert.equal(h.$('version-status').textContent, before.version);
++    assert.equal(h.$('landing-pack-status').textContent, before.pack);
++    assert.equal(h.$('version-picker').options.length, before.options);
++    assert.deepEqual(h.navigations, []);
++    assert.deepEqual(h.writes, []);
++    for (const target of [h.doc, h.win])
++      for (const listeners of [target.listeners, target.captureListeners])
++        assert.equal(
++          [...listeners.values()].reduce((count, handlers) => count + handlers.size, 0),
++          0,
++          'Terminal cleanup removes the About owner and shared input listeners.',
++        );
++  });
++
++test('disconnect retires edits and reconnect requires neutral and a fresh join', async (t) => {
++  const h = await about(t);
++  await h.start();
++  h.join();
++  h.walk(h.$('versions').querySelector('summary'));
++  h.tap(0);
++  h.walk(h.$('version-picker'));
++  h.tap(0);
++  h.unplug();
++  assert.equal(h.$('version-picker').getAttribute('data-controller-editing'), null);
++  h.setPad([0]);
++  h.tick();
++  h.tick();
++  assert.deepEqual(h.navigations, []);
++  h.join();
++  h.tap(1);
++  assert.equal(h.doc.activeElement, h.$('about-return'));
++});
+diff --git a/game/test/landing-release-history-host.test.mjs b/game/test/landing-release-history-host.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..b30009b0d4cbbd39b0b2a88a90fba08cec82e43b
+--- /dev/null
++++ b/game/test/landing-release-history-host.test.mjs
+@@ -0,0 +1,234 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { Document, Events } from './helpers/couch-dom.mjs';
++import { waitFor } from './helpers/wait-for.mjs';
++
++const html = await readFile(new URL('../../site/about.html', import.meta.url), 'utf8');
++let instance = 0;
++function mount(doc) {
++  doc.documentElement.dataset.currentVersion = html.match(/data-current-version="([^"]+)"/)[1];
++  const stack = [doc.body];
++  for (const [token] of html
++    .split(/<body\b[^>]*>/)[1]
++    .split('</body>')[0]
++    .matchAll(/<!--[\s\S]*?-->|<\/?[^>]+>|[^<]+/g)) {
++    if (token.startsWith('<!--')) continue;
++    if (token.startsWith('</')) {
++      stack.pop();
++      continue;
++    }
++    if (!token.startsWith('<')) {
++      stack.at(-1)._text = (stack.at(-1)._text || '') + token.trim();
++      continue;
++    }
++    const tag = token.match(/^<([\w-]+)/)[1],
++      el = doc.createElement(tag);
++    for (const [, name, quoted, bare] of token
++      .slice(tag.length + 1, -1)
++      .matchAll(/([^\s=]+)(?:\s*=\s*(?:"([^"]*)"|([^\s]+)))?/g)) {
++      const value = quoted ?? bare ?? '';
++      el.setAttribute(name, value);
++      if (['value', 'href', 'type'].includes(name)) el[name] = value;
++      if (name === 'class') el.className = value;
++      if (['hidden', 'disabled'].includes(name)) el[name] = true;
++    }
++    stack.at(-1).append(el);
++    if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(el);
++  }
++}
++
++async function about(t, pageHref) {
++  const doc = new Document(),
++    win = new Events(),
++    frames = new Map();
++  mount(doc);
++  const requests = [],
++    navigations = [],
++    writes = [];
++  let resolveArchive,
++    evaluation,
++    frameId = 0;
++  const archiveGate = new Promise((resolve) => {
++    resolveArchive = resolve;
++  });
++  const location = {
++    href: pageHref,
++    assign: (href) => navigations.push(href),
++    replace: (href) => navigations.push(href),
++  };
++  const globals = {
++    document: doc,
++    window: win,
++    navigator: { getGamepads: () => [] },
++    requestAnimationFrame: (callback) => {
++      frames.set(++frameId, callback);
++      return frameId;
++    },
++    cancelAnimationFrame: (id) => frames.delete(id),
++    location,
++    localStorage: { getItem: () => null, setItem: (...args) => writes.push(args) },
++    fetch: async (url, options) => {
++      requests.push({ href: String(url), options });
++      if (requests.length === 1) return archiveGate;
++      assert.match(String(url), /\/game\/content\/packs\/catalog\.json$/);
++      // Pack-launch behavior is independent of the release-history change.
++      return new Response('', { status: 503 });
++    },
++  };
++  const previous = Object.fromEntries(
++    Object.keys(globals).map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
++  );
++  for (const [key, value] of Object.entries(globals))
++    Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
++  t.after(async () => {
++    win.emit('pagehide', { persisted: false });
++    resolveArchive(new Response('', { status: 503 }));
++    if (evaluation) await evaluation;
++    for (const [key, descriptor] of Object.entries(previous))
++      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
++      else delete globalThis[key];
++  });
++  for (const link of doc.querySelectorAll('a'))
++    link.addEventListener('click', (event) => {
++      event.preventDefault();
++      navigations.push(new URL(link.href, pageHref).href);
++    });
++  const $ = (id) => doc.getElementById(id);
++  return {
++    doc,
++    $,
++    location,
++    requests,
++    navigations,
++    writes,
++    async start() {
++      evaluation = import(`../../site/landing.mjs?history-host=${++instance}`);
++      await waitFor(() => requests.length > 0, {
++        message: 'About did not request its release index.',
++      });
++    },
++    async complete(payload = null, responseHref = '') {
++      const response = new Response(payload ? JSON.stringify(payload) : '', {
++        status: payload ? 200 : 503,
++      });
++      if (responseHref) Object.defineProperty(response, 'url', { value: responseHref });
++      resolveArchive(response);
++      await evaluation;
++    },
++  };
++}
++
++const payload = {
++  releases: [
++    { version: 'v0.28.0', play: 'v0.28.0/site/game/' },
++    { version: 'v0.29.0', play: 'v0.29.0/site/game/', canonicalPlay: 'javascript:alert(1)' },
++    {
++      version: 'v0.1.0',
++      play: 'v0.1.0/site/game/',
++      canonicalPlay: 'https://archive.example.test/releases/v0.1.0/site/game/',
++    },
++    {
++      version: 'v9.0.0',
++      play: '../unsafe/site/game/',
++      canonicalPlay: 'https://name:secret@example.test/releases/v9.0.0/site/game/',
++    },
++  ],
++};
++for (const [page, shared, responseHref] of [
++  [
++    'https://example.test/revealline/site/about.html#versions',
++    'https://example.test/revealline/releases/',
++    '',
++  ],
++  [
++    'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions',
++    'https://example.test/revealline/releases/',
++    '',
++  ],
++  [
++    'https://example.test/preview/releases/v0.60.8/site/site/about.html',
++    'https://example.test/preview/releases/',
++    'https://cdn.example.test/catalog/releases/index.json',
++  ],
++  [
++    'https://mekhovov.github.io/revealline-archive-21/releases/v0.61.3/site/site/about.html',
++    'https://mekhovov.github.io/revealline/releases/',
++    '',
++  ],
++])
++  test(`About exposes history while pending and only changes explicit links: ${page}`, async (t) => {
++    const h = await about(t, page);
++    assert.equal(
++      h.$('release-history')?.hidden,
++      true,
++      'Archive link waits for its real URL, not a placeholder.',
++    );
++    await h.start();
++    const history = h.$('release-history'),
++      picker = h.$('version-picker'),
++      play = h.$('version-play');
++    assert.equal(history.hidden, false);
++    assert.equal(history.closest('#versions'), h.$('versions'));
++    const main = h.doc.querySelector('main');
++    assert.equal(h.$('versions').parentElement, main);
++    assert.equal(
++      main.children[0].id,
++      'versions',
++      'Build information precedes long page content so it is not displaced by that content.',
++    );
++    assert.ok(
++      [...main.children].indexOf(h.$('versions')) <
++        [...main.children].indexOf(h.doc.querySelector('.hero')),
++    );
++    assert.equal(history.href, shared);
++    assert.deepEqual(h.requests, [{ href: `${shared}index.json`, options: { cache: 'no-cache' } }]);
++    assert.equal(picker.value, '../game/');
++    assert.equal(play.href, '../game/');
++    assert.equal(h.location.href, page);
++    assert.deepEqual(h.navigations, []);
++    await h.complete(payload, responseHref);
++    const index = responseHref || `${shared}index.json`;
++    assert.deepEqual(
++      picker.options.map((option) => option.value),
++      [
++        '../game/',
++        new URL('v0.29.0/site/game/', index).href,
++        new URL('v0.28.0/site/game/', index).href,
++        'https://archive.example.test/releases/v0.1.0/site/game/',
++      ],
++    );
++    assert.match(h.$('version-status').textContent, /3 preserved builds.*remains the default/);
++    assert.equal(picker.value, '../game/');
++    assert.equal(play.href, '../game/');
++    picker.value = picker.options[1].value;
++    picker.emit('change');
++    assert.equal(play.href, picker.value);
++    assert.deepEqual(h.navigations, [], 'Choosing a preserved version never starts it.');
++    assert.equal(h.location.href, page);
++    assert.deepEqual(h.writes, []);
++    play.click();
++    assert.deepEqual(h.navigations, [new URL('v0.29.0/site/game/', index).href]);
++    history.click();
++    assert.deepEqual(h.navigations, [new URL('v0.29.0/site/game/', index).href, shared]);
++  });
++
++test('About retains current play and shared history when the archive request fails', async (t) => {
++  const page = 'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions';
++  const h = await about(t, page);
++  await h.start();
++  assert.ok(h.$('release-history'), 'About owns the release-history route.');
++  const href = h.$('release-history').href;
++  assert.equal(href, 'https://example.test/revealline/releases/');
++  await h.complete();
++  assert.match(h.$('version-status').textContent, /current build is ready.*archive is available/);
++  assert.equal(h.$('release-history').hidden, false);
++  assert.equal(h.$('release-history').href, href);
++  assert.equal(h.$('version-picker').options.length, 1);
++  assert.equal(h.$('version-play').href, '../game/');
++  assert.deepEqual(h.navigations, []);
++  assert.deepEqual(h.writes, []);
++  assert.equal(h.location.href, page);
++  h.$('version-play').click();
++  assert.deepEqual(h.navigations, ['https://example.test/revealline/releases/v0.60.8/site/game/']);
++});
+diff --git a/site/about-navigation.mjs b/site/about-navigation.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..783743e4c34bfe07d8783eec7d7961358aa53da2
+--- /dev/null
++++ b/site/about-navigation.mjs
+@@ -0,0 +1,147 @@
++import { attachControllerNavigation } from '../game/ui/controller-navigation.mjs';
++import { createControllerRouter } from '../game/ui/controller-router.mjs';
++
++/** The About page owns input independently of its optional catalogue requests. */
++export function attachAboutNavigation({
++  document: doc = globalThis.document,
++  window: win = globalThis.window,
++  navigator: nav = globalThis.navigator,
++  requestAnimationFrame: requestFrame = globalThis.requestAnimationFrame,
++  cancelAnimationFrame: cancelFrame = globalThis.cancelAnimationFrame,
++} = {}) {
++  const returnLink = doc.getElementById('about-return'),
++    status = doc.getElementById('about-navigation-status'),
++    listeners = [];
++  let disposed = false,
++    cached = false,
++    blurred = doc.hasFocus?.() === false,
++    frameId = null,
++    lastStatus = null;
++  const foreground = () =>
++    !disposed && !cached && !blurred && !doc.hidden && doc.hasFocus?.() !== false;
++  const hint = (text) => {
++    if (!foreground()) return;
++    // Select drafts already announce their text in the adjacent live preview.
++    // Keep the page status for connection, cancellation and navigation hints.
++    const editor = doc.querySelector('.controller-editor');
++    if (editor?.getAttribute('role') === 'status' && editor.textContent === text) return;
++    if (status.textContent !== text) status.textContent = text;
++  };
++  const router = createControllerRouter({
++    readPads: () => nav?.getGamepads?.() ?? [],
++    eventTarget: win,
++  });
++  const returnFocus = () => {
++    if (!foreground()) return;
++    returnLink.focus({ preventScroll: true });
++    returnLink.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
++    hint('Return to game selected. Confirm to leave this page.');
++  };
++  const navigation = attachControllerNavigation({
++    document: doc,
++    getScope: () => 'about',
++    getRoot: () => doc,
++    getDefaultFocus: () => returnLink,
++    onBack: returnFocus,
++    onMenu: returnFocus,
++    onHint: hint,
++    onNativeInput: () => router.clear(),
++  });
++  const listen = (target, type, handler, capture = false) => {
++    target.addEventListener(type, handler, capture);
++    listeners.push(() => target.removeEventListener(type, handler, capture));
++  };
++  const clear = () => {
++    router.clear();
++    navigation.clear();
++  };
++  const stop = () => {
++    if (frameId !== null) cancelFrame(frameId);
++    frameId = null;
++    clear();
++  };
++  const schedule = () => {
++    if (foreground() && frameId === null) frameId = requestFrame(poll);
++  };
++  function poll(timeMs) {
++    frameId = null;
++    if (!foreground()) {
++      clear();
++      return;
++    }
++    const sample = router.sample({ scope: 'about', timeMs });
++    if (sample.disconnected) navigation.clear();
++    if (sample.status.code !== lastStatus) {
++      lastStatus = sample.status.code;
++      hint(
++        sample.status.code === 'connected'
++          ? 'D-pad: move · South: choose · East: Back · Keyboard and touch also work.'
++          : sample.status.message,
++      );
++    }
++    navigation.handle(sample.ui);
++    schedule();
++  }
++  function dispose() {
++    if (disposed) return;
++    disposed = true;
++    stop();
++    listeners.splice(0).forEach((remove) => remove());
++    navigation.destroy();
++    router.destroy();
++  }
++  // Native Tab/select/disclosure behavior stays with the browser. The adapter
++  // consumes Escape only while cancelling a controller edit; an unconsumed
++  // fresh Escape outside native editors is the deliberate Back-to-Return
++  // focus action. Native editors retain Escape to dismiss their own UI.
++  listen(
++    doc,
++    'keydown',
++    (event) => {
++      if (
++        foreground() &&
++        !event.defaultPrevented &&
++        !event.repeat &&
++        event.key === 'Escape' &&
++        !event.ctrlKey &&
++        !event.metaKey &&
++        !event.altKey &&
++        !event.target?.closest?.(
++          'input,select,textarea,[contenteditable]:not([contenteditable="false"])',
++        )
++      ) {
++        event.preventDefault();
++        returnFocus();
++      }
++    },
++    true,
++  );
++  listen(win, 'blur', () => {
++    blurred = true;
++    stop();
++  });
++  listen(win, 'focus', () => {
++    blurred = false;
++    schedule();
++  });
++  listen(doc, 'visibilitychange', () => {
++    if (doc.hidden) stop();
++    else schedule();
++  });
++  listen(win, 'pagehide', (event) => {
++    if (!event.persisted) dispose();
++    else {
++      cached = true;
++      stop();
++    }
++  });
++  listen(win, 'pageshow', (event) => {
++    if (!event.persisted || disposed) return;
++    cached = false;
++    blurred = doc.hasFocus?.() === false;
++    clear();
++    schedule();
++  });
++  schedule();
++  return { current: () => !disposed, dispose };
++}

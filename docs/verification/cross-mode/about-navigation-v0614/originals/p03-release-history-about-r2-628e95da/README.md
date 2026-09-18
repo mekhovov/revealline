@@ -1,0 +1,9 @@
+# Release history in About — R2
+
+Exact base: `628e95daf403082768cdcf900a8ea1d1ef4629a2`. This successor preserves the R1 packet and its source-green/native-blocked evidence. Only three R1 bodies change: About HTML, its actual-host placement assertions, and one documentation sentence. The existing `#versions` details block moves unchanged to main’s first child after the header. This retains the existing layout width, handlers and links while removing the long reflowing game guide above focused build controls. No new scrolling, focus, modality or lifecycle owner is added.
+
+`candidate-pins.json` references new R2 bodies for those three paths and immutable R1 bodies for the other nine. `r2-delta.patch` applies to R1; `candidate.patch` composes all twelve paths against exact628. The original strict URL validator, game release resolver, current-build fallback and explicit-only navigation remain unchanged. `runtime-pins.json` references all six exact runtime bodies without duplicating the unchanged five.
+
+Final R2 actual-host/Home/URL cohort: 26/26 pass with before/after source pins. Placement red fails because versions was not the first main child. Source-link5/5 and unchanged-code checks from R1 remain supporting evidence, not a claimed R2 execution: the pure move preserves all link attributes, and no source-link script or other route changes after R1. Static fixtures are not rehydrated because the immutable R1 packet consumes the remaining bounded storage allowance. The release coordinator must run complete source/build/public checks after composition.
+
+Native R1 failure and R2 native qualification are owned by the parent. Source placement assertions cannot prove rotated focus visibility, CSS hiding, physical controller behavior or public catalog availability. No files have been staged, committed, versioned, built, fetched or published by this task.

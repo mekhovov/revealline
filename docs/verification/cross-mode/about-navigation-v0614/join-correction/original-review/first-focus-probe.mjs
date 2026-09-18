@@ -1,0 +1,13 @@
+import { Document, Events } from '../worktrees/p03-about-controller-v0614/game/test/helpers/couch-dom.mjs';
+import { attachAboutNavigation } from '../worktrees/p03-about-controller-v0614/site/about-navigation.mjs';
+const doc = new Document(), win = new Events(), frames = new Map();
+const link = doc.createElement('a'); link.id = 'about-return'; link.setAttribute('href', '../game/'); doc.body.append(link);
+const status = doc.createElement('p'); status.id = 'about-navigation-status'; doc.body.append(status);
+let next = 0, now = 0, clicks = 0;
+link.addEventListener('click', () => clicks++);
+const pad = { index: 0, id: 'bounded-review-pad', connected: true, mapping: 'standard', axes: [0,0,0,0], buttons: Array.from({length:17}, () => ({pressed:false,value:0})) };
+const owner = attachAboutNavigation({ document: doc, window: win, navigator: { getGamepads: () => [pad] }, requestAnimationFrame: callback => {frames.set(++next, callback);return next;}, cancelAnimationFrame: id => frames.delete(id) });
+const tick = buttons => { pad.buttons = Array.from({length:17}, (_,i)=>({pressed:buttons.includes(i),value:Number(buttons.includes(i))})); const queued=[...frames.values()];frames.clear();now+=16;queued.forEach(callback=>callback(now)); };
+const snapshot = () => ({activeTag:doc.activeElement?.tagName,activeId:doc.activeElement?.id || '',returnFocused:doc.activeElement === link,controllerFocus:link.classList.contains('controller-focus'),clicks,status:status.textContent});
+const before = snapshot();tick([]);tick([0]);const afterJoin=snapshot();tick([]);const afterRelease=snapshot();tick([0]);const afterFreshConfirm=snapshot();owner.dispose();
+console.log(JSON.stringify({scope:'Finite actual About owner/router/navigation with modeled DOM and pad; not browser or physical input',before,afterJoin,afterRelease,afterFreshConfirm},null,2));
