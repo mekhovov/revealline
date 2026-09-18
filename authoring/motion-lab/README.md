@@ -242,3 +242,14 @@ The [composed evidence record](../../docs/verification/cross-mode/p05-motion-rea
 If preset download or validation fails after the module attaches, an ordinary **Retry loading study** link appears beside the error, outside the locked study. It reloads this same tool route; reading and return actions remain available. Showing it must not move focus or restart the disposed preview. During pending or successful setup it stays hidden. Module-graph failure continues to use the existing launcher Reload action.
 
 Maintainer prompt: “Exercise the actual launcher followed by a rejected preset read and invalid validated data. Preserve newer reading/return focus, the disabled study and zero active frames. Confirm the authored retry is a normal same-route link outside the lock, hidden during pending/ready/terminal late failure and without a competing visible launcher action. Run complete affected files, then test real keyboard retry and browser navigation separately; modeled link presence is not physical-controller certification.”
+
+
+### Stable slider names and current values
+
+Each native range has a visible label naming only its purpose, explicitly associated with that input. Keep the formatted value outside the label. The decorative output repeats the same value visually; the range exposes its current units through `aria-valuetext`, updated alongside the output on startup, input and recipe changes. Do not replace native range bounds, value or keyboard behavior with a custom slider.
+
+The v0.60.5 browser record exposed an implicit-label error: the first labelable descendant was the output, leaving the slider unnamed and producing status names with stale initial numbers. This correction separates name and value; it does not add an announcement stream or move focus. Check all five ranges, including rotor recipe replacement and the preset's 540 degrees/second override of the HTML default.
+
+Guidance reviewed on 2026-09-17: the [W3C APG Slider pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/) distinguishes the visible label from the current value and recommends understandable value text where numbers need context. The [HTML label definition](https://html.spec.whatwg.org/multipage/forms.html#the-label-element) explains explicit control association and the first labelable descendant rule. Keeping purpose names stable and suppressing duplicate output announcements is this tool's implementation policy.
+
+Maintainer prompt: “Keep each Motion slider's name unchanged while its current value and units update. Exercise the actual app's held startup, preset adoption, all five input handlers and rotor recipe replacement; preserve focus, paused state and separate storage. Then verify native label activation, Tab/arrow/Home/End operation and a screen reader's current value announcement in Theme/Plain and Standard/Large. DOM assertions and an accessibility snapshot do not establish assistive-technology or touch-device qualification.”

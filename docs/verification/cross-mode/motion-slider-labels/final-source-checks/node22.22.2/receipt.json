@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/motion-lab-display-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-motion-slider-labels",
+  "version": "0.60.9",
+  "parent": "cc161f7d97b2a90482e84d875a4360e4bf4afffe",
+  "startedAt": "2026-09-17T20:43:31.644112+00:00",
+  "finishedAt": "2026-09-17T20:43:33.057791+00:00",
+  "elapsedSeconds": 1.4136787500028731,
+  "exitCode": 0,
+  "counts": {
+    "tests": 38,
+    "pass": 38,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "inputCount": 35,
+  "inputBytes": 352424,
+  "inputsSha256": "8dc754c47d1925d2892cb7c1555b8b3aafe87781f31ee6d105f2a3b1ab750208",
+  "inputsUnchanged": true,
+  "stdoutSha256": "1f92e270f819a99b666efa14eb0ffee9f9db4809a93edb631c74742a9c5bdcc1",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

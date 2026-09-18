@@ -1,0 +1,100 @@
+{
+  "status": "FIVE_PATH_CACHE_CANDIDATE_WITH_SCOPED_TEST_PASS",
+  "base": "5f59f1dfdaca8df6fc737a1923631e120abdf580",
+  "runs": [
+    {
+      "path": "runs/baseline",
+      "counts": {
+        "tests": 38,
+        "pass": 35,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "receipt": {
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "--max-old-space-size=1024",
+          "--test",
+          "--test-concurrency=1",
+          "game/test/motion-lab-display-host.test.mjs"
+        ],
+        "exitCode": 1,
+        "elapsedSeconds": 1.7930148330051452,
+        "inputCount": 35,
+        "inputBytes": 350136,
+        "inputsSha256": "bb45483bb39b3668a269eca0d9d01f0fcdbf7d0bc121bbefa426c06336dcd535",
+        "unchangedAfter": true,
+        "stdoutSha256": "ae217f2f65321586be95cebce6bfd6ffddb0bbb27c77cba0141ce4edd90044b8",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "path": "runs/candidate-node20",
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "receipt": {
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "--max-old-space-size=1024",
+          "--test",
+          "--test-concurrency=1",
+          "game/test/motion-lab-display-host.test.mjs"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.2605474580050213,
+        "inputCount": 35,
+        "inputBytes": 352424,
+        "inputsSha256": "32949158c8c768871db20722c3581d3c4a0630fc21c57d9059827d83175fd7ba",
+        "unchangedAfter": true,
+        "stdoutSha256": "3d3de4d0d03cdba4ad58b080611864f081b94ed25e33a69d11a03adb88752e6f",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "path": "runs/candidate-node22",
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "receipt": {
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--max-old-space-size=1024",
+          "--test",
+          "--test-concurrency=1",
+          "game/test/motion-lab-display-host.test.mjs"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 1.6381855419967906,
+        "inputCount": 35,
+        "inputBytes": 352424,
+        "inputsSha256": "32949158c8c768871db20722c3581d3c4a0630fc21c57d9059827d83175fd7ba",
+        "unchangedAfter": true,
+        "stdoutSha256": "bee4817169deece5da4022c94c36473aa10f06176517d0dd5cc0f375ecb372f1",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "fixtureCount": 35,
+  "candidateFixtureBytes": 352424,
+  "patchSha256": "fde7a3948170d2d9b3ea0e5c96c5b26152450f95247f7e679dfa63046aa4958a",
+  "scope": "Stable native range labels and synchronized value text for the five existing Motion sliders. Current CSS, range bounds and step, numeric setters, simulation, preview ownership, storage, source worktree, index, version and remote state unchanged.",
+  "remaining": [
+    "Root source review and actual native candidate focus/name/value check",
+    "Actual screen-reader announcement and touch-assistive operation",
+    "Any future integrated source, build, release and public gates"
+  ],
+  "documentationSuccessor": "Adds only a runtime-maintainer paragraph and prompt; four reviewed candidate bodies and test input manifests unchanged."
+}

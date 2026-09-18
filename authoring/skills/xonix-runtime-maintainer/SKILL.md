@@ -613,6 +613,12 @@ PNG static-preview preparation reads bytes asynchronously before native Image lo
 
 Prompt: “Extend Motion upload handling without changing the APNG default identity contract. Run complete parser and real-application host files for byte-read rejection, supersession, Clear, cached/terminal departure and late decode. Preserve native source evidence separately; no fake Image event establishes browser codec conformance.”
 
+### Motion slider names and current values
+
+Keep each native range explicitly associated with a stable visible purpose label. Do not place an unrelated labelable output inside that label. Expose current units through `aria-valuetext` on the range and update it with the visible readout for input and preset/recipe changes; hide only the duplicate visual output from accessibility. Preserve native bounds, steps, keyboard handling, focus and preview intent. Use the actual-host regression and the [Motion slider guide](../../../authoring/motion-lab/README.md#stable-slider-names-and-current-values); native label activation and screen-reader/touch operation require separate checks.
+
+Prompt: “Change each Motion slider and then replace the rotor recipe. Its purpose name must stay stable while current value text follows the actual setting. Preserve paused intent, focus and storage; do not infer assistive-technology qualification from modeled DOM assertions.”
+
 ## Backup-owned content feedback
 
 A complete-backup Import or Undo owns a journaled replacement, even when it temporarily shares the content-switch busy flag. Preserve cancellation generations, paused adoption and storage guards; announce a pending pack cancellation only for pack-owned work. A blur during held backup commit and successful adoption must not create a fictional newer-play-choice message on Home. Keep restoration feedback in Saves & loads and do not alter pager or profile ordering to fix this copy. See [backup feedback ownership](../../../docs/operation-focus.md#backup-feedback-ownership).

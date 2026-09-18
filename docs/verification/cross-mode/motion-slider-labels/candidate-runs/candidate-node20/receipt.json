@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--max-old-space-size=1024",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/motion-lab-display-host.test.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.2605474580050213,
+  "inputCount": 35,
+  "inputBytes": 352424,
+  "inputsSha256": "32949158c8c768871db20722c3581d3c4a0630fc21c57d9059827d83175fd7ba",
+  "unchangedAfter": true,
+  "stdoutSha256": "3d3de4d0d03cdba4ad58b080611864f081b94ed25e33a69d11a03adb88752e6f",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
