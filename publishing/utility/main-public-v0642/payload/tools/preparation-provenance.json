@@ -1,0 +1,20 @@
+{
+  "upstream": [
+    {
+      "path": ".cache/p05-public-audit-v0641-execution-r2/receipt-successors-r1/hosted-result-intake-r1/intake/evidence/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0641-execution-r2/receipt-successors-r1/hosted-result-intake-r1/intake/evidence/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/catalog.json",
+      "bytes": 44604,
+      "sha256": "05ba9feb3776b1091610b7de175463d5a41b247d15142a6f3b5f5c5ad38a369d"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0641-execution-r2/receipt-successors-r1/hosted-result-intake-r1/intake/evidence/tools/inputs/95575953e9601c2ee018e9803ea6f90db9d93e20/configuration.json",
+      "bytes": 174441,
+      "sha256": "4828630e7818a201b03d8210f65f94c24a0d22f3fe8e5de9d4feabafd4aa659d"
+    }
+  ],
+  "scope": "v64.2 source/catalog identity;100 accepted prior catalog rows,31 exact prior admission semantic hashes, new acceptedArchive32. Transport/retry/MIME/budget unchanged. New32-admission combination exists only as offline fixture; no deployed publisher invented."
+}
