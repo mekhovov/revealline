@@ -79,6 +79,19 @@ The corrected scoped rerun passed all five selected stable-Continue, cancellatio
 and cross-pack cases (28.52 s; four intentional nonmatching skips). The failing
 new-chooser case now passes without requiring the user to press Cancel first.
 
+A subsequent held-picture test initially used the old fixture's hidden Start
+route while the new chooser was open; its zero-tick failure was a fixture error,
+not a failed legal capture. After switching to visible title Start, the test
+reproduced a separate ownership defect: cancelled picture decoding still held the
+outer Journey launch lock and blocked a newer mission. The pack owner now releases
+that lock when handing off to the existing cancellable picture/result ticket.
+The fixture requires the newer mission to start before the old decode resolves,
+then verifies late completion cannot replace it. Earlier 61be4a51 runs are also
+precursor evidence, not qualification of this correction.
+The corrected held-picture regression passed in 15.65 s (one selected test,
+16 intentional nonmatching skips). The four selected cold-cancellation and
+cross-pack cases passed again in 27.38 s. Changed-file lint/format checks passed.
+
 The original cross-pack fixture lacked an Image decoder seam. Its correction
 models decode completion and image dimensions, not actual pixels. The next cold
 run exceeded the ordinary five-second fixture wait while original-picture identity
