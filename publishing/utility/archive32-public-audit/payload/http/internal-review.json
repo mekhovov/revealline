@@ -1,0 +1,13 @@
+{
+  "status": "PREPARED_FROM_ACTUAL_ARCHIVE32_ORIGINALS_PENDING_ROOT_ACTIVATION",
+  "reviewed": true,
+  "rootReviewed": true,
+  "requestSha256": "618598f3a280c9bf5c2195d59590f0d06e6248c6d7d7be4643f72da07c282033",
+  "scope": "Exact7 raw terminal originals and3-member receipt reconciled;712rows,zero prior. Offline fixtures recorded separately. Root activation and public HTTP audit remain pending.",
+  "reserveBytes": 536870912,
+  "executionAllocationBytes": 33554432,
+  "capacityEnforcement": "Inherited stage-boundary checks; not a hard filesystem quota.",
+  "publicAuditComplete": false,
+  "nativeComplete": false,
+  "rootScope": "Exact archived50909e7/treeb11d, original terminal receipt and all712rows reviewed;27offlinefixtures plus exact merged-source binder passed. Root native scoped observation retained separately; utility performs readonly public byte audit, no release/main changes."
+}
