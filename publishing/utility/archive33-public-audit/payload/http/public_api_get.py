@@ -2,7 +2,7 @@
 import json,sys,time,urllib.request,urllib.error
 PREFIX='repos/mekhovov/revealline-archive-33/'
 def endpoint(value):
-    allowed={PREFIX+'git/ref/heads/main',PREFIX+'actions/runs/35468569854',PREFIX+'deployments/6545564229',PREFIX+'deployments/6545564229/statuses'}
+    allowed={PREFIX+'git/ref/heads/main',PREFIX+'actions/runs/35476969070',PREFIX+'deployments/6547026356',PREFIX+'deployments/6547026356/statuses'}
     if value not in allowed: raise ValueError('Unreviewed authority endpoint')
     return 'https://api.github.com/'+value
 class NoRedirect(urllib.request.HTTPRedirectHandler):

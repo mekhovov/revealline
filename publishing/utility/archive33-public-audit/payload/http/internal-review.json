@@ -1,13 +1,12 @@
 {
-  "status": "ROOT_REVIEWED_EXACT_ARCHIVE33_PUBLIC_AUDIT_INPUTS",
+  "status": "INDEPENDENT_ACTUAL_BINDING_REVIEW_ROOT_DISPATCH_PENDING",
   "reviewed": true,
-  "rootReviewed": true,
-  "requestSha256": "81855f7452d8d058b73c5fb5d6fa202f54b43430014ea780e3cf3a6022367831",
-  "scope": "Seven actual successful terminal originals and the one root-consumed three-member receipt are bound. 712 initial rows and zero prior rows. Root activation, bound fixtures, exact merged checkout and public/native acceptance remain required.",
+  "rootReviewed": false,
+  "requestSha256": "9db1ef2e06e573f827228b137955d854e37895e439c4e925f7949d84036be80f",
+  "scope": "Exact seven originals, two-cohort original receipt and prior preservation independently checked. Root still owns final source/dispatch review and actual HTTP/native acceptance.",
   "reserveBytes": 536870912,
   "executionAllocationBytes": 33554432,
   "capacityEnforcement": "Inherited stage-boundary checks; not a hard filesystem quota.",
   "publicAuditComplete": false,
-  "nativeComplete": false,
-  "rootScope": "Root reconciled actual archive b184/treeb46, successful Pages and deployment, original one-GET three-member receipt,712rows/prior0, independent unchanged-donor review,27 offline fixtures and exact clean merged-source binder. Public byte audit remains pending; no acceptance inferred."
+  "nativeComplete": false
 }
