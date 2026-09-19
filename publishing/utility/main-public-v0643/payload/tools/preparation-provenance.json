@@ -1,0 +1,20 @@
+{
+  "upstream": [
+    {
+      "path": ".cache/worktrees/v0642-main-http-audit/publishing/utility/main-public-v0642/payload/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "2abd779766cd6d4b217b93a10575ed55d2d5547a:publishing/pages-controller/catalog.json",
+      "bytes": 45049,
+      "sha256": "11bf189718f1eb3dc7a0d3b9846847c42c3109bcee583ba66b2ac22ba440d8f5"
+    },
+    {
+      "path": "2abd779766cd6d4b217b93a10575ed55d2d5547a:publishing/pages-controller/publication.json",
+      "bytes": 182779,
+      "sha256": "e36cbdfb93ba77ce20c2f694e2d12736f5e33bfe545712fb01533e73105cf755"
+    }
+  ],
+  "scope": "Workshopv0.64.3 identity,101 accepted prior catalog rows and31 unchanged prior archive authorities; Archive32 updated to accepted v0.64.2 append. Transport/retry/MIME/resource limits unchanged. Prior-to-current admission replacement is an offline fixture, not deployment authority."
+}
