@@ -1,0 +1,40 @@
+{
+  "upstream": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/tools/audit-main.mjs",
+      "bytes": 22169,
+      "sha256": "b4a59af7371e8d1fa1fbaa5c4f347acd87795981c6b5f17538f96a6542cbecc7"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/tools/catalog-cohorts.mjs",
+      "bytes": 1183,
+      "sha256": "f9982cb6c453f2a916ef0f177357312bfe27adb9ecf9a07ce81772f370abec39"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/tools/self-check.mjs",
+      "bytes": 3958,
+      "sha256": "70b74c10242557b2569941d9830e9b35f1d902290d2ecc71d3864c1b21af5864"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/tools/test-cohort-output.mjs",
+      "bytes": 1959,
+      "sha256": "1b894d0f7298205d32dd5c115fdd8bac28e46f01907fcde28ae2c543d8da2a6b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/tools/test-all-history-policy.mjs",
+      "bytes": 2659,
+      "sha256": "904200b5f6f3c23d6f5b1dbac74e0bb5f35f3a8ed60bd61f8487559708f86e55"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-public-audit-v0630-preparation/source-originals/catalog.json",
+      "bytes": 43714,
+      "sha256": "7ad4e0055126c16690a1d95f833d7233f23c39d3af1287263c070634ea392283"
+    }
+  ],
+  "scope": "Identity/count-only v0.64.0 adaptation; exact accepted v0.63.0 catalog retained. HTTP transport unchanged. Future publication inventory remains pending."
+}
