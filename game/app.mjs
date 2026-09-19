@@ -3439,6 +3439,7 @@ try {
       // The exact picture/result ticket now owns cancellation. Later pause,
       // navigation or lifecycle work must not revive the preceding pack owner.
       owner.cancel = null;
+      if (journeyLaunch === owner) journeyLaunch = null;
       const adopted = await prepareResultAttempt(kind, index, entry);
       if (adopted && skipped)
         journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
