@@ -1,0 +1,92 @@
+{
+  "format": "revealline-scoped-source-originals.v1",
+  "createdAt": "2026-09-18T22:11:04.897473+00:00",
+  "base": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "scope": "Pause candidate layout, focused host fixtures and exact production reproduction. The 43-case host cohort passed independently on Node20.19.5 and22.22.2 before the subsequent mechanical current-theme Team bindings/test expectations and maintainer guidance update. Final committed-source full qualification and public checks remain pending.",
+  "originals": [
+    {
+      "entry": "production/source-stage.log",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/production-run/source-stage.log",
+      "bytes": 246,
+      "sha256": "767770dba869b46d06af017921aefb7e431076c3cf396577bbb3377af20e066c"
+    },
+    {
+      "entry": "production/reviewed-stage.log",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/production-run/reviewed-stage.log",
+      "bytes": 245,
+      "sha256": "8ada3ddd20da9b4d5e69abfecdd19a736fc1f6dc5bde44850f4de62af2ea7e7f"
+    },
+    {
+      "entry": "production/reproduction.log",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/production-run/reproduction.log",
+      "bytes": 245,
+      "sha256": "8ada3ddd20da9b4d5e69abfecdd19a736fc1f6dc5bde44850f4de62af2ea7e7f"
+    },
+    {
+      "entry": "production/source-verification.json",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/production-run/source-verification.json",
+      "bytes": 27709,
+      "sha256": "a7816027e3ec408cdb199d8fecb6f106d3db417f6dbb7aa50d5dd2fefd2da929"
+    },
+    {
+      "entry": "production/reviewed-verification.json",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/production-run/reviewed-verification.json",
+      "bytes": 27711,
+      "sha256": "7ae142050dc26073c377a62ce751a6858c0be337357121e8d306f064467e7003"
+    },
+    {
+      "entry": "focused/node20-r1/stdout",
+      "originalPath": ".cache/p03-solo-pause-v06124-checks-r2/runs/node20-r1/stdout",
+      "bytes": 10514,
+      "sha256": "cb454831a9b8531c1fa489628e64f4d2289698b3c9776af1ab4291fa75490e0c"
+    },
+    {
+      "entry": "focused/node20-r1/stderr",
+      "originalPath": ".cache/p03-solo-pause-v06124-checks-r2/runs/node20-r1/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": "focused/node20-r1/receipt.json",
+      "originalPath": ".cache/p03-solo-pause-v06124-checks-r2/runs/node20-r1/receipt.json",
+      "bytes": 1151,
+      "sha256": "26898046d52f25cfa0bc0e53171b36761265785f0f0c282fdec5142d7a0ac38a"
+    },
+    {
+      "entry": "focused/node22-r1/stdout",
+      "originalPath": ".cache/p03-solo-pause-v06124-checks-r2/runs/node22-r1/stdout",
+      "bytes": 11153,
+      "sha256": "04790f053e8d5cd6b523a38d9c02d20ea6b76d74ed8df7f27e7a8370d0ebb4bc"
+    },
+    {
+      "entry": "focused/node22-r1/stderr",
+      "originalPath": ".cache/p03-solo-pause-v06124-checks-r2/runs/node22-r1/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "entry": "focused/node22-r1/receipt.json",
+      "originalPath": ".cache/p03-solo-pause-v06124-checks-r2/runs/node22-r1/receipt.json",
+      "bytes": 1152,
+      "sha256": "36efff97346ae97ea69fdcdd99975f73de43ba9ec84bb239039f8d655f974378"
+    },
+    {
+      "entry": "review/review.json",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/current-authority-review-r1/review.json",
+      "bytes": 10524,
+      "sha256": "1f2e870686a08115f0392101534120112359c308e4bd29f4971fd978ea02f2b8"
+    },
+    {
+      "entry": "review/current-authority.patch",
+      "originalPath": ".cache/p03-solo-pause-next-preparation/current-authority-review-r1/current-authority.patch",
+      "bytes": 1644,
+      "sha256": "7892ac9061b0c22e43e805814ad8893faeb0b60cc9b387a67bcc78098b44052b"
+    }
+  ],
+  "archive": {
+    "path": "originals.zip",
+    "bytes": 26007,
+    "sha256": "daa85411d83d4c54413bdf27fa8a914e0881d708235e8cd79f770381852ab17f"
+  },
+  "physicalHardwareQualified": false
+}
