@@ -4,7 +4,10 @@ import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { coverageClear } from './helpers/coop-route-search.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
-import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
+import {
+  COOP_PICTURE_BINDINGS,
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+} from '../couch/coop-picture-bindings.mjs';
 
 // Actual Team markup, host, core and property handlers, exact prepared originals,
 // finite DOM/Image and independent inert Canvas recorders. Not native pixels,
@@ -352,17 +355,22 @@ test('Pause and confirmed Change setup leave preview in the lobby and reuse the 
   assertLobbyOwned(f);
 });
 
-test('legacy procedural import clears artwork, loss keeps preview outside Results, and reset restores exact starter art', async (t) => {
+test('historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art', async (t) => {
   const f = await page(t, options),
     custom = structuredClone(COOP_STARTER_PACK);
   custom.id = 'preview-procedural';
   custom.name = 'Preview procedural fixture';
   custom.levels[0].enemies = [];
+  const starterImage = lastPreview(f);
   await f.selectFile(JSON.stringify(custom));
-  assertHiddenPreview(f, 'procedural');
+  // Valid historical imports now prepare an explicit approved picture before adoption.
+  assert.equal(previewState(f), 'ready');
+  assert.equal(f.$('coop-preview-canvas').hidden, false);
+  assert.notEqual(lastPreview(f), starterImage);
+  assert.equal(lastPreview(f).sha256, COOP_HISTORICAL_IMPORT_PICTURE_POLICY.picture.sha256);
+  assertMysteryPreview(f);
   assert.equal(f.$('coop-start').disabled, false);
-  assert.match(f.$('coop-preview-message').textContent, /procedural/i);
-  assert.equal(f.artwork.calls.reads.length, 1);
+  assert.equal(f.artwork.calls.reads.length, 2);
   f.$('coop-difficulty').value = 'expert';
   f.$('coop-start').click();
   f.tick(3);
@@ -388,7 +396,7 @@ test('legacy procedural import clears artwork, loss keeps preview outside Result
   await settle(f);
   assert.equal(previewState(f), 'ready');
   assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
-  assert.equal(f.artwork.calls.reads.length, 2);
+  assert.equal(f.artwork.calls.reads.length, 3);
 });
 
 test('persisted pagehide retains accepted preview; terminal cleanup clears it and late lifecycle events cannot redraw', async (t) => {
@@ -563,7 +571,7 @@ test('preview-only failure does not move Retry into play or Pause, and focused k
   assert.equal(lastArena(f), image);
 });
 
-test('required read failure and a changed starter identity each clear old preview before exposing recovery', async (t) => {
+test('required read failure clears preview while a rejected starter import preserves the accepted arena', async (t) => {
   const faults = [];
   t.mock.method(console, 'error', (...args) => faults.push(args));
   const f = await page(t, {
@@ -594,27 +602,33 @@ test('required read failure and a changed starter identity each clear old previe
   assert.equal(previewState(f), 'ready');
   assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   const reads = f.artwork.calls.reads.length,
-    beforeImportClears = previewClears(f);
+    acceptedImage = lastPreview(f),
+    acceptedLevel = f.$('coop-level').value;
   const changed = structuredClone(COOP_STARTER_PACK);
   changed.name += ' changed';
   await f.selectFile(JSON.stringify(changed));
-  await settle(f, 'error');
-  assertHiddenPreview(f, 'error');
-  assert.ok(previewClears(f) > beforeImportClears);
-  assert.equal(f.$('coop-start').disabled, true);
+  // Import is transactional: rejected content reports its own error without replacing ready art.
+  assert.equal(f.$('coop-pack-status').dataset.state, 'error');
+  assert.match(
+    f.$('coop-pack-status').textContent,
+    /Pack unchanged: No exact Team picture binding/,
+  );
+  assert.equal(previewState(f), 'ready');
+  assert.equal(f.$('coop-preview-canvas').hidden, false);
+  assert.equal(lastPreview(f), acceptedImage);
+  assert.equal(f.$('coop-level').value, acceptedLevel);
+  assert.equal(f.$('coop-start').disabled, false);
+  assert.equal(f.$('coop-pack-retry').hidden, false);
+  assert.equal(f.doc.activeElement.id, 'coop-pack-retry');
   assert.equal(
     f.artwork.calls.reads.length,
     reads,
     'Changed starter identity fails before reading image bytes.',
   );
-  assert.equal(
-    f.$('coop-picture-status').textContent,
-    'Team picture unavailable. Retry picture or choose another arena.',
-  );
-  assert.equal(faults.length, 2);
+  assert.equal(f.$('coop-picture-status').dataset.state, 'ready');
+  assert.equal(faults.length, 1);
   assert.ok(faults.every(([prefix]) => prefix === 'Team picture preparation failed.'));
   assert.match(faults[0][1].message, /Controlled required picture read failure/);
-  assert.match(faults[1][1].message, /No exact Team picture binding/);
   assert.equal(f.drawImages.length, 0);
 });
 
