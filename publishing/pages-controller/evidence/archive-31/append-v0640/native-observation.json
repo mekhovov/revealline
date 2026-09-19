@@ -1,0 +1,22 @@
+{
+  "status": "PASS_SCOPED_ARCHIVE_NATIVE_ROUTING",
+  "at": "2026-09-19T12:00:13.986356+00:00",
+  "archiveCommit": "2ff1b312872857cf04b485f9c987a26c0432f356",
+  "archiveTree": "8c3ca7ed1accb04afcb8a92063bb412e05ecc833",
+  "pagesRun": 35441173594,
+  "source": "7c9d34f7011a904b9c100f66884a19808666315a",
+  "observations": [
+    "Archive root lists originalv63+v64; Tab/Tab/Return followed exactv64link; titleVERSIONV0.64.0.",
+    "Continue prepared original picture withCancel; restored pre-existing verified result52.2%/8160/0:08/3stars, explicitlysession-only becauseanothergametabowned saving. This was not a newly earned win in this nativepass.",
+    "Tab/Tab/Return Tryagain resetflight0%/0score/3lives. Down/Escapepaused0:05; resume focused.",
+    "Tab/Return Fielddetails; Escape restoredFielddetailsopener, time0:05stillpaused. ShiftTab/Return explicitResume, thenEscape paused. ImmediateResumeandPause actions do not establish elapsedmovement.",
+    "Backreturnedarchiveindex; Tab/Return retainedv63route, loadedVERSIONV0.63.0title/ContinuePressureLines.",
+    "Backtoarchiveindex;threeTabs/Return reachedmainreleaseexplorer Currentv0.64.0. Temporarytab31closed."
+  ],
+  "limits": [
+    "Scopedkeyboard/routing only; no physicaltouch/controllers,zoom,audio/offline or persistedwriteclaim.",
+    "Session-onlysavesauthorityexplicitlydisplayed; existingwrittenprogressnotreplaced.",
+    "No newTeamwin/Next/heldSupportrescueorbroaderphaseacceptance.",
+    "Desktopdefaultviewport; noresponsivepassclaimedhere."
+  ]
+}
