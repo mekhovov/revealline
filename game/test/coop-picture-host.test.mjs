@@ -311,31 +311,24 @@ test('changed accepted asset authority refuses Retry before replacing the paused
   assert.notDeepEqual(hud(f), before);
 });
 
-test('same-ID changed starter imports are refused before reads, while a separately named legacy import is explicitly procedural', async (t) => {
-  const faults = [];
-  t.mock.method(console, 'error', (...args) => faults.push(args));
+test('changed starter imports leave the ready arena intact; renamed historical imports receive the approved generic picture', async (t) => {
   const f = await page(t, options),
     changed = structuredClone(COOP_STARTER_PACK);
   changed.name += ' changed';
   await f.selectFile(JSON.stringify(changed));
-  assert.equal(state(f), 'error');
-  assert.equal(
-    f.$('coop-picture-status').textContent,
-    'Team picture unavailable. Retry picture or choose another arena.',
-  );
-  assert.equal(faults.length, 1);
-  assert.equal(faults[0][0], 'Team picture preparation failed.');
-  assert.match(faults[0][1].message, /No exact Team picture binding/);
+  assert.equal(state(f), 'ready');
+  assert.match(f.$('coop-pack-status').textContent, /No exact Team picture binding/);
   assert.equal(f.artwork.calls.reads.length, 1);
-  assert.equal(f.$('coop-start').disabled, true);
+  assert.equal(f.$('coop-start').disabled, false);
+  assert.equal(f.$('coop-level').value, 'first-connection');
   assert.equal(f.drawImages.length, 0);
   changed.id = 'legacy-player-team';
   await f.selectFile(JSON.stringify(changed));
   assert.equal(state(f), 'ready');
-  assert.match(f.$('coop-picture-status').textContent, /Imported Team pack · procedural/);
+  assert.match(f.$('coop-picture-status').textContent, /Imported Team picture ready/);
   start(f);
-  assert.equal(f.drawImages.length, 0);
-  assert.equal(f.artwork.calls.reads.length, 1);
+  assert.ok(f.drawImages.length > 0);
+  assert.equal(f.artwork.calls.reads.length, 2);
 });
 
 test('BFCache suspension keeps accepted artwork and shared preferences; terminal cleanup releases it exactly once', async (t) => {

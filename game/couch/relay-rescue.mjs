@@ -9,13 +9,21 @@ import {
   FIXED_DT,
 } from '../coop/core.mjs';
 import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
-import { COOP_STARTER_PACK, readCoopPack, coopGoalText } from '../coop/library.mjs';
+import {
+  COOP_STARTER_PACK,
+  readCoopPack,
+  coopGoalText,
+  coopPackDestination,
+} from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCoopPresentation } from './coop-presentation.mjs';
-import { COOP_PICTURE_BINDINGS } from './coop-picture-bindings.mjs';
+import {
+  COOP_PICTURE_BINDINGS,
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+} from './coop-picture-bindings.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
@@ -222,17 +230,32 @@ export function bootCoop() {
   let importRequest = 0;
   const packStatus = createOperationStatus($('coop-pack-status'), { isCurrent: () => !disposed });
   const packPicker = $('coop-pack-file').closest('details');
-  let importDisplay = null;
-  function cancelImport() {
-    if (!importDisplay) return;
-    importDisplay.finish({
-      state: 'detached',
-      message: 'Stopped waiting. The selected pack is unchanged.',
-    });
+  let importDisplay = null,
+    importOperation = null,
+    importDraft = null;
+  function cancelImport({ forget = false } = {}) {
+    const operation = importOperation;
+    // Invalidate before abort, status, or focus callbacks can reenter the host.
+    importOperation = null;
     importDisplay = null;
     importRequest++;
+    if (operation) {
+      operation.controller.abort();
+      operation.focus.finish(null, false);
+      operation.display.finish({
+        state: 'detached',
+        message: 'Stopped waiting. The selected pack is unchanged. Retry pack when ready.',
+      });
+    }
+    if (forget && importDraft) {
+      const draft = importDraft;
+      importDraft = null;
+      if (draft.selection !== pictureSelection) draft.selection?.lease.dispose();
+    }
     $('coop-pack-cancel').hidden = true;
+    $('coop-pack-retry').hidden = !importDraft;
     $('coop-pack-file').value = '';
+    if (operation) pictureUI();
   }
   let knockdowns = [null, null];
   const selectedLevel = () =>
@@ -350,19 +373,21 @@ export function bootCoop() {
           ? $('coop-discard-stay')
           : nextOperation
             ? $('coop-next-cancel')
-            : pictureOperation
-              ? $('coop-picture-cancel')
-              : !run && pictureSelection?.state !== 'ready'
-                ? $('coop-picture-retry')
-                : !run
-                  ? $('coop-start')
-                  : run.status === 'paused' && !loopStopped
-                    ? $('coop-resume')
-                    : run.status === 'won' && !loopStopped
-                      ? teamDestination()?.next
-                        ? $('coop-next')
-                        : $('coop-lobby')
-                      : $('coop-retry');
+            : importOperation
+              ? $('coop-pack-cancel')
+              : pictureOperation
+                ? $('coop-picture-cancel')
+                : !run && pictureSelection?.state !== 'ready'
+                  ? $('coop-picture-retry')
+                  : !run
+                    ? $('coop-start')
+                    : run.status === 'paused' && !loopStopped
+                      ? $('coop-resume')
+                      : run.status === 'won' && !loopStopped
+                        ? teamDestination()?.next
+                          ? $('coop-next')
+                          : $('coop-lobby')
+                        : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -823,7 +848,7 @@ export function bootCoop() {
   // This focus lifetime is local to one picture action. Native disabling may
   // move its opener to BODY; a later deliberate choice or loss of foreground
   // permanently vetoes the completion handoff.
-  function pictureFocus(origin, initial = false) {
+  function pictureFocus(origin, initial = false, selectionCurrent = null) {
     let moved = inactive || !foreground(),
       retired = false,
       pending = null,
@@ -864,7 +889,7 @@ export function bootCoop() {
       started &&
       !moved &&
       foreground() &&
-      pictureSelection === selection &&
+      (selectionCurrent ? selectionCurrent() : pictureSelection === selection) &&
       run === attempt &&
       generation === epoch &&
       settingsVisit === visit &&
@@ -998,7 +1023,7 @@ export function bootCoop() {
     const busy = Boolean(pictureOperation),
       ready = pictureSelection?.state === 'ready',
       retryPreview = !run && ready && previewState === 'unavailable';
-    $('coop-start').disabled = !startPermitted || !ready || busy;
+    $('coop-start').disabled = !startPermitted || !ready || busy || Boolean(importOperation);
     $('coop-picture-cancel').hidden = !busy;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
     $('coop-picture-retry').textContent = retryPreview ? 'Retry preview' : 'Retry picture';
@@ -1031,26 +1056,24 @@ export function bootCoop() {
     pictureUI('Picture loading cancelled. Retry picture when you are ready.');
     focus?.finish($('coop-picture-retry'));
   }
-  function newPictureSelection(recipe, sourcePack) {
+  function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack) {
     return {
       sourcePack,
-      pack: structuredClone(sourcePack),
+      pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
       request: {
-        pack: structuredClone(sourcePack),
+        pack: structuredClone(pinnedPack),
         levelId: recipe.level.id,
         themeId: 'fpv',
         attemptId: `team-${++pictureSequence}`,
       },
-      lease:
-        sourcePack.id === COOP_STARTER_PACK.id
-          ? createCoopPresentation({
-              bindings: COOP_PICTURE_BINDINGS,
-              getSnapshot: presentationPage.current,
-              readPicture: presentationPage.readPicture,
-              decodeImage: decodeCoopPicture,
-            })
-          : null,
+      lease: createCoopPresentation({
+        bindings: COOP_PICTURE_BINDINGS,
+        historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+        getSnapshot: presentationPage.current,
+        readPicture: presentationPage.readPicture,
+        decodeImage: decodeCoopPicture,
+      }),
       binding: null,
       state: 'new',
     };
@@ -1067,13 +1090,6 @@ export function bootCoop() {
     }
     const selection = pictureSelection;
     if (pictureOperation) return pictureOperation.promise;
-    // Other imported namespaces retain the explicitly named legacy procedural
-    // path. The starter namespace always requires the closed exact binding.
-    if (!selection.lease) {
-      selection.state = 'ready';
-      pictureUI('Imported Team pack · procedural arena. Start remains a separate action.');
-      return Promise.resolve();
-    }
     const focus = pictureFocus(origin, initial),
       controller = new AbortController();
     const operation = { selection, controller, focus, run, generation };
@@ -1140,23 +1156,17 @@ export function bootCoop() {
     }
     return preparePicture({ retry: true });
   };
-  // Only the exact approved built-in pack has a qualified ordered journey.
-  // An imported pack with the same ID must not inherit it accidentally.
+  // Follow the accepted content snapshot. Imports retain their own order and
+  // recipes even when IDs match built-ins or a source catalogue later changes.
   function teamDestination() {
     if (
       run?.status !== 'won' ||
-      acceptedPicture?.sourcePack !== COOP_STARTER_PACK ||
-      JSON.stringify(attemptPack) !== JSON.stringify(COOP_STARTER_PACK)
+      acceptedPicture?.state !== 'ready' ||
+      acceptedPicture.pack !== attemptPack ||
+      acceptedPicture.levelId !== attemptLevel?.id
     )
       return null;
-    const index = COOP_STARTER_PACK.levels.findIndex(
-      (level) => JSON.stringify(level) === JSON.stringify(attemptLevel),
-    );
-    if (index < 0) return null;
-    return {
-      next: COOP_STARTER_PACK.levels[index + 1] ?? null,
-      final: index === COOP_STARTER_PACK.levels.length - 1,
-    };
+    return coopPackDestination(attemptPack, attemptLevel);
   }
   function nextStatus(text) {
     const owner = nextOperation,
@@ -1216,7 +1226,8 @@ export function bootCoop() {
     )
       return;
     const recipe = { level: structuredClone(destination), options: currentRecipe().options };
-    const selection = newPictureSelection(recipe, COOP_STARTER_PACK);
+    const selection = newPictureSelection(recipe, acceptedPicture.sourcePack, attemptPack);
+    const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
       run,
       generation,
@@ -1321,7 +1332,7 @@ export function bootCoop() {
       last = null;
       accumulator = 0;
       try {
-        lastBuiltInArena = destination.id;
+        if (rememberBuiltIn) lastBuiltInArena = destination.id;
         $('coop-level').value = destination.id;
         $('coop-difficulty').value = candidate.difficulty;
         const configuration = COOP_PLAYTEST_CONFIGURATIONS.find((item) =>
@@ -1362,7 +1373,7 @@ export function bootCoop() {
         }
         throw error;
       }
-      if (adopted(candidate)) arenaPreference.choose(destination.id);
+      if (adopted(candidate) && rememberBuiltIn) arenaPreference.choose(destination.id);
       if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
         previous.picture.lease?.dispose();
       if (!adopted(candidate)) return;
@@ -1466,6 +1477,7 @@ export function bootCoop() {
       departure ||
       earnedDialog.open ||
       pictureOperation ||
+      importOperation ||
       (!run && !startPermitted) ||
       !foreground()
     )
@@ -1484,8 +1496,7 @@ export function bootCoop() {
     const next = prepared || createCoop(startingLevel, recipe.options);
     const rememberVisibleArena =
       !run && pack === COOP_STARTER_PACK && arenaPreference.current() !== startingLevel.id;
-    cancelImport();
-    importRequest++;
+    cancelImport({ forget: true });
     $('coop-pack-file').value = '';
     clear();
     knockdowns = [null, null];
@@ -1662,8 +1673,7 @@ export function bootCoop() {
     if (disposed || departure) return;
     const focus = lobbyFocus();
     try {
-      cancelImport();
-      importRequest++;
+      cancelImport({ forget: true });
       clear();
       const retainedPicture = acceptedPicture;
       retirePicture();
@@ -1852,6 +1862,7 @@ export function bootCoop() {
     if (disposed) return;
     if (settingsOwner) settingsOwner.restore = false;
     inactive = true;
+    cancelImport();
     pause({ focus: false });
     cancelDeparture({ restore: false });
     // Losing foreground also retires menu ownership while already paused.
@@ -2017,8 +2028,10 @@ export function bootCoop() {
       .begin({ message: `${pack.name} · ${pack.levels.length} levels` })
       .finish({ message: `${pack.name} · ${pack.levels.length} levels` });
   }
-  function showPack(next, preferred = next.levels[0].id) {
+  function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
+    if (disposed || !isCurrent()) return;
     pack = next;
+    const owns = () => !disposed && pack === next && isCurrent();
     $('coop-level').replaceChildren(
       ...pack.levels.map((level) => {
         const option = document.createElement('option');
@@ -2027,58 +2040,180 @@ export function bootCoop() {
         return option;
       }),
     );
+    if (!owns()) return;
     $('coop-level').value = preferred;
+    if (!owns()) return;
     showPackStatus();
+    if (!owns()) return;
     $('coop-pack-reset').hidden = pack === COOP_STARTER_PACK;
-    setupNote();
+    if (owns()) setupNote();
   }
-  $('coop-pack-file').onchange = async () => {
-    const file = $('coop-pack-file').files?.[0];
-    cancelImport();
-    const request = ++importRequest;
-    if (!file || run || pictureOperation || departure || disposed) return;
-    const origin = document.activeElement;
-    const current = () => !disposed && request === importRequest && !run;
+  async function prepareImport(draft, { retry = false, origin = document.activeElement } = {}) {
+    if (
+      disposed ||
+      inactive ||
+      !foreground() ||
+      run ||
+      pictureOperation ||
+      departure ||
+      importOperation ||
+      importDraft !== draft
+    )
+      return;
+    const request = ++importRequest,
+      controller = new AbortController(),
+      focus = pictureFocus(
+        origin,
+        false,
+        () => importDraft === draft || pictureSelection === draft.selection,
+      );
+    const current = () =>
+      !disposed &&
+      request === importRequest &&
+      importOperation === operation &&
+      importDraft === draft &&
+      !run &&
+      !controller.signal.aborted;
     const display = packStatus.begin({
-      message: 'Reading the selected Team pack…',
-      stage: 'reading',
-      isCurrent: current,
+      message: draft.pack
+        ? 'Preparing the imported Team picture…'
+        : 'Reading the selected Team pack…',
+      stage: draft.pack ? 'preparing' : 'reading',
     });
+    const operation = { draft, controller, focus, display };
+    importOperation = operation;
     importDisplay = display;
     $('coop-pack-cancel').hidden = false;
+    $('coop-pack-retry').hidden = true;
     try {
-      if (file.size > COOP_PACK_MAX_BYTES)
-        throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
-      const source = await file.text();
+      pictureUI();
+      if (!draft.pack) {
+        if (draft.file.size > COOP_PACK_MAX_BYTES)
+          throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
+        const source = await draft.file.text();
+        if (!current()) return;
+        if (!packPicker.open) {
+          cancelImport();
+          return;
+        }
+        display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
+        if (!current()) return;
+        draft.pack = readCoopPack(source);
+        draft.selection = newPictureSelection({ level: draft.pack.levels[0] }, draft.pack);
+      }
+      display.update({
+        message: 'Preparing the imported Team picture… The selected pack stays available.',
+        stage: 'preparing',
+      });
+      if (!current()) return;
+      const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
+      if (retry && !disposed && snapshot && snapshot === presentationPage.current())
+        menuStyle.setPresentation(snapshot);
+      if (!current()) return;
+      const selection = draft.selection;
+      const binding = await selection.lease.select({
+        ...selection.request,
+        signal: controller.signal,
+        onStatus: (status) => {
+          if (!current()) return;
+          const text = picturePreparationText(status);
+          if (text)
+            display.update({
+              message: `${text} The selected pack is unchanged.`,
+              stage: 'preparing',
+            });
+        },
+      });
       if (!current()) return;
       if (!packPicker.open) {
         cancelImport();
         return;
       }
-      display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
-      const next = readCoopPack(source);
-      if (!current()) return;
-      showPack(next);
-      importDisplay = null;
-      await preparePicture({ origin });
-      if (
-        current() &&
-        !document.hidden &&
-        document.hasFocus() &&
-        document.activeElement === origin &&
-        visibleAction($('coop-start'))
-      )
-        $('coop-start').focus({ preventScroll: true });
-    } catch (error) {
-      if (current())
-        display.finish({ state: 'error', message: `Pack unchanged: ${error.message}` });
-    } finally {
-      if (request === importRequest) {
-        importDisplay = null;
-        $('coop-pack-cancel').hidden = true;
-        $('coop-pack-file').value = '';
+      selection.lease.confirm(selection.request);
+      const previous = {
+        pack,
+        selection: pictureSelection,
+        level: $('coop-level').value,
+        message: pictureMessage,
+      };
+      selection.binding = binding;
+      selection.state = 'preparing';
+      const rollback = () => {
+        if (pictureSelection !== selection || run || disposed) return;
+        pictureSelection = previous.selection;
+        showPack(previous.pack, previous.level);
+        pictureUI(previous.message);
+      };
+      // Publish the validated pack and prepared image together. Keep the previous
+      // image alive until the new setup has rendered successfully. No Start can
+      // use the tentative selection, including from a reentrant DOM callback.
+      pictureSelection = selection;
+      try {
+        showPack(draft.pack, undefined, current);
+        if (!current()) {
+          rollback();
+          return;
+        }
+        selection.state = 'ready';
+        pictureUI('Imported Team picture ready. Start remains a separate action.');
+        if (!current()) {
+          rollback();
+          return;
+        }
+      } catch (error) {
+        rollback();
+        throw error;
+      } finally {
+        // Reset or disposal can replace the tentative setup inside a host
+        // callback. The previous image then has no visible owner to retire it.
+        if (
+          !current() &&
+          pictureSelection !== previous.selection &&
+          acceptedPicture !== previous.selection
+        )
+          previous.selection?.lease?.dispose();
+        if (
+          importDraft !== draft &&
+          pictureSelection !== selection &&
+          acceptedPicture !== selection
+        )
+          selection.lease.dispose();
       }
+      importOperation = null;
+      importDisplay = null;
+      importDraft = null;
+      $('coop-pack-cancel').hidden = true;
+      $('coop-pack-retry').hidden = true;
+      $('coop-pack-file').value = '';
+      $('coop-start').disabled = !startPermitted;
+      previous.selection?.lease?.dispose();
+      focus.finish($('coop-start'));
+    } catch (error) {
+      if (!current()) return;
+      importOperation = null;
+      importDisplay = null;
+      packStatus.begin({ message: 'Team pack unavailable.' }).finish({
+        state: 'error',
+        message: `Pack unchanged: ${error.message}. Retry pack or choose another file.`,
+      });
+      $('coop-pack-cancel').hidden = true;
+      $('coop-pack-retry').hidden = false;
+      pictureUI();
+      focus.finish($('coop-pack-retry'));
+    } finally {
+      focus.finish(null, false);
+      if (request === importRequest) $('coop-pack-file').value = '';
     }
+  }
+  $('coop-pack-file').onchange = () => {
+    const file = $('coop-pack-file').files?.[0];
+    cancelImport({ forget: true });
+    if (!file || run || pictureOperation || departure || disposed) return;
+    importDraft = { file, pack: null, selection: null };
+    return prepareImport(importDraft);
+  };
+  $('coop-pack-retry').onclick = () => {
+    if (importDraft) return prepareImport(importDraft, { retry: true });
   };
   function stopWaiting() {
     cancelImport();
@@ -2092,13 +2227,13 @@ export function bootCoop() {
   packPicker.addEventListener('toggle', pickerToggled);
   $('coop-pack-reset').onclick = () => {
     if (run || departure || pictureOperation || disposed) return;
-    cancelImport();
-    importRequest++;
+    cancelImport({ forget: true });
     showPack(COOP_STARTER_PACK, lastBuiltInArena);
     void preparePicture();
   };
   $('coop-level').onchange = () => {
-    if (run || departure || importDisplay || disposed) return;
+    if (run || departure || disposed) return;
+    cancelImport({ forget: true });
     if (pack === COOP_STARTER_PACK) {
       lastBuiltInArena = selectedLevel().id;
       arenaPreference.choose(lastBuiltInArena);
@@ -2168,7 +2303,7 @@ export function bootCoop() {
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.
     if (running()) pauseCoop(run);
-    cancelImport();
+    cancelImport({ forget: true });
     cancelDeparture({ restore: false });
     retirePicture();
     acceptedPicture?.lease?.dispose();
