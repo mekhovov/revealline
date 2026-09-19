@@ -1,0 +1,20 @@
+{
+  "upstream": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-public-audit-v0640-preparation/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-public-audit-v0640-preparation/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/catalog.json",
+      "bytes": 44159,
+      "sha256": "7fe38250a9d213d78288d5d0eb97a5c9d7d2b177664ee5f6e4dc74804fae3ec8"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-public-audit-v0640-preparation/tools/inputs/5807df71aa612636e574f66f0df99bf09506cbeb/configuration.json",
+      "bytes": 170998,
+      "sha256": "56af458ec875f20bf7ea2115e6a8ad17703a6ef7ac05cb2448149d0785494b74"
+    }
+  ],
+  "scope": "v64.1 source/catalog identity plus explicit31 admission checks. Exact accepted99-authority catalog and30 prior admission hashes retained. HTTP transport unchanged. Test fixture is original prior configuration; modified fixture exists only in memory."
+}
