@@ -1,0 +1,49 @@
+{
+  "format": "revealline-archive-originals.v2",
+  "archiveId": "archive-31",
+  "repository": "mekhovov/revealline-archive-31",
+  "sourceRepository": "mekhovov/revealline",
+  "toolingCommit": "a13ab970222498d7c5fa7f62f9fc04fe436979d5",
+  "extractorPath": "publishing/pages-controller/extract-current.py",
+  "extractorSha256": "38081b1791b49cb7328d18b4d4325c2876bb3bc8d7db03f4610f8d8a7c4bf91b",
+  "budgetBytes": 800000000,
+  "releases": [
+    {
+      "version": "v0.63.0",
+      "sourceRevision": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+      "sourceTree": "fd0138c0e5f71b8b25368878c1948f5bef14255d",
+      "tagObject": "8d64aa0959cd0560ea917bc8fad8bf02d9892eb0",
+      "distributionSha256": "e667bbfe8b21f3b37bbe8390aefdc1488c0744d4df23232f52f6afc65c5b8347",
+      "distributionBytes": 313598341,
+      "metadata": {
+        "release.json": "a6b2a42db22acec03434820db0c9e663b2bd809affd2b1669a38f1dafb3369dc",
+        "manifest.json": "01ab7c1f0c17d8c7e0e9a0108a6c88c1f96e48cfffccc6a3c67cb34c22225b24",
+        "distribution.zip.sha256": "47b0de745435a31a6411b3ea6331faa2f47d179698fd958565324b6ee397f886"
+      },
+      "sourceQualification": {
+        "sha256": "b7a313dcd32dd164d517533d1fa1b213459fb8efeeeb5fe070073b9878ee9ad4",
+        "bytes": 79549
+      }
+    },
+    {
+      "version": "v0.64.0",
+      "sourceRevision": "7c9d34f7011a904b9c100f66884a19808666315a",
+      "sourceTree": "db0b7014be960b5e04e41234a802fac9d5930d6d",
+      "tagObject": "30f93a1d5c072fbd58769dc533ba64217e293374",
+      "distributionSha256": "4bfebc27821f38b8a8eee9ccf5f4d38a8f65ea0ce35cfb3ed522af90463cf9de",
+      "distributionBytes": 313607870,
+      "metadata": {
+        "release.json": "1a1adc4d3f76aa111dde766d7c87c3de374f0b108d9f0c23e21ae1ac5521d1c3",
+        "manifest.json": "5ede3af99f6e053f01e9ae7a8db966a8d1eaa6c49e259f17fd872a15bfaa7230",
+        "distribution.zip.sha256": "f8e2f2abf4a69cf426b7cabdd1a53d88c020c4a55147cf0b34ac4703cdec95c6"
+      },
+      "sourceQualification": {
+        "sha256": "7db2769eae4e45860dc1ecb43be9f7781a2654aba270bf9b6c47be740ee6b48a",
+        "bytes": 78261
+      }
+    }
+  ],
+  "expectedInventorySha256": "0ffe35d0cfbeb53b200c3cd1d62749f23fb625bfb82cf3a1d84b649e9c3284db",
+  "expectedFiles": 1420,
+  "expectedBytes": 627122610
+}

@@ -282,7 +282,8 @@
       "id": "archive-31",
       "repository": "mekhovov/revealline-archive-31",
       "versions": [
-        "v0.63.0"
+        "v0.63.0",
+        "v0.64.0"
       ]
     }
   ]
