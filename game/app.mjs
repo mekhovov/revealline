@@ -36,6 +36,8 @@ import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { classicView } from './ui/classic-view.mjs';
+import { attachFlightInformation } from './ui/flight-information-host.mjs';
+import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
 import {
   FIRST_FLIGHT_LESSONS,
@@ -356,7 +358,8 @@ try {
     onError: (error) => {
       const message = `A committed pack change needs a reload before it can appear: ${error.message}`;
       contentStatus(message, true);
-      warning(message);
+      // Persistent storage reconciliation is a system notice, not a flight event.
+      warning(message, null, 'host.storage');
     },
   });
   globalThis.RevealLineBoot?.progress?.('Reading your saved flight and installed chapters…');
@@ -667,7 +670,18 @@ try {
     titleFlightHold = false,
     lastOwnedAttempt = null,
     contentSwitchBusy = false,
-    backupBusy = false;
+    backupBusy = false,
+    flightDetails = null;
+  const flightInformation = attachFlightInformation({
+    element: $('run-message'),
+    getState: () => ({ started, paused }),
+    writeWarning(message, cue) {
+      runMessageCue = cue;
+      $('run-message').textContent = message;
+      captionUntil = (run?.time || 0) + 5;
+      return { fullText: message, cue, expiresAt: captionUntil };
+    },
+  });
   const packLaunchGuard = createPackLaunchGuard();
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
@@ -879,6 +893,7 @@ try {
   victoryStoryButton.onclick = () => {
     if (practice || run.status !== 'won' || completionWarning) return;
     cancelResultAttempt();
+    const notify = flightInformation.captureWarning('host.story', { allowTerminal: true });
     try {
       const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
         identityCatalog: flightPictures.identityCatalog,
@@ -902,9 +917,9 @@ try {
             new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
           },
         })
-        .catch((error) => warning(error.message));
+        .catch((error) => notify(error.message));
     } catch (error) {
-      warning(error.message);
+      notify(error.message);
     }
   };
   const legacyPictureButton = document.createElement('button');
@@ -1062,14 +1077,14 @@ try {
     pictureResume = null;
     pictureThemePending = null;
   }
-  function pictureFailure(error) {
+  function pictureFailure(error, notify) {
     if (error?.name === 'AbortError') return;
     const needsWriter = error instanceof ReleasePictureWriteRequiredError;
     pictureRecovery = needsWriter ? { owner: flightPictures, run, themeId: theme.id } : null;
     const message = needsWriter
       ? error.message
       : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
-    warning(message);
+    notify(message);
     // An unjoined prewarm has no launch lease to publish its terminal feedback.
     // Keep other preparation owners in charge of their existing presenter.
     if (pictureResume === null && !preparationOperation && !pictureThemePending)
@@ -1082,6 +1097,7 @@ try {
   function warmPicture() {
     const owner = flightPictures;
     if (!owner || owner.ready(theme.id)) return;
+    const notify = flightInformation.captureWarning('host.picture');
     const prewarm = { owner, themeId: theme.id, observe: null, latest: null, promise: null };
     picturePrewarm = prewarm;
     prewarm.promise = owner.ensure(theme.id, {
@@ -1098,7 +1114,7 @@ try {
       .catch((error) => {
         if (picturePrewarm !== prewarm || owner !== flightPictures) return;
         picturePrewarm = null;
-        pictureFailure(error);
+        pictureFailure(error, notify);
       });
   }
   legacyPictureButton.onclick = () => {
@@ -1437,10 +1453,8 @@ try {
     sfx: library.preferences.sfxVolume,
   });
   if (scenario?.music) assignMusic(scenario.music);
-  function warning(message, cue = null) {
-    runMessageCue = cue;
-    $('run-message').textContent = message;
-    captionUntil = (run?.time || 0) + 5;
+  function warning(message, cue = null, role = 'host.unknown') {
+    return flightInformation.warning(message, cue, role);
   }
   function dialogOpen() {
     return !!document.querySelector('dialog[open]');
@@ -1769,6 +1783,7 @@ try {
     compactOverlay: !courseSession,
     additionalSurfaces: [
       ['help-reading', 'help-read', 'How to play', 'help-reading-unit'],
+      ['flight-details-reading', 'flight-details-read', 'Field details', 'flight-details-unit'],
       [
         'collection-reading',
         'collection-read',
@@ -1782,6 +1797,55 @@ try {
     getScope: controllerScope,
     pause,
     onTransition: () => clearInput({ preserveNavigation: true }),
+  });
+  flightDetails = attachFlightDetails({
+    read: flightInformation.read,
+    pause,
+    clearInput,
+    topDialog: controllerDialog,
+    canOpen: () =>
+      started &&
+      paused &&
+      !courseBlocked() &&
+      !campaignOverview &&
+      !['won', 'lost'].includes(run?.status),
+    onReadingChange: () => controllerReading.refresh(),
+    getContext: () => {
+      const capabilities = arcadeActionCapabilities(run.level),
+        actions = [],
+        labels = bindingLabels(resolveKeyBindings(library.preferences.keyboardBindings)),
+        buttons = controllerLabels.flight;
+      if (capabilities.manualAbility)
+        actions.push({
+          label: theme.labels.ability,
+          detail: `${labels.ability} / ${buttons.ability}. ${Math.max(0, run.ability.cooldownUntil - run.time).toFixed(1)}s cooldown remaining${run.ability.capacity ? `; ${run.ability.ammo}/${run.ability.capacity} charges` : ''}.`,
+        });
+      if (manualSupplyAvailable())
+        actions.push({
+          label: 'Supply',
+          detail: `${labels.pickup} / ${buttons.pickup}. Collect a nearby supply for this craft.`,
+        });
+      if (capabilities.manualBoost)
+        actions.push({
+          label: 'Boost',
+          detail: `${labels.boost} / ${buttons.boost}. Uses the configured Hold/Toggle control.`,
+        });
+      if (craftSwitchAvailable())
+        actions.push({
+          label: 'Change craft',
+          detail: `${labels.hangar} / ${buttons.hangar}. Return to a hangar on safe ground.`,
+        });
+      const roles = new Map();
+      for (const enemy of run.enemies) roles.set(enemy.type, (roles.get(enemy.type) || 0) + 1);
+      return {
+        mission: run.level.name,
+        goal: `Reveal ${(run.level.goal.coverage * 100).toFixed(1)}% of the picture.`,
+        steering: `Release a direction to keep flying.${run.rules.stopOnCapture ? ' Closing a cut stops your craft; choose a fresh direction.' : ''}`,
+        objectiveLabel: theme.labels.objective,
+        actorRoles: [...roles].map(([type, count]) => ({ type, count })),
+        actions,
+      };
+    },
   });
   const enemyWorkshopReturn = attachEnemyWorkshopReturn({
     enabled: practiceSession && !courseSession && !controllerPreviewRequested,
@@ -1833,9 +1897,13 @@ try {
     replayFeedback?.clear();
     suspendAudio();
     writer.release();
+    flightDetails.suspend();
+    flightInformation.suspend();
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      flightDetails.dispose();
+      flightInformation.dispose();
       soundtrackDisposed = true;
       soundtrackLoad.abort();
       enemyGuide.dispose();
@@ -1881,6 +1949,7 @@ try {
   };
   window.addEventListener('pageshow', (event) => {
     if (!event.persisted) return;
+    flightInformation.resume();
     restoreListening();
     controller.invalidate();
     clearInput();
@@ -3435,6 +3504,7 @@ try {
     files,
     { signal, download = false, onStatus } = {},
   ) {
+    const notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
     const descriptor = sourceExternalChapter(chapterId);
     if (practiceSession || courseEntry || !writer.writable)
       throw new Error('Open the writable game to install this chapter.');
@@ -3498,7 +3568,7 @@ try {
           });
         } catch (error) {
           if (error.name !== 'AbortError')
-            warning(
+            notify(
               `Chapter installed with its source originals. Field Kit defaults could not be saved: ${error.message}`,
             );
         }
@@ -3582,6 +3652,7 @@ try {
     packId,
     { campaignId, levelId, announce = true, preserveCurrentRun = false, beforeSelect } = {},
   ) {
+    let notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
     attemptFiles?.invalidate();
     cancelRestore();
     const operation = packLaunchGuard.begin(packs);
@@ -3613,7 +3684,12 @@ try {
         const targetIndex = entry.campaign.levels.findIndex((level) => level.id === levelId);
         if (targetIndex < 0) throw new Error('This pack level is unavailable.');
         if (!missionAvailable(targetIndex, entry)) {
-          if (!preserveCurrentRun) selectEntry(entry, { contentSwitchTicket: operation });
+          if (!preserveCurrentRun) {
+            selectEntry(entry, { contentSwitchTicket: operation });
+            // This fallback deliberately accepted a different mission. Its immediate
+            // locked-target explanation belongs to that new presentation owner.
+            notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
+          }
           throw new Error(
             `${entry.campaign.levels[targetIndex].name} is still locked. The next available level is selected.`,
           );
@@ -3629,7 +3705,7 @@ try {
     } catch (error) {
       if (!packLaunchGuard.current(operation, packs)) return false;
       contentStatus(error.message, true);
-      warning(error.message);
+      notify(error.message);
       return false;
     } finally {
       if (packLaunchGuard.current(operation, packs)) {
@@ -3851,6 +3927,7 @@ try {
       run = restored.run;
       recorder = restored.recorder;
       runId = restored.session.runId;
+      const informationOwner = flightInformation.adopt(run, runId);
       masteryDefinition = masteryFor(campaignKey(campaign), run.levelId, masteryCatalog);
       masteryObserver = restored.masteryObserver ?? null;
       masteryAward = null;
@@ -3870,7 +3947,12 @@ try {
       updateLoadout();
       overlay('pause');
       refreshHUD();
-      warning(savedFlightRestoredMessage, 'restored');
+      flightInformation.commitWarning(
+        informationOwner,
+        savedFlightRestoredMessage,
+        'restored',
+        'host.restored',
+      );
       const adopted = {
         run,
         recorder,
@@ -4542,6 +4624,7 @@ try {
   for (const id of ['music-select', 'master-volume', 'music-volume', 'sfx-volume'])
     $(id).onchange = tuneMusic;
   $('music-preview').onclick = async () => {
+    const notify = flightInformation.captureWarning('host.music', { allowTerminal: true });
     const player = soundtrackPlayer,
       request = ++musicPreviewRequest;
     try {
@@ -4554,7 +4637,7 @@ try {
       musicPreviewState = { playing: ok, status: ok ? 'playing' : 'error' };
       renderMusicPreview();
     } catch (e) {
-      if (request === musicPreviewRequest) warning(e.message);
+      if (request === musicPreviewRequest) notify(e.message);
     }
   };
   $('settings-dialog').addEventListener('close', () => {
@@ -5002,6 +5085,7 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('overlay-restart', kind === 'pause');
+    show('overlay-field-details', kind === 'pause');
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
     show('retry-consequence', false);
@@ -5454,6 +5538,7 @@ try {
         classRecipes: scenario?.classRecipes || classRegistry,
       });
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+    const informationOwner = flightInformation.adopt(run, runId);
     courseObserver = null;
     courseUnavailable = null;
     if (courseSession)
@@ -5567,7 +5652,8 @@ try {
     overlay(campaignOverview && !practice ? 'campaign-complete' : 'ready', {
       preserveFocus: !!preparedAttempt,
     });
-    warning(
+    flightInformation.commitWarning(
+      informationOwner,
       courseSession
         ? getFirstFlightLesson(courseRequest.lessonId).instructions[0]
         : practice
@@ -5575,6 +5661,8 @@ try {
           : campaignOverview
             ? 'Campaign complete. View your collection or choose a mission to replay.'
             : currentBriefing().status,
+      null,
+      'host.ready',
     );
     if (!restoreAdoption && !preparedAttempt) {
       flightPictures = newFlightPictures();
@@ -5607,7 +5695,8 @@ try {
       pictureResume = ticket;
       paused = true;
       clearInput();
-      warning(picturePreparingMessage);
+      warning(picturePreparingMessage, null, 'host.picture');
+      const notify = flightInformation.captureWarning('host.picture');
       const feedback = beginPreparation(picturePreparingMessage, cancelPictureStart);
       const prewarm =
         picturePrewarm?.owner === owner && picturePrewarm.themeId === selectedTheme
@@ -5652,7 +5741,7 @@ try {
                 : `Picture unavailable: ${error.message}`,
               'error',
             );
-            pictureFailure(error);
+            pictureFailure(error, notify);
           }
         })
         .finally(() => {
@@ -5859,103 +5948,115 @@ try {
       (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
     refreshMastery();
     refreshCourse();
+    flightDetails?.reconcile();
   }
   function eventFeedback(events) {
-    for (const event of events) {
-      sound.event(event);
-      if (event.type === 'class.switched') {
-        updateLoadout();
-        setTheme();
-        warning(`Now flying ${run.classRecipe.label}. Charges and cooldowns are preserved.`);
+    const ticket = flightInformation.begin(run, events);
+    try {
+      for (const [index, event] of events.entries()) {
+        flightInformation.observeEvent(ticket, index, () => {
+          sound.event(event);
+          if (event.type === 'class.switched') {
+            updateLoadout();
+            setTheme();
+            warning(`Now flying ${run.classRecipe.label}. Charges and cooldowns are preserved.`);
+          }
+          if (event.type === 'class.rejected')
+            warning(`Cannot switch craft: ${event.reason}. Return to safe hangar ground.`);
+          if (event.type === 'cells.claimed')
+            warning(
+              `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+              'secured',
+            );
+          if (
+            event.type === 'cut.started' &&
+            ['failure', 'secured', 'secured-stopped'].includes(runMessageCue) &&
+            run.status === 'running' &&
+            run.player.cutting
+          )
+            warning('Live line exposed. Reach safe ground to secure it.');
+          if (event.type === 'player.failed')
+            warning(
+              {
+                'self-contact': 'Your line crossed itself. Choose a new route.',
+                'mission-timeout': 'The mission clock ran out. Try a faster route.',
+                'cut-timeout': 'Your live line stayed open too long. Make a shorter cut.',
+                'cable-limit': 'Your cable budget ran out. Close a shorter line.',
+                'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
+              }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
+              'failure',
+            );
+          if (event.type === 'lineImpact.seeded')
+            warning('Line struck! Reach safe ground before the travelling spark catches you.');
+          if (event.type === 'lineImpact.arrived')
+            warning('The travelling impact reached your craft. One life lost.');
+          if (event.type === 'shield.absorbed')
+            warning('Shield absorbed the hit. Your unfinished line is cancelled; no life lost.');
+          if (event.type === 'ability.rejected')
+            warning(
+              {
+                empty: 'No charges left. Return to a supply pad and press Supply.',
+                cooldown: 'Ability is recharging. Watch the cooldown beside your controls.',
+                'already-full': 'Your supplies are already full.',
+                'out-of-range': 'Move onto a supply pad to pick up a charge.',
+              }[event.reason] || 'Ability is unavailable right now.',
+            );
+          if (event.type === 'ability.used')
+            warning(
+              {
+                scan: 'Hidden objectives marked. Short direction hints show where enemies are heading.',
+                'stun-field': 'Stun field placed. Nearby moving field enemies are briefly held.',
+                'slow-field': 'Slow field placed. Nearby field enemies move at quarter speed.',
+                shield: 'Shield active. One enemy contact can cancel your line safely.',
+              }[event.primitive] || `${theme.labels.ability} active.`,
+            );
+          if (event.type === 'pickup.collected')
+            warning('Supplies ready. Choose your next opportunity.');
+          if (event.type === 'capture.stopped')
+            warning(
+              `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+              'secured-stopped',
+            );
+          if (event.type === 'powerup.collected')
+            warning(
+              {
+                'extra-life': event.gain
+                  ? 'Extra life collected.'
+                  : 'Life pickup collected. Already at the nine-life limit.',
+                'player-speed': 'Speed pickup: faster flight for five seconds.',
+                'enemy-slow': 'Slow pickup: enemies move at half speed for six seconds.',
+                'enemy-freeze':
+                  'Freeze pickup: enemies are held for three seconds. Terrain and the mission clock stay active.',
+              }[event.kind] || 'Powerup collected.',
+            );
+          if (event.type === 'rover.warning')
+            warning('Claimed-ground rover waking in one second. Watch the marked actor.');
+          if (event.type === 'rover.activated')
+            warning('Claimed-ground rover active. Your secured ground still has a moving threat.');
+          if (event.type === 'erosion.warning')
+            warning('The marked captured cell is about to reopen. Watch the edge timer.');
+          if (event.type === 'cells.eroded')
+            warning(
+              'Ground reopened. Reclaiming it restores coverage, without repeat capture points.',
+            );
+          if (
+            event.type === 'encounter.stageChanged' ||
+            event.type === 'encounter.phaseChanged' ||
+            event.type === 'encounter.defeated'
+          ) {
+            const cue = encounterView(run);
+            if (cue) warning(`${cue.title}. ${cue.instruction}`);
+          }
+          if (event.type === 'boss.warning')
+            warning(`${theme.labels.boss}: the marked lane will activate shortly.`);
+        });
       }
-      if (event.type === 'class.rejected')
-        warning(`Cannot switch craft: ${event.reason}. Return to safe hangar ground.`);
-      if (event.type === 'cells.claimed')
-        warning(
-          `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
-          'secured',
-        );
-      if (
-        event.type === 'cut.started' &&
-        ['failure', 'secured', 'secured-stopped'].includes(runMessageCue) &&
-        run.status === 'running' &&
-        run.player.cutting
-      )
-        warning('Live line exposed. Reach safe ground to secure it.');
-      if (event.type === 'player.failed')
-        warning(
-          {
-            'self-contact': 'Your line crossed itself. Choose a new route.',
-            'mission-timeout': 'The mission clock ran out. Try a faster route.',
-            'cut-timeout': 'Your live line stayed open too long. Make a shorter cut.',
-            'cable-limit': 'Your cable budget ran out. Close a shorter line.',
-            'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
-          }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
-          'failure',
-        );
-      if (event.type === 'lineImpact.seeded')
-        warning('Line struck! Reach safe ground before the travelling spark catches you.');
-      if (event.type === 'lineImpact.arrived')
-        warning('The travelling impact reached your craft. One life lost.');
-      if (event.type === 'shield.absorbed')
-        warning('Shield absorbed the hit. Your unfinished line is cancelled; no life lost.');
-      if (event.type === 'ability.rejected')
-        warning(
-          {
-            empty: 'No charges left. Return to a supply pad and press Supply.',
-            cooldown: 'Ability is recharging. Watch the cooldown beside your controls.',
-            'already-full': 'Your supplies are already full.',
-            'out-of-range': 'Move onto a supply pad to pick up a charge.',
-          }[event.reason] || 'Ability is unavailable right now.',
-        );
-      if (event.type === 'ability.used')
-        warning(
-          {
-            scan: 'Hidden objectives marked. Short direction hints show where enemies are heading.',
-            'stun-field': 'Stun field placed. Nearby moving field enemies are briefly held.',
-            'slow-field': 'Slow field placed. Nearby field enemies move at quarter speed.',
-            shield: 'Shield active. One enemy contact can cancel your line safely.',
-          }[event.primitive] || `${theme.labels.ability} active.`,
-        );
-      if (event.type === 'pickup.collected')
-        warning('Supplies ready. Choose your next opportunity.');
-      if (event.type === 'capture.stopped')
-        warning(
-          `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
-          'secured-stopped',
-        );
-      if (event.type === 'powerup.collected')
-        warning(
-          {
-            'extra-life': event.gain
-              ? 'Extra life collected.'
-              : 'Life pickup collected. Already at the nine-life limit.',
-            'player-speed': 'Speed pickup: faster flight for five seconds.',
-            'enemy-slow': 'Slow pickup: enemies move at half speed for six seconds.',
-            'enemy-freeze':
-              'Freeze pickup: enemies are held for three seconds. Terrain and the mission clock stay active.',
-          }[event.kind] || 'Powerup collected.',
-        );
-      if (event.type === 'rover.warning')
-        warning('Claimed-ground rover waking in one second. Watch the marked actor.');
-      if (event.type === 'rover.activated')
-        warning('Claimed-ground rover active. Your secured ground still has a moving threat.');
-      if (event.type === 'erosion.warning')
-        warning('The marked captured cell is about to reopen. Watch the edge timer.');
-      if (event.type === 'cells.eroded')
-        warning('Ground reopened. Reclaiming it restores coverage, without repeat capture points.');
-      if (
-        event.type === 'encounter.stageChanged' ||
-        event.type === 'encounter.phaseChanged' ||
-        event.type === 'encounter.defeated'
-      ) {
-        const cue = encounterView(run);
-        if (cue) warning(`${cue.title}. ${cue.instruction}`);
-      }
-      if (event.type === 'boss.warning')
-        warning(`${theme.labels.boss}: the marked lane will activate shortly.`);
+      painter.effectsFor(events, run);
+      flightInformation.finish(ticket);
+    } catch (error) {
+      flightInformation.cancel(ticket);
+      throw error;
     }
-    painter.effectsFor(events, run);
   }
   function update(elapsed) {
     if (document.hidden || !document.hasFocus()) {
@@ -6248,7 +6349,7 @@ try {
           show('game-overlay', false);
           show('skip-celebration', true);
           show('show-result', false);
-          warning('Picture unlocked. A whole world, from one brave line.');
+          warning('Picture unlocked. A whole world, from one brave line.', null, 'host.won');
         } else {
           defeatActive = true;
           defeatPaused = false;
@@ -6258,7 +6359,11 @@ try {
           $('skip-celebration').textContent = 'Show defeat menu';
           show('skip-celebration', true);
           $('skip-celebration').focus({ preventScroll: true });
-          warning('Life lost. Showing the final impact; choose Show defeat menu to continue.');
+          warning(
+            'Life lost. Showing the final impact; choose Show defeat menu to continue.',
+            null,
+            'host.lost',
+          );
         }
       }
     } else {
@@ -6301,6 +6406,7 @@ try {
     const next =
       themesFile.themes.find((t) => t.id === $('theme-select').value) ||
       (scenario?.theme?.id === $('theme-select').value ? scenario.theme : themesFile.themes[0]);
+    const notify = flightInformation.captureWarning('host.picture', { allowTerminal: true });
     const owner = flightPictures,
       controller = new AbortController(),
       ticket = ++pictureGeneration;
@@ -6345,7 +6451,7 @@ try {
               : `World artwork unavailable: ${error.message}`,
           state: 'error',
         });
-        pictureFailure(error);
+        pictureFailure(error, notify);
       }
     } finally {
       candidate?.dispose();
@@ -6372,12 +6478,13 @@ try {
     requestMissionReplacement({ kind: 'steering', id: $('turn-select').value }, $('turn-select'));
   $('start-button').onclick = () => resume();
   $('continue-saved').onclick = async () => {
+    const notify = flightInformation.captureWarning('host.restore', { allowTerminal: true });
     try {
       await restoreAttempt(savedAttempt());
       $('start-button').focus({ preventScroll: true });
     } catch (error) {
       if (error.name === 'AbortError') return;
-      warning(`Saved flight was not loaded: ${error.message}`);
+      notify(`Saved flight was not loaded: ${error.message}`);
       // A new selection may have cancelled verification. Preserve its focus;
       // only recover focus lost when the loading button was disabled.
       if (!$('continue-saved').hidden && document.activeElement === document.body)
@@ -6681,6 +6788,7 @@ try {
     document,
   });
   async function downloadCurrentReplay(replay) {
+    const notify = flightInformation.captureWarning('host.replay', { allowTerminal: true });
     if (replayDownload) return;
     const operation = {
       run,
@@ -6700,7 +6808,7 @@ try {
       if (operation.observed && $('replay-dialog').open) {
         operation.status.finish({ message: exported.message });
         if (operation.run === run)
-          warning(
+          notify(
             `Replay prepared with its exact rules, inputs and final state. ${exported.message}`,
           );
       }
@@ -6724,6 +6832,7 @@ try {
   });
   $('export-replay').onclick = async () => {
     if (replayDownload) return;
+    const notify = flightInformation.captureWarning('host.replay', { allowTerminal: true });
     try {
       if (!recorder) throw new Error('Start a new attempt to record a replay.');
       pause(true);
@@ -6733,7 +6842,7 @@ try {
       replayFocusClearance.refresh();
       await downloadCurrentReplay(lastReplay);
     } catch (error) {
-      warning(`Replay could not export: ${error.message}`);
+      notify(`Replay could not export: ${error.message}`);
     }
   };
   $('download-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
@@ -6753,7 +6862,7 @@ try {
     pause(true);
   }
   onNativeInactive(suspendInteraction).catch((error) =>
-    warning(`App lifecycle adapter unavailable: ${error.message}`),
+    warning(`App lifecycle adapter unavailable: ${error.message}`, null, 'host.lifecycle'),
   );
   window.addEventListener('blur', suspendInteraction);
   function restoreListening() {

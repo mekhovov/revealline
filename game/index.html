@@ -101,6 +101,7 @@
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
     <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/flight-information-details.css" />
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
     <link rel="stylesheet" data-boot-href="ui/mission-picker.css" />
@@ -341,6 +342,9 @@
                   </button>
                   <button id="first-flight-enter" class="button secondary" type="button" hidden>
                     Learn by playing
+                  </button>
+                  <button id="overlay-field-details" class="button secondary" type="button" hidden>
+                    Field details
                   </button>
                   <button id="overlay-restart" class="button secondary" type="button" hidden>
                     Restart mission
@@ -605,6 +609,55 @@
         </nav>
       </footer>
     </main>
+    <dialog id="flight-details-dialog" aria-labelledby="flight-details-title">
+      <h2 id="flight-details-title">Field details</h2>
+      <p class="flight-details-context">Paused. Back keeps your flight paused.</p>
+      <div id="flight-details-unit">
+        <div class="reading-toolbar">
+          <div class="reading-actions">
+            <button
+              id="flight-details-read"
+              type="button"
+              aria-controls="flight-details-reading"
+              aria-pressed="false"
+            >
+              Read field details
+            </button>
+          </div>
+          <p
+            id="flight-details-reading-hint"
+            class="reading-hint"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            Read without resuming.
+          </p>
+        </div>
+        <div
+          id="flight-details-reading"
+          role="region"
+          aria-label="Full field details"
+          tabindex="0"
+          data-game-reading
+        >
+          <div id="flight-details-content"></div>
+        </div>
+        <div class="flight-details-actions">
+          <button
+            id="flight-details-reading-done"
+            type="button"
+            aria-controls="flight-details-reading"
+            disabled
+          >
+            Done reading
+          </button>
+          <button id="flight-details-back" class="button secondary" type="button">
+            Back to Pause
+          </button>
+        </div>
+      </div>
+    </dialog>
     <dialog id="help-dialog" aria-labelledby="help-title">
       <button class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button>
       <p class="eyebrow">THE SHORT VERSION</p>
