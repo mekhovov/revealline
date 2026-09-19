@@ -671,3 +671,192 @@ test('closed and disposed media panels retire queued clearance without refocusin
   assert.equal(h.panel.dialog.style.scrollPaddingBlockStart, '0px');
   assert.equal(h.panel.dialog.style.scrollPaddingBlockEnd, '0px');
 });
+
+test('verified reload stays successful when its host notification throws', async (t) => {
+  let notifications = 0;
+  const h = await setup(t, {
+    panel: {
+      onLoaded() {
+        ++notifications;
+        throw new Error('Host notice unavailable');
+      },
+    },
+  });
+  const writes = h.memory.allPuts.length;
+  assert.equal(h.panel.snapshot().ready, true);
+  assert.equal(await h.$('reload').onclick(), true);
+  assert.equal(notifications, 2);
+  assert.equal(h.panel.snapshot().ready, true);
+  assert.equal(h.$('status').dataset.state, 'ready');
+  assert.match(h.$('status').textContent, /Saved originals verified, but its notification failed/);
+  assert.match(h.$('status').textContent, /Host notice unavailable/);
+  assert.equal(h.memory.allPuts.length, writes);
+});
+
+// The public Workshop Reload failure showed the same native disabled-button
+// blur as Preview. Exercise the real load/work owner, not a retained fake focus.
+async function pendingReload(t, { fail = false, onEnable, focused = true } = {}) {
+  let gate = null;
+  const entered = deferred(),
+    f = mediaFixture(true),
+    context = Object.freeze({ generation: 1, executionCatalog: f.catalog });
+  const h = await setup(t, {
+    panel: {
+      catalog: {
+        async read() {
+          if (gate) {
+            entered.resolve();
+            await gate.promise;
+          }
+          return context;
+        },
+      },
+    },
+  });
+  const before = await h.store.read(),
+    writes = h.memory.allPuts.length,
+    win = focusWindow(h),
+    listenersBefore = listenerCount(h),
+    opener = h.$('reload');
+  nativeDisabled(opener, () => onEnable?.(h));
+  (focused ? opener : h.$('close')).focus();
+  gate = deferred();
+  t.after(() => gate.resolve());
+  const pending = opener.onclick();
+  await entered.promise;
+  assert.equal(opener.disabled, true);
+  assert.equal(h.doc.activeElement, focused ? h.doc.body : h.$('close'));
+  return {
+    h,
+    win,
+    opener,
+    listenersBefore,
+    async complete() {
+      if (fail) gate.reject(new Error('Reload catalog unavailable'));
+      else gate.resolve();
+      const result = await pending;
+      assert.equal(h.memory.allPuts.length, writes, 'Reload has no media writes');
+      assert.deepEqual(await h.store.read(), before);
+      return result;
+    },
+  };
+}
+for (const fail of [false, true])
+  test(`reload ${fail ? 'failure' : 'success'} restores its invoking button after native disabled blur`, async (t) => {
+    const { h, opener, complete, listenersBefore } = await pendingReload(t, { fail });
+    assert.equal(await complete(), !fail);
+    assert.equal(opener.disabled, false);
+    assert.equal(h.doc.activeElement, opener);
+    assert.equal(h.$('status').dataset.state, fail ? 'error' : 'ready');
+    assert.equal(listenerCount(h), listenersBefore);
+  });
+
+for (const decision of [
+  'focus-away',
+  'body-key',
+  'body-pointer',
+  'window-blur',
+  'hidden',
+  'pagehide',
+  'new-dialog',
+])
+  test(`reload completion cannot reclaim focus after ${decision}`, async (t) => {
+    const { h, win, complete, listenersBefore } = await pendingReload(t);
+    if (decision === 'focus-away') {
+      h.$('close').focus();
+      h.$('close').blur();
+    } else if (decision === 'body-key') h.doc.body.emit('keydown', { key: 'Tab', code: 'Tab' });
+    else if (decision === 'body-pointer') h.doc.body.emit('pointerdown', { button: 0 });
+    else if (decision === 'window-blur') {
+      win.emit('blur');
+      win.emit('focus');
+    } else if (decision === 'hidden') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+      h.doc.hidden = false;
+      h.doc.emit('visibilitychange');
+    } else if (decision === 'pagehide') win.emit('pagehide', { persisted: true });
+    else {
+      const dialog = h.doc.createElement('dialog');
+      h.doc.body.append(dialog);
+      dialog.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
+      dialog.showModal();
+      dialog.close();
+    }
+    assert.equal(listenerCount(h), listenersBefore, 'Newer intent promptly retires listeners');
+    assert.equal(await complete(), true);
+    assert.equal(h.doc.activeElement, h.doc.body);
+  });
+
+for (const stop of ['cancel', 'invalidate', 'close', 'dispose'])
+  test(`${stop} retires the pending reload focus owner before its read settles`, async (t) => {
+    const { h, complete, listenersBefore, opener } = await pendingReload(t);
+    if (stop === 'cancel') h.$('cancel').onclick();
+    else if (stop === 'invalidate') h.panel.invalidateContext();
+    else if (stop === 'close') h.panel.close();
+    else h.panel.dispose();
+    assert.equal(listenerCount(h), listenersBefore);
+    const focus = h.doc.activeElement;
+    assert.equal(await complete(), false);
+    assert.equal(h.doc.activeElement, focus);
+    assert.notEqual(h.doc.activeElement, opener);
+  });
+
+test('programmatic reload preserves an unrelated focused Close action', async (t) => {
+  const { h, complete, listenersBefore } = await pendingReload(t, { focused: false });
+  assert.equal(await complete(), true);
+  assert.equal(h.doc.activeElement, h.$('close'));
+  assert.equal(listenerCount(h), listenersBefore);
+});
+
+for (const decision of ['focus', 'invalidate'])
+  test(`reload final enabling ${decision} vetoes the old focus owner`, async (t) => {
+    let handled = false;
+    const { h, complete, opener } = await pendingReload(t, {
+      onEnable(page) {
+        if (handled) return;
+        handled = true;
+        if (decision === 'focus') page.$('close').focus();
+        else page.panel.invalidateContext();
+      },
+    });
+    await complete();
+    assert.equal(handled, true);
+    assert.notEqual(h.doc.activeElement, opener);
+    if (decision === 'focus') assert.equal(h.doc.activeElement, h.$('close'));
+    else assert.equal(h.panel.snapshot().ready, false);
+  });
+
+test('closing and reopening while reload is pending keeps the newer load focus and status', async (t) => {
+  let reads = 0;
+  const gate = deferred(),
+    entered = deferred(),
+    f = mediaFixture(true);
+  const h = await setup(t, {
+    panel: {
+      catalog: {
+        async read() {
+          if (++reads === 2) {
+            entered.resolve();
+            await gate.promise;
+          }
+          return { generation: reads, executionCatalog: f.catalog };
+        },
+      },
+    },
+  });
+  focusWindow(h);
+  nativeDisabled(h.$('reload'));
+  h.$('reload').focus();
+  const retired = h.$('reload').onclick();
+  await entered.promise;
+  h.panel.close();
+  assert.equal(await h.panel.open(), true);
+  assert.equal(h.doc.activeElement, h.$('reload'));
+  h.$('close').focus();
+  const accepted = h.$('status').textContent;
+  gate.resolve();
+  assert.equal(await retired, false);
+  assert.equal(h.$('status').textContent, accepted);
+  assert.equal(h.doc.activeElement, h.$('close'));
+});
