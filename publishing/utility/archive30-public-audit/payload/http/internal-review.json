@@ -1,0 +1,11 @@
+{
+  "status": "ROOT_REVIEWED_EXACT_BOUND_HTTP_REQUEST",
+  "reviewed": true,
+  "requestSha256": "ac0b16f2172689be950595641ea9156963ba003c017b96711ff67dd833130b36",
+  "scope": "One 705-row / 313563420-byte public audit after root receipt/source validation and complete reviewed request. Zero prior rows. Before/after authorities and independent row reconciliation required.",
+  "reserveBytes": 536870912,
+  "executionAllocationBytes": 33554432,
+  "capacityEnforcement": "Root preflight and monitoring; donor HTTP wrapper is time bounded, not a disk quota.",
+  "publicAuditComplete": false,
+  "nativeComplete": false
+}
