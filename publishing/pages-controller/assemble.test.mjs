@@ -6,7 +6,7 @@ import path from 'node:path';
 import { assemble, loadCatalog, validateAdmissions } from './assemble.mjs';
 import { digest, jsonBytes, retainRecentMetadata } from './metadata.mjs';
 
-async function fixture(t, versions = ['v0.1.0', 'v0.44.0']) {
+async function fixture(t, versions = ['v0.1.0', 'v0.44.0'], { archiveCurrent = false } = {}) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-assemble-'));
   t.after(() => fs.rm(dir, { recursive: true, force: true }));
   const directory = path.join(dir, 'config'),
@@ -18,6 +18,7 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0']) {
   };
   const currentVersion = versions.at(-1),
     historicalVersions = versions.slice(0, -1),
+    archivedVersions = archiveCurrent ? versions : historicalVersions,
     releases = [],
     records = [],
     archiveFiles = [];
@@ -76,7 +77,7 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0']) {
     );
     if (version === currentVersion)
       for (const [name, bytes] of payload) await write(path.join(currentSite, name), bytes);
-    else {
+    if (version !== currentVersion || archiveCurrent) {
       archiveFiles.push({
         path: `releases/${version}/release.json`,
         bytes: recordBytes.length,
@@ -101,7 +102,7 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0']) {
       {
         id: 'archive-01',
         repository: 'mekhovov/revealline-archive-01',
-        versions: historicalVersions,
+        versions: archivedVersions,
       },
       {
         id: 'archive-08',
@@ -131,7 +132,7 @@ async function fixture(t, versions = ['v0.1.0', 'v0.44.0']) {
     archiveId: 'archive-01',
     infrastructureCommit: 'e'.repeat(40),
     deploymentId: 42,
-    versions: historicalVersions,
+    versions: archivedVersions,
   });
   const qualificationBytes = jsonBytes({
     format: 'revealline-source-qualification.v1',
@@ -297,6 +298,44 @@ test('archive admission requires every original file, pinned HTTP evidence and n
   const wrong = structuredClone(f.configuration);
   wrong.admissions[0].infrastructureCommit = 'f'.repeat(40);
   await assert.rejects(validate(wrong), /browser admission failed/);
+});
+
+test('an admitted current archive is verified without replacing the current game route', async (t) => {
+  const f = await fixture(t, ['v0.1.0', 'v0.44.0'], { archiveCurrent: true });
+  const { metadata } = await loadCatalog(f.directory);
+  const admitted = await validateAdmissions({ ...f, metadata });
+  assert.equal(admitted.admissions.length, 1);
+  assert.equal(admitted.canonicalSites['v0.44.0'], undefined);
+  assert.deepEqual(admitted.plan.shards[0].versions, ['v0.1.0']);
+  const receipt = await assemble(f);
+  assert.equal(receipt.currentVersion, 'v0.44.0');
+  assert.equal(
+    await fs.readFile(
+      path.join(f.outputDirectory, 'releases/v0.44.0/site/game/index.html'),
+      'utf8',
+    ),
+    'game v0.44.0',
+  );
+
+  // Even though current routing stays local, its new archive must retain exact bytes.
+  const inventory = JSON.parse(await fs.readFile(path.join(f.directory, 'inventory.json')));
+  inventory.files.find((r) => r.path === 'releases/v0.44.0/site/game/icon.png').sha256 = 'f'.repeat(
+    64,
+  );
+  const inventoryBytes = jsonBytes(inventory);
+  await fs.writeFile(path.join(f.directory, 'inventory.json'), inventoryBytes);
+  const config = structuredClone(f.configuration);
+  config.admissions[0].evidence.find((pin) => pin.kind === 'inventory').sha256 =
+    digest(inventoryBytes);
+  const http = JSON.parse(await fs.readFile(path.join(f.directory, 'http.json')));
+  http.expectedInventorySha256 = digest(inventoryBytes);
+  const httpBytes = jsonBytes(http);
+  await fs.writeFile(path.join(f.directory, 'http.json'), httpBytes);
+  config.admissions[0].evidence.find((pin) => pin.kind === 'http').sha256 = digest(httpBytes);
+  await assert.rejects(
+    validateAdmissions({ directory: f.directory, metadata, configuration: config }),
+    /does not preserve the pinned original/,
+  );
 });
 
 test('accepted HTTP status cannot substitute a different original while retaining matched counts', async (t) => {
