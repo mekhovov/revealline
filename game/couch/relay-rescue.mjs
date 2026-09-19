@@ -25,6 +25,8 @@ import {
   COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
 } from './coop-picture-bindings.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
+import { createCoopPresentationImport } from './coop-import-source.mjs';
+import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -227,24 +229,46 @@ export function bootCoop() {
   let inactive = !foreground();
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
+  let packArtworkSource = null;
+  const artworkImports = createCoopPresentationImport();
   let importRequest = 0;
   const packStatus = createOperationStatus($('coop-pack-status'), { isCurrent: () => !disposed });
   const packPicker = $('coop-pack-file').closest('details');
   let importDisplay = null,
     importOperation = null,
-    importDraft = null;
+    importDraft = null,
+    importAdopting = null;
+  function importControls() {
+    if (disposed) return;
+    const finishing = artworkImports.pending();
+    $('coop-pack-file').disabled = finishing;
+    $('coop-pack-retry').disabled = finishing;
+  }
   function cancelImport({ forget = false } = {}) {
     const operation = importOperation;
     // Invalidate before abort, status, or focus callbacks can reenter the host.
     importOperation = null;
     importDisplay = null;
     importRequest++;
+    const artworkDraft = importDraft?.kind === 'artwork' ? importDraft : null;
+    if (artworkDraft && (operation || forget)) {
+      artworkImports.cancel();
+      if (artworkDraft.selection !== pictureSelection) artworkDraft.selection?.lease.dispose();
+      artworkDraft.pack = null;
+      artworkDraft.artworkSource = null;
+      artworkDraft.selection = null;
+      artworkDraft.cancelledRequest = importRequest;
+    }
     if (operation) {
       operation.controller.abort();
       operation.focus.finish(null, false);
       operation.display.finish({
         state: 'detached',
-        message: 'Stopped waiting. The selected pack is unchanged. Retry pack when ready.',
+        message: artworkDraft
+          ? artworkImports.pending()
+            ? 'Finishing cancelled artwork validation… The selected pack is unchanged.'
+            : 'Artwork import cancelled. The selected pack is unchanged. Retry pack when ready.'
+          : 'Stopped waiting. The selected pack is unchanged. Retry pack when ready.',
       });
     }
     if (forget && importDraft) {
@@ -255,6 +279,7 @@ export function bootCoop() {
     $('coop-pack-cancel').hidden = true;
     $('coop-pack-retry').hidden = !importDraft;
     $('coop-pack-file').value = '';
+    importControls();
     if (operation) pictureUI();
   }
   let knockdowns = [null, null];
@@ -1023,7 +1048,8 @@ export function bootCoop() {
     const busy = Boolean(pictureOperation),
       ready = pictureSelection?.state === 'ready',
       retryPreview = !run && ready && previewState === 'unavailable';
-    $('coop-start').disabled = !startPermitted || !ready || busy || Boolean(importOperation);
+    $('coop-start').disabled =
+      !startPermitted || !ready || busy || Boolean(importOperation || importAdopting);
     $('coop-picture-cancel').hidden = !busy;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
     $('coop-picture-retry').textContent = retryPreview ? 'Retry preview' : 'Retry picture';
@@ -1056,16 +1082,18 @@ export function bootCoop() {
     pictureUI('Picture loading cancelled. Retry picture when you are ready.');
     focus?.finish($('coop-picture-retry'));
   }
-  function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack) {
+  function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack, artworkSource = null) {
     return {
       sourcePack,
+      artworkSource,
       pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
       request: {
         pack: structuredClone(pinnedPack),
         levelId: recipe.level.id,
-        themeId: 'fpv',
+        themeId: artworkSource?.receipt.theme.id ?? 'fpv',
         attemptId: `team-${++pictureSequence}`,
+        ...(artworkSource ? { artworkSource } : {}),
       },
       lease: createCoopPresentation({
         bindings: COOP_PICTURE_BINDINGS,
@@ -1084,9 +1112,27 @@ export function bootCoop() {
     initial = false,
   } = {}) {
     if (disposed || departure || importDisplay || running()) return Promise.resolve();
+    if (importAdopting) {
+      // A synchronous setup callback can reset the pack while adoption unwinds.
+      // Do not prepare against its tentative owner; keep only the newer intent.
+      const request = importRequest,
+        selectedPack = pack,
+        levelId = $('coop-level').value;
+      return Promise.resolve().then(() => {
+        if (request !== importRequest || pack !== selectedPack || $('coop-level').value !== levelId)
+          return;
+        return preparePicture({ retry, origin, initial });
+      });
+    }
     if (!retry || !pictureSelection) {
       retirePicture();
-      pictureSelection = newPictureSelection(currentRecipe(), run ? attemptPack : pack);
+      const sourcePack = run ? attemptPack : pack;
+      pictureSelection = newPictureSelection(
+        currentRecipe(),
+        sourcePack,
+        sourcePack,
+        run ? (acceptedPicture?.artworkSource ?? null) : packArtworkSource,
+      );
     }
     const selection = pictureSelection;
     if (pictureOperation) return pictureOperation.promise;
@@ -1226,7 +1272,12 @@ export function bootCoop() {
     )
       return;
     const recipe = { level: structuredClone(destination), options: currentRecipe().options };
-    const selection = newPictureSelection(recipe, acceptedPicture.sourcePack, attemptPack);
+    const selection = newPictureSelection(
+      recipe,
+      acceptedPicture.sourcePack,
+      attemptPack,
+      acceptedPicture.artworkSource,
+    );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
       run,
@@ -1478,6 +1529,7 @@ export function bootCoop() {
       earnedDialog.open ||
       pictureOperation ||
       importOperation ||
+      importAdopting ||
       (!run && !startPermitted) ||
       !foreground()
     )
@@ -1687,7 +1739,11 @@ export function bootCoop() {
       $('coop-menu').hidden = false;
       showPackStatus();
       placeTools(false);
-      if (retainedPicture?.sourcePack === pack && retainedPicture.levelId === selectedLevel().id) {
+      if (
+        retainedPicture?.sourcePack === pack &&
+        retainedPicture.artworkSource === packArtworkSource &&
+        retainedPicture.levelId === selectedLevel().id
+      ) {
         pictureSelection = retainedPicture;
         pictureUI('Team picture ready. Start remains a separate action.');
       } else {
@@ -2024,9 +2080,8 @@ export function bootCoop() {
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
   function showPackStatus() {
-    packStatus
-      .begin({ message: `${pack.name} · ${pack.levels.length} levels` })
-      .finish({ message: `${pack.name} · ${pack.levels.length} levels` });
+    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}`;
+    packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
     if (disposed || !isCurrent()) return;
@@ -2057,6 +2112,8 @@ export function bootCoop() {
       pictureOperation ||
       departure ||
       importOperation ||
+      importAdopting ||
+      artworkImports.pending() ||
       importDraft !== draft
     )
       return;
@@ -2083,23 +2140,59 @@ export function bootCoop() {
     const operation = { draft, controller, focus, display };
     importOperation = operation;
     importDisplay = display;
+    let committed = false;
     $('coop-pack-cancel').hidden = false;
     $('coop-pack-retry').hidden = true;
     try {
       pictureUI();
       if (!draft.pack) {
-        if (draft.file.size > COOP_PACK_MAX_BYTES)
-          throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
-        const source = await draft.file.text();
-        if (!current()) return;
+        if (draft.kind === 'artwork') {
+          display.update({ message: 'Checking the Team artwork bundle…', stage: 'verifying' });
+          if (!current()) return;
+          let source;
+          try {
+            const preparation = artworkImports.prepare(draft.file, {
+              signal: controller.signal,
+              onProgress: ({ stage, index, total }) => {
+                if (!current()) return;
+                display.update({
+                  message:
+                    stage === 'checking-picture'
+                      ? `Checking local artwork ${index + 1} of ${total}…`
+                      : stage === 'ready'
+                        ? 'Local artwork validated. Preparing the selected arena…'
+                        : 'Checking Team arenas and artwork…',
+                  stage: 'verifying',
+                });
+              },
+            });
+            importControls();
+            source = await preparation;
+          } finally {
+            importControls();
+          }
+          if (!current()) return;
+          draft.artworkSource = source;
+          draft.pack = source.pack;
+        } else {
+          if (draft.file.size > COOP_PACK_MAX_BYTES)
+            throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
+          const source = await draft.file.text();
+          if (!current()) return;
+          display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
+          if (!current()) return;
+          draft.pack = readCoopPack(source);
+        }
         if (!packPicker.open) {
           cancelImport();
           return;
         }
-        display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
-        if (!current()) return;
-        draft.pack = readCoopPack(source);
-        draft.selection = newPictureSelection({ level: draft.pack.levels[0] }, draft.pack);
+        draft.selection = newPictureSelection(
+          { level: draft.pack.levels[0] },
+          draft.pack,
+          draft.pack,
+          draft.artworkSource,
+        );
       }
       display.update({
         message: 'Preparing the imported Team picture… The selected pack stays available.',
@@ -2132,38 +2225,78 @@ export function bootCoop() {
       selection.lease.confirm(selection.request);
       const previous = {
         pack,
+        artworkSource: packArtworkSource,
         selection: pictureSelection,
         level: $('coop-level').value,
         message: pictureMessage,
       };
+      const proposedPack = draft.pack,
+        proposedArtwork = draft.artworkSource;
       selection.binding = binding;
       selection.state = 'preparing';
       const rollback = () => {
-        if (pictureSelection !== selection || run || disposed) return;
+        if (
+          committed ||
+          pictureSelection !== selection ||
+          pack !== proposedPack ||
+          packArtworkSource !== proposedArtwork ||
+          run ||
+          disposed
+        )
+          return;
         pictureSelection = previous.selection;
+        packArtworkSource = previous.artworkSource;
         showPack(previous.pack, previous.level);
         pictureUI(previous.message);
       };
       // Publish the validated pack and prepared image together. Keep the previous
       // image alive until the new setup has rendered successfully. No Start can
       // use the tentative selection, including from a reentrant DOM callback.
+      const ownsCommitted = () =>
+        committed &&
+        !disposed &&
+        request === importRequest &&
+        !run &&
+        !importOperation &&
+        !importDraft &&
+        pictureSelection === selection &&
+        pack === proposedPack &&
+        packArtworkSource === proposedArtwork;
       pictureSelection = selection;
+      importAdopting = operation;
       try {
+        packArtworkSource = draft.artworkSource;
         showPack(draft.pack, undefined, current);
         if (!current()) {
           rollback();
           return;
         }
         selection.state = 'ready';
-        pictureUI('Imported Team picture ready. Start remains a separate action.');
+        pictureUI(
+          draft.artworkSource
+            ? 'Local artwork ready. Start remains a separate action.'
+            : 'Imported Team picture ready. Start remains a separate action.',
+        );
         if (!current()) {
           rollback();
           return;
         }
+        if ($('coop-level').value !== selection.levelId)
+          throw new Error('The selected arena changed during import. Retry the pack.');
+        // Commit and relinquish the old operation without callbacks between
+        // them. Once the old source is retired, rollback is no longer valid.
+        if (draft.artworkSource) artworkImports.commit(draft.artworkSource);
+        else artworkImports.retire(previous.artworkSource);
+        committed = true;
+        importOperation = null;
+        importDisplay = null;
+        importDraft = null;
+        importAdopting = null;
       } catch (error) {
         rollback();
         throw error;
       } finally {
+        if (importAdopting === operation) importAdopting = null;
         // Reset or disposal can replace the tentative setup inside a host
         // callback. The previous image then has no visible owner to retire it.
         if (
@@ -2173,21 +2306,22 @@ export function bootCoop() {
         )
           previous.selection?.lease?.dispose();
         if (
-          importDraft !== draft &&
+          (importDraft !== draft || draft.selection !== selection) &&
           pictureSelection !== selection &&
           acceptedPicture !== selection
         )
           selection.lease.dispose();
+        // Cancellation restores a usable previous setup after the synchronous
+        // Start guard is released. A successful adoption renders below instead.
+        if (!committed && !disposed && pictureSelection === previous.selection) pictureUI();
       }
-      importOperation = null;
-      importDisplay = null;
-      importDraft = null;
+      if (!ownsCommitted()) return;
       $('coop-pack-cancel').hidden = true;
       $('coop-pack-retry').hidden = true;
       $('coop-pack-file').value = '';
-      $('coop-start').disabled = !startPermitted;
-      previous.selection?.lease?.dispose();
-      focus.finish($('coop-start'));
+      if (!ownsCommitted()) return;
+      pictureUI();
+      if (ownsCommitted()) focus.finish($('coop-start'));
     } catch (error) {
       if (!current()) return;
       importOperation = null;
@@ -2203,22 +2337,49 @@ export function bootCoop() {
     } finally {
       focus.finish(null, false);
       if (request === importRequest) $('coop-pack-file').value = '';
+      importControls();
+      if (
+        !disposed &&
+        draft.kind === 'artwork' &&
+        !artworkImports.pending() &&
+        importDraft === draft &&
+        draft.cancelledRequest === importRequest &&
+        !importOperation
+      )
+        packStatus.begin({ message: 'Artwork import cancelled.' }).finish({
+          state: 'detached',
+          message:
+            'Artwork import cancelled. The selected pack is unchanged. Retry pack when ready.',
+        });
     }
   }
   $('coop-pack-file').onchange = () => {
+    if (artworkImports.pending()) {
+      $('coop-pack-file').value = '';
+      return;
+    }
     const file = $('coop-pack-file').files?.[0];
     cancelImport({ forget: true });
     if (!file || run || pictureOperation || departure || disposed) return;
-    importDraft = { file, pack: null, selection: null };
-    return prepareImport(importDraft);
+    const kind =
+      file.type === COOP_PRESENTATION_MIME || /\.rlteam$/i.test(file.name ?? '')
+        ? 'artwork'
+        : 'json';
+    const draft = { file, kind, pack: null, artworkSource: null, selection: null };
+    importDraft = draft;
+    $('coop-pack-cancel').textContent = kind === 'artwork' ? 'Cancel import' : 'Stop waiting';
+    return importAdopting
+      ? Promise.resolve().then(() => prepareImport(draft))
+      : prepareImport(draft);
   };
   $('coop-pack-retry').onclick = () => {
-    if (importDraft) return prepareImport(importDraft, { retry: true });
+    if (importDraft && !artworkImports.pending())
+      return prepareImport(importDraft, { retry: true });
   };
   function stopWaiting() {
     cancelImport();
     $('coop-pack-file').value = '';
-    $('coop-pack-file').focus({ preventScroll: true });
+    $(artworkImports.pending() ? 'coop-level' : 'coop-pack-file').focus({ preventScroll: true });
   }
   $('coop-pack-cancel').onclick = stopWaiting;
   const pickerToggled = () => {
@@ -2228,8 +2389,11 @@ export function bootCoop() {
   $('coop-pack-reset').onclick = () => {
     if (run || departure || pictureOperation || disposed) return;
     cancelImport({ forget: true });
+    const previousArtwork = artworkImports.current();
+    packArtworkSource = null;
     showPack(COOP_STARTER_PACK, lastBuiltInArena);
     void preparePicture();
+    artworkImports.retire(previousArtwork);
   };
   $('coop-level').onchange = () => {
     if (run || departure || disposed) return;
@@ -2308,6 +2472,8 @@ export function bootCoop() {
     retirePicture();
     acceptedPicture?.lease?.dispose();
     acceptedPicture = null;
+    artworkImports.dispose();
+    packArtworkSource = null;
     presentationPage.close();
     closeAudio();
     closeDisplay();

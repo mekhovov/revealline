@@ -623,3 +623,72 @@ test('minimum authored Team radius stays exact in the sampled frame and final fo
   );
   assert.deepEqual(run, before);
 });
+
+function earnedRescue(seat) {
+  const run = startCoop(createCoop(RELAY_YARD, { difficulty: 'standard', seed: 17 }));
+  const command = (direction = null, support = false) => ({ direction, boost: true, support });
+  // Same revision-2 legal-command route as the independently qualified Team
+  // reachability evidence. No player position, status or rescue is fabricated.
+  const segments = [
+    [140, command('right'), command('left')],
+    [70, command('up'), command('up')],
+    [214, command('right'), command('left')],
+    [24, command(seat === 0 ? 'left' : null), command(seat === 1 ? 'right' : null)],
+    [35, command(seat === 0 ? 'up' : null), command(seat === 1 ? 'up' : null)],
+    [17, command(seat === 1 ? 'right' : null), command(seat === 0 ? 'left' : null)],
+    [60, command(null, seat === 1), command(null, seat === 0)],
+  ];
+  for (const [ticks, ...commands] of segments)
+    for (let tick = 0; tick < ticks; tick++) stepCoop(run, commands, 1 / 120);
+  assert.equal(run.players[seat].status, 'downed');
+  assert.equal(run.players[1 - seat].rescue.target, seat);
+  assert.ok(Math.abs(run.time - run.players[1 - seat].rescue.startedAt - 0.5) < 1e-6);
+  return run;
+}
+
+for (const seat of [0, 1]) {
+  test(`actual rescue of player ${seat + 1} has a legible static role cue without a second progress gauge`, () => {
+    const earned = earnedRescue(seat),
+      before = structuredClone(earned);
+    for (const width of [200, 240, 390, 479, 844, 1152]) {
+      const run = structuredClone(earned),
+        view = surface(width),
+        painter = createCoopPainter(view.canvas);
+      painter.setPresentation(prepared().snapshot);
+      painter.paint(run, { reduced: true });
+      const text = labels(view.calls),
+        cue = text.find((call) => call.args[0] === `RESCUE ${seat + 1}`);
+      assert.ok(cue, `${width}px rescue target is visible without colour alone`);
+      assert.equal(text.filter((call) => String(call.args[0]).startsWith('RESCUE ')).length, 1);
+      assert.ok(text.some((call) => call.args[0] === '1'));
+      assert.ok(text.some((call) => call.args[0] === '2'));
+      assert.ok(text.some((call) => call.args[0] === '+'));
+      assert.equal(
+        text.some((call) => /%/.test(String(call.args[0]))),
+        false,
+      );
+      const index = view.calls.indexOf(cue),
+        backing = view.calls[index - 1],
+        cell = width / 72;
+      assert.ok(index > view.calls.findLastIndex((call) => call.name === 'drawImage'));
+      assert.equal(backing.name, 'fillRect');
+      assert.equal(backing.state.fillStyle, '#07111c');
+      const [x, y, w, h] = backing.args;
+      assert.ok(x >= 0 && y >= 0 && x + w <= 72 + 1e-9 && y + h <= 36 + 1e-9);
+      const fontSize = Number(/600 ([\d.]+)px/.exec(cue.state.font)[1]) * cell;
+      assert.ok(fontSize >= 14 - 1e-9, `${width}px rescue label remains readable`);
+      const held = view.calls.slice();
+      view.reset();
+      painter.paint(run, { reduced: true });
+      assert.deepEqual(view.calls, held, 'Held rescue has no independent animation clock.');
+      assert.deepEqual(run, before);
+      pauseCoop(run);
+      view.reset();
+      painter.paint(run, { reduced: true });
+      assert.equal(
+        labels(view.calls).some((call) => String(call.args[0]).startsWith('RESCUE ')),
+        false,
+      );
+    }
+  });
+}

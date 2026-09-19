@@ -1,8 +1,39 @@
 import { FORMATS, validateThemeBundle, resolvePresentation } from './model.mjs';
-import { canonicalJSON } from '../data-json.mjs';
+import { canonicalJSON, required } from '../data-json.mjs';
 
 const reference = (record) => ({ id: record.id, revision: record.revision });
 const same = (a, b) => a.id === b.id && a.revision === b.revision;
+/** History belongs to exact slot bindings, not asset naming conventions.
+ * Retain derivative sources for download, but only previously valid bindings
+ * can be rebound. A large original is not necessarily a prepared slot asset. */
+export function studioSlotHistory(source, slotId) {
+  const document = validateThemeBundle(source);
+  required(
+    document.slots.some((slot) => slot.id === slotId),
+    'Unknown Studio asset slot.',
+  );
+  const key = (record) => `${record.id}@${record.revision}`;
+  const bound = new Set();
+  for (const owner of [...document.themes, ...document.collections]) {
+    const target = owner.bindings[slotId];
+    if (target) bound.add(key(target));
+  }
+  const assets = new Map(document.assets.map((asset) => [key(asset), asset]));
+  const related = new Set(bound);
+  for (const identity of bound) {
+    let parent = assets.get(identity).provenance.parent;
+    while (parent && !related.has(key(parent))) {
+      related.add(key(parent));
+      parent = assets.get(key(parent)).provenance.parent;
+    }
+  }
+  return Object.freeze(
+    document.assets
+      .filter((asset) => related.has(key(asset)))
+      .reverse()
+      .map((asset) => Object.freeze({ asset, bindable: bound.has(key(asset)) })),
+  );
+}
 export function nextAssetRevision(document, slotId) {
   const id = `${slotId}.custom`;
   return {
