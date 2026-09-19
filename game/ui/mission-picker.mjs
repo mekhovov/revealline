@@ -1,5 +1,6 @@
 import { captureOperationFocus } from './operation-focus.mjs';
 import { attachMissionGallery } from './mission-gallery.mjs';
+import { attachChapterFocusClearance } from './chapter-focus-clearance.mjs';
 
 const attached = new WeakMap();
 
@@ -66,7 +67,8 @@ export function attachMissionPicker({
   for (const child of original) if (!keep.has(child)) fields.append(child);
   deck.append(...[heading, continued, stage, brief, setup].filter(Boolean));
   deck.classList.add('mission-picker');
-  const gallery = attachMissionGallery({ document: doc, missions });
+  const gallery = attachMissionGallery({ document: doc, missions }),
+    chapterFocus = attachChapterFocusClearance({ document: doc, rails: [cards, olderCards] });
 
   const rows = new Map(),
     removers = [];
@@ -257,6 +259,7 @@ export function attachMissionPicker({
       observer?.disconnect();
       for (const remove of removers) remove();
       for (const row of rows.values()) row.remove();
+      chapterFocus.destroy();
       gallery?.destroy();
       deck.append(...original);
       stage.remove();

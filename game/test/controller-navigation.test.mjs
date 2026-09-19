@@ -2041,3 +2041,372 @@ test('an accepted practice exit cannot wrap the child after a callback changes s
         assert.equal(f.releases, stage === 'onRelease' ? 1 : 0);
       });
 });
+
+function keyboardDoneReader(
+  t,
+  { modal = true, exitAfter = false, blurOnDisable = false, ...overrides } = {},
+) {
+  let host;
+  const changes = [],
+    actions = { start: 0, done: 0 };
+  const h = setup(t, {
+    keyboard: true,
+    onReadingChange(state) {
+      changes.push(state);
+      host.changed(state);
+      if (!state && blurOnDisable && h.document.activeElement.disabled)
+        h.document.activeElement.blur();
+    },
+    ...overrides,
+  });
+  const panel = h.control(modal ? 'dialog' : 'section', { open: modal });
+  h.setScope('paused:brief', panel);
+  const entry = h.control('button', { id: 'mission-brief-read' }, panel),
+    done = h.control('button', { id: 'mission-brief-reading-done' }, panel),
+    hint = h.control('p', { id: 'mission-brief-reading-hint' }, panel),
+    region = h.control(
+      'div',
+      {
+        id: 'mission-brief-reading',
+        textContent: 'Full authored brief. Final target: 45%.',
+        clientHeight: 100,
+        scrollHeight: 500,
+      },
+      panel,
+    ),
+    start = h.control('button', { id: 'resume' }, panel);
+  panel.id = 'mission-brief-unit';
+  region.setAttribute('tabindex', '0');
+  region.setAttribute('data-game-reading', '');
+  region.setAttribute('aria-label', 'Full mission brief');
+  if (exitAfter) region.after(done);
+  start.addEventListener('click', () => actions.start++);
+  done.addEventListener('click', () => actions.done++);
+  host = attachControllerReading({
+    document: h.document,
+    getNavigation: () => h.api,
+    getControlLabels: () => ({ confirm: 'South', back: 'East' }),
+    getScope: () => 'paused',
+    surfaceDefinitions: [
+      ['mission-brief-reading', 'mission-brief-read', 'Mission brief', 'mission-brief-unit'],
+    ],
+  });
+  t.after(() => host.destroy());
+  // Finite browser defaults for this fixture: sequential focus and button click.
+  // This models event order; actual browser paint and key defaults need native review.
+  const key = (value, extra = {}) => {
+    const target = h.document.activeElement,
+      event = target.emit('keydown', { key: value, ...extra });
+    if (!event.defaultPrevented && value === 'Tab') {
+      const stops = panel
+        .querySelectorAll('button,[tabindex]')
+        .filter((element) => !element.disabled && !element.hidden && element.tabIndex >= 0);
+      const index = stops.indexOf(target),
+        next = stops[(index + (extra.shiftKey ? -1 : 1) + stops.length) % stops.length];
+      next?.focus();
+    } else if (!event.defaultPrevented && ['Enter', ' '].includes(value)) target.click();
+    return event;
+  };
+  entry.focus();
+  entry.click();
+  return { ...h, panel, entry, done, hint, region, start, key, changes, actions };
+}
+
+for (const modal of [true, false])
+  for (const activation of ['Enter', ' '])
+    test(`keyboard Done: ${modal ? 'modal' : 'panel'} Shift+Tab and ${JSON.stringify(activation)} end the actual host once`, (t) => {
+      const f = keyboardDoneReader(t, { modal });
+      f.key('End');
+      assert.equal(f.region.scrollTop, 400, 'The complete brief can be read before leaving.');
+      f.key('Tab', { shiftKey: true });
+      assert.equal(f.document.activeElement, f.done);
+      assert.equal(f.done.disabled, false);
+      assert.equal(f.changes.length, 1, 'Reaching Done is not an exit or re-entry.');
+      f.api.sync();
+      assert.ok(f.api.readingState());
+      f.key(activation);
+      assert.equal(f.actions.done, 1, 'The focused native button owns activation.');
+      assert.equal(f.api.readingState(), null);
+      assert.equal(f.document.activeElement, f.entry);
+      assert.equal(f.done.disabled, true);
+      assert.equal(f.region.scrollTop, 400);
+      assert.equal(f.changes.length, 2);
+      assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+      f.done.emit('click');
+      assert.equal(f.changes.length, 2, 'A late duplicate click cannot re-enter or resume.');
+    });
+
+for (const modal of [true, false])
+  test(`keyboard Done: ${modal ? 'modal' : 'panel'} round trip retains reading, leaving the pair cancels`, (t) => {
+    const f = keyboardDoneReader(t, { modal });
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.done);
+    f.key('Tab');
+    assert.equal(f.document.activeElement, f.region);
+    assert.ok(f.api.readingState());
+    f.key('ArrowDown');
+    assert.equal(f.region.scrollTop, 48);
+    f.key('Tab', { shiftKey: true });
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.entry);
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.done.disabled, true);
+    assert.equal(f.changes.length, 2);
+    assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+  });
+
+test('keyboard Done: an exit after the region follows actual sequential order', (t) => {
+  const f = keyboardDoneReader(t, { exitAfter: true });
+  f.key('Tab');
+  assert.equal(f.document.activeElement, f.done);
+  assert.ok(f.api.readingState());
+  f.key('Tab', { shiftKey: true });
+  assert.equal(f.document.activeElement, f.region);
+  assert.equal(f.changes.length, 1);
+});
+
+test('keyboard Done: an intervening action is not skipped or activated to reach Done', (t) => {
+  const f = keyboardDoneReader(t),
+    between = f.control('button', { id: 'intervening' });
+  f.done.after(between);
+  let clicks = 0;
+  between.addEventListener('click', () => clicks++);
+  f.key('Tab', { shiftKey: true });
+  assert.equal(f.document.activeElement, between);
+  assert.equal(f.api.readingState(), null);
+  assert.equal(f.done.disabled, true);
+  assert.equal(clicks + f.actions.start, 0);
+});
+
+for (const action of ['back', 'confirm', 'menu'])
+  test(`keyboard Done: controller ${action} on focused Done ends without host action`, (t) => {
+    const f = keyboardDoneReader(t);
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.done);
+    f.api.handle({ [action]: true });
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.document.activeElement, f.entry);
+    assert.equal(f.changes.length, 2);
+    assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+  });
+
+for (const [name, change] of [
+  [
+    'hidden exit',
+    (f) => {
+      f.done.hidden = true;
+    },
+  ],
+  [
+    'disabled exit',
+    (f) => {
+      f.done.disabled = true;
+    },
+  ],
+  ['removed exit', (f) => f.done.remove()],
+  [
+    'replaced text',
+    (f) => {
+      f.region.textContent = 'A new brief';
+    },
+  ],
+  ['changed scope', (f) => f.setScope('ready:other', f.panel)],
+  ['external focus', (f) => f.start.focus()],
+  ['lifecycle clear', (f) => f.api.clear()],
+  ['destroy', (f) => f.api.destroy()],
+])
+  test(`keyboard Done: ${name} invalidates its ownership without activating another action`, (t) => {
+    const f = keyboardDoneReader(t);
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.done);
+    change(f);
+    f.api.handle({ confirm: true });
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+    assert.equal(f.done.disabled, true);
+  });
+
+for (const modal of [true, false])
+  test(`keyboard Done: ${modal ? 'modal' : 'panel'} disabling the focused exit preserves its real Tab neighbor`, (t) => {
+    const f = keyboardDoneReader(t, { modal, blurOnDisable: true });
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.done);
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.entry);
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+  });
+
+test('keyboard Done: held activation and ordinary controller directions retain one reader', (t) => {
+  const f = keyboardDoneReader(t);
+  f.key('Tab', { shiftKey: true });
+  const held = f.key('Enter', { repeat: true });
+  assert.equal(held.defaultPrevented, true);
+  assert.equal(f.actions.done, 0);
+  f.api.handle({ direction: 'down' });
+  assert.equal(f.region.scrollTop, 48);
+  assert.equal(f.document.activeElement, f.done);
+  assert.equal(f.changes.length, 1);
+  f.key('Escape');
+  assert.equal(f.document.activeElement, f.entry);
+  assert.equal(f.api.readingState(), null);
+  assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+});
+
+test('keyboard Done: a host focus handoff during exit owns the next destination', (t) => {
+  const f = keyboardDoneReader(t);
+  f.key('Tab', { shiftKey: true });
+  // The host's reading-state notification updates the entry before returning.
+  const setEntry = f.entry.setAttribute.bind(f.entry);
+  f.entry.setAttribute = (name, value) => {
+    setEntry(name, value);
+    if (name === 'aria-pressed' && value === 'false') f.start.focus();
+  };
+  f.key('Tab', { shiftKey: true });
+  assert.equal(f.document.activeElement, f.start);
+  assert.equal(f.api.readingState(), null);
+  assert.equal(f.actions.start, 0);
+  assert.equal(f.changes.length, 2);
+});
+
+test('keyboard Done: hosts without keyboard navigation retain native focus cancellation', (t) => {
+  const f = keyboardDoneReader(t, { keyboard: false });
+  f.done.focus();
+  assert.equal(f.api.readingState(), null);
+  assert.equal(f.document.activeElement, f.done);
+  assert.equal(f.done.disabled, true);
+  assert.equal(f.changes.length, 2);
+  assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+});
+
+for (const lost of ['hidden', 'blurred'])
+  test(`keyboard Done: a ${lost} page after exit notification cannot receive a stale Tab handoff`, (t) => {
+    const f = keyboardDoneReader(t);
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.document.activeElement, f.done);
+    const setEntry = f.entry.setAttribute.bind(f.entry);
+    f.entry.setAttribute = (name, value) => {
+      setEntry(name, value);
+      if (name === 'aria-pressed' && value === 'false') {
+        if (lost === 'hidden') f.document.hidden = true;
+        else f.document.hasFocus = () => false;
+      }
+    };
+    f.key('Tab', { shiftKey: true });
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.document.activeElement, f.done);
+    assert.equal(f.done.disabled, true);
+    assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+  });
+
+for (const modal of [true, false])
+  test(`reader modifier: full Shift down/Tab down-up/Shift up reaches Done in a ${modal ? 'modal' : 'panel'}`, (t) => {
+    const inputs = [],
+      f = keyboardDoneReader(t, { modal, onNativeInput: (event) => inputs.push(event.key) });
+    const shift = f.key('Shift', { code: 'ShiftLeft', shiftKey: true });
+    assert.equal(shift.defaultPrevented, false, 'Shift retains its native modifier meaning.');
+    assert.ok(f.api.readingState(), 'Shift must not disable Done before Tab arrives.');
+    assert.equal(f.document.activeElement, f.region);
+    assert.equal(f.done.disabled, false);
+    f.key('Tab', { code: 'Tab', shiftKey: true });
+    assert.equal(f.document.activeElement, f.done);
+    f.done.emit('keyup', { key: 'Tab', code: 'Tab', shiftKey: true });
+    f.done.emit('keyup', { key: 'Shift', code: 'ShiftLeft', shiftKey: false });
+    assert.ok(f.api.readingState());
+    assert.equal(f.changes.length, 1);
+    assert.deepEqual(inputs, ['Shift', 'Tab'], 'Both keys still report native input to the host.');
+    f.key('Tab');
+    assert.equal(f.document.activeElement, f.region);
+    assert.ok(f.api.readingState());
+    f.key('Shift', { code: 'ShiftRight', shiftKey: true });
+    f.key('Tab', { shiftKey: true });
+    f.done.emit('keyup', { key: 'Tab', shiftKey: true });
+    f.done.emit('keyup', { key: 'Shift', code: 'ShiftRight', shiftKey: false });
+    f.key('Enter');
+    assert.equal(f.actions.done, 1);
+    assert.equal(f.document.activeElement, f.entry);
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.actions.start + f.calls.back + f.calls.menu, 0);
+  });
+
+for (const target of ['region', 'done'])
+  test(`reader modifier: Shift alone and held Shift preserve the current ${target} without action`, (t) => {
+    const f = keyboardDoneReader(t);
+    if (target === 'done') f.key('Tab', { shiftKey: true });
+    for (const repeat of [false, true]) {
+      const event = f.key('Shift', { shiftKey: true, repeat });
+      assert.equal(event.defaultPrevented, false);
+      assert.ok(f.api.readingState());
+      assert.equal(f.document.activeElement, f[target]);
+    }
+    f[target].emit('keyup', { key: 'Shift', shiftKey: false });
+    assert.equal(f.changes.length, 1);
+    assert.equal(f.actions.start + f.actions.done + f.calls.back + f.calls.menu, 0);
+    f.key('Escape');
+    assert.equal(f.document.activeElement, f.entry);
+    assert.equal(f.api.readingState(), null);
+  });
+
+test('reader modifier: hosts without keyboard navigation retain Shift relinquish', (t) => {
+  const f = keyboardDoneReader(t, { keyboard: false });
+  f.key('Shift', { shiftKey: true });
+  assert.equal(f.api.readingState(), null);
+  assert.equal(f.done.disabled, true);
+  assert.equal(f.document.activeElement, f.region);
+});
+
+for (const [name, change] of [
+  [
+    'hidden page',
+    (f) => {
+      f.document.hidden = true;
+    },
+  ],
+  [
+    'unfocused page',
+    (f) => {
+      f.document.hasFocus = () => false;
+    },
+  ],
+  [
+    'replaced text',
+    (f) => {
+      f.region.textContent = 'Replacement';
+    },
+  ],
+  ['changed scope', (f) => f.setScope('ready:new', f.panel)],
+  ['changed root', (f) => f.setScope('paused:brief', f.document.body)],
+  ['outside focus', (f) => f.start.focus()],
+])
+  test(`reader modifier: Shift cannot preserve ${name}`, (t) => {
+    const f = keyboardDoneReader(t);
+    change(f);
+    const event = f.key('Shift', { shiftKey: true });
+    assert.equal(event.defaultPrevented, false);
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.done.disabled, true);
+    assert.equal(f.actions.start + f.actions.done + f.calls.back + f.calls.menu, 0);
+  });
+
+for (const property of ['ctrlKey', 'altKey', 'metaKey', 'defaultPrevented'])
+  test(`reader modifier: Shift with ${property} retains existing relinquish behavior`, (t) => {
+    const f = keyboardDoneReader(t);
+    f.key('Shift', { shiftKey: true, [property]: true });
+    assert.equal(f.api.readingState(), null);
+    assert.equal(f.done.disabled, true);
+    assert.equal(f.actions.start + f.actions.done + f.calls.back + f.calls.menu, 0);
+  });
+
+test('reader modifier: native-input callback may retire the reader without re-entry or focus transfer', (t) => {
+  let f;
+  f = keyboardDoneReader(t, {
+    onNativeInput(event) {
+      if (event.key === 'Shift') f.api.clear();
+    },
+  });
+  f.key('Shift', { shiftKey: true });
+  assert.equal(f.api.readingState(), null);
+  assert.equal(f.done.disabled, true);
+  assert.equal(f.document.activeElement, f.region);
+  assert.equal(f.changes.length, 2);
+});
