@@ -1,0 +1,26 @@
+{
+  "status": "PASS_INDEPENDENT_HOSTED_HTTP_RECEIPT_RECONCILIATION",
+  "at": "2026-09-19T09:52:34.842631+00:00",
+  "utilityCommit": "a1c735741db7c4f01e5837e662d24f68c2357ca1",
+  "utilityTree": "6dcd5f95f1287b274a57459c1c8e897995ca9d08",
+  "hostedRunId": 35435664018,
+  "hostedArtifact": {
+    "id": 10581634647,
+    "bytes": 348109,
+    "sha256": "9b192351ae9837628dedbdf45a25c1e3f1a18d99d55e69672106f1dbc9989d7d",
+    "name": "archive31-public-byte-audit-evidence"
+  },
+  "files": 711,
+  "verifiedBytes": 313557913,
+  "attempts": 711,
+  "failedAttempts": 0,
+  "retries": 0,
+  "priorRows": 0,
+  "allPathsExactlyOnce": true,
+  "allOriginalsAndHelperPinsMatch": true,
+  "beforeAfterArchiveAuthoritiesUnchanged": true,
+  "reviewedRequestSha256": "96273e62851b11e276a54f37427c8d15884b9430309002403233adf1ac8980ed",
+  "nativeAcceptance": false,
+  "publicAdmission": false,
+  "scope": "Independent receipt-only review. Root must combine actual native evidence and final authority refresh before admission."
+}
