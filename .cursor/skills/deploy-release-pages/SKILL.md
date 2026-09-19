@@ -158,3 +158,7 @@ Archive admission may preserve exact original bytes and a scoped navigation resu
 Report the actual runtime from each retained hosted job log with that run’s workload and totals. Two successful workflow families are not a Node-version matrix. Distinguish complete source suites from focused Node 20/22 cohorts, and identify command-path version evidence when stdout does not print the runtime. Correct ambiguous summaries through a pinned append-only clarification; never rewrite the original qualification, log, attachment or historical acceptance.
 
 Example prompt: “For each claimed Node version, identify the exact run or local receipt, runtime authority, test/file totals and source scope. Keep focused checks separate from full suites, and retain corrections beside the immutable originals.”
+
+## Resolve the actual workflow before dispatch
+
+Use the retained workflow filename or its verified GitHub workflow ID when dispatching an artifact utility. The current utility is `qualify-release-source.yml`; do not infer a filename from an operation name. Preserve a definite 404 from a nonexistent workflow, correct the endpoint once, and bind the resulting actual run. An ambiguous transport outcome instead needs run/asset discovery before any repeat. Keep root-owned publication moving while independent workers prepare the next ready correction; a local coordination wait is not a whole-programme blocker.
