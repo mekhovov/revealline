@@ -1,6 +1,9 @@
 """Offline transport fixtures; no public network calls and no payload files."""
 import hashlib
 import io
+import json
+import zipfile
+import warnings
 import unittest
 from unittest.mock import patch
 import urllib.error
@@ -48,12 +51,12 @@ class AuditTests(unittest.TestCase):
     def fetch(self, response, expected=None):
         return audit.fetch_once(expected or row(), 1, Opener(response), deadline=100, clock=lambda: 0)
 
-    def test_prepared_initial_inventory_is_exact_without_network(self):
+    def test_prepared_append_inventory_is_exact_without_network(self):
         raw, rows, _ = binding.candidate_inventory()
         for item in rows:
             audit.validate_row(item)
-        self.assertEqual(len(rows), 705)
-        self.assertEqual(sum(item['bytes'] for item in rows), 313563420)
+        self.assertEqual(len(rows), 1408)
+        self.assertEqual(sum(item['bytes'] for item in rows), 627086405)
         self.assertEqual(audit.digest(raw), audit.INVENTORY_SHA)
 
     def test_changed_source_lock_pin_refuses(self):
@@ -169,6 +172,87 @@ class AuditTests(unittest.TestCase):
         result = audit.fetch_once(row(), 1, Opener(Response(b'{"ok":true}')), deadline=100, clock=lambda: next(ticks))
         self.assertEqual(result['status'], 'FAIL')
         self.assertEqual(result['errorType'], 'TimeoutError')
+
+
+class AppendPreservationTests(unittest.TestCase):
+    def setUp(self):
+        self.current = json.loads((binding.ROOT/'inputs/expected-inventory.json').read_bytes())['files']
+        self.prior = json.loads((binding.ROOT/'inputs/prior-expected-inventory.json').read_bytes())['files']
+
+    def test_exact_prior_cohort_is_preserved_with_only_index_change(self):
+        result = binding.preservation_metadata(self.current)
+        self.assertEqual(result, {
+            'priorInventoryRows': 705, 'preservedOldCanonicalRows': 704,
+            'preservedPriorReleaseRows': 702, 'preservedRootSupportRows': 2,
+            'preservedRootSupportPaths': ['.nojekyll', 'releases/index.html'],
+            'changedPriorPaths': ['index.html'], 'newRows': 703, 'newBytes': 313522906,
+        })
+        old = {r['path']:r for r in self.prior}
+        new = {r['path']:r for r in self.current}
+        self.assertEqual(new['index.html']['bytes']-old['index.html']['bytes'],79)
+        self.assertTrue(all(p.startswith('releases/v0.62.1/') for p in new.keys()-old.keys()))
+
+    def test_missing_prior_path_is_rejected(self):
+        missing = self.prior[0]['path']
+        with self.assertRaisesRegex(ValueError,'removed'):
+            binding.derive_preservation([r for r in self.current if r['path']!=missing],self.prior)
+
+    def test_modified_prior_payload_or_support_is_rejected(self):
+        release = next(r['path'] for r in self.prior if r['path'].startswith('releases/v0.62.0/'))
+        for target in [release,'.nojekyll','releases/index.html']:
+            changed = [{**r,'sha256':'0'*64} if r['path']==target else r for r in self.current]
+            with self.subTest(target=target),self.assertRaisesRegex(ValueError,'payload changed'):
+                binding.derive_preservation(changed,self.prior)
+
+    def test_duplicate_current_or_prior_path_is_rejected(self):
+        for current,prior in [(self.current+self.current[:1],self.prior),(self.current,self.prior+self.prior[:1])]:
+            with self.assertRaisesRegex(ValueError,'Duplicate'):
+                binding.derive_preservation(current,prior)
+
+    def test_extra_root_path_is_rejected(self):
+        with self.assertRaisesRegex(ValueError,'appended root'):
+            binding.derive_preservation(self.current+[row('extra.json')],self.prior)
+
+    def test_unchanged_index_does_not_satisfy_exact_append(self):
+        prior_index = next(r for r in self.prior if r['path']=='index.html')
+        changed = [prior_index if r['path']=='index.html' else r for r in self.current]
+        with self.assertRaises(ValueError):
+            binding.preservation_metadata(changed)
+
+    def test_prior_inventory_pin_is_required(self):
+        with patch.object(binding,'PRIOR_INVENTORY_SHA','0'*64):
+            with self.assertRaisesRegex(ValueError,'Prior inventory pin'):
+                binding.preservation_metadata(self.current)
+
+
+class AppendReceiptMemberTests(unittest.TestCase):
+    names = ['receipt.json','expected-inventory.json','zip-receipt-v0.62.0.json','zip-receipt-v0.62.1.json']
+    def archive(self,names):
+        stream = io.BytesIO()
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore',UserWarning)
+            with zipfile.ZipFile(stream,'w') as out:
+                for name in names:
+                    out.writestr(name,b'{}')
+        stream.seek(0)
+        return zipfile.ZipFile(stream)
+
+    def test_exact_two_cohort_members_are_accepted(self):
+        with self.archive(self.names) as archive:
+            binding.validate_receipt_members(archive)
+
+    def test_initial_only_extra_duplicate_or_wrong_cohort_is_rejected(self):
+        for names in [self.names[:-1],self.names+['extra.json'],self.names+[self.names[-1]],self.names[:-1]+['zip-receipt-v0.62.2.json']]:
+            with self.subTest(names=names),self.archive(names) as archive,self.assertRaisesRegex(ValueError,'unexpected/duplicate'):
+                binding.validate_receipt_members(archive)
+
+    def test_member_and_total_uncompressed_bounds_are_enforced(self):
+        for sizes in [[524289,0,0,0],[300000,300000,300000,300000]]:
+            with self.subTest(sizes=sizes),self.archive(self.names) as archive:
+                for info,size in zip(archive.infolist(),sizes):
+                    info.file_size=size
+                with self.assertRaisesRegex(ValueError,'exceed bounds'):
+                    binding.validate_receipt_members(archive)
 
 
 if __name__ == '__main__':

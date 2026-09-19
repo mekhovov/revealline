@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: mekhovov/revealline-archive-30
-          ref: cf9113746d96cf50d7cb8491d58dece53bd9cc60
+          ref: 950e30e6c891345ac5b68e2e796b54c0e64828f5
           path: archive-source
           persist-credentials: false
           fetch-depth: 1

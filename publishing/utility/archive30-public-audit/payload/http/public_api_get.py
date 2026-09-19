@@ -1,8 +1,11 @@
 """One bounded unauthenticated public authority GET; no redirect or credential support."""
 import json,sys,time,urllib.request,urllib.error
 PREFIX='repos/mekhovov/revealline-archive-30/'
+RUN_ID=35431113584
+DEPLOYMENT_ID=6538726400
 def endpoint(value):
-    allowed={PREFIX+'git/ref/heads/main',PREFIX+'actions/runs/35421309244',PREFIX+'deployments/6537067684',PREFIX+'deployments/6537067684/statuses'}
+    if type(DEPLOYMENT_ID) is not int or DEPLOYMENT_ID<=0: raise ValueError('Observed deployment authority is still pending')
+    allowed={PREFIX+'git/ref/heads/main',PREFIX+f'actions/runs/{RUN_ID}',PREFIX+f'deployments/{DEPLOYMENT_ID}',PREFIX+f'deployments/{DEPLOYMENT_ID}/statuses'}
     if value not in allowed: raise ValueError('Unreviewed authority endpoint')
     return 'https://api.github.com/'+value
 class NoRedirect(urllib.request.HTTPRedirectHandler):
