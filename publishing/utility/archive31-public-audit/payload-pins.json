@@ -1,0 +1,97 @@
+[
+  {
+    "path": "http/collect-live.py",
+    "bytes": 3446,
+    "sha256": "89d2f1484a0d15436b43b511e97d3179ab14801c0ba5d025aaccdd362ead3921"
+  },
+  {
+    "path": "http/execution-request.reviewed.json",
+    "bytes": 1611,
+    "sha256": "67dcd2439c33e2e348ab915c0311e4a1ad2edc4c1add74b6fe7bdedbee3d15b8"
+  },
+  {
+    "path": "http/http-tools/audit_binding.py",
+    "bytes": 12191,
+    "sha256": "c5756ef57a50bf13dd5aef25af81371c3cf83983616138f09826da506d8f623b"
+  },
+  {
+    "path": "http/http-tools/http_audit.py",
+    "bytes": 13551,
+    "sha256": "122be4950f7da85fc003ff5c804c98059211e3c36c46b691d5c1dfbebcd91633"
+  },
+  {
+    "path": "http/http-tools/test_http_audit.py",
+    "bytes": 8083,
+    "sha256": "02d77bc79cf588c331b3c26b06c6318df8ea1aa05e0d788e48ef4ab62fc6474c"
+  },
+  {
+    "path": "http/inputs/expected-inventory.json",
+    "bytes": 146232,
+    "sha256": "285232581d22b530a309eae608a75cb6826bf688bd8604b179b6258f64748da6"
+  },
+  {
+    "path": "http/inputs/prior-expected-inventory.json",
+    "bytes": 81,
+    "sha256": "d0bb98485ebfe2ff77aa3cb9617de07233f4aa7867f77737f513f3760eb42527"
+  },
+  {
+    "path": "http/inputs/source-lock.json",
+    "bytes": 1428,
+    "sha256": "1204afdf0ca75a10333a2e4a8ddc776a622ef5108604076969a0198802c46bea"
+  },
+  {
+    "path": "http/internal-review.json",
+    "bytes": 649,
+    "sha256": "635c896c33359896721310ebbd09c63d42f9812da147cf43b9d4cc9e33ec71a6"
+  },
+  {
+    "path": "http/public_api_get.py",
+    "bytes": 1833,
+    "sha256": "c4b6307f8a665d3a907e7ca955df43630267afa96dd2aea822aba9a0232aec3e"
+  },
+  {
+    "path": "http/reconcile-completed-rows.py",
+    "bytes": 7520,
+    "sha256": "43d0917a06f3bead7c1409cecb2b5b70ccb4eb42474abed3bfb484ef36eeb85e"
+  },
+  {
+    "path": "http/run-reviewed-operations.py",
+    "bytes": 1530,
+    "sha256": "07b4a003da045e4fea58489af5b1e9c506279861b35dd53a211357acbcc6fb10"
+  },
+  {
+    "path": "intake/terminal-r1/artifacts.json",
+    "bytes": 1454,
+    "sha256": "76182369dc2dbc3ae7b4e8ea10c6757b8bdd7c0aa9a2266696d0c394e3587ad4"
+  },
+  {
+    "path": "intake/terminal-r1/commit.json",
+    "bytes": 2737,
+    "sha256": "a11103481743b6bb89746cfa28c305115e89f53968cf3d5b4d57097e5ea5154f"
+  },
+  {
+    "path": "intake/terminal-r1/deployment.json",
+    "bytes": 3856,
+    "sha256": "b44746fd2ebe711476d4baa9f1036ee193e0a62a874f46e689adfa7a796e5776"
+  },
+  {
+    "path": "intake/terminal-r1/main.json",
+    "bytes": 358,
+    "sha256": "6926f338ef28a2faea3ca7d5c5c9e9806276604ebe211895fa2a633a0b173882"
+  },
+  {
+    "path": "intake/terminal-r1/receipts-original.zip",
+    "bytes": 37874,
+    "sha256": "35cf5f0decf18e95fab49bce13426025d2d902127206579719b6f754e690825e"
+  },
+  {
+    "path": "intake/terminal-r1/run.json",
+    "bytes": 13186,
+    "sha256": "21c2ba3874d2364505b1a48bdfc82fe71c33883a58b0f8eb22c9a2d7e18b8366"
+  },
+  {
+    "path": "intake/terminal-r1/statuses.json",
+    "bytes": 6817,
+    "sha256": "68837077f3a11aad3711752b7893cd50ca365a9d54f347fd9d5ba674f6b47319"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "format": "revealline-archive31-hosted-audit.v1",
+  "reviewed": false,
+  "repository": "mekhovov/revealline-archive-31",
+  "archiveCommit": "f476c311e0050b47d7408db51d57239fba7bece6",
+  "archiveTree": "d144cc112088882211bb1b5e04df298f4f4a78be",
+  "runId": 35434694566,
+  "runAttempt": 1,
+  "deploymentId": 6539360227,
+  "deploymentStatusId": 18558487091,
+  "receiptArtifactId": 10581207803,
+  "receiptBytes": 37874,
+  "receiptSha256": "35cf5f0decf18e95fab49bce13426025d2d902127206579719b6f754e690825e",
+  "inventorySha256": "285232581d22b530a309eae608a75cb6826bf688bd8604b179b6258f64748da6",
+  "sourceLockSha256": "1204afdf0ca75a10333a2e4a8ddc776a622ef5108604076969a0198802c46bea",
+  "expectedFiles": 711,
+  "expectedBytes": 313557913,
+  "priorRows": 0,
+  "executionRequestSha256": "67dcd2439c33e2e348ab915c0311e4a1ad2edc4c1add74b6fe7bdedbee3d15b8"
+}
