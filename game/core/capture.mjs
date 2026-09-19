@@ -2,7 +2,8 @@ import { CELL } from './registry.mjs';
 import { EPS, capsuleTime, pointAt } from './geometry.mjs';
 import { ownershipSpans, cellIndex } from './movement.mjs';
 import { releaseCutCells, finishEncounterCapture, defeatEncounter } from './encounter.mjs';
-import { classicSeedsField, classicClaim, updateClassicAnchors } from './classic-topology.mjs';
+import { classicClaim, updateClassicAnchors } from './classic-topology.mjs';
+import { retainedCaptureCells } from './capture-regions.mjs';
 
 export function tracePlan(state, paths, duration) {
   const additions = [],
@@ -140,36 +141,7 @@ function captureCells(state, releaseSeed, closeCut) {
       state.cells[c.index] = CELL.SAFE;
       secured.push(c.index);
     }
-  const retained = new Uint8Array(state.width * state.height),
-    queue = new Int32Array(state.width * state.height);
-  let head = 0,
-    tail = 0;
-  for (const e of state.enemies)
-    if (
-      (state.classic ? classicSeedsField(e) : e.type !== 'border-patrol') &&
-      !(e.type === 'relay-sentinel' && (releaseSeed || state.encounter?.defeated))
-    ) {
-      const index = cellIndex(e.x, e.y, state);
-      if (state.cells[index] === CELL.FIELD && !retained[index]) {
-        retained[index] = 1;
-        queue[tail++] = index;
-      }
-    }
-  while (head < tail) {
-    const i = queue[head++],
-      x = i % state.width,
-      y = Math.floor(i / state.width);
-    for (const n of [
-      x > 0 ? i - 1 : -1,
-      x < state.width - 1 ? i + 1 : -1,
-      y > 0 ? i - state.width : -1,
-      y < state.height - 1 ? i + state.width : -1,
-    ])
-      if (n >= 0 && state.cells[n] === CELL.FIELD && !retained[n]) {
-        retained[n] = 1;
-        queue[tail++] = n;
-      }
-  }
+  const retained = retainedCaptureCells(state, releaseSeed);
   for (let y = 1; y < state.height - 1; y++)
     for (let x = 1; x < state.width - 1; x++) {
       const i = y * state.width + x;
