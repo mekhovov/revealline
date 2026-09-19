@@ -1,0 +1,36 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-33",
+  "infrastructureCommit": "b184d8d8872ec305d8606ac99bd3d6235e291db8",
+  "deploymentId": 6545564229,
+  "versions": [
+    "v0.64.3"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-33/initial-v0643/root-acceptance.json",
+      "sha256": "5ff171278942f5a905cd9ac9659542b678afa09ea3f7ee28227d72ea569d4b18"
+    },
+    {
+      "path": "evidence/archive-33/initial-v0643/native-observation.json",
+      "sha256": "a4a2baad158fadde2db99422a72f2d240490065626cf958f74008e4b141a7524"
+    },
+    {
+      "path": "evidence/archive-33/initial-v0643/final-authority-review.json",
+      "sha256": "fd9eb338dd3da064acf0a7843af731206769aa2fc07159c38d4e05ef0018dfb5"
+    },
+    {
+      "path": "evidence/archive-33/initial-v0643/final-independent-review.json",
+      "sha256": "f4907a9b49f483925ebded0fc04db792e13c06c146ee8787ced399e347a3cdca"
+    }
+  ],
+  "scope": "Root accepted exact v0.64.3 archive preservation after 712 public files and 313,572,608 bytes matched in 712 attempts without failure/retry, unchanged fresh archive/release authorities, and scoped native keyboard/visible-control evidence. Main v0.64.3 public HTTP acceptance remains separate and pending; no broader phase is closed.",
+  "limits": [
+    "Requested390x844 viewport did not target this backgroundtab: readonlyDOM measured1280x720. Selectedtab wasuser1; override immediatelyreset. No390/600 responsive acceptance claimed.",
+    "Inline screenshots observed, no exported screenshotfiles.",
+    "No upload/assignment/restore/story/audio/offline/physicalcontroller/touch/zoom or broadphaseacceptance.",
+    "First post-close retry refusal retained separately from later successfulrecovery.",
+    "No whole-phase, whole-game or main-publisher acceptance is inferred."
+  ]
+}
