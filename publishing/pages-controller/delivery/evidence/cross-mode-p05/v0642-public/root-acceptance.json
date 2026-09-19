@@ -1,0 +1,72 @@
+{
+  "status": "ACCEPTED_SCOPED_SHORT_LANDSCAPE_HUD_PUBLIC_RELEASE",
+  "at": "2026-09-19T19:20:53.254642+00:00",
+  "version": "v0.64.2",
+  "playableUrl": "https://mekhovov.github.io/revealline/releases/v0.64.2/site/game/",
+  "sourceCommit": "adbfcb94037b8a38d49b9650e7f8a83c7face1db",
+  "sourceTree": "32369df7260360cc273857b195b2c2c7ca855994",
+  "sourcePR": 160,
+  "publisherPR": 165,
+  "publisherCommit": "2abd779766cd6d4b217b93a10575ed55d2d5547a",
+  "publisherTree": "00478b7f870107adfe389efeeebeac0d7013b61c",
+  "releaseId": 392067660,
+  "tagObject": "fe1f350eaca309d740d02ab621fe68395dfb13e4",
+  "pagesRun": 35450648405,
+  "deploymentId": 6542316588,
+  "deploymentStatusId": 18565162298,
+  "publicAuditRun": 35463369005,
+  "publicFiles": 3450,
+  "publicBytes": 644370153,
+  "failedFinalFiles": 0,
+  "resolvedTransientRetries": 0,
+  "sourceTests": {
+    "perHostedFamily": 6275,
+    "files": 486,
+    "runtime": "Node20.19.6",
+    "families": 2
+  },
+  "acceptedScope": [
+    "HUD counters readable in Plain/Large at600x400 for Tactical and wide Arcade",
+    "Complete arena and44px Pause remain available",
+    "390x844 rotation preserves pause until explicit Resume",
+    "Keyboard chapter selection and Stay preserve the existing paused attempt",
+    "Actual complete public inventory and fresh release/tag/source/deployment identities match"
+  ],
+  "pins": {
+    "publicRows": {
+      "path": ".cache/p05-public-audit-v0642-preparation-r1/receipt-successors-r1/hosted-result-intake-r1/independent-review.json",
+      "bytes": 1284,
+      "sha256": "9d1940fe4a0d062b8d70715aef4defa1fc3635f566b8a6dfc131d8b9741fb093"
+    },
+    "native": {
+      "path": ".cache/p05-public-native-v0642-r1/native-observation.json",
+      "bytes": 2015,
+      "sha256": "ecc4745d660551f3a35c2f3538a43d20cdd0d7c39a1382ae16a557957a51578c"
+    },
+    "freshRelease": {
+      "path": ".cache/v0642-final-release-authority-r1/result.json",
+      "bytes": 10642,
+      "sha256": "66f864001448b78a6c1450f24f4d1c572f6998034c692db6f0d2cb7e43dc68a6"
+    },
+    "freshMain": {
+      "path": ".cache/p05-public-audit-v0642-preparation-r1/authority-observer-r1/hosted-observation-actual-main-post-http-r1/record.json",
+      "bytes": 3703,
+      "sha256": "76f6cde121061d868488069d7a73faf20cdf2441aeb9180884e2794638d959f8"
+    },
+    "binding": {
+      "path": ".cache/p05-public-audit-v0642-preparation-r1/tools/inputs/2abd779766cd6d4b217b93a10575ed55d2d5547a/binding.json",
+      "bytes": 2041,
+      "sha256": "55d945e1fa7e74c14a6dd154f67114bbbe57c1d77f0452ab997a6f2f754f8b6e"
+    }
+  },
+  "limitations": [
+    "P03/P05/P08/P18 remain incomplete",
+    "Viewport emulation is not physical touch/controller qualification",
+    "Dropdown option selection used actual UI selectOption; whole keyboard dropdown acceptance remains open",
+    "No200percent zoom, audible listening or offline claim",
+    "GitHub immutable flag remains false; original payloads and tag preserved by pinned release policy",
+    "Native screenshots inspected inline only"
+  ],
+  "historicalReleasePreserved": true,
+  "wholePhaseComplete": false
+}
