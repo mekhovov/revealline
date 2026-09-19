@@ -682,3 +682,21 @@
     max-width: max(0px, calc(100% - var(--dpad-board-left) - var(--dpad-board-right)));
   }
 }
+
+/* Narrow active-flight telemetry needs two rows at the selected text size.
+   Reserve two label/value rows, the coverage target, one caption line and
+   their spacing before fitting the complete board. The reserve depends on
+   preferences and viewport only; score, threat and message updates cannot
+   resize the arena. Keep the existing button-free horizontal HUD lane. */
+@media (min-width: 521px) and (max-width: 680px) and (orientation: landscape) and (max-height: 600px) {
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) {
+    --fk-flight-header: calc(
+      var(--fk-text-counter) * 2.5 + var(--fk-text-secondary) * 4.35 + var(--fk-text-secondary) *
+        1.3 + 24px
+    );
+  }
+  body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .telemetry {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 8px;
+  }
+}
