@@ -27,7 +27,12 @@ const snapshot = {
   fonts: { ui: 'Prepared UI', numeric: 'Prepared Mono' },
   image(slot) {
     const asset = compiled.resolved.assets[slot];
-    return asset ? { image: { slot }, geometry: imagePresentation(asset) } : null;
+    if (!asset) return null;
+    const geometry = imagePresentation(asset);
+    return {
+      image: { slot, width: geometry.frame.width, height: geometry.frame.height },
+      geometry,
+    };
   },
 };
 function surface(width = 362) {

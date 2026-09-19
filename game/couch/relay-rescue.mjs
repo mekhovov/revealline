@@ -1090,7 +1090,11 @@ export function bootCoop() {
     focus.pending($('coop-picture-cancel'));
     operation.promise = (async () => {
       try {
-        await presentationPage.ready;
+        const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
+        // The original ready observer already handles first load. A recovered
+        // shared page also updates global appearance, even after picture Cancel.
+        if (retry && !disposed && snapshot && snapshot === presentationPage.current())
+          menuStyle.setPresentation(snapshot);
         if (!current()) return;
         const binding = await selection.lease.select({
           ...selection.request,

@@ -161,3 +161,42 @@ test('BFCache keeps cosmetic observation, while real page disposal fences late s
   assert.equal(f.calls.closes, 1);
   assert.equal(f.window.listeners.get('pagehide').size, 0);
 });
+
+test('auxiliary retry exposes current readiness and changes error notice back to busy without taking focus', async () => {
+  const f = fixture();
+  let loads = 0,
+    finish;
+  const second = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const entry = mountAuxiliaryPresentationPage({
+    ...f,
+    createHost: () => ({
+      load() {
+        if (++loads === 1) throw new Error('Temporary presentation outage');
+        return second;
+      },
+      apply() {},
+      close() {},
+    }),
+  });
+  assert.equal(await entry.ready, null);
+  assert.equal(f.target().dataset.state, 'error');
+  const previous = entry.ready,
+    retry = entry.retry();
+  assert.notEqual(retry, previous);
+  assert.equal(entry.ready, retry);
+  assert.equal(f.target().dataset.state, 'busy');
+  assert.equal(f.target().hidden, false);
+  assert.match(label(f.target()), /Loading release artwork/);
+  assert.equal(f.document.activeElement, f.back);
+  assert.equal(f.localStatus.textContent, 'Reading the local original…');
+  await Promise.resolve();
+  const snapshot = { recovered: true };
+  finish(snapshot);
+  assert.equal(await retry, snapshot);
+  assert.equal(loads, 2);
+  assert.equal(f.target().hidden, true);
+  assert.equal(f.document.activeElement, f.back);
+  entry.close();
+});

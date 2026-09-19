@@ -754,6 +754,16 @@ Log the original exception with a guarded logger, then revalidate operation/run/
 
 On viewport resize, reveal only the currently focused actionable control within the visible paused Team overlay. Use its bordered client scrollport intersected with the viewport and the existing eight-pixel focus clearance. Recheck the same attempt, generation, modal visit, foreground and active element after layout/style reads. Do not refocus, queue a future reveal, resume, or change gameplay geometry. Guard reentry and remove the listener on disposal. Qualify Settings → Back → portrait/landscape with unchanged paused time, coverage and reserves; distinguish actual browser geometry from modeled host tests and physical-device acceptance.
 
+For [initial presentation recovery](../../../docs/presentation-recovery.md), use the shared page lease's explicit `retry()` only to recover an unsuccessful initial load. Concurrent calls join one load; an accepted snapshot never refreshes. Team Retry picture must retain its exact arena and operation/focus ownership and must not Start automatically. Retire failed hosts before replacement, fence stale status/error callbacks, preserve pinned painters and independent leases, and distinguish cancelling picture adoption from cancelling a shared load. Reproduce first-load failure and same-page recovery through the actual host; retain native/public qualification separately. The guide includes the current maintenance prompt.
+
+### Shared Team terrain and trails
+
+Follow [Team presentation](../../../docs/team-actor-presentation.md#shared-terrain-and-active-cuts). Borrow `terrain.wall` and its prepared pivot from the accepted page snapshot once, before publishing any actor/look replacement. A malformed advertised image must fail without partial adoption; a missing legacy binding keeps the flat wall. Preserve the host's image lifetime, existing full-cell backing and nearest sampling. Do not reapply source frame offsets or invent wall cells.
+
+Adapt the shared active-trail primitive with a local 1/16 transform, passing unchanged logical safe anchors, visited cell centres and true fractional player heads. Derive line widths from canvas CSS width and motion from active run time; retain both player accents, number/shape badges, contact cues and reduced-effects readability. Cosmetic body offsets must never move a cut. Explicit null snapshots retain historical drawing. Keep simulation, replay, input and HUD changes out of a presentation-only feature.
+
+Prompt: "Qualify Team terrain/trails with real-core simultaneous cuts in both starter arenas at desktop and narrow widths; check prepared image identity/pivots, replacement and failed adoption, null compatibility, exact heads, both player identities, pause/reduced effects and unchanged outcomes. Then review actual artwork in the browser and run the release gates. Report command tests, native review, physical devices and public verification separately; do not label this slice complete P08-A coverage."
+
 
 ### Flight Details and bounded recent context
 
