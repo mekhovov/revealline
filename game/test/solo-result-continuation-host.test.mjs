@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { readFlightInformation } from '../ui/flight-information-host.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import {
   pngBytes,
@@ -161,6 +162,7 @@ function snapshot(p) {
     image: p.rendered.backdrop.image,
     profile: p.storage.getItem(profileKey),
     saved: p.storage.getItem(sessionKey),
+    information: readFlightInformation(p.$('run-message')),
   };
 }
 function kept(p, before) {
@@ -171,6 +173,9 @@ function kept(p, before) {
   assert.equal(before.image.releases, 0, 'The accepted drawable remains owned');
   assert.equal(p.storage.getItem(profileKey), before.profile);
   assert.equal(p.storage.getItem(sessionKey), before.saved);
+  const information = readFlightInformation(p.$('run-message'));
+  assert.deepEqual(information.owner, before.information.owner);
+  assert.deepEqual(information.lastWarning, before.information.lastWarning);
 }
 
 for (const policy of ['immediate', 'grid-center'])
@@ -201,6 +206,10 @@ for (const policy of ['immediate', 'grid-center'])
     gate.resolve();
     await running(p, 'next-cut');
     assert.notEqual(p.rendered.run, before.run);
+    const information = readFlightInformation(p.$('run-message'));
+    assert.ok(information.owner.generation > before.information.owner.generation);
+    assert.notEqual(information.owner.attempt, before.information.owner.attempt);
+    assert.equal(information.snapshot.tick, 0);
     assert.equal(before.image.releases, 1, 'The accepted drawable releases once after adoption');
     assert.equal(p.rendered.run.tick, 0);
     assert.equal(p.rendered.paused, false);
