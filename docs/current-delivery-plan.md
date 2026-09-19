@@ -1,6 +1,6 @@
 # RevealLine: detailed delivery history
 
-For the current order and remaining outcomes, read [the whole-game execution plan](whole-game-ux-plan.md) and [Delivery priorities](delivery-priorities.md). The detailed historical register follows unchanged. Its “active” and “upcoming” headings describe their recorded dates, not the current release.
+For the current release, phase status, accepted evidence and remaining work, start with the [cross-mode execution register](cross-mode-execution.md). The [whole-game execution plan](whole-game-ux-plan.md) and [Delivery priorities](delivery-priorities.md) describe the approved sequence and outcomes. The detailed historical register below remains unchanged; its “active” and “upcoming” headings describe their recorded dates, not the current release.
 
 Historical register last updated 2026-09-14. Its dated status paragraphs describe earlier checkpoints, not today’s release or remaining priorities. Use [Delivery priorities](delivery-priorities.md) for the current order and acceptance gates. Implementation remains authorized.
 

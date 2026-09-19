@@ -1,0 +1,69 @@
+{
+  "status": "ACCEPTED_SCOPED_PUBLIC_FEATURE_RELEASE",
+  "at": "2026-09-19T07:01:17.096315+00:00",
+  "version": "v0.62.1",
+  "gameSource": "9f04273a09dd23d44236c1715d62cfa460171e24",
+  "sourceTree": "2c35f299f981aba98929ba9ac01addbfe8b48d63",
+  "sourcePR": 153,
+  "publicationPR": 154,
+  "publisher": "3abc9b8d8a61280fd3070ffb3fa926328d14aefb",
+  "publisherTree": "38a121d6309cb3e7ab860fbd4659837835521e20",
+  "pagesRunId": 35427535988,
+  "deploymentId": 6538129092,
+  "deploymentStatusId": 18555712674,
+  "publicURL": "https://mekhovov.github.io/revealline/game/",
+  "immutableURL": "https://mekhovov.github.io/revealline/releases/v0.62.1/site/game/",
+  "sourceTests": {
+    "testsPerFamily": 6184,
+    "filesPerFamily": 478,
+    "families": 2,
+    "actualNodeVersion": "20.19.6",
+    "earlierFocusedMatrixSeparate": true
+  },
+  "publicAudit": {
+    "files": 3338,
+    "bytes": 643669109,
+    "attempts": 3338,
+    "failures": 0,
+    "retries": 0,
+    "uninspected": 0,
+    "catalogAuthorities": 97
+  },
+  "acceptedScope": [
+    "Missions chapter/nested focus clearance and responsive labels/Back",
+    "Brief native keyboard reading/Done/Back and paused restoration",
+    "Solo legal win and Next continuation as observed"
+  ],
+  "evidence": [
+    {
+      "path": "receipt-successors-r1/hosted-result-intake-r1/independent-review.json",
+      "bytes": 1282,
+      "sha256": "ed422381c82c2fa6ce37be51d84fdc9a5ab29abcb0957cf063a88bc539573fb5"
+    },
+    {
+      "path": "after-http-authorities-v0621-r1/result.json",
+      "bytes": 7532,
+      "sha256": "68354d453030276748d2b216e9b13ebb947879e8cb1bd247a615f74e9419a9a4"
+    },
+    {
+      "path": "native-observation-r1.json",
+      "bytes": 1734,
+      "sha256": "c6174ba1c4040d6c68b16cd3e0e78fe2e502b24bdd9597fc835b88644b6dfaf5"
+    },
+    {
+      "path": "native-observation-r2.json",
+      "bytes": 763,
+      "sha256": "c37548f5ab0d76742098b72cb8232cf396f281b57ab48ea20b7a08de1d9b0693"
+    }
+  ],
+  "open": [
+    "P03/P05 parent completion",
+    "Physicalcontroller/touch",
+    "Audio/offline/lifecycle fullqualification",
+    "PublicTeamwin/Next",
+    "PublicNextcancelnotestablishedinthisattempt",
+    "Fullremainingcontent/campaignprogramme"
+  ],
+  "previousAcceptedRelease": "v0.62.0",
+  "wholeProgrammeComplete": false
+}

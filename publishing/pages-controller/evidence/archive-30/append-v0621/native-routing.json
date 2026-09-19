@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-19T08:20:02.815561+00:00",
+  "status": "SCOPED_NATIVE_ROUTING_PASS",
+  "archiveCommit": "950e30e6c891345ac5b68e2e796b54c0e64828f5",
+  "deployment": 6538726400,
+  "steps": [
+    "From archive index Tab Return opened exactv0.62.0 route and settled title VERSION V0.62.0.",
+    "Browser Back returned index with both cohorts. Tab Tab Tab Return followed current-release-explorer link.",
+    "Explorer displayed Current v0.62.1 and historical entries. Browser Back restored archive index.",
+    "Temporary archive tab closed after checks."
+  ],
+  "input": "keyboard plus browser Back",
+  "limits": "Retained routing/title checks only; explorer current stillv0.62.1 intentionally beforev0.63publication."
+}
