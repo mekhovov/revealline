@@ -1,0 +1,48 @@
+{
+  "at": "2026-09-19T03:08:40.035692+00:00",
+  "preview": ".cache/p03-missions-native-v0620-r3",
+  "tab": "30",
+  "viewport": {
+    "width": 280,
+    "height": 568
+  },
+  "preferences": {
+    "textFace": "plain",
+    "textSize": "large"
+  },
+  "status": "FAIL_CHAPTER_OBSCURED_BETWEEN_STICKY_BANDS",
+  "observations": [
+    "Settings keyboard entry/exit worked; native popup Down/Return did not commit a changed value, retained as unestablished selection journey. getByLabel failed, exact observed select IDs then selected Plain/Large; AX confirmed preferences.",
+    "Missions entered with ShiftTab twice from titleSettings thenReturn. DefaultBasecard focus preserved onresize.",
+    "Fulltitle is visible but three48px lines use151.195px, Back47px y240.289. Stickyfooter217px y351. ActiveBasecard136.195px y305.086 is partlycovered.",
+    "Screenshot inline inspected, no exportedimage. Header/footer consume too much verticalroom despite intact labels."
+  ],
+  "rectangles": {
+    "title": {
+      "x": 24,
+      "y": 61.09375,
+      "width": 232,
+      "height": 151.1953125
+    },
+    "back": {
+      "x": 24,
+      "y": 240.2890625,
+      "width": 232,
+      "height": 47
+    },
+    "activeChapter": {
+      "x": 32,
+      "y": 305.0859375,
+      "width": 180,
+      "height": 136.1953125
+    },
+    "footer": {
+      "x": 24,
+      "y": 351,
+      "width": 232,
+      "height": 217
+    }
+  },
+  "remedyPending": "Scoped semantic-size narrow heading; preserve all actions and text preferences.",
+  "acceptance": false
+}

@@ -1,0 +1,81 @@
+{
+  "status": "SCOPED_CANDIDATE_EVIDENCE_NOT_PUBLIC_ACCEPTANCE",
+  "sourceBase": "4eb25587c566346204e6bb1d58a182acc0414872",
+  "sourceTree": "709005c7064dc93e06a0bc19b72a33c0e3e73438",
+  "runtimePreviewBase": "72b6845e101850a4ee34df66656dae3c7ad87f5f",
+  "overrides": "root-http-identity.json",
+  "files": [
+    {
+      "path": "integrated-modifier-test-review.json",
+      "originalPath": ".cache/p03-missions-next-preparation/integrated-modifier-test-review.json",
+      "bytes": 1206,
+      "sha256": "67467d05b0ae730bf3f7fa6e7db36052f7e8e62fe3817db4efdd07b6f29b71aa"
+    },
+    {
+      "path": "integrated-modifier-node20.stdout",
+      "originalPath": ".cache/p03-missions-next-preparation/integrated-modifier-node20.stdout",
+      "bytes": 60229,
+      "sha256": "1fe40fa206f8f1b02f359d8dd51f0950ad9802ceced798bfd15ff70e59c7e44f"
+    },
+    {
+      "path": "integrated-modifier-node20.stderr",
+      "originalPath": ".cache/p03-missions-next-preparation/integrated-modifier-node20.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "integrated-modifier-node22.stdout",
+      "originalPath": ".cache/p03-missions-next-preparation/integrated-modifier-node22.stdout",
+      "bytes": 64536,
+      "sha256": "73b3d914e198f566f5128c7dc01e1fc55e9dc4f5876fc5ff0960895949316685"
+    },
+    {
+      "path": "integrated-modifier-node22.stderr",
+      "originalPath": ".cache/p03-missions-next-preparation/integrated-modifier-node22.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "main-integration-and-sparse-guide.json",
+      "originalPath": ".cache/p03-missions-next-preparation/main-integration-and-sparse-guide.json",
+      "bytes": 542,
+      "sha256": "2ee1746470af6117283b06e55e5f774e08806320a0264df0fd05e08f6922e90a"
+    },
+    {
+      "path": "native-missions-briefing-r7.json",
+      "originalPath": ".cache/p03-couch-team-next-integration/native-missions-briefing-r7.json",
+      "bytes": 1422,
+      "sha256": "bb64f9127c2729940268528ac9101fde51b0b16aad0dff80b2aba1fa7c8c975b"
+    },
+    {
+      "path": "native-missions-portrait-r8.json",
+      "originalPath": ".cache/p03-couch-team-next-integration/native-missions-portrait-r8.json",
+      "bytes": 1527,
+      "sha256": "eb12c22ed5ca435dee8dbec14aae4e444a63cbed9145535d6537b2f37e053242"
+    },
+    {
+      "path": "native-missions-r4-r9.json",
+      "originalPath": ".cache/p03-couch-team-next-integration/native-missions-r4-r9.json",
+      "bytes": 2591,
+      "sha256": "1f55fb08bf51302be9930f440280eb3ae4fd627a38cfc60d5978716edf3c9149"
+    },
+    {
+      "path": "native-missions-r4-r10.json",
+      "originalPath": ".cache/p03-couch-team-next-integration/native-missions-r4-r10.json",
+      "bytes": 1710,
+      "sha256": "4955923b442d381b69a69b7816d6359c1cdd8393c6aa942d1b4a4ebc7f1d09e7"
+    },
+    {
+      "path": "root-http-identity.json",
+      "originalPath": ".cache/p03-missions-native-v0620-r4/root-http-identity.json",
+      "bytes": 6826,
+      "sha256": "e8d41ecae04792d53260bf6cc68260662dc42cd89c2ffc3c14ded52ca4fd6cd8"
+    }
+  ],
+  "limits": [
+    "284 focused cases per runtime; not full source qualification",
+    "R4 runtime identity exact; version allocation not included in preview",
+    "R7/R8 failures preserved with R9/R10 successor observations",
+    "Screenshots inline only; no physical device, controller or foreground lifecycle claims"
+  ]
+}

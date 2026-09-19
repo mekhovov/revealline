@@ -1,0 +1,38 @@
+{
+  "at": "2026-09-19T03:11:28.149951+00:00",
+  "status": "PASS_FOCUSED_INTEGRATION",
+  "files": 8,
+  "sourceBase": "8d761a75bf4e498717bda8d954beaa38ceb29896",
+  "modifierPatchSha256": "d4a7898a064cc84211d3a653d86e2167bad501c4949468600b77c9e96d449885",
+  "results": [
+    {
+      "runtime": "20.19.5",
+      "stdout": ".cache/p03-missions-next-preparation/integrated-modifier-node20.stdout",
+      "bytes": 60229,
+      "sha256": "1fe40fa206f8f1b02f359d8dd51f0950ad9802ceced798bfd15ff70e59c7e44f",
+      "totals": {
+        "tests": 284,
+        "pass": 284,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "runtime": "22.22.2",
+      "stdout": ".cache/p03-missions-next-preparation/integrated-modifier-node22.stdout",
+      "bytes": 64536,
+      "sha256": "73b3d914e198f566f5128c7dc01e1fc55e9dc4f5876fc5ff0960895949316685",
+      "totals": {
+        "tests": 284,
+        "pass": 284,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  ],
+  "scope": "Ordinary tests in integrated worktree. Does not establish CSS geometry, complete source gates, physical inputs or public release acceptance."
+}

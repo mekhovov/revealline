@@ -108,7 +108,7 @@ export function attachControllerNavigation({
     const previous = reading;
     reading = null;
     previous.region.removeAttribute('data-controller-reading');
-    if (focused === previous.region) mark(null);
+    if (focused === previous.region || focused === previous.exit) mark(null);
     readingInvalidated ||= invalidated;
     onReadingChange(null);
     if (message) readingMessage(message, previous);
@@ -137,7 +137,8 @@ export function attachControllerNavigation({
       visible(owner.region) &&
       owner.region.id === owner.regionId &&
       visible(owner.origin) &&
-      doc.activeElement === owner.region &&
+      (doc.activeElement === owner.region ||
+        (keyboard && owner.exit && doc.activeElement === owner.exit && visible(owner.exit))) &&
       owner.region.textContent === owner.text &&
       owner.region.hasAttribute('data-game-reading') &&
       (owner.region.getAttribute('aria-label') || owner.region.getAttribute('aria-labelledby')) &&
@@ -320,6 +321,27 @@ export function attachControllerNavigation({
       onNativeInput(event);
       return;
     }
+    // Shift arrives before a real Shift+Tab. Preserve only its current reader;
+    // it is not itself a navigation action and must keep native modifier behavior.
+    const reader = reading;
+    if (
+      keyboard &&
+      event.key === 'Shift' &&
+      !event.defaultPrevented &&
+      !event.ctrlKey &&
+      !event.altKey &&
+      !event.metaKey &&
+      readingCurrent(reader) &&
+      !destroyed &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      getScope() === reader.scope &&
+      getRoot() === reader.root &&
+      reading === reader
+    ) {
+      onNativeInput(event);
+      return;
+    }
     if (keyboard && keyboardNavigation(event)) {
       onNativeInput(event);
       return;
@@ -333,7 +355,11 @@ export function attachControllerNavigation({
   });
   listen('focusin', (event) => {
     if (focusing) return;
-    if (reading && event.target !== reading.region)
+    if (
+      reading &&
+      event.target !== reading.region &&
+      !(event.target === reading.exit && readingCurrent())
+    )
       cancelReading({ invalidated: true, message: 'Reading ended.' });
     if (editing && event.target !== editing.element) cancelEdit('Controller edit cancelled.');
     if (engaged) mark(visible(event.target) ? event.target : null);
@@ -604,13 +630,62 @@ export function attachControllerNavigation({
         reading.region.scrollTop = Math.max(0, Math.min(metrics.max, target));
         return true;
       }
+      // A focused Done keeps native button activation; its host click is end-only.
+      if (doc.activeElement === reading.exit && ['Enter', ' '].includes(event.key)) return true;
       if (['Enter', ' ', 'Escape'].includes(event.key)) {
         event.preventDefault();
         endReading();
         return true;
       }
-      if (event.key === 'Tab') endReading({ restoreFocus: false });
-      else return false;
+      if (event.key === 'Tab') {
+        const owner = reading;
+        if (owner.exit && visible(owner.exit)) {
+          const stops = [...root.querySelectorAll(`${CONTROLS},[tabindex]`)]
+            .filter((element) => element.tabIndex >= 0 && visible(element))
+            .sort((a, b) => (a.tabIndex || Infinity) - (b.tabIndex || Infinity));
+          const current = stops.indexOf(doc.activeElement),
+            next = stops[current + (event.shiftKey ? -1 : 1)],
+            paired = doc.activeElement === owner.region ? owner.exit : owner.region;
+          // Preserve only adjacent text/Done traversal. Other controls retain
+          // native order and leave reading; this is neither a trap nor a launch.
+          if (
+            current >= 0 &&
+            next === paired &&
+            !destroyed &&
+            !doc.hidden &&
+            doc.hasFocus?.() !== false &&
+            getScope() === owner.scope &&
+            getRoot() === owner.root &&
+            readingCurrent(owner)
+          ) {
+            event.preventDefault();
+            focus(next);
+            return true;
+          }
+          if (reading !== owner) {
+            event.preventDefault();
+            return true;
+          }
+          if (doc.activeElement === owner.exit && current >= 0 && next) {
+            // Ending disables Done. Capture its real neighbor first so this
+            // Tab cannot skip a control after the native focus owner disappears.
+            event.preventDefault();
+            endReading({ restoreFocus: false });
+            if (
+              !reading &&
+              !destroyed &&
+              !doc.hidden &&
+              doc.hasFocus?.() !== false &&
+              getScope() === owner.scope &&
+              getRoot() === owner.root &&
+              (doc.activeElement === owner.exit || doc.activeElement === doc.body)
+            )
+              focus(next);
+            return true;
+          }
+        }
+        endReading({ restoreFocus: false });
+      } else return false;
     }
     if (editing && event.key === 'Escape') {
       event.preventDefault();
