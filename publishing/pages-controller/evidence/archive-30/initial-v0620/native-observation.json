@@ -1,0 +1,31 @@
+{
+  "observedAt": "2026-09-19T05:08:15.534912+00:00",
+  "version": "v0.62.0",
+  "source": "72b6845e101850a4ee34df66656dae3c7ad87f5f",
+  "url": "https://mekhovov.github.io/revealline-archive-30/releases/v0.62.0/site/game/",
+  "observer": "root cua native browser input",
+  "viewports": [
+    [
+      600,
+      400
+    ]
+  ],
+  "input": [
+    "keyboard"
+  ],
+  "observations": [
+    "Archive root Play link entered actual original v0.62.0. First boot stalled at Preparing your arcade; visible Reload recovered Title. Original failed observation is retained separately.",
+    "Actual Start mission then immediate Escape cancelled preparation with visible explanation and retained Start focus. Retry completed launch.",
+    "Pause at 2:22 / 0.0% / 3 lives; Resume then brief S release continued flight. Win at 2:26 / 50.0% / 7820 points / 3 lives. Full-picture result visible with Next uncleared mission focused.",
+    "Browser Back returned actual archive root with Play and current release explorer links. Attempt to navigate current explorer through keyboard hit browser control timeout before final observation."
+  ],
+  "screenshotEvidence": "Inline tool screenshots only; no exported screenshot or hash claimed.",
+  "scopedArchivePlayPass": true,
+  "currentExplorerNavigationVerified": false,
+  "physicalController": false,
+  "physicalTouch": false,
+  "offline": false,
+  "audibleListening": false,
+  "actualForegroundLifecycle": false,
+  "publicTeamWinNext": false
+}
