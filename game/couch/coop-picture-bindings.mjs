@@ -49,3 +49,24 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     },
   },
 ]);
+
+/** Explicit approved scenery for valid historical imports outside closed binding
+ * namespaces. This is an association policy, not approval of imported level art.
+ * Each attempt pins the complete imported pack/level and this exact picture.
+ */
+export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
+  version: 'revealline-team-historical-import-picture.v1',
+  themeId: 'fpv',
+  themeRevision: 32,
+  collection: null,
+  picture: {
+    slot: 'scene.reveal.wide',
+    assetId: 'scene.reveal.wide.field-kit',
+    assetRevision: 2,
+    bytes: 52720,
+    height: 576,
+    mime: 'image/png',
+    sha256: '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850',
+    width: 1152,
+  },
+});
