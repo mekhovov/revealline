@@ -3,6 +3,10 @@ import { validateCoopPack, COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { freezePresentation, LIMITS, validateAssetRevision } from '../presentation/model.mjs';
+import {
+  exportCoopPresentationEnvelope,
+  readCoopPresentationPicture,
+} from '../coop/presentation-envelope.mjs';
 
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
 const revision = (value) => Number.isSafeInteger(value) && value > 0;
@@ -105,6 +109,18 @@ function requestIdentity(request) {
   required(level, 'The requested Team level is absent from this exact pack.');
   const packJSON = canonicalJSON(pack),
     levelJSON = canonicalJSON(level);
+  const artworkSource = request.artworkSource ?? null;
+  let sourceReceipt = null;
+  if (artworkSource !== null) {
+    // Authenticate the opaque owner before trusting its public frozen metadata.
+    exportCoopPresentationEnvelope(artworkSource);
+    required(
+      canonicalJSON(artworkSource.pack) === packJSON,
+      'Local Team artwork belongs to a different exact pack.',
+    );
+    readCoopPresentationPicture(artworkSource, level);
+    sourceReceipt = artworkSource.receipt;
+  }
   return {
     pack,
     level,
@@ -112,7 +128,13 @@ function requestIdentity(request) {
     attemptId,
     packJSON,
     levelJSON,
-    key: canonicalJSON([packJSON, levelId, themeId, attemptId]),
+    artworkSource,
+    sourceReceipt,
+    key: canonicalJSON(
+      sourceReceipt
+        ? [packJSON, levelId, themeId, attemptId, 'local-import', sourceReceipt]
+        : [packJSON, levelId, themeId, attemptId],
+    ),
   };
 }
 function snapshotIdentity(snapshot, themeId) {
@@ -203,7 +225,22 @@ export function createCoopPresentation({
         canonicalJSON(state.theme),
       'Team theme identity changed during preparation.',
     );
-    if (state.row)
+    if (state.request.artworkSource !== null) {
+      const original = readCoopPresentationPicture(
+        state.request.artworkSource,
+        state.request.level,
+      );
+      required(
+        canonicalJSON(state.request.artworkSource.receipt) ===
+          canonicalJSON(state.request.sourceReceipt),
+        'Local Team artwork identity changed during preparation.',
+      );
+      if (state.row)
+        required(
+          canonicalJSON(original.file) === canonicalJSON(state.row.picture),
+          'Local Team artwork changed during preparation.',
+        );
+    } else if (state.row)
       required(
         canonicalJSON(selectedAsset(state.snapshot, state.row)) === state.assetJSON,
         'Team picture binding changed during preparation.',
@@ -229,8 +266,9 @@ export function createCoopPresentation({
     const identity = requestIdentity(request);
     if (captured?.request.attemptId === identity.attemptId) {
       required(
-        captured.request.key === identity.key,
-        'Retry must retain the exact Team pack, level and theme.',
+        captured.request.key === identity.key &&
+          captured.request.artworkSource === identity.artworkSource,
+        'Retry must retain the exact Team pack, level, theme and artwork source.',
       );
       contextCurrent(captured);
       return captured;
@@ -263,14 +301,53 @@ export function createCoopPresentation({
         candidate.themeRevision === state.theme.themeRevision &&
         canonicalJSON(candidate.collection) === canonicalJSON(state.theme.collection),
     );
-    if (
-      !row &&
+    const policyMatches =
       policy &&
-      !closedNamespaces.has(state.request.pack.id) &&
       state.theme.themeId === policy.themeId &&
       state.theme.themeRevision === policy.themeRevision &&
-      canonicalJSON(state.theme.collection) === canonicalJSON(policy.collection)
-    ) {
+      canonicalJSON(state.theme.collection) === canonicalJSON(policy.collection);
+    if (state.request.artworkSource !== null) {
+      const receipt = state.request.sourceReceipt;
+      required(
+        receipt.packSha256 === packSha256 &&
+          receipt.theme.id === state.theme.themeId &&
+          receipt.theme.revision === state.theme.themeRevision &&
+          canonicalJSON(receipt.theme.collection) === canonicalJSON(state.theme.collection),
+        'Local Team artwork requires its exact accepted pack and prepared theme collection.',
+      );
+      required(
+        !closedNamespaces.has(state.request.pack.id) ||
+          rows.some(
+            (candidate) =>
+              candidate.packId === state.request.pack.id &&
+              candidate.packRevision === state.request.pack.revision &&
+              candidate.packSha256 === packSha256,
+          ),
+        'Local artwork cannot replace gameplay under a reserved Team pack identity.',
+      );
+      required(row || policyMatches, 'Local Team artwork is not supported by this approved theme.');
+      const original = readCoopPresentationPicture(
+        state.request.artworkSource,
+        state.request.level,
+      );
+      operationCurrent(operation);
+      state.row = freezePresentation({
+        packId: state.request.pack.id,
+        packRevision: state.request.pack.revision,
+        packSha256,
+        levelId: state.request.level.id,
+        levelRevision: state.request.level.revision,
+        levelSha256,
+        themeId: state.theme.themeId,
+        themeRevision: state.theme.themeRevision,
+        collection: state.theme.collection,
+        sourceKind: 'local-import',
+        presentationReceipt: receipt,
+        picture: original.file,
+      });
+      return;
+    }
+    if (!row && !closedNamespaces.has(state.request.pack.id) && policyMatches) {
       row = freezePresentation({
         packId: state.request.pack.id,
         packRevision: state.request.pack.revision,
@@ -302,16 +379,25 @@ export function createCoopPresentation({
       if (row.picture) {
         report(operation, 'downloading', 'Reading the selected Team picture…');
         operationCurrent(operation);
-        const original = await readPicture(row.picture.slot, {
-          snapshot: state.snapshot,
-          signal: operation.controller.signal,
-          onStatus: (status) => report(operation, status.stage, status.message),
-        });
+        const local = state.request.artworkSource !== null;
+        const original = local
+          ? readCoopPresentationPicture(state.request.artworkSource, state.request.level)
+          : await readPicture(row.picture.slot, {
+              snapshot: state.snapshot,
+              signal: operation.controller.signal,
+              onStatus: (status) => report(operation, status.stage, status.message),
+            });
         operationCurrent(operation);
-        required(
-          canonicalJSON(validateAssetRevision(original?.asset)) === state.assetJSON,
-          'Team picture reader returned a different asset.',
-        );
+        if (local)
+          required(
+            canonicalJSON(original.file) === canonicalJSON(row.picture),
+            'Team local picture reader returned a different original.',
+          );
+        else
+          required(
+            canonicalJSON(validateAssetRevision(original?.asset)) === state.assetJSON,
+            'Team picture reader returned a different asset.',
+          );
         let blob;
         try {
           const size = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get.call(
@@ -448,7 +534,8 @@ export function createCoopPresentation({
         !pending &&
           accepted &&
           accepted.state === captured &&
-          captured.request.key === identity.key,
+          captured.request.key === identity.key &&
+          captured.request.artworkSource === identity.artworkSource,
         'The exact Team picture is not ready for this request.',
       );
       contextCurrent(captured);

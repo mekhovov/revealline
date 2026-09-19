@@ -17,6 +17,61 @@ export const COOP_ACTOR_ROLES = Object.freeze({
   core: Object.freeze({ role: 'team-stronghold', slot: 'enemy.relay-sentinel' }),
 });
 const key = (kind, id) => `${kind}:${id}`;
+const TAU = Math.PI * 2;
+const turnDelta = (target, heading) =>
+  ((((target - heading + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
+
+/** Two cosmetic observations only: downed rotors stay frozen while real crawl
+ * displacement can turn the body. State transitions may teleport to an anchor;
+ * those displacements must never masquerade as crawling. */
+function pilotPose(run, player, frame, old, dt, reduced) {
+  const running = run.status === 'running',
+    changed = old && old.tick !== run.tick,
+    sameStatus = old?.status === player.status;
+  let heading = old?.heading ?? frame.heading,
+    target = sameStatus ? old.target : heading,
+    moving = running && sameStatus && !changed ? old.moving : false;
+  if (running && changed && sameStatus) {
+    const dx = player.x - old.x,
+      dy = player.y - old.y;
+    moving = Math.hypot(dx, dy) > 0.00001;
+    if (moving) target = Math.atan2(dy, dx) + Math.PI / 2;
+    if (player.status === 'active' || moving)
+      heading = reduced
+        ? target
+        : heading + Math.max(-dt * 12, Math.min(dt * 12, turnDelta(target, heading)));
+  }
+  const rescue = player.rescue,
+    partner =
+      running && player.status === 'active' && Number.isInteger(rescue?.target)
+        ? run.players.find((other) => other.id === rescue.target && other.id !== player.id)
+        : null,
+    rescueTarget = partner?.status === 'downed' ? partner.id : null;
+  const pilotState =
+    player.status === 'downed'
+      ? moving
+        ? 'crawling'
+        : 'downed'
+      : rescueTarget !== null
+        ? 'rescuing'
+        : player.cutting
+          ? 'cutting'
+          : player.graceUntil > run.time
+            ? 'recovery'
+            : 'normal';
+  return {
+    sample: {
+      x: player.x,
+      y: player.y,
+      tick: run.tick,
+      status: player.status,
+      heading,
+      target,
+      moving,
+    },
+    pose: { heading, pilotState, rescueTarget },
+  };
+}
 
 /** Borrow prepared sprites and keep cosmetic samples only; never acquire assets or mutate a run. */
 export function createCoopActorPresentation() {
@@ -24,12 +79,14 @@ export function createCoopActorPresentation() {
   let snapshot = null,
     sprites = new Map(),
     entries = new Map(),
+    pilots = new Map(),
     attempt = null,
     previousTick = null,
     previousTime = 0;
   function reset() {
     sampler.reset();
     entries = new Map();
+    pilots = new Map();
     attempt = null;
     previousTick = null;
     previousTime = 0;
@@ -86,6 +143,7 @@ export function createCoopActorPresentation() {
       });
       descriptions.set(id, {
         ...COOP_ACTOR_ROLES.pilot,
+        player,
         radius: player.radius,
         slot: `${COOP_ACTOR_ROLES.pilot.slot}.${treatment}`,
       });
@@ -123,10 +181,25 @@ export function createCoopActorPresentation() {
       screenScale,
       canvasCSSWidth: width,
     });
-    const next = new Map();
-    for (const [id, frame] of frames) {
+    const next = new Map(),
+      nextPilots = new Map();
+    for (const [id, sampled] of frames) {
       const description = descriptions.get(id),
         core = description.role === COOP_ACTOR_ROLES.core.role;
+      let frame = sampled;
+      if (description.player) {
+        const result = pilotPose(
+          run,
+          description.player,
+          sampled,
+          pilots.get(id),
+          elapsed * scale,
+          reduced,
+        );
+        nextPilots.set(id, result.sample);
+        // Geometry must use the final heading, including pivot and rotor bounds.
+        frame = { ...sampled, ...result.pose };
+      }
       const sprite = sprites.get(description.slot) ?? null;
       const bodyOffset =
         description.role === COOP_ACTOR_ROLES.pilot.role && sprite
@@ -156,6 +229,7 @@ export function createCoopActorPresentation() {
       });
     }
     entries = next;
+    pilots = nextPilots;
     previousTick = run.tick;
     previousTime = run.time;
   }

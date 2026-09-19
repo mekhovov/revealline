@@ -28,6 +28,9 @@ const text = (tag, value, className = '', hostRole = null) => {
 export async function drawAssetPreview(surface, slot, asset, resolved, blobs, settings) {
   const {
     mode,
+    fieldMode = 'solo',
+    teamArena = 'first-connection',
+    teamScenario = 'initial',
     background,
     geometry,
     motion = 'paused',
@@ -55,7 +58,26 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   const unapply = applyPresentation(surface, resolved);
   const cleanups = [];
   const own = (cleanup) => (isCurrent() ? cleanups.push(cleanup) : cleanup());
-  const options = { mode, motion, motionPreferences, state, isCurrent, onStatus: phase };
+  const options = {
+    mode,
+    fieldMode,
+    teamArena,
+    teamScenario,
+    motion,
+    motionPreferences,
+    state,
+    isCurrent,
+    onStatus: phase,
+  };
+  const fieldSlot = [
+    'players',
+    'motion',
+    'enemies',
+    'terrain',
+    'pickups',
+    'effects',
+    'pictures',
+  ].includes(slot.group);
   let cleaned = false;
   surface.previewCleanup = (preserveStatus = false) => {
     if (cleaned) {
@@ -90,6 +112,15 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       surface.append(text('p', 'No binding. Upload a candidate for this slot.', '', 'body'));
       return;
     }
+    if (mode === 'context' && !fieldSlot)
+      surface.append(
+        text(
+          'small',
+          'Game mode applies to field previews. This slot uses its own font, audio or component specimen.',
+          'bounded-label',
+          'secondary',
+        ),
+      );
     for (const id of ['font.display', 'font.ui', 'font.numeric']) {
       const fontAsset = resolved.assets[id];
       if (fontAsset?.kind !== 'font') continue;
@@ -192,6 +223,16 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     const palette = canvasPresentation(resolved).palette;
+    if (mode === 'context' && fieldMode === 'team' && fieldSlot) {
+      if (asset.kind === 'recipe' && slot.group === 'pictures')
+        throw new Error(
+          'This picture recipe has no Team field preview. Choose Solo or inspect its original pixels; no substitute picture is shown.',
+        );
+      // Team owns its arena/artwork applicability check. A bound Team picture
+      // can also have a Solo owner, which must not redirect this inspection.
+      await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
+      return;
+    }
     if (asset.kind === 'recipe' && slot.group === 'pictures') {
       const loader = createCurrentArtPreview();
       own(() => loader.close());
@@ -256,12 +297,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
 
-    if (
-      mode === 'context' &&
-      ['players', 'motion', 'enemies', 'terrain', 'pickups', 'effects', 'pictures'].includes(
-        slot.group,
-      )
-    ) {
+    if (mode === 'context' && fieldSlot) {
       if (slot.group === 'pictures') {
         const controller = new AbortController();
         own(() => controller.abort());

@@ -201,9 +201,9 @@ export function createCoopPainter(canvas) {
         body(kind, id)
           ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
           : minimum;
-      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed') {
+      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed', minimum = 12) {
         ctx.save();
-        size = cueScale.font(size, 12, 18);
+        size = cueScale.font(size, minimum, 18);
         ctx.font = `600 ${size}px ${font}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -293,6 +293,17 @@ export function createCoopPainter(canvas) {
           ctx.setLineDash([]);
         }
         ctx.restore();
+        if (frame?.pilotState === 'rescuing' && Number.isInteger(frame.rescueTarget))
+          cue(
+            `RESCUE ${frame.rescueTarget + 1}`,
+            x,
+            (rect.bottom + 12) / cssCell,
+            0.66,
+            fonts.ui,
+            true,
+            '#f1f7ed',
+            14,
+          );
       }
       for (const stronghold of run.strongholds || []) {
         const coreBody = body('core', stronghold.id);
