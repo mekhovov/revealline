@@ -1,66 +1,56 @@
-name: Audit exact public Archive30 bytes
+name: Audit exact v0.62.1 public main bytes
 on:
   workflow_dispatch:
     inputs:
-      archive_binding:
-        description: Root-reviewed exact archive30-only binding JSON
+      main_binding:
+        description: Root-reviewed actual final main-public binding JSON
         required: true
         type: string
 permissions:
   contents: read
 concurrency:
-  group: readonly-archive30-public-audit
+  group: readonly-v0621-main-public-audit
   cancel-in-progress: false
 jobs:
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
-      - name: Check out the actual reviewed utility workflow
+      - name: Check out reviewed utility only
         uses: actions/checkout@v4
         with:
           ref: ${{ github.workflow_sha }}
           path: automation
           persist-credentials: false
           sparse-checkout: |
-            publishing/utility/archive30-public-audit
+            publishing/utility/main-public-v0621
             .github/workflows/qualify-release-source.yml
           sparse-checkout-cone-mode: false
-      - name: Check out the immutable archive source
-        uses: actions/checkout@v4
+      - name: Select Node 20
+        uses: actions/setup-node@v4
         with:
-          repository: mekhovov/revealline-archive-30
-          ref: cf9113746d96cf50d7cb8491d58dece53bd9cc60
-          path: archive-source
-          persist-credentials: false
-          fetch-depth: 1
-      - name: Test bounded public transport without network
+          node-version: '20'
+      - name: Validate helper contracts without public requests
+        working-directory: automation/publishing/utility/main-public-v0621/payload
+        run: |
+          node tools/self-check.mjs
+          node tools/test-cohort-output.mjs
+          node tools/test-all-history-policy.mjs
+      - name: Verify the complete pinned deployed inventory
         env:
-          REVEALLINE_ARCHIVE_SOURCE: ${{ github.workspace }}/archive-source
-          PYTHONDONTWRITEBYTECODE: '1'
-          PYTHONOPTIMIZE: '0'
-        run: python3 -B -m unittest discover -s automation/publishing/utility/archive30-public-audit/payload/http/http-tools -p test_http_audit.py -v
-      - name: Test the exact dispatch and authority boundaries without network
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-          PYTHONOPTIMIZE: '0'
-        run: python3 -B -m unittest discover -s automation/publishing/utility/archive30-public-audit -p test_hosted_run.py -v
-      - name: Read and verify every exact public body
-        env:
-          ARCHIVE_BINDING: ${{ inputs.archive_binding }}
+          MAIN_BINDING: ${{ inputs.main_binding }}
           UTILITY_WORKFLOW_SHA: ${{ github.workflow_sha }}
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONOPTIMIZE: '0'
         run: >-
-          python3 -B automation/publishing/utility/archive30-public-audit/hosted_run.py
-          --source "${{ github.workspace }}/archive-source"
-          --out "${{ runner.temp }}/archive30-public-audit"
-      - name: Retain bounded original evidence including failure outcomes
+          python3 -B automation/publishing/utility/main-public-v0621/hosted_run.py
+          --out "${{ runner.temp }}/v0621-main-public-audit"
+      - name: Retain bounded evidence including incomplete attempts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: archive30-public-byte-audit-evidence
-          path: ${{ runner.temp }}/archive30-public-audit/
+          name: v0621-main-public-audit-evidence
+          path: ${{ runner.temp }}/v0621-main-public-audit/
           include-hidden-files: true
           compression-level: 6
           retention-days: 14
