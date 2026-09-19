@@ -83,7 +83,7 @@ test('a file selected before Start cannot replace setup after returning from an 
   read.resolve(text);
   await pending;
   assert.equal(f.$('coop-pack-status').textContent, 'Relay Rescue · 2 levels');
-  assert.equal(f.$('coop-level').value, 'relay-yard');
+  assert.equal(f.$('coop-level').value, 'first-connection');
   assert.equal(f.$('coop-difficulty').value, 'expert');
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.doc.activeElement.id, 'coop-start');
@@ -143,7 +143,7 @@ test('returning to built-ins cancels an outstanding file read', async (t) => {
   f.$('coop-pack-reset').click();
   read.resolve(text);
   await pending;
-  assert.equal(f.$('coop-level').value, 'relay-yard');
+  assert.equal(f.$('coop-level').value, 'first-connection');
   assert.equal(f.$('coop-pack-reset').hidden, true);
   assert.equal(f.$('coop-pack-status').textContent, 'Relay Rescue · 2 levels');
 });
@@ -535,7 +535,7 @@ test('Team pack reads show immediate status, Stop waiting rejects late adoption,
   read.resolve(candidate);
   await pending;
   assert.equal(f.$('coop-pack-status').textContent, cancelled);
-  assert.equal(f.$('coop-level').value, 'relay-yard');
+  assert.equal(f.$('coop-level').value, 'first-connection');
   const nextRead = deferred();
   const next = f.selectFile(candidate, () => nextRead.promise);
   f.$('coop-race').focus();
@@ -574,7 +574,7 @@ test('Back and closing the Team pack picker detach a read before reopening', asy
   picker.open = true;
   picker.emit('toggle');
   assert.equal(f.$('coop-pack-status').dataset.state, 'detached');
-  assert.equal(f.$('coop-level').value, 'relay-yard');
+  assert.equal(f.$('coop-level').value, 'first-connection');
   await f.selectFile(candidate);
   assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
   assert.equal(f.$('coop-level').value, 'closed-coverage');

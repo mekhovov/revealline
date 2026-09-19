@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { runInNewContext } from 'node:vm';
 import { createHash } from 'node:crypto';
 import { Document, Events, Element } from './couch-dom.mjs';
 import { mountCouch } from './couch-host.mjs';
@@ -7,6 +8,7 @@ import { FIXED_DT } from '../../coop/core.mjs';
 import { installCoopPresentation, waitFor } from './coop-presentation-fixture.mjs';
 
 const html = await readFile(new URL('../../couch/relay-rescue.html', import.meta.url), 'utf8');
+const entrySource = await readFile(new URL('../../couch/team-entry.js', import.meta.url), 'utf8');
 let sequence = 0;
 
 /** Finite native dialog state; return focus remains the production host's work. */
@@ -46,6 +48,9 @@ export async function page(
     expectError = false,
     readyStartDisabled = false,
     capturePaint = false,
+    stablePaintImages = false,
+    retainInitialDifficulty = false,
+    entryBootstrap = true,
     presentation = {},
     waitPicture = true,
     previewContextAvailable = true,
@@ -56,6 +61,10 @@ export async function page(
   doc.parentNode = win;
   mountCouch(doc, html);
   const $ = (id) => doc.getElementById(id);
+  // The finite shared parser leaves selects at their first option.
+  // Model this page’s authored native Arena default before pre-boot interaction.
+  const initialArenaOption = $('coop-level').querySelector('option[selected]');
+  if (initialArenaOption) $('coop-level').value = initialArenaOption.value;
   modelTeamDialogs(doc);
   if (nativeVisibility) {
     for (const element of doc.querySelectorAll('*')) {
@@ -164,7 +173,11 @@ export async function page(
             }
             paintDepth++;
           }
-          paintHash?.update(JSON.stringify([key, ...args]));
+          const paintArgs =
+            stablePaintImages && key === 'drawImage' && args[0]?.sha256
+              ? [{ sha256: args[0].sha256 }, ...args.slice(1)]
+              : args;
+          paintHash?.update(JSON.stringify([key, ...paintArgs]));
           if (key === 'restore' && --paintDepth === 0 && paintHash) {
             lastPaint = paintHash.digest('hex');
             paintHash = null;
@@ -249,6 +262,13 @@ export async function page(
     },
   });
   const artwork = installCoopPresentation({ doc, win, install, ...presentation });
+  const entryHost = {
+    document: doc,
+    addEventListener: (...args) => win.addEventListener(...args),
+    removeEventListener: (...args) => win.removeEventListener(...args),
+  };
+  if (entryBootstrap) runInNewContext(entrySource, entryHost);
+  install('RevealLineTeamEntry', { value: entryHost.RevealLineTeamEntry });
   beforeImport({ $, doc, win, install, failNextPreviewPaint });
   await import(`../../couch/relay-rescue.mjs?host-test=${++sequence}`);
   if (!expectError) {
@@ -265,7 +285,7 @@ export async function page(
     assert.equal(doc.documentElement.dataset.toolState, 'ready');
     assert.ok(frames.size);
   }
-  $('coop-difficulty').value = 'standard';
+  if (!retainInitialDifficulty) $('coop-difficulty').value = 'standard';
   const selectFile = (text, read = async () => text) => {
     $('coop-pack-file').closest('details').open = true;
     $('coop-pack-file').files = [{ size: Buffer.byteLength(text), text: read }];

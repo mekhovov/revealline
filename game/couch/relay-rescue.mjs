@@ -8,7 +8,7 @@ import {
   stepCoop,
   FIXED_DT,
 } from '../coop/core.mjs';
-import { RELAY_YARD, COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
+import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
 import { COOP_STARTER_PACK, readCoopPack, coopGoalText } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
@@ -32,6 +32,8 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
+
+import { createTeamArenaPreference } from './team-arena-preference.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
 
@@ -58,6 +60,22 @@ const names = ['Sunflower', 'Skyline'];
 const clock = (seconds) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 
+function picturePreparationText({ stage, status }, destination = null) {
+  // The owning catch publishes recovery after the operation has failed. Reader
+  // messages can contain diagnostics and must never become live-region text.
+  if (status === 'error' || stage === 'error') return null;
+  // A forwarded reader stage is not the lease's authenticated ready status.
+  if (status === 'ready')
+    return destination
+      ? `${destination} ready. Starting together…`
+      : 'Team picture ready. Start remains a separate action.';
+  const action =
+    stage === 'downloading' ? 'Loading' : stage === 'verifying' ? 'Checking' : 'Preparing';
+  return destination
+    ? `${action} ${destination} artwork… Your result stays available.`
+    : `${action} the Team picture…`;
+}
+
 export function bootCoop() {
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
@@ -73,6 +91,15 @@ export function bootCoop() {
   $('coop-race').setAttribute('href', returnHref());
   $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
   $('coop-solo').setAttribute('href', fromSolo ? returnHref() : '../');
+  const arenaPreference = createTeamArenaPreference({
+    pack: COOP_STARTER_PACK,
+    getStorage: () => localStorage,
+    onWarning: (message) => {
+      $('coop-selection-status').textContent = message;
+      $('coop-selection-status').hidden = !message;
+    },
+  });
+  let lastBuiltInArena = arenaPreference.current();
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({
     audioMaster,
@@ -186,6 +213,7 @@ export function bootCoop() {
     pictureSelection = null,
     pictureOperation = null,
     pictureSequence = 0,
+    nextOperation = null,
     startPermitted = true;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   let inactive = !foreground();
@@ -279,6 +307,10 @@ export function bootCoop() {
       cancelDeparture();
       return;
     }
+    if (nextOperation) {
+      cancelNext({ restore: true });
+      return;
+    }
     if (pictureOperation) {
       cancelPicture();
       return;
@@ -316,15 +348,21 @@ export function bootCoop() {
         ? $('coop-picture-return')
         : departure
           ? $('coop-discard-stay')
-          : pictureOperation
-            ? $('coop-picture-cancel')
-            : !run && pictureSelection?.state !== 'ready'
-              ? $('coop-picture-retry')
-              : !run
-                ? $('coop-start')
-                : run.status === 'paused' && !loopStopped
-                  ? $('coop-resume')
-                  : $('coop-retry');
+          : nextOperation
+            ? $('coop-next-cancel')
+            : pictureOperation
+              ? $('coop-picture-cancel')
+              : !run && pictureSelection?.state !== 'ready'
+                ? $('coop-picture-retry')
+                : !run
+                  ? $('coop-start')
+                  : run.status === 'paused' && !loopStopped
+                    ? $('coop-resume')
+                    : run.status === 'won' && !loopStopped
+                      ? teamDestination()?.next
+                        ? $('coop-next')
+                        : $('coop-lobby')
+                      : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -410,7 +448,14 @@ export function bootCoop() {
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: back,
     onMenu: () => {
-      if (settingsDialog.open || earnedDialog.open || departure || run?.status === 'paused') back();
+      if (
+        settingsDialog.open ||
+        earnedDialog.open ||
+        departure ||
+        nextOperation ||
+        run?.status === 'paused'
+      )
+        back();
     },
     onHint: (message, context) => {
       if (
@@ -434,6 +479,67 @@ export function bootCoop() {
       ['coop-data-reading', 'coop-data-read', 'Team game data', 'coop-data-unit'],
     ],
   });
+  let revealingPauseResize = false;
+  function revealPausedAction(event) {
+    if (revealingPauseResize || event.target !== window) return;
+    revealingPauseResize = true;
+    try {
+      const target = document.activeElement,
+        panel = $('coop-overlay'),
+        attempt = run,
+        epoch = generation,
+        visit = settingsVisit;
+      const current = () =>
+        !disposed &&
+        !inactive &&
+        foreground() &&
+        run === attempt &&
+        run?.status === 'paused' &&
+        generation === epoch &&
+        settingsVisit === visit &&
+        !settingsDialog.open &&
+        !earnedDialog.open &&
+        !departure &&
+        !panel.hidden &&
+        panel.contains(target) &&
+        document.activeElement === target;
+      // Resize owns no opener or future focus. The reading adapter owns its
+      // separate text region; only the current paused action is considered here.
+      if (
+        !current() ||
+        !target?.matches('button,a[href],select,input,textarea,summary') ||
+        !visibleAction(target) ||
+        !current()
+      )
+        return;
+      const rect = target.getBoundingClientRect(),
+        bounds = panel.getBoundingClientRect(),
+        width = document.documentElement.clientWidth || window.innerWidth,
+        height = document.documentElement.clientHeight || window.innerHeight,
+        left = Math.max(0, bounds.left + panel.clientLeft) + 8,
+        top = Math.max(0, bounds.top + panel.clientTop) + 8,
+        right = Math.min(width, bounds.left + panel.clientLeft + panel.clientWidth) - 8,
+        bottom = Math.min(height, bounds.top + panel.clientTop + panel.clientHeight) - 8;
+      if (
+        ![rect.left, rect.top, rect.right, rect.bottom, left, top, right, bottom].every(
+          Number.isFinite,
+        ) ||
+        rect.width <= 0 ||
+        rect.height <= 0 ||
+        right <= left ||
+        bottom <= top ||
+        (rect.left >= left && rect.right <= right && rect.top >= top && rect.bottom <= bottom)
+      )
+        return;
+      // Match the overlay's existing 8px scroll-padding. Recheck after the final
+      // style read: a newer focus, dialog, attempt or lifecycle vetoes this reveal.
+      if (!current() || !visibleAction(target) || !current()) return;
+      target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    } finally {
+      revealingPauseResize = false;
+    }
+  }
+  window.addEventListener('resize', revealPausedAction);
   function clear() {
     input.clear();
     batch.release();
@@ -455,6 +561,7 @@ export function bootCoop() {
     generation === owner.generation &&
     foreground();
   function openSettings() {
+    cancelNext();
     const opener = $('coop-settings-open');
     if (
       disposed ||
@@ -540,6 +647,7 @@ export function bootCoop() {
     acceptedPicture === owner.picture &&
     foreground();
   function openEarnedPicture() {
+    cancelNext();
     const opener = $('coop-view-picture');
     if (
       disposed ||
@@ -638,6 +746,12 @@ export function bootCoop() {
     if (!show) return;
     const won = run.status === 'won',
       lost = run.status === 'lost';
+    const destination = won && !loopStopped ? teamDestination() : null;
+    $('coop-next').hidden = !destination?.next;
+    $('coop-next').textContent = destination?.next
+      ? `Next: ${destination.next.name}`
+      : 'Next arena';
+    $('coop-lobby').textContent = won ? 'Choose arena' : 'Change setup';
     $('coop-resume').hidden = won || lost;
     $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
     $('coop-overlay-kicker').textContent = won
@@ -651,7 +765,7 @@ export function bootCoop() {
         ? 'Your next route starts here.'
         : 'Both players paused';
     $('coop-overlay-copy').textContent = won
-      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. Try another level or a harder challenge.`
+      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? 'Final arena in this pack. Choose an arena or retry this challenge.' : 'Choose another arena or retry this challenge.'}`
       : lost
         ? coopRetryFeedback(run, knockdowns.filter(Boolean))
         : 'Release your controls, then choose Resume together.';
@@ -982,7 +1096,9 @@ export function bootCoop() {
           ...selection.request,
           signal: controller.signal,
           onStatus: (status) => {
-            if (current()) pictureUI(status.message);
+            if (!current()) return;
+            const text = picturePreparationText(status);
+            if (text) pictureUI(text);
           },
         });
         if (!current()) return;
@@ -1020,6 +1136,305 @@ export function bootCoop() {
     }
     return preparePicture({ retry: true });
   };
+  // Only the exact approved built-in pack has a qualified ordered journey.
+  // An imported pack with the same ID must not inherit it accidentally.
+  function teamDestination() {
+    if (
+      run?.status !== 'won' ||
+      acceptedPicture?.sourcePack !== COOP_STARTER_PACK ||
+      JSON.stringify(attemptPack) !== JSON.stringify(COOP_STARTER_PACK)
+    )
+      return null;
+    const index = COOP_STARTER_PACK.levels.findIndex(
+      (level) => JSON.stringify(level) === JSON.stringify(attemptLevel),
+    );
+    if (index < 0) return null;
+    return {
+      next: COOP_STARTER_PACK.levels[index + 1] ?? null,
+      final: index === COOP_STARTER_PACK.levels.length - 1,
+    };
+  }
+  function nextStatus(text) {
+    const owner = nextOperation,
+      attempt = run,
+      epoch = generation;
+    const current = () =>
+      !disposed && nextOperation === owner && run === attempt && generation === epoch;
+    if (!current()) return;
+    $('coop-next-status').textContent = text;
+    if (!current()) return;
+    $('coop-next-status').hidden = !text;
+    if (!current()) return;
+    $('coop-next-cancel').hidden = !owner;
+    if (current()) $('coop-next').setAttribute('aria-busy', String(Boolean(owner)));
+  }
+  function cancelNext({ restore = false, announce = true } = {}) {
+    const operation = nextOperation;
+    if (!operation) return;
+    // Invalidate before abort/release/native-focus callbacks can reenter.
+    nextOperation = null;
+    operation.detach();
+    try {
+      if (announce && !disposed)
+        nextStatus('Next arena cancelled. Your result and picture are still here.');
+    } finally {
+      operation.controller.abort();
+      operation.selection.lease?.dispose();
+    }
+    if (
+      disposed ||
+      !announce ||
+      nextOperation ||
+      run !== operation.run ||
+      generation !== operation.generation ||
+      acceptedPicture !== operation.picture ||
+      settingsVisit !== operation.settingsVisit ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure
+    )
+      return;
+    if (restore && run === operation.run && generation === operation.generation && foreground())
+      $('coop-next').focus({ preventScroll: true });
+  }
+  async function nextArena() {
+    const destination = teamDestination()?.next;
+    if (
+      !destination ||
+      disposed ||
+      inactive ||
+      !foreground() ||
+      loopStopped ||
+      nextOperation ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure
+    )
+      return;
+    const recipe = { level: structuredClone(destination), options: currentRecipe().options };
+    const selection = newPictureSelection(recipe, COOP_STARTER_PACK);
+    const operation = {
+      run,
+      generation,
+      picture: acceptedPicture,
+      pack: attemptPack,
+      settingsVisit,
+      selection,
+      controller: new AbortController(),
+      detach: () => {},
+    };
+    const current = () =>
+      nextOperation === operation &&
+      !disposed &&
+      !inactive &&
+      foreground() &&
+      run === operation.run &&
+      generation === operation.generation &&
+      acceptedPicture === operation.picture &&
+      attemptPack === operation.pack &&
+      run.status === 'won' &&
+      !loopStopped &&
+      !settingsDialog.open &&
+      !earnedDialog.open &&
+      !departure &&
+      !operation.controller.signal.aborted;
+    let rolledBack = false,
+      adoptedGeneration = null;
+    const adopted = (candidate) =>
+      !disposed &&
+      run === candidate &&
+      generation === adoptedGeneration &&
+      acceptedPicture === selection &&
+      settingsVisit === operation.settingsVisit &&
+      running() &&
+      !inactive &&
+      foreground() &&
+      !settingsDialog.open &&
+      !earnedDialog.open &&
+      !departure;
+    nextOperation = operation;
+    const focusChanged = (event) => {
+      if (event.target !== $('coop-next') && event.target !== $('coop-next-cancel')) cancelNext();
+    };
+    document.addEventListener('focusin', focusChanged);
+    operation.detach = () => document.removeEventListener('focusin', focusChanged);
+    try {
+      nextStatus(`Preparing ${destination.name}… Your result stays available.`);
+      if (!current()) return;
+      $('coop-next-cancel').focus({ preventScroll: true });
+      await presentationPage.ready;
+      if (!current()) return;
+      selection.binding = await selection.lease.select({
+        ...selection.request,
+        signal: operation.controller.signal,
+        onStatus: (status) => {
+          if (!current()) return;
+          const text = picturePreparationText(status, destination.name);
+          if (text) nextStatus(text);
+        },
+      });
+      if (!current()) return;
+      selection.binding = selection.lease.confirm(selection.request);
+      selection.state = 'ready';
+      const candidate = createCoop(structuredClone(recipe.level), recipe.options);
+      startCoop(candidate);
+      if (!current()) return;
+      // First paint is tested while the completed attempt still owns its image.
+      painter.paint(candidate, {
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
+        textFace: displayPreferences.snapshot().textFace,
+        picture: selection.binding,
+      });
+      if (!current()) {
+        if (!disposed && run === operation.run) render();
+        return;
+      }
+      clear();
+      if (!current()) return;
+      const previous = {
+        run,
+        level: attemptLevel,
+        pack: attemptPack,
+        picture: acceptedPicture,
+        selection: pictureSelection,
+        knockdowns,
+        last,
+        accumulator,
+        arena: $('coop-level').value,
+        difficulty: $('coop-difficulty').value,
+        configuration: $('coop-experiment').value,
+        lastBuiltInArena,
+      };
+      // No callbacks between the final check and reference publication.
+      run = candidate;
+      attemptLevel = recipe.level;
+      attemptPack = selection.pack;
+      acceptedPicture = pictureSelection = selection;
+      adoptedGeneration = ++generation;
+      nextOperation = null;
+      operation.detach();
+      knockdowns = [null, null];
+      last = null;
+      accumulator = 0;
+      try {
+        lastBuiltInArena = destination.id;
+        $('coop-level').value = destination.id;
+        $('coop-difficulty').value = candidate.difficulty;
+        const configuration = COOP_PLAYTEST_CONFIGURATIONS.find((item) =>
+          ['jointCuts', 'assistCaptures', 'advancedCooperation'].every(
+            (key) => item[key] === candidate.config[key],
+          ),
+        );
+        if (configuration) $('coop-experiment').value = configuration.id;
+        nextStatus('');
+        $('coop-stage').textContent = candidate.level.name.toUpperCase();
+        $('coop-progress').max = candidate.level.goal.coverage
+          ? candidate.level.goal.coverage * 100
+          : 100;
+        overlay({ focus: false });
+        render();
+        if (!adopted(candidate)) return;
+        setupNote({ level: attemptLevel, experiment: candidate.config });
+      } catch (error) {
+        if (adopted(candidate) && settingsVisit === operation.settingsVisit) {
+          rolledBack = true;
+          run = previous.run;
+          attemptLevel = previous.level;
+          attemptPack = previous.pack;
+          acceptedPicture = previous.picture;
+          pictureSelection = previous.selection;
+          knockdowns = previous.knockdowns;
+          last = previous.last;
+          accumulator = previous.accumulator;
+          generation++;
+          lastBuiltInArena = previous.lastBuiltInArena;
+          $('coop-level').value = previous.arena;
+          $('coop-difficulty').value = previous.difficulty;
+          $('coop-experiment').value = previous.configuration;
+          setupNote({ level: attemptLevel, experiment: run.config });
+          $('coop-stage').textContent = run.level.name.toUpperCase();
+          $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
+          overlay({ focus: false });
+        }
+        throw error;
+      }
+      if (adopted(candidate)) arenaPreference.choose(destination.id);
+      if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
+        previous.picture.lease?.dispose();
+      if (!adopted(candidate)) return;
+      message(`${destination.name}. Choose fresh directions when you are ready.`);
+      input.focus();
+    } catch (error) {
+      const failed = nextOperation === operation;
+      const recovery = {
+        owner: nextOperation,
+        generation,
+        settingsVisit,
+        focus: document.activeElement,
+      };
+      const ownsRecovery = () =>
+        !disposed &&
+        !operation.controller.signal.aborted &&
+        nextOperation === recovery.owner &&
+        generation === recovery.generation &&
+        run === operation.run &&
+        acceptedPicture === operation.picture &&
+        attemptPack === operation.pack &&
+        settingsVisit === recovery.settingsVisit &&
+        document.activeElement === recovery.focus;
+      if (!(failed || rolledBack) || !ownsRecovery()) return;
+      // Logging is an external callback: Cancel or a newer action must remain
+      // authoritative when it returns, including after an adoption rollback.
+      try {
+        console.error('Team next arena preparation failed.', error);
+      } catch {}
+      if (!ownsRecovery()) return;
+      if (failed) {
+        nextOperation = null;
+        operation.detach();
+      }
+      // A cancelled/stale completion must not overwrite a newer action/status.
+      if (
+        (failed || rolledBack) &&
+        !disposed &&
+        run === operation.run &&
+        acceptedPicture === operation.picture &&
+        !nextOperation
+      ) {
+        nextStatus(
+          `Could not start ${destination.name}. Your result is unchanged. Try Next again.`,
+        );
+        try {
+          render();
+        } catch {
+          /* The retained result still offers recovery. */
+        }
+        if (
+          !nextOperation &&
+          run === operation.run &&
+          acceptedPicture === operation.picture &&
+          foreground() &&
+          !settingsDialog.open &&
+          !earnedDialog.open
+        )
+          $('coop-next').focus({ preventScroll: true });
+      }
+    } finally {
+      if (nextOperation === operation) cancelNext();
+      operation.detach();
+      if (acceptedPicture !== selection && pictureSelection !== selection)
+        selection.lease?.dispose();
+      if (
+        adoptedGeneration !== null &&
+        acceptedPicture !== operation.picture &&
+        pictureSelection !== operation.picture
+      )
+        operation.picture.lease?.dispose();
+    }
+  }
+  $('coop-next').onclick = () => void nextArena();
+  $('coop-next-cancel').onclick = () => cancelNext({ restore: true });
+
   function currentRecipe() {
     if (run)
       return {
@@ -1039,6 +1454,8 @@ export function bootCoop() {
     };
   }
   function start(recipe = currentRecipe(), prepared = null) {
+    cancelNext();
+    nextStatus('');
     if (
       disposed ||
       inactive ||
@@ -1061,6 +1478,8 @@ export function bootCoop() {
     // Keep the validated starting level separately for an exact fresh Retry.
     const startingLevel = structuredClone(recipe.level);
     const next = prepared || createCoop(startingLevel, recipe.options);
+    const rememberVisibleArena =
+      !run && pack === COOP_STARTER_PACK && arenaPreference.current() !== startingLevel.id;
     cancelImport();
     importRequest++;
     $('coop-pack-file').value = '';
@@ -1096,6 +1515,8 @@ export function bootCoop() {
       stopArena(error);
       return;
     }
+    if (rememberVisibleArena && !disposed && run === next && running() && foreground())
+      arenaPreference.choose(startingLevel.id);
     input.focus();
     if (loopStopped) {
       loopStopped = false;
@@ -1103,6 +1524,7 @@ export function bootCoop() {
     }
   }
   function pause({ focus = true } = {}) {
+    cancelNext();
     cancelPicture({ restore: false });
     if (!running()) return;
     pauseCoop(run);
@@ -1115,6 +1537,7 @@ export function bootCoop() {
     }
   }
   function stopArena(error, { focus = true } = {}) {
+    cancelNext();
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
     loopStopped = true;
@@ -1230,6 +1653,8 @@ export function bootCoop() {
     };
   }
   function lobby() {
+    cancelNext();
+    nextStatus('');
     if (disposed || departure) return;
     const focus = lobbyFocus();
     try {
@@ -1293,6 +1718,7 @@ export function bootCoop() {
     closeDeparture(departure, options);
   }
   function requestDeparture(kind, opener) {
+    cancelNext();
     if (
       disposed ||
       departure ||
@@ -1405,6 +1831,7 @@ export function bootCoop() {
         (event.button !== undefined && event.button !== 0)
       )
         return;
+      cancelNext();
       $(id).setAttribute(
         'href',
         kind === 'return' ? returnHref() : kind === 'versus' ? './' : '../',
@@ -1552,9 +1979,7 @@ export function bootCoop() {
   $('coop-resume').onclick = resume;
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
-  function setupNote() {
-    const level = selectedLevel();
-    const experiment = selectedConfiguration();
+  function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
     const stronghold = Boolean(level.goal.cores);
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
@@ -1665,16 +2090,33 @@ export function bootCoop() {
     if (run || departure || pictureOperation || disposed) return;
     cancelImport();
     importRequest++;
-    showPack(COOP_STARTER_PACK, RELAY_YARD.id);
+    showPack(COOP_STARTER_PACK, lastBuiltInArena);
     void preparePicture();
   };
   $('coop-level').onchange = () => {
-    if (run || departure || importDisplay) return;
+    if (run || departure || importDisplay || disposed) return;
+    if (pack === COOP_STARTER_PACK) {
+      lastBuiltInArena = selectedLevel().id;
+      arenaPreference.choose(lastBuiltInArena);
+    }
     setupNote();
     return preparePicture();
   };
   $('coop-experiment').onchange = setupNote;
-  showPack(COOP_STARTER_PACK, RELAY_YARD.id);
+  // The classic entry owns intent before the select becomes interactive.
+  // Without that evidence, retain native setup rather than override a choice.
+  const earlySelection = globalThis.RevealLineTeamEntry?.take();
+  const validArena = (id) => COOP_STARTER_PACK.levels.some((level) => level.id === id);
+  if (!earlySelection || earlySelection.claimed) {
+    const selected = earlySelection?.changed ? earlySelection.value : $('coop-level').value;
+    lastBuiltInArena = validArena(selected) ? selected : COOP_STARTER_PACK.levels[0].id;
+    if (earlySelection?.changed && validArena(selected)) arenaPreference.choose(selected);
+  }
+  // Keep the existing option nodes and an already-correct native value while a
+  // player may have the platform's selector open during module preparation.
+  if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
+  showPackStatus();
+  setupNote();
   $('coop-touch').value = 'auto';
   $('coop-touch').onchange = () => {
     input.clearPhysical();
@@ -1697,6 +2139,9 @@ export function bootCoop() {
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
     if (disposed) return;
+    cancelNext({ announce: false });
+    $('coop-next').onclick = null;
+    $('coop-next-cancel').onclick = null;
     // Retire dialog callbacks before native close or preference disposal can
     // reenter. No terminal cleanup restores focus or resumes the attempt.
     settingsOwner = null;
@@ -1727,6 +2172,7 @@ export function bootCoop() {
     presentationPage.close();
     closeAudio();
     closeDisplay();
+    arenaPreference.dispose();
     importRequest++;
     disposed = true;
     packStatus.dispose();
@@ -1738,6 +2184,7 @@ export function bootCoop() {
     reading.destroy();
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
+    window.removeEventListener('resize', revealPausedAction);
     window.removeEventListener('blur', suspend);
     window.removeEventListener('focus', returned);
     window.removeEventListener('pageshow', returned);
