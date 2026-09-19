@@ -42,7 +42,8 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
     capturePaint: true,
     ...options,
   });
-  if (level !== 'relay-yard') await f.choose('coop-level', level);
+  if (level !== 'first-connection') await f.choose('coop-level', level);
+  assert.equal(f.$('coop-level').value, level);
   f.$('coop-difficulty').value = 'standard';
   f.$('coop-start').focus();
   f.tap('Enter');
@@ -85,7 +86,11 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
   );
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-resume').hidden, true);
-  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  assert.equal(
+    f.doc.activeElement.id,
+    level === 'first-connection' ? 'coop-next' : 'coop-lobby',
+    'Victory recommends the next arena, or choosing an arena at the end of the pack',
+  );
   assert.equal(f.$('coop-discard-dialog').open, false);
   const binding =
     COOP_PICTURE_BINDINGS.find((row) => row.levelId === level) ??
@@ -113,12 +118,13 @@ for (const [level, name] of [
   ['first-connection', 'First Connection'],
   ['relay-yard', 'Relay Yard'],
 ])
-  test(`${name}: earned Team victory focuses Retry; keyboard Retry preserves exact authored recipe and picture`, async (t) => {
+  test(`${name}: earned Team victory focuses its continuation action; keyboard Retry preserves exact authored recipe and picture`, async (t) => {
     const { f, first } = await win(t, { level });
     // Hidden setup values are not authority for Retry of the terminal attempt.
     f.$('coop-level').value = level === 'relay-yard' ? 'first-connection' : 'relay-yard';
     f.$('coop-difficulty').value = 'expert';
     f.$('coop-experiment').value = 'independent';
+    tabTo(f, 'coop-retry');
     f.tap('Enter');
     assert.equal(f.$('coop-discard-dialog').open, false);
     assert.equal(f.$('coop-overlay').hidden, true);
@@ -267,11 +273,11 @@ test('Team earned picture: controller Back and Confirm require fresh edges and n
   edge(0, false);
   assert.equal(
     f.doc.activeElement.id,
-    'coop-retry',
-    'First deliberate edge joins without activation',
+    'coop-next',
+    'First deliberate edge joins without activating the recommended next arena',
   );
-  edge(14, true);
-  edge(14, false);
+  edge(15, true);
+  edge(15, false);
   assert.equal(f.doc.activeElement.id, 'coop-view-picture');
   edge(0, true);
   assert.equal(f.$('coop-earned-picture').open, true);

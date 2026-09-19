@@ -268,6 +268,7 @@ try {
     installed = createCouchInstalledChapters({
       channel,
       registeredEntries: [baseEntry],
+      presentationPage,
     });
     bootDisplay.update({
       message: 'Checking installed chapters and pictures…',
@@ -484,7 +485,7 @@ try {
     contentBusy = false;
     contentReady = retainedResult;
     contentError = retainedResult
-      ? 'Next picture loading cancelled. Results are kept. Choose Next when you are ready.'
+      ? `${continuationAction()} picture loading cancelled. Results are kept. Choose ${continuationAction()} when you are ready.`
       : 'Picture loading cancelled. Retry when you are ready.';
     if (installedStatus === 'Checking installed chapters…')
       installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
@@ -535,12 +536,15 @@ try {
       classId,
       turnPolicy: $('race-turn').value,
       seconds: Number($('race-time').value),
+      format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
     };
+    $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
     generation = ++raceSequence;
     paintRound(roundRecipe);
     finished = false;
-    $('race-start').textContent = 'Start round ↗';
+    $('race-start').textContent =
+      roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
     return loadPreparedPicture(entry);
   }
   function createRound(recipe) {
@@ -633,6 +637,9 @@ try {
       }
     })();
   }
+  function continuationAction() {
+    return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? 'Rematch' : 'Next round';
+  }
   async function prepareNext() {
     if (!nextAttempt || nextAttempt.previous !== match || nextAttempt.recipe !== roundRecipe) {
       nextAttempt = {
@@ -641,7 +648,7 @@ try {
         recipe: roundRecipe,
         match: createRound(roundRecipe),
         raceId: ++raceSequence,
-        resetWins: won.some((n) => n >= 2),
+        resetWins: roundRecipe.format === 'single' || won.some((n) => n >= 2),
         lease: null,
       };
     }
@@ -665,7 +672,7 @@ try {
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
-      message: 'Preparing the next picture. Your completed Results are kept until it is ready…',
+      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your completed Results are kept until the picture is ready…`,
       stage: 'verifying',
       isCurrent: current,
     });
@@ -704,7 +711,8 @@ try {
         return null;
       clear({ resetDirection: true });
       paintRound(attempt.recipe);
-      $('race-start').textContent = 'Start round ↗';
+      $('race-start').textContent =
+        roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
       $('race-message').textContent = [
         lease.picture?.notice,
         'Both boards use the prepared next picture. Start when you are ready.',
@@ -716,15 +724,13 @@ try {
       prepared = {
         match,
         controller,
-        isStatic,
         ownsAction: () => restoreFocus.current(true),
         releaseFocus: restoreFocus.close,
       };
       return prepared;
     } catch (error) {
       if (current()) {
-        contentError =
-          'The next picture could not be prepared. Results are kept. Choose Next to retry.';
+        contentError = `The ${continuationAction().toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuationAction()} to retry.`;
         $('race-message').textContent = contentError;
         display.finish({ state: 'error', message: '' });
         console.warn('Next picture preparation failed.', error);
@@ -753,7 +759,8 @@ try {
     pauseDuel(match, { preserveContinuation: true });
     clear();
     if (match.status === 'paused') {
-      $('race-start').textContent = 'Resume round →';
+      $('race-start').textContent =
+        roundRecipe.format === 'single' ? 'Resume race →' : 'Resume round →';
       $('race-message').textContent = 'Both players are paused. Resume when everyone is ready.';
     }
     updateMenu();
@@ -774,13 +781,52 @@ try {
         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
     let nextConfirmed = false,
       nextFocus = null;
+    if (match.status === 'ready') {
+      const start = $('race-start'),
+        previousRun = match,
+        previousGeneration = generation,
+        previousController = contentController;
+      if (!start.isConnected || start.closest('[hidden],[inert]') || !start.getClientRects().length)
+        return;
+      // Touch activation need not focus a button. Admit this click before
+      // acquiring its lease; later focus choices still revoke permission to start.
+      start.focus({ preventScroll: true });
+      if (
+        !ownsStartIntent() ||
+        document.activeElement !== start ||
+        match !== previousRun ||
+        generation !== previousGeneration ||
+        contentController !== previousController ||
+        contentBusy ||
+        shell.scope() !== 'main'
+      )
+        return;
+    }
     if (match.status === 'finished') {
+      const start = $('race-start'),
+        previousRun = match,
+        previousGeneration = generation,
+        previousController = contentController;
+      if (!start.isConnected || start.closest('[hidden],[inert]') || !start.getClientRects().length)
+        return;
+      // Touch activation need not focus a button in every browser. This admitted
+      // action owns its initial focus, never a later user choice or background return.
+      start.focus({ preventScroll: true });
+      if (
+        !ownsStartIntent() ||
+        document.activeElement !== start ||
+        match !== previousRun ||
+        generation !== previousGeneration ||
+        contentController !== previousController ||
+        contentBusy ||
+        shell.scope() !== 'main'
+      )
+        return;
       const prepared = await prepareNext();
-      // Preparation may finish after blur, but only the original foreground
-      // shipped Next gesture may start it. Installed chapters keep fresh Start.
+      // Preparation may finish after blur, but only this uninterrupted foreground
+      // action may start it. Installed pictures pass the same confirmation boundary.
       if (
         !prepared ||
-        !prepared.isStatic ||
         !prepared.ownsAction() ||
         !ownsStartIntent() ||
         match !== prepared.match ||
@@ -800,7 +846,16 @@ try {
     if (match.status === 'ready' && !nextConfirmed) {
       const restoreFocus = actionFocus($('race-start'));
       contentBusy = true;
-      const controller = contentController;
+      const controller = contentController,
+        ownsReadyStart = () =>
+          ownsStartIntent() &&
+          restoreFocus.current(true) &&
+          controller === contentController &&
+          !controller.signal.aborted &&
+          match === selectedRun &&
+          ticket === generation &&
+          match.status === 'ready' &&
+          shell.scope() === 'main';
       const display = preparationStatus.begin({
         message: 'Confirming the prepared picture before starting…',
         stage: 'verifying',
@@ -829,15 +884,13 @@ try {
           );
           await confirmation;
         }
-        if (
-          !ownsStartIntent() ||
-          controller !== contentController ||
-          controller.signal.aborted ||
-          match !== selectedRun ||
-          ticket !== generation ||
-          shell.scope() !== 'main'
-        )
-          return;
+        if (!ownsReadyStart()) return;
+        // Keep ownership live through completion UI and input cleanup. Either
+        // can produce a newer choice before the final launch boundary below.
+        nextFocus = {
+          ownsAction: ownsReadyStart,
+          releaseFocus: restoreFocus.close,
+        };
       } catch (error) {
         if (
           !disposed &&
@@ -874,6 +927,7 @@ try {
             ticket === generation &&
             controller === contentController &&
             !controller.signal.aborted,
+          { retain: !!nextFocus },
         );
       }
     }
@@ -990,7 +1044,7 @@ try {
       if (!disposed)
         $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
     });
-  for (const id of ['race-level', 'race-class', 'race-turn', 'race-time'])
+  for (const id of ['race-level', 'race-class', 'race-turn', 'race-time', 'race-format'])
     $(id).onchange = () => {
       if (match?.status !== 'ready' || disposed) return;
       won = [0, 0];
@@ -1155,9 +1209,10 @@ try {
     shell?.update({
       match,
       won,
+      format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+      summary: `${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${roundRecipe.turnPolicy === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${roundRecipe.seconds} seconds`,
     });
     // Reconcile deliberate layout transitions immediately, including browsers
     // without ResizeObserver. Ordinary frames only compare cheap state values.
@@ -1192,6 +1247,7 @@ try {
     'race-class',
     'race-turn',
     'race-time',
+    'race-format',
     'race-setup-back',
     'race-touch-0',
     'race-touch-1',
@@ -1422,11 +1478,10 @@ try {
       if (match.winner !== null) won[match.winner]++;
       const name =
         match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
+      const series = roundRecipe.format === 'first-to-two';
       $('race-message').textContent =
-        `${match.winner === null ? 'Draw' : `${name} wins the round`}. ${match.reason}.${won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
-      $('race-start').textContent = won.some((n) => n >= 2)
-        ? 'Play another match ↗'
-        : 'Next round ↗';
+        `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
+      $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
           p.startCelebration?.({
@@ -1456,12 +1511,12 @@ try {
             : match.status === 'ready'
               ? 'READY · '
               : match.status === 'finished'
-                ? 'ROUND ENDED · '
+                ? `${roundRecipe.format === 'single' ? 'RACE' : 'ROUND'} ENDED · `
                 : '';
         const heading = `${context}${cue.title}`;
         const copy =
           match.status === 'finished' && !['won', 'lost'].includes(run.status)
-            ? `Frozen at round end. Live line ${cue.cutCells} / ${cue.min} new cells.`
+            ? `Frozen at ${roundRecipe.format === 'single' ? 'race' : 'round'} end. Live line ${cue.cutCells} / ${cue.min} new cells.`
             : cue.instruction;
         // The run owns this clock. Keep paused/finished cues and avoid rewriting unchanged text.
         if (title.textContent !== heading) title.textContent = heading;

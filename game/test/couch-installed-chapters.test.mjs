@@ -196,6 +196,169 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
 }
 const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 45000, message });
 
+async function readyInstalledPage(t, { coarse = false } = {}) {
+  const f = await fixture(t);
+  f.reader.dispose();
+  const page = await couchPage(t, {
+    initialLevel: null,
+    coarse,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+  });
+  const choice = page
+    .$('race-level')
+    .options.find((option) => option.value.startsWith('installed/'));
+  assert.ok(choice);
+  page.$('race-focus').click();
+  page.$('race-level').value = choice.value;
+  await action(page.$('race-level'), 'change');
+  page.$('race-setup-back').click();
+  page.frame(0);
+  assert.equal(page.state(), 'ready');
+  return { f, page };
+}
+
+function holdInitialConfirmation(t, f) {
+  const gate = deferred(),
+    request = f.locks.request.bind(f.locks);
+  let hold = true,
+    entered = false;
+  f.locks.request = async (...args) => {
+    if (hold) {
+      hold = false;
+      entered = true;
+      await gate.promise;
+    }
+    return request(...args);
+  };
+  t.after(() => gate.resolve());
+  return { gate, entered: () => entered };
+}
+
+for (const interruption of ['Tab to Help', 'pointer to Help', 'Help then BODY'])
+  test(`initial Start ownership preserves a newer ${interruption} choice`, async (t) => {
+    const { f, page } = await readyInstalledPage(t),
+      writes = f.writes(),
+      checkpoint = page.checkpoint(),
+      runs = [...page.renders],
+      picture = page.drawOptions[0].backdrop,
+      held = holdInitialConfirmation(t, f);
+    page.$('race-start').focus();
+    const starting = action(page.$('race-start'));
+    await settle(held.entered, 'Initial installed confirmation must enter its real lock.');
+    assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+    const help = page.$('race-help');
+    if (interruption === 'Tab to Help') {
+      // Exercise the host's actual Tab routing, without selecting its target for it.
+      for (let count = 0; page.doc.activeElement !== help && count < 24; count++) {
+        const before = page.doc.activeElement;
+        const event = before.emit('keydown', { key: 'Tab', code: 'Tab' });
+        assert.equal(event.defaultPrevented, true, 'The host owns this menu Tab.');
+        assert.equal(page.doc.activeElement !== before, true, 'Tab must advance menu focus.');
+      }
+      assert.equal(page.doc.activeElement === help, true, 'Help must be reachable using Tab only.');
+    } else {
+      help.emit('pointerdown', { pointerType: 'touch', button: 0, isPrimary: true });
+      help.focus();
+      if (interruption === 'Help then BODY') page.doc.body.focus();
+    }
+    const owner = page.doc.activeElement;
+    held.gate.resolve();
+    await starting;
+    page.frame(0);
+    assert.equal(
+      page.state(),
+      'ready',
+      'An older confirmation cannot authorize launch after newer focus.',
+    );
+    assert.equal(page.$('race-start').disabled, false);
+    assert.equal(page.doc.activeElement === owner, true, 'Confirmation must preserve newer focus.');
+    assert.equal(
+      page.renders.every((run, index) => run === runs[index]),
+      true,
+    );
+    assert.deepEqual(page.checkpoint(), checkpoint);
+    assert.equal(page.drawOptions[0].backdrop === picture, true);
+    assert.equal(page.drawOptions[1].backdrop === picture, true);
+    assert.deepEqual(f.writes(), writes);
+    // Deliberate activation is admitted even when a touch browser leaves old focus.
+    await action(page.$('race-start'));
+    page.frame(0);
+    assert.equal(page.state(), 'running');
+    assert.equal(page.drawOptions[0].backdrop === picture, true);
+    assert.deepEqual(f.writes(), writes);
+  });
+
+test('initial Start ownership survives admitted direct touch without prior button focus', async (t) => {
+  const { f, page } = await readyInstalledPage(t, { coarse: true }),
+    writes = f.writes(),
+    held = holdInitialConfirmation(t, f);
+  page.doc.body.focus();
+  page.$('race-start').emit('pointerdown', { pointerType: 'touch', button: 0, isPrimary: true });
+  const starting = action(page.$('race-start'));
+  await settle(held.entered, 'Touch Start must reach required authentication.');
+  assert.equal(page.state(), 'ready');
+  held.gate.resolve();
+  await starting;
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  assert.deepEqual(f.writes(), writes);
+});
+
+test('initial Start ownership keeps a shipped synchronous touch start immediate', async (t) => {
+  const page = await couchPage(t, { coarse: true });
+  page.doc.body.focus();
+  page.$('race-start').emit('pointerdown', { pointerType: 'touch', button: 0, isPrimary: true });
+  const starting = action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(
+    page.state(),
+    'running',
+    'The synchronous shipped path needs no additional action or turn.',
+  );
+  await starting;
+});
+
+test('initial Start ownership checks newer focus produced during completion cleanup', async (t) => {
+  const { f, page } = await readyInstalledPage(t),
+    held = holdInitialConfirmation(t, f),
+    writes = f.writes(),
+    checkpoint = page.checkpoint(),
+    start = page.$('race-start'),
+    help = page.$('race-help');
+  start.focus();
+  const starting = action(start);
+  await settle(held.entered, 'Initial confirmation must be pending.');
+  let disabled = start.disabled,
+    moved = false;
+  Object.defineProperty(start, 'disabled', {
+    configurable: true,
+    get: () => disabled,
+    set(value) {
+      disabled = value;
+      if (!value && !moved) {
+        moved = true;
+        help.focus();
+      }
+    },
+  });
+  held.gate.resolve();
+  await starting;
+  page.frame(0);
+  assert.equal(moved, true, 'The completion UI callback actually changed focus.');
+  assert.equal(
+    page.state(),
+    'ready',
+    'Final launch must recheck ownership after completion callbacks.',
+  );
+  assert.equal(page.doc.activeElement === help, true);
+  assert.deepEqual(page.checkpoint(), checkpoint);
+  assert.deepEqual(f.writes(), writes);
+});
+
 test('interrupted async Start confirmation stays ready after blur and return until a fresh Start', async (t) => {
   const f = await fixture(t),
     before = f.writes();
@@ -914,7 +1077,7 @@ for (const [name, build] of [
 // These cases finish the actual installed race through its input and clock.
 // The boundary models delay decoding/lock delivery; they do not edit a run,
 // fabricate a result or certify browser pixels.
-async function completedInstalledRound(t) {
+async function completedInstalledRound(t, format) {
   const f = await fixture(t),
     before = f.writes();
   f.reader.dispose();
@@ -931,6 +1094,11 @@ async function completedInstalledRound(t) {
     .options.find((option) => option.value.startsWith('installed/'));
   assert.ok(choice);
   page.$('race-focus').click();
+  assert.equal(page.$('race-format').value, 'single');
+  if (format !== 'single') {
+    page.$('race-format').value = format;
+    await action(page.$('race-format'), 'change');
+  }
   page.$('race-level').value = choice.value;
   await action(page.$('race-level'), 'change');
   await settle(
@@ -955,6 +1123,13 @@ async function completedInstalledRound(t) {
     selection: page.$('race-level').value,
   };
   assert.notEqual(completed.wins, '0 : 0', 'The input route must yield a nonzero series result.');
+  assert.equal(page.$('race-format').value, format);
+  assert.equal(
+    page
+      .$('race-start')
+      .textContent.startsWith(`${format === 'single' ? 'Rematch' : 'Next round'}:`),
+    true,
+  );
   assert.equal(sha(completed.picture.image.bytes), completed.picture.pin.sha256);
   assert.equal(completed.picture === page.drawOptions[1].backdrop, true);
   assert.deepEqual(f.writes(), before);
@@ -982,167 +1157,184 @@ function assertCompletedInstalled(page, completed) {
   assert.equal(page.$('race-review').hidden, false);
 }
 
-test('installed failed Next decode keeps completed Results, wins and the original available to View', async (t) => {
-  const diagnostics = [];
-  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
-  const { f, page, before, completed } = await completedInstalledRound(t),
-    priorImages = f.model.seen.length;
-  f.model.onDecode = async () => {
-    throw new Error('Held installed Next decode refused.');
-  };
-  page.$('race-start').focus();
-  await action(page.$('race-start'));
-  assertCompletedInstalled(page, completed);
-  assert.equal(page.$('race-start').disabled, false);
-  assert.equal(
-    page.$('race-message').textContent,
-    'The next picture could not be prepared. Results are kept. Choose Next to retry.',
-  );
-  assert.equal(diagnostics.length, 1);
-  assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
-  assert.match(diagnostics[0][1].message, /decode refused/);
-  const rejected = f.model.seen.slice(priorImages);
-  assert.ok(rejected.length > 0, 'The refusal occurred after actual image allocation.');
-  assert.ok(rejected.every((image) => image.released === 1));
-  assert.equal(f.model.urls.has(completed.picture.image.source), true);
-  page.$('race-review').click();
-  page.frame(0);
-  assert.equal(page.$('race-boards').hidden, false);
-  assertCompletedInstalled(page, completed);
-  page.$('race-pause').click();
-  assertCompletedInstalled(page, completed);
-  assert.equal(page.doc.activeElement === page.$('race-review'), true);
-  assert.deepEqual(f.writes(), before);
-});
+for (const format of ['single', 'first-to-two']) {
+  const continuation = format === 'single' ? 'Rematch' : 'Next round';
+  test(`installed ${continuation} decode failure keeps completed Results, wins and the original available to View`, async (t) => {
+    const diagnostics = [];
+    t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+    const { f, page, before, completed } = await completedInstalledRound(t, format),
+      priorImages = f.model.seen.length;
+    f.model.onDecode = async () => {
+      throw new Error('Held installed Next decode refused.');
+    };
+    page.$('race-start').focus();
+    await action(page.$('race-start'));
+    assertCompletedInstalled(page, completed);
+    assert.equal(page.$('race-start').disabled, false);
+    assert.equal(
+      page.$('race-message').textContent,
+      `The ${continuation.toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuation} to retry.`,
+    );
+    assert.equal(diagnostics.length, 1);
+    assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
+    assert.match(diagnostics[0][1].message, /decode refused/);
+    const rejected = f.model.seen.slice(priorImages);
+    assert.ok(rejected.length > 0, 'The refusal occurred after actual image allocation.');
+    assert.ok(rejected.every((image) => image.released === 1));
+    assert.equal(f.model.urls.has(completed.picture.image.source), true);
+    page.$('race-review').click();
+    page.frame(0);
+    assert.equal(page.$('race-boards').hidden, false);
+    assertCompletedInstalled(page, completed);
+    page.$('race-pause').click();
+    assertCompletedInstalled(page, completed);
+    assert.equal(page.doc.activeElement === page.$('race-review'), true);
+    assert.deepEqual(f.writes(), before);
+  });
 
-test('installed Next final confirmation refusal retains the prior lease until an explicit successful retry adopts Ready', async (t) => {
-  const diagnostics = [];
-  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
-  const { f, page, completed } = await completedInstalledRound(t),
-    raw = await f.pointer.snapshot(),
-    gate = deferred(),
-    request = f.locks.request.bind(f.locks),
-    priorImages = f.model.seen.length;
-  let armed = true;
-  f.locks.request = async (...args) => {
-    if (
-      armed &&
-      page
-        .$('race-preparation')
-        .textContent.includes('Confirming the next chapter before adopting it')
-    ) {
-      armed = false;
-      await gate.promise;
-    }
-    return request(...args);
-  };
-  page.$('race-start').focus();
-  const pending = action(page.$('race-start'));
-  await settle(() => !armed, 'The final installed confirmation never requested its lock.');
-  assertCompletedInstalled(page, completed);
-  assert.equal(page.$('race-start').disabled, true);
-  assert.equal(page.$('race-picture-cancel').hidden, false);
-  assert.ok(f.model.seen.slice(priorImages).some((image) => image.decoded && !image.released));
-  await f.put(f.pointer.keys.packsKey, `${raw.packs}\n`);
-  const afterExternalChange = f.writes();
-  gate.resolve();
-  await pending;
-  assertCompletedInstalled(page, completed);
-  assert.equal(page.$('race-start').disabled, false);
-  assert.equal(
-    page.$('race-message').textContent,
-    'The next picture could not be prepared. Results are kept. Choose Next to retry.',
-  );
-  assert.equal(diagnostics.length, 1);
-  assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
-  assert.match(diagnostics[0][1].message, /snapshot changed/);
-  assert.ok(f.model.seen.slice(priorImages).every((image) => image.released === 1));
-  assert.deepEqual(
-    f.writes(),
-    afterExternalChange,
-    'The failed read performs no compensating save.',
-  );
-  await f.put(f.pointer.keys.packsKey, raw.packs);
-  const beforeRetry = f.writes();
-  page.$('race-start').focus();
-  await action(page.$('race-start'));
-  page.frame(0);
-  assert.equal(page.state(), 'ready', 'Installed Next requires another explicit Start.');
-  assert.equal(
-    page.renders.every((run, i) => run !== completed.runs[i]),
-    true,
-  );
-  assert.equal(page.$('series-score').textContent, completed.wins);
-  assert.equal(completed.picture.image.released, 1);
-  const nextPicture = page.drawOptions[0].backdrop;
-  assert.equal(nextPicture === completed.picture, false);
-  assert.equal(nextPicture === page.drawOptions[1].backdrop, true);
-  assert.deepEqual(nextPicture.pin.identity, completed.picture.pin.identity);
-  assert.equal(sha(nextPicture.image.bytes), completed.picture.pin.sha256);
-  const ready = page.checkpoint();
-  page.frames(20);
-  assert.deepEqual(page.checkpoint(), ready);
-  await action(page.$('race-start'));
-  page.frame(0);
-  assert.equal(page.state(), 'running');
-  assert.equal(page.drawOptions[0].backdrop === nextPicture, true);
-  assert.deepEqual(f.writes(), beforeRetry);
-});
+  test(`installed ${continuation} confirmation refusal retains the prior lease until one successful retry starts play`, async (t) => {
+    const diagnostics = [];
+    t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+    const { f, page, completed } = await completedInstalledRound(t, format),
+      raw = await f.pointer.snapshot(),
+      gate = deferred(),
+      request = f.locks.request.bind(f.locks),
+      priorImages = f.model.seen.length;
+    let armed = true;
+    f.locks.request = async (...args) => {
+      if (
+        armed &&
+        page
+          .$('race-preparation')
+          .textContent.includes('Confirming the next chapter before adopting it')
+      ) {
+        armed = false;
+        await gate.promise;
+      }
+      return request(...args);
+    };
+    page.$('race-start').focus();
+    const pending = action(page.$('race-start'));
+    await settle(() => !armed, 'The final installed confirmation never requested its lock.');
+    assertCompletedInstalled(page, completed);
+    assert.equal(page.$('race-start').disabled, true);
+    assert.equal(page.$('race-picture-cancel').hidden, false);
+    assert.ok(f.model.seen.slice(priorImages).some((image) => image.decoded && !image.released));
+    await f.put(f.pointer.keys.packsKey, `${raw.packs}\n`);
+    const afterExternalChange = f.writes();
+    gate.resolve();
+    await pending;
+    assertCompletedInstalled(page, completed);
+    assert.equal(page.$('race-start').disabled, false);
+    assert.equal(
+      page.$('race-message').textContent,
+      `The ${continuation.toLowerCase()} picture could not be prepared. Results are kept. Choose ${continuation} to retry.`,
+    );
+    assert.equal(diagnostics.length, 1);
+    assert.equal(diagnostics[0][0], 'Next picture preparation failed.');
+    assert.match(diagnostics[0][1].message, /snapshot changed/);
+    assert.ok(f.model.seen.slice(priorImages).every((image) => image.released === 1));
+    assert.deepEqual(
+      f.writes(),
+      afterExternalChange,
+      'The failed read performs no compensating save.',
+    );
+    await f.put(f.pointer.keys.packsKey, raw.packs);
+    const beforeRetry = f.writes();
+    page.$('race-start').focus();
+    await action(page.$('race-start'));
+    page.frame(0);
+    assert.equal(
+      page.state(),
+      'running',
+      'The uninterrupted continuation starts after confirmation without another Start.',
+    );
+    assert.equal(
+      page.renders.every((run, i) => run !== completed.runs[i]),
+      true,
+    );
+    assert.equal(
+      page.$('series-score').textContent,
+      format === 'single' ? '0 : 0' : completed.wins,
+    );
+    assert.equal(completed.picture.image.released, 1);
+    const nextPicture = page.drawOptions[0].backdrop;
+    assert.equal(nextPicture === completed.picture, false);
+    assert.equal(nextPicture === page.drawOptions[1].backdrop, true);
+    assert.deepEqual(nextPicture.pin.identity, completed.picture.pin.identity);
+    assert.equal(sha(nextPicture.image.bytes), completed.picture.pin.sha256);
+    page.$('race-pause').click();
+    page.frame(0);
+    assert.equal(page.state(), 'paused');
+    const paused = page.checkpoint();
+    page.frames(20);
+    assert.deepEqual(page.checkpoint(), paused);
+    assert.equal(page.drawOptions[0].backdrop === nextPicture, true);
+    await action(page.$('race-start'));
+    page.frame(0);
+    assert.equal(page.state(), 'running');
+    assert.equal(page.drawOptions[0].backdrop === nextPicture, true);
+    assert.deepEqual(f.writes(), beforeRetry);
+  });
 
-test('installed cancelled Next cannot overwrite a newer retry or revive Start after blur and return', async (t) => {
-  const { f, page, before, completed } = await completedInstalledRound(t),
-    oldGate = deferred(),
-    newGate = deferred();
-  let oldImage, newImage;
-  f.model.onDecode = async (image) => {
-    oldImage = image;
-    await oldGate.promise;
-  };
-  page.$('race-start').focus();
-  const first = action(page.$('race-start'));
-  await settle(() => oldImage, 'The cancelled candidate decoder never started.');
-  assertCompletedInstalled(page, completed);
-  page.$('race-picture-cancel').focus();
-  page.$('race-picture-cancel').click();
-  await first;
-  assertCompletedInstalled(page, completed);
-  assert.equal(page.doc.activeElement === page.$('race-start'), true);
-  assert.equal(page.$('race-start').disabled, false);
-  assert.match(page.$('race-message').textContent, /cancelled.*Results are kept/s);
-  f.model.onDecode = async (image) => {
-    newImage = image;
-    await newGate.promise;
-  };
-  const retry = action(page.$('race-start'));
-  await settle(() => newImage, 'The replacement candidate decoder never started.');
-  assertCompletedInstalled(page, completed);
-  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
-  oldGate.resolve();
-  await settle(() => oldImage.decoded, 'The cancelled decoder did not settle.');
-  assert.equal(oldImage.released, 1);
-  assert.equal(page.$('race-start').disabled, true);
-  assert.equal(page.$('race-picture-cancel').hidden, false);
-  assertCompletedInstalled(page, completed);
-  page.doc.focused = false;
-  page.win.emit('blur');
-  page.doc.body.focus();
-  page.doc.focused = true;
-  newGate.resolve();
-  await retry;
-  page.frame(0);
-  assert.equal(page.state(), 'ready');
-  assert.equal(page.doc.activeElement === page.doc.body, true);
-  assert.equal(completed.picture.image.released, 1);
-  assert.equal(page.$('series-score').textContent, completed.wins);
-  assert.equal(page.drawOptions[0].backdrop === page.drawOptions[1].backdrop, true);
-  const ready = page.checkpoint();
-  page.frames(20);
-  assert.deepEqual(page.checkpoint(), ready);
-  await action(page.$('race-start'));
-  page.frame(0);
-  assert.equal(page.state(), 'running');
-  assert.deepEqual(f.writes(), before);
-});
+  test(`installed cancelled ${continuation} cannot overwrite a newer retry or revive Start after blur and return`, async (t) => {
+    const { f, page, before, completed } = await completedInstalledRound(t, format),
+      oldGate = deferred(),
+      newGate = deferred();
+    let oldImage, newImage;
+    f.model.onDecode = async (image) => {
+      oldImage = image;
+      await oldGate.promise;
+    };
+    page.$('race-start').focus();
+    const first = action(page.$('race-start'));
+    await settle(() => oldImage, 'The cancelled candidate decoder never started.');
+    assertCompletedInstalled(page, completed);
+    page.$('race-picture-cancel').focus();
+    page.$('race-picture-cancel').click();
+    await first;
+    assertCompletedInstalled(page, completed);
+    assert.equal(page.doc.activeElement === page.$('race-start'), true);
+    assert.equal(page.$('race-start').disabled, false);
+    assert.match(page.$('race-message').textContent, /cancelled.*Results are kept/s);
+    f.model.onDecode = async (image) => {
+      newImage = image;
+      await newGate.promise;
+    };
+    const retry = action(page.$('race-start'));
+    await settle(() => newImage, 'The replacement candidate decoder never started.');
+    assertCompletedInstalled(page, completed);
+    assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+    oldGate.resolve();
+    await settle(() => oldImage.decoded, 'The cancelled decoder did not settle.');
+    assert.equal(oldImage.released, 1);
+    assert.equal(page.$('race-start').disabled, true);
+    assert.equal(page.$('race-picture-cancel').hidden, false);
+    assertCompletedInstalled(page, completed);
+    page.doc.focused = false;
+    page.win.emit('blur');
+    page.doc.body.focus();
+    page.doc.focused = true;
+    newGate.resolve();
+    await retry;
+    page.frame(0);
+    assert.equal(page.state(), 'ready');
+    assert.equal(page.doc.activeElement === page.doc.body, true);
+    assert.equal(completed.picture.image.released, 1);
+    assert.equal(
+      page.$('series-score').textContent,
+      format === 'single' ? '0 : 0' : completed.wins,
+    );
+    assert.equal(page.drawOptions[0].backdrop === page.drawOptions[1].backdrop, true);
+    const ready = page.checkpoint();
+    page.frames(20);
+    assert.deepEqual(page.checkpoint(), ready);
+    await action(page.$('race-start'));
+    page.frame(0);
+    assert.equal(page.state(), 'running');
+    assert.deepEqual(f.writes(), before);
+  });
+}
 
 for (const outcome of ['cancel', 'replacement'])
   test(`installed candidate ready callback ${outcome} retains accepted ownership until a confirmed commit`, async (t) => {

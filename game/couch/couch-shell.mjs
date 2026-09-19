@@ -376,7 +376,14 @@ export function createCouchShell({
     const seat = arena?.closest('.racer');
     if (seat) observe(Number(seat.dataset.player), 'touch');
   });
-  function update({ match, summary, won, contentBusy = false, focusTransition = true }) {
+  function update({
+    match,
+    summary,
+    won,
+    format = 'single',
+    contentBusy = false,
+    focusTransition = true,
+  }) {
     if (destroyed) return;
     const previous = status;
     status = match.status;
@@ -387,7 +394,16 @@ export function createCouchShell({
       opener = null;
       renderScreens();
     }
+    const series = format === 'first-to-two';
     setText('race-summary', summary);
+    setText(
+      'race-format-note',
+      `${series ? 'First to two round wins.' : 'One race. Choose First to two in Race setup for a longer match.'} Couch races do not change your solo progress.`,
+    );
+    setText(
+      'race-format-help',
+      `First clear wins the ${series ? 'round' : 'race'}. At the time limit: coverage, then lives, then score decide. ${series ? 'First to two round wins takes the match. Draws award no round win.' : 'One race ends after this result. Rematch plays the same mission again.'}`,
+    );
     setText(
       'race-title',
       contentBusy
@@ -395,9 +411,11 @@ export function createCouchShell({
         : status === 'paused'
           ? 'Both boards paused.'
           : status === 'finished'
-            ? won.some((n) => n >= 2)
-              ? 'Match complete.'
-              : 'Round complete.'
+            ? !series
+              ? 'Race complete.'
+              : won.some((n) => n >= 2)
+                ? 'Match complete.'
+                : 'Round complete.'
             : 'Two boards. One race.',
     );
     $('race-review').hidden = status !== 'finished';
@@ -406,7 +424,7 @@ export function createCouchShell({
     $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
-    for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time'])
+    for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time', 'race-format'])
       $(id).disabled = status !== 'ready';
     $('race-tap-field').hidden = !equipment.some((e) => e.boost);
     $('race-tap').disabled = !equipment.some((e) => e.boost);
@@ -428,7 +446,7 @@ export function createCouchShell({
       $(`race-result-${i}`).hidden = status !== 'finished';
       setText(
         `race-result-${i}`,
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points · ${won[i]} round wins`,
+        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points${series ? ` · ${won[i]} round wins` : ''}`,
       );
     }
     renderPads();

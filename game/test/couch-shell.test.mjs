@@ -390,13 +390,13 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   assert.equal(f.state(), 'finished');
   const before = f.checkpoint();
   const score = f.$('series-score').textContent;
-  assert.match(f.$('race-title').textContent, /Round complete/);
+  assert.match(f.$('race-title').textContent, /Race complete/);
   assert.equal(f.$('race-result-0').hidden, false);
   assert.equal(f.$('race-result-1').hidden, false);
   assert.deepEqual(firstResultsReveal, [
     {
       options: { block: 'nearest', inline: 'nearest', behavior: 'auto' },
-      title: 'Round complete.',
+      title: 'Race complete.',
       rows: [0, 1].map((i) => ({ hidden: false, text: f.$(`race-result-${i}`).textContent })),
     },
   ]);
