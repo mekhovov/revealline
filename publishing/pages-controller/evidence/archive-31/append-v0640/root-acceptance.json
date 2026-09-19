@@ -1,0 +1,52 @@
+{
+  "status": "ACCEPTED_ARCHIVE_APPEND_WITH_SCOPED_NATIVE_CHECK",
+  "at": "2026-09-19T12:50:18.993545+00:00",
+  "archiveCommit": "2ff1b312872857cf04b485f9c987a26c0432f356",
+  "archiveTree": "8c3ca7ed1accb04afcb8a92063bb412e05ecc833",
+  "pagesRunId": 35441173594,
+  "deploymentId": 6540533321,
+  "deploymentStatusId": 18561156073,
+  "files": 1420,
+  "verifiedBytes": 627122610,
+  "failedAttempts": 0,
+  "retries": 0,
+  "preservedPriorReleaseRows": 708,
+  "preservedRootSupportRows": 2,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "newRows": 709,
+  "evidence": [
+    {
+      "path": ".cache/archive31-v0640-hosted-intake-preparation-r2/independent-review.json",
+      "bytes": 1266,
+      "sha256": "b526b6e21c539557f030f5d38fb2d5f3e612697129ea0a9d397562ead286be70"
+    },
+    {
+      "path": ".cache/archive31-v0640-root-r1/native-observation-r1.json",
+      "bytes": 1523,
+      "sha256": "2c0e8188e50f99de5f1e4064668628461f8bfd1aaf9f3f3137a6195ad894f7a0"
+    },
+    {
+      "path": ".cache/archive31-v0640-root-r1/final-authorities-r1/main.json",
+      "bytes": 358,
+      "sha256": "adfc7cc0b4245ce823ba3a917e19dfcacac22c05945fd412c9b897408acb689a"
+    },
+    {
+      "path": ".cache/archive31-v0640-root-r1/final-authorities-r1/run.json",
+      "bytes": 13165,
+      "sha256": "6de01b2f822e78365a13443015be9d8fbb24d62f216bb2e26cb32408680bdcbe"
+    },
+    {
+      "path": ".cache/archive31-v0640-root-r1/final-authorities-r1/deployment.json",
+      "bytes": 3856,
+      "sha256": "8745fc64e0b69df3415f64a8b08ed12f7045e9699d3403d2ffeada6fc763e664"
+    },
+    {
+      "path": ".cache/archive31-v0640-root-r1/final-authorities-r1/statuses.json",
+      "bytes": 6817,
+      "sha256": "7f2d29e271c3e4a8950abd7cfbb77362b32964b060c87a8bb2ec9fb410f3cf21"
+    }
+  ],
+  "scope": "Append v0.64.0 while retaining v0.63.0 originals. Native keyboard entry, result/retry, pause/help/resume and historical entry only. This does not close Team win/Next, physical devices, audio/offline, persistence or entire P03/P05/P08 phases."
+}
