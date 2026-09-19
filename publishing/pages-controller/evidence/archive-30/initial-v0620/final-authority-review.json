@@ -1,0 +1,35 @@
+{
+  "status": "PASS_PINNED_FINAL_ARCHIVE_IDENTITIES",
+  "observer": "Worker offline review of root-provided original API bodies; no new network request",
+  "archiveCommit": "cf9113746d96cf50d7cb8491d58dece53bd9cc60",
+  "runId": 35421309244,
+  "deploymentId": 6537067684,
+  "deploymentStatusId": 18553235524,
+  "originals": [
+    {
+      "sourcePath": ".cache/archive30-v0620-root-r1/final-authorities-r1/deployment.json",
+      "archivePath": "final-authorities/deployment.json",
+      "bytes": 3856,
+      "sha256": "be9b98d6901c58c93413a67a26dc3a4bc13af70edc1dd3e10cb0cb041fec46ba"
+    },
+    {
+      "sourcePath": ".cache/archive30-v0620-root-r1/final-authorities-r1/main.json",
+      "archivePath": "final-authorities/main.json",
+      "bytes": 358,
+      "sha256": "b59e67c8be96cf45b55366f64e30adb6a5d8833ad3dcb67a73ce22965dc3a3c6"
+    },
+    {
+      "sourcePath": ".cache/archive30-v0620-root-r1/final-authorities-r1/run.json",
+      "archivePath": "final-authorities/run.json",
+      "bytes": 13220,
+      "sha256": "b3d8fe0465d9137bb9ef910a8654c429e7985932dec9705a072671efb1118a94"
+    },
+    {
+      "sourcePath": ".cache/archive30-v0620-root-r1/final-authorities-r1/statuses.json",
+      "archivePath": "final-authorities/statuses.json",
+      "bytes": 6817,
+      "sha256": "a004929fc62810a05c4b2c209b4295fa0605092986811579946703b426714852"
+    }
+  ],
+  "parentPhaseAccepted": false
+}
