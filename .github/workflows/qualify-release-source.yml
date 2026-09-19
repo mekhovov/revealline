@@ -1,15 +1,15 @@
-name: Audit exact public Archive32 bytes
+name: Audit exact public Archive33 bytes
 on:
   workflow_dispatch:
     inputs:
       archive_binding:
-        description: Root-reviewed exact archive32-only binding JSON
+        description: Root-reviewed exact archive33-only binding JSON
         required: true
         type: string
 permissions:
   contents: read
 concurrency:
-  group: readonly-archive32-public-audit
+  group: readonly-archive33-public-audit
   cancel-in-progress: false
 jobs:
   audit:
@@ -23,14 +23,14 @@ jobs:
           path: automation
           persist-credentials: false
           sparse-checkout: |
-            publishing/utility/archive32-public-audit
+            publishing/utility/archive33-public-audit
             .github/workflows/qualify-release-source.yml
           sparse-checkout-cone-mode: false
       - name: Check out the immutable archive source
         uses: actions/checkout@v4
         with:
-          repository: mekhovov/revealline-archive-32
-          ref: 50909e7cf38916fe7d3e2e7eb79339bb49ae80b9
+          repository: mekhovov/revealline-archive-33
+          ref: b184d8d8872ec305d8606ac99bd3d6235e291db8
           path: archive-source
           persist-credentials: false
           fetch-depth: 1
@@ -39,12 +39,12 @@ jobs:
           REVEALLINE_ARCHIVE_SOURCE: ${{ github.workspace }}/archive-source
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONOPTIMIZE: '0'
-        run: python3 -B -m unittest discover -s automation/publishing/utility/archive32-public-audit/payload/http/http-tools -p test_http_audit.py -v
+        run: python3 -B -m unittest discover -s automation/publishing/utility/archive33-public-audit/payload/http/http-tools -p test_http_audit.py -v
       - name: Test the exact dispatch and authority boundaries without network
         env:
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONOPTIMIZE: '0'
-        run: python3 -B -m unittest discover -s automation/publishing/utility/archive32-public-audit -p test_hosted_run.py -v
+        run: python3 -B -m unittest discover -s automation/publishing/utility/archive33-public-audit -p test_hosted_run.py -v
       - name: Read and verify every exact public body
         env:
           ARCHIVE_BINDING: ${{ inputs.archive_binding }}
@@ -52,15 +52,15 @@ jobs:
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONOPTIMIZE: '0'
         run: >-
-          python3 -B automation/publishing/utility/archive32-public-audit/hosted_run.py
+          python3 -B automation/publishing/utility/archive33-public-audit/hosted_run.py
           --source "${{ github.workspace }}/archive-source"
-          --out "${{ runner.temp }}/archive32-public-audit"
+          --out "${{ runner.temp }}/archive33-public-audit"
       - name: Retain bounded original evidence including failure outcomes
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: archive32-public-byte-audit-evidence
-          path: ${{ runner.temp }}/archive32-public-audit/
+          name: archive33-public-byte-audit-evidence
+          path: ${{ runner.temp }}/archive33-public-audit/
           include-hidden-files: true
           compression-level: 6
           retention-days: 14
