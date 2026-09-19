@@ -1,0 +1,687 @@
+{
+  "scope": "Recorded ordinary keyboard gestures from validated unmodified imported map; finite host replay only",
+  "sourceEvidence": ".cache/p08a-team-import-route-9cfc9a4f-r1/keyboard-node20.json",
+  "sourceEvidenceSHA256": "de0ab3c34a481dd3b21259afe8f3ee38a22e5c5b7d9c9dc0238911aa6ed88cab",
+  "authoredPack": {
+    "version": "revealline-coop-pack.v1",
+    "ruleset": "revealline-coop.v3",
+    "id": "boundary-multi-core",
+    "revision": 2,
+    "name": "Imported multi-core",
+    "levels": [
+      {
+        "version": "revealline-coop-level.v1",
+        "id": "boundary-multi-core-stronghold",
+        "revision": 2,
+        "name": "Imported two-core yard",
+        "width": 72,
+        "height": 36,
+        "spawns": [
+          {
+            "x": 0.5,
+            "y": 18.5
+          },
+          {
+            "x": 71.5,
+            "y": 18.5
+          }
+        ],
+        "walls": [
+          {
+            "x": 16,
+            "y": 14,
+            "w": 2,
+            "h": 8
+          },
+          {
+            "x": 54,
+            "y": 14,
+            "w": 2,
+            "h": 8
+          }
+        ],
+        "safeRects": [],
+        "enemies": [
+          {
+            "id": "yard-hunter-left",
+            "type": "hunter",
+            "x": 28.5,
+            "y": 15.5,
+            "vx": 0,
+            "vy": 0,
+            "radius": 0.35
+          },
+          {
+            "id": "yard-hunter-right",
+            "type": "hunter",
+            "x": 43.5,
+            "y": 15.5,
+            "vx": 0,
+            "vy": 0,
+            "radius": 0.35
+          },
+          {
+            "id": "yard-drifter-left",
+            "type": "drifter",
+            "x": 28.5,
+            "y": 7.5,
+            "vx": 2.4,
+            "vy": 0,
+            "radius": 0.35
+          },
+          {
+            "id": "yard-drifter-right",
+            "type": "drifter",
+            "x": 43.5,
+            "y": 7.5,
+            "vx": -2.4,
+            "vy": 0,
+            "radius": 0.35
+          }
+        ],
+        "strongholds": [
+          {
+            "id": "optional",
+            "core": {
+              "x": 10.5,
+              "y": 5.5
+            },
+            "anchors": [
+              {
+                "x": 6.5,
+                "y": 11.5
+              },
+              {
+                "x": 12.5,
+                "y": 11.5
+              }
+            ]
+          },
+          {
+            "id": "yard-relay",
+            "core": {
+              "x": 35.5,
+              "y": 6.5
+            },
+            "anchors": [
+              {
+                "x": 23.5,
+                "y": 11.5
+              },
+              {
+                "x": 48.5,
+                "y": 11.5
+              }
+            ]
+          },
+          {
+            "id": "second",
+            "core": {
+              "x": 36.5,
+              "y": 29.5
+            },
+            "anchors": [
+              {
+                "x": 23.5,
+                "y": 24.5
+              },
+              {
+                "x": 48.5,
+                "y": 24.5
+              }
+            ]
+          }
+        ],
+        "goal": {
+          "cores": ["yard-relay", "second"]
+        },
+        "rules": {
+          "moveSpeed": 8,
+          "boostMultiplier": 1.5
+        },
+        "encounter": {
+          "hunterWakeStep": 0.45,
+          "hunterRecovery": 1.2,
+          "hunterRange": 28,
+          "hunterAttackSpeed": 11,
+          "hunterCommitMax": 2.4,
+          "emitterCooldown": 3
+        }
+      },
+      {
+        "version": "revealline-coop-level.v1",
+        "id": "boundary-multi-core-coverage",
+        "revision": 2,
+        "name": "Imported coverage",
+        "width": 72,
+        "height": 36,
+        "spawns": [
+          {
+            "x": 0.5,
+            "y": 18.5
+          },
+          {
+            "x": 71.5,
+            "y": 18.5
+          }
+        ],
+        "walls": [],
+        "safeRects": [],
+        "enemies": [
+          {
+            "id": "orchard-hunter-left",
+            "type": "hunter",
+            "x": 20.5,
+            "y": 9.5,
+            "vx": 0,
+            "vy": 0,
+            "radius": 0.35
+          },
+          {
+            "id": "orchard-hunter-right",
+            "type": "hunter",
+            "x": 51.5,
+            "y": 9.5,
+            "vx": 0,
+            "vy": 0,
+            "radius": 0.35
+          },
+          {
+            "id": "orchard-drifter-left",
+            "type": "drifter",
+            "x": 20.5,
+            "y": 26.5,
+            "vx": 3.2,
+            "vy": 1.8,
+            "radius": 0.35
+          },
+          {
+            "id": "orchard-drifter-right",
+            "type": "drifter",
+            "x": 51.5,
+            "y": 26.5,
+            "vx": -3.2,
+            "vy": 1.8,
+            "radius": 0.35
+          }
+        ],
+        "strongholds": [],
+        "goal": {
+          "coverage": 0.724
+        },
+        "rules": {
+          "moveSpeed": 8,
+          "boostMultiplier": 1.5
+        },
+        "encounter": {
+          "hunterWakeStep": 0.45,
+          "hunterRecovery": 1.4,
+          "hunterRange": 28,
+          "hunterAttackSpeed": 10.5,
+          "hunterCommitMax": 2.4,
+          "emitterCooldown": 3
+        }
+      }
+    ]
+  },
+  "authoredPackSHA256": "0a11413aefa93e1bcc754f157c93d77df1942b26eb1310b117819519b95c963d",
+  "gestures": [
+    {
+      "row": 0,
+      "tick": 1,
+      "code": "ShiftLeft",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 0,
+      "tick": 1,
+      "code": "KeyW",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 0,
+      "tick": 1,
+      "code": "KeyW",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 0,
+      "tick": 1,
+      "code": "ShiftRight",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 0,
+      "tick": 1,
+      "code": "ArrowUp",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 0,
+      "tick": 1,
+      "code": "ArrowUp",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 60,
+      "tick": 61,
+      "code": "KeyD",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 60,
+      "tick": 61,
+      "code": "KeyD",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 60,
+      "tick": 61,
+      "code": "ArrowLeft",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 60,
+      "tick": 61,
+      "code": "ArrowLeft",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 413,
+      "tick": 415,
+      "code": "ShiftLeft",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 413,
+      "tick": 415,
+      "code": "ShiftRight",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 415,
+      "tick": 416,
+      "code": "ShiftLeft",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 415,
+      "tick": 416,
+      "code": "KeyA",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 415,
+      "tick": 416,
+      "code": "KeyA",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 415,
+      "tick": 416,
+      "code": "ShiftRight",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 415,
+      "tick": 416,
+      "code": "ArrowRight",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 415,
+      "tick": 416,
+      "code": "ArrowRight",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 538,
+      "tick": 539,
+      "code": "KeyW",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 538,
+      "tick": 539,
+      "code": "KeyW",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 538,
+      "tick": 539,
+      "code": "ArrowUp",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 538,
+      "tick": 539,
+      "code": "ArrowUp",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 652,
+      "tick": 654,
+      "code": "ShiftLeft",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 652,
+      "tick": 654,
+      "code": "ShiftRight",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 654,
+      "tick": 655,
+      "code": "ShiftLeft",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 654,
+      "tick": 655,
+      "code": "KeyS",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 654,
+      "tick": 655,
+      "code": "KeyS",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 654,
+      "tick": 655,
+      "code": "ShiftRight",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 654,
+      "tick": 655,
+      "code": "ArrowDown",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 654,
+      "tick": 655,
+      "code": "ArrowDown",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 709,
+      "tick": 710,
+      "code": "KeyD",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 709,
+      "tick": 710,
+      "code": "KeyD",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 709,
+      "tick": 710,
+      "code": "ArrowLeft",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 709,
+      "tick": 710,
+      "code": "ArrowLeft",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 831,
+      "tick": 833,
+      "code": "ShiftLeft",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 831,
+      "tick": 833,
+      "code": "ShiftRight",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 833,
+      "tick": 834,
+      "code": "ShiftLeft",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 833,
+      "tick": 834,
+      "code": "KeyA",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 833,
+      "tick": 834,
+      "code": "KeyA",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 833,
+      "tick": 834,
+      "code": "ShiftRight",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 833,
+      "tick": 834,
+      "code": "ArrowRight",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 833,
+      "tick": 834,
+      "code": "ArrowRight",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 956,
+      "tick": 957,
+      "code": "KeyS",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 956,
+      "tick": 957,
+      "code": "KeyS",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 956,
+      "tick": 957,
+      "code": "ArrowDown",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 956,
+      "tick": 957,
+      "code": "ArrowDown",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 1240,
+      "tick": 1242,
+      "code": "ShiftLeft",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 1240,
+      "tick": 1242,
+      "code": "ShiftRight",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 1242,
+      "tick": 1243,
+      "code": "ShiftLeft",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 1242,
+      "tick": 1243,
+      "code": "KeyW",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 1242,
+      "tick": 1243,
+      "code": "KeyW",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 1242,
+      "tick": 1243,
+      "code": "ShiftRight",
+      "down": true,
+      "reason": "hold Boost"
+    },
+    {
+      "row": 1242,
+      "tick": 1243,
+      "code": "ArrowUp",
+      "down": true,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 1242,
+      "tick": 1243,
+      "code": "ArrowUp",
+      "down": false,
+      "reason": "fresh steering after event clear"
+    },
+    {
+      "row": 1297,
+      "tick": 1298,
+      "code": "KeyD",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 1297,
+      "tick": 1298,
+      "code": "KeyD",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 1297,
+      "tick": 1298,
+      "code": "ArrowLeft",
+      "down": true,
+      "reason": "direction change"
+    },
+    {
+      "row": 1297,
+      "tick": 1298,
+      "code": "ArrowLeft",
+      "down": false,
+      "reason": "direction change"
+    },
+    {
+      "row": 1419,
+      "tick": 1421,
+      "code": "ShiftLeft",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    },
+    {
+      "row": 1419,
+      "tick": 1421,
+      "code": "ShiftRight",
+      "down": false,
+      "reason": "physical release after cut.closed"
+    }
+  ],
+  "metrics": {
+    "ticksReplayed": 1420,
+    "keyDowns": 30,
+    "keyUps": 30,
+    "directionTaps": [10, 10],
+    "bankClearedRetaps": [4, 4],
+    "changedDirectionTaps": [6, 6],
+    "physicalBoostReleasesAfterClear": [5, 5],
+    "neutralReleaseTicks": [5, 5],
+    "deferredNominalMoves": [0, 0],
+    "desiredNullWithLatchedDirection": [0, 0],
+    "desiredNullWithConsumedDirection": [0, 0],
+    "consumedDirectionMismatches": [0, 0],
+    "consumedBoostMismatches": [0, 0],
+    "supportCommands": 0
+  },
+  "requiredCoreTransitions": [
+    {
+      "count": 0,
+      "total": 2,
+      "tick": 0
+    },
+    {
+      "count": 1,
+      "total": 2,
+      "tick": 832,
+      "seconds": 6.941667,
+      "stronghold": "yard-relay"
+    },
+    {
+      "count": 2,
+      "total": 2,
+      "tick": 1420,
+      "seconds": 11.841667,
+      "stronghold": "second"
+    }
+  ]
+}

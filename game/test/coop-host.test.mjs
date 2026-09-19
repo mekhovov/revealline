@@ -75,6 +75,8 @@ test('a file selected before Start cannot replace setup after returning from an 
     text = JSON.stringify(customPack('late'));
   f.$('coop-difficulty').value = 'expert';
   const pending = f.selectFile(text, () => read.promise);
+  assert.equal(f.$('coop-start').disabled, true);
+  f.$('coop-pack-cancel').click();
   f.$('coop-start').click();
   f.$('coop-pause').click();
   f.$('coop-lobby').click();
@@ -93,7 +95,7 @@ test('a file selected before Start cannot replace setup after returning from an 
 test('invalid or oversized imports preserve the selected custom pack and challenge', async (t) => {
   const f = await page(t);
   await f.selectFile(JSON.stringify(customPack()));
-  f.choose('coop-level', 'custom-stronghold');
+  await f.choose('coop-level', 'custom-stronghold');
   f.$('coop-difficulty').value = 'expert';
   const options = f.$('coop-level').options.map((option) => [option.value, option.textContent]);
   for (const text of ['{', JSON.stringify({ ...customPack(), ruleset: 'unsupported' })]) {
@@ -180,7 +182,7 @@ test('custom fractional coverage and multiple required cores drive the actual br
   f.$('coop-lobby').click();
   assert.equal(f.$('coop-discard-dialog').open, true);
   f.$('coop-discard-confirm').click();
-  f.choose('coop-level', 'custom-stronghold');
+  await f.choose('coop-level', 'custom-stronghold');
   assert.match(f.$('coop-menu-goal').textContent, /2 strongholds/);
   assert.doesNotMatch(f.$('coop-level-note').textContent, /Bait a Hunter/);
   f.$('coop-start').click();
@@ -528,7 +530,7 @@ test('Team pack reads show immediate status, Stop waiting rejects late adoption,
   assert.equal(f.$('coop-pack-status').dataset.stage, 'reading');
   assert.match(f.$('coop-pack-status').textContent, /Reading the selected Team pack/);
   assert.equal(f.$('coop-pack-cancel').hidden, false);
-  assert.equal(f.$('coop-start').disabled, false, 'an import never blocks the existing arena');
+  assert.equal(f.$('coop-start').disabled, true, 'Cancel restores the existing arena before Start');
   f.$('coop-pack-cancel').click();
   assert.equal(f.$('coop-pack-status').dataset.state, 'detached');
   const cancelled = f.$('coop-pack-status').textContent;

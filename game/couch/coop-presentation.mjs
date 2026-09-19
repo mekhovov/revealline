@@ -7,6 +7,9 @@ import { freezePresentation, LIMITS, validateAssetRevision } from '../presentati
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
 const revision = (value) => Number.isSafeInteger(value) && value > 0;
 const identifier = (value) => typeof value === 'string' && value.length > 0 && value.length <= 100;
+// Historical level revisions are opaque strings or positive integer Numbers.
+// Asset/theme revisions remain their separate, stricter presentation contract.
+const levelRevision = (value) => identifier(value) || (Number.isInteger(value) && value > 0);
 const fields = (value, names, label) => {
   const keys = names.split(' ');
   exactKeys(value, keys, label);
@@ -15,6 +18,43 @@ const fields = (value, names, label) => {
     `${label} is incomplete.`,
   );
 };
+function pictureIdentity(picture) {
+  fields(picture, 'slot assetId assetRevision sha256 bytes mime width height', 'Team picture');
+  required(
+    stableId(picture.slot) &&
+      stableId(picture.assetId) &&
+      revision(picture.assetRevision) &&
+      digest(picture.sha256) &&
+      revision(picture.bytes) &&
+      picture.bytes <= LIMITS.assetBytes &&
+      ['image/png', 'image/jpeg'].includes(picture.mime) &&
+      picture.width === 1152 &&
+      picture.height === 576,
+    'Team picture requires a bounded complete 1152×576 PNG/JPEG identity.',
+  );
+}
+function historicalPolicy(source) {
+  if (source === null || source === undefined) return null;
+  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 16 });
+  fields(
+    policy,
+    'version themeId themeRevision collection picture',
+    'Team historical import policy',
+  );
+  required(
+    policy.version === 'revealline-team-historical-import-picture.v1' &&
+      stableId(policy.themeId) &&
+      revision(policy.themeRevision) &&
+      policy.collection === null,
+    'Invalid Team historical import picture policy.',
+  );
+  pictureIdentity(policy.picture);
+  required(
+    policy.picture.slot === 'scene.reveal.wide',
+    'Historical Team imports require an explicit wide-scene association.',
+  );
+  return freezePresentation(policy);
+}
 function bindingTable(source) {
   const rows = boundedJSON(source, { maxBytes: 256 * 1024, maxArray: 128 });
   required(Array.isArray(rows), 'Team picture bindings must be a finite list.');
@@ -30,7 +70,7 @@ function bindingTable(source) {
         revision(row.packRevision) &&
         digest(row.packSha256) &&
         identifier(row.levelId) &&
-        revision(row.levelRevision) &&
+        levelRevision(row.levelRevision) &&
         digest(row.levelSha256) &&
         stableId(row.themeId) &&
         revision(row.themeRevision),
@@ -43,26 +83,7 @@ function bindingTable(source) {
         'Invalid Team collection identity.',
       );
     }
-    if (row.picture !== null) {
-      fields(
-        row.picture,
-        'slot assetId assetRevision sha256 bytes mime width height',
-        'Team picture',
-      );
-      const picture = row.picture;
-      required(
-        stableId(picture.slot) &&
-          stableId(picture.assetId) &&
-          revision(picture.assetRevision) &&
-          digest(picture.sha256) &&
-          revision(picture.bytes) &&
-          picture.bytes <= LIMITS.assetBytes &&
-          ['image/png', 'image/jpeg'].includes(picture.mime) &&
-          picture.width === 1152 &&
-          picture.height === 576,
-        'Team picture requires a bounded complete 1152×576 PNG/JPEG identity.',
-      );
-    }
+    if (row.picture !== null) pictureIdentity(row.picture);
     const { picture: _, ...identity } = row;
     const key = canonicalJSON(identity);
     required(!seen.has(key), 'Duplicate Team picture identity.');
@@ -154,8 +175,16 @@ const releaseQuietly = (lease) => {
  * The host injects a prepared registry snapshot and readers for its exact assets.
  * A null picture is an explicit registered procedural choice, never error fallback.
  */
-export function createCoopPresentation({ bindings, getSnapshot, readPicture, decodeImage }) {
-  const rows = bindingTable(bindings);
+export function createCoopPresentation({
+  bindings,
+  historicalImportPolicy,
+  getSnapshot,
+  readPicture,
+  decodeImage,
+}) {
+  const rows = bindingTable(bindings),
+    policy = historicalPolicy(historicalImportPolicy),
+    closedNamespaces = new Set(['relay-rescue-starter', ...rows.map((row) => row.packId)]);
   required(
     [getSnapshot, readPicture, decodeImage].every((fn) => typeof fn === 'function'),
     'Team presentation requires injected snapshot, picture and decoder readers.',
@@ -222,7 +251,7 @@ export function createCoopPresentation({ bindings, getSnapshot, readPicture, dec
       hashPresentationBytes(encoder.encode(state.request.levelJSON)),
     ]);
     operationCurrent(operation);
-    const row = rows.find(
+    let row = rows.find(
       (candidate) =>
         candidate.packId === state.request.pack.id &&
         candidate.packRevision === state.request.pack.revision &&
@@ -234,6 +263,27 @@ export function createCoopPresentation({ bindings, getSnapshot, readPicture, dec
         candidate.themeRevision === state.theme.themeRevision &&
         canonicalJSON(candidate.collection) === canonicalJSON(state.theme.collection),
     );
+    if (
+      !row &&
+      policy &&
+      !closedNamespaces.has(state.request.pack.id) &&
+      state.theme.themeId === policy.themeId &&
+      state.theme.themeRevision === policy.themeRevision &&
+      canonicalJSON(state.theme.collection) === canonicalJSON(policy.collection)
+    ) {
+      row = freezePresentation({
+        packId: state.request.pack.id,
+        packRevision: state.request.pack.revision,
+        packSha256,
+        levelId: state.request.level.id,
+        levelRevision: state.request.level.revision,
+        levelSha256,
+        themeId: policy.themeId,
+        themeRevision: policy.themeRevision,
+        collection: policy.collection,
+        picture: policy.picture,
+      });
+    }
     required(
       row,
       'No exact Team picture binding; this arena has not been prepared for this theme.',
