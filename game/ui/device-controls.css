@@ -691,8 +691,8 @@
 @media (min-width: 521px) and (max-width: 680px) and (orientation: landscape) and (max-height: 600px) {
   body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) {
     --fk-flight-header: calc(
-      var(--fk-text-counter) * 2.5 + var(--fk-text-secondary) * 4.35 +
-        var(--fk-text-secondary) * 1.3 + 24px
+      var(--fk-text-counter) * 2.5 + var(--fk-text-secondary) * 4.35 + var(--fk-text-secondary) *
+        1.3 + 24px
     );
   }
   body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .telemetry {
