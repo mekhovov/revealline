@@ -27,6 +27,18 @@ export function readCoopPack(text) {
   return structuredClone(pack);
 }
 
+/** Resolve only within an accepted pack snapshot, never a same-ID live catalogue. */
+export function coopPackDestination(pack, level) {
+  if (!validateCoopPack(pack).valid) return null;
+  const identity = JSON.stringify(level);
+  const index = pack.levels.findIndex((candidate) => JSON.stringify(candidate) === identity);
+  if (index < 0) return null;
+  return {
+    next: pack.levels[index + 1] ? structuredClone(pack.levels[index + 1]) : null,
+    final: index === pack.levels.length - 1,
+  };
+}
+
 export function coopGoalText(level) {
   return level.goal.cores
     ? `Capture ${level.goal.cores.length === 1 ? 'both anchors, then the exposed core' : `the anchors and cores of ${level.goal.cores.length} strongholds`}`
