@@ -1,0 +1,37 @@
+{
+  "status": "ACCEPTED_ARCHIVE_BYTES_AND_SCOPED_NATIVE",
+  "at": "2026-09-19T09:55:34.212301+00:00",
+  "archiveId": "archive-31",
+  "archiveCommit": "f476c311e0050b47d7408db51d57239fba7bece6",
+  "archiveTree": "d144cc112088882211bb1b5e04df298f4f4a78be",
+  "runId": 35434694566,
+  "deploymentId": 6539360227,
+  "deploymentStatusId": 18558487091,
+  "files": 711,
+  "verifiedBytes": 313557913,
+  "attempts": 711,
+  "failedAttempts": 0,
+  "retries": 0,
+  "priorRows": 0,
+  "releases": [
+    "v0.63.0"
+  ],
+  "evidence": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive31-v0630-hosted-intake-preparation-r1/independent-review.json",
+      "bytes": 1003,
+      "sha256": "2586a770189b4bd9a3fcfc7454d0c1311397d8301b490b4cc072ecfb7f69762d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive31-v0630-root-r1/native-observation-r1.json",
+      "bytes": 1760,
+      "sha256": "78e6ebe7258afb830cf8163e19061c240959cb5c3df175445c80c8355e01b5a6"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive31-v0630-root-r1/final-authorities-r1/result.json",
+      "bytes": 1244,
+      "sha256": "8909e438aa53a9edc70c4e8bc34a4f4d363140cfec65cbcae8afdf2d19c956c0"
+    }
+  ],
+  "scope": "Archive retention bytes and actual keyboard route/play/Pause/Details/Resume accepted. Session-only capture8.5%/2000; no new persistence, physicalcontroller/touch,audio,offline,TeamwinNext or wholephase acceptance. Mainpublisheradmission separate."
+}

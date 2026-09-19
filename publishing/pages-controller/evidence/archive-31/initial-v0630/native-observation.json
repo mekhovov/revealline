@@ -1,0 +1,27 @@
+{
+  "status": "SCOPED_NATIVE_ARCHIVE_ROUTE_AND_PLAY_OBSERVED",
+  "observedAt": "2026-09-19T09:38:50.488426+00:00",
+  "observer": "root CUA, desktop in-app browser tab18 at1280x720",
+  "archiveCommit": "f476c311e0050b47d7408db51d57239fba7bece6",
+  "archiveSource": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+  "version": "v0.63.0",
+  "actions": [
+    "Archive index \u2192Tab/Return Play \u2192actual VERSION V0.63.0 title",
+    "Explicit Continue restored Orchard Crossing; preparation feedback visible",
+    "Live safe-ground state7.3%/1700/3lives; Escape\u2192Pause\u2192Return Resume",
+    "Brief d selected continuous movement; live line exposed; subsequent w; legal capture8.5%/2000/3lives",
+    "Pause\u2192Tab/Return Field details; current roles and no-manual-equipment description; recent message confirmed capture-stop at8.5%",
+    "Read/End/Tab/Return sequence ended reading; subsequent Tab/Return did not close Details, so that was not claimed as Back activation",
+    "Escape returned to Pause, exact Field details opener focused",
+    "ShiftTab/Return explicitly resumed; Escape paused at0:57 with8.5%/2000/3lives",
+    "Browser Back\u2192archive index\u2192twoTabs/Return\u2192current release explorer showingv0.63.0"
+  ],
+  "storageBoundary": "Another game tab owns saving notice remained visible; this was session-only play, not a new persisted-save assertion",
+  "limitations": [
+    "No level win, new art or mechanics acceptance",
+    "No physical controller/touch, audio/offline/lifecycle certification",
+    "Screenshots inspected inline; no exported image/hash",
+    "Existing frozen v63 broader limitations remain open"
+  ],
+  "publicByteAudit": "Pending separate full711-row audit; native observation alone is not archive admission"
+}
