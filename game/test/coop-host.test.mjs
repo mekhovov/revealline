@@ -696,7 +696,7 @@ test('fresh Team lobby focuses enabled Start only after actual ready, without st
   assert.equal(h.$('coop-play').hidden, true);
   assert.equal(h.doc.activeElement.id, 'coop-start');
   h.tap('Tab');
-  assert.equal(h.doc.activeElement.tagName, 'SUMMARY');
+  assert.equal(h.doc.activeElement.id, 'coop-discovery-open');
   const chosen = h.doc.activeElement;
   for (let i = 0; i < 8; i++) h.tick();
   assert.equal(h.doc.activeElement === chosen, true, 'Later frames must not retry initial focus.');

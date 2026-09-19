@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { isMediaLibrary } from '../media-library.mjs';
+import { CONTENT_LIMITS, inspectImageDataUrl } from '../content.mjs';
 import { snapshotPictureChoice } from '../presentation-pins.mjs';
 
 const cancelled = () => new DOMException('Picture acquisition cancelled.', 'AbortError');
@@ -84,6 +85,55 @@ function decodeOwned(decode, source, signal) {
       );
     if (signal?.aborted) abort();
   });
+}
+
+/** Decode an already selected authored background before accepting a flight.
+ * Only bounded embedded static artwork is accepted; no remote fetch or new pin.
+ * The returned drawable belongs to this handle until its idempotent disposal.
+ */
+export async function acquireAuthoredPicture(
+  source,
+  { signal, decodeImage, ImageClass = globalThis.Image } = {},
+) {
+  check(signal);
+  const background = boundedJSON(source, {
+    maxBytes: CONTENT_LIMITS.maxEncodedImageChars + CONTENT_LIMITS.maxMetadataChars,
+    maxString: CONTENT_LIMITS.maxEncodedImageChars,
+  });
+  exactKeys(background, ['dataUrl', 'name', 'fit', 'metadata'], 'Authored background');
+  const header = inspectImageDataUrl(background.dataUrl);
+  required(header.valid, `The authored background image is invalid: ${header.errors.join('; ')}`);
+  const fit = background.fit ?? 'cover';
+  required(['contain', 'cover'].includes(fit), 'The authored background fit is unsupported.');
+  const decode = decodeImage ?? ((src, options) => browserDecode(src, { ...options, ImageClass }));
+  required(typeof decode === 'function', 'A picture decoder is required.');
+  let image = null;
+  const dispose = () => {
+    const prior = image;
+    image = null;
+    disposeImage(prior);
+  };
+  try {
+    image = await decodeOwned(decode, background.dataUrl, signal);
+    check(signal);
+    required(
+      image &&
+        image.width === header.width &&
+        image.height === header.height &&
+        (image.naturalWidth ?? image.width) === header.width &&
+        (image.naturalHeight ?? image.height) === header.height,
+      'Decoded authored picture dimensions differ from its original.',
+    );
+    check(signal);
+    return Object.freeze({ image, fit, dispose });
+  } catch (error) {
+    try {
+      dispose();
+    } catch {
+      // A cleanup callback cannot conceal the preparation failure.
+    }
+    throw error;
+  }
 }
 
 /** Acquire one historical choice, never today's replacement assignment.

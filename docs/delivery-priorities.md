@@ -1,5 +1,12 @@
 # RevealLine delivery plan
 
+**Current public baseline, 20 September 2026: [v0.65.0 — imported-Team continuation](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Its [scoped acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) covers imported pictures, earned-picture viewing, Next and Retry. Whole navigation, rewards, presentation and browser qualification remain incomplete.
+
+The [cross-mode execution register](cross-mode-execution.md) is the single authority for current item status and execution order. Next are the qualified v0.66.0 Team/Studio publication and the v0.67.0 discovery candidate, followed by the remaining player-experience phases. This document retains earlier requirements and dated evidence; its historical “current” or “next” wording is not today's release status.
+
+<details>
+<summary>Historical delivery snapshots and requirements — retained verbatim</summary>
+
 **Current public baseline, 19 September 2026: [v0.63.0 — Field details](https://mekhovov.github.io/revealline/releases/v0.63.0/site/game/).** [Publication PR157](https://github.com/mekhovov/revealline/pull/157) merged `d97bea7cd435a55884eaa43586771e481de85fd7` (tree `60a4230a9f4a1dd119049f8e9a003757e8d2e00a`); Pages run `35433279357` deployed as `6539128893`, success status `18557975370`. The complete public audit passed 3,373 files / 643,901,139 bytes in 3,373 attempts, with zero failures, retries or uninspected paths. Fresh post-audit authorities confirmed the release, tag, nine assets, publisher and deployment unchanged. [Scoped public acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p03/v0630-public/README.md).
 
 **What is complete:** paused Field details is publicly verified for keyboard Read/Done/Back and opener restoration, Tactical and Arcade descriptions, an unfinished line staying paused, and explicit Resume/Continue. The observed 390×844 and 600×400 layouts covered Large/Plain and Standard/Theme text; legal Arcade play reached 7.3% capture. **P03 navigation and P05 readability remain in progress.** These desktop-browser observations do not certify real touch/controllers, zoom, the whole EN/UA matrix, audio/offline/lifecycle, new backup/restore or public Team win → Next.
@@ -167,3 +174,5 @@ Apple’s [game-controls guidance](https://developer.apple.com/design/human-inte
 Playback recommendations also follow [MDN media playback](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play) and [Web Audio best practices](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Best_practices): use the direct gesture path, report the actual playback result, keep long tracks streamed and separate current listening intent from asynchronous preference persistence. Test fast menu/flight transitions as well as settled playback.
 
 The remaining backup qualification follows [MDN storage guidance](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria): browser storage is best-effort unless persistence is granted, and storage estimates do not guarantee available physical space. Keep explicit downloadable originals, report unavailable media, and verify actual exported files and restored bytes. A persistent-storage grant alone is not a backup.
+
+</details>

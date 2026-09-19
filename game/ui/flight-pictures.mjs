@@ -11,6 +11,8 @@ import {
 import { createPresentationImageSlot } from './presentation-image.mjs';
 
 /** One attempt's immutable choices and one currently displayed decoded original.
+ * acquireLegacy({pin,themeId},{signal}) owns authored legacy-pin decoding, when
+ * supplied; legacy:true practice still uses its original no-acquisition path.
  * The caller owns pause/resume intent. No simulation, profile or award writes. */
 export function createFlightPictures({
   context,
@@ -22,6 +24,7 @@ export function createFlightPictures({
   legacy = false,
   explicitLegacy = false,
   acquire,
+  acquireLegacy,
   selectPins,
   prepareSelection,
 }) {
@@ -154,6 +157,15 @@ export function createFlightPictures({
           { pin, metadata: media.metadata, store: media.store },
           { context: next, signal: controller.signal },
         );
+      } else if (acquireLegacy) {
+        report({ stage: 'decoding', message: 'Opening this flight’s authored picture…' });
+        check();
+        const handle = await acquireLegacy({ pin, themeId }, { signal: controller.signal });
+        // Install the disposal owner before checking cancellation: an injected
+        // acquisition may ignore abort and return its drawable late.
+        candidate = handle
+          ? Object.freeze({ current: () => handle, dispose: () => handle.dispose() })
+          : null;
       }
       check();
       const prior = slot;

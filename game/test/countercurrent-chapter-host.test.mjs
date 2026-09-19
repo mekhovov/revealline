@@ -30,7 +30,7 @@ function inventoryDiagnostic(p, phase) {
     rows: allEditions.map((e) => ({
       id: e.descriptor.id,
       state: p.$(id(e, 'state'))?.textContent,
-      chooseDisabled: p.$(id(e, 'choose'))?.disabled,
+      chooseDisabled: primary(p, e)?.disabled,
     })),
     errors: p.errors.map((error) => String(error?.stack ?? error)),
   });
@@ -204,6 +204,7 @@ async function page(t, f = {}, release = false) {
   return Object.assign(p, { fixture: f, requests });
 }
 const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
+const primary = (p, e) => p.$(id(e, 'download')) ?? p.$(id(e, 'choose'));
 async function open(p) {
   p.$('shell-menu').click();
   p.$('shell-play').click();
@@ -223,10 +224,32 @@ function showCard(p, e) {
   }
   assert.equal(p.$(id(e, 'card')).hidden, false, 'the exact owner is visibly reachable');
 }
-async function choose(p, e, { replaceFlight = false } = {}) {
+async function downloadAndStay(p, e) {
   showCard(p, e);
-  const phase = `Choose and authenticate exact ${e.descriptor.id}`,
-    opener = p.$(id(e, 'choose'));
+  const opener = primary(p, e),
+    run = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+  assert.match(opener.textContent, /Download & play/);
+  opener.focus();
+  await waitInventory(p, `Download and authenticate exact ${e.descriptor.id}`, {
+    operation: clickOperation(p, opener.id),
+    ready: () => p.$('mission-replace-dialog').open && !p.$('mission-replace-confirm').disabled,
+  });
+  assert.match(p.$('mission-replace-status').textContent, /saved and verified/);
+  p.$('mission-replace-stay').click();
+  p.frame(0);
+  assert.equal(p.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(p.rendered.paused, true);
+  assert.equal(primary(p, e), opener);
+  assert.equal(opener.textContent, 'Play');
+  assert.equal(opener.disabled, false);
+  assert.equal(p.doc.activeElement, opener);
+}
+async function play(p, e, { replaceFlight = false } = {}) {
+  showCard(p, e);
+  const phase = `Play and authenticate exact ${e.descriptor.id}`,
+    opener = primary(p, e);
   opener.focus();
   if (replaceFlight) {
     const run = p.rendered.run,
@@ -269,6 +292,9 @@ async function choose(p, e, { replaceFlight = false } = {}) {
   );
   p.frame(0);
   assert.equal(p.$('pack-select').value, e.descriptor.id);
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.frame(0);
+  assert.equal(p.rendered.paused, false, 'Play starts without a second Start action.');
 }
 function direction(p, d) {
   const k = 'Arrow' + d[0].toUpperCase() + d.slice(1);
@@ -329,7 +355,7 @@ function playPrefix(p, route, maximum = Infinity) {
   return captures;
 }
 
-test('four Countercurrent owners explicitly download and Choose without replacing an unrelated cut; exact earned and saved data recover', async (t) => {
+test('four Countercurrent owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
   const f = {};
   let receipts,
     stories,
@@ -340,7 +366,7 @@ test('four Countercurrent owners explicitly download and Choose without replacin
     setupComplete = false,
     saveComplete = false;
   await t.test(
-    'four Arcade downloads retain the paused base run and earn separate exact first pictures',
+    'four Arcade Download & play decisions retain the paused base run after Stay and earn separate exact first pictures',
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
@@ -363,10 +389,7 @@ test('four Countercurrent owners explicitly download and Choose without replacin
         showCard(p, e);
         const card = p.$(id(e, 'card'));
         assert(card.children.some((n) => n.textContent === 'Arcade · 3 original pictures'));
-        await waitInventory(p, `Download exact ${e.descriptor.id}`, {
-          operation: clickOperation(p, id(e, 'download')),
-          ready: () => !p.$('optional-worlds-reload').disabled && !p.$(id(e, 'choose')).disabled,
-        });
+        await downloadAndStay(p, e);
         p.frame(0);
         assert.equal(p.rendered.run, run);
         assert.deepEqual(authoritativeCheckpoint(run), before);
@@ -384,11 +407,10 @@ test('four Countercurrent owners explicitly download and Choose without replacin
       let prior = [];
       for (const e of allEditions) {
         if (!p.$('optional-worlds-dialog').open) await open(p);
-        await choose(p, e, { replaceFlight: e === allEditions[0] });
+        await play(p, e, { replaceFlight: e === allEditions[0] });
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
         assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
         const route = routeFor(e.descriptor.originals[0].levelId);
-        p.$('start-button').click();
         const captures = playPrefix(p, route);
         assert.deepEqual(
           captures,
@@ -426,12 +448,12 @@ test('four Countercurrent owners explicitly download and Choose without replacin
     async (t) => {
       const p = await page(t, f, true);
       await open(p);
-      for (const e of allEditions) assert.equal(p.$(id(e, 'choose')).disabled, false);
+      for (const e of allEditions) assert.equal(primary(p, e).disabled, false);
       const library = loadLibrary(f.storage, profile).library;
       assert.deepEqual(library.pictureReceipts, receipts);
       assert.deepEqual(library.storyReceipts, stories);
       selected = allEditions[0];
-      await choose(p, selected);
+      await play(p, selected);
       assert.equal(
         p.rendered.backdrop.pin.identity.baseCampaignKey,
         selected.descriptor.campaignKey,
@@ -440,7 +462,6 @@ test('four Countercurrent owners explicitly download and Choose without replacin
       const route = routeFor(selected.descriptor.originals[1].levelId);
       const boundary = route.saved.find((s) => s.trailCells > 0 && s.tick < route.expected.tick);
       assert.ok(boundary);
-      p.$('start-button').click();
       playPrefix(p, route, boundary.tick);
       p.$('pause-button').click();
       p.frame(0);
@@ -479,14 +500,13 @@ test('four Countercurrent owners explicitly download and Choose without replacin
       assert.deepEqual(p.fixture.assets.contents(), assets);
       assert.equal(p.fixture.assets.allPuts.length, writes);
       p.$('library-dialog').close();
+      p.$('start-button').click();
+      direction(p, 'down');
+      ticks(p, 13);
+      p.$('pause-button').click();
+      p.frame(0);
       await open(p);
-      for (const e of allEditions) {
-        showCard(p, e);
-        await waitInventory(p, `Restore exact originals ${e.descriptor.id}`, {
-          operation: clickOperation(p, id(e, 'download')),
-          ready: () => !p.$('optional-worlds-reload').disabled && !p.$(id(e, 'choose')).disabled,
-        });
-      }
+      for (const e of allEditions) await downloadAndStay(p, e);
       assert.equal(p.$('pack-select').value, '');
       p.$('optional-worlds-dialog').close();
       p.$('library-button').click();

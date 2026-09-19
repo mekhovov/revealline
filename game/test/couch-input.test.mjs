@@ -413,6 +413,16 @@ test('native form shortcuts are preserved, Escape still pauses from a focused co
   editor.tag = 'input';
   assert.equal(editor.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' }).defaultPrevented, false);
   assert.equal(f.key('KeyW', { metaKey: true }).defaultPrevented, false);
+  for (const guard of [
+    { ctrlKey: true },
+    { metaKey: true },
+    { altKey: true },
+    { defaultPrevented: true },
+  ]) {
+    const event = f.key('Escape', guard);
+    assert.equal(event.defaultPrevented, !!guard.defaultPrevented);
+    assert.equal(f.pauses, 0, 'Browser shortcuts and an owning menu keep Escape.');
+  }
   f.buttons[0].boost.emit('keydown', { key: 'Escape', code: 'Escape' });
   assert.equal(f.pauses, 1);
   f.resume();

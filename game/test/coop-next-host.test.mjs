@@ -46,8 +46,13 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   assert.deepEqual(f.visits, []);
   earnTeamVictory(t, f, 'relay-yard');
   assert.equal(f.$('coop-next').hidden, true);
-  assert.equal(f.doc.activeElement.id, 'coop-lobby');
-  assert.match(f.$('coop-overlay-copy').textContent, /Final arena in this pack/i);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
+  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/i);
+  f.tap('Enter');
+  assert.equal(f.$('coop-discovery-dialog').open, true);
+  f.$('coop-discovery-back').focus();
+  f.tap('Enter');
+  f.$('coop-lobby').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-play').hidden, true);
@@ -409,22 +414,24 @@ test('an older cancelled Next completion cannot replace a newer Next candidate o
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
 });
 
-test('an earned Relay Yard result honestly identifies the final arena and focuses Choose arena without another start', async (t) => {
+test('a completed Team pack focuses Browse Team arenas and keeps the earned result available', async (t) => {
   const { f } = await winTeam(t, { level: 'relay-yard' });
   const result = resultSnapshot(f);
   assert.equal(f.$('coop-next').hidden, true);
   assert.equal(f.$('coop-next-cancel').hidden, true);
-  assert.equal(f.doc.activeElement.id, 'coop-lobby');
-  assert.match(f.$('coop-overlay-copy').textContent, /Final arena in this pack/i);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
+  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/i);
   f.$('coop-next').click();
   f.tick(5);
   assertResult(f, result);
   f.tap('Enter');
-  assert.equal(f.$('coop-menu').hidden, false);
-  assert.equal(f.$('coop-play').hidden, true);
+  assert.equal(f.$('coop-discovery-dialog').open, true);
+  assertResult(f, result);
+  f.$('coop-discovery-back').focus();
+  f.tap('Enter');
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
+  assertResult(f, result);
   assert.equal(f.$('coop-level').value, 'relay-yard');
-  assert.equal(f.doc.activeElement.id, 'coop-start');
-  assertYardBriefing(f, { visible: true });
   assert.deepEqual(f.visits, []);
 });
 
