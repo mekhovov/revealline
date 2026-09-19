@@ -1,0 +1,28 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-31",
+  "infrastructureCommit": "2ff1b312872857cf04b485f9c987a26c0432f356",
+  "deploymentId": 6540533321,
+  "versions": ["v0.63.0", "v0.64.0"],
+  "evidence": [
+    {
+      "path": "evidence/archive-31/append-v0640/root-acceptance.json",
+      "sha256": "cca0c52ddecf1aaf7a708be828b8c99d01b4751313e2d9f0cfe0965efbc92c15"
+    },
+    {
+      "path": "evidence/archive-31/append-v0640/native-observation.json",
+      "sha256": "2c0e8188e50f99de5f1e4064668628461f8bfd1aaf9f3f3137a6195ad894f7a0"
+    },
+    {
+      "path": "evidence/archive-31/initial-v0630/native-observation.json",
+      "sha256": "78e6ebe7258afb830cf8163e19061c240959cb5c3df175445c80c8355e01b5a6"
+    }
+  ],
+  "scope": "Append v0.64.0 while retaining v0.63.0 originals. Native keyboard entry, result/retry, pause/help/resume and historical entry only. This does not close Team win/Next, physical devices, audio/offline, persistence or entire P03/P05/P08 phases.",
+  "limits": [
+    "Desktop browser keyboard observation only; no physical controller or touch certification.",
+    "Team earned win/Next, held rescue, audio/offline, persistence and entire parent phases remain open.",
+    "v0.63.0 retains its earlier scoped native evidence; immutable release bodies are unchanged."
+  ]
+}
