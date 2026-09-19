@@ -6,11 +6,40 @@
 
 **Next in order:** finish the active navigation/readability corrections, then P08-A artwork/actor parity → P08-B action feedback → P09 fair challenge → P07 rewards → P02-B music → P04 creation → P06 discovery → P10 Team encounters → P11–P15 campaigns → P16/P17 supporting workflows and authoring → P18 browser qualification. Named supporting features may ship earlier without closing their parent phase. Native stores and online multiplayer retain separate later gates.
 
-## Historical Settings implementation checkpoint
+## Historical publication checkpoint before v0.61.24 public acceptance — 19 September 2026
+
+The following statements retain main’s original publication cutoff. Their pending acceptance and older next-work ordering are historical; the live baseline, candidate and approved order above supersede them. Qualification, failure and retention records keep their original scopes.
+
+**Current scoped public checkpoint (19 September 2026): v0.61.23 is accepted within the recorded Still Media correction.** Source `2f1074a37ade9c731ea7be37a6e56e533b51d1ac` is selected by publisher `8783cbd6fcd0b02ba1d14bae09b16595a4166055`. The release coordinator reports successful [Pages run 35396835006](https://github.com/mekhovov/revealline/actions/runs/35396835006), verification of all 3,255 files / 642,999,818 bytes, and the scoped native owned-draft rotation and opener-return journey. Committed [exact-source qualification](https://github.com/mekhovov/revealline/blob/8783cbd6fcd0b02ba1d14bae09b16595a4166055/publishing/pages-controller/evidence/current-v06123/source-qualification.json) separately records passing source gates. This does not establish complete navigation, presentation or whole-phase acceptance.
+
+**Current published correction: v0.61.24 — narrow Solo Pause columns; Pages acceptance pending.** Qualified source `bb8cd8ea8af0cbec6af7e633c05d1bec78815938` retains `fpv@32`; [source PR #149](https://github.com/mekhovov/revealline/pull/149) is merged. [Manual qualification 35404392904](https://github.com/mekhovov/revealline/actions/runs/35404392904) and [PR qualification 35403877032](https://github.com/mekhovov/revealline/actions/runs/35403877032) each passed 5,925 tests across 466 files on Node 20.19.6, with the source/production/build gates passed. The original frozen source and all 694 game files were inspected, all nine immutable attachments independently reviewed, and [v0.61.24](https://github.com/mekhovov/revealline/releases/tag/v0.61.24) published as stable Latest. Both earlier `58643e0c` failures remain retained; their stale label expectation was corrected without changing runtime behavior. This publisher change selects the new release, but deployed-byte and actual Pause-menu acceptance remain pending; v0.61.23 remains the last accepted public scope until they pass.
+
+**Retention and next corrections:** Archive29 preserves v0.61.23 with all 702 public files verified and a scoped keyboard/media journey. Its publisher admission is committed separately and keeps the current selector unchanged. The next source candidates address narrow Large-text HUD clipping and Couch Ready → Start losing the player's newer focus choice. Their proposal checks do not qualify the integrated source or close P03/P05.
+
+**Next in order:** finish these navigation/readability corrections and P07-A/P16-A continuation/data safeguards, then P08-A artwork/actor parity; complete discovery/journey and Studio/themes; finish action feedback/audio and fair challenge before Team encounters and bulk campaigns. Keep the whole-game plan's content, physical-device, listening, offline and human-playtest gates. Newer public acceptance must be recorded explicitly; dated statements below are history.
+
+### Historical table updates at that publication cutoff
+
+These four rows preserve the separately recorded publisher snapshot. The live phase register above governs current status and order.
+
+| Order | Phase / feature | Completion requirement | Current status |
+| --- | --- | --- | --- |
+| 1 | Baseline reconciliation | Preserve working tree/history, integrate reviewed work and finish already qualifying releases. | v0.61.23 is scoped publicly accepted; v0.61.24 is committed with a draft source PR, with full/manual qualification in progress. Neither closes the remaining programme. |
+| 2 | P03/P05 Settings and sound | Shared categories, quick mute, immediate global appearance, safe pause/return and storage reconciliation. | Shared Settings and quick Sound retain their scoped v0.60.6 public acceptance; full P03/P05 and later regressions remain open. |
+| 3 | P03/P05 navigation | Shared Home/lobbies/Pause/Help/Workshop; actual opener restoration, responsive focus order and device prompts. | Partial. v0.61.23 accepts the scoped Still Media correction; narrow Solo Pause v0.61.24 awaits its own qualification and public gates. Complete cross-mode journeys remain open. |
+| 4 | P07-A/P16-A continuation and data safeguards | Stage Next before retiring results, explicitly retain Retry artwork, offer difficulty change, accurate backup scope and replacement preflight. | Partial. Preserve the historical P07-A1 qualification and failure records below; complete continuation, artwork retention, difficulty and data-safeguard journeys still require their own acceptance. |
+
+## Historical release checkpoints
+
+**Implementation checkpoint (18 September 2026):** public **v0.60.6** is accepted for shared Settings and quick Sound in Solo, Versus and Team. Its exact source `9c89f997` passed 5,673 tests in each hosted family. Public acceptance binds 2,822 files / 639,924,677 bytes, zero failures or retries, and the scoped browser journeys. Source PR #94, publisher PR #104 and acceptance PR #105 are merged. [Accepted delivery and remaining work](https://github.com/mekhovov/revealline/blob/79b94bf8d713ed44a3a713c2dfd685d8051e0ccd/publishing/pages-controller/delivery/evidence/cross-mode-p03/public-v0606/planning/progress-and-next.md). P00, P01 and P02-A retain their accepted scopes; full P03, P05 and P18 remain open.
+
+**Active corrections:** Replay/Team bindings v0.60.7, Missions/backup feedback v0.60.8 and Motion range names v0.60.9 have passing final-source qualifications; their individual public gates remain separate. Solo Retry/Next v0.61.0 passed both final-source families (5,707 tests / 454 files each), build and freeze; artifact inspection and publication remain pending. The v0.61.1 candidate combines readable native file controls, narrow-screen Still Media sizing and exact Preview focus return. Candidate tests and local browser observations are not release or phase acceptance.
+
+## Historical Settings implementation checkpoint (17 September 2026)
 
 Updated 17 September 2026. This is the current implementation order approved by the user. It replaces the previous ordering; historical release records remain unchanged. Source inspection began at `a53d646153fc9dfb2d8f152fdc9dbde607782777` (accepted Recovery v0.60.4). Settings PR #94 merged as `7db26c148cced9b51315dc24902569234061b17d`, following Motion acceptance PR #99. This checkpoint incorporates the reviewed Replay/navigation production-metadata and Team revision-binding repairs; frozen source commits and historical release evidence remain unchanged.
 
-## Accepted work and current feature
+## Historical accepted work and queued features (17 September 2026)
 
 P00 and P01 are accepted. P02-A shared master sound is accepted within its recorded scope. P03/P05 have accepted slices through v0.60.5, but neither whole phase is complete. Asset registries, shared fonts, appearance preferences and some Team artwork adapters already exist; this does not establish complete themes, full map parity or production readiness.
 

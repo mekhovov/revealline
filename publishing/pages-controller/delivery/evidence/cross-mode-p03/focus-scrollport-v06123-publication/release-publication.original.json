@@ -1,0 +1,10 @@
+{
+  "status": "PUBLISHED_ONCE_LATEST_AND_NINE_ORIGINALS_VERIFIED",
+  "at": "2026-09-18T21:04:57.295784+00:00",
+  "releaseId": 391779301,
+  "tagObject": "b956962dd2c0b3023cef2b7e0eaa0e092ab55e65",
+  "source": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "tree": "4e04fef2d0d37614149624392e316742a513bc8d",
+  "qualificationSha256": "482970f1a16bf12b8fa8da85959631b533426478dc81748ce8ebb7f93f731d35",
+  "publicAcceptance": false
+}

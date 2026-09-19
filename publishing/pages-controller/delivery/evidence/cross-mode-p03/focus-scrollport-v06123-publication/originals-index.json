@@ -1,0 +1,66 @@
+{
+  "originals": [
+    {
+      "path": "release-publication.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-root-publication-r1/publish-r1/review.json",
+      "bytes": 429,
+      "sha256": "2253aa49fe1c054087610a3e0fb330f76e715d1c2233c31994c05b0251fad244"
+    },
+    {
+      "path": "published-release.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-root-publication-r1/publish-r1/release-after.json",
+      "bytes": 16467,
+      "sha256": "4d5ac85202457261d2bb2a6c7d71b5a76ab085373d5ac55661d08471fbf965b9"
+    },
+    {
+      "path": "latest-release.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-root-publication-r1/publish-r1/latest.json",
+      "bytes": 16467,
+      "sha256": "4d5ac85202457261d2bb2a6c7d71b5a76ab085373d5ac55661d08471fbf965b9"
+    },
+    {
+      "path": "tag-object.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-root-publication-r1/publish-r1/tag-object.json",
+      "bytes": 735,
+      "sha256": "4e54d7eddfedc204f4def8c37370f91c4e0c09d869dd89a78874aca0b49e2756"
+    },
+    {
+      "path": "source-integration.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-root-publication-r1/integration-final.json",
+      "bytes": 950,
+      "sha256": "4a63578bd1dc62c261030fcb69724184be6e36b8bf72035a50396dc31e6632b1"
+    },
+    {
+      "path": "upload-reconciliation.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-upload-receipt-preparation/reconciliation/v0.61.23-reconciliation.json",
+      "bytes": 15554,
+      "sha256": "db4d9a5049aa44da3770210978defd8f37e1c6d7ce0b2e64b257fec6ba46771d"
+    },
+    {
+      "path": "upload-originals.zip",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-upload-receipt-preparation/root-small-intake-r1/original-receipt.zip",
+      "bytes": 6686415,
+      "sha256": "0f295225395686e5146cfe7c492c311b6d6a9325ffbffaa2589621134a83547e"
+    },
+    {
+      "path": "runtime-scope.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-release-preparation/node-version-scope.json",
+      "bytes": 5966,
+      "sha256": "a43853e575b0312a8b797ac39a4a27764b85ed08d759fd021ad5d342fc5d0648"
+    },
+    {
+      "path": "qualification-summary.original.json",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v06123-release-preparation/qualification-summary.json",
+      "bytes": 8785,
+      "sha256": "10b1fcc9d05dde741ed5c536b3070e3568384e47b30981038867aca2d2cf5102"
+    }
+  ],
+  "metadataReview": {
+    "at": "2026-09-18T21:14:51.197925+00:00",
+    "unchangedCatalogRecords": 93,
+    "newVersion": "v0.61.23",
+    "catalogSha256": "37f31b0857893dce7b2764bc121c0cd68e6622b9129522f9b8a6075735eb7187",
+    "syncCommand": "node publishing/pages-controller/sync-release-metadata.mjs --versions v0.61.23 --qualification v0.61.23",
+    "metadataOriginalBytesMatch": true
+  }
+}

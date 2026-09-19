@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-09-18T10:31:24.190345+00:00",
+  "version": "v0.61.4",
+  "sourceRevision": "d6800fa53d1d9166fe8f310d44aec9c7240b62fc",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.61.4/site/game/",
+  "browser": "Codex in-app Chromium",
+  "input": "Actual native keyboard actions through cua; catalog return cleanup used a pointer click",
+  "observations": [
+    "Stable /game/ alias opened the exact v0.61.4 title with Start focused.",
+    "Keyboard title Workshop > Sound and game extras > About reached exact same-edition About. Escape selected visible RETURN TO GAME; Return opened exact same-edition title with Start focused.",
+    "Actual First Signal Solo win: 52.2 percent,8160 points,3 lives. A separate run paused at0:04 with Resume focused, explicit Return resumed saved downward travel and completed at0:07; Collection later displayed7.87s.",
+    "After victory Return advanced to Relay Orchard with0 percent,target58,3 lives,0 points; Escape paused; threeTab/Return reached Main menu with Continue focused.",
+    "Keyboard Collection > First Signal displayed the full original picture and GOLD/8160. Escape returned focus to its exact Collection card. Screenshot inspected inline, no standalone screenshot file created.",
+    "Public Workshop > Enemy workshop is included and loads seven roles/four presentations. Closing initial catalog withEscape left document/body focus; subsequentEscape/Tab did not establish visible recovery in this observation. Pointer Return to game restored same-edition title. This is a remaining issue covered by prepared v0.61.20, not a v0.61.4 fix."
+  ],
+  "remaining": [
+    "Physical controller and touch hardware not exercised.",
+    "About controller join has automated/source qualification, not physical-controller acceptance.",
+    "No audible listening, offline-server-stopped, backup round-trip or forced delayed loading performed.",
+    "First Signal is a basic teaching level; this does not establish campaign difficulty or authored capture-stop parity."
+  ],
+  "scope": "Scoped public keyboard/About regression and real Solo reward/Collection smoke; no whole phase acceptance."
+}

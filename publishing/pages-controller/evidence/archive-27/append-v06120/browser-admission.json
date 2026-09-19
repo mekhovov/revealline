@@ -1,0 +1,52 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-27",
+  "infrastructureCommit": "3ecdbdcb2126f28c8697bc087614143105905ea5",
+  "deploymentId": 6530925625,
+  "versions": [
+    "v0.61.9",
+    "v0.61.20"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-27/append-v06120/root-acceptance.json",
+      "sha256": "9c16929e57cc2e631d2ee1e818eabe04ac4b1edccec79562f8bfc15a53cb167a"
+    },
+    {
+      "path": "evidence/archive-27/append-v06120/native-observation.json",
+      "sha256": "c5af5e2a4b0b653d4eba0a4daa5ebe365fde487642bfb1b71affaabf14483ae7"
+    },
+    {
+      "path": "evidence/archive-27/append-v06120/row-review.json",
+      "sha256": "2f7152ba3453d18aa147545abf10d57d19e2ad7a5377e6b9f338d74a015afe3d"
+    },
+    {
+      "path": "evidence/archive-27/append-v06120/binding-review.json",
+      "sha256": "ea25f1776e5c3b45020734ae39b6510295b8b7cfbcb4e36cfe41121e3794f7d3"
+    },
+    {
+      "path": "evidence/archive-27/append-v06120/originals.zip",
+      "sha256": "8f09f13cc172a9a7bc1a65cd02530708b865efea0096e435eda737eb9b93f4d8"
+    },
+    {
+      "path": "evidence/archive-27/append-v06120/originals-index.json",
+      "sha256": "50c21a02793851ada0ef86deef13b7a7d9c42994379ad0a224125432f0b471ef"
+    }
+  ],
+  "scope": "Root-accepted retention of both original editions: full public bytes and scoped keyboard journeys, including v0.61.20 Enemy Workshop opener restoration. This derived controller admission cites the unchanged root acceptance and native originals.",
+  "observationProvenance": "Root actual Codex in-app browser keyboard observation; inline screenshots only.",
+  "limits": [
+    "Retention and scoped keyboard navigation only; no whole-feature or phase acceptance.",
+    "v0.61.9 known Large/Plain portrait return outline clipping1.765625px remains; v0.61.20 known390portrait wrapped Open/Return gap clips full focus outline. Archive retention does not fix either.",
+    "No fresh full win, actual offline install/play, audio listening, BFCache, real touch or physical controller qualification.",
+    "Screenshots were inline only; no exported screenshot hashes. Natural1258x720 viewport, not device certification.",
+    "All GitHub project paths share an origin; no isolated storage claim. v0.61.20 Start reported session-only saving due to another game tab. v0.61.9 continued an existing run; native saved-data compatibility/ownership is not fully qualified.",
+    "Authorized gameplay may update continuation; no media edit/save/import/export/delete or catalog Apply was performed."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}

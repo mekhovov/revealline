@@ -1,0 +1,374 @@
+{
+  "status": "INDEPENDENT_LOCAL_RECEIPT_RECONCILIATION_PASS",
+  "at": "2026-09-18T10:53:07.041502+00:00",
+  "source": {
+    "commit": "d34e283819376eb43e4942287d9767b22a4f6487",
+    "tree": "3af511259e14ed2af11a2e2498535744450a378f",
+    "version": "v0.61.5"
+  },
+  "runId": 35335613225,
+  "jobId": 105569638407,
+  "operation": "upload-originals",
+  "originals": 123,
+  "zipMembers": 124,
+  "expandedBytes": 4979809,
+  "allZIPMembersCRCPinsExact": true,
+  "requestAndTwoLoggedBindingsExact": true,
+  "executedHelpers": [
+    {
+      "path": "publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": "publishing/utility/release_artifact.py",
+      "bytes": 32143,
+      "sha256": "53662aae608f6245bb40f6468427c5825c3eed233b095d4df190a7fbc2ac3698"
+    },
+    {
+      "path": "publishing/utility/test_release_artifact.py",
+      "bytes": 35031,
+      "sha256": "abc3d7e480ddbef330a264594b79f5c783fb05ddc041d950f995798540561098"
+    },
+    {
+      "path": "publishing/utility/test_upload_diagnostics.py",
+      "bytes": 12712,
+      "sha256": "14a87102a09eabeba741d19e7839b9320ac5b634bc2d790baf14ebb7f8687045"
+    },
+    {
+      "path": "publishing/utility/test_upload_distribution.py",
+      "bytes": 14627,
+      "sha256": "463537b0d7e6ecdc8a852134e0b1084e037f82f0d8e894167fdadee919836eda"
+    },
+    {
+      "path": "publishing/utility/test_upload_source.py",
+      "bytes": 14451,
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "path": "publishing/utility/upload_distribution.py",
+      "bytes": 20002,
+      "sha256": "5ed2a8940e4c862763ee4dfc34394e2ac1825c40cdbe5e68ad0674af707cfa27"
+    },
+    {
+      "path": "publishing/utility/upload_source.py",
+      "bytes": 19932,
+      "sha256": "993fcc897682277998df54c40dee83335d9d4b6746611084731c6af63abac6e6"
+    },
+    {
+      "path": "publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    }
+  ],
+  "sourceCleanBeforeAfterAndLocal": true,
+  "frozenInspection": {
+    "format": "revealline-qualified-artifact-offline-inspection.v1",
+    "status": "PASS",
+    "scope": "Local byte/Git/hash-chain inspection only; workflow success, public release and play/offline acceptance are separate",
+    "gitHead": "d34e283819376eb43e4942287d9767b22a4f6487",
+    "gitTree": "3af511259e14ed2af11a2e2498535744450a378f",
+    "gitObjectFormat": "sha1",
+    "version": "v0.61.5",
+    "artifact": {
+      "path": "/home/runner/work/revealline/revealline/utility-output/qualified-artifact-original.zip",
+      "bytes": 1418038894,
+      "sha256": "a756bcb521f945c3dd0013d0a2e34cca5a82edbc08d27c8492ac2b4fc714fb7d",
+      "externallyExpectedDigestSupplied": true,
+      "members": 5,
+      "prefix": "v0.61.5/"
+    },
+    "sourceTar": {
+      "sha256": "89cd4078ac12f8a7931bc3bdb4078ef8c344f87495e2bc43565c6344608941a5",
+      "bytes": 1104517120,
+      "gitFiles": 11555,
+      "gitDirectories": 1461,
+      "gitOriginalBytes": 1095080345,
+      "paxCommitPresent": true,
+      "modePolicy": "All Git tracked executable bits matched; only canonical Git archive modes 0644/0664 and 0755/0775 accepted",
+      "outerMember": "v0.61.5/source.tar",
+      "copiedToDisk": false
+    },
+    "distribution": {
+      "files": 692,
+      "manifestTotalBytes": 313144698,
+      "entry": "game/index.html",
+      "allManifestBytesVerified": true,
+      "innerManifestIdentical": true,
+      "bytes": 313392789,
+      "sha256": "57b3de753aeb5e8773084e0be1848d187602dd7eecb06e2f8a8f8c80d2b098c2",
+      "copiedToDisk": false,
+      "outerMember": "v0.61.5/site/distribution.zip"
+    },
+    "releaseHashChainVerified": true,
+    "manifestSha256": "cf35b91ed69fdb328ecbcabc6e46364ceb36496824275d07f103209784eb9f25",
+    "diskReserveBytes": 536870912,
+    "freeBytesAfterInspection": 87268450304,
+    "output": "/home/runner/work/revealline/revealline/utility-output/qualified-artifact-verified",
+    "extractedFiles": [
+      "release.json",
+      "manifest.json",
+      "distribution.zip.sha256"
+    ]
+  },
+  "frozenOfflineReview": {
+    "format": "revealline-frozen-offline-review.v1",
+    "status": "PASS",
+    "checkedAt": "2026-09-18T10:38:50.160494+00:00",
+    "sourceRevision": "d34e283819376eb43e4942287d9767b22a4f6487",
+    "sourceTree": "3af511259e14ed2af11a2e2498535744450a378f",
+    "version": "v0.61.5",
+    "inspectionPin": {
+      "path": "/home/runner/work/revealline/revealline/utility-output/qualified-artifact-verified/inspection.json",
+      "bytes": 1914,
+      "sha256": "8d479a70b25bd33f1ffe732e2844fed9ffe27f2f767169dcbedade4021972cf0"
+    },
+    "manifestPin": {
+      "path": "/home/runner/work/revealline/revealline/utility-output/qualified-artifact-verified/manifest.json",
+      "bytes": 127707,
+      "sha256": "cf35b91ed69fdb328ecbcabc6e46364ceb36496824275d07f103209784eb9f25"
+    },
+    "downloadPin": {
+      "path": "/home/runner/work/revealline/revealline/utility-output/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "df9afef1d07735dcdaf0b468dfd77929a4b5a138284fa9ad7f7141b925daa20e"
+    },
+    "verifierPin": {
+      "path": "/home/runner/work/revealline/revealline/automation/publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    "originals": [
+      {
+        "archivePath": "offline-cache.json",
+        "path": "/home/runner/work/revealline/revealline/utility-output/frozen-offline-review/originals/offline-cache.json",
+        "bytes": 120654,
+        "sha256": "915319dd4feb8f97a5178730fceba40dcbbcb357eec459786c108c1cb2050183"
+      },
+      {
+        "archivePath": "game/build-info.json",
+        "path": "/home/runner/work/revealline/revealline/utility-output/frozen-offline-review/originals/game/build-info.json",
+        "bytes": 143,
+        "sha256": "2c66596e70331585ed37ce57cde1ac6ffc4067e6f171bb1168829f06c34255d5"
+      },
+      {
+        "archivePath": "service-worker.js",
+        "path": "/home/runner/work/revealline/revealline/utility-output/frozen-offline-review/originals/service-worker.js",
+        "bytes": 111446,
+        "sha256": "4bd615fbec6f3bcb3606c9ce48999643c96e851c7096628304a104df1ec9556a"
+      },
+      {
+        "archivePath": "game/index.html",
+        "path": "/home/runner/work/revealline/revealline/utility-output/frozen-offline-review/originals/game/index.html",
+        "bytes": 74706,
+        "sha256": "99fb88f68016c2023333724288cbb0afa3dbe773d4aefc8904211ec3de838ad2"
+      }
+    ],
+    "sourceWorkerTemplateSha256": "0853846ed91a82b4526d8572ac80f0efa96493d295e44ab738158418624d96a9",
+    "frozenBuildInfo": {
+      "formatVersion": 1,
+      "version": "v0.61.5",
+      "sourceRevision": "d34e283819376eb43e4942287d9767b22a4f6487",
+      "entry": "game/index.html"
+    },
+    "offline": {
+      "buildId": "5e89eb0a0794d59d719989fa20c7fa7cce793c5ced4dfe21bc7e6de4ddb0ad68",
+      "files": 646,
+      "bytes": 56137313,
+      "maxFiles": 2000,
+      "maxBytes": 67108864,
+      "optionalPacks": 11,
+      "allOfflineRowsMatchFrozenManifest": true,
+      "allOfflineBytesVerified": true,
+      "offlineBudgetVerified": true,
+      "workerInventoryBindingVerified": true,
+      "entryMetaBindingVerified": true,
+      "entryIncluded": true
+    },
+    "limits": [
+      "Frozen byte/dependency/identity review only. No browser offline execution or P01 acceptance.",
+      "Whole original artifact bytes were verified by the prerequisite inspector; this check rereads four bounded originals.",
+      "No local ordinary build or repeated whole artifact hash is claimed."
+    ]
+  },
+  "allNineHostedAssets": [
+    {
+      "id": 572407338,
+      "name": "distribution.zip",
+      "size": 313392789,
+      "digest": "sha256:57b3de753aeb5e8773084e0be1848d187602dd7eecb06e2f8a8f8c80d2b098c2",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401324,
+      "name": "distribution.zip.sha256",
+      "size": 83,
+      "digest": "sha256:9645137cc422373936b7f1114d91638a7ae0310a1699f4fb8e4b5481dc36468b",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401352,
+      "name": "manifest.json",
+      "size": 127707,
+      "digest": "sha256:cf35b91ed69fdb328ecbcabc6e46364ceb36496824275d07f103209784eb9f25",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401393,
+      "name": "qualification-evidence-record.json",
+      "size": 11720,
+      "digest": "sha256:99b8c1e90f5805fa62e9f9f184b10494162c042e3ca2fe856dafe7c87f33747c",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401423,
+      "name": "release.json",
+      "size": 465,
+      "digest": "sha256:7677f7727725f100de68d438111f80c279026704c9bb0eaed1516d8fcea6231c",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401474,
+      "name": "source-qualification-evidence.zip",
+      "size": 3861724,
+      "digest": "sha256:c0f4a02106f2021f497e754a7817eb76578ee7b32b54467cae7addd4daa3c458",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401631,
+      "name": "source-qualification.json",
+      "size": 101239,
+      "digest": "sha256:1f56a442e24b7da51a91332366a76c3ea0e1e2968ce11067fc61c94a023ace53",
+      "state": "uploaded"
+    },
+    {
+      "id": 572406497,
+      "name": "source.tar",
+      "size": 1104517120,
+      "digest": "sha256:89cd4078ac12f8a7931bc3bdb4078ef8c344f87495e2bc43565c6344608941a5",
+      "state": "uploaded"
+    },
+    {
+      "id": 572401672,
+      "name": "verification.json",
+      "size": 1914,
+      "digest": "sha256:c037fb578e3d97a6c15a669bc81352725e847b5222840b31c62a6227e81d4b45",
+      "state": "uploaded"
+    }
+  ],
+  "uploadReceipts": [
+    {
+      "status": "UPLOADED_VERIFIED",
+      "repository": "mekhovov/revealline",
+      "releaseId": 391391690,
+      "tag": "v0.61.5",
+      "tagCommit": "d34e283819376eb43e4942287d9767b22a4f6487",
+      "assetId": 572406497,
+      "assetName": "source.tar",
+      "bytes": 1104517120,
+      "sha256": "89cd4078ac12f8a7931bc3bdb4078ef8c344f87495e2bc43565c6344608941a5",
+      "serverDigest": "sha256:89cd4078ac12f8a7931bc3bdb4078ef8c344f87495e2bc43565c6344608941a5",
+      "postCount": 1,
+      "readBackVerified": true
+    },
+    {
+      "status": "UPLOADED_VERIFIED",
+      "repository": "mekhovov/revealline",
+      "releaseId": 391391690,
+      "tag": "v0.61.5",
+      "tagCommit": "d34e283819376eb43e4942287d9767b22a4f6487",
+      "assetId": 572407338,
+      "assetName": "distribution.zip",
+      "bytes": 313392789,
+      "sha256": "57b3de753aeb5e8773084e0be1848d187602dd7eecb06e2f8a8f8c80d2b098c2",
+      "serverDigest": "sha256:57b3de753aeb5e8773084e0be1848d187602dd7eecb06e2f8a8f8c80d2b098c2",
+      "postCount": 1,
+      "readBackVerified": true
+    }
+  ],
+  "sevenSmallAssetsMatchOriginalPackage": true,
+  "nestedQualificationZIPMembers": 391,
+  "pins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-release-preparation/upload-request.reviewed.json",
+      "bytes": 1835,
+      "sha256": "76812ebd92d928969913b8f3b564c7ecb12cb08da7017849dcbec25227d1cbc5"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/receipt.json",
+      "bytes": 20015,
+      "sha256": "eea4f786ce670390d91054ff8bd27f99d492058f6bb7bef4a26a42440e489a25"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/original-receipt.zip",
+      "bytes": 4996347,
+      "sha256": "039d442bb47996bcef846306239cd5ccbb1de008f3ed9a870a07d687b373e3be"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/retained-manifest.json",
+      "bytes": 27019,
+      "sha256": "77ecbd91b1c705f5b0640ac86f49c930a58da2d737b1a223e680fe4596b513f0"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/execution.json",
+      "bytes": 2442,
+      "sha256": "9470ca9f6639975ea72f37559deb157f871b41ff660a8d728a8e521e61940395"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/result.json",
+      "bytes": 547,
+      "sha256": "88d9114bf46ddfacff5c24461b69c73242da747c5d9f292af6c6983967203a17"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/source-before.json",
+      "bytes": 159,
+      "sha256": "3429ddabf9a2a3cefcc57a6ba9d6b79ac0c3f162d3a06e696f3f75f9770ad3d3"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/source-after.json",
+      "bytes": 159,
+      "sha256": "3429ddabf9a2a3cefcc57a6ba9d6b79ac0c3f162d3a06e696f3f75f9770ad3d3"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/qualified-artifact-verified/inspection.json",
+      "bytes": 1914,
+      "sha256": "8d479a70b25bd33f1ffe732e2844fed9ffe27f2f767169dcbedade4021972cf0"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/qualified-artifact-verified/manifest.json",
+      "bytes": 127707,
+      "sha256": "cf35b91ed69fdb328ecbcabc6e46364ceb36496824275d07f103209784eb9f25"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/qualified-artifact-verified/release.json",
+      "bytes": 465,
+      "sha256": "7677f7727725f100de68d438111f80c279026704c9bb0eaed1516d8fcea6231c"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/root-small-intake-r1/evidence/frozen-offline-review/review.json",
+      "bytes": 3411,
+      "sha256": "de0e1ed5cf406d95b6d33af09d947923a4b6d216106d7427c87741b0e0349dbb"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/snapshots/20260918T104235894679Z/job-105569638407-original-log.body",
+      "bytes": 66923,
+      "sha256": "5115c8ca06e2e11e310a581ba2d5941792fa9097dda40456ef2aacc55f16bd4f"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/snapshots/20260918T104235894679Z/run.body",
+      "bytes": 12148,
+      "sha256": "5e937f0bad97d36bb8f2d62d60b3f7ef588a7b367e8a772587c5fc89861b07fc"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0615-upload-observation/snapshots/20260918T104235894679Z/jobs.body",
+      "bytes": 6335,
+      "sha256": "a68608884c78addb304c82d66bea9a30dbd9b3516c7c000d290abc932cb5af81"
+    }
+  ],
+  "limits": [
+    "No network requests or remote mutation by this review. Only root-retained small original bytes were read.",
+    "Original large payload was verified by hosted utility, not downloaded locally.",
+    "Frozen offline byte authority does not claim actual browser offline playback.",
+    "Fresh draft/tag API readback, release publication and public acceptance remain root-owned separate gates."
+  ]
+}

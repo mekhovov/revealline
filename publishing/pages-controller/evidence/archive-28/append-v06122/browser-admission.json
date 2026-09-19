@@ -1,0 +1,47 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-28",
+  "infrastructureCommit": "0a0a95abcae2211386f62a24c41c46a9ff02a1ee",
+  "deploymentId": 6532547942,
+  "versions": [
+    "v0.61.21",
+    "v0.61.22"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-28/append-v06122/root-acceptance.json",
+      "sha256": "d8a445747d845a848f31d6bec76bd76c35f82cdc2bae2dff41fd14b6aa99eed0"
+    },
+    {
+      "path": "evidence/archive-28/append-v06122/native-observation.json",
+      "sha256": "b4263b4ea296a3fd559b2ea1f616c5f3ef83a596d36830b0d318f60f47592df9"
+    },
+    {
+      "path": "evidence/archive-28/append-v06122/row-review.json",
+      "sha256": "c56943c8d5d9bf69ba3e960b1b2a01da11e7613f323beb0cda4cce9fcd71facf"
+    },
+    {
+      "path": "evidence/archive-28/append-v06122/originals.zip",
+      "sha256": "88d5aa640d118df8f47a26f2e7407e1af9a421e23150ad9527987d58bb43de06"
+    },
+    {
+      "path": "evidence/archive-28/append-v06122/originals-index.json",
+      "sha256": "56082ecdb48bce5c6c60a8860535f64b599f5ba56cf25398bf5ded75f3d9dde5"
+    }
+  ],
+  "scope": "Root-accepted scoped retention: desktop keyboard entry to both editions, actual v622 Versus captures/Pause/explicit Resume, prior Solo continuation retained and current release explorer return. Complete public bytes are verified separately.",
+  "observationProvenance": "Root actual keyboard/browser record; screenshots inspected inline only.",
+  "limits": [
+    "Inline screenshots only; no exported image files or screenshot hashes.",
+    "No archived win, Team v622 flight, audible listening,offline lifecycle,physical touch or controller acceptance.",
+    "Known public v622 280px Large Pause fragmentation remains open; archive retention does not close native UX phase.",
+    "Only the root-created unsaved Versus attempt was explicitly discarded. No isolated-storage or durable-save migration claim.",
+    "v621 title entry does not repeat its historical flight/picture checks; prior accepted scope remains separate."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}

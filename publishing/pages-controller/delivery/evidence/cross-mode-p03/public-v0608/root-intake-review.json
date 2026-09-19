@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "originalPinsRehashed": 42,
+  "bindingSha256": "aa10cdad5b758454c20aef7d65aa906284839e60051bb099686c3971b3057b51",
+  "files": 2872,
+  "bytes": 640294864,
+  "scope": "Exact receipt/catalog/source/qualification and deployment; public HTTP execution next"
+}

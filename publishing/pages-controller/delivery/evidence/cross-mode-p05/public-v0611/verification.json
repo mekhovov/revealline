@@ -1,0 +1,23 @@
+{
+  "status": "PASS_FINITE_EVIDENCE_AND_DOCUMENTATION_CHECKS",
+  "at": "2026-09-18T05:44:48.880384+00:00",
+  "base": "c7770eda1dbdf6d241c11496d80faa28dbcb9b2b",
+  "originalMembers": 216,
+  "originalBytes": 8645145,
+  "zipBytes": 1860025,
+  "allZipCrcSizeShaAndSourceBytesExact": true,
+  "directCopies": 10,
+  "queueOriginals": 8,
+  "relativeLinksChecked": 28,
+  "previousV0610ReportChanged": false,
+  "deliveryReadmeHistoricalBodyExact": true,
+  "approvedPhaseOrderAndContentLedgerPreserved": true,
+  "stagedChanges": 0,
+  "sourceTestsRun": false,
+  "runtimeVersionSelectorOrRemoteChanges": false,
+  "managedBytesBeforeManifest": 2132214,
+  "managedCapBytes": 16777216,
+  "freeBytes": 1489063936,
+  "freeReserveBytes": 536870912,
+  "scope": "Document and evidence integrity only; original root acceptance defines public scope."
+}

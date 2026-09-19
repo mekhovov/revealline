@@ -1,0 +1,24 @@
+{
+  "status": "ROOT_SCOPED_LOCAL_NATIVE_REVIEW_PASS",
+  "at": "2026-09-18T14:15:55.889040+00:00",
+  "sourceManifestSha256": "c071cc61d42a9141acfce06e30f3adfd8592b95dc06e7780f43b95767e88ccf7",
+  "nativeManifestSha256": "aef775ec84f27849ba31591611243a611cc9cf004299b3e60ae4e825f6d0ea4f",
+  "scope": "ActualSolo/Versus sourcepreviewUI observed compact/detailed craft inside examined top/left/bottomleftedges/corners,contact/cut associationunderstandable. Source100testsperNodefamily covermodelgeometry independently.",
+  "rootViewed": [
+    "01-versus-280-standard-top.jpg",
+    "03-versus-280-standard-cut.jpg",
+    "14-solo-266-standard-left.jpg",
+    "17-solo-540-standard-cut.jpg"
+  ],
+  "observerClarification": "Delegated agent used actual CUA input and screenshots; root independently visually reviewed raw captures. Original observation text Human screenshot review does not mean a human player playtest was conducted.",
+  "retainedLimits": [
+    "Cases05/07staleproviderwidths correctedby06/08; originalsretained.",
+    "Case04actuallyrespawn afterordinaryloss,notactivecut.",
+    "NarrowLargeHUDoverflow:Versus280->290document,Solo280->285and266->277. Separatefrombodyinset.",
+    "Notallroles/rotations/themes/corners/phases/fullbrightart; nohardware/offline/listening/fairnessacceptance."
+  ],
+  "nativeScopePassed": true,
+  "publicAccepted": false,
+  "phaseAccepted": false,
+  "remaining": "Finalversionedsourceintegration/fullqualification andpublicrelease; broaderlayout/crossmodeP08 stillopen."
+}

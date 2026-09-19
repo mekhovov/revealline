@@ -1,0 +1,77 @@
+{
+  "status": "ROOT_REVIEWED_NINE_AUTHORITIES",
+  "authorityPins": {
+    "receipt": {
+      "path": "receipt.json",
+      "bytes": 621039,
+      "sha256": "2060a77acd5432bf58ba9e623e908b523f92300cd313a47d9ce56bbff1bd8c5a"
+    },
+    "deployment": {
+      "path": "deployment.json",
+      "bytes": 3823,
+      "sha256": "7aaba1fe89d8ac5ab2a09cc1efb86825e2790fb4a152c1852a95c3d45c4b4e8f"
+    },
+    "statuses": {
+      "path": "statuses.json",
+      "bytes": 6586,
+      "sha256": "48ea21dd3c8ba02a7f395293393bc53bc4c331ef353145d02b400fedcea980cf"
+    },
+    "run": {
+      "path": "run.json",
+      "bytes": 12225,
+      "sha256": "89e3a8700d2524746bd212d5209af988f08d22b5bdf8643fafbdda8a612f5b77"
+    },
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 128038,
+      "sha256": "268846ad44cebb1aa2c2558a4e9d081e9f09e201947fc5ab8578bd1f41a50438"
+    },
+    "record": {
+      "path": "record.json",
+      "bytes": 468,
+      "sha256": "c9256dbd7a48180eea09fc42028fa8e2d7d405fde2d9e578a9582c9ecc0977d6"
+    },
+    "qualification": {
+      "path": "qualification.json",
+      "bytes": 109293,
+      "sha256": "482970f1a16bf12b8fa8da85959631b533426478dc81748ce8ebb7f93f731d35"
+    },
+    "catalog": {
+      "path": "catalog.json",
+      "bytes": 41933,
+      "sha256": "37f31b0857893dce7b2764bc121c0cd68e6622b9129522f9b8a6075735eb7187"
+    },
+    "configuration": {
+      "path": "configuration.json",
+      "bytes": 156136,
+      "sha256": "0d53b697f799670cd7ec40d6719db7b86e56f589bfce167818672dd2b2b4e14b"
+    }
+  },
+  "hostedFiles": 3255,
+  "hostedBytes": 642999818,
+  "preservedCatalogEntries": 93,
+  "allHistoryEntries": 94,
+  "configurationMatchesCommittedPublisher": true,
+  "archive28Admission": "accepted v0.61.22 append retained in publisher",
+  "sourceGateNames": [
+    "validate",
+    "lint",
+    "format",
+    "native-format",
+    "motion-syntax",
+    "test"
+  ],
+  "affectedCanonicalRows": [
+    {
+      "path": "releases/v0.61.23/site/authoring/still-media/index.html",
+      "bytes": 5435,
+      "sha256": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888"
+    },
+    {
+      "path": "releases/v0.61.23/site/game/ui/focus-clearance.mjs",
+      "bytes": 3149,
+      "sha256": "28d8b85dd9493163f487ae8913a98fb8287e38d1098aba02e3deb77294532736"
+    }
+  ],
+  "bindingSha256": "acaa5dbcf91db72769c65da986779347d5c2ce6d81fa858da5eee792a51a7ccc"
+}

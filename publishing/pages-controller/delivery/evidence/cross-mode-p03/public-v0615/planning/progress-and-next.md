@@ -1,0 +1,68 @@
+# Current plan — v0.61.5 accepted; six qualified corrections next
+
+**Latest accepted public release: [v0.61.5](https://mekhovov.github.io/revealline/releases/v0.61.5/site/game/).** Its Studio guide correction, all **3,051 public files / 641,652,183 bytes**, and actual public Studio/Solo/Collection/history keyboard journeys passed. One historical HTTP 503 recovered; its original attempt remains retained. [Accepted scope and evidence](../README.md)
+
+**Priorities remain native navigation, shared readable presentation, cross-mode artwork and clear action feedback.** Publish and verify the already-qualified corrections in order before bulk campaigns. P00 integration, P01 loading feedback and P02-A master sound retain their accepted scopes. P03/P05/P07/P08/P18 remain open. The introductory First Signal win does not establish satisfying challenge or replay value.
+
+## Dated release queue
+
+**Snapshot: 18 September 2026, 11:59 UTC.** These are six actual candidate versions: **v0.61.6, v0.61.7, v0.61.8, v0.61.9, v0.61.20 and v0.61.21**. Their source package originals and exact Git package versions were checked for this report. They are not a continuous numerical range, and source qualification is distinct from immutable release and public acceptance.
+
+| Order | Candidate | Completed scope | Next gate |
+| --- | --- | --- | --- |
+| Accepted | v0.61.5 — Studio guide continuity | Exact source, nine published assets, complete deployed bytes and public Studio/Solo/Collection/history journeys accepted | Broader creation, media, device and whole-phase gates remain open. |
+| 1 | v0.61.6 — Versus board fitting | [Source package accepted](../queue-evidence/v0616-source-package.original.json); scoped source-native geometry passed; [source PR119 merged](../queue-evidence/v0616-source-merge.original.json) as `0d2e03084e503dc200b3481f955cb8b949cd2c07` after the [preservation review](../queue-evidence/v0616-merge-review.original.json) | Immutable release/public and remaining input gates. Arena fitting does not qualify every actor's displayed extent. |
+| 2 | v0.61.7 — Motion Lab rotation focus | [Source package accepted](../queue-evidence/v0617-source-package.original.json); scoped native vertical visibility passed | Immutable release/public gates; retain the known right-edge outline limitation. |
+| 3 | v0.61.8 — Still Media picker clearance | [Source package accepted](../queue-evidence/v0618-source-package.original.json); scoped Standard-text native portrait/landscape checks passed | Immutable release/public and broader reading/device gates. |
+| 4 | v0.61.9 — Still Media reading preferences | [Corrected source package accepted](../queue-evidence/v0619-source-package.original.json): 5,888 tests across 465 files per family; actual-source Plain/Large portrait/landscape passed | Immutable release/public gates. Original fixture failure remains retained. |
+| 5 | v0.61.20 — Enemy startup-close focus | [Source package accepted](../queue-evidence/v0620-source-package.original.json): 5,895 tests across 465 files per family, frozen inspection and exact-source desktop/portrait/landscape keyboard focus checks | Immutable release/public startup-close journey. Enemy Workshop is already shipped, not excluded from public packages. |
+| 6 | v0.61.21 — Team View picture reward | [Source package accepted](../queue-evidence/v0621-source-package.original.json): 5,902 tests across 465 files per family, frozen inspection and seven attachments. First Connection win/view/Back and explicit Retry passed in source-native checks | Immutable release/public viewer and navigation gates; native Relay Yard win, physical devices and full P07 remain open. |
+
+For v0.61.21, [First Connection won at 66.6%, 0:25, three joint cuts and five reserves](../queue-evidence/v0621-native-reward.original.json). View/Back/Escape and Standard/Plain-Large responsive layouts passed. [Retry](../queue-evidence/v0621-native-retry.original.json) reset to 0%, 0:00 and five reserves. The [actual Relay Yard attempt failed](../queue-evidence/v0621-native-relay-attempt.original.json) at 0.0%, four reserves and 0/2 anchors; no native Relay viewer acceptance is claimed. Source-preview results never substitute for deployed journeys.
+
+The [Enemy Workshop packaging correction](../../public-v0614/packaging-scope-correction.md) remains in force. Existing archive admissions preserve older public versions; Archive24 retains v0.61.3 and v0.61.4 with 1,394 files / 626,715,708 bytes and all 697 previous canonical rows. Archive25 retention for v0.61.5 has its source PR merged and deployment underway, according to the coordinator; its public retention acceptance remains pending at this snapshot. A future source merge, published asset or successful build alone does not advance public acceptance.
+
+## Current focused follow-ups
+
+**Close local connections:** fresh actual public v0.61.4 keyboard checks passed [before opening](../queue-evidence/close-early.original.json), [after saved-picture preview](../queue-evidence/close-late.original.json), and in [844×390 landscape](../queue-evidence/close-landscape.original.json). Close restored enabled, visibly focused Open local media; Back remained reachable. The historical v0.61.1 failure was not reproduced and remains preserved. A [root-reviewed, unversioned test-only candidate](../queue-evidence/close-test-review.original.json) adds coverage on exact source `ef1430174dfd35a9df441233988b8737d0401851`; [13 selected tests pass on Node 20/22](../queue-evidence/close-test-candidate.original.json). It changes no runtime and is not merged or publicly accepted. A separately retained direct terminal-callback probe exposes a focus side effect in a test; it does not prove the earlier native failure's cause. Integrate useful regression coverage into a coherent later P03 change and keep lifecycle/device gates open.
+
+**Team Large text:** the [source audit](../queue-evidence/team-large-gap.original.json) found that the Team DOM stores the preference but does not pass it to the canvas painter; gameplay cues and badges retain fixed sizes. An external unversioned draft is still unaccepted. Review actual displayed cue/badge sizes and backing rectangles across narrow arenas and both text faces. Integrate onto v0.61.21 without losing its earned-picture lifecycle or changing simulation, collision, scoring or saves. A nominal font increase alone is insufficient.
+
+**Still Media and Motion Lab:** finish release/public gates for the qualified picker, reading and rotation corrections. Preserve Cancel/Close visibility without covering the focused field, label or focus outline. Retain the compact saving-warning placement and Motion Lab right-edge limitations until their own focused fixes and native gates pass.
+
+## Prioritized remaining phases
+
+| Order | Phase | Status | Remaining completion gate |
+| --- | --- | --- | --- |
+| Accepted scopes | P00 / P01 / P02-A | Complete within recorded scopes | Preserve integration, loading feedback and master-sound guarantees. |
+| 1 | P03 — native navigation | Partial | Publish qualified menu/dialog corrections; finish mode entry/exit, focus restoration, Back/explicit Resume and whole keyboard/controller/touch journeys. Retain Close lifecycle coverage and Motion Lab limits described above. |
+| 2 | P05 — shared readable presentation | Partial | Complete Team Large propagation, focused-field clearance, saving-warning placement, cross-mode preferences, EN/UA glyphs, text modes, zoom and reduced effects. |
+| 3 | P08-A — artwork and actor parity | Partial | Preserve exact artwork and complete arenas; finish readable silhouettes, heading, motion and displayed scale in Solo/Versus/Team independently of hitboxes. Resolve the shared 64-logical-pixel actor cap versus nominal minimum display size on narrow 72-column boards. |
+| 4 | P08-B — action feedback | Partial | Explain trail danger, capture, loss/recovery, bonuses, Support/rescue and victory without covering play; cover reduced effects and every advertised mode. |
+| 5 | P09 — challenge and enemy intelligence | Partial foundations | Tune the three-level benchmark, route pressure and warnings/counters. Prove deterministic collisions, replay/checkpoints and defeat-once rewards, then conduct human difficulty/replay-value playtests. |
+| 6 | P07 — rewards and continuation | Partial; ordinary Solo correction accepted in v0.61.0 | Publish and publicly verify the qualified Team View picture correction. Finish all mode transitions, objectives/mastery, optional skippable stories, recovery and duplicate-reward safeguards. |
+| 7 | P02-B — complete music | Partial | Custom MP3s and shared playlists in every advertised mode; exact transfer/offline playback; audition and qualify synth, chiptune, rock and metal tracks. |
+| 8 | P04 — creation framework | Partial | Real upload/edit/export/import/play with exact originals, previews/history, asset and edition registries, prompts and safe failure recovery. Studio guide acceptance is a navigation slice only. |
+| 9 | P06 — discovery and installation | Partial | Compatible catalog, explicit optional downloads, safe replacement/removal and interrupted-install recovery. Validate capacity before campaign expansion. |
+| 10 | P10 — richer Team encounters | Queued | First Connection and Relay Yard variants with Support, rescue, shared objectives and a separate two-player readability/encounter matrix. |
+| 11 | P11-A–D — FPV campaigns | Queued | Four independently released twelve-mission campaigns with complete art, actors, sound, progression and rewards. |
+| 12 | P12-A–D — DroneAid campaigns | Queued | Four independently released twelve-mission campaigns with distinct Support/Combat framing and authored class interactions. |
+| 13 | P13 — Ukrainian culture | Queued | Twelve Living Atlas missions with cultural, historical and visual review. |
+| 14 | P14 — retro arcade | Queued | Twelve After School Arcade missions with distinct nostalgic art, encounters and music. |
+| 15 | P15 — spend management | Queued | Twelve Spend in Motion missions with understandable noncombat goals and complete Coupa presentation. |
+| 16 | P16 — supporting workflows | Partial | Complete Collection, scores, replay, learning, data recovery and legacy-content journeys under the established navigation standard. |
+| 17 | P17 — reproducible authoring | Partial | Complete guides, AI skills, prompts, templates and CLI examples. Modularize the large runtime-maintainer skill into a concise entry and scoped references; independently create, install, play, export and recover an example from a fresh workspace. |
+| Release gate | P18 — full browser qualification | Partial evidence | Cross-phase regression, performance, accessibility, media/offline recovery and actual touch/controller hardware. Resolve required outstanding issues. |
+| Later | Native stores / network multiplayer | Deferred | Separate packaging, signing, lifecycle, hardware, authoritative-network and reconnect gates. |
+
+## Content ledger and production gate
+
+The last accepted ledger remains **15/29 map families and 60/116 pictures**, **1/12 victory stories**, and **40 selected source reserve illustrations**. That leaves 14 families, 56 pictures and 11 stories beyond accepted content. The reserve originals are not 40 installed missions. The target of 56 complete animated character sets is unmet; body images alone do not count. The 24-track music programme requires finished listening and qualification. This report does not re-audit that content library.
+
+**132 new Solo missions and 36 Team configurations remain programme targets.** Bulk production follows the three-level gameplay/presentation quality gate. Finish navigation, readable art and action feedback before judging enemy difficulty. Record player comprehension, attempts, loss causes, escape routes and route variety. Registry coverage, passing source checks and byte audits do not establish enjoyable challenge or finished content.
+
+## Research and release practice
+
+The coordinator's retained [navigation research](../queue-evidence/navigation-research.original.md) links [Xbox navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) and the [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/): restore focus to a logical opener, keep Back visible, and test complete digital-input journeys. The retained [text-display research](../queue-evidence/text-display-research.original.md) applies [Xbox text guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101) to gameplay cues and text inside badges as actually displayed. These references were checked on 18 September 2026; physical hardware acceptance remains separate.
+
+For each completed feature/phase, review and commit only related hunks (whole related binary assets with hashes), allocate the next unused version, pass source/build gates, review and merge the source PR, freeze immutable release assets, update Pages through its PR, then verify actual deployed bytes and affected journeys. Report the exact source/PR, playable URL, passed checks and limitations. Only accepted scope becomes Complete. This documentation-only acceptance report records v0.61.5; it does not bump game version or redeploy unchanged game bytes.

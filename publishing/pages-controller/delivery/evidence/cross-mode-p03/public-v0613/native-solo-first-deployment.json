@@ -1,0 +1,28 @@
+{
+  "status": "SCOPED_PUBLIC_NATIVE_PASS_FIRST_DEPLOYMENT",
+  "observedAt": "2026-09-18T09:22:52.172135+00:00",
+  "source": "58ff1b1da3c5487412e168ce34539866ac2f4970",
+  "version": "v0.61.3",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.61.3/site/game/index.html",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "input": "Actual keyboard through cua_repl; no injected application state",
+  "journeys": [
+    "/game/ resolved to frozen v0.61.3 title with Start focused.",
+    "Return started First Signal; Down selected persistent direction; Escape paused at0:05.",
+    "Tab to Mission brief and Return opened it; Escape returned focus to Mission brief without advancing clock.",
+    "ShiftTab twice and Return explicitly resumed saved direction.",
+    "Real win at52.2%,8160points,0:09,3lives and3stars; Next uncleared mission focused.",
+    "Tab Return opened full picture; screenshot showed no results panel, Results focused.",
+    "Return restored View picture focus; coverage/score/time/lives stayedunchanged."
+  ],
+  "screenshots": "Inspected inline, not exported; no raw image hash claimed.",
+  "deploymentScope": "Observed after first successful run35328391453 on100702d5. Same immutable game is being republished from updated main68f9; final authority/byte audit and a postdeployment smoke remain pending.",
+  "limits": [
+    "No physical controller/touch, audio, offline or wholephase acceptance.",
+    "Source-only Enemy Workshop Return is separate from ordinary public runtime.",
+    "No profile database introspection or duplicate-achievement proof claimed by this native observation."
+  ]
+}

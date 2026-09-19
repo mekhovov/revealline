@@ -1,0 +1,113 @@
+{
+  "status": "REFUSED_CURRENT_MAIN_CHANGED",
+  "recordedAt": "2026-09-18T09:18:16.853632+00:00",
+  "expectedController": "100702d50a2ed8165a4c92f18b06727ea9f12783",
+  "observedMain": "68f9ebdfe13ef7ac76a75e59204c1b972c5c8606",
+  "pagesRun": 35328391453,
+  "pagesConclusion": "success",
+  "reason": "The unchanged observer requires fresh current main to equal the controller and workflow head. No binding or intake request was created from this inconsistent snapshot.",
+  "originals": [
+    {
+      "path": "hosted-observation-pages-r2/artifacts.attempt.json",
+      "bytes": 1449,
+      "sha256": "fb8f0b6c0f17538a129f65b192780f5f22d10bf5aafb411b48e1e7d0ef2cfe8f"
+    },
+    {
+      "path": "hosted-observation-pages-r2/artifacts.json",
+      "bytes": 1401,
+      "sha256": "8d31b857df1f10a432a5a55f0a858be0a794b031143a9baa80c507acf8311549"
+    },
+    {
+      "path": "hosted-observation-pages-r2/artifacts.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployments.attempt.json",
+      "bytes": 1489,
+      "sha256": "ab8fd92ce1c7bfef7881818ca8282ed80a01f157aed8bc739eca3ccb2eba606a"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployments.json",
+      "bytes": 3825,
+      "sha256": "0ecc11209d49510a9d89df953d4f7bbe154f97759cc6a4438eba689f43ad2ec3"
+    },
+    {
+      "path": "hosted-observation-pages-r2/deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/jobs.attempt.json",
+      "bytes": 1429,
+      "sha256": "727eb7307be45910c1606777dbc1793332aa2cadb440e1d7ce76d1201489c157"
+    },
+    {
+      "path": "hosted-observation-pages-r2/jobs.json",
+      "bytes": 5571,
+      "sha256": "e7dd237c0e93ac7e88e95f1ee8bff6e9e0923950fa9ed963d85a619217a4a380"
+    },
+    {
+      "path": "hosted-observation-pages-r2/jobs.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/main.attempt.json",
+      "bytes": 1416,
+      "sha256": "0baea05ee8a1f1b1ba723e8d0401148631e12072b7fe1ff568c5f8218930abbf"
+    },
+    {
+      "path": "hosted-observation-pages-r2/main.json",
+      "bytes": 336,
+      "sha256": "8491d8a3e4c0ddb0d7c1e37e3e1b24528006cca0078c0d4e03ae1b0e937bc54e"
+    },
+    {
+      "path": "hosted-observation-pages-r2/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/run.attempt.json",
+      "bytes": 1423,
+      "sha256": "3a7b5732e4187c4f588376f06f75c75e6cdfba8144b8cd2271dd6d21ee5a23b0"
+    },
+    {
+      "path": "hosted-observation-pages-r2/run.json",
+      "bytes": 12190,
+      "sha256": "a6dc07e9ea70898f43429dc67db0426539a855288f337fda59a7286e07f6ea21"
+    },
+    {
+      "path": "hosted-observation-pages-r2/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-observation-pages-r2/wrapper.attempt.json",
+      "bytes": 1461,
+      "sha256": "e0a7d20ae4f2e3bc7933522ead5970c7bb72ce141bc5cbc7dd17faab64df5ba5"
+    },
+    {
+      "path": "hosted-observation-pages-r2/wrapper.json",
+      "bytes": 2688,
+      "sha256": "6b6a18190d231f00610ac5c35836fc44827b6cb690b5797358a04d2ea8378a1e"
+    },
+    {
+      "path": "hosted-observation-pages-r2/wrapper.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pages-observe-r2.stderr",
+      "bytes": 460,
+      "sha256": "dc12a6a80af6b2304e1613a941c095434d75a34b613ac47ef1d0466dd2d647f5"
+    },
+    {
+      "path": "pages-observe-r2.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "artifactGets": 0,
+  "publicAcceptance": false
+}

@@ -1,0 +1,24 @@
+{
+  "status": "ROOT_ACCEPTED_EXACT_SOURCE_PACKAGE_ONLY",
+  "at": "2026-09-18T17:45:02.064172+00:00",
+  "source": {
+    "commit": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+    "tree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+    "version": "v0.61.22"
+  },
+  "packageReadySHA256": "c01cd974297f1dc8a9715667358a5360a8086a26cdb6e64e2054c438c9edfe0c",
+  "independentReviewSHA256": "91955a5026dd08086b115e9af8406e2dfa0faf31b03eaaac701890ad63b4cb12",
+  "sevenAttachmentsRehashed": true,
+  "testCountEachFamily": 5922,
+  "testFiles": 466,
+  "sourceIndexClean": true,
+  "fullNativeAcceptance": false,
+  "publicAcceptance": false,
+  "wholePhaseAccepted": false,
+  "remaining": [
+    "Source integration and immutable release",
+    "Exact final-source actor native journeys",
+    "Public release bytes and affected game journeys",
+    "Existing P03/P05/P07/P08/P18 open gates"
+  ]
+}

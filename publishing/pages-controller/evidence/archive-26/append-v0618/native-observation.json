@@ -1,0 +1,610 @@
+[
+  {
+    "name": "01-archive-index",
+    "active": "",
+    "body": "RevealLine archive 26\n\nThe original v0.61.7 and v0.61.8 builds, preserved for comparison and historical play.\n\nPlay v0.61.7\n\nPlay v0.61.8\n\nOpen the current release explorer",
+    "document": [
+      1280,
+      720
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "02-v617-home",
+    "active": "shell-featured",
+    "body": "◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nLoading release artwork and fonts…\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.7\n\nHANGAR 01\nFIRST LIGHT",
+    "document": [
+      1280,
+      720
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "03-v617-capture-paused",
+    "active": "enemy-guide-frame",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.7\n\nHANGAR 01\nFIRST LIGHT\n\nFIELD KIT / WORKSHOP\n\nMake it yours\nBack\n\nBuild a world, tune your kit, or practice the next move.\n\nAsset Studio\nArt, themes & generation prompts\nMission playground\nBuild and test a flight\nEnemy workshop\nCharacters & behaviors\nMotion lab\nPictures & stories\nVideo poster workshop\nDesign atlas\nReplay Theater\nReview a recorded flight\nExport replay\nController practice\nCheck your controls\nField guide & practice\nScores & saves\nHow to play\nSound & game extras\nField guide\n\nClose a short cut while it is moving away. Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson. Pause to Restart or Return to field guide.\n\nReturn to field guide\n\nPractice only · campaign progress and saved flights are unchanged.",
+    "document": [
+      1280,
+      720
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "v617-practice-capture",
+    "body": " ◩ REVEAL / LINE\nPRACTICE\n⛶\nMissions\nCollection\nSettings\nREVEALED\n6.8%\nTARGET 55%\nLIVES\n◆ ◆ ◆\nTIME\n0:09\nSCORE\n01620\n\nPAUSED\n\nResume →\nRestart mission\nMission brief\nMain menu\nReturn to field guide"
+  },
+  {
+    "name": "04-v617-explicit-resume",
+    "active": "enemy-guide-frame",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.7\n\nHANGAR 01\nFIRST LIGHT\n\nFIELD KIT / WORKSHOP\n\nMake it yours\nBack\n\nBuild a world, tune your kit, or practice the next move.\n\nAsset Studio\nArt, themes & generation prompts\nMission playground\nBuild and test a flight\nEnemy workshop\nCharacters & behaviors\nMotion lab\nPictures & stories\nVideo poster workshop\nDesign atlas\nReplay Theater\nReview a recorded flight\nExport replay\nController practice\nCheck your controls\nField guide & practice\nScores & saves\nHow to play\nSound & game extras\nField guide\n\nClose a short cut while it is moving away. Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson. Pause to Restart or Return to field guide.\n\nReturn to field guide\n\nPractice only · campaign progress and saved flights are unchanged.",
+    "document": [
+      1280,
+      720
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "v617-practice-resumed",
+    "body": "◩\n⛶\nⅡ\nREVEALED\n6.8%\nTARGET 55%\nLIVES\n◆ ◆ ◆\nTIME\n0:09\nSCORE\n01620"
+  },
+  {
+    "name": "v617-after-resume-pause",
+    "body": " ◩ REVEAL / LINE\nPRACTICE\n⛶\nMissions\nCollection\nSettings\nREVEALED\n6.8%\nTARGET 55%\nLIVES\n◆ ◆ ◆\nTIME\n0:18\nSCORE\n01620\n\nPAUSED\n\nResume →\nRestart mission\nMission brief\nMain menu\nReturn to field guide"
+  },
+  {
+    "name": "v617-guide-return-focus",
+    "active": "enemy-guide-play"
+  },
+  {
+    "name": "05-v617-workshop-return",
+    "active": "shell-guide",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.7\n\nHANGAR 01\nFIRST LIGHT\n\nFIELD KIT / WORKSHOP\n\nMake it yours\nBack\n\nBuild a world, tune your kit, or practice the next move.\n\nAsset Studio\nArt, themes & generation prompts\nMission playground\nBuild and test a flight\nEnemy workshop\nCharacters & behaviors\nMotion lab\nPictures & stories\nVideo poster workshop\nDesign atlas\nReplay Theater\nReview a recorded flight\nExport replay\nController practice\nCheck your controls\nField guide & practice\nScores & saves\nHow to play\nSound & game extras",
+    "document": [
+      1280,
+      720
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "06-v618-home",
+    "active": "shell-featured",
+    "body": "◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nAnother game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.\n\nLoading release artwork and fonts…\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.8\n\nHANGAR 01\nFIRST LIGHT",
+    "document": [
+      1280,
+      768
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "v618-practice-capture",
+    "body": " ◩ REVEAL / LINE\nPRACTICE\n⛶\nMissions\nCollection\nSettings\nREVEALED\n4.8%\nTARGET 55%\nLIVES\n◆ ◆ ◆\nTIME\n0:09\nSCORE\n01140\n\nPAUSED\n\nResume →\nRestart mission\nMission brief\nMain menu\nReturn to field guide"
+  },
+  {
+    "name": "07-v618-capture-paused",
+    "active": "enemy-guide-frame",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nAnother game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.8\n\nHANGAR 01\nFIRST LIGHT\n\nFIELD KIT / WORKSHOP\n\nMake it yours\nBack\n\nBuild a world, tune your kit, or practice the next move.\n\nAsset Studio\nArt, themes & generation prompts\nMission playground\nBuild and test a flight\nEnemy workshop\nCharacters & behaviors\nMotion lab\nPictures & stories\nVideo poster workshop\nDesign atlas\nReplay Theater\nReview a recorded flight\nExport replay\nController practice\nCheck your controls\nField guide & practice\nScores & saves\nHow to play\nSound & game extras\nField guide\n\nClose a short cut while it is moving away. Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson. Pause to Restart or Return to field guide.\n\nReturn to field guide\n\nPractice only · campaign progress and saved flights are unchanged.",
+    "document": [
+      1280,
+      751
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "08-v618-explicit-resume",
+    "active": "enemy-guide-frame",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nAnother game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.8\n\nHANGAR 01\nFIRST LIGHT\n\nFIELD KIT / WORKSHOP\n\nMake it yours\nBack\n\nBuild a world, tune your kit, or practice the next move.\n\nAsset Studio\nArt, themes & generation prompts\nMission playground\nBuild and test a flight\nEnemy workshop\nCharacters & behaviors\nMotion lab\nPictures & stories\nVideo poster workshop\nDesign atlas\nReplay Theater\nReview a recorded flight\nExport replay\nController practice\nCheck your controls\nField guide & practice\nScores & saves\nHow to play\nSound & game extras\nField guide\n\nClose a short cut while it is moving away. Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson. Pause to Restart or Return to field guide.\n\nReturn to field guide\n\nPractice only · campaign progress and saved flights are unchanged.",
+    "document": [
+      1280,
+      751
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "v618-practice-resumed",
+    "body": "◩\n⛶\nⅡ\nREVEALED\n4.8%\nTARGET 55%\nLIVES\n◆ ◆ ◆\nTIME\n0:09\nSCORE\n01140"
+  },
+  {
+    "name": "v618-after-resume-pause",
+    "body": " ◩ REVEAL / LINE\nPRACTICE\n⛶\nMissions\nCollection\nSettings\nREVEALED\n4.8%\nTARGET 55%\nLIVES\n◆ ◆ ◆\nTIME\n0:15\nSCORE\n01140\n\nPAUSED\n\nResume →\nRestart mission\nMission brief\nMain menu\nReturn to field guide"
+  },
+  {
+    "name": "v618-guide-return-focus",
+    "active": "enemy-guide-play"
+  },
+  {
+    "name": "09-v618-workshop-return",
+    "active": "shell-guide",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nAnother game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.8\n\nHANGAR 01\nFIRST LIGHT\n\nFIELD KIT / WORKSHOP\n\nMake it yours\nBack\n\nBuild a world, tune your kit, or practice the next move.\n\nAsset Studio\nArt, themes & generation prompts\nMission playground\nBuild and test a flight\nEnemy workshop\nCharacters & behaviors\nMotion lab\nPictures & stories\nVideo poster workshop\nDesign atlas\nReplay Theater\nReview a recorded flight\nExport replay\nController practice\nCheck your controls\nField guide & practice\nScores & saves\nHow to play\nSound & game extras",
+    "document": [
+      1280,
+      751
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "10-v618-still-operation-lock",
+    "active": "",
+    "body": "Still picture workshop\n\nWorkshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.\n\nBack to this edition’s game\n\nUpload an original, choose an exact map and world, then save and preview its assignment.\n\nThis workshop reads the installed packs for this exact game edition, or the dev channel when served from source. Close that game before editing. Fresh flights use the assigned revision. Saved flights and earned Collection pictures keep their original choice; changing an assignment does not replace them.\n\nReal local storage: Open local media upgrades this address’s shared image/story/music database to version 4. It is not a sandbox. Older game audio readers cannot reopen it. Export your music in the old game first if needed, then close old tabs. Original MP3 and image bytes are retained; no downgrade or automatic deletion is provided.\n\nOpen local media\nClose local connections\nTry Dawn Signal\n\nAn optional eight-second silent story for the base game’s First Signal mission in FPV Front. Download both example files, then use Open local media to review and restore them. Nothing is installed until you explicitly restore it.\n\nDownload Dawn Signal picture\nDownload Dawn Signal story\nExample identity and hashes\nRestore the picture file first. Preserve current assignments unless you intend to replace them. Then choose Reload saved media and installed maps; the other editing tools remain disabled until this reload.\nRestore the story file with Restore incoming bindings.\nReturn to this edition’s game, choose base-game First Signal and FPV Front, then win a fresh attempt. Choose Victory story to Play or Skip. Saved flights and previously earned pictures retain their earlier choices.\nSoundtrack recovery\n\nThe compatible audio adapter shares the same version 4 manager. If the saved data can be verified, prepare an unchanged .rlsound backup. Still pictures are not included. Corrupt metadata can require a separate recovery tool; it is never replaced with an empty library here.\n\nPrepare soundtrack backup\n\nKeep original image files outside browser storage. Inside the workshop, Prepare originals download creates a verified .rlmedia backup; use its separate Download originals link. To restore, choose a file and assignment policy, review it, then explicitly Restore. Game progress, saved flights, packs and audio-only files need their separate backups. This workshop can bind an optional story to an exact saved picture. Keep video originals in a separate .rlstory backup. Authoring and previews do not award pictures.\n\nKeyboard: Tab/arrows and Enter, Escape to close. Controller: join, D-pad to move, South to choose, East to return. File picking and text entry use the browser/OS controls; no controller virtual keyboard is supplied.\n\nStill picture workshop\n\nClose the source game and finish its pack or backup operation, then retry.\n\nCancel pending work\nClose workshop\n\nSave exact map/world assignments for fresh flights. Existing saved flights and earned Collection pictures keep their original revision. Original files remain unchanged.\n\nNo verified saved media loaded.\n\nInstalled chapter\nMap\nWorld\nSaved picture revision\nOriginal PNG or JPEG (4 MiB maximum)\nDeclared source\nMy uploaded file\nOriginal artwork\nLicensed artwork\nCredit\nSource / provenance note\nPicture description\nPreview chosen file\nPreview saved revision\nPreview authored picture\nSave assignment\nUse authored picture\nDiscard draft\nReload saved media and installed maps\nOriginal picture files\n\nA .rlmedia file includes every referenced still original, retained generic original and exact owner history. Game progress, flights, packs and audio-only files need their separate backups.\n\nOriginals backup (.rlmedia, at most 256 MiB)\nAssignment restore policy\nKeep current assignments; add missing bindings\nUse the bundle’s exact assignment set\n\nKeep destination assignments when they conflict, and add only missing bindings. Every retained original and revision stays saved.\n\nNo originals backup has been reviewed.\n\nPrepare originals download\nReview chosen originals backup\nRestore reviewed originals\nOptional story\n\nChoose a saved picture revision before preparing its story. Saved flights and earned pictures are unchanged.\n\nSave or select an exact picture revision to attach a story.\n\nSelected story: none.\n\nOwned video (MP4 or WebM, 64 MiB maximum)\nStory starts at (seconds)\nStory ends at (seconds)\nPoster frame at (seconds)\nStory description\nSaved story for this picture\nChoose a saved story…\n\nInspect chosen video\nCapture picture draft\nPrepare new story\nPrepare saved story\nSave prepared story\nClear story binding\n\nStory originals\n\nRestore picture originals separately with .rlmedia. This file contains story history and video originals; no progress or audio.\n\nStory originals (.rlstory, 256 MiB maximum)\nStory binding restore policy\nKeep current bindings\nRestore incoming bindings\n\nNo story backup reviewed.\n\nPrepare story download\nReview chosen story backup\nRestore reviewed stories",
+    "document": [
+      1280,
+      1370
+    ],
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "v618-still-retry-fresh-tab",
+    "status": "Close the source game and finish its pack or backup operation, then retry.",
+    "note": "Original test tab closed; release writer remains held elsewhere. No bypass or storage modification."
+  },
+  {
+    "name": "11-explorer-return",
+    "url": "https://mekhovov.github.io/revealline/releases/",
+    "links": [
+      {
+        "href": "https://mekhovov.github.io/revealline/releases/v0.61.8/site/game/",
+        "label": "Play"
+      },
+      {
+        "href": "https://github.com/mekhovov/revealline/releases/download/v0.61.8/distribution.zip",
+        "label": "Download ZIP"
+      },
+      {
+        "href": "https://mekhovov.github.io/revealline/releases/v0.61.8/release.json",
+        "label": "Manifest"
+      },
+      {
+        "href": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.7/site/game/",
+        "label": "Play"
+      },
+      {
+        "href": "https://github.com/mekhovov/revealline/releases/download/v0.61.7/distribution.zip",
+        "label": "Download ZIP"
+      },
+      {
+        "href": "https://mekhovov.github.io/revealline/releases/v0.61.7/release.json",
+        "label": "Manifest"
+      }
+    ]
+  },
+  {
+    "name": "12-v618-owned-preview-portrait",
+    "active": "still-media-preview",
+    "bodyFont": "18px",
+    "rects": [
+      {
+        "bottom": 828,
+        "font": "18px",
+        "height": 812,
+        "id": "still-media-dialog",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 369,
+        "scroll": 982,
+        "value": "",
+        "width": 348,
+        "x": 21,
+        "y": 16
+      },
+      {
+        "bottom": 236.59375,
+        "font": "18px",
+        "height": 205.59375,
+        "id": "still-media-operations",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 31
+      },
+      {
+        "bottom": 8.875,
+        "font": "16px",
+        "height": 91.59375,
+        "id": "still-media-file-label",
+        "line": "21.6px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": -82.71875
+      },
+      {
+        "bottom": 8.875,
+        "font": "16px",
+        "height": 64,
+        "id": "still-media-file",
+        "line": "21.6px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "C:\\fakepath\\revealline-owned-preview.png",
+        "width": 318,
+        "x": 36,
+        "y": -55.125
+      },
+      {
+        "bottom": 597.75,
+        "font": "18px",
+        "height": 238.5,
+        "id": "still-media-preview-canvas",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 359.25
+      }
+    ],
+    "stats": "2 retained image records · 2 immutable revisions · saved generation 2",
+    "status": "768 × 576 · 46655 original bytes verified. Preview only; choose Save assignment to retain them.",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "name": "13-v618-picker-portrait",
+    "active": "still-media-file",
+    "bodyFont": "18px",
+    "rects": [
+      {
+        "bottom": 828,
+        "font": "18px",
+        "height": 812,
+        "id": "still-media-dialog",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 369,
+        "scroll": 604,
+        "value": "",
+        "width": 348,
+        "x": 21,
+        "y": 16
+      },
+      {
+        "bottom": 236.59375,
+        "font": "18px",
+        "height": 205.59375,
+        "id": "still-media-operations",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 31
+      },
+      {
+        "bottom": 386.875,
+        "font": "16px",
+        "height": 91.59375,
+        "id": "still-media-file-label",
+        "line": "21.6px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 295.28125
+      },
+      {
+        "bottom": 386.875,
+        "font": "16px",
+        "height": 64,
+        "id": "still-media-file",
+        "line": "21.6px",
+        "offset": "4px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "C:\\fakepath\\revealline-owned-preview.png",
+        "width": 318,
+        "x": 36,
+        "y": 322.875
+      },
+      {
+        "bottom": 975.75,
+        "font": "18px",
+        "height": 238.5,
+        "id": "still-media-preview-canvas",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 737.25
+      }
+    ],
+    "stats": "2 retained image records · 2 immutable revisions · saved generation 2",
+    "status": "768 × 576 · 46655 original bytes verified. Preview only; choose Save assignment to retain them.",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "name": "14-v618-picker-landscape",
+    "active": "still-media-file",
+    "bodyFont": "18px",
+    "rects": [
+      {
+        "bottom": 374,
+        "font": "18px",
+        "height": 358,
+        "id": "still-media-dialog",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 823,
+        "scroll": 379.5,
+        "value": "",
+        "width": 802,
+        "x": 21,
+        "y": 16
+      },
+      {
+        "bottom": 136,
+        "font": "18px",
+        "height": 97,
+        "id": "still-media-operations",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 800,
+        "scroll": 0,
+        "value": "",
+        "width": 756,
+        "x": 44,
+        "y": 39
+      },
+      {
+        "bottom": 235.59375,
+        "font": "16px",
+        "height": 91.59375,
+        "id": "still-media-file-label",
+        "line": "21.6px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 416,
+        "scroll": 0,
+        "value": "",
+        "width": 372,
+        "x": 44,
+        "y": 144
+      },
+      {
+        "bottom": 235.59375,
+        "font": "16px",
+        "height": 64,
+        "id": "still-media-file",
+        "line": "21.6px",
+        "offset": "4px",
+        "outline": "3px",
+        "right": 416,
+        "scroll": 0,
+        "value": "C:\\fakepath\\revealline-owned-preview.png",
+        "width": 372,
+        "x": 44,
+        "y": 171.59375
+      },
+      {
+        "bottom": 605.9765625,
+        "font": "18px",
+        "height": 187.1953125,
+        "id": "still-media-preview-canvas",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 800,
+        "scroll": 0,
+        "value": "",
+        "width": 756,
+        "x": 44,
+        "y": 418.78125
+      }
+    ],
+    "stats": "2 retained image records · 2 immutable revisions · saved generation 2",
+    "status": "768 × 576 · 46655 original bytes verified. Preview only; choose Save assignment to retain them.",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      844,
+      390
+    ]
+  },
+  {
+    "name": "15-v618-picker-return-portrait",
+    "active": "still-media-file",
+    "bodyFont": "18px",
+    "rects": [
+      {
+        "bottom": 828,
+        "font": "18px",
+        "height": 812,
+        "id": "still-media-dialog",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 369,
+        "scroll": 379.5,
+        "value": "",
+        "width": 348,
+        "x": 21,
+        "y": 16
+      },
+      {
+        "bottom": 236.59375,
+        "font": "18px",
+        "height": 205.59375,
+        "id": "still-media-operations",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 31
+      },
+      {
+        "bottom": 611.375,
+        "font": "16px",
+        "height": 91.59375,
+        "id": "still-media-file-label",
+        "line": "21.6px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 519.78125
+      },
+      {
+        "bottom": 611.375,
+        "font": "16px",
+        "height": 64,
+        "id": "still-media-file",
+        "line": "21.6px",
+        "offset": "4px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "C:\\fakepath\\revealline-owned-preview.png",
+        "width": 318,
+        "x": 36,
+        "y": 547.375
+      },
+      {
+        "bottom": 1200.25,
+        "font": "18px",
+        "height": 238.5,
+        "id": "still-media-preview-canvas",
+        "line": "27px",
+        "offset": "0px",
+        "outline": "3px",
+        "right": 354,
+        "scroll": 0,
+        "value": "",
+        "width": 318,
+        "x": 36,
+        "y": 961.75
+      }
+    ],
+    "stats": "2 retained image records · 2 immutable revisions · saved generation 2",
+    "status": "768 × 576 · 46655 original bytes verified. Preview only; choose Save assignment to retain them.",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "name": "16-v618-escape-opener",
+    "active": "still-host-open",
+    "body": "Still picture workshop\n\nReal local media opened for release-v0.61.8. Picture assignments are ready for fresh flights in this edition.\n\nBack to this edition’s game\n\nUpload an original, choose an exact map and world, then save and preview its assignment.\n\nThis workshop reads the installed packs for this exact game edition, or the dev channel when served from source. Close that game before editing. Fresh flights use the assigned revision. Saved flights and earned Collection pictures keep their original choice; changing an assignment does not replace them.\n\nReal local storage: Open local media upgrades this address’s shared image/story/music database to version 4. It is not a sandbox. Older game audio readers cannot reopen it. Export your music in the old game first if needed, then close old tabs. Original MP3 and image bytes are retained; no downgrade or automatic deletion is provided.\n\nOpen local media\nClose local connections\nTry Dawn Signal\n\nAn optional eight-second silent story for the base game’s First Signal mission in FPV Front. Download both example files, then use Open local media to review and restore them. Nothing is installed until you explicitly restore it.\n\nDownload Dawn Signal picture\nDownload Dawn Signal story\nExample identity and hashes\nRestore the picture file first. Preserve current assignments unless you intend to replace them. Then choose Reload saved media and installed maps; the other editing tools remain disabled until this reload.\nRestore the story file with Restore incoming bindings.\nReturn to this edition’s game, choose base-game First Signal and FPV Front, then win a fresh attempt. Choose Victory story to Play or Skip. Saved flights and previously earned pictures retain their earlier choices.\nSoundtrack recovery\n\nThe compatible audio adapter shares the same version 4 manager. If the saved data can be verified, prepare an unchanged .rlsound backup. Still pictures are not included. Corrupt metadata can require a separate recovery tool; it is never replaced with an empty library here.\n\nPrepare soundtrack backup\n\nKeep original image files outside browser storage. Inside the workshop, Prepare originals download creates a verified .rlmedia backup; use its separate Download originals link. To restore, choose a file and assignment policy, review it, then explicitly Restore. Game progress, saved flights, packs and audio-only files need their separate backups. This workshop can bind an optional story to an exact saved picture. Keep video originals in a separate .rlstory backup. Authoring and previews do not award pictures.\n\nKeyboard: Tab/arrows and Enter, Escape to close. Controller: join, D-pad to move, South to choose, East to return. File picking and text entry use the browser/OS controls; no controller virtual keyboard is supplied.",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "name": "17-v618-close-opener",
+    "active": "still-host-open",
+    "body": "Still picture workshop\n\nReal local media opened for release-v0.61.8. Picture assignments are ready for fresh flights in this edition.\n\nBack to this edition’s game\n\nUpload an original, choose an exact map and world, then save and preview its assignment.\n\nThis workshop reads the installed packs for this exact game edition, or the dev channel when served from source. Close that game before editing. Fresh flights use the assigned revision. Saved flights and earned Collection pictures keep their original choice; changing an assignment does not replace them.\n\nReal local storage: Open local media upgrades this address’s shared image/story/music database to version 4. It is not a sandbox. Older game audio readers cannot reopen it. Export your music in the old game first if needed, then close old tabs. Original MP3 and image bytes are retained; no downgrade or automatic deletion is provided.\n\nOpen local media\nClose local connections\nTry Dawn Signal\n\nAn optional eight-second silent story for the base game’s First Signal mission in FPV Front. Download both example files, then use Open local media to review and restore them. Nothing is installed until you explicitly restore it.\n\nDownload Dawn Signal picture\nDownload Dawn Signal story\nExample identity and hashes\nRestore the picture file first. Preserve current assignments unless you intend to replace them. Then choose Reload saved media and installed maps; the other editing tools remain disabled until this reload.\nRestore the story file with Restore incoming bindings.\nReturn to this edition’s game, choose base-game First Signal and FPV Front, then win a fresh attempt. Choose Victory story to Play or Skip. Saved flights and previously earned pictures retain their earlier choices.\nSoundtrack recovery\n\nThe compatible audio adapter shares the same version 4 manager. If the saved data can be verified, prepare an unchanged .rlsound backup. Still pictures are not included. Corrupt metadata can require a separate recovery tool; it is never replaced with an empty library here.\n\nPrepare soundtrack backup\n\nKeep original image files outside browser storage. Inside the workshop, Prepare originals download creates a verified .rlmedia backup; use its separate Download originals link. To restore, choose a file and assignment policy, review it, then explicitly Restore. Game progress, saved flights, packs and audio-only files need their separate backups. This workshop can bind an optional story to an exact saved picture. Keep video originals in a separate .rlstory backup. Authoring and previews do not award pictures.\n\nKeyboard: Tab/arrows and Enter, Escape to close. Controller: join, D-pad to move, South to choose, East to return. File picking and text entry use the browser/OS controls; no controller virtual keyboard is supplied.",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/authoring/still-media/",
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "name": "v618-final-reopened-verified",
+    "stats": "2 retained image records · 2 immutable revisions · saved generation 2",
+    "status": "Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision."
+  },
+  {
+    "name": "18-v618-back-home",
+    "active": "shell-featured",
+    "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path.\nReveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nMission brief\nMain menu\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nFPV FIELD KIT / FLIGHT READY\n\nREVEAL\n/ LINE\nSolo\nOne player\nVersus\nTwo rival boards\nTeam\nOne shared arena\nStart\n→\nMissions\nCollection\nSettings\nWorkshop\nSound: off\n\nStart · First Signal\n\nChoose a flight. Trace a path. Close the line.\n\nVERSION V0.61.8\n\nHANGAR 01\nFIRST LIGHT",
+    "url": "https://mekhovov.github.io/revealline-archive-26/releases/v0.61.8/site/game/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  {
+    "name": "19-cleanup-archive-index",
+    "active": "",
+    "body": "RevealLine archive 26\n\nThe original v0.61.7 and v0.61.8 builds, preserved for comparison and historical play.\n\nPlay v0.61.7\n\nPlay v0.61.8\n\nOpen the current release explorer",
+    "url": "https://mekhovov.github.io/revealline-archive-26/",
+    "viewport": [
+      1280,
+      720
+    ]
+  }
+]

@@ -13,15 +13,14 @@ function versionParts(version) {
   return version.slice(1).split('.').map(Number);
 }
 
-/** Keep a bounded recent history for every semantic major-version line. */
+export function validReleaseRetention(value) {
+  return value === 'all' || (Number.isSafeInteger(value) && value >= 1 && value <= 100);
+}
+
+/** Keep all validated history, or a bounded recent set for every semantic major. */
 export function retainRecentMetadata(metadata, retainedReleasesPerMajor) {
-  if (
-    !(metadata instanceof Map) ||
-    !Number.isSafeInteger(retainedReleasesPerMajor) ||
-    retainedReleasesPerMajor < 1 ||
-    retainedReleasesPerMajor > 100
-  )
-    throw new Error('Invalid per-major release retention count.');
+  if (!(metadata instanceof Map) || !validReleaseRetention(retainedReleasesPerMajor))
+    throw new Error('Invalid per-major release retention policy.');
   const groups = new Map();
   for (const [version, item] of metadata) {
     const parts = versionParts(version),
@@ -37,7 +36,9 @@ export function retainRecentMetadata(metadata, retainedReleasesPerMajor) {
       }
       return left.version.localeCompare(right.version);
     });
-    for (const row of rows.slice(-retainedReleasesPerMajor)) retained.add(row.version);
+    const selected =
+      retainedReleasesPerMajor === 'all' ? rows : rows.slice(-retainedReleasesPerMajor);
+    for (const row of selected) retained.add(row.version);
   }
   return new Map([...metadata].filter(([version]) => retained.has(version)));
 }

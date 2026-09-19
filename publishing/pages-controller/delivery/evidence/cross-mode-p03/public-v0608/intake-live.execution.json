@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "run-capacity-bounded-intake.py"
+  ],
+  "start": "2026-09-18T01:52:03.497724+00:00",
+  "end": "2026-09-18T01:52:06.217110+00:00",
+  "exitCode": 0,
+  "runnerPurpose": "Capacity-only guard after one original GET and before extraction; original helper untouched."
+}

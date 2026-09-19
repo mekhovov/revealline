@@ -1,0 +1,67 @@
+{
+  "format": "revealline-release-utility-binding.v1",
+  "reviewed": true,
+  "repository": "mekhovov/revealline",
+  "source": {
+    "commit": "4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9",
+    "tree": "d16edac0127fc96139445ae2365cc74499f80921",
+    "version": "v0.61.6"
+  },
+  "artifact": {
+    "id": 10532569673,
+    "runId": 35308384414,
+    "bytes": 1421641282,
+    "sha256": "38236e3f2ab08006420674fa67ffa748817077b71f456bcbd8ab6fb3fafa4713"
+  },
+  "release": {
+    "id": 391439978,
+    "tag": "v0.61.6",
+    "assets": [
+      {
+        "name": "distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "c540395ddfd85eefcf08222ceee5d55da0ddd734ced857446ccca6bbc1e0c822"
+      },
+      {
+        "name": "manifest.json",
+        "bytes": 127872,
+        "sha256": "bc777fcde5ae6d8a35b5f7dd6fac418d57a44fb145c45ab6dffb0bb78908333e"
+      },
+      {
+        "name": "qualification-evidence-record.json",
+        "bytes": 12031,
+        "sha256": "e46ab8a498f83ccd2055dcfda0675d624613eb8756ea1a3a7d95939f2982ca6b"
+      },
+      {
+        "name": "release.json",
+        "bytes": 465,
+        "sha256": "1127a05dea1f3f24a74bc40f476d9089e9c5b5cfaf5192c2581c0a5c3ec53826"
+      },
+      {
+        "name": "source-qualification-evidence.zip",
+        "bytes": 3796187,
+        "sha256": "c4d57a66b8035129fbacd940309b6bd25c703732f2c27d522970ef646b5dee36"
+      },
+      {
+        "name": "source-qualification.json",
+        "bytes": 102335,
+        "sha256": "65101af99081508d016ae6e8596449438117bc404a45e40a459a4165b40e34e1"
+      },
+      {
+        "name": "verification.json",
+        "bytes": 1914,
+        "sha256": "82c9751944f469c54ee2ddfcf2cc56fec564691dd29e57d1683f11cde976b3a4"
+      },
+      {
+        "name": "source.tar",
+        "bytes": 1108111360,
+        "sha256": "b73d5dc5b8a29785e97bd0c06838abe349e833e2cbee62123010340cc12dc5dd"
+      },
+      {
+        "name": "distribution.zip",
+        "bytes": 313400772,
+        "sha256": "3cde046471c5d681f2c134d4058bcd96aa6ba5eda92c78cacc3e640c8fac0524"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+# Player illustration inset — local successor
+
+The craft now moves inward visually only when its complete paint envelope would cross an arena edge. The true contact ring is drawn last at the original position; a muted connector links it to the illustration. Art identity, source scale, cut/head, ability centers, simulation and saves are unchanged. Team keeps its separate existing placement calculation.
+
+The pure helper uses the actual Solo/Motion renderer’s cell units, source pivot, heading offset and shear/bank. It encloses the source/center mark, complete rotor sweep and bounded recipe attachment animation, including fallback and shadow. Rotor/effect phases cannot change the offset. Ordinary interior positions remain fractional and exact. Diffuse glow is excluded; an impossible-fit custom envelope is centered deterministically without pretending it fits.
+
+All 100 affected tests pass on each of Node 20.19.5 and 22.22.2; lint, formatting and diff checks pass. Actual paint-command geometry covers all four edges/corners, cardinal/diagonal headings, both banks/reduced motion, asymmetric wide/tall/absent images, all blade shapes/phases and optional recipe effects. Existing actual Versus-host checks retain both seats’ 240→320→240 fits and exact authority. The new BoardPainter check preserves real contact, active head, trail endpoints and checkpoint. It fails against the exact retained pre-inset renderer with image top -31.4667 logical pixels, and passes against this successor.
+
+Initial fixtures omitted explicit encounter:null and expected unrounded head coordinates; those failures are retained. A preparation guard also refused replacing a formatter-created node_modules directory; the following missing-loader failure was procedural, not a geometry proof. The corrected exact-source loader regression is retained separately. Temporary fixture links were removed only after target hash checks; the source index remains unchanged.
+
+The original eight-path packet, nine-path guide successor and clipped native screenshots remain immutable. This eleven-path successor is unversioned, unstaged and unpublished. Native craft/rotor recognition and connector/contact association must be repeated at narrow Standard/Large and detailed widths, all edges and active cuts. No native, physical-device, release or whole-P08 acceptance is claimed.

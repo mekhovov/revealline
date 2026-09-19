@@ -1,0 +1,16 @@
+{
+  "format": "revealline-public-intake-request.v1",
+  "reviewed": false,
+  "outputLabel": "UNBOUND_INTAKE_LABEL",
+  "currentVersion": "v0.60.8",
+  "gameSourceRevision": "a7fd646e40bd93268f56b714fdc5d8aa9b0b1f67",
+  "qualifiedSourceTree": "fffcf886b4f1a0000fbfd062a931bbe1cb0fef64",
+  "controllerCommit": null,
+  "controllerTree": null,
+  "runId": null,
+  "deploymentId": null,
+  "latestSuccessStatusId": null,
+  "receiptArtifact": null,
+  "hostedObservation": null,
+  "publishedRelease": null
+}

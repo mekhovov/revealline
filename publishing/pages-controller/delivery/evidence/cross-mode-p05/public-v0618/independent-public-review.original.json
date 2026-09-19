@@ -1,0 +1,304 @@
+{
+  "status": "PASS_INDEPENDENT_ALL_ROWS_AND_AUTHORITIES",
+  "at": "2026-09-18T15:29:44.707789+00:00",
+  "reviewer": "/root/qualify_media_final/review_intake_bounds",
+  "scope": "Read-only local reconciliation of original completed HTTP metadata, exact binding, catalog and post-HTTP authority originals. No network, body download, audit/helper/test execution, browser or source edit.",
+  "identity": {
+    "currentVersion": "v0.61.8",
+    "gameSourceRevision": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+    "qualifiedSourceTree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+    "controllerCommit": "e95374932385097fbdee58517f8f9bf269f3cff4",
+    "controllerTree": "627c93e560c27d1a4de1858c7ba8992048f02e81",
+    "deploymentId": 6527302148,
+    "runId": 35361114741
+  },
+  "counts": {
+    "resultRows": 3128,
+    "verifiedBytes": 642118555,
+    "attempts": 3129,
+    "failedAttempts": 1,
+    "retries": 1,
+    "finalFailures": 0,
+    "authorityPins": 9,
+    "releaseAssetDescriptors": 9,
+    "retainedCatalogAuthorities": 88,
+    "totalCatalogAuthorities": 89
+  },
+  "checks": [
+    "All 3,128 unique inventory rows, result rows, expected byte/hash declarations, canonical encoded URLs and decoded size/hash results reconcile exactly.",
+    "All 3,129 attempts occur within audit timestamps; each per-path attempt sequence is contiguous, bounded to three, and its final complete row equals the successful result.",
+    "MIME independently recomputed from each actual content-type header and exact reviewed extension policy; all 3,128 accepted.",
+    "All nine bound original authority files rehashed; exact binding and inventory serialization hashes match report, root binding review and receipt.",
+    "All 88 prior catalog entry bodies match, not merely version names; one exact v0.61.8 addition and all 89 public release-record hashes match inventory.",
+    "All four executed runner pins and 12 preparation helper pins rehashed; bound intake runner is a separate retained identity substitution, not included as byte-identical to its unbound original.",
+    "All 24 post-HTTP hosted-observation pins and 21 live-authority refresh pins rehashed; complete API streams, timestamps, main/tree/run/deployment/latest success, tag/source and release identities reconcile.",
+    "All nine release descriptors match retained published, pre-audit and after-audit release/Latest originals; small source assets match bound authority hashes."
+  ],
+  "mimeCounts": {
+    "application/javascript": 97,
+    "application/json": 361,
+    "application/manifest+json": 2,
+    "application/octet-stream": 132,
+    "font/ttf": 4,
+    "font/woff2": 18,
+    "image/jpeg": 16,
+    "image/png": 508,
+    "image/svg+xml": 2,
+    "text/css": 86,
+    "text/html": 1241,
+    "text/javascript": 614,
+    "text/markdown": 34,
+    "text/plain": 13
+  },
+  "recoveredFailure": {
+    "initialAttempt": {
+      "path": "releases/v0.61.8/site/game/core/classic-state.mjs",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.8/site/game/core/classic-state.mjs",
+      "attempt": 1,
+      "expectedBytes": 2306,
+      "expectedSha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377",
+      "startedAt": "2026-09-18T15:22:50.992Z",
+      "status": 503,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "etag": null,
+      "retryAfter": "0",
+      "ok": false,
+      "error": "Error: Expected direct HTTP 200, received 503",
+      "transportError": false,
+      "finishedAt": "2026-09-18T15:22:51.114Z"
+    },
+    "finalAttempt": {
+      "path": "releases/v0.61.8/site/game/core/classic-state.mjs",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.61.8/site/game/core/classic-state.mjs",
+      "attempt": 2,
+      "expectedBytes": 2306,
+      "expectedSha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377",
+      "startedAt": "2026-09-18T15:22:53.116Z",
+      "status": 200,
+      "contentType": "text/javascript; charset=utf-8",
+      "contentEncoding": "gzip",
+      "etag": "W/\"6aad563b-902\"",
+      "retryAfter": null,
+      "bytes": 2306,
+      "sha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377",
+      "bytesMatch": true,
+      "hashMatch": true,
+      "contentTypeAccepted": true,
+      "ok": true,
+      "finishedAt": "2026-09-18T15:22:53.254Z"
+    }
+  },
+  "catalogScope": {
+    "retainedCatalogAuthorities": 88,
+    "newCatalogAuthorities": 1,
+    "totalCatalogAuthorities": 89,
+    "retainedCatalogVersions": [
+      "v0.1.0",
+      "v0.1.1",
+      "v0.1.2",
+      "v0.10.0",
+      "v0.11.0",
+      "v0.12.0",
+      "v0.13.0",
+      "v0.14.0",
+      "v0.15.0",
+      "v0.16.0",
+      "v0.17.0",
+      "v0.17.1",
+      "v0.18.0",
+      "v0.19.0",
+      "v0.2.0",
+      "v0.2.1",
+      "v0.20.0",
+      "v0.21.0",
+      "v0.22.0",
+      "v0.23.0",
+      "v0.24.0",
+      "v0.25.0",
+      "v0.26.0",
+      "v0.27.0",
+      "v0.28.0",
+      "v0.29.0",
+      "v0.29.1",
+      "v0.29.2",
+      "v0.3.0",
+      "v0.30.0",
+      "v0.31.0",
+      "v0.32.0",
+      "v0.33.0",
+      "v0.34.0",
+      "v0.35.0",
+      "v0.36.0",
+      "v0.37.0",
+      "v0.38.0",
+      "v0.39.0",
+      "v0.4.0",
+      "v0.4.1",
+      "v0.40.0",
+      "v0.41.0",
+      "v0.42.0",
+      "v0.44.0",
+      "v0.45.0",
+      "v0.46.0",
+      "v0.47.0",
+      "v0.48.0",
+      "v0.49.0",
+      "v0.5.0",
+      "v0.50.0",
+      "v0.51.0",
+      "v0.52.0",
+      "v0.54.0",
+      "v0.55.0",
+      "v0.56.0",
+      "v0.57.0",
+      "v0.57.1",
+      "v0.57.2",
+      "v0.57.3",
+      "v0.57.4",
+      "v0.58.0",
+      "v0.58.1",
+      "v0.59.0",
+      "v0.59.1",
+      "v0.6.0",
+      "v0.60.0",
+      "v0.60.1",
+      "v0.60.2",
+      "v0.60.3",
+      "v0.60.4",
+      "v0.60.5",
+      "v0.60.6",
+      "v0.60.7",
+      "v0.60.8",
+      "v0.60.9",
+      "v0.61.0",
+      "v0.61.1",
+      "v0.61.2",
+      "v0.61.3",
+      "v0.61.4",
+      "v0.61.5",
+      "v0.61.6",
+      "v0.61.7",
+      "v0.7.0",
+      "v0.8.0",
+      "v0.9.0"
+    ],
+    "newCatalogVersions": [
+      "v0.61.8"
+    ],
+    "historicalHTTPBodyPreservationClaimed": false
+  },
+  "findings": [],
+  "pins": [
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/receipt.json",
+      "bytes": 596713,
+      "sha256": "ede24c04b837d897e63f8ecf51310e9c1f5ef2ead8460077e87bc4162dcabf3d"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/deployment.json",
+      "bytes": 3823,
+      "sha256": "8393449c07fe69541c9c984a0c857d275a75d4d2418498eae45646a39536fe8d"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/statuses.json",
+      "bytes": 6586,
+      "sha256": "2e80299001c70009dc7d999bacdcddf54c3f09870b425f99b0d7d682a9faeb4a"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/run.json",
+      "bytes": 12192,
+      "sha256": "d22faedb62fe50dceaa228ed7a4fed5cf1a42db8fe972b80549f4ddd12e510f9"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/manifest.json",
+      "bytes": 127872,
+      "sha256": "206ba0af671d0db861d93a5d68cb8628c4f25641d04e6705236cc3a8f2a323f7"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/record.json",
+      "bytes": 465,
+      "sha256": "142e6394e7b4c6b159a40e3b06ba18db06bc60637e7756000350e0c874f5ad5e"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/qualification.json",
+      "bytes": 104201,
+      "sha256": "35975fc84614a0a9f43dfa9c15f2a5a54c8d2facd5526728290d583827356084"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/catalog.json",
+      "bytes": 39704,
+      "sha256": "8b872ff4cfbbccdb87ba88be102afcdc2f9368a945e98c93f5d883cebc2db632"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/configuration.json",
+      "bytes": 145989,
+      "sha256": "0e8540cb92141ec2992452001f5d40d1e70e63f9862292be0633e56c3b07e171"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/inputs/e95374932385097fbdee58517f8f9bf269f3cff4/binding.json",
+      "bytes": 2042,
+      "sha256": "6d8ea9d0ae73608fdd0049662f4e6aebaca8e092f91e1cc2d799fb7476b7b06b"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/runs/full-public-r1/report.json",
+      "bytes": 5922,
+      "sha256": "2fafa3392afc17fd305702c6f51e023b282178faa7205d6bb6b191bbf75588fb"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/runs/full-public-r1/inventory.json",
+      "bytes": 789408,
+      "sha256": "280129b334c076cd8515322a192cef9c48c32282839184727a6de0c55e4459bb"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/runs/full-public-r1/results.jsonl",
+      "bytes": 2027230,
+      "sha256": "34b6c258aa7b41d05f70918a4da8131ce0c05384dbd1ccfdd29fa057989393a9"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/runs/full-public-r1/attempts.jsonl",
+      "bytes": 2027779,
+      "sha256": "e24c3a9f51f6b207143691b846233efb95a82d55afd9e6a558632d8ee9183a88"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/public-row-review-full-public-r1.json",
+      "bytes": 3369,
+      "sha256": "230955442f3b501fad1bb9d1945d52042f7803b49979467cef0b46dbedf1b763"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/root-binding-review.json",
+      "bytes": 395,
+      "sha256": "7c46a95b4f15bf9c600966b13a922667a6d71f3731778620adad781f3561c00e"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/after-http-authorities-full-public-r1/result.json",
+      "bytes": 7659,
+      "sha256": "9aadeb2a2d91fc2667b81e8c65065caba67351f552cc72896d6ab1645db4570d"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/hosted-observation-after-http-r1/record.json",
+      "bytes": 3703,
+      "sha256": "4549fb32fc766f4495d5cc084c03557de283bd954cd0608438d958d173fd1ae5"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/tools/retained-catalog.json",
+      "bytes": 39259,
+      "sha256": "bc122875db63c84f613531b2a947fde0f6cc06e8f88057c8016140087e4d302c"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/frozen-asset-expectations.json",
+      "bytes": 3344,
+      "sha256": "723a5547a3087e1f80617cb870b1e01428cd394bf63e250eab9c016aaa2f1849"
+    },
+    {
+      "path": ".cache/p05-public-audit-v0618-preparation/helper-pins.json",
+      "bytes": 6814,
+      "sha256": "189cb3a3d055453e9d14d82a3c7b68b97a6bc0432272c2dfda540f0005c69283"
+    }
+  ],
+  "limits": [
+    "HTTP metadata review corroborates decoded body and MIME results from the original audit, without a repeat GET. No payload bodies persisted by reviewer.",
+    "Retained catalog-authority preservation is not a claim that all historical HTTP asset bodies remained on this publisher; historical bridges and external archive retentions retain their separate authorities.",
+    "Native root review remains separate; no independent browser, offline, storage migration, physical-device, whole-phase or new public-acceptance claim. Root owns acceptance."
+  ]
+}

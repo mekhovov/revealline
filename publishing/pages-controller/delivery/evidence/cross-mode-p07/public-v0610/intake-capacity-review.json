@@ -1,0 +1,11 @@
+{
+  "status": "PASS_BEFORE_EXTRACTION",
+  "expandedBytes": 558798,
+  "allocatedBytesBeforeExtraction": 1097728,
+  "futureAllowanceBytes": 22647914,
+  "capBytes": 33554432,
+  "freeBytes": 2856419328,
+  "reserveBytes": 536870912,
+  "originalDownloadCount": 1,
+  "helperChanged": false
+}

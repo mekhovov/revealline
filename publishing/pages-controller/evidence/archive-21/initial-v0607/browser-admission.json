@@ -1,0 +1,31 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-21",
+  "infrastructureCommit": "2bba1447f2810ec4107eb8b8ddcdf9008c475ad2",
+  "deploymentId": 6515049749,
+  "versions": [
+    "v0.60.7"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-21/initial-v0607/native-20260918/observations.json",
+      "sha256": "95983b6c614309e084abeb87d5f9fa9dcb6d1676764869ff3531b00f9668a248"
+    },
+    {
+      "path": "evidence/archive-21/initial-v0607/native-20260918/root-admission.json",
+      "sha256": "a756049e0cf3072b221812c7e7983ca9116e12932d79de80ffc47cb656232e59"
+    }
+  ],
+  "observer": "Root through CUA browser1/tab1",
+  "observedAt": "2026-09-18T01:29:37.474212+00:00",
+  "scope": "Actual keyboard title/Start, First Signal cut and win, Retry preparation cancellation, explicit Pause/Resume, Release explorer and ordinary browser Back to this archive. Combined with the separately pinned full-body audit.",
+  "limitations": [
+    "Screenshots inspected inline only; no exported screenshots or invented hashes.",
+    "No physical touch/controller, audio audition, offline/server-stopped, Team, full accessibility or whole-phase acceptance.",
+    "First Signal archive verification does not establish harder campaign quality."
+  ],
+  "nativeAccepted": true,
+  "phaseAccepted": false
+}

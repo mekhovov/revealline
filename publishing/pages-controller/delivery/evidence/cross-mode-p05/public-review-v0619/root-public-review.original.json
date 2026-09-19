@@ -1,0 +1,77 @@
+{
+  "at": "2026-09-18T16:58:25.630852+00:00",
+  "status": "PUBLIC_BYTES_VERIFIED_NATIVE_PARTIAL_REQUIRED_FOCUS_FAILURE",
+  "version": "v0.61.9",
+  "source": "6db978db40287151489803e915cb4ecb9ea232ee",
+  "sourceTree": "50391b01ad011079c9ba66fe7e4f9f0ed229a1f9",
+  "publisherCommit": "b88b0e4c63dddcc5339076e29606b2fb1700553f",
+  "publisherTree": "9456449f0b6ea304c6d2c3ba2b590782e6e3a484",
+  "publisherPR": 142,
+  "runId": 35370220934,
+  "deploymentId": 6528856630,
+  "releaseId": 391596705,
+  "files": 3153,
+  "bytes": 642265836,
+  "attempts": 3154,
+  "retries": 1,
+  "failedFiles": 0,
+  "priorAcceptedScopedBaseline": "v0.61.8",
+  "nativeSuccesses": [
+    "Initial Large/Plain preference adoption before local media open",
+    "Owned PNG preview and unsaved metadata retained through rotation and actual cross-tab preference switches",
+    "Escape/Close restore the opener; visible saved counts retained; Back returns to exact edition"
+  ],
+  "remainingFailure": {
+    "id": "still-media-return-portrait-focus-clipped",
+    "viewport": [
+      390,
+      844
+    ],
+    "clippedCssPixels": 1.765625,
+    "stateAndFocusRetained": true,
+    "resolution": "Separately versioned correction must measure inner scrollport and pass affected native/shared-helper gates."
+  },
+  "publicBytesAccepted": true,
+  "fullFeatureAccepted": false,
+  "fullNativeAcceptance": false,
+  "phaseAccepted": false,
+  "fullGameAccepted": false,
+  "originalsPreserved": true,
+  "pins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-v0619-preparation/tools/runs/public-main-r1/report.json",
+      "bytes": 5954,
+      "sha256": "8d15912ece21406b698c5af9032bd9bf85e5af09f58b4a07ff7be68e80dce3b2"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-v0619-preparation/public-row-review-public-main-r1.json",
+      "bytes": 3386,
+      "sha256": "3bdb10459265afef379d91872cfc5a3f0e2c2e9c30be1f674bb84b54fcf4f849"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-v0619-preparation/independent-public-review.json",
+      "bytes": 4682,
+      "sha256": "57da9d4b85a4d74c6597484a21937f885235e9b554db29d897ba665caad4ef64"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-v0619-preparation/after-http-authorities-main-r1/result.json",
+      "bytes": 7512,
+      "sha256": "db9bfac0efc4a4d3f66f65c1412cba8ccf0e56e175694d1b1e120cb830291cd6"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-native-v0619/manifest.json",
+      "bytes": 4182,
+      "sha256": "cf0ee6fae938aaa32b4626fd0b4f04a555462bc5a6ef2e3f44b8d6ad7add74dc"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-native-v0619/root-review.json",
+      "bytes": 2280,
+      "sha256": "3daf70a4e56dbf4b16daa302519fb9854a55f04a03aacf0f9c8c51f44598aeda"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-public-audit-v0619-preparation/focus-research.md",
+      "bytes": 1078,
+      "sha256": "4f6054ee4eb22e85d1c1e0428f544bd4b96f3d58167e7c79d9b68bc4c6bd6d5c"
+    }
+  ]
+}

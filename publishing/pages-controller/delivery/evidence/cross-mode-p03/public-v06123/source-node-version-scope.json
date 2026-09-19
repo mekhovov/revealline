@@ -1,0 +1,151 @@
+{
+  "status": "ORIGINAL_HOSTED_NODE_VERSION_DISTINCTION",
+  "fullSuites": "Two complete hosted families on Node20.19.6; no full Node22 suite claimed.",
+  "focusedLocal": "Composed-source157 tests in9files passed Node20 and22; overlap with hosted totals, never added.",
+  "originalLogs": [
+    {
+      "family": "manual",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/manual/job-105692260544.log.gz",
+      "bytes": 11740,
+      "sha256": "10027ff906ce0ba631ec230c779af14c8330c22a42201ebde8804701a49ac44b",
+      "nodeVersionLines": [
+        {
+          "line": 461,
+          "text": "2026-09-18T17:17:00.7047010Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "manual",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/manual/job-105692843162.log.gz",
+      "bytes": 110491,
+      "sha256": "2b227f888fab58257b9706c53c48d28366a46eecdfb41803ff54b7b7dd57c337",
+      "nodeVersionLines": [
+        {
+          "line": 461,
+          "text": "2026-09-18T17:19:38.1009306Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "manual",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/manual/job-105692843199.log.gz",
+      "bytes": 117296,
+      "sha256": "279f3c81dec683afb4f6b9f1cd15df039a32194ccf614419c4e6d56b6bbe18fa",
+      "nodeVersionLines": [
+        {
+          "line": 461,
+          "text": "2026-09-18T17:18:47.0021925Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "manual",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/manual/job-105692843200.log.gz",
+      "bytes": 124166,
+      "sha256": "d5fb74cab5a2043c37faacd528d8a6c59337c99845a9c4c048d1959f5034e807",
+      "nodeVersionLines": [
+        {
+          "line": 461,
+          "text": "2026-09-18T17:21:39.7193054Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "manual",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/manual/job-105692843204.log.gz",
+      "bytes": 108583,
+      "sha256": "f777a64839993915d4321c1200d4fc582ec350927678ccbb4eef35fd05f4be27",
+      "nodeVersionLines": [
+        {
+          "line": 438,
+          "text": "2026-09-18T17:18:47.9458337Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "manual",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/manual/job-105703637378.log.gz",
+      "bytes": 12794,
+      "sha256": "4bd13d59beffc035e11758b672244f23795080008b68f07479382d92a16eb2dd",
+      "nodeVersionLines": [
+        {
+          "line": 462,
+          "text": "2026-09-18T17:53:14.9114519Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/pr-source/job-105692176201.log.gz",
+      "bytes": 14866,
+      "sha256": "f8469e641302c97a409c190db200598533a0c3703356c2cf18df97d5e8e024f7",
+      "nodeVersionLines": [
+        {
+          "line": 346,
+          "text": "2026-09-18T17:16:41.9757376Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/pr-source/job-105692761518.log.gz",
+      "bytes": 12295,
+      "sha256": "0f5f40dc4ced72254020b55f3d53074e92e6b2e5a8f3201979f1383bf3cbb87c",
+      "nodeVersionLines": [
+        {
+          "line": 587,
+          "text": "2026-09-18T17:21:38.8793381Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/pr-source/job-105692761560.log.gz",
+      "bytes": 112497,
+      "sha256": "95d5a7f008a155790f286c3655942b99c7e45438fa2a120e0a9159e3a0918656",
+      "nodeVersionLines": [
+        {
+          "line": 340,
+          "text": "2026-09-18T17:18:36.6825248Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/pr-source/job-105692761561.log.gz",
+      "bytes": 106971,
+      "sha256": "e3231ad2ada952d83c7aadb7d3e9d3e16ee4e457cc46150a891ce61aee721f48",
+      "nodeVersionLines": [
+        {
+          "line": 352,
+          "text": "2026-09-18T17:18:37.3834564Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/pr-source/job-105692761619.log.gz",
+      "bytes": 120837,
+      "sha256": "2b8c91f0390770209f582ac32f6193016922c61a091a8d2fc55013f7e7a2d17a",
+      "nodeVersionLines": [
+        {
+          "line": 349,
+          "text": "2026-09-18T17:19:48.0483852Z node: v20.19.6"
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-focus-scrollport-v06123/source-qualification-r1/observer/intake/hosted/pr-source/job-105692761626.log.gz",
+      "bytes": 105673,
+      "sha256": "c3ae8fbde0116994315717809eeceacf40b322a4c21669c917658f13323ff2b7",
+      "nodeVersionLines": [
+        {
+          "line": 345,
+          "text": "2026-09-18T17:18:36.6501537Z node: v20.19.6"
+        }
+      ]
+    }
+  ]
+}

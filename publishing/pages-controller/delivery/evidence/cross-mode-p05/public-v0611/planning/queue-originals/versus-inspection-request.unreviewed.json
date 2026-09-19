@@ -1,0 +1,8 @@
+{
+  "ref": "codex/release-ssl-diagnostics",
+  "inputs": {
+    "operation": "inspect-artifact",
+    "artifact_binding": "{\"format\":\"revealline-release-utility-binding.v1\",\"reviewed\":false,\"repository\":\"mekhovov/revealline\",\"source\":{\"commit\":\"4fd8e2dac4fdc851d0d2bf0b21e77162d9d405c9\",\"tree\":\"d16edac0127fc96139445ae2365cc74499f80921\",\"version\":\"v0.61.6\"},\"artifact\":{\"id\":10532569673,\"runId\":35308384414,\"bytes\":1421641282,\"sha256\":\"38236e3f2ab08006420674fa67ffa748817077b71f456bcbd8ab6fb3fafa4713\"},\"release\":null}",
+    "freeze_snapshot": "false"
+  }
+}

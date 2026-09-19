@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "observe-hosted.failure-retention.py",
+    "before-1",
+    "36d9e9fa14601ae1ae11a737dda0279e27f909da",
+    "5af98e177d58b102d805041341901e682a55370b",
+    "35296490635"
+  ],
+  "start": "2026-09-18T01:48:19.178964+00:00",
+  "end": "2026-09-18T01:48:20.795686+00:00",
+  "exitCode": 0
+}

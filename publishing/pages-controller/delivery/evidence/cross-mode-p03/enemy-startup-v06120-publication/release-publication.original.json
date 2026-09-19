@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-18T17:47:53.976515+00:00",
+  "status": "IMMUTABLE_RELEASE_PUBLISHED_NINE_ASSETS_VERIFIED",
+  "version": "v0.61.20",
+  "releaseId": 391660904,
+  "tagObject": "f07889a5220722112d3b6eeb7ae97eecc60c40a5",
+  "source": "d51acab59232edc4e7f77ab5df491f2c403de709",
+  "latestReadbackVerified": true,
+  "nineAssetIdsUnchanged": true,
+  "pagesSelectionPending": true,
+  "publicAcceptance": false
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS_EXACT_TEN_GAME_PATHS_AND_CURRENT_PUBLISHER_PRESERVED",
+  "source": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "parent": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+  "priorMain": "f5ecf8e165441f49bf47f0ae5c33e064f6303347",
+  "merge": "eaab381d30dd5027ae7dc6a1ea573f546d74db52",
+  "tree": "fa05e97923b6ecf35288af2fa07a26c08555b4b3",
+  "paths": [
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "docs/still-media-workshop.md",
+    "docs/verification/cross-mode/focus-scrollport-v06123/README.md",
+    "docs/verification/cross-mode/focus-scrollport-v06123/originals-index.json",
+    "docs/verification/cross-mode/focus-scrollport-v06123/originals.zip",
+    "game/build-config.json",
+    "game/test/focus-clearance.test.mjs",
+    "game/ui/focus-clearance.mjs",
+    "package-lock.json",
+    "package.json"
+  ],
+  "scope": "No integration change to intended game bytes; immutable source qualification remains exact."
+}

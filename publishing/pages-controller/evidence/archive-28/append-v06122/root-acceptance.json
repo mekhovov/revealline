@@ -1,0 +1,46 @@
+{
+  "format": "revealline-archive28-root-acceptance.v1",
+  "at": "2026-09-18T21:15:12.295481+00:00",
+  "status": "ACCEPTED_SCOPED_APPEND_RETENTION",
+  "archiveCommit": "0a0a95abcae2211386f62a24c41c46a9ff02a1ee",
+  "archiveTree": "6910fa3222ea6e4da0180c40bd21f85085029d3c",
+  "runId": 35393868797,
+  "deploymentId": 6532547942,
+  "versions": [
+    "v0.61.21",
+    "v0.61.22"
+  ],
+  "files": 1400,
+  "verifiedBytes": 626845129,
+  "failedAttempts": 0,
+  "retries": 0,
+  "preservedPriorRows": 700,
+  "preservedPriorReleaseRows": 698,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "newRows": 699,
+  "scope": "Original archive bytes plus actual root-observed keyboard entry to both editions, v622 Versus captures/Pause/Resume and intact Solo continuation. Broader current-game acceptance remains separate.",
+  "open": [
+    "Narrow Large SoloPause issue retained",
+    "Physical touch/controller, audible,offline and complete phase gates remain open"
+  ],
+  "pins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive28-append-v06122-audit-preparation/http/row-review.json",
+      "bytes": 12777,
+      "sha256": "c56943c8d5d9bf69ba3e960b1b2a01da11e7613f323beb0cda4cce9fcd71facf"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive28-append-v06122-root/native-retention.json",
+      "bytes": 1980,
+      "sha256": "b4263b4ea296a3fd559b2ea1f616c5f3ef83a596d36830b0d318f60f47592df9"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive28-append-v06122-audit-preparation/http/http/http-20260918T211241Z-94ef8101/http-report.json",
+      "bytes": 1616,
+      "sha256": "64951a4f66beebc6c7d647155d8b2a7fb49d23499c8bd8344fdf431f86977563"
+    }
+  ],
+  "phaseComplete": false
+}
