@@ -1,5 +1,15 @@
 # Reveal Line cross-mode execution register
 
+## Journey redesign authority — 20 September 2026
+
+The approved [Xposed-led Journey plan](xposed-journey-plan.md) now owns the new
+campaign redesign, its twelve-campaign allocation and P00–P15 delivery sequence.
+The four FPV/four DroneAid and 132-mission allocations below are historical, not
+instructions for new Journey production. Existing release identities, evidence,
+unrelated in-flight deliveries and compatibility obligations remain intact.
+Journey P00 is an isolated 0.67.0 technical preview; it is not yet released or
+fully validated. This does not relabel the historical cross-mode phases below.
+
 ## Current delivery — 19 September 2026
 
 **Play the accepted [v0.64.2 HUD update](https://mekhovov.github.io/revealline/releases/v0.64.2/site/game/).** Large/Plain flight counters now fit short landscape while keeping the complete arena and Pause button available. Rotation preserves the paused attempt until explicit Resume. The [scoped acceptance record](../publishing/pages-controller/delivery/evidence/cross-mode-p05/v0642-public/README.md) contains the release, test, public-audit and native evidence. This completes **P05-HUD-01**, not the whole presentation or navigation phase.

@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { BoardPainter } from '../../ui/render.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
 import { SOUNDTRACK_DATABASE } from '../../soundtrack-store.mjs';
+import { JOURNEY_PROFILE_DATABASE } from '../../journey/profile.mjs';
 import { audioHarness } from './soundtrack-audio.mjs';
 import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
 import { waitFor } from './wait-for.mjs';
@@ -160,6 +161,7 @@ export async function soloPage(
     audio,
     soundtrackIndexedDB,
     assetIndexedDB,
+    journeyIndexedDB,
     lockManager,
     rendering,
     parentWindow,
@@ -249,6 +251,8 @@ export async function soloPage(
     indexedDB: mediaDB
       ? {
           open(name, ...args) {
+            if (name === JOURNEY_PROFILE_DATABASE && journeyIndexedDB)
+              return journeyIndexedDB.open(name, ...args);
             return name === SOUNDTRACK_DATABASE
               ? mediaDB.open(name, ...args)
               : db.open(name, ...args);

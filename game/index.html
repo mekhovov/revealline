@@ -105,6 +105,7 @@
     <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
     <link rel="stylesheet" data-boot-href="ui/mission-picker.css" />
+    <link rel="stylesheet" data-boot-href="ui/journey.css" />
     <link rel="stylesheet" data-boot-href="ui/mission-brief.css" />
     <link rel="stylesheet" data-boot-href="ui/enemy-guide.css" />
     <link rel="stylesheet" data-boot-href="ui/story-dialog.css" />
@@ -194,6 +195,7 @@
       <button id="shell-packs" type="button" data-field-kit-copy="navigation.missions">
         Missions
       </button>
+      <button id="journey-skip" type="button" hidden>Skip mission</button>
       <button id="shell-collection" type="button" data-field-kit-copy="navigation.collection">
         Collection
       </button>
@@ -446,6 +448,11 @@
           <p id="run-message" class="run-message" role="status">
             Your first route: fly down from the marked start to the opposite border.
           </p>
+          <aside id="journey-save-status" class="journey-status" hidden>
+            <p id="journey-save-message" role="status"></p>
+            <button id="journey-save-retry" type="button">Retry save</button>
+            <button id="journey-save-export" type="button">Export Journey progress</button>
+          </aside>
           <div class="minor-controls">
             <label><input id="tap-steering" type="checkbox" /> Tap steering</label
             ><label><input id="reduced-effects" type="checkbox" /> Reduced effects</label
@@ -1547,7 +1554,7 @@
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
       <div class="home-art" aria-hidden="true"></div>
       <div class="home-content">
-        <p class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
+        <p id="shell-title-edition" class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find your line.<br />Bring the picture home.</p>
         <nav id="shell-title-modes" aria-label="Game mode">
