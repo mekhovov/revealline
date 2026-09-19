@@ -1,0 +1,58 @@
+{
+  "status": "ACCEPTED_SCOPED_V06123_PUBLIC_CORRECTION",
+  "at": "2026-09-18T21:41:43.179024+00:00",
+  "version": "v0.61.23",
+  "gameSourceRevision": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "controllerCommit": "8783cbd6fcd0b02ba1d14bae09b16595a4166055",
+  "deploymentId": 6533008944,
+  "runId": 35396835006,
+  "releaseId": 391779301,
+  "playableUrl": "https://mekhovov.github.io/revealline/releases/v0.61.23/site/game/",
+  "sourcePR": 144,
+  "publisherPR": 148,
+  "scope": "Keep focused controls and full outlines inside bordered dialog scrollports across resize and rotation. Preserve original source/media/save authority and all release history.",
+  "files": 3255,
+  "bytes": 642999818,
+  "attempts": 3256,
+  "retries": 1,
+  "failedFiles": 0,
+  "skippedFiles": 0,
+  "sourceTests": {
+    "tests": 5925,
+    "files": 466,
+    "fullFamilies": 2,
+    "actualHostedNode": "20.19.6",
+    "focusedNode20And22Separate": true
+  },
+  "pins": {
+    "publicByteReport": {
+      "path": "tools/runs/public-r1/report.json",
+      "bytes": 6095,
+      "sha256": "a849c32c3d934b1cfcb99fe36f580434ae7f646b6a35a6aed108c68cfb2dfa8f"
+    },
+    "rowReview": {
+      "path": "public-row-review-public-r1.json",
+      "bytes": 3439,
+      "sha256": "1db9b56d2fe9d10c6fb23746807c1c5f06c8a1cf7920be31ee50fc913272263d"
+    },
+    "authorityRefresh": {
+      "path": "after-http-authorities-public-r1/result.json",
+      "bytes": 7564,
+      "sha256": "83c4c9a10393d7169e311d45426c2726930cca81569b22ea3879156a1418db4f"
+    },
+    "native": {
+      "path": "root-public-native-focus.json",
+      "bytes": 5076,
+      "sha256": "ed48658eda345b66ff32055d9c4a2fd728b88917430fbacd6aedb3be03c90834"
+    }
+  },
+  "phaseAccepted": false,
+  "wholeGameComplete": false,
+  "remaining": [
+    "P03 broader navigation and input matrix",
+    "Narrow Solo Pause responsive actions",
+    "280px Large HUD clipping",
+    "Known stale Workshop host failure text after successful reload",
+    "Physical controller/touch/offline/audio and full browser acceptance"
+  ]
+}
