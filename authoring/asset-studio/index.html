@@ -173,10 +173,11 @@
           </p>
           <h3 data-studio-host="heading">Review what the preview can show</h3>
           <p data-studio-host="body">
-            Native pixels, enlarged pixels, transparency and field context help inspect an asset.
-            These are bounded previews, not a complete playthrough of every mode or screen.
-            Technical validation does not approve the art: record the checks you actually performed
-            before marking a revision reviewed.
+            Native pixels, enlarged pixels, transparency and field context help inspect an asset. In
+            Field context, choose Game mode. Team arena and Team scene select a bounded Team
+            fixture; State remains the selected asset's own state. These are bounded previews, not a
+            complete playthrough of every mode or screen. Technical validation does not approve the
+            art: record the checks you actually performed before marking a revision reviewed.
           </p>
           <p data-studio-host="body">
             Interface changes text face, size and reduced effects for the tools without staging a
@@ -339,6 +340,34 @@
               <option value="context">Field context</option>
             </select></label
           ><label data-studio-host="control"
+            >Game mode<select data-studio-host="control" id="preview-field-mode" disabled>
+              <option value="solo">Solo</option>
+              <option value="versus">Couch Versus</option>
+              <option value="team">Couch Team</option>
+            </select></label
+          ><label data-studio-host="control"
+            >Team arena<select data-studio-host="control" id="preview-team-arena" disabled>
+              <option value="first-connection">First Connection</option>
+              <option value="relay-yard">Relay Yard</option>
+            </select></label
+          ><label data-studio-host="control"
+            >Team scene<select data-studio-host="control" id="preview-team-scenario" disabled>
+              <option value="initial">Initial field</option>
+              <option value="cutting">Active cuts</option>
+              <option value="warning">Hunter warning</option>
+              <option value="charge">Hunter charge</option>
+              <option value="capture">Capture feedback</option>
+              <option value="anchors" disabled>Anchors captured</option>
+              <option value="core" disabled>Relay core exposed</option>
+              <option value="victory">Completed field</option>
+              <option value="downed-p1" disabled>Player 1 downed</option>
+              <option value="rescue-p1" disabled>Rescuing Player 1</option>
+              <option value="recovered-p1" disabled>Player 1 recovered</option>
+              <option value="downed-p2" disabled>Player 2 downed</option>
+              <option value="rescue-p2" disabled>Rescuing Player 2</option>
+              <option value="recovered-p2" disabled>Player 2 recovered</option>
+            </select></label
+          ><label data-studio-host="control"
             >Backdrop<select data-studio-host="control" id="preview-background">
               <option value="checker">Checkerboard</option>
               <option value="dark">Dark</option>
@@ -352,7 +381,7 @@
           <label data-studio-host="control"
             >Motion<select data-studio-host="control" id="preview-motion">
               <option value="paused">Paused</option>
-              <option value="playing">Play cosmetic loop</option>
+              <option value="playing">Play preview</option>
               <option value="reduced">Reduced effects</option>
             </select></label
           >
