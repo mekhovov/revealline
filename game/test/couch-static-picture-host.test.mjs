@@ -124,6 +124,7 @@ async function fixture(
     failDecode = false,
     audio,
     storage,
+    pads = [],
   } = {},
 ) {
   const media = mediaBoundary(),
@@ -136,6 +137,7 @@ async function fixture(
   const page = await couchPage(t, {
     audio,
     storage,
+    pads,
     initialLevel: null,
     ImageClass: media.Image,
     URLImpl: media.URLImpl,
@@ -595,7 +597,7 @@ test('failed Next original read keeps Results and keyboard View, then retry adop
   retainedResult(p, before);
   assert.equal(
     p.$('race-message').textContent,
-    'The next picture could not be prepared. Results are kept. Choose Next to retry.',
+    'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
   );
   assert.doesNotMatch(p.$('race-message').textContent, /assets\/|[a-f0-9]{64}/);
   assert.deepEqual(diagnostics, [['Next picture preparation failed.', readError]]);
@@ -731,29 +733,235 @@ test('successful Next retires its original only after the new duel and picture a
 test('completed match wins reset only when an explicitly retried Next commits', async (t) => {
   const f = await fixture(t),
     p = f.page;
+  await chooseFormat(p, 'first-to-two');
   await action(p, 'race-start');
-  for (let round = 0; round < 2; round++) {
-    p.key('KeyS');
-    p.frames(151, 200);
-    p.key('KeyS', false);
-    assert.equal(p.state(), 'finished');
+  for (const [round, winner] of ['win', 'draw', 'win'].entries()) {
+    completeRound(p, winner);
     assert.equal(
       p.$('series-score').textContent,
-      `${round + 1} : 0`,
-      'Real directional input earns each round.',
+      `${round === 2 ? 2 : 1} : 0`,
+      'Directional wins earn one point each; an identical-input timeout draw earns none.',
     );
-    if (round === 0) await action(p, 'race-start');
+    assert.match(p.$('race-format-note').textContent, /first to two/i);
+    assert.match(p.$('race-format-help').textContent, /first to two/i);
+    if (winner === 'draw') assert.match(p.$('race-message').textContent, /^Draw\b/);
+    if (round < 2) {
+      assert.equal(p.$('race-title').textContent, 'Round complete.');
+      assert.equal(p.$('race-start').textContent, 'Next round: First Signal');
+      const before = completedResult(p);
+      if (round === 0) {
+        f.media.fail();
+        await action(p, 'race-start');
+        retainedResult(p, before);
+        assert.equal(
+          p.$('race-message').textContent,
+          'The next round picture could not be prepared. Results are kept. Choose Next round to retry.',
+        );
+      }
+      p.frames(5, 200);
+      retainedResult(p, before);
+      await action(p, 'race-start');
+    }
   }
   const before = completedResult(p);
+  assert.equal(p.$('race-title').textContent, 'Match complete.');
   f.media.fail();
   await action(p, 'race-start');
   retainedResult(p, before);
   assert.equal(p.$('series-score').textContent, '2 : 0');
-  assert.match(p.$('race-start').textContent, /another match/);
+  assert.equal(p.$('race-start').textContent, 'Rematch: First Signal');
   await action(p, 'race-start');
   assert.equal(p.state(), 'running');
   assert.equal(p.$('series-score').textContent, '0 : 0');
   assert.equal(before.picture.image.releaseCount, 1);
+  assert.deepEqual(f.memory.allPuts, []);
+});
+
+async function chooseFormat(p, value) {
+  assert.equal(p.state(), 'ready');
+  await action(p, 'race-focus');
+  assert.equal(p.$('race-setup').hidden, false);
+  const control = p.$('race-format');
+  assert.ok(control, 'Race setup exposes the actual native format selector.');
+  assert.equal(control.disabled, false);
+  assert.equal(control.closest('[hidden],[inert]'), null);
+  control.value = value;
+  await action(p, 'race-format', 'change');
+  assert.equal(control.value, value);
+  await action(p, 'race-setup-back');
+  assert.equal(p.state(), 'ready');
+  assert.equal(p.$('race-start').disabled, false);
+}
+
+function completeRound(p, outcome) {
+  assert.equal(p.state(), 'running');
+  // Same shipped map and legal directional/timeout route as the retained
+  // threshold test. No duel status, winner or player coordinates are injected.
+  if (outcome === 'win') p.key('KeyS');
+  p.frames(151, 200);
+  if (outcome === 'win') p.key('KeyS', false);
+  assert.equal(p.state(), 'finished');
+}
+
+const acceptedFormatCopy = (p) =>
+  ['race-title', 'race-summary', 'race-format-note', 'race-format-help', 'race-start'].map(
+    (id) => p.$(id).textContent,
+  );
+
+for (const outcome of ['win', 'draw'])
+  test(`default One race ${outcome} settles once, retains Review and ignores a hidden format draft`, async (t) => {
+    const f = await fixture(t),
+      p = f.page;
+    assert.equal(p.$('race-format').value, 'single');
+    assert.deepEqual(
+      p.$('race-format').options.map((option) => option.value),
+      ['single', 'first-to-two'],
+      'This slice exposes two formats; it does not claim an authored campaign tour.',
+    );
+    assert.match(p.$('race-format-note').textContent, /one race/i);
+    assert.match(p.$('race-format-help').textContent, /one race/i);
+    await action(p, 'race-start');
+    completeRound(p, outcome);
+    assert.equal(p.$('series-score').textContent, outcome === 'win' ? '1 : 0' : '0 : 0');
+    assert.equal(p.$('race-title').textContent, 'Race complete.');
+    assert.equal(p.$('race-start').textContent, 'Rematch: First Signal');
+    if (outcome === 'draw') assert.match(p.$('race-message').textContent, /^Draw\b/);
+    const before = completedResult(p);
+    p.frames(12, 200);
+    retainedResult(p, before);
+    await action(p, 'race-review');
+    assert.equal(p.$('race-boards').hidden, false);
+    p.frames(12, 200);
+    retainedResult(p, before);
+    await action(p, 'race-pause');
+    assert.equal(p.$('race-main').hidden, false);
+    retainedResult(p, before);
+    const copy = acceptedFormatCopy(p);
+    assert.ok(p.$('race-format').closest('[hidden],[inert]'));
+    p.$('race-format').value = 'first-to-two';
+    p.frames(12, 200);
+    assert.deepEqual(
+      acceptedFormatCopy(p),
+      copy,
+      'Results, summary, help and footnote describe the accepted recipe, not a hidden draft.',
+    );
+    retainedResult(p, before);
+
+    if (outcome === 'win') {
+      f.media.fail();
+      await action(p, 'race-start');
+      retainedResult(p, before);
+      assert.equal(
+        p.$('race-message').textContent,
+        'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
+      );
+      const entered = deferred(),
+        gate = deferred();
+      t.after(() => gate.resolve());
+      f.media.setDecodeHook(async () => {
+        entered.resolve();
+        await gate.promise;
+      });
+      p.$('race-start').focus();
+      const pending = action(p, 'race-start');
+      await entered.promise;
+      retainedResult(p, before);
+      await action(p, 'race-picture-cancel');
+      gate.resolve();
+      await pending;
+      retainedResult(p, before);
+      assert.equal(p.$('race-start').textContent, 'Rematch: First Signal');
+      f.media.setDecodeHook(null);
+      await action(p, 'race-start');
+      assert.equal(p.state(), 'running');
+      assert.equal(p.$('series-score').textContent, '0 : 0');
+      assert.equal(before.picture.image.releaseCount, 1);
+      completeRound(p, 'win');
+      assert.equal(p.$('series-score').textContent, '1 : 0');
+      assert.equal(p.$('race-title').textContent, 'Race complete.');
+      assert.equal(p.$('race-start').textContent, 'Rematch: First Signal');
+      assert.match(p.$('race-format-note').textContent, /one race/i);
+      assert.match(p.$('race-format-help').textContent, /one race/i);
+    }
+    assert.deepEqual(f.memory.allPuts, []);
+  });
+
+for (const initialFocus of ['BODY', 'race-help'])
+  test(`a direct Rematch click from ${initialFocus} focus owns preparation without an extra Start`, async (t) => {
+    const f = await fixture(t),
+      p = f.page,
+      entered = deferred(),
+      gate = deferred();
+    t.after(() => gate.resolve());
+    await action(p, 'race-start');
+    completeRound(p, 'win');
+    const before = completedResult(p);
+    f.media.setDecodeHook(async () => {
+      entered.resolve();
+      await gate.promise;
+    });
+    if (initialFocus === 'BODY') p.doc.body.focus();
+    else p.$(initialFocus).focus();
+    assert.notEqual(p.doc.activeElement, p.$('race-start'));
+    // Dispatch the actual click without the browser choosing button focus.
+    // This is a finite host boundary, not proof of physical touch behavior.
+    const pending = action(p, 'race-start');
+    await entered.promise;
+    retainedResult(p, before);
+    assert.equal(p.doc.activeElement, p.$('race-picture-cancel'));
+    gate.resolve();
+    await pending;
+    assert.equal(p.state(), 'running');
+    assert.equal(p.$('series-score').textContent, '0 : 0');
+    assert.equal(p.drawOptions[0].backdrop === p.drawOptions[1].backdrop, true);
+    assert.equal(before.picture.image.releaseCount, 1);
+    assert.deepEqual(f.memory.allPuts, []);
+  });
+
+test('controller format draft can cancel or commit while preserving selector focus and never starting a round', async (t) => {
+  const controller = {
+    index: 0,
+    id: 'Format test controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ value: 0, pressed: false })),
+  };
+  const f = await fixture(t, { pads: [controller] }),
+    p = f.page;
+  p.join(0);
+  p.focus('race-focus');
+  p.pulse(0, 0);
+  assert.equal(p.$('race-setup').hidden, false);
+  p.focus('race-format');
+  const reads = f.reads.length;
+  assert.equal(p.$('race-format').value, 'single');
+  p.pulse(0, 0);
+  assert.equal(p.editors().length, 1);
+  p.pulse(0, 13);
+  assert.equal(p.$('race-format').value, 'single', 'A draft is not an accepted setup change.');
+  p.pulse(0, 1);
+  assert.equal(p.editors().length, 0);
+  assert.equal(p.$('race-format').value, 'single');
+  assert.equal(p.doc.activeElement, p.$('race-format'));
+  assert.equal(f.reads.length, reads, 'Cancelling the draft cannot acquire a new original.');
+  p.pulse(0, 0);
+  p.pulse(0, 13);
+  p.pulse(0, 0);
+  await waitFor(() => !p.$('race-start').disabled, {
+    message: 'The explicitly committed format did not finish preparing.',
+  });
+  p.frame();
+  assert.equal(p.$('race-format').value, 'first-to-two');
+  assert.equal(p.editors().length, 0);
+  assert.equal(p.state(), 'ready');
+  assert.equal(p.tick(), 0);
+  assert.equal(p.doc.activeElement, p.$('race-format'));
+  assert.match(p.$('race-format-note').textContent, /first to two/i);
+  assert.match(p.$('race-format-help').textContent, /first to two/i);
+  p.pulse(0, 1);
+  assert.equal(p.$('race-main').hidden, false);
+  assert.equal(p.state(), 'ready');
   assert.deepEqual(f.memory.allPuts, []);
 });
 

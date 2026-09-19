@@ -1,5 +1,15 @@
 # Reveal Line: whole-game UX and production execution
 
+**Current public baseline, 19 September 2026: [v0.61.24](https://mekhovov.github.io/revealline/releases/v0.61.24/site/game/).** The Solo Pause correction is accepted within its recorded scope: readable actions and focus at 280×800 and 600×400 in Theme/Large and Plain/Large, explicit Resume and a completed First Signal flight. Source `bb8cd8ea8af0cbec6af7e633c05d1bec78815938` passed 5,925 tests across 466 files in each of two hosted Node 20.19.6 families. The public audit verified all 3,280 files / 643,266,110 bytes with no failure, retry or skip. [Source PR149](https://github.com/mekhovov/revealline/pull/149) and [publication PR150](https://github.com/mekhovov/revealline/pull/150) are merged. These results do not close P03/P05/P18 or establish physical-device, listening or offline acceptance.
+
+**Active candidate: Couch/Team entry and continuation.** The combined source adds remembered Team arenas, installed-picture parity, Team Next, One race/First to two formats and owned Ready focus. Its 30-suite focused cohort passed 593 cases on each of Node 20.19.5 and 22.22.2; this is not the complete source gate. Native keyboard play verified Versus wins, draws, Next, Rematch reset and remembered Team selection. The Team paused-rotation defect is corrected; eight additional Node 20/22 regressions and actual Plain/Large and Theme/Standard keyboard rotation checks pass within scope. Team win→Next, installed-content native recovery, ordinary-source qualification and public delivery remain open. See [the current candidate checkpoint](couch-team-delivery.md).
+
+**Next in order:** finish the active navigation/readability corrections, then P08-A artwork/actor parity → P08-B action feedback → P09 fair challenge → P07 rewards → P02-B music → P04 creation → P06 discovery → P10 Team encounters → P11–P15 campaigns → P16/P17 supporting workflows and authoring → P18 browser qualification. Named supporting features may ship earlier without closing their parent phase. Native stores and online multiplayer retain separate later gates.
+
+## Historical publication checkpoint before v0.61.24 public acceptance — 19 September 2026
+
+The following statements retain main’s original publication cutoff. Their pending acceptance and older next-work ordering are historical; the live baseline, candidate and approved order above supersede them. Qualification, failure and retention records keep their original scopes.
+
 **Current scoped public checkpoint (19 September 2026): v0.61.23 is accepted within the recorded Still Media correction.** Source `2f1074a37ade9c731ea7be37a6e56e533b51d1ac` is selected by publisher `8783cbd6fcd0b02ba1d14bae09b16595a4166055`. The release coordinator reports successful [Pages run 35396835006](https://github.com/mekhovov/revealline/actions/runs/35396835006), verification of all 3,255 files / 642,999,818 bytes, and the scoped native owned-draft rotation and opener-return journey. Committed [exact-source qualification](https://github.com/mekhovov/revealline/blob/8783cbd6fcd0b02ba1d14bae09b16595a4166055/publishing/pages-controller/evidence/current-v06123/source-qualification.json) separately records passing source gates. This does not establish complete navigation, presentation or whole-phase acceptance.
 
 **Current published correction: v0.61.24 — narrow Solo Pause columns; Pages acceptance pending.** Qualified source `bb8cd8ea8af0cbec6af7e633c05d1bec78815938` retains `fpv@32`; [source PR #149](https://github.com/mekhovov/revealline/pull/149) is merged. [Manual qualification 35404392904](https://github.com/mekhovov/revealline/actions/runs/35404392904) and [PR qualification 35403877032](https://github.com/mekhovov/revealline/actions/runs/35403877032) each passed 5,925 tests across 466 files on Node 20.19.6, with the source/production/build gates passed. The original frozen source and all 694 game files were inspected, all nine immutable attachments independently reviewed, and [v0.61.24](https://github.com/mekhovov/revealline/releases/tag/v0.61.24) published as stable Latest. Both earlier `58643e0c` failures remain retained; their stale label expectation was corrected without changing runtime behavior. This publisher change selects the new release, but deployed-byte and actual Pause-menu acceptance remain pending; v0.61.23 remains the last accepted public scope until they pass.
@@ -7,6 +17,17 @@
 **Retention and next corrections:** Archive29 preserves v0.61.23 with all 702 public files verified and a scoped keyboard/media journey. Its publisher admission is committed separately and keeps the current selector unchanged. The next source candidates address narrow Large-text HUD clipping and Couch Ready → Start losing the player's newer focus choice. Their proposal checks do not qualify the integrated source or close P03/P05.
 
 **Next in order:** finish these navigation/readability corrections and P07-A/P16-A continuation/data safeguards, then P08-A artwork/actor parity; complete discovery/journey and Studio/themes; finish action feedback/audio and fair challenge before Team encounters and bulk campaigns. Keep the whole-game plan's content, physical-device, listening, offline and human-playtest gates. Newer public acceptance must be recorded explicitly; dated statements below are history.
+
+### Historical table updates at that publication cutoff
+
+These four rows preserve the separately recorded publisher snapshot. The live phase register above governs current status and order.
+
+| Order | Phase / feature | Completion requirement | Current status |
+| --- | --- | --- | --- |
+| 1 | Baseline reconciliation | Preserve working tree/history, integrate reviewed work and finish already qualifying releases. | v0.61.23 is scoped publicly accepted; v0.61.24 is committed with a draft source PR, with full/manual qualification in progress. Neither closes the remaining programme. |
+| 2 | P03/P05 Settings and sound | Shared categories, quick mute, immediate global appearance, safe pause/return and storage reconciliation. | Shared Settings and quick Sound retain their scoped v0.60.6 public acceptance; full P03/P05 and later regressions remain open. |
+| 3 | P03/P05 navigation | Shared Home/lobbies/Pause/Help/Workshop; actual opener restoration, responsive focus order and device prompts. | Partial. v0.61.23 accepts the scoped Still Media correction; narrow Solo Pause v0.61.24 awaits its own qualification and public gates. Complete cross-mode journeys remain open. |
+| 4 | P07-A/P16-A continuation and data safeguards | Stage Next before retiring results, explicitly retain Retry artwork, offer difficulty change, accurate backup scope and replacement preflight. | Partial. Preserve the historical P07-A1 qualification and failure records below; complete continuation, artwork retention, difficulty and data-safeguard journeys still require their own acceptance. |
 
 ## Historical release checkpoints
 
@@ -36,14 +57,16 @@ P00 and P01 are accepted. P02-A shared master sound is accepted within its recor
 
 The interface colour/ornament preference is **not** a complete game theme. The complete visual-theme catalogue, exact collection pins and alternate pictures remain in order 7. Game data in Couch Settings truthfully describes page-local attempts; unified content administration remains in order 6. No new campaign, encounter, Team music or complete phase acceptance is claimed by this feature.
 
-## Required order and blocking completion
+## Historical delivery order — 17 September 2026
 
-| Order | Phase / feature | Completion requirement | Current status |
+This table preserves its original cutoff. Use the [current execution register](cross-mode-execution.md) for the approved order and current status; the older pending releases below are not the current public baseline.
+
+| Historical order | Phase / feature | Completion requirement | Status at this historical cutoff |
 | --- | --- | --- | --- |
-| 1 | Baseline reconciliation | Preserve working tree/history, integrate reviewed work and finish already qualifying releases. | v0.61.23 is scoped publicly accepted; v0.61.24 is committed with a draft source PR, with full/manual qualification in progress. Neither closes the remaining programme. |
-| 2 | P03/P05 Settings and sound | Shared categories, quick mute, immediate global appearance, safe pause/return and storage reconciliation. | Shared Settings and quick Sound retain their scoped v0.60.6 public acceptance; full P03/P05 and later regressions remain open. |
-| 3 | P03/P05 navigation | Shared Home/lobbies/Pause/Help/Workshop; actual opener restoration, responsive focus order and device prompts. | Partial. v0.61.23 accepts the scoped Still Media correction; narrow Solo Pause v0.61.24 awaits its own qualification and public gates. Complete cross-mode journeys remain open. |
-| 4 | P07-A/P16-A continuation and data safeguards | Stage Next before retiring results, explicitly retain Retry artwork, offer difficulty change, accurate backup scope and replacement preflight. | Partial. Preserve the historical P07-A1 qualification and failure records below; complete continuation, artwork retention, difficulty and data-safeguard journeys still require their own acceptance. |
+| 1 | Baseline reconciliation | Preserve working tree/history, integrate reviewed work and finish already qualifying releases. | v0.60.5 accepted; Settings source merged and qualified, with its public gate pending. |
+| 2 | P03/P05 Settings and sound | Shared categories, quick mute, immediate global appearance, safe pause/return and storage reconciliation. | Exact source qualified; annotated tag and draft release exist; publication and public acceptance pending. |
+| 3 | P03/P05 navigation | Shared Home/lobbies/Pause/Help/Workshop; actual opener restoration, responsive focus order and device prompts. | Partial. Replay and Missions/backup corrections are prepared; metadata and Team revision-binding repairs are composed; fresh qualification and release/public gates remain. |
+| 4 | P07-A/P16-A continuation and data safeguards | Stage Next before retiring results, explicitly retain Retry artwork, offer difficulty change, accurate backup scope and replacement preflight. | P07-A1 candidate composed; precursor modeled checks pass. Integrated/browser/public gates and remaining data safeguards are pending. |
 | 5 | P08-A existing maps | Both Team arenas, all 15 built-in Versus maps, installed/imported paths, reviewed art and complete required roles; full board/control clearance. | Reviewed candidates retained; not fully accepted. |
 | 6 | P06/P07-B catalogue and journey | One community → campaign → missions browser; discovery/download/play, teasers/full preview, specific offline dependencies and useful campaign endings. | Pending. |
 | 7 | P04/P05 Studio and complete themes | Upload/edit/history/export/import, exact retained themes, real Solo/two-board Versus/Team previews and two-collection benchmark. | Partial tools; benchmark pending. |

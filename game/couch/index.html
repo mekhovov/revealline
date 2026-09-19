@@ -152,7 +152,7 @@
             <a id="race-coop" class="race-primary" href="relay-rescue.html?return=versus"
               >Relay Rescue · team up</a
             >
-            <button id="race-start" class="race-primary" type="button">Start round</button>
+            <button id="race-start" class="race-primary" type="button">Start race</button>
             <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
             <button id="race-focus" type="button">Race setup</button>
@@ -164,8 +164,9 @@
             <button id="race-review" type="button" hidden>View both boards</button>
             <a id="race-solo-return" href="../">Return to solo</a>
           </div>
-          <p class="race-footnote">
-            First to two rounds. Couch races do not change your solo progress.
+          <p id="race-format-note" class="race-footnote">
+            One race. Choose First to two in Race setup for a longer match. Couch races do not
+            change your solo progress.
           </p>
         </section>
         <section
@@ -180,6 +181,12 @@
           <p>Choose together. Each player starts with the same map, craft and time.</p>
           <div class="race-fields">
             <label>Map<select id="race-level"></select></label>
+            <label
+              >Format<select id="race-format">
+                <option value="single">One race</option>
+                <option value="first-to-two">First to two</option>
+              </select></label
+            >
             <label>World<select id="race-theme"></select></label>
             <label id="race-class-field">Craft<select id="race-class"></select></label>
             <label
@@ -189,7 +196,7 @@
               </select></label
             >
             <label
-              >Round time<select id="race-time">
+              >Time limit<select id="race-time">
                 <option value="90">90 seconds</option>
                 <option value="180">3 minutes</option>
                 <option value="30">30 seconds</option>
@@ -435,9 +442,9 @@
                 Escape or either controller's Menu pauses both boards. Resume is always explicit.
                 Each controller needs neutral controls before it can join or resume.
               </p>
-              <p>
-                First clear wins the round. At the time limit: coverage, then lives, then score
-                decide. First to two round wins takes the match.
+              <p id="race-format-help">
+                First clear wins the race. At the time limit: coverage, then lives, then score
+                decide. One race ends after this result. Rematch plays the same mission again.
               </p>
             </div>
           </div>

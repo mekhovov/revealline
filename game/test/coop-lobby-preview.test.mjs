@@ -111,8 +111,8 @@ for (const [level, name, bindingIndex] of [
 ])
   test(`${name} preview and arena borrow one exact prepared image without preview reads or automatic Start`, async (t) => {
     const f = await page(t, options);
-    if (level !== 'relay-yard') await f.choose('coop-level', level);
-    const expectedPreparations = level === 'relay-yard' ? 1 : 2;
+    if (level !== 'first-connection') await f.choose('coop-level', level);
+    const expectedPreparations = level === 'first-connection' ? 1 : 2;
     assertLobbyOwned(f);
     assert.equal(figure(f).tagName, 'FIGURE');
     assert.equal(figure(f).querySelectorAll('button,a,input,select,[tabindex]').length, 0);
@@ -166,7 +166,7 @@ for (const [level, index] of [
 ])
   test(`${level} ready lobby hides the picture centre until an earned win`, async (t) => {
     const f = await page(t, options);
-    if (level !== 'relay-yard') await f.choose('coop-level', level);
+    if (level !== 'first-connection') await f.choose('coop-level', level);
     assertMysteryPreview(f);
     const image = lastPreview(f),
       reads = f.artwork.calls.reads.length;
@@ -196,7 +196,7 @@ test('selecting another arena immediately hides and clears old lobby art until i
   const old = lastPreview(f),
     clears = previewClears(f);
   f.$('coop-level').focus();
-  const changing = f.choose('coop-level', 'first-connection');
+  const changing = f.choose('coop-level', 'relay-yard');
   await waitFor(() => f.artwork.calls.reads.length === 2);
   assertHiddenPreview(f, 'preparing');
   assert.ok(previewClears(f) > clears);
@@ -206,7 +206,7 @@ test('selecting another arena immediately hides and clears old lobby art until i
   await changing;
   assert.equal(previewState(f), 'ready');
   assert.notEqual(lastPreview(f), old);
-  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.doc.activeElement.id, 'coop-start');
 });
 
@@ -217,7 +217,7 @@ test('held artwork completes behind Settings without reclaiming its selector or 
     ...options,
     presentation: { read: ({ calls }) => (calls.reads.length === 2 ? gate.promise : undefined) },
   });
-  const changing = f.choose('coop-level', 'first-connection');
+  const changing = f.choose('coop-level', 'relay-yard');
   await waitFor(() => f.artwork.calls.reads.length === 2);
   assertHiddenPreview(f, 'preparing');
   f.$('coop-settings-open').focus();
@@ -234,7 +234,7 @@ test('held artwork completes behind Settings without reclaiming its selector or 
   assert.equal(f.doc.activeElement, selector);
   assert.equal(selector.value, 'large');
   assertMysteryPreview(f);
-  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.artwork.calls.reads.length, 2);
   assert.equal(f.artwork.calls.decodes.length, 2);
   assert.equal(f.drawImages.length, 0, 'Neither readiness nor Settings starts a flight.');
@@ -256,7 +256,7 @@ test('late superseded read cannot draw or clear the newer arena preview or recla
   });
   await waitFor(() => f.artwork.calls.reads.length === 1);
   assertHiddenPreview(f, 'preparing');
-  await f.choose('coop-level', 'first-connection');
+  await f.choose('coop-level', 'relay-yard');
   f.$('coop-versus').focus();
   const image = lastPreview(f),
     operations = f.previewOperations.length;
@@ -264,7 +264,7 @@ test('late superseded read cannot draw or clear the newer arena preview or recla
   await flush();
   assert.equal(previewState(f), 'ready');
   assert.equal(lastPreview(f), image);
-  assert.equal(image.sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(image.sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(
     f.previewOperations.length,
     operations,
@@ -325,7 +325,7 @@ test('required original decode failure shows no lobby art and Retry prepares the
   assert.equal(previewState(f), 'ready');
   assert.equal(f.artwork.calls.reads.length, 2);
   assert.equal(f.artwork.calls.reads[0].slot, f.artwork.calls.reads[1].slot);
-  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
   assert.equal(f.doc.activeElement.id, 'coop-start');
 });
 
@@ -387,7 +387,7 @@ test('legacy procedural import clears artwork, loss keeps preview outside Result
   f.$('coop-pack-reset').click();
   await settle(f);
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
   assert.equal(f.artwork.calls.reads.length, 2);
 });
 
@@ -448,7 +448,7 @@ test('missing preview Canvas context never blocks a fully prepared playable aren
   assert.equal(f.previewDrawImages.length, 0);
   assert.equal(f.artwork.calls.reads.length, 1);
   start(f);
-  assert.equal(lastArena(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(lastArena(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
 });
 
 test('fresh pointer intent during loading permits preview publication without adding a focus handoff', async (t) => {
@@ -471,7 +471,7 @@ test('fresh pointer intent during loading permits preview publication without ad
 
 test('earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease', async (t) => {
   const f = await page(t, options);
-  await f.choose('coop-level', 'first-connection');
+  assert.equal(f.$('coop-level').value, 'first-connection');
   const image = lastPreview(f),
     reads = f.artwork.calls.reads.length;
   assert.ok(image);
@@ -577,7 +577,7 @@ test('required read failure and a changed starter identity each clear old previe
   const old = lastPreview(f),
     clears = previewClears(f);
   assert.ok(old);
-  await f.choose('coop-level', 'first-connection');
+  await f.choose('coop-level', 'relay-yard');
   await settle(f, 'error');
   assertHiddenPreview(f, 'error');
   assert.ok(previewClears(f) > clears);
@@ -592,7 +592,7 @@ test('required read failure and a changed starter identity each clear old previe
   f.tap('Enter');
   await settle(f);
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   const reads = f.artwork.calls.reads.length,
     beforeImportClears = previewClears(f);
   const changed = structuredClone(COOP_STARTER_PACK);
@@ -624,7 +624,7 @@ test('preview reset failure cannot block a newly prepared arena or interrupt ter
   const oldImage = lastPreview(f),
     operations = f.previewOperations.length;
   f.setPreviewResetFailure(true);
-  await assert.doesNotReject(f.choose('coop-level', 'first-connection'));
+  await assert.doesNotReject(f.choose('coop-level', 'relay-yard'));
   assert.equal(previewState(f), 'unavailable');
   assert.equal(f.$('coop-preview-canvas').hidden, true, 'Unclearable old pixels remain concealed.');
   assert.equal(f.$('coop-picture-status').dataset.state, 'ready');
@@ -638,7 +638,7 @@ test('preview reset failure cannot block a newly prepared arena or interrupt ter
   );
   assert.deepEqual(f.artwork.calls.releases, [f.artwork.calls.urls[0]]);
   const image = f.artwork.calls.decodes[1];
-  assert.equal(image.sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(image.sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   start(f);
   assert.equal(
     lastArena(f),

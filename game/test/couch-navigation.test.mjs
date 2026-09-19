@@ -271,7 +271,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   f.key('Escape');
   f.frame();
   assert.equal(f.state(), 'ready');
-  assert.match(f.$('race-start').textContent, /Start round/);
+  assert.match(f.$('race-start').textContent, /Start race/);
   f.$('race-focus').click();
   f.frame();
   f.focus('race-level');
@@ -310,8 +310,13 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
 });
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
-  test(`${turnPolicy}: actual Sentinel round win and best-of-three rematch retain legal core route results`, async (t) => {
+  test(`${turnPolicy}: actual Sentinel round win and First to two rematch retain legal core route results`, async (t) => {
     const f = await page(t, { campaign: sentinel.campaigns[0], turnPolicy, pads: [pad(0)] });
+    f.$('race-focus').click();
+    f.$('race-format').value = 'first-to-two';
+    await f.$('race-format').onchange();
+    f.$('race-setup-back').click();
+    f.frame(0);
     f.join(0);
     const route = sentinelRoutes.routes.find(
       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
@@ -355,7 +360,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       f.pulse(0, 1);
       assert.equal(f.state(), 'finished');
     }
-    assert.match(f.$('race-start').textContent, /Play another match/);
+    assert.match(f.$('race-start').textContent, /Rematch:/);
     await nextAction(f, () => f.pulse(0, 0));
     assert.equal(f.state(), 'running');
     assert.equal(f.$('series-score').textContent, '0 : 0');
