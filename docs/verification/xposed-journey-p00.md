@@ -68,6 +68,17 @@ have their narrower scope.
 
 ## Failed fixture attempts and limits
 
+Post-PR review reproduced another real bug: opening Missions during a held cold
+pack download did not retire the old pack owner, so a new card selection could
+be ignored. The new-chooser regression failed with an unsettled host action before
+the fix. Cold Journey ownership now participates in the existing cancellation
+path and explicitly hands off to the picture/result ticket. Button and Escape
+cancellation remain separate cases. The original 57d87413 qualification runs are
+precursor evidence and cannot qualify this corrected source.
+The corrected scoped rerun passed all five selected stable-Continue, cancellation
+and cross-pack cases (28.52 s; four intentional nonmatching skips). The failing
+new-chooser case now passes without requiring the user to press Cancel first.
+
 The original cross-pack fixture lacked an Image decoder seam. Its correction
 models decode completion and image dimensions, not actual pixels. The next cold
 run exceeded the ordinary five-second fixture wait while original-picture identity

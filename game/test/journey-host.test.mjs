@@ -162,7 +162,7 @@ test('Journey total defeat starts a fresh attempt without a menu confirmation', 
   assert.deepEqual(p.errors, []);
 });
 
-for (const cancel of ['button', 'Escape'])
+for (const cancel of ['button', 'Escape', 'new chooser'])
   test(`Journey cold-load ${cancel} cancellation is immediate and a late failure cannot replace a newer choice`, async (t) => {
     let resolveDownload;
     const { p } = await setup(t, {
@@ -181,7 +181,7 @@ for (const cancel of ['button', 'Escape'])
     await settle(() => !!resolveDownload);
     assert.equal(p.$('flight-preparation-cancel').hidden, false);
     if (cancel === 'button') p.$('flight-preparation-cancel').click();
-    else {
+    else if (cancel === 'Escape') {
       p.key('Escape');
       p.key('Escape', false);
     }
