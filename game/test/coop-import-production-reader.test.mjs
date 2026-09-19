@@ -9,6 +9,7 @@ import {
   COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
 } from '../couch/coop-picture-bindings.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const compiledURL = new URL('../presentation/compiled/', import.meta.url);
 const manifest = JSON.parse(await readFile(new URL('runtime.json', compiledURL), 'utf8'));
@@ -28,14 +29,15 @@ const deferred = () => {
   });
   return { promise, resolve };
 };
-const tick = () => new Promise((resolve) => setImmediate(resolve));
-async function until(check) {
-  for (let n = 0; n < 200; n++) {
-    if (check()) return;
-    await tick();
-  }
-  assert.fail('Expected production picture request did not begin.');
-}
+// Production reads and WebCrypto finish on elapsed time, not a fixed number of turns.
+const until = (check) =>
+  waitFor(check, { message: 'Expected production picture request did not begin.' });
+// Observe immediately so cleanup cannot leave a rejection unhandled if waiting fails.
+const outcome = (promise) =>
+  promise.then(
+    (value) => ({ value }),
+    (error) => ({ error }),
+  );
 
 async function fixture(t, { responseForPicture } = {}) {
   const calls = {
@@ -195,15 +197,14 @@ test('cancelling a held production fetch retires late bytes and a new deliberate
     },
   });
   const controller = new AbortController();
-  const pending = f.lease.select({ ...f.request, signal: controller.signal });
+  const pending = outcome(f.lease.select({ ...f.request, signal: controller.signal }));
   await until(() => f.calls.pictures.length === 1);
-  const rejected = assert.rejects(pending, { name: 'AbortError' });
   controller.abort();
   assert.equal(f.calls.pictures[0].signal.aborted, true);
   const newer = await f.lease.select(f.request);
   assert.equal(f.calls.teamDecodes.length, 1);
   gate.resolve();
-  await rejected;
+  assert.equal((await pending).error?.name, 'AbortError');
   assert.equal(f.lease.current(), newer);
   assert.equal(f.calls.teamDecodes.length, 1);
   assert.equal(f.calls.releases.length, 0);
@@ -217,13 +218,12 @@ test('a real host snapshot replacement rejects its old pending picture instead o
       if (calls.pictures.length === 1) await gate.promise;
     },
   });
-  const pending = f.lease.select(f.request);
+  const pending = outcome(f.lease.select(f.request));
   await until(() => f.calls.pictures.length === 1);
-  const rejected = assert.rejects(pending, /release changed|presentation changed/);
   const replacement = await f.host.load();
   assert.notEqual(replacement, f.snapshot);
   gate.resolve();
-  await rejected;
+  assert.match((await pending).error?.message ?? '', /release changed|presentation changed/);
   assert.equal(f.calls.teamDecodes.length, 0);
   assert.equal(f.lease.current(), null);
   const ready = await f.lease.select({ ...f.request, attemptId: 'import-after-reload' });
