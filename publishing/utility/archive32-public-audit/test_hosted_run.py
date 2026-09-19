@@ -18,7 +18,7 @@ class HostedContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):hosted_run.validate_binding(json.dumps(v))
     def test_only_four_public_authority_routes(self):
         p='repos/mekhovov/revealline-archive-32/'
-        for endpoint in ['git/ref/heads/main','actions/runs/35446915477','deployments/6541593688','deployments/6541593688/statuses']:
+        for endpoint in ['git/ref/heads/main','actions/runs/35464701544','deployments/6544867176','deployments/6544867176/statuses']:
             self.assertEqual(api.endpoint(p+endpoint),'https://api.github.com/'+p+endpoint)
         for bad in ['https://example.com',p+'actions/runs/1',p+'actions/artifacts/10585129992/zip',p+'git/ref/heads/main?token=secret']:
             with self.assertRaises(ValueError):api.endpoint(bad)

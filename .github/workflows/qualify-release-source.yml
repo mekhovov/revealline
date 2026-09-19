@@ -30,10 +30,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: mekhovov/revealline-archive-32
-          ref: 50909e7cf38916fe7d3e2e7eb79339bb49ae80b9
+          ref: 2ff124892905eda499e7b1fb29729f092a253ecb
           path: archive-source
           persist-credentials: false
           fetch-depth: 1
+      - name: Fetch the accepted prior archive inventory for exact preservation proof
+        working-directory: archive-source
+        run: git fetch --no-tags --depth=1 origin 50909e7cf38916fe7d3e2e7eb79339bb49ae80b9
       - name: Test bounded public transport without network
         env:
           REVEALLINE_ARCHIVE_SOURCE: ${{ github.workspace }}/archive-source

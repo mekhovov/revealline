@@ -7,91 +7,91 @@
   {
     "path": "http/execution-request.reviewed.json",
     "bytes": 1611,
-    "sha256": "618598f3a280c9bf5c2195d59590f0d06e6248c6d7d7be4643f72da07c282033"
+    "sha256": "ecb73415aa2f7505500a0482564178641f9b65195a9c0b3a1ed5a48337d87906"
   },
   {
     "path": "http/http-tools/audit_binding.py",
-    "bytes": 12191,
-    "sha256": "fff15aa0e566cd625769585504e7699e46e484bebd6b8e4709fc5623db37171c"
+    "bytes": 12522,
+    "sha256": "65893ea5322c84f125b263bb376e01afe7bfb6fffd393454d0920b0d0bc0dc1a"
   },
   {
     "path": "http/http-tools/http_audit.py",
-    "bytes": 13551,
-    "sha256": "d96459678e64258c4be5f5a1b008750b2401ee1cabec4059cf5cdcc81db9765b"
+    "bytes": 13552,
+    "sha256": "d34a9c3e9ba4cff320ddff305b18afbfc64ff4974a1a203df063f62959b4f0ed"
   },
   {
     "path": "http/http-tools/test_http_audit.py",
     "bytes": 8083,
-    "sha256": "ff7ff520551d8aecb19bb4f46f2e3018d361616c66257a8c19d2f57f5ef0d7aa"
+    "sha256": "2525646b3ca007f164424c8cbd841351f560ba104dc134bc080a7f5a3edafeb2"
   },
   {
     "path": "http/inputs/expected-inventory.json",
+    "bytes": 292323,
+    "sha256": "2557dc9feaa90454f291846f135f3ec556a92b18cf4e883fbb173d4a76376543"
+  },
+  {
+    "path": "http/inputs/prior-expected-inventory.json",
     "bytes": 146422,
     "sha256": "fcf083e83494a0d22c3078ddd032f75b630dcda4d25d3d4976b612ca1216c6d0"
   },
   {
-    "path": "http/inputs/prior-expected-inventory.json",
-    "bytes": 81,
-    "sha256": "019716b5473c822f29d7dabe8849078ba69edb59d82aadf86b90ef42623a31e3"
-  },
-  {
     "path": "http/inputs/source-lock.json",
-    "bytes": 1428,
-    "sha256": "4edef85f0b79cc82e7597497db9153e92c5cd3e07aca55e05089562d20372c46"
+    "bytes": 2263,
+    "sha256": "96b82582a221f57781eb6342d35efde98ac03437d63378cc376f18af7d40fa10"
   },
   {
     "path": "http/internal-review.json",
-    "bytes": 899,
-    "sha256": "66993c2868c5a33441500cf522e3827382453700f5588bc2fb70738ca62ec50a"
+    "bytes": 1090,
+    "sha256": "8057eeb5838005c8b2dee24f955a6d7e985ef0cd6676924dacdb984a8e82747c"
   },
   {
     "path": "http/public_api_get.py",
     "bytes": 1833,
-    "sha256": "5d17606df9f7301a20cd41db4611f56946e7fd051984a887e8b4d7204795f087"
+    "sha256": "df77ba562f1a2d142d7e230470e298e1d84fca23e8f8b5602b81b9a9dc918105"
   },
   {
     "path": "http/reconcile-completed-rows.py",
-    "bytes": 7520,
-    "sha256": "13f5079b49c9853cb28c87551e9ab4072fcff772e0290cfbed19d583e18b4b4b"
+    "bytes": 7655,
+    "sha256": "b71d3fd7fd362f717db2eca6cbd84b215d6ed069079291131948a02f03241a99"
   },
   {
     "path": "http/run-reviewed-operations.py",
     "bytes": 1530,
-    "sha256": "c6f6e42a89d39cd06ed12bf12c16aa19bbb0c0bcdf4692c33a807937eb9e40fe"
+    "sha256": "26f4a734afbe22cd25eafe6513c141d03f1b3d95a8927f7d91d328aa59bfaed1"
   },
   {
     "path": "intake/terminal-r1/artifacts.json",
     "bytes": 1454,
-    "sha256": "13bd8706d4498549d5904cb323c4f6a7f7d0e51d276a941f3280609b99b52160"
+    "sha256": "4f8bb313da130b6b75a01d88a1fcb25f0a45736fef6cbc3bb82b9ff9ef8da7d7"
   },
   {
     "path": "intake/terminal-r1/commit.json",
-    "bytes": 2743,
-    "sha256": "2582c63bbd68cb9760e87cf9e4dd494fe44eefc7654e1fbfcb9eaf3dcc420328"
+    "bytes": 2707,
+    "sha256": "cd6efa9c0f7fc9a7cd7284af5cf794a42de780a959600cb7d675939b248b0540"
   },
   {
     "path": "intake/terminal-r1/deployment.json",
     "bytes": 3856,
-    "sha256": "86afc0fa5236b56ff2cec8e50d4c0833bfdb4410bdb0adcbf98089f536b78d1b"
+    "sha256": "4453d5dacf019e570a1ad7d569609e18bd233cffd030cd155867e882c5281681"
   },
   {
     "path": "intake/terminal-r1/main.json",
     "bytes": 358,
-    "sha256": "a5a88accd5ca9bd29302c050edd87d1c0e07a55f7d2d83361a09df9da1944e74"
+    "sha256": "ba145e5617fdd6082eaf7298371af3ce743b7d004b1f07a8b5d5e6a2c0342fa4"
   },
   {
     "path": "intake/terminal-r1/receipts-original.zip",
-    "bytes": 37929,
-    "sha256": "abf503a3cdf07c093794fa22c04b12c8fc304510ba2e6b6c96696150a6da1461"
+    "bytes": 74682,
+    "sha256": "e6b153a057a629f3d04746fab21429d9e52577a2af3c2f0eaf846b4d58855151"
   },
   {
     "path": "intake/terminal-r1/run.json",
-    "bytes": 13189,
-    "sha256": "a73585a50a81fb23d5643a72825a16a33a09cda900fe0335f43d15404bcd25e7"
+    "bytes": 13162,
+    "sha256": "8eee006d1ecc27244ce17e2573d3f1de53d9f30800a5dfd875f7ed7bbf953dbb"
   },
   {
     "path": "intake/terminal-r1/statuses.json",
-    "bytes": 8507,
-    "sha256": "0c7811ec328f53e3c36c53d3e752470d203974c6db27988970c1efc62e5b8e52"
+    "bytes": 6817,
+    "sha256": "9aed8079ee60dc305506acac9175e4caa91b68d920f1c93aaacfabb425b2ab26"
   }
 ]

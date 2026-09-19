@@ -48,12 +48,12 @@ class AuditTests(unittest.TestCase):
     def fetch(self, response, expected=None):
         return audit.fetch_once(expected or row(), 1, Opener(response), deadline=100, clock=lambda: 0)
 
-    def test_prepared_initial_inventory_is_exact_without_network(self):
+    def test_prepared_append_inventory_is_exact_without_network(self):
         raw, rows, _ = binding.candidate_inventory()
         for item in rows:
             audit.validate_row(item)
-        self.assertEqual(len(rows), 712)
-        self.assertEqual(sum(item['bytes'] for item in rows), 313567687)
+        self.assertEqual(len(rows), 1421)
+        self.assertEqual(sum(item['bytes'] for item in rows), 627136217)
         self.assertEqual(audit.digest(raw), audit.INVENTORY_SHA)
 
     def test_changed_source_lock_pin_refuses(self):

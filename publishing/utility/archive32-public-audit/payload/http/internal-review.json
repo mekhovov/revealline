@@ -1,13 +1,14 @@
 {
-  "status": "PREPARED_FROM_ACTUAL_ARCHIVE32_ORIGINALS_PENDING_ROOT_ACTIVATION",
+  "status": "INDEPENDENT_ORIGINALS_BOUND_PENDING_ROOT_UTILITY_ACTIVATION",
   "reviewed": true,
   "rootReviewed": true,
-  "requestSha256": "618598f3a280c9bf5c2195d59590f0d06e6248c6d7d7be4643f72da07c282033",
-  "scope": "Exact7 raw terminal originals and3-member receipt reconciled;712rows,zero prior. Offline fixtures recorded separately. Root activation and public HTTP audit remain pending.",
+  "requestSha256": "ecb73415aa2f7505500a0482564178641f9b65195a9c0b3a1ed5a48337d87906",
+  "scope": "All seven actual terminal originals, exact four-member receipt, merged archive and prior inventory are bound. Root authorized receipt intake and independent fixtures/binder; utility dispatch activation remains a separate root review.",
+  "rootReceiptRequestSha256": "2e116e600c0ab3b44783ea45f561b0045d3edd0915292ccfc72e4633cbdcad79",
   "reserveBytes": 536870912,
   "executionAllocationBytes": 33554432,
   "capacityEnforcement": "Inherited stage-boundary checks; not a hard filesystem quota.",
   "publicAuditComplete": false,
   "nativeComplete": false,
-  "rootScope": "Exact archived50909e7/treeb11d, original terminal receipt and all712rows reviewed;27offlinefixtures plus exact merged-source binder passed. Root native scoped observation retained separately; utility performs readonly public byte audit, no release/main changes."
+  "rootScope": "Reviewed every changed executable hunk, bound actual originals and whole binary receipt; 27 fixtures and exact merged-source binder passed. Read-only public audit only; no release or main changes. Native scoped record retained separately at .cache/archive32-v0642-native-r1/native-observation.json."
 }
