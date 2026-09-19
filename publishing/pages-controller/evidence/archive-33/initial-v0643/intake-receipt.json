@@ -1,0 +1,14 @@
+{
+  "status": "OUTER_ARTIFACT_RECEIVED_NOT_PUBLIC_ACCEPTANCE",
+  "runId": 35469429186,
+  "jobId": 105967574995,
+  "artifact": {
+    "id": 10592541287,
+    "bytes": 348860,
+    "sha256": "179edc71156e01b69fee59391d37fadd56b78cd4b7eadfc4430b7e3d51808bd0",
+    "name": "archive33-public-byte-audit-evidence"
+  },
+  "members": 81,
+  "expandedBytes": 1719927,
+  "publicAccepted": false
+}
