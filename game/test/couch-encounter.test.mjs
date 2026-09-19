@@ -9,8 +9,16 @@ const pack = await read('../content/packs/sentinel-relay.json');
 const proofs = await read('../replays/sentinel-routes.json');
 const html = await readFile(new URL('../couch/index.html', import.meta.url), 'utf8');
 
-async function page(t, { campaign = pack.campaigns[0], turnPolicy = 'immediate' } = {}) {
+async function page(
+  t,
+  { campaign = pack.campaigns[0], turnPolicy = 'immediate', format = 'single' } = {},
+) {
   const f = await couchPage(t, { campaign, turnPolicy, seconds: '90' });
+  assert.equal(f.$('race-format').value, 'single');
+  if (format !== 'single') {
+    f.$('race-format').value = format;
+    await f.$('race-format').onchange();
+  }
   const elements = Object.fromEntries(
     [...html.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => [id, f.$(id)]),
   );
@@ -36,9 +44,14 @@ async function page(t, { campaign = pack.campaigns[0], turnPolicy = 'immediate' 
   };
 }
 
-for (const turnPolicy of ['immediate', 'grid-center']) {
-  test(`${turnPolicy}: actual couch inputs keep both phase cues independent and freeze them on pause/finish`, async (t) => {
-    const app = await page(t, { turnPolicy });
+for (const [format, turnPolicy] of [
+  ['single', 'immediate'],
+  ['single', 'grid-center'],
+  ['first-to-two', 'immediate'],
+  ['first-to-two', 'grid-center'],
+]) {
+  test(`${format}/${turnPolicy}: actual couch inputs keep both phase cues independent and freeze them on pause/finish`, async (t) => {
+    const app = await page(t, { turnPolicy, format });
     assert.match(app.cue(0).title, /^READY · 1 \/ 2/);
     assert.deepEqual(app.cue(0), app.cue(1));
     app.elements['race-start'].onclick();
@@ -89,10 +102,16 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(app.renders[0].status, 'won');
     assert.equal(app.renders[0].tick, 1792);
     assert.equal(app.renders[1].status, 'running');
-    assert.match(app.cue(0).title, /ROUND ENDED.*CORE RELEASED/);
+    const noun = format === 'single' ? 'race' : 'round';
+    assert.equal(app.cue(0).title, `${noun.toUpperCase()} ENDED · 2 / 2 · CORE RELEASED`);
     assert.match(app.cue(0).instruction, /picture is yours/);
-    assert.match(app.cue(1).title, /^ROUND ENDED/);
-    assert.match(app.cue(1).instruction, /^Frozen at round end/);
+    assert.ok(app.cue(1).title.startsWith(`${noun.toUpperCase()} ENDED · `));
+    assert.ok(app.cue(1).instruction.startsWith(`Frozen at ${noun} end. `));
+    assert.ok(
+      app.elements['race-start'].textContent.startsWith(
+        format === 'single' ? 'Rematch:' : 'Next round:',
+      ),
+    );
     assert.doesNotMatch(app.cue(1).instruction, /Capture|Close|Return/);
     const ended = [app.cue(0), app.cue(1)];
     const ticks = app.renders.map((run) => run.tick);
