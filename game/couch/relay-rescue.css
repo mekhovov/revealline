@@ -976,3 +976,129 @@ kbd {
   margin-block: var(--fk-space-2);
   color: var(--fk-text);
 }
+
+/* A short running arena gets the space left by its actual text and controls.
+   No fixed chrome-height estimate, transformed bitmap or hidden live status. */
+@media (orientation: landscape) and (max-height: 500px) {
+  body.playing:has(#coop-overlay[hidden]) #coop-app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    block-size: 100svh;
+    max-inline-size: none;
+    padding-block: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom));
+  }
+  body.playing:has(#coop-overlay[hidden]) :is(#coop-play, #coop-controls) {
+    display: contents;
+  }
+  body.playing:has(#coop-overlay[hidden]) .hud {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: 'one team two';
+    align-items: start;
+    gap: 8px;
+    padding: 0;
+  }
+  body.playing:has(#coop-overlay[hidden]) .hud > .sunflower {
+    grid-area: one;
+  }
+  body.playing:has(#coop-overlay[hidden]) .hud > .skyline {
+    grid-area: two;
+  }
+  body.playing:has(#coop-overlay[hidden]) .hud > .team-status {
+    grid-area: team;
+    padding: 0;
+    border: 0;
+  }
+  body.playing:has(#coop-overlay[hidden]) .live-objective {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+    font-size: var(--fk-text-secondary);
+    line-height: 1.3;
+  }
+  body.playing:has(#coop-overlay[hidden]) .coop-board-slot {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    place-items: center;
+    min-inline-size: 0;
+    min-block-size: 0;
+    padding: var(--fk-border-width);
+  }
+  body.playing:has(#coop-overlay[hidden]) .coop-board-slot > .arena-wrap {
+    display: contents;
+  }
+  body.playing:has(#coop-overlay[hidden]) #coop-canvas {
+    /* Replaced-element intrinsic sizing keeps the drawable box exactly 2:1.
+       The slot reserves the decorative frame; it never stretches the canvas. */
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+    box-shadow: 0 0 0 var(--fk-border-width) var(--fk-line);
+  }
+  body.playing:has(#coop-overlay[hidden]) .board-footer {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    gap: 8px;
+    min-block-size: var(--fk-target-size);
+    min-inline-size: 0;
+  }
+  body.playing:has(#coop-overlay[hidden]) .board-footer p {
+    min-inline-size: 0;
+    margin: 0;
+    font-size: var(--fk-text-secondary);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  body.playing:has(#coop-overlay[hidden]) .board-footer button {
+    min-block-size: var(--fk-target-size);
+    padding: var(--fk-space-1) var(--fk-space-2);
+  }
+  body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden]) #coop-app {
+    grid-template-columns: 140px minmax(0, 1fr) 140px;
+  }
+  body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden]) .coop-board-slot {
+    grid-column: 2;
+  }
+  body.playing:has(#coop-overlay[hidden]) .control-card {
+    grid-row: 3;
+    align-self: center;
+    min-inline-size: 0;
+  }
+  body.playing:has(#coop-overlay[hidden]) .control-card:first-child {
+    grid-column: 1;
+  }
+  body.playing:has(#coop-overlay[hidden]) .control-card:last-child {
+    grid-column: 3;
+  }
+  body.playing:has(#coop-overlay[hidden]) .control-card[data-touch-visible='false'] {
+    display: none;
+  }
+  body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:first-child[data-touch-visible='false']) {
+    grid-template-columns: minmax(0, 1fr) 140px;
+  }
+  body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:first-child[data-touch-visible='false'])
+    .coop-board-slot {
+    grid-column: 1;
+  }
+  body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:first-child[data-touch-visible='false'])
+    .control-card:last-child {
+    grid-column: 2;
+  }
+  body.playing[data-coop-touch='visible']:has(#coop-overlay[hidden])
+    #coop-app:has(.control-card:last-child[data-touch-visible='false']) {
+    grid-template-columns: 140px minmax(0, 1fr);
+  }
+}
