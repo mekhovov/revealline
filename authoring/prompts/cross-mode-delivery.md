@@ -18,6 +18,8 @@ Native evidence: “Pin the installed recorder transport and retain bounded post
 
 Use the [active phase register](../../docs/cross-mode-execution.md). Preserve earlier immutable records, player ownership and historical simulations. Each prompt applies only after its prerequisite phase is accepted; examples do not claim implementation.
 
+Versus formats and Rematch: “Start the default One race, earn a real win or draw, then inspect the named same-mission Rematch. Explicitly select First to two and exercise win/draw/win, with exactly one settlement per race and score reset only at accepted rematch publication. Change hidden setup fields after Results; the accepted recipe still owns copy and continuation. Exercise shipped and authenticated installed pictures with one deliberate activation, including touch that leaves focus elsewhere. Hold reads/decoding/confirmation; Cancel or fail without losing Results, then retry the captured candidate. Blur or newer focus may leave Ready but cannot launch; Back, Settings and a newer setup must retire the old action. Verify both boards, artwork revisions, input release and zero Solo writes. Keep the composed Node fixture separate from native layout/controller/offline/public evidence. Follow [the feature contract](../../docs/versus-session-formats.md).”
+
 ## Continue a phase
 
 “After changing navigation, run the existing host regressions through the current visible routes. Open Missions → Prepare before setup selectors and Library → Expansion packs before campaign Play. Keep Title Start, explicit Title Continue and paused generic Load distinct. Preserve unfinished-flight confirmation, exact campaign/art readiness, checkpoint/storage/replay assertions and late-completion ownership. Reproduce failures, distinguish missing sparse-checkout inputs from product failures, and retain original failed logs. Do not remove guards, raise timeouts, skip tests or change gameplay to restore an obsolete hidden-control shortcut.”
@@ -25,6 +27,10 @@ Use the [active phase register](../../docs/cross-mode-execution.md). Preserve ea
 “Inspect the current branch, latest main and `docs/cross-mode-execution.md`. Continue the active unaccepted phase. Reconcile related work without touching unrelated hunks. Show exact evidence for its blocking acceptance, fix failures, update this contract and relevant skills, synchronize the next unused version, commit related changes, qualify the exact source, freeze and deploy through the existing Pages controller. Verify all public bytes and ordinary play before marking accepted or beginning the next phase. Report physical devices separately from modeled/browser checks.”
 
 “If a production revision, theme transfer or combined player library fails a JSON capacity check, measure its actual UTF-8 document and wrapper bytes first. Preserve the declared limits and every immutable revision. Count escaped strings, keys and punctuation accurately without executing untrusted getters or toJSON. Before expecting a trusted fixture to be rejected, independently assert that its standalone collections fit and its serialized union exceeds the actual quota; correct an under-limit fixture with valid bounded fields or history, preserving identity, unchanged-input and zero-write checks. Do not change runtime or budgets to restore an obsolete test expectation. Verify exact-limit/one-byte-over inputs and the complete production review, replacement, export and import journey; retain the actual failed source receipt, keep earlier focused results scoped, and qualify the corrected commit afresh.”
+
+## Keep Team entry simple
+
+“Open Team with no saved arena and verify First Connection’s exact preview and objective, followed by one explicit Start. Choose Relay Yard, leave and revisit; restore only the compatible built-in arena, never a flight. Hold module loading and choose First Connection—even if it is the original markup value—before readiness; that choice must beat a saved Yard hint even without an input/change event. Mere focus or Tab must not count as selection. Keep native options stable during attachment; opening/cancelling writes nothing, while successful explicit initial Start remembers the accepted built-in arena. Keep loading feedback and navigation visible while the early tracker loads. Test denied storage, malformed/future records, early invalid choices, out-of-order artwork, imported pack/Return, Settings, Retry and BFCache without altering Solo or media records. Use real selectors, preserve exact accepted artwork and explicit Resume, and report modeled input, native browser and physical-device evidence separately. Do not store imported content or add persistent co-op saves.”
 
 ## Add or change asynchronous presentation
 
@@ -231,3 +237,37 @@ Use the exact current Team picture selection as the lobby preview source. Keep t
 ### Qualify visible Team picture recovery
 
 “On the current composed source, fail a required Team picture and inspect the ordinary recovery status: show clear Retry/choose-another-arena guidance without a hash or internal error path, retaining the original exception only in local console diagnostics. Test owned failure → Retry → pending Cancel and explicit Cancel → Retry with visible actions at short landscape and portrait sizes. Keep selection identity, attempt, generation, Settings visit, foreground and newer-input vetoes authoritative through each direct focus/layout/scroll callback. A reveal-only browser exception must not strand picture preparation. Settle delayed artwork behind Settings, supersede a failed picture with another arena and reject late cancelled work without focus or scrolling. Preserve the existing successful navigation callback rather than claiming its internal scroll is newly guarded. Keep model observations, actual native geometry/hit testing, physical controls and public qualification separate.”
+
+## Qualify installed Versus picture choice and chapter readiness
+
+“Install the exact embedded R5 pack and authenticated external pilot. Compare
+fresh Solo, shipped Versus where compatible, and installed Versus picture SHA,
+dimensions, fit and sampling using the real selection modules. A matching level
+name cannot establish owner identity, and an altered embedded original cannot
+qualify by gameplay identity alone. For external content, retain whole-chapter
+descriptor-original authentication even when the displayed image is a saved
+alternate. Exercise historical revisions, unavailable optional presentation,
+invalid selected required bytes, failed/cancelled selected-image decoding,
+retained same-race Retry after reassignment, and stale Start. Keep Results during
+staged Next; confirmation does not publish and retirement follows host adoption.
+Check both actual host board inputs, exact-once cleanup and zero player/media
+writes. Count completed readwrite transactions as well as puts so delete-only
+mutations cannot escape the observer. Preserve failing baseline receipts. Record fixture alternate images as
+test data, not approved production art. Qualify native decode, input, offline,
+all-edition coverage and exact-source/public release separately.”
+
+## Continue a Team journey safely
+
+“Earn First Connection through ordinary inputs. Activate Next: Relay Yard once; hold reading/decoding, inspect live loading status and the unchanged earned result, then let the exact successor start without another Start action. Retain accepted difficulty/teamwork and both input assignments; update stronghold Help, setup and arena bookmark. Repeat with Cancel, Back/Menu, focus-away-and-back, Settings, picture viewing, native mode departure, blur, hidden state and cached/terminal pagehide. Reject stale completions and duplicate activation. Fail artwork and first/commit paint; retain the old result while its owner remains current. Reenter during URL cleanup and ensure no focus theft or leaked originals. Retry must keep the accepted picture. Win Relay Yard and offer Choose arena with honest final-arena wording. Record finite modeled, ordinary-source, native and physical/public evidence separately; do not introduce Solo writes or persistent Team saves.”
+
+### Team preparation recovery-copy prompt
+
+Review Team lobby and ordered Next preparation through the real host and presentation lease. Capture every live-status write while read/decode/paint fails with a distinctive diagnostic. Keep player messages bounded and actionable, log the original exception separately, and preserve the accepted result, picture, score and explicit recovery. A reader stage named ready is not the authenticated lease ready status; do not announce a start early. Test cancellation/replacement during logging and recheck ownership before subsequent status/focus changes. Retain lobby's explicit Start and Next's one-action continuation. Qualify the actual composed source separately from any cache-only test fixture and retain public/physical-device limitations.
+
+## Couch initial Start ownership
+
+Reproduce delayed Ready → Start confirmation through the real installed-picture reader. Move focus with modeled Tab or a pointer while authentication is pending, including Help → BODY, and prove completion leaves the same race Ready without stealing focus. Keep the exact picture, checkpoints and Solo data unchanged. Preserve one deliberate direct-touch Start when the browser does not focus the button, the synchronous shipped path, explicit fresh Start, and Cancel/Retry. Retain the action lease through completion callbacks and input cleanup before the final launch check. Report original failing assertions and exact-source green evidence separately from native device and public-release qualification.
+
+### Rotate Team while paused
+
+“Start Team, Pause, set Plain/Large, open Settings and return by keyboard. Rotate 390×844 → 844×390 → portrait; keep the same action focused and its complete outline inside the bordered client scrollport. Repeat Theme/Standard at 600×360. Check unchanged time/coverage/reserves and explicit Resume only. Cover stale focus during measurement, another modal, background/disposal and resize reentry in host tests. Preserve the original failed geometry; native checks do not establish physical-device or public acceptance.”

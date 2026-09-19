@@ -1,5 +1,52 @@
 # Reveal Line cross-mode execution register
 
+**Current public baseline, 19 September 2026: [v0.61.24](https://mekhovov.github.io/revealline/releases/v0.61.24/site/game/).** The Solo Pause correction is accepted within its recorded scope: readable actions and focus at 280×800 and 600×400 in Theme/Large and Plain/Large, explicit Resume and a completed First Signal flight. Source `bb8cd8ea8af0cbec6af7e633c05d1bec78815938` passed 5,925 tests across 466 files in each of two hosted Node 20.19.6 families. The public audit verified all 3,280 files / 643,266,110 bytes with no failure, retry or skip. [Source PR149](https://github.com/mekhovov/revealline/pull/149) and [publication PR150](https://github.com/mekhovov/revealline/pull/150) are merged. These results do not close P03/P05/P18 or establish physical-device, listening or offline acceptance.
+
+**Active candidate: Couch/Team entry and continuation.** The combined source adds remembered Team arenas, installed-picture parity, Team Next, One race/First to two formats and owned Ready focus. Its 30-suite focused cohort passed 593 cases on each of Node 20.19.5 and 22.22.2; this is not the complete source gate. Native keyboard play verified Versus wins, draws, Next, Rematch reset and remembered Team selection. The Team paused-rotation defect is corrected; eight additional Node 20/22 regressions and actual Plain/Large and Theme/Standard keyboard rotation checks pass within scope. Team win→Next, installed-content native recovery, ordinary-source qualification and public delivery remain open. See [the current candidate checkpoint](couch-team-delivery.md).
+
+**Next in order:** finish the active navigation/readability corrections, then P08-A artwork/actor parity → P08-B action feedback → P09 fair challenge → P07 rewards → P02-B music → P04 creation → P06 discovery → P10 Team encounters → P11–P15 campaigns → P16/P17 supporting workflows and authoring → P18 browser qualification. Named supporting features may ship earlier without closing their parent phase. Native stores and online multiplayer retain separate later gates.
+
+| Phase | Current status | Next completion requirement |
+|---|---|---|
+| P00 — Integration baseline | Complete within v0.55.0 scope | Preserve compatibility in later releases. |
+| P01 — Loading feedback | Complete within v0.57.4 scope | Apply its state/focus/cancellation contract to new screens. |
+| P02-A — Master sound controls | Complete within v0.58.1 scope | Keep later cross-mode regressions separate from music/content acceptance. |
+| P03 — Native navigation | In progress | Finish all player and supporting-screen journeys, focus returns and input ownership; test physical controller/touch separately. |
+| P05 — Shared readable presentation | In progress | Publish the qualified readability fixes; complete Team, EN/UA glyphs, Large/Plain, zoom and reduced-effects matrix. |
+| P08-A — Artwork and actor parity | Partial | Team picture delivery accepted within scope; finish role silhouettes, scale and heading across all modes/detail treatments. |
+| P08-B — Action feedback | Partial | Complete coherent trails, impact propagation, capture/loss/recovery, bonuses and Support/rescue feedback. |
+| P09 — Challenge and intelligence | Partial | Tune fair pressure and warnings; complete versioned patrol/carrier/shooter encounters and deterministic replay/checkpoint gates. |
+| P07 — Rewards and continuation | Partial | Preserve completed results through transitions and offer an unobscured full-picture reward; finish stories and Collection replay. |
+| P02-B — Music experience | Partial | Finish cross-mode uploaded/mixed playlists, real transfer/offline checks and the 24-track listening gate. |
+| P04 — Creation framework | Partial | Complete actual edit/export/import/play examples, history, registries and original-byte recovery. |
+| P06 — Discovery and installation | Partial | Complete compatible catalog, capacity, safe replacement/removal and interrupted-install journeys. |
+| P10 — Team encounters | Queued | Complete First Connection/Relay Yard variants and separate two-player encounter/readability matrix. |
+| P11-A–D — FPV campaigns | Queued; 0/4 accepted | Four individually released campaigns, twelve complete missions each. |
+| P12-A–D — DroneAid campaigns | Queued; 0/4 accepted | Four individually released campaigns, twelve complete missions each. |
+| P13 — Ukrainian culture | Queued | Twelve Living Atlas missions with cultural/historical and visual review. |
+| P14 — Retro arcade | Queued | Twelve After School Arcade missions with distinct art, encounters and music. |
+| P15 — Spend management | Queued | Twelve Spend in Motion missions with understandable noncombat goals. |
+| P16 — Supporting workflows | Partial | Complete Collection, scores, replay, learning, restore and legacy workflows. |
+| P17 — Reproducible authoring | Partial | Independently create/install/play/export/recover an example in a fresh workspace; maintain skills and bounded CLI examples. |
+| P18 — Browser qualification | Partial evidence | Complete regression, performance, real device/controller, accessibility, audio/offline recovery and human playtests. |
+| Native stores; network multiplayer | Deferred | Separate signing/store/hardware and authoritative network/reconnect gates. |
+
+**Execution order remains:** finish P03/P05 corrections → P08-A → P08-B → P09 → P07 → P02-B → P04 → P06 → P10 → P11–P15 → P16/P17 → P18. The three-level benchmark remains the quality gate before bulk campaign production. Supporting fixes may ship sooner when they are independently complete; this does not close their parent phase.
+
+**Content accounting remains explicit:** accepted content records still show 15/29 picture families (60/116 pictures), 1/12 victory stories and 40 reserve source illustrations. The 56 complete animated character sets and 24 auditioned tracks remain unfinished. The 132 new Solo missions are a programme target, not delivered content. Source art, generated candidates and test scenarios do not count as accepted campaigns.
+
+**Current review findings:** narrow active-flight Large HUD crowding, Mission brief Done reading wrapping, stale Workshop reload status remain separate corrections. Team paused-rotation focus is corrected in the unreleased candidate. The earlier Team picture and recovery observations retain their dated scopes. New notices must preserve input ownership and readable focus, following [Xbox navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) and [W3C status-message guidance](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+
+**Delivery rule:** every completed phase or named subphase has scoped hunk review, applicable skills/docs/tests, a new unused game version, an exact final-source qualification, source PR, immutable release, publication PR, full public-file audit and affected real player journeys. Archive/controller-only maintenance preserves the original game version. Build success, a merged PR or an uploaded artifact alone is not public acceptance. Keep original failures and historical reports unchanged; update this current checkpoint when new acceptance is recorded.
+
+**Additional open checks retained from the publication checkpoint:** horizontal forward-Tab mission-card focus, Replay JSON text sizing, Team ownership/footer/HUD and actor readability, complete shipped Enemy Workshop public journeys, and compatible P04/P06 history-capacity work without relaxing immutable-history bounds. These remain outside the current Couch/Team candidate’s accepted scope.
+
+## Historical source and acceptance checkpoints
+
+### Publication checkpoint before v0.61.24 public acceptance — 19 September 2026
+
+The following publication statements retain main’s original preacceptance cutoff verbatim. References to “current”, “pending” and “next” in this historical block are not the live baseline or the approved execution order above. The scoped v0.61.24 acceptance recorded above supersedes the pending public gate only.
+
 **Current scoped public checkpoint (19 September 2026): v0.61.23 is accepted within the recorded Still Media correction.** Source `2f1074a37ade9c731ea7be37a6e56e533b51d1ac` is selected by publisher `8783cbd6fcd0b02ba1d14bae09b16595a4166055`. The release coordinator reports successful [Pages run 35396835006](https://github.com/mekhovov/revealline/actions/runs/35396835006), verification of all 3,255 files / 642,999,818 bytes, and the scoped native owned-draft rotation and opener-return journey. Committed [exact-source qualification](https://github.com/mekhovov/revealline/blob/8783cbd6fcd0b02ba1d14bae09b16595a4166055/publishing/pages-controller/evidence/current-v06123/source-qualification.json) separately records passing source gates. This does not establish complete navigation, presentation or whole-phase acceptance.
 
 **Current published correction: v0.61.24 — narrow Solo Pause columns; Pages acceptance pending.** Qualified source `bb8cd8ea8af0cbec6af7e633c05d1bec78815938` retains `fpv@32`; [source PR #149](https://github.com/mekhovov/revealline/pull/149) is merged. [Manual qualification 35404392904](https://github.com/mekhovov/revealline/actions/runs/35404392904) and [PR qualification 35403877032](https://github.com/mekhovov/revealline/actions/runs/35403877032) each passed 5,925 tests across 466 files on Node 20.19.6, with the source/production/build gates passed. The original frozen source and all 694 game files were inspected, all nine immutable attachments independently reviewed, and [v0.61.24](https://github.com/mekhovov/revealline/releases/tag/v0.61.24) published as stable Latest. Both earlier `58643e0c` failures remain retained; their stale label expectation was corrected without changing runtime behavior. This publisher change selects the new release, but deployed-byte and actual Pause-menu acceptance remain pending; v0.61.23 remains the last accepted public scope until they pass.
@@ -10,7 +57,6 @@
 
 The dated records below are preserved history; this header does not promote their scope or close later gates.
 
-## Historical source and acceptance checkpoints
 
 ### Opening queue recorded on 18 September 2026
 
