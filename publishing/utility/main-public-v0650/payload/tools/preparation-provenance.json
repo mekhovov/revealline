@@ -1,0 +1,20 @@
+{
+  "upstream": [
+    {
+      "path": "0376f1f2d3b077208418836d32d6610d0a154fdc:publishing/utility/main-public-v0643/payload/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "666c68a6f842da7cdac22c542e56f5e2910380e7:publishing/pages-controller/catalog.json",
+      "bytes": 45494,
+      "sha256": "99c628f8cb63983d1fd1815ac3667323031dc678518186ca2a4a2e34d8869ca0"
+    },
+    {
+      "path": "666c68a6f842da7cdac22c542e56f5e2910380e7:publishing/pages-controller/publication.json",
+      "bytes": 187112,
+      "sha256": "ef2746ff46f86340b463a7b036046d67367e9dbfca6aedbe4d17909d6a9f2825"
+    }
+  ],
+  "scope": "Imported-Team v0.65.0; all 102 accepted prior catalog records and 32 archive authorities unchanged, Archive33 added from accepted v0.64.3 preservation. Transport/MIME/retry/resource policies unchanged. Fixtures are not actual new publisher/deployment authority."
+}
