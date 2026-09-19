@@ -1707,17 +1707,20 @@
       <div class="shell-dialog-heading">
         <div>
           <p id="shell-missions-context" class="eyebrow">YOUR NEXT FLIGHT</p>
-          <h2 id="shell-missions-title">Choose your mission</h2>
+          <h2 id="shell-missions-title" data-field-kit-copy="navigation.missions">Missions</h2>
         </div>
-        <button
-          id="shell-missions-back"
-          type="button"
-          class="button secondary"
-          data-close="shell-missions"
-          data-field-kit-copy="navigation.back"
-        >
-          Back
-        </button>
+        <div class="shell-mission-actions">
+          <button
+            id="shell-missions-back"
+            type="button"
+            class="button secondary"
+            data-close="shell-missions"
+            data-field-kit-copy="navigation.back"
+          >
+            Back
+          </button>
+          <button id="shell-worlds" type="button" class="button secondary">More chapters</button>
+        </div>
         <div id="shell-craft-feedback"></div>
       </div>
       <details id="shell-mode-choice" class="shell-mode-choice">
@@ -1728,7 +1731,6 @@
             >Relay Rescue · 2-player co-op</a
           >
           <a id="shell-versus" href="couch/" class="button secondary">Couch Versus · 2 players</a>
-          <button id="shell-worlds" type="button" class="button secondary">More worlds</button>
         </nav>
       </details>
       <div id="shell-mission-content"></div>

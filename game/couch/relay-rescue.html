@@ -96,6 +96,7 @@
           <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
             Preparing arena…
           </button>
+          <button id="coop-discovery-open" type="button" disabled>Browse Team arenas</button>
           <details class="pack-picker">
             <summary>Play a created co-op pack</summary>
             <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
@@ -192,6 +193,7 @@
                   </button>
                   <button id="coop-view-picture" type="button" hidden>View picture</button>
                   <button id="coop-retry" type="button">Retry same arena</button>
+                  <button id="coop-discovery-paused" type="button">Browse Team arenas</button>
                   <button id="coop-lobby" type="button">Change setup</button>
                 </div>
                 <div id="coop-pause-modes"></div>
@@ -270,6 +272,51 @@
           </div>
         </article>
       </section>
+      <dialog
+        id="coop-discovery-dialog"
+        class="team-discovery field-kit-panel"
+        aria-labelledby="coop-discovery-title"
+        aria-describedby="coop-discovery-description"
+      >
+        <header class="team-discovery-heading">
+          <h2 id="coop-discovery-title">Team arenas</h2>
+          <button id="coop-discovery-back" type="button">Back</button>
+        </header>
+        <p id="coop-discovery-description">
+          Included arenas and Team packs you open appear here. Play uses your current challenge and
+          teamwork settings.
+        </p>
+        <div id="coop-discovery-list" class="team-discovery-list" aria-busy="false"></div>
+        <section id="coop-discovery-preview" aria-labelledby="coop-discovery-preview-title" hidden>
+          <h3 id="coop-discovery-preview-title">Arena artwork preview</h3>
+          <figure class="team-discovery-full-picture">
+            <canvas
+              id="coop-discovery-preview-canvas"
+              width="1152"
+              height="576"
+              aria-hidden="true"
+              hidden
+            ></canvas>
+            <figcaption>Preview · not earned. Scenery does not mark obstacles.</figcaption>
+          </figure>
+          <p
+            id="coop-discovery-preview-status"
+            class="operation-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <button id="coop-discovery-preview-retry" type="button" hidden>Retry preview</button>
+        </section>
+        <footer class="team-discovery-footer">
+          <p
+            id="coop-discovery-status"
+            class="operation-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <button id="coop-discovery-cancel" type="button" hidden>Cancel preparation</button>
+        </footer>
+      </dialog>
       <dialog
         id="coop-discard-dialog"
         class="coop-confirm-dialog"

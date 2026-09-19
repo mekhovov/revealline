@@ -2,6 +2,50 @@
 
 ## Current delivery — 20 September 2026
 
+**Play the accepted [v0.65.0 imported-Team continuation update](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Imported pictures remain tied to their missions through a win, earned-picture viewing, Next and Retry. The [scoped acceptance guide](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) links the retained source/release evidence and copied small acceptance records. **P07-TEAM-IMPORTED-CONTINUATION is Complete; P03, P07, P08 and P18 remain incomplete.**
+
+### Next three deliveries
+
+1. **Publish and verify Team/Studio v0.66.0.** Final source `dae39ba7` / tree `e003212f` passed both complete hosted families: 6,541 tests across 501 files on Node 20.19.6 in each, plus source/production/build gates and independent frozen inspection. [PR166](https://github.com/mekhovov/revealline/pull/166) merged with the same tree. Its own publication and affected public journeys remain required.
+2. **Qualify and publish chapter discovery v0.67.0.** Solo, Versus and Team discovery, Training return, visible busy Cancel focus, native-dialog Escape and optional Team picture previews are composed. Final Team preview layout and keyboard focus pass at 390×844, 844×390 and 600×400 with Large/Plain text in a resized desktop browser. The candidate still needs its exact-source hosted gates, immutable release and public verification; P06 remains Partial. See [Team discovery](team-discovery.md), including the dated navigation/layout references.
+3. **Finish the remaining player journeys.** Continue P03/P05 keyboard, controller and touch navigation/readability coverage, then the agreed actor, feedback, challenge and reward work. Physical hardware, 200% zoom, audible listening and offline recovery remain separate qualification gates.
+
+### Phase status
+
+Complete means accepted within the named release scope. Partial/In progress means required work remains; candidate preparation does not close a phase.
+
+| Phase | Status | Remaining delivery |
+|---|---|---|
+| P00 — Integration baseline | Complete, v0.55 | Preserve compatibility. |
+| P01 — Loading feedback | Complete, v0.57.4 | Apply the contract to new screens. |
+| P02 — Sound and music | A complete, v0.58.1; B partial | Cross-mode MP3/mixed playlists, transfer/offline use and the 24-track listening gate. |
+| P03 — Native navigation | In progress | Workshop recovery accepted; finish all menus, focus returns and keyboard/controller/touch journeys. |
+| P04 — Creation framework | Partial | Publish Team/Studio work; prove edit/export/import/play and original-byte recovery. |
+| P05 — Readable presentation | In progress | HUD and Replay fixes accepted; finish EN/UA, all modes, zoom and reduced-effects coverage. |
+| P06 — Discovery/install | Partial | Discoverable compatible content, capacity, replacement/removal and interrupted-install recovery. |
+| P07 — Rewards/continuation | Partial | Imported-Team continuation accepted; finish other Retry/Next paths, full-picture rewards, stories and Collection replay. |
+| P08 — Art and feedback | A/B partial | Role silhouettes, scale/heading and clear trail, impact, loss, pickup and Support/rescue feedback. |
+| P09 — Challenge/intelligence | Partial | Fair pressure, readable warnings, encounter tuning and deterministic replay/checkpoints. |
+| P10 — Team encounters | Queued | First Connection/Relay Yard variants and the two-player encounter matrix. |
+| P11 — FPV campaigns | Queued, 0/4 accepted | Four campaigns × twelve finished missions. |
+| P12 — DroneAid campaigns | Queued, 0/4 accepted | Four campaigns × twelve finished missions. |
+| P13 — Ukrainian culture | Queued | Twelve reviewed Living Atlas missions. |
+| P14 — Retro arcade | Queued | Twelve After School Arcade missions. |
+| P15 — Spend management | Queued | Twelve Spend in Motion missions. |
+| P16 — Supporting workflows | Partial | Collection, scores, replay, learning, restore and legacy workflows. |
+| P17 — Reproducible authoring | Partial | Fresh-workspace create/install/play/export/recover example; guides, skills and CLI examples. |
+| P18 — Browser qualification | Partial evidence | Complete regression, performance, accessibility, audio/offline/lifecycle, real hardware and human playtests. |
+| Native stores / online multiplayer | Deferred | Separate platform and network gates. |
+
+**Execution order after these deliveries:** P03/P05 → P08-A/P08-B → P09/P07 → P02-B → P04/P06 → P10 → P11–P15 → P16/P17 → P18. Independently complete supporting fixes may ship earlier. The 132 new campaign missions remain a backlog target; bulk production follows the three-level gameplay and presentation benchmark.
+
+The current accepted release and each source/native/public record retain their own scope. No broad phase is complete merely because its latest correction passed. Every independently completed feature needs related commits, a versioned release, Pages deployment and scoped public acceptance.
+
+<details>
+<summary>Historical e6e269ea current-summary cutoff — retained verbatim</summary>
+
+## Current delivery — 20 September 2026
+
 **Play the accepted [v0.64.3 Workshop recovery update](https://mekhovov.github.io/revealline/releases/v0.64.3/site/game/).** If another game owns saved media, the Workshop explains the refusal; after that game closes, deliberate Reload restores editing and visible focus without losing the originals. The [scoped acceptance record](../publishing/pages-controller/delivery/evidence/cross-mode-p03/v0643-public/README.md) joins the actual keyboard recovery journey with verification of every deployed main file. **P03-WORKSHOP-01 is Complete; P03 and P05 remain In progress.**
 
 [Archive33 preservation](../publishing/pages-controller/evidence/archive-33/initial-v0643/root-acceptance.json) is separately accepted for v0.64.3. The earlier HUD and Replay releases remain retained. Archive acceptance, source qualification and main feature acceptance each keep their own evidence and limits.
@@ -42,6 +86,8 @@ Complete means accepted within the named release scope. Partial/In progress mean
 **Execution order after these deliveries:** P03/P05 → P08-A/P08-B → P09/P07 → P02-B → P04/P06 → P10 → P11–P15 → P16/P17 → P18. Independently complete supporting fixes may ship earlier. The 132 new campaign missions remain a backlog target; bulk production follows the three-level gameplay and presentation benchmark.
 
 The accepted Workshop journey is desktop keyboard/visible-controls scope. Physical controllers/touch, phone/short-landscape/200% zoom, audible listening, offline acceptance, Team two-core encounters and held rescue remain open. Every independently completed feature still needs its own related commit, versioned release, Pages deployment and scoped public acceptance.
+
+</details>
 
 <details>
 <summary>Historical dae39 current-summary cutoff — retained verbatim</summary>

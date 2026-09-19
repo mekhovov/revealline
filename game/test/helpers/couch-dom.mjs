@@ -266,8 +266,42 @@ export class Element extends Events {
   }
   getClientRects() {
     for (let node = this; node?.nodeType === 1; node = node.parentNode)
-      if (node.hidden || node.style.display === 'none') return [];
+      if (node.hidden || node.style.display === 'none' || (node.tagName === 'DIALOG' && !node.open))
+        return [];
     return this.isConnected ? [this.getBoundingClientRect()] : [];
+  }
+  showModal() {
+    assert.equal(this.tagName, 'DIALOG');
+    assert.ok(this.isConnected, 'A native modal must be connected before opening.');
+    if (this.open) return;
+    this._dialogReturnFocus = this.ownerDocument.activeElement;
+    this.open = true;
+    this.ownerDocument.modalDialogs.push(this);
+    this.setAttribute('open', '');
+    const first = this.querySelectorAll('[autofocus],button,input,select,textarea,[tabindex]').find(
+      (element) => !element.disabled && element.tabIndex >= 0 && element.getClientRects().length,
+    );
+    (first || this).focus();
+  }
+  close(value) {
+    assert.equal(this.tagName, 'DIALOG');
+    if (!this.open) return;
+    if (value !== undefined) this.returnValue = String(value);
+    this.open = false;
+    this.ownerDocument.modalDialogs = this.ownerDocument.modalDialogs.filter(
+      (dialog) => dialog !== this,
+    );
+    this.removeAttribute('open');
+    const previous = this._dialogReturnFocus;
+    if (
+      this.contains(this.ownerDocument.activeElement) &&
+      previous?.isConnected &&
+      !previous.disabled &&
+      !previous.closest('[hidden],[inert]') &&
+      previous.getClientRects().length
+    )
+      previous.focus();
+    this.emit('close', { bubbles: false });
   }
   focus() {
     this.ownerDocument.activeElement = this;
@@ -300,6 +334,7 @@ export class Document extends Events {
     this.body = new Element(this, 'body');
     this.documentElement.append(this.body);
     this.activeElement = this.body;
+    this.modalDialogs = [];
     this.hidden = false;
     this.focused = true;
     this.defaultView = {

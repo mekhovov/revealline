@@ -13,6 +13,7 @@ export function attachGameShell({
   initial = true,
   initialFocus = true,
   training = false,
+  practiceReturn = null,
   onFeatured,
   onTitleStart,
   onTitleContinue,
@@ -25,6 +26,9 @@ export function attachGameShell({
   focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
 } = {}) {
+  // A registered embedded lesson already owns a token-checked return action.
+  // Its shell must not expose campaign destinations inside the practice frame.
+  const isolated = training || !!practiceReturn;
   const $ = (id) => doc.getElementById(id);
   const copy = (key, values) => fieldKitCopy(key, doc.documentElement?.lang || 'en', values);
   const home = $('shell-home'),
@@ -97,7 +101,8 @@ export function attachGameShell({
     $('shell-mission-content').hidden = false;
     $('shell-briefing').hidden = false;
     if ($('shell-deploy-bar')) $('shell-deploy-bar').hidden = false;
-    if ($('shell-mode-choice')) $('shell-mode-choice').hidden = training;
+    if ($('shell-mode-choice')) $('shell-mode-choice').hidden = isolated;
+    if ($('shell-worlds')) $('shell-worlds').hidden = isolated || !onWorlds;
     $('shell-missions-title').textContent = title;
     if ($('shell-missions-context')) $('shell-missions-context').textContent = context;
     delete missions.dataset.view;
@@ -151,6 +156,10 @@ export function attachGameShell({
   };
   const openMissions = ({ opener = null } = {}) => {
     if (destroyed) return;
+    if (practiceReturn) {
+      if (!practiceReturn.disabled) openBrief(opener);
+      return;
+    }
     beginMissionsVisit(opener);
     const visit = missionsVisit;
     pause(true);
@@ -168,6 +177,11 @@ export function attachGameShell({
     if (!focusMissions?.()) $('pack-select').focus();
   };
   const openHome = ({ focus = true, returnGuard = null } = {}) => {
+    if (destroyed) return;
+    if (practiceReturn) {
+      practiceReturn.click();
+      return;
+    }
     titleModeIntent = null;
     retireMissionsVisit();
     const revision = missionsRevision;
@@ -176,11 +190,11 @@ export function attachGameShell({
     if (missions.open) missions.close();
     if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
     restoreMissionView();
-    const continued = !training && canContinue();
+    const continued = !isolated && canContinue();
     $('shell-continue').hidden = !continued;
-    if ($('shell-featured')) $('shell-featured').hidden = training || continued;
+    if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
     if ($('shell-destination'))
-      $('shell-destination').textContent = training
+      $('shell-destination').textContent = isolated
         ? copy('title.trainingDestination')
         : continued
           ? copy('title.continueDestination', {
@@ -198,7 +212,7 @@ export function attachGameShell({
       home.showModal();
     }
     if (focus)
-      (training
+      (isolated
         ? $('shell-course-return')
         : canContinue()
           ? $('shell-continue')
@@ -260,7 +274,7 @@ export function attachGameShell({
         )
       : null;
     const primary = parent
-      ? [training ? $('shell-course-return') : $('shell-continue'), $('shell-featured')].find(
+      ? [isolated ? $('shell-course-return') : $('shell-continue'), $('shell-featured')].find(
           (node) => availableReturn(node, parent),
         )
       : ['show-result', 'skip-celebration', 'next-button', 'retry-button', 'start-button']
@@ -295,10 +309,14 @@ export function attachGameShell({
   };
   missions.addEventListener('cancel', cancelMissions);
   const overlayMenu = $('overlay-menu');
-  if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
+  if (overlayMenu) {
+    overlayMenu.onclick = () => $('shell-menu').click();
+    if (practiceReturn) overlayMenu.hidden = true;
+  }
+  if (practiceReturn) $('shell-menu').setAttribute('aria-label', practiceReturn.textContent);
   const worlds = $('shell-worlds');
   if (worlds) {
-    worlds.hidden = training || !onWorlds;
+    worlds.hidden = isolated || !onWorlds;
     worlds.onclick = () => {
       pause(true);
       closeHome();
@@ -307,55 +325,56 @@ export function attachGameShell({
     };
   }
   const overlayBrief = $('overlay-brief');
-  if (overlayBrief)
-    overlayBrief.onclick = () => {
-      if (destroyed) return;
-      beginMissionsVisit(overlayBrief);
-      const visit = missionsVisit;
-      pause(true);
-      if (destroyed || missionsVisit !== visit) return;
-      closeHome();
-      if (destroyed || missionsVisit !== visit) return;
-      const brief = $('mission-brief'),
-        unit = $('mission-brief-unit'),
-        slot = $('shell-brief-content');
-      if (brief && unit && slot && !briefing) {
-        const marker = doc.createElement('span');
-        marker.hidden = true;
-        briefing = {
-          brief,
-          unit,
-          marker,
-          open: brief.open,
-          title: $('shell-missions-title').textContent,
-          context: $('shell-missions-context')?.textContent,
-        };
-        unit.after(marker);
-        slot.append(unit);
-        slot.hidden = false;
-        $('shell-mission-content').hidden = true;
-        $('shell-briefing').hidden = true;
-        if ($('shell-deploy-bar')) $('shell-deploy-bar').hidden = true;
-        if ($('shell-mode-choice')) $('shell-mode-choice').hidden = true;
-        missions.dataset.view = 'brief';
-        $('shell-missions-title').textContent =
-          $('mission-brief-title').textContent || copy('missions.brief');
-        if ($('shell-missions-context'))
-          $('shell-missions-context').textContent = copy('missions.briefContext', {
-            edition: $('shell-edition')?.textContent || copy('missions.currentFlight'),
-          });
-        missions.scrollTop = 0;
-        $('mission-brief-reading').scrollTop = 0;
-      }
-      if (brief) brief.open = true;
-      showCraftFeedback();
-      if (!missions.open) {
-        missionsVisit.closeOrigin = doc.activeElement;
-        missions.showModal();
-      }
-      focusClearance.refresh();
-      if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
-    };
+  function openBrief(opener = overlayBrief) {
+    if (destroyed || !overlayBrief) return;
+    beginMissionsVisit(opener || overlayBrief);
+    const visit = missionsVisit;
+    pause(true);
+    if (destroyed || missionsVisit !== visit) return;
+    closeHome();
+    if (destroyed || missionsVisit !== visit) return;
+    const brief = $('mission-brief'),
+      unit = $('mission-brief-unit'),
+      slot = $('shell-brief-content');
+    if (brief && unit && slot && !briefing) {
+      const marker = doc.createElement('span');
+      marker.hidden = true;
+      briefing = {
+        brief,
+        unit,
+        marker,
+        open: brief.open,
+        title: $('shell-missions-title').textContent,
+        context: $('shell-missions-context')?.textContent,
+      };
+      unit.after(marker);
+      slot.append(unit);
+      slot.hidden = false;
+      $('shell-mission-content').hidden = true;
+      $('shell-briefing').hidden = true;
+      if ($('shell-deploy-bar')) $('shell-deploy-bar').hidden = true;
+      if ($('shell-mode-choice')) $('shell-mode-choice').hidden = true;
+      if ($('shell-worlds')) $('shell-worlds').hidden = true;
+      missions.dataset.view = 'brief';
+      $('shell-missions-title').textContent =
+        $('mission-brief-title').textContent || copy('missions.brief');
+      if ($('shell-missions-context'))
+        $('shell-missions-context').textContent = copy('missions.briefContext', {
+          edition: $('shell-edition')?.textContent || copy('missions.currentFlight'),
+        });
+      missions.scrollTop = 0;
+      $('mission-brief-reading').scrollTop = 0;
+    }
+    if (brief) brief.open = true;
+    showCraftFeedback();
+    if (!missions.open) {
+      missionsVisit.closeOrigin = doc.activeElement;
+      missions.showModal();
+    }
+    focusClearance.refresh();
+    if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
+  }
+  if (overlayBrief) overlayBrief.onclick = () => openBrief();
   $('shell-packs').onclick = () => openMissions({ opener: $('shell-packs') });
   $('shell-play').onclick = () => openMissions({ opener: $('shell-play') });
   const featured = $('shell-featured');
@@ -438,7 +457,7 @@ export function attachGameShell({
       current: 'solo',
       actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
     });
-    titleModes.hidden = training || !onModeDeparture;
+    titleModes.hidden = isolated || !onModeDeparture;
     for (const kind of ['versus', 'team']) {
       const opener = $(`shell-title-${kind}`);
       opener.onclick = (event) => {
@@ -451,7 +470,7 @@ export function attachGameShell({
           (event.button !== undefined && event.button !== 0)
         )
           return;
-        if (destroyed || training || !onModeDeparture || topDialog() !== home) {
+        if (destroyed || isolated || !onModeDeparture || topDialog() !== home) {
           event.preventDefault();
           return;
         }
@@ -547,13 +566,13 @@ export function attachGameShell({
   // Keep Workshop beneath its Guide so native modal return restores the visible opener.
   const courseReturn = $('shell-course-return');
   if (courseReturn) {
-    courseReturn.hidden = !training;
+    courseReturn.hidden = !isolated;
     courseReturn.onclick = () => {
       closeHome();
       focusGame();
     };
   }
-  if (training) {
+  if (isolated) {
     // Course sessions keep their usable sound/help shortcuts in the lesson menu.
     home.querySelector('.home-actions')?.append($('shell-music'), $('shell-help'));
     // These destinations cannot operate on the course's isolated, non-awarding

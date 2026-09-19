@@ -53,7 +53,7 @@ function downloads(t, intercept = () => null) {
 async function open(page) {
   page.$('shell-menu').click();
   page.$('shell-play').click();
-  page.$('shell-mode-choice').open = true;
+  assert.equal(page.$('shell-mode-choice').open, false);
   page.$('shell-worlds').click();
   await settle(
     () =>
@@ -61,7 +61,7 @@ async function open(page) {
       !page.$(`optional-worlds-install-${first.id}`).disabled,
   );
 }
-test('native More worlds discovers Tactical separately and keeps the default run until explicit Choose', async (t) => {
+test('More worlds discovers Tactical and one Download & play retains the old run until preparation finishes', async (t) => {
   images(t);
   const page = await soloPage(t, { titleScreen: true });
   page.$('shell-play').click();
@@ -76,8 +76,17 @@ test('native More worlds discovers Tactical separately and keeps the default run
       page.doc.body.dataset.pictureState === 'ready',
   );
   page.frame(0);
-  const requests = downloads(t),
-    chapter = catalog.packs.find((item) => item.id === 'fpv-route-choices'),
+  const chapter = catalog.packs.find((item) => item.id === 'fpv-route-choices');
+  let release,
+    entered = false;
+  const requests = downloads(t, (url) =>
+      url.endsWith(chapter.path)
+        ? new Promise((resolve) => {
+            release = resolve;
+            entered = true;
+          })
+        : null,
+    ),
     originalRun = page.rendered.run,
     before = authoritativeCheckpoint(originalRun);
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
@@ -87,11 +96,8 @@ test('native More worlds discovers Tactical separately and keeps the default run
   page.change('optional-worlds-mode', 'Tactical');
   assert.equal(page.$(`optional-worlds-install-${chapter.id}`).closest('[hidden]'), null);
   page.$(`optional-worlds-install-${chapter.id}`).click();
-  await settle(
-    () =>
-      !!page.$(`optional-worlds-choose-${chapter.id}`) &&
-      !page.$(`optional-worlds-choose-${chapter.id}`).disabled,
-  );
+  await settle(() => entered);
+  assert.equal(page.$(`optional-worlds-install-${chapter.id}`).disabled, true);
   page.frame(0);
   assert.equal(page.rendered.run, originalRun);
   assert.deepEqual(authoritativeCheckpoint(originalRun), before);
@@ -100,9 +106,9 @@ test('native More worlds discovers Tactical separately and keeps the default run
     if (!key.includes('packs')) assert.equal(page.storage.map.get(key), value, key);
   assert.equal(requests.length, 2);
   assert.ok(requests[1].endsWith(chapter.path));
-  page.$(`optional-worlds-choose-${chapter.id}`).click();
+  release(new Response(await readFile(new URL(chapter.path, root))));
   await settle(
-    () => !page.$('optional-worlds-dialog').open && page.doc.body.dataset.pictureState === 'ready',
+    () => !page.$('optional-worlds-dialog').open && page.doc.body.dataset.flightState === 'running',
   );
   page.frame(0);
   assert.equal(page.$('pack-select').value, chapter.id);
@@ -115,12 +121,14 @@ test('native More worlds discovers Tactical separately and keeps the default run
   assert.equal(page.$('action-button').hidden, false);
   assert.equal(page.$('boost-button').hidden, false);
   assert.equal(page.rendered.run.tick, 0);
-  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.paused, false);
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.deepEqual(authoritativeCheckpoint(originalRun), before);
   assert.match(page.$('mission-brief-copy').textContent, /Tactical challenge/);
-  assert.equal(page.doc.activeElement, page.$('start-button'));
+  assert.equal(page.doc.activeElement, page.$('game-canvas'));
   assert.deepEqual(page.errors, []);
 });
-test('offline More worlds keeps the same chapter and paused cut when Choose is pressed again', async (t) => {
+test('offline Play of the current chapter requests replacement; Stay preserves its paused cut', async (t) => {
   images(t);
   const page = await soloPage(t);
   page.$('pack-select').focus();
@@ -139,7 +147,7 @@ test('offline More worlds keeps the same chapter and paused cut when Choose is p
   const requests = downloads(t, () => Promise.reject(new Error('Offline fixture')));
   page.$('shell-menu').click();
   page.$('shell-play').click();
-  page.$('shell-mode-choice').open = true;
+  assert.equal(page.$('shell-mode-choice').open, false);
   page.$('shell-worlds').click();
   await settle(() => !page.$('optional-worlds-reload').disabled);
   assert.match(page.$('optional-worlds-status').textContent, /Online list unavailable/);
@@ -159,20 +167,24 @@ test('offline More worlds keeps the same chapter and paused cut when Choose is p
   await choose.onclick();
   page.frame(0);
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
-  assert.equal(
-    page.rendered.run === run,
-    true,
-    'Choosing the current chapter must not reset the flight.',
-  );
+  assert.equal(page.rendered.run, run, 'Play must not reset the flight before Replace.');
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(page.$('optional-worlds-dialog').open, true);
+  assert.equal(page.$('mission-replace-dialog').open, true);
+  assert.equal(page.$('mission-replace-confirm').textContent, 'Replace & play');
+  const retained = page.storage.getItem('revealline.suspended.dev.v1');
+  assert.deepEqual(JSON.parse(retained).replay.checkpoint, checkpoint);
+  page.$('mission-replace-stay').click();
   assert.equal(page.$('mission-replace-dialog').open, false);
-  assert.deepEqual(page.storage.map, stored);
+  assert.equal(page.doc.activeElement, choose);
+  assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), retained);
+  for (const [key, value] of stored)
+    if (key !== 'revealline.suspended.dev.v1') assert.equal(page.storage.map.get(key), value, key);
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.errors, []);
 });
 for (const saveFailure of ['none', 'quota', 'readback'])
-  test(`native More worlds ${saveFailure} save keeps a paused flight until explicit Replace`, async (t) => {
+  test(`More worlds ${saveFailure} save keeps a paused flight until explicit Replace & play`, async (t) => {
     images(t);
     const page = await soloPage(t);
     const requests = downloads(t);
@@ -192,29 +204,37 @@ for (const saveFailure of ['none', 'quota', 'readback'])
     page.frame(0);
     const saved = new Map(page.storage.map);
     page.$(`optional-worlds-install-${first.id}`).click();
-    await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
+    await settle(
+      () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+    );
     page.frame(0);
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), before);
     assert.equal(page.rendered.paused, true);
     assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
     for (const [key, value] of saved)
-      if (!key.includes('packs'))
+      if (!key.includes('packs') && key !== 'revealline.suspended.dev.v1')
         assert.equal(page.storage.map.get(key), value, `Unchanged ${key}`);
-    assert.match(page.$('optional-worlds-status').textContent, /paused flight is kept/);
+    assert.deepEqual(
+      JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')).replay.checkpoint,
+      before,
+    );
+    assert.match(page.$('mission-replace-status').textContent, /saved and verified/);
     assert.equal(requests.length, 2);
+    page.$('mission-replace-stay').click();
     page.$('optional-worlds-back').click();
     page.$('shell-play').click();
     page.$('shell-mode-choice').open = true;
     page.$('shell-worlds').click();
     assert.equal(page.$(`optional-worlds-install-${first.id}`).disabled, true);
-    await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
+    await settle(() => !page.$(`optional-worlds-install-${first.id}`).disabled);
+    assert.equal(page.$(`optional-worlds-install-${first.id}`).textContent, 'Play');
     assert.equal(
       requests.length,
       2,
       'Reopening an already-read catalog and stored chapter makes no download',
     );
-    const choose = page.$(`optional-worlds-choose-${first.id}`),
+    const choose = page.$(`optional-worlds-install-${first.id}`),
       slot = 'revealline.suspended.dev.v1',
       get = page.storage.getItem.bind(page.storage),
       set = page.storage.setItem.bind(page.storage),
@@ -245,17 +265,22 @@ for (const saveFailure of ['none', 'quota', 'readback'])
     await choose.onclick();
     assert.equal(page.$('mission-replace-dialog').open, true);
     page.$('mission-replace-confirm').click();
-    await settle(() => !page.$('optional-worlds-dialog').open);
+    await settle(
+      () =>
+        !page.$('optional-worlds-dialog').open && page.doc.body.dataset.flightState === 'running',
+    );
     page.frame(0);
     assert.notEqual(page.rendered.run, run);
+    assert.deepEqual(authoritativeCheckpoint(run), before);
     assert.equal(page.rendered.run.tick, 0);
     assert.equal(page.$('pack-select').value, first.id);
-    assert.equal(page.rendered.paused, true);
-    assert.equal(page.$('start-button'), page.doc.activeElement);
+    assert.equal(page.rendered.paused, false);
+    assert.equal(page.$('game-overlay').hidden, true);
+    assert.equal(page.$('game-canvas'), page.doc.activeElement);
     assert.deepEqual(page.errors, []);
   });
 
-test('a failed asset transaction keeps the installed library and current run; explicit Install retries', async (t) => {
+test('a failed asset transaction keeps the installed library and current run; Download & play retries', async (t) => {
   images(t);
   const assets = managedIndexedDB();
   const page = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
@@ -268,20 +293,28 @@ test('a failed asset transaction keeps the installed library and current run; ex
   page.$(`optional-worlds-install-${first.id}`).click();
   await settle(() => !page.$(`optional-worlds-install-${first.id}`).disabled);
   assert.match(page.$('optional-worlds-status').textContent, /storage failed/);
-  assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, true);
+  assert.match(
+    page.$(`optional-worlds-install-${first.id}`).textContent,
+    /^Download & play · \d+(?:\.\d+)? MiB$/,
+  );
   assert.deepEqual(page.storage.map, stored);
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assets.failAnyPutAt = null;
   page.$(`optional-worlds-install-${first.id}`).click();
-  await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
+  await settle(
+    () => !page.$('optional-worlds-dialog').open && page.doc.body.dataset.flightState === 'running',
+  );
   page.frame(0);
-  assert.equal(page.rendered.run, run);
+  assert.notEqual(page.rendered.run, run);
+  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.paused, false);
+  assert.equal(page.$('pack-select').value, first.id);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
 
-test('keyboard and standard controller reach all world install actions and Back without flying', async (t) => {
+test('keyboard and standard controller enter More chapters with Mode collapsed and return without flying', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   downloads(t);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
@@ -320,14 +353,16 @@ test('keyboard and standard controller reach all world install actions and Back 
   key('Enter');
   assert.equal(page.$('shell-home').open, false);
   assert.equal(page.$('shell-missions').open, true);
-  const modeChoice = page.$('shell-mode-choice'),
-    modeSummary = modeChoice.querySelector('summary');
-  for (let i = 0; i < 80 && page.doc.activeElement !== modeSummary; i++) key('Tab');
-  assert.equal(page.doc.activeElement, modeSummary);
-  key('Enter');
-  assert.equal(modeChoice.open, true, 'Native summary activation exposes More worlds.');
+  const modeChoice = page.$('shell-mode-choice');
+  assert.equal(modeChoice.open, false);
+  assert.equal(page.$('shell-worlds').closest('#shell-mode-choice'), null);
+  assert.equal(
+    page.$('shell-worlds').closest('.shell-dialog-heading'),
+    page.$('shell-missions').querySelector('.shell-dialog-heading'),
+  );
   for (let i = 0; i < 30 && page.doc.activeElement.id !== 'shell-worlds'; i++) key('Tab');
   assert.equal(page.doc.activeElement.id, 'shell-worlds');
+  assert.equal(modeChoice.open, false, 'More chapters is reachable without opening Game mode.');
   key('Enter');
   await settle(
     () =>
@@ -395,6 +430,20 @@ test('keyboard and standard controller reach all world install actions and Back 
   press(1);
   assert.equal(page.$('optional-worlds-dialog').open, false);
   assert.equal(page.$('shell-home').open, true);
+  seek('shell-play', () => press(13));
+  press(0);
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(modeChoice.open, false);
+  seek('shell-worlds', () => press(13));
+  assert.equal(modeChoice.open, false, 'Controller entry does not open Game mode.');
+  press(0);
+  await settle(
+    () => page.$('optional-worlds-dialog').open && !page.$('optional-worlds-reload').disabled,
+  );
+  press(1);
+  assert.equal(page.$('optional-worlds-dialog').open, false);
+  assert.equal(page.$('shell-home').open, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
@@ -438,7 +487,10 @@ test('failed published checksum leaves native retry and keyboard Back available 
   page.$(`optional-worlds-install-${first.id}`).click();
   await settle(() => !page.$(`optional-worlds-install-${first.id}`).disabled);
   assert.match(page.$('optional-worlds-status').textContent, /checksum/);
-  assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, true);
+  assert.match(
+    page.$(`optional-worlds-install-${first.id}`).textContent,
+    /^Download & play · \d+(?:\.\d+)? MiB$/,
+  );
   assert.deepEqual(page.storage.map, saved);
   // The finite DOM does not implement native Escape→dialog cancel defaults.
   page.$('optional-worlds-dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
@@ -478,7 +530,11 @@ test('a valid imported chapter with substituted artwork is a conflict, never an 
       page.$(`optional-worlds-install-${first.id}`)?.textContent === 'Different edition installed',
   );
   assert.equal(page.$(`optional-worlds-install-${first.id}`).disabled, true);
-  assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, true);
+  assert.equal(
+    page.$(`optional-worlds-choose-${first.id}`),
+    null,
+    'No alternate Choose can bypass the conflicting edition.',
+  );
   assert.ok(
     page
       .$('optional-worlds-cards')
@@ -496,7 +552,13 @@ test('a valid imported chapter with substituted artwork is a conflict, never an 
 
 test('cancelling a refreshed catalog during installed-art inspection retains a coherent old menu', async (t) => {
   images(t);
-  const page = await soloPage(t, { titleScreen: true });
+  const page = await soloPage(t);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  for (let i = 0; i < 13; i++) page.frame();
+  assert.equal(page.rendered.run.player.cutting, true);
   let revised = false;
   downloads(t, (url) =>
     revised && url.endsWith('optional-worlds.json')
@@ -509,7 +571,10 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
   );
   await open(page);
   page.$(`optional-worlds-install-${first.id}`).click();
-  await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
+  await settle(
+    () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+  );
+  page.$('mission-replace-stay').click();
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     saved = new Map(page.storage.map),
     headingsBeforeRefresh = [...page.$('optional-worlds-cards').querySelectorAll('section')].map(
@@ -555,14 +620,15 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
     headingsBeforeRefresh,
     'Cancelled list does not publish its reduced card set',
   );
-  assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, false);
+  assert.equal(page.$(`optional-worlds-install-${first.id}`).disabled, false);
+  assert.equal(page.$(`optional-worlds-install-${first.id}`).textContent, 'Play');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.storage.map, saved);
   assert.deepEqual(page.errors, []);
 });
 
 for (const afterStay of ['unchanged', 'moved focus', 'foreground loss', 'newer operation'])
-  test(`More worlds early Stay restores its exact Choose; late verification respects ${afterStay}`, async (t) => {
+  test(`More worlds early Stay restores its exact Play; late verification respects ${afterStay}`, async (t) => {
     images(t);
     const page = await soloPage(t);
     downloads(t);
@@ -580,12 +646,15 @@ for (const afterStay of ['unchanged', 'moved focus', 'foreground loss', 'newer o
     assert.equal(run.player.cutting, true);
     await open(page);
     page.$(`optional-worlds-install-${first.id}`).click();
-    await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
+    await settle(
+      () => page.$('mission-replace-dialog').open && !page.$('mission-replace-confirm').disabled,
+    );
+    page.$('mission-replace-stay').click();
     page.frame(0);
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     const before = new Map(page.storage.map),
-      choose = page.$(`optional-worlds-choose-${first.id}`),
+      choose = page.$(`optional-worlds-install-${first.id}`),
       request = navigator.locks.request.bind(navigator.locks);
     let grant,
       delayed = false;
@@ -606,7 +675,7 @@ for (const afterStay of ['unchanged', 'moved focus', 'foreground loss', 'newer o
     await settle(() => !!grant, 'The replacement must reach its real checked-save lock.');
     assert.equal(page.$('mission-replace-dialog').open, true);
     assert.equal(page.$('mission-replace-confirm').disabled, true);
-    assert.equal(choose.disabled, true, 'The outer preparation still owns the disabled Choose.');
+    assert.equal(choose.disabled, true, 'The outer preparation still owns the disabled Play.');
     assert.equal(page.doc.activeElement, page.$('mission-replace-stay'));
     page.$('mission-replace-stay').click();
     assert.equal(page.$('mission-replace-dialog').open, false);
@@ -616,7 +685,7 @@ for (const afterStay of ['unchanged', 'moved focus', 'foreground loss', 'newer o
       false,
       'Stay releases the outer operation before its late callback.',
     );
-    assert.equal(page.doc.activeElement, choose, 'Stay restores the exact available Choose.');
+    assert.equal(page.doc.activeElement, choose, 'Stay restores the exact available Play.');
     page.frame(0);
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
@@ -665,7 +734,7 @@ for (const afterStay of ['unchanged', 'moved focus', 'foreground loss', 'newer o
       assert.equal(page.$('optional-worlds-dialog').open, true);
       assert.equal(choose.disabled, false);
       assert.equal(page.doc.activeElement, choose);
-      assert.equal(focusCalls, 1, 'Only the second explicit Stay restores Choose.');
+      assert.equal(focusCalls, 1, 'Only the second explicit Stay restores Play.');
       secondGrant();
       await newer;
       for (let i = 0; i < 8; i++) page.frame();
