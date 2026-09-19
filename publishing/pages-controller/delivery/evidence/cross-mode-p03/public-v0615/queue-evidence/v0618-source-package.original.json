@@ -1,0 +1,21 @@
+{
+  "status": "ROOT_ACCEPTED_SOURCE_PACKAGE_ONLY",
+  "at": "2026-09-18T07:59:26.685218+00:00",
+  "source": {
+    "commit": "0ae4330b8a87d332051db112f5e09b7c3cbef9fa",
+    "tree": "bea7eebf35befcae0362b19f7ecfbb75a3942b00",
+    "version": "v0.61.8"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-picker-clearance-v0618/.cache/p05-qualified/picker-clearance-v0618-0ae4330b/qualification/source-qualification.json",
+    "bytes": 104201,
+    "sha256": "35975fc84614a0a9f43dfa9c15f2a5a54c8d2facd5526728290d583827356084"
+  },
+  "qualificationPinsRehashed": 234,
+  "attachmentsRehashed": 7,
+  "zipMembersCRC": 407,
+  "manifestMembersRehashed": 406,
+  "sourceAndIndexUnchanged": true,
+  "publicAcceptance": false,
+  "remaining": "Final source native picker scope, immutable release, public deployment and full phase gates"
+}

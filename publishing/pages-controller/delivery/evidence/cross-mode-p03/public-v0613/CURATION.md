@@ -1,0 +1,7 @@
+# Evidence curation
+
+The compressed bundle retains 252 exact files (9,818,526 uncompressed bytes) from the v0.61.3 public audit cache. [The member index](originals-index.json) records every original path, byte count and SHA-256; [the ZIP](originals.zip) was reopened and every member and CRC verified. Nine small public records are also copied separately for direct reading, without modifying their bytes. The source-workspace Return observation, later v0.61.9 qualification record and later v0.61.21 native reward observation are separately named originals. The queue originals remain outside the earlier finite public-audit ZIP snapshot.
+
+This snapshot preserves the initial successful publisher run, the observer refusal when main advanced, and the explicit second deployment. It includes the actual small receipt ZIP, exact metadata/binding, helper adaptation/history, complete HTTP attempt/result rows and final authority refresh. It does not include either large source/distribution payload, create screenshot files or rewrite any earlier pending/failure statement. Native screenshots were inspected inline only.
+
+The snapshot is finite. Later cache files are not retroactively part of this record. The first-deployment play observation and final-deployment reload/Collection observation retain their original scopes. The later root acceptance resolves the stated scoped public gate; it does not turn source-only Workshop evidence into a public route or accept full parent phases, audio, offline recovery or physical devices.

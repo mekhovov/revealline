@@ -1,0 +1,268 @@
+{
+  "status": "APPEND_ONLY_NODE_COVERAGE_REPORTING_CORRECTION_V06122",
+  "at": "2026-09-18T20:36:32.896056+00:00",
+  "version": "v0.61.22",
+  "source": {
+    "commit": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+    "tree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+    "version": "v0.61.22"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08-actor-minimum-next/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification/source-qualification.json",
+    "bytes": 109848,
+    "sha256": "5674518091ab8d30429d5236aedae97a1f30b6457786284de093e2e416c1b4d8"
+  },
+  "rootPackageReview": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/final-execution/root-package-review.json",
+    "bytes": 877,
+    "sha256": "29737eafaa4890b3d52846343ea802eeb697e7f19909f4cb28445b0eec1bd051"
+  },
+  "correction": "Both complete hosted manual and PR source suites ran Node v20.19.6, each5922passing tests across466files. They were not one Node20 and one Node22 full suite.",
+  "families": [
+    {
+      "family": "manual",
+      "runId": 35365086056,
+      "runAttempt": 1,
+      "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+      "runtime": "v20.19.6",
+      "tests": 5922,
+      "pass": 5922,
+      "fail": 0,
+      "testFiles": 466,
+      "shards": [
+        {
+          "jobId": 105666435839,
+          "name": "test (2)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1477,
+            "pass": 1477,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/manual/job-105666435839.log.gz",
+            "bytes": 116367,
+            "sha256": "8d71ffd48c715344c2ec975fd4aaa9b962cb94a3580645bb2322d714d61e4e1a"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 447,
+              "text": "2026-09-18T15:56:14.5532528Z node: v20.19.6"
+            }
+          ]
+        },
+        {
+          "jobId": 105666435875,
+          "name": "test (1)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1406,
+            "pass": 1406,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/manual/job-105666435875.log.gz",
+            "bytes": 110657,
+            "sha256": "d22788f2463a7e56796c48f8eab28021f07ffe7c54435fc7d3b16b9aa492c33d"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 458,
+              "text": "2026-09-18T15:56:06.3415924Z node: v20.19.6"
+            }
+          ]
+        },
+        {
+          "jobId": 105666435907,
+          "name": "test (3)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1359,
+            "pass": 1359,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/manual/job-105666435907.log.gz",
+            "bytes": 110242,
+            "sha256": "4c76fc3eeffb024aa8c3a2fb47f168b4cad0e090cd85635fa870b7c88c1c636e"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 458,
+              "text": "2026-09-18T15:56:04.0740534Z node: v20.19.6"
+            }
+          ]
+        },
+        {
+          "jobId": 105666435912,
+          "name": "test (4)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1680,
+            "pass": 1680,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/manual/job-105666435912.log.gz",
+            "bytes": 124128,
+            "sha256": "9ae4c574f833cf3cbbf1fb7e7183084b15599d97fdab384fc4e0a17bf28b4c5c"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 458,
+              "text": "2026-09-18T15:56:06.4471544Z node: v20.19.6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "family": "pr-source",
+      "runId": 35365020670,
+      "runAttempt": 1,
+      "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+      "runtime": "v20.19.6",
+      "tests": 5922,
+      "pass": 5922,
+      "fail": 0,
+      "testFiles": 466,
+      "shards": [
+        {
+          "jobId": 105666054101,
+          "name": "test (1)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1406,
+            "pass": 1406,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/pr-source/job-105666054101.log.gz",
+            "bytes": 106953,
+            "sha256": "2074f2747b1605023857161c8a3f2e4f1aded341cb6fd615fac4d0a6f0212c6d"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 349,
+              "text": "2026-09-18T15:54:57.2721571Z node: v20.19.6"
+            }
+          ]
+        },
+        {
+          "jobId": 105666054160,
+          "name": "test (4)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1680,
+            "pass": 1680,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/pr-source/job-105666054160.log.gz",
+            "bytes": 120401,
+            "sha256": "73023199d6d62cd56484320af35e8a295bd2992251e32ea7d2cecba5fbb0aaba"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 349,
+              "text": "2026-09-18T15:54:58.0285644Z node: v20.19.6"
+            }
+          ]
+        },
+        {
+          "jobId": 105666054176,
+          "name": "test (3)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1359,
+            "pass": 1359,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/pr-source/job-105666054176.log.gz",
+            "bytes": 106775,
+            "sha256": "81f9e6b28438e1fc714c3864d33dd2d49a0812c6f73e83d0471e5a1f37c448fc"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 349,
+              "text": "2026-09-18T15:54:57.6456908Z node: v20.19.6"
+            }
+          ]
+        },
+        {
+          "jobId": 105666054245,
+          "name": "test (2)",
+          "runtime": "v20.19.6",
+          "counts": {
+            "tests": 1477,
+            "pass": 1477,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "originalLog": {
+            "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/pr-source/job-105666054245.log.gz",
+            "bytes": 113546,
+            "sha256": "c0fa77aa115db9b461006e598d30189b0b4e10275e2e1dca67c9cf622e9f19d3"
+          },
+          "nodeVersionLines": [
+            {
+              "line": 349,
+              "text": "2026-09-18T15:55:21.7642942Z node: v20.19.6"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "originalAPIPins": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/manual/jobs.json",
+      "bytes": 18623,
+      "sha256": "0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/manual/run.json",
+      "bytes": 12615,
+      "sha256": "47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/pr-source/jobs.json",
+      "bytes": 18834,
+      "sha256": "39d8d7e14f64ea02d30390f2470d67d21f53e15038af1e1e9751177121ecbb71"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/intake/hosted/pr-source/run.json",
+      "bytes": 12661,
+      "sha256": "6f2a63be4180b60b23a6d38853c69226d3923ada37102e0a60d0121a81beaaac"
+    }
+  ],
+  "focusedScope": "Earlier focused Node20/22 cohorts remain separate source-scoped receipts and do not establish a full Node22 source suite. No new tests were executed.",
+  "unchanged": "Counts, immutable qualification/release assets, original logs and root source-package acceptance are unchanged. Correct only later summaries with this explicit sidecar.",
+  "fullNode22SuiteClaimed": false,
+  "remoteCalls": 0,
+  "sourceWrites": 0
+}

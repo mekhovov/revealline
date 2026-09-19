@@ -1,0 +1,82 @@
+{
+  "status": "SOURCE_QUALIFICATION_AND_SEVEN_ATTACHMENTS_READY_FOR_INDEPENDENT_ROOT_REVIEW",
+  "source": {
+    "commit": "d6800fa53d1d9166fe8f310d44aec9c7240b62fc",
+    "tree": "d4e0510955ca61d703361bd7ac6c7bffbc918ed2",
+    "version": "v0.61.4"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/qualification/source-qualification.json",
+    "bytes": 101692,
+    "sha256": "61596bd5e50528922c4198849afbf1c1dc18e05e7088214e21dd0286d3181d54"
+  },
+  "qualificationReview": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/parent-independent-qualification-review.json",
+    "bytes": 4653,
+    "sha256": "ce824938d870e56bea00f672dc8323573e7907958963458844daf15cd2a4191c"
+  },
+  "releaseEvidenceReceipt": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-evidence/receipt.json",
+    "bytes": 427,
+    "sha256": "bb1ad3aac0d8da87d18c3aeb99b5897e231ac8b04613f39244fe7aa73c5cba1d"
+  },
+  "attachmentFiles": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "d68d2b789dd074462845df27b01ef7b8b3cf9c748c4d4e0de69ce4453430773b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/manifest.json",
+      "bytes": 127540,
+      "sha256": "c3a72cc4fc7a11e3a747d362829c1d40bbc941afe263bb8becbbd8c4d834e96d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/qualification-evidence-record.json",
+      "bytes": 11910,
+      "sha256": "28cbecbb2166e0def96f9c8c87bfd9fdc30bf3f585e56a9eaa371bb67534c106"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/release.json",
+      "bytes": 465,
+      "sha256": "4e8c3892ef93c56f9ab57dc0248e264bc554060df3dc0ea795c458fe23fd2d9a"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/source-qualification-evidence.zip",
+      "bytes": 3959929,
+      "sha256": "0fcd4560e141dd51a3fdb9518a15e6cdbf6c86dff8cd831e9a7ebbb0dc54a401"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/source-qualification.json",
+      "bytes": 101692,
+      "sha256": "61596bd5e50528922c4198849afbf1c1dc18e05e7088214e21dd0286d3181d54"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-about-controller-v0614/.cache/p03-qualified/about-controller-v0614-d6800fa5/release-attachments/verification.json",
+      "bytes": 1914,
+      "sha256": "3d5f55ba6ad29cde97440cd4486c2ea214ec39bf1a80ee37cbb4383d6763e17c"
+    }
+  ],
+  "sourceBeforeAfter": {
+    "source": "d6800fa53d1d9166fe8f310d44aec9c7240b62fc",
+    "tree": "d4e0510955ca61d703361bd7ac6c7bffbc918ed2",
+    "status": "",
+    "index": ""
+  },
+  "sourceBoundary": "Tracked source, index and untracked-file inventory remain clean and unchanged.",
+  "counts": {
+    "tests": 5838,
+    "pass": 5838,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 461,
+  "managedBytes": 25230429,
+  "freeBytes": 2306957312,
+  "noLargeArtifactDownload": true,
+  "publication": false,
+  "publicAcceptance": false,
+  "wholePhaseAccepted": false
+}

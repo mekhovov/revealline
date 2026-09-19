@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da/tools/self-check.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p05-motion-public-audit-628e95da",
+  "start": "2026-09-18T02:49:40.772496+00:00",
+  "end": "2026-09-18T02:49:41.114073+00:00",
+  "exitCode": 1,
+  "stdout": {
+    "path": "checks/node-selfcheck-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "checks/node-selfcheck-1.stderr",
+    "bytes": 739,
+    "sha256": "2bd9b3472d0d655e3b4551ce1691a6aebcb169fcf72757bd5965e61d14727a0b"
+  }
+}

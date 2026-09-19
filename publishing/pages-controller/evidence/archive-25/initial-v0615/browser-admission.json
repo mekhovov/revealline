@@ -1,0 +1,44 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-25",
+  "infrastructureCommit": "70eb8242670ab7e3518b2f8266ca07fef51ecf5c",
+  "deploymentId": 6523753253,
+  "versions": [
+    "v0.61.5"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-25/initial-v0615/root-acceptance.json",
+      "sha256": "991bd660ab813e99d80b85147e3bcbddeb783bb1226b3825d4a7806f11a27fdb"
+    },
+    {
+      "path": "evidence/archive-25/initial-v0615/native-observation.json",
+      "sha256": "46d66eddd1dce913b21533351809461680ca95fd5eb733f016b79c4dea602be2"
+    },
+    {
+      "path": "evidence/archive-25/initial-v0615/metadata-correction.json",
+      "sha256": "fc160b2387d1a64bd1b76469b3de7da6889db246b7dfdcc87792847a75aa94c5"
+    },
+    {
+      "path": "evidence/archive-25/initial-v0615/originals.zip",
+      "sha256": "feefe51bc5447edf86cfa76888dd14f53eac8052e0899cdd8fa877b69dc12250"
+    },
+    {
+      "path": "evidence/archive-25/initial-v0615/originals-index.json",
+      "sha256": "79c699df4e5492a2e7bb18302f09bbb389a27ddc0c626d59dd33317633e9c560"
+    }
+  ],
+  "scope": "Root-accepted archive retention: actual desktop keyboard Continue, Pause/explicit Resume, legitimate capture, Main menu and return to the current release explorer. Complete public bytes were verified separately.",
+  "observationProvenance": "Root original actual keyboard observation; screenshots inspected inline only.",
+  "limits": [
+    "Session-only saving because another game tab owned saving; no save migration or durable-save acceptance.",
+    "No mission win, physical device/controller, audible listening, offline, export/import or whole-phase qualification.",
+    "The original transport summary has an incorrect inherited prior-row count; the retained explicit correction and independent all-row proof establish zero."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}

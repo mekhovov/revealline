@@ -1,0 +1,1064 @@
+{
+  "format": "revealline-retained-originals-index.v1",
+  "sourceRoots": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation"
+  ],
+  "count": 174,
+  "bytes": 4124390,
+  "files": [
+    {
+      "member": "audit/README.md",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/README.md",
+      "bytes": 4135,
+      "sha256": "e162c22bd5352a12d7f8ac79af86da0602e8b616c9d6a33f76ec307859b37c4f"
+    },
+    {
+      "member": "audit/adapter-review.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/adapter-review.json",
+      "bytes": 1831,
+      "sha256": "c599536b50395774c22e4cbae66f43f62cd88d8bcf9eb744ea07fd84578356fc"
+    },
+    {
+      "member": "audit/audit_binding.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/audit_binding.py.adaptation.diff",
+      "bytes": 7743,
+      "sha256": "5ba814445cd90cb78b9b8315cfa38c819da909bcf6a8f01feb18332164f0a5eb"
+    },
+    {
+      "member": "audit/audit_binding.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/audit_binding.py.adaptation.final.diff",
+      "bytes": 7756,
+      "sha256": "88675b279ad6f5e3101cca647f3a6e6cc9c4c90f9402b4d06b145facf789aa6a"
+    },
+    {
+      "member": "audit/byte-audit-completion.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/byte-audit-completion.json",
+      "bytes": 2765,
+      "sha256": "4aeab5c242dce1a744ca576c56b2b138c84930597d9cf00d40d37937c753777f"
+    },
+    {
+      "member": "audit/checks/audit_binding.unbound-original.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/audit_binding.unbound-original.py",
+      "bytes": 9989,
+      "sha256": "f1dcd8d44c2df0f14383393334c9f5cb68fe62855bba154eb6a18d9cf6190cef"
+    },
+    {
+      "member": "audit/checks/http_audit.before-row-label-fix.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/http_audit.before-row-label-fix.py",
+      "bytes": 13477,
+      "sha256": "338fe6bd48bb193136850b5335e2ec425c5d81328a7854032053e63384317111"
+    },
+    {
+      "member": "audit/checks/intake-binding.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/intake-binding.diff",
+      "bytes": 2679,
+      "sha256": "16803c7d0515c94493c1d44465e1b5e80d2705414e8fd720b5f8371fbf88b8fc"
+    },
+    {
+      "member": "audit/checks/intake-small-receipt.unbound-original.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/intake-small-receipt.unbound-original.py",
+      "bytes": 5401,
+      "sha256": "3af7b562c996880e6041c8649a8c15415d2b68b6f99d54045ad3b655152dceb7"
+    },
+    {
+      "member": "audit/checks/offline-1.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/offline-1.receipt.json",
+      "bytes": 851,
+      "sha256": "6d063ff3448efaaed85a90ee75cd5e6050d9915fcccf26ce19295f82f57ed7e1"
+    },
+    {
+      "member": "audit/checks/offline-1.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/offline-1.stderr",
+      "bytes": 122,
+      "sha256": "516f73e1d45e978ca8237657c0ed7640c2b9de6ced6ab4a86240f755c1debcca"
+    },
+    {
+      "member": "audit/checks/offline-1.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/offline-1.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/checks/offline-final.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/offline-final.receipt.json",
+      "bytes": 859,
+      "sha256": "9c18d4fb1031e80dabeb7368f29579442d8278a21901e3d3a19397a5f2344a60"
+    },
+    {
+      "member": "audit/checks/offline-final.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/offline-final.stderr",
+      "bytes": 122,
+      "sha256": "c3f6f1f573a8d0949f3c3f43d386b1fb2510bfc9f78d6440123f38c85644e876"
+    },
+    {
+      "member": "audit/checks/offline-final.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/offline-final.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/checks/prepare-1.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/prepare-1.receipt.json",
+      "bytes": 859,
+      "sha256": "538c0a0eb2cc4dea4656679a01a59cf47cde5276ab7c07b1730fd146bc117e95"
+    },
+    {
+      "member": "audit/checks/prepare-1.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/prepare-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/checks/prepare-1.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/prepare-1.stdout",
+      "bytes": 163,
+      "sha256": "4579f9f4cd2f8c35b8c887f2c5c029fec617c291d279de9eb9529fdcbc817f70"
+    },
+    {
+      "member": "audit/checks/prepare-final.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/prepare-final.receipt.json",
+      "bytes": 867,
+      "sha256": "9eb24ef7d3e7e77b07a4d24e49a768dce33e67cb25fe39a295b0f2c82394e9e3"
+    },
+    {
+      "member": "audit/checks/prepare-final.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/prepare-final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/checks/prepare-final.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/prepare-final.stdout",
+      "bytes": 163,
+      "sha256": "640b3c376b6d333c93e72ca61680f9e949beb81ffda6388b7c7b4b57ed9089a3"
+    },
+    {
+      "member": "audit/checks/row-label-fix.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/row-label-fix.diff",
+      "bytes": 1131,
+      "sha256": "57db90526eb2e6dddf49dd7a413277ba1dcb0f63386c1d9c09dc7c8777aa1d7f"
+    },
+    {
+      "member": "audit/checks/row-label-fix.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/row-label-fix.json",
+      "bytes": 336,
+      "sha256": "e788690a18759ce45c9fe48ee284b3e82aa9fbab2059f07f1f41575a9d550967"
+    },
+    {
+      "member": "audit/checks/transport-review-initial-failure.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/checks/transport-review-initial-failure.json",
+      "bytes": 406,
+      "sha256": "40e659c0ab30e65c181dd50aed1f5e1afe9ed4ff6e915e64e3220abe37739808"
+    },
+    {
+      "member": "audit/collect-live.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/collect-live.py",
+      "bytes": 3412,
+      "sha256": "20c67bf13821cab44d520c8e5d985d0fdead201c4df786b141b9dfbdcd85f916"
+    },
+    {
+      "member": "audit/collect-live.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/collect-live.py.adaptation.diff",
+      "bytes": 1651,
+      "sha256": "ce2442409ab1baf22fbba331a922ef377e2fcfae64d3b3e7cf11283f192edc87"
+    },
+    {
+      "member": "audit/collect-live.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/collect-live.py.adaptation.final.diff",
+      "bytes": 1651,
+      "sha256": "ce2442409ab1baf22fbba331a922ef377e2fcfae64d3b3e7cf11283f192edc87"
+    },
+    {
+      "member": "audit/execution-originals/after.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/after.receipt.json",
+      "bytes": 351,
+      "sha256": "1b8e8bd7c7d33c0edc7e55f8ccbc9088ad1cfc18a14eb98227cf92bb078a15b8"
+    },
+    {
+      "member": "audit/execution-originals/after.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/execution-originals/after.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/after.stdout",
+      "bytes": 218,
+      "sha256": "a1452b8daf015ed6b2455ef1db3c64b8e8004e585dc422680bfbd35653c9f4df"
+    },
+    {
+      "member": "audit/execution-originals/audit.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/audit.receipt.json",
+      "bytes": 386,
+      "sha256": "d9fdba6f3220cbe6042aefd567a47b3f85f47466b7fc6382596215e188bcedcf"
+    },
+    {
+      "member": "audit/execution-originals/audit.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/audit.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/execution-originals/audit.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/audit.stdout",
+      "bytes": 4153,
+      "sha256": "9686e10b94fb340c7696860bd7aa2ab168057254afe313f199a92bf84dc539ac"
+    },
+    {
+      "member": "audit/execution-originals/before.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/before.receipt.json",
+      "bytes": 352,
+      "sha256": "121a8caca55f1c9b563d71ececec03e1dc6a4b11fd1b77c5aec72feb812b456d"
+    },
+    {
+      "member": "audit/execution-originals/before.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/execution-originals/before.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-originals/before.stdout",
+      "bytes": 219,
+      "sha256": "981c40a02346033597e8b372d6c7e2debbec153d17b424b067aa2ef8eda297e3"
+    },
+    {
+      "member": "audit/execution-request.pending.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-request.pending.json",
+      "bytes": 541,
+      "sha256": "eb886c7e5226cad7eccb0ff43dc88f0ccd5e29bad3a48c3b0dd401e35093f831"
+    },
+    {
+      "member": "audit/execution-request.proposed.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-request.proposed.json",
+      "bytes": 1721,
+      "sha256": "861b38717175a11fdbf281ac03c987566e7e13d4fa6d53539751f62fdb07d9a7"
+    },
+    {
+      "member": "audit/execution-request.reviewed.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-request.reviewed.json",
+      "bytes": 1720,
+      "sha256": "f91afb9944f56532041d57930202328b7475e08755f29172999592eecae330f1"
+    },
+    {
+      "member": "audit/execution-request.unbound-original.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/execution-request.unbound-original.json",
+      "bytes": 420,
+      "sha256": "1087c8bc3f013ebc14044dc868c25bdf1c57ecaa0f15a7e9feecf122ce168e56"
+    },
+    {
+      "member": "audit/helper-pins.final.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/helper-pins.final.json",
+      "bytes": 4601,
+      "sha256": "1a81dd933cbac0e69e9e260c84d7757bd3a42843dc5560a9013734cd4d334f09"
+    },
+    {
+      "member": "audit/helper-pins.prepared.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/helper-pins.prepared.json",
+      "bytes": 4600,
+      "sha256": "4046224dca6d7b0e20bd7b6fb9a6d8ba358a3e6754843d5eebaa5aea5eae4721"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/audit_binding.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/audit_binding.py",
+      "bytes": 10002,
+      "sha256": "b9ac3ac3f7f799ee2293a044afd62c505768962eabdfe26d8ea129ce78e38f55"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/auditor.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/auditor.py",
+      "bytes": 13477,
+      "sha256": "bb7c9368e5d5f65c92b76bd597755c51690989790fd13b5652cacd4b55734cb7"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/artifacts.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/artifacts.json",
+      "bytes": 1454,
+      "sha256": "3679e172ee52a34f2b834111dbb1cfb53eee195406c536e1e7ece8c480b4472f"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/commit.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/commit.json",
+      "bytes": 2771,
+      "sha256": "93fc4641252590de77f4c5aff60b9541d9625cd6fed9dddab6085f1b288c4c63"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/deployment.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/deployment.json",
+      "bytes": 3856,
+      "sha256": "c5d0fde00be03834b42eb8b28cf100ccedceb3089bea5697c1c78e6ea64f73d0"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/main.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/main.json",
+      "bytes": 358,
+      "sha256": "b1ddb54a83ac1962b722de86b1013b03bb508726f2b3fce76fb6787c2ec366d8"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/receiptZIP.zip",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/receiptZIP.zip",
+      "bytes": 73296,
+      "sha256": "2ae5da4df18c95ccf5461cc04f3b40ed54ae669f6e337476fd37cedb2f58045f"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/run.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/run.json",
+      "bytes": 13176,
+      "sha256": "787e66fc54e3526497e6f0b03d64a272ff16c315f8e622017ab457a721dca1d8"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/authority-originals/statuses.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/authority-originals/statuses.json",
+      "bytes": 6817,
+      "sha256": "04d4d60f981e29eb8e65573471ed452ea9223ae6d841c6f7c54555c8eb160108"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/execution-request.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/execution-request.json",
+      "bytes": 1720,
+      "sha256": "f91afb9944f56532041d57930202328b7475e08755f29172999592eecae330f1"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/expected-inventory.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/expected-inventory.json",
+      "bytes": 286989,
+      "sha256": "e36410ebed9f4ecb5dcbf1acc66d6d0ae7eaaeab638534e6823603ab9cf980c5"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/http-attempts.jsonl",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/http-attempts.jsonl",
+      "bytes": 1104434,
+      "sha256": "e12368199bb8dbf1c4a7f2faf14cc469336097ede5d6aa7d7557e0d7ae220139"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/http-report.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/http-report.json",
+      "bytes": 1380,
+      "sha256": "82dbd05dd0725f5a6031d561e33c094f883524a3e64e4513d752a425ac837b5f"
+    },
+    {
+      "member": "audit/http/http-20260918T022519Z-cdacb86c/http-results.jsonl",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http/http-20260918T022519Z-cdacb86c/http-results.jsonl",
+      "bytes": 1104434,
+      "sha256": "e12368199bb8dbf1c4a7f2faf14cc469336097ede5d6aa7d7557e0d7ae220139"
+    },
+    {
+      "member": "audit/http-tools/audit_binding.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http-tools/audit_binding.py",
+      "bytes": 10002,
+      "sha256": "b9ac3ac3f7f799ee2293a044afd62c505768962eabdfe26d8ea129ce78e38f55"
+    },
+    {
+      "member": "audit/http-tools/http_audit.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http-tools/http_audit.py",
+      "bytes": 13477,
+      "sha256": "bb7c9368e5d5f65c92b76bd597755c51690989790fd13b5652cacd4b55734cb7"
+    },
+    {
+      "member": "audit/http-tools/test_append_preservation.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http-tools/test_append_preservation.py",
+      "bytes": 3247,
+      "sha256": "17b3ea37c03fb54504f0a370a712d6e79a2256f2e491853ccff1ad2e8822f215"
+    },
+    {
+      "member": "audit/http-tools/test_http_audit.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http-tools/test_http_audit.py",
+      "bytes": 7126,
+      "sha256": "11be232981a15b481768d3886d99623498ca79628f61d14c9dafe5f08ad1609f"
+    },
+    {
+      "member": "audit/http_audit.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http_audit.py.adaptation.diff",
+      "bytes": 3412,
+      "sha256": "1844af290fe6efaa0172aed46b55664dc199d47451ae7a7d8fe35243ac7c6e5a"
+    },
+    {
+      "member": "audit/http_audit.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/http_audit.py.adaptation.final.diff",
+      "bytes": 3510,
+      "sha256": "6b41cd8771a2176f59408ee8f81a555f58a802e130cfad2906200392960c37ce"
+    },
+    {
+      "member": "audit/inputs/append-v0608-authority.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/inputs/append-v0608-authority.json",
+      "bytes": 3035,
+      "sha256": "bf65a66b7c54c62ea8f640e0eff7ebaa5358b0771201048360eb1b27ace3e5ee"
+    },
+    {
+      "member": "audit/inputs/expected-inventory.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/inputs/expected-inventory.json",
+      "bytes": 286989,
+      "sha256": "e36410ebed9f4ecb5dcbf1acc66d6d0ae7eaaeab638534e6823603ab9cf980c5"
+    },
+    {
+      "member": "audit/inputs/predecessor-inventory.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/inputs/predecessor-inventory.json",
+      "bytes": 143755,
+      "sha256": "d3e85ea8f63bc180502aa0e10661b5826bc7add12f9dff6033981c8cb3217da4"
+    },
+    {
+      "member": "audit/inputs/source-lock.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/inputs/source-lock.json",
+      "bytes": 2263,
+      "sha256": "73867f319bd804c993f19eda4318ee21bfec0c173da0e07bb0b5479a7e926298"
+    },
+    {
+      "member": "audit/intake-small-receipt.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/intake-small-receipt.py.adaptation.diff",
+      "bytes": 5164,
+      "sha256": "5cb6f953f0321573ff846132d97ad5b3ca08d353f697471610d2d5a0907065bc"
+    },
+    {
+      "member": "audit/intake-small-receipt.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/intake-small-receipt.py.adaptation.final.diff",
+      "bytes": 5421,
+      "sha256": "62cc0cacac63e1c5699c687f96391c57f0eb066b703b8c9d3665defb1ff8b03f"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/deployment.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/deployment.attempt.json",
+      "bytes": 251,
+      "sha256": "d694cafd74139df96d84bd81d56aa766cd7704f2d633a1a7d31719cab9b154ce"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/deployment.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/deployment.json",
+      "bytes": 3856,
+      "sha256": "c5d0fde00be03834b42eb8b28cf100ccedceb3089bea5697c1c78e6ea64f73d0"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/deployment.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/deployment.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/main.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/main.attempt.json",
+      "bytes": 247,
+      "sha256": "129beba0a90691fc986e9915e26018a6559b3f00a16fff2c515491425ff45b79"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/main.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/main.json",
+      "bytes": 358,
+      "sha256": "b1ddb54a83ac1962b722de86b1013b03bb508726f2b3fce76fb6787c2ec366d8"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/main.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/result.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/result.json",
+      "bytes": 2363,
+      "sha256": "f45bb1618712863f2eb939e08d063bc7557b0e699e13323ccac066936a5e8b7b"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/run.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/run.attempt.json",
+      "bytes": 253,
+      "sha256": "552e11f46baed436a0c14bbe378d9b23b07d068af75d897cdbf4f6de81f4f3c4"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/run.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/run.json",
+      "bytes": 13176,
+      "sha256": "787e66fc54e3526497e6f0b03d64a272ff16c315f8e622017ab457a721dca1d8"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/run.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/statuses.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/statuses.attempt.json",
+      "bytes": 260,
+      "sha256": "9dbdf91aee2540c15f68a6240aaf793212448fc730a0b998b7f3319addc55380"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/statuses.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/statuses.json",
+      "bytes": 6817,
+      "sha256": "04d4d60f981e29eb8e65573471ed452ea9223ae6d841c6f7c54555c8eb160108"
+    },
+    {
+      "member": "audit/live-authorities/after-20260918T022702Z-0c466f6b/statuses.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/after-20260918T022702Z-0c466f6b/statuses.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/deployment.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/deployment.attempt.json",
+      "bytes": 251,
+      "sha256": "f29e89a0cc1047807b1c5992e03a95194948ef9b9b9aa2787b206b5b5a26a53e"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/deployment.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/deployment.json",
+      "bytes": 3856,
+      "sha256": "c5d0fde00be03834b42eb8b28cf100ccedceb3089bea5697c1c78e6ea64f73d0"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/deployment.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/deployment.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/main.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/main.attempt.json",
+      "bytes": 247,
+      "sha256": "a3e5691f3fa5823978b9376050f7c87d406cd22b58048169638dfb2f9c400015"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/main.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/main.json",
+      "bytes": 358,
+      "sha256": "b1ddb54a83ac1962b722de86b1013b03bb508726f2b3fce76fb6787c2ec366d8"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/main.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/result.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/result.json",
+      "bytes": 2365,
+      "sha256": "23e729b18c696f4f9250b242075849937028107292369d38b2f1693f35071b15"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/run.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/run.attempt.json",
+      "bytes": 253,
+      "sha256": "afffbcfb23cae680136cccfcefbab3db26e96c88f32e7ea2908181313ecda653"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/run.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/run.json",
+      "bytes": 13176,
+      "sha256": "787e66fc54e3526497e6f0b03d64a272ff16c315f8e622017ab457a721dca1d8"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/run.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/statuses.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/statuses.attempt.json",
+      "bytes": 260,
+      "sha256": "0fad67e8c2148a17a3dd14baf2c8c9760a2523962b9626d1e3fa3a761a1a943a"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/statuses.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/statuses.json",
+      "bytes": 6817,
+      "sha256": "04d4d60f981e29eb8e65573471ed452ea9223ae6d841c6f7c54555c8eb160108"
+    },
+    {
+      "member": "audit/live-authorities/before-20260918T022518Z-e40ac6a7/statuses.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/live-authorities/before-20260918T022518Z-e40ac6a7/statuses.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/observe-hosted.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/observe-hosted.py.adaptation.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/observe-hosted.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/observe-hosted.py.adaptation.final.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/predecessor/collect-live.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/collect-live.py",
+      "bytes": 3412,
+      "sha256": "fd973b4ffd3f8619ec720980c6ec20981d5b0846e6422f1a9bd8ad7fa6a0df31"
+    },
+    {
+      "member": "audit/predecessor/http-tools__audit_binding.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/http-tools__audit_binding.py",
+      "bytes": 9472,
+      "sha256": "1c212dfe9e6c35dac837c9ed7e4d1d1524cc836ffc9e8b4fbcab5d8e9a29d1e7"
+    },
+    {
+      "member": "audit/predecessor/http-tools__http_audit.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/http-tools__http_audit.py",
+      "bytes": 13477,
+      "sha256": "136c16a2ad8f0c5f5fd65b65c0337b219c52dd61ea3734bc8d7d324573d36ffe"
+    },
+    {
+      "member": "audit/predecessor/http-tools__test_http_audit.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/http-tools__test_http_audit.py",
+      "bytes": 7126,
+      "sha256": "00e3b712e6a22a8fe8111ee2974be083a86aae35cca5f2799693b4226ad7267a"
+    },
+    {
+      "member": "audit/predecessor/intake-small-receipt.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/intake-small-receipt.py",
+      "bytes": 5413,
+      "sha256": "74533a5ad37222fa6615c3aecd5a4b5a88827ca50806bcf8ff55ec499dd5dcc6"
+    },
+    {
+      "member": "audit/predecessor/observe-hosted.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/observe-hosted.py",
+      "bytes": 4989,
+      "sha256": "a683e516d837420859017f5e7a707fe7f596d3a38a38206e65b6f1e0df198514"
+    },
+    {
+      "member": "audit/predecessor/reconcile-completed-rows.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/reconcile-completed-rows.py",
+      "bytes": 6419,
+      "sha256": "fc5185122accad2a61c2f17be7c782b8913f3f2d7869412358a8263d7ba92a7f"
+    },
+    {
+      "member": "audit/predecessor/run-reviewed-operations.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/predecessor/run-reviewed-operations.py",
+      "bytes": 1484,
+      "sha256": "224b989ef846542535f921f9d3a7c64993ad82bfdcf3cac62a464ac8c9a661b7"
+    },
+    {
+      "member": "audit/preparation-status.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/preparation-status.json",
+      "bytes": 1247,
+      "sha256": "2742421837d69f3837681a1f99df42dec67eebcbcdf104d9eb4817f04889e5ff"
+    },
+    {
+      "member": "audit/prepared-packet.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/prepared-packet.json",
+      "bytes": 29841,
+      "sha256": "d35399657c415b31c1200fad3caab539ef9b409d1f1cba5aafdc16452d023488"
+    },
+    {
+      "member": "audit/public-browser/observations.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/public-browser/observations.json",
+      "bytes": 2120,
+      "sha256": "db3689fa26866866184d89ad4217a4842781638a3230d2b62d26c3ec448f4f1b"
+    },
+    {
+      "member": "audit/reconcile-completed-rows.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconcile-completed-rows.py",
+      "bytes": 6535,
+      "sha256": "a8d6176facd4c6abf3d59eb0e3beb3f8721244a816bb78b9e3f2abb464bc393b"
+    },
+    {
+      "member": "audit/reconcile-completed-rows.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconcile-completed-rows.py.adaptation.diff",
+      "bytes": 8105,
+      "sha256": "fedfdf4b320a7128ea381ef1166d56bc8daa7d124550e8bd264bc3f3d7aa7108"
+    },
+    {
+      "member": "audit/reconcile-completed-rows.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconcile-completed-rows.py.adaptation.final.diff",
+      "bytes": 8105,
+      "sha256": "fedfdf4b320a7128ea381ef1166d56bc8daa7d124550e8bd264bc3f3d7aa7108"
+    },
+    {
+      "member": "audit/reconcile-completed-rows.py.unbound.original",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconcile-completed-rows.py.unbound.original",
+      "bytes": 6507,
+      "sha256": "1ec05eed622878b0deeb6353dfe166f534904c0f66548ed290ddd5e508ebc511"
+    },
+    {
+      "member": "audit/reconciliation.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconciliation.receipt.json",
+      "bytes": 779,
+      "sha256": "30d2e3505961f7e44c819cc1686cb244ab2fad5eb59f63008c0789c48365b3b2"
+    },
+    {
+      "member": "audit/reconciliation.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconciliation.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "audit/reconciliation.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/reconciliation.stdout",
+      "bytes": 1714,
+      "sha256": "2d8b092c683ee3a2993af288ba5f24a4ab31907f3ff1eb817c3ba75e73a2473c"
+    },
+    {
+      "member": "audit/root-archive-acceptance.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/root-archive-acceptance.json",
+      "bytes": 1220,
+      "sha256": "ae933f92a55cd347e7be42beedb24812463520f14f854ab3d484e94e73482332"
+    },
+    {
+      "member": "audit/root-review.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/root-review.json",
+      "bytes": 696,
+      "sha256": "87e8fbfad79c8894b1f945809590c11fd6eb6b33b139b472af3fd2b2e042f7eb"
+    },
+    {
+      "member": "audit/row-review.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/row-review.json",
+      "bytes": 12558,
+      "sha256": "8af657cf61b58a76e0ad5fb28a7863d622aa48aa5aa0a9d6ff5d76bef197c4c8"
+    },
+    {
+      "member": "audit/run-reviewed-operations.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/run-reviewed-operations.py",
+      "bytes": 1484,
+      "sha256": "8a37fda2b76125882032d902f0957166d5af807f3b218dc54d026cba64c6efce"
+    },
+    {
+      "member": "audit/run-reviewed-operations.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/run-reviewed-operations.py.adaptation.diff",
+      "bytes": 1165,
+      "sha256": "144d6c38cf52a7d5a33aba5475529aefd1b9318cd898ffa5a783baeb237b2b9c"
+    },
+    {
+      "member": "audit/run-reviewed-operations.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/run-reviewed-operations.py.adaptation.final.diff",
+      "bytes": 1165,
+      "sha256": "144d6c38cf52a7d5a33aba5475529aefd1b9318cd898ffa5a783baeb237b2b9c"
+    },
+    {
+      "member": "audit/run-reviewed-operations.py.unbound.original",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/run-reviewed-operations.py.unbound.original",
+      "bytes": 1456,
+      "sha256": "45b02f68dad31ccb95ab9ebecce498ce3db497bd85eadf820a914007b2413792"
+    },
+    {
+      "member": "audit/test_http_audit.py.adaptation.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/test_http_audit.py.adaptation.diff",
+      "bytes": 1041,
+      "sha256": "884cdb4975ca63c311f754bb0f6339b5bb6e337e4a9e0d7088dce89abb91924c"
+    },
+    {
+      "member": "audit/test_http_audit.py.adaptation.final.diff",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-public-audit/test_http_audit.py.adaptation.final.diff",
+      "bytes": 1041,
+      "sha256": "884cdb4975ca63c311f754bb0f6339b5bb6e337e4a9e0d7088dce89abb91924c"
+    },
+    {
+      "member": "observation/actual-merge.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/actual-merge.json",
+      "bytes": 2771,
+      "sha256": "93fc4641252590de77f4c5aff60b9541d9625cd6fed9dddab6085f1b288c4c63"
+    },
+    {
+      "member": "observation/actual-merge.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/actual-merge.receipt.json",
+      "bytes": 762,
+      "sha256": "036f1222652491e2f72e9e85113783d3a449769311328d03951158561d3f25ec"
+    },
+    {
+      "member": "observation/actual-merge.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/actual-merge.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/candidate/expected-inventory.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/candidate/expected-inventory.json",
+      "bytes": 286989,
+      "sha256": "e36410ebed9f4ecb5dcbf1acc66d6d0ae7eaaeab638534e6823603ab9cf980c5"
+    },
+    {
+      "member": "observation/candidate/source-lock.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/candidate/source-lock.json",
+      "bytes": 2263,
+      "sha256": "73867f319bd804c993f19eda4318ee21bfec0c173da0e07bb0b5479a7e926298"
+    },
+    {
+      "member": "observation/hosted-observation-initial/artifacts.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/artifacts.attempt.json",
+      "bytes": 1460,
+      "sha256": "102b180280518031d3736011a6cd1134aa320a954d0ff568ae947c50b94286c1"
+    },
+    {
+      "member": "observation/hosted-observation-initial/artifacts.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/artifacts.json",
+      "bytes": 1454,
+      "sha256": "3679e172ee52a34f2b834111dbb1cfb53eee195406c536e1e7ece8c480b4472f"
+    },
+    {
+      "member": "observation/hosted-observation-initial/artifacts.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/artifacts.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/deployment.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/deployment.attempt.json",
+      "bytes": 1451,
+      "sha256": "058c0ba04b9fc95cde1bcdb384916406168c8ef82dd4f3038ff9ba4100de1a41"
+    },
+    {
+      "member": "observation/hosted-observation-initial/deployment.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/deployment.json",
+      "bytes": 3856,
+      "sha256": "c5d0fde00be03834b42eb8b28cf100ccedceb3089bea5697c1c78e6ea64f73d0"
+    },
+    {
+      "member": "observation/hosted-observation-initial/deployment.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/deployment.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/deployments.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/deployments.attempt.json",
+      "bytes": 1500,
+      "sha256": "b3f45498577fbb2067e1474873055655aa351855196e9208f04d37b3dc4e709e"
+    },
+    {
+      "member": "observation/hosted-observation-initial/deployments.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/deployments.json",
+      "bytes": 3858,
+      "sha256": "17d7902224c2eaa2d9efe7f71b87b1bb362da4f3c2bc1183aacb27404f385f01"
+    },
+    {
+      "member": "observation/hosted-observation-initial/deployments.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/deployments.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/jobs.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/jobs.attempt.json",
+      "bytes": 1440,
+      "sha256": "1ad8c976aa304a2ad6a9237baa6883f9d675cbb8ead0d9f252dc35093f4c2a3d"
+    },
+    {
+      "member": "observation/hosted-observation-initial/jobs.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/jobs.json",
+      "bytes": 4836,
+      "sha256": "6beb3a497599ec2901a0c59d297e4b87156cbdaea394197601056ba7a7e56659"
+    },
+    {
+      "member": "observation/hosted-observation-initial/jobs.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/jobs.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/main.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/main.attempt.json",
+      "bytes": 1427,
+      "sha256": "6ff6ecafe121b6d48e35676d1dfc0a052a75c5299f040839b46ed3079971883c"
+    },
+    {
+      "member": "observation/hosted-observation-initial/main.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/main.json",
+      "bytes": 358,
+      "sha256": "b1ddb54a83ac1962b722de86b1013b03bb508726f2b3fce76fb6787c2ec366d8"
+    },
+    {
+      "member": "observation/hosted-observation-initial/main.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/main.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/record.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/record.json",
+      "bytes": 3703,
+      "sha256": "df942b90b288729d53a57b8cdffa6a0908375add66e6ee481c6b13579d49ef70"
+    },
+    {
+      "member": "observation/hosted-observation-initial/run.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/run.attempt.json",
+      "bytes": 1434,
+      "sha256": "52ff6e714eb66d08947bc323438a4c7efc35c20ecc44daaae4cac0c5f752f16f"
+    },
+    {
+      "member": "observation/hosted-observation-initial/run.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/run.json",
+      "bytes": 13176,
+      "sha256": "787e66fc54e3526497e6f0b03d64a272ff16c315f8e622017ab457a721dca1d8"
+    },
+    {
+      "member": "observation/hosted-observation-initial/run.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/statuses.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/statuses.attempt.json",
+      "bytes": 1454,
+      "sha256": "8d6b2b1e85dbd843e0b072b88cd6071b4c0a264353ffaab0b1c98827157c5db8"
+    },
+    {
+      "member": "observation/hosted-observation-initial/statuses.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/statuses.json",
+      "bytes": 6817,
+      "sha256": "04d4d60f981e29eb8e65573471ed452ea9223ae6d841c6f7c54555c8eb160108"
+    },
+    {
+      "member": "observation/hosted-observation-initial/statuses.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/statuses.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-observation-initial/wrapper.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/wrapper.attempt.json",
+      "bytes": 1472,
+      "sha256": "6da5aadfafa44568901472f43b26f506feccc48f14e13c0a73540bcdf92cabda"
+    },
+    {
+      "member": "observation/hosted-observation-initial/wrapper.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/wrapper.json",
+      "bytes": 2771,
+      "sha256": "93fc4641252590de77f4c5aff60b9541d9625cd6fed9dddab6085f1b288c4c63"
+    },
+    {
+      "member": "observation/hosted-observation-initial/wrapper.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-observation-initial/wrapper.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-originals/completion.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/completion.json",
+      "bytes": 2334,
+      "sha256": "422cf7de3121ecb94283e042b6412e8b5d5e2abc0f9f6c3182406fabc8b4d99c"
+    },
+    {
+      "member": "observation/hosted-originals/download.attempt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/download.attempt.json",
+      "bytes": 412,
+      "sha256": "7414babc3dea4e02287a94fd843a26b2a78e1dd194e64ab994b18dfe2be81f6f"
+    },
+    {
+      "member": "observation/hosted-originals/download.exit",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/download.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "member": "observation/hosted-originals/download.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/download.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/hosted-originals/receipts/expected-inventory.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/receipts/expected-inventory.json",
+      "bytes": 286989,
+      "sha256": "e36410ebed9f4ecb5dcbf1acc66d6d0ae7eaaeab638534e6823603ab9cf980c5"
+    },
+    {
+      "member": "observation/hosted-originals/receipts/receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/receipts/receipt.json",
+      "bytes": 1753,
+      "sha256": "6931c85e8bad4f42df290f0ffc5d60d4f641ad1e8208d3087b422f173b5d369f"
+    },
+    {
+      "member": "observation/hosted-originals/receipts/zip-receipt-v0.60.7.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/receipts/zip-receipt-v0.60.7.json",
+      "bytes": 407,
+      "sha256": "4b4d206668e3fb09d546e9e2e6372a905e52c9f04b667bdd3afe6131ac9fa2fc"
+    },
+    {
+      "member": "observation/hosted-originals/receipts/zip-receipt-v0.60.8.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/receipts/zip-receipt-v0.60.8.json",
+      "bytes": 407,
+      "sha256": "bf16f4a75d5c04bbfcd3275296a35f11f72227fe2a73af2b8a166852f363917d"
+    },
+    {
+      "member": "observation/hosted-originals/reviewed-download-request.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/reviewed-download-request.json",
+      "bytes": 2358,
+      "sha256": "7b4ebfe2f47d35cb7ff509554e5bf65de31142c0006d3e41518c49aab28b62ac"
+    },
+    {
+      "member": "observation/hosted-originals/verification-receipts-original.zip",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/hosted-originals/verification-receipts-original.zip",
+      "bytes": 73296,
+      "sha256": "2ae5da4df18c95ccf5461cc04f3b40ed54ae669f6e337476fd37cedb2f58045f"
+    },
+    {
+      "member": "observation/intake-1.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/intake-1.receipt.json",
+      "bytes": 759,
+      "sha256": "049470c39487791b91f019ec12d0e21d72d5b02943c143266050a777d9e097e5"
+    },
+    {
+      "member": "observation/intake-1.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/intake-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/intake-1.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/intake-1.stdout",
+      "bytes": 812,
+      "sha256": "9120bbae6910971dade4e3d1eb46c409847bbe278ac5628069ff754f9a7f091f"
+    },
+    {
+      "member": "observation/intake-small-receipt.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/intake-small-receipt.py",
+      "bytes": 5419,
+      "sha256": "16d389934d18821b607dec71cf10ab827d603ad108f5421db5e45bf7479ad7bd"
+    },
+    {
+      "member": "observation/observe-hosted.py",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/observe-hosted.py",
+      "bytes": 4989,
+      "sha256": "a683e516d837420859017f5e7a707fe7f596d3a38a38206e65b6f1e0df198514"
+    },
+    {
+      "member": "observation/observe-initial.receipt.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/observe-initial.receipt.json",
+      "bytes": 898,
+      "sha256": "0ec311769ef43dfe12e4845b55e7ddf47fb4ea5bed2670f61f1c0617dd99563c"
+    },
+    {
+      "member": "observation/observe-initial.stderr",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/observe-initial.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "observation/observe-initial.stdout",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/observe-initial.stdout",
+      "bytes": 1365,
+      "sha256": "b4e6fe36e0e3c41c3320d8953c2054b5748bf55157e1e8129ef0c385fd526842"
+    },
+    {
+      "member": "observation/small-intake-review.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/small-intake-review.json",
+      "bytes": 898,
+      "sha256": "80b8b85707ed4f101d5ac4f5ffd2429a06c5d11e36fdfa3c351ba4ce0c9f4eed"
+    },
+    {
+      "member": "observation/small-receipt-request.authorized.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/small-receipt-request.authorized.json",
+      "bytes": 2358,
+      "sha256": "7b4ebfe2f47d35cb7ff509554e5bf65de31142c0006d3e41518c49aab28b62ac"
+    },
+    {
+      "member": "observation/small-receipt-request.pending.json",
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0609-archive21-append-observation/small-receipt-request.pending.json",
+      "bytes": 731,
+      "sha256": "91965717f725d85fd03bf42b79bfa8bb4199c18c86a4051c1e84d7bacc32e493"
+    }
+  ],
+  "zip": {
+    "path": "originals.zip",
+    "bytes": 915109,
+    "sha256": "e8d2fb1f6adf9ed93921cd22337d66ed0b1aafb1be8304068fdcfe0125427a3f"
+  },
+  "exclusions": [
+    "Generated __pycache__ directories only"
+  ],
+  "publicPayloadsStored": false
+}

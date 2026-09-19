@@ -1,0 +1,210 @@
+{
+  "formatVersion": 1,
+  "shards": [
+    {
+      "id": "archive-01",
+      "repository": "mekhovov/revealline-archive-01",
+      "versions": [
+        "v0.1.0",
+        "v0.1.1",
+        "v0.1.2",
+        "v0.2.0",
+        "v0.2.1",
+        "v0.3.0",
+        "v0.4.0",
+        "v0.4.1",
+        "v0.5.0",
+        "v0.6.0",
+        "v0.7.0",
+        "v0.8.0",
+        "v0.9.0",
+        "v0.10.0",
+        "v0.11.0",
+        "v0.12.0",
+        "v0.13.0",
+        "v0.14.0",
+        "v0.15.0",
+        "v0.16.0",
+        "v0.17.0",
+        "v0.17.1",
+        "v0.18.0",
+        "v0.19.0",
+        "v0.20.0",
+        "v0.21.0",
+        "v0.22.0",
+        "v0.23.0",
+        "v0.24.0",
+        "v0.25.0",
+        "v0.26.0"
+      ]
+    },
+    {
+      "id": "archive-02",
+      "repository": "mekhovov/revealline-archive-02",
+      "versions": [
+        "v0.27.0",
+        "v0.28.0",
+        "v0.29.0",
+        "v0.29.1",
+        "v0.29.2",
+        "v0.30.0",
+        "v0.31.0",
+        "v0.32.0"
+      ]
+    },
+    {
+      "id": "archive-03",
+      "repository": "mekhovov/revealline-archive-03",
+      "versions": [
+        "v0.33.0",
+        "v0.34.0",
+        "v0.35.0",
+        "v0.60.2"
+      ]
+    },
+    {
+      "id": "archive-04",
+      "repository": "mekhovov/revealline-archive-04",
+      "versions": [
+        "v0.36.0",
+        "v0.37.0",
+        "v0.38.0"
+      ]
+    },
+    {
+      "id": "archive-05",
+      "repository": "mekhovov/revealline-archive-05",
+      "versions": [
+        "v0.39.0",
+        "v0.40.0"
+      ]
+    },
+    {
+      "id": "archive-06",
+      "repository": "mekhovov/revealline-archive-06",
+      "versions": [
+        "v0.41.0",
+        "v0.44.0"
+      ]
+    },
+    {
+      "id": "archive-07",
+      "repository": "mekhovov/revealline-archive-07",
+      "versions": [
+        "v0.45.0",
+        "v0.46.0"
+      ]
+    },
+    {
+      "id": "archive-08",
+      "repository": "mekhovov/revealline-archive-08",
+      "versions": [
+        "v0.47.0",
+        "v0.48.0"
+      ]
+    },
+    {
+      "id": "archive-09",
+      "repository": "mekhovov/revealline-archive-09",
+      "versions": [
+        "v0.49.0",
+        "v0.50.0"
+      ]
+    },
+    {
+      "id": "archive-10",
+      "repository": "mekhovov/revealline-archive-10",
+      "versions": [
+        "v0.42.0"
+      ]
+    },
+    {
+      "id": "archive-11",
+      "repository": "mekhovov/revealline-archive-11",
+      "versions": [
+        "v0.51.0",
+        "v0.60.1"
+      ]
+    },
+    {
+      "id": "archive-12",
+      "repository": "mekhovov/revealline-archive-12",
+      "versions": [
+        "v0.52.0",
+        "v0.56.0"
+      ]
+    },
+    {
+      "id": "archive-13",
+      "repository": "mekhovov/revealline-archive-13",
+      "versions": [
+        "v0.54.0",
+        "v0.55.0"
+      ]
+    },
+    {
+      "id": "archive-14",
+      "repository": "mekhovov/revealline-archive-14",
+      "versions": [
+        "v0.57.0",
+        "v0.59.0"
+      ]
+    },
+    {
+      "id": "archive-15",
+      "repository": "mekhovov/revealline-archive-15",
+      "versions": [
+        "v0.57.1",
+        "v0.59.1"
+      ]
+    },
+    {
+      "id": "archive-16",
+      "repository": "mekhovov/revealline-archive-16",
+      "versions": [
+        "v0.57.2",
+        "v0.60.0"
+      ]
+    },
+    {
+      "id": "archive-17",
+      "repository": "mekhovov/revealline-archive-17",
+      "versions": [
+        "v0.57.3",
+        "v0.57.4"
+      ]
+    },
+    {
+      "id": "archive-18",
+      "repository": "mekhovov/revealline-archive-18",
+      "versions": [
+        "v0.58.0",
+        "v0.58.1"
+      ]
+    },
+    {
+      "id": "archive-19",
+      "repository": "mekhovov/revealline-archive-19",
+      "versions": [
+        "v0.60.3",
+        "v0.60.4"
+      ]
+    },
+    {
+      "id": "archive-20",
+      "repository": "mekhovov/revealline-archive-20",
+      "versions": [
+        "v0.60.5",
+        "v0.60.6"
+      ]
+    },
+    {
+      "id": "archive-21",
+      "repository": "mekhovov/revealline-archive-21",
+      "versions": [
+        "v0.60.7",
+        "v0.60.8"
+      ]
+    }
+  ]
+}

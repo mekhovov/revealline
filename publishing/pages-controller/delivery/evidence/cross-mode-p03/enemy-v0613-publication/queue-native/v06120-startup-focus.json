@@ -1,0 +1,30 @@
+{
+  "status": "ROOT_NATIVE_SCOPED_STARTUP_CLOSE_PASS",
+  "at": "2026-09-18T09:00:15.728541+00:00",
+  "source": {
+    "commit": "d51acab59232edc4e7f77ab5df491f2c403de709",
+    "tree": "1ebd48695649123c08f7092f88cafeb442f9f0d6",
+    "version": "v0.61.20"
+  },
+  "url": "http://127.0.0.1:61331/authoring/enemy-catalog/",
+  "observer": "Root CUA in-app browser native keyboard, source served by verified exact Git blobs with no overrides",
+  "viewport": [
+    1280,
+    720
+  ],
+  "checks": [
+    "Untouched startup opened Role;Tab toPresentation thenEscape returned visible Open workshop focus",
+    "ForwardTab selected Level playground thenReturn togame; repeatedEscape preserved Return focus",
+    "Explicit Open workshop via keyboard;ShiftTab reached Back andReturn restored Open workshop",
+    "Intentional reload untouched startup, Presentation/back traversal; Back restored page then twoTabs reachedReturn",
+    "NativeReturn activated same-origin /game/; title Start focused afterreadiness"
+  ],
+  "paintedFocus": "Full cyan focus outline onOpenworkshop inspected in inline screenshot",
+  "storage": "No Apply,Import,Export,Reload savedchoices orTryrole action used; no persistent authoring operation deliberately invoked",
+  "limits": [
+    "Exact source runtime, not ordinary built/public package; bannerDEV expected for source server",
+    "No candidate physicalcontroller/touch/offline/audio/BFCache admission",
+    "Late loading intent and practice behavior separately covered by focused tests, not newly forced in native browser",
+    "Inline screenshot only; no exported image hash"
+  ]
+}

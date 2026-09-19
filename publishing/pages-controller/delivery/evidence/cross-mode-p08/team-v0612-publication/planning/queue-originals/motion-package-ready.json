@@ -1,0 +1,82 @@
+{
+  "status": "SOURCE_QUALIFICATION_AND_SEVEN_ATTACHMENTS_READY_FOR_INDEPENDENT_ROOT_REVIEW",
+  "source": {
+    "commit": "b3262eb02a998c50354758ba922324d023138875",
+    "tree": "0f4815e7c4116aeb08bee9696828f143a1ef5479",
+    "version": "v0.61.7"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/qualification/source-qualification.json",
+    "bytes": 101581,
+    "sha256": "b7cee153302a8702071cb80fe463ab39ad458cd284771dd8a1d601a9f4955c15"
+  },
+  "qualificationReview": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/parent-independent-qualification-review.json",
+    "bytes": 4689,
+    "sha256": "efaf33fb20fefe0db81257333ec3428bc1a3ad5c3c2b97c6ea211f410d38d293"
+  },
+  "releaseEvidenceReceipt": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-evidence/receipt.json",
+    "bytes": 427,
+    "sha256": "4a09de5153ec154b40eadbe6d7b33e49b0084021eaef3676ed25a96f86698520"
+  },
+  "attachmentFiles": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "b5df1aa1034c119145383666b2af91766a7cf6687e1f40913a640ca2f084e91b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/manifest.json",
+      "bytes": 127872,
+      "sha256": "b6fcf7902505615097dbd4684789f87e348d04064eb4e214ca120caa35df64f1"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/qualification-evidence-record.json",
+      "bytes": 11906,
+      "sha256": "c7bc6349aaabf43fed4047ad4e49e286f43ede8ea0d4fe7125437da33026d94b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/release.json",
+      "bytes": 465,
+      "sha256": "f1b2088c9d8d384b602af5b491b3c31aa4f057381de69ec09f7532f1fd56029d"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/source-qualification-evidence.zip",
+      "bytes": 3462977,
+      "sha256": "e60148c27068f71bbe8b85905223024292e63399d167e457d58ec29328a80cd8"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/source-qualification.json",
+      "bytes": 101581,
+      "sha256": "b7cee153302a8702071cb80fe463ab39ad458cd284771dd8a1d601a9f4955c15"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/release-attachments/verification.json",
+      "bytes": 1914,
+      "sha256": "3b511a82fe985dd730f3071a3c0e63715dfe5c12b32a9e492619ee12a633678f"
+    }
+  ],
+  "sourceBeforeAfter": {
+    "source": "b3262eb02a998c50354758ba922324d023138875",
+    "tree": "0f4815e7c4116aeb08bee9696828f143a1ef5479",
+    "status": "",
+    "index": ""
+  },
+  "sourceBoundary": "Tracked source, index and untracked-file inventory remain clean and unchanged.",
+  "counts": {
+    "tests": 5877,
+    "pass": 5877,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 464,
+  "managedBytes": 23156566,
+  "freeBytes": 1333653504,
+  "noLargeArtifactDownload": true,
+  "publication": false,
+  "publicAcceptance": false,
+  "wholePhaseAccepted": false
+}

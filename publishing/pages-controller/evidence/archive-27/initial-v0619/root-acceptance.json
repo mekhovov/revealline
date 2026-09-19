@@ -1,0 +1,69 @@
+{
+  "status": "ROOT_ACCEPTED_ARCHIVE_RETENTION_ONLY",
+  "at": "2026-09-18T18:00:43.487951+00:00",
+  "archive": "archive-27",
+  "versions": [
+    "v0.61.9"
+  ],
+  "archiveCommit": "8b5495a4a8374ef3f8020707cde2cec9c7ba8e23",
+  "archiveTree": "20f5504cfc080ae58e163c37206758f1b3ba6dc2",
+  "runId": 35375952398,
+  "deploymentId": 6529786687,
+  "deploymentStatusId": 18536345799,
+  "receiptArtifactId": 10560406101,
+  "files": 701,
+  "verifiedBytes": 313404982,
+  "attempts": 701,
+  "failedAttempts": 0,
+  "retries": 0,
+  "newRows": 701,
+  "changedPriorPaths": [],
+  "failedPublicFiles": 0,
+  "skipped": 0,
+  "priorInventoryRows": 0,
+  "preservedOldCanonicalRows": 0,
+  "preservedPriorReleaseRows": 0,
+  "preservedRootSupportRows": 0,
+  "newBytes": 313404982,
+  "scope": "Immutable original v0.61.9 archive, complete701publicbyte audit and scoped keyboard flight/Pause/Resume/Workshop return retention. Initial archive has zero prior accepted paths.",
+  "pins": [
+    {
+      "path": ".cache/archive27-v0619-public-audit/independent-peer.json",
+      "bytes": 15883,
+      "sha256": "760c140379f23011c0ee13cd1bba904c795f8018c49b093adda3f620b5cf89c7"
+    },
+    {
+      "path": ".cache/archive27-v0619-public-audit/row-review.json",
+      "bytes": 12690,
+      "sha256": "810a81e9f097243c875517f688adeb40664a8d47cde12db7f4736a5e86f39c62"
+    },
+    {
+      "path": ".cache/archive27-v0619-public-audit/root-original-pin-review.json",
+      "bytes": 237,
+      "sha256": "9b166fec84f47c383ef3b169455b6bb4d263cd06208ede65ed4f3aa1cb5dfb68"
+    },
+    {
+      "path": ".cache/archive27-v0619-public-audit/root-native-retention.json",
+      "bytes": 2162,
+      "sha256": "01586564ee34700ce68ac7aaadb994511ab7557b2357c8a59db4c87098eaef58"
+    },
+    {
+      "path": ".cache/archive27-v0619-hosted-intake/hosted-originals/completion.json",
+      "bytes": 2150,
+      "sha256": "93308a365e8fcafa0023e3919d4198d099c4e1768c9407fe9f943c67fded6811"
+    }
+  ],
+  "nativeLimits": [
+    "fresh full win",
+    "audio listening",
+    "offline installation",
+    "physical touch/controller",
+    "full responsive acceptance",
+    "whole P03/P05 or game completion",
+    "Retained v0.61.9 still has previously observed1.765625px Large/Plain portrait-return focus-outline clipping; not corrected by archival.",
+    "Inline only; no exported image hashes. Natural screenshot1258x720 excluded from responsive geometry claims.",
+    "Authorized fresh gameplay may create/update continuation state; no claim of zero storage mutation. Did not open/edit/save/restore media, Use authored assets, export, import, or delete anything."
+  ],
+  "currentDefaultChanged": false,
+  "wholePhaseAccepted": false
+}

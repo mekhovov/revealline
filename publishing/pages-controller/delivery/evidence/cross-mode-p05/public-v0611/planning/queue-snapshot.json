@@ -1,0 +1,62 @@
+{
+  "capturedAt": "2026-09-18T05:39:23.794211+00:00",
+  "publicAcceptanceAt": "2026-09-18T05:33:31.866051+00:00",
+  "latestAcceptedPublicVersion": "v0.61.1",
+  "pins": [
+    {
+      "path": "queue-originals/team-package-ready.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08a-qualified/team-v0612-bb5e6e7/final-execution/package-ready.json",
+      "bytes": 4282,
+      "sha256": "4bef2e95549b885a71ea88f7fbfaa0a87abc1e77fda05b8631427f849790f05d"
+    },
+    {
+      "path": "queue-originals/enemy-package-ready.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/enemy-v0613-58ff1b1/final-execution/package-ready.json",
+      "bytes": 4018,
+      "sha256": "7b428fae680c0399ca65915fe82f1e6d9d48d162a2fd3eeab8471b0b80590d76"
+    },
+    {
+      "path": "queue-originals/about-package-ready.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/about-controller-v0614-d6800fa5/final-execution/package-ready.json",
+      "bytes": 4158,
+      "sha256": "e7f89cbdd9fa2324ebd6e343c92af679003bbb1a1aefe4227a7cf7a589ec07fd"
+    },
+    {
+      "path": "queue-originals/studio-package-ready.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p03-qualified/studio-guide-v0615-d34e2838/final-execution/package-ready.json",
+      "bytes": 4078,
+      "sha256": "beadb2922c63bfac7a100bc6a398ea1dacd67edb20358ca28f131b660df48b9e"
+    },
+    {
+      "path": "queue-originals/versus-hosted-review.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/intake/hosted/review.json",
+      "bytes": 864,
+      "sha256": "801d4348df5cab8b133b803603c42f34fee77f290850a9b91ba8cde9bcb19bc6"
+    },
+    {
+      "path": "queue-originals/versus-manual-run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/intake/hosted/manual/run.json",
+      "bytes": 12620,
+      "sha256": "291b334e161d67abfb13501495ecdcb1a4f46864622f963a72c4f7e6725a13b5"
+    },
+    {
+      "path": "queue-originals/versus-pr-run.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/intake/hosted/pr-source/run.json",
+      "bytes": 12651,
+      "sha256": "466cd9d2952d39b2a4d28f11e09a0521f1d09c33bd0124f0ac169fd2f83aff84"
+    },
+    {
+      "path": "queue-originals/versus-inspection-request.unreviewed.json",
+      "sourcePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/p08-qualified/versus-footprint-v0616-4fd8e2da/inspection-proposal/request.unreviewed.json",
+      "bytes": 593,
+      "sha256": "e1e755cc01a4268c36e59178be97be3dcecf2447d2cb5eaf7daa6e3e8cc3b91d"
+    }
+  ],
+  "source": "Existing local original qualification/package and terminal CI records; no new remote query or test run.",
+  "coordinatorHandoff": "The handoff described v0.61.6 as all shards complete with freezing finishing. The original terminal run bodies inspected for this later queue snapshot record manual success at 05:29:15Z and PR success at 05:26:30Z; their observation is later, not the run event itself.",
+  "limits": [
+    "Qualified local packages are not public release or parent-phase acceptance.",
+    "The v0.61.6 inspection request is unreviewed and is not proof that inspection ran.",
+    "This checkpoint does not update the immutable v0.61.0 planning record."
+  ]
+}

@@ -1,0 +1,2217 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.61.22",
+  "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+  "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+  "actualCheckoutCommit": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+  "actualCheckoutTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+  "qualifiedAt": "2026-09-18T17:32:37.492066+00:00",
+  "passed": true,
+  "qualificationBasis": "hosted-exact-source-with-verified-frozen-originals",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "format": "revealline-source-identity.v1",
+    "root": "/home/runner/work/revealline/revealline",
+    "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+    "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+    "files": 12306,
+    "bytes": 1108036695,
+    "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/35365020670",
+  "runId": 35365020670,
+  "runAttempt": 1,
+  "workflowPath": ".github/workflows/deploy-pages.yml",
+  "workflowRevision": "8895746cf13a30198717bde7e48ed741d02f23b8",
+  "workflowTree": "46a35d2b77b7db1e628d7afc6746b746a59d2e2a",
+  "sourceWorkflowSha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7",
+  "automationAuthority": {
+    "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/receipt.json",
+    "bytes": 2747,
+    "sha256": "f495253bdfe16ef64d3ce5dc16992635ac247b11617a0b30a149afdccac1aea4"
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "jobId": 105665249223,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T15:53:25Z",
+        "completed_at": "2026-09-18T15:54:09Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "jobId": 105665249223,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T15:53:25Z",
+        "completed_at": "2026-09-18T15:54:09Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "jobId": 105665249223,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T15:53:25Z",
+        "completed_at": "2026-09-18T15:54:09Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "jobId": 105665249223,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T15:53:25Z",
+        "completed_at": "2026-09-18T15:54:09Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "jobId": 105665249223,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T15:53:25Z",
+        "completed_at": "2026-09-18T15:54:09Z"
+      },
+      "scope": "Same actual successful preflight step; per-command exits/timestamps are not invented."
+    },
+    {
+      "gate": "test",
+      "jobId": 105666054160,
+      "step": {
+        "name": "Run test shard 4/4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-18T15:55:11Z",
+        "completed_at": "2026-09-18T16:26:15Z"
+      },
+      "actualJobSteps": [
+        {
+          "shard": 1,
+          "jobId": 105666054101,
+          "step": {
+            "name": "Run test shard 1/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T15:55:11Z",
+            "completed_at": "2026-09-18T16:23:22Z"
+          },
+          "counts": {
+            "tests": 1406,
+            "pass": 1406,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054101.log.gz",
+            "bytes": 106953,
+            "sha256": "2074f2747b1605023857161c8a3f2e4f1aded341cb6fd615fac4d0a6f0212c6d"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 1/4 --root ."
+        },
+        {
+          "shard": 2,
+          "jobId": 105666054245,
+          "step": {
+            "name": "Run test shard 2/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T15:55:48Z",
+            "completed_at": "2026-09-18T16:16:58Z"
+          },
+          "counts": {
+            "tests": 1477,
+            "pass": 1477,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054245.log.gz",
+            "bytes": 113546,
+            "sha256": "c0fa77aa115db9b461006e598d30189b0b4e10275e2e1dca67c9cf622e9f19d3"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 2/4 --root ."
+        },
+        {
+          "shard": 3,
+          "jobId": 105666054176,
+          "step": {
+            "name": "Run test shard 3/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T15:55:11Z",
+            "completed_at": "2026-09-18T16:16:10Z"
+          },
+          "counts": {
+            "tests": 1359,
+            "pass": 1359,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054176.log.gz",
+            "bytes": 106775,
+            "sha256": "81f9e6b28438e1fc714c3864d33dd2d49a0812c6f73e83d0471e5a1f37c448fc"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 3/4 --root ."
+        },
+        {
+          "shard": 4,
+          "jobId": 105666054160,
+          "step": {
+            "name": "Run test shard 4/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-18T15:55:11Z",
+            "completed_at": "2026-09-18T16:26:15Z"
+          },
+          "counts": {
+            "tests": 1680,
+            "pass": 1680,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "log": {
+            "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054160.log.gz",
+            "bytes": 120401,
+            "sha256": "73023199d6d62cd56484320af35e8a295bd2992251e32ea7d2cecba5fbb0aaba"
+          },
+          "command": "node ../automation/scripts/run-test-shard.mjs --shard 4/4 --root ."
+        }
+      ],
+      "counts": {
+        "tests": 5922,
+        "pass": 5922,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "partition": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/partition-coverage.json",
+        "bytes": 23809,
+        "sha256": "e2f5672bc3ddae39ba8d8f8d25b1b20836e0b5cff63cb14a5bebcd3e2ffb0294"
+      },
+      "scope": "Actual last-completed successful shard is representative; all four actual completed shards and exact partition are required."
+    }
+  ],
+  "tests": {
+    "tests": 5922,
+    "pass": 5922,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testFiles": 466,
+  "observations": [
+    {
+      "path": "pr-source/job-105665249223.log.gz",
+      "line": 366,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105665249223.log.gz",
+      "line": 812,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054101.log.gz",
+      "line": 369,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054101.log.gz",
+      "line": 7466,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054245.log.gz",
+      "line": 370,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054245.log.gz",
+      "line": 7821,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054176.log.gz",
+      "line": 369,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054176.log.gz",
+      "line": 7236,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054160.log.gz",
+      "line": 369,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054160.log.gz",
+      "line": 8843,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline/source",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054285.log.gz",
+      "line": 595,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    },
+    {
+      "path": "pr-source/job-105666054285.log.gz",
+      "line": 633,
+      "identity": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+        "sourceTree": "e8a544161dc23e67995f21d6bc20d268e4174120",
+        "files": 12306,
+        "bytes": 1108036695,
+        "aggregateSha256": "8809699714ecef21fcb7ba9e9c06b3c6260e0668e9dffbcc87fc0351e1059887",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      },
+      "matchesExpected": true
+    }
+  ],
+  "hostedSourceReview": {
+    "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/review.json",
+    "bytes": 864,
+    "sha256": "755db6642f5add543f5db31907431405b04cdaa00276e74d3de567cd28952ee2"
+  },
+  "hostedEvidenceManifest": {
+    "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/final-evidence-manifest.json",
+    "bytes": 11152,
+    "sha256": "55216eba09eac16f832f8becbe5dc23118456f61fe1bd65885c8e426cde9d25f"
+  },
+  "publisherPreviewObservation": {
+    "status": "not-part-of-this-source-qualification",
+    "reason": "No publisher workflow changes; main-only publication remains a later separate gate."
+  },
+  "hostedNodeVersion": "v20.19.6",
+  "additionalManualQualification": {
+    "run": {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/run.json",
+      "bytes": 12615,
+      "sha256": "47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f"
+    },
+    "jobs": {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/jobs.json",
+      "bytes": 18623,
+      "sha256": "0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2"
+    },
+    "preflight": {
+      "id": 105665471390,
+      "run_id": 35365086056,
+      "workflow_name": "Qualify release source",
+      "head_branch": "codex/p08-actor-minimum-next",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/35365086056",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAYmicjng",
+      "head_sha": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/105665471390",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/35365086056/job/105665471390",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-18T15:52:46Z",
+      "started_at": "2026-09-18T15:53:56Z",
+      "completed_at": "2026-09-18T15:55:41Z",
+      "name": "qualify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-18T15:53:57Z",
+          "completed_at": "2026-09-18T15:53:58Z"
+        },
+        {
+          "name": "Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-18T15:53:58Z",
+          "completed_at": "2026-09-18T15:54:14Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-18T15:54:14Z",
+          "completed_at": "2026-09-18T15:54:21Z"
+        },
+        {
+          "name": "Record source identity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-09-18T15:54:21Z",
+          "completed_at": "2026-09-18T15:54:21Z"
+        },
+        {
+          "name": "Install dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-09-18T15:54:21Z",
+          "completed_at": "2026-09-18T15:54:23Z"
+        },
+        {
+          "name": "Check hosted artifact utility locally",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-18T15:54:23Z",
+          "completed_at": "2026-09-18T15:54:46Z"
+        },
+        {
+          "name": "Validate source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T15:54:46Z",
+          "completed_at": "2026-09-18T15:55:00Z"
+        },
+        {
+          "name": "Lint source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-09-18T15:55:00Z",
+          "completed_at": "2026-09-18T15:55:09Z"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-09-18T15:55:09Z",
+          "completed_at": "2026-09-18T15:55:29Z"
+        },
+        {
+          "name": "Check native formatting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-09-18T15:55:29Z",
+          "completed_at": "2026-09-18T15:55:30Z"
+        },
+        {
+          "name": "Check motion lab syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-09-18T15:55:30Z",
+          "completed_at": "2026-09-18T15:55:30Z"
+        },
+        {
+          "name": "Reproduce production collection when available",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-09-18T15:55:30Z",
+          "completed_at": "2026-09-18T15:55:35Z"
+        },
+        {
+          "name": "Require reviewed production slots in the committed ledger",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-09-18T15:55:35Z",
+          "completed_at": "2026-09-18T15:55:37Z"
+        },
+        {
+          "name": "Verify qualified tracked source is unchanged",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-09-18T15:55:37Z",
+          "completed_at": "2026-09-18T15:55:38Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-09-18T15:55:38Z",
+          "completed_at": "2026-09-18T15:55:38Z"
+        },
+        {
+          "name": "Post Check out exact candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-09-18T15:55:38Z",
+          "completed_at": "2026-09-18T15:55:38Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-09-18T15:55:38Z",
+          "completed_at": "2026-09-18T15:55:38Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/105665471390",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000001789,
+      "runner_name": "GitHub Actions 1000001789",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "shards": [
+      {
+        "shard": 1,
+        "jobId": 105666435875,
+        "step": {
+          "name": "Run test shard 1/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T15:56:09Z",
+          "completed_at": "2026-09-18T16:24:09Z"
+        },
+        "counts": {
+          "tests": 1406,
+          "pass": 1406,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435875.log.gz",
+          "bytes": 110657,
+          "sha256": "d22788f2463a7e56796c48f8eab28021f07ffe7c54435fc7d3b16b9aa492c33d"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 1/4"
+      },
+      {
+        "shard": 2,
+        "jobId": 105666435839,
+        "step": {
+          "name": "Run test shard 2/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T15:56:18Z",
+          "completed_at": "2026-09-18T16:11:58Z"
+        },
+        "counts": {
+          "tests": 1477,
+          "pass": 1477,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435839.log.gz",
+          "bytes": 116367,
+          "sha256": "8d71ffd48c715344c2ec975fd4aaa9b962cb94a3580645bb2322d714d61e4e1a"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 2/4"
+      },
+      {
+        "shard": 3,
+        "jobId": 105666435907,
+        "step": {
+          "name": "Run test shard 3/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T15:56:07Z",
+          "completed_at": "2026-09-18T16:17:19Z"
+        },
+        "counts": {
+          "tests": 1359,
+          "pass": 1359,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435907.log.gz",
+          "bytes": 110242,
+          "sha256": "4c76fc3eeffb024aa8c3a2fb47f168b4cad0e090cd85635fa870b7c88c1c636e"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 3/4"
+      },
+      {
+        "shard": 4,
+        "jobId": 105666435912,
+        "step": {
+          "name": "Run test shard 4/4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-18T15:56:10Z",
+          "completed_at": "2026-09-18T16:27:11Z"
+        },
+        "counts": {
+          "tests": 1680,
+          "pass": 1680,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "log": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435912.log.gz",
+          "bytes": 124128,
+          "sha256": "9ae4c574f833cf3cbbf1fb7e7183084b15599d97fdab384fc4e0a17bf28b4c5c"
+        },
+        "command": "node scripts/run-test-shard.mjs --shard 4/4"
+      }
+    ],
+    "counts": {
+      "tests": 5922,
+      "pass": 5922,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "manualFreezeObservation": {
+    "runId": 35365086056,
+    "jobPresent": true,
+    "jobId": 105676800290,
+    "conclusion": "success",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-09-18T16:27:18Z",
+        "completed_at": "2026-09-18T16:27:19Z"
+      },
+      {
+        "name": "Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-09-18T16:27:19Z",
+        "completed_at": "2026-09-18T16:27:35Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-09-18T16:27:35Z",
+        "completed_at": "2026-09-18T16:27:39Z"
+      },
+      {
+        "name": "Freeze the exact qualified commit",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-09-18T16:27:39Z",
+        "completed_at": "2026-09-18T16:30:15Z"
+      },
+      {
+        "name": "Retain original release assets",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-09-18T16:30:15Z",
+        "completed_at": "2026-09-18T16:30:23Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-09-18T16:30:23Z",
+        "completed_at": "2026-09-18T16:30:23Z"
+      },
+      {
+        "name": "Post Check out the qualified source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-09-18T16:30:23Z",
+        "completed_at": "2026-09-18T16:30:23Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-09-18T16:30:23Z",
+        "completed_at": "2026-09-18T16:30:23Z"
+      }
+    ],
+    "artifactMetadata": {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/artifacts-final.json",
+      "bytes": 752,
+      "sha256": "233af9f5a57eb9d71b36327c412aeb25211baca392b74954b053de8232783822"
+    },
+    "observedArtifacts": [
+      {
+        "id": 10556769519,
+        "node_id": "MDg6QXJ0aWZhY3QxMDU1Njc2OTUxOQ==",
+        "name": "qualified-release-snapshot",
+        "size_in_bytes": 1431714439,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10556769519",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10556769519/zip",
+        "expired": false,
+        "digest": "sha256:8c00d55690cf52ec80991936c8ef167b69d2653d1c537159bf7d5fba89f09063",
+        "created_at": "2026-09-18T16:30:23Z",
+        "updated_at": "2026-09-18T16:30:23Z",
+        "expires_at": "2026-10-02T16:30:16Z",
+        "workflow_run": {
+          "id": 35365086056,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/p08-actor-minimum-next",
+          "head_sha": "17e0a455f76c3f4a72f2e596397a0e73463335a5"
+        }
+      }
+    ],
+    "scope": "Actual freeze outcome and artifact API metadata; separate from six source gates. Matching whole original payload inspection is now required before qualification."
+  },
+  "localFullTest": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local Actor size and edge readability cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+  },
+  "localOrdinaryBuild": {
+    "status": "not-run",
+    "executed": false,
+    "reason": "Not run locally by this qualification pipeline: root selected complete hosted exact-source test and ordinary-build authority to avoid duplicate resource-heavy execution. Earlier local Actor size and edge readability cohorts remain separately source-scoped corroboration; no local command gates are inferred for the final source."
+  },
+  "localCorroboration": {
+    "status": "not-run-on-final-source",
+    "checks": 0,
+    "scope": "Earlier local Actor size and edge readability cohorts remain separate; no local command gates are inferred for the final source."
+  },
+  "localAdditionalChecks": [],
+  "ordinaryBuildCorroboration": {
+    "runId": 35365020670,
+    "jobId": 105666054285,
+    "step": {
+      "name": "Build pull-request artifact",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-09-18T15:55:19Z",
+      "completed_at": "2026-09-18T15:57:16Z"
+    },
+    "command": "npm run build",
+    "log": {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054285.log.gz",
+      "bytes": 12064,
+      "sha256": "54de8d3f232bd6ddf0b30b1ca5f3a6875bb9664fc0ce9cdb7c13a39ef4cf169c"
+    },
+    "scope": "Actual successful hosted PR ordinary build command on exact source, bounded by raw source identities. No local build or loose ordinary-byte inspection claimed."
+  },
+  "frozenArtifactCorroboration": {
+    "hostedUtility": {
+      "inputs": {
+        "inspection": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+          "bytes": 1918,
+          "sha256": "ee2a81b09f37e8650ec8bb112b8e0ca8950fc92bdd657d9bfbca4cd9fb09e9ad"
+        },
+        "download": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-original.download.json",
+          "bytes": 594,
+          "sha256": "28cd21925f431c4a74f069f934e2446c33bff1195a3d20fc44aa1a5c47dc4c54"
+        },
+        "releaseRecord": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/release.json",
+          "bytes": 468,
+          "sha256": "5ea0ab97d5672674a4100b726ccd6f6165dc302d5cda9fa502e4b7c562e632a4"
+        },
+        "manifest": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+          "bytes": 128038,
+          "sha256": "eda02738528cf86acc97beb608c0e95081d54ae8ba9d9e62d659f67094582b1a"
+        },
+        "checksum": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "c9b6650d42b304eeed178d9ceaae162657a84133ddb8f41a1857143271bc98a6"
+        },
+        "inspector": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+          "bytes": 25776,
+          "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+        },
+        "frozenOfflineReview": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/review.json",
+          "bytes": 3413,
+          "sha256": "6b23736c77df229271969ebaaba01f5ad25564364da86add0bf24da4e0ea449c"
+        },
+        "frozenOfflineManifest": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+          "bytes": 120985,
+          "sha256": "c49d7ecac5e1922bd1197d75e6d533de90d3ef95a4b7bd18d8f023f0248e1eb6"
+        },
+        "frozenBuildInfo": {
+          "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+          "bytes": 144,
+          "sha256": "7bde80529030446cca0894cfa4479b8c23a693dd31ec04ff74aa34324a971be1"
+        }
+      },
+      "artifactAuthority": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/artifact-authority.json",
+        "bytes": 803,
+        "sha256": "68689632ecf467700e41b0d7de9648c1ebe2f01e9a29af10026b4ab93818353c"
+      },
+      "execution": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/execution.json",
+        "bytes": 2442,
+        "sha256": "b4694aac2c58dd7945e2dbffaca80752cd2cf2895326457a9d75bccbdea338fb"
+      },
+      "run": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/run.json",
+        "bytes": 12148,
+        "sha256": "6c3b52d395868afa23faf2f4f71e43acbbb5cdab1e2c13acf8f768d9e9e280cc"
+      },
+      "jobs": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/jobs.json",
+        "bytes": 6314,
+        "sha256": "0f31857e5c28f363c858add1b02264b9c82acc547ee8626899320729c43b8be7"
+      },
+      "retainedManifest": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/retained-manifest.json",
+        "bytes": 6782,
+        "sha256": "fd59396422dbdbc4189354b515cdb55ce0e772f8a03fd86c5362f11c1c81a4fc"
+      },
+      "bindingProvenance": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/manifest.json",
+        "bytes": 76974,
+        "sha256": "cdce897db9d49209a92c9274353b0e3b04fbc1e9e45c9f18a069e81ec77e8696"
+      },
+      "scope": "Hosted original-byte inspection; separate from source command qualification."
+    },
+    "binding": {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2871,
+      "sha256": "b36e2ac8be965be1e74ede05f43ba81593cfa54dcd737797781a16775f2e4192"
+    },
+    "inputs": {
+      "inspection": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+        "bytes": 1918,
+        "sha256": "ee2a81b09f37e8650ec8bb112b8e0ca8950fc92bdd657d9bfbca4cd9fb09e9ad"
+      },
+      "download": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-original.download.json",
+        "bytes": 594,
+        "sha256": "28cd21925f431c4a74f069f934e2446c33bff1195a3d20fc44aa1a5c47dc4c54"
+      },
+      "releaseRecord": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/release.json",
+        "bytes": 468,
+        "sha256": "5ea0ab97d5672674a4100b726ccd6f6165dc302d5cda9fa502e4b7c562e632a4"
+      },
+      "manifest": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+        "bytes": 128038,
+        "sha256": "eda02738528cf86acc97beb608c0e95081d54ae8ba9d9e62d659f67094582b1a"
+      },
+      "checksum": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "c9b6650d42b304eeed178d9ceaae162657a84133ddb8f41a1857143271bc98a6"
+      },
+      "inspector": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+        "bytes": 25776,
+        "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+      },
+      "frozenOfflineReview": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/review.json",
+        "bytes": 3413,
+        "sha256": "6b23736c77df229271969ebaaba01f5ad25564364da86add0bf24da4e0ea449c"
+      },
+      "frozenOfflineManifest": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+        "bytes": 120985,
+        "sha256": "c49d7ecac5e1922bd1197d75e6d533de90d3ef95a4b7bd18d8f023f0248e1eb6"
+      },
+      "frozenBuildInfo": {
+        "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+        "bytes": 144,
+        "sha256": "7bde80529030446cca0894cfa4479b8c23a693dd31ec04ff74aa34324a971be1"
+      }
+    },
+    "artifactId": 10556769519,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "allInnerZipManifestBytesVerified": true,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "scope": "Existing reviewed streaming inspector checked original TAR Git blobs/types/modes/commit, outer digest and every inner ZIP byte; public delivery remains separate."
+  },
+  "evidencePins": [
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/expected-test-partitions.json",
+      "bytes": 23586,
+      "sha256": "18a8dfb201e040393ffac608b421f026ed8865c46ac2e0a36ccfb0b7ad645a40"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/final-evidence-manifest.json",
+      "bytes": 11152,
+      "sha256": "55216eba09eac16f832f8becbe5dc23118456f61fe1bd65885c8e426cde9d25f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/job-step-records.json",
+      "bytes": 35498,
+      "sha256": "2b8a7d8af7c1d417106f3ef4b4f8c5550f24ddd18ea2e11fbff89731b6a73743"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/artifacts-final.json",
+      "bytes": 752,
+      "sha256": "233af9f5a57eb9d71b36327c412aeb25211baca392b74954b053de8232783822"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105665471390-receipt.json",
+      "bytes": 693,
+      "sha256": "449271ea5e4c09cfa99f83d8e923cc7a315ac54201f1ab413150a74db52d149c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105665471390.json",
+      "bytes": 3747,
+      "sha256": "1bca9c59aa5827ed25a1dc857c4e3bb371f89d469a4ba7c69dd2d8fc5414a605"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105665471390.log.gz",
+      "bytes": 11734,
+      "sha256": "ea1078fae9a5529a0bbc0a5f2704251de6819559dffc3b7b8142206ad618181c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105665473030.json",
+      "bytes": 890,
+      "sha256": "2ca49e6646ef53f743c2096c7c60a5b033048bd37ed54f26a98b557b0903f793"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105665473048.json",
+      "bytes": 890,
+      "sha256": "2c8e40cdd12f87221a4891cbfac248dc9d0d3499323dec72f98e2060ef719c82"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435839-receipt.json",
+      "bytes": 696,
+      "sha256": "b628befa2ef5520ba5cf42cd79e830d255f9d4a21dbdcf8538d48f2a51802fcc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435839.json",
+      "bytes": 2708,
+      "sha256": "9e4fdb436a0da788220de89dab0614297a62306fce8705ab66b29362878548c1"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435839.log.gz",
+      "bytes": 116367,
+      "sha256": "8d71ffd48c715344c2ec975fd4aaa9b962cb94a3580645bb2322d714d61e4e1a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435875-receipt.json",
+      "bytes": 696,
+      "sha256": "cd912ea5d1d683967c135693b54bea35ba29c327706c6693b1678bb48afb493a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435875.json",
+      "bytes": 2708,
+      "sha256": "dac3466f32f5b09a46d32ba4ef77029e5955317b836d87a24f9b558886a1661a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435875.log.gz",
+      "bytes": 110657,
+      "sha256": "d22788f2463a7e56796c48f8eab28021f07ffe7c54435fc7d3b16b9aa492c33d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435907-receipt.json",
+      "bytes": 696,
+      "sha256": "bf28563634ffca07b045e8da3193c03a207a6ec4e29ee67ab438b9d621170530"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435907.json",
+      "bytes": 2708,
+      "sha256": "9118997f2d39ac2db3148c4247e428daf973629161f0332c328ad55835096ed3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435907.log.gz",
+      "bytes": 110242,
+      "sha256": "4c76fc3eeffb024aa8c3a2fb47f168b4cad0e090cd85635fa870b7c88c1c636e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435912-receipt.json",
+      "bytes": 696,
+      "sha256": "c774e242fbfbd13d0bf61f5413ae6afe7c71ec81c79c25d8ec15a246bdf39f48"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435912.json",
+      "bytes": 2708,
+      "sha256": "2c68fcb1909bcae3b10c7e9e598c28b818147e654bc4d5bf8369ab6dd1fc6916"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105666435912.log.gz",
+      "bytes": 124128,
+      "sha256": "9ae4c574f833cf3cbbf1fb7e7183084b15599d97fdab384fc4e0a17bf28b4c5c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105676800290-receipt.json",
+      "bytes": 692,
+      "sha256": "a6af8dd25cb622ea8563f7a74ac3f7ea9f383c940512a4a8258147e904166f4a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105676800290.json",
+      "bytes": 2230,
+      "sha256": "a829734a34958e7d791ccf49c6a0561da872094e84e2275d20cff1d7cc7bb73d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/job-105676800290.log.gz",
+      "bytes": 12698,
+      "sha256": "9ef2ce428a6a7d152ff1afe98c65715ff186ac1857a47247cfd00ff7f6c0bf61"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/jobs.json",
+      "bytes": 18623,
+      "sha256": "0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/manual/run.json",
+      "bytes": 12615,
+      "sha256": "47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/partition-coverage.json",
+      "bytes": 23809,
+      "sha256": "e2f5672bc3ddae39ba8d8f8d25b1b20836e0b5cff63cb14a5bebcd3e2ffb0294"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/.github__workflows__deploy-pages.yml.api.json",
+      "bytes": 12158,
+      "sha256": "7d59c0106959172038ae9fe51538adeb1aae08dc2dc531127af322ec99d3e14e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/.github__workflows__publish-frozen-pages.yml.api.json",
+      "bytes": 7266,
+      "sha256": "4c8e3675aba8edd93f342ee324cacc6fd319d38610ea1515d65fd6ec543a50d3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/commit.json",
+      "bytes": 2648,
+      "sha256": "77ab662f1c606d9a96b133a8c8c3420cfaf9dbf510ebe1195c97d54a60a7edec"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/receipt.json",
+      "bytes": 2747,
+      "sha256": "f495253bdfe16ef64d3ce5dc16992635ac247b11617a0b30a149afdccac1aea4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/scripts__check-source-identity.mjs.api.json",
+      "bytes": 11139,
+      "sha256": "0e0f8c3ffb71c09c25b77519c8f52a93e06752b29e7b528c9ae0c4d05b1eb258"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-automation/scripts__run-test-shard.mjs.api.json",
+      "bytes": 4816,
+      "sha256": "d7d2ff2e5d26aab99148f55826252c704bab46e7bee396a1ae20ecc92548f3e9"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-partition-coverage.json",
+      "bytes": 26576,
+      "sha256": "916543701a11fdcee734e807e8e082608fdfe30c5a4af13b387798244ae815b6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105665249223-receipt.json",
+      "bytes": 698,
+      "sha256": "75ac1955adade63d6b9a42946fa990122139c6121366510a3db865cda7785978"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105665249223.json",
+      "bytes": 3311,
+      "sha256": "8093ba7b48850fab5180a5b859cc63414cb29bf92f5737ab99f4735db7c45429"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105665249223.log.gz",
+      "bytes": 15011,
+      "sha256": "651e21e53746ff8e92dd159389bf4b985f0efb92e92bca0a015bc8b904ef5234"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105665250958.json",
+      "bytes": 893,
+      "sha256": "33e7edb171bd77c06a857134c2659692f8831936f1f71402bed7e751c65ce93a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054101-receipt.json",
+      "bytes": 699,
+      "sha256": "ec1230d358c28328c721b18bca0b1d161dfc000617188effd221439e8edd7637"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054101.json",
+      "bytes": 2910,
+      "sha256": "9865bca91c9c29a73c656353c439687a058930c9b9b06b649f7e9bd70e0cc112"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054101.log.gz",
+      "bytes": 106953,
+      "sha256": "2074f2747b1605023857161c8a3f2e4f1aded341cb6fd615fac4d0a6f0212c6d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054160-receipt.json",
+      "bytes": 699,
+      "sha256": "32a05f844592a2269f14ceae724187624d54074dfe286de23eeaf22a617688a2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054160.json",
+      "bytes": 2910,
+      "sha256": "3bbf24a90b8f4de2be96a4c3e59596c3b9dd1adb70735eee16d4820b887a9d24"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054160.log.gz",
+      "bytes": 120401,
+      "sha256": "73023199d6d62cd56484320af35e8a295bd2992251e32ea7d2cecba5fbb0aaba"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054176-receipt.json",
+      "bytes": 699,
+      "sha256": "ae44eb6c66b1709a6404453f3254a22aedcfeb83178394cd055279c7ab8c5f4e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054176.json",
+      "bytes": 2910,
+      "sha256": "9218d77a79dedc135021bce5d62079371d6ade06d426f91f9cb140f2fb3959fe"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054176.log.gz",
+      "bytes": 106775,
+      "sha256": "81f9e6b28438e1fc714c3864d33dd2d49a0812c6f73e83d0471e5a1f37c448fc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054245-receipt.json",
+      "bytes": 699,
+      "sha256": "dc701448d17e800ca123f04480c97a793b2ab182757e9f83d7df25647b7d0602"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054245.json",
+      "bytes": 2910,
+      "sha256": "f36734156de09ff174f1d9b2ff963a18adfe2e2da9ade266f466f53ad0983ad0"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054245.log.gz",
+      "bytes": 113546,
+      "sha256": "c0fa77aa115db9b461006e598d30189b0b4e10275e2e1dca67c9cf622e9f19d3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054285-receipt.json",
+      "bytes": 694,
+      "sha256": "e1e6e6ceafcfc0a638a5f8a1fcbcc2e823805abf40bb4164b1f2d4e3eb052f17"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054285.json",
+      "bytes": 2957,
+      "sha256": "b235b4e022423da008086b8e233b3f7ab15b74a53812c1c0fca8c8914d6b49c7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/job-105666054285.log.gz",
+      "bytes": 12064,
+      "sha256": "54de8d3f232bd6ddf0b30b1ca5f3a6875bb9664fc0ce9cdb7c13a39ef4cf169c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/jobs.json",
+      "bytes": 18834,
+      "sha256": "39d8d7e14f64ea02d30390f2470d67d21f53e15038af1e1e9751177121ecbb71"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/pr-source/run.json",
+      "bytes": 12661,
+      "sha256": "6f2a63be4180b60b23a6d38853c69226d3923ada37102e0a60d0121a81beaaac"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/review.json",
+      "bytes": 864,
+      "sha256": "755db6642f5add543f5db31907431405b04cdaa00276e74d3de567cd28952ee2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/source-executed/.github__workflows__deploy-pages.yml",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/source-executed/.github__workflows__publish-frozen-pages.yml",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/source-executed/receipt.json",
+      "bytes": 1353,
+      "sha256": "a17fdf2c273b0824d7ee7465168dee95f449567b9463e2e0fa2fc6bbc9b4d36e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/source-executed/scripts__check-source-identity.mjs",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/source-executed/scripts__run-test-shard.mjs",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/hosted/source-identities.json",
+      "bytes": 7863,
+      "sha256": "47c1c9f0a2cb375f7316d54c1b2be5d4df46caeea1cdceaa4235174a081d5d73"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-bindings/automation-binding.json",
+      "bytes": 510,
+      "sha256": "36fb25148023908a656070dc78129598067d9a581964d7d3e5128e3d9d068e7f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-bindings/frozen-input-binding.json",
+      "bytes": 2871,
+      "sha256": "b36e2ac8be965be1e74ede05f43ba81593cfa54dcd737797781a16775f2e4192"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/assemble.py",
+      "bytes": 35040,
+      "sha256": "98b5d2c2b58e8263f0104f1d52393a5b61a87f30009b280ae5dc998fc6774650"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/manifest.json",
+      "bytes": 76974,
+      "sha256": "cdce897db9d49209a92c9274353b0e3b04fbc1e9e45c9f18a069e81ec77e8696"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/009da1c4768fe6df12a0a288edbfc4c8fd955311ee332bac86555e8ed540ac7f.bin",
+      "bytes": 468,
+      "sha256": "009da1c4768fe6df12a0a288edbfc4c8fd955311ee332bac86555e8ed540ac7f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/0701abedfeb5a65da885211eab64fded70b2a20eabc33fa9ef4fc708ccafb689.bin",
+      "bytes": 9747,
+      "sha256": "0701abedfeb5a65da885211eab64fded70b2a20eabc33fa9ef4fc708ccafb689"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/0e0f8c3ffb71c09c25b77519c8f52a93e06752b29e7b528c9ae0c4d05b1eb258.bin",
+      "bytes": 11139,
+      "sha256": "0e0f8c3ffb71c09c25b77519c8f52a93e06752b29e7b528c9ae0c4d05b1eb258"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/0f1907327e7d0389852b498161c4e140c1a65accd6384a5346a64267caecf155.bin",
+      "bytes": 2832,
+      "sha256": "0f1907327e7d0389852b498161c4e140c1a65accd6384a5346a64267caecf155"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/0f31857e5c28f363c858add1b02264b9c82acc547ee8626899320729c43b8be7.bin",
+      "bytes": 6314,
+      "sha256": "0f31857e5c28f363c858add1b02264b9c82acc547ee8626899320729c43b8be7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/0f6ce0293ac595999fb132c93f36c66e745ce5990ded5c65f7e32769f56f965b.bin",
+      "bytes": 13480,
+      "sha256": "0f6ce0293ac595999fb132c93f36c66e745ce5990ded5c65f7e32769f56f965b"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2.bin",
+      "bytes": 18623,
+      "sha256": "0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/140f73852f7e176ffc79a2d870a7a382672ab4b6fc0dd34458db7d5704e12799.bin",
+      "bytes": 1300,
+      "sha256": "140f73852f7e176ffc79a2d870a7a382672ab4b6fc0dd34458db7d5704e12799"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/18a8dfb201e040393ffac608b421f026ed8865c46ac2e0a36ccfb0b7ad645a40.bin",
+      "bytes": 23586,
+      "sha256": "18a8dfb201e040393ffac608b421f026ed8865c46ac2e0a36ccfb0b7ad645a40"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/1bca9c59aa5827ed25a1dc857c4e3bb371f89d469a4ba7c69dd2d8fc5414a605.bin",
+      "bytes": 3747,
+      "sha256": "1bca9c59aa5827ed25a1dc857c4e3bb371f89d469a4ba7c69dd2d8fc5414a605"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2074f2747b1605023857161c8a3f2e4f1aded341cb6fd615fac4d0a6f0212c6d.bin",
+      "bytes": 106953,
+      "sha256": "2074f2747b1605023857161c8a3f2e4f1aded341cb6fd615fac4d0a6f0212c6d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/20cad14721844069d62743b58247a3130db7a50be8031dd5cb4ed650ad49ecc3.bin",
+      "bytes": 580,
+      "sha256": "20cad14721844069d62743b58247a3130db7a50be8031dd5cb4ed650ad49ecc3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7.bin",
+      "bytes": 8015,
+      "sha256": "22bcbd482cc6539c96c92be76d21780092f9abf9b88cdcf7fcfcff61bae36ea7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/233af9f5a57eb9d71b36327c412aeb25211baca392b74954b053de8232783822.bin",
+      "bytes": 752,
+      "sha256": "233af9f5a57eb9d71b36327c412aeb25211baca392b74954b053de8232783822"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2844a673aa85f0959b3bd185d80e38621d8ee9490bd79247e123dfad47867a94.bin",
+      "bytes": 20410,
+      "sha256": "2844a673aa85f0959b3bd185d80e38621d8ee9490bd79247e123dfad47867a94"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/28cd21925f431c4a74f069f934e2446c33bff1195a3d20fc44aa1a5c47dc4c54.bin",
+      "bytes": 594,
+      "sha256": "28cd21925f431c4a74f069f934e2446c33bff1195a3d20fc44aa1a5c47dc4c54"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2b8a7d8af7c1d417106f3ef4b4f8c5550f24ddd18ea2e11fbff89731b6a73743.bin",
+      "bytes": 35498,
+      "sha256": "2b8a7d8af7c1d417106f3ef4b4f8c5550f24ddd18ea2e11fbff89731b6a73743"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2c05cd17a091e3ae8fc2b4faccd939dc039887058918828409e91e652437e2be.bin",
+      "bytes": 748,
+      "sha256": "2c05cd17a091e3ae8fc2b4faccd939dc039887058918828409e91e652437e2be"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2c68fcb1909bcae3b10c7e9e598c28b818147e654bc4d5bf8369ab6dd1fc6916.bin",
+      "bytes": 2708,
+      "sha256": "2c68fcb1909bcae3b10c7e9e598c28b818147e654bc4d5bf8369ab6dd1fc6916"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2c8e40cdd12f87221a4891cbfac248dc9d0d3499323dec72f98e2060ef719c82.bin",
+      "bytes": 890,
+      "sha256": "2c8e40cdd12f87221a4891cbfac248dc9d0d3499323dec72f98e2060ef719c82"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2ca49e6646ef53f743c2096c7c60a5b033048bd37ed54f26a98b557b0903f793.bin",
+      "bytes": 890,
+      "sha256": "2ca49e6646ef53f743c2096c7c60a5b033048bd37ed54f26a98b557b0903f793"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/2cff841cec0beef8dd2c7bf4d1a2c93a1744237dc8ab07dda08b74e3d079cd59.bin",
+      "bytes": 409,
+      "sha256": "2cff841cec0beef8dd2c7bf4d1a2c93a1744237dc8ab07dda08b74e3d079cd59"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/32a05f844592a2269f14ceae724187624d54074dfe286de23eeaf22a617688a2.bin",
+      "bytes": 699,
+      "sha256": "32a05f844592a2269f14ceae724187624d54074dfe286de23eeaf22a617688a2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/33e7edb171bd77c06a857134c2659692f8831936f1f71402bed7e751c65ce93a.bin",
+      "bytes": 893,
+      "sha256": "33e7edb171bd77c06a857134c2659692f8831936f1f71402bed7e751c65ce93a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/39d8d7e14f64ea02d30390f2470d67d21f53e15038af1e1e9751177121ecbb71.bin",
+      "bytes": 18834,
+      "sha256": "39d8d7e14f64ea02d30390f2470d67d21f53e15038af1e1e9751177121ecbb71"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/3bbf24a90b8f4de2be96a4c3e59596c3b9dd1adb70735eee16d4820b887a9d24.bin",
+      "bytes": 2910,
+      "sha256": "3bbf24a90b8f4de2be96a4c3e59596c3b9dd1adb70735eee16d4820b887a9d24"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/3fa371e27a02fe18f71a9c6ea0537dc93d628f2359a702f6fd79d38578b35353.bin",
+      "bytes": 549,
+      "sha256": "3fa371e27a02fe18f71a9c6ea0537dc93d628f2359a702f6fd79d38578b35353"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/449271ea5e4c09cfa99f83d8e923cc7a315ac54201f1ab413150a74db52d149c.bin",
+      "bytes": 693,
+      "sha256": "449271ea5e4c09cfa99f83d8e923cc7a315ac54201f1ab413150a74db52d149c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/47c1c9f0a2cb375f7316d54c1b2be5d4df46caeea1cdceaa4235174a081d5d73.bin",
+      "bytes": 7863,
+      "sha256": "47c1c9f0a2cb375f7316d54c1b2be5d4df46caeea1cdceaa4235174a081d5d73"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f.bin",
+      "bytes": 12615,
+      "sha256": "47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/4c76fc3eeffb024aa8c3a2fb47f168b4cad0e090cd85635fa870b7c88c1c636e.bin",
+      "bytes": 110242,
+      "sha256": "4c76fc3eeffb024aa8c3a2fb47f168b4cad0e090cd85635fa870b7c88c1c636e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/4c8e3675aba8edd93f342ee324cacc6fd319d38610ea1515d65fd6ec543a50d3.bin",
+      "bytes": 7266,
+      "sha256": "4c8e3675aba8edd93f342ee324cacc6fd319d38610ea1515d65fd6ec543a50d3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/54de8d3f232bd6ddf0b30b1ca5f3a6875bb9664fc0ce9cdb7c13a39ef4cf169c.bin",
+      "bytes": 12064,
+      "sha256": "54de8d3f232bd6ddf0b30b1ca5f3a6875bb9664fc0ce9cdb7c13a39ef4cf169c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/55216eba09eac16f832f8becbe5dc23118456f61fe1bd65885c8e426cde9d25f.bin",
+      "bytes": 11152,
+      "sha256": "55216eba09eac16f832f8becbe5dc23118456f61fe1bd65885c8e426cde9d25f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/5ea0ab97d5672674a4100b726ccd6f6165dc302d5cda9fa502e4b7c562e632a4.bin",
+      "bytes": 468,
+      "sha256": "5ea0ab97d5672674a4100b726ccd6f6165dc302d5cda9fa502e4b7c562e632a4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/5edf0855610f89af46e9d3ac782e7a1374080c90ca479d9071243b829e829ad2.bin",
+      "bytes": 194,
+      "sha256": "5edf0855610f89af46e9d3ac782e7a1374080c90ca479d9071243b829e829ad2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/651e21e53746ff8e92dd159389bf4b985f0efb92e92bca0a015bc8b904ef5234.bin",
+      "bytes": 15011,
+      "sha256": "651e21e53746ff8e92dd159389bf4b985f0efb92e92bca0a015bc8b904ef5234"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/654c01cf5b2d31a32f46a845db48c7d617a77b82f0928e2c6292c917ace384ce.bin",
+      "bytes": 1178,
+      "sha256": "654c01cf5b2d31a32f46a845db48c7d617a77b82f0928e2c6292c917ace384ce"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/68689632ecf467700e41b0d7de9648c1ebe2f01e9a29af10026b4ab93818353c.bin",
+      "bytes": 803,
+      "sha256": "68689632ecf467700e41b0d7de9648c1ebe2f01e9a29af10026b4ab93818353c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6a729d3a0d1c614e99e823ee71f12920eeb8cfe6a9a93ad4a3c3d059a4647132.bin",
+      "bytes": 6127,
+      "sha256": "6a729d3a0d1c614e99e823ee71f12920eeb8cfe6a9a93ad4a3c3d059a4647132"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6b23736c77df229271969ebaaba01f5ad25564364da86add0bf24da4e0ea449c.bin",
+      "bytes": 3413,
+      "sha256": "6b23736c77df229271969ebaaba01f5ad25564364da86add0bf24da4e0ea449c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6c3b52d395868afa23faf2f4f71e43acbbb5cdab1e2c13acf8f768d9e9e280cc.bin",
+      "bytes": 12148,
+      "sha256": "6c3b52d395868afa23faf2f4f71e43acbbb5cdab1e2c13acf8f768d9e9e280cc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6d8ea08461372543bd144cda6582b1b84cfcd4c87e532d5656f7f58a25096464.bin",
+      "bytes": 9149,
+      "sha256": "6d8ea08461372543bd144cda6582b1b84cfcd4c87e532d5656f7f58a25096464"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6e75502b5e113491666cfefe6efe4a3cc130b4d55aef2501c429ba2cd7833db0.bin",
+      "bytes": 301,
+      "sha256": "6e75502b5e113491666cfefe6efe4a3cc130b4d55aef2501c429ba2cd7833db0"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6eca64722e1301d1f7a482be9f7708fd519541cab206282555da37e14a3dfcd8.bin",
+      "bytes": 422,
+      "sha256": "6eca64722e1301d1f7a482be9f7708fd519541cab206282555da37e14a3dfcd8"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/6f2a63be4180b60b23a6d38853c69226d3923ada37102e0a60d0121a81beaaac.bin",
+      "bytes": 12661,
+      "sha256": "6f2a63be4180b60b23a6d38853c69226d3923ada37102e0a60d0121a81beaaac"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/7201e1ae8bfa948b46c892898976aa6e4b02a0b5c2837b02201f99f2dc708e86.bin",
+      "bytes": 4423,
+      "sha256": "7201e1ae8bfa948b46c892898976aa6e4b02a0b5c2837b02201f99f2dc708e86"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/73023199d6d62cd56484320af35e8a295bd2992251e32ea7d2cecba5fbb0aaba.bin",
+      "bytes": 120401,
+      "sha256": "73023199d6d62cd56484320af35e8a295bd2992251e32ea7d2cecba5fbb0aaba"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/755db6642f5add543f5db31907431405b04cdaa00276e74d3de567cd28952ee2.bin",
+      "bytes": 864,
+      "sha256": "755db6642f5add543f5db31907431405b04cdaa00276e74d3de567cd28952ee2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/75ac1955adade63d6b9a42946fa990122139c6121366510a3db865cda7785978.bin",
+      "bytes": 698,
+      "sha256": "75ac1955adade63d6b9a42946fa990122139c6121366510a3db865cda7785978"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/77ab662f1c606d9a96b133a8c8c3420cfaf9dbf510ebe1195c97d54a60a7edec.bin",
+      "bytes": 2648,
+      "sha256": "77ab662f1c606d9a96b133a8c8c3420cfaf9dbf510ebe1195c97d54a60a7edec"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/793bf002c2c1f114d593906b9c8ae66b92411e6c574d7445ed81be78c758f750.bin",
+      "bytes": 2327,
+      "sha256": "793bf002c2c1f114d593906b9c8ae66b92411e6c574d7445ed81be78c758f750"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/7bde80529030446cca0894cfa4479b8c23a693dd31ec04ff74aa34324a971be1.bin",
+      "bytes": 144,
+      "sha256": "7bde80529030446cca0894cfa4479b8c23a693dd31ec04ff74aa34324a971be1"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/7d59c0106959172038ae9fe51538adeb1aae08dc2dc531127af322ec99d3e14e.bin",
+      "bytes": 12158,
+      "sha256": "7d59c0106959172038ae9fe51538adeb1aae08dc2dc531127af322ec99d3e14e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/7fce464bc4fb58c795057f23e21666b18deabbc2db8a723926b9351075c06f78.bin",
+      "bytes": 301,
+      "sha256": "7fce464bc4fb58c795057f23e21666b18deabbc2db8a723926b9351075c06f78"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/8093ba7b48850fab5180a5b859cc63414cb29bf92f5737ab99f4735db7c45429.bin",
+      "bytes": 3311,
+      "sha256": "8093ba7b48850fab5180a5b859cc63414cb29bf92f5737ab99f4735db7c45429"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/8171a38881a1591ffdf7aa48ad5212a1833d439202514b63cfd6047670f5044c.bin",
+      "bytes": 326,
+      "sha256": "8171a38881a1591ffdf7aa48ad5212a1833d439202514b63cfd6047670f5044c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/81f9e6b28438e1fc714c3864d33dd2d49a0812c6f73e83d0471e5a1f37c448fc.bin",
+      "bytes": 106775,
+      "sha256": "81f9e6b28438e1fc714c3864d33dd2d49a0812c6f73e83d0471e5a1f37c448fc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/83563ec3bfb2301c33e2f3466cad9808969d66ac6ea4ba3d93a433f1b2753821.bin",
+      "bytes": 159,
+      "sha256": "83563ec3bfb2301c33e2f3466cad9808969d66ac6ea4ba3d93a433f1b2753821"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/8782f86cbec48300aef1c3e4e06ff7e7e20827ca5f26dd13278478aefd4bf068.bin",
+      "bytes": 13314,
+      "sha256": "8782f86cbec48300aef1c3e4e06ff7e7e20827ca5f26dd13278478aefd4bf068"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/8d71ffd48c715344c2ec975fd4aaa9b962cb94a3580645bb2322d714d61e4e1a.bin",
+      "bytes": 116367,
+      "sha256": "8d71ffd48c715344c2ec975fd4aaa9b962cb94a3580645bb2322d714d61e4e1a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/905c861d943c6b83db010ecd96319af430eac05b78f75708f9c28260b0d6dc6f.bin",
+      "bytes": 591,
+      "sha256": "905c861d943c6b83db010ecd96319af430eac05b78f75708f9c28260b0d6dc6f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/9118997f2d39ac2db3148c4247e428daf973629161f0332c328ad55835096ed3.bin",
+      "bytes": 2708,
+      "sha256": "9118997f2d39ac2db3148c4247e428daf973629161f0332c328ad55835096ed3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/916543701a11fdcee734e807e8e082608fdfe30c5a4af13b387798244ae815b6.bin",
+      "bytes": 26576,
+      "sha256": "916543701a11fdcee734e807e8e082608fdfe30c5a4af13b387798244ae815b6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/9218d77a79dedc135021bce5d62079371d6ade06d426f91f9cb140f2fb3959fe.bin",
+      "bytes": 2910,
+      "sha256": "9218d77a79dedc135021bce5d62079371d6ade06d426f91f9cb140f2fb3959fe"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/9865bca91c9c29a73c656353c439687a058930c9b9b06b649f7e9bd70e0cc112.bin",
+      "bytes": 2910,
+      "sha256": "9865bca91c9c29a73c656353c439687a058930c9b9b06b649f7e9bd70e0cc112"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/990b664e5f141a587780e1e3e2bc8682309ceb2461bb24a3595fe0a3d9a6d9c6.bin",
+      "bytes": 4094,
+      "sha256": "990b664e5f141a587780e1e3e2bc8682309ceb2461bb24a3595fe0a3d9a6d9c6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/99c1a439504b5ad43464d8f01e1cd39441e182bb990f2b0d697eecd4c88d6d8e.bin",
+      "bytes": 304,
+      "sha256": "99c1a439504b5ad43464d8f01e1cd39441e182bb990f2b0d697eecd4c88d6d8e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/9ae4c574f833cf3cbbf1fb7e7183084b15599d97fdab384fc4e0a17bf28b4c5c.bin",
+      "bytes": 124128,
+      "sha256": "9ae4c574f833cf3cbbf1fb7e7183084b15599d97fdab384fc4e0a17bf28b4c5c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/9e4fdb436a0da788220de89dab0614297a62306fce8705ab66b29362878548c1.bin",
+      "bytes": 2708,
+      "sha256": "9e4fdb436a0da788220de89dab0614297a62306fce8705ab66b29362878548c1"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/9ef2ce428a6a7d152ff1afe98c65715ff186ac1857a47247cfd00ff7f6c0bf61.bin",
+      "bytes": 12698,
+      "sha256": "9ef2ce428a6a7d152ff1afe98c65715ff186ac1857a47247cfd00ff7f6c0bf61"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/a17fdf2c273b0824d7ee7465168dee95f449567b9463e2e0fa2fc6bbc9b4d36e.bin",
+      "bytes": 1353,
+      "sha256": "a17fdf2c273b0824d7ee7465168dee95f449567b9463e2e0fa2fc6bbc9b4d36e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/a32256061c49e7d3c9acf1bda2730682bdadf0be7af974cd9d2fafa7bb457a5d.bin",
+      "bytes": 720,
+      "sha256": "a32256061c49e7d3c9acf1bda2730682bdadf0be7af974cd9d2fafa7bb457a5d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4.bin",
+      "bytes": 7275,
+      "sha256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/a6af8dd25cb622ea8563f7a74ac3f7ea9f383c940512a4a8258147e904166f4a.bin",
+      "bytes": 692,
+      "sha256": "a6af8dd25cb622ea8563f7a74ac3f7ea9f383c940512a4a8258147e904166f4a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/a829734a34958e7d791ccf49c6a0561da872094e84e2275d20cff1d7cc7bb73d.bin",
+      "bytes": 2230,
+      "sha256": "a829734a34958e7d791ccf49c6a0561da872094e84e2275d20cff1d7cc7bb73d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/a89c6c174c88f364e605b6b7bb7b5f56eb4b6f81d2a58103b2837334f979cb0b.bin",
+      "bytes": 111709,
+      "sha256": "a89c6c174c88f364e605b6b7bb7b5f56eb4b6f81d2a58103b2837334f979cb0b"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/ae44eb6c66b1709a6404453f3254a22aedcfeb83178394cd055279c7ab8c5f4e.bin",
+      "bytes": 699,
+      "sha256": "ae44eb6c66b1709a6404453f3254a22aedcfeb83178394cd055279c7ab8c5f4e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/b131f6a0e13d09865898e13a35e056125848fa81323d9f6fca88763d5e00197c.bin",
+      "bytes": 23612,
+      "sha256": "b131f6a0e13d09865898e13a35e056125848fa81323d9f6fca88763d5e00197c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/b235b4e022423da008086b8e233b3f7ab15b74a53812c1c0fca8c8914d6b49c7.bin",
+      "bytes": 2957,
+      "sha256": "b235b4e022423da008086b8e233b3f7ab15b74a53812c1c0fca8c8914d6b49c7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/b4694aac2c58dd7945e2dbffaca80752cd2cf2895326457a9d75bccbdea338fb.bin",
+      "bytes": 2442,
+      "sha256": "b4694aac2c58dd7945e2dbffaca80752cd2cf2895326457a9d75bccbdea338fb"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/b628befa2ef5520ba5cf42cd79e830d255f9d4a21dbdcf8538d48f2a51802fcc.bin",
+      "bytes": 696,
+      "sha256": "b628befa2ef5520ba5cf42cd79e830d255f9d4a21dbdcf8538d48f2a51802fcc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/bdb12587c3ddb792c5ae9a457289d0ec2f070c91414aaa557d539984a8114591.bin",
+      "bytes": 3274,
+      "sha256": "bdb12587c3ddb792c5ae9a457289d0ec2f070c91414aaa557d539984a8114591"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/bf28563634ffca07b045e8da3193c03a207a6ec4e29ee67ab438b9d621170530.bin",
+      "bytes": 696,
+      "sha256": "bf28563634ffca07b045e8da3193c03a207a6ec4e29ee67ab438b9d621170530"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c0fa77aa115db9b461006e598d30189b0b4e10275e2e1dca67c9cf622e9f19d3.bin",
+      "bytes": 113546,
+      "sha256": "c0fa77aa115db9b461006e598d30189b0b4e10275e2e1dca67c9cf622e9f19d3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c157c21319d7a90e4cb28a85d32490e61750f4f0f0d0dc6117e8d78f607f208a.bin",
+      "bytes": 395,
+      "sha256": "c157c21319d7a90e4cb28a85d32490e61750f4f0f0d0dc6117e8d78f607f208a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c49d7ecac5e1922bd1197d75e6d533de90d3ef95a4b7bd18d8f023f0248e1eb6.bin",
+      "bytes": 120985,
+      "sha256": "c49d7ecac5e1922bd1197d75e6d533de90d3ef95a4b7bd18d8f023f0248e1eb6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9.bin",
+      "bytes": 4425,
+      "sha256": "c74d4e8b2b2c8c056c154e2a2d7d9bac5f25f5f714b35742bd6282fc3d0468c9"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c774e242fbfbd13d0bf61f5413ae6afe7c71ec81c79c25d8ec15a246bdf39f48.bin",
+      "bytes": 696,
+      "sha256": "c774e242fbfbd13d0bf61f5413ae6afe7c71ec81c79c25d8ec15a246bdf39f48"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c909360bf7a91b5b21b9d2d747b2304bf58b4955038ecfb713d05deb5c08c8b3.bin",
+      "bytes": 527867,
+      "sha256": "c909360bf7a91b5b21b9d2d747b2304bf58b4955038ecfb713d05deb5c08c8b3"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/c9b6650d42b304eeed178d9ceaae162657a84133ddb8f41a1857143271bc98a6.bin",
+      "bytes": 83,
+      "sha256": "c9b6650d42b304eeed178d9ceaae162657a84133ddb8f41a1857143271bc98a6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/cd912ea5d1d683967c135693b54bea35ba29c327706c6693b1678bb48afb493a.bin",
+      "bytes": 696,
+      "sha256": "cd912ea5d1d683967c135693b54bea35ba29c327706c6693b1678bb48afb493a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/cf35da3fb69ed3144213ddaee3226843d67f91d1e11103de11bb6cca8f940d45.bin",
+      "bytes": 74710,
+      "sha256": "cf35da3fb69ed3144213ddaee3226843d67f91d1e11103de11bb6cca8f940d45"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/d0a7dcf917a06cb6d2fd43ad4f3c294dbb6f0511e4c108c0f8a54a7f190830aa.bin",
+      "bytes": 304,
+      "sha256": "d0a7dcf917a06cb6d2fd43ad4f3c294dbb6f0511e4c108c0f8a54a7f190830aa"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/d22788f2463a7e56796c48f8eab28021f07ffe7c54435fc7d3b16b9aa492c33d.bin",
+      "bytes": 110657,
+      "sha256": "d22788f2463a7e56796c48f8eab28021f07ffe7c54435fc7d3b16b9aa492c33d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/d7d2ff2e5d26aab99148f55826252c704bab46e7bee396a1ae20ecc92548f3e9.bin",
+      "bytes": 4816,
+      "sha256": "d7d2ff2e5d26aab99148f55826252c704bab46e7bee396a1ae20ecc92548f3e9"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/da080f4089319d12272236d554bf126ca699778369f9a47dc151a6abaef967d0.bin",
+      "bytes": 469,
+      "sha256": "da080f4089319d12272236d554bf126ca699778369f9a47dc151a6abaef967d0"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/dac3466f32f5b09a46d32ba4ef77029e5955317b836d87a24f9b558886a1661a.bin",
+      "bytes": 2708,
+      "sha256": "dac3466f32f5b09a46d32ba4ef77029e5955317b836d87a24f9b558886a1661a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/dc701448d17e800ca123f04480c97a793b2ab182757e9f83d7df25647b7d0602.bin",
+      "bytes": 699,
+      "sha256": "dc701448d17e800ca123f04480c97a793b2ab182757e9f83d7df25647b7d0602"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730.bin",
+      "bytes": 2719,
+      "sha256": "dec7c80967cb23c6873968ef28f4c948203539e482c27787713e5f4c1ffc6730"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/dfa2a0178d22b2761b6bc746024da2aa871a50d4711f2c2f34e1a5e3250fdc21.bin",
+      "bytes": 1400,
+      "sha256": "dfa2a0178d22b2761b6bc746024da2aa871a50d4711f2c2f34e1a5e3250fdc21"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/e1e6e6ceafcfc0a638a5f8a1fcbcc2e823805abf40bb4164b1f2d4e3eb052f17.bin",
+      "bytes": 694,
+      "sha256": "e1e6e6ceafcfc0a638a5f8a1fcbcc2e823805abf40bb4164b1f2d4e3eb052f17"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/e21deffcd71b657a10e7e34cf215fd21415221861e9fa129a480294846789907.bin",
+      "bytes": 2750,
+      "sha256": "e21deffcd71b657a10e7e34cf215fd21415221861e9fa129a480294846789907"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/e2f5672bc3ddae39ba8d8f8d25b1b20836e0b5cff63cb14a5bebcd3e2ffb0294.bin",
+      "bytes": 23809,
+      "sha256": "e2f5672bc3ddae39ba8d8f8d25b1b20836e0b5cff63cb14a5bebcd3e2ffb0294"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/e58a6761b53343dd9fada37260b69ccd7c1a4b83ead1762ebd3b36b501fb89b9.bin",
+      "bytes": 6112,
+      "sha256": "e58a6761b53343dd9fada37260b69ccd7c1a4b83ead1762ebd3b36b501fb89b9"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/e6d23ce67b0dfd7aed9631c10f43672b7332fce20a4a774982d1f3e85c400721.bin",
+      "bytes": 194,
+      "sha256": "e6d23ce67b0dfd7aed9631c10f43672b7332fce20a4a774982d1f3e85c400721"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/ea1078fae9a5529a0bbc0a5f2704251de6819559dffc3b7b8142206ad618181c.bin",
+      "bytes": 11734,
+      "sha256": "ea1078fae9a5529a0bbc0a5f2704251de6819559dffc3b7b8142206ad618181c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/ea11e68c802691f499ff0a41a51c6ac029adafdea75fb50200b3ee4cd2e0dadc.bin",
+      "bytes": 328056,
+      "sha256": "ea11e68c802691f499ff0a41a51c6ac029adafdea75fb50200b3ee4cd2e0dadc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/ec1230d358c28328c721b18bca0b1d161dfc000617188effd221439e8edd7637.bin",
+      "bytes": 699,
+      "sha256": "ec1230d358c28328c721b18bca0b1d161dfc000617188effd221439e8edd7637"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/eda02738528cf86acc97beb608c0e95081d54ae8ba9d9e62d659f67094582b1a.bin",
+      "bytes": 128038,
+      "sha256": "eda02738528cf86acc97beb608c0e95081d54ae8ba9d9e62d659f67094582b1a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/ee24b408bc9dee2228d32b324685de0777f0dc372bc5a1e9996625312b387c21.bin",
+      "bytes": 23254,
+      "sha256": "ee24b408bc9dee2228d32b324685de0777f0dc372bc5a1e9996625312b387c21"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/ee2a81b09f37e8650ec8bb112b8e0ca8950fc92bdd657d9bfbca4cd9fb09e9ad.bin",
+      "bytes": 1918,
+      "sha256": "ee2a81b09f37e8650ec8bb112b8e0ca8950fc92bdd657d9bfbca4cd9fb09e9ad"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/f36734156de09ff174f1d9b2ff963a18adfe2e2da9ade266f466f53ad0983ad0.bin",
+      "bytes": 2910,
+      "sha256": "f36734156de09ff174f1d9b2ff963a18adfe2e2da9ade266f466f53ad0983ad0"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/f38d17e07e4fb59508a0f0b71a782d5c7173556facf73a3bbba681ae172c08b5.bin",
+      "bytes": 611,
+      "sha256": "f38d17e07e4fb59508a0f0b71a782d5c7173556facf73a3bbba681ae172c08b5"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/f495253bdfe16ef64d3ce5dc16992635ac247b11617a0b30a149afdccac1aea4.bin",
+      "bytes": 2747,
+      "sha256": "f495253bdfe16ef64d3ce5dc16992635ac247b11617a0b30a149afdccac1aea4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/fca456c1849e71b6c8ee53e407f4c9f878e596423bd993de66f45a2d10dff4aa.bin",
+      "bytes": 326,
+      "sha256": "fca456c1849e71b6c8ee53e407f4c9f878e596423bd993de66f45a2d10dff4aa"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/binding-provenance/originals/fd59396422dbdbc4189354b515cdb55ce0e772f8a03fd86c5362f11c1c81a4fc.bin",
+      "bytes": 6782,
+      "sha256": "fd59396422dbdbc4189354b515cdb55ce0e772f8a03fd86c5362f11c1c81a4fc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/context.reviewed.json",
+      "bytes": 6133,
+      "sha256": "505e2c79adf710f38d3301c6e91f4395cd3025834fb68a02da215d4c03c9c4b0"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/prepared_binding.py",
+      "bytes": 9242,
+      "sha256": "0a57750cbd2ba614ff1bdf5e6d6042eb51b0098a9e66c273d4c2fcbd1903ac23"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/qualification_context.py",
+      "bytes": 19697,
+      "sha256": "5abda081ac41a847a78bc90c51811588ed2962f6c2603271e501e0f9c0b05225"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/review-final-qualification.py",
+      "bytes": 19746,
+      "sha256": "215253ebae96b2060ebe8f201a3b0f9bbffb510d7620d51bb4777372949acac1"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/source-identity-original.json",
+      "bytes": 452,
+      "sha256": "c7a8018685b688ba7401484804afe282b348aa1ab55be1e67eeb69febb260de7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/qualification-tools/utility-source-pins.json",
+      "bytes": 3247,
+      "sha256": "8b9f9d47a4f61456e9246e0cac1732d6e9bfee5b3617fe16523e93e1e2a974e5"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/001.json",
+      "bytes": 720,
+      "sha256": "a32256061c49e7d3c9acf1bda2730682bdadf0be7af974cd9d2fafa7bb457a5d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/001.request.json",
+      "bytes": 304,
+      "sha256": "d0a7dcf917a06cb6d2fd43ad4f3c294dbb6f0511e4c108c0f8a54a7f190830aa"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/002.json",
+      "bytes": 12615,
+      "sha256": "47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/002.request.json",
+      "bytes": 301,
+      "sha256": "7fce464bc4fb58c795057f23e21666b18deabbc2db8a723926b9351075c06f78"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/003.json",
+      "bytes": 18623,
+      "sha256": "0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/003.request.json",
+      "bytes": 326,
+      "sha256": "8171a38881a1591ffdf7aa48ad5212a1833d439202514b63cfd6047670f5044c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/004.json",
+      "bytes": 720,
+      "sha256": "a32256061c49e7d3c9acf1bda2730682bdadf0be7af974cd9d2fafa7bb457a5d"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/004.request.json",
+      "bytes": 304,
+      "sha256": "99c1a439504b5ad43464d8f01e1cd39441e182bb990f2b0d697eecd4c88d6d8e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/005.json",
+      "bytes": 12615,
+      "sha256": "47ee42aba808670acdda5ebd30119f81a4f32398ab715284b433b20e3baf6b2f"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/005.request.json",
+      "bytes": 301,
+      "sha256": "6e75502b5e113491666cfefe6efe4a3cc130b4d55aef2501c429ba2cd7833db0"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/006.json",
+      "bytes": 18623,
+      "sha256": "0ff404d54dc9a68baa2a60e351b51853fcf8744881e1125038d92f77290845c2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/api/006.request.json",
+      "bytes": 326,
+      "sha256": "fca456c1849e71b6c8ee53e407f4c9f878e596423bd993de66f45a2d10dff4aa"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/artifact-authority.json",
+      "bytes": 803,
+      "sha256": "68689632ecf467700e41b0d7de9648c1ebe2f01e9a29af10026b4ab93818353c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/binding.json",
+      "bytes": 395,
+      "sha256": "c157c21319d7a90e4cb28a85d32490e61750f4f0f0d0dc6117e8d78f607f208a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/execution.json",
+      "bytes": 2442,
+      "sha256": "b4694aac2c58dd7945e2dbffaca80752cd2cf2895326457a9d75bccbdea338fb"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/game/build-info.json",
+      "bytes": 144,
+      "sha256": "7bde80529030446cca0894cfa4479b8c23a693dd31ec04ff74aa34324a971be1"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/game/index.html",
+      "bytes": 74710,
+      "sha256": "cf35da3fb69ed3144213ddaee3226843d67f91d1e11103de11bb6cca8f940d45"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/offline-cache.json",
+      "bytes": 120985,
+      "sha256": "c49d7ecac5e1922bd1197d75e6d533de90d3ef95a4b7bd18d8f023f0248e1eb6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/originals/service-worker.js",
+      "bytes": 111709,
+      "sha256": "a89c6c174c88f364e605b6b7bb7b5f56eb4b6f81d2a58103b2837334f979cb0b"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/frozen-offline-review/review.json",
+      "bytes": 3413,
+      "sha256": "6b23736c77df229271969ebaaba01f5ad25564364da86add0bf24da4e0ea449c"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/inspection.log",
+      "bytes": 4094,
+      "sha256": "990b664e5f141a587780e1e3e2bc8682309ceb2461bb24a3595fe0a3d9a6d9c6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/offline-review.log",
+      "bytes": 194,
+      "sha256": "5edf0855610f89af46e9d3ac782e7a1374080c90ca479d9071243b829e829ad2"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-original.download.json",
+      "bytes": 594,
+      "sha256": "28cd21925f431c4a74f069f934e2446c33bff1195a3d20fc44aa1a5c47dc4c54"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "c9b6650d42b304eeed178d9ceaae162657a84133ddb8f41a1857143271bc98a6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/inspection.json",
+      "bytes": 1918,
+      "sha256": "ee2a81b09f37e8650ec8bb112b8e0ca8950fc92bdd657d9bfbca4cd9fb09e9ad"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/manifest.json",
+      "bytes": 128038,
+      "sha256": "eda02738528cf86acc97beb608c0e95081d54ae8ba9d9e62d659f67094582b1a"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/qualified-artifact-verified/release.json",
+      "bytes": 468,
+      "sha256": "5ea0ab97d5672674a4100b726ccd6f6165dc302d5cda9fa502e4b7c562e632a4"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/result.json",
+      "bytes": 549,
+      "sha256": "3fa371e27a02fe18f71a9c6ea0537dc93d628f2359a702f6fd79d38578b35353"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/retained-manifest.json",
+      "bytes": 6782,
+      "sha256": "fd59396422dbdbc4189354b515cdb55ce0e772f8a03fd86c5362f11c1c81a4fc"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/source-after.json",
+      "bytes": 159,
+      "sha256": "83563ec3bfb2301c33e2f3466cad9808969d66ac6ea4ba3d93a433f1b2753821"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/evidence/source-before.json",
+      "bytes": 159,
+      "sha256": "83563ec3bfb2301c33e2f3466cad9808969d66ac6ea4ba3d93a433f1b2753821"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/.github/workflows/qualify-release-source.yml",
+      "bytes": 9779,
+      "sha256": "1556a65202bc0e70ce84e10333df711fc863aec0f261c710b9216eb7d5b4af83"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/release_artifact.py",
+      "bytes": 32143,
+      "sha256": "53662aae608f6245bb40f6468427c5825c3eed233b095d4df190a7fbc2ac3698"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/test_release_artifact.py",
+      "bytes": 35031,
+      "sha256": "abc3d7e480ddbef330a264594b79f5c783fb05ddc041d950f995798540561098"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/test_upload_diagnostics.py",
+      "bytes": 12712,
+      "sha256": "14a87102a09eabeba741d19e7839b9320ac5b634bc2d790baf14ebb7f8687045"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/test_upload_distribution.py",
+      "bytes": 14627,
+      "sha256": "463537b0d7e6ecdc8a852134e0b1084e037f82f0d8e894167fdadee919836eda"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/test_upload_source.py",
+      "bytes": 14451,
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/upload_distribution.py",
+      "bytes": 20002,
+      "sha256": "5ed2a8940e4c862763ee4dfc34394e2ac1825c40cdbe5e68ad0674af707cfa27"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/upload_source.py",
+      "bytes": 19932,
+      "sha256": "993fcc897682277998df54c40dee83335d9d4b6746611084731c6af63abac6e6"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/executed-helpers/publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/jobs.json",
+      "bytes": 6314,
+      "sha256": "0f31857e5c28f363c858add1b02264b9c82acc547ee8626899320729c43b8be7"
+    },
+    {
+      "path": ".cache/p08-actor-minimum-next/source-qualification-v06122-r3/observer/utility-inspection/run.json",
+      "bytes": 12148,
+      "sha256": "6c3b52d395868afa23faf2f4f71e43acbbb5cdab1e2c13acf8f768d9e9e280cc"
+    }
+  ],
+  "limits": [
+    "Source qualification uses complete hosted suites/build and already verified frozen originals; release publication, public HTTP/browser/offline and physical-device acceptance remain separate.",
+    "Five source commands share one actual successful preflight step; no per-command exit codes or timestamps are invented.",
+    "PR coverage is authenticated exact runner semantics plus complete deterministic file partitions; no direct per-file execution event trace is claimed.",
+    "Twelve raw hosted identity boundaries verify tracked bytes/modes; these are not a continuous filesystem lock.",
+    "The game checkout is exact bound release; the separately observed executed PR workflow/automation checkout is recorded in workflowRevision/workflowTree with exact retained API/blob authority.",
+    "Literal unsharded npm test and ordinary build were not run locally. Both hosted shard families cover every pinned test file; no unsharded scheduling equivalence or local ordinary-byte/browser carry-forward is claimed."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "status": "UNVERSIONED_COMBINED_CANDIDATE_READY_FOR_ROOT_REVIEW",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-responsive-navigation-next",
+  "branch": "codex/p03-responsive-navigation-next",
+  "sourceBase": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+  "tree": "4e04fef2d0d37614149624392e316742a513bc8d",
+  "pathCount": 19,
+  "candidateBodyBytes": 571208,
+  "records": [
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/candidate-pins.json",
+      "bytes": 5897,
+      "sha256": "5bd42cef55deacc871d62abedb12dade21b813a1433c57c266db4d66f36dc52e"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/candidate.patch",
+      "bytes": 148383,
+      "sha256": "553bbc1e193a62e23786ec9623cd5f5ab6b066af5a6b6856c0bcf9f5bd85df6e"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/composition-review.json",
+      "bytes": 5912,
+      "sha256": "d18020dbebf45df2adacbc955d38500944a453e62bf8deea4a383985095cb1f8"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/relay-overlap.diff",
+      "bytes": 601,
+      "sha256": "e3d54bd5a440724f8cbfc1595278397f433972b74e9e6adffc2c638c7ae308b3"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/cohort.json",
+      "bytes": 1083,
+      "sha256": "6e550ce2fed6f89f494bce3c9ce97ecc0c6fff59104fe6cea98886d7bf321587"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/checks-summary.json",
+      "bytes": 2408,
+      "sha256": "4b41dd985bfa26cdfefe34dc860d6dae6f5f37cd3ba3ade854d8c59340ed39e7"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/combined-node20.json",
+      "bytes": 47802,
+      "sha256": "973a50180b3196c413375dadbd2556e91a8d66bed11248b3b73692e5696e44bd"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/combined-node20-r2.json",
+      "bytes": 48067,
+      "sha256": "64ecc2eea8e6dc85bbe2f0c515733c5d8b4aba308d1fc3b087d10560340b9bbc"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/brief-node20.json",
+      "bytes": 1211,
+      "sha256": "5f891c777287659160cb6745eaa2b5481efbba0f582203fa5dfa1ebb0bed1287"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/combined-node22.json",
+      "bytes": 48545,
+      "sha256": "2342fa8619920752b96fd8aeaf3c4324a94d9826e84e8b93f05608e8d5d7c22b"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/lint.json",
+      "bytes": 1138,
+      "sha256": "066fbb5603ee64efc8e8850c8b9a7e8d9a51717287948b7dd874bd1c398cc6e3"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/format.json",
+      "bytes": 1334,
+      "sha256": "bc65b976bd64bbc55c806bc9deb6f1fd42f6b8008b8c071484c187bb5bf5c618"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/diff-check.json",
+      "bytes": 392,
+      "sha256": "65a2a42ee309ea74250a283eaae3185fcce0164708f1404d1691009d5f05afc0"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/patch-check.json",
+      "bytes": 329,
+      "sha256": "60d7c5a6bbb52149e8c03a282979113cc2b2f052f70696d17c378ec99c12abbe"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/preservation.json",
+      "bytes": 351,
+      "sha256": "857c1d2e10f2ed91526f5f24d78a55e8ca1c0c07cbf7704d9afe7774f212ada9"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/production-dependency-review.json",
+      "bytes": 1057,
+      "sha256": "951fc4d2f672c4e54a00d740c1f9b2402c93576cc020bd5165218fcc8b5faf28"
+    },
+    {
+      "path": ".cache/p03-responsive-navigation-on-v0623/independent-review.json",
+      "bytes": 4524,
+      "sha256": "69351256833b79352120012d7894e4f67bffba17457c18d0e82275562e314ccc"
+    }
+  ],
+  "checks": {
+    "node22": "430/430 across18wholefiles",
+    "node20": "421 passing cases across17wholefiles, plus9/9mission-brief after exact fixture hydration; no singleclean430run claimed",
+    "lint": "PASS",
+    "format": "PASS",
+    "diff": "PASS",
+    "reversePatch": "PASS",
+    "independentReview": "PASS"
+  },
+  "preservation": "Root dirty/index/common config unchanged; exact623source clean; threeversion files byte-identical; no staging/remote/network/browser.",
+  "remaining": [
+    "Fresh exact-combined native CSS/input/layout review",
+    "Ordinary full source/release gates; omitted Older original-art matrix remains inherited",
+    "No wholephase/public/physical/audio/offline acceptance"
+  ],
+  "capacityWriteHistory": "Completed peer/ready writes were twice deferred when external disk usage fell below512MiB reserve. All candidate bodies and previous records remained unchanged. Root recovered verified duplicate capacity before final records.",
+  "managedCapBytes": 33554432,
+  "reserveBytes": 536870912,
+  "freeBytesBefore": 1043574784
+}

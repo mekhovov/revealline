@@ -1,0 +1,52 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-28",
+  "infrastructureCommit": "888cd5c5699af7399f8716183482be90adec87c9",
+  "deploymentId": 6532056613,
+  "versions": [
+    "v0.61.21"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-28/initial-v06121/root-acceptance.json",
+      "sha256": "ff9ebf547547b364cde459f9a34a4142917dc6c4393200b8d53bd7e34139452f"
+    },
+    {
+      "path": "evidence/archive-28/initial-v06121/native-observation.json",
+      "sha256": "1f57e21c5ed0d4e2692e63b81a48ef4645d20277f58e03c714df8bc556bc6ff2"
+    },
+    {
+      "path": "evidence/archive-28/initial-v06121/independent-peer.json",
+      "sha256": "eae31532f1298393728d38cb07dbe1a5b882e32a0632c1e60c3332193fb588db"
+    },
+    {
+      "path": "evidence/archive-28/initial-v06121/row-review.json",
+      "sha256": "47c7a9456d43e04f78066ee565f421df8cb84c96a0adbdd8130697a951067819"
+    },
+    {
+      "path": "evidence/archive-28/initial-v06121/originals.zip",
+      "sha256": "10f07b58ae0c1808ca8cb1434d1be9385a9d088d9eb7f73eee0f08a1d7346bb1"
+    },
+    {
+      "path": "evidence/archive-28/initial-v06121/originals-index.json",
+      "sha256": "e8253a8143c5865d8f209d3c19957d4125ee5cb6edb871fb1020c217f69154ee"
+    }
+  ],
+  "scope": "Root-accepted original retention: complete public bytes and desktop keyboard Archive Play, Standard Full teamwork First Connection flight/cuts, Pause/explicit Resume, Change Setup, Solo title and main release explorer.",
+  "observationProvenance": "Root actual CUA browser keyboard/navigation observation; inline screenshots only. Original early Help focus and collapsed-selector attempt remain recorded.",
+  "limits": [
+    "No archive win or picture-dialog test; prior main621 accepted result remains separate.",
+    "No physical controller/touch, offline, audio or BFcache claim.",
+    "No screenshot files exported. No isolated-storage claim.",
+    "No saved Solo attempt opened/replaced.",
+    "Standard Full teamwork practice was tested; no archive win or earned-picture dialog was tested. Main v0.61.21 picture-feature acceptance remains separate.",
+    "All Pages project paths share an origin; archive routing does not establish storage isolation. Gameplay and explicit temporary-session discard occurred; no blanket zero-state-change claim.",
+    "No phone/rotation or whole-phase acceptance follows from this desktop retention observation."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}

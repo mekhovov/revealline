@@ -1,0 +1,22 @@
+{
+  "status": "ROOT_ACCEPTED_SOURCE_PACKAGE_ONLY",
+  "at": "2026-09-18T07:39:02.769737+00:00",
+  "source": {
+    "commit": "b3262eb02a998c50354758ba922324d023138875",
+    "tree": "0f4815e7c4116aeb08bee9696828f143a1ef5479",
+    "version": "v0.61.7"
+  },
+  "qualification": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-motion-focus-rotation/.cache/p03-qualified/motion-focus-v0617-b3262eb0/qualification/source-qualification.json",
+    "bytes": 101581,
+    "sha256": "b7cee153302a8702071cb80fe463ab39ad458cd284771dd8a1d601a9f4955c15"
+  },
+  "qualificationPinsRehashed": 229,
+  "attachmentsRehashed": 7,
+  "zipMembersCRC": 411,
+  "manifestMembersRehashed": 410,
+  "sourceAndIndexUnchanged": true,
+  "publicAcceptance": false,
+  "separateLaterNative": ".cache/p03-motion-native-v0617/root-native-rotation.json",
+  "remaining": "Exact immutable release/publication; known horizontal outline clip and full phase gates remain"
+}
