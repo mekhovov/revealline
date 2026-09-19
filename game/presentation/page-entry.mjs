@@ -51,10 +51,13 @@ export function mountAuxiliaryPresentationPage({
     onStatus(status) {
       if (closed || !presenter) return;
       if (!activity) activity = presenter.begin(status);
-      if (status.status === 'ready') activity.finish();
-      else if (status.status === 'error')
+      if (status.status === 'ready') {
+        activity.finish();
+        activity = null;
+      } else if (status.status === 'error') {
         activity.finish({ message: status.message, state: 'error' });
-      else activity.update(status);
+        activity = null;
+      } else activity.update(status);
     },
   });
   const close = () => {
@@ -69,7 +72,13 @@ export function mountAuxiliaryPresentationPage({
   const pagehide = (event) => {
     if (!event.persisted) close();
   };
-  const entry = Object.freeze({ ...lease, close });
+  const entry = Object.freeze({
+    ...lease,
+    get ready() {
+      return lease.ready;
+    },
+    close,
+  });
   entries.set(doc, entry);
   win?.addEventListener?.('pagehide', pagehide);
   return entry;

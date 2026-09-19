@@ -1,6 +1,7 @@
 import { canvasTextFonts } from '../text-face.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
+import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
@@ -14,7 +15,8 @@ export function createCoopPainter(canvas) {
   if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
   const actors = createCoopActorPresentation();
   let presentation = null,
-    look = null;
+    look = null,
+    wall = null;
   function setPresentation(snapshot) {
     let next = null;
     if (snapshot != null) {
@@ -50,9 +52,11 @@ export function createCoopPainter(canvas) {
     }
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
+    const nextWall = prepareCoopWall(snapshot);
     actors.setPresentation(snapshot ?? null);
     presentation = snapshot ?? null;
     look = next;
+    wall = nextWall;
   }
   function paint(
     run,
@@ -141,6 +145,7 @@ export function createCoopPainter(canvas) {
           if (cell === 2) {
             ctx.fillStyle = palette?.muted ?? '#4b6269';
             ctx.fillRect(x, y, 1, 1);
+            drawCoopWall(ctx, wall, x, y);
           } else if (cell === 1) {
             if (picture?.image) continue;
             // Revealed land reads as a continuous orchard, independent of captor.
@@ -398,7 +403,13 @@ export function createCoopPainter(canvas) {
         ctx.fillStyle = colors[player.id];
         ctx.lineJoin = 'round';
         ctx.lineWidth = 0.28;
-        if (player.trail.length) {
+        if (presentation) {
+          drawCoopActiveTrail(ctx, player, colors[player.id], {
+            time: run.time * motionScale,
+            reduced,
+            cssCell,
+          });
+        } else if (player.trail.length) {
           ctx.globalAlpha = 0.28;
           for (const cell of player.trail) ctx.fillRect(cell.x, cell.y, 1, 1);
           ctx.globalAlpha = 1;

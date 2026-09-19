@@ -199,7 +199,7 @@ test('snapshot validation is atomic and plain text keeps its existing system-fon
   );
 });
 
-test('all existing Team semantic cues and geometry remain above the picture in reduced paused paint', () => {
+test('existing Team non-trail cues and geometry remain above the picture in reduced paused paint', () => {
   const view = canvasRecorder(),
     painter = createCoopPainter(view.canvas),
     run = createCoop(RELAY_YARD),
@@ -209,7 +209,8 @@ test('all existing Team semantic cues and geometry remain above the picture in r
   run.supportEffects = [{ player: 0, x: 30, y: 20 }];
   run.players[0].status = 'downed';
   run.players[1].cutting = true;
-  run.players[1].trail = [{ x: 50, y: 20 }];
+  // Shared trails intentionally differ from legacy strokes. Real simultaneous
+  // cuts and their exact head geometry are covered by coop-terrain-trail.test.
   run.players[1].graceUntil = 4;
   const hunters = run.enemies.filter((enemy) => enemy.type === 'hunter');
   Object.assign(hunters[0], { phase: 'warning', target: 1, targetPoint: { x: 40, y: 20 } });

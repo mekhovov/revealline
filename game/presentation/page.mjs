@@ -37,7 +37,10 @@ export function mountPresentationPage({
     page.report = (status) => {
       if (page.closed) return;
       page.status = status;
-      for (const lease of page.leases) lease.report(status);
+      for (const lease of page.leases) {
+        if (page.status !== status || page.closed) break;
+        lease.report(status);
+      }
     };
     page.dispose = () => {
       if (page.closed) return;
@@ -51,56 +54,96 @@ export function mountPresentationPage({
       if (!event.persisted) page.dispose();
     };
     win?.addEventListener?.('pagehide', page.pagehide);
-    // Defer until the first lease is registered. Failed loads keep each existing
-    // look intact and resolve ready to null rather than leaking a rejection.
-    page.ready = Promise.resolve()
-      .then(() => {
-        if (page.closed) return null;
-        page.host = createHost({ document: doc });
-        return page.host.load({
-          onStatus: (status) => {
-            // Page readiness additionally includes applying the accepted snapshot.
-            if (status.status !== 'ready' && status.status !== 'error') page.report(status);
-          },
+    // A failed initial load may be retried explicitly. All live leases share the
+    // pending operation; accepted snapshots and their resource leases never reload.
+    page.load = () => {
+      if (page.closed) return Promise.resolve(null);
+      if (page.pending || page.snapshot) return page.ready;
+      const operation = {};
+      page.pending = operation;
+      page.error = null;
+      const current = () => !page.closed && page.pending === operation;
+      // Defer host creation until the lease and this promise are registered.
+      const ready = Promise.resolve()
+        .then(() => {
+          if (!current()) return null;
+          page.host = createHost({ document: doc });
+          return page.host.load({
+            onStatus: (status) => {
+              // Readiness additionally includes applying the accepted snapshot.
+              if (current() && status.status !== 'ready' && status.status !== 'error')
+                page.report(status);
+            },
+          });
+        })
+        .then((snapshot) => {
+          if (!current()) return null;
+          if (!snapshot) {
+            page.host?.close();
+            page.host = null;
+            return null;
+          }
+          page.host.apply(doc.documentElement);
+          if (!current()) return null;
+          page.snapshot = snapshot;
+          for (const [painter, binding] of page.painters) applyPainter(painter, binding);
+          page.report({
+            status: 'ready',
+            stage: 'ready',
+            progress: null,
+            message: 'Release artwork and fonts are ready.',
+          });
+          return page.closed ? null : snapshot;
+        })
+        .catch((error) => {
+          if (!current()) return null;
+          for (const [painter, binding] of page.painters)
+            if (page.snapshot && painter.presentation === page.snapshot)
+              painter.setPresentation(binding.before);
+          page.snapshot = null;
+          page.host?.close();
+          page.host = null;
+          if (error.name === 'AbortError') return null;
+          page.error = error;
+          // Status/error observers may deliberately retry. Retire this owner
+          // first, and do not send old errors after a replacement begins.
+          page.pending = null;
+          page.report({
+            status: 'error',
+            stage: 'error',
+            progress: null,
+            message: `Release artwork unavailable: ${error.message}`,
+          });
+          for (const lease of page.leases) {
+            if (page.ready !== ready || page.closed) break;
+            lease.notify(error);
+          }
+          return null;
+        })
+        .finally(() => {
+          if (page.pending === operation) page.pending = null;
         });
-      })
-      .then((snapshot) => {
-        if (page.closed || !snapshot) return null;
-        page.host.apply(doc.documentElement);
-        page.snapshot = snapshot;
-        for (const [painter, binding] of page.painters) applyPainter(painter, binding);
-        page.report({
-          status: 'ready',
-          stage: 'ready',
-          progress: null,
-          message: 'Release artwork and fonts are ready.',
-        });
-        return snapshot;
-      })
-      .catch((error) => {
-        if (page.closed || error.name === 'AbortError') return null;
-        for (const [painter, binding] of page.painters)
-          if (page.snapshot && painter.presentation === page.snapshot)
-            painter.setPresentation(binding.before);
-        page.snapshot = null;
-        page.host?.close();
-        page.host = null;
-        page.error = error;
-        page.report({
-          status: 'error',
-          stage: 'error',
-          progress: null,
-          message: `Release artwork unavailable: ${error.message}`,
-        });
-        for (const lease of page.leases) lease.notify(error);
-        return null;
+      page.ready = ready;
+      page.report({
+        status: 'preparing',
+        stage: 'reading',
+        progress: null,
+        message: 'Loading release artwork and fonts…',
       });
+      return ready;
+    };
+    page.load();
   }
   let closed = false;
   const bindings = new Set();
   const pictureReads = new Set();
   const lease = {
-    ready: page.ready,
+    get ready() {
+      return page.ready;
+    },
+    retry() {
+      return closed || page.closed ? Promise.resolve(null) : page.load();
+    },
     current: () => (closed || page.closed ? null : page.snapshot),
     report(status) {
       if (closed || page.closed) return;
