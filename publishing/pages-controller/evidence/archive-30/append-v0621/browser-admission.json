@@ -1,0 +1,71 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-30",
+  "infrastructureCommit": "950e30e6c891345ac5b68e2e796b54c0e64828f5",
+  "infrastructureTree": "fe6cba995c640068d2f9f21805bd815c46831163",
+  "workflowRunId": 35431113584,
+  "deploymentId": 6538726400,
+  "deploymentStatusId": 18557058965,
+  "versions": [
+    "v0.62.0",
+    "v0.62.1"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-30/append-v0621/root-acceptance.json",
+      "sha256": "a5f8106c1ad37b2d66e8b42b8e17a4138278123a67533c01aaaf9d119fd912aa"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/native-observation.json",
+      "sha256": "c143138a8fc30efa59fddb21c319659dfe0fc842265f1f415ba914565dbdb0d1"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/native-routing.json",
+      "sha256": "bbb772c26a3c9ca9c5195fc1839d8632b57450737efc7461e339fdb53e0f123a"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/final-authority-review.json",
+      "sha256": "de215513a6d1791a0bd3775c4c3abcda336bb9e07294264b26ae338c4f61b880"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/independent-review.json",
+      "sha256": "0256849a1767eb72ccb7a9b78c7966a60f7ec72f76e7ebd64579a5884628cbc2"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/hosted-completion.json",
+      "sha256": "61939e6d4a18f2e658794cc71df9dac840a7c7ea036d667898bd0ac1e6f01867"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/row-review.json",
+      "sha256": "bedf0bffc5a0709cfd1e61972fc68bd5e1402d8df036cfdff6a758a0c69c3b7b"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/source-lock.json",
+      "sha256": "cf7c1384c8c5eff796eadc3a59d8c5645f04ea50d279fae6f7bb05761b8b43ff"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/originals.zip",
+      "sha256": "1c8f95a48546311abd681dbf24defa662279f66e8adb3ebf151356f82d17584f"
+    },
+    {
+      "path": "evidence/archive-30/append-v0621/originals-index.json",
+      "sha256": "3047971c89ac132c180b61b1906cde54b9d4b5c319fd8db246bc65063e67aac6"
+    }
+  ],
+  "scope": "Root accepted exact archive bytes and scoped keyboard v0.62.1 Solo Continue, Pause/explicit Resume, continuous steering and a 52.2% cut; both version titles, archive index reentry and current-explorer return were observed. All 1408 public rows independently reconciled.",
+  "observationProvenance": "Original root CUA in-app browser keyboard, inline screenshot and accessibility observations; preparation worker did not repeat browser actions.",
+  "limits": [
+    "1280x720 browser viewport and keyboard only; no physical controller or touch qualification.",
+    "The native tab was session-only because another game tab owned saving. No persistence, migration or cross-version save isolation accepted.",
+    "Inline screenshot inspected only; no exported screenshot or hash invented.",
+    "No audio listening, offline or foreground lifecycle qualification.",
+    "No Team win/Next, parent phase or whole-game acceptance. Existing initial v0.62.0 evidence and its earlier failures remain preserved unchanged as history."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "teamWinNextAccepted": false,
+  "wholeGameComplete": false
+}
