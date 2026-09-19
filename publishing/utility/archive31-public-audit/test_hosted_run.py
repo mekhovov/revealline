@@ -18,9 +18,9 @@ class HostedContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):hosted_run.validate_binding(json.dumps(v))
     def test_only_four_public_authority_routes(self):
         p='repos/mekhovov/revealline-archive-31/'
-        for endpoint in ['git/ref/heads/main','actions/runs/35434694566','deployments/6539360227','deployments/6539360227/statuses']:
+        for endpoint in ['git/ref/heads/main','actions/runs/35441173594','deployments/6540533321','deployments/6540533321/statuses']:
             self.assertEqual(api.endpoint(p+endpoint),'https://api.github.com/'+p+endpoint)
-        for bad in ['https://example.com',p+'actions/runs/1',p+'actions/artifacts/10581207803/zip',p+'git/ref/heads/main?token=secret']:
+        for bad in ['https://example.com',p+'actions/runs/1',p+'actions/artifacts/10583822110/zip',p+'git/ref/heads/main?token=secret']:
             with self.assertRaises(ValueError):api.endpoint(bad)
     def test_authority_redirect_refused(self):
         with self.assertRaises(ValueError):api.NoRedirect().redirect_request(None,None,302,'',{},'https://example.com')

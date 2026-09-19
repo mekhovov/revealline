@@ -1,4 +1,4 @@
-"""Read-only, fail-closed intake of the actual Archive31 v0.63.0 initial deployment receipts."""
+"""Read-only, fail-closed intake of the actual Archive31 v0.64.0 appended deployment receipts."""
 import hashlib
 import io
 import json
@@ -15,11 +15,11 @@ INFRA = Path(os.environ['REVEALLINE_ARCHIVE_SOURCE'])
 REQUEST = ROOT / 'execution-request.reviewed.json'
 BASE = 'https://mekhovov.github.io/revealline-archive-31/'
 REPO = 'mekhovov/revealline-archive-31'
-TREE = 'd144cc112088882211bb1b5e04df298f4f4a78be'
-INVENTORY_SHA = '285232581d22b530a309eae608a75cb6826bf688bd8604b179b6258f64748da6'
-LOCK_SHA = '1204afdf0ca75a10333a2e4a8ddc776a622ef5108604076969a0198802c46bea'
-PRIOR_INVENTORY_SHA = 'd0bb98485ebfe2ff77aa3cb9617de07233f4aa7867f77737f513f3760eb42527'
-PRIOR_COMMIT = None
+TREE = '8c3ca7ed1accb04afcb8a92063bb412e05ecc833'
+INVENTORY_SHA = '0ffe35d0cfbeb53b200c3cd1d62749f23fb625bfb82cf3a1d84b649e9c3284db'
+LOCK_SHA = 'c36f25e5a7289a0c2930f0d18841df83585d3103f7195caba263768ea17ea7d3'
+PRIOR_INVENTORY_SHA = '285232581d22b530a309eae608a75cb6826bf688bd8604b179b6258f64748da6'
+PRIOR_COMMIT = 'f476c311e0050b47d7408db51d57239fba7bece6'
 ROLES = {'main', 'commit', 'run', 'deployment', 'statuses', 'artifacts', 'receiptZIP'}
 
 
@@ -63,8 +63,8 @@ def candidate_inventory():
     value, lock = json.loads(raw), json.loads(lock_raw)
     require(set(value) == {'base', 'files'} and value['base'] == BASE, 'Wrong inventory envelope')
     rows = value['files']; current = {r['path']: r for r in rows}
-    require(len(rows) == len(current) == 711 and sum(r['bytes'] for r in rows) == 313557913, 'Wrong finite inventory')
-    require([r['version'] for r in lock['releases']] == ['v0.63.0'], 'Wrong locked cohorts')
+    require(len(rows) == len(current) == 1420 and sum(r['bytes'] for r in rows) == 627122610, 'Wrong finite inventory')
+    require([r['version'] for r in lock['releases']] == ['v0.63.0', 'v0.64.0'], 'Wrong locked cohorts')
     preservation_metadata(rows)
     return raw, rows, lock
 
@@ -99,11 +99,13 @@ def preservation_metadata(rows):
     require(set(prior) == {'base', 'files'} and prior['base'] == BASE, 'Wrong prior inventory envelope')
     value = derive_preservation(rows, prior['files'])
     require(value == {
-        'priorInventoryRows': 0, 'preservedOldCanonicalRows': 0,
-        'preservedPriorReleaseRows': 0, 'preservedRootSupportRows': 0,
-        'preservedRootSupportPaths': [],
-        'changedPriorPaths': [], 'newRows': 711, 'newBytes': 313557913,
-    }, 'Initial cohort or zero-prior path identity differs')
+        'priorInventoryRows': 711, 'preservedOldCanonicalRows': 710,
+        'preservedPriorReleaseRows': 708, 'preservedRootSupportRows': 2,
+        'preservedRootSupportPaths': ['.nojekyll', 'releases/index.html'],
+        'changedPriorPaths': ['index.html'], 'newRows': 709, 'newBytes': 313564618,
+    }, 'Appended cohort or preserved prior path identity differs')
+    current = {r['path']: r for r in rows}; previous = {r['path']: r for r in prior['files']}
+    require(current['index.html']['bytes'] - previous['index.html']['bytes'] == 79, 'Unexpected archive index delta')
     return value
 
 
@@ -152,16 +154,16 @@ def validate_execution_binding():
     require(git('rev-parse', 'HEAD').decode().strip() == request['sourceCheckoutCommit'] and git('rev-parse', 'HEAD^{tree}').decode().strip() == TREE, 'Held source checkout changed')
     require(git('show', request['sourceCheckoutCommit'] + ':expected-inventory.json') == raw and local_bytes(INFRA / 'expected-inventory.json') == raw, 'Inventory not from held exact source')
     require(git('show', request['sourceCheckoutCommit'] + ':source-lock.json') == local_bytes(ROOT / 'inputs/source-lock.json'), 'Source-lock differs from reviewed source')
-    require(PRIOR_COMMIT is None and json.loads(local_bytes(ROOT / 'inputs/prior-expected-inventory.json')) == {'base': BASE, 'files': []}, 'Initial archive must have no accepted prior paths')
+    require(git('show', PRIOR_COMMIT + ':expected-inventory.json') == local_bytes(ROOT / 'inputs/prior-expected-inventory.json'), 'Accepted prior inventory Git bytes changed')
     validate_tag_fetch_cohorts(git('show', request['sourceCheckoutCommit'] + ':.github/workflows/deploy.yml').decode(), lock)
     with zipfile.ZipFile(io.BytesIO(zip_raw)) as archive:
-        names = ['receipt.json', 'expected-inventory.json', 'zip-receipt-v0.63.0.json']
+        names = ['receipt.json', 'expected-inventory.json', 'zip-receipt-v0.63.0.json', 'zip-receipt-v0.64.0.json']
         require(sorted(archive.namelist()) == sorted(names), 'Receipt ZIP has unexpected/duplicate members')
         require(sum(i.file_size for i in archive.infolist()) <= 1024**2 and all(i.file_size <= 512*1024 for i in archive.infolist()), 'Receipt members exceed bounds')
         require(archive.testzip() is None and archive.read('expected-inventory.json') == raw, 'Hosted receipt inventory differs')
         receipt = json.loads(archive.read('receipt.json'))
-        require(receipt['status'] == 'PASS' and receipt['files'] == 711 and receipt['bytes'] == 313557913 and receipt['archiveId'] == 'archive-31' and receipt['archiveCommit'] == commit and receipt['archiveTree'] == TREE and receipt['expectedInventorySha256'] == INVENTORY_SHA and receipt['noHistoricalBuilds'] is True, 'Hosted complete-inventory receipt differs')
-        require(receipt['toolingCommit'] == lock['toolingCommit'] and len(receipt['releases']) == 1, 'Hosted source cohort differs')
+        require(receipt['status'] == 'PASS' and receipt['files'] == 1420 and receipt['bytes'] == 627122610 and receipt['archiveId'] == 'archive-31' and receipt['archiveCommit'] == commit and receipt['archiveTree'] == TREE and receipt['expectedInventorySha256'] == INVENTORY_SHA and receipt['noHistoricalBuilds'] is True, 'Hosted complete-inventory receipt differs')
+        require(receipt['toolingCommit'] == lock['toolingCommit'] and len(receipt['releases']) == 2, 'Hosted source cohort differs')
         for expected in lock['releases']:
             versions = [r for r in receipt['releases'] if r['version'] == expected['version']]
             require(len(versions) == 1, 'Wrong receipt edition')

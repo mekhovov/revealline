@@ -48,13 +48,28 @@ class AuditTests(unittest.TestCase):
     def fetch(self, response, expected=None):
         return audit.fetch_once(expected or row(), 1, Opener(response), deadline=100, clock=lambda: 0)
 
-    def test_prepared_initial_inventory_is_exact_without_network(self):
+    def test_prepared_appended_inventory_is_exact_without_network(self):
         raw, rows, _ = binding.candidate_inventory()
         for item in rows:
             audit.validate_row(item)
-        self.assertEqual(len(rows), 711)
-        self.assertEqual(sum(item['bytes'] for item in rows), 313557913)
+        self.assertEqual(len(rows), 1420)
+        self.assertEqual(sum(item['bytes'] for item in rows), 627122610)
         self.assertEqual(audit.digest(raw), audit.INVENTORY_SHA)
+
+    def test_prior_release_and_support_preservation(self):
+        _, rows, _ = binding.candidate_inventory()
+        value = binding.preservation_metadata(rows)
+        self.assertEqual(value['priorInventoryRows'], 711)
+        self.assertEqual(value['preservedOldCanonicalRows'], 710)
+        self.assertEqual(value['preservedPriorReleaseRows'], 708)
+        self.assertEqual(value['preservedRootSupportPaths'], ['.nojekyll', 'releases/index.html'])
+        self.assertEqual(value['changedPriorPaths'], ['index.html'])
+        self.assertEqual((value['newRows'], value['newBytes']), (709, 313564618))
+
+    def test_changed_prior_inventory_pin_refuses(self):
+        with patch.object(binding, 'PRIOR_INVENTORY_SHA', '0' * 64):
+            with self.assertRaises(ValueError):
+                binding.candidate_inventory()
 
     def test_changed_source_lock_pin_refuses(self):
         with patch.object(binding, 'LOCK_SHA', '0' * 64):
@@ -62,11 +77,11 @@ class AuditTests(unittest.TestCase):
                 binding.candidate_inventory()
 
     def test_locked_immutable_tag_refspec_pass(self):
-        binding.validate_tag_fetch_cohorts('git fetch origin refs/tags/v0.63.0:refs/tags/v0.63.0 refs/tags/v0.61.24:refs/tags/v0.61.24', {'releases': [{'version': 'v0.63.0'}, {'version': 'v0.61.24'}]})
+        binding.validate_tag_fetch_cohorts('git fetch origin refs/tags/v0.63.0:refs/tags/v0.63.0 refs/tags/v0.64.0:refs/tags/v0.64.0', {'releases': [{'version': 'v0.63.0'}, {'version': 'v0.64.0'}]})
 
     def test_missing_locked_tag_refspec_refuses(self):
         with self.assertRaises(ValueError):
-            binding.validate_tag_fetch_cohorts('git fetch origin refs/tags/v0.63.0:refs/tags/v0.63.0', {'releases': [{'version': 'v0.63.0'}, {'version': 'v0.61.24'}]})
+            binding.validate_tag_fetch_cohorts('git fetch origin refs/tags/v0.63.0:refs/tags/v0.63.0', {'releases': [{'version': 'v0.63.0'}, {'version': 'v0.64.0'}]})
 
     def test_crosswired_tag_refspec_refuses(self):
         with self.assertRaises(ValueError):
