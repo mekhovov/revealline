@@ -79,6 +79,26 @@ and retain the failure; recover only the newly created clean worktree to its
 reviewed sparse paths. Do not reset, stash or remove files from other worktrees,
 and do not guess a prior common-config value that was not captured.
 
+Before preparing a new small archive repository, inspect the configured Git
+transport in the current repository and an accepted sibling archive. Reuse that
+working, already-authorized transport for the new repository; do not assume HTTPS
+or change unrelated remotes. A definite HTTPS OAuth rejection for a workflow file
+is different from an ambiguous push outcome. Retain the original rejection and
+any dependent read-only branch-precheck 404. If the existing repositories already
+use configured SSH, an explicitly recorded same-head push through that transport
+may complete the authorized operation without new OAuth scope, credentials or
+user action. Do not broaden authentication scopes to repair a transport mismatch.
+Afterward, read the remote branch again and match its exact reviewed commit/tree
+before creating the PR. If the first push result was ambiguous, discover the
+actual remote state before any repeat; a suggested PR URL is not that readback.
+
+Example prompt: “Create this bounded archive using the Git transport already
+configured for the project and accepted archives. Preserve a definite rejected
+push and its branch-precheck 404 if present, then verify the exact remote head and
+tree before opening the PR. Reuse existing authorization; do not add credentials
+or scope. Keep repository creation, source PR, deployment and public admission as
+separate actual records.”
+
 Before appending a release to an archive, compare its workflow's explicit tag fetch
 against **every** release in that archive's final `source-lock.json`, including
 unchanged cohorts. Run the read-only check from the reviewed controller checkout:

@@ -1,0 +1,31 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-32",
+  "infrastructureCommit": "50909e7cf38916fe7d3e2e7eb79339bb49ae80b9",
+  "deploymentId": 6541593688,
+  "versions": [
+    "v0.64.1"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-32/initial-v0641/root-acceptance.json",
+      "sha256": "fb7d17bf04690a9c5e95be259b6962c4762420f4a55ab7ec57f1d0010f885b68"
+    },
+    {
+      "path": "evidence/archive-32/initial-v0641/native-observation.json",
+      "sha256": "54790666d26f848de22df44f5a5ad5bcc699b9d7a06c6e3ef5e92a0667a1af6b"
+    },
+    {
+      "path": "evidence/archive-32/initial-v0641/final-authority-review.json",
+      "sha256": "a227ea4c89aeac92dc89296c8ffe68475386ae57196911ac43c170a746ecc30d"
+    }
+  ],
+  "scope": "Root accepted exact v0.64.1 archive preservation after all712 public bodies/313567687 bytes matched, unchanged release/deployment authorities and scoped native keyboard win/full-picture, Pause/details/Resume, Replay/focus and archive-to-main explorer routing. This is not HUD public acceptance or closure of broader phases.",
+  "limits": [
+    "Session-only tab because another game tab owns writer; saved progress/restore notcertified.",
+    "Download requested only; filesystemdelivery notverified.",
+    "Inline screenshots/DOM only, no exportedimages or hashes.",
+    "No physicalcontroller/touch, zoom, audio, offline, completecrossmode or wholephaseacceptance."
+  ]
+}
