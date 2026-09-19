@@ -31,7 +31,21 @@ test('actual classic entry gives file-URL guidance before module/storage access'
 });
 async function setup(t, options = {}) {
   const doc = new Document();
-  doc.createElement = (tag) => new SoloElement(doc, tag);
+  doc.createElement = (tag) => {
+    const element = new SoloElement(doc, tag);
+    if (options.nativeReloadFocus && tag === 'button') {
+      let disabled = element.disabled;
+      Object.defineProperty(element, 'disabled', {
+        get: () => disabled,
+        set(value) {
+          disabled = value;
+          if (value && element.id === 'still-media-reload' && doc.activeElement === element)
+            element.blur();
+        },
+      });
+    }
+    return element;
+  };
   const html = await readFile(
     new URL('../../authoring/still-media/index.html', import.meta.url),
     'utf8',
@@ -45,6 +59,7 @@ async function setup(t, options = {}) {
   const win = new Events(),
     frames = new Map();
   let frame = 0;
+  if (options.nativeReloadFocus) doc.defaultView = Object.assign(win, doc.defaultView);
   win.location = { protocol: 'http:' };
   win.requestAnimationFrame = (fn) => {
     frames.set(++frame, fn);
@@ -426,3 +441,168 @@ test('classic picture workshop exposes loading and Back before storage explanati
   assert.ok(title < status && status < back && back < explanation);
   assert.match(html.slice(status, back), /data-state="busy"[\s\S]*Loading the picture workshop/);
 });
+
+async function recoverableWorkshop(t, { reloadGate, failReload = false } = {}) {
+  let reads = 0;
+  const entered = deferred();
+  const h = await setup(t, {
+    nativeReloadFocus: true,
+    host: {
+      createStills(args) {
+        const store = createStillMediaStore(args);
+        return {
+          ...store,
+          async read(options) {
+            if (++reads === 1) throw new Error('Picture originals temporarily unavailable.');
+            entered.resolve();
+            if (reloadGate) await reloadGate.promise;
+            if (failReload) throw new Error('Picture originals remain unavailable.');
+            return store.read(options);
+          },
+        };
+      },
+    },
+  });
+  h.$('still-host-open').focus();
+  assert.equal(await h.host.open(), false);
+  assert.match(h.$('still-host-status').textContent, /Workshop open failed/);
+  assert.equal(h.$('still-host-status').dataset.state, 'error');
+  return { ...h, entered };
+}
+
+test('successful in-dialog reload reconciles the failed host opening without moving focus or writing media', async (t) => {
+  const h = await recoverableWorkshop(t);
+  const before = h.memory.allPuts.length;
+  h.$('still-media-reload').focus();
+  assert.equal(await h.$('still-media-reload').onclick(), true);
+  assert.equal(h.host.panel.snapshot().ready, true);
+  assert.equal(h.host.panel.snapshot().generation, 0);
+  assert.match(h.$('still-media-status').textContent, /Saved originals verified/);
+  assert.equal(h.$('still-host-status').dataset.state, 'ready');
+  assert.match(h.$('still-host-status').textContent, /Real local media opened for dev/);
+  assert.equal(h.memory.allPuts.length, before, 'Recovery reads do not write media.');
+  assert.equal(h.doc.activeElement === h.$('still-media-reload'), true);
+  h.host.panel.close();
+  assert.equal(h.doc.activeElement === h.$('still-host-open'), true);
+});
+
+test('failed in-dialog reload retains the host failure and the current panel error', async (t) => {
+  const h = await recoverableWorkshop(t, { failReload: true });
+  const failed = h.$('still-host-status').textContent;
+  assert.equal(await h.$('still-media-reload').onclick(), false);
+  assert.equal(h.$('still-host-status').textContent, failed);
+  assert.equal(h.$('still-host-status').dataset.state, 'error');
+  assert.match(h.$('still-media-status').textContent, /remain unavailable/);
+});
+
+for (const action of ['hide', 'close'])
+  test(`cancelled reload after ${action} cannot reconcile a late read as success`, async (t) => {
+    const gate = deferred();
+    const h = await recoverableWorkshop(t, { reloadGate: gate });
+    const recovery = h.$('still-media-reload').onclick();
+    await h.entered.promise;
+    if (action === 'hide') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+    } else h.$('still-host-close').onclick();
+    const retained = h.$('still-host-status').textContent;
+    gate.resolve();
+    assert.equal(await recovery, false);
+    assert.equal(h.$('still-host-status').textContent, retained);
+    assert.doesNotMatch(retained, /Real local media opened/);
+  });
+
+test('successful reload cannot overwrite a newer host status owner', async (t) => {
+  const gate = deferred();
+  const h = await recoverableWorkshop(t, { reloadGate: gate });
+  const recovery = h.$('still-media-reload').onclick();
+  await h.entered.promise;
+  // Exercise the existing host-message callback while the panel read is held.
+  // This tests status ownership; it does not claim native activation of an inert link.
+  h.$('still-host-download-audio').onclick();
+  const newer = h.$('still-host-status').textContent;
+  assert.match(newer, /Download requested/);
+  gate.resolve();
+  assert.equal(await recovery, true);
+  assert.equal(h.$('still-host-status').textContent, newer);
+});
+
+for (const newerFails of [false, true])
+  test(`retired reload cannot change a newer ${newerFails ? 'failed' : 'successful'} opening`, async (t) => {
+    const gate = deferred(),
+      entered = deferred();
+    let reads = 0;
+    const h = await setup(t, {
+      host: {
+        createStills(args) {
+          const store = createStillMediaStore(args);
+          return {
+            ...store,
+            async read(options) {
+              const read = ++reads;
+              if (read === 1 || (read === 3 && newerFails))
+                throw new Error(`Picture read ${read} unavailable.`);
+              if (read === 2) {
+                entered.resolve();
+                await gate.promise;
+              }
+              return store.read(options);
+            },
+          };
+        },
+      },
+    });
+    h.$('still-host-open').focus();
+    assert.equal(await h.host.open(), false);
+    const retired = h.$('still-media-reload').onclick();
+    await entered.promise;
+    h.host.panel.close();
+    assert.equal(await h.host.open(), !newerFails);
+    const status = h.$('still-host-status').textContent;
+    const state = h.$('still-host-status').dataset.state;
+    const focus = h.doc.activeElement;
+    gate.resolve();
+    assert.equal(await retired, false);
+    assert.equal(h.$('still-host-status').textContent, status);
+    assert.equal(h.$('still-host-status').dataset.state, state);
+    assert.equal(h.doc.activeElement === focus, true);
+    assert.equal(state, newerFails ? 'error' : 'ready');
+    if (newerFails) {
+      assert.equal(await h.$('still-media-reload').onclick(), true);
+      assert.equal(h.$('still-host-status').dataset.state, 'ready');
+      assert.match(h.$('still-host-status').textContent, /Real local media opened/);
+    }
+  });
+
+for (const initialFailure of [false, true])
+  test(`workshop initial ${initialFailure ? 'failed' : 'successful'} load and reopen restore Reload after native disabled blur`, async (t) => {
+    let reads = 0;
+    const h = await setup(t, {
+      nativeReloadFocus: true,
+      host: {
+        createStills(args) {
+          const store = createStillMediaStore(args);
+          return {
+            ...store,
+            read(options) {
+              assert.equal(h.doc.activeElement, h.doc.body, 'The focused Reload really blurred');
+              if (++reads === 1 && initialFailure) throw new Error('Initial read unavailable');
+              return store.read(options);
+            },
+          };
+        },
+      },
+    });
+    const opener = h.$('still-host-open');
+    opener.focus();
+    assert.equal(await opener.onclick(), !initialFailure);
+    assert.equal(h.doc.activeElement, h.$('still-media-reload'));
+    assert.equal(h.$('still-media-reload').disabled, false);
+    h.host.panel.close();
+    assert.equal(h.doc.activeElement, opener);
+    assert.equal(await opener.onclick(), true);
+    assert.equal(h.doc.activeElement, h.$('still-media-reload'));
+    h.host.panel.close();
+    assert.equal(h.doc.activeElement, opener);
+    assert.equal(h.memory.allPuts.length, 0, 'Verification does not write media');
+  });
