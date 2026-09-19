@@ -1,0 +1,40 @@
+{
+  "upstream": [
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/audit-main.mjs",
+      "bytes": 22169,
+      "sha256": "4f319ad02210dd1b49d3b5cdb018c4f1bd53cdb260e4104fa31b222be55a62fb"
+    },
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/catalog-cohorts.mjs",
+      "bytes": 1183,
+      "sha256": "f9982cb6c453f2a916ef0f177357312bfe27adb9ecf9a07ce81772f370abec39"
+    },
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/self-check.mjs",
+      "bytes": 3958,
+      "sha256": "8179ef896c850e6178aa62650e37f41d2cac9fc092331f5fcbe9047f6cdbe181"
+    },
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/test-cohort-output.mjs",
+      "bytes": 1959,
+      "sha256": "221144b3e6ca2b01a9790151a51f16301b428be7f4bba3d18853b0ce02c8056f"
+    },
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/test-all-history-policy.mjs",
+      "bytes": 2659,
+      "sha256": "904200b5f6f3c23d6f5b1dbac74e0bb5f35f3a8ed60bd61f8487559708f86e55"
+    },
+    {
+      "path": "worktrees/v0621-main-http-audit/publishing/utility/main-public-v0621/payload/tools/inputs/3abc9b8d8a61280fd3070ffb3fa926328d14aefb/catalog.json",
+      "bytes": 43269,
+      "sha256": "d50ad23442c68a5ea878a526e12f6dd430141e10b3134311ad8c14861e83fedc"
+    }
+  ],
+  "scope": "Identity/count-only v0.63.0 adaptation; retained catalog is exact accepted v0.62.1 catalog original. Transport unchanged."
+}

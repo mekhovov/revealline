@@ -1,4 +1,4 @@
-name: Audit exact v0.62.1 public main bytes
+name: Audit exact v0.63.0 public main bytes
 on:
   workflow_dispatch:
     inputs:
@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: readonly-v0621-main-public-audit
+  group: readonly-v0630-main-public-audit
   cancel-in-progress: false
 jobs:
   audit:
@@ -23,7 +23,7 @@ jobs:
           path: automation
           persist-credentials: false
           sparse-checkout: |
-            publishing/utility/main-public-v0621
+            publishing/utility/main-public-v0630
             .github/workflows/qualify-release-source.yml
           sparse-checkout-cone-mode: false
       - name: Select Node 20
@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: '20'
       - name: Validate helper contracts without public requests
-        working-directory: automation/publishing/utility/main-public-v0621/payload
+        working-directory: automation/publishing/utility/main-public-v0630/payload
         run: |
           node tools/self-check.mjs
           node tools/test-cohort-output.mjs
@@ -43,14 +43,14 @@ jobs:
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONOPTIMIZE: '0'
         run: >-
-          python3 -B automation/publishing/utility/main-public-v0621/hosted_run.py
-          --out "${{ runner.temp }}/v0621-main-public-audit"
+          python3 -B automation/publishing/utility/main-public-v0630/hosted_run.py
+          --out "${{ runner.temp }}/v0630-main-public-audit"
       - name: Retain bounded evidence including incomplete attempts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: v0621-main-public-audit-evidence
-          path: ${{ runner.temp }}/v0621-main-public-audit/
+          name: v0630-main-public-audit-evidence
+          path: ${{ runner.temp }}/v0630-main-public-audit/
           include-hidden-files: true
           compression-level: 6
           retention-days: 14
