@@ -3,6 +3,15 @@ import { SOURCE_EXTERNAL_CHAPTERS, SOURCE_EXTERNAL_EDITIONS } from '../external-
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { acquirePresentationImage } from '../ui/presentation-image.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
+import { createCouchStaticPictures } from './couch-static-pictures.mjs';
+import { createMediaIdentityCatalog } from '../media-library.mjs';
+import { createPresentationPins } from '../presentation-pins.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import {
+  matchesReleasePictureBaseline,
+  releasePictureForIdentity,
+} from '../presentation/release-pictures.mjs';
+import { acquireCouchReleasePicture } from './couch-release-picture.mjs';
 
 const cancelled = () =>
   new DOMException('Installed couch chapter loading cancelled.', 'AbortError');
@@ -21,6 +30,7 @@ const releaseImage = (image) => {
 export function createCouchInstalledChapters({
   channel,
   registeredEntries,
+  presentationPage,
   indexedDB = globalThis.indexedDB,
   storage = globalThis.localStorage,
   lockManager = globalThis.navigator?.locks,
@@ -37,8 +47,11 @@ export function createCouchInstalledChapters({
     choices = new WeakMap(),
     binding = null,
     selection = null,
-    staged = null;
-  const retirements = new Set();
+    staged = null,
+    pictureRequest = null,
+    externalRequest = null;
+  const retirements = new Set(),
+    pictureReaders = new Set();
   const check = (signal) => {
     if (disposed || signal?.aborted) throw cancelled();
   };
@@ -119,6 +132,218 @@ export function createCouchInstalledChapters({
     getManagedStore: () => (manager ??= createManagedMediaStore({ indexedDB, storyMedia: true })),
     decodeImage: verifyDecode,
   });
+  // Embedded installs have the same fresh-picture policy as shipped maps. Each
+  // race owns its captured choice so a failed Next cannot invalidate Results,
+  // and Retry cannot silently replace a choice captured before cancellation.
+  function retirePictureReader(request) {
+    if (!request || request === pictureRequest || request.leases) return;
+    pictureReaders.delete(request);
+    request.owner.dispose();
+  }
+  function forgetPictureRequest() {
+    const previous = pictureRequest;
+    pictureRequest = null;
+    retirePictureReader(previous);
+  }
+  function pictureRequestFor(row, state, themeId, raceId) {
+    if (pictureRequest?.raceId === raceId) {
+      requireValue(
+        pictureRequest.source === row && pictureRequest.themeId === themeId,
+        'Changed setup requires a new race identity.',
+      );
+      return pictureRequest;
+    }
+    const previous = pictureRequest,
+      backdrop = { image: null, fit: state.background?.fit || 'cover' };
+    pictureRequest = {
+      source: row,
+      themeId,
+      raceId,
+      leases: 0,
+      backdrop,
+      row: Object.freeze({
+        level: row.level,
+        defaultThemeId: row.defaultThemeId,
+        pictureEntry: state.entry,
+        authoredBackground: state.background || null,
+        backdrop,
+      }),
+      owner: createCouchStaticPictures({
+        entries: [state.entry],
+        presentationPage,
+        indexedDB,
+        ImageClass,
+        URLImpl,
+      }),
+    };
+    pictureReaders.add(pictureRequest);
+    retirePictureReader(previous);
+    return pictureRequest;
+  }
+  async function embeddedPicture(row, state, themeId, raceId, signal, report) {
+    const request = pictureRequestFor(row, state, themeId, raceId);
+    request.leases++;
+    let original = null,
+      lease = null,
+      released = false;
+    const release = () => {
+      if (released) return;
+      released = true;
+      try {
+        lease?.cancel();
+        lease?.picture?.release();
+      } finally {
+        if (request.backdrop.image === original) request.backdrop.image = null;
+        releaseImage(original);
+        original = null;
+        request.leases--;
+        retirePictureReader(request);
+      }
+    };
+    try {
+      if (state.background) {
+        const header = inspectImageDataUrl(state.background.dataUrl);
+        requireValue(header.valid, 'The installed embedded original is invalid.');
+        report('decoding', 'Checking the installed original before choosing its presentation…');
+        original = await decode(state.background.dataUrl, signal);
+        requireValue(
+          original.naturalWidth === header.width && original.naturalHeight === header.height,
+          'The installed original decoded to different dimensions.',
+        );
+        request.backdrop.image = original;
+      }
+      lease = await request.owner.stage(request.row, {
+        themeId,
+        raceId,
+        signal,
+        onStatus: ({ stage, message, status }) => report(stage, message, status),
+      });
+      return {
+        picture: Object.freeze({ ...lease.picture, release }),
+        presentation: { request, lease, committed: false },
+      };
+    } catch (error) {
+      release();
+      throw error;
+    }
+  }
+  // Descriptor originals establish chapter readiness. They do not override the
+  // current media assignment. Capture that choice once per race, independently
+  // of each preparation's fresh metadata/readiness proof.
+  async function externalPicture(row, state, themeId, raceId, proof, signal, report) {
+    let request = externalRequest;
+    if (request?.raceId === raceId) {
+      requireValue(
+        request.row === row && request.state === state && request.themeId === themeId,
+        'Changed setup requires a new race identity.',
+      );
+    } else {
+      const identityCatalog = createMediaIdentityCatalog(state.snapshot.executionCatalog);
+      const pin = createPresentationPins({
+        library: proof.metadata.document.library,
+        identityCatalog,
+        executionKey: state.entry.executionKey,
+        levelId: row.level.id,
+        levelRevision: row.level.revision,
+        themeIds: [themeId],
+      }).choices[0];
+      request = externalRequest = {
+        row,
+        state,
+        themeId,
+        raceId,
+        pin,
+        original: proof.pin,
+        kind: pin.kind === 'still' ? 'still' : null,
+        snapshot: null,
+        release: null,
+        notice: '',
+      };
+    }
+    requireValue(
+      canonicalJSON(request.original) === canonicalJSON(proof.pin),
+      'The installed original changed; choose setup again.',
+    );
+    if (!request.kind) {
+      let page;
+      try {
+        page = await waitForPresentation(signal);
+      } catch (error) {
+        check(signal);
+        if (error.name === 'AbortError') throw error;
+        page = null;
+      }
+      check(signal);
+      requireValue(
+        (page ?? null) === (presentationPage?.current?.() ?? null),
+        'The release artwork changed; choose setup again.',
+      );
+      request.snapshot = page ?? null;
+      if (page && (await matchesReleasePictureBaseline(request.pin.identity, null, { signal }))) {
+        check(signal);
+        request.release = releasePictureForIdentity(page, request.pin.identity);
+      }
+      request.kind = request.release ? 'release' : 'authored';
+      if (!page) request.notice = 'Release artwork is unavailable; the authored picture is kept.';
+    }
+    check(signal);
+    let picture;
+    if (request.kind === 'release') {
+      picture = await acquireCouchReleasePicture({
+        choice: request.release,
+        snapshot: request.snapshot,
+        presentationPage,
+        signal,
+        check,
+        decode,
+        report,
+        URLImpl,
+      });
+    } else {
+      report('decoding', 'Opening the selected picture for both boards…');
+      picture = await acquirePresentationImage(
+        {
+          pin: request.kind === 'still' ? request.pin : request.original,
+          metadata: proof.metadata,
+          store: proof.store,
+        },
+        { signal, ImageClass, URLImpl },
+      );
+    }
+    requireValue(picture?.image, 'The selected installed picture is unavailable.');
+    return {
+      request,
+      picture: Object.freeze({
+        ...picture,
+        choice: Object.freeze({
+          kind: request.kind,
+          identity: request.pin.identity,
+          ...(request.kind === 'still' ? { pin: request.pin } : {}),
+          ...(request.kind === 'authored' ? { pin: request.original } : {}),
+          ...(request.release
+            ? {
+                slotId: request.release.slotId,
+                sha256: request.release.asset.file.sha256,
+              }
+            : {}),
+        }),
+        notice: request.notice,
+      }),
+    };
+  }
+  function waitForPresentation(signal) {
+    check(signal);
+    return new Promise((resolve, reject) => {
+      const abort = () => reject(cancelled());
+      signal.addEventListener('abort', abort, { once: true });
+      Promise.resolve(presentationPage?.ready ?? null)
+        .then(resolve, reject)
+        .finally(() => {
+          signal.removeEventListener('abort', abort);
+        });
+      if (signal.aborted) abort();
+    });
+  }
   function clearBinding() {
     const prior = binding;
     binding = null;
@@ -200,6 +425,8 @@ export function createCouchInstalledChapters({
   async function refresh({ signal, onStatus } = {}) {
     staged?.cancel();
     clearBinding();
+    forgetPictureRequest();
+    externalRequest = null;
     snapshot = null;
     choices = new WeakMap();
     return operation(
@@ -258,7 +485,7 @@ export function createCouchInstalledChapters({
     );
     return state;
   }
-  async function verifyCurrent(state, proof, signal) {
+  async function verifyCurrent(state, proof, signal, presentation = null, external = null) {
     await host.withCurrent(
       state.snapshot,
       async () => {
@@ -269,6 +496,17 @@ export function createCouchInstalledChapters({
             'Installed originals changed; reload this chapter before starting.',
           );
         }
+        if (presentation) {
+          const { request, lease, committed } = presentation;
+          if (committed)
+            await request.owner.confirm(request.row, { raceId: request.raceId, signal });
+          else await lease.confirm();
+        }
+        if (external && external.kind !== 'still')
+          requireValue(
+            external.snapshot === (presentationPage?.current?.() ?? null),
+            'The release artwork changed; choose setup again.',
+          );
         check(signal);
       },
       { signal },
@@ -283,13 +521,30 @@ export function createCouchInstalledChapters({
     requireValue(Number.isSafeInteger(raceId) && raceId >= 0, 'Use a new in-memory race identity.');
     if (!stage) {
       staged?.cancel();
+      // A cancelled successor may own the latest request while Results still
+      // owns this race. Restore its choice before releasing the accepted lease.
+      if (
+        selection?.row === row &&
+        selection.state === state &&
+        selection.themeId === themeId &&
+        selection.raceId === raceId
+      ) {
+        if (selection.external) externalRequest = selection.external;
+        if (selection.presentation) {
+          const displaced = pictureRequest;
+          pictureRequest = selection.presentation.request;
+          retirePictureReader(displaced);
+        }
+      }
       clearBinding();
     }
     return operation(
       signal,
       async (s, current, report) => {
         let candidate = null,
-          proof = null;
+          proof = null,
+          presentation = null,
+          external = null;
         try {
           if (state.external) {
             proof = await host.authoredPicture(
@@ -303,31 +558,20 @@ export function createCouchInstalledChapters({
               { signal: s },
             );
             current();
-            report('decoding', 'Opening the original picture for both boards…');
-            candidate = await acquirePresentationImage(proof, { signal: s, ImageClass, URLImpl });
-            requireValue(candidate?.image, 'The installed authored original is unavailable.');
-          } else if (state.background) {
-            const header = inspectImageDataUrl(state.background.dataUrl);
-            requireValue(header.valid, 'The installed embedded original is invalid.');
-            report('decoding', 'Opening the original picture for both boards…');
-            const image = await decode(state.background.dataUrl, s);
-            candidate = Object.freeze({
-              image,
-              fit: state.background.fit || 'cover',
-              sampling: 'nearest',
-              release: () => releaseImage(image),
-            });
-            requireValue(
-              image.naturalWidth === header.width && image.naturalHeight === header.height,
-              'The installed original decoded to different dimensions.',
-            );
+            const prepared = await externalPicture(row, state, themeId, raceId, proof, s, report);
+            candidate = prepared.picture;
+            external = prepared.request;
+          } else {
+            const prepared = await embeddedPicture(row, state, themeId, raceId, s, report);
+            candidate = prepared.picture;
+            presentation = prepared.presentation;
           }
           current();
           report('verifying', 'Confirming the selected chapter and picture…');
-          await verifyCurrent(state, proof, s);
+          await verifyCurrent(state, proof, s, presentation, external);
           current();
           requireValue(state === stateFor(row, themeId), 'The selected installed owner changed.');
-          const selected = { row, themeId, raceId, state, proof };
+          const selected = { row, themeId, raceId, state, proof, presentation, external };
           if (stage) {
             stage.current();
             stage.picture = candidate;
@@ -335,9 +579,12 @@ export function createCouchInstalledChapters({
             candidate = null;
             return stage.picture;
           }
+          const retire = presentation?.lease.commit();
+          if (presentation) presentation.committed = true;
           binding = candidate;
           candidate = null;
           selection = selected;
+          retire?.();
           return binding;
         } finally {
           candidate?.release();
@@ -389,7 +636,13 @@ export function createCouchInstalledChapters({
             controller.signal,
             async (s, current) => {
               const selected = item.selection;
-              await verifyCurrent(selected.state, selected.proof, s);
+              await verifyCurrent(
+                selected.state,
+                selected.proof,
+                s,
+                selected.presentation,
+                selected.external,
+              );
               current();
               requireValue(
                 selected.state === stateFor(row, selected.themeId),
@@ -406,7 +659,10 @@ export function createCouchInstalledChapters({
         commit() {
           item.current();
           requireValue(item.confirmed && !pending, 'Confirm the next chapter before adopting it.');
-          const previous = binding;
+          const previous = binding,
+            presentation = item.selection.presentation,
+            retirePicture = presentation?.lease.commit();
+          if (presentation) presentation.committed = true;
           binding = item.picture;
           selection = item.selection;
           live = false;
@@ -420,6 +676,7 @@ export function createCouchInstalledChapters({
             try {
               previous?.release();
             } catch {}
+            retirePicture?.();
           };
           retirements.add(retire);
           return retire;
@@ -439,7 +696,13 @@ export function createCouchInstalledChapters({
     return operation(
       signal,
       async (s, current) => {
-        await verifyCurrent(selected.state, selected.proof, s);
+        await verifyCurrent(
+          selected.state,
+          selected.proof,
+          s,
+          selected.presentation,
+          selected.external,
+        );
         current();
         requireValue(selection === selected, 'The prepared race changed.');
         return binding;
@@ -453,6 +716,10 @@ export function createCouchInstalledChapters({
     disposed = true;
     clear();
     for (const retire of retirements) retire();
+    forgetPictureRequest();
+    externalRequest = null;
+    for (const request of pictureReaders) request.owner.dispose();
+    pictureReaders.clear();
     choices = new WeakMap();
     snapshot = null;
     host.close();
