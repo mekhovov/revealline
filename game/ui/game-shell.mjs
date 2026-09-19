@@ -2,6 +2,7 @@ import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
 import { fieldKitCopy } from './field-kit-copy.mjs';
 import { attachFocusClearance } from './focus-clearance.mjs';
+import { prepareChapterFocus } from './chapter-focus-clearance.mjs';
 import { mountModeChoices } from './mode-choice.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
@@ -46,6 +47,8 @@ export function attachGameShell({
     container: missions,
     heading: missions.querySelector('.shell-dialog-heading'),
     footer: $('shell-deploy-bar'),
+    prepareTarget: (focused) =>
+      prepareChapterFocus(focused, { container: missions, document: doc }),
   });
   // Keep the renderer's one live status in the same top layer as its selectors.
   // Moving the node changes neither its presenter nor the current load owner.

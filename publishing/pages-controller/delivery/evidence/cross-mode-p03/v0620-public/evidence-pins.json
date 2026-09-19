@@ -1,0 +1,55 @@
+{
+  "scope": "Scoped public v0.62.0 acceptance; phase remains incomplete",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2335,
+      "sha256": "a6f207fd95e64d9971fca4fb30c274e1b0e6e97a77d01b4d95eac87ce05e146c"
+    },
+    {
+      "path": "authority-refresh.json",
+      "bytes": 7512,
+      "sha256": "8dce033ca33a253649b732e22a9d973048743c6c416ebf16d53f97dbe6ce994d"
+    },
+    {
+      "path": "http-report.json",
+      "bytes": 6156,
+      "sha256": "b9932979a447034e0f06542e56f79f5c4073242b1d37e7d04abd6f4845a089d1"
+    },
+    {
+      "path": "native-default-route.json",
+      "bytes": 499,
+      "sha256": "7ff8ff82d13a1638689a8e28b97a485ba1071725c76fd40b3f170108c10909c7"
+    },
+    {
+      "path": "native-observation.json",
+      "bytes": 2503,
+      "sha256": "bf1124d1249ff5c8fa835c88ba833536cb539a518f1711786ea6099a8460642a"
+    },
+    {
+      "path": "native-solo-observation.json",
+      "bytes": 597,
+      "sha256": "9ae2134b41d125d67b401606a0ec3b86566de5fccabc4ff177245f1bea96ac29"
+    },
+    {
+      "path": "originals-index.json",
+      "bytes": 43518,
+      "sha256": "63b6ca7c5335873703f76f1660940952fa5ffe68557f7649891f252e109d5073"
+    },
+    {
+      "path": "originals.zip",
+      "bytes": 2100114,
+      "sha256": "45dd67f90100802019e35e56601d7c64168f654c39cb30183abd4799292ee825"
+    },
+    {
+      "path": "root-acceptance.json",
+      "bytes": 2595,
+      "sha256": "5dcbd138de81ade75a8317ce3b12e97a076a64e3928408524e73c68c0617d053"
+    },
+    {
+      "path": "row-review.json",
+      "bytes": 3485,
+      "sha256": "2d309b5928d67a74e8a5376bf74bb5feb5d2b755cc5964cdc744323b1a3fb403"
+    }
+  ]
+}

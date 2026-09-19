@@ -4,6 +4,7 @@ export function attachFocusClearance({
   heading,
   footer,
   includeControlLabel = false,
+  prepareTarget = null,
   document: doc = globalThis.document,
 }) {
   const view = doc.defaultView ?? globalThis;
@@ -12,6 +13,24 @@ export function attachFocusClearance({
   const visible = (node) => node && !node.hidden && node.getClientRects().length > 0;
   const update = () => {
     if (disposed || !container.open || doc.hidden || doc.hasFocus?.() === false) return;
+    let preparedTarget = null;
+    if (typeof prepareTarget === 'function') {
+      const candidate = doc.activeElement;
+      if (
+        candidate &&
+        container.contains(candidate) &&
+        !heading?.contains(candidate) &&
+        !footer?.contains(candidate) &&
+        !candidate.disabled &&
+        visible(candidate)
+      ) {
+        preparedTarget = candidate;
+        // A host may reveal a known inner scrollport before these outer bounds.
+        // Other consumers retain the original padding and label-fit sequence.
+        prepareTarget(candidate);
+        if (disposed || !container.open || doc.hidden || doc.hasFocus?.() === false) return;
+      }
+    }
     const box = container.getBoundingClientRect(),
       // Overflow clips inside the border, not at the bounding rectangle.
       // Minimal non-native surfaces may not expose client geometry.
@@ -34,6 +53,7 @@ export function attachFocusClearance({
     const focused = doc.activeElement;
     if (
       bottom <= top ||
+      (preparedTarget !== null && focused !== preparedTarget) ||
       !focused ||
       !container.contains(focused) ||
       heading?.contains(focused) ||
