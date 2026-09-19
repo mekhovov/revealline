@@ -1,0 +1,48 @@
+{
+  "status": "ACCEPTED_ARCHIVE_APPEND_BYTES_AND_SCOPED_NATIVE",
+  "at": "2026-09-19T08:35:33.992367+00:00",
+  "archiveId": "archive-30",
+  "archiveCommit": "950e30e6c891345ac5b68e2e796b54c0e64828f5",
+  "archiveTree": "fe6cba995c640068d2f9f21805bd815c46831163",
+  "runId": 35431113584,
+  "deploymentId": 6538726400,
+  "deploymentStatusId": 18557058965,
+  "files": 1408,
+  "verifiedBytes": 627086405,
+  "attempts": 1408,
+  "failedAttempts": 0,
+  "retries": 0,
+  "preservedReleaseRows": 702,
+  "preservedSupportRows": 2,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "newRows": 703,
+  "releases": [
+    "v0.62.0",
+    "v0.62.1"
+  ],
+  "evidence": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive30-v0621-hosted-intake-r1/independent-review.json",
+      "bytes": 1141,
+      "sha256": "0256849a1767eb72ccb7a9b78c7966a60f7ec72f76e7ebd64579a5884628cbc2"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive30-append-v0621-root-r1/native-observation-r1.json",
+      "bytes": 1330,
+      "sha256": "c143138a8fc30efa59fddb21c319659dfe0fc842265f1f415ba914565dbdb0d1"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive30-append-v0621-root-r1/native-routing-r1.json",
+      "bytes": 721,
+      "sha256": "bbb772c26a3c9ca9c5195fc1839d8632b57450737efc7461e339fdb53e0f123a"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/archive30-append-v0621-root-r1/final-authorities-r1/result.json",
+      "bytes": 336,
+      "sha256": "de215513a6d1791a0bd3775c4c3abcda336bb9e07294264b26ae338c4f61b880"
+    }
+  ],
+  "scope": "Archive retention admission accepted: exactpublicbytes and scopedkeyboardSolo52.2%capture/Pause/Resume, bothversiontitles andexplorerreturn. Session-onlytab explicitly didnotownsave. No physicalcontroller/touch,audio,offline,TeamwinNext or parentphase/fullgame acceptance. Mainpublisheradoption remainsseparate."
+}
