@@ -107,6 +107,16 @@ commit/run identities recorded before promotion.
 
 ## Outstanding acceptance
 
+### Publication integration
+
+The source branch now incorporates main publication commit `e6e269ea` (PR168,
+frozen v0.65.0 metadata and Archive33 acceptance). The only content conflict was
+the execution-register introduction: both the Journey authority banner and the
+complete upstream publication status/history are retained. Upstream publishing
+files remain exact; Journey runtime, tests and the allocated 0.67.0 version are
+unchanged. Runs `35474420498` and `35474422199` qualify the preceding `bf1f8cd2`
+source only, not this combined tree. Fresh exact-source families are required.
+
 Latest local rerun: 33/33 tests passed across Journey catalog/profile, capture
 inspection, the five-test Journey host precursor and the full existing Solo
 result-continuation file (270.42 s). A separate six-file engine/classic/Team/race/

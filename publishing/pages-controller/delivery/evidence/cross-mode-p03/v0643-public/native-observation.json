@@ -1,0 +1,32 @@
+{
+  "status": "PASS_SCOPED_PUBLIC_WORKSHOP_AND_SOLO_KEYBOARD",
+  "at": "2026-09-19T21:17:06.061111+00:00",
+  "gameSource": "7a9985ec00168b99a86c1d5db0457343ca18ffae",
+  "publisherCommit": "666c68a6f842da7cdac22c542e56f5e2910380e7",
+  "pagesRunId": 35469057384,
+  "deploymentId": 6545673666,
+  "base": "https://mekhovov.github.io/revealline/releases/v0.64.3/site/",
+  "environment": "Codex in-app browser; actual1280x720; native keyboard, AX and read-only DOM",
+  "observations": [
+    "Opened Still picture workshop via Tab/Return. Initial load verified3retained images/3immutable revisions/generation3; Reload visibly focused.",
+    "Escape restored Open local media. Tab/Return Close local connections explicitly preserved originals.",
+    "Opened own matching game tab53 to hold writer. Workshop Open refused with close-game instruction, all editing disabled, Reload visibly focused. Return repeated safe refusal.",
+    "Closed only test owner tab53; later deliberate Return entered Reading and verifying originals then recovered same dialog. Failed notice cleared, editing reenabled, Reload visibly focused, same3records/3revisions/generation3.",
+    "Escape restored Open. Return reopened and verified same originals with Reload focused. Escape/Tab/Return explicitly closed localconnections; saved originals retained.",
+    "ShiftTab/Return used Back to this edition game. Visible versionv0.64.3, Start focused. Return Start and briefDown produced legal FirstSignalwin52.2%,8160points,0:08,3lives/3stars.",
+    "Tab/Return Viewpicture opened fullreward; Return Results preserved8160 and restored Viewpicturefocus."
+  ],
+  "consoleErrors": [],
+  "limitations": [
+    "Desktop viewport only. No phone/shortlandscape/zoom or physicalcontroller/touch qualification.",
+    "Inline screenshots inspected; no exported screenshot files.",
+    "No upload/assignment/restore/story/audio/offline or broadphaseacceptance.",
+    "Simple FirstSignalnavigation smoke is not enemybalance/replayvalue acceptance."
+  ],
+  "cleanup": {
+    "testWriter53": "closed",
+    "localConnections": "explicitlyclosed before returning togame",
+    "test52": "kept as v0.64.3 testing deliverable",
+    "viewportOverride": "none"
+  }
+}
