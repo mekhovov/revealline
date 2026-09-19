@@ -6,92 +6,92 @@
   },
   {
     "path": "http/execution-request.reviewed.json",
-    "bytes": 1629,
-    "sha256": "ac0b16f2172689be950595641ea9156963ba003c017b96711ff67dd833130b36"
+    "bytes": 1622,
+    "sha256": "e3cce9d3079639ad5282cdf973c375f9580cd77f5e9ebee00bb3c3138614227f"
   },
   {
     "path": "http/http-tools/audit_binding.py",
-    "bytes": 12163,
-    "sha256": "5a510083b0fd62c34865c3a3180bc072fdeb011fdc12958ff876b009e6aa4a35"
+    "bytes": 12392,
+    "sha256": "230f8ffec5bdaf4719c36a9e8de0211b34e87c7be14653417b037b813049dcc4"
   },
   {
     "path": "http/http-tools/http_audit.py",
-    "bytes": 13551,
-    "sha256": "7b98049da493441ec590f6a3c54d6a752db5926c66744b8976bb48035aed8bfc"
+    "bytes": 13552,
+    "sha256": "f26b271ae41c7c5dfa3a4f6a9fe88341dd66bd59723d9e082b5c009ce191a4fb"
   },
   {
     "path": "http/http-tools/test_http_audit.py",
-    "bytes": 8083,
-    "sha256": "771841a757665b799a4053313879593b363641530c0ff3ac696fde83f23c362d"
+    "bytes": 12558,
+    "sha256": "e4011ac768f3133ddf14d5c7eda7d07bd22a5908cfbd0966a7f6f6380376c037"
   },
   {
     "path": "http/inputs/expected-inventory.json",
+    "bytes": 289810,
+    "sha256": "39343732354cf89ef968048a501d81cef4555bd22dc7d7a3f15eac6801b1fb9b"
+  },
+  {
+    "path": "http/inputs/prior-expected-inventory.json",
     "bytes": 145070,
     "sha256": "4bff619ddb71739ab0cc851518fc7115bdb877d4608f6bae025864ab2d90f774"
   },
   {
-    "path": "http/inputs/prior-expected-inventory.json",
-    "bytes": 81,
-    "sha256": "61bf1351c3cdca9165654a400359ccbc4ea3284576957912d8572db383bc9633"
-  },
-  {
     "path": "http/inputs/source-lock.json",
-    "bytes": 1429,
-    "sha256": "96975e385a48e0da84696a23d2593b8ede599573d190a5f323e66c9a76380802"
+    "bytes": 2264,
+    "sha256": "cf7c1384c8c5eff796eadc3a59d8c5645f04ea50d279fae6f7bb05761b8b43ff"
   },
   {
     "path": "http/internal-review.json",
-    "bytes": 616,
-    "sha256": "d52fbff99b52632ffa07711c0f8552cd8cf63e7698e0fc2d1713ae35d24045c6"
+    "bytes": 721,
+    "sha256": "eecef548aea6cf893f8122816ebf973225fab911d8eeb8e27f3494b6a78332ab"
   },
   {
     "path": "http/public_api_get.py",
-    "bytes": 1833,
-    "sha256": "2d701e1ca728f1fb4e9da91498600c6de9cbec5cd9aac3fd59714a0f839da8bf"
+    "bytes": 2013,
+    "sha256": "28398141d2253663802a3410e9de266acedd6ae94dea212070a7b1bda3187c85"
   },
   {
     "path": "http/reconcile-completed-rows.py",
-    "bytes": 7520,
-    "sha256": "f359fd24dad899079825e4cc6d5414639298b16a5eb3250d268dd42c119da126"
+    "bytes": 7655,
+    "sha256": "fd8cd9bc491616d9be5ad3b128d333f1994bf7919e4ae8dbcf758476a0623512"
   },
   {
     "path": "http/run-reviewed-operations.py",
     "bytes": 1530,
-    "sha256": "e3dcdf3466676ac5f70126d8ce68b87e430defa90dac8252c3207667165b9e48"
-  },
-  {
-    "path": "intake/hosted-originals/verification-receipts-original.zip",
-    "bytes": 37618,
-    "sha256": "d64ee36720da01e58aabb3b7ed76b57889111eb2ea1a3ef60a9a9735e3be9dcc"
+    "sha256": "54f0482af0d87a63855e1e2173f23e7f0ad54d9215245c567ee3d53f01dc496d"
   },
   {
     "path": "intake/terminal-r1/artifacts.json",
     "bytes": 1454,
-    "sha256": "09b289e27bec41e33a0fb4eef618a4ca952f6271cbb94eacee8b71da01309d8e"
+    "sha256": "d37be75b215d18ff2235861b8d41e6f3d577db714dbf898bb897de2dd3419586"
   },
   {
     "path": "intake/terminal-r1/commit.json",
-    "bytes": 2769,
-    "sha256": "60ba2e63b74759f35836de79d4fe99c423925f8070524a2fe4380844abc15f9a"
+    "bytes": 2757,
+    "sha256": "ddd446c6cf9132cf84e2576b593ea5ccf29a449933f4313d27d78d41c41f35fa"
+  },
+  {
+    "path": "intake/terminal-r1/deployment-statuses.json",
+    "bytes": 6817,
+    "sha256": "3a3b58234f94c89608aea7931ba1dc2ccfac772c06fe4dab493985acf795d03c"
   },
   {
     "path": "intake/terminal-r1/deployment.json",
     "bytes": 3856,
-    "sha256": "be9b98d6901c58c93413a67a26dc3a4bc13af70edc1dd3e10cb0cb041fec46ba"
+    "sha256": "6f02365c4a7a07a1408b35b516a25cc51fef77b7c41bc2cd0bfb78bac6ad74bf"
   },
   {
     "path": "intake/terminal-r1/main.json",
     "bytes": 358,
-    "sha256": "b59e67c8be96cf45b55366f64e30adb6a5d8833ad3dcb67a73ce22965dc3a3c6"
+    "sha256": "14bd8dc136150b2821f51a41a57c072eb723b5fb163643b7e7ac4631d36f7841"
+  },
+  {
+    "path": "intake/terminal-r1/receipts-original.zip",
+    "bytes": 74091,
+    "sha256": "063da5fcabfd2c232937a17ccf951cfa616ec35b601c71f57e622c402b8e86fa"
   },
   {
     "path": "intake/terminal-r1/run.json",
-    "bytes": 13220,
-    "sha256": "b3d8fe0465d9137bb9ef910a8654c429e7985932dec9705a072671efb1118a94"
-  },
-  {
-    "path": "intake/terminal-r1/statuses.json",
-    "bytes": 6817,
-    "sha256": "a004929fc62810a05c4b2c209b4295fa0605092986811579946703b426714852"
+    "bytes": 13204,
+    "sha256": "f5cc6c319c00c611e5870887a8e251838aa72c05d3f653578133d39850f23b9b"
   }
 ]

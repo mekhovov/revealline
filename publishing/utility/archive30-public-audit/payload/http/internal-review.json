@@ -1,11 +1,12 @@
 {
   "status": "ROOT_REVIEWED_EXACT_BOUND_HTTP_REQUEST",
   "reviewed": true,
-  "requestSha256": "ac0b16f2172689be950595641ea9156963ba003c017b96711ff67dd833130b36",
-  "scope": "One 705-row / 313563420-byte public audit after root receipt/source validation and complete reviewed request. Zero prior rows. Before/after authorities and independent row reconciliation required.",
+  "rootReviewed": true,
+  "requestSha256": "e3cce9d3079639ad5282cdf973c375f9580cd77f5e9ebee00bb3c3138614227f",
+  "scope": "One 1408-row / 627086405-byte public audit. Preserve 702 v0.62.0 release rows and two root-support rows; root index is the sole prior-path exception (+79 bytes); 703 new v0.62.1 rows. Before/after authority originals and independent row reconciliation remain required.",
   "reserveBytes": 536870912,
   "executionAllocationBytes": 33554432,
-  "capacityEnforcement": "Root preflight and monitoring; donor HTTP wrapper is time bounded, not a disk quota.",
+  "capacityEnforcement": "Hosted guard checks reserve and managed bytes between bounded stages, not a filesystem quota.",
   "publicAuditComplete": false,
   "nativeComplete": false
 }

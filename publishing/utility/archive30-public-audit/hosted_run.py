@@ -16,6 +16,7 @@ def validate_binding(raw):
     if len(raw.encode())>16384: raise ValueError('Binding exceeds limit')
     value=strict(raw);expected=strict((HERE/'binding.proposed.json').read_text());expected['reviewed']=True
     if value!=expected: raise ValueError('Exact reviewed archive30 binding required')
+    if any(v is None for v in value.values()): raise ValueError('Observed archive authority is still pending')
     return value
 def guard(root):
     if sum(p.stat().st_size for p in root.rglob('*') if p.is_file())>CAP: raise ValueError('Evidence budget exceeded')
