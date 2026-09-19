@@ -1,48 +1,48 @@
 {
   "format": "revealline-archive31-http-request.v1",
   "reviewed": true,
-  "archiveCommit": "f476c311e0050b47d7408db51d57239fba7bece6",
-  "archiveTree": "d144cc112088882211bb1b5e04df298f4f4a78be",
-  "sourceCheckoutCommit": "f476c311e0050b47d7408db51d57239fba7bece6",
-  "runId": 35434694566,
-  "deploymentId": 6539360227,
-  "deploymentStatusId": 18558487091,
-  "receiptArtifactId": 10581207803,
+  "archiveCommit": "2ff1b312872857cf04b485f9c987a26c0432f356",
+  "archiveTree": "8c3ca7ed1accb04afcb8a92063bb412e05ecc833",
+  "sourceCheckoutCommit": "2ff1b312872857cf04b485f9c987a26c0432f356",
+  "runId": 35441173594,
+  "deploymentId": 6540533321,
+  "deploymentStatusId": 18561156073,
+  "receiptArtifactId": 10583822110,
   "pins": {
     "main": {
       "path": "terminal-r1/main.json",
       "bytes": 358,
-      "sha256": "6926f338ef28a2faea3ca7d5c5c9e9806276604ebe211895fa2a633a0b173882"
+      "sha256": "adfc7cc0b4245ce823ba3a917e19dfcacac22c05945fd412c9b897408acb689a"
     },
     "commit": {
       "path": "terminal-r1/commit.json",
-      "bytes": 2737,
-      "sha256": "a11103481743b6bb89746cfa28c305115e89f53968cf3d5b4d57097e5ea5154f"
+      "bytes": 2707,
+      "sha256": "972c8f4331cbdfafb60a95207c0da1e56b183a7f0bcb4fe40c2538a181cd5f77"
     },
     "run": {
       "path": "terminal-r1/run.json",
-      "bytes": 13186,
-      "sha256": "21c2ba3874d2364505b1a48bdfc82fe71c33883a58b0f8eb22c9a2d7e18b8366"
+      "bytes": 13165,
+      "sha256": "6de01b2f822e78365a13443015be9d8fbb24d62f216bb2e26cb32408680bdcbe"
     },
     "deployment": {
       "path": "terminal-r1/deployment.json",
       "bytes": 3856,
-      "sha256": "b44746fd2ebe711476d4baa9f1036ee193e0a62a874f46e689adfa7a796e5776"
+      "sha256": "8745fc64e0b69df3415f64a8b08ed12f7045e9699d3403d2ffeada6fc763e664"
     },
     "statuses": {
       "path": "terminal-r1/statuses.json",
       "bytes": 6817,
-      "sha256": "68837077f3a11aad3711752b7893cd50ca365a9d54f347fd9d5ba674f6b47319"
+      "sha256": "7f2d29e271c3e4a8950abd7cfbb77362b32964b060c87a8bb2ec9fb410f3cf21"
     },
     "artifacts": {
       "path": "terminal-r1/artifacts.json",
       "bytes": 1454,
-      "sha256": "76182369dc2dbc3ae7b4e8ea10c6757b8bdd7c0aa9a2266696d0c394e3587ad4"
+      "sha256": "8ee073b18d8f5bd9d53027c14ef4dfd47c216e1ba3c9abf3612ecca10f6c732e"
     },
     "receiptZIP": {
       "path": "terminal-r1/receipts-original.zip",
-      "bytes": 37874,
-      "sha256": "35cf5f0decf18e95fab49bce13426025d2d902127206579719b6f754e690825e"
+      "bytes": 74646,
+      "sha256": "3ba0e84e0864810b421c92920a376d13bee09627352299b5060aa89b239a71b0"
     }
   }
 }

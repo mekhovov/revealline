@@ -1,12 +1,11 @@
 {
-  "status": "ROOT_REVIEWED_ACTUAL_ARCHIVE31_READONLY_AUDIT",
+  "status": "ROOT_REVIEWED_ACTUAL_ARCHIVE_APPEND_OFFLINE_CHECKS_PENDING",
   "reviewed": true,
   "rootReviewed": true,
-  "requestSha256": "67dcd2439c33e2e348ab915c0311e4a1ad2edc4c1add74b6fe7bdedbee3d15b8",
-  "scope": "Root reviewed actual seven authority originals, exact three-member receipt and711-row inventory. Offline21 HTTP+6 hosted fixtures pass. One bounded read-only public audit authorized; no archive admission from preparation.",
+  "requestSha256": "2fb2a5fcb33475ffc3e3a64ea78388a83d074cc11b2946cf9745189b347c9732",
+  "scope": "Root reviewed all24 candidate paths, focused helper adaptation, original receipt and preservation inventory. Native archive navigation completed separately. Hosted HTTP audit and admission remain pending.",
   "reserveBytes": 536870912,
   "executionAllocationBytes": 33554432,
-  "capacityEnforcement": "Inherited stage-boundary checks; not a hard filesystem quota.",
   "publicAuditComplete": false,
   "nativeComplete": false
 }
