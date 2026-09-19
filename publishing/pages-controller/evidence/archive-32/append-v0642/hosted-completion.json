@@ -1,0 +1,46 @@
+{
+  "status": "PASS_HTTP_ROWS_ONLY",
+  "steps": [
+    {
+      "name": "binding",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-c",
+        "from audit_binding import validate_execution_binding; print(validate_execution_binding()[\"requestSha256\"])"
+      ],
+      "startedAt": "2026-09-19T19:54:32.518716+00:00",
+      "finishedAt": "2026-09-19T19:54:32.582660+00:00",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "audit",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/runner/work/_temp/archive32-public-audit/http/run-reviewed-operations.py"
+      ],
+      "startedAt": "2026-09-19T19:54:32.583213+00:00",
+      "finishedAt": "2026-09-19T19:54:54.962632+00:00",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "reconcile",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/runner/work/_temp/archive32-public-audit/http/reconcile-completed-rows.py"
+      ],
+      "startedAt": "2026-09-19T19:54:54.963976+00:00",
+      "finishedAt": "2026-09-19T19:54:55.128279+00:00",
+      "exitCode": 0,
+      "timedOut": false
+    }
+  ],
+  "sourceUnchanged": true,
+  "nativeAcceptance": false,
+  "releaseAcceptance": false,
+  "publicAdmission": false
+}
