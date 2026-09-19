@@ -1,0 +1,29 @@
+{
+  "status": "PASS_SCOPED_ARCHIVE_KEYBOARD_REPLAY",
+  "at": "2026-09-19T13:59:14.070400+00:00",
+  "url": "https://mekhovov.github.io/revealline-archive-32/releases/v0.64.1/site/game/",
+  "version": "v0.64.1",
+  "archiveCommit": "50909e7cf38916fe7d3e2e7eb79339bb49ae80b9",
+  "pagesRun": 35446915477,
+  "deployment": 6541593688,
+  "observer": "Root; actual native in-app browser tab35; no hidden state injection",
+  "checks": [
+    "Title shows v0.64.1. Keyboard Start\u2192Down release continues cut; earned52.2%/8160points/3lives win at0:03 and full picture.",
+    "Fresh Start\u2192Down\u2192Escape pauses before cut; Field details viaTab/Return; Escape returns Field details focus while paused; Shift+Tab/Return explicitly resumes.",
+    "Next attempted cut lost one life legally; paused0:37 with2lives. TitleContinue/Workshop reached with keyboard.",
+    "Workshop ninthTab\u2192Export replay produces6018-character read-only JSON from actual run:4530ticks,statusrunning,checkpointcc4d27fbf1d813e3. Text16px/24pxline,180pxheight,1020pxwidth.",
+    "EscapeReplay returns Export replay focus; EscapeWorkshop returns Workshop focus.",
+    "Archive root keyboard secondlink opens main release explorer, currentv0.64.1 and retained release list."
+  ],
+  "retainedFailures": [
+    "First Escape occurred after win and showed fullpicture; not counted as Pause.",
+    "Wait for guessed View picture label timed out on secondattempt, which actually lost a life; no win claimed for secondattempt."
+  ],
+  "limitations": [
+    "Session-only tab because another game tab owns writer; saved progress/restore notcertified.",
+    "Download requested only; filesystemdelivery notverified.",
+    "Inline screenshots/DOM only, no exportedimages or hashes.",
+    "No physicalcontroller/touch, zoom, audio, offline, completecrossmode or wholephaseacceptance.",
+    "Byteaudit remains separate."
+  ]
+}

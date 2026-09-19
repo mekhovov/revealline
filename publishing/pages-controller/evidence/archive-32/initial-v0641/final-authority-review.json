@@ -1,0 +1,108 @@
+{
+  "status": "PASS_FINAL_ARCHIVE32_AUTHORITIES_UNCHANGED",
+  "at": "2026-09-19T14:10:25.585731+00:00",
+  "repositoryId": 1377207652,
+  "archiveCommit": "50909e7cf38916fe7d3e2e7eb79339bb49ae80b9",
+  "archiveTree": "b11d49db3eb2e7416bc5d8b0b6f01f8084911345",
+  "pagesRun": 35446915477,
+  "latestDeployment": 6541593688,
+  "latestStatus": 18563533057,
+  "pagesEnvironmentMainBranchOnly": true,
+  "releaseId": 392054157,
+  "version": "v0.64.1",
+  "tagObject": "f21134c68f768377d528e60d3baf6b30a8d161dc",
+  "gameSource": "8ae70850db00777eb9afb233ff8a881fc26714f0",
+  "gameTree": "3b52b721c2000b316bcc52a3132d011703089888",
+  "originalAssetsUnchanged": 9,
+  "auditRun": 35447542918,
+  "utilityCommit": "aceab9f58ffb405c81539f0ef5ebf49175b70e9b",
+  "utilityTree": "508e182afe6399422361baf3e3d33b974f7b3c9f",
+  "utilityBranchUnchanged": true,
+  "readOnlyRequests": 16,
+  "binaryGETs": 0,
+  "retries": 0,
+  "originals": [
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/repository.json",
+      "bytes": 6351,
+      "sha256": "5f0feb6505ff53ed38e993d12a867a6fe1175ea3c0b579b386f2bb0d248794e7"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/main.json",
+      "bytes": 358,
+      "sha256": "a5a88accd5ca9bd29302c050edd87d1c0e07a55f7d2d83361a09df9da1944e74"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/commit.json",
+      "bytes": 2743,
+      "sha256": "2582c63bbd68cb9760e87cf9e4dd494fe44eefc7654e1fbfcb9eaf3dcc420328"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/pages-run.json",
+      "bytes": 13189,
+      "sha256": "a73585a50a81fb23d5643a72825a16a33a09cda900fe0335f43d15404bcd25e7"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/deployments.json",
+      "bytes": 3858,
+      "sha256": "4210d0e31837b0d8d9b841cf7ed6ba0a4354650e652500d9877db272084fdcea"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/deployment.json",
+      "bytes": 3856,
+      "sha256": "86afc0fa5236b56ff2cec8e50d4c0833bfdb4410bdb0adcbf98089f536b78d1b"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/statuses.json",
+      "bytes": 8507,
+      "sha256": "0c7811ec328f53e3c36c53d3e752470d203974c6db27988970c1efc62e5b8e52"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/environment.json",
+      "bytes": 568,
+      "sha256": "aad96ed8f8e4cd8e3bdcc32182b18f327cf620cf4f71a8cb3338fc1e3fb322f5"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/branch-policies.json",
+      "bytes": 136,
+      "sha256": "a72c0a536b2372b14eadeb909e7f0052892148f6f0bc14de0d61743c4cf8a0b3"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/pages-config.json",
+      "bytes": 348,
+      "sha256": "702b8e90a2e09033eede2b86d111bb673febb43e8cd0a5e679d070ffde7ca94e"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/release.json",
+      "bytes": 16477,
+      "sha256": "f54831ccd335d55476fccb7d1d78b8e56242cd66ac2226793408881679567b92"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/tag-ref.json",
+      "bytes": 337,
+      "sha256": "ba4bb65065a2ed388bc851c41c96c09e5ed8989062a703e747ac8955656e6e45"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/tag-object.json",
+      "bytes": 718,
+      "sha256": "66bd0385053ac5867ce92d84304e8fff7a400ff0494709489f32982872138808"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/game-commit.json",
+      "bytes": 1441,
+      "sha256": "f6301719d1a94a2e35431f6c9ba1480357aff81f7196d582d328f2fdb49cad22"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/audit-run.json",
+      "bytes": 12147,
+      "sha256": "e335b59e0243ff09de9a90e15612f1785e6bdb1cdd0d5b82807262c9d54ce74f"
+    },
+    {
+      "path": ".cache/archive32-v0641-final-authorities-r1/utility-ref.json",
+      "bytes": 435,
+      "sha256": "954793e9e71ceb4531b6d7c3bc2f2be19aab7cda6628d849ddbdec56d1869628"
+    }
+  ],
+  "sourceOrRemoteMutations": false,
+  "nativeAdmission": "Root owned; no new native actions by this reviewer."
+}
