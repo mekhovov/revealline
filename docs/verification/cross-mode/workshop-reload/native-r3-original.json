@@ -1,0 +1,28 @@
+{
+  "status": "SCOPED_NATIVE_RECOVERY_AND_FOCUS_PASS",
+  "at": "2026-09-19T10:08:40.328720+00:00",
+  "source": "3e47f60b9f9b4c5088410536d649ff595b2667eb",
+  "url": "http://127.0.0.1:64589/authoring/still-media/",
+  "overrides": {
+    "game/ui/still-media-host.mjs": "6394175f2360bf422ae488e9db1f40eaac7d974b6e7aa94733384735053b56a1",
+    "game/ui/still-media-panel.mjs": "dfb17222f3f9d09ce503156ad9dd08bac097abec3dbb4d8a123b610ecc3a7bcf"
+  },
+  "predecessorFailure": ".cache/p03-workshop-reload-native-r1/observation.json",
+  "steps": [
+    "Fresh loopback game title ready; same-origin Workshop opened by Tab/Tab/Return.",
+    "Initial real profile-writer refusal kept error status and editing disabled; focus restored to still-media-reload.",
+    "Return repeated real locked-profile failure; actual focus remained still-media-reload.",
+    "Closed backgroundgamewithoutleavingWorkshop;Return onReload read savedmedia. Duringworkfocuseddisabledcontrolcleared;aftersettlementfocusrestoredtoenabledstill-media-reload.",
+    "Hoststate ready / Real local media opened for dev; panel Saved originals verified.",
+    "Escape returnedtoactualstill-host-open. Return reopenedverifiedmediaandfocusedstill-media-reload.",
+    "600x400 resize keptReload fullyvisible atx44,y328.96875,w324.7421875,h44 andClose aboveit.",
+    "Escapeafterportraitresize returnedOpenlocalmedia; viewportreset andtemporarytabclosed."
+  ],
+  "portraitLimit": "Immediate390x844 screenshot appeared transitional/cropped; no portraitvisualpass claimed. Recheck afterlayoutsettlesinfinalsource/publicjourney.",
+  "evidence": "root CUA actualkeyboardandread-onlyDOM; inline screenshots only",
+  "limits": [
+    "No runtimeorstorestateinjection; startupinitializedfreshprofile, noassignmentupload/save.",
+    "Nophysicalcontroller/touch, zoom,audio/offline,newerinput-raceorpublicacceptance.",
+    "Finalsourceintegration andfullqualification remainrequired."
+  ]
+}

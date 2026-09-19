@@ -98,7 +98,8 @@ export function attachStillMediaHost({
     openController = null;
 
   const feedback = createOperationStatus(status);
-  let activity = null;
+  let activity = null,
+    failedOpening = null;
   function setStatus(message, state = 'ready') {
     if (activity) activity.update({ message, progress: null });
     else feedback.begin({ message }).finish({ message, state });
@@ -119,6 +120,8 @@ export function attachStillMediaHost({
       setStatus(text);
     },
   });
+  const readyMessage = () =>
+    `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`;
   const explain = (error) =>
     error?.name === 'VersionError'
       ? 'This database needs a newer compatible media workshop. Open that version to recover/export it. No downgrade or deletion was attempted.'
@@ -144,6 +147,7 @@ export function attachStillMediaHost({
     opening = false;
     feedback.clear();
     activity = null;
+    failedOpening = null;
     if (!disposed) $('still-host-open').disabled = false;
   }
   function closeStorage() {
@@ -204,6 +208,12 @@ export function attachStillMediaHost({
           preview: createPreview({ canvas: doc.createElement('canvas'), presets: source.presets }),
           decodeImage,
           URLImpl,
+          onLoaded: () => {
+            // Reconcile only the failed opening that still owns the host status.
+            // Newer host messages and lifecycle cancellation revoke that lease.
+            failedOpening?.finish({ message: readyMessage() });
+            failedOpening = null;
+          },
           onClose: () => {
             if (opening) cancelOpen();
             router.clear();
@@ -222,9 +232,10 @@ export function attachStillMediaHost({
         navigation.sync();
         setStatus(
           result
-            ? `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`
+            ? readyMessage()
             : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.',
         );
+        failedOpening = result ? null : lease;
       }
       lease.finish({ message: status.textContent, state: result ? 'ready' : 'error' });
       return result;
