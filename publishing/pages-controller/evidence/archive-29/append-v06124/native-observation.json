@@ -1,0 +1,35 @@
+{
+  "status": "ROOT_OBSERVED_SCOPED_ARCHIVE_NATIVE_RETENTION",
+  "at": "2026-09-19T02:25:41.483796+00:00",
+  "archiveMain": "9abddbdf00b8b47d93df63d2d465588d06fb0988",
+  "workflowRun": 35415286512,
+  "method": "CUA actual public browser keyboard navigation, inline screenshot and accessibility observations",
+  "v06124": {
+    "url": "https://mekhovov.github.io/revealline-archive-29/releases/v0.61.24/site/game/",
+    "entry": "Versionv0.61.24title;StartEnter",
+    "play": "TapScontinued live line;Escape paused0:06 with3lives",
+    "pause": "600x400 visibleResume full row,Restart/Missionbrief two columns,Mainmenu fullrow",
+    "resume": "ExplicitReturn resumedgamecanvas",
+    "win": {
+      "coverage": 52.2,
+      "lives": 3,
+      "score": 8160,
+      "time": "0:06"
+    },
+    "result": "A little more light. fullpicture added to collection."
+  },
+  "v06123": {
+    "url": "https://mekhovov.github.io/revealline-archive-29/releases/v0.61.23/site/game/",
+    "entry": "ArchiveindexTabEnteropenedoldversiontitle;StartEnter",
+    "play": "TapSlegalwin52.2percent3lives8160points0:03",
+    "retainedAttempt": "Escapeafterwinshowedpictureview;TabEnterreturnedMainmenu ratherthan Results. ReenteredStart;earlyEscapeshowed briefing. Keyboard3Tabs reachedStartmission,Enterstarted,EscapeopenedPause0:03;explicitReturnresumedcanvas. No claimthatfirstEscapepausedthecompletedrun."
+  },
+  "explorer": "Archive root actual visible current release explorer link reached via3TabsEnter;destinationhttps://mekhovov.github.io/revealline/releases/ showed currentv0.61.24andhistory",
+  "limitations": [
+    "Scoped keyboard/browser-emulated600x400 only; inline screenshots not exported/hashable.",
+    "No physicaltouch/controller, zoom,audio,offline,focusloss or save-isolation qualification.",
+    "Shared archiveorigin doesnotprove independentcross-versionstorage.",
+    "Public byteaudit and final authority reconciliation remain separate."
+  ],
+  "parentPhaseComplete": false
+}

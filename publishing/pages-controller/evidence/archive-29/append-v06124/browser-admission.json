@@ -1,0 +1,57 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "reviewed": true,
+  "archiveId": "archive-29",
+  "infrastructureCommit": "9abddbdf00b8b47d93df63d2d465588d06fb0988",
+  "deploymentId": 6536099795,
+  "versions": [
+    "v0.61.23",
+    "v0.61.24"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-29/append-v06124/root-acceptance.json",
+      "sha256": "1c3cbca11d3dd5fdabeef5ca699746e1805f912975d1117f427c325b1a8a9e05"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/native-observation.json",
+      "sha256": "95aa4d2075e777a0ff50fbed6a621a746af3dbc53c02d5ddb1a6fe0bcde9204a"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/row-review.json",
+      "sha256": "3fee8fb3d2599ed8a61af33bd0946b4afb773a4416db1d6674f2273368f5405d"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/hosted-completion.json",
+      "sha256": "28e0bd0f94da617ccaa2cb980bbce002251eacd453d90f9f5b8e3f2089200859"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/independent-review.json",
+      "sha256": "87fd4fa788bc309ab320abc45ddfc26dd71202e605db02f566673317ea3ebf9f"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/originals.zip",
+      "sha256": "0173a30b58eb3ded90876693297287a8b755dd4ad668971c74b826b59c841ca4"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/originals-index.json",
+      "sha256": "95ee6fd975d2531ba1a34db51fde530ae376002b617224fe188550383c5ec926"
+    },
+    {
+      "path": "evidence/archive-29/append-v06124/root-helper-correction.json",
+      "sha256": "6db85edf70fec1d759f9e54a9413eb525dbe9ecd99dfe4e760f13478364dc3d5"
+    }
+  ],
+  "scope": "Accepted from actual root keyboard retention: v624 launch/continuous steering/Pause at600x400/explicitResume/52.2percent picture; v623 legalwin and retained reentry/Pause/Resume attempts; archive root to current explorer. Complete bytes separately verified.",
+  "observationProvenance": "Original root CUA record, inline screenshot/accessibility observations only; independent reviewer did not repeat browser session.",
+  "limits": [
+    "Scoped keyboard/browser-emulated600x400 only; inline screenshots not exported/hashable.",
+    "No physicaltouch/controller, zoom,audio,offline,focusloss or save-isolation qualification.",
+    "Shared archiveorigin doesnotprove independentcross-versionstorage."
+  ],
+  "phaseAccepted": false,
+  "physicalDeviceAccepted": false,
+  "durableSaveAccepted": false,
+  "wholeGameComplete": false
+}

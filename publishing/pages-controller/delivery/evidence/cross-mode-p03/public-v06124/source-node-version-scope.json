@@ -1,0 +1,106 @@
+{
+  "format": "revealline-derived-source-runtime-scope.v1",
+  "source": "bb8cd8ea8af0cbec6af7e633c05d1bec78815938",
+  "derivedFromRetainedOriginals": true,
+  "newTestsRun": false,
+  "fullFamilies": 2,
+  "actualHostedNode": "20.19.6",
+  "testsPerFamily": 5925,
+  "filesPerFamily": 466,
+  "originalSourceReview": {
+    "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/review.json",
+    "bytes": 864,
+    "sha256": "4d85598aee1d8b68ba0336be32ab551ed4b644734db5a9f1a14e9aac3f1dc0be"
+  },
+  "runtimeLogOriginals": [
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/manual/job-105791016417.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/manual/job-105791016417.log.gz",
+      "bytes": 11795,
+      "sha256": "4d47cf46ed5caac512ec357e0d9063f80e2dc524205e472243f358ad14c849ec",
+      "actualRuntimeLine": "2026-09-18T23:07:20.9139904Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/manual/job-105791373958.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/manual/job-105791373958.log.gz",
+      "bytes": 110773,
+      "sha256": "2ae96ad34e3f13ddbdcb91eff257add9d89cded3ce26b378bc38849f2cc1cfc8",
+      "actualRuntimeLine": "2026-09-18T23:09:05.8073642Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/manual/job-105791373996.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/manual/job-105791373996.log.gz",
+      "bytes": 117406,
+      "sha256": "427fbb76015d85aa4acf9a5093ef01ddbfae6dd1e25c998793b09dfb0d0b450a",
+      "actualRuntimeLine": "2026-09-18T23:09:05.2593784Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/manual/job-105791374008.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/manual/job-105791374008.log.gz",
+      "bytes": 121797,
+      "sha256": "ddb9127bd123c92ef646348ce1ac6ba0c480bc687e288e673fa5d91edffffe4a",
+      "actualRuntimeLine": "2026-09-18T23:09:19.6708671Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/manual/job-105791374012.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/manual/job-105791374012.log.gz",
+      "bytes": 110497,
+      "sha256": "5bfd2ffa4399b4db378bee8cd61b5580b3bc3c7ffd6f9a2ff5df19bc6aff5dbc",
+      "actualRuntimeLine": "2026-09-18T23:09:06.1928672Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/manual/job-105796511205.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/manual/job-105796511205.log.gz",
+      "bytes": 12896,
+      "sha256": "844f44f5410aae3fcc8e202bae0c4996e455f4ad3662db177b2d4efba8395473",
+      "actualRuntimeLine": "2026-09-18T23:35:21.5036576Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/pr-source/job-105789468013.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/pr-source/job-105789468013.log.gz",
+      "bytes": 14752,
+      "sha256": "84805da753c7a6d12d6d845ba031e87a1645e7c50a983cec21737eccae5ab6db",
+      "actualRuntimeLine": "2026-09-18T23:00:05.5348198Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/pr-source/job-105789816471.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/pr-source/job-105789816471.log.gz",
+      "bytes": 12368,
+      "sha256": "2e18c20957211df84baaaaf0a5d22652d7ab707da4b16be89b40774f14b3daa6",
+      "actualRuntimeLine": "2026-09-18T23:01:38.2088557Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/pr-source/job-105789816525.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/pr-source/job-105789816525.log.gz",
+      "bytes": 106002,
+      "sha256": "e93cd2b5da710988482eadbe6b0d5f3eea022f661d4bed0b75ce13891499771f",
+      "actualRuntimeLine": "2026-09-18T23:01:37.8081618Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/pr-source/job-105789816554.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/pr-source/job-105789816554.log.gz",
+      "bytes": 120461,
+      "sha256": "326284ccafeb595ee5fbb8f7df45edd8ecd69980a5522135b39a756b788af13b",
+      "actualRuntimeLine": "2026-09-18T23:01:46.9887613Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/pr-source/job-105789816613.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/pr-source/job-105789816613.log.gz",
+      "bytes": 105478,
+      "sha256": "704658ef2ce7e5778ca954de68733cfd6654b56a656eed27ba9e5bc1920d53c0",
+      "actualRuntimeLine": "2026-09-18T23:01:39.3814024Z node: v20.19.6"
+    },
+    {
+      "path": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/intake/hosted/pr-source/job-105789816706.log.gz",
+      "qualificationPath": ".cache/p03-solo-pause-next-preparation/source-qualification-r2/observer/hosted/pr-source/job-105789816706.log.gz",
+      "bytes": 113392,
+      "sha256": "7e5439b7cbb5534880b6cead9100da4ba9fc321ec2d8e3c9fc86f2c87c7c7eca",
+      "actualRuntimeLine": "2026-09-18T23:01:34.9760230Z node: v20.19.6"
+    }
+  ],
+  "limitations": [
+    "Full hosted families both used Node 20.19.6; this is not complete-suite Node 22 evidence.",
+    "Separate focused Node 20/22 and publisher checks retain their original scopes; no counts added together.",
+    "No new source, runtime, browser, offline or physical tests ran during curation."
+  ]
+}

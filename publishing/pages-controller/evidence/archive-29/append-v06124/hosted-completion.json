@@ -1,0 +1,65 @@
+{
+  "status": "ORIGINAL_SMALL_RECEIPT_VALIDATED_NO_PUBLIC_AUDIT",
+  "archiveCommit": "9abddbdf00b8b47d93df63d2d465588d06fb0988",
+  "archiveTree": "bf8b5d0784bcd466669465b40c7c73a855625c2b",
+  "runId": 35415286512,
+  "deploymentId": 6536099795,
+  "deploymentStatusId": 18550986076,
+  "receiptArtifactId": 10574989223,
+  "receiptBytes": 73681,
+  "receiptSha256": "5774307186e6f49bec913c0ebb8804f7d6d9e43f370de4fb1decafb807b71107",
+  "files": 1401,
+  "bytes": 626907986,
+  "inventorySha256": "3aca3751cc35f8315667c517d7fc4c7c6250e921629ffa9e9236542bd7867733",
+  "crcAndExactFourMembersPassed": true,
+  "exactCandidateInventoryAndSourceChainPassed": true,
+  "pins": [
+    {
+      "path": "hosted-originals/download.attempt.json",
+      "bytes": 439,
+      "sha256": "fbeaf50e53883c612dd2cbf20f8dab6288425dac0759b8cb4a1585f4752d25e3"
+    },
+    {
+      "path": "hosted-originals/download.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "hosted-originals/download.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "hosted-originals/receipts/expected-inventory.json",
+      "bytes": 289882,
+      "sha256": "3aca3751cc35f8315667c517d7fc4c7c6250e921629ffa9e9236542bd7867733"
+    },
+    {
+      "path": "hosted-originals/receipts/receipt.json",
+      "bytes": 1757,
+      "sha256": "2d802235794d5db0b71f7980c77a046680ae928a7b9a6f1dc515b386f4ccfa2a"
+    },
+    {
+      "path": "hosted-originals/receipts/zip-receipt-v0.61.23.json",
+      "bytes": 408,
+      "sha256": "cc3db32bbba8a799890c0d5b57ad08c424fe0989e3c57a9c05ef9242a8d97cc0"
+    },
+    {
+      "path": "hosted-originals/receipts/zip-receipt-v0.61.24.json",
+      "bytes": 408,
+      "sha256": "ab32c5dc5eca95d2bd28e91fea213d4865b3734a6c67de01eee5b7301a4be461"
+    },
+    {
+      "path": "hosted-originals/reviewed-download-request.json",
+      "bytes": 3255,
+      "sha256": "7035857abf6df0b77041ca683f04bbd0303d425f5e7b15d285c70fdc7f635f93"
+    },
+    {
+      "path": "hosted-originals/verification-receipts-original.zip",
+      "bytes": 73681,
+      "sha256": "5774307186e6f49bec913c0ebb8804f7d6d9e43f370de4fb1decafb807b71107"
+    }
+  ],
+  "publicByteAcceptance": false,
+  "nativeAcceptanceNotAltered": true
+}
