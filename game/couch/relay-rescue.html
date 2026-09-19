@@ -31,11 +31,27 @@
           <p id="coop-intro" class="lead">
             Start with a small loop. Cover each other, then meet to join a larger cut.
           </p>
+          <p id="coop-boot" class="operation-status" data-state="busy" role="status">
+            <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i></span
+            ><span>Loading Relay Rescue.</span>
+          </p>
+          <script src="team-entry.js"></script>
           <div class="setup">
             <label
               >Arena<select id="coop-level">
-                <option value="first-connection">First Connection · territory challenge</option>
-                <option value="relay-yard" selected>Relay Yard · stronghold challenge</option>
+                <option value="first-connection" selected>
+                  First Connection · territory challenge
+                </option>
+                <option value="relay-yard">Relay Yard · stronghold challenge</option>
               </select></label
             >
             <label
@@ -53,11 +69,13 @@
               </select></label
             >
           </div>
+          <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <p id="coop-setup-note" class="setup-note">
             Captures recharge both players’ Support and can rescue a downed partner.
           </p>
           <p id="coop-level-note" class="setup-note">
-            One open field. Bait a Hunter, cover the crossing, then take the anchors together.
+            Both halves are contested. Create safe routes in small steps, then coordinate a larger
+            cut.
           </p>
           <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
             <div class="coop-preview-frame">
@@ -78,19 +96,6 @@
           <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
             Preparing arena…
           </button>
-          <p id="coop-boot" class="operation-status" data-state="busy" role="status">
-            <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i></span
-            ><span>Loading Relay Rescue.</span>
-          </p>
           <details class="pack-picker">
             <summary>Play a created co-op pack</summary>
             <label for="coop-pack-file">Open a co-op pack JSON file</label>
@@ -170,7 +175,12 @@
               <p class="eyebrow" id="coop-overlay-kicker">PAUSED</p>
               <h2 id="coop-overlay-title" class="field-kit-display">Both players paused</h2>
               <p id="coop-overlay-copy">Release your controls, then choose Resume together.</p>
+              <p id="coop-next-status" role="status" aria-live="polite" hidden></p>
               <div class="overlay-actions">
+                <button id="coop-next" class="primary field-kit-primary" type="button" hidden>
+                  Next arena
+                </button>
+                <button id="coop-next-cancel" type="button" hidden>Cancel next arena</button>
                 <button id="coop-resume" class="primary field-kit-primary" type="button">
                   Resume together
                 </button>
@@ -493,7 +503,8 @@
               </p>
               <p>
                 Team play does not write Solo saves, campaign progress, scores or earned pictures.
-                Shared sound and appearance preferences are saved separately on this device.
+                Shared sound and appearance preferences and your last built-in Team arena choice are
+                saved separately on this device. Imported packs remain on this page.
               </p>
             </div>
           </div>

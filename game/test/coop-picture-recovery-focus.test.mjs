@@ -27,6 +27,9 @@ async function waiting(t, { width = 844, height = 390, visible = false, before =
     presentation: { read: ({ calls }) => gates[calls.reads.length - 1]?.promise },
     beforeImport(context) {
       const { $, doc, win } = context;
+      // Exercise Relay Yard recovery deliberately, including its initial read.
+      $('coop-level').value = 'relay-yard';
+      $('coop-level').emit('change');
       Object.assign(win, doc.defaultView, { innerWidth: width, innerHeight: height });
       doc.defaultView = win;
       doc.documentElement.clientWidth = width;

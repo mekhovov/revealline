@@ -58,6 +58,12 @@ The [history-picture correction](verification/cross-mode/p01/history-picture-ret
 - Music preparation appears in `snapshot().preparation` without altering `status`, `playing` or `desired`. Enable/play requests retain the original user gesture. Background cue decoding keeps the existing immediate fallback and never replays a late cue.
 - Couch and Replay own their preparation and current-board identity. Embedded Playground readiness uses the child's actual boot/tool-ready marker, not the iframe load event. Controller Lab retains its authenticated session messages and neutral-input gate.
 
+## Couch/Team continuation supplement
+
+The current candidate extends A45/A46 Versus picture preparation and A47 Team preparation without replacing the historical P01 inventory. Ready owns only an untouched initial entry; a later settings, focus or lifecycle action can revoke an automatic handoff. Uninterrupted explicit Rematch/Next prepares and starts the accepted recipe in one action. Interrupted Versus preparation can finish at Ready and require a separate deliberate Start. Team Next interruption cancels that transition and retains Results; starting its successor requires another explicit Next. Pending Team Next retains the completed result, exact earned picture and counters until successor acceptance. Cancel, Back, failure and stale completion cannot award again, replace newer work or resume a paused flight.
+
+Verify visible action/status placement, exact artwork, retained score, focus restoration and actual browser routes separately from modeled delayed/failure cases. Keep known rotation failures open until corrected and observed. See [Couch/Team delivery](couch-team-delivery.md), [Team ordered results](team-ordered-results.md) and [Versus formats](versus-session-formats.md).
+
 ## Qualification for a changed entry point
 
 Exercise real delayed success, cached success, failure and retry. Then cancel or navigate away, start a newer operation and let the old promise settle. Check current run/content/draft bytes, disabled controls, focus and status ownership. Non-interruptible saves and shared downloads need separate observed and durable outcomes. No artificial minimum delay is permitted.

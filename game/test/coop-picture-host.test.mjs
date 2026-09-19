@@ -42,6 +42,10 @@ test('initial exact Relay Yard preparation exposes Cancel, then Ready and only e
   const f = await page(t, {
     ...options,
     waitPicture: false,
+    beforeImport({ $ }) {
+      $('coop-level').value = 'relay-yard';
+      $('coop-level').emit('change');
+    },
     presentation: { read: () => gate.promise },
   });
   assert.equal(f.doc.documentElement.dataset.toolState, 'ready');
@@ -63,17 +67,17 @@ test('initial exact Relay Yard preparation exposes Cancel, then Ready and only e
   assert.equal(f.$('coop-stage').textContent, 'RELAY YARD');
 });
 
-test('actual arena selection prepares First Connection independently and releases the unadopted Yard picture once', async (t) => {
+test('actual arena selection prepares Relay Yard independently and releases the unadopted First Connection picture once', async (t) => {
   const f = await page(t, options);
   const first = f.artwork.calls.urls[0];
   f.$('coop-level').focus();
-  await f.choose('coop-level', 'first-connection');
+  await f.choose('coop-level', 'relay-yard');
   assert.equal(f.doc.activeElement.id, 'coop-start');
   assert.deepEqual(f.artwork.calls.releases, [first]);
   assert.equal(f.$('coop-menu').hidden, false);
   start(f);
-  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
-  assert.equal(f.$('coop-stage').textContent, 'FIRST CONNECTION');
+  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+  assert.equal(f.$('coop-stage').textContent, 'RELAY YARD');
 });
 
 test('Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity', async (t) => {
@@ -138,7 +142,7 @@ test('a new actual arena choice supersedes a held old read without adopting or f
   });
   await waitFor(() => f.artwork.calls.reads.length === 1);
   f.$('coop-level').focus();
-  await f.choose('coop-level', 'first-connection');
+  await f.choose('coop-level', 'relay-yard');
   f.$('coop-versus').focus();
   gate.resolve();
   await new Promise((resolve) => setImmediate(resolve));
@@ -146,7 +150,7 @@ test('a new actual arena choice supersedes a held old read without adopting or f
   assert.equal(state(f), 'ready');
   assert.equal(f.artwork.calls.decodes.length, 1);
   start(f);
-  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assert.equal(lastImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
 });
 
 for (const interruption of ['blur', 'hidden', 'pagehide']) {
@@ -257,6 +261,7 @@ test('required decode failure exposes Retry with no procedural fallback or autom
 
 test('confirmed Retry retains the immutable authored arena and exact accepted picture after live enemy mutation', async (t) => {
   const f = await page(t, options);
+  await f.choose('coop-level', 'relay-yard');
   f.$('coop-start').click();
   const firstPaint = f.lastPaint,
     image = lastImage(f);
@@ -277,12 +282,13 @@ test('confirmed Retry retains the immutable authored arena and exact accepted pi
   assert.equal(f.$('coop-clock').textContent, '0:00');
   assert.equal(f.lastPaint, firstPaint);
   assert.equal(lastImage(f), image);
-  assert.equal(f.artwork.calls.reads.length, 1);
-  assert.equal(f.artwork.calls.releases.length, 0);
+  assert.equal(f.artwork.calls.reads.length, 2);
+  assert.deepEqual(f.artwork.calls.releases, [f.artwork.calls.urls[0]]);
 });
 
 test('changed accepted asset authority refuses Retry before replacing the paused run or image', async (t) => {
   const f = await page(t, options);
+  await f.choose('coop-level', 'relay-yard');
   start(f);
   f.tick(90);
   pause(f);
@@ -298,7 +304,7 @@ test('changed accepted asset authority refuses Retry before replacing the paused
   assert.deepEqual(hud(f), before);
   assert.equal(lastImage(f), image);
   assert.equal(f.$('coop-overlay').hidden, false);
-  assert.equal(f.artwork.calls.reads.length, 1);
+  assert.equal(f.artwork.calls.reads.length, 2);
   asset.revision = old;
   f.$('coop-resume').click();
   f.tick(90);
@@ -415,6 +421,7 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
     'revealline.audio-master.v1',
     'revealline.display.v1',
     'revealline.menu-style.v1',
+    'revealline.team-arena.v1',
   ]);
   assert.deepEqual([...new Set(writes)].sort(), [
     'revealline.display.v1',
