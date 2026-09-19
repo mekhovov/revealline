@@ -21,6 +21,7 @@ export function attachStillMediaPanel({
   preview,
   onClose = () => {},
   onSaved = () => {},
+  onLoaded = () => {},
   decodeImage,
   URLImpl = globalThis.URL,
   makeId = () => `still-${crypto.randomUUID()}`,
@@ -504,10 +505,17 @@ export function attachStillMediaPanel({
           progress.update({ message: 'Reading optional story history…', stage: 'reading' });
           await story.load({ signal, check });
         }
+        check();
         setStatus(
           'Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision.',
         );
+        try {
+          onLoaded();
+        } catch (error) {
+          setStatus(`Saved originals verified, but its notification failed: ${message(error)}.`);
+        }
       },
+      { opener: reload },
     );
   }
   const view = (selected, asset, blob) => ({
