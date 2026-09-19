@@ -1,0 +1,9 @@
+# Archive 33 — v0.64.3 preservation evidence
+
+The original hosted audit ZIP contains all 712 HTTP rows and attempts, the before/after archive authorities, exact helper/input originals and the Pages deployment receipt. `originals-index.json` records every member hash; the ZIP is retained byte-for-byte. The selected readable JSON records below are unchanged originals from that evidence or the final independent review.
+
+The audit verified 313,572,608 bytes in 712 single attempts, with no failure, retry or prior archive rows. The deployed archive commit is `b184d8d8872ec305d8606ac99bd3d6235e291db8`, tree `b46cb2fa286731828733a65f0b83f6b205f8e3f8`; Pages run 35468569854 and deployment 6545564229 are actual successful authorities. Fresh archive and v0.64.3 release/tag/source metadata remained unchanged. GitHub reports the release's immutable flag as false; exact source/tag/asset descriptors establish the recorded identity.
+
+Native evidence covers the actual 1280×720 keyboard and visible-control journey: retained media, writer refusal and later recovery, ordinary win/picture/results, and the archive-to-main explorer route. An immediate post-close retry still refused before a later deliberate retry succeeded; no timing cause is inferred. The attempted phone viewport did not apply to the observed tab, so phone/short-landscape, physical touch/controller, audio/offline, restore, and whole-phase acceptance remain outside this record.
+
+The main task has reviewed the originals and accepted this scoped archive preservation, as recorded in `root-acceptance.json`; `browser-admission.json` binds that acceptance to the native and final authority evidence. The publisher admission is prepared for integration and has not itself been deployed. Main v0.64.3 public HTTP acceptance remains separate and pending; no broader phase is closed.

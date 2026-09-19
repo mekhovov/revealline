@@ -132,6 +132,26 @@ If only a summary field is wrong, preserve executed helpers, reports and all row
 attach an explicit correction backed by independent complete-row reconciliation.
 Do not silently rewrite originals or repeat payload requests for that metadata error.
 
+Before adapting a receipt verifier, derive each release-specific value from the
+exact retained originals: hash the original manifest bytes, compare the
+distribution hash with the original release record and published asset descriptor,
+and derive historical bridge counts from the full semantic catalog under the
+reviewed retention policy. Match every retained archive identity to the current
+accepted admission and its actual deployment. An archive append can change those
+identities while retaining the archive number. Review the observer, receipt
+verifier, offline binding and final public validator as one chain; changing the
+version string alone is insufficient.
+
+If review catches stale checks before an artifact GET, preserve the donor,
+executed static utility and prior originals. Prepare only the corrected helper
+successor and exact input pins; keep capacity, transport, ZIP, time and retry
+limits unchanged. Verify the already-applied static outputs still match. Do not
+redownload a payload, rerun source qualification or rewrite historical evidence
+to repair a copied metadata assertion. Use the existing pure contracts and compare
+complete actual input pins; add a regression only for a new behavior or missing
+invariant, not a duplicate of implementation literals. A metadata review does not
+establish public-byte, native gameplay or device acceptance.
+
 Example prompt: “Retain this release in a new archive. Report zero prior accepted
 paths, derive every total from the exact inventory, and keep native play separate
 from byte acceptance. For an append, prove the stated prior paths remain unchanged.”

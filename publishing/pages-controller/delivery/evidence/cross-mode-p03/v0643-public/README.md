@@ -1,0 +1,11 @@
+# v0.64.3 — accepted Workshop recovery
+
+[Play v0.64.3](https://mekhovov.github.io/revealline/releases/v0.64.3/site/game/). Root accepted **P03-WORKSHOP-01** on 19 September 2026. The Workshop preserves retained originals when another game owns the writer, shows an actionable refusal, and recovers through deliberate Reload after that owner closes. Recovery clears the old error, reenables editing and restores Reload/Open focus through keyboard Back and reopen.
+
+The [original root acceptance](root-acceptance.json) binds frozen source `7a9985ec00168b99a86c1d5db0457343ca18ffae`, publisher `666c68a6f842da7cdac22c542e56f5e2910380e7`, Pages run 35469057384 and deployment 6545673666. Its complete main public audit verified **3,475 files / 644,520,592 bytes** in 3,475 attempts, with no failed files or retries. All 102 semantic catalog entries and 101 historical bridges were present; this main audit does not claim a fresh body audit of every external archive.
+
+The small originals are retained unchanged: [HTTP reconciliation](public-row-review.json), [native observation](native-observation.json), [final authorities](final-authority-review.json), and [publisher binding](publisher-binding.json). The [existing source qualification](../../../../evidence/current-v0643/source-qualification.json) reports 6,302 passing tests across 486 files per hosted family on Node 20.19.6; this acceptance review did not rerun source qualification. Exact source/tag/nine-asset and deployment identities remain in those records. The original local evidence references in the root record preserve provenance; the linked copies here contain the same bytes.
+
+Archive33's [separate accepted preservation](../../../../evidence/archive-33/initial-v0643/root-acceptance.json) verified 712 files / 313,572,608 bytes and its own scoped native journey. It is the retained v0.64.3 route for the next publisher; it does not substitute for this main release acceptance.
+
+**Limits:** actual 1280×720 desktop keyboard/visible controls and inline screenshots. No phone/short-landscape/zoom, physical controller/touch, audio/offline, upload/assignment/restore/story or whole-phase acceptance. The ordinary First Signal win/full-picture/result journey is a navigation smoke check, not enemy-balance or replay-value qualification. P03, P05 and the broader programme remain incomplete.
