@@ -1075,7 +1075,10 @@ try {
     preserveRecovery = false,
     preserveResult = false,
   } = {}) {
-    if (!preserveResult) cancelResultAttempt();
+    if (!preserveResult) {
+      cancelResultAttempt();
+      journeyLaunch?.cancel?.();
+    }
     // Opening a secondary dialog must not dismiss a settled recovery path.
     // A retry, new context or page retirement still cancels it unconditionally.
     const keepRecovery =
@@ -3387,22 +3390,23 @@ try {
       return false;
     pause(true);
     clearInput();
-    const owner = { run, runId, mission, feedback: null };
+    const owner = { run, runId, mission, feedback: null, cancel: null };
     journeyLaunch = owner;
     const operation = packLaunchGuard.begin(packs);
     packCommits.markIntent();
     contentSwitchBusy = true;
     refreshContentSelectors();
     try {
+      owner.cancel = ({ restoreFocus = false } = {}) => {
+        if (journeyLaunch !== owner) return;
+        journeyLaunch = null;
+        invalidateContentSwitch();
+        owner.feedback?.finish('Preparation cancelled. Your current flight is kept.', 'cancelled');
+        if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
+      };
       owner.feedback = beginPreparation(
         `Preparing ${mission.name}… Your current flight is kept.`,
-        ({ restoreFocus = false } = {}) => {
-          if (journeyLaunch !== owner) return;
-          journeyLaunch = null;
-          invalidateContentSwitch();
-          owner.feedback.finish('Preparation cancelled. Your current flight is kept.', 'cancelled');
-          if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
-        },
+        owner.cancel,
         'preparing',
         true,
       );
@@ -3432,6 +3436,9 @@ try {
       contentSwitchBusy = false;
       refreshContentSelectors();
       owner.feedback.finish();
+      // The exact picture/result ticket now owns cancellation. Later pause,
+      // navigation or lifecycle work must not revive the preceding pack owner.
+      owner.cancel = null;
       const adopted = await prepareResultAttempt(kind, index, entry);
       if (adopted && skipped)
         journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
