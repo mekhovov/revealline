@@ -68,6 +68,38 @@ have their narrower scope.
 
 ## Failed fixture attempts and limits
 
+### Official Journey gameplay identity
+
+Source review found that IDs alone admitted an edited imported campaign under an
+official Journey mission. P00 now compares the existing normalized campaign and
+equipment identity with a shipped pin before mission adoption or progress recording.
+All eight active pack pins are checked against their actual original files, and
+Standard/Gentle projections retain the original authored identity. The base campaign
+is bound directly to its shipped boot data. This is local progress provenance, not
+anti-cheat, authentication, or permission to overwrite imports.
+
+An edited same-ID pack is retained in Library and refused as official Journey
+content with an explanation; the current flight remains paused and intact. No
+automatic replacement or migration of the player's custom pack occurs. The new
+unit test initially failed because the authority module had not yet been created;
+that is a test-first missing-module result, not a native exploit reproduction.
+The host regression separately exercises the actual chooser and modified pack.
+Qualification of `1c1136e5` predates this correction and is precursor evidence only.
+
+After adding the check, the actual local browser reloaded, opened title Missions,
+searched Midnight, and launched the already-installed official Midnight Channel
+card in one activation. The arena became active with a running timer; Escape
+returned to the paused overlay with Resume focused. This verifies local ordinary
+launch and return, not public delivery or the edited-import refusal in a native
+browser. Source validation reported 667 files; full lint, source/native formatting,
+motion syntax and production/readiness checks passed on the correction worktree.
+The complete three-file Journey cohort passed 21/21 tests with no skips in
+126.70 seconds. This includes ten consecutive Next transitions, storage recovery,
+all three cold-cancellation routes, refusal of edited same-ID content with the
+old flight retained, and ordinary cross-pack failure/retry. The authority unit
+file also passed independently after changing its equipment case to a gameplay
+cooldown mutation. Complete hosted qualification is still required.
+
 Post-PR review reproduced another real bug: opening Missions during a held cold
 pack download did not retire the old pack owner, so a new card selection could
 be ignored. The new-chooser regression failed with an unsettled host action before

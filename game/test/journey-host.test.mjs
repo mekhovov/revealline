@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -203,32 +204,62 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
     assert.deepEqual(p.errors, []);
   });
 
+// Models only image decode completion; browser/pixel evidence is separate.
+class Picture {
+  constructor() {
+    this.naturalWidth = this.naturalHeight = 1;
+  }
+  set src(value) {
+    this.url = value;
+    if (value?.startsWith('data:')) {
+      const header = inspectImageDataUrl(value);
+      this.naturalWidth = header.width;
+      this.naturalHeight = header.height;
+    }
+    if (value) queueMicrotask(() => this.onload?.());
+  }
+  get src() {
+    return this.url;
+  }
+  decode() {
+    return Promise.resolve();
+  }
+  removeAttribute() {
+    this.url = '';
+  }
+}
+
+test('Journey refuses an edited same-ID pack without replacing the current flight or awarding progress', async (t) => {
+  const edited = JSON.parse(
+    await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url), 'utf8'),
+  );
+  edited.campaigns[0].levels[0].goal.coverage = 0.01;
+  const { p, backend } = await setup(t, {
+    pictures: { Image: Picture },
+    fetchJSON: (url) => (url === 'content/packs/fpv-arcade-r5.json' ? edited : undefined),
+  });
+  const original = p.rendered.run;
+  p.$('shell-packs').click();
+  p.$('journey-search').value = 'Orchard Crossing';
+  p.$('journey-search').emit('input');
+  p.$('journey-cards').children[0].click();
+  await waitFor(
+    () => p.$('run-message').textContent.includes('differs from this Journey edition'),
+    {
+      timeoutMs: 30000,
+      message: 'Edited same-ID campaign was not refused after cold original verification.',
+    },
+  );
+  p.frame(0);
+  assert.equal(p.rendered.run, original);
+  assert.equal(p.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual((await backend.read()).clears.solo, {});
+  assert.match(p.$('run-message').textContent, /imported content is kept/);
+  assert.deepEqual(p.errors, []);
+});
+
 test('Journey campaign-boundary Next keeps a result on failed download and retries into the next pack', async (t) => {
   let failing = true;
-  // Models only image decode completion; browser/pixel evidence is separate.
-  class Picture {
-    constructor() {
-      this.naturalWidth = this.naturalHeight = 1;
-    }
-    set src(value) {
-      this.url = value;
-      if (value?.startsWith('data:')) {
-        const header = inspectImageDataUrl(value);
-        this.naturalWidth = header.width;
-        this.naturalHeight = header.height;
-      }
-      if (value) queueMicrotask(() => this.onload?.());
-    }
-    get src() {
-      return this.url;
-    }
-    decode() {
-      return Promise.resolve();
-    }
-    removeAttribute() {
-      this.url = '';
-    }
-  }
   const { p } = await setup(t, {
     pictures: { Image: Picture },
     fetchResponse: (url) => {
