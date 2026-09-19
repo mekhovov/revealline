@@ -16,3 +16,13 @@
 - Validation result and next runtime checks:
 
 Keep exact data fields in the contract; this companion brief can express proposed art direction without implying a new schema field exists.
+
+## Cross-mode Studio inspection
+
+- Record the selected theme/collection, asset revision, mode, arena, scene and actual renderer width for both Saved and Draft.
+- Inspect Solo, both independent Versus boards and each compatible Team arena. Team currently has FPV starter bindings; unsupported editions and unbound roles remain explicit gaps.
+- Compare compact and detailed bodies at their actual responsive widths. An inactive selected treatment is labelled; Native size inspects that file directly. Never turn a forced sprite override into a claim about runtime selection.
+- Team scenes are reached through real commands. Hold rescue by stopping steps; pause releases its input. Playing uses a bounded isolated replay, with reduced effects preserving a still specimen.
+- Record picture owner/arena compatibility, frame, pivot, rotors, cancelled/stale decode behavior and resource cleanup. Keep native layout, physical input, sound, gameplay and public release checks separate.
+
+Copyable inspection prompt: “Inspect ASSET_ID at REVISION in Solo, both Versus boards and each compatible Team arena. Compare Saved/Draft at compact and detailed widths, then inspect relevant warning, capture, downed, rescue and recovery states. Explain unavailable bindings; do not substitute an unrelated mission or fabricate simulation states. Cancel a delayed preview and resize while paused. Preserve authored levels, theme history, player saves and earned originals. Report the exact evidence and remaining release checks.”

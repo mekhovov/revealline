@@ -41,4 +41,8 @@ test('the release allowlist includes the Studio and its complete static module g
   assert.ok(seen.has('game/presentation/current-art.mjs'));
   assert.ok(seen.has('game/presentation/studio-store.mjs'));
   assert.ok(seen.has('game/ui/render.mjs'));
+  assert.ok(seen.has('game/multiplayer.mjs'));
+  assert.ok(seen.has('game/couch/coop-view.mjs'));
+  assert.ok(seen.has('game/couch/coop-picture-bindings.mjs'));
+  assert.ok(seen.has('authoring/asset-studio/team-preview-fixture.mjs'));
 });

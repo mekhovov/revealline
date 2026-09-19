@@ -9,6 +9,9 @@ import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { reviseStudioTheme } from '../presentation/studio-session.mjs';
+import { resolvePresentation } from '../presentation/model.mjs';
 
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const deferred = () => {
@@ -53,6 +56,42 @@ function mount(doc, html) {
 test('actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only', async (t) => {
   const pixels = iconForSlot('icon.play');
   const bytes = encodeSpritePNG(pixels);
+  // Load a real verified release document, not only the source-name defaults:
+  // the approved field-kit identity must survive a later custom upload.
+  const base = createDefaultThemeBundle(),
+    publishedSlot = base.slots[0],
+    publishedBytes = encodeSpritePNG(iconForSlot('icon.pause')),
+    publishedHash = await hashPresentationBytes(publishedBytes);
+  const produced = {
+    ...structuredClone(base.assets[0]),
+    id: `${publishedSlot.id}.field-kit`,
+    kind: 'image',
+    recipe: null,
+    geometry: publishedSlot.geometry,
+    file: {
+      sha256: publishedHash,
+      bytes: publishedBytes.length,
+      mime: 'image/png',
+      width: 24,
+      height: 24,
+    },
+    quality: { stage: 'produced', evidence: [] },
+  };
+  const approved = {
+    ...produced,
+    revision: 2,
+    quality: {
+      stage: 'reviewed',
+      evidence: ['Fixture slot geometry and exact PNG bytes checked.'],
+    },
+  };
+  const published = reviseStudioTheme(
+    reviseStudioTheme(base, {
+      assets: [produced],
+      bindings: { [publishedSlot.id]: { id: produced.id, revision: 1 } },
+    }),
+    { assets: [approved], bindings: { [publishedSlot.id]: { id: approved.id, revision: 2 } } },
+  );
   const doc = new Document(),
     window = new Events();
   const readGate = deferred(),
@@ -105,6 +144,9 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
         {
           putImageData: (value) => {
             this.paintedPixels = new Uint8ClampedArray(value.data);
+          },
+          drawImage: (bitmap) => {
+            this.drawnBlob = bitmap.blob;
           },
           getImageData: () => ({
             width: this.width,
@@ -176,19 +218,25 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       }
     },
     matchMedia,
-    fetch: async () => new Response('', { status: 404 }),
-    createImageBitmap: async () => {
+    fetch: async (url) =>
+      String(url).endsWith('/compiled/studio.json')
+        ? new Response(JSON.stringify(published))
+        : String(url).endsWith(`/compiled/assets/${publishedHash}.png`)
+          ? new Response(publishedBytes)
+          : new Response('', { status: 404 }),
+    createImageBitmap: async (blob) => {
       if (delayDecode) {
         await decodeGate.promise;
         return {
           width: 24,
           height: 24,
+          blob,
           close() {
             lateClosed++;
           },
         };
       }
-      return { width: 24, height: 24, close() {} };
+      return { width: 24, height: 24, blob, close() {} };
     },
     cancelAnimationFrame() {},
   };
@@ -319,7 +367,11 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     assert.equal($(id).hasAttribute('data-studio-startup-disabled'), false);
   startupGate.resolve();
   await until(() => $('cancel-studio-operation').hidden);
-  assert.match(message(), /Source registry loaded/);
+  assert.match(message(), /Current release assets loaded/);
+  // The approved fixture remains available throughout all later inspection
+  // journeys, including the separate cross-mode preview test composition.
+  $('filter-quality').value = '';
+  $('filter-quality').emit('change');
   // The actual click handler is the browser's keyboard/pointer activation path.
   // This models DOM focus ownership; native Enter/Tab behavior is checked separately.
   const inventoryButton = (slotId) =>
@@ -327,8 +379,61 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       .querySelectorAll('button')
       .find((button) => button.querySelector('small')?.textContent.startsWith(`${slotId} ·`));
   const originalSlot = $('slot-id').textContent;
-  // This source host deliberately has no compiled release: its font slots are
-  // recipes. Filter those same three slots without inventing installed font files.
+  const preferenceWritesBeforeInspection = preferenceWrites.length;
+  $('preview-mode').value = 'context';
+  $('preview-mode').emit('change');
+  $('preview-field-mode').value = 'team';
+  $('preview-field-mode').emit('change');
+  assert.equal($('preview-team-arena').disabled, false);
+  $('preview-team-arena').value = 'relay-yard';
+  $('preview-team-arena').emit('change');
+  $('preview-team-scenario').value = 'rescue-p2';
+  $('preview-team-scenario').emit('change');
+  $('preview-team-arena').focus();
+  $('preview-team-arena').value = 'first-connection';
+  $('preview-team-arena').emit('change');
+  await flush();
+  assert.equal($('preview-team-scenario').value, 'initial');
+  assert.equal(
+    $('preview-team-scenario').options.find((option) => option.value === 'rescue-p2').disabled,
+    true,
+  );
+  assert.equal(doc.activeElement, $('preview-team-arena'));
+  const originalScreenFilter = $('filter-screen').value;
+  $('filter-screen').value = 'flight';
+  $('filter-screen').emit('change');
+  $('filter-search').value = 'scene.reveal.wide';
+  $('filter-search').emit('input');
+  const recipeScene = inventoryButton('scene.reveal.wide');
+  assert.ok(recipeScene);
+  const previousFetch = globalThis.fetch,
+    inspectionFetches = [];
+  globalThis.fetch = async (...args) => {
+    inspectionFetches.push(args[0]);
+    return previousFetch(...args);
+  };
+  recipeScene.click();
+  await flush();
+  assert.match(
+    $('current-preview-status').querySelector('.operation-status-label').textContent,
+    /picture recipe has no Team field preview/,
+    'A Team picture recipe fails visibly before looking up an unrelated Solo owner.',
+  );
+  assert.equal(inspectionFetches.length, 0);
+  globalThis.fetch = previousFetch;
+  assert.equal(preferenceWrites.length, preferenceWritesBeforeInspection);
+  $('preview-mode').value = 'pixel';
+  $('preview-mode').emit('change');
+  $('preview-field-mode').value = 'solo';
+  $('preview-field-mode').emit('change');
+  assert.equal($('preview-team-arena').disabled, true);
+  $('filter-search').value = '';
+  $('filter-search').emit('input');
+  $('filter-screen').value = originalScreenFilter;
+  $('filter-screen').emit('change');
+  inventoryButton(originalSlot).click();
+  // The bounded release fixture keeps its font slots as recipes. Filter those
+  // same three slots without inventing installed font files.
   $('filter-kind').value = 'recipe';
   $('filter-kind').emit('change');
   $('filter-search').value = 'font.';
@@ -407,6 +512,7 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   $('filter-kind').emit('change');
   $('filter-search').value = '';
   $('filter-search').emit('input');
+  assert.ok(inventoryButton(originalSlot), 'Every stage includes the approved release asset.');
   inventoryButton(originalSlot).focus();
   inventoryButton(originalSlot).click();
   await flush();
@@ -601,6 +707,63 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   await $('stage-asset').onclick();
   assert.match(message(), /validated and staged/);
   assert.match($('workspace-summary').textContent, /unsaved changes/);
+  const historyRow = (id, revision) =>
+    $('asset-history').children.find(
+      (row) => row.querySelector('strong')?.textContent === `${id}@${revision}`,
+    );
+  const bindButton = (id, revision) =>
+    historyRow(id, revision)
+      ?.querySelectorAll('button')
+      .find((button) => button.textContent === 'Bind this revision');
+  const currentBinding = () => JSON.parse($('slot-contract').textContent).currentAsset;
+  const customId = `${originalSlot}.custom`;
+  assert.ok(
+    historyRow(approved.id, 2),
+    'The exact earlier approved field-kit revision stays reachable.',
+  );
+  assert.ok(bindButton(approved.id, 2));
+  assert.equal(
+    bindButton(customId, 1).disabled,
+    true,
+    'Only the current exact revision is disabled.',
+  );
+  const sourceRow = historyRow(`${customId}.source`, 1);
+  assert.ok(
+    sourceRow.querySelectorAll('button').some((button) => button.textContent === 'Download file'),
+  );
+  assert.equal(
+    bindButton(`${customId}.source`, 1),
+    undefined,
+    'An unprepared original is download-only.',
+  );
+  assert.ok(
+    sourceRow
+      .querySelectorAll('p')
+      .some((paragraph) => /Source original/.test(paragraph.textContent)),
+  );
+  const customPreviewBytes = async (surface) => {
+    await until(() => $(surface).querySelector('canvas')?.drawnBlob);
+    return Buffer.from(await $(surface).querySelector('canvas').drawnBlob.arrayBuffer());
+  };
+  assert.deepEqual(await customPreviewBytes('current-preview'), Buffer.from(publishedBytes));
+  assert.deepEqual(await customPreviewBytes('draft-preview'), Buffer.from(bytes));
+  assert.equal(
+    await createStudioStore({ indexedDB: db.indexedDB }).load(),
+    null,
+    'Staging never saves.',
+  );
+  await bindButton(approved.id, 2).onclick();
+  assert.equal(currentBinding(), `${approved.id}@2`);
+  assert.deepEqual(await customPreviewBytes('draft-preview'), Buffer.from(publishedBytes));
+  assert.equal(bindButton(approved.id, 2).disabled, true);
+  assert.equal(bindButton(customId, 1).disabled, false);
+  await $('undo-draft').onclick();
+  assert.equal(currentBinding(), `${customId}@1`);
+  await $('redo-draft').onclick();
+  assert.equal(currentBinding(), `${approved.id}@2`);
+  await $('undo-draft').onclick();
+  assert.equal(currentBinding(), `${customId}@1`);
+  assert.deepEqual(await customPreviewBytes('current-preview'), Buffer.from(publishedBytes));
   const stagedSummary = $('workspace-summary').textContent,
     stagedStatus = message(),
     stagedHistory = [$('undo-draft').disabled, $('redo-draft').disabled];
@@ -616,6 +779,32 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.deepEqual(Buffer.from(await saved.assets.get(hash).arrayBuffer()), Buffer.from(bytes));
   assert.equal(saved.generation, 1);
   assert.ok(saved.document.assets.some((asset) => asset.id.endsWith('.source')));
+  assert.deepEqual(saved.document.themes.slice(0, published.themes.length), published.themes);
+  assert.deepEqual(saved.document.assets.slice(0, published.assets.length), published.assets);
+  assert.deepEqual(resolvePresentation(saved.document).bindings[originalSlot], {
+    id: customId,
+    revision: 1,
+  });
+  assert.deepEqual(
+    Buffer.from(await saved.assets.get(publishedHash).arrayBuffer()),
+    Buffer.from(publishedBytes),
+  );
+  await bindButton(approved.id, 2).onclick();
+  assert.equal(currentBinding(), `${approved.id}@2`);
+  assert.equal((await createStudioStore({ indexedDB: db.indexedDB }).load()).generation, 1);
+  await $('reset-draft').onclick();
+  assert.equal(currentBinding(), `${customId}@1`, 'Reset keeps the last saved custom binding.');
+  await $('reload-workspace').onclick();
+  assert.equal(currentBinding(), `${customId}@1`);
+  assert.ok(
+    bindButton(approved.id, 2),
+    'Reloaded history still reaches the exact approved original.',
+  );
+  assert.deepEqual(await customPreviewBytes('current-preview'), Buffer.from(bytes));
+  assert.deepEqual(
+    (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
+    saved.document,
+  );
   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
   $('new-sprite').onclick();
   const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);

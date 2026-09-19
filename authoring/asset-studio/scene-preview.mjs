@@ -15,6 +15,7 @@ import { Soundscape } from '../../game/ui/audio.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentation.mjs';
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
 import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
+import { crossModeContextPreview, stageBoardPreviewEffect } from './cross-mode-preview.mjs';
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
   node.textContent = value;
@@ -236,6 +237,15 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   );
 }
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
+  if (options.fieldMode && options.fieldMode !== 'solo')
+    return crossModeContextPreview(surface, slot, asset, resolved, blobs, options, own, {
+      context: (id, owner) => fixtureLoader.context(id, owner),
+      bodyIds,
+      imageRoles,
+      decode: croppedImage,
+      presentation: createStudioContextPresentation,
+      loop,
+    });
   options.onStatus?.('loading scene fixtures…', 'downloading');
   const classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout',
     pictureOwner = options.pictureOwner || options.sourcePicture,
@@ -263,21 +273,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     return;
   }
   painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
-  if (slot.id.startsWith('effect.')) {
-    const type = {
-      failure: 'player.failed',
-      pickup: 'powerup.collected',
-      shield: 'shield.absorbed',
-      respawn: 'player.respawned',
-      pressure: 'lineImpact.seeded',
-      capture: 'cells.claimed',
-      victory: 'run.completed',
-    }[slot.id.slice(7)];
-    painter.effectsFor(
-      [{ type, tick: run.tick, x: run.player.x, y: run.player.y, kind: 'extra-life' }],
-      run,
-    );
-  }
+  stageBoardPreviewEffect(painter, slot, run);
   const scoped = { ...resolved.assets, [slot.id]: asset },
     decoded = new Map();
   for (const [id, candidate] of Object.entries(scoped)) {

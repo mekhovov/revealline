@@ -646,6 +646,17 @@ body.field-kit {
   border: 2px solid var(--fk-line);
   background: var(--fk-bg);
 }
+.board-context-versus {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  align-items: start;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+}
+.board-context-versus .board-context-frame {
+  min-width: 0;
+}
 .context-hud {
   display: flex;
   justify-content: space-between;

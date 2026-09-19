@@ -98,8 +98,12 @@
           </button>
           <details class="pack-picker">
             <summary>Play a created co-op pack</summary>
-            <label for="coop-pack-file">Open a co-op pack JSON file</label>
-            <input id="coop-pack-file" type="file" accept=".json,application/json" />
+            <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
+            <input
+              id="coop-pack-file"
+              type="file"
+              accept=".json,.rlteam,application/json,application/vnd.revealline.team-presentation"
+            />
             <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
             <button id="coop-pack-retry" type="button" hidden>Retry pack</button>
             <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>

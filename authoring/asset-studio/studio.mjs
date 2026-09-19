@@ -20,6 +20,7 @@ import {
   adoptStudioBundle,
   generateAssetPrompt,
   nextAssetRevision,
+  studioSlotHistory,
 } from '../../game/presentation/studio-session.mjs';
 import { createStudioStore } from '../../game/presentation/studio-store.mjs';
 import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
@@ -317,6 +318,18 @@ function refreshInspector() {
   refreshPreviews();
 }
 async function refreshPreviews() {
+  const fieldContext = $('preview-mode').value === 'context',
+    teamContext = fieldContext && $('preview-field-mode').value === 'team';
+  $('preview-field-mode').disabled = !fieldContext;
+  $('preview-team-arena').disabled = !teamContext;
+  $('preview-team-scenario').disabled = !teamContext;
+  const firstConnection = $('preview-team-arena').value === 'first-connection',
+    scenario = $('preview-team-scenario'),
+    firstConnectionScenes = ['initial', 'cutting', 'warning', 'charge', 'capture', 'victory'];
+  for (const option of scenario.options)
+    option.disabled = firstConnection && !firstConnectionScenes.includes(option.value);
+  if (firstConnection && !firstConnectionScenes.includes(scenario.value))
+    scenario.value = 'initial';
   const requestedPreview = ++previewGeneration;
   const slot = currentSlot(),
     current = resolvePresentation(saved.document),
@@ -328,6 +341,9 @@ async function refreshPreviews() {
     audioMaster,
     motionPreferences: interfacePreferences.motion,
     mode: $('preview-mode').value,
+    fieldMode: $('preview-field-mode').value,
+    teamArena: $('preview-team-arena').value,
+    teamScenario: $('preview-team-scenario').value,
     background: $('preview-background').value,
     geometry: $('preview-geometry').checked,
     motion: $('preview-motion').value,
@@ -381,15 +397,9 @@ function refreshPrompt() {
 }
 function refreshHistory() {
   const asset = resolved().assets[selected],
-    related = new Set([
-      asset?.id,
-      `${selected}.default`,
-      `${selected}.custom`,
-      `${selected}.custom.source`,
-    ]);
-  const history = working.document.assets.filter((item) => related.has(item.id)).reverse();
+    history = studioSlotHistory(working.document, selected);
   $('asset-history').replaceChildren(
-    ...history.map((item) => {
+    ...history.map(({ asset: item, bindable }) => {
       const row = node('div', '', 'history-row'),
         copy = node('div');
       copy.append(
@@ -411,6 +421,12 @@ function refreshHistory() {
             `${item.id}-${item.revision}.${extension(item.file.mime)}`,
           );
         row.append(downloadButton);
+      }
+      if (!bindable) {
+        row.append(
+          node('p', 'Source original · prepare it before binding to this slot.', '', 'secondary'),
+        );
+        return row;
       }
       const button = node('button', 'Bind this revision', '', 'control');
       button.type = 'button';
@@ -978,6 +994,9 @@ $('filter-theme').onchange = () =>
   });
 [
   'preview-mode',
+  'preview-field-mode',
+  'preview-team-arena',
+  'preview-team-scenario',
   'preview-background',
   'preview-geometry',
   'preview-motion',
