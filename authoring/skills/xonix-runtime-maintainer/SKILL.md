@@ -781,3 +781,10 @@ Flight Details regression prompt: “Start and pause an exposed cut. Enter Field
 #### Details lifetime through backup completion
 
 Keep the installed Field details presenter owned by the page, not by a backup transaction. Editing the shared declaration must not accidentally rewrite unrelated `backupBusy = false` assignments in finally blocks. Verify actual app-mounted successful import, Undo and failure, then persisted and terminal pagehide. A presentation reference reset can leave click handlers alive while breaking lifecycle cleanup; testing only whether the dialog opens is insufficient.
+
+
+### Narrow Solo active-flight counter clearance
+
+Follow [the scoped HUD layout contract](../../../docs/device-controls.md#narrow-solo-flight-counters--p05-hud-correction). The 521–680px, at-most-600px-high running-landscape correction uses two stat columns and a text-token-derived stable header reserve. Preserve selected fonts, complete numeric values, target/caption ownership, 44px actions, conditional controls and full-board aspect fitting. Keep training, portrait and Couch outside this rule; no event-dependent geometry or hide-all prototype substitution. A larger header reduces the playing arena and needs actual play-scale review.
+
+Retain exact original baseline and native candidate observations. Check actual DOM text/control/board rectangles with Standard/Large, Theme/Plain, shown/hidden D-pad and the deliberate floating-stick overlay; preserve both steering hands and explicit Pause/Resume. A zero-score candidate preview does not certify long or fractional scores, and a resized desktop is not a physical device. Do not add tests that merely repeat CSS declarations or treat fake rectangles as native layout evidence. Run applicable existing contracts when their behavior changes, then qualify the exact final integrated source and affected public journeys. Use the [maintenance prompt](../../prompts/cross-mode-delivery.md#qualify-narrow-solo-active-flight-counters); keep P03/P05 and broader zoom/input/play-comfort gates open.
