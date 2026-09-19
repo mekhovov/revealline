@@ -1,5 +1,6 @@
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
+import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
@@ -308,6 +309,12 @@ try {
   const practiceSession = !!scenario;
   // P00 technical preview. Historical editions keep their original navigation.
   const journeyEnabled = params.get('journey') === '1' && !practiceSession;
+  const journeyAuthority = journeyEnabled
+    ? createJourneyAuthority({
+        baseCampaign,
+        pins: await getJSON('content/journey-campaign-pins.json'),
+      })
+    : null;
   const journeyCatalog = journeyFromPackCatalog(
     baseCampaign,
     preparePackCatalog(packCatalogSource),
@@ -3360,6 +3367,7 @@ try {
     });
   }
   function journeyMission(entry = activeEntry, index = levelIndex) {
+    if (!journeyAuthority?.matches(entry)) return null;
     const authored = entry.baseCampaign || entry.campaign;
     const level = authored.levels[index];
     if (!level) return null;
@@ -3426,6 +3434,10 @@ try {
           entry.sourcePackId === mission.packId && entry.campaign.id === mission.campaignId,
       );
       if (!authored) throw new Error('This mission is unavailable in the current edition.');
+      if (!journeyAuthority.matches(authored))
+        throw new Error(
+          'The installed campaign differs from this Journey edition. Your imported content is kept. Manage it in Library or choose another mission.',
+        );
       const entry =
         executionCatalog.select(
           campaignKey(authored.campaign),

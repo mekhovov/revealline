@@ -132,6 +132,9 @@ The audit still covers all 110 missions, including those editions.
 
 - `game/journey/catalog.mjs`: stable mission ownership, ordered continuation,
   global search and explicit mode filters.
+- `game/journey/authority.mjs`: shipped gameplay/equipment pins prevent edited
+  same-ID imports from becoming official Journey missions. Custom content is
+  preserved; this local identity check is not authentication or anti-cheat.
 - `game/journey/profile.mjs`: version-independent, transactional IndexedDB event
   merging, session-only fallback, retry and progress export. Frozen save formats
   are not migrated or overwritten. Full backup restoration remains to be integrated.
