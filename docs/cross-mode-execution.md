@@ -1,5 +1,52 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — 19 September 2026
+
+**Play the accepted [v0.64.2 HUD update](https://mekhovov.github.io/revealline/releases/v0.64.2/site/game/).** Large/Plain flight counters now fit short landscape while keeping the complete arena and Pause button available. Rotation preserves the paused attempt until explicit Resume. The [scoped acceptance record](../publishing/pages-controller/delivery/evidence/cross-mode-p05/v0642-public/README.md) contains the release, test, public-audit and native evidence. This completes **P05-HUD-01**, not the whole presentation or navigation phase.
+
+**Next is Workshop recovery v0.64.3.** Its source is qualified and merged, and its stable release preserves all nine verified assets. A successful Reload clears the matching read-failure notice and restores focus to Reload without losing saved originals. Stable publication and Archive32 retention are complete. Pages deployment, public-byte verification and the affected public recovery journey are still required. **P03-WORKSHOP-01 remains Verification; P03 and P05 remain In progress.**
+
+### Next three deliveries
+
+1. **Publish and verify Workshop recovery:** keep the accepted HUD edition in Archive32 and the stable Workshop assets intact; deploy the reviewed selector; verify the deployed inventory and real keyboard failure → Reload → recovery journey.
+2. **Publish imported-Team continuation v0.65.0:** corrected exact source `57fdc39aa78683f6de479eb77f810f60e7c6756a` has successful final hosted runs and merged through source PR163 as `90ce831ee9e9a0b89195c252dd7aebf19298c03f`, with the same tree `b71a23d6c2474da72ef379793c811e7097b0a156`. Frozen-source inspection is complete. Finish the reviewed release package, immutable release and public imported picture → win → Next/Retry gates while preserving failed precursors. The enemy-free native flow proves navigation only; encounter balance and held rescue remain separate.
+3. **Qualify Team/Studio v0.66.0:** [source PR166](https://github.com/mekhovov/revealline/pull/166) now contains the combined pilot states, custom artwork and Studio history changes. Finish exact-source qualification and affected native/public checks before release. Candidate tests and an open PR are not a published feature.
+
+### Phase status
+
+Complete means accepted within the named release scope. Partial/In progress means required work remains; candidate preparation does not close a phase.
+
+| Phase | Status | Remaining delivery |
+|---|---|---|
+| P00 — Integration baseline | Complete, v0.55 | Preserve compatibility. |
+| P01 — Loading feedback | Complete, v0.57.4 | Apply the contract to new screens. |
+| P02 — Sound and music | A complete, v0.58.1; B partial | Cross-mode MP3/mixed playlists, transfer/offline use and the 24-track listening gate. |
+| P03 — Native navigation | In progress | Workshop publication; all menus, focus returns and keyboard/controller/touch journeys. |
+| P04 — Creation framework | Partial | Integrate prepared Studio work; prove edit/export/import/play and original-byte recovery. |
+| P05 — Readable presentation | In progress | HUD and Replay fixes accepted; finish EN/UA, all modes, zoom and reduced-effects coverage. |
+| P06 — Discovery/install | Partial | Discoverable compatible content, capacity, replacement/removal and interrupted-install recovery. |
+| P07 — Rewards/continuation | Partial | Imported-Team delivery; reliable Retry/Next, full-picture rewards, stories and Collection replay. |
+| P08 — Art and feedback | A/B partial | Role silhouettes, scale/heading and clear trail, impact, loss, pickup and Support/rescue feedback. |
+| P09 — Challenge/intelligence | Partial | Fair pressure, readable warnings, encounter tuning and deterministic replay/checkpoints. |
+| P10 — Team encounters | Queued | First Connection/Relay Yard variants and the two-player encounter matrix. |
+| P11 — FPV campaigns | Queued, 0/4 accepted | Four campaigns × twelve finished missions. |
+| P12 — DroneAid campaigns | Queued, 0/4 accepted | Four campaigns × twelve finished missions. |
+| P13 — Ukrainian culture | Queued | Twelve reviewed Living Atlas missions. |
+| P14 — Retro arcade | Queued | Twelve After School Arcade missions. |
+| P15 — Spend management | Queued | Twelve Spend in Motion missions. |
+| P16 — Supporting workflows | Partial | Collection, scores, replay, learning, restore and legacy workflows. |
+| P17 — Reproducible authoring | Partial | Fresh-workspace create/install/play/export/recover example; guides, skills and CLI examples. |
+| P18 — Browser qualification | Partial evidence | Complete regression, performance, accessibility, audio/offline/lifecycle, real hardware and human playtests. |
+| Native stores / online multiplayer | Deferred | Separate platform and network gates. |
+
+**Execution order after the three deliveries:** P03/P05 → P08-A/P08-B → P09/P07 → P02-B → P04/P06 → P10 → P11–P15 → P16/P17 → P18. Independently complete supporting fixes may ship earlier. The 132 new campaign missions remain a backlog target. Bulk production follows the three-level gameplay and presentation benchmark.
+
+Physical controllers/touch, 200% zoom, audible listening, offline acceptance, Team two-core encounters and held rescue remain open. Desktop viewport checks do not qualify physical devices. Every completed feature still needs its related commit, versioned release, Pages deployment and scoped public acceptance.
+
+## Historical records — preserved snapshots, not current status
+
+Everything below retains its original bytes and describes its recorded cutoff. Earlier uses of “current”, “pending” or “next” are historical and are superseded by the summary above. The exact source, failed attempts, qualification, release and acceptance identities remain available without treating an older candidate as today's status.
+
 **Current accepted public baseline, 19 September 2026: [v0.64.1 — readable Replay JSON](https://mekhovov.github.io/revealline/releases/v0.64.1/site/game/).** [Publication PR164](https://github.com/mekhovov/revealline/pull/164) delivered publisher `95575953e9601c2ee018e9803ea6f90db9d93e20` (tree `6a21170770cd7341abe423c88228a9424f80a5e9`); Pages run `35445356978` deployed as `6541328289`, success status `18562945129`. The complete public audit verified **3,425 files / 644,219,286 bytes**, with one resolved transient HTTP 503 retry, zero final failures and no uninspected files. Fresh release/tag/deployment authorities and the exact current bytes reconcile. Scoped native acceptance covers real keyboard play → Workshop → Replay → copy → close/focus restoration, Standard/Theme 16px text with 24px line height, Large/Plain 20px text with 30px line height, and 390×844 ↔ 600×400 rotation preserving text and focus. Download was requested but filesystem delivery was not confirmed. This closes the named Replay-readability delivery; P03/P05/P08/P18, physical controls, 200% zoom, audible/offline and whole-game acceptance remain open.
 
 **Previous accepted checkpoint, 19 September 2026: [v0.64.0 — Team field presentation](https://mekhovov.github.io/revealline/releases/v0.64.0/site/game/).** [Publication PR162](https://github.com/mekhovov/revealline/pull/162) delivered publisher `5807df71aa612636e574f66f0df99bf09506cbeb`; Pages run `35439057940` deployed as `6540160635`. The complete public audit passed **3,400 files / 644,070,167 bytes**, without failures, retries or uninspected paths. Fresh authority checks confirmed the release and deployment. Scoped desktop-browser acceptance covers Team terrain/trails and artwork, the complete 600×400 Large/Plain arena, keyboard Start/Pause/Help/Back/Settings/explicit Resume, Solo smoke and the previous v0.63.0 archive entry. This does not close P03, P05, P08 or P18.

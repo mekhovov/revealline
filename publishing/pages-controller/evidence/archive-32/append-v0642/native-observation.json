@@ -1,0 +1,38 @@
+{
+  "status": "PASS_SCOPED_NATIVE_ARCHIVE_APPEND",
+  "at": "2026-09-19T19:52:35.984929+00:00",
+  "archiveCommit": "2ff124892905eda499e7b1fb29729f092a253ecb",
+  "archiveTree": "12407d538821769350a37679ec0d214b99b77a98",
+  "method": "Actual Codex in-app browser UI; keyboard actions and visible AX/screenshot evidence. No simulated win or page-state injection.",
+  "newVersion": {
+    "url": "https://mekhovov.github.io/revealline-archive-32/releases/v0.64.2/site/game/",
+    "visibleVersion": "V0.64.2",
+    "chapter": "Pressure Lines / Orchard Crossing",
+    "observations": [
+      "Explicit Continue/Resume loaded 0%, 3 lives, 2:40.",
+      "Escape paused at 2:32; Field details opened by keyboard, described 68% target, three field threats plus contour, speed pickup, capture-stop and no manual equipment.",
+      "Escape returned from Field details with opener focus and the paused time unchanged.",
+      "Explicit Resume then a Down tap began a live line; observed one line loss, two lives and recovery waiting for fresh direction.",
+      "Escape paused at 0:55. No new cut completion or victory claimed for this scoped v0.64.2 run."
+    ],
+    "storageBoundary": "Another game tab owned saving; this archived run visibly used session-only mode. No persistence acceptance from this journey."
+  },
+  "retainedVersion": {
+    "url": "https://mekhovov.github.io/revealline-archive-32/releases/v0.64.1/site/game/",
+    "visibleVersion": "V0.64.1",
+    "observations": [
+      "Archive index linked both preserved versions. Tab/Return opened v0.64.1.",
+      "Return on Start launched First Signal; one Down tap continued after key release.",
+      "Actual win: 52.2% coverage, 8160 points, 0:08, three lives, three stars. Full picture visible.",
+      "Tab/Return opened View picture; Return on Results restored results and View picture focus. Score remained 8160.",
+      "No captured browser error logs."
+    ]
+  },
+  "navigation": "Archive index current release explorer link followed with Tab/Return to main /releases/, visibly Current v0.64.2.",
+  "evidence": "AX output and screenshot displayed inline in the task; no external screenshot file asserted.",
+  "limitations": [
+    "This supplements exact public byte verification; public audit pending.",
+    "No new physical touch/controller, audible audio, offline, zoom or comprehensive browser certification.",
+    "Whole P03/P05/P08/P18 remain partial."
+  ]
+}

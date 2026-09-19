@@ -1,0 +1,60 @@
+{
+  "status": "ACCEPTED_SCOPED_ARCHIVE32_V0642_APPEND",
+  "at": "2026-09-19T20:02:20.631672+00:00",
+  "archiveCommit": "2ff124892905eda499e7b1fb29729f092a253ecb",
+  "archiveTree": "12407d538821769350a37679ec0d214b99b77a98",
+  "archivePR": 2,
+  "pagesRun": 35464701544,
+  "deployment": 6544867176,
+  "deploymentStatus": 18570809928,
+  "auditRun": 35465766334,
+  "files": 1421,
+  "verifiedBytes": 627136217,
+  "attempts": 1421,
+  "failedAttempts": 0,
+  "retries": 0,
+  "priorCanonicalPathsPreserved": 711,
+  "priorReleasePathsPreserved": 709,
+  "priorRootSupportPathsPreserved": 2,
+  "changedPriorPaths": [
+    "index.html"
+  ],
+  "newHUDPaths": 709,
+  "sourceOriginalsPreserved": true,
+  "native": "Actual archived HUD gameplay/pause/brief/loss, retained v641 keyboard win/picture/results and archive-to-current explorer route. Session-only v642; no save acceptance inferred.",
+  "evidence": [
+    {
+      "path": ".cache/archive32-v0642-hosted-intake-r1/independent-review.json",
+      "bytes": 1007,
+      "sha256": "595eb460ac5cf4af088eaa3e126c61c09610957b1a99e2d7bd5eae17de4f76c7"
+    },
+    {
+      "path": ".cache/archive32-v0642-native-r1/native-observation.json",
+      "bytes": 2421,
+      "sha256": "f45f737fdb38104b8889ee7251a473dbab13f50dd5c7cfbdd2b464d38752f024"
+    }
+  ],
+  "freshAuthorities": [
+    {
+      "path": ".cache/archive32-v0642-root-acceptance-r1/main.json",
+      "sha256": "ba145e5617fdd6082eaf7298371af3ce743b7d004b1f07a8b5d5e6a2c0342fa4"
+    },
+    {
+      "path": ".cache/archive32-v0642-root-acceptance-r1/run.json",
+      "sha256": "8eee006d1ecc27244ce17e2573d3f1de53d9f30800a5dfd875f7ed7bbf953dbb"
+    },
+    {
+      "path": ".cache/archive32-v0642-root-acceptance-r1/deployment.json",
+      "sha256": "4453d5dacf019e570a1ad7d569609e18bd233cffd030cd155867e882c5281681"
+    },
+    {
+      "path": ".cache/archive32-v0642-root-acceptance-r1/statuses.json",
+      "sha256": "9aed8079ee60dc305506acac9175e4caa91b68d920f1c93aaacfabb425b2ab26"
+    }
+  ],
+  "limits": [
+    "Archive preservation acceptance only, not whole-game or physical device certification.",
+    "No physical touch/controller, audio, offline or zoom qualification.",
+    "Main release selector unchanged by this admission."
+  ]
+}
