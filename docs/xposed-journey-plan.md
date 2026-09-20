@@ -135,14 +135,20 @@ rename and organize candidates without JSON editing. Dependency-aware removal an
 archive/restore are implemented. All ten opening missions now have distinct
 original raster reveal candidates, pinned to exact bytes, hashes and dimensions.
 Whole-set native partial-reveal/contrast and human qualification remain open.
-The separate three-preset next-attempt preference store is tested but is not yet
-wired into player hosts; Legacy and v1 Journey progress schemas stay unchanged.
+The three-preset next-attempt preference store is now wired into the opt-in Solo
+opening host; Legacy and v1 Journey progress schemas stay unchanged.
 The shared candidate attempt preparer now exercises all sixty opening full-clear
 routes with exact compiler, preset, roster and replay identities, cancellation and
-verified artwork. It prepares but does not adopt into Journey or award progress.
+verified artwork. The opt-in `game/?journey=opening` now adopts these exact
+attempts into the real Solo host after run/focus/save/preset ownership checks,
+with original decoded pictures, cross-campaign Next, two-action Skip, a flat
+ten-mission chooser and an optional (not auto-assigned) Remix. Candidate clears
+record Journey progress, never Legacy collection/mastery awards. Candidate saves
+use a separate revision-pinned slot; ordinary gameplay and `journey=1` are intact.
 Studio now uses the actual authored Horizon theme, fixing its previous silent
 Retro substitution. See `docs/verification/xposed-journey-attempt-boundary.md`.
-Team qualification, Journey adoption and release gates remain. None of that branch's
+Broader host/preset/controller qualification, preference recovery controls,
+Versus/Team adoption, human validation and release gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
 
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
