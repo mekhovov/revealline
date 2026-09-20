@@ -219,6 +219,10 @@ export function createExternalChapterInstaller({
         conflicts.push(
           Object.freeze({
             identity: p.identity,
+            levelName:
+              item.pack.campaigns
+                .flatMap((campaign) => campaign.levels)
+                .find((level) => level.id === p.identity.levelId)?.name ?? p.identity.levelId,
             original: Object.freeze({ presentationId: p.id, revision: p.revision }),
             retained: assignment
               ? Object.freeze({

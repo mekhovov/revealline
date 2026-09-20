@@ -205,7 +205,8 @@ function pictureConflict() {
   error.name = 'RetainedPictureAssignmentConflict';
   error.conflicts = [
     {
-      identity: { levelId: 'orchard' },
+      identity: { levelId: 'internal-fixture-map-id' },
+      levelName: 'Orchard Crossing',
       retained: { presentationId: 'custom.orchard', revision: 2 },
     },
   ];
@@ -253,7 +254,10 @@ for (const pathway of ['download-play', 'download-install', 'upload']) {
     await opener.onclick();
     assert.equal(calls.length, 1);
     assert.equal(f.$('source-a-picture-review').hidden, false);
-    assert.match(f.$('source-a-picture-review-text').textContent, /Orchard: your selected picture/);
+    assert.match(
+      f.$('source-a-picture-review-text').textContent,
+      /Orchard Crossing: your selected picture/,
+    );
     assert.equal(
       f.$('source-a-picture-cancel').ownerDocument.activeElement,
       f.$('source-a-picture-cancel'),
@@ -366,4 +370,28 @@ test('late inspection after confirmed install and Back cannot overwrite new read
   await pending;
   assert.equal(f.$('source-a-state').textContent, before);
   assert.equal(f.$('source-a-choose').disabled, true);
+});
+
+test('Cancel then retry and confirm keeps visible status messages attached', async (t) => {
+  let installed = false;
+  const f = fixture(t, [
+    chapter('a', {
+      download: async ({ pictureReview }) => {
+        if (!pictureReview) throw pictureConflict();
+        installed = true;
+      },
+      inspect: async () => ({ status: installed ? 'installed' : 'absent' }),
+    }),
+  ]);
+  await f.panel.open();
+  const label = f.$('status').querySelector('.operation-status-label');
+  await f.$('source-a-download').onclick();
+  f.$('source-a-picture-cancel').onclick();
+  assert.equal(label.isConnected, true, 'Cancel must not detach the owned live status label');
+  await f.$('source-a-download').onclick();
+  assert.match(label.textContent, /Review your existing picture choices/);
+  await f.$('source-a-picture-confirm').onclick();
+  assert.equal(label.isConnected, true);
+  assert.match(f.$('status').textContent, /Originals installed/);
+  assert.doesNotMatch(f.$('status').textContent, /Installation cancelled/);
 });

@@ -427,7 +427,8 @@ export function attachOptionalChaptersPanel({
       const origin = row.pictureReview?.origin;
       discardPictureReviews();
       refresh();
-      status.textContent = `Installation cancelled. Your pictures and paused ${attemptLabel} are unchanged.`;
+      const message = `Installation cancelled. Your pictures and paused ${attemptLabel} are unchanged.`;
+      presentation.begin({ message }).finish({ message, state: 'cancelled' });
       if (dialog.open) (origin && !origin.disabled ? origin : row.choose).focus();
     });
     row.review.append(row.reviewText, row.confirm, row.dismiss);
@@ -845,7 +846,7 @@ export function attachOptionalChaptersPanel({
             error.conflicts
               .map(
                 (entry) =>
-                  `${entry.identity.levelId.replaceAll('-', ' ').replace(/^./, (letter) => letter.toUpperCase())}: ${entry.retained ? 'your selected picture' : 'your default picture'}`,
+                  `${entry.levelName ?? entry.identity.levelId.replaceAll('-', ' ').replace(/^./, (letter) => letter.toUpperCase())}: ${entry.retained ? 'your selected picture' : 'your default picture'}`,
               )
               .join('; ');
           if (focusPlan) focusPlan.next = sourceRow.dismiss;

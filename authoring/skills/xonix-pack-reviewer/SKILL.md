@@ -110,3 +110,11 @@ before adopting readiness. Skip fresh release-picture defaults only on the check
 preserve path; describe a committed install truthfully when later inspection fails.
 Exercise all three entry paths and keep browser input checks separate from modeled
 host tests. Never describe the review itself as replacing artwork or a flight.
+
+
+Never assign textContent/innerHTML to a container owned by createOperationStatus:
+that detaches its live label even if a later operation updates its original reference.
+Use the owner's begin/finish API for review cancellation. Exercise Cancel → retry →
+confirm in the real browser and assert the visible final message, not just the
+installed card state. Display authenticated authored map names in the review;
+retain internal IDs only in diagnostics/evidence.
