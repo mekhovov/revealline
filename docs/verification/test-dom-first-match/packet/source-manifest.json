@@ -1,0 +1,28 @@
+{
+  "base": "b25cc3f13337b446c58262a73706677d50cb6580",
+  "files": {
+    "game/test/helpers/couch-dom.mjs": {
+      "before": "878852600b15a1551ba136fd506f88c890349472c6fc340225ab423a299159f8",
+      "after": "74df1dfe5afdb295a168e8bc2ff9369aa547ebee06bb6ed92f243a1ef8770998",
+      "bytes": 12095
+    },
+    "game/test/dom-query-boundary.test.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "298e6465c4e6ce182fe83253d4a07e1758c73c8854912b72de7989914f3df95c",
+      "bytes": 3603,
+      "new": true
+    },
+    "docs/test-dom-first-match.md": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "d88951f4f2b217a4204da8136e9af3affe3e2abee4b44ecff4f48e23cbf04194",
+      "bytes": 2167,
+      "new": true
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "before": "47be0a9861d2189b059cca0c413a1e8c4bbb7cb23625481006a4e87d1757f120",
+      "after": "24ab08415be6480186c6202fa6faaea5eb36f38544b626ffbf2a076dbb2a8706",
+      "bytes": 281720
+    }
+  },
+  "patchSHA256": "a3aa90a28a72e1002c12c71dccb51dcea9ae7ce5b577ae6fc95b2d9bcffb8320"
+}

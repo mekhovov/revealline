@@ -1,0 +1,7 @@
+import './candidate/game/test/gallery-focus.test.mjs';
+import './candidate/game/test/practice-playground-display.test.mjs';
+import './candidate/game/test/presentation-ui.test.mjs';
+import './candidate/game/test/continuous-input.test.mjs';
+import './candidate/game/test/couch-input.test.mjs';
+import './candidate/game/test/dom-query-boundary.test.mjs';
+import './candidate/game/test/optional-world-play-host.test.mjs';
