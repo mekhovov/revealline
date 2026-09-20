@@ -127,12 +127,23 @@ files in the sparse worktree. Restoring their exact tracked copies allowed norma
 boot; their error logs remain, with no new errors after successful launch.
 This is an agent opening observation, not a complete native route or human test.
 
+## Local tracing benchmark
+
+[The six-fixture color-tracing benchmark](signal-tracing-benchmark.md) records a
+bounded local proposal prototype and five passing tests. Flat/noisy cell-aligned
+diagrams match exactly, while a similar-colored background has2330false positives
+and only0.021intersection-over-union. Fragmented output is explicitly refused.
+The prototype does not decode, save, apply or publish and is not exposed in Studio.
+Retain manual geometry as the supported UI path until real-image/crop/native and
+human-correction evidence justifies an assisted UI. This is measured feasibility
+and a documented limitation, not completed general image-to-map recognition.
+
 ## Remaining gates
 
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
-presentation; local assisted-tracing benchmark; native/device/accessibility and
+presentation; real-image assisted-trace qualification if exposed; native/device/accessibility and
 human comprehension/enjoyment; reviewed final-source PR, immutable release,
 Pages acceptance and rollback. No phase is complete merely because greyboxes pass.
 
