@@ -1,0 +1,15 @@
+{
+  "source": "aedb00ed5742b58e5a6bf31d9e2ea577149a97ba",
+  "paths": [
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 53415,
+      "sha256": "65f7120ea1ff67d171d2b0ec1cc47223ab016ac1f8b1681c97bf9a04edcd119c"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "bytes": 64919,
+      "sha256": "db9a9629de19aec9c2a24378f47ac30472108956d1c877fae3901a1701e402bf"
+    }
+  ]
+}

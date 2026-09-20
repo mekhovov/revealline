@@ -1,0 +1,1 @@
+import './candidate/game/test/soundtrack-panel.test.mjs';

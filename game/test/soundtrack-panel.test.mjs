@@ -737,6 +737,51 @@ test('binary download and replacement draft preserve exact original audio; Undo 
   );
 });
 
+for (const delayedBlur of [false, true]) {
+  test(`Undo retains usable focus after discarding a draft (delayed blur: ${delayedBlur})`, async (t) => {
+    const app = await setup(t);
+    await app.click('clone-playlist');
+    const saved = await app.store.read();
+    const playback = structuredClone(app.state);
+    const calls = app.calls.length;
+    app.doc.deferDisabledBlur = delayedBlur;
+    app.node('undo').focus();
+    await app.click('undo');
+    for (const blur of app.doc.disabledBlurs) blur();
+    assert.equal(app.doc.activeElement?.id, app.node('reload').id);
+    assert.equal(app.doc.activeElement.disabled, false);
+    assert.equal(app.node('undo').disabled, true);
+    assert.match(app.node('draft-state').textContent, /^Saved/);
+    assert.deepEqual(await app.store.read(), saved);
+    assert.deepEqual(app.state, playback);
+    assert.equal(app.calls.length, calls, 'Undo does not change transport or adopt a library.');
+  });
+}
+
+for (const boundary of ['other-control', 'hidden', 'unfocused', 'host-refused', 'newer-focus']) {
+  test(`Undo cannot reclaim focus across ${boundary}`, async (t) => {
+    let app;
+    app = await setup(t, {
+      callbacks: {
+        canRestoreFocus: () => {
+          if (boundary === 'newer-focus') app.node('close').focus();
+          return boundary !== 'host-refused';
+        },
+      },
+    });
+    await app.click('clone-playlist');
+    app.node('undo').focus();
+    if (boundary === 'other-control') app.node('close').focus();
+    if (boundary === 'hidden') app.doc.hidden = true;
+    if (boundary === 'unfocused') app.doc.hasFocus = () => false;
+    await app.click('undo');
+    assert.notEqual(app.doc.activeElement?.id, app.node('reload').id);
+    if (boundary === 'other-control' || boundary === 'newer-focus')
+      assert.equal(app.doc.activeElement?.id, app.node('close').id);
+    assert.match(app.node('draft-state').textContent, /^Saved/);
+  });
+}
+
 test('concurrent writer conflict preserves a draft and never silently overwrites newer saved state', async (t) => {
   const app = await setup(t);
   await app.click('clone-playlist');

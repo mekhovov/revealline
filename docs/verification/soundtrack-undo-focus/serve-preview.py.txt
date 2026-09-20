@@ -1,0 +1,33 @@
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from pathlib import Path
+import os, subprocess, urllib.parse, mimetypes, hashlib, json
+ROOT=Path(__file__).resolve().parents[2]
+BASE=Path(__file__).resolve().parent
+SOURCE="508a638f556b80817f4c872b9950d7de7b207b17"
+WORK=ROOT/".cache/worktrees/mission-caption-followup"
+OVERRIDES={'game/ui/soundtrack-panel.mjs': {'bytes': 53950, 'sha256': 'aa774a0fd3c9579a8893fe4b886b9519f0953e493a35e041aa9037910758eef1'}}
+FIXTURES={}
+ENV={k:v for k,v in os.environ.items() if not k.startswith("GIT_")};ENV.update(GIT_NO_LAZY_FETCH="1",GIT_OPTIONAL_LOCKS="0")
+class Handler(BaseHTTPRequestHandler):
+ def do_GET(self):
+  p=urllib.parse.unquote(urllib.parse.urlsplit(self.path).path).lstrip('/')
+  if any(v in ['..','.'] for v in p.split('/')):self.send_error(400);return
+  if not p or p.endswith('/'):p+='index.html'
+  if p in FIXTURES:
+   body=(BASE/'native-fixture'/Path(p).name).read_bytes()
+   if len(body)!=FIXTURES[p]['bytes'] or hashlib.sha256(body).hexdigest()!=FIXTURES[p]['sha256']:self.send_error(409);return
+  elif p in OVERRIDES:
+   body=(WORK/p).read_bytes()
+   if len(body)!=OVERRIDES[p]['bytes'] or hashlib.sha256(body).hexdigest()!=OVERRIDES[p]['sha256']:self.send_error(409);return
+  else:
+   r=subprocess.run(['git','--no-lazy-fetch','--no-optional-locks','show',SOURCE+':'+p],cwd=ROOT,env=ENV,capture_output=True)
+   if r.returncode:self.send_error(404);return
+   body=r.stdout
+  if len(body)>32*1024**2:self.send_error(413);return
+  mime=mimetypes.guess_type(p)[0] or 'application/octet-stream'
+  if p.endswith('.mjs'):mime='text/javascript'
+  self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(len(body)));self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(body)
+  print(json.dumps({'path':p,'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest(),'override':p in OVERRIDES}),flush=True)
+ def log_message(self,*args):pass
+print('Exact source preview on http://127.0.0.1:18803/game/',flush=True)
+ThreadingHTTPServer(('127.0.0.1',18803),Handler).serve_forever()

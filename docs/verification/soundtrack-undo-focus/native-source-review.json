@@ -1,0 +1,1361 @@
+{
+  "source": "508a638f556b80817f4c872b9950d7de7b207b17",
+  "overrides": [
+    "game/ui/soundtrack-panel.mjs"
+  ],
+  "responses": 225,
+  "distinctPaths": 225,
+  "allSourceAndOverrideBytesMatch": true,
+  "paths": [
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 25330,
+      "sha256": "766dda8a56d066a691eeb2d67e387155334e4d04d5bb1d1931a952c74e1c5802",
+      "override": false
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "bytes": 638,
+      "sha256": "6a71c7612bd5bc9a684b4865e0fafbd802d7c35128da2fff307cabd3e359b0db",
+      "override": false
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "bytes": 2713,
+      "sha256": "30d79b9ec13f845377d5ae80a1c0544ca2323fc7a8d65611fe6acced3a6db2e4",
+      "override": false
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 30697,
+      "sha256": "9e1df07eb3d1c10da6e8d2ff277cfa6d35c833af74ee1a81184622735bdf4f81",
+      "override": false
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "bytes": 11317,
+      "sha256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+      "override": false
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "bytes": 22607,
+      "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01",
+      "override": false
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "bytes": 1889,
+      "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+      "override": false
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6",
+      "override": false
+    },
+    {
+      "path": "game/ui/menu-appearance.css",
+      "bytes": 4537,
+      "sha256": "c7eee049cafbdb5258201b742a6ecd07436dd7f715e85e2ace792401b27c18c3",
+      "override": false
+    },
+    {
+      "path": "game/ui/settings.css",
+      "bytes": 3863,
+      "sha256": "ce96c1b6388044ae33a98926a5e857f02118df2f303e2d97b3d8fc78e6f20764",
+      "override": false
+    },
+    {
+      "path": "game/couch/mode-entry.js",
+      "bytes": 1384,
+      "sha256": "514059be1f7cfc4e0d004832523753fd215507cc93aa967e2b37726c0e86b2f8",
+      "override": false
+    },
+    {
+      "path": "game/ui/direct-tool-launch.js",
+      "bytes": 2507,
+      "sha256": "665b17159332858b0eb0140eaa9018434a8b2776ba091afacbb2f4ed6ebd3181",
+      "override": false
+    },
+    {
+      "path": "game/couch/team-entry.js",
+      "bytes": 2252,
+      "sha256": "09aa15da88da88b2c2d4baa2b650872de3e5145f501b6378dc041552e85ee2da",
+      "override": false
+    },
+    {
+      "path": "game/ui/fonts/field-kit/exo2-ui-400-600.woff2",
+      "bytes": 76652,
+      "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+      "override": false
+    },
+    {
+      "path": "game/ui/fonts/field-kit/handjet-display-600.woff2",
+      "bytes": 38120,
+      "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+      "override": false
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 124565,
+      "sha256": "a534de016a7dccaace00643fbd6f4bea25b915c5ccfdca4943e608a136f32f2d",
+      "override": false
+    },
+    {
+      "path": "game/ui/fonts/field-kit/ibm-plex-mono-500.woff2",
+      "bytes": 40080,
+      "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+      "override": false
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 7670,
+      "sha256": "140b206c7615658c63fc36a680c366324cbf4ecb37e6bdf51f3166af87694651",
+      "override": false
+    },
+    {
+      "path": "game/couch/couch-music-context.mjs",
+      "bytes": 2640,
+      "sha256": "a447bb96044f28cd8bf3b0f04a623e1fb4c0c8ec0f347776eddc5f081a58cfb7",
+      "override": false
+    },
+    {
+      "path": "game/ui/authored-mode-routes.mjs",
+      "bytes": 1573,
+      "sha256": "a049cc9e20f4c6d5743c393ef7e1022067ff3232446521dc18c5eeaca4f48e7e",
+      "override": false
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1418,
+      "sha256": "62b9ff2312b5127180d47d3c80b3f33def387cfe7dde7cb342847fa526682e78",
+      "override": false
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "bytes": 5773,
+      "sha256": "1a7e9eef65f663ed2e88d90b1c7cff0ce97889a3e484bbd26bb680e9e111cb72",
+      "override": false
+    },
+    {
+      "path": "game/coop/core.mjs",
+      "bytes": 38694,
+      "sha256": "cb710a70b7986f2f85d171600b274cdc69ed3c9b2f6eb508384427d265cca281",
+      "override": false
+    },
+    {
+      "path": "game/coop/relay-yard.mjs",
+      "bytes": 797,
+      "sha256": "5fa25a3a39902e87dd0d043779f55a1305c393035208fef1fd30a70d50d905ef",
+      "override": false
+    },
+    {
+      "path": "game/coop/library.mjs",
+      "bytes": 1837,
+      "sha256": "a3ec90857ccc34e5821898ff9148a8d087b3b138d3350a58fa541f426e4bfaf1",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 22176,
+      "sha256": "6f223ae5545f64139b6ff58dcb31042dcf6acbb3cd3f52dc638acfed176af176",
+      "override": false
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "bytes": 17643,
+      "sha256": "257c694808281c4f5bcb82f7d707dd2d059da7f4dabf0beaabafbce213acd394",
+      "override": false
+    },
+    {
+      "path": "game/coop/recipes.mjs",
+      "bytes": 13003,
+      "sha256": "e6f81a40c44d1d90699cc22015caa1e8db64dbe1bd97c6ac95fa382c0a248aab",
+      "override": false
+    },
+    {
+      "path": "game/presentation/page.mjs",
+      "bytes": 8036,
+      "sha256": "bb8a23d4a6946bb7ed618ab6b44a2d87122c1e61e7986752b9b006b9654f498d",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-picture-bindings.mjs",
+      "bytes": 2476,
+      "sha256": "d00e51fa260cdfa2f463d590e55aefe6ee5df014a7e2352e45fcc070d7f48f5f",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-presentation.mjs",
+      "bytes": 21881,
+      "sha256": "414eba3d130959c94041552b8c6c763d45157bcdd5330af61e2fad5a8266a652",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-import-source.mjs",
+      "bytes": 3759,
+      "sha256": "cecf6e57e55d5a3d78ddb85dc6b3a531fb59fba1494dd317f78f7366e65ad7d7",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-picture-image.mjs",
+      "bytes": 1891,
+      "sha256": "bf70256dc4e2b6b5277c989cf5b0c38a8d22a140a947cf8f3a70442aa963fb48",
+      "override": false
+    },
+    {
+      "path": "game/coop/presentation-envelope.mjs",
+      "bytes": 11740,
+      "sha256": "6a74a9a9db26de7c26c02e702481c017b6268b5574f0c17bf052a2555bbff874",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-feedback.mjs",
+      "bytes": 2277,
+      "sha256": "b1eeb46daf1873de6dd551c19ee952495d52322587570eba26d7201d0316ccb9",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-briefing.mjs",
+      "bytes": 2899,
+      "sha256": "eef232cb151e1dc9700d1fe87ebc0739aa2a3987a62a6d7153b9550b1d272908",
+      "override": false
+    },
+    {
+      "path": "game/ui/controller-router.mjs",
+      "bytes": 15585,
+      "sha256": "e7ebce7d1e2e08ba193f92b2c1e80586713a1f6b98189e7dc303a06f652eebb3",
+      "override": false
+    },
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "bytes": 29364,
+      "sha256": "af656f735895e76a746c96813fc7f7ea24b3b5af397a6386bf70bbd695ac1c89",
+      "override": false
+    },
+    {
+      "path": "game/ui/playground-tab-boundary.mjs",
+      "bytes": 1894,
+      "sha256": "1922cf1dd960063446d20d627021aee1bfa845f153b5060454915c1fa5582749",
+      "override": false
+    },
+    {
+      "path": "game/ui/controller-reading.mjs",
+      "bytes": 14595,
+      "sha256": "76bb57322f465b25e64c55e05253289224e323bf8f13d409ff2413d44cfbe32a",
+      "override": false
+    },
+    {
+      "path": "game/ui/reading-input-prompt.mjs",
+      "bytes": 597,
+      "sha256": "08d79038c0b250e811d0ba3fb0407597fc6057bca0f46504bf7346a347363dea",
+      "override": false
+    },
+    {
+      "path": "game/input-presentation.mjs",
+      "bytes": 1770,
+      "sha256": "79c5e770a98f4c2eeb3f9854b3a2de0518c32f82889907b28b0f5d72e03d6b3c",
+      "override": false
+    },
+    {
+      "path": "game/platform.mjs",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260",
+      "override": false
+    },
+    {
+      "path": "game/coop/input-policy.mjs",
+      "bytes": 1519,
+      "sha256": "89e0a28cf383d79ca3c56a3faf6dc3caf9bf6b5c129764fbcdc03612d6220528",
+      "override": false
+    },
+    {
+      "path": "game/ui/operation-status.mjs",
+      "bytes": 4173,
+      "sha256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+      "override": false
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c",
+      "override": false
+    },
+    {
+      "path": "game/ui/menu-style-controls.mjs",
+      "bytes": 2125,
+      "sha256": "2bb7757979bd0cf83d2b22e8191da1705cc4a0685b6923987f94eacc068f3a08",
+      "override": false
+    },
+    {
+      "path": "game/audio-preferences.mjs",
+      "bytes": 5918,
+      "sha256": "9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239",
+      "override": false
+    },
+    {
+      "path": "game/display-preferences.mjs",
+      "bytes": 8285,
+      "sha256": "996de37e27bcc12f3a0714a3648c8cd18b1631e316114e6e3e7e04568a222132",
+      "override": false
+    },
+    {
+      "path": "game/ui/preference-restoration.mjs",
+      "bytes": 1992,
+      "sha256": "ea3bffcf8faf2c0ad508a0a92d65cd2748acb340736e01268bd933b424d1eee2",
+      "override": false
+    },
+    {
+      "path": "game/ui/settings-panels.mjs",
+      "bytes": 4427,
+      "sha256": "668407411e337bf5da1959b5c8d62e5b473bdbfec27d486767bee2c733d25e5b",
+      "override": false
+    },
+    {
+      "path": "game/couch/team-arena-preference.mjs",
+      "bytes": 3310,
+      "sha256": "b1266f6f0c3478584c7292debc5358ed429bd89b8e53bd73733130fdbe3c8081",
+      "override": false
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 53950,
+      "sha256": "aa774a0fd3c9579a8893fe4b886b9519f0953e493a35e041aa9037910758eef1",
+      "override": true
+    },
+    {
+      "path": "game/mode-return.mjs",
+      "bytes": 5791,
+      "sha256": "d7b428457d17bd024de91e8a04008743abb363750f500998ede5c55f4619c526",
+      "override": false
+    },
+    {
+      "path": "game/couch/team-discovery.mjs",
+      "bytes": 10196,
+      "sha256": "b2d791da9fe208e45451181f9f06314c916558db7eb2bdd6dfd04e8da6aabb83",
+      "override": false
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 26731,
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+      "override": false
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 24085,
+      "sha256": "6b45ab2c75fc313443c97ec3a64ed8e1526d89052292c6c3ab2c9817b1465932",
+      "override": false
+    },
+    {
+      "path": "game/managed-media-store.mjs",
+      "bytes": 37789,
+      "sha256": "7f9b1220b3c5fa7a27183d42df269faa212c6eea728140f89f5c5f9d4bbdf7c2",
+      "override": false
+    },
+    {
+      "path": "game/soundtrack-store.mjs",
+      "bytes": 1073,
+      "sha256": "2f4d16b4c341ebad5399ed80983e8edda62bb1ea6a2af140fd6f92f2509fc81c",
+      "override": false
+    },
+    {
+      "path": "game/couch/couch-music-library.mjs",
+      "bytes": 7578,
+      "sha256": "54618a91cf8e70ee3da4dae11be0d0fe9190c58273f94b81fc8ffd11781c9331",
+      "override": false
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 4920,
+      "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823",
+      "override": false
+    },
+    {
+      "path": "game/couch/couch-music-session.mjs",
+      "bytes": 4977,
+      "sha256": "cabc51a7250c93ba17aa20d7cb3421fab745cfe63f6b78a7b9375c857bb45eaf",
+      "override": false
+    },
+    {
+      "path": "game/presentation/bundle.mjs",
+      "bytes": 8883,
+      "sha256": "40f293fceb60c971d46f9069c91bc7594aa4065d23bfdbfc06a3b5db74cf3755",
+      "override": false
+    },
+    {
+      "path": "game/mp3.mjs",
+      "bytes": 8902,
+      "sha256": "76855e254b283aee0eaf1980b3f7a8c7e7b85a0fdd0e1b72cdf2d154999c3243",
+      "override": false
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "bytes": 10172,
+      "sha256": "dd3bc7362cd2ff2dccabc82137e9389fbf8e1f4859e103915b5af55c7d0184b2",
+      "override": false
+    },
+    {
+      "path": "game/core/geometry.mjs",
+      "bytes": 4005,
+      "sha256": "d7252d751c56f77cebffcdd5c3adc5b5db9c0f4f489a821591bb356f05c0af55",
+      "override": false
+    },
+    {
+      "path": "game/content-design/catalogs.mjs",
+      "bytes": 5295,
+      "sha256": "bf6b79fdc50a27b3feb66e59b8696553d8bae422c7ae8394ecb9856b7c774da9",
+      "override": false
+    },
+    {
+      "path": "game/coop/foundations.mjs",
+      "bytes": 753,
+      "sha256": "a01e0c83b786daf2cb8b4f706358e788256d0a31c2cc9073ea21614b4c34fef4",
+      "override": false
+    },
+    {
+      "path": "game/coop/threats.mjs",
+      "bytes": 13742,
+      "sha256": "824128022776185742fbcb409060111c7909181be594e19df0ffdf53c792d54f",
+      "override": false
+    },
+    {
+      "path": "game/coop/geometry.mjs",
+      "bytes": 8307,
+      "sha256": "b508c9697a3a9ebec1e05ae12508814b93f8c96d92d1d362aca0334c3c1f0ed9",
+      "override": false
+    },
+    {
+      "path": "game/coop/first-connection.mjs",
+      "bytes": 540,
+      "sha256": "41dda9601c43ae2387e6a04bde0517d97efba01a2897da89be296a161f22961a",
+      "override": false
+    },
+    {
+      "path": "game/text-face.mjs",
+      "bytes": 807,
+      "sha256": "6df38ef690513d0b663a1f533e4f7c88af8adc5e0532efa9eb1b0592fed2e7d0",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "bytes": 9024,
+      "sha256": "3306c84058a1eee5734f7c3186993558d950ecfb3040eee5d53196fd7d351eaf",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "bytes": 4245,
+      "sha256": "a244c145cf791634c0724365ca6b4f58b259dedadaf913997beec67956bbf02d",
+      "override": false
+    },
+    {
+      "path": "game/couch/coop-terrain-trail.mjs",
+      "bytes": 2159,
+      "sha256": "012512a4000018e4e824ed4f7465b7c6798e5c9d8c7d888ecf47032ea014934b",
+      "override": false
+    },
+    {
+      "path": "game/multiplayer.mjs",
+      "bytes": 4840,
+      "sha256": "575caf3e4e475942b3cae91e921d450b345a4087d7f961bbb56261dcb98531fb",
+      "override": false
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "bytes": 18003,
+      "sha256": "32deb9e8db1311d550608a352e0364a5977137cc6e747a186f38680cbad10388",
+      "override": false
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "bytes": 27939,
+      "sha256": "f63aae713bad754ca826fa3d7c0ea2455db4f5d56b55882cd2ef6f196ec13798",
+      "override": false
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "bytes": 27005,
+      "sha256": "dd637591c4209af94d3d18adcd5eaa084fc20531bdb9691cc818f94807b8d874",
+      "override": false
+    },
+    {
+      "path": "game/content.mjs",
+      "bytes": 23401,
+      "sha256": "5270f582ec3b6f27e7252bda373bbb93bf5f199caceefca1580dfea13751b7d4",
+      "override": false
+    },
+    {
+      "path": "game/controller-bindings.mjs",
+      "bytes": 11948,
+      "sha256": "03f1ae09fcfc1416e3e5c933056f94643e7b8f27861f0eeed8963c9f738c204e",
+      "override": false
+    },
+    {
+      "path": "game/controller-boost.mjs",
+      "bytes": 398,
+      "sha256": "c71973fcdf65d6809cea584054f01f445ce0fa1523c32a79986fec7f00c8d012",
+      "override": false
+    },
+    {
+      "path": "game/core/arcade-actions.mjs",
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726",
+      "override": false
+    },
+    {
+      "path": "game/ui/menu-appearance.mjs",
+      "bytes": 5257,
+      "sha256": "c1e04bd940dcf6c109c543717a264adceae09f32deec437e77d0c30516845a80",
+      "override": false
+    },
+    {
+      "path": "game/menu-style-preferences.mjs",
+      "bytes": 5816,
+      "sha256": "67beab52f37053576a26ada91616d98f3b472d485022a4cdc2e7d796fac9d58b",
+      "override": false
+    },
+    {
+      "path": "game/text-size.mjs",
+      "bytes": 251,
+      "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a",
+      "override": false
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 7059,
+      "sha256": "0707d47e0cbd89c3b3d64cd22acf6b430bb4b5ff581d9a085196a0f5b48f4758",
+      "override": false
+    },
+    {
+      "path": "game/couch/team-discovery-pictures.mjs",
+      "bytes": 12137,
+      "sha256": "378b0a90bcd4e719a3b4be1d105f3ccb9b60d7d7625ea2e49d5985ec08c47b93",
+      "override": false
+    },
+    {
+      "path": "game/selection-bookmark.mjs",
+      "bytes": 3207,
+      "sha256": "0591740d60d1863ad9c459617a33d278672631fb286ca2b1c0f5c5c10131f235",
+      "override": false
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda",
+      "override": false
+    },
+    {
+      "path": "game/media-storage-record.mjs",
+      "bytes": 11906,
+      "sha256": "4088cff8ad53b36d31df616791f9343f935d0b832cde8f18a7766b9db6f6470e",
+      "override": false
+    },
+    {
+      "path": "game/imports.mjs",
+      "bytes": 4923,
+      "sha256": "439c5495d62b22dd3df3e1b0abb946c18301000018afc8d84a5a8b8ca7c3f51f",
+      "override": false
+    },
+    {
+      "path": "game/soundtrack-store-legacy.mjs",
+      "bytes": 9093,
+      "sha256": "73534a723ca283716a97fa04a145c5a677d5e5543b47fc8a9e126b6bb7ff13ab",
+      "override": false
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "bytes": 3430,
+      "sha256": "2c782b83a7ceaa5765cf2d17fac3af06ca3ad596071cad10f4890601bc7079ce",
+      "override": false
+    },
+    {
+      "path": "game/core/registry.mjs",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c",
+      "override": false
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 27239,
+      "sha256": "0b28a8f086b5615c071913beaed6d04bd6c2bddb672bb46af6f760c5ed797e60",
+      "override": false
+    },
+    {
+      "path": "game/content-design/map.mjs",
+      "bytes": 7783,
+      "sha256": "93edb45d6af77738a3ba8ff42f3fb9d672bcecd9a00ccee20d259fe496b34c28",
+      "override": false
+    },
+    {
+      "path": "game/ui/presentation-draw-image.mjs",
+      "bytes": 389,
+      "sha256": "d3f0804c19dcfbedb0a886516b14d28eed45233607b6718e1b45f136e030740e",
+      "override": false
+    },
+    {
+      "path": "game/core/index.mjs",
+      "bytes": 17691,
+      "sha256": "fa0d5e2affd2be15b6919f112fee84e0862c5c3bb7b95f2d3d604eb4ff352c5d",
+      "override": false
+    },
+    {
+      "path": "game/key-bindings.mjs",
+      "bytes": 12560,
+      "sha256": "bbd86d04ea7e45d9e140f1712e1e940956375b988841978537cd7a978da0ebe0",
+      "override": false
+    },
+    {
+      "path": "game/ui/touch-steering.mjs",
+      "bytes": 3599,
+      "sha256": "9fa66aa6a279be8ac78190e097c6a31efd05e47a7dd963b4d65495f928981600",
+      "override": false
+    },
+    {
+      "path": "game/mastery-catalog.mjs",
+      "bytes": 13823,
+      "sha256": "6e91dee8471c950acef82ed45b418c9e5ebfff5fa36ce1f773207efdd745b29e",
+      "override": false
+    },
+    {
+      "path": "game/presentation/runtime.mjs",
+      "bytes": 7206,
+      "sha256": "c2877907aa6059c506b9c4f62e9e73bf0517c5a38edd9ec0a87788edc9af4b10",
+      "override": false
+    },
+    {
+      "path": "game/presentation/menu-styles.mjs",
+      "bytes": 1585,
+      "sha256": "92b9b23578c0ff63ba4123315c1fc30cec8cf67518da10e7bb0b19137cb6c9c4",
+      "override": false
+    },
+    {
+      "path": "game/library.mjs",
+      "bytes": 36454,
+      "sha256": "08b95366baaff88d3faee6260410037517b76de7e5a336e2213883f48fdc9f16",
+      "override": false
+    },
+    {
+      "path": "game/campaign-contexts.mjs",
+      "bytes": 4403,
+      "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8",
+      "override": false
+    },
+    {
+      "path": "game/campaign-difficulty.mjs",
+      "bytes": 7336,
+      "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97",
+      "override": false
+    },
+    {
+      "path": "game/core/level.mjs",
+      "bytes": 14696,
+      "sha256": "e294005640e2834672feccaeb6f57a659923194be38237b6ff5dda3731e1e88c",
+      "override": false
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4",
+      "override": false
+    },
+    {
+      "path": "game/enemy-catalog.mjs",
+      "bytes": 5966,
+      "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+      "override": false
+    },
+    {
+      "path": "game/media-still.mjs",
+      "bytes": 5220,
+      "sha256": "36cd1574adcc3f0b05582c1eefb56d42ce96ccc53e09ad93d9d79b9b62f548e1",
+      "override": false
+    },
+    {
+      "path": "game/ui/enemy-body-motion.mjs",
+      "bytes": 1179,
+      "sha256": "b23cff03deada23ea77efe8d8834e31f693712775cafcb00aa236b629cb6a554",
+      "override": false
+    },
+    {
+      "path": "game/core/line-impact.mjs",
+      "bytes": 9000,
+      "sha256": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6",
+      "override": false
+    },
+    {
+      "path": "game/core/movement.mjs",
+      "bytes": 10912,
+      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a",
+      "override": false
+    },
+    {
+      "path": "game/core/contacts.mjs",
+      "bytes": 5168,
+      "sha256": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b",
+      "override": false
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "bytes": 8716,
+      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba",
+      "override": false
+    },
+    {
+      "path": "game/core/capture.mjs",
+      "bytes": 7160,
+      "sha256": "081572756599471e0c1811812f2d20576ad4e479157be390ed945c6b12de263b",
+      "override": false
+    },
+    {
+      "path": "game/core/abilities.mjs",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde",
+      "override": false
+    },
+    {
+      "path": "game/core/systems.mjs",
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6",
+      "override": false
+    },
+    {
+      "path": "game/core/classic-state.mjs",
+      "bytes": 2356,
+      "sha256": "2b328066188d54dc3010540384427fee18ac2f49f13c67f8c55f65539f61a500",
+      "override": false
+    },
+    {
+      "path": "game/core/classic-step.mjs",
+      "bytes": 16343,
+      "sha256": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca",
+      "override": false
+    },
+    {
+      "path": "game/core/foundations.mjs",
+      "bytes": 2463,
+      "sha256": "d5aa7b471790e3d3f8ed04fc26747665ac316ce201962fdd6cfcc31f6f84389c",
+      "override": false
+    },
+    {
+      "path": "game/touch-controls.mjs",
+      "bytes": 1651,
+      "sha256": "247811a921e69ff3488faa3138e36db42f5bacddccd03e2d52b0f21169809cc6",
+      "override": false
+    },
+    {
+      "path": "game/mastery.mjs",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504",
+      "override": false
+    },
+    {
+      "path": "game/progress.mjs",
+      "bytes": 14628,
+      "sha256": "4dd5c9c895c9e7861e09652f8253866364e93cda53e257bcf66306cb9dd570cd",
+      "override": false
+    },
+    {
+      "path": "game/mastery-records.mjs",
+      "bytes": 10009,
+      "sha256": "71edb762a8097fec95428444bbcb269ecfb7a02abc7ea5af7b537639cf3b330f",
+      "override": false
+    },
+    {
+      "path": "game/picture-receipts.mjs",
+      "bytes": 4055,
+      "sha256": "f777e136a1c29077af75b3b4ec053bbf854a9954b4116e13b086c510a78be004",
+      "override": false
+    },
+    {
+      "path": "game/flight-media-pins.mjs",
+      "bytes": 5415,
+      "sha256": "e7fcc1e020ac3991d6947bc79487e54c13d6176356a177a45274a8ba6d64f241",
+      "override": false
+    },
+    {
+      "path": "game/story-receipts.mjs",
+      "bytes": 2208,
+      "sha256": "8463ccf09a48cb55c7d46627a03178960e231313dcbd29bb93c5a83b4d5b1492",
+      "override": false
+    },
+    {
+      "path": "game/core/classic-definition.mjs",
+      "bytes": 7476,
+      "sha256": "7043aede6e48136f34552ddb0e2ca746f675092a96412b1ac499765a7da5eda8",
+      "override": false
+    },
+    {
+      "path": "game/core/classic-topology.mjs",
+      "bytes": 6458,
+      "sha256": "e72c4c6e3d75be33d0c2995c7ced65a21c81eba34874e18737b05e8c011284b3",
+      "override": false
+    },
+    {
+      "path": "game/core/capture-regions.mjs",
+      "bytes": 4040,
+      "sha256": "57d7b36d8e82d4640bd8ae4b92b48924ccee42508963ab99142138e730d9b203",
+      "override": false
+    },
+    {
+      "path": "game/core/classic-contour.mjs",
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8",
+      "override": false
+    },
+    {
+      "path": "game/core/classic-motion.mjs",
+      "bytes": 12271,
+      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020",
+      "override": false
+    },
+    {
+      "path": "game/core/enemy-pressure.mjs",
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb",
+      "override": false
+    },
+    {
+      "path": "game/mastery-equipment.mjs",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a",
+      "override": false
+    },
+    {
+      "path": "game/presentation-pins.mjs",
+      "bytes": 7014,
+      "sha256": "fd6b3b0bfc3cf1860ffe808d8644e7b490a936955d5d90f7c59dc7b9b76ad959",
+      "override": false
+    },
+    {
+      "path": "game/story-bindings.mjs",
+      "bytes": 3657,
+      "sha256": "555415656c7052d16b1afe8a742d11baef48c0163a749bc79b2b3821d342425a",
+      "override": false
+    },
+    {
+      "path": "game/story-storage-record.mjs",
+      "bytes": 12312,
+      "sha256": "9fdd834cf7c39e5d84a33236b8f4fcb961242d3d6be54d4945aae9242d63e938",
+      "override": false
+    },
+    {
+      "path": "game/media-presentation.mjs",
+      "bytes": 1688,
+      "sha256": "6e34dd758d1fbb85c7d6f27c651ee6ea20fc7cba013b40770b0ad24e921733fb",
+      "override": false
+    },
+    {
+      "path": "game/victory-story.mjs",
+      "bytes": 5111,
+      "sha256": "363728b8bf711e0a854b472d1153a40d5db790b7b4234dcb121564cc6d795e49",
+      "override": false
+    },
+    {
+      "path": "game/video-poster.mjs",
+      "bytes": 17190,
+      "sha256": "23163933aba6a5fb94124161f1b281ae722fcca160832603642464295ac8dc79",
+      "override": false
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "bytes": 3507,
+      "sha256": "7e48803cada4be1a38ecc8344a9c3350d9a23010721fb59d016b374a15388758",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 979693,
+      "sha256": "c6e756293298463a0d462412f835ff2dd79c13cfa8417169c682e6a367aa91ab",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11.png",
+      "bytes": 162,
+      "sha256": "d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/ee156b11b8102f73615260895e66be4e420bd3d7c70aec7150b556cdc9999a1c.png",
+      "bytes": 115,
+      "sha256": "ee156b11b8102f73615260895e66be4e420bd3d7c70aec7150b556cdc9999a1c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/2617aa19f98e0a455046c229a9abcb678efeaa76c07ebe5ce07cb8b00d4d65bf.png",
+      "bytes": 144,
+      "sha256": "2617aa19f98e0a455046c229a9abcb678efeaa76c07ebe5ce07cb8b00d4d65bf",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/4213f1ac958d600b68f4aa1aa0171d8f5e7a10ca2422154f88cc9b58bda9c0c1.png",
+      "bytes": 150,
+      "sha256": "4213f1ac958d600b68f4aa1aa0171d8f5e7a10ca2422154f88cc9b58bda9c0c1",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/526656d6f29126aaec7bc7d1abf0769d247b311039c8d069c7e2afc17d112747.png",
+      "bytes": 135,
+      "sha256": "526656d6f29126aaec7bc7d1abf0769d247b311039c8d069c7e2afc17d112747",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/8b5ebd66c72bc3a9ccc07c5dedaba2a8c556ea4e78ef1f17650cc99bc1eca666.png",
+      "bytes": 105,
+      "sha256": "8b5ebd66c72bc3a9ccc07c5dedaba2a8c556ea4e78ef1f17650cc99bc1eca666",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/53fff7055c1021c80f93590ed4e028c85d59ea4cb2f06ac71644d29989fa2bd7.png",
+      "bytes": 106,
+      "sha256": "53fff7055c1021c80f93590ed4e028c85d59ea4cb2f06ac71644d29989fa2bd7",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/2ff89ae01c04bfc698892ec3a35610b7975a6f36596ddd7ddeedbecef248d5d4.png",
+      "bytes": 136,
+      "sha256": "2ff89ae01c04bfc698892ec3a35610b7975a6f36596ddd7ddeedbecef248d5d4",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683.png",
+      "bytes": 295,
+      "sha256": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e.png",
+      "bytes": 290,
+      "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc.png",
+      "bytes": 282,
+      "sha256": "fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9.png",
+      "bytes": 269,
+      "sha256": "4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76.png",
+      "bytes": 275,
+      "sha256": "05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb.png",
+      "bytes": 446,
+      "sha256": "cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png",
+      "bytes": 515,
+      "sha256": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145.woff2",
+      "bytes": 38120,
+      "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8.woff2",
+      "bytes": 40080,
+      "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2",
+      "bytes": 76652,
+      "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/f7495ea7b56215ba88c7d465fa6ad9ab22121695e4c674cf183b65ef6d400ae0.png",
+      "bytes": 106,
+      "sha256": "f7495ea7b56215ba88c7d465fa6ad9ab22121695e4c674cf183b65ef6d400ae0",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/cc1bc2077c62d4cea9aeba86c00d0185b3c93f7c7dfceaede414dc105859196f.png",
+      "bytes": 111,
+      "sha256": "cc1bc2077c62d4cea9aeba86c00d0185b3c93f7c7dfceaede414dc105859196f",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/b65d23a488db2a276f1332680fbf394b1aee685fffc42f0b093c01506041f143.png",
+      "bytes": 116,
+      "sha256": "b65d23a488db2a276f1332680fbf394b1aee685fffc42f0b093c01506041f143",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/c3cd0a0f9997f28d1a295de1c8995ebe81bf782acb1c033036371c49fc40a08e.png",
+      "bytes": 109,
+      "sha256": "c3cd0a0f9997f28d1a295de1c8995ebe81bf782acb1c033036371c49fc40a08e",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/27fca2383ecb60fe0019232ed3f384103f602e36fe583fbad4b018b0c20d08fe.png",
+      "bytes": 90,
+      "sha256": "27fca2383ecb60fe0019232ed3f384103f602e36fe583fbad4b018b0c20d08fe",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/9e865e30bb22014bc6cc20dd4038415f4b279164ab33c54d9682e7ffc9cf2c91.png",
+      "bytes": 107,
+      "sha256": "9e865e30bb22014bc6cc20dd4038415f4b279164ab33c54d9682e7ffc9cf2c91",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/ff2e2defa02d62198a0be240fb16c8328d8be7c6aa9e3ec4516c7589edd83b22.png",
+      "bytes": 162,
+      "sha256": "ff2e2defa02d62198a0be240fb16c8328d8be7c6aa9e3ec4516c7589edd83b22",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/9b6313464e6e6f26dff9b98405fba899dcd0c6a614fde6df8ed1a2d835c73f34.png",
+      "bytes": 105,
+      "sha256": "9b6313464e6e6f26dff9b98405fba899dcd0c6a614fde6df8ed1a2d835c73f34",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/a3ad1f5a90f71164d77039f7052ce3403e684f1e9acecb0d3c86a7d456e9d509.png",
+      "bytes": 119,
+      "sha256": "a3ad1f5a90f71164d77039f7052ce3403e684f1e9acecb0d3c86a7d456e9d509",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/1aa1245d987000c889a47cd242c9ca976d620e48323cdde2a60358006718cc51.png",
+      "bytes": 130,
+      "sha256": "1aa1245d987000c889a47cd242c9ca976d620e48323cdde2a60358006718cc51",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/2033ce4e45c2b164edc31e8680244deaa475783dca1aebc6262bfffcd3980eb2.png",
+      "bytes": 161,
+      "sha256": "2033ce4e45c2b164edc31e8680244deaa475783dca1aebc6262bfffcd3980eb2",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/08512d067c5f322eb059dc45733fd61534b8bc530a9ebd8b33208d941a603922.png",
+      "bytes": 122,
+      "sha256": "08512d067c5f322eb059dc45733fd61534b8bc530a9ebd8b33208d941a603922",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/9c181b9009de288e0ed3349ab0bda4908e67c92587946517115b9231d5ea65b8.png",
+      "bytes": 143,
+      "sha256": "9c181b9009de288e0ed3349ab0bda4908e67c92587946517115b9231d5ea65b8",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
+      "bytes": 107,
+      "sha256": "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/e325a3a5b3647614bffa5432779f4ade7e865158e384888888f83b073aff033c.png",
+      "bytes": 123,
+      "sha256": "e325a3a5b3647614bffa5432779f4ade7e865158e384888888f83b073aff033c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/466b729b69035d65e5a95d5ef9c8d1c337e64a6af3b5fbdcf91cf74d3096d33b.png",
+      "bytes": 118,
+      "sha256": "466b729b69035d65e5a95d5ef9c8d1c337e64a6af3b5fbdcf91cf74d3096d33b",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/8b557a3e23bcbf550c01b5fe77618bc6ab31cce51835e80ad807023f2fc8fa47.png",
+      "bytes": 140,
+      "sha256": "8b557a3e23bcbf550c01b5fe77618bc6ab31cce51835e80ad807023f2fc8fa47",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/b0e9acf3605b9c5440328ef0bea6c0959efd03acdddbc4ac2cc5520e036457b6.png",
+      "bytes": 113,
+      "sha256": "b0e9acf3605b9c5440328ef0bea6c0959efd03acdddbc4ac2cc5520e036457b6",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/044bfaa980686917e6715e3919617a516ee1585e38dd8a63154301eba23d4118.png",
+      "bytes": 102,
+      "sha256": "044bfaa980686917e6715e3919617a516ee1585e38dd8a63154301eba23d4118",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/084e63a13178e1736ac2eaa12af621d63a786eea4dc21ab5cae8c6acf96c8153.png",
+      "bytes": 115,
+      "sha256": "084e63a13178e1736ac2eaa12af621d63a786eea4dc21ab5cae8c6acf96c8153",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/9f649ed85a5ff7d88996729975dfcb3b4df001474b02cd34114dcf4fc5e2b49c.png",
+      "bytes": 159,
+      "sha256": "9f649ed85a5ff7d88996729975dfcb3b4df001474b02cd34114dcf4fc5e2b49c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/95b99a09686ab417503cd8444f6b485d1021b6ae3f8e9525a545faafd6254c9c.png",
+      "bytes": 97,
+      "sha256": "95b99a09686ab417503cd8444f6b485d1021b6ae3f8e9525a545faafd6254c9c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7.png",
+      "bytes": 134,
+      "sha256": "0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/43db178018db9727dc1d4f6f9231dbe2ad29fe6d75a6a84d5ed97b069e18e3a4.png",
+      "bytes": 125,
+      "sha256": "43db178018db9727dc1d4f6f9231dbe2ad29fe6d75a6a84d5ed97b069e18e3a4",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/70dcff8faa588f074e529704a7d6024fe0a7590b18afa6059488fb505ce4a5f7.png",
+      "bytes": 159,
+      "sha256": "70dcff8faa588f074e529704a7d6024fe0a7590b18afa6059488fb505ce4a5f7",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/210d3b2ab32eaef632751e0333321b7e3e2a8571de758e9a02d1f350c483cf61.png",
+      "bytes": 139,
+      "sha256": "210d3b2ab32eaef632751e0333321b7e3e2a8571de758e9a02d1f350c483cf61",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/40172d186e595959d100dd0e7e52a78906e904300d93c8c0958d82b6f3b91ff0.png",
+      "bytes": 148,
+      "sha256": "40172d186e595959d100dd0e7e52a78906e904300d93c8c0958d82b6f3b91ff0",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/0839e0cac64adad321fb07518b14673091bbc1a61a836ff15ebf48510480bbbc.png",
+      "bytes": 146,
+      "sha256": "0839e0cac64adad321fb07518b14673091bbc1a61a836ff15ebf48510480bbbc",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/a25dc0c7e2f24a5451f3fbb0d24e90fdce796b274d8b54f238cbee0a26e8b857.png",
+      "bytes": 111,
+      "sha256": "a25dc0c7e2f24a5451f3fbb0d24e90fdce796b274d8b54f238cbee0a26e8b857",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/78294d66d340a9cc4036814defa9a291b8573949d79318823722b6f51c71fc14.png",
+      "bytes": 123,
+      "sha256": "78294d66d340a9cc4036814defa9a291b8573949d79318823722b6f51c71fc14",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/aa2e8583a56b36b5357e5462aee6b010b5b894626929afbc553c683462ce42cf.png",
+      "bytes": 138,
+      "sha256": "aa2e8583a56b36b5357e5462aee6b010b5b894626929afbc553c683462ce42cf",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/8a652da0dfc053d85190a2a0a17a27c43144c90a1cce5ae7883cb70f73df7c50.png",
+      "bytes": 166,
+      "sha256": "8a652da0dfc053d85190a2a0a17a27c43144c90a1cce5ae7883cb70f73df7c50",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872.png",
+      "bytes": 233,
+      "sha256": "02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192.png",
+      "bytes": 185,
+      "sha256": "7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868.png",
+      "bytes": 156,
+      "sha256": "44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe.png",
+      "bytes": 159,
+      "sha256": "53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420.png",
+      "bytes": 137,
+      "sha256": "5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c.png",
+      "bytes": 152,
+      "sha256": "7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346.png",
+      "bytes": 314,
+      "sha256": "33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c.png",
+      "bytes": 564,
+      "sha256": "de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59.png",
+      "bytes": 328,
+      "sha256": "7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb.png",
+      "bytes": 639,
+      "sha256": "8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35.png",
+      "bytes": 303,
+      "sha256": "ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3.png",
+      "bytes": 567,
+      "sha256": "77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68.png",
+      "bytes": 331,
+      "sha256": "4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa.png",
+      "bytes": 583,
+      "sha256": "f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3.png",
+      "bytes": 341,
+      "sha256": "2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e.png",
+      "bytes": 635,
+      "sha256": "85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png",
+      "bytes": 325,
+      "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c.png",
+      "bytes": 600,
+      "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c.png",
+      "bytes": 327,
+      "sha256": "83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826.png",
+      "bytes": 586,
+      "sha256": "78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/d9ee53a1cc344517624e80785e764da99fa8bd9b90d7f2b9b5d2ac52ff236a4b.png",
+      "bytes": 188,
+      "sha256": "d9ee53a1cc344517624e80785e764da99fa8bd9b90d7f2b9b5d2ac52ff236a4b",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/9ad64ed82783ba763f61fe954e3cdc8c360df472c8d035ef74579670d2649bba.png",
+      "bytes": 190,
+      "sha256": "9ad64ed82783ba763f61fe954e3cdc8c360df472c8d035ef74579670d2649bba",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/8d445857cc63417a2b4a9468c854e4ffed3828b3cd1a90cdd8d4f8c951be88f4.png",
+      "bytes": 169,
+      "sha256": "8d445857cc63417a2b4a9468c854e4ffed3828b3cd1a90cdd8d4f8c951be88f4",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/150ebf2c0817461fda33425c885488da7f4566b16a83947e94799d8da2df05e5.png",
+      "bytes": 191,
+      "sha256": "150ebf2c0817461fda33425c885488da7f4566b16a83947e94799d8da2df05e5",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/c0f4e7ca9de3a9f06637dbc8d5972b69b7e804f1bbd9579f5724d99a02c5c86b.png",
+      "bytes": 147,
+      "sha256": "c0f4e7ca9de3a9f06637dbc8d5972b69b7e804f1bbd9579f5724d99a02c5c86b",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052.png",
+      "bytes": 25969,
+      "sha256": "72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27.png",
+      "bytes": 23827,
+      "sha256": "8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c.png",
+      "bytes": 148,
+      "sha256": "963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48.png",
+      "bytes": 144,
+      "sha256": "544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db.png",
+      "bytes": 146,
+      "sha256": "326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db",
+      "override": false
+    },
+    {
+      "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+      "bytes": 52720,
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "override": false
+    }
+  ]
+}

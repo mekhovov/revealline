@@ -1,0 +1,25 @@
+{
+  "at": "2026-09-20T19:20:26.821044+00:00",
+  "source": "508a638f556b80817f4c872b9950d7de7b207b17 plus reviewed soundtrack-panel override",
+  "origin": "http://localhost:18803/game/couch/relay-rescue.html",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "initial": "Saved generation 1; two owned MP3s; one mixed playlist; falling-chime paused; master muted. No attempt started.",
+  "steps": [
+    "Settings pointer entry; Left to Audio; 8 Tab presses and Return open Music library.",
+    "Clone selected built-in playlist through visible button; creates unsaved second playlist.",
+    "19 Tab presses reach Undo unsaved changes; Return activates Undo.",
+    "Immediate focus is soundtrack-reload, enabled; draft state returns to Saved generation 1 / 2 tracks / 1 playlist; falling-chime stays paused at 0:00.",
+    "Screenshot shows complete focus outline; Reload rect x532.28125 y643.4921875 width180.0859375 height44 in1280x720.",
+    "Escape returns to coop-music-library; next Escape to coop-settings-open."
+  ],
+  "limits": [
+    "Mixed pointer setup and actual keyboard Undo/return, not controller/touch-only proof.",
+    "Inline screenshot inspected; no retained raw image artifact.",
+    "Source override preview, not integrated release/public acceptance.",
+    "Master muted; no listening/offline/hardware claim."
+  ],
+  "cleanup": "Tab108 closed; local server31471 terminated exit130."
+}
