@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.69.3",
-  "catalogSha256": "7004b01a7a88d5b6c75e74509ebcc86b58af488589923d1fa130b12c8f1f360b",
-  "allocationSha256": "d34d4d8829571875a6a2e9e956a8864e8fb09f45683ec6ab1f812755534aae53",
+  "currentVersion": "v0.70.0",
+  "catalogSha256": "245526d8df3616fd3893b6f9fb9186021406bb21519ba07ef5f31417ed8608c4",
+  "allocationSha256": "8597d918fd30b04c0aff5a0270b822107655ca5562e841e6d7d3a18abd752054",
   "admissions": [
     {
       "id": "archive-01",
@@ -5287,12 +5287,119 @@
           "kind": "reference"
         }
       ]
+    },
+    {
+      "id": "archive-38",
+      "infrastructureCommit": "760408d1b49e7025662851d45a0bb23afa377ee8",
+      "deploymentId": 6556673116,
+      "evidence": [
+        {
+          "path": "evidence/archive-38/README.md",
+          "sha256": "567124409f7e4b1b9cbd191c83c79c548fc940f23530ce2d782b2d58df6ecb7d",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/archive-tests.log",
+          "sha256": "f96cd2412a9442cb78b33f3fa12aa49df4d2722030aee657a429d87e033f7e62",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/artifacts.json",
+          "sha256": "4a66791d05316ddb30ec108531985846d4e3890f83f428604d1a9b7a3980f9cd",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/auditor.mjs",
+          "sha256": "f510e56e196edfe692d4ca2f024068f6f8245004aeac962e85d5573e90c7e5b7",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/browser-admission.json",
+          "sha256": "977ec09a81f57cb5453de84031fd3b5b7c7611c06923e485012f6bb27379ec60",
+          "kind": "browser"
+        },
+        {
+          "path": "evidence/archive-38/deployment-statuses.json",
+          "sha256": "cf35dd6a57cf16e2b12fcf9e2d01c7d8a726c9110ced5648ad845c2108c86e49",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/deployments.json",
+          "sha256": "fb68fec1ba0f3e7294799817ee8815a0e6e77bea5db13c23f4feeb5dbc9d7dcf",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/expected-inventory.json",
+          "sha256": "7d68f5b27b5d7dae71c46b69f2cc04edfd090372742d8a50b2653f3cb0c2854d",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-38/hosted-members.json",
+          "sha256": "64b8582beaf76ce3f1f1e72ef99f27367f64e465f5736cbbcef5e24140632866",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/hosted-original.zip",
+          "sha256": "321de06f4add94a80633950871eb05c9bf4f7904b0645cc73da8a2b66c0942d9",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/hosted-review.json",
+          "sha256": "6790b77570fe0b15433ba28449e5f50fd9c89b875ae3c158b46344424d71a1db",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/http-attempts.jsonl",
+          "sha256": "68066a2eab6bfd07b934c4b2d43024671552d94ec9255f9eb364983db3119556",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/http-engine.mjs",
+          "sha256": "967b680b65dbb51d3596e53a4bc114a10d8ce1d19fb27bd16089320f9134746a",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/http-report.json",
+          "sha256": "10e3db9caed327ad9633393ca6c6c76ed6421a0bf27880bf0076d11cfeacd00c",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-38/http-results.jsonl",
+          "sha256": "68066a2eab6bfd07b934c4b2d43024671552d94ec9255f9eb364983db3119556",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/jobs.json",
+          "sha256": "0790b7bef1daa738b9df9e16979d3a8e17cfbc799a735e2d1906e61a7e45fada",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/native-observation.json",
+          "sha256": "7e44955908fc13fc968c71d5744b90e04482dd5c6160321bd58923e49a9894b2",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/root-acceptance.json",
+          "sha256": "8361a12196ec3d5372c90a8184da3c1b8a57e3274313a35e58451472c17b5a5b",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/run.json",
+          "sha256": "8c3f14acbb73f847ec493b47eef7a12788e3a3baad8e1a3b09342aa314e8bfd4",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-38/source-lock.json",
+          "sha256": "01489335677d2777d08cdda6367cac73e3e4ef53f26f0f11216b19fe2f053c0f",
+          "kind": "reference"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v0693/source-qualification.json",
-    "sha256": "d1033a9fbc3176c8ef33833437aaa6b14accb1f36955a18e22c702bb3c672f1e"
+    "path": "evidence/current-v0700/source-qualification.json",
+    "sha256": "5b661b3deb4cb344ee51b611e86c2b7ec7a2345d7b7103bc33ed602b12e018f7"
   },
   "retainedReleasesPerMajor": "all",
   "testingRoutes": {}

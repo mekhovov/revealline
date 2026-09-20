@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "run": 35531856595,
+  "source": "760408d1b49e7025662851d45a0bb23afa377ee8",
+  "tree": "1b237d782cce1da6a499da2e5103277bef6693ed",
+  "artifactId": 10611247796,
+  "artifactSha256": "321de06f4add94a80633950871eb05c9bf4f7904b0645cc73da8a2b66c0942d9",
+  "receiptSha256": "e5bf5bb989570326c2865e0b93cb5e1512b2738064a5f55656b3bbd3dcbf2c1e",
+  "inventorySha256": "7d68f5b27b5d7dae71c46b69f2cc04edfd090372742d8a50b2653f3cb0c2854d",
+  "zipReceiptSha256": "abdf40dde749e5b236ef4d9ef90460e0081ee091570dfd2757a39d591db29b9b",
+  "files": 780,
+  "bytes": 340012969,
+  "crcAndHashesVerified": true
+}
