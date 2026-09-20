@@ -26,6 +26,8 @@ export function attachSoundtrackPanel({
   store,
   player,
   onLibrary = () => {},
+  adoptLibrary = null,
+  musicSession = null,
   onError = () => {},
   getContext = () => ({}),
   otherManagedBytes = () => 0,
@@ -35,6 +37,7 @@ export function attachSoundtrackPanel({
   download,
   onOpen = () => {},
   onClose = () => {},
+  canRestoreFocus = () => true,
   onVolume = () => {},
   onPlayback = () => {},
   onAudioEnabled = () => {},
@@ -45,6 +48,13 @@ export function attachSoundtrackPanel({
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
     throw new Error('Soundtrack panel requires a document, store and player.');
+  if (adoptLibrary !== null && typeof adoptLibrary !== 'function')
+    throw new TypeError('Soundtrack library adoption must be a host function.');
+  if (
+    musicSession &&
+    (typeof musicSession.play !== 'function' || typeof musicSession.pause !== 'function')
+  )
+    throw new TypeError('Soundtrack music session requires Play and Pause controls.');
   const bindings = [];
   let disposed = false,
     busy = false,
@@ -216,6 +226,7 @@ export function attachSoundtrackPanel({
         value.selection.playlistId = chosen;
       });
       const committed = await commitDraft(signal);
+      if (!committed.adopted || disposed) return;
       await stopAudition(false);
       wakeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
@@ -229,8 +240,12 @@ export function attachSoundtrackPanel({
     transportStatus,
     row(
       button('previous', 'Previous', () => controlMusic(() => player.previous())),
-      button('play', 'Play music', () => controlMusic(() => player.play(), true)),
-      button('pause', 'Pause music', () => controlMusic(() => player.pause())),
+      button('play', 'Play music', () =>
+        controlMusic(() => (musicSession ? musicSession.play() : player.play()), true),
+      ),
+      button('pause', 'Pause music', () =>
+        controlMusic(() => (musicSession ? musicSession.pause() : player.pause())),
+      ),
       button('next', 'Next', () => controlMusic(() => player.next())),
     ),
     seek.field,
@@ -898,6 +913,13 @@ export function attachSoundtrackPanel({
   }
   async function task(label, work) {
     if (busy || disposed) return false;
+    const opener = saved && dialog.contains(doc.activeElement) ? doc.activeElement : null;
+    const foregroundVisit = () =>
+      !disposed &&
+      dialog.open &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      canRestoreFocus(returnFocus);
     busy = true;
     controller = new AbortController();
     const signal = controller.signal;
@@ -907,6 +929,14 @@ export function attachSoundtrackPanel({
     });
     activity = lease;
     render();
+    // Disabling the active action otherwise strands native focus on BODY.
+    // The cancel button is an explicit temporary owner, never a live-status focus target.
+    if (
+      opener?.disabled &&
+      foregroundVisit() &&
+      (doc.activeElement === opener || doc.activeElement === doc.body)
+    )
+      cancelButton.focus({ preventScroll: true });
     try {
       await work(signal, lease);
       lease.finish({ message: status.textContent });
@@ -922,21 +952,46 @@ export function attachSoundtrackPanel({
       return false;
     } finally {
       if (activity === lease) activity = null;
+      const ownsFocus = doc.activeElement === cancelButton;
       busy = false;
       controller = null;
       if (!disposed) render();
+      if (
+        ownsFocus &&
+        foregroundVisit() &&
+        (doc.activeElement === cancelButton || doc.activeElement === doc.body)
+      ) {
+        const target =
+          opener?.isConnected && !opener.disabled && !opener.closest?.('[hidden],[inert]')
+            ? opener
+            : closeButton;
+        target.focus({ preventScroll: true });
+      }
     }
+  }
+  async function adoptSavedLibrary(value) {
+    // A Couch owner installs verified bytes and metadata together. The default
+    // remains compatible with Solo; onLibrary is still a later notification.
+    if (adoptLibrary) await adoptLibrary(value);
+    else player.setLibrary(value.library);
+  }
+  function refreshWarning(error) {
+    try {
+      onError(error);
+    } catch {}
+    return `Library is saved, but the game refresh failed: ${message(error)}. Reload the studio to refresh it.`;
   }
   async function reload() {
     return task('Loading saved music and local audio…', async (signal) => {
       invalidateBackup();
       const value = await store.read({ signal });
       throwIfSoundtrackAborted(signal);
+      await adoptSavedLibrary(value);
+      throwIfSoundtrackAborted(signal);
       saved = value;
       draft = value.library;
       assets = [...value.assets];
       dirty = false;
-      player.setLibrary(draft);
       const warning = await notifyLibrary(value);
       setStatus(
         warning || 'Saved library loaded. Imports and edits remain drafts until Save all changes.',
@@ -948,10 +1003,7 @@ export function attachSoundtrackPanel({
       await onLibrary(value.library, value);
       return null;
     } catch (error) {
-      try {
-        onError(error);
-      } catch {}
-      return `Library is saved, but the game refresh failed: ${message(error)}. Reload the studio to refresh it.`;
+      return refreshWarning(error);
     }
   }
   async function commitDraft(signal) {
@@ -973,13 +1025,26 @@ export function attachSoundtrackPanel({
     draft = result.library;
     assets = [...prepared.assets];
     dirty = false;
-    player.setLibrary(draft);
-    const warning = await notifyLibrary(saved);
+    if (disposed)
+      return {
+        ...saved,
+        adopted: false,
+        warning: 'Library saved; the panel closed before refresh.',
+      };
+    let adopted = false,
+      warning;
+    try {
+      await adoptSavedLibrary(saved);
+      adopted = true;
+    } catch (error) {
+      warning = refreshWarning(error);
+    }
+    if (adopted && !disposed) warning = await notifyLibrary(saved);
     setStatus(
       warning ||
         'Music library saved atomically. The current song continues; edited queues and automatic assignments apply at a song boundary.',
     );
-    return { ...saved, warning };
+    return { ...saved, warning, adopted };
   }
   async function importMP3Files() {
     return task('Inspecting selected MP3 files…', async (signal, progress) => {
@@ -1183,7 +1248,7 @@ export function attachSoundtrackPanel({
     updateAudition();
   }
   async function open() {
-    if (disposed) return;
+    if (disposed || dialog.open) return;
     onOpen();
     returnFocus = doc.activeElement;
     if (!dialog.open) dialog.showModal();
@@ -1235,11 +1300,19 @@ export function attachSoundtrackPanel({
       );
     }
   }
-  function close() {
-    if (busy || disposed) return false;
-    void playback(() => stopAudition(true));
-    if (dialog.open) dialog.close();
-    if (returnFocus?.isConnected && !returnFocus.disabled) returnFocus.focus();
+  function close({ restoreFocus = true, restoreMusic = true } = {}) {
+    if (busy || disposed || !dialog.open) return false;
+    void playback(() => stopAudition(restoreMusic));
+    dialog.close();
+    if (
+      restoreFocus &&
+      !doc.hidden &&
+      returnFocus?.isConnected &&
+      !returnFocus.disabled &&
+      !returnFocus.closest?.('[hidden],[inert]') &&
+      canRestoreFocus(returnFocus)
+    )
+      returnFocus.focus({ preventScroll: true });
     onClose();
     return true;
   }
@@ -1360,5 +1433,12 @@ export function attachSoundtrackPanel({
     style.remove();
   }
   render();
-  return Object.freeze({ open, close, update, dispose });
+  return Object.freeze({
+    open,
+    close,
+    update,
+    dispose,
+    element: dialog,
+    isOpen: () => !disposed && dialog.open,
+  });
 }
