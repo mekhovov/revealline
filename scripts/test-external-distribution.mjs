@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { JOURNEY_ART_CANDIDATES } from '../game/content-design/journey-art.mjs';
 import { buildProject, readBuildConfig } from './game-cli.mjs';
 import {
   readExternalDistributionEntries,
@@ -108,8 +109,11 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   // promise that the online-only authored preview works without a connection.
   if (offline.optionalArtwork) {
     assert.equal(offline.optionalArtwork.availability, 'online-only');
-    assert.equal(offline.optionalArtwork.count, 17);
-    assert.equal(offline.optionalArtwork.bytes, 45282783);
+    assert.equal(offline.optionalArtwork.count, JOURNEY_ART_CANDIDATES.length);
+    assert.equal(
+      offline.optionalArtwork.bytes,
+      JOURNEY_ART_CANDIDATES.reduce((sum, asset) => sum + asset.bytes, 0),
+    );
     for (const pin of offline.optionalArtwork.files) {
       assert.deepEqual(
         manifest.files.find((file) => file.path === pin.path),

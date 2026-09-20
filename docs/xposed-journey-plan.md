@@ -325,6 +325,25 @@ uses a native modal with an explicit return path, guided by the
 
 ## Research sources
 
+### Continuing source checkpoints (not phase completion)
+
+P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;
+freeze=false deliberately produced no release snapshot. Integration, publication
+and human acceptance remain with the release owner. P04 separately prepares seven
+original Signal pixel backgrounds plus Shared detour's own composition; three
+illustrated alternatives remain distinct. Exact-pinned assets/packaging and unchanged
+routes pass36/36 focused tests. Native line-only partial reveal is scoped evidence,
+with craft contrast and whole-set visual review still open. See
+`verification/xposed-signal-art.md`. Neither this artwork nor the frozen greyboxes
+silently replaces the currently published authored Journey.
+
+The P05 source-preparation branch has an explicit v2 actor catalogue for the
+existing reclaimed-ground roamer, without rewriting v1. Prior Horizon/Border
+Solo and paired routes pass48/48 regression tests. Authored Rover layouts and
+all later campaign, Team, accessibility, human and deployment gates remain.
+
+### Primary references
+
 - https://store.playstation.com/en-us/concept/10002881/
 - https://store.playstation.com/en-ca/product/UP2538-CUSA05619_00-XPOSEDPS4USGAME1
 - https://www.nintendo.com/us/store/products/xposed-switched-switch/
