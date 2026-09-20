@@ -1,0 +1,91 @@
+{
+  "status": "PASS_SCOPED_STATIC_AND_RETAINED_INTAKE_IDENTITY_REVIEW",
+  "at": "2026-09-20T01:23:41.017895+00:00",
+  "reviewer": "team_final_preview",
+  "findings": [],
+  "scope": "Retrospective independent source/identity review after root had already executed its one GET and row reconciler. No helpers executed, tests rerun, API requests, binary download, source/Git/browser mutation or artifact extraction performed by this reviewer.",
+  "inputs": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/ready.json",
+      "bytes": 4037,
+      "sha256": "63aa4cde389ca8851f99c0d5ec8fc71208fe914bb34dd6aa18d0f560356fde51"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/expected-provenance.json",
+      "bytes": 3491,
+      "sha256": "2bba4ab91a9fae9d5b4b1d68e6c40546a6e3948ad69fc8b7a2acd64efd097f7e"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/contract.py",
+      "bytes": 6386,
+      "sha256": "2b3f6cc6a650d5a36203ee33339585e476ba7dc451b559bac90ae6df6aea9bf1"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/intake.py",
+      "bytes": 3786,
+      "sha256": "4d9cb8b6c7ab7d943d07e8f0de24a59b8ff6cb18aaa1d096b76823ff1f86aa15"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/reconcile-hosted.py",
+      "bytes": 11801,
+      "sha256": "bd85558dd98a338c660151c97d1fed6ac0995e374cf9eae45ad67efa8e5632ce"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/request.reviewed.json",
+      "bytes": 1421,
+      "sha256": "f8de84c39264dd6b7502f359d88bc99b746284a040f582e98a2098c56b8f7169"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/review.request.reviewed.json",
+      "bytes": 1517,
+      "sha256": "0d7bf49037ab76bae343d0499db6224241e68e6483b2f88573df4fce057a5e1b"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/independent-review.json",
+      "bytes": 1284,
+      "sha256": "63e7678007eac0f47c5c88da76ba94d273a569de7edba2176ffe1d3a8be193df"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/v0660-hosted-public-intake-r1/intake/receipt.json",
+      "bytes": 380,
+      "sha256": "fe47a50ba56107f75fe6b8bd5748417599e891277405e0e943009ae6f2caf9ae"
+    }
+  ],
+  "checks": {
+    "readyPins": 18,
+    "sevenExpectedRolesMatchExactLocalUtilityGitObjects": true,
+    "threeHelpersMatchReviewedP04TemplatesByteForByte": true,
+    "fourMetadataBodiesMatchActualRetainedOriginals": true,
+    "actualTerminalRun": 35480862934,
+    "actualTerminalJob": 105998299558,
+    "actualUtility": "94f7ac356778cf8854b6de046f21642873534d8c",
+    "actualUtilityTree": "a0d2ace06afc6fad631517968831781ae9333b92",
+    "runAndJobSuccessExactProducer": true,
+    "artifactId": 10595787308,
+    "artifactBytes": 1064440,
+    "artifactSha256": "9d52186c3d59117fe4edbefd5e09f8e7eb6b01dde6ee4e2189234b6a31e01115",
+    "actualRetainedOuterZipHashMatches": true,
+    "payloadPinsRehashed": 22,
+    "mainAuthorityPinsRehashed": 9,
+    "reviewedRequestsOnlyIntendedApprovalAndRequestHashChanges": true
+  },
+  "reviewedCodeProperties": [
+    "Exact original run/job/artifact/commit descriptors and one explicit reviewed artifact GET; no retry; exclusive intake directory and files preserve ambiguity.",
+    "8 MiB ZIP, 32 MiB expanded, 48 MiB managed, 256 MiB reserve, 4096 members and one 60-second transport deadline remain fixed. Member paths/types, duplicate names and hashes are checked.",
+    "Hosted code is not executed locally. The reconciler imports only seven fixed reviewed expected roles, preserves four original helper mappings, and runs the trusted check mode with zero HTTP/output writes.",
+    "All-row reconciliation checks one result per inventory path, byte/hash/MIME equality, successful final attempts and restricted transient retries; source/main/artifact bindings and 103 retained plus one new catalog authority are explicit.",
+    "Workflow success and byte audit remain distinct from fresh final authorities and native acceptance."
+  ],
+  "rootExecutedReconciliationSummary": {
+    "files": 3533,
+    "bytes": 644953790,
+    "attempts": 3533,
+    "failures": 0,
+    "retries": 0,
+    "catalogAuthorities": 104,
+    "rowReconcilerRepeatedByThisReviewer": false
+  },
+  "publicAcceptance": false,
+  "nativeAcceptance": false,
+  "freshFinalAuthoritiesReviewedHere": false
+}
