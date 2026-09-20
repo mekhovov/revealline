@@ -1041,3 +1041,9 @@ Example verification prompt: “Follow the game’s Build information link. Conf
 For soundtrack recovery, use the actual saved-library `.rlsound` download, then restore it through the native picker into a separate empty origin. Include two owned MP3s, a built-in entry and a repeated playlist entry; compare the complete re-export and each embedded original hash. A prepared link or download notification is not proof of file arrival. Record transport separately from audible listening, mute state, offline use and hardware. Follow [the reproducible backup journey](../../../docs/verification/music-backup-native-v070/README.md). Prompt: “Prove original-byte music recovery without seeding browser storage; retain the downloaded artifacts, playlist selection/order, exact source and focus return.”
 
 Extend native music recovery with a manifest-preserving one-byte audio corruption and a truncated bundle. Confirm rejected imports preserve both the saved library and an existing unsaved edit. Download the saved library while that draft exists and compare it with the pre-failure binary baseline, then Undo and check sequential focus. Report validation rejection separately from quota, interrupted-transaction and concurrent-writer recovery.
+
+When Sound Studio Undo disables itself, retain its pre-render focus ownership and
+move to the adjacent enabled Reload action only in the current foreground visit.
+Respect the host focus guard and newer focus; never activate Reload or change
+transport as a side effect. Follow [the Undo focus maintenance prompt](../../../docs/soundtrack-undo-focus.md),
+including native disabled blur, actual keyboard activation and distinct release evidence.

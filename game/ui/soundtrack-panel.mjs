@@ -148,13 +148,27 @@ export function attachSoundtrackPanel({
     task('Verifying and saving the music library…', (signal) => commitDraft(signal)),
   );
   const undoButton = button('undo', 'Undo unsaved changes', () => {
-    if (!saved || busy) return;
+    if (!saved || busy || disposed) return;
+    const ownedFocus = doc.activeElement === undoButton;
     invalidateBackup();
     draft = saved.library;
     assets = [...saved.assets];
     dirty = false;
     render();
     setStatus('Restored the saved library. Playback is unchanged.');
+    // Undo becomes disabled after rendering; retain a usable footer action.
+    // A newer focus owner or a background visit must not be reclaimed.
+    if (
+      ownedFocus &&
+      dialog.open &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      canRestoreFocus(returnFocus) &&
+      !disposed &&
+      dialog.open &&
+      (doc.activeElement === undoButton || doc.activeElement === doc.body)
+    )
+      reloadButton.focus({ preventScroll: true });
   });
   const reloadButton = button('reload', 'Reload latest saved', () => reload());
   const stateLine = node('p', 'draft-state', '', { class: 'micro-note' });

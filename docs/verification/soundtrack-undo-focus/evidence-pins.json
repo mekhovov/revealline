@@ -1,0 +1,85 @@
+{
+  "format": "revealline.focus-evidence.v1",
+  "originals": [
+    {
+      "path": "fixture-fs-sync.mjs.txt",
+      "bytes": 714,
+      "sha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91"
+    },
+    {
+      "path": "fixture-fs.mjs.txt",
+      "bytes": 735,
+      "sha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa"
+    },
+    {
+      "path": "green-node20.log.gz",
+      "bytes": 3523,
+      "sha256": "3ed4727469f186cc2a1569037626823c74e8ceb3fe5a3185280ba0d3611cb984"
+    },
+    {
+      "path": "green-node22.log.gz",
+      "bytes": 3550,
+      "sha256": "bcc616dade417cd98d58cb66327f1d094ae35d783bdd288a61d62c50d05ea15a"
+    },
+    {
+      "path": "lint.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "loader.mjs.txt",
+      "bytes": 1098,
+      "sha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168"
+    },
+    {
+      "path": "native-observations.json",
+      "bytes": 1413,
+      "sha256": "a59d48f1271bec8190d6fc1309728b28fda9dd10bb73e9f1bf487e1bb8f517d2"
+    },
+    {
+      "path": "native-requests.log.gz",
+      "bytes": 12201,
+      "sha256": "3520f2ed07c229e72f96e19552e405752c6e67a875a70997ac5737e176115c38"
+    },
+    {
+      "path": "native-source-review.json",
+      "bytes": 48284,
+      "sha256": "366dd1eaa3b09c72e0fc1e6d265503d1acbc8f1f93a610526183cac1d48b0b7f"
+    },
+    {
+      "path": "patch-source.mjs.txt",
+      "bytes": 999,
+      "sha256": "5e70abc380110d1de1edb825ced94363677d639e514dfa90d84bec8662a8baa9"
+    },
+    {
+      "path": "red-node20-r2.log.gz",
+      "bytes": 4234,
+      "sha256": "9f0b64a1df7ed0fb7b16d76cd0be8521dc427b7c8ae014e452c07af22e67002f"
+    },
+    {
+      "path": "red-node20.log.gz",
+      "bytes": 135,
+      "sha256": "d6aed5599a6d1caf18fb25185cb5829d3474a42b686feee0a801089ba2e2a21f"
+    },
+    {
+      "path": "serve-preview.py.txt",
+      "bytes": 2117,
+      "sha256": "51ee95135ba26d674b8b084bbc67d244f795763acda9db23706a230329cb940a"
+    },
+    {
+      "path": "source.json",
+      "bytes": 411,
+      "sha256": "c5e4dcb5bfb7a770d64d6dacdad33c96e1c4d4da3c1945fd762acadb3c18369e"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 1390,
+      "sha256": "fb053c3aa2154e7128cf46b7751fddb7a5d8b3aa300b8625753ad007f5f40c3d"
+    },
+    {
+      "path": "suite.test.mjs.txt",
+      "bytes": 58,
+      "sha256": "2007bacc90987219b0aad902b6bed11b23cebcf91cdee93407f6e5734c48901c"
+    }
+  ]
+}
