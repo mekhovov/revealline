@@ -48,6 +48,10 @@ Verification:
   remained visible. Screenshots were inspected inline. No viewport override or
   physical-device acceptance is claimed. Preview was closed back to the saved draft.
 
+Follow-up decoded-media ownership is implemented and independently tested in
+`xposed-journey-candidate-pictures.md`; this earlier receipt does not substitute
+for its evidence or imply main-host adoption.
+
 Open: main Journey adoption, distinct candidate save/award authority, decoded-media
 ownership, next-attempt controls, paired-race host integration, Team, whole-set
 presentation/accessibility, human playtesting, exact-source hosted release gates

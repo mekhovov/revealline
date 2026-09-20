@@ -6,6 +6,7 @@ import { createRecorder } from '../replay.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
 import { loadPreviewArtwork, verifiedPreviewBackground } from './assets.mjs';
+import { acquireCandidatePicture } from './picture.mjs';
 
 const cancelled = () => new DOMException('Candidate preparation cancelled.', 'AbortError');
 
@@ -21,6 +22,7 @@ export function createContentAttemptPreparer(
     themes,
     buildVersion = 'dev',
     loadArtwork = loadPreviewArtwork,
+    decodeImage,
     timeoutMs = 20000,
   } = {},
 ) {
@@ -29,6 +31,10 @@ export function createContentAttemptPreparer(
     'Invalid candidate preparation timeout.',
   );
   required(typeof loadArtwork === 'function', 'Candidate preparation needs an artwork loader.');
+  required(
+    decodeImage === undefined || typeof decodeImage === 'function',
+    'Candidate preparation needs a picture decoder.',
+  );
   required(
     typeof buildVersion === 'string' && buildVersion.length > 0 && buildVersion.length <= 80,
     'Invalid candidate build version.',
@@ -53,10 +59,12 @@ export function createContentAttemptPreparer(
     prepared = null;
   const cancel = () => {
     generation++;
+    const retired = prepared;
     prepared = null;
     const previous = pending;
     pending = null;
     previous?.abort();
+    retired?.picture?.release();
   };
   async function prepare(request, { signal, onStatus = () => {} } = {}) {
     required(!disposed, 'Candidate preparer is disposed.');
@@ -95,7 +103,9 @@ export function createContentAttemptPreparer(
       }
       check();
     };
-    let timer, abort;
+    let timer,
+      abort,
+      candidatePicture = null;
     const stopped = new Promise((_, reject) => {
       abort = () => {
         reject(cancelled());
@@ -120,6 +130,15 @@ export function createContentAttemptPreparer(
           const visualOverrides = manifest.background
             ? { background: verifiedPreviewBackground(manifest.background, media) }
             : {};
+          if (manifest.background) {
+            report('decoding', 'Opening this mission’s verified original picture…');
+            candidatePicture = await acquireCandidatePicture(manifest.background, {
+              signal: controller.signal,
+              loadArtwork: async () => media,
+              decodeImage,
+            });
+            check();
+          }
           report('preparing', 'Preparing the authored rules without changing the current flight…');
           const options = {
             seed: selected.seed,
@@ -139,6 +158,7 @@ export function createContentAttemptPreparer(
             levelIndex,
             theme,
             visualOverrides: freezeDesign(visualOverrides),
+            picture: candidatePicture,
             run,
             recorder,
             officialProgressEligible: false,
@@ -147,12 +167,14 @@ export function createContentAttemptPreparer(
       ]);
       check();
       prepared = result;
+      candidatePicture = null;
       return result;
     } finally {
       clearTimeout(timer);
       signal?.removeEventListener('abort', abort);
       if (pending === controller) pending = null;
       controller.abort();
+      candidatePicture?.release();
     }
   }
   return Object.freeze({
@@ -160,6 +182,16 @@ export function createContentAttemptPreparer(
     prepare,
     cancel,
     current: (candidate) => !disposed && candidate != null && candidate === prepared,
+    take(candidate) {
+      required(
+        !disposed && candidate != null && candidate === prepared,
+        'Candidate is no longer current.',
+      );
+      // Transfer exactly once. The accepting host now owns picture.release(),
+      // including when its own adoption fails after this point.
+      prepared = null;
+      return candidate;
+    },
     dispose() {
       disposed = true;
       cancel();

@@ -158,7 +158,13 @@ test('exact original asset is verified before exposing a new attempt; copied med
     fetchAsset: async () => new Response(bytes),
     digest: (value) => webcrypto.subtle.digest('SHA-256', value),
   });
-  const host = setup({ loadArtwork: async () => media }, source);
+  const host = setup(
+    {
+      loadArtwork: async () => media,
+      decodeImage: async () => ({ width: asset.width, height: asset.height }),
+    },
+    source,
+  );
   const first = await host.prepare(requestFor(host));
   assert.equal(first.visualOverrides.background.dataUrl, media.dataUrl);
   assert.equal(first.visualOverrides.background.name, asset.alt);
