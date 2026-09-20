@@ -1,0 +1,6 @@
+{
+  "source": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "branch": "codex/mission-caption-followup",
+  "scope": "Separate future correction. No version allocated; not part of PR202.",
+  "setupFailure": "First preparation assertion expected2 source sites but found4; no runtime/tests ran. Replaced only first2 successful play cases; initial missing-suite log retained."
+}
