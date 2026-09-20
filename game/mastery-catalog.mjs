@@ -8,6 +8,7 @@ import {
   FOUNDATION_VERSIONS,
   RELAY_VERSIONS,
   DIRECTIONAL_VERSIONS,
+  SENTINEL_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
@@ -283,6 +284,7 @@ export function createMasteryCatalog(source) {
         'xonix-pack.v6',
         'xonix-pack.v7',
         'xonix-pack.v8',
+        'xonix-pack.v9',
       ].includes(format),
       'Unsupported mastery source pack format.',
     );
@@ -290,7 +292,7 @@ export function createMasteryCatalog(source) {
       !Object.hasOwn(entry, 'sourcePackFormat') || entry.sourcePackFormat === format,
       'A source format must be explicit text or omitted.',
     );
-    const directional = format === 'xonix-pack.v8';
+    const directional = format === 'xonix-pack.v8' || format === 'xonix-pack.v9';
     const relays = format === 'xonix-pack.v7' || directional;
     const foundations = format === 'xonix-pack.v6' || relays;
     const classic = format === 'xonix-pack.v5' || foundations;
@@ -308,19 +310,21 @@ export function createMasteryCatalog(source) {
       definitionIds = new Set();
     requireValue(
       context.versions.ruleset ===
-        (directional
-          ? DIRECTIONAL_VERSIONS.ruleset
-          : relays
-            ? RELAY_VERSIONS.ruleset
-            : foundations
-              ? FOUNDATION_VERSIONS.ruleset
-              : classic
-                ? CLASSIC_VERSIONS.ruleset
-                : wide
-                  ? WIDE_VERSIONS.ruleset
-                  : encounter
-                    ? ENCOUNTER_VERSIONS.ruleset
-                    : LEGACY_VERSIONS.ruleset),
+        (format === 'xonix-pack.v9'
+          ? SENTINEL_VERSIONS.ruleset
+          : directional
+            ? DIRECTIONAL_VERSIONS.ruleset
+            : relays
+              ? RELAY_VERSIONS.ruleset
+              : foundations
+                ? FOUNDATION_VERSIONS.ruleset
+                : classic
+                  ? CLASSIC_VERSIONS.ruleset
+                  : wide
+                    ? WIDE_VERSIONS.ruleset
+                    : encounter
+                      ? ENCOUNTER_VERSIONS.ruleset
+                      : LEGACY_VERSIONS.ruleset),
       'Pack format and campaign simulation versions differ.',
     );
     requireValue(

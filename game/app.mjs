@@ -6742,7 +6742,9 @@ try {
                   ? run.player.speed === 0
                     ? 'LINE EXPOSED / CHOOSE A TURN'
                     : 'LIVE LINE / EXPOSED'
-                  : ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8'].includes(run.ruleset)
+                  : ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(
+                        run.ruleset,
+                      )
                     ? 'Reclaimed ground'
                     : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
@@ -6845,7 +6847,7 @@ try {
             run.player.cutting
           )
             warning(
-              `Live line exposed. Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground to secure it.`,
+              `Live line exposed. Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground to secure it.`,
             );
           if (event.type === 'player.failed')
             warning(
@@ -6860,7 +6862,7 @@ try {
             );
           if (event.type === 'lineImpact.seeded')
             warning(
-              `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
+              `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
             );
           if (event.type === 'lineImpact.arrived')
             warning('The travelling impact reached your craft. One life lost.');

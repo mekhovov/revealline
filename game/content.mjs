@@ -41,6 +41,7 @@ export const CLASSIC_SCENARIO_VERSION = 'xonix-playground.v5';
 export const FOUNDATION_SCENARIO_VERSION = 'xonix-playground.v6';
 export const RELAY_SCENARIO_VERSION = 'xonix-playground.v7';
 export const DIRECTIONAL_SCENARIO_VERSION = 'xonix-playground.v8';
+export const SENTINEL_SCENARIO_VERSION = 'xonix-playground.v9';
 
 /** A preview uses the authored definition's campaign ID and this single map.
  * It is deliberately separate from any installed campaign or award authority.
@@ -463,12 +464,14 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       FOUNDATION_SCENARIO_VERSION,
       RELAY_SCENARIO_VERSION,
       DIRECTIONAL_SCENARIO_VERSION,
+      SENTINEL_SCENARIO_VERSION,
     ].includes(value.format)
   )
-    return result(['Expected a supported xonix-playground.v1..v8 format'], {
+    return result(['Expected a supported xonix-playground.v1..v9 format'], {
       warnings,
     });
-  const directional = value.format === DIRECTIONAL_SCENARIO_VERSION;
+  const sentinel = value.format === SENTINEL_SCENARIO_VERSION;
+  const directional = value.format === DIRECTIONAL_SCENARIO_VERSION || sentinel;
   const relays = value.format === RELAY_SCENARIO_VERSION || directional;
   const foundations = value.format === FOUNDATION_SCENARIO_VERSION || relays;
   const classic = value.format === CLASSIC_SCENARIO_VERSION || foundations;
@@ -496,19 +499,21 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (
     plain(value.level) &&
     value.level.version !==
-      (directional
-        ? 'xonix-level.v7'
-        : relays
-          ? 'xonix-level.v6'
-          : foundations
-            ? 'xonix-level.v5'
-            : classic
-              ? 'xonix-level.v4'
-              : wide
-                ? 'xonix-level.v3'
-                : hasEncounter
-                  ? 'xonix-level.v2'
-                  : 'xonix-level.v1')
+      (sentinel
+        ? 'xonix-level.v8'
+        : directional
+          ? 'xonix-level.v7'
+          : relays
+            ? 'xonix-level.v6'
+            : foundations
+              ? 'xonix-level.v5'
+              : classic
+                ? 'xonix-level.v4'
+                : wide
+                  ? 'xonix-level.v3'
+                  : hasEncounter
+                    ? 'xonix-level.v2'
+                    : 'xonix-level.v1')
   )
     errors.push('Scenario and level simulation versions must match');
   themeChecks(value.theme, errors);

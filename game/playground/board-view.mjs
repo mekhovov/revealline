@@ -12,9 +12,13 @@ export function paintEditorMap(canvas, current) {
   if (canvas.height !== height) canvas.height = height;
   const c = canvas.getContext('2d'),
     s = 16;
-  const run = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(
-    current.level.version,
-  )
+  const run = [
+    'xonix-level.v4',
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+    'xonix-level.v8',
+  ].includes(current.level.version)
     ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
   const classic = run ? classicView(run) : null;

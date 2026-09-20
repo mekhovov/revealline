@@ -542,6 +542,33 @@
               <p id="directional-result" class="note" role="status"></p>
             </form>
           </details>
+          <details id="sentinel-panel">
+            <summary>Stage a Sentinel encounter</summary>
+            <p id="sentinel-qualification" class="note"></p>
+            <form id="sentinel-form">
+              <fieldset id="sentinel-tools">
+                <legend>Boss and shield relays · apply together</legend>
+                <label
+                  >Sentinel actor ID<input id="sentinel-enemy" maxlength="80" required
+                /></label>
+                <label>Core objective<select id="sentinel-core" required></select></label>
+                <label>Shield relay 1<select id="sentinel-shield-0" required></select></label>
+                <label>Shield relay 2<select id="sentinel-shield-1"></select></label>
+                <label>Shield relay 3<select id="sentinel-shield-2"></select></label>
+                <label>Shield relay 4<select id="sentinel-shield-3"></select></label>
+                <p class="note">
+                  Choose distinct visible required objectives. The core places the boss at that cell
+                  centre. All shield relays must be captured, in any order. The shared recipe
+                  controls timing; there are no per-level speed or warning overrides.
+                </p>
+                <button id="sentinel-submit" type="submit">Create Sentinel encounter</button>
+                <button id="sentinel-remove" type="button" disabled>
+                  Remove Sentinel encounter
+                </button>
+              </fieldset>
+              <p id="sentinel-result" class="note" role="status"></p>
+            </form>
+          </details>
           <details id="image-authoring">
             <summary>Build from a reference picture</summary>
             <p class="note">

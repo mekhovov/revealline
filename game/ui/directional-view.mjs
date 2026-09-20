@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { CELL, DIRECTIONS } from '../core/registry.mjs';
+import { isDirectionalRuleset } from '../core/versions.mjs';
 import { compileDirectionalZones, DIRECTIONAL_FIELD_RULES } from '../core/directional-fields.mjs';
 
 const own = (value, key) => {
@@ -24,7 +25,7 @@ const visualBounds = Object.freeze({
 /** Bounded detached view. It cannot steer, publish, reveal cells or change speed. */
 export function directionalView(run) {
   try {
-    if (own(run, 'ruleset') !== 'xonix-core.v8') return null;
+    if (!isDirectionalRuleset(own(run, 'ruleset'))) return null;
     required(
       own(run, 'width') === 72 && own(run, 'height') === 36,
       'Unsupported directional board.',
