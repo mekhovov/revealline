@@ -37,6 +37,12 @@ exterior keeper, preserving two established threat roles and the same speed reci
 The initial output remains rejected evidence rather than a qualifying route for
 the revised map. No countdown, tighter movement or mandatory cleanup was added.
 
+Delayed-start probes also rejected four blind repetitions of the first teaching
+cut when enemy/attack positions had changed. Alternate departures qualify at those
+delays without changing the authored hazards. A Remix route that opened but never
+used its connector was rejected; the replacement physically traverses it. These
+checks preserve the intended route decision rather than making every timing safe.
+
 ## Primary-source checkpoint
 
 The [publisher's Xposed Switched listing](https://www.nintendo.com/us/store/products/xposed-switched-switch/)

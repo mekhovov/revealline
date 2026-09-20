@@ -146,6 +146,23 @@ full clear or device-matrix acceptance.
 The probes do not prove the proposed human-duration or mastery targets. All artwork is explicitly
 greybox/null; the Horizon palette is a candidate fallback, not Crosswind's final art.
 
-Original assets, mastery/delayed-start matrices, Team and human acceptance remain
+The35 delayed-start alternatives now pass public replay and exact checkpoint
+verification at0.5,1,2,3,5seconds (Standard/immediate/seed1). These are separately
+adapted routes, not the same opening repeated at each delay; some make additional
+legal waits while choosing a departure. Four forced teaching-cut repetitions lost
+a life (Long wave and Remix at3seconds, Windbreak weave and Compass at5seconds).
+Their failures remain local evidence. An initial3second Remix alternative also
+failed qualification because it never used its opened connector; its replacement
+traverses the connector and also meets the optional goal. All35 final routes have
+no life loss, multiple captures, a stable denominator and no quota-first objective
+cleanup. Every existing relay opens before victory and is traversed. The six delay
+tests plus four strict goal-observer unit tests pass10/10 on both Node versions.
+
+The test-only optional-goal observer checks actual final reclaimed field cells,
+connected landing visits with no active trail, legal opened-connector traversal,
+victory and no life loss. It does not add runtime awards or edit simulation state.
+Isolated negative fixtures distinguish observer invariants from playable routes.
+
+Original assets, the complete mastery matrix, Team and human acceptance remain
 open. Team rejects successor editions rather than silently dropping their rules.
 No public Journey selects this work; hosted qualification and release remain open.
