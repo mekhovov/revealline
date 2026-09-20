@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2157,
+      "sha256": "0a2350c8e247d87fba0d0eff2b5073d5ab9ed26a5732d770ffb3f018d036c672"
+    },
+    {
+      "path": "observations.json",
+      "bytes": 1252,
+      "sha256": "d32b0a9eb1ef40de46c59e70e5e5968c3a8cf080a56ede228b8c5ece401e09d0"
+    },
+    {
+      "path": "preview-helper.txt",
+      "bytes": 1991,
+      "sha256": "0aac5da0d43b2f5119d093dce29d332d0ba8ef4d77d91a5ebe191eb7924d036a"
+    },
+    {
+      "path": "requests.log.gz",
+      "bytes": 19961,
+      "sha256": "6932d9531f4dfd141843a15601336a85195a4b622e7c95a3948411e742eb2e6a"
+    }
+  ]
+}
