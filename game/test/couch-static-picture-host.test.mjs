@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
+import { Element } from './helpers/couch-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
@@ -1083,7 +1084,8 @@ for (const outcome of ['cancel', 'decode refusal'])
       originalEnable = Soundscape.prototype.enable,
       diagnostics = [];
     let sound = null,
-      enables = 0;
+      enables = 0,
+      mediaElements = 0;
     // Observe the real host-owned sound producer; do not replace its methods or
     // issue test-only transport commands. Audio time/output is a finite boundary.
     t.mock.method(Soundscape.prototype, 'enable', function (...args) {
@@ -1095,7 +1097,16 @@ for (const outcome of ['cancel', 'decode refusal'])
     const f = await fixture(t, {
         audio: {
           ...a,
-          createElement: () => a.media,
+          createElement(doc) {
+            // The persistent player and library audition are distinct DOM media
+            // elements. Preserve the primary harness's observable transport.
+            const media = mediaElements++ === 0 ? a.media : audioHarness().media;
+            const element = new Element(doc, 'audio');
+            for (const [key, value] of Object.entries(element))
+              if (!Object.hasOwn(media, key)) media[key] = value;
+            Object.setPrototypeOf(media, Object.getPrototypeOf(element));
+            return media;
+          },
           Context: class {
             constructor() {
               return a.context;
