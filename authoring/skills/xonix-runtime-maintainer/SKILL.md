@@ -921,3 +921,14 @@ old reference crosswalk and prove its identities before renewing new-policy pins
 ### Responsive recovery dialogs
 
 Use the shared focus-clearance owner for scrollable player dialogs. Supply a sticky heading only when the dialog actually has one, dispose listeners with the owning screen, and retain the selected action through reflow without activating it. Verify portrait to short-landscape resizing with keyboard focus on Cancel/Stay/Play, including pending and completed media operations. A passing layout-model test does not replace observing the final integrated browser view. Preserve original failed observations and sparse-input failures separately from product regressions.
+
+
+### Independent presentation observer ownership
+
+When adding a resize observer to a menu, audit lifecycle fixtures that select the
+last observer by creation order. Identify the board observer through its actual
+arena targets before disconnection, require unique ownership, and retain cached-
+page disconnect, stale-callback, no-background-simulation and zero-RAF assertions.
+Also verify terminal disposal of independent menu observers and that queued focus
+reflow cannot scroll or activate a hidden page. Restore missing sparse inputs from
+the exact selected Git revision; keep setup failures distinct from product failures.

@@ -116,3 +116,12 @@ Cancel, Play and Stay remain visible at 390×844, 844×390 and 844×256; Tab rev
 the alternative Replace action without activating it. [Scoped native record](verification/external-picture-recovery/native-integrated-observation.json)
 resolves the earlier responsive observation for this candidate. Physical inputs,
 full final-source gates and deployed acceptance remain separate and open.
+
+
+A broader lifecycle test assumed the last resize observer belonged to the boards.
+The test now identifies the unique owner of both arena targets and additionally
+checks terminal disposal of every board/menu observer. The two complete affected
+files pass 16/16 on Node 20.19.5; no production change or weaker lifecycle predicate
+was needed. [Review and original local logs](verification/external-picture-recovery/observer-ownership-review.json)
+retain sparse setup failures separately. The corrected final source needs fresh
+full qualification; earlier successful or failed runs cannot qualify it.

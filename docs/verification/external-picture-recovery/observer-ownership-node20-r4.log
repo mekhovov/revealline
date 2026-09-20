@@ -1,0 +1,84 @@
+TAP version 13
+# node:internal/fs/promises:639
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/couch/index.html'
+#     at async open (node:internal/fs/promises:639:25)
+#     at async readFile (node:internal/fs/promises:1246:14)
+#     at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/helpers/couch-host.mjs:9:14 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/couch/index.html'
+# }
+# Node.js v20.19.5
+# Subtest: /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/couch-board-footprint-host.test.mjs
+not ok 1 - /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/couch-board-footprint-host.test.mjs
+  ---
+  duration_ms: 85.753834
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/external-media-recovery/game/test/couch-board-footprint-host.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection
+ok 2 - all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection
+  ---
+  duration_ms: 4.663084
+  ...
+# Subtest: world action stays inside a resized scrollport without changing focus or activating a choice
+ok 3 - world action stays inside a resized scrollport without changing focus or activating a choice
+  ---
+  duration_ms: 9.538709
+  ...
+# Subtest: actual panel traverses every card, filters without work and resizes with reachable focus
+ok 4 - actual panel traverses every card, filters without work and resizes with reachable focus
+  ---
+  duration_ms: 31.484542
+  ...
+# Subtest: filter and paging preserve exact pending work; failure remains on its visible card and retry acts once
+ok 5 - filter and paging preserve exact pending work; failure remains on its visible card and retry acts once
+  ---
+  duration_ms: 4.680833
+  ...
+# Subtest: remote failure still inspects exact source cards and exposes remaining installed choices without installation
+ok 6 - remote failure still inspects exact source cards and exposes remaining installed choices without installation
+  ---
+  duration_ms: 14.091417
+  ...
+# Subtest: native controller select preview and Back keep filters unchanged; Confirm commits without selecting a chapter
+ok 7 - native controller select preview and Back keep filters unchanged; Confirm commits without selecting a chapter
+  ---
+  duration_ms: 99.043542
+  ...
+# Subtest: installed mode follows actual authored policies and a multi-theme pack is one reachable choice
+ok 8 - installed mode follows actual authored policies and a multi-theme pack is one reachable choice
+  ---
+  duration_ms: 0.234167
+  ...
+# Subtest: cancelling an unavailable online list leaves inspected installed originals usable and late metadata cannot reopen the dialog
+ok 9 - cancelling an unavailable online list leaves inspected installed originals usable and late metadata cannot reopen the dialog
+  ---
+  duration_ms: 10.613375
+  ...
+# Subtest: widening and releasing a retained card never leave focus on disabled page controls
+ok 10 - widening and releasing a retained card never leave focus on disabled page controls
+  ---
+  duration_ms: 7.961833
+  ...
+# Subtest: file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes
+ok 11 - file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes
+  ---
+  duration_ms: 7.6565
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 313.39325
