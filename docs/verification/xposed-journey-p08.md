@@ -183,3 +183,17 @@ Final combined-tree review and hosted qualification belong to the release
 coordinator. Keep every affected recipe source-stage here. Human/device/pacing,
 remaining native states, original art, Team mission, Journey enrollment and public
 deployment remain open; this is a source checkpoint, not completed P08 acceptance.
+
+## Cell-envelope source successor
+
+At f2eeb598 the corrected effects fingerprint is
+`7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13`;
+UI remains `fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6`.
+The same bounded production operation appends10 source effects revisions as
+fpv37, retaining fpv36 and every earlier record,127 original payloads and CSS
+byte-for-byte. Candidate ledger SHA-256
+`efe8361e36c9d280a32674e159230eab114745cc8ac5a12eb69ba8c74f3bd55d`.
+All34 affected recipes remain source; no previous approval was copied.
+Both starter picture tuples and the historical import policy advance explicitly
+to37 with identical original descriptors. The eab native recheck is historical,
+not a claim of final fpv37 or post-composition native acceptance.
