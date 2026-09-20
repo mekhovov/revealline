@@ -239,6 +239,7 @@ export function classicView(run) {
       ['contour-patrol', 'contour patrol'],
       ['claimed-rover', 'claimed rover'],
       ['eroder', 'eroder'],
+      ['lane-boss', 'lane emitter'],
     ].flatMap(([type, label]) => {
       const count = enemies.filter((enemy) => enemy.type === type && !enemy.impactCarrier).length;
       const plural = label.endsWith('enemy') ? `${label.slice(0, -5)}enemies` : `${label}s`;
@@ -430,22 +431,32 @@ export function drawClassicEnemy(
   presentation = null,
   body = null,
 ) {
-  if (enemy?.type === 'bouncer' && enemy.impactCarrier) {
+  if ((enemy?.type === 'bouncer' && enemy.impactCarrier) || enemy?.type === 'lane-boss') {
+    const laneImage = enemy.type === 'lane-boss' && (body?.image ?? images.boss);
+    if (laneImage && presentation)
+      drawPresentedActor(
+        ctx,
+        presentation,
+        palette,
+        laneImage,
+        body?.geometry ?? images.presentationSprites?.boss,
+        body?.record,
+      );
     ctx.save();
     ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
-    // Keep the role recognizable even when a theme supplies a generic bouncer.
+    // A stable functional cue accompanies an uploaded body rather than replacing it.
     ctx.fillStyle = enemy.stunned ? palette.muted : palette.danger;
     ctx.strokeStyle = PRESENTATION_INK;
     ctx.lineWidth = 2;
     ctx.beginPath();
     traceContentActor(
       ctx,
-      'impact-carrier',
+      enemy.type === 'lane-boss' ? 'lane-boss' : 'impact-carrier',
       0,
       0,
       Math.max(11, (presentation?.diameter ?? 22) / 2),
     );
-    ctx.fill();
+    if (!laneImage || !presentation) ctx.fill();
     ctx.stroke();
     ctx.beginPath();
     ctx.arc(0, 0, enemy.radius * SIZE, 0, Math.PI * 2);

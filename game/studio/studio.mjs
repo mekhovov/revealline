@@ -6,6 +6,7 @@ import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
+import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -548,6 +549,12 @@ $('fracture').onclick = guarded(() => {
 $('phase').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createPhaseCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('livewire').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createLivewireCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
