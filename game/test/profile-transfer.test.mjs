@@ -214,7 +214,37 @@ test('discovery is bounded and unavailable storage never becomes an empty succes
   );
   for (let i = 0; i < TRANSFER_LIMITS.candidates + 1; i++)
     f.map.set(`revealline.library.release-v0.2.${i + 1}.v1`, 'x');
-  assert.throws(() => discoverProfileTransfers(f.options), /Too many earlier/);
+  const bounded = discoverProfileTransfers(f.options);
+  assert.equal(bounded.length, TRANSFER_LIMITS.candidates);
+  assert.equal(bounded[0].id, 'release-v0.3.0');
+  assert.equal(bounded.at(-1).id, 'release-v0.2.3');
+  assert.ok(!bounded.some((source) => source.id === 'release-v0.2.1'));
+  assert.ok(!bounded.some((source) => source.id === 'release-v0.2.2'));
+  assert.equal(f.reads.length, 0);
+});
+
+test('many historical channels retain a recent saved flight in the bounded picker', () => {
+  const f = fixture();
+  f.map.clear();
+  for (let patch = 1; patch <= 62; patch++)
+    f.map.set(`revealline.suspended.release-v0.2.${patch}.v1`, 'unverified');
+  f.map.set('revealline.library.release-v0.69.3.v1', 'unverified');
+  f.map.set('revealline.suspended.release-v0.69.3.v1', 'unverified');
+  const sources = discoverProfileTransfers({ ...f.options, currentVersion: 'v0.76.0' });
+  assert.equal(sources.length, TRANSFER_LIMITS.candidates);
+  assert.equal(sources[0].id, 'release-v0.69.3');
+  assert.equal(sources.filter((source) => source.id === 'release-v0.69.3').length, 1);
+  assert.equal(sources.at(-1).id, 'release-v0.2.32');
+  const entries = [...f.map.entries()].reverse();
+  f.map.clear();
+  for (const entry of entries) f.map.set(...entry);
+  assert.deepEqual(
+    discoverProfileTransfers({ ...f.options, currentVersion: 'v0.76.0' }).map(
+      (source) => source.id,
+    ),
+    sources.map((source) => source.id),
+  );
+  assert.equal(f.reads.length, 0, 'Bounded discovery must not read saved-flight values.');
 });
 
 test('verified profile, pack image and live cut transfer without any source mutation', async () => {
