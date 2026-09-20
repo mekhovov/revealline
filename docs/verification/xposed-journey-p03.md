@@ -9,6 +9,12 @@ Automatic merge `0234e8ba` subsequently incorporates P02 `9fe6276f`, including t
 release owner's `014449ed` Journey/Couch music composition. The42-test focused
 cohort passes again after this merge. Source composition is not phase acceptance.
 
+Later mergef33f1969 includes repaired P02fd6745a9, its retained fpv33/fpv34 history,
+bounded Studio metadata capacity and release-owner evidence/cutoff. The expanded
+Signal candidates/terrain/routes/timing cohort passes44/44 in24.5seconds after this
+merge. A separate two-test crosswalk cohort pins four reference originals and all
+119 clear/delay fixtures, while keeping artwork/mastery/final dispositions pending.
+
 ## Scope and design
 
 Seven original 72×36 maps form two three-mission learning arcs and one optional
@@ -54,6 +60,8 @@ collision tolerances or fill rules. We explicitly define our slow/lethal behavio
 The three-bay reference is simplified into separated refuges; no new relay gates
 are implied. A final per-reference disposition remains pending greybox comparison,
 alternative-route evidence and human testing; these are not four completed imports.
+`docs/research/signal-reference-crosswalk.json` machine-pins the four source hashes,
+byte lengths, each current Standard runtime identity and the intentional departures.
 
 ## Verification
 

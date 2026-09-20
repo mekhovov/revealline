@@ -1,0 +1,125 @@
+{
+  "format": "SignalReferenceCrosswalkV1",
+  "phase": "P03",
+  "policyId": "journey-arcade-v2",
+  "status": "greybox-feasibility-not-final-disposition",
+  "scope": "Original spatial adaptations, not copies or exact recreations. Stills do not establish timing, collision tolerances, actor AI or fill rules.",
+  "review": {
+    "date": "2026-09-20",
+    "method": "direct-full-frame-review",
+    "files": [
+      "pack-1_level-5.png",
+      "pack-1_level-7.png",
+      "pack-2_level-1.png",
+      "pack-3_level-1.png"
+    ],
+    "display": "6144x2560 source frames viewed as2048x853 tool previews; not native-sprite inspection"
+  },
+  "ledger": "docs/research/xposed-journey-ledger.json",
+  "references": [
+    {
+      "designKey": "xposed-pack-1-level-05",
+      "sha256": "d13314917e1961950221a182597551dbbd6241d6f9bd15818597c80865ad67e9",
+      "bytes": 7943989,
+      "retainedVisualIdea": "Marked central bed with interrupted strips and inner bars.",
+      "finalDisposition": false
+    },
+    {
+      "designKey": "xposed-pack-1-level-07",
+      "sha256": "4b31b6e97b6fca6d8dd869d47771f13937162214953d220dcf53a7dc9d4b3c0a",
+      "bytes": 3923070,
+      "retainedVisualIdea": "Red crossed tiles arranged as lettering; boundary and field actors are visible.",
+      "finalDisposition": false
+    },
+    {
+      "designKey": "xposed-pack-2-level-01",
+      "sha256": "a66bc59d10e8a3310aabf1d8f74ba5b1fd281241f14fce6112137c16a2673302",
+      "bytes": 6798777,
+      "retainedVisualIdea": "Offset marked bars and pillars around a taller central block.",
+      "finalDisposition": false
+    },
+    {
+      "designKey": "xposed-pack-3-level-01",
+      "sha256": "5b55e34edb9d9e0a4d5c59c02717250defd7a9fdb6b8f0273cfd068bdff67be8",
+      "bytes": 7649104,
+      "retainedVisualIdea": "Three framed bays with a continuous marked band and separated red quadrants.",
+      "finalDisposition": false
+    }
+  ],
+  "missions": [
+    {
+      "id": "soft-crossing",
+      "standardSimulationIdentity": "a92a1c4793b3b398",
+      "references": ["xposed-pack-1-level-05"],
+      "departureFromReference": "Replace nested bars with one broad near island and a short slow band. Existing shared keepers and perimeter patrol define behavior; reference symbols are not used to infer enemy AI.",
+      "distinctiveDecision": "Choose the direct slow crossing or a longer clear approach; neutralizing the bed makes later returns faster.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    },
+    {
+      "id": "dry-spine",
+      "standardSimulationIdentity": "eb16b98430a8e17e",
+      "references": ["xposed-pack-1-level-05"],
+      "departureFromReference": "Rework the interrupted inner-bar motif into one permanent central spine and two offset slow beds. The interior start, non-scoring foundations and optional life are explicit original contracts.",
+      "distinctiveDecision": "Choose which slow bed to reclaim first and which end of the spine gives a better return distance.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    },
+    {
+      "id": "wide-approach",
+      "standardSimulationIdentity": "426dc73a71adc2bc",
+      "references": ["xposed-pack-1-level-05", "xposed-pack-2-level-01"],
+      "departureFromReference": "Use two unequal offset landings around a wide slow center rather than the source's literal strips, pillars or actor counts. One known frontier patrol supplies route pressure.",
+      "distinctiveDecision": "Cross the slow center for a broad capture or link landings through a longer clear approach while reshaping the frontier.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    },
+    {
+      "id": "cool-the-crossing",
+      "standardSimulationIdentity": "1e14b5286af8e381",
+      "references": ["xposed-pack-1-level-07"],
+      "departureFromReference": "Replace literal warning lettering with a single readable lethal bed between original refuges. Do not copy artwork or infer damage tolerance from the source screenshot.",
+      "distinctiveDecision": "Enclose and neutralize the marked bed before crossing, or preserve a wide outside route.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    },
+    {
+      "id": "garden-refuges",
+      "standardSimulationIdentity": "7b34e243e3a17b44",
+      "references": ["xposed-pack-2-level-01"],
+      "departureFromReference": "Simplify the offset pillar motif into two lethal rows with broad clear end routes and two foundation refuges. Retain shared measured threats rather than matching source actor counts.",
+      "distinctiveDecision": "Neutralize the nearer row first or loop around both ends to reach another return surface.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    },
+    {
+      "id": "neutral-ground",
+      "standardSimulationIdentity": "da29ad681a9d8585",
+      "references": ["xposed-pack-1-level-05", "xposed-pack-2-level-01"],
+      "departureFromReference": "Combine the already-taught material motifs around an original three-rectangle cross. The start is inside the reclaimed cross; no new mandatory rule or directional drift is added.",
+      "distinctiveDecision": "Open the slow western route or the lethal eastern approach while keeping the central cross useful.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    },
+    {
+      "id": "signal-remix",
+      "standardSimulationIdentity": "4d9110cd734ff876",
+      "references": ["xposed-pack-3-level-01"],
+      "departureFromReference": "Turn three framed bays into three separated, connectable refuges around two offset material channels. No copied quadrants, relay gates, coordinates or guessed actor behavior.",
+      "distinctiveDecision": "Choose the order of island connections and whether the optional freeze detour improves an ambitious enclosure.",
+      "backgroundAsset": null,
+      "masteryQualification": "pending"
+    }
+  ],
+  "evidence": {
+    "clearRoutes": "game/test/fixtures/signal-clear-routes.json",
+    "delayedRoutes": "game/test/fixtures/signal-timing-routes.json",
+    "verification": "docs/verification/xposed-journey-p03.md",
+    "routeCount": 119,
+    "seedReplayCount": 420,
+    "humanValidation": "pending",
+    "releaseValidation": "pending",
+    "artworkValidation": "not-produced",
+    "limitations": "Legal omniscient routes prove solvability for sampled inputs, not difficulty, enjoyment, arbitrary-delay safety or mastery. Pacing and alternate-route review remain open."
+  }
+}
