@@ -1,0 +1,25 @@
+{
+  "artifactId": 10611247796,
+  "artifactName": "archive38-verification-receipts",
+  "run": 35531856595,
+  "members": [
+    {
+      "path": "expected-inventory.json",
+      "bytes": 159543,
+      "sha256": "7d68f5b27b5d7dae71c46b69f2cc04edfd090372742d8a50b2653f3cb0c2854d",
+      "crc32": "aa0db8f5"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1088,
+      "sha256": "e5bf5bb989570326c2865e0b93cb5e1512b2738064a5f55656b3bbd3dcbf2c1e",
+      "crc32": "33aba904"
+    },
+    {
+      "path": "zip-receipt-v0.69.3.json",
+      "bytes": 407,
+      "sha256": "abdf40dde749e5b236ef4d9ef90460e0081ee091570dfd2757a39d591db29b9b",
+      "crc32": "d0ccb3a8"
+    }
+  ]
+}
