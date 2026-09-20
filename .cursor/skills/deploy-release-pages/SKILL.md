@@ -215,3 +215,16 @@ For complete catalog/admission validation without copying historical evidence, a
 Count authored evidence files such as README and browser admission separately from copied originals. Verify every final evidence pin against the staged index, including complete original ZIPs and their member indexes. Preserve prepared cutoffs; add truthful current acceptance above them instead of leaving pending instructions as the current summary.
 
 Example prompt: “Review only the publisher's related hunks, validate every catalog row and archive admission using exact original bytes, preserve all historical routes and evidence, and distinguish local sparse fixtures from the complete hosted checks. Update the current report only after actual public acceptance.”
+
+
+## Validate evidence ZIPs with their actual upload consumer
+
+Before uploading qualification metadata, run the selected source utility’s real
+`small_assets_check` against the complete proposed binding and original small
+asset bodies. Its evidence ZIP requires `evidence-manifest.json` at the ZIP root;
+valid nested hashes alone do not establish a consumer-compatible package.
+If an unpublished draft has invalid metadata, retain the rejected originals and
+failed hosted receipt first. Correct only the explicitly identified draft metadata
+assets after exact source/tag/asset reconciliation, then bind one reviewed upload
+attempt to the new descriptors. Never overwrite published versions, change the
+frozen game bytes, or repeat an ambiguous payload upload without fresh asset checks.
