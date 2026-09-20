@@ -143,6 +143,10 @@ function domainHit(state, a, b, radius, domain) {
   return best;
 }
 
+// The Team reclaimed-roamer edition uses this same swept domain boundary,
+// including world edges. Exporting the pure query does not change Solo motion.
+export { domainHit as classicDomainHit };
+
 export function classicEnemyFactor(state, enemy) {
   if (classicEffectActive(state, 'enemy-freeze') || enemy.stunnedUntil > state.time + EPS) return 0;
   return Math.min(
