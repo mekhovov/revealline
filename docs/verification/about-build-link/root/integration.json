@@ -1,0 +1,11 @@
+{
+  "base": "aafc1fefbc229fb72d6080936e04ed8a6236ddce",
+  "packetBase": "4bb553d0",
+  "files": [
+    "site/about-navigation.mjs",
+    "game/test/about-navigation-host.test.mjs",
+    "docs/about-build-information-link.md",
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md"
+  ],
+  "scope": "Separate follow-up; preserve prior skill additions and source cutoff"
+}

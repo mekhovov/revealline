@@ -1,0 +1,26 @@
+{
+  "status": "ready-for-later-integration-not-released",
+  "base": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "phase": "P16 supporting navigation",
+  "patchSHA256": "dabccca1397e72db1d571d1ad2438d715e3e1d0a5d99fcd22f5e90848ab44626",
+  "created_at": "2026-09-20T17:54:34.109445+00:00",
+  "receipts": {
+    "README.md": "8db93302955904057fd4ec0d6a08231472867eba78021b03bfc3c114f8eae7b1",
+    "fixture-fs-sync.mjs": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91",
+    "fixture-fs.mjs": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa",
+    "git-apply-check.log": "a38ddc45d1a85dc8d9b7cc0cf3acf468079d751b816f6aed9233d2a79bb6a2d5",
+    "loader.mjs": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168",
+    "native-evidence.json": "4d5c47f295d05e055a9345025d9472e79592a7ec407075704560d089de54e1c2",
+    "native-pins.json": "4e57520b7e9a0744c4cdefac6056d3d50de6a3f79d39e23161f47ab22062747d",
+    "native-served.jsonl.xz": "bf2cbcc07a75a6debe72023625d1c97a61d42ce701fb0f2f55cb072035b8487e",
+    "patch-source.mjs": "09ac530f430e8657b7c2feaf5ff897b1a722234a1c741c0120bdcb3869ea042d",
+    "public-runtime-pins.json": "c6e9efcfd18c850555060a4a8145e0effe05d2ddd6f3d4dc9c72b153b239f75e",
+    "qualification-logs.json.xz": "ea4a5fd473b244d8279420578c8dd4ba88ecce0059687d3f54cf6cfd36e39616",
+    "reconstructed-node20.log": "aa9e757bc177cb44e6896e55b71a1341638480771f33beb9c487a61fca35637a",
+    "reconstruction.log": "a979f9719fa4e889538cec01e5be6a93864f7f10a097430ab4dcf8d0fac11d2d",
+    "source-manifest.json": "d1d40a8c252be019c326a97dde2ff207fe7df554561a5fafa7a54e6efb9e3390",
+    "source.patch.gz": "0d092c37d907fb07334d6850bf8149b9fd5a713e5324e5d88acf368990813ea6",
+    "suite.test.mjs": "fa8fd3747854c5509cd16a904d65ac1e2eee3e4cda1a01788db3383970334dbb",
+    "verify-source.mjs": "ddc77a0190b116b99c600b3b548562debbf640d7e32e399081db3268a31a4075"
+  }
+}

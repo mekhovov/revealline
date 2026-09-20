@@ -1,0 +1,25 @@
+{
+  "base": "aafc1fefbc229fb72d6080936e04ed8a6236ddce",
+  "files": [
+    {
+      "path": "site/about-navigation.mjs",
+      "bytes": 5439,
+      "sha256": "6fb1fb1723b627f69e77c3b654d00516b917e129ffa38a087e7148d8b1f954da"
+    },
+    {
+      "path": "game/test/about-navigation-host.test.mjs",
+      "bytes": 27810,
+      "sha256": "4abaf67d1f3da7fee6f9847dd2c2af6485868e57a08684d9d5301486c6d6bd6b"
+    },
+    {
+      "path": "docs/about-build-information-link.md",
+      "bytes": 1910,
+      "sha256": "e0e4a17d24af8834df2f255c131df96768bbb7659e6de3e66fdcd7100f922048"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 287466,
+      "sha256": "704df3dc67a6a892da36ecf22f10b4fe485a8d45d56ff2176a2f7e321548dda4"
+    }
+  ]
+}

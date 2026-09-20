@@ -1,0 +1,28 @@
+{
+  "time": "2026-09-20T17:52:38.375002+00:00",
+  "base": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "runtime_override": "site/about-navigation.mjs",
+  "public_failure": {
+    "url": "https://mekhovov.github.io/revealline/releases/v0.69.3/site/site/about.html#versions",
+    "versionsOpen": false,
+    "historyHref": "https://mekhovov.github.io/revealline/releases/",
+    "historyHidden": false,
+    "catalogue": "112 preserved builds"
+  },
+  "local": {
+    "url": "http://127.0.0.1:63246/releases/v0.70.0/site/site/about.html#versions",
+    "versionsOpen": true,
+    "initialActive": "BODY",
+    "Tab": "SUMMARY: Build information / Release history and preserved builds",
+    "Escape": "about-return",
+    "normalAboutOpen": false,
+    "viewport": "1280x720",
+    "visual": "Open build information panel and controls inspected in native screenshot; no screenshot file retained.",
+    "catalogue": "Unavailable local archive; existing fallback displayed"
+  },
+  "limits": [
+    "Desktop native keyboard and read-only DOM observations, not physical-controller or touch evidence",
+    "No player game session opened or save replacement performed",
+    "No public deployment of correction claimed"
+  ]
+}

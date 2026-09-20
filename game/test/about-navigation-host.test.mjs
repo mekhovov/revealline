@@ -82,7 +82,7 @@ function mount(doc) {
 
 async function about(
   t,
-  pageHref = 'https://example.test/revealline/releases/v0.60.8/site/site/about.html#versions',
+  pageHref = 'https://example.test/revealline/releases/v0.60.8/site/site/about.html',
 ) {
   const doc = new Document(),
     win = new Events(),
@@ -708,3 +708,46 @@ for (const page of [
     });
   }
 }
+
+for (const page of [
+  'https://example.test/revealline/site/about.html#versions',
+  'https://example.test/revealline/releases/v0.70.0/site/site/about.html#versions',
+  'https://mekhovov.github.io/revealline-archive-34/releases/v0.68.0/site/site/about.html#versions',
+]) {
+  test(`Build information deep link opens its disclosure before catalogue readiness: ${page}`, async (t) => {
+    const h = await about(t, page);
+    await h.start();
+    assert.equal(h.$('versions').open, true);
+    assert.equal(h.requests.length, 1, 'The release catalogue is still pending.');
+    h.$('about-return').focus();
+    await h.finish(packCatalog);
+    assert.equal(h.doc.activeElement, h.$('about-return'));
+    assert.deepEqual(h.navigations, []);
+    assert.deepEqual(h.writes, []);
+  });
+}
+
+test('About disclosure follows an explicit hash visit without stealing focus or overwriting manual closure on restoration', async (t) => {
+  const h = await about(t);
+  await h.start();
+  assert.equal(Boolean(h.$('versions').open), false, 'Ordinary About starts compact.');
+  h.$('about-return').focus();
+  h.win.location.href += '#versions';
+  h.win.emit('hashchange');
+  assert.equal(h.$('versions').open, true);
+  assert.equal(h.doc.activeElement, h.$('about-return'));
+  h.$('versions').querySelector('summary').click();
+  assert.equal(h.$('versions').open, false);
+  h.win.emit('pagehide', { persisted: true });
+  h.win.emit('pageshow', { persisted: true });
+  assert.equal(h.$('versions').open, false, 'Back/forward cache keeps the manual choice.');
+  h.win.location.href = h.win.location.href.replace('#versions', '#modes');
+  h.win.emit('hashchange');
+  assert.equal(h.$('versions').open, false);
+  h.win.emit('pagehide', { persisted: false });
+  h.win.location.href = h.win.location.href.replace('#modes', '#versions');
+  h.win.emit('hashchange');
+  assert.equal(h.$('versions').open, false, 'A departed owner cannot reopen the section.');
+  assert.deepEqual(h.navigations, []);
+  assert.deepEqual(h.writes, []);
+});
