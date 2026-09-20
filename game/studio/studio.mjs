@@ -22,6 +22,7 @@ import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
+import { createGeometryEditor } from './geometry-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -69,6 +70,18 @@ const actorEditor = createActorEditor({
   getSource: () => session.current(),
   getMission: currentMission,
   getDifficulty: () => $('difficulty').value,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const geometryEditor = createGeometryEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
   apply: (candidate) => {
     if (!discardSource()) return false;
     session.replace(candidate);
@@ -154,6 +167,7 @@ function draw(preview) {
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
   actorEditor.sync();
+  geometryEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);

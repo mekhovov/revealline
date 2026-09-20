@@ -184,6 +184,10 @@ function editorFixture() {
     cancel: () => {
       cancelled = true;
     },
+    update: (next, sync = true) => {
+      source = next;
+      if (sync) editor.sync();
+    },
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
@@ -218,6 +222,25 @@ test('actor controls add, replace and confirm removal; invalid fields retain the
   f.node('remove').onclick();
   assert.equal(f.source().missions[0].actors.length, 1);
   assert.equal(f.node('select').value, '');
+});
+
+test('stale actor fields cannot apply after a project or same-revision source replacement', () => {
+  const f = editorFixture();
+  f.node('select').value = 'keeper';
+  f.node('select').onchange();
+  const next = structuredClone(f.source());
+  next.missions[0].actors[0].x = 55.5;
+  f.update(next, false);
+  f.node('x').value = '50.5';
+  submit(f);
+  assert.match(f.node('result').textContent, /context changed/);
+  assert.equal(f.source().missions[0].actors[0].x, 55.5);
+  f.editor.sync();
+  assert.equal(f.node('x').value, '55.5');
+  f.node('remove').onclick();
+  f.update({ ...f.source(), id: 'different-project' });
+  f.node('remove').onclick();
+  assert.equal(f.source().missions[0].actors.length, 1, 'New context disarms removal.');
 });
 
 test('role controls explain domains, refresh preset tiers, clear absent missions and honor rejected adoption', () => {
