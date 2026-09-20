@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
     <title>RevealLine — Asset Studio</title>
+    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="./studio.css" />
   </head>
-  <body class="field-kit" data-text-face="pixel" data-text-size="standard">
+  <body
+    data-workshop-tool="asset-studio"
+    class="field-kit"
+    data-text-face="pixel"
+    data-text-size="standard"
+  >
     <a data-studio-host="control" class="skip-link" href="#inspector">Skip inventory</a>
     <div class="studio-operation">
       <p
@@ -31,7 +38,15 @@
     </div>
     <header class="studio-header">
       <div>
-        <a data-studio-host="control" href="../../game/">REVEALLINE / WORKSHOP</a>
+        <a
+          id="studio-workshop-return"
+          data-workshop-return="workshop"
+          inert
+          aria-disabled="true"
+          data-studio-host="control"
+          href="../../game/?workshop=asset-studio"
+          >Return to Workshop</a
+        >
         <h1 data-studio-host="title">Asset Studio</h1>
       </div>
       <div class="workspace-actions">
@@ -746,8 +761,16 @@
       </section>
     </main>
     <footer class="studio-footer">
-      <a data-studio-host="control" href="../design-atlas/">Design atlas</a
-      ><a data-studio-host="control" href="../../game/">Return to game</a
+      <a data-studio-host="control" href="../design-atlas/" data-workshop-tool="design-atlas"
+        >Design atlas</a
+      ><a
+        id="studio-game-return"
+        data-workshop-return="game"
+        inert
+        aria-disabled="true"
+        data-studio-host="control"
+        href="../../game/"
+        >Return to game</a
       ><span data-studio-host="secondary"
         >Local authoring workspace · player saves stay separate</span
       >

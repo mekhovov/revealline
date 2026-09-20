@@ -15,12 +15,25 @@
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../ui/workshop-return.css" />
   </head>
-  <body class="field-kit field-kit-support" data-field-kit-page="controller">
+  <body
+    data-workshop-tool="controller-lab"
+    class="field-kit field-kit-support"
+    data-field-kit-page="controller"
+  >
     <header>
-      <a href="../">◩ REVEAL / LINE</a>
+      <a href="../" data-workshop-return="game" inert aria-disabled="true">◩ REVEAL / LINE</a>
+      <a
+        data-workshop-return="workshop"
+        inert
+        aria-disabled="true"
+        href="../?workshop=controller-lab"
+        >Return to Workshop</a
+      >
       <span>CONTROLLER PRACTICE</span>
-      <a href="../playground/">Open Playground ↗</a>
+      <a href="../playground/" data-workshop-tool="playground">Open Playground ↗</a>
     </header>
     <main>
       <p id="load-status" class="operation-status notice" data-state="busy">

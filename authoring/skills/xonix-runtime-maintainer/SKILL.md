@@ -921,3 +921,27 @@ old reference crosswalk and prove its identities before renewing new-policy pins
 ### Complete visual-theme identity boundary
 
 Use `game/presentation/visual-theme-catalogue.mjs` only for declared compatibility and exact compiler/theme/collection identities. Supply accepted authored owners and canonical level hashes before difficulty transforms; keep numeric and legacy string revisions exact. A compatible declaration is not art approval or byte validation. Compare loader-verified declarations against authoritative required slots, preserve historical catalogue entries, and keep unsupported content distinct from unavailable revisions. Do not expose Settings choices or change retained picture/story pins until the complete two-collection benchmark and staged-host integration pass. Follow the prompt in `docs/visual-theme-catalogue.md`.
+
+For Asset Studio navigation, preserve the fixed same-edition Workshop return and
+bounded Journey route in `game/ui/asset-studio-return.mjs`. The UI hint opens a
+menu only; do not broaden historical mode-return readers or turn it into save or
+selection adoption. Restore after boot only while the existing host owns focus,
+and keep pause callbacks from covering newer dialogs/focus. Return to game remains
+separate. Follow the native and modeled maintenance prompt in
+[Studio return navigation](../../../docs/asset-studio.md#returning-to-workshop),
+including unchanged checkpoints/save bytes and explicit Back to the Workshop
+opener. This Solo tool route does not certify Couch departure or restore behavior.
+
+For the shared standalone Workshop return, use the finite tool map in
+`game/ui/workshop-return.mjs` and the maintenance journey in
+[Standalone Workshop navigation](../../../docs/field-kit-surfaces.md#standalone-workshop-return-navigation).
+Keep the existing practice token/session protocols, Replay explicit departure and
+Video Poster cancel-first Back unchanged. No route hint may adopt saves or implicit
+mission selection. Include early loading, all exact tool openers and native nested
+Escape in the next release's evidence; partial Studio coverage is not nine-tool acceptance.
+
+For Playground keyboard exits, use the named same-origin frame's nonmodal native
+Tab boundary and the current host's input suspension. Do not repurpose controller
+session or enemy draft-return transport. Test exit/re-entry in both directions,
+explicit Resume, frame retirement, modal containment and in-frame mode links;
+see `docs/field-kit-surfaces.md` for the maintenance prompt and evidence limits.

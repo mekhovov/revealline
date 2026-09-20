@@ -14,18 +14,29 @@
     <script type="module" src="../ui/tool-display-entry.mjs"></script>
     <script type="module" src="../presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../ui/workshop-return.css" />
   </head>
-  <body class="playground-page field-kit field-kit-support">
+  <body data-workshop-tool="playground" class="playground-page field-kit field-kit-support">
     <p id="boot-status" class="boot-status operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
       ><span class="operation-status-label" role="status">Loading Playground tools…</span>
     </p>
     <header class="masthead">
-      <a class="wordmark" href="../">◩ REVEAL / LINE</a>
+      <a class="wordmark" href="../" data-workshop-return="game" inert aria-disabled="true"
+        >◩ REVEAL / LINE</a
+      >
       <nav>
         <span>PLAYGROUND</span><a href="../studio/">Content Studio preview ↗</a
-        ><a href="../controller-lab/">Controller practice ↗</a><a href="../couch/">Couch race ↗</a
-        ><a href="../">Back to campaign ↗</a>
+        ><a href="../controller-lab/" data-workshop-tool="controller-lab">Controller practice ↗</a
+        ><a href="../couch/">Couch race ↗</a
+        ><a
+          href="../?workshop=playground"
+          data-workshop-return="workshop"
+          inert
+          aria-disabled="true"
+          >Return to Workshop</a
+        >
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true" class="workshop">
@@ -502,7 +513,7 @@
               verification run and grants no campaign rewards.
             </p>
             <p>
-              <a href="../replay-theater/"
+              <a data-workshop-tool="replay-theater" href="../replay-theater/"
                 >Open Replay Theater to watch, pause and step through a recording ↗</a
               >
             </p>
@@ -568,17 +579,27 @@
             <button id="apply-preview-size" class="button" type="submit">Apply size</button>
           </form>
           <p id="preview-size-help" class="micro-note">
-            Custom size: 240–2560 CSS pixels per side. Resizing keeps the current game.
+            Custom size: 240–2560 CSS pixels per side. Resizing keeps the current game. Tab and
+            Shift+Tab leave the preview at its first or last control. Returning keeps play paused;
+            choose Resume to continue.
           </p>
           <p id="preview-size-status" class="micro-note" role="status"></p>
           <div id="preview-stage">
             <iframe
               id="preview-frame"
+              name="revealline-playground-preview"
               title="Playable configuration preview"
               width="390"
               height="844"
             ></iframe>
           </div>
+          <a
+            href="../?workshop=playground"
+            data-workshop-return="workshop"
+            inert
+            aria-disabled="true"
+            >Return to Workshop</a
+          >
           <p id="viewport-readout" class="micro-note"></p>
           <p id="control-readout" class="micro-note">
             Controls are measured after the preview loads.
