@@ -140,6 +140,81 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.deepEqual(p.errors, []);
   });
 
+test('failed difficulty save offers truthful export and retry without replacing the current flight', async (t) => {
+  const { p, storage } = await setup(t);
+  p.$('shell-featured').click();
+  await running(p, 'first-return');
+  const run = p.rendered.run,
+    picture = p.rendered.backdrop,
+    saved = storage.getItem(JOURNEY_PREFERENCES_KEY),
+    setItem = storage.setItem.bind(storage);
+  let refuse = true,
+    exportFailure = true,
+    exported;
+  storage.setItem = (key, value) => {
+    if (refuse && key === JOURNEY_PREFERENCES_KEY) throw new Error('Quota test.');
+    setItem(key, value);
+  };
+  t.mock.method(URL, 'createObjectURL', (blob) => {
+    if (exportFailure) throw new Error('Download test.');
+    exported = blob;
+    return 'blob:journey-difficulty';
+  });
+  p.change('difficulty-select', 'expert');
+  assert.equal(p.$('journey-preferences-recovery').hidden, false);
+  assert.match(p.$('journey-preferences-message').textContent, /only to this session.*Quota test/);
+  assert.equal(storage.getItem(JOURNEY_PREFERENCES_KEY), saved);
+  p.$('journey-preferences-export').click();
+  await settle(() => p.$('journey-preferences-message').textContent.includes('Export failed'));
+  assert.match(p.$('journey-preferences-message').textContent, /choice is still here/);
+  exportFailure = false;
+  p.$('journey-preferences-export').click();
+  await settle(() => p.$('journey-preferences-message').textContent.includes('Download requested'));
+  assert.deepEqual(JSON.parse(await exported.text()), {
+    format: 'JourneyPreferencesV1',
+    difficulty: 'expert',
+  });
+  assert.equal(
+    p.$('journey-preferences-recovery').hidden,
+    false,
+    'Export does not imply saved preference',
+  );
+  refuse = false;
+  p.$('journey-preferences-retry').click();
+  assert.equal(p.$('journey-preferences-recovery').hidden, true);
+  assert.equal(JSON.parse(storage.getItem(JOURNEY_PREFERENCES_KEY)).difficulty, 'expert');
+  p.frame(0);
+  assert.equal(p.rendered.run, run);
+  assert.equal(p.rendered.backdrop, picture);
+  assert.equal(p.rendered.run.lives, 3);
+  assert.match(
+    p.$('difficulty-note').textContent,
+    /This flight: standard. Next fresh attempt: expert/,
+  );
+  assert.deepEqual(p.errors, []);
+});
+
+test('cross-tab difficulty intent refreshes controls but preserves the current attempt', async (t) => {
+  const { p, storage } = await setup(t);
+  p.$('shell-featured').click();
+  await running(p, 'first-return');
+  const run = p.rendered.run,
+    picture = p.rendered.backdrop;
+  const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'gentle' });
+  storage.setItem(JOURNEY_PREFERENCES_KEY, raw);
+  p.win.emit('storage', { key: JOURNEY_PREFERENCES_KEY, newValue: raw, storageArea: storage });
+  p.frame(0);
+  assert.equal(p.$('difficulty-select').value, 'gentle');
+  assert.equal(p.rendered.run, run);
+  assert.equal(p.rendered.backdrop, picture);
+  assert.equal(p.rendered.run.lives, 3);
+  assert.match(
+    p.$('difficulty-note').textContent,
+    /This flight: standard. Next fresh attempt: gentle/,
+  );
+  assert.deepEqual(p.errors, []);
+});
+
 test('authored Solo clear and Next cross campaign boundaries without Legacy awards; Remix is optional', async (t) => {
   const { p, storage, backend } = await setup(t);
   p.$('shell-featured').click();

@@ -7472,6 +7472,44 @@ try {
     };
     window.addEventListener('online', () => void journeyProfile.flush());
   }
+  if (journeyPreferences) {
+    let preferenceRevision = journeyPreferences.snapshot().revision,
+      exportSequence = 0;
+    journeyPreferences.subscribe((snapshot) => {
+      // Cross-tab intent updates the next attempt only. An old in-flight
+      // preparation cannot adopt a now-stale preset after its pixels resolve.
+      if (preferenceRevision !== snapshot.revision) {
+        preferenceRevision = snapshot.revision;
+        cancelResultAttempt();
+      }
+      exportSequence++;
+      show('journey-preferences-recovery', !snapshot.durable);
+      $('journey-preferences-message').textContent = snapshot.error;
+      refreshDifficulty();
+    });
+    $('journey-preferences-retry').onclick = () => {
+      const restoreFocus = document.activeElement === $('journey-preferences-retry');
+      const snapshot = journeyPreferences.retry();
+      if (snapshot.durable && restoreFocus && availableFocusTarget($('difficulty-select')))
+        $('difficulty-select').focus({ preventScroll: true });
+    };
+    $('journey-preferences-export').onclick = async () => {
+      const ticket = ++exportSequence;
+      try {
+        const result = await downloadJSON(
+          JSON.parse(journeyPreferences.export()),
+          'revealline-journey-difficulty.json',
+        );
+        if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
+          $('journey-preferences-message').textContent =
+            `${journeyPreferences.snapshot().error} ${result.message}`;
+      } catch (error) {
+        if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
+          $('journey-preferences-message').textContent =
+            `Export failed: ${error.message}. Your session difficulty choice is still here.`;
+      }
+    };
+  }
   optionalWorlds = attachOptionalChaptersPanel({
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
