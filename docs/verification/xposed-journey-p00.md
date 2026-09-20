@@ -180,6 +180,42 @@ of the next committed source is still required.
 
 ## Outstanding acceptance
 
+### Accepted v0.66 integration and capture-teaching correction
+
+Integration `b5193ca1` composes actual v0.66 publisher
+`7b898a7ba4a5007397d02d8911e0577668d3bc99` without changing its publication files.
+All 48 inherited paths merged cleanly; publishing, the release skill, README and
+delivery priorities match that publisher. The game/package/scripts remained equal
+to precursor `34e3f742` before the explicit correction below. Version stays 0.67.0.
+The separately reviewed public acceptance receipt is 5,010 bytes, SHA-256
+`7fc90c84f1417ad1b16d913786a673d3668d7114d34b907aea65a48767496622`;
+its accepted scope and untested hardware/human boundaries are not broadened here.
+
+The early Journey `cells.claimed` explanation was overwritten by the subsequent
+`capture.stopped` event in the same closure. Both now use the same engine-derived
+retained-region explanation; the stopped message also retains the fresh-direction
+cue. Legacy feedback and simulation/replay identities are unchanged. An actual-host
+two-keeper fixture installs through Library, starts normally and legally closes a
+line-only cut. It checks both occupied regions/actor identities, the explanation,
+the stop cue and persistence through the following frame. Fixture development on
+P01 first exposed invalid pack/storage/start-route setup; those setup failures are
+not represented as product regressions or passing evidence.
+
+On the integrated P00 tree with this correction, complete Classic and Journey host
+files pass 15/15 tests, zero failures/skips/cancellations, in 118.19 seconds. This
+includes ten consecutive clears, Skip, stable Continue, failed persistence, automatic
+reset, cold-load cancellation, same-ID content refusal and cross-pack Next recovery.
+Full lint, source/native formatting, content validation (667 files; the same four
+navigation warnings), motion syntax and production reproduction/readiness passed.
+These local results do not replace exact committed-source hosted qualification.
+
+Earlier PR run `35477966230` and manual run `35477966955` each passed 6,567 tests
+across 505 files on Node 20.19.6 for `34e3f742`. Hosted frozen inspection run
+`35479748767` also passed for that precursor. All remain precursor evidence: neither
+the old frozen artifact nor its inspection qualifies this integration/correction.
+The subsequent acceptance-only publisher evidence is composed before final source
+qualification; no tag, stable release or Pages selector is changed by these edits.
+
 ### Publication integration
 
 The source branch now incorporates main publication commit `e6e269ea` (PR168,

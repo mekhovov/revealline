@@ -94,14 +94,15 @@ retry and expose export. Distinguish technical-ready from human-validated conten
 
 ## Delivery tracker
 
-The accepted main baseline is ce8c72ed (includes v0.65.0 and merged Team Studio work
-already allocated as 0.66.0). Preserve the user's dirty original checkout. P00 uses
-0.67.0 rather than reusing the allocated 0.66.0; subsequent labels shift by one minor.
+The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
+publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
+is scoped, not whole-phase or physical-device validation. Preserve the user's dirty
+original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | In progress |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress; independent framework slice |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress on PR172; not published |
 | P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
@@ -119,11 +120,21 @@ Independent source correction, tests and content preparation continue during tha
 
 Latest continuation instruction explicitly allows independent P01 implementation
 while P00 publication waits. The local `codex/xposed-journey-p01` branch is stacked
-on frozen P00 `34e3f742`; it is not an accepted release baseline. Integrate the
-accepted P00/Discovery changes and requalify exact source before P01 publication.
-The initial shared compiler, explicit foundation runtime/replay tuple and local
-Studio workbench are implementation candidates, not completed P01 content. See
+on corrected P00 `6a42faca`; it is not an accepted release baseline. Integrate any
+later accepted P00/Discovery changes and requalify exact source before publication.
+The compiler, foundation runtime/replay tuple and local Studio workbench are
+implementation candidates, not completed P01 content. See
 `docs/verification/xposed-journey-p01.md` for scoped evidence and remaining work.
+
+P01's separate candidate branch has ten original opening greyboxes, a versioned
+foundation compiler/runtime, minimal map-first Studio with recoverable checkpoints,
+capture overlays and topology diagnostics. Sixty mission/preset/steering combinations
+have deterministic Solo and paired-board clear-route fixtures; these are feasibility
+evidence, not pacing or human enjoyment. Direct structure controls create, duplicate,
+rename and organize candidates without JSON editing. Archive/removal and image
+authoring remain pending. One original reveal background is pinned; nine backgrounds,
+Team qualification, Journey adoption and release gates remain. None of that branch's
+implementation is implied to ship in the P00 technical preview.
 
 Each phase: reviewed PR, version bump, automated gates, immutable release and Pages
 test deployment; continue automatically after green gates, repair red gates before

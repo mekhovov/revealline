@@ -1,0 +1,31 @@
+{
+  "status": "PASS_INDEPENDENT_HOSTED_MAIN_ROWS_ONLY",
+  "at": "2026-09-19T23:08:20.567022+00:00",
+  "version": "v0.65.0",
+  "controllerCommit": "e6e269ea58aef2336c54f9497289a31c22ce9bb7",
+  "utilityCommit": "8af3d87b10d660e78735da669f676ed4b9a2c2ff",
+  "utilityTree": "5484fd22521db5c9bb78460322cdbbed3f04ce57",
+  "hostedRunId": 35474957872,
+  "artifact": {
+    "id": 10593662793,
+    "name": "v0650-main-public-audit-evidence",
+    "bytes": 1050463,
+    "sha256": "b98e9f5b655a4c09e6077a83bd0ecee8beeee588503719b109fa502a058d1f0e"
+  },
+  "files": 3500,
+  "bytes": 644685649,
+  "attempts": 3500,
+  "failedAttempts": 0,
+  "retries": 0,
+  "allOriginalRunnerPathsPreserved": true,
+  "mappedHelpers": 4,
+  "arbitraryHostedPathsReadLocally": false,
+  "exactNineAuthorityValidation": "PASS_IN_TRUSTED_OFFLINE_DONOR_CHECK",
+  "catalogAuthorities": 103,
+  "intakeRequestSha256": "32cde9c014b83721227b6db89f4cf327aa1a64c2ea2b8a4452d1cfa1c549b08c",
+  "reviewRequestSha256": "318208c4109374ee70d0ea1d387a1eb5156f1cd5b77aa9d7b82354b43c2d97f6",
+  "publicAdmission": false,
+  "nativeAcceptance": false,
+  "liveAfterAuthorityRefresh": false,
+  "scope": "Receipt-only independent row review. Root still requires fresh main/release/tag/assets/deployment authorities and scoped native acceptance."
+}
