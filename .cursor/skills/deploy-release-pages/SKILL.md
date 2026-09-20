@@ -247,3 +247,8 @@ Play preservation, different-chapter Stay and deliberate Replace are separate ch
 Capture visible before/after mission, score, lives and timer; distinguish elapsed
 active play after explicit Continue from mutation while paused. No local preview or
 HTTP byte audit substitutes for the deployed player journey.
+
+
+### Cancel title continuation before restore settles
+
+Exercise immediate Escape/Back and explicit Cancel after title Continue from a real saved flight. Both title and field preparation feedback must settle; an enabled Load button beside a stale “Verifying your saved flight” message is a failure even when the saved bytes remain intact. Then explicitly load and compare mission, lives, score and timer while paused. Keep the abort owner scoped so a late decoder cannot erase newer feedback or move focus. Preserve the original failed public observation and the complete affected title host tests.
