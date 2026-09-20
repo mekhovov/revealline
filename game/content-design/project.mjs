@@ -5,6 +5,7 @@ import { compileMapDesign } from './map.mjs';
 import { compileAssetRevision } from './assets.mjs';
 import { inspectMissionTopology } from './diagnostics.mjs';
 import { resolveTeamMission } from './team-runtime.mjs';
+import { CONTENT_PROJECT_JSON_LIMITS, CONTENT_PROJECT_ITEM_LIMITS } from './limits.mjs';
 import {
   journeyPolicy,
   ACTOR_CATALOG,
@@ -112,12 +113,7 @@ function checkDesign(design) {
 /** One owned project registry for authoring, CLI, preview and runtime adapters.
  * Compilation validates a candidate; it does not publish it or authorize clears. */
 export function compileContentProject(source) {
-  const project = boundedJSON(source, {
-    maxBytes: 4 * 1024 * 1024,
-    maxNodes: 100000,
-    maxDepth: 20,
-    maxArray: 512,
-  });
+  const project = boundedJSON(source, CONTENT_PROJECT_JSON_LIMITS);
   identity(project, 'ContentProjectV1', [
     'policyId',
     'actorCatalogId',
@@ -135,15 +131,15 @@ export function compileContentProject(source) {
     'Project must pin registered policy and catalogs.',
   );
   required(
-    Array.isArray(project.maps) && project.maps.length <= 512,
+    Array.isArray(project.maps) && project.maps.length <= CONTENT_PROJECT_ITEM_LIMITS.maps,
     'Map revision budget exceeded.',
   );
   const mapIds = new Set(project.maps.map((map) => JSON.stringify([map.id, map.revision])));
   required(mapIds.size === project.maps.length, 'Map revisions must be unique.');
-  const missionIds = unique(project.missions, 'missions', 256);
-  const campaignIds = unique(project.campaigns, 'campaigns', 32);
-  unique(project.packs, 'packs', 32);
-  unique(project.assets ?? [], 'assets', 512);
+  const missionIds = unique(project.missions, 'missions', CONTENT_PROJECT_ITEM_LIMITS.missions);
+  const campaignIds = unique(project.campaigns, 'campaigns', CONTENT_PROJECT_ITEM_LIMITS.campaigns);
+  unique(project.packs, 'packs', CONTENT_PROJECT_ITEM_LIMITS.packs);
+  unique(project.assets ?? [], 'assets', CONTENT_PROJECT_ITEM_LIMITS.assets);
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
