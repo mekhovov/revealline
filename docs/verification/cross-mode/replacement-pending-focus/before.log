@@ -1,0 +1,171 @@
+TAP version 13
+# Subtest: replacement Stay focus is revealed inside a short dialog without changing the unfinished flight
+ok 1 - replacement Stay focus is revealed inside a short dialog without changing the unfinished flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.685916
+  ...
+# Subtest: actual level selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 2 - actual level selection asks once; Stay keeps the queued flight, Replace prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06325
+  ...
+# Subtest: actual card selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 3 - actual card selection asks once; Stay keeps the queued flight, Replace prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044125
+  ...
+# Subtest: actual campaign selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 4 - actual campaign selection asks once; Stay keeps the queued flight, Replace prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039
+  ...
+# Subtest: actual pack selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 5 - actual pack selection asks once; Stay keeps the queued flight, Replace prepares without Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.206958
+  ...
+# Subtest: same mission card/level/campaign/base pack preserves a running attempt without pause, write or restart
+ok 6 - same mission card/level/campaign/base pack preserves a running attempt without pause, write or restart # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072541
+  ...
+# Subtest: button Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 7 - button Stay cancels a pending check and restores the exact opener without late save or Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.2715
+  ...
+# Subtest: Escape Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 8 - Escape Stay cancels a pending check and restores the exact opener without late save or Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.054417
+  ...
+# Subtest: controller Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 9 - controller Stay cancels a pending check and restores the exact opener without late save or Resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.164208
+  ...
+# Subtest: quota keeps truthful loss warning and the old attempt until explicit Replace
+ok 10 - quota keeps truthful loss warning and the old attempt until explicit Replace # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.121209
+  ...
+# Subtest: readback keeps truthful loss warning and the old attempt until explicit Replace
+ok 11 - readback keeps truthful loss warning and the old attempt until explicit Replace # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.048125
+  ...
+# Subtest: newer-before keeps truthful loss warning and the old attempt until explicit Replace
+ok 12 - newer-before keeps truthful loss warning and the old attempt until explicit Replace # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042209
+  ...
+# Subtest: new saved slot after verification requires a second deliberate Replace and is never overwritten
+ok 13 - new saved slot after verification requires a second deliberate Replace and is never overwritten # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035458
+  ...
+# Subtest: different pack download leaves an installed live run/recorder intact through pagehide
+ok 14 - different pack download leaves an installed live run/recorder intact through pagehide # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.093375
+  ...
+# Subtest: different pack save leaves an installed live run/recorder intact through pagehide
+ok 15 - different pack save leaves an installed live run/recorder intact through pagehide # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03825
+  ...
+# Subtest: different pack cancel-download leaves an installed live run/recorder intact through pagehide
+not ok 16 - different pack cancel-download leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 9539.812083
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/story-restore-focus/game/test/mission-replacement-host.test.mjs:336:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected ... Lines skipped
+    
+    + <ref *2> SoloElement {
+    +   _rect: {
+    +     height: 44,
+    +     width: 100,
+    +     x: 0,
+    +     y: 0
+    +   },
+    +   _text: '',
+    +   attributes: Map(0) {},
+    +   captureListeners: Map(0) {},
+    +   captures: Set(0) {},
+    +   checked: false,
+    +   children: [
+    +     <ref *12> SoloElement {
+    +       _rect: {
+    +         height: 44,
+    +         width: 100,
+    +         x: 0,
+    +         y: 0
+    +       },
+    +       _text: '',
+    +       attributes: Map(3) {
+    +         'aria-labelledby' => 'boot-title',
+    +         'class' => 'launch-screen',
+    +         'id' => 'boot-screen'
+    +       },
+    ...
+    - <ref *256> SoloElement {
+    -   _rect: [Object],
+    -   _text: 'Stay with this flight',
+    -   attributes: [Map],
+    -   captureListeners: Map(0) {},
+    -   captures: Set(0) {},
+    -   checked: false,
+    -   children: [],
+    -   classList: [Classes],
+    -   clientHeight: 44,
+    -   dataset: [Object],
+    -   disabled: false,
+    -   hidden: false,
+    -   id: 'mission-replace-stay',
+    -   inert: false,
+    -   listeners: Map(0) {},
+    -   nodeName: 'BUTTON',
+    -   nodeType: 1,
+    -   onclick: [Function (anonymous)],
+    -   open: false,
+    -   options: [],
+    -   ownerDocument: <ref *1> SoloDocument {
+    -     activeElement: <ref *11> SoloElement {
+    -       _rect: {
+    -         height: 44,
+    -         width: 100,
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: successful different-pack install adopts a fresh paused run and leaves the previous run unchanged
+ok 17 - successful different-pack install adopts a fresh paused run and leaves the previous run unchanged # SKIP test name does not match pattern
+  ---
+  duration_ms: 3.170708
+  ...
+# Subtest: chapter card uses the existing pack change adapter but Stay returns to that visible card
+ok 18 - chapter card uses the existing pack change adapter but Stay returns to that visible card # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.394708
+  ...
+# Subtest: restored paused unfinished flight is guarded and Stay preserves its exact saved continuation
+ok 19 - restored paused unfinished flight is guarded and Stay preserves its exact saved continuation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.070292
+  ...
+# Subtest: unavailable IDs and locked missions do not create prompts or adopt an arbitrary target
+ok 20 - unavailable IDs and locked missions do not create prompts or adopt an arbitrary target # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047333
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 19
+# todo 0
+# duration_ms 10463.63175

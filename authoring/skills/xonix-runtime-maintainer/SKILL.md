@@ -946,3 +946,9 @@ failure, explicit focus movement and native disabled-button blur. Example:
 "Restore an owned story backup with keyboard-only input, verify Review chosen
 story backup receives focus after success, and prove late completion cannot
 reclaim focus after Back or another action."
+
+### Pending replacement focus
+
+When a confirmation disables its focused button while awaiting a picture or chapter, move focus to the still-enabled Stay/Cancel action before disabling the opener. Do so only when that opener still owns focus in a visible, focused document. Preserve any newer user focus. Model native disabled-button blur in host regressions; retaining focus on a disabled fake button is not browser evidence. Keep delayed pending-state observation separate from a cancellation input that arrives after completion.
+
+Example: “Verify Replace & play with a bounded local download delay. Keep Stay focused during preparation, retain the current flight on cancellation, and prove background/hidden or moved-focus cases do not reclaim focus. Preserve failed observations and distinguish local preview from deployed acceptance.”
