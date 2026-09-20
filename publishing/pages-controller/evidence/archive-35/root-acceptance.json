@@ -1,0 +1,24 @@
+{
+  "status": "ACCEPTED_SCOPED_ARCHIVE_RETENTION",
+  "repository": "mekhovov/revealline-archive-35",
+  "commit": "b603b1d1aa75c5352155d97876033ca37a883888",
+  "tree": "742c645ebaf942d1cc9ba9837768cc21f2bfc9d8",
+  "pr": 1,
+  "run": 35495526770,
+  "deployment": 6550067348,
+  "versions": [
+    "v0.68.0"
+  ],
+  "files": 729,
+  "bytes": 313820502,
+  "priorAcceptedPaths": 0,
+  "failedFiles": 0,
+  "originalsRebuilt": false,
+  "fullPhaseAcceptance": false,
+  "limits": [
+    "Archived stale Flight resumed caption while Paused remains; v0.68.1 correction is separate",
+    "Known same-chapter replacement issue retained from main v0.68.0 public evidence; not retested or fixed in archive",
+    "No physical hardware, offline or audible listening qualification",
+    "Screenshot inline only; no exported image/hash asserted"
+  ]
+}
