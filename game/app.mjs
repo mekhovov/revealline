@@ -701,6 +701,7 @@ try {
     lastReplay = null,
     replayFeedback = null,
     replayFocusClearance = null,
+    missionReplacementFocusClearance = null,
     replayDownload = null,
     completionWarning = '',
     appearanceRewardIds = [],
@@ -2058,6 +2059,7 @@ try {
       presentationFeedback.dispose();
       replayFeedback?.dispose();
       replayFocusClearance?.destroy();
+      missionReplacementFocusClearance?.destroy();
     }
   };
   window.addEventListener('pageshow', (event) => {
@@ -3431,6 +3433,10 @@ try {
     missionReplacementMessage(ticket);
     return false;
   }
+  missionReplacementFocusClearance = attachFocusClearance({
+    container: $('mission-replace-dialog'),
+    document,
+  });
   $('mission-replace-dialog').addEventListener('close', () => {
     if ($('mission-replace-dialog').open) return;
     const ticket = missionReplacement;

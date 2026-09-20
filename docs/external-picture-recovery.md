@@ -102,3 +102,9 @@ first reproduced the detached label before passing with the fix. Review labels n
 use the authored map name rather than exposing internal identifiers. The final affected four-file cohort passed 84/84 on Node 22.22.2
 (233,967.993959 ms, no failures or skips). A fresh browser cancellation/retry
 check remains required before closing this correction.
+
+## Integrated v0.69.1 candidate
+
+The recovery workflow is integrated with the qualified v0.69.0 Journey source. All 84 recovery tests pass on Node 20.19.5 after restoring missing sparse-checkout inputs. Earlier 3eb native recovery evidence remains scoped to that source.
+
+The responsive follow-up reuses the shared focus-clearance helper for More worlds and Replace flight. Resizing keeps the current action visible; it does not move selection or activate an action. Forty-eight focus, world-browser and actual replacement tests pass. The first run lacked two exact pack fixtures; the failure and corrected run remain retained. Final integrated native checks and full source/public qualification remain required.
