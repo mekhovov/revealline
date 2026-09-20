@@ -1,0 +1,130 @@
+{
+  "run": 35508682387,
+  "source": "7fe377d3a829c29454ec31a9e86c3d3d82d31817",
+  "originalLogsSha256": "0810494d32d19e0b3dab606b232b6323fe0caee1062bfcb267792f0f64930ef0",
+  "correction": "First review matched no member because it omitted step-number prefix; original empty review retained and never counted as a passing source result.",
+  "failures": [
+    {
+      "member": "test (3)/7_Run test shard 3_4.txt",
+      "lines": [
+        "2026-09-20T11:48:23.3010979Z   ...",
+        "2026-09-20T11:48:23.7052453Z # Subtest: actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal",
+        "2026-09-20T11:48:23.7062395Z not ok 730 - actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal",
+        "2026-09-20T11:48:23.7063580Z   ---",
+        "2026-09-20T11:48:23.7064108Z   duration_ms: 422.999392",
+        "2026-09-20T11:48:23.7065687Z   location: '/home/runner/work/revealline/revealline/game/test/couch-board-footprint-host.test.mjs:323:1'",
+        "2026-09-20T11:48:23.7066840Z   failureType: 'testCodeFailure'",
+        "2026-09-20T11:48:23.7067611Z   error: 'A cached page retires its observer ownership.'",
+        "2026-09-20T11:48:23.7068351Z   code: 'ERR_ASSERTION'",
+        "2026-09-20T11:48:23.7068915Z   name: 'AssertionError'",
+        "2026-09-20T11:48:23.7069473Z   expected: true",
+        "2026-09-20T11:48:23.7070047Z   operator: '=='",
+        "2026-09-20T11:48:23.7070821Z   stack: |-",
+        "2026-09-20T11:48:23.7072102Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/couch-board-footprint-host.test.mjs:346:10)",
+        "2026-09-20T11:48:23.7073523Z     async Test.run (node:internal/test_runner/test:797:9)",
+        "2026-09-20T11:48:23.7074569Z     async Test.processPendingSubtests (node:internal/test_runner/test:526:7)",
+        "2026-09-20T11:48:23.7075426Z   ...",
+        "2026-09-20T11:48:28.6055381Z # Subtest: actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver",
+        "2026-09-20T11:48:28.6081934Z ok 731 - actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver",
+        "2026-09-20T11:48:28.6083237Z   ---",
+        "2026-09-20T11:48:28.6083812Z   duration_ms: 4898.416384",
+        "2026-09-20T11:48:28.6084405Z   ...",
+        "2026-09-20T11:48:32.4655109Z # Subtest: actual Versus fallback refits wrapping statistics after a normal capture before either seat paints",
+        "2026-09-20T11:48:32.4681708Z ok 732 - actual Versus fallback refits wrapping statistics after a normal capture before either seat paints",
+        "2026-09-20T11:48:32.4691108Z   ---",
+        "2026-09-20T11:48:32.4691704Z   duration_ms: 3865.136222",
+        "2026-09-20T11:48:32.4692281Z   ...",
+        "2026-09-20T11:48:35.2061227Z # Subtest: fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations",
+        "2026-09-20T11:48:35.2063477Z ok 733 - fresh couch uses exact wide Pressure Lines originals, authored Arcade controls and independent continuations",
+        "2026-09-20T11:48:35.2064786Z   ---",
+        "2026-09-20T11:48:35.2065338Z   duration_ms: 3441.033949"
+      ]
+    },
+    {
+      "member": "test (3)/7_Run test shard 3_4.txt",
+      "lines": [
+        "2026-09-20T12:13:10.6707364Z   ...",
+        "2026-09-20T12:13:10.6708600Z # Subtest: public cards lead with playable context and actions; native recovery controls stay inside one closed disclosure",
+        "2026-09-20T12:13:10.6710584Z not ok 931 - public cards lead with playable context and actions; native recovery controls stay inside one closed disclosure",
+        "2026-09-20T12:13:10.6711545Z   ---",
+        "2026-09-20T12:13:10.6711857Z   duration_ms: 11.799719",
+        "2026-09-20T12:13:10.6712797Z   location: '/home/runner/work/revealline/revealline/game/test/external-chapter-card-focus.test.mjs:91:1'",
+        "2026-09-20T12:13:10.6713782Z   failureType: 'testCodeFailure'",
+        "2026-09-20T12:13:10.6714206Z   error: |-",
+        "2026-09-20T12:13:10.6714652Z     Expected values to be strictly deep-equal:",
+        "2026-09-20T12:13:10.6715256Z     + actual - expected ... Lines skipped",
+        "2026-09-20T12:13:10.6715704Z     ",
+        "2026-09-20T12:13:10.6715993Z       [",
+        "2026-09-20T12:13:10.6716293Z         'H3',",
+        "2026-09-20T12:13:10.6716610Z     ...",
+        "2026-09-20T12:13:10.6716910Z         'BUTTON',",
+        "2026-09-20T12:13:10.6717250Z         'BUTTON',",
+        "2026-09-20T12:13:10.6717586Z     +   'DIV',",
+        "2026-09-20T12:13:10.6717907Z         'P',",
+        "2026-09-20T12:13:10.6718225Z         'DETAILS'",
+        "2026-09-20T12:13:10.6718545Z       ]",
+        "2026-09-20T12:13:10.6718863Z   code: 'ERR_ASSERTION'",
+        "2026-09-20T12:13:10.6719249Z   name: 'AssertionError'",
+        "2026-09-20T12:13:10.6719623Z   expected:",
+        "2026-09-20T12:13:10.6719934Z     0: 'H3'",
+        "2026-09-20T12:13:10.6720236Z     1: 'P'",
+        "2026-09-20T12:13:10.6720724Z     2: 'P'",
+        "2026-09-20T12:13:10.6721038Z     3: 'BUTTON'",
+        "2026-09-20T12:13:10.6721373Z     4: 'BUTTON'",
+        "2026-09-20T12:13:10.6721685Z     5: 'P'",
+        "2026-09-20T12:13:10.6721988Z     6: 'DETAILS'",
+        "2026-09-20T12:13:10.6722316Z   actual:"
+      ]
+    }
+  ],
+  "totals": [
+    {
+      "member": "test (4)/7_Run test shard 4_4.txt",
+      "totals": [
+        "2026-09-20T12:01:32.2991657Z # tests 1712",
+        "2026-09-20T12:01:32.2991979Z # pass 1712",
+        "2026-09-20T12:01:32.2992133Z # fail 0",
+        "2026-09-20T12:01:32.2992283Z # cancelled 0",
+        "2026-09-20T12:01:32.2992443Z # skipped 0",
+        "2026-09-20T12:01:32.2992591Z # todo 0",
+        "2026-09-20T12:01:32.2992761Z # duration_ms 849630.918647"
+      ]
+    },
+    {
+      "member": "test (2)/7_Run test shard 2_4.txt",
+      "totals": [
+        "2026-09-20T12:22:30.9368465Z # tests 1668",
+        "2026-09-20T12:22:30.9368637Z # pass 1668",
+        "2026-09-20T12:22:30.9368715Z # fail 0",
+        "2026-09-20T12:22:30.9368801Z # cancelled 0",
+        "2026-09-20T12:22:30.9368885Z # skipped 0",
+        "2026-09-20T12:22:30.9368962Z # todo 0",
+        "2026-09-20T12:22:30.9369075Z # duration_ms 2064531.983715"
+      ]
+    },
+    {
+      "member": "test (1)/7_Run test shard 1_4.txt",
+      "totals": [
+        "2026-09-20T12:12:14.2471848Z # tests 1666",
+        "2026-09-20T12:12:14.2472307Z # pass 1666",
+        "2026-09-20T12:12:14.2472535Z # fail 0",
+        "2026-09-20T12:12:14.2472751Z # cancelled 0",
+        "2026-09-20T12:12:14.2472986Z # skipped 0",
+        "2026-09-20T12:12:14.2473196Z # todo 0",
+        "2026-09-20T12:12:14.2473443Z # duration_ms 1489354.839602"
+      ]
+    },
+    {
+      "member": "test (3)/7_Run test shard 3_4.txt",
+      "totals": [
+        "2026-09-20T12:29:53.4640893Z # tests 1960",
+        "2026-09-20T12:29:53.4641066Z # pass 1958",
+        "2026-09-20T12:29:53.4641143Z # fail 2",
+        "2026-09-20T12:29:53.4641228Z # cancelled 0",
+        "2026-09-20T12:29:53.4641311Z # skipped 0",
+        "2026-09-20T12:29:53.4641390Z # todo 0",
+        "2026-09-20T12:29:53.4641498Z # duration_ms 2550151.730272"
+      ]
+    }
+  ]
+}
