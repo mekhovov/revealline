@@ -1,0 +1,7 @@
+{
+  "source": "508a638f556b80817f4c872b9950d7de7b207b17",
+  "path": "authoring/motion-lab/index.html",
+  "insertion": "      <nav aria-label=\"Workshop navigation\">\n        <a\n          id=\"motion-workshop-return\"\n          href=\"../../game/?workshop=motion-lab\"\n          data-workshop-return=\"workshop\"\n          inert\n          aria-disabled=\"true\"\n          >Return to Workshop</a\n        >\n      </nav>\n",
+  "bytes": 22248,
+  "sha256": "8c56ad1d07d26e84b6d686271b981bd32f1f6cfb1a2b0fbbbff2d59fffff6d95"
+}
