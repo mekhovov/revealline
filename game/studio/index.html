@@ -508,6 +508,36 @@
           </p>
         </section>
         <section class="source-panel" aria-label="Project source and validation">
+          <details id="pacing-panel">
+            <summary>Review campaign progression</summary>
+            <p class="note">
+              Inspect the applied draft in gameplay order. Ratings and duration estimates are
+              authored hypotheses, not measured difficulty. Findings never change a map or block
+              publication. Exclude optional finales explicitly when reviewing core-content countdown
+              frequency.
+            </p>
+            <label
+              >Review mode<select id="pacing-mode">
+                <option value="solo">Solo</option>
+                <option value="versus">Versus</option>
+                <option value="team">Team</option>
+              </select></label
+            >
+            <label
+              >Exclude optional campaigns (leave unselected for all)<select
+                id="pacing-exclude"
+                multiple
+                size="4"
+              ></select
+            ></label>
+            <button id="pacing-inspect" type="button">Inspect applied sequence</button>
+            <p id="pacing-summary" class="note" role="status"></p>
+            <ul id="pacing-warnings" aria-label="Advisory progression findings"></ul>
+            <details>
+              <summary>Ordered challenge ratings</summary>
+              <ol id="pacing-sequence"></ol>
+            </details>
+          </details>
           <details id="structure-editor">
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">

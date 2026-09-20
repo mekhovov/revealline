@@ -27,9 +27,11 @@ import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
+import { createPacingInspector } from './pacing-inspector.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
+const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
 let session,
   inspected = null,
   sourceChanged = false,
@@ -279,6 +281,7 @@ function inspectBoard(trailCells = []) {
 }
 function render(selected = $('mission').value) {
   inspections.invalidate();
+  pacingInspector.sync();
   tuningRevision = null;
   const project = session.current();
   $('project-id').value = project.id;
