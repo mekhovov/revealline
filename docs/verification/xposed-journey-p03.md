@@ -157,6 +157,16 @@ host evidence, not native-device or Team/Versus terrain-caption qualification.
 The first wider run failed to load two omitted sparse fixtures (classic-lab and
 sentinel-relay); restoring their exact tracked copies allowed the complete rerun.
 
+Native check on source3b284853 / localhost8780: reloaded the saved Signal draft,
+launched Standard Soft crossing Practice, and made two keyboard Down closures.
+The first earned0.6%/150points with all three lives and reported **5 slow-field cells
+neutralized by this capture**, preserving the fresh-direction instruction. The
+second earned1.3%/310points and stopped again. Paused Field details retained both
+first-capture captions in Recent messages. Back to Pause → Close preview returned
+to the unchanged checkpoint1 draft. The elapsed0:16 includes inspection/idle and
+is not a timing benchmark. Only the two previously documented sparse-catalog errors
+remain in the tab log; no new error appeared. No full clear or human test is implied.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
