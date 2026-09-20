@@ -18,6 +18,7 @@ import { exportJSONFile } from '../platform.mjs';
 import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
+import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 
@@ -54,6 +55,13 @@ const imageWorkbench = createImageWorkbench({
     return true;
   },
   play: (source, missionId, difficulty) => launchPreview(source, missionId, difficulty),
+  onChange: () => traceRecovery.changed(),
+});
+const traceRecovery = createTraceRecovery({
+  document,
+  workbench: imageWorkbench,
+  getSource: () => session.current(),
+  getMission: () => currentMission(),
 });
 function status(text, error = false) {
   $('status').textContent = text;
@@ -132,6 +140,7 @@ function draw(preview) {
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
   imageWorkbench.sync();
+  traceRecovery.sync();
   setBoardAvailability(document, !!mission);
   if (!mission) {
     $('export-team').hidden = true;
@@ -615,7 +624,7 @@ $('close-preview').onclick = () => {
   $('play').focus();
 };
 window.addEventListener('beforeunload', (event) => {
-  if (sourceChanged || session?.status().dirty || imageWorkbench.hasPending()) {
+  if (sourceChanged || session?.status().dirty || traceRecovery.hasUnsaved()) {
     event.preventDefault();
     event.returnValue = '';
   }

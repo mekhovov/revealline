@@ -1,6 +1,7 @@
 # Journey P02 — Border Bloom greybox preparation
 
-20 September 2026. Provisional **0.70.0**, stacked on P01 `e7aa131f`.
+20 September 2026. Provisional **0.70.0**, now integrated with candidate P01
+`3556e257` via merge `fe137d77` (original preparation began at `e7aa131f`).
 This is an independent draft preparation slice, not an accepted baseline, phase
 completion, released campaign or permission to bypass P01 integration and gates.
 
@@ -60,19 +61,21 @@ change the choice; geometry and a higher quota alone are insufficient.
 Meaningful alternative routes, mastery feasibility,
 capture/contour transitions, real timing/comprehension/enjoyment, original art and
 campaign presentation, actual Journey entry/continuation, Team qualification,
-native image-workflow qualification and durable tracing recovery, final exact-source qualification, reviewed phase
+full image-workflow device qualification, final exact-source qualification, reviewed phase
 PR, immutable release, Pages/native public acceptance and rollback proof.
 
 Greybox presentation uses the existing preview theme, not final Border artwork.
 The optional Remix remains in a separate candidate pack. No official progress,
 copied reference artwork or screenshot-inferred actor behavior is introduced.
-Human validation is pending. P01's pending original artwork remains uncommitted
-and is not part of this phase's committed source.
+Human validation is pending. P01's committed original Horizon artwork is now
+inherited through the candidate integration; Border still needs its own artwork.
 
 The manual image-reference / crop / queued-geometry / inspect / exact Practice /
 explicit Apply implementation is tracked separately in
 `xposed-journey-studio-images.md`. It does not automatically trace pixels, embed
-reference pictures into runtime assets or publish candidate maps.
+reference pictures into runtime assets or publish candidate maps. The durable
+tracing follow-up adds separate local autosave/recovery and portable backups,
+with exact map binding and explicit restoration before fresh Inspect/Apply.
 
 ## Complete-route feasibility continuation
 
