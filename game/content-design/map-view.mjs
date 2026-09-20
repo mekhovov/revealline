@@ -47,6 +47,27 @@ export function paintContentMap(
       ctx.strokeRect(x + 2, y + 2, size - 5, size - 5);
     }
   }
+  // Framed glyphs distinguish pickup effects without relying on color. These
+  // are placement markers, never a claim that enclosing them collects them.
+  const bonusGlyphs = {
+    'extra-life': '+',
+    'player-speed': '>',
+    'enemy-slow': 'v',
+    'enemy-freeze': '*',
+  };
+  for (const bonus of manifest.level.classic?.powerups ?? []) {
+    const x = bonus.x * size,
+      y = bonus.y * size;
+    ctx.fillStyle = '#102720';
+    ctx.fillRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.strokeStyle = '#d8ef92';
+    ctx.strokeRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.fillStyle = '#f5ffba';
+    ctx.font = `bold ${Math.max(10, size)}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(bonusGlyphs[bonus.kind], x, y);
+  }
   for (const actor of overlay.actors) {
     const x = actor.x * size,
       y = actor.y * size,

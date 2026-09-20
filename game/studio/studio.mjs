@@ -23,6 +23,7 @@ import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
+import { createBonusEditor } from './bonus-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -79,6 +80,18 @@ const actorEditor = createActorEditor({
   },
 });
 const geometryEditor = createGeometryEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const bonusEditor = createBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
@@ -168,6 +181,7 @@ function inspectBoard(trailCells = []) {
   const mission = currentMission();
   actorEditor.sync();
   geometryEditor.sync();
+  bonusEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
@@ -200,7 +214,7 @@ function inspectBoard(trailCells = []) {
   $('rules').textContent =
     `${manifest.level.rules.lives ?? journeyPreset(manifest.difficulty).lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
   $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}`;
+    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
