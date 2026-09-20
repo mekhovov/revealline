@@ -1,7 +1,7 @@
 const roles = {
   bouncer: 'Field hunter',
   'border-patrol': 'Border patrol',
-  'lane-boss': 'Lane attacker',
+  'lane-boss': 'Lane emitter',
   'relay-sentinel': 'Signal sentinel',
   'contour-patrol': 'Boundary patrol',
   'claimed-rover': 'Ground rover',
@@ -38,7 +38,8 @@ const enemyState = (enemy) => {
     {
       bouncer: 'threatens you and your unfinished line in hidden territory',
       'border-patrol': 'patrols the outside border',
-      'lane-boss': 'watch the highlighted lane before each attack',
+      'lane-boss':
+        'stationary field anchor; watch the locked lane and secure any unfinished trail before it fires. Reclaimed ground shelters your craft from the lane, but enclosure does not disable this emitter',
       'relay-sentinel': 'capture its relay to open the shield',
       eroder: 'can reopen captured ground',
     }[enemy.type] ||
