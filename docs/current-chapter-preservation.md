@@ -13,3 +13,9 @@ The public observation and original-code failing regression are retained under `
 Research: [W3C's modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) recommends a visible closing action, a contained keyboard sequence and logical focus return. Those navigation requirements remain applicable to the different-chapter confirmation; selecting an unchanged chapter need not open that confirmation.
 
 Both complete affected-file runs pass 16/16 tests on Node 20.19.5 and Node 22.22.2. [Retained evidence](verification/current-chapter-preservation/manifest.json) includes original failing behavior, the sparse-fixture failure and final successes. These are focused checks, not complete source qualification.
+
+## Full-suite correction
+
+The first complete hosted families for `45ed925e` failed an older offline current-chapter test that expected the removed replacement dialog. The corrected complete file now requires the exact paused cut, checkpoint, unchanged storage bytes, no new download, no confirmation and retained Play focus. Different-chapter Stay/Replace, quota/readback, failed installation and cancellation coverage remains. The test activates a focused Play action, matching the native keyboard journey.
+
+The complete additional host file passes 15/15 on Node 20.19.5 and Node 22.22.2. [Original failures and corrected receipts](verification/current-chapter-preservation/full-suite-correction/review.json) stay separate from the earlier 16-test file and from pending exact-source full requalification. No production behavior changed in this test-contract correction.
