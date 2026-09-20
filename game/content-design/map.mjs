@@ -17,8 +17,17 @@ const copy = (source) =>
  * Immutable plain arrays let every consumer inspect the same geometry without
  * sharing a mutable engine buffer. Historical editions do not use this compiler. */
 export function compileMapGeometry(source) {
+  return compileGeometry(source, false);
+}
+
+/** Explicit successor geometry; old maps never infer gates from artwork or walls. */
+export function compileRelayMapGeometry(source) {
+  return compileGeometry(source, true);
+}
+
+function compileGeometry(source, relays) {
   const map = copy(source);
-  exactKeys(map, geometryKeys, 'map geometry');
+  exactKeys(map, [...geometryKeys, ...(relays ? ['gates'] : [])], 'map geometry');
   required(map.width === 72 && map.height === 36, 'Map geometry must be 72 × 36.');
   const { width, height } = map;
   const cells = Array(width * height).fill(CELL.FIELD);
@@ -65,6 +74,22 @@ export function compileMapGeometry(source) {
       cells[index] = CELL.SAFE;
       permanent[index] = 1;
     }
+  const gates = [];
+  if (relays) {
+    required(Array.isArray(map.gates), 'Relay geometry requires explicit gates.');
+    required(map.gates.length <= 32, 'At most 32 relay gates are supported.');
+    const gateIds = new Set();
+    for (const [i, gate] of map.gates.entries()) {
+      const indexes = rectangle(gate, `gates[${i}]`, ['id']);
+      required(stableId(gate.id) && !gateIds.has(gate.id), `gates[${i}] needs a unique id.`);
+      gateIds.add(gate.id);
+      for (const index of indexes) {
+        required(cells[index] === CELL.FIELD, `gates[${i}] overlaps reserved geometry.`);
+        cells[index] = CELL.WALL;
+      }
+      gates.push({ id: gate.id, cells: indexes });
+    }
+  }
   const eligible = cells.map((cell) => Number(cell === CELL.FIELD));
   const eligibleCount = eligible.reduce((sum, cell) => sum + cell, 0);
   required(eligibleCount > 0, 'At least one interior cell must remain eligible field.');
@@ -162,13 +187,16 @@ export function compileMapGeometry(source) {
     safeComponents,
     fieldComponents,
     diagnostics,
+    ...(relays ? { gates } : {}),
   });
 }
 
 export function compileMapDesign(source) {
   const map = copy(source);
-  exactKeys(map, ['format', 'id', 'revision', 'name', ...geometryKeys], 'map');
-  required(map.format === 'MapDesignV1', 'Expected MapDesignV1.');
+  const relays = map.format === 'MapDesignV2';
+  const keys = [...geometryKeys, ...(relays ? ['gates'] : [])];
+  exactKeys(map, ['format', 'id', 'revision', 'name', ...keys], 'map');
+  required(map.format === 'MapDesignV1' || relays, 'Expected MapDesignV1 or MapDesignV2.');
   required(stableId(map.id), 'Map needs a stable id.');
   required(
     typeof map.revision === 'string' && map.revision.length > 0 && map.revision.length <= 80,
@@ -178,10 +206,8 @@ export function compileMapDesign(source) {
     typeof map.name === 'string' && map.name.trim().length > 0 && map.name.length <= 160,
     'Map needs a name.',
   );
-  const geometry = compileMapGeometry(
-    Object.fromEntries(
-      geometryKeys.filter((key) => Object.hasOwn(map, key)).map((key) => [key, map[key]]),
-    ),
+  const geometry = (relays ? compileRelayMapGeometry : compileMapGeometry)(
+    Object.fromEntries(keys.filter((key) => Object.hasOwn(map, key)).map((key) => [key, map[key]])),
   );
   const geometryIdentity = dataIdentity({
     width: geometry.width,
@@ -189,6 +215,12 @@ export function compileMapDesign(source) {
     cells: geometry.cells,
     terrain: geometry.terrain,
     spawns: geometry.spawns,
+    ...(relays ? { gates: geometry.gates } : {}),
   });
-  return freeze({ format: 'ResolvedMapV1', source: map, geometryIdentity, geometry });
+  return freeze({
+    format: relays ? 'ResolvedMapV2' : 'ResolvedMapV1',
+    source: map,
+    geometryIdentity,
+    geometry,
+  });
 }

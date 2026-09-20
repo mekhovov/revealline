@@ -35,6 +35,7 @@ import { createAbility, switchClass, updateSignal, challengeContact } from './sy
 import { createClassicState } from './classic-state.mjs';
 import { initializeClassicActors, stepClassic } from './classic-step.mjs';
 import { foundationGeometry } from './foundations.mjs';
+import { createRelayState } from './relay-gates.mjs';
 export {
   validateLevel,
   validateClassRecipes,
@@ -80,7 +81,9 @@ export function createRun(
   for (const w of level.walls)
     for (let y = w.y; y < w.y + w.h; y++)
       for (let x = w.x; x < w.x + w.w; x++) cells[y * width + x] = CELL.WALL;
-  const foundations = level.version === 'xonix-level.v5' ? foundationGeometry(level) : null;
+  const foundations = ['xonix-level.v5', 'xonix-level.v6'].includes(level.version)
+    ? foundationGeometry(level)
+    : null;
   if (foundations) cells.set(foundations.cells);
   const totalClaimable = cells.filter((c) => c === CELL.FIELD).length;
   const state = {
@@ -164,7 +167,13 @@ export function createRun(
     _terminalEmitted: false,
   };
   if (
-    ['xonix-level.v2', 'xonix-level.v3', 'xonix-level.v4', 'xonix-level.v5'].includes(level.version)
+    [
+      'xonix-level.v2',
+      'xonix-level.v3',
+      'xonix-level.v4',
+      'xonix-level.v5',
+      'xonix-level.v6',
+    ].includes(level.version)
   )
     state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
   if (foundations)
@@ -172,7 +181,8 @@ export function createRun(
       version: 'foundation-state.v1',
       permanent: Uint8Array.from(foundations.permanent),
     };
-  if (['xonix-level.v4', 'xonix-level.v5'].includes(level.version)) {
+  if (level.version === 'xonix-level.v6') state.relay = createRelayState(level, foundations);
+  if (['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(level.version)) {
     state.classic = createClassicState(level, cells);
     initializeClassicActors(state);
   }

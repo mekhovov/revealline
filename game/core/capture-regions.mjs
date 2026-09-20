@@ -92,6 +92,12 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
     .filter((component) => !component.retained)
     .flatMap((component) => component.cells);
   const captured = new Set([...securedTrail, ...filledCells]);
+  const affectedObjectiveIds = (state.objectives || [])
+    .filter(
+      (objective) =>
+        !objective.captured && captured.has(cellIndex(objective.x, objective.y, snapshot)),
+    )
+    .map((objective) => objective.id);
   return {
     tick: state.tick ?? null,
     assumption:
@@ -99,12 +105,17 @@ export function inspectCaptureSnapshot(state, { trailCells = [], releaseBoss = f
     securedTrail,
     filledCells,
     components,
-    affectedObjectiveIds: (state.objectives || [])
-      .filter(
-        (objective) =>
-          !objective.captured && captured.has(cellIndex(objective.x, objective.y, snapshot)),
-      )
-      .map((objective) => objective.id),
+    affectedObjectiveIds,
+    ...(state.relay
+      ? {
+          affectedGateIds: state.relay.gates
+            .filter(
+              (gate) => gate.openedTick === null && affectedObjectiveIds.includes(gate.objectiveId),
+            )
+            .map((gate) => gate.id),
+          reservedGateCells: state.relay.gates.flatMap((gate) => gate.cells),
+        }
+      : {}),
     lineOnly: securedTrail.length > 0 && filledCells.length === 0,
   };
 }
