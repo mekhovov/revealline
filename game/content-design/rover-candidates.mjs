@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign, ROVER_ACTOR_CATALOG } from './catalogs.mjs';
+import { ROVER_ART_CANDIDATES } from './rover-art.mjs';
 
 // Spatial hypotheses only. Reclaimed roamers use an explicit catalogue edition;
 // no screenshot establishes their movement, warning or collision behavior.
@@ -284,11 +285,12 @@ export const ROVER_REFERENCE_ADAPTATIONS = freezeDesign(
 export const ROVER_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((row) => [row.id, row.departure])),
 );
-export function createRoverCandidates() {
+export function createRoverCandidates({ artwork = false } = {}) {
   const project = createStarterProject('rover-greybox-candidates');
   project.name = 'Rover Yard · greybox candidates';
   project.actorCatalogId = ROVER_ACTOR_CATALOG.id;
   project.maps = [];
+  project.assets = artwork ? structuredClone(ROVER_ART_CANDIDATES) : [];
   project.missions = rows.map((row, index) => {
     const map = {
       format: 'MapDesignV1',
@@ -312,7 +314,10 @@ export function createRoverCandidates() {
       actors: structuredClone(row.actors),
       bonuses: [],
       coverage: row.coverage,
-      presentation: { themeId: 'horizon', backgroundAssetId: null },
+      presentation: {
+        themeId: 'horizon',
+        backgroundAssetId: artwork ? `rover-pixel-${row.id}` : null,
+      },
       design: {
         routeDecision: row.decision,
         lesson: row.lesson,

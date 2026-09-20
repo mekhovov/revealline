@@ -532,7 +532,7 @@ $('neon').onclick = guarded(() => {
 });
 $('rover').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createRoverCandidates(), null, 2);
+  $('source').value = JSON.stringify(createRoverCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
