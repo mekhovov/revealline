@@ -4,7 +4,6 @@ import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import {
-  classicView,
   drawClassicTerrain,
   drawClassicPickups,
   drawClassicEnemy,
@@ -12,6 +11,7 @@ import {
   drawLineImpacts,
   drawEnemyPressure,
 } from './classic-view.mjs';
+import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';

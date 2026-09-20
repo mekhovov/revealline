@@ -101,7 +101,7 @@ already allocated as 0.66.0). Preserve the user's dirty original checkout. P00 u
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | In progress |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Pending |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress; independent framework slice |
 | P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
@@ -116,6 +116,14 @@ P01–P15 therefore shift one further minor, as above; these later allocations r
 provisional. Preserve both features through reviewed integration and new exact-source
 gates. Journey must not race the current publication owner or replace its selector.
 Independent source correction, tests and content preparation continue during that wait.
+
+Latest continuation instruction explicitly allows independent P01 implementation
+while P00 publication waits. The local `codex/xposed-journey-p01` branch is stacked
+on frozen P00 `34e3f742`; it is not an accepted release baseline. Integrate the
+accepted P00/Discovery changes and requalify exact source before P01 publication.
+The initial shared compiler, explicit foundation runtime/replay tuple and local
+Studio workbench are implementation candidates, not completed P01 content. See
+`docs/verification/xposed-journey-p01.md` for scoped evidence and remaining work.
 
 Each phase: reviewed PR, version bump, automated gates, immutable release and Pages
 test deployment; continue automatically after green gates, repair red gates before
