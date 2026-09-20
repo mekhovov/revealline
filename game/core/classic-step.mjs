@@ -292,7 +292,8 @@ function world(state, input, hooks) {
       recovering
         ? null
         : enemyContact(state, playerPlan.paths, plans, trace, horizon, {
-            ignoreTrail: !!state.classic.lineImpact,
+            ignoreTrail: state.level.classic.lineImpact?.version === 'line-impact.v1',
+            ignoreTrailActorIds: state.level.classic.lineImpact?.actorIds ?? [],
           }),
       impactEvent?.kind === 'player' &&
       impactEvent.time <= horizon + EPS &&

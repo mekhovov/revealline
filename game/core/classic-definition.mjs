@@ -37,9 +37,34 @@ export function resolveClassicDefinition(level, foundationGeometry = null) {
   );
   if (Object.hasOwn(level.classic, 'lineImpact')) {
     const impact = level.classic.lineImpact;
-    has(impact, ['version', 'speed'], 'line impact');
-    required(impact.version === 'line-impact.v1', 'unsupported line impact definition');
+    has(
+      impact,
+      ['version', 'speed', ...(impact?.version === 'line-impact.v2' ? ['actorIds'] : [])],
+      'line impact',
+    );
+    required(
+      ['line-impact.v1', 'line-impact.v2'].includes(impact.version),
+      'unsupported line impact definition',
+    );
     required(number(impact.speed, 4, 60), 'line impact speed must be 4..60 cells per second');
+    if (impact.version === 'line-impact.v2') {
+      required(
+        Array.isArray(impact.actorIds) &&
+          impact.actorIds.length > 0 &&
+          impact.actorIds.length <= 64,
+        'selective line impact requires 1..64 explicit actor IDs',
+      );
+      required(
+        impact.actorIds.every(stableId) && new Set(impact.actorIds).size === impact.actorIds.length,
+        'selective line impact actor IDs must be stable and unique',
+      );
+      required(
+        impact.actorIds.every((id) =>
+          level.enemies.some((enemy) => enemy.id === id && enemy.type === 'bouncer'),
+        ),
+        'selective line impact actors must reference existing field bouncers',
+      );
+    }
   }
   if (Object.hasOwn(level.classic, 'arcadeActions')) {
     const actions = level.classic.arcadeActions;
