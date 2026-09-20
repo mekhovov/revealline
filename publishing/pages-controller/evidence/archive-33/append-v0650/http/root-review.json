@@ -1,0 +1,9 @@
+{
+  "reviewed": true,
+  "status": "ROOT_REVIEWED_BOUNDED_HTTP_RECEIPT_INTAKE",
+  "at": "2026-09-20T00:05:34.764459+00:00",
+  "requestSha256": "0bbf785c8c450366f100ea5c4dcf86fef92610dfa79bbcaa76d79264a853c547",
+  "helperReview": "Read all three helpers and identity-only adaptation; peer review agrees; single small body GET with retained originals and exclusive outputs.",
+  "artifactId": 10594422814,
+  "expectedBytes": 688899
+}
