@@ -2,6 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
+test('only fully owned frozen compiled registries may be reused without recompilation', () => {
+  const source = projectFixture(),
+    project = compileContentProject(source);
+  assert.equal(compileContentProject(project), project);
+  assert(Object.isFrozen(project));
+  assert(Object.isFrozen(project.source.missions[0].design));
+  assert.throws(() => compileContentProject(structuredClone(project)));
+  assert.throws(() => compileContentProject({ ...project }));
+  source.missions[0].coverage = 0.7;
+  const next = compileContentProject(source);
+  assert.notEqual(next, project);
+  assert.equal(next.missions[0].coverage, 0.7);
+  assert.equal(project.missions[0].coverage, 0.6);
+});
+
 export function projectFixture() {
   return {
     format: 'ContentProjectV1',
