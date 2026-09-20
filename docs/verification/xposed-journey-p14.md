@@ -292,7 +292,36 @@ independent and cannot acquire cross-campaign authority. These12 host cases and
 two opening-route cases pass on both Node versions (scoped cohorts). Existing
 legacy Next/reentry checks also pass27/27 on Node20.
 
-No native gameplay timing, human coordination, enjoyment or visual-contrast claim
-follows from modeled DOM/Canvas tests. Progress storage, Continue restoration,
-explicit skip bookkeeping, candidate difficulty controls, original backgrounds,
-broader real-device qualification and deployment remain open.
+The exact `fc6bad8d` source on local port8806 was also inspected natively:
+labelled twelve-mission geometry route, all twelve chooser cards, direct Play
+Shared lookout into the running arena with both reclaimed-ground HUD labels,
+0% and two reserves, then Pause at six seconds. No native clear, gameplay timing,
+human coordination, enjoyment or visual-contrast claim follows. The optional
+chooser's generic fallback-scene "Artwork teaser" wording still needs a more
+explicit candidate label.54 legacy Next/import/discovery/recovery tests pass on
+both Node versions.
+
+### Release-independent Team progress
+
+The explicit Team entry now reads the existing `revealline-journey-v1` profile,
+with separate Team cursors, skips and exact completion receipts. Successful
+host admission records selection; a command-earned win records the owned
+manifest's simulation identity and accepted preset exactly once per run. No
+official award is created. Imported same-ID packs remain excluded. Failed Next
+does not advance the cursor. Returning after a clear selects the authored next
+mission, including a different campaign; a last-mission receipt never wraps to
+the beginning. Unknown historical IDs/receipts and other modes remain intact.
+
+Storage denial does not prevent playing or Next. An explicit session-only notice
+offers Retry saving progress and Export progress. Export uses the shared portable
+backup format and truthfully reports a download request, not a confirmed file.
+Retry merges pending events with other saved modes without replacing the paused
+run. Native-selector intent during loading still takes priority over restoration.
+The profile adapter owns no per-release keys or runtime simulation changes.
+
+Five progress-contract tests plus16 real-host cases pass on Node20 and22, including
+the full12-mission flow, profile recreation, command-earned receipt, failed-Next
+cursor, denied-save export and recovery.69 legacy/shared-profile regression cases
+pass on Node22. This is modeled storage/DOM evidence, not browser disk/quota or
+native-progress approval. Two-activation skip UI, candidate difficulty controls,
+original backgrounds, broader real-device qualification and deployment remain open.

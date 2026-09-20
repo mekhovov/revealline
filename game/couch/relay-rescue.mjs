@@ -38,7 +38,7 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
-import { onNativeInactive } from '../platform.mjs';
+import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
@@ -94,6 +94,7 @@ function picturePreparationText({ stage, status }, destination = null) {
 
 export function bootCoop({
   candidateJourney = null,
+  candidateProgress = null,
   candidateDifficulty = 'standard',
   candidateNotice = '',
 } = {}) {
@@ -1640,6 +1641,8 @@ export function bootCoop({
       if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
         previous.picture.lease?.dispose();
       if (!adopted(candidate)) return;
+      candidateProgress?.started(selection.journeyRow, candidate);
+      if (!adopted(candidate)) return;
       message(`${destination.name}. Choose fresh directions when you are ready.`);
       input.focus();
     } catch (error) {
@@ -2153,6 +2156,8 @@ export function bootCoop({
       };
       for (const old of new Set([previous.picture, previous.selection]))
         if (old && old !== acceptedPicture && old !== pictureSelection) old.lease?.dispose();
+      if (run === candidate && running() && foreground() && !disposed)
+        candidateProgress?.started(selection.journeyRow, candidate);
       return run === candidate && running() && foreground() && !disposed;
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
@@ -2318,6 +2323,9 @@ export function bootCoop({
       arenaPreference.choose(startingLevel.id);
     if (!disposed && run === next && running() && foreground())
       acceptMusic(selection, { play: true });
+    if (!disposed && run === next && running() && foreground())
+      candidateProgress?.started(selection.journeyRow, next);
+    if (disposed || run !== next || !running() || !foreground()) return;
     input.focus();
     if (loopStopped) {
       loopStopped = false;
@@ -2839,6 +2847,10 @@ export function bootCoop({
           accumulator -= FIXED_DT;
           events();
           if (!running()) {
+            const finishedAttempt = run,
+              epoch = generation;
+            if (run.status === 'won') candidateProgress?.complete(run);
+            if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
             if (run.status === 'lost' && run.level.journeyDifficulty && !loopStopped) {
@@ -3256,7 +3268,9 @@ export function bootCoop({
     const first = candidateJourney.catalog.missions.find((mission) =>
       candidateJourney.isCore(mission.id),
     );
-    const row = candidateJourney.row(first, candidateDifficulty);
+    const row =
+      candidateProgress?.initial(candidateDifficulty) ??
+      candidateJourney.row(first, candidateDifficulty);
     showPack(row.pack, row.level.id);
   } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
@@ -3327,6 +3341,7 @@ export function bootCoop({
     closeAudio();
     closeDisplay();
     arenaPreference.dispose();
+    candidateProgress?.dispose();
     importRequest++;
     disposed = true;
     packStatus.dispose();
@@ -3354,6 +3369,56 @@ export function bootCoop({
     suspend();
   });
   window.addEventListener('pageshow', returned);
+  let progressExport = 0;
+  candidateProgress?.subscribe(({ ready, durable, error }) => {
+    if (disposed) return;
+    const notice = $('coop-journey-save'),
+      focus = document.activeElement,
+      ownedFocus = !notice.hidden && notice.contains(focus),
+      attempt = run,
+      epoch = generation;
+    notice.hidden = !ready || durable || !error;
+    if (disposed) return;
+    $('coop-journey-save-message').textContent = error
+      ? `Team Journey progress is session-only. Retry saving or export before closing. ${error}`
+      : '';
+    if (
+      ownedFocus &&
+      notice.hidden &&
+      !disposed &&
+      foreground() &&
+      !running() &&
+      run === attempt &&
+      generation === epoch &&
+      (document.activeElement === focus || unclaimedFocus(document.activeElement))
+    ) {
+      const target = primary();
+      if (visibleAction(target)) target.focus({ preventScroll: true });
+    }
+  });
+  $('coop-journey-save-retry').onclick = () => {
+    if (!disposed) {
+      progressExport++;
+      void candidateProgress?.retry();
+    }
+  };
+  $('coop-journey-save-export').onclick = async () => {
+    if (disposed || !candidateProgress) return;
+    const ticket = ++progressExport;
+    try {
+      const result = await exportJSONFile(
+        JSON.parse(candidateProgress.export()),
+        'revealline-journey-progress.json',
+      );
+      if (!disposed && ticket === progressExport && !$('coop-journey-save').hidden)
+        $('coop-journey-save-message').textContent =
+          `Team Journey progress is session-only. ${result.message}`;
+    } catch (error) {
+      if (!disposed && ticket === progressExport && !$('coop-journey-save').hidden)
+        $('coop-journey-save-message').textContent =
+          `Export failed: ${error.message}. Your session progress is still here.`;
+    }
+  };
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({
@@ -3382,7 +3447,7 @@ try {
   let candidateEntry;
   if (journeyRequests.length === 1 && journeyRequests[0] === 'team-greybox') {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
-    candidateEntry = createTeamGreyboxEntry();
+    candidateEntry = await createTeamGreyboxEntry();
   }
   bootCoop(candidateEntry);
 } catch (error) {

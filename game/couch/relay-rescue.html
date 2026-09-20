@@ -331,6 +331,18 @@
         </div>
       </dialog>
       <aside id="coop-tools" class="coop-tools" aria-label="Help, Settings and sound">
+        <section
+          id="coop-journey-save"
+          class="coop-picture"
+          aria-label="Team Journey progress"
+          hidden
+        >
+          <p id="coop-journey-save-message" role="status" aria-live="polite"></p>
+          <div class="coop-picture-actions">
+            <button id="coop-journey-save-retry" type="button">Retry saving progress</button>
+            <button id="coop-journey-save-export" type="button">Export progress</button>
+          </div>
+        </section>
         <section class="coop-picture" aria-label="Arena picture">
           <p id="coop-picture-status" role="status" aria-live="polite">
             Preparing the Team picture…

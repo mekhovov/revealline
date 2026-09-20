@@ -5,10 +5,16 @@ import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { createCandidateTeamHost } from '../content-design/team-host.mjs';
+import { createJourneyBackend, inspectJourneyBackup } from '../journey/profile.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
 const href = 'http://localhost/game/couch/relay-rescue.html?journey=team-greybox';
 const source = createTeamJourneyCandidates();
+const navigation = createCandidateTeamHost(source, {
+  corePackIds: source.packs.map((pack) => pack.id),
+});
 const keys = [
   { up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' },
   { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' },
@@ -73,6 +79,11 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
   assert.match(f.$('coop-pack-status').textContent, /Geometry test.*not human validated/);
   assert.match(f.$('coop-boot').textContent, /human validation and original artwork pending/);
   assert.match(f.$('coop-boot').textContent, /only to this session/);
+  assert.equal(f.$('coop-journey-save').hidden, false);
+  assert.match(
+    f.$('coop-journey-save-message').textContent,
+    /Team Journey progress is session-only/,
+  );
   f.$('coop-start').focus();
   f.tap('Enter');
   for (const [index, mission] of source.missions.entries()) {
@@ -273,6 +284,111 @@ test('cancelled cross-campaign preparation cannot replace the completed run when
   assert.equal(f.$('coop-overlay-copy').textContent, copy);
   assert.equal(f.$('coop-level').value, 'twin-landings');
   assert.match(f.$('coop-next-status').textContent, /cancelled/);
+  await next(f);
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+});
+
+test('real Team host restores the next mission from a legally earned cross-release profile without writing on entry', async (t) => {
+  const memory = managedIndexedDB(),
+    backend = createJourneyBackend(memory);
+  const mission = navigation.catalog.missions[0];
+  await t.test('earn the opening clear, retain its cursor on failed Next', async (t) => {
+    const f = await journeyPage(t, {
+      beforeImport({ install }) {
+        install('indexedDB', { value: memory.indexedDB });
+      },
+    });
+    assert.equal(memory.allPuts.length, 0);
+    assert.equal(f.$('coop-journey-save').hidden, true);
+    f.$('coop-start').click();
+    clear(f, 'twin-landings');
+    await new Promise((resolve) => setImmediate(resolve));
+    const profile = await backend.read();
+    assert.equal(profile.cursors.team, mission.id);
+    assert.equal(
+      profile.clears.team[mission.id].gameplayId,
+      navigation.row(mission).simulationIdentity,
+    );
+    const errors = [];
+    t.mock.method(console, 'error', (error) => errors.push(error));
+    f.failNextPaint();
+    f.$('coop-next').click();
+    await waitFor(() => /Could not start/.test(f.$('coop-next-status').textContent));
+    assert.deepEqual(await backend.read(), profile);
+    assert.equal(errors.length, 1);
+  });
+  await t.test(
+    'new page restores the successor, Start records only the admitted mission',
+    async (t) => {
+      const count = memory.allPuts.length;
+      const f = await journeyPage(t, {
+        beforeImport({ install }) {
+          install('indexedDB', { value: memory.indexedDB });
+        },
+      });
+      assert.equal(f.$('coop-level').value, 'stepping-exchange');
+      assert.equal(memory.allPuts.length, count);
+      f.$('coop-start').focus();
+      f.tap('Enter');
+      assert.equal(f.$('coop-menu').hidden, true);
+      await new Promise((resolve) => setImmediate(resolve));
+      const profile = await backend.read();
+      assert.equal(profile.cursors.team, navigation.catalog.missions[1].id);
+      assert.deepEqual(Object.keys(profile.clears.team), [mission.id]);
+    },
+  );
+});
+
+test('denied Team saving stays playable, exports pending progress and Retry saves it without changing the paused run', async (t) => {
+  const memory = managedIndexedDB();
+  let allowStorage = false;
+  const f = await journeyPage(t, {
+    beforeImport({ install }) {
+      install('indexedDB', {
+        get() {
+          if (!allowStorage) throw new Error('Test denied Team storage');
+          return memory.indexedDB;
+        },
+      });
+    },
+  });
+  f.$('coop-start').click();
+  clear(f, 'twin-landings');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('coop-journey-save').hidden, false);
+  const blobs = [],
+    create = URL.createObjectURL;
+  const exportTimers = [],
+    schedule = setTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {
+    const timer = schedule(callback, ms, ...args);
+    if (ms === 60000) {
+      timer.unref();
+      exportTimers.push(timer);
+    }
+    return timer;
+  });
+  t.after(() => exportTimers.forEach(clearTimeout));
+  t.mock.method(URL, 'createObjectURL', (blob) => {
+    blobs.push(blob);
+    return create(blob);
+  });
+  await f.$('coop-journey-save-export').onclick();
+  const exported = blobs.find((blob) => blob.type === 'application/json');
+  assert(exported);
+  const backup = inspectJourneyBackup(JSON.parse(await exported.text()));
+  assert(backup.profile.clears.team[navigation.catalog.missions[0].id]);
+  assert.match(f.$('coop-journey-save-message').textContent, /Download requested/);
+  const copy = f.$('coop-overlay-copy').textContent;
+  allowStorage = true;
+  f.$('coop-journey-save-retry').focus();
+  f.tap('Enter');
+  await waitFor(() => f.$('coop-journey-save').hidden);
+  assert.equal(f.doc.activeElement.id, 'coop-next');
+  assert.equal(f.$('coop-overlay-copy').textContent, copy);
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  const profile = await createJourneyBackend(memory).read();
+  assert(profile.clears.team[navigation.catalog.missions[0].id]);
   await next(f);
   assert.equal(f.$('coop-level').value, 'stepping-exchange');
 });
