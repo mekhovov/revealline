@@ -48,9 +48,35 @@ closure/objective observation and other audit value matches the pre-P10 report
 (excluding only the report's source-description label). This is compatibility
 evidence, not public enrollment or human qualification.
 
-Scenario/pack transport, map editor/Studio controls, visible directional cues,
-native interaction, full Crosswind greyboxes, reference adaptations, original
+## Transport, cues and candidate authoring
+
+Explicit `xonix-playground.v8` / `xonix-pack.v8` now preserve the successor level,
+fields, foundations and relay links through Studio preview, map import/edit/export,
+pack installation and campaign selection. Mismatched edition pairs reject; legacy
+equipment mastery stays disabled. Briefing, flight information, craft locator and
+existing actor presentation recognize the new ruleset without rewriting it.
+
+One bounded, detached visual projection feeds static outlined arrows in gameplay,
+the legacy map editor and Studio. It filters current ownership, so claimed cells
+lose their arrows immediately and reopened cells regain them. Glyphs stay inside
+their cells and under craft/trail layers, use light/dark shape rather than color
+alone, and add no motion or hidden steering. Full-picture victory omits the overlay.
+Automated drawing tests are not a substitute for native small-screen readability.
+
+Studio's explicit directional-edition opt-in upgrades only the selected mission
+through copy-on-write. Shared controls create, rotate, resize and remove fields,
+show the effective fixed factors and reject stale context, overlaps and cancelled
+adoption. Removal requires a second activation. Existing relays remain editable;
+manual image traces preserve fields and reject overlapping replacement geometry.
+Undo/redo uses the existing draft history and autosave/checkpoint path.
+
+The authoring/transport cohort passes 18/18 on both Node versions; the nine-file
+shell/pack/briefing/editor/flight-information regression cohort passes 82/82 on
+both. The first authoring run exposed an omitted `speedZones` map-edit allowlist
+entry. It was corrected, and the original failed run is retained locally rather
+than counted as a pass. Scoped lint, formatting and whitespace checks pass.
+
+Native interaction, full Crosswind greyboxes, reference adaptations, original
 assets, preset/route/mastery/seed/delay matrices, Team and human acceptance remain
 open. Team rejects successor editions rather than silently dropping their rules.
-No public Journey selects this work, and it must not be shown as a fully supported
-directional authoring edition until transport and readable preview are connected.
+No public Journey selects this work; hosted qualification and release remain open.

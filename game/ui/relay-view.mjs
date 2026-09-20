@@ -9,7 +9,7 @@ const own = (value, key) => {
 /** Bounded, detached presentation only. Never call getters or rewrite a run. */
 export function relayView(run) {
   try {
-    if (own(run, 'ruleset') !== 'xonix-core.v7') return null;
+    if (!['xonix-core.v7', 'xonix-core.v8'].includes(own(run, 'ruleset'))) return null;
     const definition = boundedJSON(own(own(run, 'level'), 'relayGates'), {
       maxBytes: 16384,
       maxNodes: 512,

@@ -2,6 +2,7 @@ import { compileContentProject, resolveMission } from './project.mjs';
 import {
   FOUNDATION_SCENARIO_VERSION,
   RELAY_SCENARIO_VERSION,
+  DIRECTIONAL_SCENARIO_VERSION,
   validateScenario,
 } from '../content.mjs';
 import { createRun } from '../core/index.mjs';
@@ -9,6 +10,7 @@ import { inspectCaptureSnapshot } from '../core/capture-regions.mjs';
 import { verifiedPreviewBackground } from './assets.mjs';
 import { createCoop } from '../coop/core.mjs';
 import { relayView } from '../ui/relay-view.mjs';
+import { directionalView } from '../ui/directional-view.mjs';
 
 /** Both preview surfaces use the same resolved candidate as the CLI. No awards. */
 export function prepareContentPreview(
@@ -40,9 +42,11 @@ export function prepareContentPreview(
       throw new Error('Preview theme must match the authored mission presentation.');
     scenario = {
       format:
-        manifest.level.version === 'xonix-level.v6'
-          ? RELAY_SCENARIO_VERSION
-          : FOUNDATION_SCENARIO_VERSION,
+        manifest.level.version === 'xonix-level.v7'
+          ? DIRECTIONAL_SCENARIO_VERSION
+          : manifest.level.version === 'xonix-level.v6'
+            ? RELAY_SCENARIO_VERSION
+            : FOUNDATION_SCENARIO_VERSION,
       masteryDefinition: null,
       visualOverrides: manifest.background
         ? { background: verifiedPreviewBackground(manifest.background, artwork) }
@@ -69,6 +73,7 @@ export function prepareContentPreview(
     objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
     ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
     ...(relays ? { gates: relays.gates, relayTriggers: relays.triggers } : {}),
+    ...(manifest.level.directionalFields ? { directionalFields: directionalView(run) } : {}),
   };
   const authoredTerrain = structuredClone(
     manifest.level.classic?.terrain ?? manifest.level.terrain ?? [],
