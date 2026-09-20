@@ -199,6 +199,46 @@ function editorFixture({ deferredSource = false } = {}) {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio emitter controls use shared cadence and an explicit axis without motion overrides', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'lane-emitter'));
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v5';
+  f.update(next);
+  f.node('role').value = 'lane-emitter';
+  f.node('role').onchange();
+  assert.match(f.node('tier-label').textContent, /Cadence/);
+  assert(f.node('tier').children.every((row) => /1.5s warning/.test(row.textContent)));
+  assert.equal(f.node('axis-row').hidden, false);
+  assert.equal(f.node('heading-row').hidden, true);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  f.node('id').value = 'emitter';
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('axis').value = 'vertical';
+  submit(f);
+  const actor = f.source().missions[0].actors.find((row) => row.id === 'emitter');
+  assert.deepEqual(actor, {
+    id: 'emitter',
+    role: 'lane-emitter',
+    tier: 'measured',
+    x: 45.5,
+    y: 15.5,
+    axis: 'vertical',
+  });
+  assert.match(f.node('result').textContent, /Actor applied/);
+  const labels = f.node('tier').children.map((row) => row.textContent);
+  f.preset('expert');
+  assert.deepEqual(
+    f.node('tier').children.map((row) => row.textContent),
+    labels,
+  );
+  assert.equal(f.node('axis').value, 'vertical');
+  f.node('role').value = 'field-keeper';
+  f.node('role').onchange();
+  assert.equal(f.node('axis-row').hidden, true);
+  assert.match(f.node('tier-label').textContent, /Speed/);
+});
 test('Studio may create actor controls before its asynchronous draft session is adopted', () => {
   const f = editorFixture({ deferredSource: true });
   assert.equal(f.node('tools').disabled, true);

@@ -174,12 +174,41 @@ export const PHASE_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// Stationary lane timing is a cadence, not an invented movement speed. Presets
+// do not shorten warnings; existing moving roles retain their speed scaling.
+export const LIVEWIRE_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v5',
+  roles: {
+    ...PHASE_ACTOR_CATALOG.roles,
+    'lane-emitter': {
+      type: 'lane-boss',
+      domain: 'stationary-unclaimed-field',
+      damageTarget: 'exposed-body-and-trail-in-active-lane',
+      retainsField: true,
+      captureResponse: 'retains-field; reclaimed-ground-shelters-player',
+      warning: 'locks-player-row-or-column-before-attack; first-warning-at-2-actor-seconds',
+      action: 'warn-then-fire-the-locked-interior-lane',
+      recovery: 'rest-until-next-warning; freeze-pauses-actor-clock',
+      counterplay:
+        'Watch the locked lane, leave it during the warning, and close before it fires. Reclaimed ground shelters the craft from the lane, not from other enemy roles. Enclosure does not silently disable this field-retaining emitter.',
+      timings: {
+        measured: { warningSeconds: 1.5, activeSeconds: 0.7, period: 6 },
+        standard: { warningSeconds: 1.5, activeSeconds: 0.7, period: 5.5 },
+        brisk: { warningSeconds: 1.5, activeSeconds: 0.7, period: 5 },
+      },
+      laneWidth: 1.2,
+    },
+  },
+});
+
 export function journeyActors(id = ACTOR_CATALOG.id) {
   const catalogs = {
     [ACTOR_CATALOG.id]: ACTOR_CATALOG,
     [ROVER_ACTOR_CATALOG.id]: ROVER_ACTOR_CATALOG,
     [FRACTURE_ACTOR_CATALOG.id]: FRACTURE_ACTOR_CATALOG,
     [PHASE_ACTOR_CATALOG.id]: PHASE_ACTOR_CATALOG,
+    [LIVEWIRE_ACTOR_CATALOG.id]: LIVEWIRE_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];
@@ -195,8 +224,23 @@ export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_
   const catalog = journeyActors(catalogId);
   const role = catalog.roles[actor.role];
   required(Object.hasOwn(catalog.roles, actor.role), 'Unsupported actor role.');
+  const preset = journeyPreset(difficulty);
+  if (role.type === 'lane-boss') {
+    exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'axis'], 'actor');
+    required(Object.hasOwn(role.timings, actor.tier), 'Unsupported actor cadence tier.');
+    required(['horizontal', 'vertical'].includes(actor.axis), 'Lane axis must be explicit.');
+    return {
+      id: actor.id,
+      type: role.type,
+      x: actor.x,
+      y: actor.y,
+      axis: actor.axis,
+      ...role.timings[actor.tier],
+      laneWidth: role.laneWidth,
+    };
+  }
   required(Object.hasOwn(role.speeds, actor.tier), 'Unsupported actor speed tier.');
-  const speed = role.speeds[actor.tier] * journeyPreset(difficulty).enemySpeedFactor;
+  const speed = role.speeds[actor.tier] * preset.enemySpeedFactor;
   if (['bouncer', 'claimed-rover', 'eroder'].includes(role.type)) {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'heading'], 'actor');
     required(

@@ -196,7 +196,7 @@
             ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span
             ><span>Tracked square: reclaimed-ground roamer</span
             ><span>Toothed blade: territory eroder</span><span>Bolt: trail-impact carrier</span
-            ><span>✚ Spawn</span>
+            ><span>Twin posts: stationary lane emitter</span><span>✚ Spawn</span>
             <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
             <span>Capture markers: ! Required · o Optional · ? Hidden</span>
             <span>Slow field: paired dashes · Lethal field: framed ×</span>
@@ -282,7 +282,10 @@
                 <label>Actor<select id="actor-select"></select></label>
                 <label>Stable actor ID<input id="actor-id" maxlength="80" required /></label>
                 <label>Role<select id="actor-role"></select></label>
-                <label>Speed tier · selected difficulty<select id="actor-tier"></select></label>
+                <label
+                  ><span id="actor-tier-label">Speed tier · selected difficulty</span
+                  ><select id="actor-tier"></select
+                ></label>
                 <p id="actor-description" class="note"></p>
                 <div class="pair">
                   <label
@@ -315,6 +318,12 @@
                 >
                 <label id="actor-clockwise-row"
                   ><input id="actor-clockwise" type="checkbox" checked /> Clockwise patrol</label
+                >
+                <label id="actor-axis-row" hidden
+                  >Locked lane axis<select id="actor-axis">
+                    <option value="horizontal">Horizontal row</option>
+                    <option value="vertical">Vertical column</option>
+                  </select></label
                 >
                 <button id="actor-submit" type="submit">Validate & add actor</button>
                 <button id="actor-remove" type="button" disabled>Remove selected actor</button>

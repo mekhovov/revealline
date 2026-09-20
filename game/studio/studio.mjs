@@ -10,7 +10,7 @@ import { createTeamSignalCandidates } from '../content-design/team-signal-candid
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
-import { contentActorMarkerType } from '../content-design/actor-marker.mjs';
+import { contentActorDescription } from '../content-design/actor-marker.mjs';
 import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
@@ -238,7 +238,7 @@ function inspectBoard(trailCells = []) {
   $('rules').textContent =
     `${manifest.level.rules.lives ?? journeyPreset(manifest.difficulty).lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
   $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorMarkerType(manifest.level, actor) === 'impact-carrier' ? 'trail-impact carrier' : actor.type} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
+    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorDescription(manifest.level, actor)} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
