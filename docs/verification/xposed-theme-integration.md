@@ -70,3 +70,15 @@ validator; the fixture was corrected without relaxing production validation.
 The dependency/pin/lease four-file cohort passes 36/36 on Node 20.19.5 and
 22.22.2; changed JavaScript also passes ESLint and Prettier.
 This inventory is not yet a complete offline attempt envelope or a backup UI.
+
+## Independent review correction: empty-inventory cancellation
+
+Review of `aaa4d50c` found an async boundary after inventory inspection where an
+already-aborted request could still report `verified-bytes` when all bindings
+were procedural and the resource loop was empty. Verification now checks
+cancellation immediately after inspection, before pin comparison or file reads.
+The regression uses the real WebCrypto digest with controlled completion
+microtasks; it confirms `AbortError` and zero reads for that exact boundary.
+The dependency file passes 9/9 on Node 20.19.5, and the combined dependency,
+campaign identity and DOM-adoption cohort passes 27/27 on Node 22.22.2.
+No Studio navigation or frozen campaign source is part of this correction.

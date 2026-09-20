@@ -70,6 +70,7 @@ export async function verifyPresentationDependencies(
     'Use an exact SHA-256 presentation manifest pin.',
   );
   const inventory = await inspectPresentationDependencies(source, { signal });
+  cancelled(signal);
   required(
     expectedManifestSha256 === null || inventory.manifest.sha256 === expectedManifestSha256,
     'Presentation dependencies differ from the pinned manifest.',
