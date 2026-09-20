@@ -1,0 +1,66 @@
+{
+  "source": "95da61883f07d6552caefa3b3d0fd820b016dcf4",
+  "observedAt": "2026-09-20T11:44:21.928933+00:00",
+  "origin": "http://127.0.0.1:18791",
+  "observer": "Codex native in-app browser; screenshots inline only",
+  "precondition": "Owned isolated fixture seeds three exact originals and Orchard selected revision 2 referencing poster 2. Fixture is not a player authoring journey.",
+  "keyboard": [
+    "Start, brief direction, Escape, Main menu, Missions, More chapters",
+    "Native keyboard filechooser imports original pack.json and media.rlmedia",
+    "Cancel is default during retained-picture review; authored Orchard Crossing name displayed",
+    "Portrait to landscape resizing keeps Cancel visible without activating it",
+    "Cancel restores Install focus and truthful cancelled status",
+    "Retry shows new verification and review; Shift+Tab/Return explicitly confirms installation",
+    "Success reports originals installed while choices and paused flight are kept; Play receives focus without launch",
+    "Explicit Play opens replacement with Stay default; Tab reveals Replace, Shift+Tab/Return chooses Stay",
+    "Stay restores visible Play focus; Escape returns main menu without resuming"
+  ],
+  "beforeAndAfter": {
+    "mission": "First Signal",
+    "coverage": "0.0%",
+    "lives": 3,
+    "score": 0,
+    "timer": "0:06",
+    "state": "paused",
+    "afterAuthority": "Main-menu Continue names First Signal; DOM-backed HUD values read after Stay and Escape"
+  },
+  "storeAfter": {
+    "generation": 3,
+    "retainedOrchardRevision": 2,
+    "retainedOrchardPoster": "external-fpv-poster-2",
+    "originalPosters": [
+      "external-fpv-poster-1",
+      "external-fpv-poster-2",
+      "external-fpv-poster-3"
+    ],
+    "assetBytes": [
+      2113587,
+      2999096,
+      2912184
+    ],
+    "additionalInitialFlightAssetBytes": 40810,
+    "authority": "Read-only owned fixture Inspect retained choices UI"
+  },
+  "responsive": [
+    {
+      "size": "390x844",
+      "result": "Current Cancel, Play and Stay focus remains visibly available; Tab scrolls Replace into view. No automatic activation."
+    },
+    {
+      "size": "844x390",
+      "result": "Current Cancel, Play and Stay focus remains visibly available; Tab scrolls Replace into view. No automatic activation."
+    },
+    {
+      "size": "844x256",
+      "result": "Current Cancel, Play and Stay focus remains visibly available; Tab scrolls Replace into view. No automatic activation."
+    }
+  ],
+  "status": "PASS_SCOPED_INTEGRATED_RECOVERY_AND_RESPONSIVE_FOCUS",
+  "limits": [
+    "Source preview, not public acceptance or complete P06",
+    "No physical controller/touch qualification; viewport checks are desktop emulation",
+    "No audible or offline proof",
+    "Full final-source qualification and immutable publication remain pending",
+    "Earlier failed native observations preserved"
+  ]
+}
