@@ -311,6 +311,41 @@ test('stale actor fields cannot apply after a project or same-revision source re
   assert.equal(f.source().missions[0].actors.length, 1, 'New context disarms removal.');
 });
 
+test('Studio exposes the eroder only in v3, with shared warning rules and validated heading fields', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'territory-eroder'));
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v3';
+  f.update(next);
+  assert(f.node('role').children.some((row) => row.value === 'territory-eroder'));
+  f.node('id').value = 'eroder';
+  f.node('role').value = 'territory-eroder';
+  f.node('role').onchange();
+  assert.equal(f.node('heading-row').hidden, false);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  assert.match(f.node('position-help').textContent, /60 actor ticks/);
+  assert.match(f.node('description').textContent, /Retains its field region/);
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('heading').value = '-1,0';
+  submit(f);
+  assert.match(f.node('result').textContent, /applied/);
+  assert.equal(f.source().missions[0].actors.at(-1).role, 'territory-eroder');
+  f.node('x').value = '32.5';
+  f.node('y').value = '17.5';
+  submit(f);
+  assert.match(f.node('result').textContent, /Not applied/);
+  assert.equal(f.source().missions[0].actors.at(-1).x, 45.5);
+  const team = createTeamOpeningCandidates();
+  team.actorCatalogId = 'journey-actors-v3';
+  f.update(team);
+  f.mission('twin-landings');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper'],
+  );
+});
+
 test('role controls explain domains, refresh preset tiers, clear absent missions and honor rejected adoption', () => {
   const f = editorFixture();
   f.node('select').value = 'keeper';

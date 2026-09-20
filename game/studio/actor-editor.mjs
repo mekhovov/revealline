@@ -7,6 +7,7 @@ const names = {
   'perimeter-patrol': 'Outer-perimeter patrol',
   'frontier-patrol': 'Moving-frontier patrol',
   'reclaimed-roamer': 'Reclaimed-ground roamer',
+  'territory-eroder': 'Territory eroder',
 };
 
 /** Catalog-only controls. Unsaved fields are local; only an explicit validated
@@ -17,7 +18,8 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     removal = null;
   const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
   const catalog = () => journeyActors(getSource().actorCatalogId);
-  const hasHeading = (role) => ['field-keeper', 'reclaimed-roamer'].includes(role);
+  const hasHeading = (role) =>
+    ['field-keeper', 'reclaimed-roamer', 'territory-eroder'].includes(role);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -51,7 +53,9 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
       ? 'Integer field cell beside reclaimed ground; choose its side facing that ground.'
       : $('role').value === 'reclaimed-roamer'
         ? 'Use cell centres ending in .5. Dormant in field; after its body is reclaimed it warns for 120 actor ticks, then roams reclaimed ground.'
-        : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
+        : $('role').value === 'territory-eroder'
+          ? 'Start in unclaimed field. Eligible frontier contact marks one cell for 60 actor ticks before reopening it, followed by a 120 actor-tick cooldown. Foundations are permanent.'
+          : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
     $('heading-row').hidden = !hasHeading($('role').value);
     $('edge-row').hidden = !frontier;
     $('clockwise-row').hidden = hasHeading($('role').value);
