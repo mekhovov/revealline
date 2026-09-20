@@ -4,11 +4,22 @@ This directory publishes one explicitly selected immutable game and the semantic
 
 The publishing controller commit is different from `gameSourceRevision`. For example, v0.42.0 is frozen source `e9928cdaad2f55d912aadd2ef25f635fb99e938c`; the main merge `f56ce9d98f0ce5d77a8f3c7dc310bf1a7e6b795c` was its publishing controller. The same distinction applies here. Infrastructure changes do not increment a frozen game version.
 
+The accepted main edition is **[v0.65.0 — imported Team continuation](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/)**. Its [scoped acceptance](delivery/evidence/cross-mode-p07/v0650-public/README.md) verifies ordinary import, both wins, earned-picture focus, Next and same-arena Retry, plus all **3,500 main files / 644,685,649 bytes** with no failures or retries. It closes P07-TEAM-IMPORTED-CONTINUATION only. Parent P03/P07/P08/P18, physical input, responsive Team, live rescue/balance and audio/offline gates remain open. The durable original audit and final authorities are retained alongside the small acceptance summaries.
+
+**v0.66.0 is a source-qualified stable release; public acceptance remains pending.** Frozen source `dae39ba7` / tree `e003212f`, tag `991bfc31` and release `392248530` preserve all nine verified assets. Both source families passed 6,541 tests across 501 files on Node 20.19.6, all required source/production/build gates and independent inspection. The catalog adds its 104th record while preserving all 103 old rows and exact metadata. Canonical stable metadata and qualification bytes match their verified originals; all nine asset descriptors remain unchanged. The publisher is based only on accepted main `e6e269ea` / tree `7e96a3c4`; it excludes the separate PR169/PR170 runtime sources.
+
+**Archive33 now preserves both v0.64.3 and v0.65.0.** Its [accepted append](evidence/archive-33/append-v0650/root-acceptance.json) covers all 1,421 files / 627,143,902 bytes without failed requests or retries, preserved earlier release bytes and scoped keyboard journeys. The allocation keeps all 33 archives and every historical route; only Archive33's current admission changes. No Archive34 repository is required. Stable promotion passed; the reviewed selector, Pages and complete public/native v0.66 acceptance remain separate gates. The accepted game is still v0.65.0. See the [current execution register](../../docs/cross-mode-execution.md).
+
+<details>
+<summary>Historical v0.65.0 selector-preparation summary — retained verbatim</summary>
+
 The accepted main edition is **[v0.64.3 — Workshop recovery](https://mekhovov.github.io/revealline/releases/v0.64.3/site/game/)**. Its [scoped acceptance](delivery/evidence/cross-mode-p03/v0643-public/README.md) verifies the actual keyboard refusal → Reload → recovery journey and all **3,475 main files / 644,520,592 bytes**, with zero failures or retries. It closes P03-WORKSHOP-01 only; P03, P05 and broader device, audio/offline and gameplay gates remain open.
 
 **Archive33's v0.64.3 preservation is accepted and prepared for this successor admission.** Its [root record](evidence/archive-33/initial-v0643/root-acceptance.json) binds all 712 files / 313,572,608 bytes, scoped native evidence and fresh authorities. Archive32 continues to preserve Replay v0.64.1 and HUD v0.64.2. The next composition preserves all 32 earlier admissions/allocations and 102 existing catalog rows; it adds Archive33's exact evidence rather than rewriting earlier releases.
 
 **As of 20 September 2026, imported-Team v0.65.0 is published stable; Pages acceptance remains pending.** Frozen source `57fdc39a` / tree `b71a23d6`, tag `74721a37` and [release 392203520](https://github.com/mekhovov/revealline/releases/tag/v0.65.0) retain all nine verified original assets. Metadata sync and the reviewed selector are prepared; hosted Pages deployment and actual public verification remain required. The publisher is based on merged v0.66 source `ce8c72ed` / tree `e003212f` while selecting the immutable v0.65 game; it must not rebuild or change either release's version or assets. Final v0.66 source `dae39ba7` passed both complete hosted families (6,541 tests across 501 files each on Node 20.19.6), all required source/build gates and independent frozen inspection. Its release/public acceptance remains separate and pending. See the [current execution register](../../docs/cross-mode-execution.md).
+
+</details>
 
 <details>
 <summary>Historical v0.64.3 selector-preparation summary — retained verbatim</summary>

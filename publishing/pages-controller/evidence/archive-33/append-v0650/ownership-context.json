@@ -1,0 +1,6 @@
+{
+  "at": "2026-09-19T23:58:01.612014+00:00",
+  "observation": "After the archive test tab closed, normal browser inventory showed other game tabs at main-repo v0.62.0 Team, v0.64.2 Solo, v0.64.3 Solo and v0.65.0 Team. All share origin https://mekhovov.github.io with Archive33 despite differing path prefixes.",
+  "interpretation": "Session-only warning is consistent with an existing writer tab. The warning does not establish a BFCache or archive regression. Actual current owner was not inspected and recovery was not exercised.",
+  "originalNativeObservationUnchanged": true
+}
