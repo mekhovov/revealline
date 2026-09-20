@@ -41,7 +41,9 @@ export function resolveContentJourney(source, options = {}) {
       campaigns.push({
         packId: pack.id,
         campaignId: design.id,
-        // A preset changes runtime identity, never the navigation/progress key.
+        // Execution recovery pins authored presentation as well as physics.
+        // A changed original must not impersonate a saved edition. Navigation
+        // and Journey progress IDs remain independent of these revisions.
         runtime: {
           version: 'xonix-campaign.v1',
           id: design.id,
@@ -49,6 +51,13 @@ export function resolveContentJourney(source, options = {}) {
             campaign: design,
             difficulty,
             simulations: manifests.map((manifest) => manifest.simulationIdentity),
+            presentation: manifests.map((manifest) => ({
+              levelId: manifest.level.id,
+              levelRevision: manifest.level.revision,
+              name: manifest.level.name,
+              presentation: manifest.presentation,
+              background: manifest.background,
+            })),
           })}`,
           title: design.name,
           levels: manifests.map((manifest) => manifest.level),
