@@ -1,10 +1,40 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 const json = async (relative) => JSON.parse(await readFile(new URL(relative, import.meta.url)));
+
+test('the Arcade crosswalk preserves the exact historical document and its v1 simulation pins', async () => {
+  const crosswalk = await json('../../docs/research/horizon-reference-crosswalk.json');
+  const legacyBytes = await readFile(
+    new URL(`../../${crosswalk.policyMigration.legacyCrosswalk}`, import.meta.url),
+  );
+  assert.equal(
+    createHash('sha256').update(legacyBytes).digest('hex'),
+    crosswalk.policyMigration.legacyCrosswalkSHA256,
+  );
+  const legacy = JSON.parse(legacyBytes);
+  const source = createOpeningCandidates();
+  source.policyId = 'journey-v1';
+  const project = compileContentProject(source);
+  assert.equal(crosswalk.policyId, 'journey-arcade-v2');
+  assert.equal(crosswalk.policyMigration.legacyPolicy, 'journey-v1');
+  assert.deepEqual(crosswalk.references, legacy.references);
+  assert.deepEqual(crosswalk.remainingGates, legacy.remainingGates);
+  assert.deepEqual(crosswalk.evidence, legacy.evidence);
+  assert.deepEqual(
+    crosswalk.missions.map(({ standardSimulationIdentity, ...row }) => row),
+    legacy.missions.map(({ standardSimulationIdentity, ...row }) => row),
+  );
+  for (const row of legacy.missions)
+    assert.equal(
+      row.standardSimulationIdentity,
+      resolveMission(project, row.id).simulationIdentity,
+    );
+});
 
 test('opening reference crosswalk preserves source pins and accounts for every original greybox', async () => {
   const crosswalk = await json('../../docs/research/horizon-reference-crosswalk.json');

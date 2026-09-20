@@ -27,3 +27,16 @@ This composition still needs the final P01 correction merge, native combined
 journeys, complete final-source gates, version allocation and public verification.
 The earlier packet's native MP3 transport evidence is not a listening or offline
 qualification of this composed source.
+
+## Final P01 corrections composed
+
+The automatic merge of041f1a71 preserves explicit untimed authored Versus, saved
+old-edition guidance and the original reference crosswalk. The composed
+Node22.22.2 host/core suite passed37 reported tests. The separate restored
+context/keyboard cohort passed2 tests (one overlaps the full host cohort).
+Sparse checkout removed supporting motion/fixture files during merge; startup
+refusals remain retained and exact index/original inputs were restored before
+the passing runs. The extra context test was restored and run explicitly.
+Reviewed materialized paths are now explicit sparse entries so a later merge
+keeps the test graph. No production validation was weakened. Native combined
+hosts and complete release gates remain; this is not public acceptance.

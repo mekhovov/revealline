@@ -402,7 +402,7 @@ export function createCouchShell({
     );
     setText(
       'race-format-help',
-      `First clear wins the ${series ? 'round' : 'race'}. At the time limit: coverage, then lives, then score decide. ${series ? 'First to two round wins takes the match. Draws award no round win.' : 'One race ends after this result. Rematch plays the same mission again.'}`,
+      `First clear wins the ${series ? 'round' : 'race'}. ${match.limitTicks === null ? 'No race countdown. If both flights end, coverage, then lives, then score decide.' : 'At the time limit: coverage, then lives, then score decide.'} ${series ? 'First to two round wins takes the match. Draws award no round win.' : 'One race ends after this result. Rematch plays the same mission again.'}`,
     );
     setText(
       'race-title',
