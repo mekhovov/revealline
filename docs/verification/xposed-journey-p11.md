@@ -133,10 +133,59 @@ The two candidates remain under review for distinct alternate/mastery routes,
 human route comprehension and possible redesign or removal. Their proposed
 60–150-second durations are not measured player results.
 
+## Full-route and seed evidence
+
+All **30 candidate/preset/steering combinations** now have no-loss Solo clears
+through the shared attempt preparer, exact pinned identities/checkpoints and
+public replay. All 30 independently allocated equal paired-board Versus races
+finish tied. Tests require every shield exactly once, one atomic transition,
+the full advertised transition interval, explicit core release, and constant
+coverage denominator. Gate connectors open before victory and remain permanent,
+non-scoring ground. These are technical feasibility tests, not Team or human
+qualification. Boss coverage can exceed the quota before the required core is
+released; the test explicitly rejects premature victory instead of incorrectly
+treating this advertised encounter stage as ordinary objective cleanup.
+
+Five additional deterministic seeds per combination pass: **150 sampled routes**
+and public replays. They are finite samples, not a claim about every seed. One
+Gentle/Grid + Buffer search stopped after capturing the shield with a narrow
+22-cell region remaining. A legal continuation used two short cuts to isolate
+the core, then the existing opening completed the mission. Neither the engine
+nor that candidate was changed to make the route pass.
+
+The combined route/seed/cue/goal-observer cohort passes **42/42 on each Node
+version**. Outputs: `.cache/p11-routes-cues-node20-r2.tap` and
+`.cache/p11-routes-cues-node22-r2.tap`. Read-only mastery observers reject joint
+captures for separate-cut goals, late/closed/unclaimed connector visits, duplicate
+or stale opening events, undersized release cuts, unfinished attempts and life
+loss. Complete optional-goal route qualification is still in progress.
+
+## Native candidate inspection
+
+The read-only exact-`d4f596d5` server on localhost8799 was inspected in owned
+tab38. "Inspect Sentinel Crown greyboxes" left the draft unchanged until the
+explicit Apply action. The resulting local checkpoint contains four core
+missions and one separately labelled optional Remix. First relay shows the
+wall chamber, slow approaches, three starting islands and one retaining Sentinel
+in the frozen overlay; no remote region would auto-fill.
+
+The exact Solo preview loaded and actual Start → Down input closed the first
+return: **0.6% earned, 130 points, three lives, stopped on reclaimed ground**.
+After 35 seconds without further movement the same safe position still had
+three lives. Closing returned focus to Play. This does not prove a full native
+clear, controller/touch support or human enjoyment. The candidate remains a
+greybox with inherited temporary artwork.
+
+The briefing exposed a wording problem: one shield plus the core appeared as
+"two required relays" followed by "all 1 shield relays." The successor briefing
+now distinguishes **shield relay(s) + core**, separately counts any other
+required objectives, and uses consistent singular/plural actor and live cues.
+Legacy encounter wording is unchanged. These fixes have automated regression
+coverage; the exact-d4 native check predates them.
+
 ## Remaining gates
 
-Candidate balance decisions; all-preset full routes,
-paired race parity, mastery and lifecycle coverage; final original artwork;
+Candidate balance decisions; complete mastery, delayed-start and lifecycle coverage; final original artwork;
 Team qualification; native/accessibility checks; human capture comprehension,
 failure explanation and voluntary retry; phase PR/review/version/release/Pages.
 No completed phase or whole-plan claim is warranted yet.

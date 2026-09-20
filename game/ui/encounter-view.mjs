@@ -25,6 +25,7 @@ export function encounterView(state) {
       })
     : null;
   const ground = multiple ? 'reclaimed ground' : 'safe ground';
+  const shieldPlural = multiple && shieldIds.length > 1;
   const min = recipe.minReleaseCutCells;
   const remaining = state.cells.reduce((sum, cell) => sum + Number(cell === CELL.FIELD), 0);
   const cutCells = encounterCutCells(state);
@@ -39,10 +40,10 @@ export function encounterView(state) {
     ? `${e.axis === 'horizontal' ? 'row' : 'column'} ${Math.floor(e.lane)}`
     : '';
   const phaseName = {
-    delay: multiple ? 'SHIELD RELAYS' : 'SHIELD RELAY',
+    delay: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
     warning: 'LANE WARNING',
     active: suppressed ? 'LANE SUPPRESSED' : 'LANE ACTIVE',
-    rest: multiple ? 'SHIELD RELAYS' : 'SHIELD RELAY',
+    rest: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
     transition: 'SHIELD OPENING',
     open: 'CORE OPEN',
     defeated: 'CORE RELEASED',
@@ -62,9 +63,9 @@ export function encounterView(state) {
         ? 'Core isolated. The picture is yours.'
         : 'Release cut secured. The picture is yours.';
   else if (e.stage === 'shielded')
-    instruction = `${multiple ? `Shield relays ${shields.captured} / ${shields.total}. Capture every remaining relay.` : 'Capture the shield relay.'} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
+    instruction = `${multiple ? `Shield relay${shieldPlural ? 's' : ''} ${shields.captured} / ${shields.total}. Capture ${shieldPlural ? 'every' : 'the'} remaining relay.` : 'Capture the shield relay.'} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
   else if (e.stage === 'transition')
-    instruction = `${multiple ? 'All shield relays secured.' : 'Relay secured.'} A vertical attack comes before the first opening.`;
+    instruction = `${shieldPlural ? 'All shield relays secured.' : 'Relay secured.'} A vertical attack comes before the first opening.`;
   else if (isolated)
     instruction =
       e.phase === 'open'
