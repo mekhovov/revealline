@@ -1,0 +1,24 @@
+{
+  "base": "41d0b908e4c7c5f1cfbbd24994f2e96381332b28",
+  "pins": {
+    "game/app.mjs": {
+      "bytes": 331766,
+      "sha256": "f5a383dded283a8c98103f582e9f6be7bbaaa4eb9d2258d562d9d661d2f18dc8"
+    },
+    "game/ui/game-shell.mjs": {
+      "bytes": 29449,
+      "sha256": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c"
+    }
+  },
+  "scope": "Exact isolated runtime, native keyboard,1280x720; separate localhost profile",
+  "homeJourney": "Start focus \u2192 Tab/Enter Missions \u2192 Shift-Tab twice More chapters \u2192 Enter catalogue \u2192 Escape Missions/More chapters focus \u2192 Escape Home/Missions focus",
+  "pausedJourney": "Start First Signal \u2192 Escape at0:02 \u2192 keyboard Missions \u2192 More chapters \u2192 Enter Back to Missions \u2192 Escape paused field/Missions focus; HUD stayed0:02,0%,3lives,0score",
+  "launchJourney": "Keyboard Download & play Illustrated Pressure \u2192 visible download feedback and Cancel focus \u2192 saved-and-verified replacement \u2192 explicit Replace & play \u2192 pending Stay focus \u2192 running Orchard Crossing at68%target; Pause showed2:29; Missions displayed correct campaign and Orchard Crossing",
+  "limits": [
+    "No physical controller or touch-only qualification",
+    "No portrait/landscape/zoom/offline/public-release claim",
+    "Browser HUD preservation is separate from host exact checkpoint/save-byte assertions",
+    "Fresh launch used isolated profile; this is not reproduction on the exact public0693 build"
+  ],
+  "cleanup": "Own tab29 closed; own server stopped by verified PID; viewport unchanged"
+}

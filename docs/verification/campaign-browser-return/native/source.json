@@ -1,0 +1,13 @@
+{
+  "source": "509eec38cbf1fd4d05319eada1654cb9a1cd69a5",
+  "overrides": {
+    "game/app.mjs": {
+      "bytes": 331894,
+      "sha256": "28c3e3138f14094315c02347ea39cf57d247a227f8815719484feefa06ec3396"
+    },
+    "game/ui/game-shell.mjs": {
+      "bytes": 29449,
+      "sha256": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source": {
+    "source": "509eec38cbf1fd4d05319eada1654cb9a1cd69a5",
+    "overrides": {
+      "game/app.mjs": {
+        "bytes": 331894,
+        "sha256": "28c3e3138f14094315c02347ea39cf57d247a227f8815719484feefa06ec3396"
+      },
+      "game/ui/game-shell.mjs": {
+        "bytes": 29449,
+        "sha256": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c"
+      }
+    }
+  },
+  "result": "scoped native Back pass",
+  "observer": "Codex CUA",
+  "url": "http://127.0.0.1:18801/game/",
+  "viewport": "1280x720 desktop in-app browser",
+  "input": "keyboard only",
+  "journeys": [
+    "Fresh Home\u2192Missions\u2192More chapters shows Back to Missions. Escape returns Missions with More chapters focused; secondEscape returns Home with Missions focused.",
+    "Explicit Start opens First Signal tactical flight. Escape pauses0:04/0percent/3lives/00000. Keyboard opens Missions\u2192More chapters; Return on Back to Missions restores More chapters focus.",
+    "Escape restores field with Missions focused and unchanged0:04/0percent/3lives/00000; no automatic resume."
+  ],
+  "responses": 358,
+  "distinctVerifiedPaths": 357,
+  "limits": [
+    "Base509eec38 plus2exactruntime overrides; no frozen/public acceptance.",
+    "Actual direct Download/Replace Play was observed on owner packet separately; current complete root host cohort covers successful Play with caption integration.",
+    "No real controller/touch, mobile/zoom/offline or exported screenshot evidence."
+  ]
+}

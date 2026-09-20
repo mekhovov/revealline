@@ -1019,3 +1019,15 @@ overrides, tree mutation, duplicate IDs and child querySelector isolation. Use
 `docs/test-dom-first-match.md` for the maintenance prompt and required cohorts.
 Report synthetic, host-test and native-browser performance separately; a faster
 fixture is not a faster game or a completed release gate.
+
+
+### Campaign browser return
+
+Keep the catalogue Back callback single-use and owned by its originating Missions
+visit. Return to More chapters while preserving the original Home/field return;
+never auto-resume or invoke Back during a successful Play adoption. A newer modal,
+visible focus, mission visit or background page keeps ownership. Follow
+`docs/campaign-browser-return.md` for the maintenance prompt, retained-state checks
+and distinct native/modelled/public evidence boundaries.
+
+When changing the catalogue Back destination, include the full optional-world Play host cohort. A Back callback can reenter while the accepted previous drawable is retired. Assert the accepted new attempt stays paused at tick zero, the old picture is released once, saved profile bytes remain unchanged, and focus returns to Missions / More chapters. Preserve the original failing old-Home expectation; change only the obsolete navigation expectation, never the launch or save guarantees.

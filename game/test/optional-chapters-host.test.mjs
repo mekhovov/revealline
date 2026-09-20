@@ -425,11 +425,9 @@ test('keyboard and standard controller enter More chapters with Mode collapsed a
   for (const item of catalog.packs) assert.ok(visited.has(`optional-worlds-install-${item.id}`));
   press(1);
   assert.equal(page.$('optional-worlds-dialog').open, false);
-  assert.equal(page.$('shell-home').open, true);
-  seek('shell-play', () => press(13));
-  press(0);
   assert.equal(page.$('shell-home').open, false);
   assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-worlds'));
   assert.equal(modeChoice.open, false);
   seek('shell-worlds', () => press(13));
   assert.equal(modeChoice.open, false, 'Controller entry does not open Game mode.');
@@ -439,7 +437,11 @@ test('keyboard and standard controller enter More chapters with Mode collapsed a
   );
   press(1);
   assert.equal(page.$('optional-worlds-dialog').open, false);
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-worlds'));
+  press(1);
   assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-play'));
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
@@ -463,7 +465,8 @@ test('cancelled optional download cannot change the flight or install after Back
   page.$(`optional-worlds-install-${first.id}`).click();
   await settle(() => entered);
   page.$('optional-worlds-back').click();
-  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-worlds'));
   resolve(new Response(await readFile(new URL(first.path, root))));
   await new Promise((done) => setImmediate(done));
   page.frame(0);
@@ -491,7 +494,8 @@ test('failed published checksum leaves native retry and keyboard Back available 
   // The finite DOM does not implement native Escape→dialog cancel defaults.
   page.$('optional-worlds-dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
   assert.equal(page.$('optional-worlds-dialog').open, false);
-  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-worlds'));
   assert.deepEqual(page.errors, []);
 });
 
@@ -520,6 +524,7 @@ test('a valid imported chapter with substituted artwork is a conflict, never an 
     checkpoint = authoritativeCheckpoint(run),
     saved = new Map(page.storage.map);
   page.$('shell-menu').click();
+  page.$('shell-play').click();
   page.$('shell-worlds').click();
   await settle(
     () =>
@@ -542,7 +547,8 @@ test('a valid imported chapter with substituted artwork is a conflict, never an 
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.deepEqual(page.storage.map, saved);
   page.$('optional-worlds-top-back').click();
-  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-worlds'));
   assert.deepEqual(page.errors, []);
 });
 
@@ -601,7 +607,8 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
   await settle(() => entered);
   assert.equal(page.$('optional-worlds-dialog').getAttribute('aria-busy'), 'true');
   assert.doesNotThrow(() => page.$('optional-worlds-top-back').click());
-  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.doc.activeElement, page.$('shell-worlds'));
   release();
   await finished;
   await new Promise((resolve) => setImmediate(resolve));

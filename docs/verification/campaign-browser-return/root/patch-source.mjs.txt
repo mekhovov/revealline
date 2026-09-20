@@ -1,0 +1,14 @@
+import {execFileSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../../',import.meta.url));
+const source='509eec38cbf1fd4d05319eada1654cb9a1cd69a5';
+const overrides=new Set(['game/app.mjs','game/ui/game-shell.mjs','game/test/worlds-return-host.test.mjs','game/test/optional-chapters-host.test.mjs','game/test/optional-world-play-host.test.mjs']);
+const cache=new Map();
+export function sourceFor(name){
+ if(!name||name.startsWith('/')||name.split('/').some(x=>!x||x==='..'))throw Error('Invalid source path');
+ if(overrides.has(name))return readFileSync(new URL('../worktrees/mission-caption-followup/'+name,import.meta.url));
+ const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>!k.startsWith('GIT_')));
+ if(!cache.has(name))cache.set(name,execFileSync('git',['--no-lazy-fetch','--no-optional-locks','show',source+':'+name],{cwd:root,maxBuffer:32*1024*1024,env:{...env,GIT_NO_LAZY_FETCH:'1',GIT_OPTIONAL_LOCKS:'0',GIT_TERMINAL_PROMPT:'0'}}));
+ return Buffer.from(cache.get(name));
+}
