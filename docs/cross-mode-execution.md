@@ -1,5 +1,26 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — 20 September 2026, v0.67 publication
+
+**Accepted public baseline: [v0.66.0](https://mekhovov.github.io/revealline/releases/v0.66.0/site/game/).** Its Team artwork ownership, actor-state previews and cross-mode Studio/history scope passed; all 3,533 public files / 644,953,790 bytes were verified. Full phases and hardware/audio/offline acceptance remain open.
+
+**v0.67.0 Journey technical preview:** source `6a42faca` / tree `ca86b288` passed both full hosted families, each 6,568 tests / 505 files on Node 20.19.6. PR169 merged; the immutable tag and stable release 392287575 retain all nine verified assets. Corrected hosted upload 35484727077 passed after a retained evidence-ZIP layout failure. The Pages selector in this change proposes v0.67.0; actual deployment, full public-byte audit and native Journey acceptance remain pending. Do not mark the parent Journey phase complete from this proposal.
+
+**v0.66.0 preservation:** Archive34 source `68d29403`, deployment `6548389224`, retains all 716 public files / 313,634,855 bytes with zero failed requests. Keyboard verification covers Solo first win, Next, Pause, saved mode leave, Team start and pause. The other 33 archives remain unchanged.
+
+### Prioritized continuation
+
+1. Finish v0.67 Pages deployment, verify every public byte and the actual Journey Start/clear/Next/Skip/Continue flow; update acceptance only afterward.
+2. Finish exact-source v0.68 qualification of `4690fedd` (PR170): combined Journey/discovery owner resolution, Practice containment, concealed previews, Team guidance and Studio audio corrections. Both final suites are running; earlier failed candidates stay failed.
+3. Review and integrate the sealed shared Couch music host after v0.68. The focused 592-test Node 20/22 matrix and native menu/import/Save/focus evidence are candidate checks, not release or listening acceptance.
+4. Continue the approved Journey plan’s registry/Studio foundations, then benchmark gameplay, actor parity/action feedback, fair challenge, rewards, optional media/content and full qualification in that plan’s order. Bulk art remains gated by capacity and the gameplay benchmark.
+
+The [Journey plan](xposed-journey-plan.md) owns new campaign counts and its P00–P15 sequence. Historical cross-mode IDs below retain their original meanings: P00/P01/P02-A accepted; P02-B/P03–P09/P16–P18 partial; Team encounters and bulk campaigns still require their complete gates. Native-store certification and online multiplayer remain separate. Each independently completed delivery needs a scoped commit/version, original release, Pages deployment and acceptance.
+
+<details>
+<summary>Previous register cutoff — retained history, not current acceptance</summary>
+
+
 ## Journey redesign authority — 20 September 2026
 
 The approved [Xposed-led Journey plan](xposed-journey-plan.md) now owns the new
@@ -817,3 +838,5 @@ The nineteen deduplicated core test files passed151 reported checks, and the com
 Native Replay testing found three corrections: Jump to playback did not transfer keyboard focus, completing playback disabled the focused Play/Step action without handing focus to Restart, and shared CSS overrode the intended readout size. All three are integrated; predecessor failures remain retained. Completed Play's amber disabled styling remains a separate component-state follow-up. Static review also found and corrected Studio textarea whitespace, preserving multiline prompts and evidence. Those corrections completed final-source qualification and the scoped v0.60.0 public-byte/browser gate linked in the [current progress report](../publishing/pages-controller/delivery/evidence/cross-mode-p05/public-v0600/planning/progress-and-next.md). The reported native scope does not qualify physical input, disconnected operation or all supporting screens. Future corrections require their own exact-source and public gates.
 
 The broader P03 device/lifecycle matrix stays open. P04 picture-context repairs, cold Back filter/selection coherence and focus after successful mutation commands disable their trigger remain separate. Other supporting-screen adapters, full art parity and physical qualification remain in their approved phases.
+
+</details>
