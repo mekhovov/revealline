@@ -210,6 +210,15 @@ distributions preserve originals. Initial native Border partial-reveal evidence
 does not complete whole-set contrast, human acceptance or campaign presentation.
 See `docs/verification/xposed-journey-p02.md` and the Border assets' `PROMPTS.md`.
 
+P02 now also composes `?journey=authored` in both real Solo and paired-board Versus:
+15 core missions flow through Prologue → Horizon → Border with one deliberate Next,
+while two Remixes remain optional in the same 17-card chooser. The older opening
+URL, execution identities and suspended-flight slot are preserved. Stable receipts
+carry across the library extension; combined-route attempts use their own slot.
+Modeled real-host tests clear all 15 consecutively in each mode, and native
+cross-pack Skip is verified. Human/full-device/timing and public acceptance remain
+open, as do Team Journey navigation and inter-mode departure integration.
+
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema
 stays readable by previous releases. It does not replace a running attempt or award

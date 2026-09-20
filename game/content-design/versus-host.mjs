@@ -5,10 +5,14 @@ import { boundedJSON, required } from '../data-json.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createMissionCard } from './mission-card.mjs';
+import { createCandidateSequence } from './route.mjs';
 
 /** Uses the shared compiler in Versus mode. The real host still owns createDuel,
  * controllers, paired ticks and race results; no Solo run substitutes for them. */
-export function createCandidateVersusHost(source, { themes } = {}) {
+export function createCandidateVersusHost(
+  source,
+  { themes, corePackIds = ['journey-opening'] } = {},
+) {
   const executions = createContentExecutionCatalog(source, { mode: 'versus' });
   const ownedThemes = boundedJSON(themes, { maxBytes: 262144, maxNodes: 8192, maxDepth: 12 });
   required(Array.isArray(ownedThemes), 'Candidate themes are required.');
@@ -31,6 +35,7 @@ export function createCandidateVersusHost(source, { themes } = {}) {
       })),
     })),
   );
+  const sequence = createCandidateSequence(catalog, corePackIds);
   const rows = executions.entries.flatMap((entry) =>
     entry.manifests.map((manifest, index) => {
       const mission = catalog.missions.find(
@@ -76,11 +81,6 @@ export function createCandidateVersusHost(source, { themes } = {}) {
       if (catalog.find(mission?.id) !== mission) return null;
       return rows.find((row) => row.mission === mission && row.difficulty === difficulty) ?? null;
     },
-    next(id) {
-      const mission = catalog.find(id);
-      if (mission?.packId !== 'journey-opening') return null;
-      const next = catalog.next(id, 'versus');
-      return next?.packId === 'journey-opening' ? next : null;
-    },
+    ...sequence,
   });
 }

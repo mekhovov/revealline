@@ -325,79 +325,91 @@ test('changed next-preset intent cancels a held race decode without retiring eit
   assert.equal(picture.image.released, 1);
 });
 
-test('all nine authored Versus races continue directly, retain equal checkpoints and separate durable receipts', async (t) => {
-  const p = await setup(t);
-  p.$('race-start').click();
-  await waitFor(() => {
-    p.frame(0);
-    return !p.$('race-pause').disabled;
-  });
-  const rows = JSON.parse(
-    await readFile(new URL('./fixtures/horizon-greybox-routes.json', import.meta.url)),
-  ).rows;
-  const keys = {
-    up: ['KeyW', 'ArrowUp'],
-    down: ['KeyS', 'ArrowDown'],
-    left: ['KeyA', 'ArrowLeft'],
-    right: ['KeyD', 'ArrowRight'],
-  };
-  const gesture = (direction) => {
-    for (const key of keys[direction] ?? []) {
-      p.key(key);
-      p.key(key, false);
-    }
-  };
-  for (const [id, , , segments] of rows.slice(0, 9)) {
-    assert.equal(p.renders[0].levelId, id);
-    const reference = createRun(p.renders[0].level, { seed: 1, classId: 'scout' });
-    // Starting the paired-board host consumes one neutral input tick equally.
-    stepRun(reference, { direction: null }, FIXED_DT);
-    p.frame(FIXED_DT * 1000);
-    for (const [direction, ticks] of segments) {
-      gesture(direction);
-      let frameTicks = 0;
-      for (let tick = 0; tick < ticks; tick++) {
-        stepRun(reference, { direction }, FIXED_DT);
-        frameTicks++;
-        const closure = reference.events.some((event) => event.type === 'capture.stopped');
-        if (closure || frameTicks === 12 || tick === ticks - 1) {
-          p.frame(frameTicks * FIXED_DT * 1000);
-          frameTicks = 0;
-          if (closure && tick < ticks - 1 && reference.status !== 'won') gesture(direction);
+for (const route of ['opening', 'authored'])
+  test(`${route} Versus races continue across all campaigns with equal checkpoints and separate receipts`, async (t) => {
+    const p = await setup(t, 'standard', { href: `http://localhost/game/couch/?journey=${route}` });
+    p.$('race-start').click();
+    await waitFor(() => {
+      p.frame(0);
+      return !p.$('race-pause').disabled;
+    });
+    const rows = JSON.parse(
+      await readFile(new URL('./fixtures/horizon-greybox-routes.json', import.meta.url)),
+    ).rows.slice(0, 9);
+    if (route === 'authored')
+      rows.push(
+        ...JSON.parse(
+          await readFile(new URL('./fixtures/border-clear-routes.json', import.meta.url)),
+        )
+          .sets.find(
+            (set) => set.bonuses && set.difficulty === 'standard' && set.turnPolicy === 'immediate',
+          )
+          .rows.slice(0, 6),
+      );
+    const keys = {
+      up: ['KeyW', 'ArrowUp'],
+      down: ['KeyS', 'ArrowDown'],
+      left: ['KeyA', 'ArrowLeft'],
+      right: ['KeyD', 'ArrowRight'],
+    };
+    const gesture = (direction) => {
+      for (const key of keys[direction] ?? []) {
+        p.key(key);
+        p.key(key, false);
+      }
+    };
+    for (const [id, , , segments] of rows) {
+      assert.equal(p.renders[0].levelId, id);
+      const reference = createRun(p.renders[0].level, { seed: 1, classId: 'scout' });
+      // Starting the paired-board host consumes one neutral input tick equally.
+      stepRun(reference, { direction: null }, FIXED_DT);
+      p.frame(FIXED_DT * 1000);
+      for (const [direction, ticks] of segments) {
+        gesture(direction);
+        let frameTicks = 0;
+        for (let tick = 0; tick < ticks; tick++) {
+          stepRun(reference, { direction }, FIXED_DT);
+          frameTicks++;
+          const closure = reference.events.some((event) => event.type === 'capture.stopped');
+          if (closure || frameTicks === 12 || tick === ticks - 1) {
+            p.frame(frameTicks * FIXED_DT * 1000);
+            frameTicks = 0;
+            if (closure && tick < ticks - 1 && reference.status !== 'won') gesture(direction);
+          }
         }
       }
+      assert.equal(p.renders[0].status, 'won', id);
+      assert.equal(p.renders[1].status, 'won', id);
+      assert.equal(
+        authoritativeCheckpoint(p.renders[0]).hash,
+        authoritativeCheckpoint(reference).hash,
+        id,
+      );
+      assert.equal(
+        authoritativeCheckpoint(p.renders[0]).hash,
+        authoritativeCheckpoint(p.renders[1]).hash,
+        id,
+      );
+      assert.equal(p.$('journey-chooser').open, false);
+      if (id !== rows.at(-1)[0]) {
+        const previous = p.renders[0];
+        p.$('race-journey-next').click();
+        await waitFor(() => {
+          p.frame(0);
+          return p.renders[0] !== previous && !p.$('race-pause').disabled;
+        });
+      }
     }
-    assert.equal(p.renders[0].status, 'won', id);
-    assert.equal(p.renders[1].status, 'won', id);
-    assert.equal(
-      authoritativeCheckpoint(p.renders[0]).hash,
-      authoritativeCheckpoint(reference).hash,
-      id,
-    );
-    assert.equal(
-      authoritativeCheckpoint(p.renders[0]).hash,
-      authoritativeCheckpoint(p.renders[1]).hash,
-      id,
-    );
-    assert.equal(p.$('journey-chooser').open, false);
-    if (id !== 'long-way-home') {
-      const previous = p.renders[0];
-      p.$('race-journey-next').click();
-      await waitFor(() => {
-        p.frame(0);
-        return p.renders[0] !== previous && !p.$('race-pause').disabled;
-      });
+    assert.equal(p.$('race-journey-next').hidden, true);
+    assert.equal(p.renders[0].levelId, rows.at(-1)[0]);
+    assert.match(p.$('race-message').textContent, /End of this test route.*optional Remixes/);
+    let persisted;
+    for (let attempt = 0; attempt < 200; attempt++) {
+      persisted = await p.journeyBackend.read();
+      if (Object.keys(persisted.clears.versus).length === rows.length) break;
+      await new Promise((resolve) => setTimeout(resolve, 5));
     }
-  }
-  assert.equal(p.$('race-journey-next').hidden, true);
-  assert.equal(p.renders[0].levelId, 'long-way-home');
-  let persisted;
-  for (let attempt = 0; attempt < 200; attempt++) {
-    persisted = await p.journeyBackend.read();
-    if (Object.keys(persisted.clears.versus).length === 9) break;
-    await new Promise((resolve) => setTimeout(resolve, 5));
-  }
-  assert.equal(Object.keys(persisted.clears.versus).length, 9);
-  assert.equal(Object.keys(persisted.clears.solo).length, 0);
-  assert.equal(Object.keys(persisted.clears.team).length, 0);
-});
+    assert.equal(Object.keys(persisted.clears.versus).length, rows.length);
+    assert.equal(Object.keys(persisted.clears.solo).length, 0);
+    assert.equal(Object.keys(persisted.clears.team).length, 0);
+  });
