@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { JOURNEY_ART_CANDIDATES } from '../game/content-design/journey-art.mjs';
 import { buildProject, collectBuildFiles, readBuildConfig } from './game-cli.mjs';
 import {
   readOptionalArtwork,
@@ -173,13 +174,16 @@ test('last packaging boundary rejects missing, duplicate or changed originals', 
   }
 });
 
-test('selected real source authenticates all seventeen originals without producing a bulk distribution', async () => {
+test('selected real source authenticates every registered original without producing a bulk distribution', async () => {
   const config = await readBuildConfig(source),
     files = await collectBuildFiles(source, { ...config, include: ['game'] });
   const artwork = await readOptionalArtwork(source, config.optionalArtwork, files);
-  assert.equal(artwork.count, 17);
-  assert.equal(artwork.bytes, 45282783);
-  assert.equal(new Set(artwork.files.map((file) => file.path)).size, 17);
+  assert.equal(artwork.count, JOURNEY_ART_CANDIDATES.length);
+  assert.equal(
+    artwork.bytes,
+    JOURNEY_ART_CANDIDATES.reduce((sum, asset) => sum + asset.bytes, 0),
+  );
+  assert.equal(new Set(artwork.files.map((file) => file.path)).size, JOURNEY_ART_CANDIDATES.length);
 });
 
 test('combined Journey opt-in preserves original bytes and historical single-campaign compatibility', async (t) => {
