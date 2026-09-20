@@ -1,0 +1,20 @@
+{
+  "source": "041f1a71fedb5edbb9a8827a3eebe51898f018e9",
+  "tree": "b0720fcfc9f6cb612abd0ca56403ca1c9de38b53",
+  "date": "2026-09-20",
+  "url": "http://127.0.0.1:18786/game/?journey=opening",
+  "sourcePolicy": "Preview serves exact immutable Git source with no working overrides; tab intentionally reloaded after source advance.",
+  "input": "CUA native browser keyboard",
+  "observations": [
+    "Title displayed Continue \u00b7 Prologue \u00b7 Choose your share after reload.",
+    "Keyboard Continue restored prior same-edition save: 34.3%, three lives, 8160 score, 0:35. Flight resumed only through explicit Continue.",
+    "Escape paused after approximately six real active seconds: 34.3%, three lives, 8160 score, 0:41. Resume focused.",
+    "Canvas instruction explicitly retains release-to-continue movement and fresh direction after closure; no manual Arcade Scan/Supply/Boost instruction."
+  ],
+  "limitations": [
+    "No new physical controller/touch test",
+    "Instruction text alone is not new dynamic capture-stop proof",
+    "No full picture/frame reward or offline claim",
+    "Screenshot inline only; no exported hash"
+  ]
+}
