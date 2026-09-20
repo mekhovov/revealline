@@ -106,3 +106,27 @@ idle checks, all-preset shared previews and equal Solo/Versus definitions. These
 are not full mission clears, delayed-departure qualification, mastery proof,
 native checks, finished artwork or human difficulty/enjoyment evidence. No
 phase-complete or publication claim is made.
+
+## Native Studio and introduction — exact4342e0ff
+
+Native tab33 served exact Git4342e0ff0ec1826a98f9545a801564660c324df2 at
+localhost8791 without source overrides or a build. Inspect Phaseworks → explicit
+Apply created checkpoint2 with seven maps/missions. The first native inspection
+at fb65adb5 exposed a missing carrier legend and generic `bouncer` text;4342e0ff
+corrected both. Reload preserved checkpoint2 and showed “Bolt: trail-impact
+carrier” and the actual carrier at38.5,1.5 in the map description.
+
+Exact Solo preview reached real readiness. Start plus fresh Down closed the
+introductory return:0.6% earned, score130, all3lives, stopped at the foundation.
+At0:16, Pause → Field details showed1field enemy /1trail-impact carrier, explicit
+endpoint/body danger, and actual recent messages “Line struck!” followed by
+line secured and the occupied-regions explanation. Back kept0:16 and the run
+paused. Resume showed the distinct bolt and unchanged short reclaimed return;
+the craft did not resume steering without a fresh direction. Paused again at
+0:28 with the same0.6% /130 /3lives. Close preview restored focus to Play and
+left checkpoint2 unchanged. No viewport override or ambient user tab was used.
+
+This verifies one real first-return path and its accessible explanation, not a
+human perception study, whole-campaign native clear, final art, physical-device
+test, low-latency benchmark or release acceptance. Other six native layouts,
+delayed-start alternatives and mastery routes remain open.
