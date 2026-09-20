@@ -6,10 +6,15 @@ import { fieldNeighbors, inspectCaptureSnapshot } from '../core/capture-regions.
  * Foundation-era candidates have no gate or boss transitions. */
 export function inspectMissionTopology(level, geometry) {
   const run = createRun(level, { seed: 1, classId: 'scout' });
+  return inspectRuntimeTopology(run, level, geometry, [level.spawn], level.objectives);
+}
+
+/** Shared spatial diagnostics, supplied with each mode's real initial engine.
+ * Reachability is the union of explicit seats, not an assumed Solo start. */
+export function inspectRuntimeTopology(run, level, geometry, spawns, objectives = []) {
   const capture = inspectCaptureSnapshot(run);
-  const start = Math.floor(level.spawn.y) * level.width + Math.floor(level.spawn.x);
-  const reachable = new Set([start]),
-    queue = [start];
+  const queue = spawns.map((spawn) => Math.floor(spawn.y) * run.width + Math.floor(spawn.x));
+  const reachable = new Set(queue);
   for (let cursor = 0; cursor < queue.length; cursor++)
     for (const next of fieldNeighbors(queue[cursor], level.width, level.height)) {
       if (next >= 0 && geometry.cells[next] !== CELL.WALL && !reachable.has(next)) {
@@ -31,7 +36,7 @@ export function inspectMissionTopology(level, geometry) {
         enemyIds: component.enemyIds,
         cells: component.cells.length,
         message:
-          'Walls isolate an occupied field region from this mission spawn. Its cells cannot be earned with the current mechanics.',
+          'Walls isolate an occupied field region from every mission spawn. Its cells cannot be earned with the current mechanics.',
       });
     } else if (!component.retained) {
       diagnostics.push({
@@ -44,7 +49,7 @@ export function inspectMissionTopology(level, geometry) {
       });
     }
   }
-  for (const objective of level.objectives) {
+  for (const objective of objectives) {
     const cell = Math.floor(objective.y) * level.width + Math.floor(objective.x);
     if (inaccessibleRetained.has(cell))
       diagnostics.push({

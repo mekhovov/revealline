@@ -34,6 +34,64 @@ test('create packs, campaigns and starter missions with explicit valid membershi
   );
 });
 
+test('explicit Team template creates two-seat content with copy-on-write geometry and stable simulation names', () => {
+  const source = createStarterProject();
+  const draft = edit(source, {
+    action: 'create',
+    kind: 'mission',
+    id: 'team-route',
+    name: 'Partners',
+    template: 'team-islands',
+    parentId: 'horizon-school',
+  });
+  const mission = draft.missions.at(-1);
+  assert.deepEqual(mission.modes, ['team']);
+  assert.deepEqual(mission.team.spawnIds, ['west', 'east']);
+  const initial = resolveMission(compileContentProject(draft), 'team-route', { mode: 'team' });
+  const renamed = edit(draft, {
+    action: 'rename',
+    kind: 'mission',
+    id: 'team-route',
+    name: 'New display name',
+  });
+  assert.equal(
+    resolveMission(compileContentProject(renamed), 'team-route', { mode: 'team' })
+      .simulationIdentity,
+    initial.simulationIdentity,
+  );
+  const duplicate = edit(draft, {
+    action: 'duplicate',
+    kind: 'mission',
+    id: 'team-copy',
+    name: 'Copy',
+    sourceId: 'team-route',
+  });
+  const map = duplicate.maps.find((entry) => entry.id === 'team-route');
+  const revised = forkMissionMap(duplicate, 'team-copy', {
+    spawns: map.spawns.map((spawn) => (spawn.id === 'east' ? { ...spawn, x: 52.5 } : spawn)),
+  });
+  const result = resolveMission(compileContentProject(revised), 'team-copy', { mode: 'team' });
+  assert.equal(result.level.spawns[1].x, 52.5);
+  assert.equal(
+    resolveMission(compileContentProject(revised), 'team-route', { mode: 'team' }).level.spawns[1]
+      .x,
+    51.5,
+  );
+  assert.equal(source.missions.length, 1);
+  for (const template of ['automatic-team-conversion', null])
+    assert.throws(
+      () =>
+        edit(source, {
+          action: 'create',
+          kind: 'mission',
+          id: 'invalid',
+          name: 'Invalid',
+          template,
+        }),
+      /template/,
+    );
+});
+
 test('duplicate shares an immutable map revision until editing only the copy', () => {
   const original = createStarterProject();
   const duplicate = edit(original, {

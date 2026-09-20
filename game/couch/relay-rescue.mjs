@@ -1508,11 +1508,12 @@ export function bootCoop() {
         options: { seed: run.seed, difficulty: run.difficulty, ...run.config },
       };
     const experiment = selectedConfiguration();
+    const level = selectedLevel();
     return {
-      level: selectedLevel(),
+      level,
       options: {
         seed: 17,
-        difficulty: $('coop-difficulty').value,
+        difficulty: level.journeyDifficulty ?? $('coop-difficulty').value,
         jointCuts: experiment.jointCuts,
         assistCaptures: experiment.assistCaptures,
         advancedCooperation: experiment.advancedCooperation,
@@ -2051,6 +2052,10 @@ export function bootCoop() {
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    // Compiled Journey packs are immutable preset editions. Changing this menu
+    // cannot re-project their actors/lives through the historical Team rules.
+    $('coop-difficulty').disabled = Boolean(level.journeyDifficulty);
+    if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
     const stronghold = Boolean(level.goal.cores);
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
@@ -2229,6 +2234,7 @@ export function bootCoop() {
         selection: pictureSelection,
         level: $('coop-level').value,
         message: pictureMessage,
+        difficulty: $('coop-difficulty').value,
       };
       const proposedPack = draft.pack,
         proposedArtwork = draft.artworkSource;
@@ -2246,6 +2252,7 @@ export function bootCoop() {
           return;
         pictureSelection = previous.selection;
         packArtworkSource = previous.artworkSource;
+        $('coop-difficulty').value = previous.difficulty;
         showPack(previous.pack, previous.level);
         pictureUI(previous.message);
       };

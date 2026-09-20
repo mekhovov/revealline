@@ -1,4 +1,4 @@
-import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { campaignKey } from '../library.mjs';
 import { resolveContentJourney } from './journey.mjs';
 import { DIFFICULTY_CATALOG, freezeDesign, journeyPreset } from './catalogs.mjs';
@@ -16,11 +16,17 @@ export function createContentExecutionCatalog(source, options = {}) {
     ]),
   );
   const standard = journeys.get('standard');
+  // Team has a separately versioned simulation, not Solo level normalization.
+  // resolveContentJourney has already validated each exact immutable pack.
+  const executionIdentity =
+    standard.mode === 'team'
+      ? (pack) => `${pack.id}/${encodeURIComponent(pack.revision)}/${dataIdentity(pack)}`
+      : campaignKey;
   const entries = [],
     byKey = new Map(),
     byBase = new Map();
   for (const base of standard.campaigns) {
-    const baseCampaignKey = campaignKey(base.runtime);
+    const baseCampaignKey = executionIdentity(base.runtime);
     // Shared campaign membership can appear in several packs. Keep ownership
     // explicit, rather than silently selecting the first identically named one.
     const owner = `${base.packId}/${base.campaignId}`;
@@ -29,7 +35,7 @@ export function createContentExecutionCatalog(source, options = {}) {
         (entry) => entry.packId === base.packId && entry.campaignId === base.campaignId,
       );
       required(resolved, 'Preset campaign membership changed.');
-      const executionKey = campaignKey(resolved.runtime);
+      const executionKey = executionIdentity(resolved.runtime);
       const entry = freezeDesign({
         campaign: resolved.runtime,
         baseCampaign: base.runtime,

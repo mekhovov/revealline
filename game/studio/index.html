@@ -200,7 +200,8 @@
                   <option value="walls">Wall</option>
                   <option value="slow">Slow field</option>
                   <option value="lethal">Lethal field</option>
-                  <option value="spawn">Move mission spawn</option>
+                  <option value="spawn">Move mission spawn / Team seat 1</option>
+                  <option value="spawn-team-two">Move Team seat 2</option>
                 </select></label
               >
               <div class="coordinates">
@@ -238,11 +239,11 @@
           <details id="structure-editor">
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">
-              New missions start as an untested band-1 island template. Duplicate shares an
-              immutable map; editing its geometry creates a private revision. Add to parent keeps
-              existing memberships. Remove from parent detaches only that membership. Delete refuses
-              referenced or nonempty items and never removes shared maps or assets. Archived items
-              stay editable here but are omitted from candidate Journey lists.
+              Choose an untested Solo / Versus island or a two-seat Team island template. Duplicate
+              shares an immutable map; editing its geometry creates a private revision. Add to
+              parent keeps existing memberships. Remove from parent detaches only that membership.
+              Delete refuses referenced or nonempty items and never removes shared maps or assets.
+              Archived items stay editable here but are omitted from candidate Journey lists.
             </p>
             <form id="structure-form">
               <label
@@ -271,6 +272,12 @@
                 >New stable ID<input id="item-id" maxlength="80" placeholder="my-new-mission"
               /></label>
               <label id="item-name-row">Display name<input id="item-name" maxlength="160" /></label>
+              <label id="item-template-row"
+                >Mission template<select id="item-template">
+                  <option value="solo-island">Solo / Versus · island</option>
+                  <option value="team-islands">Team · twin islands (greybox)</option>
+                </select></label
+              >
               <label id="item-band-row"
                 >Campaign band<input
                   id="item-band"

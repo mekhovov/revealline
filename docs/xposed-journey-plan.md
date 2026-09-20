@@ -161,6 +161,14 @@ Broader host/controller qualification, Team adoption, human validation and relea
 gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
 
+The Team foundation increment now uses the same map compiler and explicit
+two-seat authoring, with separately versioned runtime/pack editions and pinned
+presets in actual Team imports. Studio can create Team island templates and edit
+either starting position. The purpose-built Twin landings greybox has six complete
+deterministic two-seat routes; it has no final artwork or human qualification.
+This does not complete authored Team Journey navigation or P14. See
+`docs/verification/xposed-journey-team-foundations.md` for exact limits.
+
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
 P01 `e7aa131f`. Six Border Bloom core candidates and one optional Remix progress
 from outer-perimeter timing to changing-frontier shaping, with optional contact
