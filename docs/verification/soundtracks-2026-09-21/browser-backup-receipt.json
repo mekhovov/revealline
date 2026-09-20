@@ -1,0 +1,60 @@
+{
+  "file": "/Users/oleksandr.mekhovov/Downloads/RevealLine-soundtrack (17).rlsound",
+  "bytes": 24069432,
+  "sha256": "79c53d47c5a3a8c1d407b863951c028c6e8a56aa1432821041d0ea1ad99aafda",
+  "format": "revealline-soundtrack.v2",
+  "tracks": [
+    {
+      "id": "emma-ma.megasong",
+      "title": "Megasong",
+      "sha256": "13ac89fa8e5b12b78c872f981376315d0b9d33829ab85f259972be54913f8239"
+    },
+    {
+      "id": "hydrogene.determination",
+      "title": "Determination",
+      "sha256": "409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7"
+    },
+    {
+      "id": "vitalezzz.silver-bullet",
+      "title": "Silver Bullet",
+      "sha256": "ee645b6a0cf9c8cd45fa96882cd35cc3ba5ffd0a5b4fb92544d8ee49d24cedf1"
+    },
+    {
+      "id": "vitalezzz.devoted-guard",
+      "title": "Devoted Guard",
+      "sha256": "6a7ab8157315c16eee234fd0eb5c523dc830c335272cec3cc5e795a5aa067e26"
+    },
+    {
+      "id": "track.14cab44f-cfdb-4906-a246-d388b51643d0",
+      "title": "determination_1",
+      "sha256": "409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7"
+    }
+  ],
+  "playlists": [
+    {
+      "id": "licensed.rock-metal",
+      "title": "Rock & Metal",
+      "trackIds": [
+        "emma-ma.megasong",
+        "hydrogene.determination",
+        "vitalezzz.silver-bullet",
+        "vitalezzz.devoted-guard"
+      ],
+      "order": "ordered",
+      "repeat": "all"
+    },
+    {
+      "id": "playlist.3b39cb46-146f-466d-bbae-61b4eae04b23",
+      "title": "Offline MP3 mix",
+      "trackIds": [
+        "track.14cab44f-cfdb-4906-a246-d388b51643d0",
+        "builtin.signal-afterglow"
+      ],
+      "order": "shuffle",
+      "repeat": "all"
+    }
+  ],
+  "uniqueOriginals": 4,
+  "exactReexport": true,
+  "method": "Real browser download; Node framing/hash/structure check with structural duration probe, not additional playback decode."
+}
