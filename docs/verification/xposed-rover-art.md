@@ -38,6 +38,17 @@ includes320seed samples,35delayed-start alternatives,42Solo and42paired full
 clears, all42optional-goal cases and retained negative design/timing fixtures.
 Changed-source lint, formatting and diff checks pass.
 
+Native scoped check used exact8b4bdec084cc440ccb66bd95297da9eec8cd7219 at
+localhost8787, with no source/image overrides and the normal viewport. Studio
+Inspect did not apply; explicit Apply saved the seven-picture candidate as
+checkpoint1. Stepped return loaded the exact terrace original in actual Practice.
+The waking caption preceded the active-roamer caption. A normal Down departure
+closed for0.3%,70score,3lives; a screenshot showed the purple tracked roamer over
+the revealed masonry, distinct from the pink field keepers and perimeter actor.
+The run is paused at0:51 with all three lives. No full clear or all-position
+contrast claim follows from this single representative case. Other six native
+picture previews and broader brightness/accessibility checks remain pending.
+
 Remaining: native all-seven partial/full reveals, active-roamer contrast, full
 campaign silhouettes/music/theme, purpose-built Team, human comprehension and
 balance, exact-source hosted gates, reviewed release and public Pages checks.
