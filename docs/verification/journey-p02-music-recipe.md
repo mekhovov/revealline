@@ -116,3 +116,21 @@ local run failed two PNG checks because a sparse fixture was absent; restoring
 the exact committed orchard-crossing.png resolved setup without changing tests.
 Changed JavaScript lint, formatting and whitespace checks pass. A new exact-source
 hosted full run is still required; these local checks do not replace it.
+
+The final shard2 also failed:18 local-art resolver cases shared a fpv32 fixture
+while exercising current exact binding authority, and one actor provenance test
+still expected theme32. The preserved10,577-line original job106062250862 log
+matches the GitHub stream SHA256
+`3774a0e0fc63c205a10e10afa1d8b2dd3dca69ef33718dffed96b13c1c5d5962`.
+Thus fd6745's full run is terminal failure (37 failing tests across three shards),
+not a partial qualification; freezing was skipped.
+
+Resolver positive fixtures now select current binding authority. Negative tests
+vary only their intended theme/collection field, so collection refusal cannot pass
+merely because its theme is stale. A new explicit fpv32 owner/page regression
+proves both registered and generic imports still refuse an old edition before
+decode. Actor provenance now expects fpv34 while all five original frame IDs,
+asset revisions, hashes, sizes and dimensions remain unchanged. The two complete
+files pass54/54, zero skips,427ms on Node20.19.5; lint and formatting pass.
+The earlier c27801ba six-file repair received independent diff review from the
+release owner with no blocker; this later two-file correction still needs review.
