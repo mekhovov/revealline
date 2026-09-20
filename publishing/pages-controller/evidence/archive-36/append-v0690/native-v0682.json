@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-20T13:55:43Z",
+  "url": "https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/game/",
+  "visibleVersion": "V0.68.2",
+  "archiveMergeReportedByCoordinator": "f47c70dc37ab1948fed02b0148589c4e9c10574c",
+  "runReportedByCoordinator": "35514523868",
+  "deploymentReportedByCoordinator": "6553467088",
+  "evidenceCategory": "native browser keyboard, desktop, existing saved Continue",
+  "actions": [
+    "Entry: boot loading styles then Home, Continue focused, version V0.68.2",
+    "Enter: Preparing / Reading the saved picture original with Cancel preparation focused",
+    "Ready: Orchard Crossing, game canvas focused, Flight resumed",
+    "Escape: PAUSED, Resume focused",
+    "Enter: Flight resumed, canvas focused",
+    "Escape: PAUSED, Resume focused",
+    "Tab x4: Main menu focused; paused timer remained 0:44",
+    "Enter: Home, Continue focused, version V0.68.2"
+  ],
+  "result": "PASS for scoped keyboard navigation",
+  "limitations": [
+    "No fresh Start, gameplay capture, touch, physical controller, offline, or exhaustive menu qualification",
+    "No ownership warning appeared; no ownership override, manual save edits, storage clearing, settings changes or restart used",
+    "Existing Continue ran briefly (visible timer 0:49 to 0:44); ordinary game autosave behavior was not instrumented, so save-byte preservation is NOT claimed",
+    "Coordinator metadata and prior 1506-file audit were not independently revalidated in this native check",
+    "No viewport override used; only audit tab 16 opened"
+  ]
+}
