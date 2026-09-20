@@ -5,6 +5,7 @@ import { createSignalCandidates } from '../content-design/signal-candidates.mjs'
 import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
+import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -540,6 +541,12 @@ $('rover').onclick = guarded(() => {
 $('fracture').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createFractureCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('phase').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createPhaseCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
