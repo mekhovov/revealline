@@ -57,3 +57,31 @@ supports consistent digital-input navigation, predictable focus and accessible B
 routes. Continue/Pause/Resume observations here are scoped checks; they do not
 establish all-menu or physical-controller acceptance. No new claim about XPOSED
 input timing or internal algorithms follows from this reference.
+
+## Final gap correction candidate — 2026-09-20
+
+The f009474a integration is not the final accepted release. Review found that
+Journey Versus inherited the timed Legacy host, and older Journey policy saves
+were safely rejected with misleading pack-install guidance.
+
+- Adopted the bounded 408a7b1d untimed protocol/host changes: explicit
+  `xonix-duel.untimed.v1`, zero authored duration and null match deadline.
+  Legacy timed-v1 still defaults to 90 seconds, retains its shape and rejects zero.
+  Untimed packet validation requires explicit matching protocol context.
+- Candidate saved flights unavailable in the current authored edition retain their
+  original bytes and direct the player to export before choosing a new mission.
+- Preserved the original v1 reference crosswalk byte-for-byte. Renewed v2 pins only
+  after proving old policy identities; source references, uncertainty and human
+  playtest requirements remain unchanged. Adopted b42c3bb9's bounded correction.
+- Node 20.19.5: 44 actual-host, untimed/timed core, recovery and shell tests passed;
+  three crosswalk tests passed. Initial sparse-fixture failures are retained in
+  `.cache/p01-music-integration-review-r1/final-gap-tests-r1.log`; exact committed
+  fixtures were restored before the successful r2 run.
+
+The unpublished version remains 0.69.0. This correction needs fresh qualification
+of the final source, immutable publication and deployed journeys. Earlier CI runs
+remain evidence for f009474a, not this changed candidate.
+
+Node 22.22.2 independently passed the same 47 tests (44 host/core/recovery/shell
+and three crosswalk checks). Changed JavaScript passed ESLint; changed runtime/test
+files passed Prettier without further edits. These are local focused gates.

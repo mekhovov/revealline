@@ -14,7 +14,7 @@ v0.68.0's same-chapter More worlds issue persists in v0.68.1. Stay preserves the
 
 1. v0.68.1 scoped public gate is complete. Preserve its immutable assets, previous release routes and remaining limitations.
 2. Complete v0.68.2 qualification (PR179), fixing same-chapter selection without replacing or rewriting the paused run. First full runs for `45ed925e` failed an obsolete offline test expectation; correction `dfdd2687` passes its complete 15-test file on Node 20/22. Fresh exact-source full qualification and public acceptance remain pending.
-3. Review Journey Solo/Versus cards and Team registry/Studio foundations, then integrate the sealed cross-mode custom-music work. Candidates do not establish public acceptance.
+3. Continue Journey Solo/Versus and Team foundation acceptance. The five shared-music packets are now composed against `aadd855e` in an isolated candidate: **593/593 tests across 38 files on Node 20.19.5**, lint/format and native two-MP3 import, ordered playback, cross-mode library and focus checks pass. [Integration evidence and remaining gates](verification/couch-music-integration/README.md). Allocate its release version only after final composition; full source, listening, offline and public acceptance remain open.
 4. Continue presentation/actor parity, readable action feedback, fair challenge, rewards, authoring/content and complete browser qualification. Physical controllers/touch, listening, actual offline recovery and human difficulty assessment remain separate gates.
 
 The authoritative phase table below retains its stable IDs and partial statuses. Each scoped release has a source PR, immutable version, publisher PR and actual public verification. Native stores and online multiplayer remain later.
