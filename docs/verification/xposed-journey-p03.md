@@ -73,6 +73,11 @@ simultaneous-clear draws. Optional bonuses are unnecessary for these full clears
 No run is fabricated by mutating gameplay state. Exploration cloned states only
 to evaluate route choices, then replayed the selected inputs from a fresh run.
 
+The separate Signal timing cohort replays all84 routes at seeds0,1,42,2026 and
+0xffffffff: **420/420** no-loss clears,24.3seconds. This verifies seed robustness
+for these authored starts/headings, not random layouts or broader human skill.
+Delayed decisions and genuinely different route choices remain separate gates.
+
 Omniscient active-play durations are18.65–21.95s(Soft crossing),20.45–28.95s(Dry
 spine),27.85–28.05s(Wide approach),18.85–30.25s(Cool the crossing),45.05–57.65s
 (Garden refuges),26.65–27.95s(Neutral ground),33.75–63.45s(Remix). These are not
