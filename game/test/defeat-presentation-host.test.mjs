@@ -180,11 +180,7 @@ test('controller skip cannot carry held Confirm into Retry', async (t) => {
       buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
     };
   navigator.getGamepads = () => [pad];
-  page.frame(0);
-  pad.buttons[0] = { pressed: true, value: 1 };
-  page.frame(0);
-  pad.buttons[0] = { pressed: false, value: 0 };
-  page.frame(0);
+  page.frame(0); // The neutral sample automatically connects the controller.
   pad.buttons[0] = { pressed: true, value: 1 };
   page.frame(0);
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');

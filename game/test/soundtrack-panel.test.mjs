@@ -1066,6 +1066,31 @@ test('creator tags and selected-playlist export preserve original bytes and addi
   assert.deepEqual(restored.library.selection, saved.library.selection);
 });
 
+test('unclassified uploads retain scene, energy and world tags after saving and reloading', async (t) => {
+  const initial = await fixture('unclassified');
+  const app = await setup(t, { initial, callbacks: { catalogue: emptyCatalogue } });
+  app.choose('tracks', initial.track.id);
+  app.node('track-genre').value = '';
+  app.node('track-fusion').value = '';
+  app.node('track-role').value = 'menu';
+  app.node('track-energy').value = '2';
+  app.node('track-themes').value = 'retro';
+  await app.click('apply-track');
+  await app.click('save');
+  assert.deepEqual((await app.store.read()).library.tags[initial.track.id], {
+    genres: [],
+    role: 'menu',
+    energy: 2,
+    themes: ['retro'],
+  });
+  await app.click('reload');
+  app.choose('tracks', initial.track.id);
+  assert.equal(app.node('track-genre').value, '');
+  assert.equal(app.node('track-role').value, 'menu');
+  assert.equal(app.node('track-energy').value, '2');
+  assert.equal(app.node('track-themes').value, 'retro');
+});
+
 test('album browsing retains unapplied music tags and genre checkbox edits', async (t) => {
   const a = await albumFixture();
   const initial = await fixture('pending-tags');

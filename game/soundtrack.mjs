@@ -602,12 +602,6 @@ function automaticSelection(library, context) {
     );
     tracks = tracks.filter((track) => present.has(track.id));
   }
-  if (mode === 'auto' && context.themeId) {
-    const themed = tracks.filter((track) =>
-      trackTags(library, track).themes.includes(context.themeId),
-    );
-    if (themed.length) tracks = themed;
-  }
   const scene = context.scene ?? 'gameplay';
   const eligible = tracks.filter((track) => {
     const role = trackTags(library, track).role;
@@ -617,6 +611,12 @@ function automaticSelection(library, context) {
     );
   });
   tracks = eligible;
+  if (mode === 'auto' && context.themeId) {
+    const themed = tracks.filter((track) =>
+      trackTags(library, track).themes.includes(context.themeId),
+    );
+    if (themed.length) tracks = themed;
+  }
   if (!tracks.length) return soundtrackFallbackSelection(mode, genres);
   return freezeSoundtrack({
     playlist: {

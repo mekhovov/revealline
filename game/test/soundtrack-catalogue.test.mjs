@@ -151,6 +151,32 @@ test('scene, genres, fusion, uploaded tags and explicit playlists resolve indepe
   assert(!resolveSoundtrackSelection(value).playlist.trackIds.includes(upload.track.id));
 });
 
+test('automatic theme preference chooses among scene-eligible recordings without suppressing available menu music', () => {
+  const menu = {
+    ...catalogueTrack,
+    id: 'builtin.catalog.menu',
+    tags: { ...tags, role: 'menu', themes: [] },
+  };
+  const themedMenu = {
+    ...menu,
+    id: 'builtin.catalog.themedmenu',
+    tags: { ...menu.tags, themes: ['atlas'] },
+  };
+  const base = setCatalogueTracks(emptySoundtrackLibrary(), [catalogueTrack, menu]);
+  const selection = resolveSoundtrackSelection(base, { scene: 'menu', themeId: 'atlas' });
+  assert.equal(selection.source, 'catalogue');
+  assert.deepEqual(selection.playlist.trackIds, [menu.id]);
+  assert.deepEqual(
+    resolveSoundtrackSelection(base, { scene: 'gameplay', themeId: 'atlas' }).playlist.trackIds,
+    [catalogueTrack.id],
+  );
+  const preferred = setCatalogueTracks(base, [themedMenu]);
+  assert.deepEqual(
+    resolveSoundtrackSelection(preferred, { scene: 'menu', themeId: 'atlas' }).playlist.trackIds,
+    [themedMenu.id],
+  );
+});
+
 test('unavailable Ukrainian and fusion styles stay empty; installed-only never discards catalogue pins', () => {
   for (const mode of ['ukrainian', 'fusion']) {
     const value = {

@@ -223,8 +223,7 @@ function controllerPad(h, t) {
     set(index, false);
     frame();
   };
-  frame();
-  pulse(0);
+  frame(); // A neutral sample connects without activating the focused menu action.
   frame();
   return { frame, set, pulse };
 }

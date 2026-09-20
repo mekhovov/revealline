@@ -310,21 +310,19 @@ export function attachSoundtrackPanel({
           const genres = [
             ...new Set([trackGenre.element.value, trackFusion.element.value].filter(Boolean)),
           ];
-          if (genres.length)
-            value.tags[id] = {
-              genres,
-              role: trackRole.element.value,
-              energy: Number(trackEnergy.element.value),
-              themes: [
-                ...new Set(
-                  trackThemes.element.value
-                    .split(',')
-                    .map((part) => part.trim())
-                    .filter(Boolean),
-                ),
-              ],
-            };
-          else delete value.tags[id];
+          value.tags[id] = {
+            genres,
+            role: trackRole.element.value,
+            energy: Number(trackEnergy.element.value),
+            themes: [
+              ...new Set(
+                trackThemes.element.value
+                  .split(',')
+                  .map((part) => part.trim())
+                  .filter(Boolean),
+              ),
+            ],
+          };
         }
       });
       render();
