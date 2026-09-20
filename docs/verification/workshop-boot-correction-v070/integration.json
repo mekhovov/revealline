@@ -1,0 +1,109 @@
+{
+  "base": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "files": [
+    {
+      "path": "authoring/asset-studio/index.html",
+      "bytes": 34914,
+      "sha256": "82aeb58e90caaa4cedea63c4fa44f67ba1a5d06f17188d8a6f6a4bf7d9eac19f"
+    },
+    {
+      "path": "authoring/design-atlas/index.html",
+      "bytes": 25415,
+      "sha256": "e49a41a3ceae49628279c10bb6ef9180243faa9f5bd6bba12be535e950531b79"
+    },
+    {
+      "path": "authoring/enemy-catalog/index.html",
+      "bytes": 2914,
+      "sha256": "dde7dda89032dfa33866c62257a4a57f9449f982695438d9b135a9b6adc9ff97"
+    },
+    {
+      "path": "authoring/motion-lab/index.html",
+      "bytes": 21960,
+      "sha256": "9380bfd13901ecbe947a3135599ea6757093b24afa2c256f1b875874874abf8b"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 286015,
+      "sha256": "6a9c307c86871244cf55c542c37c92c3843620a4183fe6a4b8d93ac5807638b6"
+    },
+    {
+      "path": "authoring/still-media/index.html",
+      "bytes": 5843,
+      "sha256": "3108cbf9266bf68cc37a9f08455b1541b1ed5178ff79638b898e2a4672a3eee6"
+    },
+    {
+      "path": "authoring/video-poster/index.html",
+      "bytes": 4957,
+      "sha256": "2b0600a8a838849a0741bd3f7b49cab22714a4fc0dc431fbf2dd1e3a67efe502"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 223257,
+      "sha256": "dcf90b17eec196a70d194dac492d97cabaa595dcae9a44d8466c2a99bd74d1df"
+    },
+    {
+      "path": "game/controller-lab/index.html",
+      "bytes": 13188,
+      "sha256": "1bfe8691797e25c28340fdd6091b05949e0912148dfad81eeeb18b0a4595bb1a"
+    },
+    {
+      "path": "game/playground/index.html",
+      "bytes": 28553,
+      "sha256": "974657651a666d95410114817c8b4ba97ce465badc11b3a22ba65fe2e6caf969"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "bytes": 9500,
+      "sha256": "d923663b32aaa40635e4e77b5522c03b6fda7de2ff095a2df44b70dfc73e5f7f"
+    },
+    {
+      "path": "game/test/couch-markup.test.mjs",
+      "bytes": 3747,
+      "sha256": "febd7e7ac398826ddf5c9b9d56116101326521db39bfa2e132b670a852e270a8"
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "bytes": 14529,
+      "sha256": "5a0a6a6635f8504e22f6924a77aecbf602e6b56cb9b93596594d61c39e8dc222"
+    },
+    {
+      "path": "game/test/still-workshop-build.test.mjs",
+      "bytes": 20852,
+      "sha256": "d5945d2f31950a4073e122e6861f0081284a05defb41d1e5b988a19031f8af6d"
+    },
+    {
+      "path": "game/test/workshop-return.test.mjs",
+      "bytes": 8153,
+      "sha256": "60c62b7c9db1e282ae76c0436b787874c6b407c912aa1a2f87040bd2c7511e46"
+    },
+    {
+      "path": "docs/workshop-preload-exit.md",
+      "bytes": 3883,
+      "sha256": "ea275158a007e878e7f6c2a502e43452addaf5ff9e57492ca5b87a51fdd793bc"
+    }
+  ],
+  "newFeatureScope": false,
+  "cohorts": [
+    {
+      "runtime": "Node20.19.5",
+      "files": 2,
+      "tests": 55,
+      "passed": 55,
+      "durationMs": 11107.424375
+    },
+    {
+      "runtime": "Node20.19.5",
+      "files": 5,
+      "tests": 58,
+      "passed": 58,
+      "durationMs": 42133.524959
+    }
+  ],
+  "preformatNative": "Root Motion HTML original has same attrs/behavior before formatter wrapping; exact preformat response hashes retained. Replay packet exact runtime postimage retained.",
+  "sourceQualification": "Both original full families fail11of7313. All complete job originals retained; no freeze/publish. Final corrected source still requires six gates and affected public journeys.",
+  "observerFailures": [
+    "Initial local fixture adapter used global URL instance check after Motion replaces it and omitted pack stat size;48/55 failures retained; corrected adapter gives55/55 without production/test assertion changes.",
+    "Initial integrated suite observer used two nonexistent test filenames; startup failed. Correct exact tracked names give58/58.",
+    "Initial diagnostic collector expected8jobs for both families; actualPR7. Corrected per-family count consumes same retained originals; no repeated payload qualification."
+  ]
+}

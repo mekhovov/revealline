@@ -1,0 +1,14 @@
+import {execFileSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../../',import.meta.url));
+const source='4bb553d06d62f7a8cce301c77b245573838bfdcb';
+const overrides=new Set(["authoring/asset-studio/index.html", "game/playground/index.html", "authoring/enemy-catalog/index.html", "authoring/motion-lab/index.html", "authoring/still-media/index.html", "authoring/video-poster/index.html", "authoring/design-atlas/index.html", "game/controller-lab/index.html", "game/test/motion-lab-display-host.test.mjs", "game/test/still-workshop-build.test.mjs", "game/test/workshop-return.test.mjs", "game/replay-theater/index.html", "game/test/couch-markup.test.mjs", "game/test/field-kit-flow.test.mjs"]);
+const cache=new Map();
+export function sourceFor(name){
+ if(!name||name.startsWith('/')||name.split('/').some(x=>!x||x==='..'))throw Error('Invalid source path');
+ if(overrides.has(name))return readFileSync(new URL('../worktrees/music-native-v070/'+name,import.meta.url));
+ const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>!k.startsWith('GIT_')));
+ if(!cache.has(name))cache.set(name,execFileSync('git',['--no-lazy-fetch','--no-optional-locks','show',source+':'+name],{cwd:root,maxBuffer:32*1024*1024,env:{...env,GIT_NO_LAZY_FETCH:'1',GIT_OPTIONAL_LOCKS:'0',GIT_TERMINAL_PROMPT:'0'}}));
+ return Buffer.from(cache.get(name));
+}
