@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { JOURNEY_ART_CANDIDATES } from '../game/content-design/journey-art.mjs';
 import { CONTENT_PROJECT_ITEM_LIMITS } from '../game/content-design/limits.mjs';
+import { offlineAvailability } from '../game/offline.mjs';
 import { buildProject, collectBuildFiles, readBuildConfig } from './game-cli.mjs';
 import {
   readOptionalArtwork,
@@ -201,6 +202,25 @@ test('selected real source authenticates every registered original without produ
     JOURNEY_ART_CANDIDATES.reduce((sum, asset) => sum + asset.bytes, 0),
   );
   assert.equal(new Set(artwork.files.map((file) => file.path)).size, JOURNEY_ART_CANDIDATES.length);
+  const availability = offlineAvailability({
+    documentRef: {
+      querySelector: () => ({
+        content: JSON.stringify({
+          format: 'revealline-offline.v1',
+          version: '0.76.0',
+          buildId: 'a'.repeat(64),
+          scope: '../',
+          worker: '../service-worker.js',
+          optionalArtwork: artwork,
+        }),
+      }),
+    },
+    locationRef: new URL('https://example.test/game/index.html'),
+    secure: true,
+    navigatorRef: { serviceWorker: {} },
+  });
+  assert.equal(availability.available, true);
+  assert.match(availability.note, /Journey candidate artwork/);
 });
 
 test('combined Journey opt-in preserves original bytes and historical single-campaign compatibility', async (t) => {
@@ -213,9 +233,23 @@ test('combined Journey opt-in preserves original bytes and historical single-cam
     `export const JOURNEY_ART_CANDIDATES = ${JSON.stringify([pin])};`,
   );
   await buildProject({ root, out });
-  const offline = JSON.parse(await readFile(path.join(out, 'offline-cache.json')));
+  const offline = JSON.parse(await readFile(path.join(out, 'offline-cache.json'))),
+    page = await readFile(path.join(out, 'game/index.html'), 'utf8'),
+    encodedMarker = page.match(/<meta name="revealline-offline" content='([^']+)'>/)[1],
+    marker = encodedMarker.replace(
+      /&(amp|quot|#39|lt|gt);/g,
+      (entity) => ({ '&amp;': '&', '&quot;': '"', '&#39;': "'", '&lt;': '<', '&gt;': '>' })[entity],
+    );
   assert.equal(offline.optionalArtwork.name, 'Journey candidate artwork');
   assert.equal(offline.optionalArtwork.count, 1);
+  const availability = offlineAvailability({
+    documentRef: { querySelector: () => ({ content: marker }) },
+    locationRef: new URL('https://example.test/game/index.html'),
+    secure: true,
+    navigatorRef: { serviceWorker: {} },
+  });
+  assert.equal(availability.available, true);
+  assert.match(availability.note, /Journey candidate artwork/);
   assert.deepEqual(await readFile(path.join(out, imagePath)), image);
   assert(!offline.files.some((entry) => entry.path === imagePath));
   assert.equal(validateOptionalArtworkConfig(option), option);

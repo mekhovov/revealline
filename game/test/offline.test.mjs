@@ -8,6 +8,7 @@ import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS } from '../content-design/limits.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
   new URL('../offline/service-worker.template.js', import.meta.url),
@@ -961,7 +962,7 @@ test('optional pack preparation and verification explicitly distinguish core cac
 
 test('optional Journey artwork never receives a core-offline readiness claim', async () => {
   const optionalArtwork = {
-    name: 'Opening Journey artwork',
+    name: 'Journey candidate artwork',
     availability: 'online-only',
     count: 10,
     bytes: 25862573,
@@ -987,6 +988,13 @@ test('optional Journey artwork never receives a core-offline readiness claim', a
     },
     MessageChannelImpl: MessageChannel,
   };
+  for (const name of ['Opening Journey artwork', 'Journey candidate artwork']) {
+    artworkMarker.optionalArtwork = { ...optionalArtwork, name };
+    const available = offlineAvailability(env);
+    assert.equal(available.available, true);
+    assert.match(available.note, new RegExp(name));
+  }
+  artworkMarker.optionalArtwork = optionalArtwork;
   assert.match(offlineAvailability(env).note, /artwork is not included in offline preparation/);
   const reports = [];
   for (const operation of [prepareOffline, checkOffline]) {
@@ -1000,9 +1008,10 @@ test('optional Journey artwork never receives a core-offline readiness claim', a
   for (const bad of [
     null,
     {},
-    { ...optionalArtwork, count: 33 },
+    { ...optionalArtwork, count: CONTENT_PROJECT_ITEM_LIMITS.assets + 1 },
     { ...optionalArtwork, bytes: 0 },
     { ...optionalArtwork, availability: 'ready' },
+    { ...optionalArtwork, name: 'Unknown artwork' },
   ]) {
     artworkMarker.optionalArtwork = bad;
     assert.equal(offlineAvailability(env).available, false);

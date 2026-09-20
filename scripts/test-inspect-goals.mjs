@@ -70,6 +70,7 @@ async function buildFixture(t) {
   // The real builder enables offline output only when its helper is shipped.
   for (const name of [
     'game/offline.mjs',
+    'game/content-design/limits.mjs',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
   ]) {
