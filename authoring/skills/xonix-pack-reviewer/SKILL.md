@@ -80,3 +80,22 @@ When a task touches reveal artwork, a saved flight, Collection or media export, 
 ## Training shell availability
 
 Apply the [training navigation contract](../../../docs/device-controls.md#training-navigation) when changing course/player navigation. Active First Flight includes its visible Game menu and Settings in keyboard/controller traversal; campaign-only destinations stay hidden. Back to lesson restores focus without resuming, and embedded End course keeps only the terminal reader. Test native Tab/Enter separately from modeled pad navigation and include a released-input frame when changing devices. Do not weaken neutral gates to make an old held input activate a menu.
+
+## Explicit retained-picture installation review
+
+Follow [retained-picture recovery](../../../docs/external-picture-recovery.md).
+An exact original picture revision and a mutable current assignment are distinct.
+Never replace custom assignments to make an original chapter install. The candidate
+installer can emit a single-use review tied to the actual manager, profile, pack
+channel, descriptor and media generation/hash. Only an explicit player confirmation
+may pass it back as `pictureReview`. A copied/stale review is not authority.
+The confirmed v2 journal keeps assignments while validating every required original;
+legacy v1 journals keep their original contract. Old readers must refuse unknown
+journals without clearing them.
+
+Prompt: “Reproduce a chapter installation with a newer retained picture assignment.
+Show originals versus retained choices and offer Cancel or an explicit install that
+keeps custom pictures. Preserve the paused run and exact opener; never auto-confirm
+on retry. Test source-pair uploads and downloads, changed media during review,
+interruption before/after each commit, both journal versions and immutable original
+corruption. Core tests alone do not qualify the player-facing recovery workflow.”
