@@ -32,6 +32,7 @@ import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
+import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -2625,6 +2626,10 @@ export function bootCoop() {
   document.addEventListener('visibilitychange', hidden);
   function events() {
     for (const event of run.events) {
+      if (event.type === 'cells.claimed' && run.terrain) {
+        const caption = terrainTransitionCaption(run, event);
+        if (caption) message(caption);
+      }
       if (event.type === 'cut.closed') {
         input.clearPlayer(event.player);
         batch.release(event.player);

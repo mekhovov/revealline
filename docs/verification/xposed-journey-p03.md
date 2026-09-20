@@ -167,6 +167,43 @@ to the unchanged checkpoint1 draft. The elapsed0:16 includes inspection/idle and
 is not a timing benchmark. Only the two previously documented sparse-catalog errors
 remain in the tab log; no new error appeared. No full clear or human test is implied.
 
+### Explicit Team terrain edition
+
+TeamMissionV2 opts into level.v3/pack.v3/ruleset.v5; historical TeamMissionV1,
+foundation level.v2 and historical level.v1 keep their prior runtime identities
+and reject terrain fields rather than reinterpreting old content. Shared map
+compilation supplies foundations, walls and underlying slow/lethal materials.
+Only active craft in unclaimed slow field receive the0.5speed factor; enemies,
+their partner and downed recovery movement retain their rules. Lethal contact
+uses Solo's swept expanded-box contract, including corner contact, before capture
+resolution. Support and enemy grace do not neutralize a material hazard.
+
+Capture removes both effects for both craft while preserving underlying material
+definitions and the fixed earned-coverage denominator. Painter marks only active
+unclaimed material using Studio's same paired dashes/framed cross, including
+reduced effects. Briefing and knockdown text explain the material. Accepted
+neutralization events use the read-only shared caption helper; no prediction or
+new blocking screen is introduced. One shared Team compiler/export/registry path
+pins each preset; mixed runtime editions within one Team campaign are refused.
+
+Studio adds an explicit **Team · material-ready islands (greybox)** creation
+template. Existing templates/drafts are not upgraded, published or certified.
+Authors can edit terrain through existing copy-on-write geometry controls and
+export the exact selected edition. Team actors still qualify only field keepers;
+bonuses, objectives and timers remain rejected by this candidate adapter.
+
+The complete13-file affected cohort passes **108/108**, zero skips/failures,
+10.717seconds onNode20.19.5, including existing historical/foundation routes,
+recovery, actual import/Retry, renderer observations and structure CRUD. A legal
+enclosure neutralizes lethal ground and lets the other craft traverse it; duplicate
+legal command sequences reproduce complete state. Three presets compile/export/
+import exactly. Changed-source lint, formatting and whitespace checks pass.
+Earlier sparse setup lacked starter-pack.recipe.json; exact restoration resolved
+it. The first new host Retry test omitted the existing in-progress discard
+confirmation; performing that actual UI confirmation fixed the test, with no
+runtime bypass. This is finite-DOM and deterministic evidence, not a native
+complete route, physical-controller test, human balance or a shipped Team mission.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
