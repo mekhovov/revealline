@@ -60,8 +60,8 @@ function assertFresh(f, accepted, resources) {
 function assertCoverageSuccess(f) {
   assert.ok(Number.parseFloat(f.$('coop-coverage').textContent) >= 72.4);
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Final arena in this pack/);
-  assert.equal(f.doc.activeElement.id, 'coop-lobby');
+  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
 }
 
 test('imported Next → paused Retry preserves the accepted successor through Stay and confirmation', async (t) => {
@@ -132,6 +132,7 @@ test('imported final Results → Retry retains the coverage arena and earns the 
   f.$('coop-level').value = 'boundary-multi-core-coverage';
   f.$('coop-difficulty').value = 'gentle';
   f.$('coop-experiment').value = 'full';
+  teamTabTo(f, 'coop-lobby');
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.doc.activeElement.id, 'coop-start');

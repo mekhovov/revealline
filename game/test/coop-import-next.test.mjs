@@ -19,7 +19,7 @@ const fixture = JSON.parse(
 );
 const hash = (value) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
-test('the imported two-core map earns Results, one Next starts coverage, and its final win offers Choose arena', async (t) => {
+test('the imported two-core map earns Results, one Next starts coverage, and its final win offers the retained Team arena browser', async (t) => {
   const authored = JSON.stringify(fixture.authoredPack);
   assert.equal(hash(fixture.authoredPack), fixture.authoredPackSHA256);
   readCoopPack(authored);
@@ -111,17 +111,21 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   const coverage = playImportedRoute(f, importedCoverageRoute);
   assert.ok(Number.parseFloat(f.$('coop-coverage').textContent) >= 72.4);
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Final arena in this pack/);
-  assert.equal(f.doc.activeElement.id, 'coop-lobby');
+  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/);
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   const final = importedResult(f);
   f.$('coop-next').onclick();
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(importedResult(f), final);
   assert.equal(f.$('coop-overlay').hidden, false);
   f.tap('Enter');
-  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.$('coop-discovery-dialog').open, true);
+  assert.deepEqual(importedResult(f), final);
+  f.$('coop-discovery-back').focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-level').value, 'boundary-multi-core-coverage');
-  assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   t.diagnostic(
     JSON.stringify({
       scope:

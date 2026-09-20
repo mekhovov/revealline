@@ -273,6 +273,9 @@ export function attachCouchInput({
   listen(win, 'keydown', (e) => {
     if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'Escape') {
+      // Native dialogs own cancellable Escape; the flight hook must not suppress
+      // their cancel event or replace the host's guarded Back/focus lifecycle.
+      if (e.target?.closest?.('dialog[open]')) return;
       e.preventDefault();
       if (freshKey(e)) pause();
       return;

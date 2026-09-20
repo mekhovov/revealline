@@ -1,6 +1,6 @@
 # Optional original worlds
 
-**More worlds** is a native Main menu entry for optional picture chapters. The current successor source adds **FPV Front · Route Choices — Tactical** alongside the four original Arcade picture collections. This addition is source integration pending its own frozen and public qualification; it does not change the default Pressure Lines chapter or existing profiles.
+**Missions → More chapters** opens the optional picture chapter browser from the sticky Missions heading, beside Back. The selected chapter retains focus, and Game mode can stay collapsed. The source includes **FPV Front · Route Choices — Tactical** alongside the four original Arcade picture collections; each release records its own frozen and public qualification without changing the default Pressure Lines chapter or existing profiles.
 
 | Chapter                              | Maps and pictures                                                     | Authored action policy                                                            |
 | ------------------------------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
@@ -18,9 +18,9 @@ The [Route Choices guide](../authoring/library/fpv-route-choices/README.md) reta
 
 ## Player journey
 
-1. Open **Main menu → More worlds**. This reads a small same-origin catalog before any chapter body.
-2. Choose one **Install** action. The game shows its download size, checks the complete bytes and images, and commits the prepared pack through the existing atomic pack store.
-3. Installation preserves an unrelated paused flight. **Choose chapter** is a separate explicit action that switches to the new chapter's briefing.
+1. Open **Missions → More chapters**. This reads a small same-origin catalog before any chapter body; no Game mode selection is needed.
+2. Choose **Download & play**, or **Play** for a verified installed chapter. The game shows download/preparation feedback, checks complete bytes and images, and waits for the atomic installation commit.
+3. The current attempt stays intact while the destination picture is prepared. An unfinished flight offers **Stay** or **Replace & play**; accepted play starts without another briefing/Start action. Cancelled launch keeps a completed installation available for Play. Manual file recovery remains install-only. See [the launch ownership contract](more-worlds-flight-selection.md).
 4. **Back** stays accessible at the top while scrolling; the footer also offers Back, Cancel download, Refresh and Manage packs & backups. Native focus/navigation supports keyboard and standard controller input; buttons remain usable by touch and mouse.
 
 A failed download, image decode or storage transaction retains existing content. Cancellation suppresses stale completions. Refresh stages its catalog and installed-content inspection before replacing the visible cards. An already-installed object must match the complete normalized content digest, including artwork. A valid same-ID pack containing different art is shown as a conflict; it cannot be silently replaced or selected as the reviewed original. Manage it explicitly in Packs first.
@@ -51,7 +51,7 @@ Source preview: `http://127.0.0.1:8915/game/`. The preview build is a developmen
 
 Successor integration checks cover the exact optional download under immutable release and local preview prefixes, native More worlds Install/Choose with default-run preservation, and full body inclusion versus core-cache exclusion. These execute real validators/host handlers with modeled Fetch, Image, DOM and storage boundaries; they are not actual public or cold-browser acceptance of the new chapter.
 
-The actual-host tests execute the real app, panel, hashing, pack validation and store, with modeled DOM/Phaser/Image/IndexedDB boundaries. They cover separate Install/Choose, exact paused-run preservation, keyboard/controller focus, corrupt downloads, storage refusal, cancellation and same-gameplay artwork conflicts. They do not certify physical controllers, touch hardware or browser image rendering.
+The historical actual-host tests execute the real app, panel, hashing, pack validation and store, with modeled DOM/Phaser/Image/IndexedDB boundaries. Their original separate Install/Choose contract is superseded for Play-enabled cards by the new launch ownership suites; retain their coverage of exact paused-run preservation, keyboard/controller focus, corrupt downloads, storage refusal, cancellation and same-gameplay artwork conflicts. They do not certify physical controllers, touch hardware or browser image rendering.
 
 The coordinating browser review separately exercised Ukraine installation, keyboard Choose/Start/Down, a 51.5% capture, then paused installation of Retro without changing 12,060 score / three lives / 2:34. Reload/Continue retained that flight. A settled 390×844 browser viewport showed no horizontal overflow and 332×54 actions before the compact sticky Back refinement. The final top Back passed actual keyboard navigation at 1280×720. Final portrait refinement, a stopped-server installed-world journey, physical devices and public release qualification remain separate checks; do not infer them from modeled tests or this source preview.
 

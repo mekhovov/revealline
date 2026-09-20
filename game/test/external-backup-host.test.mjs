@@ -178,13 +178,13 @@ async function install(p) {
     p.$('optional-worlds-status').textContent + p.$('optional-worlds-source-state').textContent,
   );
 }
-async function choose(p) {
-  const phase = `Choose and authenticate exact ${pilot.descriptor.id}`;
+async function play(p) {
+  const phase = `Play and authenticate exact ${pilot.descriptor.id}`;
   await waitSource(p, phase, {
     operation: clickOperation(p, 'optional-worlds-source-choose'),
     ready: () => !p.$('optional-worlds-dialog').open,
   });
-  // Selection starts its own picture read; a fulfilled Choose is not image readiness.
+  // Play accepts the exact decoded original and starts without a second Start action.
   try {
     await settle(() => p.doc.body.dataset.pictureState === 'ready');
   } catch (error) {
@@ -194,6 +194,9 @@ async function choose(p) {
   }
   p.frame(0);
   assert.equal(p.$('pack-select').value, pilot.descriptor.id);
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.frame(0);
+  assert.equal(p.rendered.paused, false, 'Play needs no second Start action.');
 }
 function ticks(p, count) {
   for (let i = 0; i < count; i++) p.frame();
@@ -232,8 +235,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
   await t.test('actual source install and current paused JSON export', async (t) => {
     const p = await page(t, f);
     await install(p);
-    await choose(p);
-    p.$('start-button').click();
+    await play(p);
     direction(p, 'down');
     ticks(p, 151);
     p.$('pause-button').click();
@@ -404,8 +406,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
 test('closing during descriptor hashing cancels export and a changed flight cannot publish its stale result', async (t) => {
   const p = await page(t);
   await install(p);
-  await choose(p);
-  p.$('start-button').click();
+  await play(p);
   direction(p, 'down');
   ticks(p, 25);
   p.$('library-button').click();

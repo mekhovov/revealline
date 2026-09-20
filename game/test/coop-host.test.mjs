@@ -154,6 +154,7 @@ test('custom fractional coverage and multiple required cores drive the actual br
   const f = await page(t),
     pack = customPack();
   pack.levels[0].goal.coverage = 0.724;
+  pack.levels[0].enemies = [];
   const level = pack.levels[1];
   level.strongholds.unshift({
     id: 'optional',
@@ -174,9 +175,12 @@ test('custom fractional coverage and multiple required cores drive the actual br
   level.goal.cores.push('second');
   await f.selectFile(JSON.stringify(pack));
   assert.equal(f.$('coop-menu-goal').textContent, 'Reveal 72.4% together');
+  assert.match(f.$('coop-threat-help').textContent, /no enemies or relay emitters/);
+  assert.doesNotMatch(f.$('coop-support-help').textContent, /slow nearby enemies|spark/);
   assert.doesNotMatch(f.$('coop-level-note').textContent, /Both halves are contested/);
   f.$('coop-start').click();
   assert.equal(f.$('coop-objective').textContent, 'Reveal 72.4% together');
+  assert.doesNotMatch(f.$('coop-message').textContent, /Hunter|Drifter|spark/);
   assert.ok(Math.abs(f.$('coop-progress').max - 72.4) < 1e-9);
   f.$('coop-pause').click();
   f.$('coop-lobby').click();
@@ -184,6 +188,9 @@ test('custom fractional coverage and multiple required cores drive the actual br
   f.$('coop-discard-confirm').click();
   await f.choose('coop-level', 'custom-stronghold');
   assert.match(f.$('coop-menu-goal').textContent, /2 strongholds/);
+  assert.equal(f.$('coop-briefing-title').textContent, 'SECURE THE REQUIRED CORES');
+  assert.match(f.$('coop-threat-help').textContent, /Hunters/);
+  assert.match(f.$('coop-threat-help').textContent, /sending a spark/);
   assert.doesNotMatch(f.$('coop-level-note').textContent, /Bait a Hunter/);
   f.$('coop-start').click();
   assert.match(f.$('coop-objective').textContent, /0 \/ 2 secured/);
@@ -254,7 +261,7 @@ test('the selected cut rules agree across the briefing and actual start message'
     f.$('coop-start').click();
     assert.match(
       f.$('coop-message').textContent,
-      style === 'independent' ? /head meetings do not join/ : /join after the charge passes/,
+      style === 'independent' ? /does not join the lines/ : /meet your partner to join/,
     );
     f.$('coop-pause').click();
     f.$('coop-lobby').click();
@@ -696,7 +703,7 @@ test('fresh Team lobby focuses enabled Start only after actual ready, without st
   assert.equal(h.$('coop-play').hidden, true);
   assert.equal(h.doc.activeElement.id, 'coop-start');
   h.tap('Tab');
-  assert.equal(h.doc.activeElement.tagName, 'SUMMARY');
+  assert.equal(h.doc.activeElement.id, 'coop-discovery-open');
   const chosen = h.doc.activeElement;
   for (let i = 0; i < 8; i++) h.tick();
   assert.equal(h.doc.activeElement === chosen, true, 'Later frames must not retry initial focus.');
