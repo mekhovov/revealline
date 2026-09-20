@@ -1,7 +1,7 @@
 # Journey P01 — framework implementation checkpoint
 
 20 September 2026. Local candidate **0.69.0**, `codex/xposed-journey-p01`,
-stacked on frozen P00 `34e3f742`. Neither P00 nor P01 publication is implied.
+stacked on corrected P00 `6a42faca`. Neither P00 nor P01 publication is implied.
 This reuses the isolated worktree; the user's dirty original remains untouched.
 
 ## Implemented candidate scope
@@ -289,3 +289,64 @@ The short-landscape form was scrollable, not fully visible at once. An initial
 screenshot request had zero viewport width; explicit responsive dimensions allowed
 inspection. No image-file receipt is claimed for inline screenshots. The temporary
 viewport override was reset. Physical touch/controllers and 200% zoom remain open.
+
+## Opening artwork expansion
+
+Four additional original PNGs are pinned for Choose your share, Two keepers,
+Nearby shore and Island outpost. With First return, five missions now resolve
+distinct reveal compositions through the same verified asset boundary. Exact
+prompts, original filenames and byte/dimension/hash pins are retained alongside
+the unchanged generated images. No third-party artwork was used. All five
+images are 1774 × 887 and remain below the existing 4 MiB per-image limit.
+
+The ten-test asset/curriculum cohort passes with no failures or skips. It checks
+every pinned image's original bytes, dimensions, unique composition hash, single
+mission consumer and successful bounded loading; all ten simulation identities
+remain identical with and without artwork. Existing replay routes still pass.
+
+Native Studio inspected and explicitly applied the updated collection. Its
+existing saved project caused the expected stale-head refusal: the updated
+candidate remained usable session-only, and the stored predecessor was not
+overwritten. Island outpost's real Practice host loaded the new picture, started
+on its interior foundation at zero earned coverage and legally connected it to
+the top perimeter. The displayed result was 0.6%, 140 points and three lives,
+with stop-on-capture and fresh-direction feedback. Pause/Resume did not reuse
+steering; closing preview returned to the intact session draft. Desktop
+1024 × 768 screenshots were inspected inline, with no exported image receipt.
+This is partial-reveal/launch evidence, not a full clear or whole-set contrast,
+small-screen, physical-controller or human playability acceptance.
+
+A first browser locator action failed while the default viewport was unusable;
+the same visible action succeeded after establishing the explicit test viewport.
+That override was reset. Three further generated originals (Stepping stones,
+Two bays, Courtyard return) remain unreferenced outside the project until disk
+capacity permits a safe copy. Long way home and the Remix still need generation.
+No image-copy, large artifact download or release build is attempted below the
+existing 512 MiB reserve. No user files were deleted to obtain capacity.
+
+Follow-up: capacity later recovered above that reserve. All ten original image
+candidates are now integrated; the preceding five-picture section is historical
+evidence, not the current inventory. See `xposed-journey-horizon-art.md` for the
+complete set, 100-test cohort, actual Courtyard partial reveal and remaining
+contrast/host/human gates. None is promoted to visually qualified by generation.
+
+## Authored Journey registry adapter
+
+`resolveContentJourney` resolves explicit authored pack/campaign/mission order
+through the existing project compiler and Journey catalog. Pack selection filters
+the authored order; it does not invent a second order. Core and optional Remix
+packs can be resolved separately. Unsupported-mode missions are omitted with
+contiguous runtime indexes; empty selections and unsupported Team fail explicitly.
+
+Each runtime campaign contains the same levels as direct mission resolution.
+Gentle/Standard/Expert change execution identity but not stable navigation keys,
+and paired-board/Solo use identical physics. This bypasses no host authority and
+does not silently run Journey levels through Legacy's different Gentle policy.
+All entries are `candidate`, with official progress ineligible. Artwork references
+still require independent verified loading. Gameplay host adoption is still due.
+
+The CLI exposes this same resolver:
+`node scripts/compile-content-project.mjs project.json --journey --pack journey-opening --difficulty expert`.
+The ten-test Journey-registry plus Studio/CLI/history cohort passes without skips
+or failures, including actual Solo/paired engines for every mission/preset,
+cross-campaign Next, optional Remix separation and contradictory CLI rejection.

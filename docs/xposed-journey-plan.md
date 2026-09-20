@@ -132,9 +132,12 @@ capture overlays and topology diagnostics. Sixty mission/preset/steering combina
 have deterministic Solo and paired-board clear-route fixtures; these are feasibility
 evidence, not pacing or human enjoyment. Direct structure controls create, duplicate,
 rename and organize candidates without JSON editing. Dependency-aware removal and
-archive/restore are implemented. One original reveal background is committed;
-four more are pinned in preserved local changes, with five further background
-integrations pending. Team qualification, Journey adoption and release gates remain. None of that branch's
+archive/restore are implemented. All ten opening missions now have distinct
+original raster reveal candidates, pinned to exact bytes, hashes and dimensions.
+Whole-set native partial-reveal/contrast and human qualification remain open.
+The separate three-preset next-attempt preference store is tested but is not yet
+wired into player hosts; Legacy and v1 Journey progress schemas stay unchanged.
+Team qualification, Journey adoption and release gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
 
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
