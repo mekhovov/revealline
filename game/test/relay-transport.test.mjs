@@ -16,7 +16,7 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { foundationCompatibleView } from '../ui/foundation-view.mjs';
 import { classicView } from '../ui/classic-view.mjs';
 import { flightInformationSnapshot, flightEventKind } from '../ui/flight-information-source.mjs';
-import { relayView, drawRelayGates } from '../ui/relay-view.mjs';
+import { relayView, drawRelayGates, drawRelayTriggers } from '../ui/relay-view.mjs';
 import { openCapturedRelays } from '../core/relay-gates.mjs';
 import { captureOverlay } from '../content-design/capture-overlay.mjs';
 import { missionBriefing } from '../mission-brief.mjs';
@@ -128,8 +128,10 @@ test('relay projection is immutable and gate state changes the pattern, not coll
       },
     );
     drawRelayGates(ctx, view, scenario.theme.palette);
-    assert.equal(calls.filter((c) => c.op === 'save').length, 1);
-    assert.equal(calls.filter((c) => c.op === 'restore').length, 1);
+    assert.equal(
+      calls.filter((c) => c.op === 'save').length,
+      calls.filter((c) => c.op === 'restore').length,
+    );
     assert(!calls.some((c) => c.op === 'fillRect' || c.op === 'fill'));
     return calls;
   };
@@ -147,6 +149,67 @@ test('relay projection is immutable and gate state changes the pattern, not coll
       openCalls.filter((c) => c.op === 'lineTo').length,
   );
   assert.deepEqual(authoritativeCheckpoint(run), after);
+});
+
+test('trigger and connector numbers are stable under gate order and hide captured or unrevealed triggers', () => {
+  const { scenario } = fixture();
+  const level = structuredClone(scenario.level);
+  level.objectives.push({ id: 'alternate', x: 50.5, y: 20.5, required: false, hidden: true });
+  level.relayGates.gates.push({ id: 'second', x: 55, y: 10, w: 2, h: 3, objectiveId: 'alternate' });
+  level.relayGates.gates.push({ id: 'third', x: 60, y: 10, w: 2, h: 3, objectiveId: 'relay' });
+  const run = createRun(level),
+    before = authoritativeCheckpoint(run),
+    view = relayView(run);
+  assert.deepEqual(
+    view.gates.map((gate) => [gate.id, gate.label]),
+    [
+      ['shortcut', '2'],
+      ['second', '1'],
+      ['third', '2'],
+    ],
+  );
+  assert.deepEqual(
+    view.triggers.map((trigger) => [trigger.id, trigger.label, trigger.visible]),
+    [
+      ['alternate', '1', false],
+      ['relay', '2', true],
+    ],
+  );
+  const reversed = structuredClone(level);
+  reversed.relayGates.gates.reverse();
+  assert.deepEqual(relayView(createRun(reversed)).triggers, view.triggers);
+  const calls = [],
+    ctx = new Proxy(
+      {},
+      {
+        get:
+          (_target, op) =>
+          (...args) =>
+            calls.push({ op, args }),
+      },
+    );
+  drawRelayTriggers(ctx, view);
+  assert.deepEqual(
+    calls.filter((c) => c.op === 'fillText').map((c) => c.args[0]),
+    ['2'],
+  );
+  assert(Object.isFrozen(view.triggers[0]));
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  run.objectives[0].captured = true;
+  run.objectives[1].revealed = true;
+  assert.deepEqual(
+    relayView(run).triggers.map((trigger) => trigger.visible),
+    [true, false],
+  );
+  let reads = 0;
+  Object.defineProperty(run.objectives[0], 'x', {
+    get() {
+      reads++;
+      return 0;
+    },
+  });
+  assert.equal(relayView(run), null);
+  assert.equal(reads, 0);
 });
 
 test('malformed or getter-backed relay display state is rejected without evaluation', () => {

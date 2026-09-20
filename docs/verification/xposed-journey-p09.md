@@ -68,8 +68,8 @@ or a human difficulty benchmark.
 
 ## Remaining gates
 
-New native observations; Relay Labyrinth greybox
-decisions and route qualifications; preset/steering/seed/race/mastery checks;
+Relay Labyrinth greybox decisions and route qualifications;
+preset/steering/seed/race/mastery checks;
 original art and contrast; Team successor; human pacing; reviewed integration,
 version allocation, immutable release and Pages acceptance all remain open.
 
@@ -114,4 +114,48 @@ Existing draft history/autosave/recovery/export remain the only persistence path
 The nine-file authoring/recovery cohort passes 59/59 on Node20 and Node22
 (`content-relays`, `content-objectives`, `content-geometry-edit`, `content-drafts`,
 `content-structure`, `content-studio`, `content-studio-empty`,
-`content-image-authoring`, `content-recovery`). Native proof is still pending.
+`content-image-authoring`, `content-recovery`).
+
+## Scoped native authoring and gameplay observation
+
+Exact source `38d7f3be94a6fd042735406c39d63bb6a303e52f` was served read-only
+from Git on localhost:8794, independently of the user's existing browser origin.
+The starter mission was edited through visible Studio controls: add a required
+`first-relay` objective, explicitly enable the successor edition, then link a
+2×3 `east-shortcut` gate. Eligibility changed from 2,355 to 2,349 at authoring
+time. An overlapping replacement was rejected without adopting it; Undo/Redo
+and checkpoint 6 reload restored the same gate, link and preserved map revisions.
+
+Actual Solo Practice captured that objective on the first return to the island:
+three lives, 0.6% earned coverage, 640 points (14 cells plus the objective), and
+the opened connector caption. The gate changed from crossbars to corner brackets.
+Closing and preparing a fresh Practice restored the closed gate, zero coverage,
+zero score and uncaptured objective. No engine state was injected for this check.
+
+This is one edited starter interaction, not a Relay Labyrinth mission clear,
+multi-link readability test, physical-device matrix, timing benchmark or human
+enjoyment evidence. Native deletion was not exercised; dependency and two-action
+removal remain covered by the automated authoring tests.
+
+## Lifecycle and link readability follow-up
+
+A six-file cohort (`relay-lifecycle`, `relay-core`, `relay-project`,
+`relay-diagnostics`, `sessions-continuous`, `sessions`) passes 45/45 on both
+Node versions. New relay-edition fixtures cover timeout at closure, contact
+before closure, independent equal paired-board clears, suspended closed/open
+state and deterministic continuation, changed installed geometry rejection,
+contour cache refresh, reclaimed-versus-field domain membership, stale erosion
+requests and permanent connector anchoring. Topology tests explicitly arrange
+state to isolate those invariants; paired races and session tests use real inputs.
+Initial fixture errors (spawn clearance, anchor selection and path orientation)
+were corrected without weakening the engine's established contracts.
+
+Required linked objectives must be visible; this successor-edition restriction
+does not reinterpret historical levels. Matching static numerals now identify
+each trigger and its connectors in gameplay, Studio and the map editor. Numbers
+are stable under gate reordering, support one trigger opening several gates,
+and do not expose hidden optional triggers. Closed crossbars and open brackets
+remain the collision-state cues. Text uses an outlined light treatment and no
+flashing, color key or line across the active board. The five-file presentation
+cohort passes 51/51 on both Node versions; native multi-link readability and
+small-screen qualification remain open.

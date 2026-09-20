@@ -3,7 +3,7 @@ import { boardPaintSizeForLevel } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
 import { drawClassicTerrain, drawClassicPickups, drawClassicEnemy } from '../ui/classic-view.mjs';
 import { foundationCompatibleView as classicView } from '../ui/foundation-view.mjs';
-import { drawRelayGates, relayView } from '../ui/relay-view.mjs';
+import { drawRelayGates, drawRelayTriggers, relayView } from '../ui/relay-view.mjs';
 
 export function paintEditorMap(canvas, current) {
   const { width, height } = boardPaintSizeForLevel(current.level);
@@ -88,6 +88,7 @@ export function paintEditorMap(canvas, current) {
     c.lineWidth = 2;
     c.strokeRect(o.x * s - 5, o.y * s - 5, 10, 10);
   }
+  if (run) drawRelayTriggers(c, relayView(run), s);
   for (const p of current.level.supplies) {
     c.fillStyle = '#ffffff';
     c.fillRect(p.x * s - 3, p.y * s - 1, 6, 2);

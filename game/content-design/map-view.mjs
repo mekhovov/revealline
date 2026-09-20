@@ -2,7 +2,7 @@ import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
 import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
-import { drawRelayGates } from '../ui/relay-view.mjs';
+import { drawRelayGates, drawRelayTriggers } from '../ui/relay-view.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -122,6 +122,7 @@ export function paintContentMap(
     ctx.textBaseline = 'middle';
     ctx.fillText(objective.hidden ? '?' : objective.required ? '!' : 'o', x, y);
   }
+  drawRelayTriggers(ctx, { triggers: preview.markers.relayTriggers }, size);
   ctx.fillStyle = '#f5ffba';
   for (const [seat, { x, y }] of (preview.markers.spawns ?? [manifest.level.spawn]).entries()) {
     ctx.fillRect(x * size - 8, y * size - 2, 16, 4);

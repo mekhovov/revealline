@@ -35,6 +35,14 @@ export function relayView(run) {
         definition.gates.length === state.gates.length,
       'Invalid relay count.',
     );
+    const objectives = boundedJSON(own(run, 'objectives'), {
+      maxBytes: 32768,
+      maxNodes: 4096,
+      maxDepth: 4,
+      maxArray: 128,
+    });
+    required(Array.isArray(objectives), 'Expected relay objectives.');
+    const links = [...new Set(definition.gates.map((gate) => gate.objectiveId))].sort();
     const ids = new Set();
     const gates = definition.gates.map((gate) => {
       exactKeys(gate, ['id', 'x', 'y', 'w', 'h', 'objectiveId'], 'relay visual gate');
@@ -68,9 +76,36 @@ export function relayView(run) {
           ),
         'Relay cells must match authored geometry.',
       );
-      return Object.freeze({ ...gate, opened: live.openedTick !== null });
+      return Object.freeze({
+        ...gate,
+        label: String(links.indexOf(gate.objectiveId) + 1),
+        opened: live.openedTick !== null,
+      });
     });
-    return Object.freeze({ gates: Object.freeze(gates) });
+    const triggers = links.map((id, index) => {
+      const matches = objectives.filter((objective) => objective.id === id);
+      required(matches.length === 1, 'Relay visual objective must exist exactly once.');
+      const objective = matches[0];
+      required(
+        Number.isFinite(objective.x) &&
+          objective.x >= 0 &&
+          objective.x < 72 &&
+          Number.isFinite(objective.y) &&
+          objective.y >= 0 &&
+          objective.y < 36 &&
+          typeof objective.captured === 'boolean' &&
+          typeof objective.revealed === 'boolean',
+        'Invalid relay visual objective.',
+      );
+      return Object.freeze({
+        id,
+        label: String(index + 1),
+        x: objective.x,
+        y: objective.y,
+        visible: objective.revealed && !objective.captured,
+      });
+    });
+    return Object.freeze({ gates: Object.freeze(gates), triggers: Object.freeze(triggers) });
   } catch {
     return null;
   }
@@ -108,7 +143,10 @@ export function drawRelayGates(ctx, view, palette, size = 16) {
     ctx.strokeStyle = palette?.safe ?? '#ccebbc';
     ctx.lineWidth = Math.max(1, size * 0.09);
     outline();
-    if (gate.opened) continue;
+    if (gate.opened) {
+      relayLabel(ctx, gate.label, x + w / 2, y + h / 2, size);
+      continue;
+    }
     // Repeated crossbars distinguish a closed gate from a plain wall at any aspect.
     ctx.strokeStyle = palette?.accent ?? '#ffe8a5';
     ctx.beginPath();
@@ -122,6 +160,35 @@ export function drawRelayGates(ctx, view, palette, size = 16) {
         ctx.lineTo(cx, cy + arm);
       }
     ctx.stroke();
+    relayLabel(ctx, gate.label, x + w / 2, y + h / 2, size);
   }
   ctx.restore();
+}
+
+function relayLabel(ctx, label, x, y, size) {
+  if (!label) return;
+  ctx.save();
+  ctx.font = `bold ${Math.max(9, size * 0.85)}px monospace`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.strokeStyle = '#10201c';
+  ctx.lineWidth = Math.max(3, size * 0.2);
+  ctx.strokeText(label, x, y, size * 0.9);
+  ctx.fillStyle = '#fff4c5';
+  ctx.fillText(label, x, y, size * 0.9);
+  ctx.restore();
+}
+
+/** Matching static numerals, never a line across the active trail or a color key. */
+export function drawRelayTriggers(ctx, view, size = 16) {
+  for (const trigger of view?.triggers ?? []) {
+    if (!trigger.visible) continue;
+    relayLabel(
+      ctx,
+      trigger.label,
+      Math.max(size / 2, Math.min(71.5 * size, (trigger.x + 0.95) * size)),
+      Math.max(size / 2, Math.min(35.5 * size, (trigger.y - 0.75) * size)),
+      size,
+    );
+  }
 }
