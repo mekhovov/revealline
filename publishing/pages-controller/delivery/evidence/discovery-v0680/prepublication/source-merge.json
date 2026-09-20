@@ -1,0 +1,12 @@
+{
+  "status": "MERGED_EXACT_REVIEWED_TREE",
+  "commit": "47169c9f571d495c2a359bad6a357b4f28f27826",
+  "tree": "4cca352f61dc84688fbe41a0d725538aa6a7316f",
+  "sourceHead": "5598d56248ee4a03d0460ff8a3560eb550a4cc71",
+  "previousMain": "b356510c88208d30fdc41218890391a2d2692ec4",
+  "pr": 170,
+  "sourceRun": 35488348947,
+  "publisherPreviewRun": 35488348804,
+  "pagesDeployment": "separate selector release required; current selector remains v0.67.0",
+  "at": "2026-09-20T04:59:37.454773+00:00"
+}

@@ -294,3 +294,7 @@ source uploader, including the root evidence-manifest.json. Preserve a rejected
 draft package and its failed run. Reconcile the corrected draft descriptors before
 one explicit upload; keep published payloads immutable and verify public play
 separately from hosted upload success.”
+
+### Exact merge and publisher continuation
+
+“Finish the qualified source release without replacing any frozen payload. If PR metadata has a stale base SHA, retain it and inspect the actual proposed merge parents and tree against fresh main and the exact qualified head. Require tree equality before and after merge. Run the actual small-assets consumer before draft upload. Keep source acceptance, original payload publication, Pages selector deployment and complete public/native acceptance separate. For short-screen Settings, preserve the Close action and tabs while the panel scrolls, and return focus to a visible logical control without resuming gameplay.”

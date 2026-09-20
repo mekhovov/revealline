@@ -306,7 +306,8 @@
       "id": "archive-34",
       "repository": "mekhovov/revealline-archive-34",
       "versions": [
-        "v0.66.0"
+        "v0.66.0",
+        "v0.67.0"
       ]
     }
   ]

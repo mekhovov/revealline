@@ -228,3 +228,7 @@ failed hosted receipt first. Correct only the explicitly identified draft metada
 assets after exact source/tag/asset reconciliation, then bind one reviewed upload
 attempt to the new descriptors. Never overwrite published versions, change the
 frozen game bytes, or repeat an ambiguous payload upload without fresh asset checks.
+
+## Verify the actual merge parents
+
+A PR's cached `base.sha` can name an earlier main commit even when GitHub has already computed a clean merge against current main. Preserve that mismatch and the refused first check. Before merging, fetch the proposed merge commit itself: require its parents to equal the freshly read main and exact qualified PR head, and its tree to equal the qualified source tree. Recheck main immediately before the merge and verify the returned merge parents/tree afterward. Never substitute a stale base or re-label older qualification. If the proposed tree differs, integrate and qualify the new source instead.

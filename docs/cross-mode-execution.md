@@ -1,5 +1,13 @@
 # Reveal Line cross-mode execution register
 
+## v0.68 release delivery — source accepted, public gate pending
+
+Source PR170 merged as `47169c9f`; the merge tree equals qualified source `5598d562` / tree `4cca352f`. Both final hosted families passed **6,738 tests across 518 files on Node 20.19.6**, with source/production gates, ordinary build and frozen inspection. The source combines chapter discovery with Journey, safe current-flight replacement, concealed Team previews, level-specific guidance and Studio audio lifecycle. This is a named P06/P03 integration delivery, not completion of those parent phases.
+
+The publication selector below is prepared for v0.68.0. Actual Pages deployment, complete public inventory and affected native journeys remain required before this becomes the accepted public baseline. Preserve the accepted v0.67 report below. Its original release is additionally retained by archive-34 append commit `fc3377b2`, deployment `6549129296`: all **1,436 files / 627,342,489 bytes** matched, including every old immutable release path.
+
+Next scoped corrections are committed separately in Journey P01 PR172: persistent Settings Close/tabs on short screens, visible focus fallback after responsive layout changes, and an accurate paused flight cue. Foundation media/preparation, backup and difficulty work remain candidates. The later shared MP3/playlist, actor motion, encounters, campaign production and final hardware/listening/offline/human gates retain their order. No passed automated suite closes a physical or human gate.
+
 ## Current delivery — 20 September 2026, v0.67 verified publication
 
 **Latest scoped public release: [v0.67.0 Journey technical preview](https://mekhovov.github.io/revealline/releases/v0.67.0/site/game/?journey=1).** PR169 supplies frozen source `6a42faca`; PR174 merged publisher `555f0979`. Pages run `35487668271` and deployment `6548787815` passed. The complete actual public audit verified **3,573 files / 645,190,134 bytes**, zero failures/retries. All 105 release records and 34 archive admissions remain. [Acceptance and original evidence](../publishing/pages-controller/delivery/evidence/journey-p00/v0670-public/README.md) distinguish public bytes from native input and outstanding gates.
