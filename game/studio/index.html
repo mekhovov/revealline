@@ -470,7 +470,8 @@
               archived. Add to parent keeps existing memberships. Remove from parent detaches only
               that membership. Delete refuses referenced or nonempty items and never removes shared
               maps or assets. Archived items stay editable here but are omitted from candidate
-              Journey lists.
+              Journey lists. Changing a campaign band never retunes its missions: every member must
+              already fit that band or the next (capped at 12), or the edit is rejected.
             </p>
             <form id="structure-form">
               <label
@@ -485,6 +486,7 @@
                   <option value="create">Create</option>
                   <option value="duplicate">Duplicate item & contents</option>
                   <option value="rename">Rename</option>
+                  <option value="set-band">Change campaign band</option>
                   <option value="place">Add to parent</option>
                   <option value="detach">Remove from parent</option>
                   <option value="earlier">Move earlier in parent</option>

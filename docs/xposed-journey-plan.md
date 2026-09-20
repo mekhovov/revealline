@@ -242,6 +242,8 @@ Optional contact pickup CRUD now uses the same compiler, without effect-strength
 duration overrides. Studio exposes framed effect glyphs plus text positions; Team
 remains explicitly unqualified for bonuses. Scoped tests and native copy-only
 editing/Undo/Practice observations are recorded in the P02 evidence.
+Campaign bands can be adjusted explicitly without silently retuning child missions;
+the compiler preserves the band-window invariant and Undo restores the prior value.
 
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema
