@@ -14,6 +14,7 @@ import {
   projectIdFromURL,
 } from '../content-design/recovery.mjs';
 import { exportJSONFile } from '../platform.mjs';
+import { setBoardAvailability } from './board-state.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -108,8 +109,9 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  setBoardAvailability(document, !!mission);
   if (!mission) {
-    $('play').disabled = true;
+    inspectedTrail = [];
     return;
   }
   const preview = prepareContentPreview(session.current(), mission.id, {
@@ -185,6 +187,8 @@ function render(selected = $('mission').value) {
   sourceChanged = false;
   inspected = null;
   $('apply').disabled = true;
+  $('validation').textContent =
+    `Current draft: ${project.maps.length} map revisions, ${project.missions.length} missions. Source edits require a new inspection before applying.`;
   $('undo').disabled = !session.canUndo();
   $('redo').disabled = !session.canRedo();
   $('structure-result').textContent =
@@ -245,6 +249,13 @@ function syncStructure() {
     (action === 'duplicate' && kind !== 'mission') || (action === 'place' && kind === 'pack');
 }
 for (const id of ['item-kind', 'item-action']) $(id).onchange = syncStructure;
+$('create-first-mission').onclick = () => {
+  $('structure-editor').open = true;
+  $('item-kind').value = 'mission';
+  $('item-action').value = 'create';
+  syncStructure();
+  $('item-id').focus();
+};
 $('structure-form').onsubmit = guarded((event) => {
   event.preventDefault();
   if (!discardSource()) return;
@@ -277,10 +288,6 @@ function inspectSource({ head, selectedRevision } = {}) {
   $('apply').disabled = true;
   const text = $('source').value,
     project = compileContentProject(text).source;
-  if (!project.missions.length)
-    throw new Error(
-      'This workbench needs at least one mission. Keep the empty draft in your backup until a mission is authored.',
-    );
   inspected = { text, project, head };
   $('validation').textContent =
     `${project.name}: ${project.maps.length} map revisions, ${project.missions.length} missions compile. ${head ? `Inspected checkpoint ${selectedRevision} (latest ${head.revision}). Older versions restore as a new checkpoint. ` : ''}Human playtesting and publication remain pending. Apply to replace the workbench draft.`;
@@ -412,6 +419,7 @@ $('geometry-form').onsubmit = guarded((event) => {
   queueSave();
 });
 $('board').onclick = (event) => {
+  if (!currentMission()) return;
   const rect = $('board').getBoundingClientRect();
   $('x').value = Math.min(
     71,

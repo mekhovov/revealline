@@ -75,7 +75,15 @@
             role="img"
             aria-label="Map geometry; the same information is listed below. Click to choose edit coordinates."
           ></canvas>
-          <p class="legend">
+          <div id="empty-board" hidden>
+            <p class="eyebrow">A BLANK START / YOUR NEXT CHALLENGE</p>
+            <p>
+              Your project is ready. Create a mission now, or organize empty campaigns and packs
+              first. No map or gameplay rules are applied until a mission exists.
+            </p>
+            <button id="create-first-mission" class="primary">Create first mission</button>
+          </div>
+          <p id="board-legend" class="legend">
             <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
             ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
           </p>
@@ -89,7 +97,7 @@
           </p>
           <p id="capture-summary" class="note" role="status"></p>
           <form id="geometry-form">
-            <fieldset>
+            <fieldset id="geometry-tools">
               <legend>Add geometry · makes a new map revision</legend>
               <label
                 >Surface<select id="surface">
@@ -132,7 +140,7 @@
           </div>
         </section>
         <section class="source-panel" aria-label="Project source and validation">
-          <details>
+          <details id="structure-editor">
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">
               New missions start as an untested band-1 island template. Duplicate shares an
