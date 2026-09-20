@@ -215,7 +215,7 @@ function inspectBoard(trailCells = []) {
   inspectedTrail = [...trailCells];
   $('trail').value = inspectedTrail.join(', ');
   draw(preview);
-  const { geometry, manifest, capture } = preview;
+  const { geometry, manifest, capture, authoredTerrain } = preview;
   const tuningKey = JSON.stringify([mission.id, mission.revision]);
   if (tuningRevision !== tuningKey) {
     $('target-coverage').value = Number((mission.coverage * 100).toFixed(8));
@@ -233,7 +233,7 @@ function inspectBoard(trailCells = []) {
   $('geometry').textContent +=
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
-    ` Authored terrain: ${(manifest.level.classic?.terrain ?? []).map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
+    ` Authored terrain: ${authoredTerrain.map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -241,7 +241,7 @@ function inspectBoard(trailCells = []) {
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
       objectives: mission.objectives,
-      terrain: manifest.level.classic?.terrain ?? [],
+      terrain: authoredTerrain,
     },
     null,
     2,

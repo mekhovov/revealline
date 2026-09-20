@@ -11,6 +11,7 @@ import { readCoopPack } from '../coop/library.mjs';
 import { coopArenaGuidance } from '../couch/coop-briefing.mjs';
 import { coopFailureFeedback } from '../couch/coop-feedback.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
+import { prepareContentPreview } from '../content-design/preview.mjs';
 
 const command = (direction = null, support = false) => ({ direction, boost: false, support });
 function fixture(terrain = []) {
@@ -183,6 +184,9 @@ test('explicit TeamMissionV2 uses the shared map compiler, exact export/import a
     const manifest = resolveMission(project, 'twin-landings', { mode: 'team', difficulty });
     const run = createCoop(manifest.level);
     assert.deepEqual([...run.terrain], project.maps[0].geometry.terrain);
+    const preview = prepareContentPreview(source, 'twin-landings', { mode: 'team', difficulty });
+    assert.deepEqual(preview.authoredTerrain, source.maps[0].terrain);
+    assert.notEqual(preview.authoredTerrain, source.maps[0].terrain);
     const pack = createTeamTestPack(source, 'twin-landings', difficulty);
     assert.equal(pack.version, 'revealline-coop-pack.v3');
     assert.equal(pack.ruleset, COOP_TERRAIN_RULESET);
