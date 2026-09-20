@@ -5,6 +5,8 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter, playerPaintSize } from '../ui/render.mjs';
 import { rotorAnchors } from '../../authoring/motion-lab/animation.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import {
   createActorPresentation,
   actorDiameter,
@@ -366,6 +368,48 @@ function playerFixture({ wide = true, css = 600, bodyId = 'fpv-body', image } = 
   p.image = image ?? { id: 'player-original', naturalWidth: 1280, naturalHeight: 1280 };
   return { p, s, run };
 }
+
+test('foundation craft locator remains visible when paused/reduced and never mutates replay or Legacy rendering', () => {
+  const level = resolveMission(
+    compileContentProject(createOpeningCandidates()),
+    'courtyard-return',
+  ).level;
+  for (const css of [240, 390, 960]) {
+    const { p } = playerFixture({ css }),
+      run = createRun(level),
+      checkpoint = authoritativeCheckpoint(run);
+    for (const options of [{}, { paused: true }, { reduced: true }]) {
+      const { ctx, calls } = surface(run.width * 16, css);
+      p.draw(ctx, run, FIXED_DT, options);
+      assert(
+        calls.some(
+          (c) =>
+            c.op === 'stroke' &&
+            c.lineJoin === 'miter' &&
+            c.lineCap === 'butt' &&
+            c.lineWidth === 2 / (css / 1152),
+        ),
+      );
+      assert(
+        calls.some(
+          (c) =>
+            c.op === 'arc' &&
+            c.args[0] === run.player.x * 16 &&
+            c.args[1] === run.player.y * 16 &&
+            c.args[2] === run.rules.playerRadius * 16,
+        ),
+      );
+      assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    }
+    const legacy = playerFixture({ css });
+    legacy.p.draw(legacy.s.ctx, legacy.run, FIXED_DT);
+    assert(
+      !legacy.s.calls.some(
+        (c) => c.op === 'stroke' && c.lineJoin === 'miter' && c.lineCap === 'butt',
+      ),
+    );
+  }
+});
 
 for (const wide of [false, true]) {
   test(`${wide ? 'wide' : 'legacy'}: all four player rigs keep a readable bounded size across phone and desktop canvases`, () => {
