@@ -16,6 +16,42 @@ const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
 const fetchAsset = async () => new Response(bytes);
 const digest = (value) => webcrypto.subtle.digest('SHA-256', value);
 
+test('every authored picture has unique original bytes and leaves every mission rule unchanged', async () => {
+  const grey = compileContentProject(createOpeningCandidates());
+  const artSource = createOpeningCandidates({ artwork: true });
+  const art = compileContentProject(artSource);
+  const seen = new Set();
+  assert.equal(HORIZON_ART_CANDIDATES.length, 10);
+  assert.equal(artSource.missions.length, HORIZON_ART_CANDIDATES.length);
+  assert(artSource.missions.every((mission) => mission.presentation.backgroundAssetId));
+  for (const candidate of HORIZON_ART_CANDIDATES) {
+    const original = await readFile(new URL(`../${candidate.path}`, import.meta.url));
+    assert.equal(original.length, candidate.bytes, candidate.id);
+    assert.equal(createHash('sha256').update(original).digest('hex'), candidate.sha256);
+    assert.equal(original.readUInt32BE(16), candidate.width);
+    assert.equal(original.readUInt32BE(20), candidate.height);
+    assert.equal(candidate.width, candidate.height * 2);
+    assert(!seen.has(candidate.sha256), 'Each mission needs its own composition.');
+    seen.add(candidate.sha256);
+    const consumers = artSource.missions.filter(
+      (mission) => mission.presentation.backgroundAssetId === candidate.id,
+    );
+    assert.equal(consumers.length, 1, candidate.id);
+    const media = await loadPreviewArtwork(candidate, {
+      fetchAsset: async () => new Response(original),
+      digest,
+    });
+    assert.equal(verifiedPreviewBackground(candidate, media).name, candidate.alt);
+  }
+  for (const mission of artSource.missions) {
+    assert.equal(
+      resolveMission(grey, mission.id).simulationIdentity,
+      resolveMission(art, mission.id).simulationIdentity,
+      mission.id,
+    );
+  }
+});
+
 test('original candidate image is pinned and artwork cannot change simulation identity', async () => {
   assert.equal(bytes.length, asset.bytes);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256);
@@ -30,8 +66,8 @@ test('original candidate image is pinned and artwork cannot change simulation id
   );
   const media = await loadPreviewArtwork(asset, { fetchAsset, digest });
   const theme = JSON.parse(
-    await readFile(new URL('../content/themes.json', import.meta.url)),
-  ).themes.find((t) => t.id === 'retro');
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
+  ).themes.find((t) => t.id === 'horizon');
   const preview = prepareContentPreview(artSource, 'first-return', { theme, artwork: media });
   assert.equal(preview.scenario.visualOverrides.background.dataUrl, media.dataUrl);
   assert.equal(preview.manifest.background.sha256, asset.sha256);

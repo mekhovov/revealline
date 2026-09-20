@@ -225,6 +225,7 @@ export function bootCoop() {
     pictureSequence = 0,
     nextOperation = null,
     startPermitted = true;
+  let automaticRetry = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   let inactive = !foreground();
   let previousPads = new Map();
@@ -1004,10 +1005,14 @@ export function bootCoop() {
       binding = selection?.state === 'ready' ? selection.binding : null,
       canvas = $('coop-preview-canvas'),
       message = $('coop-preview-message'),
-      name = selection?.pack.levels.find((level) => level.id === selection.levelId)?.name;
-    $('coop-preview-caption').textContent = name
-      ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
-      : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
+      level = selection?.pack.levels.find((level) => level.id === selection.levelId),
+      name = level?.name;
+    $('coop-preview-caption').textContent =
+      level?.journeyDifficulty && !selection.artworkSource
+        ? `${name} geometry test. Preview scenery is not authored mission artwork. Win to reveal the full picture; scenery does not mark obstacles.`
+        : name
+          ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
+          : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
@@ -1508,11 +1513,12 @@ export function bootCoop() {
         options: { seed: run.seed, difficulty: run.difficulty, ...run.config },
       };
     const experiment = selectedConfiguration();
+    const level = selectedLevel();
     return {
-      level: selectedLevel(),
+      level,
       options: {
         seed: 17,
-        difficulty: $('coop-difficulty').value,
+        difficulty: level.journeyDifficulty ?? $('coop-difficulty').value,
         jointCuts: experiment.jointCuts,
         assistCaptures: experiment.assistCaptures,
         advancedCooperation: experiment.advancedCooperation,
@@ -1520,6 +1526,7 @@ export function bootCoop() {
     };
   }
   function start(recipe = currentRecipe(), prepared = null) {
+    cancelAutomaticRetry();
     cancelNext();
     nextStatus('');
     if (
@@ -1572,7 +1579,9 @@ export function bootCoop() {
     $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
     message(
       run.config.jointCuts
-        ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
+        ? level.enemies.some((enemy) => enemy.type === 'hunter')
+          ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
+          : 'Watch the field keepers. Build return routes together, or meet both moving heads to join a cut.'
         : 'Comparison: head meetings do not join lines. Find a route back to safe ground.',
     );
     overlay();
@@ -1591,6 +1600,7 @@ export function bootCoop() {
     }
   }
   function pause({ focus = true } = {}) {
+    cancelAutomaticRetry();
     cancelNext();
     cancelPicture({ restore: false });
     if (!running()) return;
@@ -1604,6 +1614,7 @@ export function bootCoop() {
     }
   }
   function stopArena(error, { focus = true } = {}) {
+    cancelAutomaticRetry();
     cancelNext();
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
@@ -1914,8 +1925,19 @@ export function bootCoop() {
       event.preventDefault();
       requestDeparture(kind, $(id));
     });
+  function cancelAutomaticRetry() {
+    if (!automaticRetry) return;
+    automaticRetry = null;
+    if (run?.status === 'lost')
+      $('coop-overlay-copy').textContent = coopRetryFeedback(run, knockdowns.filter(Boolean));
+  }
+  const retryFocusChanged = () => {
+    if (document.activeElement !== $('coop-retry')) cancelAutomaticRetry();
+  };
+  document.addEventListener('focusin', retryFocusChanged);
   const suspend = () => {
     if (disposed) return;
+    cancelAutomaticRetry();
     if (settingsOwner) settingsOwner.restore = false;
     inactive = true;
     cancelImport();
@@ -2023,6 +2045,29 @@ export function bootCoop() {
         if (routed.status.code === 'joined') navigation.engage();
         navigation.handle(routed.ui);
       }
+      if (automaticRetry) {
+        const ticket = automaticRetry;
+        if (
+          run !== ticket.run ||
+          generation !== ticket.generation ||
+          acceptedPicture !== ticket.picture ||
+          attemptPack !== ticket.pack ||
+          run.status !== 'lost' ||
+          loopStopped ||
+          settingsVisit !== ticket.settingsVisit ||
+          settingsDialog.open ||
+          earnedDialog.open ||
+          departure ||
+          document.activeElement !== $('coop-retry')
+        )
+          cancelAutomaticRetry();
+        else if (now >= ticket.at) {
+          cancelAutomaticRetry();
+          start(currentRecipe());
+          if (run !== ticket.run && running())
+            message(`${ticket.cause} New attempt; choose fresh directions together.`);
+        }
+      }
       const elapsed = last === null ? 0 : (now - last) / 1000;
       last = now;
       if (running() && elapsed > 0.25) pause();
@@ -2036,6 +2081,22 @@ export function bootCoop() {
           if (!running()) {
             clear();
             overlay();
+            if (run.status === 'lost' && run.level.journeyDifficulty && !loopStopped) {
+              const failure = knockdowns.find(Boolean);
+              automaticRetry = {
+                run,
+                generation,
+                picture: acceptedPicture,
+                pack: attemptPack,
+                settingsVisit,
+                at: now + 700,
+                cause: failure
+                  ? coopFailureFeedback(run, failure).cause
+                  : 'The team ran out of reserves.',
+              };
+              $('coop-overlay-copy').textContent +=
+                ' A fresh attempt starts shortly. Choose another action to stay here.';
+            }
           }
         }
       }
@@ -2051,6 +2112,13 @@ export function bootCoop() {
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    // Compiled Journey packs are immutable preset editions. Changing this menu
+    // cannot re-project their actors/lives through the historical Team rules.
+    $('coop-difficulty').disabled = Boolean(level.journeyDifficulty);
+    if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
+    $('coop-enemy-help').textContent = level.enemies.some((enemy) => enemy.type === 'hunter')
+      ? 'Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.'
+      : 'Field keepers threaten your craft and unfinished line. Watch their motion before crossing. Reclaimed islands close cuts; regions containing a keeper remain unclaimed.';
     const stronghold = Boolean(level.goal.cores);
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
@@ -2229,6 +2297,7 @@ export function bootCoop() {
         selection: pictureSelection,
         level: $('coop-level').value,
         message: pictureMessage,
+        difficulty: $('coop-difficulty').value,
       };
       const proposedPack = draft.pack,
         proposedArtwork = draft.artworkSource;
@@ -2246,6 +2315,7 @@ export function bootCoop() {
           return;
         pictureSelection = previous.selection;
         packArtworkSource = previous.artworkSource;
+        $('coop-difficulty').value = previous.difficulty;
         showPack(previous.pack, previous.level);
         pictureUI(previous.message);
       };
@@ -2442,6 +2512,8 @@ export function bootCoop() {
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
     if (disposed) return;
+    automaticRetry = null;
+    document.removeEventListener('focusin', retryFocusChanged);
     cancelNext({ announce: false });
     $('coop-next').onclick = null;
     $('coop-next-cancel').onclick = null;

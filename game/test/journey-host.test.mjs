@@ -4,7 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
-import { createJourneyBackend } from '../journey/profile.mjs';
+import {
+  createJourneyBackend,
+  emptyJourneyProfile,
+  JOURNEY_BACKUP_VERSION,
+} from '../journey/profile.mjs';
 import { journeyMissionId } from '../journey/catalog.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
@@ -49,6 +53,68 @@ function win(p) {
   assert.equal(p.$('next-button').hidden, false);
   assert.equal(p.$('skip-celebration').hidden, true);
 }
+
+test('Journey backup restoration updates chooser progress without replacing or rewarding the paused attempt', async (t) => {
+  const { p, backend } = await setup(t);
+  p.$('shell-packs').click();
+  p.frame(0);
+  const run = p.rendered.run;
+  const before = {
+    id: run.levelId,
+    tick: run.tick,
+    score: run.score,
+    lives: run.lives,
+    x: run.player.x,
+    y: run.player.y,
+  };
+  p.$('journey-backup-open').click();
+  assert.equal(p.$('journey-backup').open, true);
+  assert.equal(p.$('journey-chooser').open, true);
+  const incoming = emptyJourneyProfile();
+  const restoredMission = journeyMissionId({ campaignId: campaign.id, levelId: 'cut-2' });
+  incoming.cursors.solo = restoredMission;
+  incoming.clears.solo[restoredMission] = {
+    runId: 'backup-only-run',
+    gameplayId: 'older-edition',
+    difficulty: 'standard',
+  };
+  const text = JSON.stringify({ format: JOURNEY_BACKUP_VERSION, profile: incoming });
+  p.$('journey-backup-file').files = [{ size: text.length, text: async () => text }];
+  await p.$('journey-backup-file').onchange();
+  assert.equal(Object.keys((await backend.read()).clears.solo).length, 0);
+  await p.$('journey-backup-apply').onclick();
+  p.frame(0);
+  assert.equal(p.rendered.run, run);
+  assert.deepEqual(
+    {
+      id: run.levelId,
+      tick: run.tick,
+      score: run.score,
+      lives: run.lives,
+      x: run.player.x,
+      y: run.player.y,
+    },
+    before,
+  );
+  const persisted = await backend.read();
+  assert.equal(persisted.clears.solo[restoredMission].runId, 'backup-only-run');
+  assert.equal(
+    persisted.cursors.solo,
+    journeyMissionId({ campaignId: campaign.id, levelId: 'cut-1' }),
+  );
+  assert.match(
+    p.$('journey-cards').children.find((node) => node.dataset.missionId === restoredMission)
+      .textContent,
+    /Cleared/,
+  );
+  p.$('journey-backup-back').click();
+  assert.equal(p.$('journey-backup').open, false);
+  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.doc.activeElement, p.$('journey-backup-open'));
+  p.$('journey-back').click();
+  assert.equal(p.rendered.run, run);
+  assert.deepEqual(p.errors, []);
+});
 
 test('Journey ten consecutive mission clears need only Next and retain exact progress', async (t) => {
   const { p, backend } = await setup(t);

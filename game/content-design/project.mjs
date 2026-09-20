@@ -4,6 +4,7 @@ import { CLASSES, rosterHash } from '../core/registry.mjs';
 import { compileMapDesign } from './map.mjs';
 import { compileAssetRevision } from './assets.mjs';
 import { inspectMissionTopology } from './diagnostics.mjs';
+import { resolveTeamMission } from './team-runtime.mjs';
 import {
   JOURNEY_POLICY,
   ACTOR_CATALOG,
@@ -158,6 +159,7 @@ export function compileContentProject(source) {
       'design',
       'presentation',
       'archived',
+      'team',
     ]);
     archiveFlag(mission);
     exactKeys(mission.map, ['id', 'revision'], 'mission map');
@@ -170,8 +172,12 @@ export function compileContentProject(source) {
       Array.isArray(mission.modes) &&
         mission.modes.length > 0 &&
         new Set(mission.modes).size === mission.modes.length &&
-        mission.modes.every((mode) => ['solo', 'versus'].includes(mode)),
-      'Unsupported or unqualified mission mode; Team requires a separate adapter.',
+        mission.modes.every((mode) => ['solo', 'versus', 'team'].includes(mode)),
+      'Unsupported or unqualified mission mode.',
+    );
+    required(
+      mission.modes.includes('team') ? mission.team !== undefined : mission.team === undefined,
+      'Team mode needs an explicit Team mission definition.',
     );
     unique(mission.actors, 'actors', 24);
     unique(mission.objectives, 'objectives', 40);
@@ -224,7 +230,8 @@ export function compileContentProject(source) {
   try {
     for (const mission of project.missions)
       for (const difficulty of Object.keys(DIFFICULTY_CATALOG.presets))
-        resolveMission(resolved, mission.id, { difficulty, mode: mission.modes[0] });
+        for (const mode of mission.modes)
+          resolveMission(resolved, mission.id, { difficulty, mode });
   } catch (error) {
     compiledProjects.delete(resolved);
     throw error;
@@ -241,6 +248,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     (candidate) =>
       candidate.source.id === mission.map.id && candidate.source.revision === mission.map.revision,
   );
+  if (mode === 'team') return resolveTeamMission(project, mission, map, difficulty);
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const level = normalizedLevel({

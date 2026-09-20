@@ -3,6 +3,7 @@ import { FOUNDATION_SCENARIO_VERSION, validateScenario } from '../content.mjs';
 import { createRun } from '../core/index.mjs';
 import { inspectCaptureSnapshot } from '../core/capture-regions.mjs';
 import { verifiedPreviewBackground } from './assets.mjs';
+import { createCoop } from '../coop/core.mjs';
 
 /** Both preview surfaces use the same resolved candidate as the CLI. No awards. */
 export function prepareContentPreview(
@@ -17,14 +18,21 @@ export function prepareContentPreview(
     (candidate) =>
       candidate.source.id === mission.map.id && candidate.source.revision === mission.map.revision,
   );
-  const run = createRun(manifest.level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
+  // Foundation Team candidates have only active field keepers and no strongholds;
+  // their region-retention contract is identical. Never substitute a Solo run.
+  const run =
+    mode === 'team'
+      ? createCoop(manifest.level, { seed: 1 })
+      : createRun(manifest.level, { seed: 1, classId: 'scout', turnPolicy: 'immediate' });
   const capture = inspectCaptureSnapshot(run, { trailCells });
   let scenario = null;
   if (theme) {
     if (mode !== 'solo')
       throw new Error(
-        'Only Solo has a Studio gameplay preview; paired-race launch is not substituted.',
+        'Only Solo has a Studio gameplay preview; Team and paired-race launches are not substituted.',
       );
+    if (theme.id !== manifest.presentation.themeId)
+      throw new Error('Preview theme must match the authored mission presentation.');
     scenario = {
       format: FOUNDATION_SCENARIO_VERSION,
       masteryDefinition: null,
@@ -49,7 +57,8 @@ export function prepareContentPreview(
   // an alternate placement or expose the mutable run to Studio.
   const markers = {
     actors: run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
-    objectives: run.objectives.map(({ id, x, y }) => ({ id, x, y })),
+    objectives: (run.objectives ?? []).map(({ id, x, y }) => ({ id, x, y })),
+    ...(mode === 'team' ? { spawns: run.players.map(({ id, x, y }) => ({ id, x, y })) } : {}),
   };
   return { manifest, geometry: map.geometry, capture, markers, scenario };
 }
