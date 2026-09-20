@@ -106,6 +106,23 @@ test('roamer authoring uses bounded shared tiers and fails closed for unqualifie
   );
 });
 
+test('the project boundary requires an explicit catalogue and never inherits the standalone legacy default', () => {
+  for (const create of [createStarterProject, createTeamOpeningCandidates, source]) {
+    const missing = create();
+    delete missing.actorCatalogId;
+    assert.throws(() => compileContentProject(missing), /explicit registered actor catalogue/);
+    for (const actorCatalogId of [null, '', 'unknown', '__proto__']) {
+      const invalid = create();
+      invalid.actorCatalogId = actorCatalogId;
+      assert.throws(() => compileContentProject(invalid), /registered actor catalog/);
+    }
+  }
+  assert.equal(journeyActors(), ACTOR_CATALOG, 'Intentional standalone compatibility stays exact');
+  const explicit = compileContentProject(createStarterProject());
+  assert.equal(explicit.actors, ACTOR_CATALOG);
+  assert.equal(compileContentProject(explicit), explicit, 'Owned compiled projects retain reuse');
+});
+
 for (const difficulty of ['gentle', 'standard', 'expert'])
   for (const turnPolicy of ['immediate', 'grid-center'])
     test(`authored roamer keeps the existing dormant → warning → reclaimed-domain contract: ${difficulty}/${turnPolicy}`, () => {

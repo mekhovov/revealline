@@ -128,6 +128,10 @@ export function compileContentProject(source) {
     'assets',
   ]);
   const policy = journeyPolicy(project.policyId);
+  required(
+    stableId(project.actorCatalogId),
+    'Project needs an explicit registered actor catalogue ID.',
+  );
   const actors = journeyActors(project.actorCatalogId);
   required(
     project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
