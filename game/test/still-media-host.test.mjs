@@ -7,10 +7,11 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { createStoryMediaStore } from '../story-media-store.mjs';
-import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import { upgradeSoundtrackLibrary } from '../soundtrack.mjs';
+import { exportSoundtrackBundle, prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
-import { memoryIndexedDB, fixture } from './helpers/soundtrack-fixtures.mjs';
+import { memoryIndexedDB, fixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { mediaFixture, pngBytes, deferred } from './helpers/media-fixtures.mjs';
 
 const audioFixture = await fixture();
@@ -67,7 +68,7 @@ async function setup(t, options = {}) {
     lockManager: { request: async (_name, _options, work) => work({}) },
     decodeImage,
     createManager(args) {
-      assert.deepEqual(args, { storyMedia: true });
+      assert.deepEqual(args, { storyMedia: true, soundtrackCatalogue: true });
       const manager = createManagedMediaStore({ ...args, indexedDB: memory.indexedDB });
       managers.push(manager);
       return manager;
@@ -138,7 +139,7 @@ test('actual authoring entry opens no DB until explicit activation and shares on
   await new Promise(setImmediate);
   assert.ok(h.memory.closed > 0);
 });
-test('v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation', async (t) => {
+test('v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation', async (t) => {
   const memory = memoryIndexedDB(),
     old = createSoundtrackStore({ indexedDB: memory.indexedDB });
   await old.commit(audioFixture.prepared, { expectedGeneration: 0 });
@@ -293,4 +294,34 @@ test('actual shared router prevents held Confirm across modal close and native p
   assert.notEqual(h.doc.activeElement, h.$('still-media-show-authored'));
   const tab = h.doc.emit('keydown', { key: 'Tab', target: h.doc.activeElement });
   assert.equal(tab.defaultPrevented, false, 'Native modal Tab default is left to the browser.');
+});
+
+test('current Picture Workshop reads and edits beside a saved v2 music library without changing it', async (t) => {
+  const memory = memoryIndexedDB();
+  const game = createManagedMediaStore({ indexedDB: memory.indexedDB, soundtrackCatalogue: true });
+  const prepared = await prepareSoundtrackLibrary(
+    upgradeSoundtrackLibrary(audioFixture.library),
+    audioFixture.assets,
+    { probeMedia: structuralProbe },
+  );
+  await game.commitDomain('audio', prepared, { expectedGeneration: 0 });
+  const prior = await game.readDomain('audio');
+  game.close();
+  const h = await setup(t, { memory });
+  assert.equal(await h.host.open(), true);
+  h.$('still-media-file').files = [new Blob([pngBytes()])];
+  h.$('still-media-file').onchange();
+  h.$('still-media-credit').value = 'Owned fixture';
+  h.$('still-media-source').value = 'Original';
+  h.$('still-media-description').value = 'Picture beside catalogue-aware music';
+  assert.equal(await h.$('still-media-preview').onclick(), true);
+  assert.equal(await h.$('still-media-save').onclick(), true);
+  assert.deepEqual(await h.managers[0].readDomain('audio'), prior);
+  h.host.panel.close();
+  assert.equal(await h.$('still-host-export-audio').onclick(), true);
+  const backup = h.urls.get(h.$('still-host-download-audio').href);
+  assert.deepEqual(
+    await backup.arrayBuffer(),
+    await (await exportSoundtrackBundle(prior.library, prior.assets)).arrayBuffer(),
+  );
 });

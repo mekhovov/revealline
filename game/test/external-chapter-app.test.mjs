@@ -255,6 +255,7 @@ test('cleared assignment still selects descriptor original; missing original ref
   const manager = createManagedMediaStore({
     indexedDB: p.fixture.media.indexedDB,
     storyMedia: true,
+    soundtrackCatalogue: true,
   });
   const decodeImage = async () => ({ naturalWidth: 1774, naturalHeight: 887 });
   const still = createStillMediaStore({ managedStore: manager, decodeImage });
@@ -275,7 +276,7 @@ test('cleared assignment still selects descriptor original; missing original ref
   await settle(() => !p.$('pack-select').disabled && p.doc.body.dataset.pictureState === 'ready');
   p.frame(0);
   assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
-  const request = p.fixture.media.indexedDB.open('revealline-soundtrack-v1', 4);
+  const request = p.fixture.media.indexedDB.open('revealline-soundtrack-v1', 5);
   const db = await new Promise((resolve, reject) => {
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
@@ -327,7 +328,11 @@ test('Workshop authenticates the same pointer/index and holds both locks; stale 
     media = managedIndexedDB(),
     locks = new Locks(),
     storage = memoryStorage();
-  const manager = createManagedMediaStore({ indexedDB: media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const decodeImage = async () => ({ naturalWidth: 1774, naturalHeight: 887 });
   const host = createExternalChapterHost({
     indexedDB: assets.indexedDB,
@@ -434,7 +439,11 @@ test('source install and unrelated chapter win preserve an earlier exact first-e
     themeIds: ['fpv'],
   }).choices[0];
   const f = { media: managedIndexedDB() };
-  const manager = createManagedMediaStore({ indexedDB: f.media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: f.media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
   const still = createStillMediaStore({ managedStore: manager, decodeImage });
   const story = createStoryMediaStore({ managedStore: manager, decodeImage });
@@ -579,7 +588,11 @@ test('native exact-pair recovery completes a retained published journal once; re
     locks: new Locks(),
     storage: memoryStorage(),
   };
-  const manager = createManagedMediaStore({ indexedDB: f.media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: f.media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const decodeImage = async () => ({ naturalWidth: 1774, naturalHeight: 887 });
   const still = createStillMediaStore({ managedStore: manager, decodeImage });
   const pointer = createExternalChapterPointerStore({

@@ -1,5 +1,7 @@
 # Session music and original MP3 libraries
 
+The current soundtrack expansion uses explicit shared DB5 adoption and soundtrack-library/bundle v2 while retaining v1 import. Read `docs/soundtrack-expansion.md` before editing current hosts. Catalogue pins are separate from uploaded MP3 records; only trusted shipped catalogue entries grant network authority. Installed catalogue IDs determine retained offline originals. Additive creator albums and replacement backups are distinct actions. The 36 original briefs in `authoring/library/revealline-original-soundtrack` are planned assets; its ready register and runtime catalogue remain empty until actual recordings and pinned review receipts exist. Approved hosted-generation access is a prerequisite, not permission to bypass a network block.
+
 Read `docs/soundtrack-library.md` for the versioned model, transport, byte preservation and actual limits; `docs/soundtrack-studio.md` for UI authoring. Resolve these paths from the project root. The runtime modules, not this guide, define accepted data.
 
 - Use Settings → Music library & playlists for batch import, audition, metadata/provenance, editable playlists and Save & use. Imports stay drafts until the atomic save succeeds. Built-in genre playlists are synthesized recipes; they are not the planned 24 finished tracks.

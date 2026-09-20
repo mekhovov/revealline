@@ -1,5 +1,8 @@
 # RevealLine: current delivery plan
 
+**2026-09-21 soundtrack scope update:** the current music target is **36 distinct original compositions** (twelve per requested family, including six fusions), plus the separate 24-track licensed collection. Genre playlists, two-deck playback, version-5 storage, local creator albums and hosted-production acceptance tooling are implemented in the soundtrack candidate; qualification is in progress. **0/36 original recordings are finished** because approved access to hosted generation is still required. See [soundtrack implementation and production status](soundtrack-expansion.md). This supersedes the older 24-track target below without changing historical release evidence.
+
+
 Updated 2026-09-14. This is the current priority register; the older roadmap and verification notes retain their historical checkpoints. Implementation is authorized and continues without routine approval questions.
 
 **Active work: complete FPV Field Kit redesign.** The approved [design contract](fpv-redesign-design.md) and [execution register](fpv-redesign-execution.md) govern the new presentation phases, starting from reviewed `fe9961e` / v0.43.0. The [interactive design atlas](../authoring/design-atlas/index.html) contains original screen studies, bilingual font specimens and the coverage matrix. Phase 0 is a reviewable design deliverable; later font integration, asset studio, original production art and whole-game adoption have separate acceptance and release boundaries. Historical status paragraphs below retain their observation dates and do not certify a later phase.

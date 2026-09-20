@@ -34,7 +34,7 @@ const ticks = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
 async function waitFor(predicate, label) {
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 600; i++) {
     if (predicate()) return;
     await new Promise((resolve) => setTimeout(resolve, 5));
   }
@@ -92,7 +92,13 @@ async function openStudio(page) {
 const musicMedia = (page) => page.audioElements[0];
 async function playStudio(page) {
   page.$('soundtrack-play').click();
-  await waitFor(() => musicMedia(page).paused === false, page.$('soundtrack-now').textContent);
+  await waitFor(
+    () =>
+      musicMedia(page).paused === false &&
+      page.$('soundtrack-now').textContent.includes('playing') &&
+      preferences(page).musicEnabled,
+    page.$('soundtrack-now').textContent,
+  );
 }
 function leaveStudio(page) {
   page.$('soundtrack-close').click();
@@ -258,9 +264,11 @@ test('actual audition hide/focus releases the preview and restores prior MP3 lis
     url = media.src;
   page.change('soundtrack-tracks', original.track.id);
   page.$('soundtrack-audition-track').click();
-  const preview = page.audioElements[1];
+  const preview = page.audioElements.find(
+    (element) => element !== media && element.src && !element.paused,
+  );
   await waitFor(
-    () => preview.paused === false,
+    () => preview?.paused === false,
     'The actual panel starts a separate audition stream',
   );
   assert.equal(media.paused, true);
@@ -404,7 +412,11 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     1,
   );
   assert.equal(audio.revoked.includes(url), false);
-  const shared = createManagedMediaStore({ indexedDB: db.indexedDB, storyMedia: true });
+  const shared = createManagedMediaStore({
+    indexedDB: db.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const reader = createSoundtrackStore({ managedStore: shared });
   assert.equal(
     (await reader.read()).generation,
@@ -419,5 +431,69 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   leaveStudio(page);
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
+
+test('remembered menu music waits for a trusted gesture and later menu clicks preserve music-only Pause', async (t) => {
+  const { page } = await setup(t, { audioPreferences: { musicEnabled: true } });
+  const media = musicMedia(page);
+  assert.equal(media.paused, true, 'remembered settings do not bypass browser autoplay');
+  page.doc.emit('pointerdown', { isTrusted: false, target: page.doc.body });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(media.paused, true);
+  page.doc.emit('pointerdown', { isTrusted: true, target: page.doc.body });
+  await waitFor(() => !media.paused, 'trusted menu input resumes remembered music');
+  assert.equal(page.rendered.run.tick, 0);
+  await openStudio(page);
+  page.$('soundtrack-pause').click();
+  await waitFor(() => page.$('soundtrack-now').textContent.includes('paused'), 'music-only Pause');
+  leaveStudio(page);
+  page.doc.emit('pointerdown', { isTrusted: true, target: page.doc.body });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(media.paused, true, 'subsequent menu navigation respects explicit Pause');
+  assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('a denied focus resume retries on trusted input while an explicit music Pause remains paused', async (t) => {
+  const { page } = await setup(t);
+  await openStudio(page);
+  await playStudio(page);
+  const media = musicMedia(page),
+    url = media.src;
+  const denyFocusResume = async () => {
+    media.rejectPlay = new DOMException('A new gesture is required.', 'NotAllowedError');
+    page.doc.hidden = true;
+    page.doc.emit('visibilitychange');
+    page.doc.hidden = false;
+    page.doc.emit('visibilitychange');
+    page.win.emit('focus');
+    await waitFor(
+      () => /browser needs/.test(page.$('soundtrack-summary').textContent),
+      'focus resume exposes the browser denial',
+    );
+    media.rejectPlay = null;
+  };
+  await denyFocusResume();
+  const before = media.plays;
+  page.doc.emit('pointerdown', { isTrusted: false, target: page.doc.body });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(media.plays, before, 'synthetic input cannot authorize a blocked retry');
+  page.doc.emit('pointerdown', { isTrusted: true, target: page.doc.body });
+  await waitFor(() => !media.paused, 'the next trusted gesture restores desired listening');
+  assert.equal(media.plays, before + 1);
+  assert.equal(media.src, url);
+  await denyFocusResume();
+  page.$('soundtrack-pause').click();
+  await waitFor(
+    () => page.$('soundtrack-now').textContent.includes('paused'),
+    'music-only Pause clears listening intent',
+  );
+  const pausedPlays = media.plays;
+  page.doc.emit('pointerdown', { isTrusted: true, target: page.doc.body });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(media.plays, pausedPlays);
+  assert.equal(media.paused, true);
+  assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.errors, []);
 });

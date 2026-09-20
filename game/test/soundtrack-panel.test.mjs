@@ -1,8 +1,13 @@
+import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-albums.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
-import { emptySoundtrackLibrary, BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
+import {
+  emptySoundtrackLibrary,
+  BUILTIN_SOUNDTRACK_TRACKS,
+  resolveCatalogueTrack,
+} from '../soundtrack.mjs';
 import { prepareSoundtrackLibrary, importSoundtrackBundle } from '../soundtrack-bundle.mjs';
 import {
   fixture,
@@ -154,7 +159,12 @@ async function setup(
   doc.head = new Element(doc, 'head');
   doc.createElement = (tag) => new Element(doc, tag);
   const db = memoryIndexedDB(),
-    store = overrideStore ?? createSoundtrackStore({ indexedDB: db.indexedDB });
+    store =
+      overrideStore ??
+      createSoundtrackStore({
+        indexedDB: db.indexedDB,
+        soundtrackCatalogue: !!callbacks.catalogue,
+      });
   if (initial) await store.commit(initial.prepared, { expectedGeneration: 0 });
   const calls = [],
     notices = [],
@@ -178,6 +188,7 @@ async function setup(
       state.desired = desired;
     },
     selectPlaylist: async (id) => calls.push(['select', id]),
+    selectListening: async (value) => calls.push(['listening', value]),
     pause: () => {
       calls.push(['pause']);
       Object.assign(state, { playing: false, desired: false, status: 'paused' });
@@ -817,4 +828,336 @@ test('native adapter receives prepared bytes synchronously on explicit activatio
   assert.equal(requests[1].filename, 'RevealLine-soundtrack.rlsound');
   assert.match(app.node('status').textContent, /request handed to the host/);
   assert.equal((await app.store.read()).generation, 1);
+});
+
+test('optional album additions preserve applied and unapplied drafts, playlist choice and playing transport', async (t) => {
+  const a = await albumFixture('qa.first'),
+    b = await albumFixture('qa.second');
+  let requests = 0;
+  const fetch = async (url) => {
+    requests++;
+    return responseFor(
+      url.endsWith('.json')
+        ? JSON.stringify(albumCatalog(a.album, b.album))
+        : url.includes(a.album.id)
+          ? a.blob
+          : b.blob,
+      url,
+    );
+  };
+  const app = await setup(t, {
+    callbacks: { albumDownload: { baseURL: 'https://example.test/build/', fetch } },
+  });
+  assert.equal(requests, 0, 'opening Studio does not fetch metadata or audio');
+  app.node('mp3-files').files = [file('Personal.mp3')];
+  await app.click('import-mp3');
+  app.node('track-title').value = 'Applied personal title';
+  await app.click('apply-track');
+  app.node('track-title').value = 'Typed but not applied';
+  app.node('selection').value = 'builtin.fpv';
+  await app.click('browse-albums');
+  assert.equal(requests, 1);
+  assert.equal(app.node('track-title').value, 'Typed but not applied');
+  await app.click('album-add-qa.first');
+  assert.equal(app.node('track-title').value, 'Typed but not applied');
+  assert.equal(app.node('selection').value, 'builtin.fpv');
+  assert.equal((await app.store.read()).generation, 0, 'Add is only a draft');
+  await app.click('album-add-qa.second');
+  await app.click('save');
+  const current = await app.store.read();
+  assert.equal(current.library.tracks.length, 3);
+  assert.equal(current.library.tracks[0].title, 'Applied personal title');
+  assert.equal(
+    current.library.selection.playlistId,
+    null,
+    'unapplied selection was not silently saved',
+  );
+  assert.deepEqual(
+    current.library.playlists.map((p) => p.id),
+    ['qa.first', 'qa.second'],
+  );
+  assert.equal(
+    app.calls.some(([name]) => ['play', 'pause', 'select'].includes(name)),
+    false,
+  );
+  assert.equal(app.state.track.id, 'builtin.fpv');
+});
+
+test('cancelled album download preserves an earlier draft and typed editor fields', async (t) => {
+  const a = await albumFixture();
+  let cancelCount = 0,
+    requested;
+  const started = new Promise((resolve) => {
+    requested = resolve;
+  });
+  const fetch = async (url) => {
+    if (url.endsWith('.json')) return responseFor(JSON.stringify(albumCatalog(a.album)), url);
+    requested();
+    return responseFor(
+      new ReadableStream({
+        cancel() {
+          cancelCount++;
+        },
+      }),
+      url,
+    );
+  };
+  const app = await setup(t, {
+    callbacks: { albumDownload: { baseURL: 'https://example.test/build/', fetch } },
+  });
+  app.node('mp3-files').files = [file()];
+  await app.click('import-mp3');
+  app.node('track-title').value = 'Retain typed title';
+  await app.click('browse-albums');
+  const promise = app.click('album-add-qa.album');
+  await started;
+  await app.click('cancel');
+  await promise;
+  assert.equal(cancelCount, 1);
+  assert.equal(app.node('track-title').value, 'Retain typed title');
+  assert.match(app.node('status').textContent, /cancelled/);
+  await app.click('save');
+  assert.equal((await app.store.read()).library.tracks.length, 1);
+});
+
+test('album completion restores owned disabled-control focus and respects deliberate navigation', async (t) => {
+  const a = await albumFixture();
+  let respond, entered;
+  const fetch = async (url) => {
+    if (url.endsWith('.json')) return responseFor(JSON.stringify(albumCatalog(a.album)), url);
+    entered?.();
+    return new Promise((resolve) => {
+      respond = () => resolve(responseFor(a.blob, url));
+    });
+  };
+  const app = await setup(t, {
+    callbacks: { albumDownload: { baseURL: 'https://example.test/build/', fetch } },
+  });
+  await app.click('browse-albums');
+  const opener = app.node('album-add-qa.album');
+  opener.focus();
+  const firstStart = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const first = opener.click();
+  await firstStart;
+  app.doc.activeElement = app.doc.body;
+  respond();
+  await first;
+  assert.equal(app.doc.activeElement.id, app.node('save').id);
+  opener.focus();
+  const secondStart = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const second = opener.click();
+  await secondStart;
+  app.node('play').focus();
+  app.doc.emit('focusin', { target: app.node('play') });
+  respond();
+  await second;
+  assert.equal(app.doc.activeElement.id, app.node('play').id);
+});
+
+const emptyCatalogue = {
+  format: 'revealline-soundtrack-catalogue.v1',
+  edition: 'originals-1',
+  tracks: [],
+};
+
+test('genre controls persist the actual checkbox selection without resuming intentional music pause', async (t) => {
+  const app = await setup(t, { callbacks: { catalogue: emptyCatalogue } });
+  app.state.playing = false;
+  app.state.desired = false;
+  app.node('listening-mode').value = 'mix';
+  app.node('mix-synth90s').checked = false;
+  app.node('mix-metal').checked = true;
+  app.node('mix-ukrainian').checked = true;
+  app.node('installed-only').checked = true;
+  await app.click('apply-listening');
+  const saved = await app.store.read();
+  assert.deepEqual(saved.library.listening, {
+    mode: 'mix',
+    genres: ['metal', 'ukrainian'],
+    installedOnly: true,
+  });
+  assert.deepEqual(app.calls.find(([name]) => name === 'listening')[1], saved.library.listening);
+  assert.equal(
+    app.calls.some(([name]) => name === 'play'),
+    false,
+  );
+  assert.match(app.node('original-status').textContent, /in production/);
+});
+
+test('catalogue volume download and removal preserve playlists and original upload bytes', async (t) => {
+  const initial = await fixture('uploaded'),
+    song = await fixture('published');
+  const track = resolveCatalogueTrack({
+    ...song.track,
+    id: 'builtin.catalog.test',
+    edition: 'originals-1',
+    path: 'optional/soundtracks/test.mp3',
+    tags: { genres: ['ukrainian'], role: 'gameplay', energy: 4, themes: ['ukraine'] },
+  });
+  let downloads = 0;
+  const app = await setup(t, {
+    initial,
+    callbacks: {
+      catalogue: { ...emptyCatalogue, tracks: [track] },
+      readAsset: async (hash, options) => {
+        assert.equal(hash, track.asset.sha256);
+        assert.equal(options.download, true);
+        downloads++;
+        return song.assets[0].blob;
+      },
+    },
+  });
+  await app.click('download-ukrainian-1');
+  assert.equal(downloads, 1);
+  assert.equal((await app.store.read()).assets.length, 1, 'download stays draft until save');
+  await app.click('save');
+  let saved = await app.store.read();
+  assert.deepEqual(saved.library.installedTrackIds, [track.id]);
+  assert.equal(saved.assets.length, 2);
+  app.choose('tracks', track.id);
+  await app.click('create-playlist');
+  await app.click('save');
+  const id = app.node('playlists').value;
+  await app.click('offload-ukrainian-1');
+  await app.click('save');
+  saved = await app.store.read();
+  assert.deepEqual(saved.library.installedTrackIds, []);
+  assert.deepEqual(saved.library.playlists.find((item) => item.id === id).trackIds, [track.id]);
+  assert.equal(saved.assets.length, 1);
+  assert.equal(saved.assets[0].sha256, initial.track.asset.sha256);
+});
+
+test('creator tags and selected-playlist export preserve original bytes and additive import retains choices', async (t) => {
+  const initial = await fixture('creator');
+  const app = await setup(t, { initial, callbacks: { catalogue: emptyCatalogue } });
+  app.choose('tracks', initial.track.id);
+  app.node('track-genre').value = 'metal';
+  app.node('track-fusion').value = 'ukrainian';
+  app.node('track-role').value = 'intense';
+  app.node('track-energy').value = '5';
+  app.node('track-themes').value = 'fpv, ukraine';
+  await app.click('apply-track');
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.deepEqual(saved.library.tags[initial.track.id], {
+    genres: ['metal', 'ukrainian'],
+    role: 'intense',
+    energy: 5,
+    themes: ['fpv', 'ukraine'],
+  });
+  app.choose('playlists', initial.library.playlists[0].id);
+  await app.click('export-share');
+  assert.match(app.node('status').textContent, /Album prepared/);
+  await app.click('download-prepared');
+  assert.equal(app.downloads.length, 1);
+  const exported = await importSoundtrackBundle(app.downloads[0].blob, {
+    probeMedia: structuralProbe,
+  });
+  assert.equal(exported.assets[0].sha256, initial.track.asset.sha256);
+  app.node('bundle-file').files = [app.downloads[0].blob];
+  await app.click('add-share');
+  await app.click('save');
+  const restored = await app.store.read();
+  assert.equal(restored.library.tracks.length, 1);
+  assert.deepEqual(restored.library.selection, saved.library.selection);
+});
+
+test('album browsing retains unapplied music tags and genre checkbox edits', async (t) => {
+  const a = await albumFixture();
+  const initial = await fixture('pending-tags');
+  const app = await setup(t, {
+    initial,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) => responseFor(JSON.stringify(albumCatalog(a.album)), url),
+      },
+    },
+  });
+  app.choose('tracks', initial.track.id);
+  app.node('track-genre').value = 'ukrainian';
+  app.node('track-fusion').value = 'metal';
+  app.node('track-role').value = 'menu';
+  app.node('track-energy').value = '2';
+  app.node('track-themes').value = 'ukraine';
+  app.node('listening-mode').value = 'mix';
+  app.node('mix-metal').checked = false;
+  app.node('installed-only').checked = true;
+  await app.click('browse-albums');
+  assert.equal(app.node('track-genre').value, 'ukrainian');
+  assert.equal(app.node('track-fusion').value, 'metal');
+  assert.equal(app.node('track-role').value, 'menu');
+  assert.equal(app.node('track-energy').value, '2');
+  assert.equal(app.node('track-themes').value, 'ukraine');
+  assert.equal(app.node('listening-mode').value, 'mix');
+  assert.equal(app.node('mix-metal').checked, false);
+  assert.equal(app.node('installed-only').checked, true);
+});
+
+test('uninstalled trusted catalogue tracks show online availability and can be auditioned', async (t) => {
+  const song = await fixture('online-audition');
+  const track = resolveCatalogueTrack({
+    ...song.track,
+    id: 'builtin.catalog.online-audition',
+    edition: 'originals-1',
+    path: 'optional/soundtracks/online-audition.mp3',
+    tags: { genres: ['synth90s'], role: 'menu', energy: 2, themes: ['retro'] },
+  });
+  let reads = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: { ...emptyCatalogue, tracks: [track] },
+      readAsset: async (hash, { signal }) => {
+        assert.equal(hash, track.asset.sha256);
+        assert.equal(signal.aborted, false);
+        reads++;
+        return song.assets[0].blob;
+      },
+    },
+  });
+  app.choose('tracks', track.id);
+  assert.match(app.node('track-info').textContent, /available online/);
+  assert.equal(app.node('audition-track').disabled, false);
+  await app.click('audition-track');
+  assert.equal(reads, 1);
+  assert.match(app.node('status').textContent, /Auditioning/);
+  await app.click('stop-audition');
+});
+
+test('oversized complete catalogue backup is refused before any original download', async (t) => {
+  const song = await fixture('large-catalogue');
+  const tracks = Array.from({ length: 9 }, (_, index) =>
+    resolveCatalogueTrack({
+      ...song.track,
+      id: `builtin.catalog.large-${index}`,
+      edition: 'originals-1',
+      path: `optional/soundtracks/large-${index}.mp3`,
+      asset: {
+        ...song.track.asset,
+        sha256: String(index + 1).padStart(64, '0'),
+        bytes: 32 * 1024 * 1024,
+      },
+      tags: { genres: ['synth90s'], role: 'gameplay', energy: 3, themes: ['retro'] },
+    }),
+  );
+  let reads = 0;
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: { ...emptyCatalogue, tracks },
+      readAsset: async () => {
+        reads++;
+        throw new Error('Unexpected original download');
+      },
+    },
+  });
+  await app.click('apply-listening');
+  await app.click('export-bundle');
+  assert.equal(reads, 0);
+  assert.match(app.node('status').textContent, /exceeds 256.0 MiB/);
+  assert.equal(app.downloads.length, 0);
 });

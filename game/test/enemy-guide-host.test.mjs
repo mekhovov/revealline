@@ -293,7 +293,13 @@ for (const listening of [false, true]) {
     );
     page.$('soundtrack-play').click();
     const media = page.audioElements[0];
-    await settle(() => !media.paused);
+    await settle(
+      () =>
+        !media.paused &&
+        loadLibrary(page.storage, profileKey, { campaigns: [campaign] }).library.preferences
+          .musicEnabled,
+      'Playback and its persisted listening preference are ready before entering practice',
+    );
     if (!listening) {
       page.$('soundtrack-pause').click();
       await settle(() => media.paused);
