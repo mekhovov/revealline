@@ -700,3 +700,15 @@
     row-gap: 8px;
   }
 }
+
+/* Paused commands conceal the field. Keep their underlying HUD at the page
+   width instead of squeezing text into the short landscape board footprint.
+   The running arena retains its separate, aspect-correct fit. */
+@media (min-width: 521px) and (max-width: 680px) and (orientation: landscape) and (max-height: 600px) {
+  .game-shell[data-flight-state='paused'] .arena-panel,
+  .game-shell[data-flight-state='paused']
+    .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+  .game-shell[data-flight-state='paused'] .arena-panel:has(> .encounter-status:not([hidden])) {
+    max-width: 100%;
+  }
+}

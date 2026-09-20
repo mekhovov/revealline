@@ -256,3 +256,5 @@ Exercise immediate Escape/Back and explicit Cancel after title Continue from a r
 During an active title preparation, Escape/Back cancels the operation and retains its title opener. Verify this through the actual native cancel event and real keyboard input; do not treat a direct Cancel-button-only test as proof of Back focus behavior.
 
 When an authored conditional recovery group changes a chapter card, preserve the exact visible action order and closed native-file disclosure checks. Extend the contract to require the group hidden initially, an accessible name and the correct explicit actions; keep complete keyboard/controller, cancel/retry and stale-focus tests. Never simply remove a structural assertion to obtain a pass.
+
+For short-screen pause overlays, test Large/Plain at 844×390 and 568×320. Traverse both directions to Resume and Main menu; inspect the whole focused outline within the scrollport. Structural CSS assertions do not substitute for actual intrinsic-height, scroll and keyboard checks. Keep font size and target size intact.
