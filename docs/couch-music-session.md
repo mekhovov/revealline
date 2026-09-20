@@ -1,6 +1,6 @@
 # Couch music: session intent policy
 
-P02-B's next isolated milestone after the shared library/context foundation. The Team/Versus pages and Music library panel are **not wired yet**. This module supplies policy around borrowed owners, not a second audio player, context, media element, scheduler, profile store or game controller.
+P02-B's session policy is integrated into the Team and Versus pages and shared Music library panel. See [the composed host contract](couch-music-host.md) for the current wiring. This module supplies policy around borrowed owners, not a second audio player, context, media element, scheduler, profile store or game controller.
 
 ## Integration contract
 
@@ -16,12 +16,14 @@ Call `start()` in the accepted Start action. It resolves false immediately while
 
 `dispose` stops intent and fences late preparation/play policy. It deliberately does not close borrowed owners. The host then disposes library-panel auditions and published bindings/player, closes the library owner, and closes its Soundscape/master in the established order. Do not leave those owners alive after navigating away. A live borrowed library may still finish a read after policy disposal; it cannot trigger preparation or autoplay through this policy.
 
-## Remaining integration and release work
+## Host integration obligations and remaining qualification
 
-- Add the panel's supported adoption hook before its current `player.setLibrary` calls. Route panel Play/Pause and Save & use intent through the session; do not bypass it with direct transport calls that erase the policy's knowledge of a prior Pause.
-- Compose Team and Versus Settings → Audio, library modal ownership, exact opener restoration and controller routing. The native Solo keyboard baseline is Settings → Audio → Music library → Escape to Audio opener → Escape to Settings opener.
+- Preserve the panel's supported adoption hook before its default `player.setLibrary` calls. Route panel Play/Pause and Save & use intent through the session; do not bypass it with direct transport calls that erase the policy's knowledge of a prior Pause.
+- Maintain Team and Versus Settings → Audio, library modal ownership, exact opener restoration and controller routing. The native Solo keyboard baseline is Settings → Audio → Music library → Escape to Audio opener → Escape to Settings opener.
 - Keep permanent music-capability text separate from transient errors. Team gameplay effects remain visual until separately qualified.
 - Bind verified presentation music without replacing an explicit playlist, and feed exact accepted contexts for built-in/imported/installed content.
 - Verify actual browser gesture permission, hidden/foreground restoration, keyboard/touch/controller navigation, listening and public/offline journeys on the final composed source.
 
 The model tests use the existing real player/library/master modules and reused coded-silence MP3 bytes, with finite media/AudioContext/IndexedDB boundaries. They prove intent and operation ordering, not audibility, browser permission policy or physical-device behavior.
+
+The [original-byte backup journey](verification/music-backup-native-v070/README.md) records two owned MP3s and a mixed playlist restored through native file selection into a separate origin, then exported byte-identically. It is scoped to source `508a638f`, with master sound muted; it does not qualify listening, offline use, physical devices or later integrated releases.

@@ -1,6 +1,6 @@
 # Shared music panel: adoption and session integration
 
-P02-B adapter milestone after the shared-library foundation and session policy. The public Solo default remains compatible; no Team/Versus host is wired by this change alone.
+P02-B's adapter preserves the Solo default and is now composed into Team and Versus by [the shared music host](couch-music-host.md). This guide describes panel ownership; the host guide records the current integration and its remaining qualification limits.
 
 ## Supported host hooks
 
@@ -10,7 +10,7 @@ P02-B adapter milestone after the shared-library foundation and session policy. 
 - `musicSession`: routes the panel's explicit Play and Pause buttons through the supplied session's `play/pause`. Other player functions remain on the same existing player. Temporary audition pauses/restoration deliberately bypass this explicit-choice hook; they must not be mistaken for the user's persistent session choice to stop music.
 - Returned `element` and `isOpen()`: expose the exact dialog and current lifetime to the host's keyboard/controller/modal owner. These handles do not implement focus routing or gameplay pause themselves.
 
-For Couch, `owner.adoptVerifiedSnapshot(snapshot)` is the synchronous admission boundary. It accepts only output from the existing validated managed store or prepared-library commit, not raw uploaded data. It installs owned bytes before player metadata, fences older boot reads, rejects an older snapshot, and refuses admission while its own save is pending or after close. It does not write storage or invoke Play. Future host code must keep store operations on the same story-enabled v4 manager and must still perform all existing import/bundle validation.
+For Couch, `owner.adoptVerifiedSnapshot(snapshot)` is the synchronous admission boundary. It accepts only output from the existing validated managed store or prepared-library commit, not raw uploaded data. It installs owned bytes before player metadata, fences older boot reads, rejects an older snapshot, and refuses admission while its own save is pending or after close. It does not write storage or invoke Play. Host code must keep store operations on the same story-enabled v4 manager and must still perform all existing import/bundle validation.
 
 A host can use a raw `createSoundtrackStore({managedStore})` facade for panel transactions while passing `adoptLibrary: snapshot => owner.adoptVerifiedSnapshot(snapshot)`. Boot uses the same owner's guarded `load`, never a competing unguarded metadata setter. The panel's optional hook is awaited so a wrapper's rejection is observed, but preparation/I/O belongs before owner admission. Async host work must retain lifecycle cancellation; no callback is permission to mutate a destroyed host.
 
@@ -22,9 +22,9 @@ A successful transaction is durable even if adoption subsequently fails or cance
 
 Save & use preserves paused listening. It chooses the saved queue without pretending an async storage operation retained browser Play permission. The separate Play button uses the existing same-activation-task path. The host must not wrap explicit Play in awaited unrelated work.
 
-## Remaining Couch wiring
+## Composed Couch host contract
 
-Create one persistent player, its shared v4 library owner and session policy. Compose the new panel hooks, exact accepted context, published-music fallback and silent preparation. Add Settings → Audio controls in both hosts. The top library dialog owns input; closing it restores the Audio category's Music library opener, and closing Settings restores its own original opener. Gameplay Resume remains explicit. Preserve the actual verified Solo keyboard journey as a comparison, not as Couch evidence.
+Both hosts use one persistent player, its shared v4 library owner and session policy, with the panel hooks, exact accepted context, published-music fallback and silent preparation. Settings → Audio exposes their controls. The top library dialog owns input; closing it restores the Audio category's Music library opener, and closing Settings restores its own original opener. Gameplay Resume remains explicit. Preserve the actual verified Solo keyboard journey as a comparison, not as Couch evidence.
 
 Route **all** host explicit Play/Pause controls through the same session. Keep audition intent temporary. A host must prevent underlying controls from acting through an open top modal, retire auditions on lifecycle suspension, pump the one persistent player in menus/results and dispose borrowed owners in order. These host behaviors and actual native/physical-device/listening/offline/public journeys remain release gates.
 
