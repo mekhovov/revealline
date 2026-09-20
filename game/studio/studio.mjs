@@ -231,6 +231,8 @@ function inspectBoard(trailCells = []) {
     `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
+  $('geometry').textContent +=
+    ` Authored terrain: ${(manifest.level.classic?.terrain ?? []).map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -238,6 +240,7 @@ function inspectBoard(trailCells = []) {
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
       objectives: mission.objectives,
+      terrain: manifest.level.classic?.terrain ?? [],
     },
     null,
     2,

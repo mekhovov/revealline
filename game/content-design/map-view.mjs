@@ -1,5 +1,6 @@
 import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
+import { paintMaterialMarker } from './material-markers.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -31,6 +32,11 @@ export function paintContentMap(
     ctx.globalAlpha = underlay && geometry.cells[i] === CELL.FIELD ? 0.58 : 1;
     ctx.fillRect(x, y, size - 1, size - 1);
     ctx.globalAlpha = 1;
+    if (geometry.cells[i] === CELL.FIELD) paintMaterialMarker(ctx, geometry.terrain[i], x, y, size);
+    else if (geometry.cells[i] === CELL.WALL) {
+      ctx.strokeStyle = '#ced3bc';
+      ctx.strokeRect(x + size * 0.25, y + size * 0.25, size * 0.5, size * 0.5);
+    }
     if (!showCapture) continue;
     const state = overlay.cells[i];
     if (state === 'retained') {

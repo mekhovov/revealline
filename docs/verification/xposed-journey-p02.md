@@ -1,5 +1,34 @@
 # Journey P02 — Border Bloom greybox preparation
 
+## Terrain readability and shared-contract continuation
+
+Studio and player thumbnails now distinguish slow-field paired dashes from lethal
+framed crosses, mirroring the existing runtime vocabulary rather than using color
+alone. A shared bounded drawing helper keeps both initial-map views consistent.
+Walls retain a separate inset-square mark. Neutralized material beneath permanent
+foundations has no active-hazard mark. Studio also lists authored terrain rectangles
+in accessible text and effective rules; the legend explains neutralization and
+that walls cannot close a cut. Runtime physics and all bundled maps are unchanged.
+
+The missing-symbol regression failed before the correction. New compiled-project
+checks cover all three presets × both steering modes: exact player slow factor,
+unchanged catalog enemy speed, wall blocking without closure, legal captures that
+neutralize slow/lethal ground, protected foundation material, stable coverage
+denominator, identical Solo/Versus level resolution and verified public replays.
+The expanded terrain/foundation/Classic/authoring cohort passes **91/91** in 1.6 s;
+lint, formatting and whitespace pass. An earlier wider run had two ENOENT failures
+because the sparse checkout omitted the historical fpv-arcade pack; restoring its
+exact tracked blob (bfbcbe28dace73bde4f95afded9b95b4010f4c80) resolved both.
+This is scoped local evidence, not full-checkout qualification or P03 completion.
+
+Native Studio verification used only the existing isolated mission copy. A slow
+6×4 rectangle at (10,10) and lethal 6×4 rectangle at (40,10) showed distinct patterns
+with capture overlays disabled at the observed 1280×720 viewport. Accessible text
+reported both materials and exact dimensions. Two Undo actions restored no terrain,
+checkpoint23 saved, original mission remained unchanged, and console errors were
+empty. This is agent visual verification, not color-vision/phone/user acceptance;
+no authored terrain mission or new Team terrain qualification is implied.
+
 20 September 2026. Provisional **0.70.0**, now integrated with candidate P01
 `3556e257` via merge `fe137d77` (original preparation began at `e7aa131f`).
 This is an independent draft preparation slice, not an accepted baseline, phase
