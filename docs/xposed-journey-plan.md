@@ -94,14 +94,15 @@ retry and expose export. Distinguish technical-ready from human-validated conten
 
 ## Delivery tracker
 
-The accepted main baseline is ce8c72ed (includes v0.65.0 and merged Team Studio work
-already allocated as 0.66.0). Preserve the user's dirty original checkout. P00 uses
-0.67.0 rather than reusing the allocated 0.66.0; subsequent labels shift by one minor.
+The starting main baseline was ce8c72ed. P00 now incorporates the accepted v0.66.0
+publisher 7b898a7b through integration b5193ca1; the public Team/Studio acceptance
+is scoped, not whole-phase or physical-device validation. Preserve the user's dirty
+original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | In progress |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Pending |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress on PR172; not published |
 | P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
@@ -116,6 +117,14 @@ P01–P15 therefore shift one further minor, as above; these later allocations r
 provisional. Preserve both features through reviewed integration and new exact-source
 gates. Journey must not race the current publication owner or replace its selector.
 Independent source correction, tests and content preparation continue during that wait.
+
+P01's separate candidate branch has ten original opening greyboxes, a versioned
+foundation compiler/runtime, minimal map-first Studio with recoverable checkpoints,
+capture overlays and topology diagnostics. Sixty mission/preset/steering combinations
+have deterministic clear-route fixtures; these are feasibility evidence, not pacing
+or human enjoyment. One original reveal background is pinned; nine backgrounds,
+Team qualification, Journey adoption and release gates remain. None of that branch's
+implementation is implied to ship in the P00 technical preview.
 
 Each phase: reviewed PR, version bump, automated gates, immutable release and Pages
 test deployment; continue automatically after green gates, repair red gates before
