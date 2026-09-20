@@ -26,3 +26,7 @@ are explicitly structural guardrails, not simulated browser-layout evidence.
 
 
 References: [MDN safe alignment](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-items) and [W3C focus visibility](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html). Final release-source checks and public acceptance remain required.
+
+## Stacked correction preparation
+
+The isolated `codex/pause-clearance-v0692` branch adopts the exact CSS/test correction on top of the v0.69.1 recovery candidate and subsequent card-contract fix. The two complete structural tests pass independently on Node20.19.5; changed CSS/test formatting passes. They do not prove rendered layout. Version0.69.2 is reserved for this correction; no existing tag was found when reserved. The branch still requires native integrated review, final source qualification after v0.69.1 integration, original immutable publication and public acceptance.
