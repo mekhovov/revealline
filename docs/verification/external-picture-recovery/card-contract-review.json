@@ -1,0 +1,36 @@
+{
+  "sourceBefore": "c9fc63f35324397bcb02a061f2fef6a236c531ce",
+  "originalFullFailureRun": 35508682387,
+  "originalFullFailureSource": "7fe377d3a829c29454ec31a9e86c3d3d82d31817",
+  "fullOutcome": {
+    "tests": 7006,
+    "pass": 7004,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "failures": [
+    "Obsolete last-created ResizeObserver selection, already corrected in127e05c4",
+    "Card children expected no conditional picture-review group; corrected in this change"
+  ],
+  "correction": "Retain exact visible card order and native closed-file disclosure; explicitly require new review group to start hidden, carry accessible group name and own confirm/cancel actions. Existing keyboard/controller closed controls, cancellation and stale focus tests retained.",
+  "targeted": {
+    "runtime": "Node20.19.5",
+    "files": [
+      "external-chapter-card-focus.test.mjs",
+      "external-chapters-panel.test.mjs"
+    ],
+    "tests": 26,
+    "pass": 26,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 2090.060208,
+    "log": "card-contract-node20.log.gz",
+    "originalBytes": 5940,
+    "originalSha256": "551c98354723f86c929b3f86c9b1c33a6e9e8dc534f071f38e1820a50efe7186",
+    "gzipSha256": "60ad8258fa0613a25d5b962a04c3f47aaf9554416ba69fac276fda0359520e90"
+  },
+  "setupFailure": "r1 used singular panel filename that does not exist; no product assertions ran. Corrected to actual plural filename in r2.",
+  "qualification": "Superseded823/c9fc jobs cancelled because unchanged assertion is known obsolete; no cancelled family counts. Final corrected source requires its own full run."
+}
