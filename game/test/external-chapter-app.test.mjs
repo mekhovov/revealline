@@ -271,8 +271,8 @@ async function install(p) {
     p.$('optional-worlds-status').textContent + p.$('optional-worlds-source-state').textContent,
   );
 }
-async function choose(p, { replaceFlight = false } = {}) {
-  const phase = `Choose and authenticate exact ${pilot.descriptor.id}`;
+async function play(p, { replaceFlight = false } = {}) {
+  const phase = `Play and authenticate exact ${pilot.descriptor.id}`;
   if (replaceFlight) {
     const run = p.rendered.run,
       checkpoint = authoritativeCheckpoint(run),
@@ -301,7 +301,7 @@ async function choose(p, { replaceFlight = false } = {}) {
       operation: clickOperation(p, 'optional-worlds-source-choose'),
       ready: () => !p.$('optional-worlds-dialog').open,
     });
-  // Selection starts its own picture read; a fulfilled Choose is not image readiness.
+  // Play accepts the exact decoded original and starts without a second Start action.
   try {
     await settle(() => p.doc.body.dataset.pictureState === 'ready');
   } catch (error) {
@@ -311,6 +311,9 @@ async function choose(p, { replaceFlight = false } = {}) {
   }
   p.frame(0);
   assert.equal(p.$('pack-select').value, pilot.descriptor.id);
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.frame(0);
+  assert.equal(p.rendered.paused, false, 'Play needs no second Start action.');
 }
 function ticks(p, count) {
   for (let i = 0; i < count; i++) p.frame();
@@ -365,7 +368,7 @@ test('fresh native source installation assigns release pictures after durable in
       ),
     );
   }
-  await choose(p);
+  await play(p);
   assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[1].sha256);
   assert.match(p.rendered.backdrop.pin.presentationId, /^fk-picture-/);
   assert.deepEqual(requests, ['http://localhost/game/presentation/compiled/runtime.json']);
@@ -383,7 +386,7 @@ test('source registry is exact compiled authority; public catalog remains five u
   );
 });
 
-test('native pair install preserves an unfinished unrelated flight, then separate Choose and legal route earn the exact original once', async (t) => {
+test('native pair install preserves an unfinished unrelated flight, then explicit Play and legal route earn the exact original once', async (t) => {
   const p = await page(t);
   p.$('start-button').click();
   direction(p, 'down');
@@ -396,11 +399,10 @@ test('native pair install preserves an unfinished unrelated flight, then separat
   assert.deepEqual(authoritativeCheckpoint(run), before);
   assert.equal(p.rendered.paused, true);
   assert.equal(p.$('pack-select').value, '');
-  await choose(p, { replaceFlight: true });
+  await play(p, { replaceFlight: true });
   assert.equal(p.rendered.run.tick, 0);
-  assert.equal(p.rendered.paused, true);
+  assert.equal(p.rendered.paused, false);
   assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
-  p.$('start-button').click();
   for (const segment of route.segments) {
     direction(p, segment.input.direction);
     ticks(p, segment.ticks);
@@ -424,11 +426,10 @@ test('native pair install preserves an unfinished unrelated flight, then separat
 test('stored external run reloads with exact saved pin and remains paused until explicit Resume', async (t) => {
   const f = {};
   let checkpoint, pin;
-  await t.test('native install, select and pause', async (t) => {
+  await t.test('native install, play and pause', async (t) => {
     const p = await page(t, f);
     await install(p);
-    await choose(p);
-    p.$('start-button').click();
+    await play(p);
     direction(p, 'down');
     ticks(p, 151);
     p.$('pause-button').click();
@@ -482,7 +483,16 @@ for (const journals of [
 test('cleared assignment still selects descriptor original; missing original refuses both new flight and Original artwork without generic fallback', async (t) => {
   const p = await page(t);
   await install(p);
-  await choose(p);
+  await play(p);
+  const selectPack = async (id) => {
+    p.change('pack-select', id);
+    if (p.$('mission-replace-dialog').open) {
+      await settle(() => !p.$('mission-replace-confirm').disabled);
+      await clickOperation(p, 'mission-replace-confirm');
+    }
+    await settle(() => !p.$('pack-select').disabled && p.$('pack-select').value === id);
+    p.frame(0);
+  };
   const manager = createManagedMediaStore({
     indexedDB: p.fixture.media.indexedDB,
     storyMedia: true,
@@ -500,9 +510,8 @@ test('cleared assignment still selects descriptor original; missing original ref
     }),
     { expectedGeneration: prior.generation },
   );
-  p.change('pack-select', '');
-  await settle(() => !p.$('pack-select').disabled);
-  p.change('pack-select', pilot.descriptor.id);
+  await selectPack('');
+  await selectPack(pilot.descriptor.id);
   await settle(() => !p.$('pack-select').disabled && p.doc.body.dataset.pictureState === 'ready');
   p.frame(0);
   assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
@@ -518,9 +527,8 @@ test('cleared assignment still selects descriptor original; missing original ref
     tx.onabort = () => reject(tx.error);
   });
   db.close();
-  p.change('pack-select', '');
-  await settle(() => !p.$('pack-select').disabled);
-  p.change('pack-select', pilot.descriptor.id);
+  await selectPack('');
+  await selectPack(pilot.descriptor.id);
   await settle(() => !p.$('picture-use-legacy').hidden);
   p.$('start-button').click();
   await settle(() => !p.$('picture-use-legacy').hidden);
@@ -737,8 +745,7 @@ test('source install and unrelated chapter win preserve an earlier exact first-e
   await bind(2);
   const originals = await story.exportInventory();
   await install(p);
-  await choose(p);
-  p.$('start-button').click();
+  await play(p);
   for (const segment of route.segments) {
     direction(p, segment.input.direction);
     ticks(p, segment.ticks);
@@ -855,17 +862,21 @@ test('native exact-pair recovery completes a retained published journal once; re
       assert.match(p.$('save-warning').textContent, /external-recovery/);
       await install(p);
       assert.equal((await still.readMetadata()).generation, generation);
-      p.$('optional-worlds-source-choose').click();
-      await settle(() => /Reload after recovery/.test(p.$('optional-worlds-status').textContent));
+      assert.match(p.$('optional-worlds-status').textContent, /reload after recovery/i);
+      await clickOperation(p, 'optional-worlds-source-choose');
+      assert.match(
+        p.$('optional-worlds-status').textContent,
+        /resolve recovery|Reload after recovery/,
+      );
       assert.equal(p.$('pack-select').value, '');
     },
   );
   await t.test(
-    'new host coherently adopts recovered index and permits separate Choose',
+    'new host coherently adopts recovered index and permits explicit Play',
     async (t) => {
       const p = await page(t, f);
       await worlds(p);
-      await choose(p);
+      await play(p);
       assert.equal(p.rendered.run.tick, 0);
       assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
       assert.equal((await still.readMetadata()).generation, generation);
@@ -888,8 +899,7 @@ test('published external pictures survive saved Continue and confirmed Restart w
   await t.test('install, play, pause and retain new release original', async (t) => {
     const p = await page(t, f);
     await install(p);
-    await choose(p);
-    p.$('start-button').click();
+    await play(p);
     await settle(() => p.doc.body.dataset.flightState === 'running');
     direction(p, 'down');
     ticks(p, 30);

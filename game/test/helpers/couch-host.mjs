@@ -71,6 +71,9 @@ export async function couchPage(
     expectBootFailure = false,
     audio,
     rendering,
+    // Opt into browser default keyboard actions for native controls/dialogs.
+    // Existing input fixtures retain their direct-event boundary by default.
+    nativeKeyboard = false,
   } = {},
 ) {
   const doc = new Document(),
@@ -244,7 +247,7 @@ export async function couchPage(
     frame();
   }
   function key(code, held = true, target = $('race-canvas-0')) {
-    target.emit(held ? 'keydown' : 'keyup', {
+    const event = target.emit(held ? 'keydown' : 'keyup', {
       code,
       key:
         code === 'Escape'
@@ -254,6 +257,21 @@ export async function couchPage(
             : code.replace('Key', '').toLowerCase(),
       repeat: false,
     });
+    if (nativeKeyboard && held && !event.defaultPrevented) {
+      const modal = doc.modalDialogs.at(-1);
+      if (code === 'Escape' && modal) {
+        const cancel = modal.emit('cancel', { bubbles: false });
+        if (!cancel.defaultPrevented) modal.close();
+      } else if (
+        code === 'Enter' &&
+        target.tagName === 'BUTTON' &&
+        target.getClientRects().length &&
+        !target.closest('[hidden],[inert]') &&
+        (!modal || modal.contains(target))
+      )
+        target.click();
+    }
+    return event;
   }
   frame();
   return {

@@ -422,7 +422,7 @@ export function createCouchInstalledChapters({
     report('verifying', message);
     return item.promise;
   }
-  async function refresh({ signal, onStatus } = {}) {
+  async function refresh({ signal, onStatus, expectedPack = null } = {}) {
     staged?.cancel();
     clearBinding();
     forgetPictureRequest();
@@ -438,6 +438,13 @@ export function createCouchInstalledChapters({
           next.status === 'checked',
           'Installed chapters need recovery in solo More worlds before racing.',
         );
+        if (expectedPack) {
+          const actual = next.packs.packs.find((pack) => pack.id === expectedPack.id);
+          requireValue(
+            actual && canonicalJSON(actual) === canonicalJSON(expectedPack),
+            'The selected chapter changed. Refresh Chapters before playing.',
+          );
+        }
         const rows = [];
         for (const entry of next.executionCatalog.entries) {
           if (!entry.sourcePackId || entry.difficulty !== 'standard') continue;
@@ -449,6 +456,7 @@ export function createCouchInstalledChapters({
             };
             const row = Object.freeze({
               key: `installed/${entry.executionKey}/${level.id}`,
+              sourcePackId: entry.sourcePackId,
               chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
               level,
               classes: entry.classRecipes,
