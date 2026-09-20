@@ -322,6 +322,29 @@ test('installed Play starts directly without downloading the already authenticat
   assert.deepEqual(p.errors, []);
 });
 
+test('Play on the current installed chapter preserves the unfinished flight instead of offering replacement', async (t) => {
+  const h = await setup(t, { installed: true }),
+    { p } = h;
+  await activate(await openWorlds(p));
+  await running(p);
+  p.key('ArrowDown');
+  p.key('ArrowDown', false);
+  for (let i = 0; i < 8; i++) p.frame();
+  assert.equal(p.rendered.run.player.cutting, true);
+  const button = await openWorlds(p),
+    before = snapshot(p),
+    requests = h.requests.length;
+  await activate(button);
+  assert.equal(p.$('mission-replace-dialog').open, false);
+  kept(p, before);
+  assert.equal(p.$('optional-worlds-dialog').open, true);
+  assert.equal(button.disabled, false);
+  assert.equal(p.doc.activeElement, button);
+  assert.match(p.$('optional-worlds-status').textContent, /already active.*kept paused.*Continue/i);
+  assert.equal(h.requests.length, requests, 'The installed chapter is not downloaded again.');
+  assert.deepEqual(p.errors, []);
+});
+
 for (const outcome of ['failure', 'cancel', 'hidden'])
   test(`completed install plus ${outcome} during picture preparation preserves the earned result`, async (t) => {
     const h = await setup(t),
