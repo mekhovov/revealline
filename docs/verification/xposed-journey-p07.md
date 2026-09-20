@@ -199,3 +199,21 @@ returned only the page background both with the iframe open and after closing
 it. This is recorded as an unresolved visual-capture limitation, not a passed
 rendering inspection or an established product defect. The other five layouts
 and visual acceptance remain pending; no source change was made on that signal.
+
+## Exact b81a1c15 focused checkpoint
+
+The combined12-file core/catalogue/routes/mastery/seeds/timing/briefing/rendering
+cohort passed98/98 on Node20.19.5 and22.22.2 with zero skips or cancellations.
+An additional actor/Details/source cohort passed22 tests but initially could not
+load `flight-information-source.test.mjs`: the sparse checkout lacked its
+tracked256,854-byte `game/replays/sentinel-routes.json`. Adding that exact
+fixture, without changing product or tests, produced16/16 source tests on both
+Node versions. That initial environmental failure is not counted as a pass.
+
+The local8791 server was then explicitly repinned to b81a1c1590158ee9af2c1483d4214d72cd6a9a6f,
+without overrides, asset generation or a build. Reload preserved Studio
+checkpoint2. The first mission reached real engine readiness and its accessible
+ready card contained the new carrier-only warning. Close restored Play focus.
+Visual capture subsequently reported zero width, so no screenshot or device
+layout acceptance is inferred. These scoped checks are not a production recipe
+review, full-source hosted qualification, immutable release or Pages deployment.
