@@ -1,9 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createOpeningCandidates, OPENING_ARCS } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../replay.mjs';
 
 test('opening greyboxes form three learning arcs without a campaign threat reset', () => {
   const source = createOpeningCandidates(),
@@ -41,6 +49,44 @@ test('opening greyboxes form three learning arcs without a campaign threat reset
   }
 });
 
+test('all ten Standard candidates have replay-verifiable complete legal routes, not human pacing evidence', async () => {
+  const fixture = JSON.parse(
+    await readFile(new URL('./fixtures/horizon-greybox-routes.json', import.meta.url)),
+  );
+  const project = compileContentProject(createOpeningCandidates());
+  assert.equal(fixture.rows.length, project.missions.length);
+  assert.deepEqual(
+    fixture.rows.map((row) => row[0]),
+    project.missions.map((m) => m.id),
+  );
+  for (const [id, identity, checkpoint, segments] of fixture.rows) {
+    const manifest = resolveMission(project, id);
+    assert.equal(manifest.simulationIdentity, identity, `${id}: route requires renewed review`);
+    const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+    const run = createRun(manifest.level, options),
+      recorder = createRecorder(
+        manifest.level,
+        options,
+        'greybox-feasibility-not-human-validation',
+      );
+    for (const [direction, ticks] of segments) {
+      assert(Number.isSafeInteger(ticks) && ticks > 0 && ticks <= 1000);
+      for (let tick = 0; tick < ticks; tick++) {
+        assert.equal(run.status, 'running', `${id}: route outlived the run`);
+        recordInput(recorder, { direction });
+        stepRun(run, { direction }, FIXED_DT);
+        assert.equal(run.lives, 3, `${id}: route lost a life`);
+      }
+    }
+    assert.equal(run.status, 'won', id);
+    assert(run.coverage >= manifest.level.goal.coverage);
+    assert.equal(authoritativeCheckpoint(run).hash, checkpoint, id);
+    const verified = verifyReplay(exportReplay(recorder, run));
+    assert.equal(verified.match, true, `${id}: replay mismatched`);
+    assert.equal(verified.state.status, 'won');
+  }
+});
+
 test('each greybox has a deterministic legal first return; this is not a full-clear or duration claim', () => {
   const project = compileContentProject(createOpeningCandidates());
   const departures = {
@@ -66,4 +112,22 @@ test('each greybox has a deterministic legal first return; this is not a full-cl
     assert.equal(run.player.speed, 0);
     assert.equal(run.score, run.classic.uniqueClaimedCount * 10);
   }
+});
+
+test('the first natural enclosure completes the lesson without fractional quota cleanup in every preset and control policy', () => {
+  const project = compileContentProject(createOpeningCandidates());
+  for (const difficulty of ['gentle', 'standard', 'expert'])
+    for (const turnPolicy of ['immediate', 'grid-center']) {
+      const manifest = resolveMission(project, 'first-return', { difficulty });
+      const run = createRun(manifest.level, { seed: 1, turnPolicy });
+      for (let tick = 0; tick < 600 && run.claimedCount === 0; tick++)
+        stepRun(run, { direction: 'down' }, FIXED_DT);
+      assert.equal(run.status, 'won', `${difficulty}/${turnPolicy}`);
+      assert.equal(run.lives, manifest.level.rules.lives);
+      assert.equal(
+        run.coverage,
+        816 / 2380,
+        'Victory presentation must not rewrite earned coverage',
+      );
+    }
 });

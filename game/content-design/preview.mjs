@@ -2,12 +2,13 @@ import { compileContentProject, resolveMission } from './project.mjs';
 import { FOUNDATION_SCENARIO_VERSION, validateScenario } from '../content.mjs';
 import { createRun } from '../core/index.mjs';
 import { inspectCaptureSnapshot } from '../core/capture-regions.mjs';
+import { verifiedPreviewBackground } from './assets.mjs';
 
 /** Both preview surfaces use the same resolved candidate as the CLI. No awards. */
 export function prepareContentPreview(
   source,
   missionId,
-  { difficulty = 'standard', mode = 'solo', theme, trailCells = [] } = {},
+  { difficulty = 'standard', mode = 'solo', theme, artwork, trailCells = [] } = {},
 ) {
   const project = compileContentProject(source);
   const manifest = resolveMission(project, missionId, { difficulty, mode });
@@ -27,7 +28,9 @@ export function prepareContentPreview(
     scenario = {
       format: FOUNDATION_SCENARIO_VERSION,
       masteryDefinition: null,
-      visualOverrides: {},
+      visualOverrides: manifest.background
+        ? { background: verifiedPreviewBackground(manifest.background, artwork) }
+        : {},
       level: structuredClone(manifest.level),
       theme: structuredClone(theme),
       settings: { classId: 'scout', turnPolicy: 'immediate', seed: 1 },
