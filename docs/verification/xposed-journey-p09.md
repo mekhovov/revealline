@@ -159,3 +159,18 @@ remain the collision-state cues. Text uses an outlined light treatment and no
 flashing, color key or line across the active board. The five-file presentation
 cohort passes 51/51 on both Node versions; native multi-link readability and
 small-screen qualification remain open.
+
+## Greybox content increment
+
+Seven original Relay Labyrinth candidates now compile through the same registry
+as Studio and CLI: six core missions in two three-mission arcs, plus one optional
+Remix. The explicit Studio inspection action does not enroll them into the public
+Journey or replace a saved draft without the existing apply flow. Four supplied
+reference motifs have non-final proposals in `../research/relay-reference-crosswalk.md`.
+
+The initial content/Studio cohort passes 24/24 on both Node versions. This includes
+42 first-return/decision-space cases across all presets and steering policies,
+public replay verification, visible trigger capture, fixed coverage denominator,
+all initial field regions genuinely enemy-retained and exact CLI/Studio manifests.
+The first return is not a full mission clear. Early full-route probes prompted
+trigger and geometry revisions; no full-route fixture is qualified by this note.

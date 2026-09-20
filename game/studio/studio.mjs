@@ -7,6 +7,7 @@ import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
 import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
 import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
+import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -572,6 +573,12 @@ $('phase').onclick = guarded(() => {
 $('livewire').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createLivewireCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('relay').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createRelayCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
