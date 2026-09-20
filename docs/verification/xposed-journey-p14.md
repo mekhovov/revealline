@@ -356,3 +356,11 @@ legacy regression cohort also passes on both, including twelve consecutive
 command-earned clears after the Skip integration. Local TAPs retain these results.
 Candidate difficulty controls, clearer chooser presentation, original backgrounds,
 broader real-device qualification and deployment remain open.
+
+Native exact `57f359bb` on local port8807 verifies Start Twin landings → Skip
+mission → named Confirm skip → running Stepping exchange in the next campaign,
+0%/two reserves and no setup/discard dialog. After pausing and reloading that
+same origin, Stepping exchange is selected with Standard and a ready Start
+button. This verifies browser control flow and persistent mission restoration,
+not preservation of an unfinished attempt, a native clear, input latency,
+small-screen layout, physical controllers or human enjoyment.
