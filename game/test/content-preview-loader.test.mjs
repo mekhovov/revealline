@@ -42,11 +42,25 @@ test('load and unavailable-theme errors remain explicit; success returns the exa
     }),
     /unavailable/,
   );
-  const theme = { id: 'retro', revision: 7 };
+  const theme = { id: 'horizon', revision: 7 };
   assert.equal(
     await loadPreviewTheme({
       fetchTheme: async () => ({ ok: true, json: async () => ({ themes: [theme] }) }),
     }),
     theme,
   );
+});
+
+test('preview requests the authored theme and refuses to substitute another campaign identity', async () => {
+  const horizon = { id: 'horizon' },
+    another = { id: 'another' };
+  const fetchTheme = async () => ({ ok: true, json: async () => ({ themes: [horizon, another] }) });
+  assert.equal(await loadPreviewTheme({ themeId: 'another', fetchTheme }), another);
+  await assert.rejects(loadPreviewTheme({ themeId: 'retro', fetchTheme }), /unavailable/);
+  let called = false;
+  await assert.rejects(
+    loadPreviewTheme({ themeId: ['horizon'], fetchTheme: () => (called = true) }),
+    /Invalid/,
+  );
+  assert.equal(called, false);
 });

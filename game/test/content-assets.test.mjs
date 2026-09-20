@@ -66,8 +66,8 @@ test('original candidate image is pinned and artwork cannot change simulation id
   );
   const media = await loadPreviewArtwork(asset, { fetchAsset, digest });
   const theme = JSON.parse(
-    await readFile(new URL('../content/themes.json', import.meta.url)),
-  ).themes.find((t) => t.id === 'retro');
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
+  ).themes.find((t) => t.id === 'horizon');
   const preview = prepareContentPreview(artSource, 'first-return', { theme, artwork: media });
   assert.equal(preview.scenario.visualOverrides.background.dataUrl, media.dataUrl);
   assert.equal(preview.manifest.background.sha256, asset.sha256);
