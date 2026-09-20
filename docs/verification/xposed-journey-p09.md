@@ -174,3 +174,50 @@ public replay verification, visible trigger capture, fixed coverage denominator,
 all initial field regions genuinely enemy-retained and exact CLI/Studio manifests.
 The first return is not a full mission clear. Early full-route probes prompted
 trigger and geometry revisions; no full-route fixture is qualified by this note.
+
+Exact `88dfc52c5654bbeeb0cb206d5fe6a92b63c28a66` was then served read-only on
+localhost:8795. Native Studio Inspect → explicit Apply exposed all seven missions.
+Second approach's real Practice showed two numbered triggers and two matching
+closed connectors. A normal keyboard upward cut captured only the western link:
+three lives, 13 earned cells / 0.6%, score 630, Relay 1/2. The western crossbars
+became reclaimed ground with brackets and its number; the eastern connector
+remained visibly closed and its uncaptured trigger remained visible. Pause/Resume
+and Close returned focus to Studio's Play action. No hidden engine mutation was
+used. This is a scoped first-return/independent-link observation at the desktop
+viewport, not a native complete clear or physical-device acceptance.
+
+## Full-route feasibility and preset qualification
+
+The committed `relay-clear-routes.json` fixture contains all 42 candidate × preset
+× steering cases. Its 13-test cohort passes on Node20.19.5 and22.22.2. Solo routes
+use the actual candidate attempt preparer, exact compiler/roster identities and
+public replay verification; paired boards use separate mutable runs and finish
+equally with no lost lives. Optional Remix remains outside core continuation.
+
+Every recorded route opens each relay before the winning cut and traverses at
+least one opened connector. All gate cells remain permanent, non-scoring and
+outside the fixed denominator. No required objective remains outstanding when
+coverage reaches the goal. This rules out the measured quota-first cleanup
+pattern, not every possible uninteresting route or human pacing problem.
+
+Five additional seeds (2,7,19,41,99) pass 210 no-loss/public-replay checks on both
+Node versions. They are finite deterministic samples, not proof for all seeds.
+The same Standard route did not transfer safely across every preset/steering
+pair; independently searched legal routes are recorded instead of relaxing the
+failure checks. Two initial probes also opened a late connector or never crossed
+one. Replacement routes satisfy the stricter pre-victory/traversal assertions.
+The solver never modifies gameplay state to produce a route.
+
+Optimized fixture times are 18.95–55.25 seconds, below the authored 90-second
+lower estimates. Those estimates are design targets, not observations. Retain
+this discrepancy for human pacing review; do not infer boredom or add artificial
+delays solely to make solver times match an estimate.
+
+Seven authoring tests now additionally confirm manual image geometry preserves
+V2 links/editions, trace-over-gate collisions reject atomically, duplicated
+campaign missions retain their local links, and later edits fork only the copy.
+Both Node versions pass. The shared renderer now projects relay display state
+once per frame; no visual cache is allowed to become simulation authority.
+
+Delayed starts, alternate-order/simultaneous/impact optional goals, all-background
+artwork, broader native/devices, Team and human validation remain incomplete.

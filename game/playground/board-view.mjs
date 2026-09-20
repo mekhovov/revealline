@@ -15,6 +15,7 @@ export function paintEditorMap(canvas, current) {
     ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
   const classic = run ? classicView(run) : null;
+  const relays = run ? relayView(run) : null;
   c.fillStyle = current.theme.palette.field;
   c.fillRect(0, 0, width, height);
   c.fillStyle = current.theme.palette.safe;
@@ -66,7 +67,7 @@ export function paintEditorMap(canvas, current) {
   for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);
   for (const gate of current.level.relayGates?.gates ?? [])
     c.fillRect(gate.x * s, gate.y * s, gate.w * s, gate.h * s);
-  if (run) drawRelayGates(c, relayView(run), current.theme.palette, s);
+  drawRelayGates(c, relays, current.theme.palette, s);
   drawClassicTerrain(c, classic, current.theme.palette);
   drawClassicPickups(c, classic, current.theme.palette);
   for (const e of current.level.enemies) {
@@ -88,7 +89,7 @@ export function paintEditorMap(canvas, current) {
     c.lineWidth = 2;
     c.strokeRect(o.x * s - 5, o.y * s - 5, 10, 10);
   }
-  if (run) drawRelayTriggers(c, relayView(run), s);
+  drawRelayTriggers(c, relays, s);
   for (const p of current.level.supplies) {
     c.fillStyle = '#ffffff';
     c.fillRect(p.x * s - 3, p.y * s - 1, 6, 2);
