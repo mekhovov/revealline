@@ -23,8 +23,8 @@ not weakened. Initial failures remain in the composition cache logs.
 
 The modal behavior follows the [W3C dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/):
 focus enters the active dialog, Escape closes it and focus returns to the opener.
-This composition still needs the final P01 correction merge, native combined
-journeys, complete final-source gates, version allocation and public verification.
+The final P01 correction merge and bounded Versus native journey are now recorded
+below. Complete final-source gates, version allocation and public verification remain.
 The earlier packet's native MP3 transport evidence is not a listening or offline
 qualification of this composed source.
 
@@ -40,3 +40,23 @@ the passing runs. The extra context test was restored and run explicitly.
 Reviewed materialized paths are now explicit sparse entries so a later merge
 keeps the test graph. No production validation was weakened. Native combined
 hosts and complete release gates remain; this is not public acceptance.
+
+## Exact composed-source native review
+
+Source `014449ed4f9fe98fd7303ee793083edd191790fb` passed 38 host/core/context
+checks on Node20.19.5. The [observation record](journey-native.json) separates
+this cohort from earlier overlapping runs and records its original log hash.
+
+At 1280×720, actual keyboard navigation covered Audio/library/Escape return
+focus, mission search, an untimed first-clear result and direct Next mission.
+Explicit music Pause survived Next while the shared master stayed muted.
+Screenshots were observed inline; no exported image hashes are claimed.
+This is scoped candidate evidence, not audible listening, physical input,
+offline, full Team or public acceptance.
+
+The later P02 integration's full gate caught a stale production audio ledger.
+`published-audio.mjs` is a fingerprint input: its new default-compatible `cues`
+option changes that fingerprint even though the other three audio inputs remain
+unchanged. Preserve the failed run and source-stage successor before a scoped
+reviewed successor; never silently carry an older approval onto changed source.
+P02 owns that correction. Draft composition PR187 retains this baseline.

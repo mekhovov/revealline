@@ -1,0 +1,43 @@
+{
+  "source": "014449ed4f9fe98fd7303ee793083edd191790fb",
+  "tree": "7a5903b51d64f0719f41f5f30d80c0a3aa292da5",
+  "date": "2026-09-20",
+  "status": "candidate-scoped-observations",
+  "automated": {
+    "runtime": "Node20.19.5",
+    "passed": 38,
+    "failed": 0,
+    "durationMs": 76634.262334,
+    "originalLog": "journey-node20.original.log",
+    "sha256": "f6a4e56b8efb48345d6c11c787d65a84f79e1a09192de4553554b4c2af33c5cb"
+  },
+  "browser": {
+    "url": "http://127.0.0.1:18787/game/couch/?journey=opening",
+    "sourcePolicy": "Git-backed exact source, no working-file overrides",
+    "viewport": [1280, 720],
+    "input": "native browser keyboard through CUA",
+    "observations": [
+      "Settings \u2192 Audio \u2192 Music library opened with Close focus. Escape returned to Music library opener; Back returned to Settings opener.",
+      "Find missions opened ten cards with search focus. Escape restored Find opener.",
+      "Authored race showed no countdown. Both boards paused with Resume focus after deliberate directions and Escape.",
+      "Signal Afterglow played under muted master after Start. Explicit Pause music then Back retained gameplay pause.",
+      "Explicit Resume produced a first-clear result: Sunflower 34.3%, three lives, 8160 points; Skyline 0%, three lives, zero points.",
+      "Keyboard Next mission launched Choose your share. Immediate Pause showed both fresh boards at 0%, three lives, zero points.",
+      "Audio still showed Signal Afterglow paused and master muted after Next.",
+      "Captured browser error log was empty."
+    ],
+    "screenshots": "Observed inline only; no exported screenshot or image hash."
+  },
+  "notEstablished": [
+    "Audible listening or album quality",
+    "Custom MP3 import and offline playback on this composed source",
+    "Physical controller or touch hardware",
+    "Complete Team native journey",
+    "Final full-source release qualification and deployed acceptance"
+  ],
+  "relatedFailure": {
+    "run": 35503593811,
+    "scope": "Later P02 integrated source9fe6276",
+    "finding": "Production audio recipe ledger stale after published-audio.mjs gained cues option. P02 owns source-stage and scoped-reviewed successors; this evidence is not recipe approval."
+  }
+}
