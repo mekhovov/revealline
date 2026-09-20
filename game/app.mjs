@@ -4590,10 +4590,15 @@ try {
     clearInput();
     const controller = new AbortController();
     restoreController = controller;
-    const abort = () => controller.abort();
-    signal?.addEventListener('abort', abort, { once: true });
     let feedback,
       stagedPictures = null;
+    const abort = () => {
+      controller.abort();
+      // Title cancellation owns this field status too. Settle it immediately;
+      // a pending decoder may finish later, after another action owns the UI.
+      feedback?.finish('Preparation cancelled. Your flight remains paused.', 'cancelled');
+    };
+    signal?.addEventListener('abort', abort, { once: true });
     try {
       feedback = beginPreparation('Verifying your saved flight…', cancelRestore, 'verifying');
       onStatus?.({
