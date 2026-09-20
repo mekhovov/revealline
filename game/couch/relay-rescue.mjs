@@ -92,7 +92,11 @@ function picturePreparationText({ stage, status }, destination = null) {
     : `${action} the Team picture…`;
 }
 
-export function bootCoop() {
+export function bootCoop({
+  candidateJourney = null,
+  candidateDifficulty = 'standard',
+  candidateNotice = '',
+} = {}) {
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const returns = new URL(location.href).searchParams.getAll('return');
@@ -263,7 +267,30 @@ export function bootCoop() {
       }),
     );
   const starterDiscoveryRows = discoveryRows(COOP_STARTER_PACK, null, 'starter');
-  const currentDiscoveryRows = () => [...starterDiscoveryRows, ...(localDiscoveryPack?.rows ?? [])];
+  const candidateDiscoveryRows =
+    candidateJourney?.rows.map((row) =>
+      Object.freeze({
+        key: row.key,
+        title: row.level.name,
+        packName: row.pack.name,
+        sourceLabel: 'Team Journey · geometry test · not human validated',
+        goal: coopGoalText(row.level),
+        levelId: row.level.id,
+        level: row.level,
+        pack: row.pack,
+        artworkSource: null,
+        journeyRow: row,
+      }),
+    ) ?? [];
+  const currentDiscoveryRows = () => [
+    ...candidateDiscoveryRows.filter(
+      (row) =>
+        row.journeyRow.difficulty ===
+        (acceptedPicture?.journeyRow?.difficulty ?? candidateDifficulty),
+    ),
+    ...starterDiscoveryRows,
+    ...(localDiscoveryPack?.rows ?? []),
+  ];
   const artworkImports = createCoopPresentationImport();
   let importRequest = 0;
   const packStatus = createOperationStatus($('coop-pack-status'), { isCurrent: () => !disposed });
@@ -916,8 +943,11 @@ export function bootCoop() {
       : lost
         ? 'Your next route starts here.'
         : 'Both players paused';
+    const completionCopy = destination?.journey
+      ? 'Team Journey test complete. Browse a mission, replay, or leave whenever you are ready.'
+      : 'Pack complete. Browse Team arenas to choose your next challenge, or retry this one.';
     $('coop-overlay-copy').textContent = won
-      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? 'Pack complete. Browse Team arenas to choose your next challenge, or retry this one.' : 'Browse Team arenas or retry this challenge.'}`
+      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? completionCopy : 'Browse Team arenas or retry this challenge.'}`
       : lost
         ? coopRetryFeedback(run, knockdowns.filter(Boolean))
         : 'Release your controls, then choose Resume together.';
@@ -1195,8 +1225,18 @@ export function bootCoop() {
     focus?.finish($('coop-picture-retry'));
   }
   function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack, artworkSource = null) {
+    // Only code-owned exact recipes join this route. An imported pack with the
+    // same IDs (or even the same bytes) keeps its independent local ordering.
+    const journeyRow =
+      candidateJourney?.rows.find(
+        (row) =>
+          row.pack === sourcePack &&
+          row.difficulty === recipe.options.difficulty &&
+          JSON.stringify(row.level) === JSON.stringify(recipe.level),
+      ) ?? null;
     const selection = {
       sourcePack,
+      journeyRow,
       artworkSource,
       pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
@@ -1260,7 +1300,7 @@ export function bootCoop() {
     }
     if (!retry || !pictureSelection) {
       retirePicture();
-      const sourcePack = run ? attemptPack : pack;
+      const sourcePack = run ? (acceptedPicture?.journeyRow?.pack ?? attemptPack) : pack;
       pictureSelection = newPictureSelection(
         currentRecipe(),
         sourcePack,
@@ -1346,6 +1386,17 @@ export function bootCoop() {
       acceptedPicture.levelId !== attemptLevel?.id
     )
       return null;
+    if (candidateJourney?.owns(acceptedPicture.journeyRow)) {
+      const row = acceptedPicture.journeyRow;
+      if (JSON.stringify(row.level) !== JSON.stringify(attemptLevel)) return null;
+      const destination = candidateJourney.destination(row);
+      return {
+        ...destination,
+        journey: true,
+        nextRow: destination.next,
+        next: destination.next?.level ?? null,
+      };
+    }
     return coopPackDestination(attemptPack, attemptLevel);
   }
   function nextStatus(text) {
@@ -1392,7 +1443,8 @@ export function bootCoop() {
       $('coop-next').focus({ preventScroll: true });
   }
   async function nextArena() {
-    const destination = teamDestination()?.next;
+    const navigation = teamDestination(),
+      destination = navigation?.next;
     if (
       !destination ||
       disposed ||
@@ -1409,9 +1461,9 @@ export function bootCoop() {
     const recipe = { level: structuredClone(destination), options: currentRecipe().options };
     const selection = newPictureSelection(
       recipe,
-      acceptedPicture.sourcePack,
-      attemptPack,
-      acceptedPicture.artworkSource,
+      navigation.nextRow?.pack ?? acceptedPicture.sourcePack,
+      navigation.nextRow?.pack ?? attemptPack,
+      navigation.nextRow ? null : acceptedPicture.artworkSource,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
@@ -1496,6 +1548,8 @@ export function bootCoop() {
         run,
         level: attemptLevel,
         pack: attemptPack,
+        setupPack: pack,
+        artworkSource: packArtworkSource,
         picture: acceptedPicture,
         selection: pictureSelection,
         knockdowns,
@@ -1519,6 +1573,11 @@ export function bootCoop() {
       accumulator = 0;
       try {
         if (rememberBuiltIn) lastBuiltInArena = destination.id;
+        if (navigation.nextRow) {
+          packArtworkSource = null;
+          showPack(navigation.nextRow.pack, destination.id, () => adopted(candidate));
+          if (!adopted(candidate)) return;
+        }
         $('coop-level').value = destination.id;
         $('coop-difficulty').value = candidate.difficulty;
         const configuration = COOP_PLAYTEST_CONFIGURATIONS.find((item) =>
@@ -1549,6 +1608,24 @@ export function bootCoop() {
           accumulator = previous.accumulator;
           generation++;
           lastBuiltInArena = previous.lastBuiltInArena;
+          if (navigation.nextRow) {
+            packArtworkSource = previous.artworkSource;
+            const epoch = generation;
+            showPack(
+              previous.setupPack,
+              previous.arena,
+              () =>
+                run === previous.run &&
+                generation === epoch &&
+                acceptedPicture === previous.picture,
+            );
+            if (
+              run !== previous.run ||
+              generation !== epoch ||
+              acceptedPicture !== previous.picture
+            )
+              return;
+          }
           $('coop-level').value = previous.arena;
           $('coop-difficulty').value = previous.difficulty;
           $('coop-experiment').value = previous.configuration;
@@ -1801,7 +1878,13 @@ export function bootCoop() {
   async function activateDiscovery(row, { signal, isCurrent, onStatus, opener }) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
       throw new DOMException('Arena selection is no longer current.', 'AbortError');
-    const recipe = { level: structuredClone(row.level), options: currentRecipe().options };
+    const recipe = {
+      level: structuredClone(row.level),
+      options: {
+        ...currentRecipe().options,
+        ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
+      },
+    };
     const selection = newPictureSelection(recipe, row.pack, row.pack, row.artworkSource);
     const previous = {
       run,
@@ -2823,7 +2906,8 @@ export function bootCoop() {
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
   function showPackStatus() {
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}`;
+    const candidate = candidateJourney?.rows.some((row) => row.pack === pack);
+    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? ' · Geometry test · not human validated' : ''}`;
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
@@ -3168,7 +3252,13 @@ export function bootCoop() {
   }
   // Keep the existing option nodes and an already-correct native value while a
   // player may have the platform's selector open during module preparation.
-  if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
+  if (candidateJourney && !earlySelection?.claimed) {
+    const first = candidateJourney.catalog.missions.find((mission) =>
+      candidateJourney.isCore(mission.id),
+    );
+    const row = candidateJourney.row(first, candidateDifficulty);
+    showPack(row.pack, row.level.id);
+  } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
   setupNote();
   $('coop-touch').value = 'auto';
@@ -3266,7 +3356,11 @@ export function bootCoop() {
   window.addEventListener('pageshow', returned);
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
-  bootDisplay.finish({ message: 'Two players · one screen · a shared victory' });
+  bootDisplay.finish({
+    message: candidateJourney
+      ? `Team Journey geometry test · twelve missions · human validation and original artwork pending. ${candidateNotice}`.trim()
+      : 'Two players · one screen · a shared victory',
+  });
   document.documentElement.dataset.toolState = 'ready';
   startPermitted = !$('coop-start').disabled;
   void preparePicture({
@@ -3284,7 +3378,13 @@ try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
   window.addEventListener('blur', initialFocusLost);
-  bootCoop();
+  const journeyRequests = new URL(location.href).searchParams.getAll('journey');
+  let candidateEntry;
+  if (journeyRequests.length === 1 && journeyRequests[0] === 'team-greybox') {
+    const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
+    candidateEntry = createTeamGreyboxEntry();
+  }
+  bootCoop(candidateEntry);
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootDisplay.finish({ state: 'error', message: `Could not start Relay Rescue: ${error.message}` });
