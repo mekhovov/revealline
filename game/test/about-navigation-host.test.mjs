@@ -653,3 +653,58 @@ test('disconnect retires edits and reconnect requires neutral and a fresh join',
   h.tap(1);
   assert.equal(h.doc.activeElement, h.$('about-return'));
 });
+
+for (const page of [
+  'https://example.test/revealline/site/about.html',
+  'https://example.test/revealline/releases/v0.68.0/site/site/about.html',
+  'https://mekhovov.github.io/revealline-archive-34/releases/v0.68.0/site/site/about.html',
+]) {
+  for (const input of ['keyboard', 'controller']) {
+    test(`${input} reaches Solo, Versus and Team in the same build while catalogues are pending: ${page}`, async (t) => {
+      const h = await about(t, page);
+      await h.start();
+      const routes = [
+        ['about-play-solo', '../game/'],
+        ['about-play-versus', '../game/couch/'],
+        ['about-play-team', '../game/couch/relay-rescue.html'],
+      ];
+      const modes = h.$('modes');
+      const links = [...modes.querySelectorAll('a')];
+      if (input === 'controller') h.join();
+      for (const [id, href] of routes) {
+        const action = links.find((link) => link.getAttribute('href') === href);
+        assert.ok(action, `${id} is a rendered mode choice.`);
+        assert.equal(action.getAttribute('href'), href);
+        assert.equal(action.closest('[hidden],[inert]'), null);
+        if (input === 'controller') {
+          h.walk(action);
+          h.tap(0);
+        } else {
+          action.focus();
+          assert.equal(h.key('Enter').defaultPrevented, false);
+        }
+        assert.equal(h.navigations.at(-1), new URL(href, page).href);
+      }
+      const actions = routes.map(([, href]) =>
+        links.find((link) => link.getAttribute('href') === href),
+      );
+      assert.ok(links.indexOf(actions[0]) < links.indexOf(actions[1]));
+      assert.ok(links.indexOf(actions[1]) < links.indexOf(actions[2]));
+      assert.equal(h.requests.length, 1, 'Mode entry does not wait for the remote catalogues.');
+      assert.equal(h.doc.activeElement, actions[2]);
+      await h.finish(packCatalog);
+      h.tick();
+      assert.equal(
+        h.doc.activeElement,
+        actions[2],
+        'Late catalogue completion cannot steal the selected Team entry.',
+      );
+      const before = [...h.navigations];
+      if (input === 'controller') h.tap(1);
+      else h.key('Escape');
+      assert.equal(h.doc.activeElement, h.$('about-return'));
+      assert.deepEqual(h.navigations, before, 'Back returns focus without leaving the build.');
+      assert.deepEqual(h.writes, [], 'Choosing a mode from About does not change saved progress.');
+    });
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "scope": "local candidate evidence only",
+  "base": "5dc68feaa8234e03f3e87ad5d00470262bf19ce4",
+  "files": [
+    {
+      "path": "focused-node20-result.json",
+      "bytes": 16,
+      "sha256": "e153f5bd2ee7416d77570b30ba1de5bb9196c55f8d145e34df9dab12190ffe43"
+    },
+    {
+      "path": "focused-node20-r2-result.json",
+      "bytes": 16,
+      "sha256": "982b9e9bfb10ffe83cad665807abcfd3fa97b37822db5ab7831157a499548a9e"
+    },
+    {
+      "path": "focused-request.json",
+      "bytes": 680,
+      "sha256": "b55469269eb4dbd4bf0d4db873f01839546b4f07d052a2649f7340e22f7cdf10"
+    },
+    {
+      "path": "static-results.json",
+      "bytes": 31,
+      "sha256": "de8108dd6e284d1d764f5184df039ef666cf7d195e4f728e27a511657fc3973e"
+    },
+    {
+      "path": "native-observations.json",
+      "bytes": 1834,
+      "sha256": "252eedc6d704a1e2675af96a2a9cd9c34410ca9a36cfb8c43a66ff52495f0dff"
+    },
+    {
+      "path": "fixture-hydration.json",
+      "bytes": 913,
+      "sha256": "3d5a3ca6129e7c59b5b74b653cc9b48499efff28bda77912f2d00b6b35310e5e"
+    },
+    {
+      "path": "fixture-retirement-before.json",
+      "bytes": 2447,
+      "sha256": "f7a1a798db1a600e66419302caf6080e763c77c80337c5c30542c88f6d4ef02f"
+    },
+    {
+      "path": "fixture-retirement-result.json",
+      "bytes": 145,
+      "sha256": "7d22490f64744eaff0947c4a7465a69f1832189383bae5374424950281f9013c"
+    },
+    {
+      "path": "overrides.json",
+      "bytes": 1813,
+      "sha256": "bfd83fb776d27764b0a2a5bbb9bf2418e5091d1c721f7f6df69696e8e2e5141e"
+    },
+    {
+      "path": "focused-node20.log.gz",
+      "bytes": 3236,
+      "sha256": "a279fcc2d26c4f8f146ff481f1bd68546274cce28d9925cc10700650feb8581e",
+      "originalBytes": 21137,
+      "originalSha256": "bc376064b95a81aed731ba64c4d0b96b6767c11d23b138aaa3f494f9742f4055"
+    },
+    {
+      "path": "focused-node20-r2.log.gz",
+      "bytes": 6761,
+      "sha256": "4f23a88998d1802c02cd92fefa296c9ad8ea337d9969183083c2bc2885cf6be4",
+      "originalBytes": 40831,
+      "originalSha256": "95f821f81c0f5ee8026329b03c2bbac99dbf5e1435e3e7dc5caf4d1095f821d0"
+    },
+    {
+      "path": "native-served.log.gz",
+      "bytes": 46446,
+      "sha256": "3c7797f4e1270ea334a6fd001850d8880802600415efcd9f2212837d96140d9c",
+      "originalBytes": 199092,
+      "originalSha256": "0b089675fb750fa9e36f025fd4f2ed895fc3494c24319dd084492dfec2adaa01"
+    }
+  ]
+}
