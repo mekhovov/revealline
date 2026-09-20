@@ -102,10 +102,11 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Accepted composition PR184 merged and immutable release published; publisher PR189 and public Pages acceptance still pending at this checkpoint; human phase acceptance remains |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Accepted composition PR184 and publisher PR189 merged; immutable release published, public byte audit3789files/698351359bytes passed with zero issues; scoped native Next passed, human phase acceptance remains |
 | P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | PR175 exact bbbbf87b: all7189 hosted tests and frozen snapshot passed; independent release-owner inspection/promotion and public acceptance pending |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Seven Solo greyboxes; 119 clear/delay fixtures, 420 seed checks, all42 preset/steering optional-goal combinations replay-verified, reference crosswalk, terrain captions, explicit Team terrain edition/template, Shared detour Team greybox, bounded tracing benchmark and shared advisory progression inspector; broader route quality/pacing, final art, human and release gates pending |
-| P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
+| P04 | 0.72.0 | Neon Contours and Remix | Draft PR190: seven original greyboxes,42 no-loss Solo routes and42 equal paired races; Inside out bypass revised; shared Studio/CLI preview and native map inspection verified. Original assets, optional goals, human and release gates remain |
+| P05–P12 | 0.73.0–0.80.0 | Campaigns 5–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
 | P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Pending |
 | P15 | 0.83.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |
