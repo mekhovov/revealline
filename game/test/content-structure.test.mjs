@@ -89,6 +89,34 @@ test('create packs, campaigns and starter missions with explicit valid membershi
   );
 });
 
+test('explicit material-ready Team template accepts shared terrain without migrating existing editions', () => {
+  const source = createStarterProject(),
+    before = structuredClone(source);
+  const draft = edit(source, {
+    action: 'create',
+    kind: 'mission',
+    id: 'material-route',
+    name: 'Material study',
+    template: 'team-materials',
+    parentId: 'horizon-school',
+  });
+  assert.deepEqual(source, before);
+  assert.equal(draft.missions.at(-1).team.format, 'TeamMissionV2');
+  const changed = forkMissionMap(draft, 'material-route', {
+    terrain: [{ id: 'bed', kind: 'slow', x: 30, y: 14, w: 5, h: 5 }],
+  });
+  for (const difficulty of ['gentle', 'standard', 'expert']) {
+    const manifest = resolveMission(compileContentProject(changed), 'material-route', {
+      mode: 'team',
+      difficulty,
+    });
+    assert.equal(manifest.level.version, 'revealline-coop-level.v3');
+    assert.equal(manifest.level.terrain.length, 1);
+    assert.equal(manifest.validation, 'compiled-candidate-not-playtested');
+  }
+  assert.deepEqual(draft.maps.at(-1).terrain, []);
+});
+
 test('explicit Team template creates two-seat content with copy-on-write geometry and stable simulation names', () => {
   const source = createStarterProject();
   const draft = edit(source, {

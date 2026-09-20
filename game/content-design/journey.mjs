@@ -2,7 +2,13 @@ import { boundedJSON, exactKeys, required, dataIdentity } from '../data-json.mjs
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { freezeDesign, journeyPreset } from './catalogs.mjs';
-import { COOP_FOUNDATION_PACK_VERSION, COOP_FOUNDATION_RULESET } from '../coop/foundations.mjs';
+import {
+  COOP_FOUNDATION_PACK_VERSION,
+  COOP_FOUNDATION_RULESET,
+  COOP_TERRAIN_LEVEL_VERSION,
+  COOP_TERRAIN_PACK_VERSION,
+  COOP_TERRAIN_RULESET,
+} from '../coop/foundations.mjs';
 import { validateCoopPack } from '../coop/recipes.mjs';
 
 /** Candidate navigation and execution share the authored order and resolver.
@@ -40,6 +46,12 @@ export function resolveContentJourney(source, options = {}) {
       const manifests = missionIds.map((missionId) =>
         resolveMission(project, missionId, { mode, difficulty }),
       );
+      const terrain = mode === 'team' && manifests[0].level.version === COOP_TERRAIN_LEVEL_VERSION;
+      if (mode === 'team')
+        required(
+          manifests.every((manifest) => manifest.level.version === manifests[0].level.version),
+          'A Team campaign must use one explicitly authored runtime edition; old editions are not silently upgraded.',
+        );
       campaigns.push({
         packId: pack.id,
         campaignId: design.id,
@@ -47,8 +59,15 @@ export function resolveContentJourney(source, options = {}) {
         // A changed original must not impersonate a saved edition. Navigation
         // and Journey progress IDs remain independent of these revisions.
         runtime: {
-          version: mode === 'team' ? COOP_FOUNDATION_PACK_VERSION : 'xonix-campaign.v1',
-          ...(mode === 'team' ? { ruleset: COOP_FOUNDATION_RULESET } : {}),
+          version:
+            mode === 'team'
+              ? terrain
+                ? COOP_TERRAIN_PACK_VERSION
+                : COOP_FOUNDATION_PACK_VERSION
+              : 'xonix-campaign.v1',
+          ...(mode === 'team'
+            ? { ruleset: terrain ? COOP_TERRAIN_RULESET : COOP_FOUNDATION_RULESET }
+            : {}),
           id: design.id,
           revision: `candidate-${dataIdentity({
             campaign: design,
