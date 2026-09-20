@@ -272,6 +272,43 @@ The complete five-file candidate/Studio/structure/material cohort passes49/49,
 zero skips/failures,4.853seconds onNode20.19.5. Changed-source lint, formatting and
 whitespace checks pass. This is not the full hosted P03 gate or human acceptance.
 
+### Responsive action visibility
+
+The release-owner native check found retained focus outside the viewport after
+resizing More worlds and the unfinished-flight replacement dialog. Both consumers
+now attach the existing measured focus-clearance helper. More worlds supplies its
+sticky heading; replacement has no sticky region. Resize/focus adjusts only the
+current dialog scroll, never selection, attempt state or focus ownership. Both
+attachments are disposed with their owning UI. No new animation or timing lock.
+
+This applies the visibility intent of [W3C Focus Not Obscured](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html)
+and preserves the existing [modal dialog interaction](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
+It is not a claim of complete WCAG conformance.
+
+The three-file focus/world-browser/actual-replacement cohort passes **48/48**,
+zero skips, 37.730 seconds on Node 20.19.5. Three additional optional-world
+launch/choice/copy lifecycle files pass **51/51**, zero skips, 1.048 seconds.
+Changed-source lint, formatting and whitespace checks pass. Initial runs had six
+missing Night Shift/Living Threads fixture failures and one missing published
+original fixture; exact tracked sparse restoration resolved those, without
+changing assertions or runtime handling.
+
+Native localhost8780 tab19 started and paused First Signal at 0:08, 0% coverage,
+three lives and zero score. Selecting Night Shift opened the actual replacement
+dialog. At 390×844 → 844×390, Stay retained focus and remained fully visible;
+Tab revealed Replace without activating it. At 844×256, Stay remained focused
+at y179.797–229.797 inside the dialog y16–240, with scrollTop118.5. Stay cancelled
+back to the original Base game selection; no replacement was accepted.
+
+More worlds keyboard navigation focused Download & play without activation.
+At 390×844, the retained action occupied y279.688–323.688 below its sticky heading
+(bottom101); at 844×256 it occupied y203.945–247.945 below the heading
+(bottom108.758), with its outline visible. No download or launch occurred.
+Escape returned to the existing Continue menu and the viewport override was
+reset. This is native mouse/keyboard reflow evidence, not physical-device,
+screen-reader, large-text or whole-library accessibility acceptance. Sparse
+development artwork fallbacks were visible and are unrelated to this layout fix.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
