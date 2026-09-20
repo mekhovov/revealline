@@ -106,7 +106,8 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | PR175 exact bbbbf87b: all7189 hosted tests and frozen snapshot passed; independent release-owner inspection/promotion and public acceptance pending |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Seven Solo greyboxes; 119 clear/delay fixtures, 420 seed checks, all42 preset/steering optional-goal combinations replay-verified, reference crosswalk, terrain captions, explicit Team terrain edition/template, Shared detour Team greybox, bounded tracing benchmark and shared advisory progression inspector; broader route quality/pacing, final art, human and release gates pending |
 | P04 | 0.72.0 | Neon Contours and Remix | Draft PR190: seven original greyboxes,42 no-loss Solo routes and42 equal paired races, all42 optional-goal combinations,315 seed checks and35 delayed-start routes; Inside out bypass revised; shared Studio/CLI preview and native map inspection verified. Original assets, human and release gates remain |
-| P05–P12 | 0.73.0–0.80.0 | Campaigns 5–12, each with Remix/assets/mode qualification | Pending |
+| P05 | 0.73.0 | Rover Yard and Remix | Independent foundation candidate: exact v2 actor catalogue exposes existing reclaimed-ground roamer, shared compiler/Studio controls and68 scoped checks. Authored campaign, art, modes, human and release gates remain |
+| P06–P12 | 0.74.0–0.80.0 | Campaigns 6–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
 | P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Pending |
 | P15 | 0.83.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |

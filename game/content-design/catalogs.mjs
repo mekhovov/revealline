@@ -107,25 +107,58 @@ export const ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// A new authored catalogue adds an existing engine role without rewriting v1.
+// Historical projects keep their exact role set and compiled motion values.
+export const ROVER_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v2',
+  roles: {
+    ...ACTOR_CATALOG.roles,
+    'reclaimed-roamer': {
+      type: 'claimed-rover',
+      domain: 'reclaimed-ground',
+      damageTarget: 'body-and-trail-while-active',
+      retainsField: false,
+      captureResponse: 'warn-then-activate-on-reclaimed-ground',
+      warning: '120-actor-ticks-after-full-body-reclamation',
+      action: 'reflect-within-reclaimed-ground',
+      recovery: 'continuous-domain-reflection',
+      counterplay:
+        'Keep an escape corridor before enclosing it; the warning gives time to move away. Reclaimed ground still closes cuts but is not universally safe.',
+      speeds: { measured: 1.6, standard: 2.2, brisk: 2.8 },
+    },
+  },
+});
+
+export function journeyActors(id = ACTOR_CATALOG.id) {
+  const catalogs = {
+    [ACTOR_CATALOG.id]: ACTOR_CATALOG,
+    [ROVER_ACTOR_CATALOG.id]: ROVER_ACTOR_CATALOG,
+  };
+  required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
+  return catalogs[id];
+}
+
 export function journeyPreset(id = 'standard') {
   required(Object.hasOwn(DIFFICULTY_CATALOG.presets, id), 'Unsupported Journey difficulty.');
   return DIFFICULTY_CATALOG.presets[id];
 }
 
-export function compileActor(source, difficulty = 'standard') {
+export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_CATALOG.id) {
   const actor = boundedJSON(source, { maxBytes: 4096, maxNodes: 64, maxDepth: 5, maxArray: 2 });
-  const role = ACTOR_CATALOG.roles[actor.role];
-  required(Object.hasOwn(ACTOR_CATALOG.roles, actor.role), 'Unsupported actor role.');
+  const catalog = journeyActors(catalogId);
+  const role = catalog.roles[actor.role];
+  required(Object.hasOwn(catalog.roles, actor.role), 'Unsupported actor role.');
   required(Object.hasOwn(role.speeds, actor.tier), 'Unsupported actor speed tier.');
   const speed = role.speeds[actor.tier] * journeyPreset(difficulty).enemySpeedFactor;
-  if (role.type === 'bouncer') {
+  if (['bouncer', 'claimed-rover'].includes(role.type)) {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'heading'], 'actor');
     required(
       Array.isArray(actor.heading) &&
         actor.heading.length === 2 &&
         actor.heading.every((n) => Number.isInteger(n) && n >= -1 && n <= 1) &&
         actor.heading.some((n) => n !== 0),
-      'Field keeper heading must be a nonzero eight-way direction.',
+      'Actor heading must be a nonzero eight-way direction.',
     );
     const magnitude = Math.hypot(...actor.heading);
     return {

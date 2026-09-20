@@ -1,4 +1,4 @@
-import { ACTOR_CATALOG, journeyPreset } from '../content-design/catalogs.mjs';
+import { journeyActors, journeyPreset } from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
@@ -6,6 +6,7 @@ const names = {
   'field-keeper': 'Field keeper',
   'perimeter-patrol': 'Outer-perimeter patrol',
   'frontier-patrol': 'Moving-frontier patrol',
+  'reclaimed-roamer': 'Reclaimed-ground roamer',
 };
 
 /** Catalog-only controls. Unsaved fields are local; only an explicit validated
@@ -15,6 +16,8 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   let revision = null,
     removal = null;
   const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
+  const catalog = () => journeyActors(getSource().actorCatalogId);
+  const hasHeading = (role) => ['field-keeper', 'reclaimed-roamer'].includes(role);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -24,14 +27,17 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
         return option;
       }),
     );
-  options($('role'), Object.entries(names));
+  options(
+    $('role'),
+    Object.entries(names).filter(([role]) => Object.hasOwn(catalog().roles, role)),
+  );
   function cancelRemoval() {
     removal = null;
     $('remove').textContent = 'Remove selected actor';
   }
   function describe() {
     cancelRemoval();
-    const role = ACTOR_CATALOG.roles[$('role').value];
+    const role = catalog().roles[$('role').value];
     const tier = $('tier').value;
     options(
       $('tier'),
@@ -44,10 +50,12 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     const frontier = $('role').value === 'frontier-patrol';
     $('position-help').textContent = frontier
       ? 'Integer field cell beside reclaimed ground; choose its side facing that ground.'
-      : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
-    $('heading-row').hidden = $('role').value !== 'field-keeper';
+      : $('role').value === 'reclaimed-roamer'
+        ? 'Use cell centres ending in .5. Dormant in field; after its body is reclaimed it warns for 120 actor ticks, then roams reclaimed ground.'
+        : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
+    $('heading-row').hidden = !hasHeading($('role').value);
     $('edge-row').hidden = !frontier;
-    $('clockwise-row').hidden = $('role').value === 'field-keeper';
+    $('clockwise-row').hidden = hasHeading($('role').value);
     for (const axis of ['x', 'y']) $(axis).step = frontier ? '1' : '0.5';
     $('description').textContent =
       `${role.domain} · hits ${role.damageTarget} · ${role.retainsField ? 'Retains its field region.' : 'Does not retain field regions.'} ${role.counterplay}`;
@@ -79,7 +87,9 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     options(
       $('role'),
       Object.entries(names).filter(
-        ([role]) => !mission?.modes.includes('team') || role === 'field-keeper',
+        ([role]) =>
+          Object.hasOwn(catalog().roles, role) &&
+          (!mission?.modes.includes('team') || role === 'field-keeper'),
       ),
     );
     const selected = $('select').value;
@@ -125,7 +135,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     }
     if (role === 'frontier-patrol') actor.edge = { x, y, side: $('edge').value };
     else Object.assign(actor, { x, y });
-    if (role === 'field-keeper') actor.heading = $('heading').value.split(',').map(Number);
+    if (hasHeading(role)) actor.heading = $('heading').value.split(',').map(Number);
     else actor.clockwise = $('clockwise').checked;
     commit({ action: $('select').value ? 'replace' : 'add', id, actor });
   };

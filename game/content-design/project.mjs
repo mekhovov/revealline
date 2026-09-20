@@ -8,7 +8,7 @@ import { resolveTeamMission } from './team-runtime.mjs';
 import { CONTENT_PROJECT_JSON_LIMITS, CONTENT_PROJECT_ITEM_LIMITS } from './limits.mjs';
 import {
   journeyPolicy,
-  ACTOR_CATALOG,
+  journeyActors,
   DIFFICULTY_CATALOG,
   compileActor,
   journeyPreset,
@@ -128,9 +128,9 @@ export function compileContentProject(source) {
     'assets',
   ]);
   const policy = journeyPolicy(project.policyId);
+  const actors = journeyActors(project.actorCatalogId);
   required(
-    project.actorCatalogId === ACTOR_CATALOG.id &&
-      project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
+    project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
     'Project must pin registered policy and catalogs.',
   );
   required(
@@ -221,7 +221,7 @@ export function compileContentProject(source) {
     campaigns: project.campaigns,
     packs: project.packs,
     policy,
-    actors: ACTOR_CATALOG,
+    actors,
     difficulty: DIFFICULTY_CATALOG,
     assets,
   });
@@ -269,7 +269,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       powerups: mission.bonuses,
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
     },
-    enemies: mission.actors.map((actor) => compileActor(actor, difficulty)),
+    enemies: mission.actors.map((actor) => compileActor(actor, difficulty, project.actors.id)),
     objectives: mission.objectives,
     supplies: [],
     rules: {
