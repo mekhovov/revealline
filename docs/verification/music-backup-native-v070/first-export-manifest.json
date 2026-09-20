@@ -1,0 +1,82 @@
+{
+  "assets": [
+    {
+      "bytes": 32600,
+      "sha256": "2d918540dd087b9620a07132bab2d6aab2d69eff4db747dd58ec95fec6c23f32"
+    },
+    {
+      "bytes": 32600,
+      "sha256": "cdee5b2980749d03f6c622c4438bbf068f7f24f2d7f4214835152929834ae891"
+    }
+  ],
+  "format": "revealline-soundtrack-bundle.v1",
+  "library": {
+    "assignments": [],
+    "format": "revealline-soundtrack.v1",
+    "playlists": [
+      {
+        "id": "playlist.38444424-0065-48d4-aab3-e017942569bc",
+        "order": "ordered",
+        "repeat": "all",
+        "title": "Backup journey \u00b7 mixed chimes",
+        "trackIds": [
+          "track.ae751e3e-5f43-4f39-8f42-70b14feab9ff",
+          "track.a18fc17a-db15-49bb-adeb-a80b04646aaa",
+          "builtin.signal-afterglow",
+          "track.ae751e3e-5f43-4f39-8f42-70b14feab9ff"
+        ]
+      }
+    ],
+    "selection": {
+      "playlistId": "playlist.38444424-0065-48d4-aab3-e017942569bc"
+    },
+    "tracks": [
+      {
+        "artist": "",
+        "asset": {
+          "bytes": 32600,
+          "channels": 1,
+          "durationSeconds": 2.0375510204081633,
+          "frames": 78,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "sha256": "cdee5b2980749d03f6c622c4438bbf068f7f24f2d7f4214835152929834ae891"
+        },
+        "format": "revealline-audio-track.v1",
+        "id": "track.a18fc17a-db15-49bb-adeb-a80b04646aaa",
+        "kind": "mp3",
+        "rights": {
+          "credit": "Personal local upload",
+          "kind": "personal",
+          "license": "",
+          "source": "rising-chime.mp3"
+        },
+        "title": "rising-chime"
+      },
+      {
+        "artist": "",
+        "asset": {
+          "bytes": 32600,
+          "channels": 1,
+          "durationSeconds": 2.0375510204081633,
+          "frames": 78,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "sha256": "2d918540dd087b9620a07132bab2d6aab2d69eff4db747dd58ec95fec6c23f32"
+        },
+        "format": "revealline-audio-track.v1",
+        "id": "track.ae751e3e-5f43-4f39-8f42-70b14feab9ff",
+        "kind": "mp3",
+        "rights": {
+          "credit": "Personal local upload",
+          "kind": "personal",
+          "license": "",
+          "source": "falling-chime.mp3"
+        },
+        "title": "falling-chime"
+      }
+    ]
+  }
+}
