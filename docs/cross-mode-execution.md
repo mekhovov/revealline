@@ -840,7 +840,7 @@ Xposed's 64 supplied screenshots include 48 numbered references. Reimagine their
 
 Keep presentation outside simulation/campaign hashes. Allocate the next unused schema versions only after inspecting current dispatch; never mutate historical validators, checkpoints or proof fixtures. Preserve historical Team's strict level imports, independent Solo progress and no persistent co-op saves. Starting-safe regions/new encounter fields require explicit new-version validation and unchanged legacy outcomes.
 
-Retain current budgets unless a separately reviewed requirement explicitly changes them: core offline 64 MiB; main Pages 950 MB; archive 800 MB; media 256 MiB; twelve installed packs, 24 MiB each/48 MiB aggregate; library 4 MiB/512 contexts; save 2 MiB. Theme manifest 4 MiB, bundle 32 MiB, asset 4 MiB, 512 slots, 2,048 revisions, 1,024 themes, 128 collections, image side 1,920/pixels 2,073,600. Plan context/recovery capacity before producing all campaigns. A proposed budget is not permission to bypass a validator.
+Retain current budgets unless a separately reviewed requirement explicitly changes them: core offline 64 MiB; main Pages 950 MB; archive 800 MB; media 256 MiB; twelve installed packs, 24 MiB each/48 MiB aggregate; library 4 MiB/512 contexts; save 2 MiB. Current Journey P02 theme manifest 5 MiB (bounded extension from 4 MiB, [measured full-replacement evidence](verification/journey-p02-music-recipe.md)); bundle 32 MiB, asset 4 MiB, 512 slots, 2,048 revisions, 1,024 themes, 128 collections, image side 1,920/pixels 2,073,600 remain unchanged. Old editions keep their original limits. Plan context/recovery capacity before producing all campaigns. A proposed budget is not permission to bypass a validator.
 
 ## Release and evidence protocol
 
