@@ -1535,7 +1535,10 @@ try {
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
       ? 'touch'
       : 'keyboard';
-  const modalNavigation = attachModalNavigation();
+  const modalNavigation = attachModalNavigation({
+    getFallbackFocus: ({ dialog, top }) =>
+      dialog.id === 'settings-dialog' && !top ? $('shell-menu') : null,
+  });
   const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
     const b = controllerLabels.menu;
@@ -6385,11 +6388,13 @@ try {
     if (!started) rememberSelection();
     started = true;
     paused = false;
-    if (runMessageCue === 'restored')
+    if (['restored', 'paused-resume'].includes(runMessageCue))
       warning(
         run.player.cutting
           ? 'Flight resumed. Your unfinished line is still exposed.'
           : 'Flight resumed.',
+        'resumed',
+        'host.resumed',
       );
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
     activateAudio().catch(() => {});
@@ -6449,6 +6454,14 @@ try {
     clearInput();
     paused = true;
     sound.pause?.();
+    if (runMessageCue === 'resumed')
+      warning(
+        run.player.cutting
+          ? 'Flight paused. Your unfinished line is kept. Press Resume to continue.'
+          : 'Flight paused. Press Resume to continue.',
+        'paused-resume',
+        'host.paused',
+      );
     if (
       !practice &&
       !courseEntryHold &&

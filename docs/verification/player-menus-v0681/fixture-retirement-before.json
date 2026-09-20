@@ -1,0 +1,55 @@
+{
+  "scope": "Only unchanged generated source-fixture copies from this turn; original Git and user checkout preserved",
+  "source": "5dc68feaa8234e03f3e87ad5d00470262bf19ce4",
+  "cohort": "171/171 complete before retirement",
+  "files": [
+    {
+      "path": "game/content/packs/fpv-arcade.json",
+      "bytes": 11701968,
+      "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904",
+      "regeneratedGitSha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "bytes": 11377254,
+      "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9",
+      "regeneratedGitSha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "bytes": 11707106,
+      "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703",
+      "regeneratedGitSha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176,
+      "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
+      "regeneratedGitSha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "bytes": 11706060,
+      "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f",
+      "regeneratedGitSha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+    },
+    {
+      "path": "game/content/packs/equipment-workshop.json",
+      "bytes": 11127024,
+      "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054",
+      "regeneratedGitSha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "bytes": 11371849,
+      "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b",
+      "regeneratedGitSha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "bytes": 11706413,
+      "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848",
+      "regeneratedGitSha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+    }
+  ]
+}

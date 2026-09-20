@@ -1,5 +1,8 @@
 /** Remember native dialog opening order. DOM order is not top-layer order. */
-export function attachModalNavigation({ document: doc = globalThis.document } = {}) {
+export function attachModalNavigation({
+  document: doc = globalThis.document,
+  getFallbackFocus = () => null,
+} = {}) {
   let stack = [],
     destroyed = false,
     previousFocus = doc.activeElement;
@@ -58,6 +61,20 @@ export function attachModalNavigation({ document: doc = globalThis.document } = 
     if (isOpen(dialog) && !stack.some((entry) => entry.dialog === dialog)) opened(dialog);
     previousFocus = event.target;
   };
+  const available = (element) => {
+    if (
+      !element?.isConnected ||
+      element.disabled ||
+      element.closest('[hidden],[inert],[aria-hidden="true"]')
+    )
+      return false;
+    for (let node = element; node && node !== doc; node = node.parentElement) {
+      if (isDialog(node) && !node.open) return false;
+      const style = doc.defaultView?.getComputedStyle?.(node);
+      if (style?.display === 'none' || style?.visibility === 'hidden') return false;
+    }
+    return typeof element.getClientRects !== 'function' || element.getClientRects().length > 0;
+  };
   const close = (event) => {
     if (!isDialog(event.target) || event.target.open) return;
     const wasTop = stack.at(-1)?.dialog === event.target;
@@ -65,20 +82,33 @@ export function attachModalNavigation({ document: doc = globalThis.document } = 
     if (!wasTop || !entry?.origin || doc.hidden || doc.hasFocus?.() === false) return;
     queueMicrotask(() => {
       if (destroyed || event.target.open || doc.hidden || doc.hasFocus?.() === false) return;
-      const top = topDialog(),
-        origin = entry.origin;
-      if (
-        !origin.isConnected ||
-        origin.disabled ||
-        origin.closest('[hidden],[inert],[aria-hidden="true"]')
-      )
-        return;
-      if (top ? !top.contains(origin) : origin.closest('dialog')) return;
+      const top = topDialog();
+      const eligible = (element) =>
+        available(element) && (top ? top.contains(element) : !element.closest('dialog'));
       // Respect an explicit replacement focus installed by another close handler.
       if (
         doc.activeElement !== doc.body &&
         doc.activeElement !== event.target &&
-        (top ? top.contains(doc.activeElement) : doc.activeElement?.isConnected)
+        eligible(doc.activeElement)
+      )
+        return;
+      let origin = entry.origin;
+      const focusBeforeFallback = doc.activeElement;
+      if (!eligible(origin)) {
+        try {
+          origin = getFallbackFocus({ dialog: event.target, origin, top });
+        } catch {
+          return;
+        }
+      }
+      if (
+        destroyed ||
+        event.target.open ||
+        doc.hidden ||
+        doc.hasFocus?.() === false ||
+        topDialog() !== top ||
+        (doc.activeElement !== focusBeforeFallback && eligible(doc.activeElement)) ||
+        !eligible(origin)
       )
         return;
       origin.focus({ preventScroll: true });
