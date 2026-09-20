@@ -18,3 +18,9 @@ Master sound remained muted. This is byte recovery and transport evidence, not a
 4. On another origin with an empty library, import the downloaded file through the real picker, inspect the draft and Save.
 5. Export again and compare the entire binary bundle, metadata, selection, entries and original audio payloads. Check playback and focus separately, reporting mute/listening status accurately.
 6. Retain the original downloads, source pins and observer limitations; do not modify the simulation or inject storage to satisfy the check.
+
+## Damaged-backup and draft preservation
+
+A follow-on actual-browser check rejected a payload with one changed audio byte and a backup truncated to 100 bytes. Saved generation 1, both original tracks and the selected mixed playlist remained intact. Repeating the damaged-payload import after a draft-only playlist rename preserved that unsaved edit and its four entries. A backup downloaded while this draft existed was still byte-identical to the original saved-library bundle. Undo restored the saved title, and the next Tab reached Reload latest saved. See `rejected-backups/native-observations.json` and its pinned fixtures/download. All 215 distinct successful source responses matched the same exact source.
+
+This tests failure recovery through the product, following [MDN's guidance on asynchronous IndexedDB operations and errors](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB). It does not simulate quota exhaustion, interrupted commits or cross-tab write conflicts. Those remain separate cases. The tab and local server were closed after verification.

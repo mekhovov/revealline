@@ -1,0 +1,39 @@
+{
+  "at": "2026-09-20T18:33:58.477606+00:00",
+  "source": "508a638f556b80817f4c872b9950d7de7b207b17",
+  "origin": "http://localhost:18803",
+  "initial": "Saved generation1; two custom tracks; one custom playlist; master muted; falling-chime paused",
+  "cases": [
+    {
+      "fixture": "damaged-payload.rlsound",
+      "status": "MP3 bytes or frame metadata differ from the soundtrack manifest.",
+      "result": "Saved generation1, selection and tracks preserved; Save/Undo remain disabled."
+    },
+    {
+      "fixture": "truncated-backup.rlsound",
+      "status": "Invalid soundtrack manifest length.",
+      "result": "Saved generation1, selection and tracks preserved."
+    },
+    {
+      "fixture": "damaged-payload.rlsound",
+      "setup": "Rename playlist to Unsaved title survives rejected backup and Apply playlist details to draft; do not Save.",
+      "result": "Rejection retained unsaved title, four entries, original saved generation and paused track. Export explicitly excluded unsaved edits; actual downloaded backup stayed byte-identical. Undo restored original title; subsequent Tab reached Reload latest saved."
+    }
+  ],
+  "savedExportAfterFailures": {
+    "file": "after-rejections.rlsound",
+    "bytes": 66840,
+    "sha256": "8f8a4d17171344024744cc8f0016f98c9e3281353cae5996bf8da415f1281637",
+    "identicalToPreFailureBaseline": true
+  },
+  "limits": [
+    "Actual browser picker and download; mixed pointer/keyboard, not controller-only acceptance.",
+    "No browser storage mutation by evaluation.",
+    "No audible, offline, physical hardware, public or newer-source claim.",
+    "This is summarized tool-transcript observation, not raw DOM capture."
+  ],
+  "research": {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB",
+    "applied": "Keep asynchronous operation errors distinct from saved transaction state; verify unchanged actual saved data after failed validation."
+  }
+}

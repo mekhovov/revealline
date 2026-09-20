@@ -1,0 +1,17 @@
+{
+  "sourceBundleSha256": "8f8a4d17171344024744cc8f0016f98c9e3281353cae5996bf8da415f1281637",
+  "files": [
+    {
+      "path": "damaged-payload.rlsound",
+      "bytes": 66840,
+      "sha256": "ee055e0d74c5f0ede3cf9a62ddc66b7e6d351383d027d1f8abdac9081d1fd704",
+      "mutation": "Final payload byte XOR1, manifest unchanged"
+    },
+    {
+      "path": "truncated-backup.rlsound",
+      "bytes": 100,
+      "sha256": "236dc5cdfd802bdc561262494913f041187ba4ea1e420748d14227a7a9e5a5ba",
+      "mutation": "First100bytes only"
+    }
+  ]
+}
