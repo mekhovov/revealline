@@ -1,0 +1,201 @@
+{
+  "format": "xonix-pack.v6",
+  "id": "workshop-foundation-example",
+  "version": "1.0.0",
+  "name": "Workshop · Island connections",
+  "description": "A procedural authoring example: connect an island to the border, then close another route. Not a production difficulty benchmark.",
+  "engine": "xonix-core.v6",
+  "dependencies": [],
+  "metadata": {
+    "author": "Reveal Line",
+    "license": "Original project content",
+    "rightsStatus": "Original procedural design"
+  },
+  "themes": [
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#f5bf77",
+        "safe": "#7edacb",
+        "danger": "#f57d9b",
+        "field": "#171d35",
+        "grid": "#293050",
+        "sky": "#e49c95",
+        "land": "#565270"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "workshop-island-connections",
+      "revision": "1",
+      "title": "Island connections",
+      "themeId": "retro",
+      "musicId": "night-shift-theme",
+      "levels": [
+        {
+          "version": "xonix-level.v5",
+          "id": "workshop-first-bridge",
+          "revision": "1",
+          "name": "First bridge",
+          "width": 72,
+          "height": 36,
+          "spawn": {
+            "x": 32.5,
+            "y": 17.5
+          },
+          "foundations": [
+            {
+              "x": 30,
+              "y": 15,
+              "w": 5,
+              "h": 5
+            }
+          ],
+          "goal": {
+            "coverage": 0.2
+          },
+          "walls": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": []
+          },
+          "enemies": [
+            {
+              "id": "keeper",
+              "type": "bouncer",
+              "x": 60.5,
+              "y": 18.5,
+              "vx": 2,
+              "vy": 2
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "stopOnCapture": true
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [],
+  "music": [
+    {
+      "id": "night-shift-theme",
+      "name": "Voltage and Velvet",
+      "genre": "metal",
+      "tempo": 144,
+      "root": 40,
+      "scale": "minor"
+    }
+  ],
+  "masteries": []
+}
