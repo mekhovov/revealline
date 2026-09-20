@@ -6,14 +6,14 @@ coordinator; no version, release, public registry, assets or Pages writes here.
 
 ## Cooperative decisions before a content count
 
-The review source currently contains eight purpose-built Team missions: existing
-Twin landings and Shared detour plus three foundation-practice and three material-
-practice greyboxes, in two explicit four-mission learning arcs.
-This does not satisfy the twelve-mission program or broader Team qualification.
+The review source currently contains twelve purpose-built Team candidates: existing
+Twin landings and Shared detour, three foundation-practice and three material-
+practice greyboxes, and four changing-ground greyboxes, in three explicit
+four-mission learning arcs. A candidate count is not shipped or human-qualified content.
 Existing definitions, runtime editions, manifests and execution keys are preserved
 at every preset; the terrain successor stays in its own campaign. No Solo map is
-automatically converted. Qualified actors remain field keepers, with explicit
-Team foundations and TeamV2 material semantics. Advanced Solo roles, relays,
+automatically converted. Qualified actors are field keepers and explicitly versioned
+TeamV3 reclaimed roamers, with shared foundations/material semantics. Other Solo roles, relays,
 directional zones, shield encounters and bonuses remain unsupported in this
 adapter and fail closed, not silently dropped.
 
@@ -163,6 +163,47 @@ the baseline is revision37. Its metadata assertion is corrected; all five old
 PNG hashes remain exact and the existing roamer PNG gets a sixth exact hash check.
 No artwork was generated or changed. Native roamer inspection remains open.
 
+## Changing-ground continuation
+
+Four original cooperative decisions use only two threat roles and one introduced
+mandatory rule across the arc:
+
+| Candidate | Shared decision | Optional goal |
+| --- | --- | --- |
+| Shared lookout | Build outer returns before waking the central roamer, or share an island connection | Activate the roamer, both craft close, no knockdowns |
+| Twin depots | Coordinate or stagger wake-ups in separately retained chambers | Activate both roamers; each craft closes in its starting chamber; no knockdowns |
+| Changing courtyard | Neutralize the upper hazard or develop the lower slow approach before joining the middle | Activate both roamers and connect the courtyard; both craft close; no knockdowns |
+| Last rendezvous | Approach opposite stepping islands or reopen the other flank together | Activate both roamers and connect both intermediate islands; both craft close; no knockdowns |
+
+Bands5,5,6,6 are authored, not measured. Geometry-only candidates use shared
+10-cell/s controls, measured catalog tiers, no countdowns and no new mandatory
+rule after the first mission. All initial chambers have keeper anchors; roamers
+are excluded from retention. All48 preset/joint-cut/seat-swap combinations allow
+five seconds of idle spawn inspection and simultaneous no-loss first returns.
+
+Twelve clear/mastery public-command recordings (four missions × three presets)
+pass with joint cuts enabled/disabled and swapped seats, with exact repeated
+state/event hashes:48 initial route cases. Another120 seed cases preserve
+no-loss mastery, and20 independently searched Standard alternatives cover
+0.5,1,2,3,5-second delayed departures with both joint-cut settings and swapped
+seats. Continuous steering is enforced by the route fixture guard; no simulation
+state is arranged in these route runs. Optional activation does not gate a normal
+clear and a warning is not credited as an activated roamer.
+
+The37-test candidate/route/composition/export cohort and5 delayed-route tests
+pass on Node20.19.5 and22.22.2. Existing eight-mission manifests and execution
+keys stay exact when composed under the additive actor catalog v2. The real
+Team host clears this four-mission campaign at all three presets with one Next
+per transition and no intervening lobby on both Node versions. Node22 additionally
+checks the new truthful “On reclaimed ground” HUD and warning help. These are
+modeled-DOM keyboard tests, not native/controller/touch or latency qualification.
+
+Optimized clear/mastery routes take21.8–40.4seconds; these rehearsed feasibility
+routes do not validate the60–150second target or a monotonic human challenge
+curve. Faster optimized Expert clears reflect route/actor timing differences,
+not a claim that Expert is appropriately balanced. Human pacing may require
+redesign or cuts; the count is not a reason to retain weak content.
+
 ## Remaining gates
 
 Native Studio inspection on the read-only `7f35c678` server (port8803) confirmed
@@ -177,8 +218,7 @@ file's presence on disk or native Team gameplay. A screenshot attempt failed
 because the hidden browser reported zero width; no global viewport override or
 change to the user's port8778 was made. Visual/device inspection remains open.
 
-Four further purpose-built candidates using the newly qualified roamer contract;
-delayed alternatives and broader seed/recovery qualification; native Studio/export
+Broader recovery qualification; native Studio/export
 and real-device checks; original assets; uninterrupted cross-campaign Team Journey
 navigation and persistence; two-human coordination/pacing/accessibility validation;
 exact combined-tree review, versioned PR/release and Pages deployment.
