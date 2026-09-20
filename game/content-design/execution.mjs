@@ -1,6 +1,7 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { campaignKey } from '../library.mjs';
 import { resolveContentJourney } from './journey.mjs';
+import { compileContentProject } from './project.mjs';
 import { DIFFICULTY_CATALOG, freezeDesign, journeyPreset } from './catalogs.mjs';
 
 /** Host-facing candidate executions. Each preset is resolved from authored source,
@@ -9,10 +10,11 @@ import { DIFFICULTY_CATALOG, freezeDesign, journeyPreset } from './catalogs.mjs'
 export function createContentExecutionCatalog(source, options = {}) {
   const selected = boundedJSON(options, { maxBytes: 8192, maxNodes: 100, maxDepth: 3 });
   exactKeys(selected, ['packIds', 'mode'], 'candidate execution selection');
+  const project = compileContentProject(source);
   const journeys = new Map(
     Object.keys(DIFFICULTY_CATALOG.presets).map((difficulty) => [
       difficulty,
-      resolveContentJourney(source, { ...selected, difficulty }),
+      resolveContentJourney(project, { ...selected, difficulty }),
     ]),
   );
   const standard = journeys.get('standard');

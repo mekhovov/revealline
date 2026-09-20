@@ -442,6 +442,38 @@ library. The three complete compiler/draft/capacity files pass11/11, zero skips,
 including compilation and storage/history operations. This is not a browser
 interaction-latency guarantee; large-library responsiveness still needs measurement.
 
+### Compile once across execution presets
+
+`createContentExecutionCatalog` previously compiled/validated the same source
+three times through its three preset projections. It now compiles once and passes
+the compiler-owned frozen registry to the shared resolver. `compileContentProject`
+recognizes only objects minted by its private WeakSet; copied/serialized/imported
+lookalikes still fail ordinary source validation. No global source cache, stored
+authorization, simulation tuning or skipped preset validation was added.
+
+A separate five-run Node20.19.5 measurement times only execution-catalog creation
+for the actual17-mission Horizon+Border source, asserting17 navigation entries.
+Before:840.411/728.044/750.543/715.220/714.555ms (median728.044).
+After:402.879/336.172/329.233/319.831/314.786ms (median329.233).
+These local observations are not CI thresholds or warm browser Next-to-control
+acceptance. They do not measure asset decoding, rendering or controller readiness.
+
+The release owner independently measured the exact e9140599 synthetic capacity
+source (266missions, only2maps,290802JSONbytes) on Node20.19.5/darwinarm64:
+compilation alone3072.216/2775.567/2660.154ms;18 subsequent resolutions total
+27.551/24.536/23.315ms. Larger-project cold compilation remains a responsiveness
+concern even after duplicate preset compilation is removed. Full unique-map/media
+capacity and browser responsiveness are not established by these fixtures.
+
+The five complete project/execution/route/music-context/attempt files pass24/24,
+zero skips/failures,7.045seconds. Tests compare all preset executions from raw and
+owned source in Solo, Versus and explicit Team, reject forged/copied registries,
+preserve caller-source immutability, and verify sixty existing replay routes and
+preparation cancellation/authority boundaries. One initial local ENOENT was the
+sparse first-return original; exact2,366,738-byte tracked blob
+94d94509e0bd3fca988e15fc000bc53af091a543 was restored without changing any media
+assertion. Changed-source lint/format/whitespace checks pass.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive

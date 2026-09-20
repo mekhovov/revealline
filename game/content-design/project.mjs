@@ -113,6 +113,9 @@ function checkDesign(design) {
 /** One owned project registry for authoring, CLI, preview and runtime adapters.
  * Compilation validates a candidate; it does not publish it or authorize clears. */
 export function compileContentProject(source) {
+  // Only this module can mint an owned, fully frozen compiled project. Reuse it
+  // across preset projections; a copied or imported lookalike must validate anew.
+  if (compiledProjects.has(source)) return source;
   const project = boundedJSON(source, CONTENT_PROJECT_JSON_LIMITS);
   identity(project, 'ContentProjectV1', [
     'policyId',
