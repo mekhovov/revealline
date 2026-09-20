@@ -46,6 +46,7 @@ import { inspectCaptureSnapshot } from './core/capture-regions.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
+import { terrainTransitionCaption } from './ui/terrain-feedback.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
@@ -6795,6 +6796,11 @@ try {
       const anchors = occupied.flatMap((region) => region.enemyIds);
       return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
     };
+    const captureTerrain = events
+      .filter((event) => event.type === 'cells.claimed')
+      .map((event) => terrainTransitionCaption(run, event))
+      .filter(Boolean)
+      .join(' ');
     try {
       for (const [index, event] of events.entries()) {
         flightInformation.observeEvent(ticket, index, () => {
@@ -6807,10 +6813,16 @@ try {
           if (event.type === 'class.rejected')
             warning(`Cannot switch craft: ${event.reason}. Return to safe hangar ground.`);
           if (event.type === 'cells.claimed') {
-            if (teachingCapture) warning(captureTeaching(), 'secured');
+            if (teachingCapture)
+              warning([captureTeaching(), captureTerrain].filter(Boolean).join(' '), 'secured');
             else
               warning(
-                `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+                [
+                  `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+                  captureTerrain,
+                ]
+                  .filter(Boolean)
+                  .join(' '),
                 'secured',
               );
           }
@@ -6864,7 +6876,15 @@ try {
             warning('Supplies ready. Choose your next opportunity.');
           if (event.type === 'capture.stopped')
             warning(
-              `${teachingCapture ? captureTeaching() : `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed.`} Tap a direction to fly again.`,
+              [
+                teachingCapture
+                  ? captureTeaching()
+                  : `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed.`,
+                captureTerrain,
+                'Tap a direction to fly again.',
+              ]
+                .filter(Boolean)
+                .join(' '),
               'secured-stopped',
             );
           if (event.type === 'powerup.collected')
@@ -6887,7 +6907,12 @@ try {
             warning('The marked captured cell is about to reopen. Watch the edge timer.');
           if (event.type === 'cells.eroded')
             warning(
-              'Ground reopened. Reclaiming it restores coverage, without repeat capture points.',
+              [
+                'Ground reopened. Reclaiming it restores coverage, without repeat capture points.',
+                terrainTransitionCaption(run, event),
+              ]
+                .filter(Boolean)
+                .join(' '),
             );
           if (
             event.type === 'encounter.stageChanged' ||
