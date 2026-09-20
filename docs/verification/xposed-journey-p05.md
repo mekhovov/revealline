@@ -137,7 +137,20 @@ starting left instead of up produced a legal full optional-goal clear. No quota,
 hazard, actor or runtime rule changed. Four complete Rover files pass24/24,
 zero failures/cancellations/skips,41.484seconds on Node20.19.5.
 
-Remaining: delayed-start/seed sampling, broader historical route pins, broader native Studio/game
+The64 ordinary and supplemental full-clear routes also pass across five explicit
+seeds (0,1,42,2026,4294967295):320 no-loss clears. Thirty-five independently
+searched Standard/immediate routes cover initial pauses of0.25,0.5,1,2and5seconds.
+Each exports and verifies through the public replay path. A two-second Remix
+pause makes its default upward opening unsafe after67movement ticks; that
+life-loss replay remains pinned. Taking the lower return instead gives a legal
+no-loss clear. Initial idle itself remains safe. No universal safe timing promise
+or player reaction-time qualification is inferred from these samples.
+
+Five complete Rover files pass27/27, zero failures/cancellations/skips,
+100.871seconds on Node20.19.5. The timing-only file also passes3/3 in46.172seconds.
+Formatting, changed-source lint and diff checks pass; broader hosted gates remain.
+
+Remaining: broader historical route pins, broader native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
 Team mission, human balance/comprehension, final-source hosted gates and reviewed
 release/Pages. This foundation alone does not complete P05.
