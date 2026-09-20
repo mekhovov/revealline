@@ -107,12 +107,37 @@ still supports variety from a compact vocabulary (three terrains, four powerups,
 eight enemy types,48levels); these are Switched counts, not Reloaded measurements.
 Neither source establishes a formula for popularity or compulsive retention.
 
-An exploratory read-only optional-goal audit found current ordinary routes meet
+An initial exploratory read-only optional-goal audit found ordinary routes meet
 the candidate predicates for Four quarters, Staggered circuit and Remix in all six
 preset/steering combinations, and Side-door bays only with immediate steering.
-Inside out mouth-first closure and Dogleg terrain-neutralization paths remain
-unproven; Folded corner's two-end connection needs a precise independent-path
-predicate. This exploratory result is not yet a pinned mastery fixture or award.
+Inside out mouth-first closure and Dogleg terrain-neutralization paths were still
+unproven; Folded corner's two-end connection needed a precise independent-path
+predicate. The pinned verification below supersedes that exploratory result.
+
+### Optional-goal feasibility across all42 combinations
+
+Twenty-one supplemental legal input routes now close those gaps. Every candidate's
+optional goal passes for Gentle/Standard/Expert and immediate/Grid + Buffer,
+with no life lost, pinned simulation/checkpoint identity and public replay export
+verification. Twenty-one ordinary clear routes deliberately fail the optional-goal
+predicate: completion remains available without doing mastery work.
+
+Folded corner requires earned reclaimed connections from both the stem's upper end
+and arm's right end to the outside boundary; walking through the permanent elbow
+cannot satisfy the second connection. Inside out requires a real completed trail
+through the ring mouth plus an outside connection, not merely filling mouth cells
+remotely. Four quarters requires captures in three initial chambers. Bays/lanes
+must be connected; Dogleg must earn territory in both original regions and
+neutralize its slow field; Remix must connect all rings and neutralize both beds.
+These are test-only predicates, not runtime awards or mandatory clear conditions.
+
+An initial mouth predicate failed because the observer copied trail cell objects
+instead of their integer `index` values. It now records actual cell indexes before
+closure; the same mouth geometry, no-loss condition and original-clear negatives
+remain unchanged. Two complete mastery tests pass2/2 in8.518seconds. The complete
+four-file Neon cohort passes22/22, zero failures/skips,13.870seconds, Node20.19.5;
+changed-source lint and formatting pass. Alternative routes are now feasible, but
+choice quality, timing tolerance, capture explanation and human enjoyment remain.
 
 Storage: media/full-build512MiB and source-materialization256MiB guards remain.
 After space dropped below256MiB, only read-only work continued until the publisher
