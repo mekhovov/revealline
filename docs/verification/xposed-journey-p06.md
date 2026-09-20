@@ -93,3 +93,33 @@ preview and route tests pass; scoped lint passes. These42 routes establish
 feasibility, not a measured human duration, difficulty curve or enjoyment claim.
 Optional mastery, variable timing/seeds, original artwork and human acceptance
 remain separate gates. No source release or Pages promotion is implied.
+
+## Optional mastery and seed evidence
+
+All42 optional-goal combinations now have legal no-loss public replays, using
+23 supplemental routes where an ordinary clear did not meet the optional task.
+Those23 ordinary clears are explicitly rejected by the test-only goal inspector.
+Repairs require a real erosion event followed by reclaimed cells at a later legal
+closure; warnings alone do not count. Early anchors use coverage when captured,
+not merely the final objective state. The Remix requires a closure after the
+roamer is already active. No campaign rewards or alternate win rules are added.
+Island reserve's wording now says repair eroded ground, avoiding an unsupported
+claim that the repaired cell was a graph-critical link.
+
+All42 ordinary routes also clear without loss or quota cleanup across seeds0,1,
+42,2026 and4294967295:210 checks. Mastery2/2 and seeds1/1 pass on both
+Node20.19.5 and22.22.2; scoped lint passes. Seed sampling is not evidence of
+varied AI: these authored classic trajectories are deterministic.
+
+## Scoped native Studio observation
+
+Exact50af4dc5, local pinned-Git server8790, native tab32: explicitly inspected and
+applied the seven-greybox project, preserving checkpoint1. The v3 eroder editor,
+field-retention overlay and distinct blade/circle/diamond/triangle markers were
+visible; Five landings showed the revised upper/lower anchor positions.
+First fracture exact Solo practice loaded after the truthful slow-boot message.
+Start plus a fresh Down produced a0.5% line-only return, retained3lives and stopped
+on closure. At pause0:55 the history showed line-secured/both-sides-occupied,
+marked-cell warning and ground-reopened/no-repeat-points captions. Closing preview
+returned focus to Play without changing the draft. No full native clear, measured
+load-time acceptance, final-art assessment, physical-device or human claim.
