@@ -14,6 +14,11 @@ export function mergeSoundtrackShare(current, currentAssets, incoming) {
   );
   const left = resolveSoundtrackLibrary(current),
     right = resolveSoundtrackLibrary(incoming.library);
+  required(
+    (right.bonusAlbums ?? []).every((album) => album.downloaded) &&
+      (right.catalogTracks ?? []).every((track) => right.installedTrackIds.includes(track.id)),
+    'Shared albums must include every downloaded original.',
+  );
   const modern = left.format.endsWith('.v2') || right.format.endsWith('.v2');
   const library = structuredClone(modern ? upgradeSoundtrackLibrary(left) : left);
   const source = modern ? upgradeSoundtrackLibrary(right) : right;
@@ -36,6 +41,26 @@ export function mergeSoundtrackShare(current, currentAssets, incoming) {
     library.installedTrackIds = [
       ...new Set([...library.installedTrackIds, ...source.installedTrackIds]),
     ];
+    // A complete imported album carries bytes, but its pins grant no network authority.
+    // Keep installed ownership per track without marking absent siblings downloaded.
+    const incomingIds = new Set(source.tracks.map((track) => track.id));
+    const pins = (library.bonusAlbums ?? [])
+      .map((album) => ({
+        ...album,
+        trackIds: album.downloaded
+          ? album.trackIds
+          : album.trackIds.filter((id) => !incomingIds.has(id)),
+      }))
+      .filter((album) => album.trackIds.length);
+    for (const incoming of source.bonusAlbums ?? []) {
+      const prior = pins.find((album) => album.id === incoming.id);
+      if (!prior) pins.push(incoming);
+      else if (prior.downloaded === incoming.downloaded)
+        prior.trackIds = [...new Set([...prior.trackIds, ...incoming.trackIds])];
+      // If an existing offloaded group has other siblings, incoming IDs remain required
+      // ordinary tracks until an explicit trusted album operation adopts the whole group.
+    }
+    if (library.bonusAlbums || source.bonusAlbums) library.bonusAlbums = pins;
   }
   const assets = new Map(ownSoundtrackAssets(currentAssets).map((asset) => [asset.sha256, asset]));
   for (const asset of ownSoundtrackAssets(incoming.assets)) assets.set(asset.sha256, asset);
@@ -59,6 +84,13 @@ export function soundtrackPlaylistShare(value, playlist) {
   library.catalogTracks = library.catalogTracks.filter((track) => ids.has(track.id));
   library.installedTrackIds = library.catalogTracks.map((track) => track.id);
   library.tags = Object.fromEntries(Object.entries(library.tags).filter(([id]) => ids.has(id)));
+  if (library.bonusAlbums)
+    library.bonusAlbums = library.bonusAlbums
+      .map((album) => ({
+        ...album,
+        trackIds: album.trackIds.filter((id) => ids.has(id)),
+      }))
+      .filter((album) => album.trackIds.length);
   library.playlists = [playlist];
   library.assignments = [];
   library.selection = { playlistId: null };

@@ -9,6 +9,7 @@ import {
   soundtrackTracks,
   soundtrackPlaylists,
   soundtrackStoredTracks,
+  soundtrackOffloadedBonusTrackIds,
 } from '../soundtrack.mjs';
 import { prepareMP3Import, probeMP3Media, throwIfSoundtrackAborted } from '../mp3.mjs';
 import {
@@ -16,7 +17,11 @@ import {
   importSoundtrackBundle,
   prepareSoundtrackLibrary,
 } from '../soundtrack-bundle.mjs';
-import { mergeSoundtrackAlbum } from '../soundtrack-albums.mjs';
+import {
+  mergeSoundtrackAlbum,
+  offloadSoundtrackAlbum,
+  restoreSoundtrackAlbum,
+} from '../soundtrack-albums.mjs';
 import { mergeSoundtrackShare, soundtrackPlaylistShare } from '../soundtrack-share.mjs';
 import {
   fetchSoundtrackAlbum,
@@ -73,6 +78,7 @@ export function attachSoundtrackPanel({
   let albumCatalog = null,
     albumEditors = null,
     albumGeneration = 0;
+  const albumControls = new Map();
   const node = (tag, id, text, attrs = {}) => {
     const element = doc.createElement(tag);
     if (id) {
@@ -342,6 +348,13 @@ export function attachSoundtrackPanel({
           );
         value.tracks = value.tracks.filter((item) => item.id !== id);
         if (value.tags) delete value.tags[id];
+        if (value.bonusAlbums)
+          value.bonusAlbums = value.bonusAlbums
+            .map((album) => ({
+              ...album,
+              trackIds: album.trackIds.filter((trackId) => trackId !== id),
+            }))
+            .filter((album) => album.trackIds.length);
       });
       pruneAssets();
       render();
@@ -757,7 +770,7 @@ export function attachSoundtrackPanel({
     node(
       'p',
       null,
-      'Browse albums and credits, then Add to draft to download and preview individual tracks. Save all changes keeps the album alongside your existing music. Your current playlist stays selected.',
+      'Browse albums and credits, then Add to draft to download and preview individual tracks. Remove offline download keeps track details and playlists; Download again restores the album. Save all changes confirms the draft. Your current playlist stays selected.',
       { class: 'micro-note' },
     ),
     albumBrowse,
@@ -884,6 +897,7 @@ export function attachSoundtrackPanel({
   }
   function renderAlbums() {
     if (!albumCatalog) return;
+    albumControls.clear();
     albumList.replaceChildren(
       ...albumCatalog.albums.map((album) => {
         const add = button(`album-add-${album.id}`, 'Add to draft', () =>
@@ -901,7 +915,10 @@ export function attachSoundtrackPanel({
                 probeMedia,
               });
               throwIfSoundtrackAborted(signal);
-              const merged = mergeSoundtrackAlbum(currentDraft, currentAssets, imported, album);
+              const restoring = albumState(album).known;
+              const merged = restoring
+                ? restoreSoundtrackAlbum(currentDraft, currentAssets, imported, album)
+                : mergeSoundtrackAlbum(currentDraft, currentAssets, imported, album);
               const prepared = await prepareSoundtrackLibrary(merged.library, merged.assets, {
                 signal,
                 probeMedia,
@@ -920,11 +937,35 @@ export function attachSoundtrackPanel({
               draft = prepared.library;
               assets = [...prepared.assets];
               dirty = true;
-              status.textContent = `${album.title} verified: ${merged.addedTracks} new tracks, ${merged.addedPlaylists} new playlist. Save all changes adds this album; Undo keeps the saved library. Playback is unchanged.`;
+              status.textContent = restoring
+                ? `${album.title} downloaded and verified. Save all changes restores offline audio; track details, playlists and playback are kept.`
+                : `${album.title} verified: ${merged.addedTracks} new tracks, ${merged.addedPlaylists} new playlist. Save all changes adds this album; Undo keeps the saved library. Playback is unchanged.`;
             },
             () => saveButton,
           ),
         );
+        const remove = button(`album-offload-${album.id}`, 'Remove offline download', () =>
+          albumTask(
+            remove,
+            `Removing ${album.title} offline copies from the draft…`,
+            async (signal) => {
+              const removed = offloadSoundtrackAlbum(draft, assets, album);
+              const prepared = await prepareSoundtrackLibrary(removed.library, removed.assets, {
+                signal,
+                probeMedia,
+              });
+              throwIfSoundtrackAborted(signal);
+              invalidateBackup();
+              draft = prepared.library;
+              assets = [...prepared.assets];
+              dirty = true;
+              status.textContent = `${album.title}: ${bytes(removed.removedBytes)} removed from the draft. Track details, credits and playlist references are kept. ${removed.retainedSharedBytes ? `${bytes(removed.retainedSharedBytes)} shared with other installed tracks is retained. ` : ''}Save all changes confirms removal; Undo restores the saved library.`;
+            },
+            () => saveButton,
+          ),
+        );
+        const availability = node('p', `album-status-${album.id}`, '', { class: 'micro-note' });
+        albumControls.set(album.id, { album, add, remove, availability });
         const list = node('ol');
         for (const track of album.library.tracks)
           list.append(
@@ -950,10 +991,51 @@ export function attachSoundtrackPanel({
           node('p', null, album.credit),
           source,
           list,
-          add,
+          availability,
+          row(add, remove),
         );
       }),
     );
+    refreshAlbumControls();
+  }
+  function albumState(album) {
+    const pin = draft.bonusAlbums?.find((item) => item.id === album.id);
+    const retained = album.library.tracks.flatMap((declared) =>
+      draft.tracks.filter(
+        (track) => track.id === declared.id && track.asset.sha256 === declared.asset.sha256,
+      ),
+    );
+    const known = !!pin || retained.length === album.library.tracks.length;
+    const localCount = retained.filter((track) =>
+      assets.some((asset) => asset.sha256 === track.asset.sha256),
+    ).length;
+    return {
+      known,
+      localCount,
+      retainedCount: retained.length,
+      downloaded: known && localCount === retained.length,
+      // A partial creator-share import restores its track as ordinary local ownership.
+      // A false pin covering only the missing siblings must not hide that restored audio.
+      offloaded:
+        pin?.downloaded === false && retained.every((track) => pin.trackIds.includes(track.id)),
+    };
+  }
+  function refreshAlbumControls() {
+    for (const { album, add, remove, availability } of albumControls.values()) {
+      const state = albumState(album);
+      add.textContent = state.known ? 'Download again' : 'Add to draft';
+      add.disabled = busy || !saved;
+      remove.disabled = busy || !saved || !state.known || state.offloaded;
+      availability.textContent = !state.known
+        ? 'Not added to this library.'
+        : state.offloaded
+          ? `Offline album removed${dirty ? ' in the draft' : ''}. Track details and playlists are retained. Choose Download again to restore its audio.${state.localCount ? ' Shared audio required by other installed tracks is still available.' : ''}`
+          : state.downloaded
+            ? `Audio available offline${dirty ? ' in the draft' : ''}.`
+            : state.localCount
+              ? `${state.localCount} of ${state.retainedCount} recordings available offline${dirty ? ' in the draft' : ''}. Choose Download again to restore the missing audio, or Remove offline download to remove the remaining copies.`
+              : 'Local audio is unavailable. Choose Download again to restore this album.';
+    }
   }
   async function albumTask(opener, label, work, destination = () => opener) {
     if (busy || !saved || disposed || !dialog.open) return false;
@@ -1058,6 +1140,11 @@ export function attachSoundtrackPanel({
     if ([...declared.values()].reduce((total, size) => total + size, 0) > limit)
       throw new Error(`This complete file exceeds ${bytes(limit)}. Use smaller albums.`);
     const originals = new Map(available.map((asset) => [asset.sha256, asset.blob]));
+    const offloaded = new Set(soundtrackOffloadedBonusTrackIds(library));
+    if (tracks.some((track) => offloaded.has(track.id) && !originals.has(track.asset.sha256)))
+      throw new Error(
+        'An album was removed from offline storage. Choose Download again in Community soundtracks and save it before preparing a complete file.',
+      );
     const result = new Map();
     let total = 0;
     for (const track of tracks) {
@@ -1146,9 +1233,10 @@ export function attachSoundtrackPanel({
       control.disabled = busy || !saved || !custom;
     auditionButton.disabled = busy || !saved || track?.kind !== 'mp3';
     const online = catalogue?.tracks.some((item) => item.id === track?.id);
+    const offloaded = soundtrackOffloadedBonusTrackIds(draft).includes(track?.id);
     trackInfo.textContent =
       track?.kind === 'mp3'
-        ? `${seconds(track.asset.durationSeconds)} · ${bytes(track.asset.bytes)} · ${track.asset.sampleRate} Hz · original bytes ${assets.some((asset) => asset.sha256 === track.asset.sha256) ? 'present locally' : online ? 'available online · not downloaded' : 'MISSING — restore a complete backup'}`
+        ? `${seconds(track.asset.durationSeconds)} · ${bytes(track.asset.bytes)} · ${track.asset.sampleRate} Hz · original bytes ${assets.some((asset) => asset.sha256 === track.asset.sha256) ? 'present locally' : offloaded ? 'removed offline — choose Download again in Community soundtracks' : online ? 'available online · not downloaded' : 'MISSING — restore a complete backup'}`
         : 'Built-in procedural synth recipe. Use the playback playlist to listen; original finished albums are a separate content milestone.';
   }
   function renderPlaylist(entryIndex) {
@@ -1255,6 +1343,7 @@ export function attachSoundtrackPanel({
     renderTrack();
     renderPlaylist();
     renderAssignments();
+    refreshAlbumControls();
     renderBackup();
     dirtyState();
     update();
@@ -1411,6 +1500,8 @@ export function attachSoundtrackPanel({
   async function startAudition() {
     const track = tracks().find((item) => item.id === tracksSelect.element.value);
     if (track?.kind !== 'mp3') throw new Error('Choose an MP3 to audition.');
+    if (soundtrackOffloadedBonusTrackIds(draft).includes(track.id))
+      throw new Error('Choose Download again in Community soundtracks to audition this album.');
     const state = player.snapshot();
     const previous = restoreMusic || (state.desired ?? state.playing);
     const stopping = stopAudition(false);

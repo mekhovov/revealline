@@ -1,6 +1,7 @@
 import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-albums.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import {
@@ -8,7 +9,12 @@ import {
   BUILTIN_SOUNDTRACK_TRACKS,
   resolveCatalogueTrack,
 } from '../soundtrack.mjs';
-import { prepareSoundtrackLibrary, importSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import {
+  prepareSoundtrackLibrary,
+  importSoundtrackBundle,
+  exportSoundtrackBundle,
+} from '../soundtrack-bundle.mjs';
+import { soundtrackPlaylistShare } from '../soundtrack-share.mjs';
 import {
   fixture,
   memoryIndexedDB,
@@ -956,6 +962,294 @@ test('album completion restores owned disabled-control focus and respects delibe
   respond();
   await second;
   assert.equal(app.doc.activeElement.id, app.node('play').id);
+});
+
+test('bonus album offload, undo and explicit download retain edited metadata, playlists and selection', async (t) => {
+  const album = await albumFixture('qa.offline');
+  let albumRequests = 0,
+    assetRequests = 0;
+  const app = await setup(t, {
+    initial: album,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      readAsset: async () => {
+        assetRequests++;
+        throw new Error('Offloaded bonus albums require an explicit album download');
+      },
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) => {
+          if (url.endsWith('.json'))
+            return responseFor(JSON.stringify(albumCatalog(album.album)), url);
+          albumRequests++;
+          return responseFor(album.blob, url);
+        },
+      },
+    },
+  });
+  app.choose('tracks', album.track.id);
+  app.node('track-title').value = 'My retained title';
+  app.node('rights-credit').value = 'My retained credit';
+  app.node('track-genre').value = 'metal';
+  await app.click('apply-track');
+  app.choose('playlists', album.album.id);
+  app.choose('scope', 'theme');
+  await app.click('assign');
+  await app.click('save');
+  const before = await app.store.read();
+  await app.click('browse-albums');
+  assert.equal(app.node('album-add-qa.offline').textContent, 'Download again');
+  app.node('track-title').value = 'Typed but unapplied';
+  await app.click('album-offload-qa.offline');
+  assert.equal(app.node('track-title').value, 'Typed but unapplied');
+  assert.equal((await app.store.read()).assets.length, 1, 'removal remains a draft');
+  assert.match(app.node('album-status-qa.offline').textContent, /removed in the draft/);
+  await app.click('undo');
+  assert.match(app.node('album-status-qa.offline').textContent, /available offline/);
+  assert.equal(app.node('album-offload-qa.offline').disabled, false);
+  await app.click('album-offload-qa.offline');
+  await app.click('save');
+  const offloaded = await app.store.read();
+  assert.equal(offloaded.assets.length, 0);
+  assert.equal(offloaded.library.bonusAlbums[0].downloaded, false);
+  for (const key of ['tracks', 'tags', 'playlists', 'assignments', 'selection', 'listening'])
+    assert.deepEqual(offloaded.library[key], before.library[key], key);
+  assert.match(app.node('track-info').textContent, /Download again/);
+  await app.click('audition-track');
+  assert.match(app.node('status').textContent, /Download again/);
+  await app.click('export-bundle');
+  assert.match(app.node('status').textContent, /Download again.*Community soundtracks/);
+  assert.equal(app.node('backup-ready').hidden, true);
+  app.choose('playlists', album.album.id);
+  await app.click('export-share');
+  assert.match(app.node('status').textContent, /Download again.*Community soundtracks/);
+  assert.equal(assetRequests, 0);
+  assert.equal(albumRequests, 0, 'offload and preview never trigger an album download');
+  await app.click('album-add-qa.offline');
+  assert.equal(albumRequests, 1);
+  assert.equal((await app.store.read()).assets.length, 0, 're-download is a draft until Save');
+  await app.click('save');
+  const restored = await app.store.read();
+  assert.equal(restored.library.bonusAlbums[0].downloaded, true);
+  assert.equal(restored.assets.length, 1);
+  assert.equal(restored.assets[0].sha256, album.track.asset.sha256);
+  for (const key of ['tracks', 'tags', 'playlists', 'assignments', 'selection', 'listening'])
+    assert.deepEqual(restored.library[key], before.library[key], key);
+  assert.equal(
+    app.calls.some(([name]) => ['play', 'pause', 'select'].includes(name)),
+    false,
+  );
+  assert.equal(app.state.playing, true);
+});
+
+test('bonus offload retains exact audio bytes still required by a separate personal upload', async (t) => {
+  const personal = await fixture('shared-recording'),
+    album = await albumFixture('qa.shared', 'shared-recording');
+  const app = await setup(t, {
+    initial: personal,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) =>
+          responseFor(
+            url.endsWith('.json') ? JSON.stringify(albumCatalog(album.album)) : album.blob,
+            url,
+          ),
+      },
+    },
+  });
+  await app.click('browse-albums');
+  await app.click('album-add-qa.shared');
+  await app.click('save');
+  await app.click('album-offload-qa.shared');
+  assert.match(app.node('status').textContent, /shared with other installed tracks is retained/);
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.equal(saved.library.tracks.length, 2);
+  assert.equal(saved.library.bonusAlbums[0].downloaded, false);
+  assert.equal(saved.assets.length, 1);
+  assert.equal(saved.assets[0].sha256, personal.track.asset.sha256);
+  assert.deepEqual(
+    Buffer.from(await saved.assets[0].blob.arrayBuffer()),
+    Buffer.from(await personal.blob.arrayBuffer()),
+  );
+  assert.match(app.node('album-status-qa.shared').textContent, /Shared audio.*still available/);
+  assert.equal(
+    app.node('album-offload-qa.shared').disabled,
+    true,
+    'protected duplicate bytes cannot be removed again',
+  );
+});
+
+test('partially restored creator shares expose remaining offline audio and can be offloaded again', async (t) => {
+  const a = await albumFixture('qa.partial'),
+    b = await albumFixture('qa.sibling');
+  const library = {
+    ...a.album.library,
+    tracks: [a.track, b.track],
+    playlists: [{ ...a.album.library.playlists[0], trackIds: [a.track.id, b.track.id] }],
+  };
+  const prepared = await prepareSoundtrackLibrary(
+    library,
+    [...a.prepared.assets, ...b.prepared.assets],
+    { probeMedia: structuralProbe },
+  );
+  const blob = await exportSoundtrackBundle(library, prepared.assets);
+  const album = {
+    ...a.album,
+    library,
+    bytes: blob.size,
+    sha256: createHash('sha256')
+      .update(Buffer.from(await blob.arrayBuffer()))
+      .digest('hex'),
+  };
+  const app = await setup(t, {
+    initial: { prepared },
+    callbacks: {
+      catalogue: emptyCatalogue,
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) => responseFor(JSON.stringify(albumCatalog(album)), url),
+      },
+    },
+  });
+  await app.click('browse-albums');
+  await app.click('album-offload-qa.partial');
+  await app.click('save');
+  const offloaded = await app.store.read();
+  const share = soundtrackPlaylistShare(offloaded.library, {
+    ...library.playlists[0],
+    id: 'qa.partial-share',
+    trackIds: [a.track.id],
+  });
+  const shareBlob = await exportSoundtrackBundle(share, a.prepared.assets);
+  app.node('bundle-file').files = [new File([shareBlob], 'partial.rlsound')];
+  await app.click('add-share');
+  assert.match(
+    app.node('album-status-qa.partial').textContent,
+    /1 of 2 recordings available offline in the draft/,
+  );
+  assert.equal(app.node('album-offload-qa.partial').disabled, false);
+  await app.click('save');
+  const partial = await app.store.read();
+  assert.equal(partial.assets.length, 1);
+  assert.equal(partial.assets[0].sha256, a.track.asset.sha256);
+  assert.deepEqual(partial.library.bonusAlbums[0].trackIds, [b.track.id]);
+  assert.equal(app.node('album-offload-qa.partial').disabled, false);
+  await app.click('album-offload-qa.partial');
+  await app.click('save');
+  const removed = await app.store.read();
+  assert.equal(removed.assets.length, 0);
+  assert.deepEqual(removed.library.tracks, partial.library.tracks);
+  assert.deepEqual(removed.library.playlists, partial.library.playlists);
+  assert.deepEqual(removed.library.bonusAlbums[0], {
+    id: album.id,
+    trackIds: [a.track.id, b.track.id],
+    downloaded: false,
+  });
+  assert.equal(app.node('album-offload-qa.partial').disabled, true);
+});
+
+test('cancelled bonus re-download retains the offloaded save and unapplied editor values', async (t) => {
+  const album = await albumFixture('qa.cancel-offline');
+  let requested,
+    cancelled = 0;
+  const started = new Promise((resolve) => {
+    requested = resolve;
+  });
+  const app = await setup(t, {
+    initial: album,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) => {
+          if (url.endsWith('.json'))
+            return responseFor(JSON.stringify(albumCatalog(album.album)), url);
+          requested();
+          return responseFor(
+            new ReadableStream({
+              cancel() {
+                cancelled++;
+              },
+            }),
+            url,
+          );
+        },
+      },
+    },
+  });
+  await app.click('browse-albums');
+  await app.click('album-offload-qa.cancel-offline');
+  await app.click('save');
+  const before = await app.store.read();
+  app.choose('tracks', album.track.id);
+  app.node('track-title').value = 'Keep this typed title';
+  const download = app.click('album-add-qa.cancel-offline');
+  await started;
+  await app.click('cancel');
+  await download;
+  assert.equal(cancelled, 1);
+  assert.match(app.node('status').textContent, /cancelled/);
+  assert.equal(app.node('track-title').value, 'Keep this typed title');
+  assert.deepEqual(await app.store.read(), before);
+  assert.equal(app.node('save').disabled, true);
+});
+
+test('bonus offload save respects a newer writer and leaves saved bytes intact', async (t) => {
+  const album = await albumFixture('qa.offload-cas');
+  const app = await setup(t, {
+    initial: album,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) => responseFor(JSON.stringify(albumCatalog(album.album)), url),
+      },
+    },
+  });
+  await app.click('browse-albums');
+  await app.click('album-offload-qa.offload-cas');
+  await app.store.commit(album.prepared, { expectedGeneration: 1 });
+  await app.click('save');
+  assert.match(app.node('status').textContent, /changed|generation/i);
+  const saved = await app.store.read();
+  assert.equal(saved.generation, 2);
+  assert.equal(saved.assets.length, 1);
+  assert.match(app.node('draft-state').textContent, /Unsaved draft/);
+  await app.click('reload');
+  assert.match(app.node('album-status-qa.offload-cas').textContent, /available offline/);
+});
+
+test('removing a bonus track from a draft also removes its obsolete album pin', async (t) => {
+  const album = await albumFixture('qa.remove-bonus');
+  const app = await setup(t, {
+    callbacks: {
+      catalogue: emptyCatalogue,
+      albumDownload: {
+        baseURL: 'https://example.test/build/',
+        fetch: async (url) =>
+          responseFor(
+            url.endsWith('.json') ? JSON.stringify(albumCatalog(album.album)) : album.blob,
+            url,
+          ),
+      },
+    },
+  });
+  await app.click('browse-albums');
+  await app.click('album-add-qa.remove-bonus');
+  await app.click('save');
+  app.choose('playlists', album.album.id);
+  await app.click('delete-playlist');
+  app.choose('tracks', album.track.id);
+  await app.click('delete-track');
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.deepEqual(saved.library.tracks, []);
+  assert.deepEqual(saved.library.bonusAlbums, []);
+  assert.deepEqual(saved.assets, []);
+  assert.equal(app.node('album-add-qa.remove-bonus').textContent, 'Add to draft');
 });
 
 const emptyCatalogue = {

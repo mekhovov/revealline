@@ -1,5 +1,12 @@
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from './data-json.mjs';
-import { freezeSoundtrack, resolveSoundtrackLibrary, SOUNDTRACK_LIMITS } from './soundtrack.mjs';
+import {
+  freezeSoundtrack,
+  resolveSoundtrackLibrary,
+  upgradeSoundtrackLibrary,
+  soundtrackStoredTracks,
+  SOUNDTRACK_FORMAT_V2,
+  SOUNDTRACK_LIMITS,
+} from './soundtrack.mjs';
 import { isPreparedSoundtrackLibrary, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
 
 export const SOUNDTRACK_ALBUM_CATALOG_FORMAT = 'revealline-soundtrack-albums.v1';
@@ -143,7 +150,7 @@ export function mergeSoundtrackAlbum(value, sourceAssets, prepared, declaration)
     }
     return result;
   };
-  const library = resolveSoundtrackLibrary({
+  let library = resolveSoundtrackLibrary({
     ...current,
     tracks: append(current.tracks, prepared.library.tracks, 'track'),
     playlists: append(current.playlists, prepared.library.playlists, 'playlist'),
@@ -168,12 +175,8 @@ export function mergeSoundtrackAlbum(value, sourceAssets, prepared, declaration)
         }
       : {}),
   });
-  const retainedTracks = [
-    ...library.tracks,
-    ...(library.catalogTracks ?? []).filter((track) =>
-      library.installedTrackIds.includes(track.id),
-    ),
-  ];
+  if (library.format === SOUNDTRACK_FORMAT_V2) library = setBonusDownload(library, album, true);
+  const retainedTracks = soundtrackStoredTracks(library);
   const wanted = new Map(retainedTracks.map((track) => [track.asset.sha256, track.asset.bytes])),
     collected = new Map(currentAssets.map((asset) => [asset.sha256, asset]));
   // A verified incoming copy can repair an existing missing/corrupt copy with the same identity.
@@ -194,4 +197,91 @@ export function mergeSoundtrackAlbum(value, sourceAssets, prepared, declaration)
     addedTracks: library.tracks.length - current.tracks.length,
     addedPlaylists: library.playlists.length - current.playlists.length,
   });
+}
+
+function matchingAlbumTracks(library, album) {
+  const declared = new Map(album.library.tracks.map((track) => [track.id, track]));
+  const retained = library.tracks.filter((track) => declared.has(track.id));
+  required(retained.length > 0, 'This album is not in the library. Add it to the draft first.');
+  required(
+    retained.every(
+      (track) => canonicalJSON(track.asset) === canonicalJSON(declared.get(track.id).asset),
+    ),
+    'This album has a conflicting recording identity; its existing tracks were preserved.',
+  );
+  const pin = library.bonusAlbums?.find((entry) => entry.id === album.id);
+  required(
+    !pin || pin.trackIds.every((id) => declared.has(id)),
+    'Bonus album ownership differs from its shipped declaration.',
+  );
+  return retained;
+}
+
+function setBonusDownload(value, album, downloaded) {
+  const library = upgradeSoundtrackLibrary(value);
+  const tracks = matchingAlbumTracks(library, album);
+  return resolveSoundtrackLibrary({
+    ...library,
+    bonusAlbums: [
+      ...(library.bonusAlbums ?? []).filter((entry) => entry.id !== album.id),
+      { id: album.id, trackIds: tracks.map((track) => track.id), downloaded },
+    ],
+  });
+}
+
+/** Explicit shipped-album offload changes ownership only. Every playlist and track ID is retained. */
+export function offloadSoundtrackAlbum(value, sourceAssets, declaration) {
+  const current = resolveSoundtrackLibrary(value),
+    album = resolveSoundtrackAlbum(declaration),
+    originalAssets = ownSoundtrackAssets(sourceAssets),
+    tracks = matchingAlbumTracks(current, album),
+    library = setBonusDownload(current, album, false),
+    wanted = new Set(soundtrackStoredTracks(library).map((track) => track.asset.sha256)),
+    albumHashes = new Set(tracks.map((track) => track.asset.sha256)),
+    assets = ownSoundtrackAssets(originalAssets.filter((asset) => wanted.has(asset.sha256)));
+  return Object.freeze({
+    library,
+    assets,
+    removedBytes: originalAssets
+      .filter((asset) => !wanted.has(asset.sha256))
+      .reduce((sum, asset) => sum + asset.blob.size, 0),
+    retainedSharedBytes: assets
+      .filter((asset) => albumHashes.has(asset.sha256))
+      .reduce((sum, asset) => sum + asset.blob.size, 0),
+  });
+}
+
+/** Only an explicitly fetched, verified shipped album restores bytes; pins never authorize fetching. */
+export function restoreSoundtrackAlbum(value, sourceAssets, prepared, declaration) {
+  const current = resolveSoundtrackLibrary(value),
+    album = resolveSoundtrackAlbum(declaration);
+  required(
+    isPreparedSoundtrackLibrary(prepared),
+    'Album restoration requires an actual verified import.',
+  );
+  required(
+    canonicalJSON(prepared.library) === canonicalJSON(album.library),
+    'Imported soundtrack differs from the selected album.',
+  );
+  const tracks = matchingAlbumTracks(current, album),
+    library = setBonusDownload(current, album, true),
+    wanted = new Map(
+      soundtrackStoredTracks(library).map((track) => [track.asset.sha256, track.asset.bytes]),
+    ),
+    collected = new Map(ownSoundtrackAssets(sourceAssets).map((asset) => [asset.sha256, asset]));
+  for (const asset of prepared.assets)
+    if (wanted.has(asset.sha256)) collected.set(asset.sha256, asset);
+  const assets = ownSoundtrackAssets(
+    [...collected.values()].filter((asset) => wanted.has(asset.sha256)),
+  );
+  required(
+    assets.length === wanted.size &&
+      assets.every((asset) => asset.blob.size === wanted.get(asset.sha256)),
+    'Album restoration needs every retained original.',
+  );
+  required(
+    assets.reduce((sum, asset) => sum + asset.blob.size, 0) <= SOUNDTRACK_LIMITS.managedBytes,
+    'Combined soundtrack exceeds the managed byte limit.',
+  );
+  return Object.freeze({ library, assets, restoredTracks: tracks.length });
 }
