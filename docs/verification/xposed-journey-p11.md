@@ -45,7 +45,7 @@ fill, and remains undoable. Stale fields and cancelled adoption do not apply.
 
 The functional visual language gains a static three-point crown silhouette,
 shield counts and remaining-link cues, plus reclaimed-ground wording. These are
-read-only projections. Native visual/layout qualification is still pending.
+read-only projections. The Studio legend also names the crown explicitly.
 
 ## Verification
 
@@ -81,6 +81,29 @@ The transport probe found a separate mastery-catalog source-format allowlist;
 it now recognizes the new pack only with its matching core and an empty optional
 equipment-mastery array. A canvas test initially passed a context instead of the
 documented canvas argument; its fixture was corrected without changing rendering.
+
+The shell/import/briefing/preview-readiness cohort passes **94/94** on both Node
+versions. The P09/P10 route cohort passes **26/26** on both, retaining all42
+ordinary Solo/replay and equal paired races for each campaign. A fresh exact-source
+audit at `0582b6d5e71ad9366b3db36734705acf01169366` also reproduces all59 original
+P01–P08 candidate manifest identities and checkpoints on both versions.
+
+## Native scoped check
+
+A read-only exact-`0582b6d5` server on localhost8798 was tested in owned tab38.
+In a new local `sentinel-native-check` draft, native controls created three
+required objectives, then atomically replaced the selected keeper with a
+two-shield Sentinel. A duplicate shield was rejected without changing the draft.
+Undo restored the prior keeper and one map revision; Redo restored the Sentinel
+and two map revisions. Save/reload retained checkpoint7 and both shield links.
+
+The exact Solo preview reached its ready state and explained both shield relays
+and the release cut. Actual Start → Down input connected the starting island:
+0.6% earned,140 points,three lives,craft stopped. The live shield counter stayed
+0/2, while the visible locked horizontal lane cycled warning/active over reclaimed
+ground without harming the stopped craft. Closing the preview returned focus to
+Play. This checks a real closure and presentation, not a native full clear,
+two-player/controller run, phone layout or human comprehension/enjoyment.
 
 ## Remaining gates
 
