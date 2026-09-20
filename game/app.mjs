@@ -47,6 +47,7 @@ import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui
 import { encounterView } from './ui/encounter-view.mjs';
 import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { terrainTransitionCaption } from './ui/terrain-feedback.mjs';
+import { laneWarningCaption } from './ui/lane-presentation.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
@@ -6937,7 +6938,7 @@ try {
             if (cue) warning(`${cue.title}. ${cue.instruction}`);
           }
           if (event.type === 'boss.warning')
-            warning(`${theme.labels.boss}: the marked lane will activate shortly.`);
+            warning(laneWarningCaption(run, event, theme.labels.boss));
         });
       }
       painter.effectsFor(events, run);
