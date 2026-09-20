@@ -1,0 +1,22 @@
+{
+  "status": "SCOPED_ARCHIVE_RETENTION_ACCEPTED",
+  "archive": "archive-37",
+  "source": "1bd293f7de06bf02b6c25706b7651f9634bbfc2e",
+  "tree": "1b195801f55e57bb7c665ed8c279318fcfaba545",
+  "run": 35517891996,
+  "deployment": 6554089168,
+  "files": 780,
+  "bytes": 340018633,
+  "priorAcceptedPaths": 0,
+  "publicByteReport": {
+    "path": "public-audit/http-r1/report.json",
+    "sha256": "b1d1ddce1d64640d7e941e02d26670d1af305ae570dcb90ed6326f3c1b824734"
+  },
+  "native": "native-observation.json",
+  "limitations": [
+    "No archive save-write/reload roundtrip because session-only ownership was visibly reported.",
+    "No new physical-controller/touch/offline/audio/human-playtest acceptance.",
+    "Inline UI observations, no exported screenshot hashes.",
+    "Retained 0.69.1 pause clearance and pending Replace/story focus issues remain unchanged."
+  ]
+}
