@@ -132,6 +132,55 @@
           </div>
         </section>
         <section class="source-panel" aria-label="Project source and validation">
+          <details>
+            <summary>Organize missions, campaigns & packs</summary>
+            <p class="note">
+              New missions start as an untested band-1 island template. Duplicate shares an
+              immutable map; editing its geometry creates a private revision. Add to parent keeps
+              existing memberships.
+            </p>
+            <form id="structure-form">
+              <label
+                >Item type<select id="item-kind">
+                  <option value="mission">Mission</option>
+                  <option value="campaign">Campaign</option>
+                  <option value="pack">Pack</option>
+                </select></label
+              >
+              <label
+                >Action<select id="item-action">
+                  <option value="create">Create</option>
+                  <option value="duplicate">Duplicate mission</option>
+                  <option value="rename">Rename</option>
+                  <option value="place">Add to parent</option>
+                  <option value="earlier">Move earlier in parent</option>
+                  <option value="later">Move later in parent</option>
+                </select></label
+              >
+              <label id="item-target-row">Existing item<select id="item-target"></select></label>
+              <label id="item-id-row"
+                >New stable ID<input id="item-id" maxlength="80" placeholder="my-new-mission"
+              /></label>
+              <label id="item-name-row">Display name<input id="item-name" maxlength="160" /></label>
+              <label id="item-band-row"
+                >Campaign band<input
+                  id="item-band"
+                  type="number"
+                  min="1"
+                  max="12"
+                  step="1"
+                  value="1"
+              /></label>
+              <label id="item-parent-row"
+                >Parent for membership / order<select id="item-parent"></select
+              ></label>
+              <button id="item-apply" type="submit">Validate & apply structure</button>
+            </form>
+            <p id="structure-result" class="note" role="status">
+              All edits are local candidates. No publication or player progress changes.
+            </p>
+            <pre id="structure-order" aria-label="Pack, campaign and mission order"></pre>
+          </details>
           <p class="eyebrow">SOURCE / ALL MAPS & CAMPAIGNS</p>
           <p class="note">
             Edit names, order, actors and design notes here. Inspect first; applying is explicit.

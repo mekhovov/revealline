@@ -258,3 +258,34 @@ finite host model does not establish native rendering, physical two-controller
 play, completed race navigation, human fairness or Team compatibility. No Solo
 clear is substituted for paired-board evidence, and Team remains unsupported by
 the project adapter until its distinct recovery/topology contract is implemented.
+
+## Direct candidate structure editing
+
+The shared structural-edit boundary now creates missions, campaigns and packs,
+duplicates missions, renames items, adds explicit parent membership and moves an
+item earlier/later within that parent. Studio exposes these actions without JSON
+editing; every change passes the project compiler before the existing undo and
+autosave session adopts it. Duplicates pin the same immutable map until a geometry
+edit forks one consumer. A starter mission is explicitly an untested band-1 island
+template, not automatically relabeled for a harder campaign. Invalid bands,
+references, duplicate IDs and inappropriate commands fail without changing source.
+Archive/restore, dependency-aware removal and the manual image workflow remain P02
+work; this is not claimed as complete CRUD or publication support.
+
+Structure, Studio/CLI, draft history and checkpoint recovery: **20/20 passed**,
+zero failures/skips. Full lint/format and validation pass (690 files, the same four
+navigation warnings). Subsequent CSS-only target sizing was checked separately.
+
+Native browser scope used a separate `studio-structure-check` local project.
+Created a pack, campaign and mission, duplicated the mission, reordered it,
+undid/redid that order, then added 25 foundation cells to only the copy. The
+original retained 25 cells; the copy showed 50. Reload restored checkpoint 8,
+both items and the accepted campaign order. This confirms local UI/persistence,
+not published-content authority or complete device accessibility.
+
+At 390×844 the new controls originally measured 38.5–40 px. Corrected inputs and
+selects now measure 44 px; portrait and 844×390 layouts have no horizontal overflow.
+The short-landscape form was scrollable, not fully visible at once. An initial
+screenshot request had zero viewport width; explicit responsive dimensions allowed
+inspection. No image-file receipt is claimed for inline screenshots. The temporary
+viewport override was reset. Physical touch/controllers and 200% zoom remain open.

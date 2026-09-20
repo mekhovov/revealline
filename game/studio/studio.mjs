@@ -7,6 +7,7 @@ import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
 import { createContentDraftSession } from '../content-design/session.mjs';
+import { editContentStructure } from '../content-design/structure.mjs';
 import {
   inspectDraftCheckpoint,
   createInspectionRequests,
@@ -164,10 +165,9 @@ function inspectBoard(trailCells = []) {
     ? ''
     : 'This candidate has no Solo adapter. Paired-race preview remains separate.';
 }
-function render() {
+function render(selected = $('mission').value) {
   inspections.invalidate();
-  const project = session.current(),
-    selected = $('mission').value;
+  const project = session.current();
   $('project-id').value = project.id;
   $('project-name').textContent = project.name;
   $('mission').replaceChildren(
@@ -187,8 +187,90 @@ function render() {
   $('apply').disabled = true;
   $('undo').disabled = !session.canUndo();
   $('redo').disabled = !session.canRedo();
+  $('structure-result').textContent =
+    'Current draft structure is shown below. All edits are local candidates; nothing is published.';
+  syncStructure();
   inspectBoard();
 }
+function syncStructure() {
+  const project = session.current(),
+    kind = $('item-kind').value,
+    action = $('item-action').value;
+  const creating = action === 'create' || action === 'duplicate';
+  const fill = (id, rows, blank) => {
+    const selected = $(id).value;
+    $(id).replaceChildren(
+      ...[...(blank ? [{ id: '', name: blank }] : []), ...rows].map((row) => {
+        const option = document.createElement('option');
+        option.value = row.id;
+        option.textContent = `${row.name}${row.id ? ` · ${row.id}` : ''}`;
+        return option;
+      }),
+    );
+    if ([...$(id).options].some((option) => option.value === selected)) $(id).value = selected;
+  };
+  fill('item-target', project[`${kind}s`]);
+  fill(
+    'item-parent',
+    kind === 'mission' ? project.campaigns : kind === 'campaign' ? project.packs : [],
+    'Unassigned',
+  );
+  for (const [id, visible] of [
+    ['item-target-row', action !== 'create'],
+    ['item-id-row', creating],
+    ['item-name-row', creating || action === 'rename'],
+    ['item-band-row', kind === 'campaign' && action === 'create'],
+    ['item-parent-row', kind !== 'pack' && action !== 'rename'],
+  ])
+    $(id).hidden = !visible;
+  $('item-id').required = creating;
+  $('item-name').required = creating || action === 'rename';
+  $('item-band').required = kind === 'campaign' && action === 'create';
+  $('item-target').required = action !== 'create';
+  $('item-parent').required = kind !== 'pack' && ['place', 'earlier', 'later'].includes(action);
+  $('structure-order').textContent = project.packs
+    .map(
+      (pack, index) =>
+        `${index + 1}. ${pack.name}: ${
+          pack.campaignIds
+            .map((id) => {
+              const campaign = project.campaigns.find((entry) => entry.id === id);
+              return `${campaign.name} [${campaign.missionIds.map((missionId) => project.missions.find((entry) => entry.id === missionId).name).join(' → ') || 'empty'}]`;
+            })
+            .join(' / ') || 'empty'
+        }`,
+    )
+    .join('\n');
+  $('item-apply').disabled =
+    (action === 'duplicate' && kind !== 'mission') || (action === 'place' && kind === 'pack');
+}
+for (const id of ['item-kind', 'item-action']) $(id).onchange = syncStructure;
+$('structure-form').onsubmit = guarded((event) => {
+  event.preventDefault();
+  if (!discardSource()) return;
+  const action = $('item-action').value,
+    kind = $('item-kind').value;
+  const creating = action === 'create' || action === 'duplicate';
+  const command = {
+    action: ['earlier', 'later'].includes(action) ? 'reorder' : action,
+    kind,
+    id: creating ? $('item-id').value.trim() : $('item-target').value,
+    ...(creating || action === 'rename' ? { name: $('item-name').value.trim() } : {}),
+    ...(action === 'duplicate' ? { sourceId: $('item-target').value } : {}),
+    ...(kind === 'campaign' && action === 'create' ? { band: Number($('item-band').value) } : {}),
+    ...(kind !== 'pack' && action !== 'rename' && $('item-parent').value
+      ? { parentId: $('item-parent').value }
+      : {}),
+    ...(['earlier', 'later'].includes(action) ? { offset: action === 'earlier' ? -1 : 1 } : {}),
+  };
+  const candidate = editContentStructure(session.current(), command);
+  session.replace(candidate);
+  render(kind === 'mission' ? command.id : $('mission').value);
+  $('item-target').value = command.id;
+  $('structure-result').textContent =
+    `${action}: ${kind} ${command.id}. Draft only; Undo restores the previous structure.`;
+  queueSave();
+});
 function inspectSource({ head, selectedRevision } = {}) {
   inspections.invalidate();
   inspected = null;
