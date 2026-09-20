@@ -192,10 +192,7 @@ test('actual practice controller pause and Return reopens the unsaved parent dra
     pad.buttons[index] = { pressed: held, value: Number(held) };
     frame();
   };
-  frame();
-  press(9, true);
-  press(9, false);
-  assert.equal(page.$('game-overlay').hidden, true, 'joining consumes the first Menu press');
+  frame(); // Neutral input connects automatically, so the first Menu press pauses.
   press(9, true);
   press(9, false);
   assert.equal(page.$('game-overlay').dataset.kind, 'pause');
