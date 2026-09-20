@@ -323,5 +323,36 @@ Five progress-contract tests plus16 real-host cases pass on Node20 and22, includ
 the full12-mission flow, profile recreation, command-earned receipt, failed-Next
 cursor, denied-save export and recovery.69 legacy/shared-profile regression cases
 pass on Node22. This is modeled storage/DOM evidence, not browser disk/quota or
-native-progress approval. Two-activation skip UI, candidate difficulty controls,
-original backgrounds, broader real-device qualification and deployment remain open.
+native-progress approval. Keyboard saving recovery restores the available Next
+action when its focused warning disappears, without resuming the attempt.
+
+### Two-activation Skip without a menu detour
+
+The explicit Team route offers Skip during play and on a paused/lost attempt.
+First activation pauses and names the successor with a no-clear explanation;
+the second prepares and starts that exact successor. It does not open the generic
+discard dialog or visit setup. The final mission never wraps. Changing focus or
+losing foreground revokes unconfirmed intent. Choosing Skip from a command-lost
+Expert attempt cancels pending automatic retry but still requires confirmation.
+
+The existing Next transaction retains the unfinished attempt and its picture
+until successor preparation, first paint and setup adoption pass. Failures/cancel
+restore that attempt and award neither a skip nor a clear. Late decoder completion
+cannot replace it. Held directions do not carry into the successor; no blanket
+input delay is added. Previously skipped missions remain selectable, and a later
+legal clear removes the skip marker.
+
+Shared profile `recordMany` validates an entire bounded event batch before
+publishing it, so Skip and its successor cursor appear together even to synchronous
+observers. The same events persist through the existing IndexedDB transaction;
+the schema/database/version is unchanged. Invalid batches change nothing.
+
+The13 focused skip/atomicity cases pass on both Node versions. They include all
+eleven successive skips across five campaigns with zero clears, cancellation
+during exposed cuts, three failure stages, loss recovery and later earned replay.
+Modeled controller navigation and touch activation add two passing cases on both
+Node versions, not physical-device evidence. The full101-case host/progress/
+legacy regression cohort also passes on both, including twelve consecutive
+command-earned clears after the Skip integration. Local TAPs retain these results.
+Candidate difficulty controls, clearer chooser presentation, original backgrounds,
+broader real-device qualification and deployment remain open.

@@ -260,6 +260,20 @@ export function createJourneyProfileStore({
     })();
     return saving;
   }
+  const recordEvents = (events) => {
+    if (!Array.isArray(events) || events.length < 1 || events.length > 256)
+      throw new TypeError('Journey progress needs one to 256 events per transaction.');
+    const owned = structuredClone(events);
+    // Validate the whole transition before publishing either its cursor or skip.
+    // One status notification cannot expose a partially applied transition.
+    const next = owned.reduce(applyJourneyEvent, profile);
+    profile = next;
+    pending.push(...owned);
+    durable = false;
+    status();
+    void flush();
+    return snapshot();
+  };
   return {
     async load() {
       await flush();
@@ -278,14 +292,9 @@ export function createJourneyProfileStore({
       return snapshot();
     },
     record(event) {
-      const owned = structuredClone(event);
-      profile = applyJourneyEvent(profile, owned);
-      pending.push(owned);
-      durable = false;
-      status();
-      void flush();
-      return snapshot();
+      return recordEvents([event]);
     },
+    recordMany: recordEvents,
     export() {
       return JSON.stringify({ format: JOURNEY_BACKUP_VERSION, profile: snapshot() }, null, 2);
     },

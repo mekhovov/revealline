@@ -115,7 +115,7 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | P11 | 0.79.0 | Sentinel Crown and Remix | Isolated multi-shield successor, shared compiler/transport and atomic Studio controls. Four core greyboxes plus optional Remix and three reference proposals. All 30 prepared Solo/replay, equal paired races and optional goals; 150 seed samples; 25 delayed alternatives; 30 resumed snapshots. Final candidate cohort 50/50 passes Node20/22. Native first capture checked; short optimized clears keep two layouts provisional. Art, Team, broader native/human and publication gates remain; see P11 verification record |
 | P12 | 0.80.0 | Apex Aurora and Remix | Isolated four-mission capstone arc plus optional Remix; three reference finales reinspected. All30 bonus-independent Solo/replay, equal paired races and optional goals;150 seed samples,32 restored snapshots and25 delayed alternatives pass Node20/22. Final66/66 cohort,69/69 shell regression. Empty chamber, unused dock and five-second keeper collision rejected. Native import/closure/three-shield brief and corrected lane-emitter caption verified. Short optimized finale clears remain pacing risks. Art/offline capacity, Team, broader native/human and publication gates remain |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Local83-mission greybox review library (71core+12Remix), explicit Studio inspection, exact standalone edition/key parity and all-boundary sequence checks. Flat chooser component checks cover both modes. Immutable project-local projection reuse reduces repeated compilation; no public enrollment or art requirement bypass. Broader regressions/native, real-host flow, human cuts/pacing and publication pending; see P13 record |
-| P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Local preparation: twelve-mission review preserves earlier editions across three four-mission learning arcs. Foundation/material practice plus four changing-ground candidates have legal clear/mastery routes with joint cuts on/off and swapped seats. Explicit Team v6 qualifies existing reclaimed roamers without upgrading old content. New arc adds120 seed cases and20 delayed alternatives; real-host campaigns clear with one Next per transition. Native/human balance, original art, recovery, cross-campaign Team Journey navigation and publication gates remain; see P14 verification record |
+| P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Local preparation: twelve candidates preserve earlier editions across three four-mission learning arcs. Foundation/material/changing-ground routes qualify joint cuts on/off and swapped seats; explicit Team v6 adds reclaimed roamers. The labelled Team greybox host clears all12 across four campaign boundaries with one Next, shared persistent receipts, session-only recovery and two-activation reversible Skip. Native chooser/direct launch checked; broader native/human balance, original art, difficulty/chooser polish, device/recovery qualification and publication gates remain; see P14 verification record |
 | P15 | 0.83.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |
 
 September 20 release coordination: the parallel discovery feature PR170 initially
@@ -181,7 +181,12 @@ native export/import verified pinned Expert rules and both-seat movement. New
 Journey Team editions automatically reset failed attempts with fresh controls,
 while focus/settings/disconnection/faults cancel pending recovery. These close
 the manual authoring-test path and scoped recovery gap, not the Team Journey
-chooser/profile, final artwork, human balance or release gates.
+chooser/profile, final artwork, human balance or release gates at that checkpoint.
+The later P14 local `?journey=team-greybox` route now joins twelve candidates with
+cross-campaign Next, release-independent Team receipts and two-activation Skip.
+Native chooser/direct launch and modeled failure/input recovery are recorded in
+`docs/verification/xposed-journey-p14.md`; this is not public enrollment or a
+claim that Team artwork, human balance, device qualification or P14 is complete.
 
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
 P01 `e7aa131f`. Six Border Bloom core candidates and one optional Remix progress

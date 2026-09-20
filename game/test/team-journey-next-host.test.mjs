@@ -392,3 +392,301 @@ test('denied Team saving stays playable, exports pending progress and Retry save
   await next(f);
   assert.equal(f.$('coop-level').value, 'stepping-exchange');
 });
+
+function armSkip(f, button = 'coop-journey-skip') {
+  f.$(button).focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.doc.activeElement.id, 'coop-journey-skip-confirm');
+  assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Confirm skip');
+  assert.match(f.$('coop-overlay-copy').textContent, /No clear is awarded/);
+}
+async function confirmSkip(f) {
+  f.tap('Enter');
+  await waitFor(
+    () => f.$('coop-overlay').hidden,
+    () => f.$('coop-next-status').textContent,
+  );
+}
+
+test('two deliberate Skip activations traverse every Team campaign without awarding clears or opening another menu', async (t) => {
+  const memory = managedIndexedDB();
+  const f = await journeyPage(t, {
+    beforeImport({ install }) {
+      install('indexedDB', { value: memory.indexedDB });
+    },
+  });
+  f.$('coop-start').click();
+  for (let index = 0; index < source.missions.length - 1; index++) {
+    assert.equal(f.$('coop-level').value, source.missions[index].id);
+    assert.equal(f.$('coop-journey-skip').hidden, false);
+    armSkip(f);
+    assert.equal(f.$('coop-level').value, source.missions[index].id);
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    await confirmSkip(f);
+    assert.equal(f.$('coop-level').value, source.missions[index + 1].id);
+    assert.equal(f.$('coop-menu').hidden, true);
+    assert.equal(f.$('coop-coverage').textContent, '0.0%');
+    assert.equal(f.$('coop-clock').textContent, '0:00');
+    assert.equal(f.doc.activeElement.id, 'coop-canvas');
+  }
+  assert.equal(
+    f.$('coop-journey-skip').hidden,
+    true,
+    'The finale never wraps into another assignment.',
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  const profile = await createJourneyBackend(memory).read();
+  assert.deepEqual(
+    profile.skipped.team,
+    navigation.catalog.missions.slice(0, -1).map((mission) => mission.id),
+  );
+  assert.equal(profile.cursors.team, navigation.catalog.missions.at(-1).id);
+  assert.deepEqual(profile.clears.team, {});
+  assert.deepEqual(f.visits, []);
+});
+
+for (const interruption of ['focus', 'foreground'])
+  test(`unconfirmed Team Skip is revoked by ${interruption} and requires two fresh activations`, async (t) => {
+    const f = await journeyPage(t);
+    f.$('coop-start').click();
+    armSkip(f);
+    if (interruption === 'focus') f.$('coop-resume').focus();
+    else {
+      f.win.emit('blur');
+      f.win.emit('focus');
+    }
+    assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip mission');
+    armSkip(f, 'coop-journey-skip-confirm');
+    assert.equal(f.$('coop-level').value, 'twin-landings');
+    await confirmSkip(f);
+    assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  });
+
+for (const failure of ['loading', 'first-paint', 'adoption'])
+  test(`failed ${failure} during confirmed Team Skip preserves the attempt and awards neither skip nor clear`, async (t) => {
+    const memory = managedIndexedDB(),
+      backend = createJourneyBackend(memory);
+    let reject = false;
+    const errors = [];
+    t.mock.method(console, 'error', (error) => errors.push(error));
+    const f = await journeyPage(t, {
+      beforeImport({ install }) {
+        install('indexedDB', { value: memory.indexedDB });
+      },
+      presentation: {
+        async decode() {
+          if (reject) {
+            reject = false;
+            throw new Error('Skip picture failure');
+          }
+        },
+      },
+    });
+    f.$('coop-start').click();
+    armSkip(f);
+    await new Promise((resolve) => setImmediate(resolve));
+    const before = await backend.read();
+    if (failure === 'loading') reject = true;
+    if (failure === 'first-paint') f.failNextPaint();
+    if (failure === 'adoption') {
+      const select = f.$('coop-level'),
+        original = select.replaceChildren;
+      let fail = true;
+      t.mock.method(select, 'replaceChildren', function (...children) {
+        original.apply(this, children);
+        if (fail) {
+          fail = false;
+          throw new Error('Skip setup failure');
+        }
+      });
+    }
+    f.tap('Enter');
+    await waitFor(() => /Could not start/.test(f.$('coop-next-status').textContent));
+    assert.equal(f.$('coop-level').value, 'twin-landings');
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.$('coop-resume').hidden, false);
+    assert.equal(f.$('coop-coverage').textContent, '0.0%');
+    assert.deepEqual(await backend.read(), before);
+    assert.equal(f.doc.activeElement.id, 'coop-journey-skip-confirm');
+    assert.equal(errors.length, 1);
+    armSkip(f, 'coop-journey-skip-confirm');
+    await confirmSkip(f);
+    assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  });
+
+test('Skip from a legitimately lost Team attempt cancels automatic retry and still requires confirmation', async (t) => {
+  const f = await journeyPage(t, {
+    beforeImport({ install }) {
+      install('localStorage', { value: storage('expert') });
+    },
+  });
+  f.$('coop-start').click();
+  f.tick(2);
+  for (let cycle = 0; cycle < 2; cycle++) {
+    for (const [a, b, ticks] of [
+      ['right', 'left', 60],
+      ['up', 'down', 30],
+      ['left', 'right', 18],
+      ['down', 'up', 30],
+    ]) {
+      f.tap(keys[0][a]);
+      f.tap(keys[1][b]);
+      f.tick(ticks);
+    }
+    if (cycle === 0) f.tick(180);
+  }
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.match(f.$('coop-overlay-copy').textContent, /starts shortly/);
+  armSkip(f, 'coop-journey-skip-confirm');
+  f.tick(150);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  await confirmSkip(f);
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  assert.equal(f.$('coop-difficulty').value, 'expert');
+});
+
+test('cancelling a held Team Skip keeps the unfinished cuts; a later confirmed skip consumes held directions separately', async (t) => {
+  const memory = managedIndexedDB(),
+    backend = createJourneyBackend(memory),
+    gate = deferred();
+  let held = false,
+    entered = false;
+  t.after(() => gate.resolve());
+  const f = await journeyPage(t, {
+    beforeImport({ install }) {
+      install('indexedDB', { value: memory.indexedDB });
+    },
+    presentation: {
+      async decode() {
+        if (held) {
+          entered = true;
+          await gate.promise;
+        }
+      },
+    },
+  });
+  f.$('coop-start').click();
+  f.tick(2);
+  f.press('KeyD');
+  f.press('ArrowLeft');
+  f.tick(42);
+  assert.equal(f.$('coop-state-0').textContent, 'Line exposed');
+  assert.equal(f.$('coop-state-1').textContent, 'Line exposed');
+  armSkip(f);
+  await new Promise((resolve) => setImmediate(resolve));
+  const before = await backend.read();
+  held = true;
+  f.tap('Enter');
+  await waitFor(() => entered);
+  f.$('coop-next-cancel').click();
+  held = false;
+  gate.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  f.tick(3);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  assert.equal(f.$('coop-state-0').textContent, 'Line exposed');
+  assert.equal(f.$('coop-state-1').textContent, 'Line exposed');
+  assert.match(f.$('coop-next-status').textContent, /Skip cancelled/);
+  assert.deepEqual(await backend.read(), before);
+  armSkip(f, 'coop-journey-skip-confirm');
+  await confirmSkip(f);
+  f.tick(120);
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  assert.equal(f.$('coop-coverage').textContent, '0.0%');
+  assert.equal(f.$('coop-state-0').textContent, 'On safe ground');
+  assert.equal(f.$('coop-state-1').textContent, 'On safe ground');
+});
+
+test('a skipped Team mission remains selectable and a later command-earned clear removes its skip marker', async (t) => {
+  const memory = managedIndexedDB(),
+    backend = createJourneyBackend(memory);
+  const f = await journeyPage(t, {
+    beforeImport({ install }) {
+      install('indexedDB', { value: memory.indexedDB });
+    },
+  });
+  f.$('coop-start').click();
+  armSkip(f);
+  await confirmSkip(f);
+  f.$('coop-pause').click();
+  f.$('coop-discovery-paused').focus();
+  f.tap('Enter');
+  const card = [...f.$('coop-discovery-list').querySelectorAll('.team-discovery-play')].find(
+    (button) => button.textContent === 'Play Twin landings',
+  );
+  card.focus();
+  f.tap('Enter');
+  await waitFor(() => f.$('coop-discard-dialog').open);
+  f.$('coop-discard-confirm').focus();
+  f.tap('Enter');
+  await waitFor(() => !f.$('coop-discovery-dialog').open && f.$('coop-overlay').hidden);
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  clear(f, 'twin-landings');
+  await new Promise((resolve) => setImmediate(resolve));
+  const profile = await backend.read();
+  assert(profile.clears.team[navigation.catalog.missions[0].id]);
+  assert.deepEqual(profile.skipped.team, []);
+});
+
+test('a joined controller can reach Team Skip, confirm twice and continue without returning to setup', async (t) => {
+  const f = await journeyPage(t);
+  f.$('coop-start').click();
+  f.tick(2);
+  f.$('coop-pause').click();
+  const pad = {
+    index: 0,
+    id: 'Team skip test controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  f.pads.push(pad);
+  const press = (index) => {
+    pad.buttons[index] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[index] = { pressed: false, value: 0 };
+    f.tick(2);
+  };
+  f.tick(2);
+  press(0);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  for (let tries = 0; tries < 40 && f.doc.activeElement.id !== 'coop-journey-skip-confirm'; tries++)
+    press(13);
+  assert.equal(f.doc.activeElement.id, 'coop-journey-skip-confirm');
+  press(0);
+  assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Confirm skip');
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  press(0);
+  await waitFor(
+    () => f.$('coop-overlay').hidden,
+    () => f.$('coop-next-status').textContent,
+  );
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  assert.equal(f.$('coop-menu').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+  f.tick(120);
+  assert.equal(f.$('coop-coverage').textContent, '0.0%');
+  t.diagnostic('Finite gamepad input model, not physical-controller qualification.');
+});
+
+test('touch-style Team Skip activation pauses then confirms without introducing a discard dialog', async (t) => {
+  const f = await journeyPage(t, { touch: true });
+  const touch = (button) => {
+    button.emit('pointerdown', { pointerId: 1, pointerType: 'touch', button: 0 });
+    button.emit('pointerup', { pointerId: 1, pointerType: 'touch', button: 0 });
+    button.click();
+  };
+  touch(f.$('coop-start'));
+  touch(f.$('coop-journey-skip'));
+  assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Confirm skip');
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  touch(f.$('coop-journey-skip-confirm'));
+  await waitFor(() => f.$('coop-overlay').hidden);
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.$('coop-menu').hidden, true);
+});

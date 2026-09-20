@@ -97,6 +97,39 @@ test('IndexedDB progress survives store recreation and merges concurrent tab wri
   assert.equal(nextRelease.status().durable, true);
 });
 
+test('batched navigation validates every event before adopting an atomic cursor/skip transition', async () => {
+  const observed = [];
+  const store = createJourneyProfileStore({
+    backend: createJourneyBackend(managedIndexedDB()),
+    onStatus: () => observed.push(store.snapshot()),
+  });
+  await store.load();
+  observed.length = 0;
+  const before = store.snapshot();
+  assert.throws(() =>
+    store.recordMany([
+      { ...select, type: 'skip' },
+      { ...select, type: 'invalid' },
+    ]),
+  );
+  assert.deepEqual(store.snapshot(), before);
+  assert.equal(observed.length, 0);
+  assert.throws(() => store.recordMany([]));
+  assert.throws(() => store.recordMany(Array(257).fill(select)));
+  const events = [
+    { ...select, type: 'skip' },
+    { ...select, missionId: 'next-mission' },
+  ];
+  store.recordMany(events);
+  events[1].missionId = 'mutated-after-adoption';
+  assert.equal(observed.length, 1);
+  assert.equal(observed[0].cursors.solo, 'next-mission');
+  assert.deepEqual(observed[0].skipped.solo, [id]);
+  assert.deepEqual(observed[0].clears.solo, {});
+  assert(await store.flush());
+  assert.equal(store.snapshot().cursors.solo, 'next-mission');
+});
+
 test('unavailable storage stays session-only, exports progress and retries without losing events', async () => {
   let saved = emptyJourneyProfile(),
     failing = true;
