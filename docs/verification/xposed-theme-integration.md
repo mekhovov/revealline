@@ -27,7 +27,8 @@ and award no official progression.
 Existing content-attempt/page/renderer regressions: 30/30 pass. Full presentation
 system file: 22/22 pass after sparse fixture hydration. All 11 paired-board
 host cases pass, including continuous opening/authored routes. The full Solo
-host rerun is still pending at this checkpoint. Initial sparse-worktree runs
+host rerun also passes all 12 cases, including both complete consecutive routes,
+Skip, exact saved media and next-attempt difficulty. Initial sparse-worktree runs
 failed on missing audio, pack catalogues, production register and optional-pack
 fixtures; those environment failures were not counted as passing runs or
 silenced by changing assertions.
@@ -43,3 +44,29 @@ Full attempt/session adoption, transitive picture/audio preflight, complete
 campaign collections, native switching/recovery, human readability and normal
 release/Pages gates remain open. Technical test success is not evidence of
 visual quality, physical-device support or enjoyment.
+
+## Complete compiled-byte inventory follow-up
+
+`presentation/dependencies.mjs` derives a deterministic, immutable inventory from
+the exact bounded `runtime.json` bytes through the existing runtime validator.
+It includes selected lazy originals and audio, groups shared hashes once with
+all bound roles, excludes unselected authoring history, and records exact source,
+theme, collection and manifest identity. `compilePresentation` returns this same
+inventory as metadata; emitted asset/manifest/CSS/studio files are unchanged.
+
+The optional verifier requires a code-owned bounded reader, checks retained
+manifest pins before any asset read, verifies every selected file sequentially,
+and reports only `verified-bytes` with `mediaDecoded: false`. Cancellation settles
+even if the reader is late, without starting further reads. It does not fetch,
+install, persist, play sound, decode artwork or alter a live host. An unpinned
+inspection does not authenticate an uploaded catalogue or prove release approval.
+
+Eight new tests cover real compiler images/audio, shared file ownership,
+unselected history, lazy loader versus full-byte verification, missing/corrupt/
+wrong-size files, exact manifest pins, malformed paths/metadata, cancellation,
+caller-byte ownership and procedural-only content. The first fixture incorrectly
+attached player rotor anchors to a scene role and was rejected by the existing
+validator; the fixture was corrected without relaxing production validation.
+The dependency/pin/lease four-file cohort passes 36/36 on Node 20.19.5 and
+22.22.2; changed JavaScript also passes ESLint and Prettier.
+This inventory is not yet a complete offline attempt envelope or a backup UI.
