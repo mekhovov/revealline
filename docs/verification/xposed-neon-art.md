@@ -78,8 +78,17 @@ to observe only the owned exact-URL document. Ready/failed settles the monitor;
 replacement, Close and pagehide cancel it. Readiness no longer depends on the
 iframe load event, which may lag behind application readiness. Seven deterministic
 monitor regressions plus the existing Studio/preview-loader cohort pass18/18,
-zero failures/cancellations/skips,7.608seconds on Node20.19.5. Native controlled
-slow-boot verification is still pending at this source checkpoint.
+zero failures/cancellations/skips,7.608seconds on Node20.19.5. The seven monitor
+tests also pass on Node22.22.2.
+
+Native controlled verification used exact53d99feecb09a42fb45d52317c0375010fdd943d
+atlocalhost8786, with source bytes unchanged and a deliberately28-second-delayed
+`game/app.mjs` response. On a repeated launch, Studio visibly changed from Loading
+to "Preview is taking longer than expected. Still checking" and subsequently to
+"Engine ready" without Close/retry or reloading the draft. The real Nearby shore
+Practice launch screen was ready at0%,0score,3lives. Close returned to the saved
+checkpoint1. This is a controlled transport-delay check, not a network-performance
+benchmark or proof that every media dependency is ready when the engine is ready.
 
 Remaining: native full reveals for all seven, whole-board threat/trail contrast,
 small-screen/reduced-effects review, actual campaign theme adoption, human
