@@ -1,3 +1,4 @@
+import { mountToolReturnLinks } from '../ui/workshop-return.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -83,6 +84,7 @@ async function workshop(
   doc.createElement = (tag) => new HostElement(doc, tag);
   mount(doc);
   win.location = { href: url };
+  mountToolReturnLinks({ document: doc, href: url, id: 'enemy-catalog' });
   win.crypto = globalThis.crypto;
   const pad = {
     index: 0,
@@ -232,15 +234,18 @@ async function workshop(
 }
 
 for (const [base, expected] of [
-  ['http://localhost:8000/authoring/enemy-catalog/', 'http://localhost:8000/game/'],
+  [
+    'http://localhost:8000/authoring/enemy-catalog/',
+    'http://localhost:8000/game/?workshop=enemy-catalog',
+  ],
   [
     'https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/',
-    'https://example.test/revealline/releases/v0.60.8/site/game/',
+    'https://example.test/revealline/releases/v0.60.8/site/game/?workshop=enemy-catalog',
   ],
 ])
   test(`native Return remains available before loading and after theme failure: ${base}`, async (t) => {
     const h = await workshop(t, base);
-    assert.equal(h.back.textContent, 'Return to game');
+    assert.equal(h.back.textContent, 'Return to Workshop');
     assert.equal(h.back.closest('[hidden],[inert],[disabled]'), null);
     assert.equal(h.$('open-catalog').disabled, true);
     assert.equal(h.requests.length, 0);
@@ -266,7 +271,7 @@ for (const [base, expected] of [
     assert.deepEqual(h.requests, ['../../game/content/themes.json']);
   });
 
-test('workshop modal Back keeps its draft before a separate keyboard Return to game', async (t) => {
+test('workshop modal Back keeps its draft before a separate keyboard Return to Workshop', async (t) => {
   const h = await workshop(t);
   await h.ready();
   h.$('enemy-catalog-role').value = 'eroder';
@@ -287,7 +292,9 @@ test('workshop modal Back keeps its draft before a separate keyboard Return to g
   assert.equal(h.$('enemy-catalog-dialog').open, false);
   h.back.focus();
   h.key('Enter');
-  assert.deepEqual(h.navigations, ['https://example.test/revealline/releases/v0.60.8/site/game/']);
+  assert.deepEqual(h.navigations, [
+    'https://example.test/revealline/releases/v0.60.8/site/game/?workshop=enemy-catalog',
+  ]);
   assert.deepEqual(h.local.writes, []);
   assert.deepEqual(h.session.writes, []);
 });
@@ -309,7 +316,9 @@ test('ready controller navigation keeps modal ownership then activates the page 
   assert.equal(h.doc.activeElement, h.back);
   assert.deepEqual(h.navigations, [], 'Highlighting the page action never navigates.');
   h.tap(0);
-  assert.deepEqual(h.navigations, ['https://example.test/revealline/releases/v0.60.8/site/game/']);
+  assert.deepEqual(h.navigations, [
+    'https://example.test/revealline/releases/v0.60.8/site/game/?workshop=enemy-catalog',
+  ]);
   assert.deepEqual(h.local.writes, []);
   assert.deepEqual(h.session.writes, []);
 });
@@ -444,7 +453,7 @@ for (const timing of ['before module', 'during loading'])
     assertRetired(listeners);
     h.key('Enter');
     assert.deepEqual(h.navigations, [
-      'https://example.test/revealline/releases/v0.60.8/site/game/',
+      'https://example.test/revealline/releases/v0.60.8/site/game/?workshop=enemy-catalog',
     ]);
     assert.deepEqual(h.local.writes, []);
     assert.deepEqual(h.session.writes, []);

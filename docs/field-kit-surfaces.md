@@ -45,3 +45,52 @@ The results reading region leads with a bounded still drawn from the completed a
 Studio button variants now use actual primary, secondary, danger, icon, tab and chip semantics. Primary and danger defaults use amber/coral; press uses cyan; selected tabs/chips retain the amber marker. The icon specimen has a real accessible label, tabs own matched panels and arrow/Home/End navigation, and chip selection stays inside the isolated sample.
 
 The Field Guide consumes the current FPV release enemy slots with the runtime pivot/rotor adapter. Other themes and releases without a resolved slot retain their existing artwork. Its enlarged preview keeps the physical center cue unchanged, and changing or closing the guide retains the existing practice/return ownership.
+
+## Standalone Workshop return navigation
+
+The nine Workshop tools share a fixed same-release return contract: Asset Studio,
+Mission playground, Enemy workshop, Motion lab, Pictures & stories, Video poster,
+Design atlas, Replay Theater and Controller practice. **Return to Workshop** opens
+Workshop with the originating tool focused. Back or Escape closes only Workshop,
+leaving its opener focused on Home. **Return to game** (or a game wordmark) opens
+Home. These actions do not launch or restore a flight.
+
+Both outgoing and return links retain one validated `journey` route hint. They do
+not adopt arbitrary return URLs, campaign selections, save identities or other
+launch parameters. A small independent entry prepares complete link destinations
+before enabling them, so returning does not wait for large editor/media modules.
+Links between these registered standalone tools retain the same route as well.
+
+Practice/course children retain their existing token/session owners. Enemy workshop
+practice returns to its current draft; Controller practice releases held input and
+uses its existing exit handshake. Replay Back cancels pending loading or pauses and
+focuses Return to Workshop; activating the link remains deliberate. Video Poster
+Back cancels active preparation first, then leaves through its existing Back action.
+Page departure keeps each tool's existing cancellation and cleanup behavior; this
+navigation feature does not persist unsaved editor work across document navigation.
+
+Maintenance prompt: “Verify ordinary and authored-Journey Home → Workshop → each
+of the nine tools → Return to Workshop → Back, with exact opener and release route.
+Exercise Return to game separately. Try early return while dependencies load,
+keyboard, touch and supported controller input. Check native Escape after both Home
+and Workshop opened during boot. Preserve practice token/session return, Replay
+pause/cancel, Video Poster cancel-first Back, history failure, newer focus, hidden
+or disposed hosts and competing launch precedence. Measure 44-pixel return targets;
+report modeled controls, native browser and physical devices separately. Do not
+claim saved-attempt continuity from menu-only tests.”
+
+The named Playground iframe also has an explicit nonmodal keyboard boundary.
+Tab from its final control and Shift+Tab from its first control use the browser's
+sequential frame traversal, after the game host suspends and releases input.
+This applies to Solo/course, Versus and Team hosts reached inside that preview.
+Native modal containment and Controller practice's separate session handshake
+remain unchanged. Re-entering the preview does not start or resume a run. The
+parent's custom-size help explains this keyboard exit. A second Return to Workshop
+link directly after the preview avoids traversing all editor fields to leave.
+
+Preview regression prompt: “At both ends of the Playground iframe, Tab/Shift+Tab
+out and back in using native browser keys. Repeat in Solo, course and Couch,
+and follow the in-frame mode links. Start, pause, leave and re-enter: require
+explicit Resume and unchanged checkpoints. Keep real modals contained and the
+Controller practice/enemy return protocols unchanged. Retire or replace a child
+during suspension; it must not wrap or steal the newer focus.”
