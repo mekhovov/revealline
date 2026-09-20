@@ -1,5 +1,6 @@
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -394,6 +395,12 @@ $('new').onclick = guarded(() => {
 $('opening').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createOpeningCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('border').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createBorderCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
