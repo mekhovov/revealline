@@ -3,6 +3,7 @@ import { JOURNEY_MODES } from './catalog.mjs';
 
 export const JOURNEY_PROFILE_VERSION = 'revealline-journey-profile.v1';
 export const JOURNEY_PROFILE_DATABASE = 'revealline-journey-v1';
+export const JOURNEY_BACKUP_VERSION = 'revealline-journey-backup.v1';
 const emptyModes = (make) => Object.fromEntries(JOURNEY_MODES.map((mode) => [mode, make()]));
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;
 const own = (object, key) => Object.hasOwn(object, key);
@@ -59,8 +60,45 @@ export function validateJourneyProfile(source) {
   return profile;
 }
 
+export function inspectJourneyBackup(source) {
+  const backup = boundedJSON(source, {
+    maxBytes: 8 * 1024 * 1024,
+    maxNodes: 100010,
+    maxDepth: 12,
+    maxArray: 4096,
+    maxString: 1024,
+  });
+  exactKeys(backup, ['format', 'profile'], 'Journey backup');
+  if (backup.format !== JOURNEY_BACKUP_VERSION) throw new TypeError('Unsupported Journey backup.');
+  return { format: JOURNEY_BACKUP_VERSION, profile: validateJourneyProfile(backup.profile) };
+}
+
+/** Non-destructive restore: current receipts/cursors win, skips never replace a
+ * clear, and unknown mission IDs survive future/previous release round trips.
+ * These local progress records grant no score, unlock, replay or award authority. */
+export function mergeJourneyBackup(source, backupSource) {
+  const profile = validateJourneyProfile(source),
+    backup = inspectJourneyBackup(backupSource).profile;
+  const before = JSON.stringify(profile);
+  for (const mode of JOURNEY_MODES) {
+    profile.cursors[mode] ??= backup.cursors[mode];
+    for (const [id, receipt] of Object.entries(backup.clears[mode])) {
+      if (!own(profile.clears[mode], id)) profile.clears[mode][id] = receipt;
+    }
+    profile.skipped[mode] = [
+      ...new Set([...profile.skipped[mode], ...backup.skipped[mode]]),
+    ].filter((id) => !own(profile.clears[mode], id));
+  }
+  if (JSON.stringify(profile) !== before) profile.generation++;
+  return validateJourneyProfile(profile);
+}
+
 /** Events contain no score authority: the host supplies only verified legal clears. */
 export function applyJourneyEvent(source, event) {
+  if (event?.type === 'restore') {
+    exactKeys(event, ['type', 'backup'], 'Journey restore event');
+    return mergeJourneyBackup(source, event.backup);
+  }
   const profile = validateJourneyProfile(source);
   if (
     !event ||
@@ -230,6 +268,15 @@ export function createJourneyProfileStore({
     snapshot,
     status,
     flush,
+    restore(source) {
+      const owned = { type: 'restore', backup: inspectJourneyBackup(source) };
+      profile = applyJourneyEvent(profile, owned);
+      pending.push(owned);
+      durable = false;
+      status();
+      void flush();
+      return snapshot();
+    },
     record(event) {
       const owned = structuredClone(event);
       profile = applyJourneyEvent(profile, owned);
@@ -240,11 +287,7 @@ export function createJourneyProfileStore({
       return snapshot();
     },
     export() {
-      return JSON.stringify(
-        { format: 'revealline-journey-backup.v1', profile: snapshot() },
-        null,
-        2,
-      );
+      return JSON.stringify({ format: JOURNEY_BACKUP_VERSION, profile: snapshot() }, null, 2);
     },
   };
 }
