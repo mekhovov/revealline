@@ -102,7 +102,7 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress on PR172; not published |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | PR172: actual Solo and paired-board opening hosts, Studio and original art; qualification incomplete, not published |
 | P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates, complete-route fixtures and manual image workflow; not published |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
@@ -148,8 +148,13 @@ use a separate revision-pinned slot; ordinary gameplay and `journey=1` are intac
 Studio now uses the actual authored Horizon theme, fixing its previous silent
 Retro substitution. See `docs/verification/xposed-journey-attempt-boundary.md`.
 Difficulty save failures now expose retry/export controls; cross-tab next-attempt
-intent refreshes without changing the current flight. Broader host/controller qualification,
-Versus/Team adoption, human validation and release gates remain. None of that branch's
+intent refreshes without changing the current flight. The opt-in paired-board
+`game/couch/?journey=opening` now uses the same compiler, originals and presets
+with real races, cross-campaign Next, two-action Skip, flat chooser, independent
+Versus receipts and failed-preparation retention. Timed race decisions alone do
+not grant mission clears. See `docs/verification/xposed-journey-versus-host.md`.
+Broader host/controller qualification, Team adoption, human validation and release
+gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
 
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on

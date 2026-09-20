@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <link rel="stylesheet" href="../ui/mode-choice.css" />
     <link rel="stylesheet" href="../ui/menu-appearance.css" />
+    <link rel="stylesheet" href="../ui/journey.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
@@ -31,6 +32,16 @@
     </p>
     <a id="boot-return" href="../">Back to the game</a>
     <main id="couch-app" data-boot-inert inert aria-busy="true">
+      <nav id="race-journey-controls" class="race-actions" aria-label="Journey missions" hidden>
+        <button id="race-journey-next" type="button" hidden>Next mission</button>
+        <button id="race-journey-skip" type="button">Skip mission</button>
+        <button id="race-journey-find" type="button">Find missions</button>
+      </nav>
+      <aside id="race-journey-save" class="journey-status" hidden>
+        <p id="race-journey-save-message" role="status"></p>
+        <button id="race-journey-save-retry" type="button">Retry progress save</button>
+        <button id="race-journey-save-export" type="button">Export Journey progress</button>
+      </aside>
       <div id="race-hud" class="race-hud" hidden>
         <button id="race-pause" type="button" disabled>Pause</button>
         <span class="race-score"
@@ -132,6 +143,10 @@
           <nav id="race-mode-choices" aria-label="Game mode"></nav>
           <p class="race-kicker">REVEAL LINE / LOCAL TWO PLAYER</p>
           <h1 class="field-kit-display" id="race-title">Two boards.<br />One race.</h1>
+          <p id="race-journey-note" hidden>
+            OPENING JOURNEY / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for
+            original pictures; core offline preparation does not save them.
+          </p>
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
           <p id="race-summary" class="race-summary"></p>
           <div class="race-seats">
@@ -180,6 +195,18 @@
           <h1 id="race-setup-title">Race setup</h1>
           <p>Choose together. Each player starts with the same map, craft and time.</p>
           <div class="race-fields">
+            <label id="race-journey-difficulty-field" hidden
+              >Next fresh race difficulty
+              <select id="race-journey-difficulty"></select>
+              <span id="race-journey-difficulty-note" role="status"></span>
+            </label>
+            <div id="race-journey-preferences-recovery" hidden>
+              <p id="race-journey-preferences-message" role="status"></p>
+              <button id="race-journey-preferences-retry" type="button">
+                Retry saving difficulty
+              </button>
+              <button id="race-journey-preferences-export" type="button">Export difficulty</button>
+            </div>
             <label>Map<select id="race-level"></select></label>
             <label
               >Format<select id="race-format">

@@ -5,6 +5,15 @@ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
+import { createCandidateCouchPictures } from './candidate-pictures.mjs';
+import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { createJourneyPreferences } from '../journey/preferences.mjs';
+import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
+import { createJourneyProfileStore } from '../journey/profile.mjs';
+import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
+import { dataIdentity } from '../data-json.mjs';
+import { downloadJSON } from '../content.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
@@ -148,7 +157,14 @@ const presentationPage = mountPresentationPage({
 });
 // Cosmetic menu choice follows this same accepted release; it owns no board lease.
 presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
-let featured, installed, staticPictures, publishedAudio, publishedPlayer, boardFootprints;
+let featured,
+  installed,
+  staticPictures,
+  publishedAudio,
+  publishedPlayer,
+  boardFootprints,
+  candidateJourney,
+  journeyPreferences;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
@@ -167,6 +183,7 @@ const releaseArtwork = (event) => {
   featured?.dispose();
   installed?.dispose();
   staticPictures?.dispose();
+  journeyPreferences?.dispose();
   boardFootprints?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
@@ -197,28 +214,61 @@ try {
     music: [],
     sourcePackId: null,
   };
-  const maps = campaign.levels.map((level) => ({
-    key: level.id,
-    chapter: campaign.title,
-    level,
-    classes: registry,
-    themes: themes.themes,
-    visualOverrides: {},
-    defaultThemeId: level.themeId || campaign.themeId,
-    track: null,
-    pictureEntry: baseEntry,
-    authoredBackground: null,
-  }));
+  const authoredJourney = new URL(location.href).searchParams.get('journey') === 'opening';
+  let journeyProfile = null,
+    journeyChooser = null,
+    journeySkipArmed = null;
+  const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
+  if (authoredJourney) {
+    document.body.classList.add('candidate-journey');
+    candidateJourney = createCandidateVersusHost(createOpeningCandidates({ artwork: true }), {
+      themes: (await json('../content-design/themes.json')).themes,
+    });
+    journeyPreferences = createJourneyPreferences({ window });
+    $('race-journey-note').hidden = false;
+    $('race-journey-difficulty-field').hidden = false;
+    $('race-journey-difficulty').replaceChildren(
+      ...Object.keys(DIFFICULTY_CATALOG.presets).map(
+        (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
+      ),
+    );
+    $('race-journey-difficulty').value = journeyPreferences.snapshot().difficulty;
+    journeyProfile = createJourneyProfileStore({
+      onStatus({ ready, durable, error }) {
+        $('race-journey-save').hidden = !ready || durable || !error;
+        $('race-journey-save-message').textContent = error
+          ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
+          : '';
+      },
+    });
+    await journeyProfile.load();
+    $('race-journey-controls').hidden = false;
+  }
+  const maps = candidateJourney
+    ? [...candidateJourney.rows]
+    : campaign.levels.map((level) => ({
+        key: level.id,
+        chapter: campaign.title,
+        level,
+        classes: registry,
+        themes: themes.themes,
+        visualOverrides: {},
+        defaultThemeId: level.themeId || campaign.themeId,
+        track: null,
+        pictureEntry: baseEntry,
+        authoredBackground: null,
+      }));
   let featuredSource,
     featuredStatus = '';
-  try {
-    bootDisplay.update({ message: 'Loading the featured chapter…', stage: 'downloading' });
-    featuredSource = await json('../content/packs/fpv-arcade-r5.json');
-  } catch (error) {
-    if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
-    featuredStatus =
-      'Featured Pressure Lines download unavailable. Base maps and checked installed maps remain available.';
-  }
+  if (!candidateJourney)
+    try {
+      bootDisplay.update({ message: 'Loading the featured chapter…', stage: 'downloading' });
+      featuredSource = await json('../content/packs/fpv-arcade-r5.json');
+    } catch (error) {
+      if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
+      featuredStatus =
+        'Featured Pressure Lines download unavailable. Base maps and checked installed maps remain available.';
+    }
   if (featuredSource !== undefined) {
     bootDisplay.update({
       message: 'Checking featured maps and original pictures…',
@@ -256,45 +306,61 @@ try {
     );
   }
   const shippedMaps = [...maps];
-  staticPictures = createCouchStaticPictures({
-    entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
-    presentationPage,
-  });
-  let installedStatus = 'Installed chapters have not been checked.';
-  try {
-    const channel = document.querySelector('meta[name="revealline-offline"]')
-      ? `release-${(await json('../build-info.json')).version}`
-      : 'dev';
-    installed = createCouchInstalledChapters({
-      channel,
-      registeredEntries: [baseEntry],
-      presentationPage,
-    });
-    bootDisplay.update({
-      message: 'Checking installed chapters and pictures…',
-      stage: 'verifying',
-    });
-    const rows = await installed.refresh({
-      signal: artworkLifetime.signal,
-      onStatus: (status) => bootDisplay.update(status),
-    });
-    maps.push(...rows);
-    installedStatus = rows.length
-      ? `${rows.length} installed maps available. Choose a map to check its original.`
-      : 'No installed chapters in this profile. Install chapters in solo More worlds, then refresh.';
-  } catch (error) {
-    installedStatus = `Installed chapters unavailable: ${error.message}`;
-  }
+  staticPictures = candidateJourney
+    ? createCandidateCouchPictures({ owns: candidateJourney.owns })
+    : createCouchStaticPictures({
+        entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
+        presentationPage,
+      });
+  let installedStatus = candidateJourney
+    ? 'Authored opening test route; Legacy chapters stay in the ordinary race.'
+    : 'Installed chapters have not been checked.';
+  if (!candidateJourney)
+    try {
+      const channel = document.querySelector('meta[name="revealline-offline"]')
+        ? `release-${(await json('../build-info.json')).version}`
+        : 'dev';
+      installed = createCouchInstalledChapters({
+        channel,
+        registeredEntries: [baseEntry],
+        presentationPage,
+      });
+      bootDisplay.update({
+        message: 'Checking installed chapters and pictures…',
+        stage: 'verifying',
+      });
+      const rows = await installed.refresh({
+        signal: artworkLifetime.signal,
+        onStatus: (status) => bootDisplay.update(status),
+      });
+      maps.push(...rows);
+      installedStatus = rows.length
+        ? `${rows.length} installed maps available. Choose a map to check its original.`
+        : 'No installed chapters in this profile. Install chapters in solo More worlds, then refresh.';
+    } catch (error) {
+      installedStatus = `Installed chapters unavailable: ${error.message}`;
+    }
   if (artworkLifetime.signal.aborted)
     throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
   const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
   function showMaps() {
     $('race-level').replaceChildren(
-      ...maps.map((m) => new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key)),
+      ...maps
+        .filter(
+          (row) => !candidateJourney || row.difficulty === journeyPreferences.snapshot().difficulty,
+        )
+        .map((m) => new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key)),
     );
   }
   showMaps();
-  $('race-level').value = maps[0].key;
+  const journeyCursor = candidateJourney?.catalog.find(journeyProfile?.snapshot().cursors.versus);
+  const initialJourneyMission =
+    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, journeyCursor.id)
+      ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
+      : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  $('race-level').value = candidateJourney
+    ? candidateJourney.row(initialJourneyMission, journeyPreferences.snapshot().difficulty).key
+    : maps[0].key;
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
@@ -325,6 +391,7 @@ try {
     unlockedBodies(emptyProgress(campaign), campaign),
   );
   function bodyFor(theme, classId) {
+    if (candidateJourney) return theme.player;
     const candidate = characterPresentations.recommendedBody(theme, classId);
     return Object.hasOwn(presets.characters, candidate) && freeBodies.has(candidate)
       ? candidate
@@ -473,7 +540,8 @@ try {
     preparationDisplay?.finish({ state: 'cancelled', message: '' });
     preparationDisplay = null;
     contentController?.abort();
-    const retainedResult = match?.status === 'finished' && nextAttempt?.previous === match;
+    const retainedResult =
+      nextAttempt?.previous === match && (candidateJourney || match?.status === 'finished');
     if (retainedResult) {
       nextAttempt.lease?.cancel();
       installed?.cancel();
@@ -516,10 +584,16 @@ try {
     contentReady = false;
     clear({ resetDirection: true });
     const entry = maps.find((m) => m.key === $('race-level').value);
-    const classId = entry.classes.some((c) => c.id === $('race-class').value)
-      ? $('race-class').value
-      : entry.classes[0].id;
-    $('race-class').replaceChildren(...entry.classes.map((c) => new Option(c.label, c.id)));
+    const classId = candidateJourney
+      ? 'scout'
+      : entry.classes.some((c) => c.id === $('race-class').value)
+        ? $('race-class').value
+        : entry.classes[0].id;
+    $('race-class').replaceChildren(
+      ...entry.classes
+        .filter((c) => !candidateJourney || c.id === 'scout')
+        .map((c) => new Option(c.label, c.id)),
+    );
     $('race-class').value = classId;
     const themeId =
       selectedMapKey !== entry.key && entry.defaultThemeId
@@ -534,6 +608,7 @@ try {
       entry,
       theme,
       classId,
+      seed: candidateJourney ? 1 : 2026,
       turnPolicy: $('race-turn').value,
       seconds: Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
@@ -541,6 +616,8 @@ try {
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
     generation = ++raceSequence;
+    if (candidateJourney)
+      journeyProfile.record({ type: 'select', mode: 'versus', missionId: entry.mission.id });
     paintRound(roundRecipe);
     finished = false;
     $('race-start').textContent =
@@ -551,7 +628,7 @@ try {
     return createDuel(
       recipe.entry.level,
       {
-        seed: 2026,
+        seed: recipe.seed,
         turnPolicy: recipe.turnPolicy,
         classId: recipe.classId,
         classRecipes: recipe.entry.classes,
@@ -575,7 +652,7 @@ try {
     publishedPlayer?.setContext({ themeId: theme.id });
     painters.forEach((p) => {
       p.setLook(theme, bodyFor(theme, classId), entry.visualOverrides);
-      p.setLevel?.(level, { seed: 2026 });
+      p.setLevel?.(level, { seed: recipe.seed });
       p.skipCelebration?.();
     });
   }
@@ -638,17 +715,45 @@ try {
     })();
   }
   function continuationAction() {
+    if (
+      candidateJourney &&
+      nextAttempt?.recipe.entry.mission !== undefined &&
+      nextAttempt.recipe.entry.mission !== roundRecipe.entry.mission
+    )
+      return 'Next mission';
     return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? 'Rematch' : 'Next round';
   }
-  async function prepareNext() {
-    if (!nextAttempt || nextAttempt.previous !== match || nextAttempt.recipe !== roundRecipe) {
+  async function prepareNext(destination = null) {
+    const target = destination ?? roundRecipe.entry;
+    const recipe =
+      target === roundRecipe.entry
+        ? roundRecipe
+        : {
+            ...roundRecipe,
+            entry: target,
+            theme: target.themes[0],
+            classId: 'scout',
+            seed: 1,
+          };
+    if (
+      !nextAttempt ||
+      nextAttempt.previous !== match ||
+      nextAttempt.previousRecipe !== roundRecipe ||
+      nextAttempt.recipe.entry !== target
+    ) {
+      nextAttempt?.lease?.cancel();
       nextAttempt = {
         previous: match,
         previousGeneration: generation,
-        recipe: roundRecipe,
-        match: createRound(roundRecipe),
+        previousRecipe: roundRecipe,
+        recipe,
+        journeyRevision: journeyPreferences?.snapshot().revision,
+        match: createRound(recipe),
         raceId: ++raceSequence,
-        resetWins: roundRecipe.format === 'single' || won.some((n) => n >= 2),
+        resetWins:
+          target !== roundRecipe.entry ||
+          roundRecipe.format === 'single' ||
+          won.some((n) => n >= 2),
         lease: null,
       };
     }
@@ -668,7 +773,8 @@ try {
       !controller.signal.aborted &&
       contentController === controller &&
       nextAttempt === attempt &&
-      roundRecipe === attempt.recipe &&
+      journeyPreferences?.snapshot().revision === attempt.journeyRevision &&
+      roundRecipe === attempt.previousRecipe &&
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
@@ -695,6 +801,10 @@ try {
       const retirePrevious = lease.commit();
       // Publish only plain references before cleanup can call back into the page.
       match = attempt.match;
+      roundRecipe = attempt.recipe;
+      theme = attempt.recipe.theme;
+      selectedMapKey = attempt.recipe.entry.key;
+      $('race-level').value = selectedMapKey;
       preparedFocusMatch = match;
       backdrop = lease.picture;
       generation = attempt.raceId;
@@ -711,6 +821,12 @@ try {
         return null;
       clear({ resetDirection: true });
       paintRound(attempt.recipe);
+      if (candidateJourney)
+        journeyProfile.record({
+          type: 'select',
+          mode: 'versus',
+          missionId: attempt.recipe.entry.mission.id,
+        });
       $('race-start').textContent =
         roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
       $('race-message').textContent = [
@@ -765,7 +881,7 @@ try {
     }
     updateMenu();
   }
-  $('race-start').onclick = async () => {
+  async function startRace(destination = null) {
     if (
       disposed ||
       contentBusy ||
@@ -802,7 +918,7 @@ try {
       )
         return;
     }
-    if (match.status === 'finished') {
+    if (match.status === 'finished' || destination) {
       const start = $('race-start'),
         previousRun = match,
         previousGeneration = generation,
@@ -822,7 +938,7 @@ try {
         shell.scope() !== 'main'
       )
         return;
-      const prepared = await prepareNext();
+      const prepared = await prepareNext(destination);
       // Preparation may finish after blur, but only this uninterrupted foreground
       // action may start it. Installed pictures pass the same confirmation boundary.
       if (
@@ -949,8 +1065,14 @@ try {
     } finally {
       nextFocus?.releaseFocus();
     }
-  };
+  }
 
+  $('race-start').onclick = () =>
+    startRace(
+      candidateJourney && match.status === 'finished'
+        ? candidateJourney.row(roundRecipe.entry.mission, journeyPreferences.snapshot().difficulty)
+        : null,
+    );
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
     const restoreFocus = actionFocus($('race-chapter-retry'));
@@ -1055,6 +1177,112 @@ try {
     return prepare();
   };
   $('race-tap').onchange = clear;
+  if (candidateJourney) {
+    let preferenceRevision = journeyPreferences.snapshot().revision,
+      preferenceExportSequence = 0;
+    journeyPreferences.subscribe((snapshot) => {
+      if (snapshot.revision !== preferenceRevision) {
+        preferenceRevision = snapshot.revision;
+        startIntentEpoch++;
+        cancelContent();
+        nextAttempt?.lease?.cancel();
+        nextAttempt = null;
+      }
+      $('race-journey-difficulty').value = snapshot.difficulty;
+      $('race-journey-difficulty-note').textContent =
+        `Next fresh race: ${snapshot.difficulty}. Both current boards keep their rules.`;
+      preferenceExportSequence++;
+      $('race-journey-preferences-recovery').hidden = snapshot.durable;
+      $('race-journey-preferences-message').textContent = snapshot.error;
+      showMaps();
+      $('race-level').value = candidateJourney.row(
+        roundRecipe?.entry.mission ?? initialJourneyMission,
+        snapshot.difficulty,
+      ).key;
+    });
+    $('race-journey-preferences-retry').onclick = () => {
+      const restoreFocus = document.activeElement === $('race-journey-preferences-retry');
+      const snapshot = journeyPreferences.retry();
+      if (snapshot.durable && restoreFocus && !document.hidden && document.hasFocus())
+        $('race-journey-difficulty').focus({ preventScroll: true });
+    };
+    $('race-journey-preferences-export').onclick = async () => {
+      const ticket = ++preferenceExportSequence;
+      try {
+        const result = await downloadJSON(
+          JSON.parse(journeyPreferences.export()),
+          'revealline-journey-difficulty.json',
+        );
+        if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
+          $('race-journey-preferences-message').textContent =
+            `${journeyPreferences.snapshot().error} ${result.message}`;
+      } catch (error) {
+        if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
+          $('race-journey-preferences-message').textContent =
+            `Export failed: ${error.message}. Your session difficulty choice is still here.`;
+      }
+    };
+    $('race-journey-difficulty').onchange = () => {
+      journeyPreferences.choose($('race-journey-difficulty').value);
+      showMaps();
+      $('race-level').value = candidateJourney.row(
+        roundRecipe.entry.mission,
+        journeyPreferences.snapshot().difficulty,
+      ).key;
+      if (match.status === 'ready' && !contentBusy) void prepare();
+    };
+    const chooseMission = async (mission, skipped = null) => {
+      if (!mission || contentBusy || disposed) return;
+      const entry = candidateJourney.row(mission, journeyPreferences.snapshot().difficulty);
+      if (!entry) return;
+      pause();
+      const previous = match;
+      await startRace(entry);
+      if (skipped && match !== previous && roundRecipe.entry === entry)
+        journeyProfile.record({ type: 'skip', mode: 'versus', missionId: skipped.id });
+    };
+    journeyChooser = attachJourneyChooser({
+      catalog: candidateJourney.catalog,
+      profile: journeyProfile,
+      mode: 'versus',
+      onChoose: chooseMission,
+      onPause: () => {
+        journeySkipArmed = null;
+        pause();
+      },
+      onReturn: (opener) => {
+        if (!document.hidden && document.hasFocus() && opener?.isConnected)
+          opener.focus({ preventScroll: true });
+      },
+    });
+    $('race-journey-find').onclick = () => journeyChooser.open($('race-journey-find'));
+    $('race-journey-next').onclick = () =>
+      chooseMission(candidateJourney.next(roundRecipe.entry.mission.id));
+    $('race-journey-skip').onclick = () => {
+      if (contentBusy) return;
+      const next = candidateJourney.next(roundRecipe.entry.mission.id);
+      if (!next) return journeyChooser.open($('race-journey-skip'));
+      if (journeySkipArmed !== match) {
+        pause();
+        journeySkipArmed = match;
+        $('race-journey-skip').textContent = 'Confirm skip';
+        $('race-message').textContent =
+          `Skip to ${next.name}? No clear is awarded. Confirm skip to continue.`;
+        return;
+      }
+      journeySkipArmed = null;
+      void chooseMission(next, roundRecipe.entry.mission);
+    };
+    $('race-journey-save-retry').onclick = () => void journeyProfile.flush();
+    $('race-journey-save-export').onclick = async () => {
+      try {
+        await downloadJSON(JSON.parse(journeyProfile.export()), 'revealline-journey-progress.json');
+      } catch (error) {
+        $('race-journey-save-message').textContent =
+          `Export failed: ${error.message}. Your session progress is still here.`;
+      }
+    };
+  }
   const input = attachCouchInput({
     continuousSteering: () => true,
     getGamepads: readCachedPads,
@@ -1096,6 +1324,8 @@ try {
     },
   });
   function couchScope() {
+    const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
+    if (modal) return `couch:${modal.id}`;
     return match?.status === 'running'
       ? 'flight'
       : `couch:${match?.status || 'loading'}:${generation}:${shell?.scope() || 'main'}`;
@@ -1188,6 +1418,17 @@ try {
   function updateMenu() {
     if (!match || disposed) return;
     const running = match.status === 'running';
+    if (candidateJourney) {
+      $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
+      const next = candidateJourney.next(roundRecipe.entry.mission.id);
+      $('race-journey-next').hidden = match.status !== 'finished' || !next;
+      $('race-journey-next').disabled = contentBusy;
+      $('race-journey-skip').hidden = match.status === 'finished';
+      $('race-journey-skip').disabled = contentBusy;
+      $('race-journey-skip').textContent =
+        journeySkipArmed === match ? 'Confirm skip' : 'Skip mission';
+      $('race-journey-find').disabled = contentBusy;
+    }
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
     $('race-start').disabled = running || contentBusy || !contentReady;
@@ -1227,6 +1468,14 @@ try {
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-journey-next',
+    'race-journey-skip',
+    'race-journey-find',
+    'race-journey-difficulty',
+    'race-journey-preferences-retry',
+    'race-journey-preferences-export',
+    'race-journey-save-retry',
+    'race-journey-save-export',
     'race-chapter-retry',
     'race-picture-cancel',
     'race-installed-refresh',
@@ -1274,17 +1523,35 @@ try {
   ]);
   navigation = attachControllerNavigation({
     getScope: couchScope,
-    getRoot: () => shell.root(),
-    getDefaultFocus: () => shell.primary(),
+    getRoot: () =>
+      [...document.querySelectorAll('dialog[open]')].at(-1) ??
+      (candidateJourney && shell.scope() === 'main' ? $('couch-app') : shell.root()),
+    getDefaultFocus: () =>
+      $('journey-backup')?.open
+        ? $('journey-backup-export')
+        : $('journey-chooser')?.open
+          ? $('journey-search')
+          : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, $('race-options-panel')),
-    accept: (element) => menuIds.has(element.id),
+    accept: (element) =>
+      menuIds.has(element.id) || !!element.closest('#journey-chooser, #journey-backup'),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
-    onBack: () => shell.back(),
-    onMenu: () => shell.back(),
+    onBack: () =>
+      $('journey-backup')?.open
+        ? $('journey-backup-back').click()
+        : $('journey-chooser')?.open
+          ? journeyChooser.close()
+          : shell.back(),
+    onMenu: () =>
+      $('journey-backup')?.open
+        ? $('journey-backup-back').click()
+        : $('journey-chooser')?.open
+          ? journeyChooser.close()
+          : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -1476,17 +1743,37 @@ try {
       finished = true;
       clear();
       if (match.winner !== null) won[match.winner]++;
+      if (candidateJourney && match.runs.some((run) => run.status === 'won'))
+        journeyProfile.record({
+          type: 'complete',
+          mode: 'versus',
+          missionId: roundRecipe.entry.mission.id,
+          runId: `${journeySessionId}:${generation}`,
+          difficulty: roundRecipe.entry.difficulty,
+          gameplayId: dataIdentity({
+            ruleset: match.ruleset,
+            level: roundRecipe.entry.level,
+            classes: roundRecipe.entry.classes,
+          }),
+        });
       const name =
         match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
       const series = roundRecipe.format === 'first-to-two';
       $('race-message').textContent =
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
+      if (
+        candidateJourney &&
+        roundRecipe.entry.mission.packId === 'journey-opening' &&
+        !candidateJourney.next(roundRecipe.entry.mission.id)
+      )
+        $('race-message').textContent +=
+          ' End of the opening route. Choose Find missions for the optional Remix, Rematch, or leave whenever you like.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
           p.startCelebration?.({
             levelId: match.runs[i].levelId,
-            seed: 2026,
+            seed: roundRecipe.seed,
             reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
       });
