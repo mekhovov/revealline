@@ -473,7 +473,11 @@ async function swappedOriginalBundle() {
     presentation: {
       id: 'local.preview-identity',
       revision: 1,
-      theme: { id: 'fpv', revision: 32, collection: null },
+      theme: {
+        id: compiled.resolved.theme.id,
+        revision: compiled.resolved.theme.revision,
+        collection: null,
+      },
       levels: pack.levels.map((level, index) => ({
         levelId: level.id,
         levelRevision: level.revision,
@@ -506,6 +510,7 @@ test('local .rlteam artwork with exact starter IDs keeps its own teaser and conc
   input.focus();
   input.files = [file];
   await input.onchange();
+  assert.equal(f.$('coop-pack-status').dataset.state, 'ready', f.$('coop-pack-status').textContent);
   assert.equal(f.previewDrawImages.at(-1).sha256, yard.picture.sha256);
   open(f);
   await teasersReady(f, 4);

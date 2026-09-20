@@ -5,6 +5,8 @@ description: Integrate Reveal Line Couch music with shared validated storage and
 
 # Couch music integration
 
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): exact-source verification, reviewed phase PR, immutable release and verified Pages deployment. Preserve the active task's scope and release ownership; modeled transport and native navigation do not establish listening or human validation.
+
 Read `docs/couch-music-adapter.md`, `docs/couch-music-host.md` and the existing soundtrack player/panel contracts before extending Team or Versus music. The library, session, panel and host adapters compose one integration; qualifying an adapter alone does not qualify the complete player journey.
 
 - Reuse one persistent player and the global master authority. Keep session music and audition faders distinct. Never write Solo profile/progress from Couch.
