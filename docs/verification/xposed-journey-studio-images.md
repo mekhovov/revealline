@@ -118,7 +118,8 @@ rectangles. A second reload/Restore retained45cells and an empty queue, proving
 the applied rectangle was not repeated. No console errors were reported.
 
 This checks the actual local browser persistence and manual Apply path, not native
-file-dialog export/import, physical devices, full phase acceptance or public Pages.
+file-dialog export/import at that checkpoint, physical devices, full phase acceptance
+or public Pages. The later portable-backup check below closes the scoped file-dialog gap.
 
 The integrated image/recovery/Studio/structure/Team/Border cohort passes **82/82**
 (16.0 seconds), including all84 complete Solo routes/replays and84 paired-board
@@ -129,3 +130,23 @@ authority and exact-map crash protection. Full source lint and changed-file
 format/whitespace checks pass. Local full source validation is not claimed: the
 capacity-preserving sparse checkout omits required historical build assets;
 complete-checkout hosted qualification remains the exact-source gate.
+
+## Native portable-backup follow-up
+
+The same owned `trace-recovery-native-check` project exported an actual
+3,155,934-byte tracing JSON file. Its SHA-256 is
+`20057c2df51bcb0e3c6ea3fa06f877d28ab54c68f82208fcf7b4f9fd17ec9a8a`.
+The strict portable reader accepted the project/mission/map binding and crop
+(200,100,1200,600), visibility and empty geometry queue. Its embedded 2,366,738-byte
+reference matches the committed original first-return PNG byte for byte (SHA-256
+`3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d`).
+The browser download-event wait timed out, but the actual exported file was
+independently verified; the UI only reported Download requested.
+
+Native file-chooser import inspected that backup without changing geometry. After
+changing the current crop X to 250 and saving tracing revision 5, explicit Restore
+returned X to 200, retained the empty queue and kept Play/Apply disabled. The map
+remained at 45 foundation cells and project checkpoint 2. Explicit replacement of
+saved tracing then produced revision 6; no geometry Apply occurred. The exported
+test backup remains available in Downloads. This verifies the local file-dialog
+backup loop, not another browser/device, release availability or human validation.

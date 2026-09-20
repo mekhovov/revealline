@@ -238,3 +238,31 @@ craft brackets and framed contact bonuses remained distinguishable in these
 connected return. No browser console errors were reported during this route check.
 The final Remix was left paused. Review delays changed enemy timing; these are not
 benchmarks, multi-seed/human playtests, exhaustive contrast or whole-level validation.
+
+## Sampled timing feasibility and native continuation
+
+The expanded route/art cohort passes **29/29** (24.1 seconds). All 84 original
+routes also clear without life loss at each explicit seed 0, 1, 42, 2026 and
+4294967295: **420 runs** across presets, steering policies and authored/no bonuses.
+This samples deterministic seed handling; it does not establish all-seed robustness
+or randomized authored enemy headings.
+
+`game/test/fixtures/border-timing-routes.json` adds **35 exact complete routes**:
+every Border mission after 0.25, 0.5, 1, 2 and 5 seconds of idle time. These use
+Standard, immediate steering, seed 1 and authored bonuses. Every input is replayed
+from a fresh run, including the initial wait, without life loss; final authoritative
+checkpoints and exported replays match. The search replans after each delay using
+omniscient branch selection. A fixed script can fail after a delay because enemies
+move; these alternative routes demonstrate sampled feasibility, not human-readable
+timing windows, universal spawn safety or mastery completion. No physics or enemy
+speed was changed to obtain this result.
+
+Native Solo on the combined route completed First return with normal Down input:
+34.3% earned coverage, 8,160 points, three lives. One deliberate Next opened Choose
+your share directly at zero coverage with three lives and canvas focus. A fresh
+Down started its live trail and subsequently closed for 34.3% / 8,160 / three lives.
+The flight was paused. One local browser observation measured **548 ms** from
+immediately before the Next click through the running accessibility-tree response;
+that includes automation/observation overhead. It is not a physical input latency
+measurement, a Next-button appearance measurement, or whole-device performance
+acceptance. Idle review time in the displayed mission clocks is not pacing evidence.
