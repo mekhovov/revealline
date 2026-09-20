@@ -93,3 +93,19 @@ Preview closed normally and focus returned to Play. Remaining six native layouts
 active-solid/muted/reduced/compact visual matrix, optional mastery, timing variety,
 art, Team, whole-source and release/human gates remain. None of these observations
 is an independently approved production-recipe review.
+
+## Production source preparation
+
+Merge4dedbe90 composes PR201 exactly once, retaining e5ff21b3 as its second
+parent after the bb672eef route evidence. Its24 UI recipes remain source-stage.
+Production fingerprints now include DOM ownership and shared actor-marker,
+lane-presentation and renderer dependencies. A changed helper reopens its group;
+a missing helper rejects fingerprinting. Two focused tests pass on both Node20
+and22. No approved digest or review declaration was changed.
+
+Independent P06 functional evidence covers21 host/ownership/UI tests and10
+adoption tests on both runtimes. Host and DOM-ownership bytes are identical from
+e5ff21b3 through4dedbe90. That packet is not full native24-recipe approval.
+Independent native inspection subsequently found that revision35 lacks the
+starter Team picture associations still pinned to34: Start correctly fails
+closed. This requires an exact successor association, not broader fallback.

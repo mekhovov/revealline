@@ -22,11 +22,12 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
 const sources = {
-  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs',
+  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs',
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
-  effects: 'game/ui/classic-view.mjs; game/ui/event-feedback.mjs',
+  effects:
+    'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
   audio:
     'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs',
 };
@@ -88,11 +89,9 @@ function recipeQuality(group, source) {
   };
 }
 
-export async function createFieldKitProduction({ projectRoot = root } = {}) {
-  const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
-  const json = async (relative) => JSON.parse(await read(relative));
-  const baseline = createDefaultThemeBundle();
-  const recipeSources = Object.fromEntries(
+/** Explicit dependency fingerprints; a helper change must reopen its review group. */
+export async function fieldKitRecipeSources(read) {
+  return Object.fromEntries(
     await Promise.all(
       Object.entries(sources).map(async ([group, paths]) => [
         group,
@@ -100,6 +99,13 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
       ]),
     ),
   );
+}
+
+export async function createFieldKitProduction({ projectRoot = root } = {}) {
+  const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
+  const json = async (relative) => JSON.parse(await read(relative));
+  const baseline = createDefaultThemeBundle();
+  const recipeSources = await fieldKitRecipeSources(read);
   const assets = [],
     bindings = {},
     bytes = new Map();

@@ -48,9 +48,9 @@ browser observations are not silently reused as a comprehensive recipe review.
 An independently pinned functional/native review must justify a later reviewed
 successor while retaining fpv35 and every earlier revision.
 
-The exact CLI production `--check` is pending hosted verification; in-memory
-factory/history/compiler parity is not represented as that command's result.
-After its reproduction gate passes, the hosted readiness gate is expected to
-remain red until review. Full source shards, accepted-baseline composition,
+The exact CLI production `--check` passed in hosted35524398709 at e5ff21b3.
+Validation, lint, formatting and native syntax also passed. Readiness correctly
+rejected24 source-stage UI recipes; full shards and freeze were skipped.
+Reproduction is not review. Full source shards, accepted-baseline composition,
 release-owner promotion, public byte/native checks and human phase acceptance
 remain separate requirements.
