@@ -163,6 +163,20 @@ connected landing visits with no active trail, legal opened-connector traversal,
 victory and no life loss. It does not add runtime awards or edit simulation state.
 Isolated negative fixtures distinguish observer invariants from playable routes.
 
-Original assets, the complete mastery matrix, Team and human acceptance remain
+All42 optional mastery combinations now have exact no-life-loss public-replay
+fixtures, across every candidate/preset/steering pair. The seven mastery tests and
+four negative observer tests pass11/11 on both Node versions. Final whole-field
+goals require every marked cell, not merely a trail through the band. Landing goals
+require a connected reclaimed route and an observed non-cutting visit; traversing
+a closed gate, a future opening or unclaimed connector cannot count. Reopened
+field at the finish invalidates a reclamation goal. Ordinary clears remain
+independent of these optional targets; no award or runtime completion gate changed.
+
+The final combined six-file Crosswind candidate/clear/race/seed/delay/mastery/
+observer cohort passes46/46 on Node20.19.5 and22.22.2 after fixture formatting.
+Scoped lint, formatting and whitespace checks pass. This remains isolated local
+qualification, not an accepted release source or hosted build.
+
+Original assets, Team and human acceptance remain
 open. Team rejects successor editions rather than silently dropping their rules.
 No public Journey selects this work; hosted qualification and release remain open.
