@@ -25,6 +25,7 @@ import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
+import { observePreviewReadiness } from './preview-readiness.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -32,7 +33,7 @@ let session,
   inspected = null,
   sourceChanged = false,
   saveTimer,
-  previewTimer,
+  stopPreviewReadiness = () => {},
   inspectedTrail = [],
   tuningRevision = null,
   previewRevision = 0,
@@ -640,7 +641,7 @@ async function launchPreview(source, missionId, difficulty) {
   const controller = new AbortController();
   previewController = controller;
   const ticket = ++previewRevision;
-  clearInterval(previewTimer);
+  stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
   $('preview-status').textContent = 'Preparing the exact candidate…';
@@ -662,38 +663,34 @@ async function launchPreview(source, missionId, difficulty) {
     return;
   }
   const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
-  let documentLoaded = false;
-  $('preview').onload = () => {
-    documentLoaded = ticket === previewRevision && $('preview').contentDocument?.URL === url;
-  };
   $('preview').src = url;
   $('preview-status').textContent =
     `Loading ${result.manifest.level.name} · ${difficulty}. Frozen candidate; later edits do not change this run.`;
   $('preview-panel').scrollIntoView({ block: 'start' });
-  clearInterval(previewTimer);
-  const deadline = Date.now() + 20000;
-  previewTimer = setInterval(() => {
-    if (ticket !== previewRevision) return;
-    const state = documentLoaded
-      ? $('preview').contentDocument?.documentElement.dataset.bootState
-      : null;
-    if (state === 'ready' || state === 'failed' || Date.now() > deadline) {
-      clearInterval(previewTimer);
+  stopPreviewReadiness = observePreviewReadiness({
+    expectedURL: url,
+    readDocument: () => $('preview').contentDocument,
+    isCurrent: () => ticket === previewRevision,
+    notify: (state) => {
       $('preview-status').textContent =
         state === 'ready'
           ? 'Engine ready. Practice only; no campaign awards. Close preview to return to your draft.'
-          : 'Preview has not reported ready. Check its recovery controls, or close and retry. Your draft is intact.';
-    }
-  }, 250);
+          : state === 'failed'
+            ? 'Preview could not start. Check its recovery controls, or close and retry. Your draft is intact.'
+            : 'Preview is taking longer than expected. Still checking; you can close and retry. Your draft is intact.';
+    },
+  });
 }
-$('close-preview').onclick = () => {
+function closePreview() {
   previewRevision++;
   previewController?.abort();
-  clearInterval(previewTimer);
+  stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = true;
   $('play').focus();
-};
+}
+$('close-preview').onclick = closePreview;
+$('preview-return').onclick = closePreview;
 window.addEventListener('beforeunload', (event) => {
   if (sourceChanged || session?.status().dirty || traceRecovery.hasUnsaved()) {
     event.preventDefault();
@@ -704,7 +701,7 @@ window.addEventListener('pagehide', () => {
   imageWorkbench.dispose();
   previewController?.abort();
   clearTimeout(saveTimer);
-  clearInterval(previewTimer);
+  stopPreviewReadiness();
 });
 async function boot() {
   let saved = null,

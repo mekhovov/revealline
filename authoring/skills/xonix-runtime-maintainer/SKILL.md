@@ -981,3 +981,17 @@ Tab boundary and the current host's input suspension. Do not repurpose controlle
 session or enemy draft-return transport. Test exit/re-entry in both directions,
 explicit Resume, frame retirement, modal containment and in-frame mode links;
 see `docs/field-kit-surfaces.md` for the maintenance prompt and evidence limits.
+
+
+### Content Studio preview and return
+
+Content Studio is a descendant of Playground, not a second registry entry for its
+Workshop opener. Use the fixed same-edition descendant links and bounded Journey
+hint; never forward draft IDs, practice tokens or caller return URLs. Initialize
+the destination before enabling the link. Add embedded keyboard exits only through
+the finite named same-origin frame owners. Test both Tab boundaries, paused re-entry,
+Return to draft focus and early Close without losing the draft. A slow boot warning
+must keep observing the owned exact preview URL; close, replacement and pagehide
+retire the observer so late readiness cannot reclaim focus. When integrating an
+independent fix, preserve the receiving branch's campaign/editor content and test
+the actual composed source. Owner-branch evidence alone does not qualify it.
