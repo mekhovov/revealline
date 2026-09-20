@@ -13,6 +13,7 @@ import { createSentinelCandidates } from '../content-design/sentinel-candidates.
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
 import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
+import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -33,7 +34,7 @@ import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
 import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
-import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
@@ -259,6 +260,7 @@ function inspectBoard(trailCells = []) {
   setBoardAvailability(document, !!mission);
   if (!mission) {
     $('export-team').hidden = true;
+    $('team-sequence-tools').hidden = true;
     $('team-test-help').hidden = true;
     inspectedTrail = [];
     tuningRevision = null;
@@ -337,6 +339,29 @@ function inspectBoard(trailCells = []) {
   );
   $('play').disabled = !mission.modes.includes('solo');
   $('export-team').hidden = !mission.modes.includes('team');
+  $('team-sequence-tools').hidden = !mission.modes.includes('team');
+  const selectedTeamCampaign = $('team-test-campaign').value;
+  const teamDraft = session.current();
+  const activeTeamIds = new Set(
+    teamDraft.missions
+      .filter((item) => !item.archived && item.modes.includes('team'))
+      .map((item) => item.id),
+  );
+  $('team-test-campaign').replaceChildren(
+    ...[
+      { id: '', name: 'Choose a campaign' },
+      ...teamDraft.campaigns.filter(
+        (campaign) => !campaign.archived && campaign.missionIds.some((id) => activeTeamIds.has(id)),
+      ),
+    ].map((campaign) => {
+      const option = document.createElement('option');
+      option.value = campaign.id;
+      option.textContent = campaign.name;
+      return option;
+    }),
+  );
+  if ([...$('team-test-campaign').options].some((option) => option.value === selectedTeamCampaign))
+    $('team-test-campaign').value = selectedTeamCampaign;
   $('team-test-help').hidden = !mission.modes.includes('team');
   $('play').title = mission.modes.includes('solo')
     ? ''
@@ -626,6 +651,12 @@ $('team-signal').onclick = guarded(() => {
   sourceChanged = true;
   inspectSource();
 });
+$('team-journey').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createTeamJourneyCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
 $('crosswind').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createCrosswindCandidates(), null, 2);
@@ -685,6 +716,17 @@ $('export-team').onclick = guarded(async () => {
   );
 });
 $('save').onclick = guarded(() => session.save());
+$('export-team-campaign').onclick = guarded(async () => {
+  if (sourceChanged)
+    throw new Error('Inspect and apply source edits before exporting a Team campaign.');
+  const campaignId = $('team-test-campaign').value;
+  const difficulty = $('difficulty').value;
+  const pack = createTeamCampaignTestPack(session.current(), campaignId, difficulty);
+  const result = await exportJSONFile(pack, `${campaignId}-${difficulty}-team-test.json`);
+  status(
+    `${result.message} ${pack.levels.length} ordered Team test missions; use Next after each clear. Geometry/rules only, not authored mission artwork or official progress. Your draft is unchanged.`,
+  );
+});
 for (const action of ['undo', 'redo'])
   $('' + action).onclick = guarded(() => {
     if (!discardSource()) return;
