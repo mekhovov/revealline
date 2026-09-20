@@ -5858,6 +5858,11 @@ try {
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    if (journeySkipArmed !== null) {
+      journeySkipArmed = null;
+      $('journey-skip').textContent = 'Skip mission';
+      warning('Skip cancelled. Continue this mission.');
+    }
     attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
     else invalidateContentSwitch({ announce: true });
@@ -6152,7 +6157,7 @@ try {
               );
               const anchors = occupied.flatMap((region) => region.enemyIds);
               warning(
-                `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? '' : 's'} remain${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`,
+                `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`,
                 'secured',
               );
             } else
@@ -7245,6 +7250,7 @@ try {
         warning(
           `Skip to ${next.name}? No clear is awarded. You can return at any time. Activate Confirm skip to continue.`,
         );
+        $('journey-skip').focus({ preventScroll: true });
         return;
       }
       journeySkipArmed = null;

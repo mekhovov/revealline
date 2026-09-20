@@ -137,6 +137,47 @@ build/freezing was not attempted and no user artifacts were removed. Full source
 families, ordinary build and freeze must run on hosted runners, with their exact
 commit/run identities recorded before promotion.
 
+## Native Skip cancellation correction — September 20
+
+Real keyboard play produced a First Signal clear at 52.2% earned coverage, 8,160
+points and three lives; one Enter on Next opened Relay Orchard without a menu.
+Another capture reached 52.2% and Cartridge 1/1 there, but no second clear was
+observed. Reload later restored that flight. These observations do not establish
+warm timing targets or human enjoyment.
+
+Native testing found that arming Skip moved focus to Resume. The new host focus
+assertion reproduced that failure (`start-button` instead of `journey-skip`).
+Returning focus to Confirm skip fixes the keyboard's second activation. Escape
+then exposed a second defect: play resumed with confirmation still armed. The
+extended host assertion failed with `Confirm skip` instead of `Skip mission`.
+Resuming now disarms confirmation and replaces its obsolete warning.
+
+After both corrections, the selected Skip regression passed (one test, nine
+intentional nonmatching skips; 1.27 seconds). In the actual reloaded browser,
+Crosswind's first Enter armed Skip with focus retained; Escape resumed the same
+mission with `Skip mission` and `Skip cancelled. Continue this mission.` A fresh
+first activation only armed it, and the second opened Stone Lanes, with 0% coverage,
+three lives and the canvas focused. Stone Lanes was left paused. This is keyboard
+evidence, not physical controller/touch or precise latency qualification.
+
+The early capture caption also now uses singular `region remains` correctly.
+Hosted runs for `9375eb59` precede these corrections: even when green, they are
+precursor evidence and cannot qualify the corrected source for publication.
+Their original logs were retained and reviewed: PR run `35475557265` and manual
+run `35475555280` each passed 6,567 tests across 505 test files, with zero failures,
+cancellations or test skips. Preflight, ordinary build and manual freeze succeeded.
+The actual PR automation helper bytes matched the candidate's corresponding files;
+all twelve pre/post PR source-identity records agreed. No frozen-artifact inspection,
+immutable release or Pages acceptance is claimed from that source-only review.
+
+The complete corrected Journey authority/catalog/profile/host cohort then passed
+21/21 tests without skips in 166.67 seconds. Full source lint, source/native
+formatting, content validation (667 files), motion-lab syntax and production/readiness
+checks passed. Two local command invocations initially named nonexistent test and
+syntax files; corrected paths were used for the successful checks. Neither command
+error is represented as a runtime failure or a passing gate. Hosted qualification
+of the next committed source is still required.
+
 ## Outstanding acceptance
 
 ### Publication integration
