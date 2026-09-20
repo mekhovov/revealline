@@ -99,6 +99,18 @@ label. This is not yet a complete cross-campaign Team Journey host or publicatio
 
 ## Remaining gates
 
+Native Studio inspection on the read-only `7f35c678` server (port8803) confirmed
+that Inspect leaves the old draft applied, explicit Apply creates the five-
+mission review, an empty campaign choice rejects export, and selecting Shared
+returns requests a three-mission download with the geometry-only warning.
+The selection survives a mission change. Divided workshop exposes two retained
+components with two identified keepers; Switchback exposes three keepers and its
+shared platform count. Reload restores the saved five-mission checkpoint1.
+This verifies the native controls and accessibility text, not the downloaded
+file's presence on disk or native Team gameplay. A screenshot attempt failed
+because the hidden browser reported zero width; no global viewport override or
+change to the user's port8778 was made. Visual/device inspection remains open.
+
 Seven further purpose-built candidates; variety and advanced-rule decisions;
 delayed alternatives and broader seed/recovery qualification; native Studio/export
 and real-device checks; original assets; uninterrupted cross-campaign Team Journey
