@@ -1047,3 +1047,10 @@ move to the adjacent enabled Reload action only in the current foreground visit.
 Respect the host focus guard and newer focus; never activate Reload or change
 transport as a side effect. Follow [the Undo focus maintenance prompt](../../../docs/soundtrack-undo-focus.md),
 including native disabled blur, actual keyboard activation and distinct release evidence.
+
+For shared music acceptance, follow the keyboard cross-mode journey in the
+[native backup guide](../../../docs/verification/music-backup-native-v070/README.md#keyboard-cross-mode-library-and-transport).
+Compare the same imported mixed playlist, explicit pause and a deliberate master
+setting in Solo, Versus and Team; verify an actual downloaded backup remains exact.
+Do not turn muted transport or full-page navigation into audible, autoplay-denial,
+continuous-position, offline, physical-input or public-release acceptance.

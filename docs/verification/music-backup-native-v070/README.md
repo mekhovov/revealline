@@ -24,3 +24,39 @@ Master sound remained muted. This is byte recovery and transport evidence, not a
 A follow-on actual-browser check rejected a payload with one changed audio byte and a backup truncated to 100 bytes. Saved generation 1, both original tracks and the selected mixed playlist remained intact. Repeating the damaged-payload import after a draft-only playlist rename preserved that unsaved edit and its four entries. A backup downloaded while this draft existed was still byte-identical to the original saved-library bundle. Undo restored the saved title, and the next Tab reached Reload latest saved. See `rejected-backups/native-observations.json` and its pinned fixtures/download. All 215 distinct successful source responses matched the same exact source.
 
 This tests failure recovery through the product, following [MDN's guidance on asynchronous IndexedDB operations and errors](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB). It does not simulate quota exhaustion, interrupted commits or cross-tab write conflicts. Those remain separate cases. The tab and local server were closed after verification.
+
+## Keyboard cross-mode library and transport
+
+On the same exact source, a subsequent keyboard journey followed the authored
+Solo → Versus → separate Team → Solo links. Each mode loaded generation 1 with
+the same two MP3s and selected mixed playlist. The Versus editor displayed all
+four entries, including the repeated falling chime. Explicit Play/Pause worked
+in each mode; Next advanced through the rising chime, synth and repeated falling
+chime while preserving pause. A deliberate master-volume change from 0.80 to
+0.78 carried into both Couch modes and was restored to 0.80 afterward. Nested
+Escape returned to each exact Music library and Settings opener.
+
+The Team backup was prepared and downloaded using the keyboard. Its actual
+66,840-byte file is identical to the original saved bundle, SHA-256
+`8f8a4d17171344024744cc8f0016f98c9e3281353cae5996bf8da415f1281637`.
+Returning to Solo did not launch a mission. A later explicit Start followed by
+Pause and Settings retained paused music; no directional flight input was used.
+The local test attempt was left paused and the test tab/server closed. Public
+saved data was not touched.
+
+See `cross-mode/` for source-response reconciliation, the original download,
+its comparison and summarized observations. The preview had no source overrides.
+All mode changes were full page navigations, not proof of uninterrupted track
+position or cached-page restoration. Master stayed muted. Following
+[MDN's autoplay guidance](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay),
+explicit Play, muted transport and audible autoplay-denial recovery remain
+different checks. This evidence does not close listening, offline, physical input,
+Retry/Next/results, public release or newer-source qualification.
+
+Maintenance prompt: “Reuse a natively imported mixed MP3/synth playlist with a
+duplicate entry. Navigate Solo, Versus and Team with the keyboard, compare shared
+selection and a deliberate master change, preserve explicit pause through Next
+and mode entry, and export a real backup for exact original-byte comparison.
+Restore the test setting, record any local attempt created, and keep public saves
+untouched. Report menu navigation, gameplay transitions, audio output and autoplay
+permission as separate acceptance cases.”

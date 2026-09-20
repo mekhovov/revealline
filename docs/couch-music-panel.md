@@ -30,7 +30,13 @@ Route **all** host explicit Play/Pause controls through the same session. Keep a
 
 ## Evidence boundary
 
-Tests execute the actual panel handlers, existing import/store transaction code and new admission/session policies with finite DOM/IndexedDB/media adapters. The composition test uses the real existing player, shared owner and session; coded-silence bytes verify transport/ownership, not sound quality. Existing whole panel tests preserve default Solo behavior, keyboard treatment, cancellation, backups and auditions. No browser or public release is claimed here.
+Tests execute the actual panel handlers, existing import/store transaction code and new admission/session policies with finite DOM/IndexedDB/media adapters. The composition test uses the real existing player, shared owner and session; coded-silence bytes verify transport/ownership, not sound quality. Existing whole panel tests preserve default Solo behavior, keyboard treatment, cancellation, backups and auditions. Those tests alone do not establish browser or public acceptance.
+
+The [native cross-mode journey](verification/music-backup-native-v070/README.md#keyboard-cross-mode-library-and-transport)
+now covers authored Solo → Versus → separate Team → Solo on exact source `508a638f`.
+It verifies actual keyboard navigation, the shared imported playlist, paused transport,
+master-volume persistence and an unchanged binary backup. It remains a local muted
+check; public, audible, offline and physical-device gates are still separate.
 
 ## Modal visit and return ownership
 
