@@ -18,18 +18,29 @@ const route = [
   ['down', 'up', 700],
 ];
 const command = (direction) => ({ direction, boost: false, support: false });
-function play(level, jointCuts, delay = 0) {
+function play(level, jointCuts, delay = 0, segments = route) {
   const run = createCoop(level, { seed: 1, jointCuts }),
     events = [];
   startCoop(run);
   for (let tick = 0; tick < Math.round(delay / FIXED_DT); tick++)
     stepCoop(run, [command(null), command(null)], FIXED_DT);
-  for (const [a, b, count] of route) {
+  for (const [a, b, count] of segments) {
     stepCoop(run, [command(null), command(null)], FIXED_DT);
+    const resting = a === null && b === null;
+    const positions = run.players.map(({ x, y }) => ({ x, y }));
+    if (resting)
+      assert(
+        run.players.every((player) => !player.cutting && run.cells[player.cellIndex] === SAFE),
+      );
     for (let tick = 0; tick < count && run.status === 'running'; tick++) {
       stepCoop(run, [command(a), command(b)], FIXED_DT);
       events.push(...structuredClone(run.events));
     }
+    if (resting)
+      assert.deepEqual(
+        run.players.map(({ x, y }) => ({ x, y })),
+        positions,
+      );
   }
   return { run, events };
 }
@@ -95,6 +106,69 @@ test('waiting for the later departure window still permits all preset clears; cl
       });
       assert.equal(materialRemaining, difficulty !== 'gentle');
       assert.deepEqual(first, play(level, jointCuts, 5));
+    }
+});
+
+test('opposite bypasses offer a distinct ordinary clear after an observed keeper window, not terrain mastery', () => {
+  for (const [difficulty, wait] of [
+    ['gentle', 0],
+    ['standard', 8],
+    ['expert', 6],
+  ])
+    for (const jointCuts of [true, false]) {
+      const level = resolveContentJourney(createTeamSignalCandidates(), {
+        mode: 'team',
+        difficulty,
+      }).campaigns[0].runtime.levels[0];
+      // Wait only after both cuts have closed and stopped on reclaimed ground.
+      // Do not manufacture an instant brake mid-cut or change enemy speed.
+      const alternative = [
+        ['down', 'up', 240],
+        ['right', 'left', 180],
+        ['up', 'down', 700],
+        [null, null, wait * 120],
+        ['down', 'up', 460],
+        ['left', 'right', 120],
+        ['up', 'down', 700],
+      ];
+      const result = play(level, jointCuts, 0, alternative);
+      assert.equal(result.run.status, 'won');
+      assert(result.run.coverage >= level.goal.coverage);
+      assert.equal(result.run.totalClaimable, 2245);
+      assert.equal(
+        result.events.some((event) => event.type === 'player.downed'),
+        false,
+      );
+      assert.deepEqual(
+        [
+          ...new Set(
+            result.events
+              .filter((event) => event.type === 'cut.closed')
+              .map((event) => event.player),
+          ),
+        ].sort(),
+        [0, 1],
+      );
+      assert(
+        level.terrain.some((area) => {
+          for (let y = area.y; y < area.y + area.h; y++)
+            for (let x = area.x; x < area.x + area.w; x++)
+              if (result.run.cells[y * 72 + x] !== SAFE) return true;
+          return false;
+        }),
+        'An ordinary clear is not automatically the optional all-material mastery.',
+      );
+      assert.deepEqual(result, play(level, jointCuts, 0, alternative));
+      if (difficulty !== 'gentle') {
+        const impatient = alternative.map((segment) =>
+          segment[0] === null ? [null, null, 0] : segment,
+        );
+        assert(
+          play(level, jointCuts, 0, impatient).events.some(
+            (event) => event.type === 'player.downed',
+          ),
+        );
+      }
     }
 });
 
