@@ -15,6 +15,8 @@ const group = (lines) => {
   return [...counts].map(([line, count]) => (count > 1 ? `${count} × ${line}` : line));
 };
 const enemyState = (enemy) => {
+  if (enemy.impactCarrier)
+    return 'trail contact sends visible fronts along your unfinished line; close before they reach you. Body contact and a hit at your live endpoint are immediate dangers';
   if (enemy.pressure)
     return (
       {
@@ -108,7 +110,9 @@ export function flightDetailsModel(information, context) {
           : enemy.slowed
             ? ' Movement slowed.'
             : '';
-      threats.push(`${roles[enemy.type] || 'Unfamiliar enemy'}: ${enemyState(enemy)}.${effect}`);
+      threats.push(
+        `${enemy.impactCarrier ? 'Trail-impact carrier' : roles[enemy.type] || 'Unfamiliar enemy'}: ${enemyState(enemy)}.${effect}`,
+      );
     }
     for (const mark of classic.erosion)
       threats.push(`Marked ground can reopen · ${seconds(mark.seconds)}.`);

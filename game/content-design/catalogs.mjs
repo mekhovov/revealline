@@ -151,11 +151,35 @@ export const FRACTURE_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// Opt-in role, not a level-wide replacement of ordinary trail collision.
+export const PHASE_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v4',
+  roles: {
+    ...FRACTURE_ACTOR_CATALOG.roles,
+    'impact-carrier': {
+      type: 'bouncer',
+      domain: 'unclaimed-field',
+      damageTarget: 'body-and-propagating-trail-impact',
+      retainsField: true,
+      captureResponse: 'remains-in-retained-region; closure-clears-impact-fronts',
+      warning: 'distinct-carrier-silhouette-and-visible-moving-impact-fronts',
+      action: 'trail-contact-sends-fronts-along-the-live-trail',
+      recovery: 'fronts-clear-on-closure-or-life-loss',
+      counterplay:
+        'Keep a short return route and close before an impact reaches you. Body contact and a hit at the live endpoint remain immediate dangers. Ordinary field keepers still break trails immediately.',
+      speeds: { measured: 2.4, standard: 3.2, brisk: 4 },
+      impactSpeed: 24,
+    },
+  },
+});
+
 export function journeyActors(id = ACTOR_CATALOG.id) {
   const catalogs = {
     [ACTOR_CATALOG.id]: ACTOR_CATALOG,
     [ROVER_ACTOR_CATALOG.id]: ROVER_ACTOR_CATALOG,
     [FRACTURE_ACTOR_CATALOG.id]: FRACTURE_ACTOR_CATALOG,
+    [PHASE_ACTOR_CATALOG.id]: PHASE_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];
