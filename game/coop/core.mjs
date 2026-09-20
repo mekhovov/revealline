@@ -4,7 +4,12 @@ import {
   compileCoopFoundationGeometry,
   COOP_FOUNDATION_LEVEL_VERSION,
   COOP_FOUNDATION_RULESET,
+  COOP_TERRAIN_LEVEL_VERSION,
+  COOP_TERRAIN_RULESET,
+  isJourneyTeamLevel,
+  isJourneyTeamRuleset,
 } from './foundations.mjs';
+import { coopTerrainSpeed, coopTerrainContact } from './terrain.mjs';
 import {
   cellAt,
   positionAt,
@@ -60,8 +65,7 @@ const dataArray = (value) =>
 const identifier = (value) => typeof value === 'string' && value.length > 0 && value.length <= 100;
 
 function buildGrid(level) {
-  if (level.version === COOP_FOUNDATION_LEVEL_VERSION)
-    return Uint8Array.from(compileCoopFoundationGeometry(level).cells);
+  if (isJourneyTeamLevel(level)) return Uint8Array.from(compileCoopFoundationGeometry(level).cells);
   const cells = new Uint8Array(level.width * level.height);
   for (let y = 0; y < level.height; y++)
     for (let x = 0; x < level.width; x++)
@@ -101,6 +105,7 @@ export function validateCoopLevel(level) {
       'strongholds',
       'encounter',
       'journeyDifficulty',
+      'terrain',
     ])
   )
     return {
@@ -108,15 +113,23 @@ export function validateCoopLevel(level) {
       errors: ['Co-op level must be a plain data object with supported fields.'],
     };
   check(
-    [COOP_LEVEL_VERSION, COOP_FOUNDATION_LEVEL_VERSION].includes(level.version),
+    [COOP_LEVEL_VERSION, COOP_FOUNDATION_LEVEL_VERSION, COOP_TERRAIN_LEVEL_VERSION].includes(
+      level.version,
+    ),
     'Unsupported co-op level version.',
   );
   check(
-    level.version === COOP_FOUNDATION_LEVEL_VERSION
+    isJourneyTeamLevel(level)
       ? typeof level.journeyDifficulty === 'string' &&
           Object.hasOwn(DIFFICULTIES, level.journeyDifficulty)
       : level.journeyDifficulty === undefined,
     'Only the new Team edition pins an explicit Journey difficulty.',
+  );
+  check(
+    level.version === COOP_TERRAIN_LEVEL_VERSION
+      ? dataArray(level.terrain)
+      : !Object.hasOwn(level, 'terrain'),
+    'Terrain requires an explicit Team terrain edition and a terrain array.',
   );
   check(level.width === 72 && level.height === 36, 'Co-op boards must be 72 × 36.');
   check(
@@ -310,8 +323,7 @@ export function createCoop(
   const validation = validateCoopLevel(level);
   if (!validation.valid) throw new TypeError(validation.errors.join(' '));
   if (difficulty === undefined)
-    difficulty =
-      level.version === COOP_FOUNDATION_LEVEL_VERSION ? level.journeyDifficulty : 'standard';
+    difficulty = isJourneyTeamLevel(level) ? level.journeyDifficulty : 'standard';
   if (
     !Number.isInteger(seed) ||
     seed < 0 ||
@@ -322,17 +334,24 @@ export function createCoop(
     typeof advancedCooperation !== 'boolean'
   )
     throw new TypeError('Invalid co-op options.');
-  if (level.version === COOP_FOUNDATION_LEVEL_VERSION && difficulty !== level.journeyDifficulty)
+  if (isJourneyTeamLevel(level) && difficulty !== level.journeyDifficulty)
     throw new TypeError('Team difficulty must match its compiled Journey edition.');
   const owned = structuredClone(level);
   const cells = buildGrid(owned);
   const run = {
     ruleset:
-      owned.version === COOP_FOUNDATION_LEVEL_VERSION ? COOP_FOUNDATION_RULESET : COOP_RULESET,
+      owned.version === COOP_TERRAIN_LEVEL_VERSION
+        ? COOP_TERRAIN_RULESET
+        : owned.version === COOP_FOUNDATION_LEVEL_VERSION
+          ? COOP_FOUNDATION_RULESET
+          : COOP_RULESET,
     level: owned,
     width: owned.width,
     height: owned.height,
     cells,
+    ...(owned.version === COOP_TERRAIN_LEVEL_VERSION
+      ? { terrain: Uint8Array.from(compileCoopFoundationGeometry(owned).terrain) }
+      : {}),
     seed,
     difficulty,
     config: { jointCuts, assistCaptures, advancedCooperation },
@@ -375,10 +394,9 @@ export function createCoop(
     team: {
       // A Journey team starts with one active team life; the rest are shared
       // reserve recoveries. Historical Team reserve counts remain untouched.
-      reserves:
-        owned.version === COOP_FOUNDATION_LEVEL_VERSION
-          ? journeyPreset(difficulty).lives - 1
-          : DIFFICULTIES[difficulty],
+      reserves: isJourneyTeamLevel(owned)
+        ? journeyPreset(difficulty).lives - 1
+        : DIFFICULTIES[difficulty],
       recoveryAt: null,
       captureCredits: 0,
       interceptions: 0,
@@ -476,7 +494,9 @@ function movement(run, commands, stopped) {
     const speed =
       player.status === 'downed'
         ? 3
-        : run.rules.moveSpeed * (command.boost ? run.rules.boostMultiplier : 1);
+        : run.rules.moveSpeed *
+          (command.boost ? run.rules.boostMultiplier : 1) *
+          coopTerrainSpeed(run, player);
     return { x: axis.x * speed, y: axis.y * speed };
   });
 }
@@ -486,7 +506,7 @@ function knockDown(run, player, cause, commands, enemy = null) {
   player.status = 'downed';
   player.downedUntil =
     run.time +
-    (run.ruleset === COOP_FOUNDATION_RULESET
+    (isJourneyTeamRuleset(run.ruleset)
       ? JOURNEY_POLICY.rules.respawnSeconds
       : COOP_TIMING[run.difficulty].recovery);
   player.downedClaimedAt = run.claimedCount;
@@ -841,6 +861,8 @@ function capture(run, closers, commands, stopped, joint = false) {
 function hazards(run, velocities, horizon) {
   const contacts = [];
   for (const player of run.players) {
+    const material = coopTerrainContact(run, player, velocities[player.id], horizon);
+    if (material) contacts.push(material);
     if (player.status !== 'active' || !player.cutting || player.graceUntil > run.time + EPS)
       continue;
     for (const enemy of run.enemies) {
@@ -993,7 +1015,9 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
     const hits = [...contacts.filter((contact) => due(contact.time)), ...instantContacts];
     for (const player of selfHits) knockDown(run, player, 'self-trail', commands);
     for (const contact of hits)
-      if (
+      if (contact.cause === 'lethal-terrain')
+        knockDown(run, run.players[contact.player], contact.cause, commands);
+      else if (
         run.enemies.some(
           (enemy) =>
             enemy.id === contact.enemy &&

@@ -1,6 +1,7 @@
 import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
+import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -80,19 +81,7 @@ export function paintContentMap(
       radius = size * 0.45;
     ctx.fillStyle = '#ffae8e';
     ctx.beginPath();
-    if (['bouncer', 'drifter'].includes(actor.type)) ctx.arc(x, y, radius, 0, Math.PI * 2);
-    else if (actor.type === 'border-patrol') {
-      ctx.moveTo(x, y - radius);
-      ctx.lineTo(x + radius, y);
-      ctx.lineTo(x, y + radius);
-      ctx.lineTo(x - radius, y);
-      ctx.closePath();
-    } else {
-      ctx.moveTo(x, y - radius);
-      ctx.lineTo(x + radius, y + radius);
-      ctx.lineTo(x - radius, y + radius);
-      ctx.closePath();
-    }
+    traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
     ctx.fill();
     if (showCapture && actor.anchor) {
       ctx.strokeStyle = '#fff0ad';

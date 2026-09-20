@@ -9,6 +9,7 @@ import {
   validatePresentationTheme,
 } from './model.mjs';
 import { hashPresentationBytes } from './bundle.mjs';
+import { createPresentationDOMOwner } from './dom-ownership.mjs';
 import {
   applyPresentation,
   canvasPresentation,
@@ -429,8 +430,14 @@ export function createPresentationHost({
         pictureReads.delete(controller);
       }
     },
-    async load({ signal, onStatus = () => {} } = {}) {
+    async load({ signal, onStatus = () => {}, expectedManifestSha256 = null } = {}) {
       required(!closed, 'Presentation host is closed.');
+      required(
+        expectedManifestSha256 === null ||
+          (typeof expectedManifestSha256 === 'string' &&
+            /^[a-f0-9]{64}$/.test(expectedManifestSha256)),
+        'Use an exact SHA-256 presentation manifest pin.',
+      );
       cancelled(signal);
       pending?.abort();
       const controller = new AbortController();
@@ -463,6 +470,12 @@ export function createPresentationHost({
         report('reading', 'Loading release artwork and fonts…');
         const bytes = await bytesAt('runtime.json', LIMITS.manifestBytes, controller.signal);
         report('verifying', 'Checking the release artwork manifest…');
+        const manifestSha256 = await hashPresentationBytes(bytes);
+        cancelled(controller.signal);
+        required(
+          expectedManifestSha256 === null || manifestSha256 === expectedManifestSha256,
+          'Presentation manifest differs from its pinned release.',
+        );
         const manifest = validateCompiledPresentation(
           new TextDecoder('utf-8', { fatal: true }).decode(bytes),
         );
@@ -570,6 +583,7 @@ export function createPresentationHost({
         }
         const css = presentationCSSVariables(manifest.resolved);
         const snapshot = Object.freeze({
+          manifestSha256,
           source: manifest.source,
           resolved: manifest.resolved,
           canvas: canvasPresentation(manifest.resolved),
@@ -600,102 +614,87 @@ export function createPresentationHost({
     apply(element) {
       required(current && !closed, 'No accepted presentation is loaded.');
       const releaseTokens = applyPresentation(element, current.snapshot.resolved);
-      const before = new Map(),
-        attributes = [],
-        values = {};
-      for (const [slot, url] of Object.entries(current.cssImages)) {
-        const name = slot.replaceAll('.', '-');
-        values[`--fk-asset-${name}`] = `url("${url}")`;
-        values[`--fk-show-${name}`] = 'inline-block';
-        const nine = current.images[slot].geometry.nineSlice;
-        if (nine) {
-          values[`--fk-border-slice-${name}`] =
-            `${nine.top} ${nine.right} ${nine.bottom} ${nine.left}`;
-          values[`--fk-slice-${name}`] = `${values[`--fk-border-slice-${name}`]} fill`;
-          values[`--fk-slice-width-${name}`] =
-            `${nine.top}px ${nine.right}px ${nine.bottom}px ${nine.left}px`;
-        }
-      }
-      for (const [name, value] of Object.entries(values)) {
-        before.set(name, {
-          value: element.style.getPropertyValue(name),
-          priority: element.style.getPropertyPriority?.(name) ?? '',
-        });
-        element.style.setProperty(name, value);
-      }
-      const markControls = (scope = element) => {
-        for (const [attribute, prefix, selectors] of [
-          ['data-presentation-icon', 'icon', controlIcons],
-          ['data-presentation-input', 'ui.input', nativeInputs],
-          ['data-presentation-control', 'control', controlGlyphs],
-          ['data-presentation-hud', 'hud', hudGlyphs],
-          ['data-presentation-focus', 'ui', { focus: 'body' }],
-          [
-            'data-presentation-reward',
-            'reward',
-            { mastery: '.mastery-note', unlock: '.appearance-reward.earned' },
-          ],
-        ])
-          for (const [icon, selector] of Object.entries(selectors)) {
-            if (!current?.cssImages[`${prefix}.${icon}`]) continue;
-            const controls = [
-              ...(scope.matches?.(selector) ? [scope] : []),
-              ...(scope.children?.length ? (scope.querySelectorAll?.(selector) ?? []) : []),
-            ];
-            for (const control of controls) {
-              if (control.getAttribute(attribute) === icon) continue;
-              attributes.push({
-                control,
-                icon,
-                attribute,
-                before: control.getAttribute(attribute),
-              });
-              control.setAttribute(attribute, icon);
-            }
+      const owner = createPresentationDOMOwner();
+      let observer = null;
+      try {
+        const values = {};
+        for (const [slot, url] of Object.entries(current.cssImages)) {
+          const name = slot.replaceAll('.', '-');
+          values[`--fk-asset-${name}`] = `url("${url}")`;
+          values[`--fk-show-${name}`] = 'inline-block';
+          const nine = current.images[slot].geometry.nineSlice;
+          if (nine) {
+            values[`--fk-border-slice-${name}`] =
+              `${nine.top} ${nine.right} ${nine.bottom} ${nine.left}`;
+            values[`--fk-slice-${name}`] = `${values[`--fk-border-slice-${name}`]} fill`;
+            values[`--fk-slice-width-${name}`] =
+              `${nine.top}px ${nine.right}px ${nine.bottom}px ${nine.left}px`;
           }
-      };
-      markControls();
-      const Observer =
-        element.ownerDocument?.defaultView?.MutationObserver ?? globalThis.MutationObserver;
-      const observer =
-        typeof Observer === 'function'
-          ? new Observer((records) => {
-              // HUD text may contain a new <small> every frame. Visit only
-              // newly inserted element subtrees, never rescan the whole page.
-              const inserted = new Set(
-                records.flatMap((record) =>
-                  [...record.addedNodes].filter((node) => node.nodeType === 1),
-                ),
-              );
-              for (const node of inserted) {
-                if (node !== element && !element.contains?.(node)) continue;
-                let parent = node.parentElement;
-                while (parent && !inserted.has(parent)) parent = parent.parentElement;
-                if (!parent) markControls(node);
+        }
+        for (const [name, value] of Object.entries(values)) owner.style(element, name, value);
+        const markControls = (scope = element) => {
+          for (const [attribute, prefix, selectors] of [
+            ['data-presentation-icon', 'icon', controlIcons],
+            ['data-presentation-input', 'ui.input', nativeInputs],
+            ['data-presentation-control', 'control', controlGlyphs],
+            ['data-presentation-hud', 'hud', hudGlyphs],
+            ['data-presentation-focus', 'ui', { focus: 'body' }],
+            [
+              'data-presentation-reward',
+              'reward',
+              { mastery: '.mastery-note', unlock: '.appearance-reward.earned' },
+            ],
+          ])
+            for (const [icon, selector] of Object.entries(selectors)) {
+              if (!current?.cssImages[`${prefix}.${icon}`]) continue;
+              const controls = [
+                ...(scope.matches?.(selector) ? [scope] : []),
+                ...(scope.children?.length ? (scope.querySelectorAll?.(selector) ?? []) : []),
+              ];
+              for (const control of controls) {
+                owner.attribute(control, attribute, icon);
               }
-            })
-          : null;
-      observer?.observe(element, { childList: true, subtree: true });
-      let active = true;
-      const cleanup = () => {
-        if (!active) return;
-        active = false;
+            }
+        };
+        markControls();
+        const Observer =
+          element.ownerDocument?.defaultView?.MutationObserver ?? globalThis.MutationObserver;
+        observer =
+          typeof Observer === 'function'
+            ? new Observer((records) => {
+                // HUD text may contain a new <small> every frame. Visit only
+                // newly inserted element subtrees, never rescan the whole page.
+                const inserted = new Set(
+                  records.flatMap((record) =>
+                    [...record.addedNodes].filter((node) => node.nodeType === 1),
+                  ),
+                );
+                for (const node of inserted) {
+                  if (node !== element && !element.contains?.(node)) continue;
+                  let parent = node.parentElement;
+                  while (parent && !inserted.has(parent)) parent = parent.parentElement;
+                  if (!parent) markControls(node);
+                }
+              })
+            : null;
+        observer?.observe(element, { childList: true, subtree: true });
+        let active = true;
+        const cleanup = () => {
+          if (!active) return;
+          active = false;
+          observer?.disconnect();
+          releaseTokens();
+          owner.release();
+          applications.delete(cleanup);
+        };
+        applications.add(cleanup);
+        return cleanup;
+      } catch (error) {
         observer?.disconnect();
         releaseTokens();
-        for (const [name, prior] of before) {
-          if (element.style.getPropertyValue(name) !== values[name]) continue;
-          if (prior.value) element.style.setProperty(name, prior.value, prior.priority);
-          else element.style.removeProperty(name);
-        }
-        for (const { control, icon, attribute, before: prior } of attributes) {
-          if (control.getAttribute(attribute) !== icon) continue;
-          if (prior === null) control.removeAttribute(attribute);
-          else control.setAttribute(attribute, prior);
-        }
-        applications.delete(cleanup);
-      };
-      applications.add(cleanup);
-      return cleanup;
+        owner.release();
+        throw error;
+      }
     },
     close() {
       if (closed) return;

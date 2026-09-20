@@ -1,4 +1,5 @@
 import { boundedJSON, required } from '../data-json.mjs';
+import { createPresentationDOMOwner } from './dom-ownership.mjs';
 import { freezePresentation, resolvePresentation, validateAssetRevision } from './model.mjs';
 
 const cssFonts = {
@@ -147,23 +148,17 @@ export function applyPresentation(element, resolved) {
     element?.style && typeof element.style.setProperty === 'function',
     'A styled element is required.',
   );
-  const variables = presentationCSSVariables(resolved),
-    before = new Map();
-  for (const [name, value] of Object.entries(variables)) {
-    before.set(name, {
-      value: element.style.getPropertyValue(name),
-      priority: element.style.getPropertyPriority?.(name) ?? '',
-    });
-    element.style.setProperty(name, value);
+  const owner = createPresentationDOMOwner();
+  try {
+    for (const [name, value] of Object.entries(presentationCSSVariables(resolved)))
+      owner.style(element, name, value);
+    return owner.release;
+  } catch (error) {
+    owner.release();
+    throw error;
   }
-  return () => {
-    for (const [name, prior] of before) {
-      if (element.style.getPropertyValue(name) !== variables[name]) continue;
-      if (prior.value) element.style.setProperty(name, prior.value, prior.priority);
-      else element.style.removeProperty(name);
-    }
-  };
 }
+
 export function preparePresentation(source, options) {
   const resolved = resolvePresentation(source, options);
   return Object.freeze({

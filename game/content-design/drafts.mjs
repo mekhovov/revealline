@@ -6,15 +6,11 @@ import {
   dataIdentity,
   canonicalJSON,
 } from '../data-json.mjs';
+import { CONTENT_PROJECT_JSON_LIMITS } from './limits.mjs';
 
 export const CONTENT_DRAFT_DATABASE = 'revealline-content-studio-v1';
 const ownDraft = (source) => {
-  const project = boundedJSON(source, {
-    maxBytes: 4 * 1024 * 1024,
-    maxNodes: 100000,
-    maxDepth: 20,
-    maxArray: 512,
-  });
+  const project = boundedJSON(source, CONTENT_PROJECT_JSON_LIMITS);
   required(
     project?.format === 'ContentProjectV1' && stableId(project.id),
     'Expected a named content project draft.',

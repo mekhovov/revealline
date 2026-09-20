@@ -833,6 +833,36 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   assert.equal($('upload-summary').textContent, preparedSummary);
   assert.equal($('asset-upload').files[0], original);
   assert.equal($('stage-asset').disabled, false);
+  // A failed or edited crop must never stage the last successful pixels.
+  const unchangedWorkspace = $('workspace-summary').textContent;
+  const unchangedBinding = $('slot-contract').textContent;
+  $('crop-width').value = preparedDimensions[0] + 1;
+  await $('prepare-crop').onclick();
+  assert.match(message(), /fit completely inside the original/);
+  await $('stage-asset').onclick();
+  assert.match(message(), /fit completely inside the original/);
+  assert.equal($('workspace-summary').textContent, unchangedWorkspace);
+  assert.equal($('slot-contract').textContent, unchangedBinding);
+  $('crop-width').value = Number(preparedCrop[2]) - 1;
+  await $('stage-asset').onclick();
+  assert.match(message(), /crop has changed.*Prepare derivative/);
+  await $('apply-geometry').onclick();
+  assert.match(message(), /crop has changed.*Prepare derivative/);
+  assert.equal($('workspace-summary').textContent, unchangedWorkspace);
+  assert.equal($('slot-contract').textContent, unchangedBinding);
+  // Edits made during an outstanding encode also invalidate its result.
+  encodeGate = deferred();
+  const cropPreparation = $('prepare-crop').onclick();
+  await until(() => /Encoding the crop/.test(message()));
+  $('crop-width').value = preparedCrop[2];
+  encodeGate.resolve();
+  await cropPreparation;
+  await $('stage-asset').onclick();
+  assert.match(message(), /crop has changed.*Prepare derivative/);
+  assert.equal($('workspace-summary').textContent, unchangedWorkspace);
+  assert.equal($('slot-contract').textContent, unchangedBinding);
+  await $('prepare-crop').onclick();
+  assert.match(message(), /Derivative prepared/);
   // The following real stage/save/restore byte assertion also proves that the
   // prepared asset survived the return, rather than only its visible labels.
   await $('stage-asset').onclick();
@@ -937,6 +967,32 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     saved.document,
   );
   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
+  // Reusing approved raster bytes does not approve changed placement metadata.
+  await bindButton(approved.id, 2).onclick();
+  await $('edit-geometry').onclick();
+  assert.equal($('nine-slice').disabled, false);
+  $('nine-slice').value = JSON.stringify({ ...approved.geometry.nineSlice, left: 7 });
+  await $('stage-asset').onclick();
+  assert.match(message(), /validated and staged/);
+  await $('save-workspace').onclick();
+  assert.match(message(), /saved atomically/);
+  const metadataSaved = await createStudioStore({ indexedDB: db.indexedDB }).load();
+  const metadataAsset = resolvePresentation(metadataSaved.document).assets[originalSlot];
+  assert.equal(metadataAsset.geometry.nineSlice.left, 7);
+  assert.equal(metadataAsset.file.sha256, approved.file.sha256);
+  assert.deepEqual(metadataAsset.quality, { stage: 'produced', evidence: [] });
+  assert.deepEqual(metadataAsset.provenance.parent, { id: approved.id, revision: 2 });
+  assert.deepEqual(
+    metadataSaved.document.assets.find((asset) => asset.id === approved.id && asset.revision === 2),
+    approved,
+    'The reviewed original and its evidence remain immutable.',
+  );
+  assert.deepEqual(
+    Buffer.from(await metadataSaved.assets.get(publishedHash).arrayBuffer()),
+    Buffer.from(publishedBytes),
+    'A metadata edit preserves the original encoded image.',
+  );
+  assert.ok(bindButton(approved.id, 2), 'The approved original can still be rebound explicitly.');
   $('new-sprite').onclick();
   const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
   $('sprite-canvas').emit('keydown', { code: 'Space' });

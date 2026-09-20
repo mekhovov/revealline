@@ -5,9 +5,10 @@ import { compileMapDesign } from './map.mjs';
 import { compileAssetRevision } from './assets.mjs';
 import { inspectMissionTopology } from './diagnostics.mjs';
 import { resolveTeamMission } from './team-runtime.mjs';
+import { CONTENT_PROJECT_JSON_LIMITS, CONTENT_PROJECT_ITEM_LIMITS } from './limits.mjs';
 import {
   journeyPolicy,
-  ACTOR_CATALOG,
+  journeyActors,
   DIFFICULTY_CATALOG,
   compileActor,
   journeyPreset,
@@ -112,12 +113,10 @@ function checkDesign(design) {
 /** One owned project registry for authoring, CLI, preview and runtime adapters.
  * Compilation validates a candidate; it does not publish it or authorize clears. */
 export function compileContentProject(source) {
-  const project = boundedJSON(source, {
-    maxBytes: 4 * 1024 * 1024,
-    maxNodes: 100000,
-    maxDepth: 20,
-    maxArray: 512,
-  });
+  // Only this module can mint an owned, fully frozen compiled project. Reuse it
+  // across preset projections; a copied or imported lookalike must validate anew.
+  if (compiledProjects.has(source)) return source;
+  const project = boundedJSON(source, CONTENT_PROJECT_JSON_LIMITS);
   identity(project, 'ContentProjectV1', [
     'policyId',
     'actorCatalogId',
@@ -130,20 +129,24 @@ export function compileContentProject(source) {
   ]);
   const policy = journeyPolicy(project.policyId);
   required(
-    project.actorCatalogId === ACTOR_CATALOG.id &&
-      project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
+    stableId(project.actorCatalogId),
+    'Project needs an explicit registered actor catalogue ID.',
+  );
+  const actors = journeyActors(project.actorCatalogId);
+  required(
+    project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
     'Project must pin registered policy and catalogs.',
   );
   required(
-    Array.isArray(project.maps) && project.maps.length <= 512,
+    Array.isArray(project.maps) && project.maps.length <= CONTENT_PROJECT_ITEM_LIMITS.maps,
     'Map revision budget exceeded.',
   );
   const mapIds = new Set(project.maps.map((map) => JSON.stringify([map.id, map.revision])));
   required(mapIds.size === project.maps.length, 'Map revisions must be unique.');
-  const missionIds = unique(project.missions, 'missions', 256);
-  const campaignIds = unique(project.campaigns, 'campaigns', 32);
-  unique(project.packs, 'packs', 32);
-  unique(project.assets ?? [], 'assets', 512);
+  const missionIds = unique(project.missions, 'missions', CONTENT_PROJECT_ITEM_LIMITS.missions);
+  const campaignIds = unique(project.campaigns, 'campaigns', CONTENT_PROJECT_ITEM_LIMITS.campaigns);
+  unique(project.packs, 'packs', CONTENT_PROJECT_ITEM_LIMITS.packs);
+  unique(project.assets ?? [], 'assets', CONTENT_PROJECT_ITEM_LIMITS.assets);
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
@@ -222,7 +225,7 @@ export function compileContentProject(source) {
     campaigns: project.campaigns,
     packs: project.packs,
     policy,
-    actors: ACTOR_CATALOG,
+    actors,
     difficulty: DIFFICULTY_CATALOG,
     assets,
   });
@@ -252,6 +255,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   if (mode === 'team') return resolveTeamMission(project, mission, map, difficulty);
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
+  const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
   const level = normalizedLevel({
     version: 'xonix-level.v5',
     id: mission.id,
@@ -269,8 +273,17 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       terrain: map.source.terrain ?? [],
       powerups: mission.bonuses,
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
+      ...(carriers.length
+        ? {
+            lineImpact: {
+              version: 'line-impact.v2',
+              speed: project.actors.roles['impact-carrier'].impactSpeed,
+              actorIds: carriers.map((actor) => actor.id).sort(),
+            },
+          }
+        : {}),
     },
-    enemies: mission.actors.map((actor) => compileActor(actor, difficulty)),
+    enemies: mission.actors.map((actor) => compileActor(actor, difficulty, project.actors.id)),
     objectives: mission.objectives,
     supplies: [],
     rules: {

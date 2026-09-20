@@ -3,6 +3,7 @@ import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-f
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
+import { drawLaneAttack } from './lane-presentation.mjs';
 import {
   drawClassicTerrain,
   drawClassicPickups,
@@ -611,36 +612,12 @@ export class BoardPainter {
         ctx.restore();
       }
       for (const e of state.enemies) {
-        if (
-          e.type === 'lane-boss' &&
-          e.bossPhase &&
-          e.bossPhase !== 'idle' &&
-          e.bossPhase !== 'recovery'
-        ) {
-          const frozen = classic?.enemies.some((enemy) => enemy.id === e.id && enemy.frozen);
-          ctx.save();
-          ctx.fillStyle = frozen ? p.muted : p.danger;
-          ctx.globalAlpha = frozen
-            ? 0.12
-            : e.bossPhase === 'active'
-              ? 0.35
-              : 0.1 + (reduced ? 0 : Math.sin(t * 8) * 0.03);
-          if (e.axis === 'horizontal')
-            ctx.fillRect(
-              16,
-              (e.lane ?? e.y) * CELL - (e.laneWidth || 1) * 8,
-              W - 32,
-              (e.laneWidth || 1) * 16,
-            );
-          else
-            ctx.fillRect(
-              (e.lane ?? e.x) * CELL - (e.laneWidth || 1) * 8,
-              16,
-              (e.laneWidth || 1) * 16,
-              H - 32,
-            );
-          ctx.restore();
-        }
+        drawLaneAttack(ctx, e, p, {
+          frozen: classic?.enemies.some((enemy) => enemy.id === e.id && enemy.frozen),
+          screenScale: canvasCSSWidth / W,
+          boardWidth: W,
+          boardHeight: H,
+        });
       }
       drawEncounterLane(ctx, state, p);
       drawClassicPickups(ctx, classic, p, images, {

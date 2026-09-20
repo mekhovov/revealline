@@ -5,6 +5,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { captureOverlay } from '../content-design/capture-overlay.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
+import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
 
 test('Studio overlay projects exact occupied regions, hypothetical trail and affected objectives without changing the candidate', () => {
   const source = createOpeningCandidates();
@@ -129,5 +130,34 @@ test('patrol markers use engine-resolved geometry and never claim field retentio
     preview.manifest.level.enemies.find((e) => e.id === 'frontier').x,
     undefined,
     'Authored contour edges remain distinct from resolved runtime marker positions',
+  );
+});
+
+test('Studio gives reclaimed roamers a tracked-square marker without a field-retention ring', () => {
+  const preview = prepareContentPreview(createRoverCandidates(), 'wake-the-yard');
+  const overlay = captureOverlay(preview);
+  const roamer = overlay.actors.find((actor) => actor.type === 'claimed-rover');
+  assert.equal(roamer.anchor, false);
+  const calls = [];
+  const ctx = new Proxy(
+    {},
+    {
+      get:
+        (_target, method) =>
+        (...args) =>
+          calls.push([method, ...args]),
+    },
+  );
+  paintContentMap(ctx, preview, { showCapture: false });
+  const radius = 14 * 0.45,
+    x = roamer.x * 14,
+    y = roamer.y * 14;
+  assert.deepEqual(
+    calls.filter(([method]) => method === 'rect'),
+    [
+      ['rect', x - radius * 0.7, y - radius * 0.65, radius * 1.4, radius * 1.3],
+      ['rect', x - radius, y - radius, radius * 0.3, radius * 2],
+      ['rect', x + radius * 0.7, y - radius, radius * 0.3, radius * 2],
+    ],
   );
 });

@@ -46,6 +46,10 @@ export function missionBriefing(
     : '';
   const classicHint = ['xonix-level.v4', 'xonix-level.v5'].includes(level.version)
     ? [
+        level.version === 'xonix-level.v5' &&
+        level.enemies?.some((enemy) => enemy.type === 'lane-boss')
+          ? 'Lanes lock, warn, then fire. Leave the lane and secure exposed trail.'
+          : '',
         level.classic?.enemyPressure?.actors?.length
           ? 'AIM locks a target. Turn before CHASE; REST returns it to patrol.'
           : '',
@@ -66,7 +70,14 @@ export function missionBriefing(
           : '',
       ]
         .filter(Boolean)
-        .slice(0, level.classic?.lineImpact ? 1 : 2)
+        .slice(
+          0,
+          level.classic?.lineImpact ||
+            (level.version === 'xonix-level.v5' &&
+              level.enemies?.some((enemy) => enemy.type === 'lane-boss'))
+            ? 1
+            : 2,
+        )
         .join('\n')
     : '';
   const captureHint =
@@ -74,7 +85,9 @@ export function missionBriefing(
       ? 'Closing a cut stops your craft. Tap a fresh direction to fly again.'
       : '';
   const impactHint = level.classic?.lineImpact
-    ? 'Line hit? Close your cut before the travelling spark reaches you.'
+    ? level.classic.lineImpact.version === 'line-impact.v2'
+      ? 'Only bolts send sparks. Close before one reaches you; other trail hits are instant.'
+      : 'Line hit? Close your cut before the travelling spark reaches you.'
     : '';
   const facts = [goal, encounterGoal, limits, recommendation].filter(Boolean).join('\n');
   return Object.freeze({

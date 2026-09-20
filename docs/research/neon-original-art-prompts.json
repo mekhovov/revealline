@@ -1,0 +1,80 @@
+{
+  "format": "OriginalArtworkPromptsV1",
+  "campaign": "neon-contours",
+  "generation": "built-in image_gen",
+  "revision": "r1",
+  "review": "candidate-not-human-qualified",
+  "constraints": "Original reveal imagery only; never collision geometry, enemy rules, or evidence of player enjoyment.",
+  "assets": [
+    {
+      "id": "dogleg-return",
+      "bytes": 2611206,
+      "sha256": "fced7682cd6f55ed13014bc72de429c35a0faa84000b5ba466280ab890ebcb27",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for Reveal Line, Neon Contours campaign, mission Dogleg return.\nPrimary request: A wide pixel-art view into a narrow, original coastal-city service canal at night. The canal makes two offset right-angle bends between dark brick turbine houses. A copper footbridge crosses the nearer bend; farther around the corner a small waterwheel and warm workshop doorway reward a later reveal. One broad elevated walkway provides a second visual route.\nStyle/medium: Crisp deliberate 16/32-bit pixel art, visible square pixel clusters, stepped outlines and short shading ramps. Quiet large water and masonry surfaces, not a glossy painting or photograph.\nComposition: Full-bleed 2:1 panorama from above the near canal bend looking into depth. Strong staggered silhouettes, no centered symmetry, no panoramic skyline. Three focal details separated across near, middle and far distances. This is scenic art, not collision geometry.\nLighting/palette: Deep ink navy and muted petrol, worn slate/brick, amber copper lamps and restrained lavender water reflections. Limited small highlights; avoid saturated cyan/magenta and pure white. No bloom or glare.\nConstraints: Original architecture, no people or game characters, no typography/digits/signage, no UI/grid/trails/enemies, no logo, frame or watermark. One complete coherent wide image.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/dogleg-return.png",
+      "alt": "A narrow brick canal bends past a bridge and water wheels toward a warmly lit workshop and raised walkway."
+    },
+    {
+      "id": "folded-corner",
+      "bytes": 2447483,
+      "sha256": "31653d193a27380e65ff0bff9183f0462ef056b1b418be2568d1f6f9f4af9f13",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for the area-capture game Reveal Line, Neon Contours campaign, mission Folded corner.\nPrimary request: Create a polished, distinctive 2:1 panoramic pixel-art scene of a quiet futuristic waterfront interchange after rain. A broad angular elevated pedestrian bridge bends once around a dark reflecting basin; an amber-lit tram shelter and a small moored maintenance boat are separate discoverable details. The architecture evokes choosing a turning route without depicting a literal game board.\nStyle/medium: Carefully placed visible square pixel clusters, restrained 16/32-bit environmental pixel art, crisp stepped silhouettes, no smooth digital painting, no photorealism. Large readable architectural masses and calm broad surfaces, selective small details.\nComposition: Full-bleed wide panorama, elevated three-quarter view. One clear bent bridge as the main silhouette, a distant low skyline and distinct shelter/boat reflections across the composition. Interesting details distributed so partial territory reveals are rewarding. Do not trace gameplay geometry or show cells.\nLighting/palette: Midnight blue, desaturated petrol and slate, warm copper/amber window lights, limited muted lavender reflections. Quiet luminous nocturne. Keep bright areas small; reserve high-saturation magenta/cyan and pure white for gameplay actors, not this background. No bloom or glare.\nConstraints: Original location and architecture, no copied game art, no text, no letters, no digits, no UI, no grid, no title, no icons, no trails, no enemies, no logos, no border, no watermark. Exactly one complete landscape image, approximately 2:1 aspect ratio.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/folded-corner.png",
+      "alt": "An angled footbridge crosses midnight water toward an amber-lit shelter, with a maintenance boat and distant waterfront."
+    },
+    {
+      "id": "four-quarters",
+      "bytes": 2789107,
+      "sha256": "19264377455e6e4989b2e94332b3bef4014bdeb74e038a9ce4c941e8753e468e",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for Reveal Line, Neon Contours campaign, mission Four quarters.\nPrimary request: A striking panoramic pixel-art view over an original nocturnal city conservatory whose four unequal glass-roofed courtyards form one connected building. Inside the separate courts reveal a copper kinetic sculpture, a small indoor grove, a warmly lit instrument workshop and a reflecting fountain. Between them, broad raised service walkways form an intelligible architectural network. This is one plausible urban scene, not four separate panels.\nStyle/medium: Crisp 16/32-bit environmental pixel art, clearly visible square clusters, deliberately stepped glass rooflines, no smooth photorealistic rendering. Large quiet roof surfaces with select small rewarding details.\nComposition: Full-bleed 2:1 panorama, high three-quarter rooftop view, asymmetric four-volume composition spanning the picture. City silhouettes along the far edge; no large sky area. The network and different interiors reward captures in different places, without matching game cell coordinates.\nLighting/palette: Midnight blue, desaturated slate and petrol, copper roof joints and amber interior pools of light, occasional muted lavender shadow. Restrained value range and small highlights. No saturated cyan or magenta, no white glare, no bloom.\nConstraints: Original architectural design, no borrowed game art; no people, no text or symbols resembling letters/numbers, no UI, no visible game grid, no trails or enemies, no logos, no border or watermark. One coherent wide landscape image.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/four-quarters.png",
+      "alt": "Four glass-roofed waterfront pavilions shelter a sculpture, grove, workshop and fountain beside connected evening walks."
+    },
+    {
+      "id": "inside-out",
+      "bytes": 2387091,
+      "sha256": "6b23afb2029d683d70d9b445b201008cedee6b49b58ba13170b60e00feb5888a",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for Reveal Line, Neon Contours campaign, mission Inside out.\nPrimary request: A complete panoramic pixel-art scene inside an original circular waterfront light observatory at night. A huge open-roof annular building surrounds a dark oval reflection pool; an offset gateway reveals the distant harbor. A small suspended brass optical instrument hangs above the pool, while recessed exhibits and a quiet viewing balcony are discoverable in other regions.\nStyle/medium: Crisp environmental 16/32-bit pixel art with visible deliberate square clusters and stepped curves, large readable masses, restrained detail. No smooth painting or photorealism.\nComposition: Full-bleed 2:1 landscape, elevated interior view across the annular courtyard. Curved architecture dominates, distinctly different from a straight bridge scene. Deep negative space in the water, offset open entrance, clear nested silhouettes. Details spread across the image for progressive territory revelation, no literal gameplay geometry.\nLighting/palette: Midnight navy, desaturated petrol and slate, warm copper/amber architectural lights and limited muted lavender reflections. Bright highlights occupy small areas only; no saturated magenta/cyan, no white glare or bloom.\nConstraints: Original environment, no borrowed game artwork, no people or game characters, no text, letters, digits, labels, UI, grids, trail lines, enemy symbols, logos, borders or watermark. One image, approximately 2:1.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/inside-out.png",
+      "alt": "An open circular observatory surrounds a reflective pool and brass instrument, framed by a harbor arch and quiet exhibits."
+    },
+    {
+      "id": "neon-remix",
+      "bytes": 2416378,
+      "sha256": "ca5824dd7ec80e0cfe65a22dd061a6112e033ddc1ba89624532cba5c8f06bbfe",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for Reveal Line, Neon Contours finale Remix.\nPrimary request: An expansive panoramic pixel-art celebration of an original waterfront city at night, seen from a high open architectural terrace. A broad illuminated crescent-shaped performance canopy spans a small harbor inlet, connected to stepped promenades and an offset tower with a kinetic copper lantern. Distinct boats, quiet roof gardens and a tiny open pavilion give separate rewarding discoveries. It should feel like a campaign culmination, not a busier copy of any one bridge or courtyard.\nStyle/medium: Deliberate crisp 16/32-bit pixel art, visible square clusters and stepped silhouettes, strong large-scale composition with restrained fine detail. No smooth painterly rendering or photorealism.\nComposition: Full-bleed 2:1 wide landscape, elevated establishing view. The crescent canopy is the focal silhouette; broad dark water and generous quiet architecture frame it. Distribute three secondary discoveries without filling every surface. No literal map geometry or game board.\nLighting/palette: Consistent midnight navy, muted slate/petrol and copper/amber city lights, subtle muted lavender reflections. Slightly more festive than ordinary missions but no fireworks, bloom, bright magenta/cyan or white glare that could compete with gameplay.\nConstraints: Entirely original environment; no crowds or game actors, text, digits, signage, UI, grid, trails, logos, borders or watermark. One coherent scene.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/neon-remix.png",
+      "alt": "A crescent performance canopy and copper lantern tower overlook a moonlit harbor, sailing boats, roof gardens and open pavilion."
+    },
+    {
+      "id": "side-door-bays",
+      "bytes": 2337665,
+      "sha256": "896885f80c9f5eb526bfeacbf37c0f608b8668d05ea77be29b01209dd488a52b",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for Reveal Line, Neon Contours campaign, mission Side-door bays.\nPrimary request: A panoramic pixel-art nocturne of an original coastal maintenance hall built along a sheltered harbor. Three deep, unequal side-opening bays face a broad dry dock, one containing a compact yellow survey submersible on a cradle, one a coiled cable drum and overhead gantry, the third mostly dark with a softly lit side passage. Curving wind screens separate the approaches. The interesting choice is the side approach rather than a frontal doorway.\nStyle/medium: Deliberate 16/32-bit environmental pixel art with visibly chunky square color clusters, stepped silhouettes and limited shading ramps. Broad matte steel and concrete surfaces, not photorealism or smooth illustration.\nComposition: Full-bleed 2:1 panorama from a low elevated three-quarter angle looking along the dock. Asymmetric strong bay silhouettes, dark harbor water only at a narrow far edge. Submersible, cable reel and passage separated into different reveal areas; no literal game board or copied map geometry.\nLighting/palette: Deep navy/slate/petrol, muted copper framing, small amber work lights and restrained mustard survey craft. Damp reflective accents but no bloom. Reserve bright cyan, saturated magenta and pure white for gameplay; omit them here.\nConstraints: Original architecture and vehicle design; no characters, typography, numbers, markings, labels, logos, UI, grid, trails, enemy symbols, borders or watermark. One coherent wide image, not a collage.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/side-door-bays.png",
+      "alt": "Three coastal hangar bays reveal a small yellow submarine, cable reel and side passage beside quiet dock forecourts."
+    },
+    {
+      "id": "staggered-circuit",
+      "bytes": 2455491,
+      "sha256": "c25b53b961e7b29c16846d552b09e74c3d7cbe3d75681d565c1be6fd290f6f47",
+      "width": 1774,
+      "height": 887,
+      "prompt": "Use case: stylized-concept\nAsset type: Original raster reveal background for Reveal Line, Neon Contours campaign, mission Staggered circuit.\nPrimary request: A panoramic pixel-art scene of offset rooftops above an original seaside city at night. Three broad terraced roofs at different heights connect through short asymmetric stairways and covered skywalks. One roof holds a small copper wind sculpture, another a luminous glass lantern pavilion, and the near terrace has shallow planted beds. The network has visible alternative routes and open gaps, not a repeated checkerboard.\nStyle/medium: Crisp 16/32-bit environmental pixel art with deliberate visible square clusters, stepped roof silhouettes, sparse detail, limited shading ramps. No photorealism or smoothly painted textures.\nComposition: Full-bleed 2:1 landscape, high three-quarter viewpoint, rooftops dominate with only a narrow distant harbor horizon. Asymmetric layered shapes and calm surfaces; focal pavilion, sculpture and terraces occupy different reveal regions. Do not depict literal game foundations, trail lines or a board.\nLighting/palette: Midnight blue, desaturated petrol and slate, copper railings with small amber light pools and muted lavender shadows. Bright areas small, no saturated cyan/magenta or white glare. Quiet luminous mood, no bloom.\nConstraints: Original city architecture; no people, enemy/game characters, text, labels, digits, logos, UI, grid, border or watermark. One scene, not separate panels.\n",
+      "path": "game/content-design/assets/neon-pixel-r1/staggered-circuit.png",
+      "alt": "Staggered waterfront roof terraces connect a brass wind sculpture, lantern pavilion and planted foreground above a night bay."
+    }
+  ]
+}
