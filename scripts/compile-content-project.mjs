@@ -2,6 +2,7 @@
 import { readFile, stat } from 'node:fs/promises';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { resolveContentJourney } from '../game/content-design/journey.mjs';
+import { inspectContentPacing } from '../game/content-design/pacing.mjs';
 
 const limit = 4 * 1024 * 1024;
 async function input(path) {
@@ -24,12 +25,14 @@ async function main() {
   const [path, ...args] = process.argv.slice(2);
   if (!path)
     throw new Error(
-      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey [--pack ID]] [--mode solo|versus|team --difficulty gentle|standard|expert]',
+      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey | --pacing] [--pack ID] [--mode solo|versus|team] [--difficulty gentle|standard|expert] [--exclude-campaigns ID,ID (pacing only)]',
     );
   const options = {},
     seen = new Set();
   let check = false,
     journey = false,
+    pacing = false,
+    excludedCampaignIds,
     packId,
     missionId;
   for (let i = 0; i < args.length; i++) {
@@ -44,8 +47,12 @@ async function main() {
       journey = true;
       continue;
     }
+    if (arg === '--pacing') {
+      pacing = true;
+      continue;
+    }
     if (
-      !['--mission', '--pack', '--mode', '--difficulty'].includes(arg) ||
+      !['--mission', '--pack', '--mode', '--difficulty', '--exclude-campaigns'].includes(arg) ||
       !args[i + 1] ||
       args[i + 1].startsWith('--')
     )
@@ -53,15 +60,33 @@ async function main() {
     const value = args[++i];
     if (arg === '--mission') missionId = value;
     else if (arg === '--pack') packId = value;
+    else if (arg === '--exclude-campaigns') excludedCampaignIds = value.split(',');
     else options[arg.slice(2)] = value;
   }
-  if (check && (missionId || journey || packId || Object.keys(options).length))
+  if (
+    check &&
+    (missionId || journey || pacing || packId || excludedCampaignIds || Object.keys(options).length)
+  )
     throw new Error('--check cannot resolve a specific mission.');
   if (journey && missionId) throw new Error('--journey cannot select a single mission.');
-  if (packId && !journey) throw new Error('--pack requires --journey.');
-  if (!check && !missionId && !journey)
-    throw new Error('Choose --check, --mission ID or --journey.');
+  if (pacing && (journey || missionId || options.difficulty))
+    throw new Error(
+      '--pacing inspects authored ratings; do not combine it with a mission, Journey or preset.',
+    );
+  if (excludedCampaignIds && !pacing) throw new Error('--exclude-campaigns requires --pacing.');
+  if (packId && !journey && !pacing) throw new Error('--pack requires --journey or --pacing.');
+  if (!check && !missionId && !journey && !pacing)
+    throw new Error('Choose --check, --mission ID, --journey or --pacing.');
   const source = await input(path);
+  if (pacing) {
+    const result = inspectContentPacing(source, {
+      ...options,
+      ...(packId ? { packIds: [packId] } : {}),
+      ...(excludedCampaignIds ? { excludedCampaignIds } : {}),
+    });
+    process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    return;
+  }
   if (journey) {
     const result = resolveContentJourney(source, {
       ...options,

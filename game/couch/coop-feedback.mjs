@@ -1,5 +1,10 @@
 /** Describe observed failures without assigning blame or changing game state. */
 export function coopFailureFeedback(run, event) {
+  if (event?.cause === 'lethal-terrain')
+    return {
+      cause: 'Unclaimed lethal field caught a craft.',
+      advice: 'Enclose the crossed field before entering it. Support affects enemies, not terrain.',
+    };
   if (event?.cause === 'self-trail')
     return {
       cause: 'An unfinished line crossed itself.',

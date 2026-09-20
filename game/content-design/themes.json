@@ -79,6 +79,46 @@
         "impact": "retro-craft",
         "trapper": "retro-craft"
       }
+    },
+    {
+      "id": "signal-gardens",
+      "name": "Signal Gardens",
+      "subtitle": "Change the ground. Open another route.",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "dawn",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply",
+        "enemy": "Field keeper",
+        "boss": "Sentinel",
+        "currency": "Score",
+        "ability": "Ability"
+      },
+      "palette": {
+        "ink": "#162c3d",
+        "paper": "#edf1ed",
+        "muted": "#a9bac6",
+        "accent": "#ffd27b",
+        "safe": "#65dcc5",
+        "danger": "#ff7795",
+        "field": "#152b3c",
+        "grid": "#334957",
+        "sky": "#bacbd0",
+        "land": "#66838c"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
     }
   ]
 }

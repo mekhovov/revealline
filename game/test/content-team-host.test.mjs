@@ -4,6 +4,7 @@ import { page } from './helpers/coop-host.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
+import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 
 function pack(difficulty) {
   const source = createStarterProject('team-host-fixture');
@@ -13,6 +14,48 @@ function pack(difficulty) {
   source.missions[0].design.difficulty.coordination = 1;
   return createTeamTestPack(source, 'nearby-shore', difficulty);
 }
+
+test('real Team terrain import explains materials, applies lethal contact and retains exact rules on retry', async (t) => {
+  const project = createTeamOpeningCandidates();
+  project.missions[0].team.format = 'TeamMissionV2';
+  project.maps[0].foundations = [];
+  project.maps[0].spawns = [
+    { id: 'west', x: 0.5, y: 18.5 },
+    { id: 'east', x: 71.5, y: 18.5 },
+  ];
+  project.maps[0].terrain = [
+    { id: 'west', kind: 'lethal', x: 2, y: 18, w: 1, h: 1 },
+    { id: 'east', kind: 'slow', x: 68, y: 18, w: 2, h: 1 },
+  ];
+  const f = await page(t, { nativeFocus: true, nativeVisibility: true }),
+    source = JSON.stringify(createTeamTestPack(project, 'twin-landings', 'expert'));
+  await f.selectFile(source);
+  assert.equal(f.$('coop-pack-status').dataset.state, 'ready', f.$('coop-pack-status').textContent);
+  assert.equal(f.$('coop-difficulty').value, 'expert');
+  assert.equal(f.$('coop-difficulty').disabled, true);
+  assert.match(f.$('coop-threat-help').textContent, /Paired dashes/);
+  assert.match(f.$('coop-threat-help').textContent, /Framed crosses/);
+  f.$('coop-start').click();
+  f.tick(3);
+  f.tap('KeyD');
+  f.tick(18);
+  assert.match(f.$('coop-state-0').textContent, /Rescue/);
+  assert.equal(f.$('coop-state-1').textContent, 'On safe ground');
+  assert.match(f.$('coop-message').textContent, /Unclaimed lethal field caught a craft/);
+  assert.equal(f.$('coop-coverage').textContent, '0.0%');
+  f.$('coop-pause').click();
+  f.$('coop-retry').click();
+  assert.equal(f.$('coop-discard-confirm').closest('dialog').open, true);
+  f.$('coop-discard-confirm').click();
+  f.tick(3);
+  assert.equal(f.$('coop-reserves').textContent, '1 reserve');
+  assert.equal(f.$('coop-state-0').textContent, 'On safe ground');
+  f.tap('KeyD');
+  f.tick(18);
+  assert.match(f.$('coop-state-0').textContent, /Rescue/);
+  assert.match(f.$('coop-message').textContent, /Unclaimed lethal field caught a craft/);
+  assert.equal(JSON.stringify(createTeamTestPack(project, 'twin-landings', 'expert')), source);
+});
 
 for (const [difficulty, reserves] of [
   ['gentle', 4],

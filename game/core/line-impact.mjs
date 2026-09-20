@@ -85,6 +85,8 @@ export function nextLineImpactSeed(state, enemyPlans, trace, horizon) {
   ];
   for (const [i, enemy] of state.enemies.entries()) {
     if (
+      (state.level.classic.lineImpact.version === 'line-impact.v2' &&
+        !state.level.classic.lineImpact.actorIds.includes(enemy.id)) ||
       impact.seededActorIds.includes(enemy.id) ||
       (enemy.type === 'relay-sentinel' && state.encounter?.defeated) ||
       (enemy.type === 'claimed-rover' && enemy.classic.mode !== 'active')

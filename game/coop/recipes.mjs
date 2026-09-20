@@ -3,6 +3,9 @@ import {
   COOP_FOUNDATION_LEVEL_VERSION,
   COOP_FOUNDATION_RULESET,
   COOP_FOUNDATION_PACK_VERSION,
+  COOP_TERRAIN_LEVEL_VERSION,
+  COOP_TERRAIN_RULESET,
+  COOP_TERRAIN_PACK_VERSION,
 } from './foundations.mjs';
 
 export const COOP_RECIPE_VERSION = 'revealline-coop-level-recipe.v1';
@@ -306,10 +309,14 @@ export function validateCoopPack(pack) {
   if (!keys(pack, ['version', 'ruleset', 'id', 'revision', 'name', 'levels']))
     return result(['A co-op pack must be a plain data object with supported fields.']);
   const errors = [];
-  const foundations = pack.version === COOP_FOUNDATION_PACK_VERSION;
+  const terrain = pack.version === COOP_TERRAIN_PACK_VERSION;
+  const foundations = pack.version === COOP_FOUNDATION_PACK_VERSION || terrain;
   if (pack.version !== COOP_PACK_VERSION && !foundations)
     errors.push('Unsupported co-op pack version; solo packs are a different format.');
-  if (pack.ruleset !== (foundations ? COOP_FOUNDATION_RULESET : COOP_RULESET))
+  if (
+    pack.ruleset !==
+    (terrain ? COOP_TERRAIN_RULESET : foundations ? COOP_FOUNDATION_RULESET : COOP_RULESET)
+  )
     errors.push('This co-op pack requires a different ruleset.');
   const validRevision = foundations
     ? typeof pack.revision === 'string' && pack.revision.length > 0 && pack.revision.length <= 80
@@ -328,7 +335,12 @@ export function validateCoopPack(pack) {
     errors.push(...validation.errors.map((error) => `Level ${i + 1}: ${error}`));
     if (
       validation.valid &&
-      level.version !== (foundations ? COOP_FOUNDATION_LEVEL_VERSION : COOP_LEVEL_VERSION)
+      level.version !==
+        (terrain
+          ? COOP_TERRAIN_LEVEL_VERSION
+          : foundations
+            ? COOP_FOUNDATION_LEVEL_VERSION
+            : COOP_LEVEL_VERSION)
     )
       errors.push(
         `Level ${i + 1}: ${foundations ? 'This foundation pack requires a matching Team runtime edition.' : 'This historical pack cannot contain a newer Team runtime edition.'}`,

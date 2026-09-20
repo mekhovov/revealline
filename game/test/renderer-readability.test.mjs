@@ -46,6 +46,28 @@ function surface(width = 294) {
   return { ctx, calls };
 }
 
+for (const width of [294, 1152])
+  test(`${width}px carrier bolt respects readable body scaling and the unchanged contact radius`, () => {
+    const enemy = { ...actor, impactCarrier: true };
+    const frame = createActorPresentation()
+      .sample([enemy], {
+        screenScale: width / 1152,
+        canvasCSSWidth: width,
+        reduced: true,
+      })
+      .get(enemy.id);
+    const s = surface(width);
+    assert.equal(drawClassicEnemy(s.ctx, enemy, theme.palette, {}, frame), true);
+    const tip = s.calls.find((c) => c.op === 'moveTo');
+    assert.equal(tip.args[1], -Math.max(11, frame.diameter / 2));
+    assert.ok((-tip.args[1] * 2 * width) / 1152 >= 11);
+    assert.ok(s.calls.some((c) => c.op === 'arc' && c.args[2] === actor.radius * 16));
+    assert.equal(
+      s.calls.some((c) => c.op === 'drawImage'),
+      false,
+    );
+  });
+
 for (const width of [294, 390, 600, 1152])
   test(`R4 dark palette: ${width}px arena keeps light cut core and bounded readable width`, () => {
     assert.equal(theme.palette.paper, '#0b121b');

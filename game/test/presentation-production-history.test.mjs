@@ -307,10 +307,17 @@ test('Journey music review retains fpv33 source evidence and every earlier immut
   );
   const current = await importThemeBundle(new Blob([currentRaw]), { decodeImage: null });
   const stage = await reconstructPinnedProduction(oracle, current);
+  const reviewedOracle = JSON.parse(
+    await fs.readFile(
+      new URL('./fixtures/production-journey-p05-fpv34.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  const reviewed = await reconstructPinnedProduction(reviewedOracle, current);
   const before = resolvePresentation(stage.document),
-    after = resolvePresentation(current.document);
+    after = resolvePresentation(reviewed.document);
   assert.equal(stage.document.revision, 33);
-  assert.equal(current.document.revision, 34);
+  assert.equal(reviewed.document.revision, 34);
   for (const [slot, asset] of Object.entries(before.assets)) {
     if (!slot.startsWith('audio.')) {
       assert.deepEqual(after.assets[slot], asset, `Unchanged non-audio binding ${slot}`);
@@ -325,9 +332,9 @@ test('Journey music review retains fpv33 source evidence and every earlier immut
     assert.deepEqual(after.assets[slot].recipe, asset.recipe);
     assert.equal(after.assets[slot].file, null);
   }
-  assert.equal(current.document.assets.length, stage.document.assets.length + 8);
-  assert.equal(current.document.themes.length, stage.document.themes.length + 1);
-  assert.equal(current.assets.size, stage.assets.size);
+  assert.equal(reviewed.document.assets.length, stage.document.assets.length + 8);
+  assert.equal(reviewed.document.themes.length, stage.document.themes.length + 1);
+  assert.equal(reviewed.assets.size, stage.assets.size);
   const reproduced = retainProductionHistory(
     (await createFieldKitProduction()).document,
     current.document,
@@ -403,7 +410,7 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
-test('the unchanged source-pinned feedback recipe reviews remain selected', async () => {
+test('Livewire feedback dependencies reopen review without borrowing the v0.54 approval', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   for (const slotId of [
@@ -419,35 +426,51 @@ test('the unchanged source-pinned feedback recipe reviews remain selected', asyn
     'effect.pressure',
   ]) {
     const asset = resolved.assets[slotId];
-    assert.equal(asset.quality.stage, 'reviewed', slotId);
-    assert.ok(asset.quality.evidence.some((entry) => entry.includes('Scoped v0.54 source review')));
+    assert.equal(asset.quality.stage, 'source', slotId);
+    assert.ok(
+      asset.provenance.source.endsWith(
+        'sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
+      ),
+    );
+    assert.match(asset.provenance.source, /game\/ui\/lane-presentation\.mjs/);
+    assert.match(asset.provenance.source, /game\/content-design\/actor-marker\.mjs/);
+    assert.equal(
+      asset.quality.evidence.some((entry) => entry.includes('Scoped v0.54 source review')),
+      false,
+    );
   }
 });
 
-test('P05 UI and Journey P02 audio reviews cover exact current inputs', async () => {
+test('DOM ownership reopens UI review while unchanged Journey P02 audio keeps its approval', async () => {
   const production = await createFieldKitProduction();
   const resolved = resolvePresentation(production.document);
   const reviewed = production.document.slots.filter((slot) => ['ui', 'audio'].includes(slot.group));
   assert.equal(reviewed.length, 32);
   for (const slot of reviewed) {
     const asset = resolved.assets[slot.id];
-    assert.equal(asset.quality.stage, 'reviewed', slot.id);
-    const review =
-      slot.group === 'ui' ? 'Scoped P05 source review' : 'Scoped Journey P02 music source review';
-    assert.ok(
-      asset.quality.evidence.some((entry) => entry.includes(review)),
-      slot.id,
-    );
     if (slot.group === 'ui') {
+      assert.equal(asset.quality.stage, 'source', slot.id);
       assert.ok(
         asset.provenance.source.endsWith(
-          'sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766',
+          'sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
         ),
         slot.id,
       );
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.css/);
       assert.match(asset.provenance.source, /game\/ui\/operation-status\.mjs/);
+      assert.match(asset.provenance.source, /game\/presentation\/dom-ownership\.mjs/);
+      assert.equal(
+        asset.quality.evidence.some((entry) => entry.includes('Scoped P05 source review')),
+        false,
+      );
     } else {
+      assert.equal(asset.quality.stage, 'reviewed', slot.id);
+      assert.ok(
+        asset.quality.evidence.some((entry) =>
+          entry.includes('Scoped Journey P02 music source review'),
+        ),
+        slot.id,
+      );
       assert.match(asset.provenance.source, /game\/ui\/audio-master\.mjs/);
     }
   }

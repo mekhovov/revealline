@@ -1,6 +1,7 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
+import { traceContentActor } from '../content-design/actor-marker.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
@@ -143,6 +144,17 @@ export function classicView(run) {
         lineImpacts.push({ id, ...point, direction });
       }
     }
+    const level = own(run, 'level');
+    const definition = level == null ? null : own(level, 'classic');
+    const impactDefinition = definition == null ? null : own(definition, 'lineImpact');
+    const carrierIds = new Set();
+    if (impactDefinition && own(impactDefinition, 'version') === 'line-impact.v2') {
+      for (const id of dense(own(impactDefinition, 'actorIds'), 64)) {
+        check(typeof id === 'string' && id.length > 0 && id.length <= 80 && !carrierIds.has(id));
+        carrierIds.add(id);
+      }
+      check(carrierIds.size > 0);
+    }
     const erosion = [];
     const enemies = dense(own(run, 'enemies'), 24).map((enemy) => {
       const id = identity(enemy),
@@ -217,15 +229,19 @@ export function classicView(run) {
         stunned: stunnedUntil > time + 1e-8,
         slowed: !active('enemy-freeze') && (active('enemy-slow') || slowUntil > time + 1e-8),
         ...(pressure ? { pressure } : {}),
+        ...(carrierIds.has(id) ? { impactCarrier: true } : {}),
       };
     });
+    for (const id of carrierIds)
+      check(enemies.some((enemy) => enemy.id === id && enemy.type === 'bouncer'));
     const roles = [
       ['bouncer', 'field enemy'],
       ['contour-patrol', 'contour patrol'],
       ['claimed-rover', 'claimed rover'],
       ['eroder', 'eroder'],
+      ['lane-boss', 'lane emitter'],
     ].flatMap(([type, label]) => {
-      const count = enemies.filter((enemy) => enemy.type === type).length;
+      const count = enemies.filter((enemy) => enemy.type === type && !enemy.impactCarrier).length;
       const plural = label.endsWith('enemy') ? `${label.slice(0, -5)}enemies` : `${label}s`;
       return count ? [`${count} ${count === 1 ? label : plural}`] : [];
     });
@@ -240,6 +256,9 @@ export function classicView(run) {
       erosion,
       summary: [
         ...roles,
+        ...(carrierIds.size
+          ? [`${carrierIds.size} trail-impact carrier${carrierIds.size === 1 ? '' : 's'}`]
+          : []),
         ...(terrain.some((cell) => cell.kind === 'slow') ? ['Slow ground active'] : []),
         ...(terrain.some((cell) => cell.kind === 'lethal') ? ['Lethal ground active'] : []),
         ...(powerups.length
@@ -412,6 +431,40 @@ export function drawClassicEnemy(
   presentation = null,
   body = null,
 ) {
+  if ((enemy?.type === 'bouncer' && enemy.impactCarrier) || enemy?.type === 'lane-boss') {
+    const laneImage = enemy.type === 'lane-boss' && (body?.image ?? images.boss);
+    if (laneImage && presentation)
+      drawPresentedActor(
+        ctx,
+        presentation,
+        palette,
+        laneImage,
+        body?.geometry ?? images.presentationSprites?.boss,
+        body?.record,
+      );
+    ctx.save();
+    ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
+    // A stable functional cue accompanies an uploaded body rather than replacing it.
+    ctx.fillStyle = enemy.stunned ? palette.muted : palette.danger;
+    ctx.strokeStyle = PRESENTATION_INK;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    traceContentActor(
+      ctx,
+      enemy.type === 'lane-boss' ? 'lane-boss' : 'impact-carrier',
+      0,
+      0,
+      Math.max(11, (presentation?.diameter ?? 22) / 2),
+    );
+    if (!laneImage || !presentation) ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, enemy.radius * SIZE, 0, Math.PI * 2);
+    ctx.strokeStyle = PRESENTATION_PLATE;
+    ctx.stroke();
+    ctx.restore();
+    return true;
+  }
   if (!enemy || !['contour-patrol', 'claimed-rover', 'eroder'].includes(enemy.type)) return false;
   if (presentation) {
     const role = { 'contour-patrol': 'contour', 'claimed-rover': 'rover', eroder: 'eroder' }[
