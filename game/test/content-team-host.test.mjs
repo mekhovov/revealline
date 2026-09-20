@@ -34,6 +34,7 @@ for (const [difficulty, reserves] of [
     );
     assert.match(f.$('coop-enemy-help').textContent, /Field keepers/);
     assert.doesNotMatch(f.$('coop-enemy-help').textContent, /Hunter/);
+    assert.match(f.$('coop-picture-status').textContent, /Start remains a separate action/);
     f.$('coop-start').click();
     f.tick();
     assert.equal(f.$('coop-menu').hidden, true);
@@ -44,6 +45,8 @@ for (const [difficulty, reserves] of [
     );
     assert.equal(f.$('coop-progress').value, 0);
     f.$('coop-pause').click();
+    assert.match(f.$('coop-picture-status').textContent, /ready for this attempt/);
+    assert.doesNotMatch(f.$('coop-picture-status').textContent, /Start remains a separate action/);
     f.$('coop-lobby').click();
     f.$('coop-discard-confirm').click();
     await f.$('coop-pack-reset').onclick();

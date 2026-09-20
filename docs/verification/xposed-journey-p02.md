@@ -122,3 +122,14 @@ Most are below the ordinary 45–150 second human target. Human route planning a
 failure/retry time are absent here; do not inflate quotas or add waiting solely
 to reach that target. Prioritize Second landing and Long rail for comparison,
 redesign or removal if their decisions prove trivial during playtesting.
+
+## Integrated Team presentation correction
+
+Independent native review of candidate P01 identified that an imported Team
+attempt still announced "Start remains a separate action" after Start and Pause.
+P02 retires that lobby-only copy when the exact picture is accepted for an attempt,
+without changing picture identity, preparation, controls or simulation. All three
+pinned presets assert the pre-Start and paused status boundaries. The combined
+Team-import/automatic-retry/Next/picture/recovery-copy host cohort passes57/57
+(35.1 seconds). This is modeled-host regression evidence; native recheck and full
+hosted qualification remain separate gates.

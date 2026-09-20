@@ -1569,7 +1569,11 @@ export function bootCoop() {
     if (pictureSelection && pictureSelection !== selection) retirePicture();
     pictureSelection = selection;
     if (previousPicture && previousPicture !== selection) previousPicture.lease?.dispose();
-    pictureUI();
+    pictureUI(
+      binding
+        ? 'Team picture is ready for this attempt.'
+        : 'Procedural Team arena is ready for this attempt.',
+    );
     generation++;
     startCoop(run);
     document.body.classList.add('playing');
