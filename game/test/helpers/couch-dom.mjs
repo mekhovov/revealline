@@ -331,6 +331,8 @@ export class Document extends Events {
     this.documentElement = new Element(this, 'html');
     this.documentElement.parentNode = this;
     this.children.push(this.documentElement);
+    this.head = new Element(this, 'head');
+    this.documentElement.append(this.head);
     this.body = new Element(this, 'body');
     this.documentElement.append(this.body);
     this.activeElement = this.body;
