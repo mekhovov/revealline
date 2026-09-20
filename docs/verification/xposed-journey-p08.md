@@ -109,3 +109,22 @@ e5ff21b3 through4dedbe90. That packet is not full native24-recipe approval.
 Independent native inspection subsequently found that revision35 lacks the
 starter Team picture associations still pinned to34: Start correctly fails
 closed. This requires an exact successor association, not broader fallback.
+
+The bounded real factory/history/compiler operation at036353c3 advances fpv35
+to36 with34 source-stage recipe successors (24 UI,10 effects). All127 payloads
+and generated CSS are byte-identical; every earlier record is preserved and the
+factory/history operation is idempotent. Only the portable ledger and three
+compiled metadata files were regenerated, not original art or a full build.
+Candidate ledger SHA-256 is
+`c7acf59b7e6fcd843c7d1c44bf740c9b81d707ba88d42fc07a30a88d298003f9`.
+Readiness correctly remains closed for34 source recipes. Exact CLI reproduction
+and hosted whole-source checks remain separate from this in-memory proof.
+
+Both Team starter associations and the opt-in historical-import policy now name
+exact fpv36. Pack, level, original picture hash, size, dimensions and asset revisions
+are unchanged. The34 real-byte/lease and negative-identity tests pass on both
+Node20.19.5 and22.22.2. Sparse originals are read-only exact Git blobs with pinned
+hashes; no image decoder or native-readiness proof is inferred from these tests.
+An initial run passed all23 starter tests but could not load the sparse historical
+fixture; adding its exact read-only hash-pinned input restored the full34-test run.
+Native successor recheck remains required before release.
