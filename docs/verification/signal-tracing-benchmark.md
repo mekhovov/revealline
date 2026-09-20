@@ -50,3 +50,26 @@ shape/option bounds and the deliberately measured ambiguity failure. No real-ima
 accuracy, browser resampling/crop/decode, accessible suggestion UI, correction-time,
 device or human evaluation is established. Those remain required before exposing
 assisted suggestions in Studio; manual authoring remains available meanwhile.
+
+## Explicit background sample extension
+
+The author may now supply a second RGB sample identifying the background. It is
+never inferred from image borders. The samples must differ by at least eight
+channel units. Within the existing target tolerance, a pixel is selected only
+when its maximum-channel distance favors the target by at least eight units.
+Ambiguous pixels become explicit abstentions; malformed or insufficiently distinct
+samples are refused. Default behavior, bounds, ownership, rectangle refusal and
+the Inspect → explicit Apply boundary are unchanged.
+
+The benchmark retains all six original fixtures, including the 2330-false-positive
+failure. A seventh run reuses the exact ambiguous pixels with an author-provided
+background sample: 50/50 selected cells, zero false positives/negatives, IoU1,
+three rectangles. Seven repetitions on Node20.19.5 measured a local median3.338ms;
+this is not a browser/device performance claim. Pixels midway between the two
+samples instead produce zero selected and2380 uncertain cells, with no rectangles.
+
+Seven regression tests pass, zero skips/failures (391.044ms on Node20.19.5),
+including unchanged source pixels and unchanged default ambiguity. Changed-source
+lint and formatting pass. This narrow synthetic improvement does not establish
+real-image accuracy, correction effort or semantic recognition. The prototype
+remains unexposed in Studio pending those checks.

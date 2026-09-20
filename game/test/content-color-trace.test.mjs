@@ -76,6 +76,10 @@ test('color meaning is explicit and bounded; unsafe pixel/options shapes are rej
     { surface: 'spawn' },
     { color: [0, 0] },
     { color: [256, 0, 0] },
+    { backgroundColor: [0, 0] },
+    { backgroundColor: [0, -1, 0] },
+    { backgroundColor: TRACE_SAMPLE_COLOR },
+    { backgroundColor: [40, 180, 147] },
     { tolerance: 65 },
     { tolerance: -1 },
     { minMatches: 4 },
@@ -130,11 +134,15 @@ test('color meaning is explicit and bounded; unsafe pixel/options shapes are rej
 
 test('benchmark exposes ambiguity failure instead of claiming general screenshot recognition', () => {
   const report = benchmarkColorTracing({ repeats: 1 });
-  assert.equal(report.rows.length, 6);
+  assert.equal(report.rows.length, 7);
   for (const row of report.rows.slice(0, 3)) assert.equal(row.iou, 1, row.name);
   const ambiguous = report.rows.find((row) => row.name === 'ambiguous-background');
   assert(ambiguous.falsePositive > 2000);
   assert(ambiguous.iou < 0.05);
+  const explicitBackground = report.rows.find((row) => row.name === 'explicit-background-sample');
+  assert.equal(explicitBackground.iou, 1);
+  assert.equal(explicitBackground.falsePositive, 0);
+  assert.equal(explicitBackground.explicitBackgroundSample, true);
   const invalidProposal = proposeColorTrace(
     colorTraceBenchmarkFixtures().find((row) => row.name === 'ambiguous-background').source,
     options,
@@ -145,4 +153,39 @@ test('benchmark exposes ambiguity failure instead of claiming general screenshot
   assert.equal(JSON.stringify(source), before, 'A broad color match cannot bypass map validation.');
   assert.match(report.limitations, /no photograph/);
   for (const repeats of [0, 26, 0.5]) assert.throws(() => benchmarkColorTracing({ repeats }));
+});
+
+test('an explicit contrasting background sample removes the known flat false positives without changing default behavior', () => {
+  const { source, truth } = colorTraceBenchmarkFixtures().find(
+    (f) => f.name === 'ambiguous-background',
+  );
+  const before = source.data.slice();
+  const result = proposeColorTrace(source, {
+    ...options,
+    backgroundColor: TRACE_SAMPLE_COLOR.map((channel) => channel + 10),
+  });
+  assert.deepEqual(result.selectedCells, truth);
+  assert.equal(result.status, 'inspect-required');
+  assert.equal(result.rectangles.length, 3);
+  assert.equal(result.uncertainCells.length, 0);
+  assert.deepEqual(source.data, before);
+  assert.equal(
+    proposeColorTrace(source, options).selectedCells.length,
+    2380,
+    'The original unsupervised color ambiguity remains measured, not hidden.',
+  );
+});
+
+test('pixels between target and background samples are abstentions, never inferred collision', () => {
+  const { source } = colorTraceBenchmarkFixtures()[0];
+  const midpoint = TRACE_SAMPLE_COLOR.map((channel) => channel + 5);
+  for (let at = 0; at < source.data.length; at += 4) source.data.set([...midpoint, 255], at);
+  const result = proposeColorTrace(source, {
+    ...options,
+    backgroundColor: TRACE_SAMPLE_COLOR.map((channel) => channel + 10),
+  });
+  assert.equal(result.status, 'no-match');
+  assert.equal(result.selectedCells.length, 0);
+  assert.equal(result.uncertainCells.length, 2380);
+  assert.deepEqual(result.rectangles, []);
 });
