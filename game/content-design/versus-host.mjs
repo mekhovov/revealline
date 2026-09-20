@@ -4,6 +4,7 @@ import { validateTheme } from '../content.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { createMissionCard } from './mission-card.mjs';
 
 /** Uses the shared compiler in Versus mode. The real host still owns createDuel,
  * controllers, paired ticks and race results; no Solo run substitutes for them. */
@@ -64,6 +65,13 @@ export function createCandidateVersusHost(source, { themes } = {}) {
     catalog,
     rows: Object.freeze(rows),
     owns: (row) => owned.has(row),
+    card(mission, difficulty = 'standard') {
+      if (catalog.find(mission?.id) !== mission) return null;
+      const manifest = executions
+        .select(mission.packId, mission.campaignId, difficulty)
+        ?.manifests.find((item) => item.missionId === mission.levelId);
+      return manifest ? createMissionCard(manifest) : null;
+    },
     row(mission, difficulty) {
       if (catalog.find(mission?.id) !== mission) return null;
       return rows.find((row) => row.mission === mission && row.difficulty === difficulty) ?? null;

@@ -768,6 +768,7 @@ try {
     contentScope = shell.scope();
     contentBusy = true;
     contentError = null;
+    let adopted = false;
     const current = () =>
       !disposed &&
       !controller.signal.aborted &&
@@ -778,9 +779,17 @@ try {
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
-      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your completed Results are kept until the picture is ready…`,
+      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your current race is kept until the picture is ready…`,
       stage: 'verifying',
-      isCurrent: current,
+      isCurrent: () =>
+        current() ||
+        (adopted &&
+          !disposed &&
+          !controller.signal.aborted &&
+          controller === contentController &&
+          match === attempt.match &&
+          roundRecipe === attempt.recipe &&
+          generation === attempt.raceId),
     });
     preparationDisplay = display;
     updateMenu();
@@ -811,6 +820,7 @@ try {
       finished = false;
       if (attempt.resetWins) won = [0, 0];
       nextAttempt = null;
+      adopted = true;
       retirePrevious();
       if (
         disposed ||
@@ -1194,6 +1204,7 @@ try {
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
       $('race-journey-preferences-message').textContent = snapshot.error;
+      journeyChooser?.refresh();
       showMaps();
       $('race-level').value = candidateJourney.row(
         roundRecipe?.entry.mission ?? initialJourneyMission,
@@ -1246,6 +1257,8 @@ try {
       profile: journeyProfile,
       mode: 'versus',
       onChoose: chooseMission,
+      getCard: (mission) =>
+        candidateJourney.card(mission, journeyPreferences.snapshot().difficulty),
       onPause: () => {
         journeySkipArmed = null;
         pause();

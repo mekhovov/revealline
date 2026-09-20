@@ -7427,6 +7427,9 @@ try {
       catalog: journeyCatalog,
       profile: journeyProfile,
       onChoose: (mission) => launchJourneyMission(mission),
+      getCard: candidateHost
+        ? (mission) => candidateHost.card(mission, journeyPreferences.snapshot().difficulty)
+        : undefined,
       onPause: () => {
         pause(true);
         clearInput();
@@ -7486,6 +7489,7 @@ try {
       show('journey-preferences-recovery', !snapshot.durable);
       $('journey-preferences-message').textContent = snapshot.error;
       refreshDifficulty();
+      journeyChooser?.refresh();
     });
     $('journey-preferences-retry').onclick = () => {
       const restoreFocus = document.activeElement === $('journey-preferences-retry');

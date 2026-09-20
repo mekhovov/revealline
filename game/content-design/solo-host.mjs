@@ -2,6 +2,7 @@ import { CLASSES } from '../core/index.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { createContentAttemptPreparer } from './attempt.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { createMissionCard } from './mission-card.mjs';
 
 /** Explicit candidate rollout adapter. Identity membership, not imported flags,
  * controls this host path. Legacy catalogs and published media stay separate. */
@@ -41,6 +42,18 @@ export function createCandidateSoloHost(source, { themes, buildVersion } = {}) {
     catalog,
     preparer,
     owns: (entry) => owned.has(entry),
+    card(mission, difficulty = 'standard') {
+      if (catalog.find(mission?.id) !== mission) return null;
+      const manifest = entries
+        .find(
+          (entry) =>
+            entry.sourcePackId === mission.packId &&
+            entry.campaignId === mission.campaignId &&
+            entry.difficulty === difficulty,
+        )
+        ?.manifests.find((item) => item.missionId === mission.levelId);
+      return manifest ? createMissionCard(manifest) : null;
+    },
     select(mission, difficulty) {
       if (catalog.find(mission?.id) !== mission) return null;
       return entries.find(

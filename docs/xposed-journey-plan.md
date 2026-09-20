@@ -153,6 +153,10 @@ intent refreshes without changing the current flight. The opt-in paired-board
 with real races, cross-campaign Next, two-action Skip, flat chooser, independent
 Versus receipts and failed-preparation retention. Timed race decisions alone do
 not grant mission clears. See `docs/verification/xposed-journey-versus-host.md`.
+Both authored hosts share engine-derived starting-map cards, challenge bands,
+next-preset labels, route decisions and optional practice challenges in the flat
+chooser. No live capture prediction or mastery award is implied. See
+`docs/verification/xposed-journey-mission-cards.md` for native layout limitations.
 Broader host/controller qualification, Team adoption, human validation and release
 gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
