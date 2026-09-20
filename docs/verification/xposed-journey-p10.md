@@ -106,7 +106,27 @@ endpoint instead of the closure event time and omitted the rules-owned body
 radius; the fixtures were corrected without changing engine semantics. Failed
 local output is not counted as passing evidence.
 
-Full Crosswind greyboxes, reference adaptations, original
-assets, preset/route/mastery/seed/delay matrices, Team and human acceptance remain
+## Original Crosswind candidates
+
+Seven distinct greyboxes now use the shared compiler and an explicit Studio
+Inspect/Apply entry: six core missions in two three-mission arcs, and the optional
+Return currents Remix. Read the arrows introduces the only new rule. Survey
+markers and Windbreak weave practice it; Compass array, Outer loop and Long wave
+combine known pressure with different directional route decisions. Bands10–11
+continue Relay Labyrinth without a handling, lives or enemy-tier reset. All five
+assigned stills have direct reinspection and non-final adaptation crosswalks in
+`../research/crosswind-reference-crosswalk.md`; historical provenance is unchanged.
+
+The candidate/Studio-readiness cohort passes19/19 on Node20 and22, including all42
+preset/steering first-return cases, five-second initial decision space, no first-cut
+victory, unchanged coverage denominator, immediate marked-cell neutralization,
+genuine initial field anchors, optional-Remix exclusion and exact CLI/Studio parity.
+Initial full-clear solver probes exposed an overly empty exterior in Outer loop;
+one measured exterior keeper was added without changing the shared speed recipe.
+These probes are not yet the full committed route qualification matrix and do not
+prove the proposed human-duration or mastery targets. All artwork is explicitly
+greybox/null; the Horizon palette is a candidate fallback, not Crosswind's final art.
+
+Original assets, full preset/route/mastery/seed/delay matrices, Team and human acceptance remain
 open. Team rejects successor editions rather than silently dropping their rules.
 No public Journey selects this work; hosted qualification and release remain open.
