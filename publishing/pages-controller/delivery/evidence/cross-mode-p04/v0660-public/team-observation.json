@@ -1,0 +1,46 @@
+{
+  "status": "OBSERVED_PUBLIC_TEAM_JOURNEYS_PASS_WITH_LIMITS",
+  "at": "2026-09-20T01:17:50.635154+00:00",
+  "observer": "root CUA browser1 tab62",
+  "source": "dae39ba7d4f1a64e309566f9cacca826958e7de2",
+  "publisher": "7b898a7ba4a5007397d02d8911e0577668d3bc99",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.66.0/site/game/couch/relay-rescue.html?return=solo",
+  "viewport": [
+    1280,
+    720
+  ],
+  "evidence": "Native AX observations and inline screenshots in root conversation. No exported screenshot bytes or hashes claimed.",
+  "journeys": [
+    {
+      "case": "entry",
+      "observed": "Public root redirected v0.66 title; keyboard Shift+Tab/Return entered Team; separate Start in lobby."
+    },
+    {
+      "case": "artA",
+      "observed": "Owned two-level local bundle via real chooser; Start remained separate, focused. P1 D/P2 Left won both levels. First earned image industrial radio yard, second orchard. Escape returned to View picture opener; Next began second at0%/0:00/fresh directions. Final results omitted Next. Retry reset same Second picture to0%/0:00; explicit Escape paused. Win times0:24 and0:10 include idle interaction time, not difficulty measurements."
+    },
+    {
+      "case": "rejected imports",
+      "observed": "After Change setup and explicit Discard, corrupt-body hash failure, unsupported-theme exact collection failure and reserved-changed identity failure each displayed Pack unchanged with Retry pack focused. Prior Second picture selection and ready artwork stayed present; no auto-start. These used file chooser pointer/AX clicks."
+    },
+    {
+      "case": "artB",
+      "observed": "Same gameplay pack replacement accepted, reset lobby First picture and focused separate Start. Real wins showed swapped first orchard and second industrial image. Times0:04/0:09 include idle interaction time. Final results omitted Next. Earned picture title/focus correct."
+    }
+  ],
+  "inputs": {
+    "keyboard": "Menu entry, Start, continuous D/Left flight, picture/Back, Next, Retry, Pause, Change setup and confirm",
+    "pointer": "File chooser input activation; browser-owned chooser setFiles API",
+    "physicalController": false,
+    "physicalTouch": false
+  },
+  "limitations": [
+    "Pending cancellation not observed:93KB bundles completed too quickly.",
+    "Corrupt container does not establish actual network404/missing-file recovery.",
+    "Held-key live rescue unverified:documented CUA has no hold-duration interface.",
+    "Empty-enemy owned fixtures are progression/presentation tests, not difficulty/playtest acceptance.",
+    "No audio/offline/device/zoom qualification.",
+    "Studio native tests separate and pending."
+  ],
+  "cleanup": "Root-owned Teamtab62 closed after final picture. User tabs preserved."
+}
