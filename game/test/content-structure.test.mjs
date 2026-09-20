@@ -5,6 +5,7 @@ import { editContentStructure as edit } from '../content-design/structure.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { forkMissionMap, createDraftHistory } from '../content-design/drafts.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS } from '../content-design/limits.mjs';
 
 test('campaign band changes validate every existing member without retuning or moving missions', () => {
   const source = createStarterProject();
@@ -361,9 +362,10 @@ test('container duplicate IDs remain bounded and generated collisions or budgets
   );
   assert.deepEqual(collision, before);
   const full = createStarterProject();
-  for (let i = 1; i < 256; i++)
+  for (let i = 1; i < CONTENT_PROJECT_ITEM_LIMITS.missions; i++)
     full.missions.push({ ...structuredClone(full.missions[0]), id: `mission-${i}` });
   const fullBefore = structuredClone(full);
+  assert.equal(compileContentProject(full).missions.length, CONTENT_PROJECT_ITEM_LIMITS.missions);
   assert.throws(
     () =>
       edit(full, {
@@ -373,7 +375,7 @@ test('container duplicate IDs remain bounded and generated collisions or budgets
         name: 'Overflow',
         sourceId: 'opening',
       }),
-    /missions/,
+    /missions exceeds its item budget/,
   );
   assert.deepEqual(full, fullBefore);
 });
