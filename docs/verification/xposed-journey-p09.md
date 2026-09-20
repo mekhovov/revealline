@@ -68,8 +68,7 @@ or a human difficulty benchmark.
 
 ## Remaining gates
 
-Studio gate/objective CRUD, copy-on-write and dependency-aware deletion; new
-native observations; Relay Labyrinth greybox
+New native observations; Relay Labyrinth greybox
 decisions and route qualifications; preset/steering/seed/race/mastery checks;
 original art and contrast; Team successor; human pacing; reviewed integration,
 version allocation, immutable release and Pages acceptance all remain open.
@@ -95,3 +94,24 @@ The nine-file transport/presentation cohort passes 92/92 on Node20 and Node22
 `mission-brief`, `content-capture-overlay`, `presentation-renderer`,
 `renderer-readability`). Preview/Team/mastery/import/host regression coverage is
 recorded separately; no physical controller or human clear is inferred.
+
+The seven-file preview/Team/mastery/import/host regression cohort also passes
+64/64 on both Node versions, including real modeled foundation host controls.
+
+## Studio relay authoring increment
+
+Authors explicitly enable the successor edition on one selected mission before
+using its relay controls. Create, reshape, relink and remove validate geometry
+and links together through the shared compiler. Both map and mission content
+identities bind commands, so same-revision replacements invalidate stale forms.
+Copy-on-write preserves shared consumers and old revisions. Removing a linked
+objective reports its dependent gates; removing a gate does not delete its
+objective or silently downgrade the edition. Removal requires two activations,
+and edits or selection changes cancel the armed confirmation. Team is disabled
+and compiler-rejected, not projected onto Solo.
+
+Existing draft history/autosave/recovery/export remain the only persistence path.
+The nine-file authoring/recovery cohort passes 59/59 on Node20 and Node22
+(`content-relays`, `content-objectives`, `content-geometry-edit`, `content-drafts`,
+`content-structure`, `content-studio`, `content-studio-empty`,
+`content-image-authoring`, `content-recovery`). Native proof is still pending.

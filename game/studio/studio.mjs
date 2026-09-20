@@ -33,6 +33,7 @@ import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
+import { createRelayEditor } from './relay-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
 
@@ -127,6 +128,18 @@ const objectiveEditor = createObjectiveEditor({
     return true;
   },
 });
+const relayEditor = createRelayEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
 function status(text, error = false) {
   $('status').textContent = text;
   $('status').dataset.error = String(error);
@@ -207,6 +220,7 @@ function inspectBoard(trailCells = []) {
   geometryEditor.sync();
   bonusEditor.sync();
   objectiveEditor.sync();
+  relayEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);

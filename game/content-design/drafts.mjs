@@ -226,7 +226,7 @@ export function forkMissionMap(source, missionId, changes) {
     patch = boundedJSON(changes);
   exactKeys(
     patch,
-    ['name', 'width', 'height', 'walls', 'foundations', 'terrain', 'spawns'],
+    ['name', 'width', 'height', 'walls', 'foundations', 'terrain', 'spawns', 'format', 'gates'],
     'map edit',
   );
   const mission = project.missions.find((m) => m.id === missionId);
