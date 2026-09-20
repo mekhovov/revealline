@@ -63,8 +63,38 @@ was corrected. Three authoring files pass23/23 in1.664seconds. The post-fix
 Rover/Horizon/Border route cohort passes49/49 in47.399seconds, with zero failures,
 cancellations or skips, Node20.19.5. Lint, formatting and diff checks pass.
 
-Remaining: authored Rover learning arcs/Remix, reference adaptations, full legal
-routes and alternatives, broader historical route pins, native Studio/game
+## Authored greybox checkpoint
+
+Six core maps and one optional Remix now form two three-mission learning arcs.
+The first introduces reclaimed roamers; the second combines already-known
+frontier, terrain and return-network choices. The final Neon core and first Rover
+core share band5; later Rover maps reach band6 without changing player physics
+or measured actor tiers. Each mission has its own route decision, lesson,
+counterplay, capture consequence and optional mastery hypothesis. Six numbered
+reference adaptations retain original hashes and non-final dispositions in
+`../research/rover-reference-crosswalk.md`.
+
+All42 mission/preset/steering combinations have legal no-loss full-clear input
+fixtures with public replay verification. All42 paired-board repetitions finish
+equally with independent terrain/foundation buffers. All42 first-return checks
+and five-second initial idle checks pass. Empty auto-fill regions are absent;
+only field keepers retain field, not dormant roamers. Studio's inspect-only
+Rover button and CLI use the same manifests, catalogue and advisory pacing
+projection; neither applies edits or publishes candidates automatically.
+
+Two unpublished layouts could clear before encountering an active roamer.
+Their exact inputs/identities/checkpoints remain reproducible negative evidence.
+Stepped return and Broken yard revision2 place a warned roamer on distant broad
+foundations. New checks retain safe spawn distance and existing120actor-tick
+activation. No quota/speed change or new mandatory objective was introduced.
+Sorting yard remains a short omniscient feasibility route with both roamers
+activated, not a measured human-duration claim.
+
+The three greybox/preview/route files pass22/22, zero failures/cancellations/skips,
+33.513seconds on Node20.19.5. Changed-source ESLint, Prettier and diff checks pass.
+This is an independent source candidate, not a hosted gate or released campaign.
+
+Remaining: optional-goal alternatives, broader historical route pins, native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
 Team mission, human balance/comprehension, final-source hosted gates and reviewed
 release/Pages. This foundation alone does not complete P05.
