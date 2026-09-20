@@ -314,7 +314,8 @@
       "id": "archive-35",
       "repository": "mekhovov/revealline-archive-35",
       "versions": [
-        "v0.68.0"
+        "v0.68.0",
+        "v0.68.1"
       ]
     }
   ]
