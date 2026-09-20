@@ -1315,3 +1315,108 @@ kbd {
     grid-template-columns: 140px minmax(0, 1fr);
   }
 }
+
+/* Keep arena and Start together; full guidance remains in the existing reading panel. */
+.field-kit #coop-menu {
+  display: block;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding: 16px 0 24px;
+}
+#coop-menu .menu-copy {
+  min-width: 0;
+}
+#coop-menu #coop-title {
+  font-size: var(--fk-text-display);
+  line-height: 1.15;
+  margin: 8px 0;
+}
+#coop-menu :is(.eyebrow, .lead, #coop-boot) {
+  margin-block: 8px;
+}
+#coop-menu .lead {
+  max-width: none;
+}
+#coop-menu .setup {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 0.7fr);
+  margin-block: 14px;
+}
+#coop-menu .setup :is(label, select) {
+  min-width: 0;
+  width: 100%;
+}
+.coop-launch-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+#coop-menu .coop-picture-preview {
+  margin: 0;
+}
+#coop-menu .coop-preview-frame {
+  width: 100%;
+  max-width: 480px;
+}
+.coop-launch-actions {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.coop-launch-actions > button {
+  width: 100%;
+}
+.coop-launch-actions .objective {
+  margin: 0;
+  padding: 0 0 8px;
+  border-top: 0;
+}
+.coop-launch-actions .objective strong {
+  display: block;
+}
+.coop-launch-actions .pack-picker {
+  margin-top: 0;
+}
+#coop-lobby-tools .coop-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 8px;
+  margin-top: 12px;
+}
+#coop-lobby-tools .coop-picture {
+  flex-basis: 100%;
+}
+#coop-lobby-tools .coop-picture p {
+  margin-block: 0 6px;
+  font-size: var(--fk-text-secondary);
+}
+#coop-lobby-tools #coop-help {
+  border-top: 0;
+  padding: 0;
+}
+#coop-lobby-tools #coop-help[open] {
+  flex-basis: 100%;
+}
+#coop-help-reading .briefing {
+  border: 0;
+  background: none;
+  padding: 0;
+}
+#coop-help-reading .briefing ol {
+  margin-block: 12px;
+  gap: 12px;
+}
+@media (max-width: 680px) {
+  #coop-menu .setup {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .coop-launch-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  #coop-menu .coop-preview-frame {
+    max-width: 360px;
+  }
+}

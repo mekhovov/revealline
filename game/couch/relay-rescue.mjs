@@ -594,13 +594,13 @@ export function bootCoop() {
       ['coop-data-reading', 'coop-data-read', 'Team game data', 'coop-data-unit'],
     ],
   });
-  let revealingPauseResize = false;
-  function revealPausedAction(event) {
-    if (revealingPauseResize || event.target !== window) return;
-    revealingPauseResize = true;
+  let revealingMenuResize = false;
+  function revealMenuAction(event) {
+    if (revealingMenuResize || event.target !== window) return;
+    revealingMenuResize = true;
     try {
       const target = document.activeElement,
-        panel = $('coop-overlay'),
+        panel = $(run ? 'coop-overlay' : 'coop-menu'),
         attempt = run,
         epoch = generation,
         visit = settingsVisit;
@@ -609,17 +609,18 @@ export function bootCoop() {
         !inactive &&
         foreground() &&
         run === attempt &&
-        run?.status === 'paused' &&
+        (!attempt || run.status === 'paused') &&
         generation === epoch &&
         settingsVisit === visit &&
         !settingsDialog.open &&
         !earnedDialog.open &&
+        !discovery?.isOpen() &&
         !departure &&
         !panel.hidden &&
         panel.contains(target) &&
         document.activeElement === target;
       // Resize owns no opener or future focus. The reading adapter owns its
-      // separate text region; only the current paused action is considered here.
+      // separate text region; only the current lobby or paused action is considered here.
       if (
         !current() ||
         !target?.matches('button,a[href],select,input,textarea,summary') ||
@@ -646,15 +647,15 @@ export function bootCoop() {
         (rect.left >= left && rect.right <= right && rect.top >= top && rect.bottom <= bottom)
       )
         return;
-      // Match the overlay's existing 8px scroll-padding. Recheck after the final
+      // Reserve the focus ring inside the current menu's visible bounds. Recheck after the final
       // style read: a newer focus, dialog, attempt or lifecycle vetoes this reveal.
       if (!current() || !visibleAction(target) || !current()) return;
       target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
     } finally {
-      revealingPauseResize = false;
+      revealingMenuResize = false;
     }
   }
-  window.addEventListener('resize', revealPausedAction);
+  window.addEventListener('resize', revealMenuAction);
   function clear() {
     input.clear();
     batch.release();
@@ -3251,7 +3252,7 @@ export function bootCoop() {
     reading.destroy();
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
-    window.removeEventListener('resize', revealPausedAction);
+    window.removeEventListener('resize', revealMenuAction);
     window.removeEventListener('blur', suspend);
     window.removeEventListener('focus', returned);
     window.removeEventListener('pageshow', returned);
