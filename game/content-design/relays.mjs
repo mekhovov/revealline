@@ -39,7 +39,10 @@ export function editContentRelay(source, missionId, input) {
     mission.relayLinks = [];
     gates = [];
   } else {
-    required(mission.format === 'MissionDesignV2', 'Explicitly enable the relay edition first.');
+    required(
+      ['MissionDesignV2', 'MissionDesignV3'].includes(mission.format),
+      'Explicitly enable the relay edition first.',
+    );
     required(stableId(command.id), 'Give the gate a stable ID.');
     gates = structuredClone(map.gates);
     const index = gates.findIndex((gate) => gate.id === command.id);
@@ -70,7 +73,10 @@ export function editContentRelay(source, missionId, input) {
       }
     }
   }
-  project = forkMissionMap(project, missionId, { format: 'MapDesignV2', gates });
+  project = forkMissionMap(project, missionId, {
+    format: mission.format === 'MissionDesignV3' ? 'MapDesignV3' : 'MapDesignV2',
+    gates,
+  });
   mission = project.missions.find((entry) => entry.id === missionId);
   mission.revision = `draft-${dataIdentity({ previous: mission.revision, command, map: mission.map })}`;
   project.revision = `draft-${dataIdentity(project)}`;

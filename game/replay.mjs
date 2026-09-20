@@ -5,7 +5,8 @@ import {
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
   FOUNDATION_VERSIONS,
-  RELAY_VERSIONS,
+  DIRECTIONAL_VERSIONS,
+  isRelayRuleset,
   isFoundationRuleset,
   isClassicRuleset,
   resolveVersions,
@@ -49,8 +50,15 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  versions.ruleset === RELAY_VERSIONS.ruleset
-    ? [...SECTIONS, 'encounter', 'classic', 'foundations', 'relays']
+  isRelayRuleset(versions.ruleset)
+    ? [
+        ...SECTIONS,
+        'encounter',
+        'classic',
+        'foundations',
+        'relays',
+        ...(versions.ruleset === DIRECTIONAL_VERSIONS.ruleset ? ['directionalFields'] : []),
+      ]
     : versions.ruleset === FOUNDATION_VERSIONS.ruleset
       ? [...SECTIONS, 'encounter', 'classic', 'foundations']
       : versions.ruleset === CLASSIC_VERSIONS.ruleset
@@ -353,13 +361,16 @@ function authoritativeSections(state, versions) {
           },
         }
       : {}),
-    ...(versions.ruleset === RELAY_VERSIONS.ruleset
+    ...(isRelayRuleset(versions.ruleset)
       ? {
           relays: {
             definition: structuredClone(state.level.relayGates),
             state: structuredClone(state.relay),
           },
         }
+      : {}),
+    ...(versions.ruleset === DIRECTIONAL_VERSIONS.ruleset
+      ? { directionalFields: structuredClone(state.level.directionalFields) }
       : {}),
   };
 }

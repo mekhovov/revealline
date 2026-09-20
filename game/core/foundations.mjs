@@ -1,13 +1,25 @@
-import { compileMapGeometry, compileRelayMapGeometry } from '../content-design/map.mjs';
+import {
+  compileMapGeometry,
+  compileRelayMapGeometry,
+  compileDirectionalMapGeometry,
+} from '../content-design/map.mjs';
 import { required } from '../data-json.mjs';
 import { CELL } from './registry.mjs';
 import { relayGeometryDefinition } from './relay-gates.mjs';
+import { directionalGeometryDefinition } from './directional-fields.mjs';
 
 /** Shared geometry boundary for new editions only. Legacy maps retain their compiler. */
 export function foundationGeometry(level) {
   required(Array.isArray(level.foundations), 'Foundation editions require explicit foundations.');
-  const relays = level.version === 'xonix-level.v6';
-  return (relays ? compileRelayMapGeometry : compileMapGeometry)({
+  const directional = level.version === 'xonix-level.v7';
+  const relays = level.version === 'xonix-level.v6' || directional;
+  return (
+    directional
+      ? compileDirectionalMapGeometry
+      : relays
+        ? compileRelayMapGeometry
+        : compileMapGeometry
+  )({
     width: level.width,
     height: level.height,
     walls: level.walls ?? [],
@@ -15,11 +27,12 @@ export function foundationGeometry(level) {
     terrain: level.classic?.terrain ?? [],
     spawns: [{ id: 'player', ...level.spawn }],
     ...(relays ? { gates: relayGeometryDefinition(level) } : {}),
+    ...(directional ? { speedZones: directionalGeometryDefinition(level) } : {}),
   });
 }
 
 export function validateFoundationOccupants(level, geometry) {
-  if (level.version === 'xonix-level.v6')
+  if (['xonix-level.v6', 'xonix-level.v7'].includes(level.version))
     for (const item of [
       ...(level.classic?.powerups ?? []),
       ...(level.supplies ?? []),

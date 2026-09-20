@@ -267,7 +267,8 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
-    const relays = version?.value === 'xonix-level.v6';
+    const directional = version?.value === 'xonix-level.v7';
+    const relays = version?.value === 'xonix-level.v6' || directional;
     const foundations = version?.value === 'xonix-level.v5' || relays;
     const classic = version?.value === 'xonix-level.v4' || foundations;
     const wide = version?.value === 'xonix-level.v3' || classic;
@@ -307,6 +308,7 @@ export function validateLevel(level) {
         ...(classic ? ['classic'] : []),
         ...(foundations ? ['foundations'] : []),
         ...(relays ? ['relayGates'] : []),
+        ...(directional ? ['directionalFields'] : []),
       ],
       'level',
     );
@@ -361,7 +363,7 @@ export function validateLevel(level) {
 
 export function normalizedLevel(level) {
   if (
-    ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(
+    ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(
       Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value,
     )
   )
@@ -378,7 +380,9 @@ export function normalizedLevel(level) {
       (level[key] ?? []).map((p) => p.id),
     ),
   );
-  if (['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(level.version))
+  if (
+    ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(level.version)
+  )
     for (const item of [...level.classic.terrain, ...level.classic.powerups]) ids.add(item.id);
   let homeId = 'home-hangar';
   for (let n = 1; ids.has(homeId); n++) homeId = `home-hangar-${n}`;

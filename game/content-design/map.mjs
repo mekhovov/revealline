@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { CELL } from '../core/registry.mjs';
+import { compileDirectionalZones } from '../core/directional-fields.mjs';
 
 const geometryKeys = ['width', 'height', 'walls', 'foundations', 'terrain', 'spawns'];
 const integer = (value, min, max) => Number.isInteger(value) && value >= min && value <= max;
@@ -25,9 +26,17 @@ export function compileRelayMapGeometry(source) {
   return compileGeometry(source, true);
 }
 
-function compileGeometry(source, relays) {
+export function compileDirectionalMapGeometry(source) {
+  return compileGeometry(source, true, true);
+}
+
+function compileGeometry(source, relays, directional = false) {
   const map = copy(source);
-  exactKeys(map, [...geometryKeys, ...(relays ? ['gates'] : [])], 'map geometry');
+  exactKeys(
+    map,
+    [...geometryKeys, ...(relays ? ['gates'] : []), ...(directional ? ['speedZones'] : [])],
+    'map geometry',
+  );
   required(map.width === 72 && map.height === 36, 'Map geometry must be 72 × 36.');
   const { width, height } = map;
   const cells = Array(width * height).fill(CELL.FIELD);
@@ -115,6 +124,9 @@ function compileGeometry(source, relays) {
       x ? index - 1 : -1,
     ].filter((n) => n >= 0);
   };
+  const speedZones = directional
+    ? compileDirectionalZones(map.speedZones, { width, height, cells, terrain })
+    : null;
   const componentAt = Array(cells.length).fill(-1);
   function components(kind) {
     const groups = [];
@@ -188,15 +200,24 @@ function compileGeometry(source, relays) {
     fieldComponents,
     diagnostics,
     ...(relays ? { gates } : {}),
+    ...(directional ? { speedZones } : {}),
   });
 }
 
 export function compileMapDesign(source) {
   const map = copy(source);
-  const relays = map.format === 'MapDesignV2';
-  const keys = [...geometryKeys, ...(relays ? ['gates'] : [])];
+  const directional = map.format === 'MapDesignV3';
+  const relays = map.format === 'MapDesignV2' || directional;
+  const keys = [
+    ...geometryKeys,
+    ...(relays ? ['gates'] : []),
+    ...(directional ? ['speedZones'] : []),
+  ];
   exactKeys(map, ['format', 'id', 'revision', 'name', ...keys], 'map');
-  required(map.format === 'MapDesignV1' || relays, 'Expected MapDesignV1 or MapDesignV2.');
+  required(
+    map.format === 'MapDesignV1' || relays,
+    'Expected MapDesignV1, MapDesignV2 or MapDesignV3.',
+  );
   required(stableId(map.id), 'Map needs a stable id.');
   required(
     typeof map.revision === 'string' && map.revision.length > 0 && map.revision.length <= 80,
@@ -206,7 +227,13 @@ export function compileMapDesign(source) {
     typeof map.name === 'string' && map.name.trim().length > 0 && map.name.length <= 160,
     'Map needs a name.',
   );
-  const geometry = (relays ? compileRelayMapGeometry : compileMapGeometry)(
+  const geometry = (
+    directional
+      ? compileDirectionalMapGeometry
+      : relays
+        ? compileRelayMapGeometry
+        : compileMapGeometry
+  )(
     Object.fromEntries(keys.filter((key) => Object.hasOwn(map, key)).map((key) => [key, map[key]])),
   );
   const geometryIdentity = dataIdentity({
@@ -216,9 +243,10 @@ export function compileMapDesign(source) {
     terrain: geometry.terrain,
     spawns: geometry.spawns,
     ...(relays ? { gates: geometry.gates } : {}),
+    ...(directional ? { speedZones: geometry.speedZones } : {}),
   });
   return freeze({
-    format: relays ? 'ResolvedMapV2' : 'ResolvedMapV1',
+    format: directional ? 'ResolvedMapV3' : relays ? 'ResolvedMapV2' : 'ResolvedMapV1',
     source: map,
     geometryIdentity,
     geometry,
