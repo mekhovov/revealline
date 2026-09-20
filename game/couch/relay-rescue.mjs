@@ -242,6 +242,7 @@ export function bootCoop({
     nextOperation = null,
     startPermitted = true;
   let automaticRetry = null;
+  let journeySkip = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
   let inactive = !foreground();
   let previousPads = new Map();
@@ -922,6 +923,14 @@ export function bootCoop({
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
     $('coop-pause').disabled = !running();
+    const skipDestination = journeyNavigation();
+    $('coop-journey-skip').hidden = !running() || !skipDestination?.next;
+    $('coop-journey-skip-confirm').hidden =
+      !['paused', 'lost'].includes(run?.status) || !skipDestination?.next || loopStopped;
+    $('coop-journey-skip-confirm').textContent =
+      journeySkip?.run === run && journeySkip.generation === generation
+        ? 'Confirm skip'
+        : 'Skip mission';
     discoveryControls();
     if (!show) return;
     const won = run.status === 'won',
@@ -1379,6 +1388,25 @@ export function bootCoop({
   };
   // Follow the accepted content snapshot. Imports retain their own order and
   // recipes even when IDs match built-ins or a source catalogue later changes.
+  function journeyNavigation() {
+    if (
+      acceptedPicture?.state !== 'ready' ||
+      acceptedPicture.pack !== attemptPack ||
+      acceptedPicture.levelId !== attemptLevel?.id ||
+      !candidateJourney?.owns(acceptedPicture.journeyRow)
+    )
+      return null;
+    const row = acceptedPicture.journeyRow;
+    if (JSON.stringify(row.level) !== JSON.stringify(attemptLevel)) return null;
+    const destination = candidateJourney.destination(row);
+    return {
+      ...destination,
+      journey: true,
+      row,
+      nextRow: destination.next,
+      next: destination.next?.level ?? null,
+    };
+  }
   function teamDestination() {
     if (
       run?.status !== 'won' ||
@@ -1387,17 +1415,7 @@ export function bootCoop({
       acceptedPicture.levelId !== attemptLevel?.id
     )
       return null;
-    if (candidateJourney?.owns(acceptedPicture.journeyRow)) {
-      const row = acceptedPicture.journeyRow;
-      if (JSON.stringify(row.level) !== JSON.stringify(attemptLevel)) return null;
-      const destination = candidateJourney.destination(row);
-      return {
-        ...destination,
-        journey: true,
-        nextRow: destination.next,
-        next: destination.next?.level ?? null,
-      };
-    }
+    if (candidateJourney?.owns(acceptedPicture.journeyRow)) return journeyNavigation();
     return coopPackDestination(attemptPack, attemptLevel);
   }
   function nextStatus(text) {
@@ -1422,7 +1440,11 @@ export function bootCoop({
     operation.detach();
     try {
       if (announce && !disposed)
-        nextStatus('Next arena cancelled. Your result and picture are still here.');
+        nextStatus(
+          operation.skipped
+            ? 'Skip cancelled. Your attempt and picture are still here.'
+            : 'Next arena cancelled. Your result and picture are still here.',
+        );
     } finally {
       operation.controller.abort();
       operation.selection.lease?.dispose();
@@ -1441,10 +1463,10 @@ export function bootCoop({
     )
       return;
     if (restore && run === operation.run && generation === operation.generation && foreground())
-      $('coop-next').focus({ preventScroll: true });
+      operation.action.focus({ preventScroll: true });
   }
-  async function nextArena() {
-    const navigation = teamDestination(),
+  async function nextArena({ skipRow = null } = {}) {
+    const navigation = skipRow ? journeyNavigation() : teamDestination(),
       destination = navigation?.next;
     if (
       !destination ||
@@ -1456,7 +1478,8 @@ export function bootCoop({
       discovery?.isOpen() ||
       settingsDialog.open ||
       earnedDialog.open ||
-      departure
+      departure ||
+      (skipRow && (navigation.row !== skipRow || !['paused', 'lost'].includes(run?.status)))
     )
       return;
     const recipe = { level: structuredClone(destination), options: currentRecipe().options };
@@ -1474,6 +1497,9 @@ export function bootCoop({
       pack: attemptPack,
       settingsVisit,
       selection,
+      skipped: skipRow,
+      action: $(skipRow ? 'coop-journey-skip-confirm' : 'coop-next'),
+      status: run.status,
       controller: new AbortController(),
       detach: () => {},
     };
@@ -1486,7 +1512,7 @@ export function bootCoop({
       generation === operation.generation &&
       acceptedPicture === operation.picture &&
       attemptPack === operation.pack &&
-      run.status === 'won' &&
+      run.status === operation.status &&
       !loopStopped &&
       !settingsDialog.open &&
       !earnedDialog.open &&
@@ -1508,12 +1534,14 @@ export function bootCoop({
       !departure;
     nextOperation = operation;
     const focusChanged = (event) => {
-      if (event.target !== $('coop-next') && event.target !== $('coop-next-cancel')) cancelNext();
+      if (event.target !== operation.action && event.target !== $('coop-next-cancel')) cancelNext();
     };
     document.addEventListener('focusin', focusChanged);
     operation.detach = () => document.removeEventListener('focusin', focusChanged);
     try {
-      nextStatus(`Preparing ${destination.name}… Your result stays available.`);
+      nextStatus(
+        `Preparing ${destination.name}… Your ${skipRow ? 'attempt' : 'result'} stays available.`,
+      );
       if (!current()) return;
       $('coop-next-cancel').focus({ preventScroll: true });
       await presentationPage.ready;
@@ -1641,7 +1669,7 @@ export function bootCoop({
       if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
         previous.picture.lease?.dispose();
       if (!adopted(candidate)) return;
-      candidateProgress?.started(selection.journeyRow, candidate);
+      candidateProgress?.started(selection.journeyRow, candidate, { skipped: skipRow });
       if (!adopted(candidate)) return;
       message(`${destination.name}. Choose fresh directions when you are ready.`);
       input.focus();
@@ -1683,7 +1711,7 @@ export function bootCoop({
         !nextOperation
       ) {
         nextStatus(
-          `Could not start ${destination.name}. Your result is unchanged. Try Next again.`,
+          `Could not start ${destination.name}. Your ${skipRow ? 'attempt' : 'result'} is unchanged. ${skipRow ? 'Choose Skip again when ready.' : 'Try Next again.'}`,
         );
         try {
           render();
@@ -1698,7 +1726,7 @@ export function bootCoop({
           !settingsDialog.open &&
           !earnedDialog.open
         )
-          $('coop-next').focus({ preventScroll: true });
+          operation.action.focus({ preventScroll: true });
       }
     } finally {
       if (nextOperation === operation) cancelNext();
@@ -1715,6 +1743,66 @@ export function bootCoop({
   }
   $('coop-next').onclick = () => void nextArena();
   $('coop-next-cancel').onclick = () => cancelNext({ restore: true });
+
+  function cancelJourneySkip() {
+    if (!journeySkip) return;
+    journeySkip = null;
+    if (!disposed) overlay({ focus: false });
+  }
+  function skipJourney() {
+    const destination = journeyNavigation();
+    if (
+      !destination?.next ||
+      disposed ||
+      inactive ||
+      !foreground() ||
+      loopStopped ||
+      nextOperation ||
+      discovery?.isOpen() ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure ||
+      !['running', 'paused', 'lost'].includes(run?.status)
+    )
+      return;
+    if (
+      journeySkip?.run === run &&
+      journeySkip.generation === generation &&
+      journeySkip.picture === acceptedPicture
+    ) {
+      const row = journeySkip.row;
+      journeySkip = null;
+      $('coop-journey-skip-confirm').textContent = 'Skip mission';
+      void nextArena({ skipRow: row });
+      return;
+    }
+    const attempt = run,
+      epoch = generation;
+    pause({ focus: false });
+    if (
+      disposed ||
+      run !== attempt ||
+      generation !== epoch ||
+      !foreground() ||
+      inactive ||
+      settingsDialog.open ||
+      earnedDialog.open ||
+      departure ||
+      discovery?.isOpen()
+    )
+      return;
+    journeySkip = { run, generation, picture: acceptedPicture, row: destination.row };
+    $('coop-journey-skip-confirm').textContent = 'Confirm skip';
+    $('coop-overlay-copy').textContent =
+      `Skip to ${destination.next.name}? No clear is awarded. You can return through Browse Team arenas.`;
+    $('coop-journey-skip-confirm').focus({ preventScroll: true });
+  }
+  const skipFocusChanged = (event) => {
+    if (event.target !== $('coop-journey-skip-confirm')) cancelJourneySkip();
+  };
+  document.addEventListener('focusin', skipFocusChanged);
+  $('coop-journey-skip').onclick = skipJourney;
+  $('coop-journey-skip-confirm').onclick = skipJourney;
 
   function canOpenDiscovery() {
     return (
@@ -2253,6 +2341,7 @@ export function bootCoop({
     };
   }
   function start(recipe = currentRecipe(), prepared = null) {
+    cancelJourneySkip();
     cancelAutomaticRetry();
     cancelNext();
     nextStatus('');
@@ -2691,6 +2780,7 @@ export function bootCoop({
   document.addEventListener('focusin', retryFocusChanged);
   const suspend = () => {
     if (disposed) return;
+    cancelJourneySkip();
     music?.suspend();
     discovery?.cancel();
     cancelDiscoveryPreparation();
@@ -3307,6 +3397,9 @@ export function bootCoop({
     cancelNext({ announce: false });
     $('coop-next').onclick = null;
     $('coop-next-cancel').onclick = null;
+    $('coop-journey-skip').onclick = null;
+    $('coop-journey-skip-confirm').onclick = null;
+    document.removeEventListener('focusin', skipFocusChanged);
     // Retire dialog callbacks before native close or preference disposal can
     // reenter. No terminal cleanup restores focus or resumes the attempt.
     settingsOwner = null;

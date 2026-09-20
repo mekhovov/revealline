@@ -159,3 +159,17 @@ test('unknown or archived saved Team cursor falls back without deleting historic
   assert.equal(progress.initial('standard'), first);
   assert(progress.snapshot().clears.team['retired/mission']);
 });
+
+test('admitted skip publishes its successor cursor and reversible skip together to observers', async () => {
+  const progress = createTeamJourneyProgress(journey, { backend: memory() });
+  await progress.load();
+  const observed = [];
+  progress.subscribe(() => observed.push(progress.snapshot()));
+  observed.length = 0;
+  assert(progress.started(second, createCoop(second.level), { skipped: first }));
+  assert.equal(observed.length, 1);
+  assert.equal(observed[0].cursors.team, second.mission.id);
+  assert.deepEqual(observed[0].skipped.team, [first.mission.id]);
+  assert.deepEqual(observed[0].clears.team, {});
+  assert.equal(progress.started(first, createCoop(first.level), { skipped: second }), false);
+});
