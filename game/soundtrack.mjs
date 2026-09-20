@@ -172,6 +172,7 @@ export function resolveSoundtrackLibrary(value) {
       'assignments',
       'selection',
       ...(catalogue ? ['catalogTracks', 'installedTrackIds', 'tags', 'listening'] : []),
+      ...(catalogue && Object.hasOwn(library, 'bonusAlbums') ? ['bonusAlbums'] : []),
     ],
     'soundtrack library',
   );
@@ -185,6 +186,29 @@ export function resolveSoundtrackLibrary(value) {
   );
   library.tracks = library.tracks.map(resolveAudioTrack);
   if (catalogue) {
+    if (Object.hasOwn(library, 'bonusAlbums')) {
+      required(
+        Array.isArray(library.bonusAlbums) && library.bonusAlbums.length <= 32,
+        'Invalid bonus album count.',
+      );
+      const albumIds = new Set();
+      for (const album of library.bonusAlbums) {
+        ownKeys(album, ['id', 'trackIds', 'downloaded'], 'bonus album ownership');
+        required(
+          customId(album.id) && !albumIds.has(album.id) && typeof album.downloaded === 'boolean',
+          'Invalid bonus album ownership.',
+        );
+        albumIds.add(album.id);
+        required(
+          Array.isArray(album.trackIds) &&
+            album.trackIds.length > 0 &&
+            album.trackIds.length <= SOUNDTRACK_LIMITS.customTracks &&
+            new Set(album.trackIds).size === album.trackIds.length &&
+            album.trackIds.every((id) => library.tracks.some((track) => track.id === id)),
+          'Bonus album references missing or duplicate tracks.',
+        );
+      }
+    }
     required(
       Array.isArray(library.catalogTracks) &&
         library.catalogTracks.length <= SOUNDTRACK_LIMITS.catalogueTracks,
@@ -338,14 +362,23 @@ export function resolveSoundtrackSelection(value, context = {}) {
     source = 'default';
   }
   const playlist = playlists.find((p) => p.id === id);
-  if (library.format === SOUNDTRACK_FORMAT_V2 && library.listening.installedOnly) {
-    const ids = installedSelection(library, scope, playlist.trackIds);
+  if (library.format === SOUNDTRACK_FORMAT_V2) {
+    const unavailable = new Set(soundtrackOffloadedBonusTrackIds(library));
+    const candidates = playlist.trackIds.filter((trackId) => !unavailable.has(trackId));
+    const ids = library.listening.installedOnly
+      ? installedSelection(library, scope, candidates)
+      : candidates;
     return freezeSoundtrack({
       playlist: { ...playlist, trackIds: ids },
       source,
-      ...(!ids.length
-        ? { notice: 'No tracks in this playlist are installed. Download its recordings first.' }
-        : {}),
+      ...(candidates.length !== playlist.trackIds.length
+        ? {
+            notice:
+              'Album recordings are not downloaded. Use Download again in Community soundtracks.',
+          }
+        : !ids.length
+          ? { notice: 'No tracks in this playlist are installed. Download its recordings first.' }
+          : {}),
     });
   }
   return freezeSoundtrack({ playlist, source });
@@ -501,12 +534,31 @@ export function soundtrackReferencedTracks(value) {
 }
 export function soundtrackStoredTracks(value) {
   const library = resolveSoundtrackLibrary(value);
+  const owned = new Set((library.bonusAlbums ?? []).flatMap((album) => album.trackIds));
+  const downloaded = new Set(
+    (library.bonusAlbums ?? [])
+      .filter((album) => album.downloaded)
+      .flatMap((album) => album.trackIds),
+  );
   return Object.freeze([
-    ...library.tracks,
+    ...library.tracks.filter((track) => !owned.has(track.id) || downloaded.has(track.id)),
     ...(library.catalogTracks || []).filter((track) =>
       library.installedTrackIds.includes(track.id),
     ),
   ]);
+}
+/** Offloaded bonus pins never authorize a network request; only retained local ownership plays. */
+export function soundtrackOffloadedBonusTrackIds(value) {
+  const library = resolveSoundtrackLibrary(value);
+  const owned = new Set((library.bonusAlbums ?? []).flatMap((album) => album.trackIds));
+  const requiredHashes = new Set(
+    soundtrackStoredTracks(library).map((track) => track.asset.sha256),
+  );
+  return Object.freeze(
+    library.tracks
+      .filter((track) => owned.has(track.id) && !requiredHashes.has(track.asset.sha256))
+      .map((track) => track.id),
+  );
 }
 export function soundtrackTracks(value) {
   return Object.freeze([...BUILTIN_SOUNDTRACK_TRACKS, ...soundtrackReferencedTracks(value)]);
@@ -592,6 +644,9 @@ function automaticSelection(library, context) {
   const { mode, genres, installedOnly } = library.listening;
   let tracks = [...library.catalogTracks, ...library.tracks];
   tracks = tracks.filter((track) => matchesMode(trackTags(library, track), mode, genres));
+  const unavailable = new Set(soundtrackOffloadedBonusTrackIds(library));
+  const hasOffloaded = tracks.some((track) => unavailable.has(track.id));
+  tracks = tracks.filter((track) => !unavailable.has(track.id));
   if (installedOnly) {
     const present = new Set(
       installedSelection(
@@ -617,7 +672,16 @@ function automaticSelection(library, context) {
     );
     if (themed.length) tracks = themed;
   }
-  if (!tracks.length) return soundtrackFallbackSelection(mode, genres);
+  if (!tracks.length) {
+    const fallback = soundtrackFallbackSelection(mode, genres);
+    return hasOffloaded
+      ? freezeSoundtrack({
+          ...fallback,
+          notice:
+            'Album recordings are not downloaded. Use Download again in Community soundtracks.',
+        })
+      : fallback;
+  }
   return freezeSoundtrack({
     playlist: {
       id: `builtin.listening.${mode}.${scene}`,

@@ -843,6 +843,39 @@ test('an explicit catalogue playlist with no installed recordings stays empty of
   assert.match(h.player.snapshot().notice, /Download/);
 });
 
+test('offloaded bonus tracks are skipped without fetching and an empty explicit album asks for Download again', async (t) => {
+  const base = upgradeSoundtrackLibrary(original.library);
+  let reads = 0;
+  const h = setup({
+    library: {
+      ...base,
+      bonusAlbums: [{ id: 'qa.bonus', trackIds: [original.track.id], downloaded: false }],
+      selection: { playlistId: 'qa.mix' },
+    },
+    readAsset: async () => {
+      reads++;
+      throw new Error('Offloaded bonus recordings must not be fetched by playback');
+    },
+  });
+  t.after(() => h.player.dispose());
+  await h.player.play();
+  await finishSynth(h);
+  assert.equal(h.player.snapshot().track.kind, 'synth');
+  assert.equal(reads, 0);
+  h.player.setLibrary({
+    ...base,
+    playlists: [{ ...base.playlists[0], trackIds: [original.track.id] }],
+    selection: { playlistId: 'qa.mix' },
+    bonusAlbums: [{ id: 'qa.bonus', trackIds: [original.track.id], downloaded: false }],
+  });
+  await h.player.next();
+  const state = h.player.snapshot();
+  assert.equal(state.playing, false);
+  assert.equal(state.playlistId, 'qa.mix');
+  assert.match(state.notice, /Download again/);
+  assert.equal(reads, 0);
+});
+
 test('catalogue metadata drives playback and same-ID theme selection changes the next rendition', async (t) => {
   const catalogTracks = ['circuit', 'river'].map((theme) => ({
     ...original.track,

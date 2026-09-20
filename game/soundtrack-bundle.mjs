@@ -113,7 +113,13 @@ export async function exportSoundtrackBundle(value, sourceAssets, { signal } = {
   await verifyAssets(library, assets, { signal, complete: true });
   const v2 = library.format === SOUNDTRACK_FORMAT_V2;
   const portableLibrary = v2
-    ? { ...library, installedTrackIds: library.catalogTracks.map((track) => track.id) }
+    ? {
+        ...library,
+        installedTrackIds: library.catalogTracks.map((track) => track.id),
+        ...(library.bonusAlbums
+          ? { bonusAlbums: library.bonusAlbums.map((album) => ({ ...album, downloaded: true })) }
+          : {}),
+      }
     : library;
   const manifest = new TextEncoder().encode(
     canonicalJSON({
@@ -169,6 +175,10 @@ export async function importSoundtrackBundle(source, { signal, probeMedia = prob
   required(
     !v2 || library.installedTrackIds.length === library.catalogTracks.length,
     'Complete soundtrack backup must install every catalogue original.',
+  );
+  required(
+    !v2 || (library.bonusAlbums ?? []).every((album) => album.downloaded),
+    'Complete soundtrack backup must install every bonus album original.',
   );
   required(
     Array.isArray(manifest.assets) && manifest.assets.length <= SOUNDTRACK_LIMITS.assets,
