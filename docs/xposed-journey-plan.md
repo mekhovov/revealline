@@ -168,6 +168,12 @@ either starting position. The purpose-built Twin landings greybox has six comple
 deterministic two-seat routes; it has no final artwork or human qualification.
 This does not complete authored Team Journey navigation or P14. See
 `docs/verification/xposed-journey-team-foundations.md` for exact limits.
+Studio now exports exact selected Team test missions for the real Team host;
+native export/import verified pinned Expert rules and both-seat movement. New
+Journey Team editions automatically reset failed attempts with fresh controls,
+while focus/settings/disconnection/faults cancel pending recovery. These close
+the manual authoring-test path and scoped recovery gap, not the Team Journey
+chooser/profile, final artwork, human balance or release gates.
 
 P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
 P01 `e7aa131f`. Six Border Bloom core candidates and one optional Remix progress

@@ -75,8 +75,8 @@ threat-domain contracts; they do not prove this greybox is enjoyable or establis
 Reloaded's exact algorithms.
 
 Still required: original art, native Team gameplay qualification, authored Team
-Journey Continue/Next/Skip/chooser and profile adapter, automatic fresh-attempt
-restart, global buffered steering qualification, broader actor/terrain bindings,
+Journey Continue/Next/Skip/chooser and profile adapter, global buffered steering
+qualification, broader actor/terrain bindings,
 physical controllers/touch/accessibility, human complementary-role and pacing
 testing, exact-source full hosted qualification and reviewed Pages promotion.
 
@@ -106,3 +106,25 @@ in 32 seconds; the earlier export/empty-Studio/three-preset cohort passed 7/7.
 Full lint/format/source validation (718 files)/whitespace checks rerun separately.
 This closes the manual Studio→real Team test import path, not the player-facing
 authored Team Journey navigation, final presentation or release acceptance.
+
+## Automatic fresh-attempt recovery
+
+New Journey Team editions now restart the exact failed mission after 700 ms of
+foreground animation-frame time, reusing the accepted picture and pinned preset.
+The failure explanation remains visible before and after restart. Held directions
+are cleared independently; there is no blanket transition-input lock. Historical
+Team editions retain manual Retry.
+
+The pending restart is retired on focus moving to another action (even if it
+returns before the next frame), settings, manual Retry, hidden/blur, controller
+disconnection, changed attempt ownership or a renderer fault. A renderer fault
+stays stopped with explicit recovery rather than retrying in a loop. The overlay
+announces the pending restart and removes that announcement when cancelled.
+
+Actual-host regression: **102/102 passed** in 38.1 seconds, including eight new
+recovery checks, three pinned presets, Legacy Team flow and imported artwork
+lifecycle. Full lint/format/source validation (718 files) and whitespace checks
+passed. The initial renderer-fault fixture incorrectly skipped asynchronous boot
+readiness; it was corrected to wait for normal boot before injecting the fault.
+This is finite-host lifecycle evidence, not a native reaction-time measurement,
+physical-controller qualification or proof of enjoyment.
