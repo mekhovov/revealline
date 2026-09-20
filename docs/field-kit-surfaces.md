@@ -117,3 +117,11 @@ current Journey and release. Return must restore Motion Lab’s card; Escape the
 returns to Home without launching a flight. Keep the footer exit and early loading
 return usable. Inspect desktop, portrait and short landscape, report actual CSS
 viewport sizes, and do not infer keyboard order by counting unchecked radio inputs.”
+
+
+The [fresh-profile Legacy Missions check](verification/legacy-missions-native-v076/README.md)
+on exact `734318d6` found matching chapter-card, briefing, Deploy and Home Start
+captions across Base game, Pressure Lines and Frontier Lines. Keyboard briefing
+reading and nested Escape returned to their actual openers. This did not reproduce
+the register’s older stale-description report; saved/profile/recovery transitions
+remain unverified. Do not infer a code fix or full issue closure from this path.

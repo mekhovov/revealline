@@ -1,0 +1,40 @@
+{
+  "source": "734318d645c4f5eb7108a5303111834c8cb2a949",
+  "responses": 368,
+  "distinctPaths": 367,
+  "overrides": [],
+  "fileInventorySha256": "6ea9feef53add6132bbc855ce8c89c70b7b781bab9e5d679a69ac603c6abdcd8",
+  "observations": [
+    {
+      "chapter": "Base game",
+      "mission": "First Signal"
+    },
+    {
+      "chapter": "Pressure Lines",
+      "mission": "Orchard Crossing"
+    },
+    {
+      "chapter": "Frontier Lines",
+      "mission": "Copper Switchyard",
+      "brief": "Reveal80%; alternatingbarriers;180s"
+    }
+  ],
+  "verifiedFields": [
+    "selected card",
+    "brief title/copy",
+    "Deploy caption",
+    "Home Start caption"
+  ],
+  "keyboard": "Home Missions \u2192 Right/Enter PressureLines \u2192 Right/Enter FrontierLines \u2192 EscapeHome \u2192 ReturnMissions \u2192 Tab10 Brief \u2192 EnterExpand \u2192 TabRead \u2192 Enter \u2192 EscapeRead \u2192 EscapeHome",
+  "finalFocus": "shell-play",
+  "consoleErrors": [],
+  "claim": "old stale description not reproduced on fresh chapter-card path; not general issue resolution",
+  "excluded": [
+    "saved-flight restore",
+    "library/recovery transitions",
+    "physical controller/touch",
+    "public acceptance",
+    "challenge or win",
+    "stopped-server offline"
+  ]
+}
