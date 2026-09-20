@@ -53,3 +53,19 @@ with Solo. Test native modal Escape with one faithful lifecycle double: duplicat
 showModal/close methods must not shadow the modal stack and focus restoration.
 Advance real host frame boundaries between screen transitions. Validate in a real
 browser as a separate gate; a finite DOM does not prove physical controller use.”
+
+## Production provenance after composition
+
+Changing a shared audio recipe input (including default-compatible options in
+`published-audio.mjs`) changes its production fingerprint. Preserve the original
+ledger, append the unreviewed source-stage successor, then record only a scoped
+review backed by actual source/test/native evidence before generating its reviewed
+successor. Run the complete production-history suite, reproduction and readiness
+gates. A browser check under master mute proves navigation and transport state;
+it is not audible listening or full audio approval.
+
+Prompt: “After composing Team's music-only adapter, inspect all four audio recipe
+inputs and the exact changed diff. Preserve the stale-ledger failure, append
+compatible history, review the bounded cues option and test default Solo behavior
+as well as Team's cues:false behavior. Record native keyboard Next/Retry music
+Pause continuity separately from listening, offline and physical-controller gates.”
