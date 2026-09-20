@@ -30,7 +30,7 @@ import {
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
-import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
+import { coopFailureFeedback, coopRetryFeedback, coopRoamerCaption } from './coop-feedback.mjs';
 import { coopArenaGuidance } from './coop-briefing.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
@@ -2634,6 +2634,8 @@ export function bootCoop() {
         input.clearPlayer(event.player);
         batch.release(event.player);
       }
+      const roamerCaption = coopRoamerCaption(event);
+      if (roamerCaption) message(roamerCaption);
       if (event.type === 'cut.joint')
         message('Joint Cut! Both lines are safe. Choose your next route together.');
       if (event.type === 'player.downed') {

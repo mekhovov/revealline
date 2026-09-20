@@ -3,12 +3,22 @@ import { JOURNEY_POLICY, journeyPreset } from '../content-design/catalogs.mjs';
 import {
   compileCoopFoundationGeometry,
   COOP_FOUNDATION_LEVEL_VERSION,
-  COOP_FOUNDATION_RULESET,
   COOP_TERRAIN_LEVEL_VERSION,
-  COOP_TERRAIN_RULESET,
+  COOP_ROVER_LEVEL_VERSION,
+  hasTeamTerrain,
+  journeyTeamPackEdition,
   isJourneyTeamLevel,
   isJourneyTeamRuleset,
 } from './foundations.mjs';
+import { fitsClassicDomain } from '../core/classic-topology.mjs';
+import {
+  isCoopRoamer,
+  activeCoopRoamer,
+  initializeCoopRoamers,
+  updateCoopRoamers,
+  coopRoamerWallContact,
+  reflectCoopRoamer,
+} from './roamers.mjs';
 import { coopTerrainSpeed, coopTerrainContact } from './terrain.mjs';
 import {
   cellAt,
@@ -113,9 +123,12 @@ export function validateCoopLevel(level) {
       errors: ['Co-op level must be a plain data object with supported fields.'],
     };
   check(
-    [COOP_LEVEL_VERSION, COOP_FOUNDATION_LEVEL_VERSION, COOP_TERRAIN_LEVEL_VERSION].includes(
-      level.version,
-    ),
+    [
+      COOP_LEVEL_VERSION,
+      COOP_FOUNDATION_LEVEL_VERSION,
+      COOP_TERRAIN_LEVEL_VERSION,
+      COOP_ROVER_LEVEL_VERSION,
+    ].includes(level.version),
     'Unsupported co-op level version.',
   );
   check(
@@ -126,9 +139,7 @@ export function validateCoopLevel(level) {
     'Only the new Team edition pins an explicit Journey difficulty.',
   );
   check(
-    level.version === COOP_TERRAIN_LEVEL_VERSION
-      ? dataArray(level.terrain)
-      : !Object.hasOwn(level, 'terrain'),
+    hasTeamTerrain(level) ? dataArray(level.terrain) : !Object.hasOwn(level, 'terrain'),
     'Terrain requires an explicit Team terrain edition and a terrain array.',
   );
   check(level.width === 72 && level.height === 36, 'Co-op boards must be 72 × 36.');
@@ -196,7 +207,8 @@ export function validateCoopLevel(level) {
           return false;
         ids.add(enemy.id);
         return (
-          ['drifter', 'hunter'].includes(enemy.type) &&
+          (['drifter', 'hunter'].includes(enemy.type) ||
+            (level.version === COOP_ROVER_LEVEL_VERSION && isCoopRoamer(enemy))) &&
           finite(enemy.x, 1, 71) &&
           finite(enemy.y, 1, 35) &&
           finite(enemy.vx, -20, 20) &&
@@ -205,7 +217,7 @@ export function validateCoopLevel(level) {
           finite(enemy.radius, 0.01, 0.49)
         );
       }),
-    'Enemies must be unique bounded drifters or Hunters.',
+    'Enemies must be unique bounded drifters or Hunters; reclaimed roamers require Team level v4.',
   );
   const point = (value) =>
     keys(value, ['x', 'y']) &&
@@ -278,7 +290,13 @@ export function validateCoopLevel(level) {
       'Spawn points must be on safe ground.',
     );
   for (const enemy of level.enemies)
-    check(circleFitsField(board, enemy), `Drifter ${enemy.id} must fit entirely inside field.`);
+    check(
+      isCoopRoamer(enemy)
+        ? fitsClassicDomain(board, enemy, enemy.radius, FIELD) ||
+            fitsClassicDomain(board, enemy, enemy.radius, SAFE)
+        : circleFitsField(board, enemy),
+      `Actor ${enemy.id} must fit entirely inside its movement domain.`,
+    );
   for (const index of objectiveCells)
     check(board.cells[index] === FIELD, 'Core and anchors must initially occupy field.');
   // Recovery routes must not be disconnected by authored walls or isolated initial islands.
@@ -339,17 +357,12 @@ export function createCoop(
   const owned = structuredClone(level);
   const cells = buildGrid(owned);
   const run = {
-    ruleset:
-      owned.version === COOP_TERRAIN_LEVEL_VERSION
-        ? COOP_TERRAIN_RULESET
-        : owned.version === COOP_FOUNDATION_LEVEL_VERSION
-          ? COOP_FOUNDATION_RULESET
-          : COOP_RULESET,
+    ruleset: isJourneyTeamLevel(owned) ? journeyTeamPackEdition(owned).ruleset : COOP_RULESET,
     level: owned,
     width: owned.width,
     height: owned.height,
     cells,
-    ...(owned.version === COOP_TERRAIN_LEVEL_VERSION
+    ...(hasTeamTerrain(owned)
       ? { terrain: Uint8Array.from(compileCoopFoundationGeometry(owned).terrain) }
       : {}),
     seed,
@@ -408,6 +421,7 @@ export function createCoop(
     needsNeutral: [false, false],
   };
   initializeThreats(run);
+  if (owned.version === COOP_ROVER_LEVEL_VERSION) initializeCoopRoamers(run);
   run.headsTouching = headsTouch(run);
   return run;
 }
@@ -684,7 +698,7 @@ function flood(run, secured, retainedCores) {
   const retained = new Uint8Array(run.cells.length);
   const queue = [];
   for (const enemy of run.enemies) {
-    if (enemy.active === false) continue;
+    if (enemy.active === false || isCoopRoamer(enemy)) continue;
     const index = cellAt(run, enemy.x, enemy.y);
     if (run.cells[index] === FIELD && !retained[index]) {
       retained[index] = 1;
@@ -863,10 +877,10 @@ function hazards(run, velocities, horizon) {
   for (const player of run.players) {
     const material = coopTerrainContact(run, player, velocities[player.id], horizon);
     if (material) contacts.push(material);
-    if (player.status !== 'active' || !player.cutting || player.graceUntil > run.time + EPS)
-      continue;
+    if (player.status !== 'active' || player.graceUntil > run.time + EPS) continue;
     for (const enemy of run.enemies) {
       if (enemy.active === false) continue;
+      if (isCoopRoamer(enemy) ? !activeCoopRoamer(enemy) : !player.cutting) continue;
       if (enemy.type === 'hunter' && enemy.phase !== 'commit') continue;
       const time = trailContact(run, enemy, player.trail, horizon);
       if (time !== null)
@@ -902,6 +916,10 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
   validateCommands(commands);
   if (run.status !== 'running') return run;
   run.events = [];
+  if (run.roverActorTick !== undefined) {
+    run.roverActorTick++;
+    updateCoopRoamers(run, emit);
+  }
   const tickStart = run.tick * FIXED_DT;
   const tickEnd = (run.tick + 1) * FIXED_DT;
   run.time = tickStart;
@@ -924,7 +942,11 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       playerWallContact(run, player, velocities[index], horizon),
     );
     const walls = run.enemies.map((enemy) =>
-      enemy.active === false ? null : enemyWallContact(run, enemy, horizon),
+      enemy.active === false
+        ? null
+        : isCoopRoamer(enemy)
+          ? coopRoamerWallContact(run, enemy, horizon)
+          : enemyWallContact(run, enemy, horizon),
     );
     const contacts = hazards(run, velocities, horizon);
     const impactPlans = planImpacts(run, velocities, horizon);
@@ -1047,7 +1069,10 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       run.impacts = run.impacts.filter((candidate) => candidate.id !== impact.id);
     }
     for (let i = 0; i < walls.length; i++)
-      if (walls[i] && due(walls[i].time)) reflectEnemy(run.enemies[i], walls[i].normals);
+      if (walls[i] && due(walls[i].time)) {
+        if (walls[i].rover) reflectCoopRoamer(run.enemies[i], walls[i]);
+        else reflectEnemy(run.enemies[i], walls[i].normals);
+      }
     const newMeeting = meetingTime !== null && due(meetingTime);
     if (newMeeting) run.headsTouching = true;
     const joint =
@@ -1056,6 +1081,7 @@ export function stepCoop(run, commands, dt = FIXED_DT) {
       run.players.every((player) => player.status === 'active' && player.cutting);
     const surviving = joint ? run.players : closers.filter((player) => player.status === 'active');
     if (surviving.length) capture(run, surviving, commands, stopped, joint);
+    if (run.roverActorTick !== undefined) updateCoopRoamers(run, emit);
     completeRecoveryAndGoal(run, commands, stopped);
   }
   run.tick++;

@@ -2,13 +2,7 @@ import { dataIdentity, required } from '../data-json.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { validateCoopPack } from '../coop/recipes.mjs';
-import {
-  COOP_FOUNDATION_PACK_VERSION,
-  COOP_FOUNDATION_RULESET,
-  COOP_TERRAIN_LEVEL_VERSION,
-  COOP_TERRAIN_PACK_VERSION,
-  COOP_TERRAIN_RULESET,
-} from '../coop/foundations.mjs';
+import { journeyTeamPackEdition } from '../coop/foundations.mjs';
 
 /** One exact selected mission for the real Team importer. Geometry/rules only:
  * never bundles a reference image, grants progress, or publishes a campaign. */
@@ -54,10 +48,8 @@ function buildTeamTestPack(manifests, identity, name) {
     'Resolve the mission topology errors before exporting a playable Team test pack.',
   );
   const levels = manifests.map((manifest) => manifest.level);
-  const terrain = levels[0].version === COOP_TERRAIN_LEVEL_VERSION;
   const pack = {
-    version: terrain ? COOP_TERRAIN_PACK_VERSION : COOP_FOUNDATION_PACK_VERSION,
-    ruleset: terrain ? COOP_TERRAIN_RULESET : COOP_FOUNDATION_RULESET,
+    ...journeyTeamPackEdition(levels[0]),
     id: `studio-team-${identity}`,
     revision: `candidate-${dataIdentity(levels.length === 1 ? levels[0] : levels)}`,
     name,

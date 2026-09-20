@@ -17,6 +17,12 @@ export function coopFailureFeedback(run, event) {
     };
   if (event?.cause === 'enemy-trail' || event?.cause === 'enemy-player') {
     const hunter = run.enemies.some((enemy) => enemy.id === event.enemy && enemy.type === 'hunter');
+    if (run.enemies.some((enemy) => enemy.id === event.enemy && enemy.type === 'claimed-rover'))
+      return {
+        cause: `An active reclaimed-ground roamer caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'a craft'}.`,
+        advice:
+          'Reclaimed ground closes cuts but does not protect you from roamers. Keep an escape corridor or use Support to slow one.',
+      };
     return {
       cause: `${hunter ? 'A Hunter' : 'A roaming enemy'} caught ${event.cause === 'enemy-trail' ? 'an unfinished line' : 'an exposed craft'}.`,
       advice: hunter
@@ -28,6 +34,14 @@ export function coopFailureFeedback(run, event) {
     cause: event ? 'A craft was knocked down.' : 'Both craft need a rescue.',
     advice: 'Try smaller loops and keep a safe route back to your partner.',
   };
+}
+
+export function coopRoamerCaption(event) {
+  if (event.type === 'rover.warning')
+    return 'Roamer waking: one active second to move away. Keep a reclaimed escape corridor.';
+  if (event.type === 'rover.activated')
+    return 'Roamer active on reclaimed ground. Watch both craft; Support can slow it.';
+  return null;
 }
 
 export function coopRetryFeedback(run, knockdowns = []) {

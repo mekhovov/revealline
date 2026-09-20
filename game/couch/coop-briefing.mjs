@@ -2,6 +2,7 @@
 export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const hunters = level.enemies.some((enemy) => enemy.type === 'hunter');
   const drifters = level.enemies.some((enemy) => enemy.type === 'drifter');
+  const roamers = level.enemies.some((enemy) => enemy.type === 'claimed-rover');
   const relays = Boolean(level.strongholds?.length);
   const requiredCores = level.goal.cores?.length ?? 0;
   const threats = [];
@@ -25,12 +26,16 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     threats.push(
       'Drifters patrol continuously and can hit your craft or unfinished line. Keep cuts short when one is nearby.',
     );
+  if (roamers)
+    threats.push(
+      'Tracked roamers do not retain field. Reclaim their full footprint and they warn for one active second, then roam reclaimed ground and threaten both craft and unfinished lines. Keep an escape corridor; reclaimed ground closes cuts but is not universally safe.',
+    );
   if (relays)
     threats.push(
       'Relay cores warn before sending a spark along an unfinished line. Bank the threatened line or use Support near the spark.',
     );
   const pulse =
-    hunters || drifters
+    hunters || drifters || roamers
       ? `Tap Support to slow nearby enemies${relays ? ' and intercept nearby sparks' : ''}. A dashed ring shows the slowdown. `
       : relays
         ? 'Tap Support near a travelling spark to intercept it. '
@@ -60,12 +65,14 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     levelNote: requiredCores
       ? 'Plan routes to the anchors, then claim the exposed cores with later cuts.'
       : 'Create safe routes together. Use the revealed ground to launch your next cut.',
-    startMessage: hunters
-      ? `Watch the Hunter warnings and cross during recovery. ${route}`
-      : drifters
-        ? `Keep cuts short near patrolling Drifters. ${route}`
-        : relays
-          ? `Watch relay warnings; bank the threatened line or intercept its spark with Support. ${route}`
-          : route,
+    startMessage: roamers
+      ? `Keep an escape corridor before enclosing a tracked roamer. WAKING gives one active second to move away. ${route}`
+      : hunters
+        ? `Watch the Hunter warnings and cross during recovery. ${route}`
+        : drifters
+          ? `Keep cuts short near patrolling Drifters. ${route}`
+          : relays
+            ? `Watch relay warnings; bank the threatened line or intercept its spark with Support. ${route}`
+            : route,
   };
 }

@@ -503,9 +503,10 @@ export function createCoopPainter(canvas) {
         }
         if (!enemyBody) {
           ctx.fillStyle =
-            enemy.phase === 'warning'
+            enemy.phase === 'warning' || enemy.rover?.mode === 'warning'
               ? '#ffd279'
-              : enemy.type === 'hunter' && enemy.phase !== 'commit'
+              : (enemy.type === 'hunter' && enemy.phase !== 'commit') ||
+                  (enemy.type === 'claimed-rover' && enemy.rover?.mode !== 'active')
                 ? '#849fa4'
                 : '#fc786f';
           ctx.strokeStyle = '#ffc0a1';
@@ -516,6 +517,10 @@ export function createCoopPainter(canvas) {
             ctx.lineTo(0.55, 0);
             ctx.lineTo(0, 0.65);
             ctx.lineTo(-0.55, 0);
+          } else if (enemy.type === 'claimed-rover') {
+            ctx.rect(-0.48, -0.4, 0.96, 0.8);
+            ctx.fillRect(-0.65, -0.55, 0.2, 1.1);
+            ctx.fillRect(0.45, -0.55, 0.2, 1.1);
           } else {
             ctx.moveTo(0, -0.6);
             ctx.lineTo(0.58, 0.42);
@@ -540,6 +545,24 @@ export function createCoopPainter(canvas) {
             fonts.ui,
             enemyBody,
             '#eee7c8',
+          );
+          ctx.save();
+          ctx.translate(enemy.x, enemy.y);
+        }
+        if (enemy.type === 'claimed-rover') {
+          ctx.restore();
+          cue(
+            enemy.rover?.mode === 'warning'
+              ? 'WAKING'
+              : enemy.rover?.mode === 'active'
+                ? 'ROAMER'
+                : 'DORMANT',
+            enemy.x,
+            Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
+            0.57,
+            fonts.ui,
+            enemyBody,
+            '#f1f7ed',
           );
           ctx.save();
           ctx.translate(enemy.x, enemy.y);

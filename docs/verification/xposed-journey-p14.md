@@ -135,6 +135,34 @@ The resulting pack exercises the existing real Team import and Next flow.
 It contains geometry/rules only and retains the host's truthful preview-scenery
 label. This is not yet a complete cross-campaign Team Journey host or publication.
 
+## Explicit Team reclaimed-roamer qualification
+
+`TeamMissionV3` compiles to Team level v4 / rules v6 / pack v4. Earlier
+editions remain unchanged and reject this role; campaign export still rejects
+mixed runtime editions. The existing catalog v2 role is reused, not a new
+pursuit mechanic: dormant roamers do not retain field, full-footprint reclamation
+starts a 120-active-tick warning, and activation reflects the actor within
+reclaimed ground and world bounds. The swept domain query is shared with Solo.
+Active bodies can hit either craft on reclaimed ground or an unfinished trail.
+Pause freezes the warning; per-craft recovery grace and bounded Support slowdown
+remain effective. Studio capture diagnostics use the same nonretaining contract.
+
+Nine contract tests include legal closure, full-footprint cancellation/rearming,
+harmless warning versus active body/trail contact, pause/grace, domain/world
+reflection, Support expiry, version rejection and exact export/import at all
+presets. The 117-test engine/presentation cohort and 51 existing route/export/
+composition tests pass on Node20.19.5; the combined 168 pass on Node22.22.2.
+Existing foundation/material route hashes remain unchanged.
+
+The Team painter reuses the existing tracked body, with DORMANT / WAKING /
+ROAMER labels that remain through pause and reduced effects. Captioned warning
+and failure advice explicitly distinguish reclaimed ground from protection.
+Painter tests observe commands and object identity, not physical readability.
+The pre-existing source-frame test incorrectly pinned theme revision34 although
+the baseline is revision37. Its metadata assertion is corrected; all five old
+PNG hashes remain exact and the existing roamer PNG gets a sixth exact hash check.
+No artwork was generated or changed. Native roamer inspection remains open.
+
 ## Remaining gates
 
 Native Studio inspection on the read-only `7f35c678` server (port8803) confirmed
@@ -149,12 +177,11 @@ file's presence on disk or native Team gameplay. A screenshot attempt failed
 because the hidden browser reported zero width; no global viewport override or
 change to the user's port8778 was made. Visual/device inspection remains open.
 
-Four further purpose-built candidates; reclaimed-roamer Team qualification before
-the final learning arc, with explicit new runtime editions and historical guards;
+Four further purpose-built candidates using the newly qualified roamer contract;
 delayed alternatives and broader seed/recovery qualification; native Studio/export
 and real-device checks; original assets; uninterrupted cross-campaign Team Journey
 navigation and persistence; two-human coordination/pacing/accessibility validation;
 exact combined-tree review, versioned PR/release and Pages deployment.
 
 No previously open art, human, native or publication gate is waived. Do not mark
-P14 complete merely because the first five candidate definitions compile.
+P14 complete merely because candidate definitions compile.
