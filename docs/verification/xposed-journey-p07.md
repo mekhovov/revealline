@@ -148,3 +148,37 @@ separate: ordinary clears must not receive unearned mastery, and supplemental
 routes are being checked against actual capture/impact/roamer history. None of
 this exposes unfinished candidates in the released Journey or qualifies P07
 for publication.
+
+## Optional goals and seed checks
+
+All42 preset/control mastery cases now have no-loss legal-input public replays.
+Twenty supplemental routes complete conditions omitted by their ordinary clear;
+negative replays confirm those20 ordinary clears do not satisfy the optional
+goal. The predicates require real closure history: a capture-cleared playerward
+impact must already exist, and an active roamer must precede the same closure
+when the Remix asks for both. New seeds, recovery clearing, a newly warned
+roamer, separate qualifying closures, an unfinished run or life loss do not
+counterfeit that history. These remain test-only feasibility predicates, not
+runtime awards or alternative completion rules. Six mastery/evidence tests pass
+on Node20.19.5 and22.22.2.
+
+The42 ordinary clears also pass on five explicit seeds (210 runs) on both Node
+versions. These authored actor placements are fixed; this is replay/seed
+stability, not210 distinct randomized layouts or a human study.
+
+Sampled delayed-departure checks exposed seven unsafe repetitions of the
+zero-delay opening: A return in reserve at0.25/0.5/1s; Pressure ladder at1/2s;
+Two ways home and Crossed bands at5s. These are retained failures, not ignored
+test cases. Alternative route checks are in progress before timing acceptance.
+
+## Additional native interaction and screenshot limitation
+
+In tab33 at the same exact4342e0ff source, Two ways home reached real readiness.
+Start plus fresh Up joined its two foundations:0.3% earned, score60,3lives.
+Pause at0:22, Resume without a direction, then Pause at0:36 retained those
+values. Close preview restored Play focus and saved checkpoint2 was unchanged.
+The accessibility and DOM surfaces remained responsive, but screenshots
+returned only the page background both with the iframe open and after closing
+it. This is recorded as an unresolved visual-capture limitation, not a passed
+rendering inspection or an established product defect. The other five layouts
+and visual acceptance remain pending; no source change was made on that signal.
