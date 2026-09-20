@@ -123,7 +123,21 @@ paused at0:18. This is one native first-return observation, not a full clear,
 timing benchmark, physical-controller or human comprehension result. The preview
 uses the existing greybox presentation, not promised final Rover artwork.
 
-Remaining: optional-goal alternatives, broader historical route pins, broader native Studio/game
+All42 optional-goal combinations now have legal pinned no-loss clear routes;
+22 require supplemental inputs and20 use an ordinary clear. Predicates require
+actual active-roamer closures, real trail contact at both Stepped return ends,
+Split berths' first complete connection after activation, captured starting
+chambers and authored material neutralization as appropriate. Waking a roamer on
+the winning cut is not enough. These are feasibility predicates, not automatic
+mastery awards. All22 ordinary-clear negatives remain checked.
+
+The Broken yard Standard/Grid search initially reached75.96% without neutralizing
+its marked pocket. Prioritizing that pocket alone did not recover the route;
+starting left instead of up produced a legal full optional-goal clear. No quota,
+hazard, actor or runtime rule changed. Four complete Rover files pass24/24,
+zero failures/cancellations/skips,41.484seconds on Node20.19.5.
+
+Remaining: delayed-start/seed sampling, broader historical route pins, broader native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
 Team mission, human balance/comprehension, final-source hosted gates and reviewed
 release/Pages. This foundation alone does not complete P05.
