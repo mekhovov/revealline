@@ -200,11 +200,17 @@ test('cross-tab difficulty intent refreshes controls but preserves the current a
   await running(p, 'first-return');
   const run = p.rendered.run,
     picture = p.rendered.backdrop;
+  p.$('shell-packs').click();
+  const card = p.$('journey-cards').children[0];
+  assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
+  card.focus();
   const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'gentle' });
   storage.setItem(JOURNEY_PREFERENCES_KEY, raw);
   p.win.emit('storage', { key: JOURNEY_PREFERENCES_KEY, newValue: raw, storageArea: storage });
   p.frame(0);
   assert.equal(p.$('difficulty-select').value, 'gentle');
+  assert.match(p.$('journey-cards').children[0].textContent, /Band 1\/12.*Gentle/);
+  assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
   assert.equal(p.rendered.run, run);
   assert.equal(p.rendered.backdrop, picture);
   assert.equal(p.rendered.run.lives, 3);

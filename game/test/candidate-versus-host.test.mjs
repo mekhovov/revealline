@@ -67,6 +67,11 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     });
     assert.equal(p.renders[0].levelId, 'choose-your-share');
     assert.equal(p.renders[1].levelId, 'choose-your-share');
+    assert.equal(
+      p.$('race-preparation').hidden,
+      true,
+      'successful Next retires its checking message',
+    );
     assert.equal(p.renders[0].lives, { gentle: 5, standard: 3, expert: 2 }[difficulty]);
     assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
     assert.notEqual(p.drawOptions[0].backdrop, picture);
@@ -161,6 +166,18 @@ test('controller can open and leave the flat chooser without starting or clearin
   p.pulse(0, 0);
   assert.equal(p.$('journey-chooser').open, true);
   assert.equal(p.$('journey-cards').children.length, 10);
+  const card = p.$('journey-cards').children[0];
+  assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
+  card.focus();
+  const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'expert' });
+  p.preferencesStorage.setItem(JOURNEY_PREFERENCES_KEY, raw);
+  p.win.emit('storage', {
+    key: JOURNEY_PREFERENCES_KEY,
+    newValue: raw,
+    storageArea: p.preferencesStorage,
+  });
+  assert.match(p.$('journey-cards').children[0].textContent, /Band 1\/12.*Expert/);
+  assert.equal(p.doc.activeElement, p.$('journey-cards').children[0]);
   p.pulse(0, 1);
   assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.doc.activeElement, p.$('race-journey-find'));

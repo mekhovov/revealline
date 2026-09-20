@@ -1,5 +1,6 @@
-.journey-chooser {
+#journey-chooser {
   width: min(68rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
   max-height: calc(100dvh - 2rem);
   padding: clamp(1rem, 3vw, 2rem);
   overflow: auto;
@@ -35,9 +36,10 @@
 }
 .journey-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
   gap: 0.75rem;
   align-content: start;
+  grid-auto-rows: max-content;
   overflow: auto;
   padding: 4px;
 }
@@ -87,6 +89,72 @@
 .journey-card-progress {
   color: #c7e78e;
   font-size: 0.85rem;
+}
+#journey-chooser .journey-card-illustrated {
+  grid-template-columns: 2.5rem 1fr;
+  grid-template-rows: auto auto auto auto auto auto 1fr;
+  align-content: start;
+  height: max-content;
+  border-top: 3px solid #94c6b0;
+}
+.journey-card-illustrated .journey-card-number {
+  grid-row: 1 / 4;
+  font-variant-numeric: tabular-nums;
+}
+.journey-card-map {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2;
+  margin: 0.5rem 0 0.25rem;
+  border: 1px solid #94c6b0;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.journey-card-challenge,
+.journey-card-route,
+.journey-card-mastery {
+  grid-column: 1 / -1;
+  line-height: 1.45;
+}
+.journey-card-challenge {
+  color: #f5ffba;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.journey-card-route {
+  font-size: 0.95rem;
+}
+.journey-card-mastery {
+  padding-top: 0.35rem;
+  color: #bacdc0;
+  font-size: 0.8rem;
+}
+@media (max-height: 480px) and (min-width: 600px) {
+  .journey-cards {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  }
+  #journey-chooser .journey-card-illustrated {
+    grid-template-columns: 2rem minmax(0, 1fr) minmax(7rem, 0.8fr);
+    grid-template-rows: repeat(6, auto);
+    gap: 0.25rem 0.5rem;
+    padding: 0.5rem;
+  }
+  .journey-card-illustrated > strong,
+  .journey-card-illustrated > span:not([class]),
+  .journey-card-illustrated .journey-card-progress {
+    grid-column: 2;
+  }
+  .journey-card-illustrated .journey-card-map {
+    grid-column: 3;
+    grid-row: 1 / 4;
+    align-self: center;
+    justify-self: end;
+    max-width: 10rem;
+    margin: 0;
+  }
 }
 .journey-card:focus-visible,
 .journey-card:hover {
