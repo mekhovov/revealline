@@ -1,0 +1,37 @@
+[
+  {
+    "path": "native-observations.json",
+    "bytes": 1441,
+    "sha256": "5013b3060be1c0e398dd3be70e4ae947bdf9b526dd97b2eaac7d6b1554ccc62d"
+  },
+  {
+    "path": "source.json",
+    "bytes": 451,
+    "sha256": "7b5a4545df31d3107b0aab4b8504b4bc5f4aa1d44ea07aaeb594239e39affe99"
+  },
+  {
+    "path": "result.json",
+    "bytes": 84,
+    "sha256": "5e8610395e259987d89c83040b16a43fc3735e4be525bfeb1a9fd72ebbb5a024"
+  },
+  {
+    "path": "node20.log.gz",
+    "bytes": 2380,
+    "sha256": "7c3d8e620d0a7fe9f33e5b51ea7dd4b9621cf25dd03f144aa4243321c5075a43"
+  },
+  {
+    "path": "lint.log.gz",
+    "bytes": 20,
+    "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "path": "format.log.gz",
+    "bytes": 82,
+    "sha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5"
+  },
+  {
+    "path": "integration-review.json",
+    "bytes": 936,
+    "sha256": "79a151046be7664cc7f02e48b325ebdbccd675ebd95a11991adcf340e44b5364"
+  }
+]
