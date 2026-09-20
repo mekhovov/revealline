@@ -240,7 +240,8 @@
             <p class="note">
               New missions start as an untested band-1 island template. Duplicate shares an
               immutable map; editing its geometry creates a private revision. Add to parent keeps
-              existing memberships.
+              existing memberships. Remove from parent detaches only that membership. Delete refuses
+              referenced or nonempty items and never removes shared maps or assets.
             </p>
             <form id="structure-form">
               <label
@@ -256,8 +257,10 @@
                   <option value="duplicate">Duplicate mission</option>
                   <option value="rename">Rename</option>
                   <option value="place">Add to parent</option>
+                  <option value="detach">Remove from parent</option>
                   <option value="earlier">Move earlier in parent</option>
                   <option value="later">Move later in parent</option>
+                  <option value="delete">Delete unreferenced item</option>
                 </select></label
               >
               <label id="item-target-row">Existing item<select id="item-target"></select></label>
@@ -277,6 +280,14 @@
               <label id="item-parent-row"
                 >Parent for membership / order<select id="item-parent"></select
               ></label>
+              <p id="item-dependencies" class="note" role="status" hidden></p>
+              <label id="item-confirm-row" hidden
+                >Type the exact item ID to delete<input
+                  id="item-confirm"
+                  maxlength="80"
+                  autocomplete="off"
+                  spellcheck="false"
+              /></label>
               <button id="item-apply" type="submit">Validate & apply structure</button>
             </form>
             <p id="structure-result" class="note" role="status">
