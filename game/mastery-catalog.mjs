@@ -7,6 +7,7 @@ import {
   CLASSIC_VERSIONS,
   FOUNDATION_VERSIONS,
   RELAY_VERSIONS,
+  DIRECTIONAL_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
@@ -281,6 +282,7 @@ export function createMasteryCatalog(source) {
         'xonix-pack.v5',
         'xonix-pack.v6',
         'xonix-pack.v7',
+        'xonix-pack.v8',
       ].includes(format),
       'Unsupported mastery source pack format.',
     );
@@ -288,7 +290,8 @@ export function createMasteryCatalog(source) {
       !Object.hasOwn(entry, 'sourcePackFormat') || entry.sourcePackFormat === format,
       'A source format must be explicit text or omitted.',
     );
-    const relays = format === 'xonix-pack.v7';
+    const directional = format === 'xonix-pack.v8';
+    const relays = format === 'xonix-pack.v7' || directional;
     const foundations = format === 'xonix-pack.v6' || relays;
     const classic = format === 'xonix-pack.v5' || foundations;
     const wide = format === 'xonix-pack.v4';
@@ -305,17 +308,19 @@ export function createMasteryCatalog(source) {
       definitionIds = new Set();
     requireValue(
       context.versions.ruleset ===
-        (relays
-          ? RELAY_VERSIONS.ruleset
-          : foundations
-            ? FOUNDATION_VERSIONS.ruleset
-            : classic
-              ? CLASSIC_VERSIONS.ruleset
-              : wide
-                ? WIDE_VERSIONS.ruleset
-                : encounter
-                  ? ENCOUNTER_VERSIONS.ruleset
-                  : LEGACY_VERSIONS.ruleset),
+        (directional
+          ? DIRECTIONAL_VERSIONS.ruleset
+          : relays
+            ? RELAY_VERSIONS.ruleset
+            : foundations
+              ? FOUNDATION_VERSIONS.ruleset
+              : classic
+                ? CLASSIC_VERSIONS.ruleset
+                : wide
+                  ? WIDE_VERSIONS.ruleset
+                  : encounter
+                    ? ENCOUNTER_VERSIONS.ruleset
+                    : LEGACY_VERSIONS.ruleset),
       'Pack format and campaign simulation versions differ.',
     );
     requireValue(

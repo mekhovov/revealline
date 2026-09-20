@@ -470,6 +470,74 @@
               <p id="relay-result" class="note" role="status"></p>
             </form>
           </details>
+          <details id="directional-panel">
+            <summary>Mark directional speed fields</summary>
+            <p id="directional-qualification" class="note"></p>
+            <button id="directional-enable" type="button">
+              Enable directional edition for this mission
+            </button>
+            <form id="directional-form">
+              <fieldset id="directional-tools" disabled>
+                <legend>Marked speed, never forced drift</legend>
+                <label>Field<select id="directional-select"></select></label>
+                <label>Stable field ID<input id="directional-id" maxlength="80" required /></label>
+                <label
+                  >Arrow direction<select id="directional-direction">
+                    <option value="right">Right →</option>
+                    <option value="down">Down ↓</option>
+                    <option value="left">Left ←</option>
+                    <option value="up">Up ↑</option>
+                  </select></label
+                >
+                <label
+                  >X · whole cell<input
+                    id="directional-x"
+                    type="number"
+                    min="1"
+                    max="70"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Y · whole cell<input
+                    id="directional-y"
+                    type="number"
+                    min="1"
+                    max="34"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Width · cells<input
+                    id="directional-w"
+                    type="number"
+                    min="1"
+                    max="70"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Height · cells<input
+                    id="directional-h"
+                    type="number"
+                    min="1"
+                    max="34"
+                    step="1"
+                    required
+                /></label>
+                <p class="note">
+                  Arrows affect only unclaimed field. Fields cannot overlap walls, foundations,
+                  gates, other fields or slow/lethal terrain. Strength is shared across every map;
+                  it is not a per-level setting.
+                </p>
+                <button id="directional-submit" type="submit">Validate & add field</button>
+                <button id="directional-remove" type="button" disabled>
+                  Remove selected field
+                </button>
+              </fieldset>
+              <p id="directional-result" class="note" role="status"></p>
+            </form>
+          </details>
           <details id="image-authoring">
             <summary>Build from a reference picture</summary>
             <p class="note">

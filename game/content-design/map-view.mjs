@@ -3,6 +3,7 @@ import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
 import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
 import { drawRelayGates, drawRelayTriggers } from '../ui/relay-view.mjs';
+import { drawDirectionalFields } from '../ui/directional-view.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -55,6 +56,7 @@ export function paintContentMap(
       ctx.strokeRect(x + 2, y + 2, size - 5, size - 5);
     }
   }
+  drawDirectionalFields(ctx, preview.markers.directionalFields, size);
   if (preview.markers.gates)
     drawRelayGates(
       ctx,

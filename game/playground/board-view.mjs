@@ -4,6 +4,7 @@ import { createRun } from '../core/index.mjs';
 import { drawClassicTerrain, drawClassicPickups, drawClassicEnemy } from '../ui/classic-view.mjs';
 import { foundationCompatibleView as classicView } from '../ui/foundation-view.mjs';
 import { drawRelayGates, drawRelayTriggers, relayView } from '../ui/relay-view.mjs';
+import { drawDirectionalFields, directionalView } from '../ui/directional-view.mjs';
 
 export function paintEditorMap(canvas, current) {
   const { width, height } = boardPaintSizeForLevel(current.level);
@@ -11,7 +12,9 @@ export function paintEditorMap(canvas, current) {
   if (canvas.height !== height) canvas.height = height;
   const c = canvas.getContext('2d'),
     s = 16;
-  const run = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(current.level.version)
+  const run = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(
+    current.level.version,
+  )
     ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
   const classic = run ? classicView(run) : null;
@@ -69,6 +72,7 @@ export function paintEditorMap(canvas, current) {
     c.fillRect(gate.x * s, gate.y * s, gate.w * s, gate.h * s);
   drawRelayGates(c, relays, current.theme.palette, s);
   drawClassicTerrain(c, classic, current.theme.palette);
+  if (run) drawDirectionalFields(c, directionalView(run), s);
   drawClassicPickups(c, classic, current.theme.palette);
   for (const e of current.level.enemies) {
     if (

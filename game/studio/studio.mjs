@@ -35,6 +35,7 @@ import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
 import { createRelayEditor } from './relay-editor.mjs';
+import { createDirectionalEditor } from './directional-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
 
@@ -141,6 +142,18 @@ const relayEditor = createRelayEditor({
     return true;
   },
 });
+const directionalEditor = createDirectionalEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
 function status(text, error = false) {
   $('status').textContent = text;
   $('status').dataset.error = String(error);
@@ -222,6 +235,7 @@ function inspectBoard(trailCells = []) {
   bonusEditor.sync();
   objectiveEditor.sync();
   relayEditor.sync();
+  directionalEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
@@ -262,6 +276,9 @@ function inspectBoard(trailCells = []) {
       ` Relay gates: ${preview.markers.gates.map((gate) => `${gate.label}: ${gate.id} opens permanently after capturing ${gate.objectiveId}`).join('; ') || 'none'}. Matching numbers show links, not a required order. Closed gates block movement; opened connectors do not earn coverage.`;
   $('geometry').textContent +=
     ` Authored terrain: ${authoredTerrain.map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
+  if (manifest.level.directionalFields)
+    $('geometry').textContent +=
+      ` Directional fields: ${manifest.level.directionalFields.zones.map((zone) => `${zone.id}: ${zone.direction}, (${zone.x}, ${zone.y}), ${zone.w} × ${zone.h}`).join('; ') || 'none'}. Craft speed ×1.25 with the arrow, ×0.8 against, ×1 across; no drift or enemy effect. Capture removes the effect; erosion restores it.`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -270,6 +287,9 @@ function inspectBoard(trailCells = []) {
       actors: manifest.level.enemies,
       objectives: mission.objectives,
       terrain: authoredTerrain,
+      ...(manifest.level.directionalFields
+        ? { directionalFields: manifest.level.directionalFields }
+        : {}),
     },
     null,
     2,

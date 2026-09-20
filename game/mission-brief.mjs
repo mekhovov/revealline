@@ -44,9 +44,19 @@ export function missionBriefing(
   const encounterGoal = encounter
     ? `Capture the shield relay. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
     : '';
-  const foundations = ['xonix-level.v5', 'xonix-level.v6'].includes(level.version);
-  const classicHint = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(level.version)
+  const foundations = ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(
+    level.version,
+  );
+  const classicHint = [
+    'xonix-level.v4',
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+  ].includes(level.version)
     ? [
+        level.directionalFields?.zones?.length
+          ? 'Arrow fields: faster with the arrow, slower against it; never forced drift. Capture removes their effect.'
+          : '',
         level.relayGates?.gates?.length
           ? 'Capture matching-number relays to open permanent return routes. Closed gates block cuts.'
           : '',
