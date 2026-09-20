@@ -1,5 +1,28 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.69.3 publicly verified; music/navigation integration continues
+
+**Public default: [v0.69.3](https://mekhovov.github.io/revealline/releases/v0.69.3/site/game/).** Source PR193 and publisher PR199 are merged. Pages35523602476 / deployment6555180412 passed. All **3,867 files / 698,856,066 bytes** matched with zero failures/retries. Both complete source families passed **7,018 tests / 561 files on Node20.19.6**, not a two-runtime matrix.
+
+Actual public story restore now focuses enabled Review, and Escape returns to its opener. Start/Pause/menu, nested Collection/library return, saved Continue, optional chapter installation/replacement and Stay preserving the paused flight passed. The pending Replace interval was too brief to observe publicly; retain its delayed local native/regression evidence separately. [Exact observations and limits](verification/public-v0693/README.md).
+
+**Next candidate: v0.70.0 shared music and navigation.** It integrates the accepted publication cutoff, shared MP3 work, the nine-tool Workshop return/embedded Playground fixes, Studio readiness and keyboard boundaries, authored Solo/Versus entry with separate Team framing, and truthful first-time Start. The composed mode/Start slice passed26 Node20.19.5 tests. Full integrated source qualification, native combined journeys, freeze and public deployment remain pending. Missions Back and successor-caption corrections have separate reviewed-owner packets and are not yet included.
+
+| Next order | Work | Current boundary |
+|---|---|---|
+| 1 | Finish shared music/native-navigation delivery | Candidate integration; verify original-byte media, interruption, menu return and exact final source. |
+| 2 | Shared readability and actor/picture parity | Partial; real playing scale, all modes, EN/UA and device coverage remain. |
+| 3 | Action feedback, fair challenge and rewards | Partial; warnings/counters, loss causes, Retry/Next/stories and human playtests remain. |
+| 4 | Creation, discovery and production campaigns | Partial/candidate; full creation/install/export/recovery and complete art/audio gates remain. |
+| 5 | Supporting workflows and reproducible authoring | Partial; fresh-workspace end-to-end example and current documentation/skills remain. |
+| 6 | Browser qualification | Partial; physical controllers/touch, listening, offline/lifecycle, ordinary-device performance and enjoyment remain. |
+| Later | Native stores and network multiplayer | Separate deferred gates. |
+
+Archive37 preserves original v0.69.1 and v0.69.2 with their recorded scope limitations. No parent programme phase closes because of these patches. Later Journey chapter candidates are not accepted production content. Legacy Missions' selected-mission description can remain stale after a chapter change; record it as a navigation/presentation follow-up while the actual flight and save remain correct. Stable phase IDs and accepted history below are retained.
+
+<details>
+<summary>Previous v0.69.2 accepted cutoff — retained history</summary>
+
 ## Current delivery — v0.69.2 publicly verified; v0.69.3 integrating
 
 **Public default and scoped correction baseline: [v0.69.2](https://mekhovov.github.io/revealline/releases/v0.69.2/site/game/).** Source PR191 and publisher PR195 are merged. Pages run35519111558 / deployment6554333402 passed. All **3,841 files / 698,693,223 bytes** matched with zero failures/retries. Both complete source families passed **7,011 tests / 561 files on Node20.19.6**; this is not a two-runtime matrix.
@@ -11,6 +34,9 @@ Actual public Pause keyboard checks passed at568×320,844×390 and390×844 with 
 **Following priority:** shared custom music and Border content; complete native navigation/readability, actor/picture parity, action feedback, fair challenge, rewards, creation tools and production campaigns. Journey Signal/Neon/Rover and their pictures remain candidate content. Archive37 now retains original v0.69.1 with its scoped session-only native limitation; all historical routes remain preserved.
 
 No parent programme phase is complete because of these patches. Full input/mode journeys, physical controllers/touch, offline/custom-media recovery, listening, finished content and human challenge/enjoyment gates remain open. Stable phase IDs below keep their own acceptance criteria; Journey chapter IDs do not replace them.
+
+
+</details>
 
 <details>
 <summary>Previous v0.69.1 accepted cutoff — retained history</summary>

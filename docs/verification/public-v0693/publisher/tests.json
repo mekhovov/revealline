@@ -1,0 +1,14 @@
+{
+  "files": [
+    "publishing/pages-controller/archive-tag-fetch.test.mjs",
+    "publishing/pages-controller/assemble.test.mjs",
+    "publishing/pages-controller/catalog.test.mjs",
+    "publishing/pages-controller/metadata.test.mjs",
+    "publishing/pages-controller/release-policy.test.mjs",
+    "publishing/pages-controller/sync-release-metadata.test.mjs",
+    "publishing/pages-controller/workflow.test.mjs"
+  ],
+  "exitCode": 0,
+  "node": "20.19.5",
+  "seconds": 4.961494290997507
+}

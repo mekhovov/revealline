@@ -1,0 +1,3 @@
+import './candidate/game/test/authored-mode-bootstrap.test.mjs';
+import './candidate/game/test/authored-mode-entry-host.test.mjs';
+import './candidate/game/test/first-journey-entry-host.test.mjs';

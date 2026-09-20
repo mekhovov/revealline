@@ -1,0 +1,27 @@
+[
+  {
+    "path": "authoring/still-media/examples/dawn-signal/Dawn-Signal-originals.rlmedia",
+    "bytes": 458062,
+    "sha256": "2cf9fb37b29f36499802638353a0a5b53042f75806b7297638e41c4bc2ccc6d9"
+  },
+  {
+    "path": "authoring/still-media/examples/dawn-signal/Dawn-Signal-stories.rlstory",
+    "bytes": 730651,
+    "sha256": "607a0952eb200178b0fe56957aeef4e1cc60784402c060ea60376358ac4d72b6"
+  },
+  {
+    "path": "authoring/still-media/examples/dawn-signal/manifest.json",
+    "bytes": 2840,
+    "sha256": "f207698be2328a687d7f9730f18a57740756186dbd4dfc547d016b828334243a"
+  },
+  {
+    "path": "game/app.mjs",
+    "bytes": 329525,
+    "sha256": "f5dc4232f9765573da552089dfdb4f09b1b4871a1be3ea3240d0318df211852b"
+  },
+  {
+    "path": "game/index.html",
+    "bytes": 80023,
+    "sha256": "116df4f704f9c79e83e379af973860effa1084c07f2937bd23a027d672a0a4f3"
+  }
+]
