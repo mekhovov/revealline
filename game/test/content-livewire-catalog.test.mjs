@@ -116,7 +116,7 @@ test('lane authoring rejects arbitrary timing, motion and axis; Team does not si
   team.actorCatalogId = LIVEWIRE_ACTOR_CATALOG.id;
   assert.throws(
     () => editContentActor(team, 'twin-landings', { action: 'add', id: 'emitter', actor: emitter }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
 });
 

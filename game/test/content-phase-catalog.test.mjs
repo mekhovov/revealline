@@ -131,7 +131,7 @@ test('carrier CRUD cannot override front speeds and removing the final carrier r
         id: 'carrier',
         actor: carrier,
       }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
 });
 

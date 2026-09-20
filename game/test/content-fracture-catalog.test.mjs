@@ -104,7 +104,7 @@ test('eroder commands use shared tiers and all-mode validation, never arbitrary 
         id: eroder.id,
         actor: eroder,
       }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
 });
 
