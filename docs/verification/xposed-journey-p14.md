@@ -225,3 +225,21 @@ exact combined-tree review, versioned PR/release and Pages deployment.
 
 No previously open art, human, native or publication gate is waived. Do not mark
 P14 complete merely because candidate definitions compile.
+
+### Native authoring finding and repair
+
+Read-only source `f4a9f161` on port8804 showed Inspect preserving the one-mission
+draft until explicit Apply, then saved checkpoint2 with12missions/5campaigns.
+Twin depots showed both craft, both roamers, and only the two keepers as field
+anchors in its two retained regions. Selecting Changing common ground requested
+a four-mission geometry-only export without changing the draft. Downloaded-file
+presence is not claimed.
+
+Native inspection also exposed an actor-picker gap: existing Team roamers were
+listed but the role choices still filtered all Team editions to field keepers.
+The picker and Team resolver now share `teamRoleQualified`; V3 permits keepers
+and reclaimed roamers, while V1/V2 retain their exact restricted role sets.
+An admin can select and replace the roamer using catalog speed tiers without
+editing raw JSON or changing shared maps. Unsupported/stale edits still fail
+before adoption. The28-test editor/contract/composition cohort passes on both
+Node versions. Native inspection of the repaired picker follows separately.

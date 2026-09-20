@@ -8,13 +8,14 @@ import {
 } from '../coop/foundations.mjs';
 import { compileActor, freezeDesign } from './catalogs.mjs';
 import { inspectRuntimeTopology } from './diagnostics.mjs';
+import { TEAM_MISSION_FORMATS, teamRoleQualified } from './team-qualification.mjs';
 
 /** Explicit Team qualification, not an automatic Solo-to-Team conversion.
  * Unsupported mechanics fail closed until their Team semantics are implemented. */
 export function resolveTeamMission(project, mission, map, difficulty) {
   exactKeys(mission.team, ['format', 'spawnIds'], 'Team mission');
   required(
-    ['TeamMissionV1', 'TeamMissionV2', 'TeamMissionV3'].includes(mission.team.format) &&
+    TEAM_MISSION_FORMATS.includes(mission.team.format) &&
       Array.isArray(mission.team.spawnIds) &&
       mission.team.spawnIds.length === 2 &&
       new Set(mission.team.spawnIds).size === 2 &&
@@ -27,16 +28,12 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     'Team missions require a coordination rating.',
   );
   required(
-    mission.actors.every(
-      (actor) =>
-        actor.role === 'field-keeper' ||
-        (mission.team.format === 'TeamMissionV3' && actor.role === 'reclaimed-roamer'),
-    ) &&
+    mission.actors.every((actor) => teamRoleQualified(mission.team.format, actor.role)) &&
       mission.objectives.length === 0 &&
       mission.bonuses.length === 0 &&
       mission.timeLimitSeconds === 0 &&
       (mission.team.format !== 'TeamMissionV1' || (map.source.terrain ?? []).length === 0),
-    'Team foundation candidates currently support field keepers and coverage, not unqualified terrain, bonuses, objectives or timers.',
+    'Team candidates support only qualified actor roles and coverage, not unqualified terrain, bonuses, objectives or timers.',
   );
   const spawns = mission.team.spawnIds.map((id) => {
     const spawn = map.geometry.spawns.find((item) => item.id === id);

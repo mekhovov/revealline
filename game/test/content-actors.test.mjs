@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
+import { createTeamRoamerCandidates } from '../content-design/team-roamer-candidates.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createDraftHistory } from '../content-design/drafts.mjs';
@@ -95,7 +96,7 @@ test('Team actor commands use the same compiler and do not change seats or lives
         id: 'outer',
         actor: patrol,
       }),
-    /currently support field keepers/,
+    /qualified actor roles/,
   );
   const next = editContentActor(source, 'twin-landings', {
     action: 'add',
@@ -285,6 +286,55 @@ test('Studio exposes roamer fields only for the exact v2 Solo catalogue and reje
     f.node('role').children.map((row) => row.value),
     ['field-keeper'],
   );
+});
+
+test('Team v3 actor picker and compiler share roamer qualification without upgrading earlier missions', () => {
+  const source = createTeamRoamerCandidates(),
+    before = structuredClone(source),
+    f = editorFixture();
+  f.update(source);
+  f.mission('shared-lookout');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper', 'reclaimed-roamer'],
+  );
+  f.node('select').value = 'roamer-1';
+  f.node('select').onchange();
+  assert.equal(f.node('role').value, 'reclaimed-roamer');
+  assert.equal(f.node('tier').children[0].textContent, 'measured · 1.6 cells/s');
+  assert.match(f.node('description').textContent, /Does not retain field regions/);
+  assert.match(f.node('position-help').textContent, /120 actor ticks/);
+  f.node('x').value = '28.5';
+  submit(f);
+  assert.match(f.node('result').textContent, /Actor applied/);
+  assert.equal(f.source().missions[0].actors.find((actor) => actor.id === 'roamer-1').x, 28.5);
+  assert.deepEqual(f.source().maps, before.maps);
+  assert.deepEqual(source, before);
+  for (const difficulty of ['gentle', 'standard', 'expert'])
+    assert.equal(
+      resolveMission(compileContentProject(f.source()), 'shared-lookout', {
+        mode: 'team',
+        difficulty,
+      }).level.version,
+      'revealline-coop-level.v4',
+    );
+  const accepted = f.source();
+  f.node('role').value = 'perimeter-patrol';
+  f.node('role').onchange();
+  submit(f);
+  assert.match(f.node('result').textContent, /Not applied.*qualified actor roles/);
+  assert.deepEqual(f.source(), accepted);
+  for (const format of ['TeamMissionV1', 'TeamMissionV2']) {
+    const old = createTeamOpeningCandidates();
+    old.actorCatalogId = 'journey-actors-v2';
+    old.missions[0].team.format = format;
+    f.update(old);
+    f.mission('twin-landings');
+    assert.deepEqual(
+      f.node('role').children.map((row) => row.value),
+      ['field-keeper'],
+    );
+  }
 });
 
 test('a same-revision map replacement rejects stale actor coordinates', () => {
