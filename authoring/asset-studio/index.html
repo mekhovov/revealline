@@ -461,8 +461,10 @@
         <details id="replacement-panel" open>
           <summary data-studio-host="control">Upload, crop and geometry</summary>
           <p data-studio-host="body" class="support-copy">
-            The original bytes are retained as a separate immutable asset. Cropping creates a PNG
-            derivative at the selected slot’s exact frame size.
+            Original file bytes are retained. For images, cropping creates a separate PNG derivative
+            at the slot’s frame size. Fonts and audio keep their file formats; pixel cropping does
+            not apply. Check the selected slot’s accepted formats and requirements before choosing a
+            replacement.
           </p>
           <label data-studio-host="control" id="asset-upload-label" class="file-button"
             >Choose replacement file<input data-studio-host="control" id="asset-upload" type="file"
