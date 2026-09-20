@@ -368,6 +368,35 @@ The separate full-route/delay/reference/pacing cohort passes30/30, zero skips,
 41.127seconds. All84 historical routes, paired-board equality,420 sampled-seed
 runs,35 delayed clears and their exact pins remain unchanged.
 
+Native Neutral ground additionally showed the paired slow dashes and framed
+lethal crosses alongside both patrol domains at0% coverage. They remained visible
+with Reduced effects enabled and at a390×844 viewport. The original unchecked
+Reduced effects preference and default viewport were restored. At the narrow
+width the individual marks are necessarily small; this observation is not
+physical-device contrast or touch qualification. The separate draft remains saved;
+its latest preview is paused on Neutral ground, not the earlier Soft crossing cut.
+
+### A second Team approach
+
+Shared detour now has a second deterministic ordinary-clear route: each partner
+takes the opposite outer bypass, closes a central return, then encloses an outer
+region after observing the field-keeper window. Gentle needs no extra wait in this
+fixture; Standard uses8seconds and Expert6seconds after both cuts have closed.
+The test asserts both craft remain on reclaimed ground throughout that wait,
+both contribute closures, no knockdown occurs, the2245-cell denominator is
+unchanged, and repeated outcomes/events match with joint cuts both enabled and
+disabled. All six routes clear72.7394%, while leaving some material unclaimed;
+none is mislabelled as optional all-material mastery. No native two-human claim.
+
+Blindly mirroring the original route and sweeping initial delays0–5seconds found
+no no-loss Standard/Expert clear. Merely widening its horizontal approach also
+failed. Inspecting the actual failure identified the keepers crossing the second
+exposed cuts; waiting after a completed closure resolves that sampled window.
+Removing that wait still produces a knockdown on Standard/Expert. No speed,
+quota, collision or map parameter was relaxed. The long wait is a human pacing
+review item, not a recommendation that every player should follow this script;
+the original no-wait route remains available.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
