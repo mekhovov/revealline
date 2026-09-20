@@ -104,12 +104,12 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   }
   assert.equal(bodySizes.length, 32);
   assert.equal(bodies.size, 16);
-  // Opening originals remain exact release bodies but do not make preparation
+  // Journey originals remain exact release bodies but do not make preparation
   // promise that the online-only authored preview works without a connection.
   if (offline.optionalArtwork) {
     assert.equal(offline.optionalArtwork.availability, 'online-only');
-    assert.equal(offline.optionalArtwork.count, 10);
-    assert.equal(offline.optionalArtwork.bytes, 25862573);
+    assert.equal(offline.optionalArtwork.count, 17);
+    assert.equal(offline.optionalArtwork.bytes, 45282783);
     for (const pin of offline.optionalArtwork.files) {
       assert.deepEqual(
         manifest.files.find((file) => file.path === pin.path),

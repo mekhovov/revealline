@@ -39,6 +39,46 @@
         "impact": "retro-craft",
         "trapper": "retro-craft"
       }
+    },
+    {
+      "id": "border-bloom",
+      "name": "Border Bloom",
+      "subtitle": "Watch the edge. Find another way.",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "dawn",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply",
+        "enemy": "Field keeper",
+        "boss": "Sentinel",
+        "currency": "Score",
+        "ability": "Ability"
+      },
+      "palette": {
+        "ink": "#172c29",
+        "paper": "#f4eedc",
+        "muted": "#abc0b0",
+        "accent": "#ffd27b",
+        "safe": "#65dcc5",
+        "danger": "#ff7795",
+        "field": "#112d28",
+        "grid": "#304c43",
+        "sky": "#d7dcc1",
+        "land": "#688b70"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
+      }
     }
   ]
 }

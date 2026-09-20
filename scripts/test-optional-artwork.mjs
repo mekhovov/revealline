@@ -173,11 +173,29 @@ test('last packaging boundary rejects missing, duplicate or changed originals', 
   }
 });
 
-test('selected real source authenticates all ten originals without producing a bulk distribution', async () => {
+test('selected real source authenticates all seventeen originals without producing a bulk distribution', async () => {
   const config = await readBuildConfig(source),
-    files = await collectBuildFiles(source, config);
+    files = await collectBuildFiles(source, { ...config, include: ['game'] });
   const artwork = await readOptionalArtwork(source, config.optionalArtwork, files);
-  assert.equal(artwork.count, 10);
-  assert.equal(artwork.bytes, 25862573);
-  assert.equal(new Set(artwork.files.map((file) => file.path)).size, 10);
+  assert.equal(artwork.count, 17);
+  assert.equal(artwork.bytes, 45282783);
+  assert.equal(new Set(artwork.files.map((file) => file.path)).size, 17);
+});
+
+test('combined Journey opt-in preserves original bytes and historical single-campaign compatibility', async (t) => {
+  const { root, out, config, saveConfig } = await fixture(t);
+  const catalog = 'game/content-design/journey-art.mjs';
+  config.optionalArtwork = { ...option, catalog };
+  await saveConfig();
+  await writeFile(
+    path.join(root, catalog),
+    `export const JOURNEY_ART_CANDIDATES = ${JSON.stringify([pin])};`,
+  );
+  await buildProject({ root, out });
+  const offline = JSON.parse(await readFile(path.join(out, 'offline-cache.json')));
+  assert.equal(offline.optionalArtwork.name, 'Journey candidate artwork');
+  assert.equal(offline.optionalArtwork.count, 1);
+  assert.deepEqual(await readFile(path.join(out, imagePath)), image);
+  assert(!offline.files.some((entry) => entry.path === imagePath));
+  assert.equal(validateOptionalArtworkConfig(option), option);
 });

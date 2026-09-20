@@ -435,7 +435,7 @@ $('opening').onclick = guarded(() => {
 });
 $('border').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createBorderCandidates(), null, 2);
+  $('source').value = JSON.stringify(createBorderCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
