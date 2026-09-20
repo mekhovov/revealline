@@ -95,6 +95,20 @@ test('history consumption preserves unrelated route and state and tolerates unav
   }
 });
 
+test('every standalone tool keeps a same-edition game exit before any module loads', async () => {
+  for (const entry of WORKSHOP_TOOLS) {
+    const html = await readFile(new URL(`../../${entry.path}index.html`, import.meta.url), 'utf8');
+    const anchor = [...html.matchAll(/<a\b[^>]*>/g)].find((match) =>
+      match[0].includes('data-workshop-return="game"'),
+    )?.[0];
+    assert.ok(anchor, `${entry.id} has a static game exit`);
+    assert.doesNotMatch(anchor, /\binert\b|aria-disabled="true"|\bhidden\b/);
+    const href = anchor.match(/href="([^"]+)"/)[1];
+    for (const prefix of ['https://example.test/', 'https://example.test/releases/v0.70.0/site/'])
+      assert.equal(new URL(href, `${prefix}${entry.path}`).href, `${prefix}game/`);
+  }
+});
+
 test('all standalone pages prepare both returns before enabling and retain cross-tool hints', async () => {
   for (const entry of WORKSHOP_TOOLS) {
     const html = await readFile(new URL(`../../${entry.path}index.html`, import.meta.url), 'utf8');

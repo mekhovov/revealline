@@ -1,0 +1,36 @@
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from pathlib import Path
+import os, subprocess, urllib.parse, mimetypes, hashlib, json
+ROOT=Path(__file__).resolve().parents[2]
+BASE=Path(__file__).resolve().parent
+SOURCE="4bb553d06d62f7a8cce301c77b245573838bfdcb"
+WORK=ROOT/".cache/worktrees/music-native-v070"
+OVERRIDES={'authoring/asset-studio/index.html': {'bytes': 34914, 'sha256': '82aeb58e90caaa4cedea63c4fa44f67ba1a5d06f17188d8a6f6a4bf7d9eac19f'}, 'game/playground/index.html': {'bytes': 28569, 'sha256': '021f56fc9b86bc4af3b9698ef2c99c45e90439b18354d5eea28197ddab827624'}, 'authoring/enemy-catalog/index.html': {'bytes': 2914, 'sha256': 'dde7dda89032dfa33866c62257a4a57f9449f982695438d9b135a9b6adc9ff97'}, 'authoring/motion-lab/index.html': {'bytes': 21984, 'sha256': '74c156aa09ac268dc4d3b3e0abe14c521ec9c9cec6f6a60f4218ae75f82cf9ff'}, 'authoring/still-media/index.html': {'bytes': 5863, 'sha256': '4681b5adc3943cd0f91b1ddfffc30bd53c609ff94a02eb2374e6b7386fbb3405'}, 'authoring/video-poster/index.html': {'bytes': 4977, 'sha256': '511c68bb6f06bf25e959dd7c045fc0728f5f03937b87b43aaa64b45bf74c46df'}, 'authoring/design-atlas/index.html': {'bytes': 25415, 'sha256': 'e49a41a3ceae49628279c10bb6ef9180243faa9f5bd6bba12be535e950531b79'}, 'game/controller-lab/index.html': {'bytes': 13188, 'sha256': '1bfe8691797e25c28340fdd6091b05949e0912148dfad81eeeb18b0a4595bb1a'}}
+FIXTURES={}
+BLOCKED={'authoring/motion-lab/display-entry.mjs','game/presentation/page-entry.mjs','game/ui/field-kit-surfaces.mjs','game/ui/workshop-return-entry.mjs','game/ui/direct-tool-launch.js'}
+ENV={k:v for k,v in os.environ.items() if not k.startswith("GIT_")};ENV.update(GIT_NO_LAZY_FETCH="1",GIT_OPTIONAL_LOCKS="0")
+class Handler(BaseHTTPRequestHandler):
+ def do_GET(self):
+  p=urllib.parse.unquote(urllib.parse.urlsplit(self.path).path).lstrip('/')
+  if any(v in ['..','.'] for v in p.split('/')):self.send_error(400);return
+  if not p or p.endswith('/'):p+='index.html'
+  if p in BLOCKED:
+   print(json.dumps({'path':p,'status':503,'fixture':'failed-script-delivery'}),flush=True);self.send_error(503);return
+  if p in FIXTURES:
+   body=(BASE/'native-fixture'/Path(p).name).read_bytes()
+   if len(body)!=FIXTURES[p]['bytes'] or hashlib.sha256(body).hexdigest()!=FIXTURES[p]['sha256']:self.send_error(409);return
+  elif p in OVERRIDES:
+   body=(WORK/p).read_bytes()
+   if len(body)!=OVERRIDES[p]['bytes'] or hashlib.sha256(body).hexdigest()!=OVERRIDES[p]['sha256']:self.send_error(409);return
+  else:
+   r=subprocess.run(['git','--no-lazy-fetch','--no-optional-locks','show',SOURCE+':'+p],cwd=ROOT,env=ENV,capture_output=True)
+   if r.returncode:self.send_error(404);return
+   body=r.stdout
+  if len(body)>32*1024**2:self.send_error(413);return
+  mime=mimetypes.guess_type(p)[0] or 'application/octet-stream'
+  if p.endswith('.mjs'):mime='text/javascript'
+  self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Content-Length',str(len(body)));self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(body)
+  print(json.dumps({'path':p,'bytes':len(body),'sha256':hashlib.sha256(body).hexdigest(),'override':p in OVERRIDES}),flush=True)
+ def log_message(self,*args):pass
+print('Exact source preview on http://127.0.0.1:18802/game/',flush=True)
+ThreadingHTTPServer(('127.0.0.1',18802),Handler).serve_forever()

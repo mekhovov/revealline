@@ -1,0 +1,2 @@
+import './candidate/game/test/motion-lab-display-host.test.mjs';
+import './candidate/game/test/still-workshop-build.test.mjs';

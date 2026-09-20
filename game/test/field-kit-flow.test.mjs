@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { attachMissionPicker } from '../ui/mission-picker.mjs';
 
@@ -65,7 +65,19 @@ test('direct briefing and disposal retain one craft presenter outside hidden mis
 });
 
 test('title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight', async (t) => {
+  // The native opening event and autofocus establish top-layer order when
+  // Workshop retains Home beneath it. This finite DOM boundary owns neither
+  // app navigation nor focus restoration; both remain the real implementations.
+  const showModal = SoloElement.prototype.showModal;
+  t.mock.method(SoloElement.prototype, 'showModal', function () {
+    if (this.open) return;
+    this.emit('beforetoggle', { newState: 'open', oldState: 'closed' });
+    showModal.call(this);
+    this.querySelector('button:not(:disabled),select:not(:disabled),input:not(:disabled)')?.focus();
+  });
   const page = await soloPage(t, { titleScreen: true });
+  const checkpoint = authoritativeCheckpoint(page.rendered.run),
+    stored = [...page.storage.map];
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
     'shell-play',
@@ -109,6 +121,8 @@ test('title keeps five game destinations and quick sound; About lives in Worksho
   assert.equal(page.doc.activeElement.id, 'shell-play', 'Back restores the actual title entry');
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual([...page.storage.map], stored);
   assert.deepEqual(page.errors, []);
 });
 
