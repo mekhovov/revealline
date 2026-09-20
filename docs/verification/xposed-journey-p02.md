@@ -266,3 +266,31 @@ immediately before the Next click through the running accessibility-tree respons
 that includes automation/observation overhead. It is not a physical input latency
 measurement, a Next-button appearance measurement, or whole-device performance
 acceptance. Idle review time in the displayed mission clocks is not pacing evidence.
+
+## Catalog-based actor authoring
+
+Studio's map workbench now adds, replaces and removes individual enemies without
+JSON editing. Controls expose registered roles, explicit headings/patrol direction,
+frontier edge placement and catalog speed tiers with the selected preset's resolved
+cells/second. Domain, damage target, region-retention behavior and counterplay stay
+visible. Team offers field keepers only, preserving its current qualification boundary.
+Unknown roles, custom speeds, duplicate/mismatched IDs and invalid movement-domain
+placements fail through the shared compiler before any draft mutation. Every
+supported mode/preset compiles; maps, asset pins, policy and published editions remain
+unchanged. Existing Undo and immutable checkpoints own recovery. Removal requires
+two activations, and editing or switching context cancels the armed action.
+
+The actor/tuning/Studio/structure/image cohort passes **39/39** (4.0 seconds).
+Native checks added a keeper at (40.5,6.5) only to the copied Behind the patrol
+mission, rejected an attempted move into its foundation at (18.5,18.5), showed
+Gentle's measured tier at 2.04 cells/second, applied a Left heading and used Undo
+to restore Down-right. Reload of checkpoint 8 retained the added keeper and its
+restored direction; the original mission still had its original three enemies.
+The final two-column panel was visually inspected in the wider map workbench at
+1280×720. Console errors were absent during the interaction check. Native removal,
+phone/controller navigation and physical-device acceptance are not claimed;
+confirmed removal and cancellation have modeled-controller coverage.
+
+The frontend-design skill guided reuse of the existing field-kit typography,
+colors and explicit controls, and relocation out of the cramped sidebar. This is
+candidate authoring, not approval of newly edited levels or a publication action.
