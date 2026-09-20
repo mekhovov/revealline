@@ -130,10 +130,32 @@ export const ROVER_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+export const FRACTURE_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v3',
+  roles: {
+    ...ROVER_ACTOR_CATALOG.roles,
+    'territory-eroder': {
+      type: 'eroder',
+      domain: 'unclaimed-field',
+      damageTarget: 'body-and-trail',
+      retainsField: true,
+      captureResponse: 'retains-field-and-can-reopen-earned-frontier',
+      warning: '60-actor-ticks-on-a-marked-eligible-cell',
+      action: 'pause-then-reopen-one-unprotected-earned-cell',
+      recovery: '120-actor-tick-erosion-cooldown',
+      counterplay:
+        'Use permanent foundations and captured required-objective anchors to protect return routes. Repair valuable gaps; reclaim restores coverage without awarding points again.',
+      speeds: { measured: 2.4, standard: 3.2, brisk: 4 },
+    },
+  },
+});
+
 export function journeyActors(id = ACTOR_CATALOG.id) {
   const catalogs = {
     [ACTOR_CATALOG.id]: ACTOR_CATALOG,
     [ROVER_ACTOR_CATALOG.id]: ROVER_ACTOR_CATALOG,
+    [FRACTURE_ACTOR_CATALOG.id]: FRACTURE_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];
@@ -151,7 +173,7 @@ export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_
   required(Object.hasOwn(catalog.roles, actor.role), 'Unsupported actor role.');
   required(Object.hasOwn(role.speeds, actor.tier), 'Unsupported actor speed tier.');
   const speed = role.speeds[actor.tier] * journeyPreset(difficulty).enemySpeedFactor;
-  if (['bouncer', 'claimed-rover'].includes(role.type)) {
+  if (['bouncer', 'claimed-rover', 'eroder'].includes(role.type)) {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'heading'], 'actor');
     required(
       Array.isArray(actor.heading) &&

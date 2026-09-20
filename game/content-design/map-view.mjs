@@ -1,6 +1,7 @@
 import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
+import { traceContentActor } from './actor-marker.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -80,24 +81,7 @@ export function paintContentMap(
       radius = size * 0.45;
     ctx.fillStyle = '#ffae8e';
     ctx.beginPath();
-    if (['bouncer', 'drifter'].includes(actor.type)) ctx.arc(x, y, radius, 0, Math.PI * 2);
-    else if (actor.type === 'border-patrol') {
-      ctx.moveTo(x, y - radius);
-      ctx.lineTo(x + radius, y);
-      ctx.lineTo(x, y + radius);
-      ctx.lineTo(x - radius, y);
-      ctx.closePath();
-    } else if (actor.type === 'claimed-rover') {
-      // A tracked square cannot be confused with either patrol silhouette.
-      ctx.rect(x - radius * 0.7, y - radius * 0.65, radius * 1.4, radius * 1.3);
-      ctx.rect(x - radius, y - radius, radius * 0.3, radius * 2);
-      ctx.rect(x + radius * 0.7, y - radius, radius * 0.3, radius * 2);
-    } else {
-      ctx.moveTo(x, y - radius);
-      ctx.lineTo(x + radius, y + radius);
-      ctx.lineTo(x - radius, y + radius);
-      ctx.closePath();
-    }
+    traceContentActor(ctx, actor.type, x, y, radius);
     ctx.fill();
     if (showCapture && actor.anchor) {
       ctx.strokeStyle = '#fff0ad';
