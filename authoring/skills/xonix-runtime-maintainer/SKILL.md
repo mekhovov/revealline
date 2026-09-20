@@ -917,3 +917,7 @@ then verify first clear, simultaneous clears, Pause/Resume and both-ended rankin
 Reject mismatched protocol packets; keep legacy timed replay outcomes. Load an old
 v1 saved flight and verify unchanged bytes plus truthful recovery copy. Preserve the
 old reference crosswalk and prove its identities before renewing new-policy pins.”
+
+### Responsive recovery dialogs
+
+Use the shared focus-clearance owner for scrollable player dialogs. Supply a sticky heading only when the dialog actually has one, dispose listeners with the owning screen, and retain the selected action through reflow without activating it. Verify portrait to short-landscape resizing with keyboard focus on Cancel/Stay/Play, including pending and completed media operations. A passing layout-model test does not replace observing the final integrated browser view. Preserve original failed observations and sparse-input failures separately from product regressions.
