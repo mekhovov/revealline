@@ -235,7 +235,7 @@ for (const action of [
     if (action === 'cancel') assert.equal(h.doc.activeElement.id, 'shell-featured');
     assert.deepEqual(h.errors, []);
   });
-for (const action of ['complete', 'cancel', 'new-save', 'missions', 'blur'])
+for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'blur'])
   test(`saved original restore: ${action} is checked before adopting a new run`, async (t) => {
     const f = await media(t),
       storage = memoryStorage();
@@ -283,6 +283,18 @@ for (const action of ['complete', 'cancel', 'new-save', 'missions', 'blur'])
           'Title cancellation settles field status before a held decoder finishes',
         );
         assert.match(h.$('flight-preparation-status').textContent, /Preparation cancelled/);
+      }
+      if (action === 'escape') {
+        const event = new Event('cancel', { cancelable: true });
+        h.$('shell-home').dispatchEvent(event);
+        assert.equal(
+          event.defaultPrevented,
+          true,
+          'Back cancels preparation without closing title',
+        );
+        assert.equal(h.$('shell-home').open, true);
+        assert.equal(h.doc.activeElement.id, 'shell-continue');
+        assert.equal(h.$('flight-preparation-cancel').hidden, true);
       }
       if (action === 'new-save') storage.setItem(slot, 'newer-saved-flight');
       if (action === 'missions') {

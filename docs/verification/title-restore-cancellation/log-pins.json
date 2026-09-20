@@ -12,6 +12,12 @@
       "gzipSha256": "3252bffe95d302e911dbb7bce17d46b08502773867b04c5db46ce2bcedc21522",
       "originalBytes": 8586,
       "originalSha256": "6de632c3da744fd2fd092e05681527793c00eb9a515b5e4180d3aa0671a9d51e"
+    },
+    {
+      "file": "escape-node20.log.gz",
+      "gzipSha256": "1b2a563e848970b207799b7d7431e66344b284b58ee7d64c16d815b3b64e41ee",
+      "originalBytes": 9052,
+      "originalSha256": "98b3953cc5bf398286e8a513a1ea309e48952c0658e652de446a617ca0eaad42"
     }
   ]
 }

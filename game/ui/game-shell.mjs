@@ -598,8 +598,15 @@ export function attachGameShell({
     for (const element of doc.querySelectorAll('.home-actions a, .shell-tools'))
       element.hidden = true;
   }
-  const cancelHome = () => {
+  const cancelHome = (event) => {
     titleModeIntent = null;
+    if (titleAction) {
+      // Back during preparation cancels that operation and keeps its opener.
+      // Closing the title too would strand focus on the underlying ready field.
+      event.preventDefault();
+      cancelTitleAndRestore(titleAction);
+      return;
+    }
     cancelTitle();
     homeVisit++;
     queueMicrotask(() => {
