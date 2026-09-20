@@ -57,6 +57,7 @@ export function createCandidateVersusHost(source, { themes } = {}) {
         track: null,
         asset: manifest.background,
         executionKey: entry.executionKey,
+        musicCampaignKey: entry.baseCampaignKey,
       });
     }),
   );
