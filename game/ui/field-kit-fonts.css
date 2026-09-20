@@ -1,7 +1,9 @@
-/* Original font names and OFL notices are retained in fonts/field-kit/. */
+/* Share hash-addressed bytes with the presentation host. Original font files,
+   names and OFL notices remain in fonts/field-kit/ for provenance and tools. */
 @font-face {
   font-family: 'Field Kit Display';
-  src: url('./fonts/field-kit/handjet-display-600.woff2') format('woff2');
+  src: url('../presentation/compiled/assets/4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145.woff2')
+    format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -9,7 +11,8 @@
 
 @font-face {
   font-family: 'Field Kit UI';
-  src: url('./fonts/field-kit/exo2-ui-400-600.woff2') format('woff2');
+  src: url('../presentation/compiled/assets/fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2')
+    format('woff2');
   font-weight: 400 600;
   font-style: normal;
   font-display: swap;
@@ -17,7 +20,8 @@
 
 @font-face {
   font-family: 'Field Kit Mono';
-  src: url('./fonts/field-kit/ibm-plex-mono-500.woff2') format('woff2');
+  src: url('../presentation/compiled/assets/0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8.woff2')
+    format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;

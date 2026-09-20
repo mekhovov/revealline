@@ -14,6 +14,10 @@ Use the [approved contract](../../docs/fpv-redesign-design.md), [interactive atl
 
 > Check the actual shipped Handjet, Exo 2 and IBM Plex Mono WOFF2 files against English and Ukrainian text, including Ґґ Єє Іі Її and ʼ ’. Use Handjet only for large display accents. Inspect Continue flight / Продовжити політ, Mission complete / Місію завершено, І l 1, О O 0, 01:24 and 85% in Standard/Large text and at 200% zoom. Report structural glyph coverage separately from visual reading and clipping. Do not claim Ukrainian translation has shipped.
 
+## Verify startup font reuse
+
+> Compare fresh browser sessions on identical source with and without the bootstrap font URL change, using the same HTTP cache policy. Confirm Home and the initial loading/failure surface remain readable. Record every requested font URL and response byte length, not just unique hashes. Verify bootstrap aliases resolve to the retained hash-addressed font bytes, runtime validation and weight descriptors remain intact, and original fonts/licenses survive compilation. Run the typography regression and mini boot/workshop distribution checks. Report native request savings separately from wall-clock speed, decoded memory, offline and public-release verification.
+
 ## Extend the shared interface
 
 > Add this screen to the Field Kit interface using the three shared CSS files, in fonts/tokens/components order after legacy styles, and body.field-kit. Keep the existing game-shell class and modal/input ownership. Use Exo 2 for controls and instructions, Handjet for static display titles at least 40px, and Plex Mono for aligned counters. Cover focus, pressed, selected, disabled and error states. Preserve 44px targets, Large text and readable canvas plates. Test the real nested return route and confirm that closing a menu does not resume a flight.

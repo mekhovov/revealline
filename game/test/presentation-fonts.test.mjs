@@ -63,3 +63,38 @@ test('compiled Handjet, variable Exo 2 and Plex faces register their real role w
   host.close();
   assert.equal(registered.size, 0);
 });
+
+test('bootstrap faces use the same retained hash-addressed bytes as presentation fonts', async () => {
+  const cssURL = new URL('../ui/field-kit-fonts.css', import.meta.url);
+  const [css, provenance, studio] = await Promise.all([
+    readFile(cssURL, 'utf8'),
+    readFile(new URL('../ui/fonts/field-kit/provenance.json', import.meta.url), 'utf8').then(
+      JSON.parse,
+    ),
+    readFile(new URL('../presentation/compiled/studio.json', import.meta.url), 'utf8').then(
+      JSON.parse,
+    ),
+  ]);
+  const faces = new Map(
+    [...css.matchAll(/@font-face\s*\{([^}]+)\}/g)].map((match) => [
+      match[1].match(/font-family:\s*'([^']+)'/)[1],
+      match[1].match(/src:\s*url\('([^']+)'\)/)[1],
+    ]),
+  );
+  assert.equal(faces.size, provenance.fonts.length);
+  for (const font of provenance.fonts) {
+    const source = faces.get(font.cssFamily);
+    assert.equal(source, `../presentation/compiled/assets/${font.sha256}.woff2`);
+    const [runtimeBytes, originalBytes] = await Promise.all([
+      readFile(new URL(source, cssURL)),
+      readFile(new URL(`../ui/fonts/field-kit/${font.file}`, import.meta.url)),
+    ]);
+    assert.deepEqual(runtimeBytes, originalBytes, `${font.family} keeps the approved glyphs`);
+    assert.equal(runtimeBytes.length, font.bytes);
+    assert.equal(await hashPresentationBytes(runtimeBytes), font.sha256);
+    assert.ok(
+      studio.assets.some((asset) => asset.kind === 'font' && asset.file?.sha256 === font.sha256),
+      'The compiler must retain bootstrap font bytes even when another collection replaces a role',
+    );
+  }
+});
