@@ -128,7 +128,7 @@ test('More worlds discovers Tactical and one Download & play retains the old run
   assert.equal(page.doc.activeElement, page.$('game-canvas'));
   assert.deepEqual(page.errors, []);
 });
-test('offline Play of the current chapter requests replacement; Stay preserves its paused cut', async (t) => {
+test('offline Play of the current chapter preserves its paused cut without replacement', async (t) => {
   images(t);
   const page = await soloPage(t);
   page.$('pack-select').focus();
@@ -164,22 +164,18 @@ test('offline Play of the current chapter requests replacement; Stay preserves i
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.storage.map, stored);
   assert.equal(requests.length, 1);
+  choose.focus();
   await choose.onclick();
   page.frame(0);
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
-  assert.equal(page.rendered.run, run, 'Play must not reset the flight before Replace.');
+  assert.equal(page.rendered.run, run, 'Current chapter selection keeps the exact flight.');
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(page.$('optional-worlds-dialog').open, true);
-  assert.equal(page.$('mission-replace-dialog').open, true);
-  assert.equal(page.$('mission-replace-confirm').textContent, 'Replace & play');
-  const retained = page.storage.getItem('revealline.suspended.dev.v1');
-  assert.deepEqual(JSON.parse(retained).replay.checkpoint, checkpoint);
-  page.$('mission-replace-stay').click();
   assert.equal(page.$('mission-replace-dialog').open, false);
+  assert.match(page.$('optional-worlds-status').textContent, /already active.*kept paused/);
   assert.equal(page.doc.activeElement, choose);
-  assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), retained);
-  for (const [key, value] of stored)
-    if (key !== 'revealline.suspended.dev.v1') assert.equal(page.storage.map.get(key), value, key);
+  assert.deepEqual(page.storage.map, stored, 'No checkpoint, timestamp or progress rewrite.');
+  assert.equal(requests.length, 1, 'Offline current chapter makes no new request.');
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.errors, []);
 });
