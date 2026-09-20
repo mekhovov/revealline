@@ -400,7 +400,8 @@
                 <p class="note">
                   Studio shows all markers: ! required, o optional, ? initially hidden. Hidden
                   requirements need deliberate teaching. Capturing a marker does not open a gate
-                  unless a future, explicit mechanic defines that link.
+                  unless the relay editor below explicitly links it. Relink or remove dependent
+                  gates before removing their objective.
                 </p>
                 <button id="objective-submit" type="submit">Validate & add objective</button>
                 <button id="objective-remove" type="button" disabled>
@@ -408,6 +409,63 @@
                 </button>
                 <p id="objective-result" class="note" role="status"></p>
               </fieldset>
+            </form>
+          </details>
+          <details id="relay-panel">
+            <summary>Link permanent relay gates</summary>
+            <p id="relay-qualification" class="note"></p>
+            <button id="relay-enable" type="button">Enable relay edition for this mission</button>
+            <form id="relay-form">
+              <fieldset id="relay-tools" disabled>
+                <legend>Closed wall → permanent reclaimed connector</legend>
+                <label>Gate<select id="relay-select"></select></label>
+                <label>Stable gate ID<input id="relay-id" maxlength="80" required /></label>
+                <label>Capture objective<select id="relay-objective" required></select></label>
+                <label
+                  >X · whole cell<input
+                    id="relay-x"
+                    type="number"
+                    min="1"
+                    max="70"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Y · whole cell<input
+                    id="relay-y"
+                    type="number"
+                    min="1"
+                    max="34"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Width · cells<input
+                    id="relay-w"
+                    type="number"
+                    min="1"
+                    max="70"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Height · cells<input
+                    id="relay-h"
+                    type="number"
+                    min="1"
+                    max="34"
+                    step="1"
+                    required
+                /></label>
+                <p class="note">
+                  Crossbars mark a closed gate; corner brackets remain when open. Gates never earn
+                  score or coverage. Opening does not connect field-enemy regions. Preview remote
+                  fill and avoid locking an objective behind its own gate.
+                </p>
+                <button id="relay-submit" type="submit">Validate & add gate</button>
+                <button id="relay-remove" type="button" disabled>Remove selected gate</button>
+              </fieldset>
+              <p id="relay-result" class="note" role="status"></p>
             </form>
           </details>
           <details id="image-authoring">
