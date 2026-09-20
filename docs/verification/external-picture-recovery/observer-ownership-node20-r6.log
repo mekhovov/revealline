@@ -1,0 +1,90 @@
+TAP version 13
+# Subtest: actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+ok 1 - actual Versus 4:3 boards fit each seat and render at the visible bitmap scale
+  ---
+  duration_ms: 289.694167
+  ...
+# Subtest: actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+ok 2 - actual Versus 2:1 boards fit each seat and render at the visible bitmap scale
+  ---
+  duration_ms: 2676.27425
+  ...
+# Subtest: actual Versus resize follows independent touch pads and Large text without replacing either run
+ok 3 - actual Versus resize follows independent touch pads and Large text without replacing either run
+  ---
+  duration_ms: 3199.118583
+  ...
+# Subtest: actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+ok 4 - actual Versus zero/hidden bounds recover and stale observer callbacks cannot survive disposal
+  ---
+  duration_ms: 184.350792
+  ...
+# Subtest: actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver
+ok 5 - actual Versus fallback refits both boards before drawing a changed encounter hint without ResizeObserver
+  ---
+  duration_ms: 1975.764625
+  ...
+# Subtest: actual Versus fallback refits wrapping statistics after a normal capture before either seat paints
+ok 6 - actual Versus fallback refits wrapping statistics after a normal capture before either seat paints
+  ---
+  duration_ms: 1509.077042
+  ...
+# Subtest: all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection
+ok 7 - all 36 choices traverse exactly once in deterministic 4/2 card pages and every theme/mode intersection
+  ---
+  duration_ms: 2.065416
+  ...
+# Subtest: world action stays inside a resized scrollport without changing focus or activating a choice
+ok 8 - world action stays inside a resized scrollport without changing focus or activating a choice
+  ---
+  duration_ms: 21.765083
+  ...
+# Subtest: actual panel traverses every card, filters without work and resizes with reachable focus
+ok 9 - actual panel traverses every card, filters without work and resizes with reachable focus
+  ---
+  duration_ms: 27.682042
+  ...
+# Subtest: filter and paging preserve exact pending work; failure remains on its visible card and retry acts once
+ok 10 - filter and paging preserve exact pending work; failure remains on its visible card and retry acts once
+  ---
+  duration_ms: 8.260291
+  ...
+# Subtest: remote failure still inspects exact source cards and exposes remaining installed choices without installation
+ok 11 - remote failure still inspects exact source cards and exposes remaining installed choices without installation
+  ---
+  duration_ms: 12.93225
+  ...
+# Subtest: native controller select preview and Back keep filters unchanged; Confirm commits without selecting a chapter
+ok 12 - native controller select preview and Back keep filters unchanged; Confirm commits without selecting a chapter
+  ---
+  duration_ms: 94.685916
+  ...
+# Subtest: installed mode follows actual authored policies and a multi-theme pack is one reachable choice
+ok 13 - installed mode follows actual authored policies and a multi-theme pack is one reachable choice
+  ---
+  duration_ms: 0.339833
+  ...
+# Subtest: cancelling an unavailable online list leaves inspected installed originals usable and late metadata cannot reopen the dialog
+ok 14 - cancelling an unavailable online list leaves inspected installed originals usable and late metadata cannot reopen the dialog
+  ---
+  duration_ms: 13.763459
+  ...
+# Subtest: widening and releasing a retained card never leave focus on disabled page controls
+ok 15 - widening and releasing a retained card never leave focus on disabled page controls
+  ---
+  duration_ms: 7.780708
+  ...
+# Subtest: file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes
+ok 16 - file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes
+  ---
+  duration_ms: 8.273
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9948.491875

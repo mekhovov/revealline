@@ -1,0 +1,6 @@
+{
+  "initialFailure": "Missing exactsource scripts/pages-current-entry.mjs after sparsecheckout reused",
+  "correction": "Restored exact01c1fbb5trackedhelper; productvalidators unchanged",
+  "fullAdmissionResult": "PASS109catalogrows/36archives/108historicalroutes",
+  "focusedPublisherTests": 47
+}

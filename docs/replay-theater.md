@@ -47,3 +47,9 @@ npm run validate
 The static build includes this directory and its sibling authoring assets automatically; nested release paths remain relative. There is no new server or package dependency. [Navigation host tests](../game/test/replay-theater-navigation.test.mjs) exercise the actual entry, router/navigation and real replay/core through modeled DOM, drawing and device boundaries: keyboard transport under both policies, neutral controller joining, select commit/cancel, deferred import cancellation, focus/loss/disposal and Classic checkpoint completion. They do not prove physical-controller behavior, browser layout, trusted picker activation or parent-page music continuity. The Theater remains silent and storage-free.
 
 Browser review should cover all four examples, keyboard/controller pause/resume/restart, native editing, the hangar body change, theme changes at the same tick, malformed import rollback, import cancellation and narrow portrait layout. No private controller or run is exposed through globals.
+
+## Artwork warning announcements
+
+Renderer artwork warnings use a persistent polite, atomic status region. Keep its empty state in the accessibility tree; remove only its margins, never hide it with `display: none`, `hidden` or `aria-hidden`. Artwork failure and recovery update this region without moving focus, starting playback or changing the verified recording. Loading progress remains a separate status.
+
+Maintainer prompt: “Verify Replay Theater with a delayed or failed craft image and then a successfully loaded theme. Confirm the complete artwork warning is exposed as a polite status, the empty region stays mounted, and the current focus, playback state and recorded checkpoint stay unchanged. Record browser semantics separately from an actual screen-reader listening check.”

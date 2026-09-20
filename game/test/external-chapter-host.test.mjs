@@ -586,3 +586,36 @@ test('native absent index is uncharged; a persisted index contributes its exact 
   assert.equal(present.usage.indexBytes, Buffer.byteLength(JSON.stringify(index)));
   assert.equal(h.borrows, 0);
 });
+
+test('explicit retained-picture review crosses temporary installer ownership and keeps authored defaults separate', async (t) => {
+  const h = await setup(t),
+    library = structuredClone(pilot.prepared.imported.document.library);
+  library.presentations.push({
+    ...library.presentations[0],
+    revision: 2,
+    description: 'Custom retained picture',
+  });
+  library.assignments[0].revision = 2;
+  await h.still.commit(
+    await h.still.prepare(library, pilot.prepared.imported.assets, {
+      executionCatalog: pilot.prepared.executionCatalog,
+    }),
+    { expectedGeneration: 0 },
+  );
+  const before = await h.still.read();
+  let pictureReview;
+  try {
+    await h.host.install(pilot.prepared);
+  } catch (error) {
+    pictureReview = error;
+  }
+  assert.equal(pictureReview.name, 'RetainedPictureAssignmentConflict');
+  assert.deepEqual(await h.still.read(), before);
+  assert.equal((await h.host.install(pilot.prepared, { pictureReview })).status, 'installed');
+  assert.deepEqual((await h.still.read()).document, before.document);
+  const snapshot = await h.host.inspect();
+  const selected = await h.host.authoredPicture(snapshot, request(snapshot));
+  assert.equal(selected.pin.presentationRevision, 1);
+  assert.equal((await h.still.read()).document.library.assignments[0].revision, 2);
+  assert.equal(h.values.size, 0);
+});

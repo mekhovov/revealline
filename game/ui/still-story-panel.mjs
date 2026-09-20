@@ -313,40 +313,44 @@ export function createStillStoryPanel({
     bundleRestore.disabled = busy || !ready || !reviewed;
     download.hidden = !downloadURL || busy;
   }
-  function guarded(text, action) {
+  function guarded(text, action, focusOptions) {
     if (disposed || busy || !ready) return false;
     const id = serial;
     let key = selectionKey(getSelection());
-    return work(text, async (signal, parentCheck) => {
-      const lease = feedback.begin({
-        message: text,
-        isCurrent: () => !disposed && id === serial && !signal.aborted,
-      });
-      activity = lease;
-      const check = () => {
-        parentCheck();
-        if (disposed || id !== serial || key !== selectionKey(getSelection()))
-          throw new DOMException('Story work cancelled.', 'AbortError');
-      };
-      check.adoptCapturedDraft = (selection) => {
-        parentCheck();
-        const next = selectionKey(selection);
-        if (disposed || id !== serial || next !== selectionKey(getSelection()))
-          throw new DOMException('Story work cancelled.', 'AbortError');
-        key = activeSelection = next;
-      };
-      try {
-        await action(signal, check);
-        check();
-        lease.finish({ message: status.textContent });
-      } catch (error) {
-        check();
-        lease.finish({ message: message(error), state: 'error' });
-        throw error;
-      } finally {
-        if (activity === lease) activity = null;
-      }
-    });
+    return work(
+      text,
+      async (signal, parentCheck) => {
+        const lease = feedback.begin({
+          message: text,
+          isCurrent: () => !disposed && id === serial && !signal.aborted,
+        });
+        activity = lease;
+        const check = () => {
+          parentCheck();
+          if (disposed || id !== serial || key !== selectionKey(getSelection()))
+            throw new DOMException('Story work cancelled.', 'AbortError');
+        };
+        check.adoptCapturedDraft = (selection) => {
+          parentCheck();
+          const next = selectionKey(selection);
+          if (disposed || id !== serial || next !== selectionKey(getSelection()))
+            throw new DOMException('Story work cancelled.', 'AbortError');
+          key = activeSelection = next;
+        };
+        try {
+          await action(signal, check);
+          check();
+          lease.finish({ message: status.textContent });
+        } catch (error) {
+          check();
+          lease.finish({ message: message(error), state: 'error' });
+          throw error;
+        } finally {
+          if (activity === lease) activity = null;
+        }
+      },
+      focusOptions,
+    );
   }
   async function load({ signal, check }) {
     invalidate();
@@ -639,24 +643,28 @@ export function createStillStoryPanel({
     if (disposed || busy || !ready || !reviewed) return false;
     const chosen = reviewed;
     reviewed = null;
-    return guarded('Restoring reviewed story originals…', async (signal, check) => {
-      try {
-        required(
-          chosen.file === bundleFile.files?.[0] && chosen.restore === (mode.value === 'restore'),
-          'File or policy changed. Review again.',
-        );
-        const result = await catalog.withCurrent(
-          chosen.ticket,
-          () => commitStoryBundleRestore(chosen.review, { signal }),
-          { signal },
-        );
-        await notified(result, check);
-        reviewText.textContent =
-          'Story originals restored. Picture originals, audio and game data use separate files.';
-      } finally {
-        await cancelStoryBundleRestore(chosen.review);
-      }
-    });
+    return guarded(
+      'Restoring reviewed story originals…',
+      async (signal, check) => {
+        try {
+          required(
+            chosen.file === bundleFile.files?.[0] && chosen.restore === (mode.value === 'restore'),
+            'File or policy changed. Review again.',
+          );
+          const result = await catalog.withCurrent(
+            chosen.ticket,
+            () => commitStoryBundleRestore(chosen.review, { signal }),
+            { signal },
+          );
+          await notified(result, check);
+          reviewText.textContent =
+            'Story originals restored. Picture originals, audio and game data use separate files.';
+        } finally {
+          await cancelStoryBundleRestore(chosen.review);
+        }
+      },
+      { opener: bundleRestore, restoreTo: bundleReview },
+    );
   }
   function changed() {
     if (busy) {

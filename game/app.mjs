@@ -703,6 +703,7 @@ try {
     lastReplay = null,
     replayFeedback = null,
     replayFocusClearance = null,
+    missionReplacementFocusClearance = null,
     replayDownload = null,
     completionWarning = '',
     appearanceRewardIds = [],
@@ -2060,6 +2061,7 @@ try {
       presentationFeedback.dispose();
       replayFeedback?.dispose();
       replayFocusClearance?.destroy();
+      missionReplacementFocusClearance?.destroy();
     }
   };
   window.addEventListener('pageshow', (event) => {
@@ -3433,6 +3435,10 @@ try {
     missionReplacementMessage(ticket);
     return false;
   }
+  missionReplacementFocusClearance = attachFocusClearance({
+    container: $('mission-replace-dialog'),
+    document,
+  });
   $('mission-replace-dialog').addEventListener('close', () => {
     if ($('mission-replace-dialog').open) return;
     const ticket = missionReplacement;
@@ -3460,6 +3466,14 @@ try {
         }
       }
       ticket.pending = true;
+      // Keep the live escape action focused before disabling its opener.
+      // Do not reclaim focus after a pointer choice or browser focus change.
+      if (
+        !document.hidden &&
+        document.hasFocus() &&
+        document.activeElement === $('mission-replace-confirm')
+      )
+        $('mission-replace-stay').focus({ preventScroll: true });
       $('mission-replace-confirm').disabled = true;
       $('mission-replace-status').textContent = isSetupRequest(ticket.request)
         ? 'Preparing the requested fresh attempt without starting it.'
@@ -4204,7 +4218,7 @@ try {
   async function installSourceChapter(
     chapterId,
     files,
-    { signal, download = false, onStatus } = {},
+    { signal, download = false, onStatus, pictureReview } = {},
   ) {
     const notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
     const descriptor = sourceExternalChapter(chapterId);
@@ -4250,7 +4264,7 @@ try {
       report('Saving the verified chapter and originals…', 'saving');
       const installed = await externalChapters[
         snapshot.reason === 'external-recovery' ? 'recover' : 'install'
-      ](prepared, { signal });
+      ](prepared, { signal, pictureReview });
       committed = true;
       report('Verifying the saved chapter is ready to play…', 'verifying');
       const next = await checkedChapters({ signal });
@@ -4259,7 +4273,7 @@ try {
       adoptContentCatalog(contentFromChapters(next));
       packLaunchGuard.advance(operation, before, packs);
       packCommits.acceptCurrent();
-      if (snapshot.reason !== 'external-recovery') {
+      if (snapshot.reason !== 'external-recovery' && !pictureReview) {
         try {
           await releasePictures.assignFreshChapter({
             descriptor: installed.descriptor,
@@ -4586,10 +4600,15 @@ try {
     clearInput();
     const controller = new AbortController();
     restoreController = controller;
-    const abort = () => controller.abort();
-    signal?.addEventListener('abort', abort, { once: true });
     let feedback,
       stagedPictures = null;
+    const abort = () => {
+      controller.abort();
+      // Title cancellation owns this field status too. Settle it immediately;
+      // a pending decoder may finish later, after another action owns the UI.
+      feedback?.finish('Preparation cancelled. Your flight remains paused.', 'cancelled');
+    };
+    signal?.addEventListener('abort', abort, { once: true });
     try {
       feedback = beginPreparation('Verifying your saved flight…', cancelRestore, 'verifying');
       onStatus?.({

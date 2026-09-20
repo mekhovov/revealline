@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-20",
+  "source": "9cbe0be5686e4f7063370299050df71402146af7",
+  "url": "http://127.0.0.1:18792/game/",
+  "server": "Exact tracked Git bytes, no source overrides; separate owned test origin",
+  "observer": "CUA native keyboard and inline screenshots",
+  "before": "First Signal,0%/3lives/0score0:04, paused; reload shows same Continue destination",
+  "steps": [
+    "Return then immediate Escape on title Continue: title stays open, Preparation cancelled is visible, Continue has focus.",
+    "Resize390x844: cancellation status and focused Continue both visible.",
+    "Return retries: actual flight restored0%/3lives/0score0:04, LIVE LINE and Flight resumed; game canvas focused.",
+    "Saved direction continued and reached52.2%/8160score/3lives0:07 victory before the subsequent Escape action. This last state is completed, not paused.",
+    "Viewport reset; test tab retained for handoff."
+  ],
+  "earlierSource": "15296cd7 removed stale status but allowed title to close/body focus; the separate Back correction above addresses that observed residual issue.",
+  "limits": [
+    "Local exact-source preview, not deployed patch",
+    "Inline screenshots only",
+    "No physical controller/touch certification",
+    "Full hosted qualification, immutable publishing and public retest pending"
+  ]
+}

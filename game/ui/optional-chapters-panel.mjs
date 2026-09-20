@@ -7,6 +7,7 @@ import { PACK_LIMITS } from '../packs.mjs';
 import { EXTERNAL_CHAPTER_LIMITS } from '../external-chapter.mjs';
 import { required } from '../data-json.mjs';
 import { createOperationStatus } from './operation-status.mjs';
+import { attachFocusClearance } from './focus-clearance.mjs';
 import {
   browseWorlds,
   installedWorldMode,
@@ -171,6 +172,11 @@ export function attachOptionalChaptersPanel({
     actions,
   );
   doc.body.append(dialog);
+  const focusClearance = attachFocusClearance({
+    container: dialog,
+    heading: top,
+    document: doc,
+  });
   const pageEvents =
     typeof doc.defaultView?.addEventListener === 'function'
       ? doc.defaultView
@@ -386,6 +392,53 @@ export function attachOptionalChaptersPanel({
       }
       card.append(row.choose);
     }
+    row.review = node('div', `${prefix}-picture-review`);
+    row.review.hidden = true;
+    row.review.setAttribute('role', 'group');
+    row.review.setAttribute('aria-label', 'Keep existing picture choices');
+    row.reviewText = node('p', `${prefix}-picture-review-text`);
+    row.confirm = action(`${prefix}-picture-confirm`, 'Install originals; keep my pictures', () => {
+      const choice = row.pictureReview;
+      if (!choice || busy) return;
+      return run(
+        async (signal, current, report) => {
+          report('Installing originals while keeping your picture choices…', 'saving');
+          if (choice.files)
+            await chapter.install(choice.files, {
+              signal,
+              onStatus: report,
+              pictureReview: choice.error,
+            });
+          else await chapter.download({ signal, onStatus: report, pictureReview: choice.error });
+          if (!current()) return;
+          report('Originals installed; checking chapter readiness…', 'verifying');
+          try {
+            const next = await chapter.inspect({ signal });
+            if (!current()) return;
+            row.result = next;
+          } catch (error) {
+            throw new Error(
+              `The originals were installed and your picture choices kept. Refresh before playing. ${error.message}`,
+            );
+          }
+          if (current())
+            report(
+              `Originals installed. Your picture choices and paused ${attemptLabel} are kept. ${chapter.play ? 'Use Play' : 'Choose the chapter separately'} when ready.`,
+            );
+        },
+        { origin: row.confirm, next: row.choose, fallback: recoverySummary },
+      );
+    });
+    row.dismiss = action(`${prefix}-picture-cancel`, 'Cancel picture review', () => {
+      const origin = row.pictureReview?.origin;
+      discardPictureReviews();
+      refresh();
+      const message = `Installation cancelled. Your pictures and paused ${attemptLabel} are unchanged.`;
+      presentation.begin({ message }).finish({ message, state: 'cancelled' });
+      if (dialog.open) (origin && !origin.disabled ? origin : row.choose).focus();
+    });
+    row.review.append(row.reviewText, row.confirm, row.dismiss);
+    card.append(row.review);
     recovery.append(row.install, recoveryNote);
     card.append(state, recovery);
     return row;
@@ -473,6 +526,8 @@ export function attachOptionalChaptersPanel({
     }
     for (const row of sourceRows) {
       const sourceState = row.result;
+      row.review.hidden = !row.pictureReview;
+      row.confirm.disabled = row.dismiss.disabled = busy;
       row.install.disabled = busy || sourceState.status === 'installed';
       if (row.chapter.play) {
         row.choose.disabled = busy || (sourceState.status !== 'installed' && !row.download);
@@ -697,7 +752,11 @@ export function attachOptionalChaptersPanel({
       }
     }
   }
+  function discardPictureReviews() {
+    for (const row of sourceRows) row.pictureReview = null;
+  }
   function cancelPending({ restoreFocus = true } = {}) {
+    discardPictureReviews();
     const wasBusy = busy;
     const focusPlan = pendingFocus,
       fromCancel = doc.activeElement === cancel;
@@ -717,6 +776,8 @@ export function attachOptionalChaptersPanel({
   }
   async function run(fn, { origin = doc.activeElement, next = null, fallback = null } = {}) {
     if (disposed || busy || !dialog.open) return;
+    const reviewFiles = sourceRows.find((row) => row.confirm === origin)?.pictureReview?.files;
+    discardPictureReviews();
     const ticket = ++generation,
       controller = new AbortController();
     const focusPlan =
@@ -730,6 +791,7 @@ export function attachOptionalChaptersPanel({
     pending = controller;
     busy = true;
     const held = allRows().find((row) => row.card.contains(origin));
+    const sourceRow = sourceRows.find((row) => row.card.contains(origin));
     if (held) pinned = held.key;
     const current = () => !disposed && dialog.open && ticket === generation;
     refresh();
@@ -766,12 +828,46 @@ export function attachOptionalChaptersPanel({
       succeeded = true;
     } catch (error) {
       if (current()) {
-        outcome = error?.name === 'AbortError' ? 'cancelled' : 'error';
-        report(
-          error?.name === 'AbortError'
-            ? `Operation cancelled. Completed installs remain available; your ${attemptLabel} is kept.`
-            : `${error.message || error} Completed installs remain available. ${play || playInstalled || sourceRows.some((row) => row.chapter.play) ? 'Use Play or Refresh to retry.' : 'Use Refresh or Install to retry.'}`,
-        );
+        const reviewable =
+          sourceRow &&
+          error?.name === 'RetainedPictureAssignmentConflict' &&
+          Array.isArray(error.conflicts) &&
+          error.conflicts.length > 0;
+        if (reviewable) {
+          sourceRow.pictureReview = {
+            error,
+            origin:
+              origin === sourceRow.confirm
+                ? reviewFiles
+                  ? sourceRow.install
+                  : sourceRow.download
+                : origin,
+            files:
+              origin === sourceRow.install
+                ? { pack: sourceRow.pack.files?.[0], media: sourceRow.media.files?.[0] }
+                : (reviewFiles ?? null),
+          };
+          sourceRow.reviewText.textContent =
+            `${sourceRow.chapter.name}: ${error.conflicts.length} existing picture choice${error.conflicts.length === 1 ? '' : 's'} will be kept. The chapter uses its authored originals; your saved and earned pictures stay unchanged. ` +
+            error.conflicts
+              .map(
+                (entry) =>
+                  `${entry.levelName ?? entry.identity.levelId.replaceAll('-', ' ').replace(/^./, (letter) => letter.toUpperCase())}: ${entry.retained ? 'your selected picture' : 'your default picture'}`,
+              )
+              .join('; ');
+          if (focusPlan) focusPlan.next = sourceRow.dismiss;
+          succeeded = true;
+          report(
+            'Review your existing picture choices. Confirm installation or Cancel; your current flight is kept.',
+          );
+        } else {
+          outcome = error?.name === 'AbortError' ? 'cancelled' : 'error';
+          report(
+            error?.name === 'AbortError'
+              ? `Operation cancelled. Completed installs remain available; your ${attemptLabel} is kept.`
+              : `${error.message || error} Completed installs remain available. ${play || playInstalled || sourceRows.some((row) => row.chapter.play) ? 'Use Play or Refresh to retry.' : 'Use Refresh or Install to retry.'}`,
+          );
+        }
       }
     } finally {
       if (current()) {
@@ -964,12 +1060,14 @@ export function attachOptionalChaptersPanel({
   dialog.addEventListener('close', () => {
     if (!dialog.open) {
       retireLaunch();
-      if (pending) cancelPending();
+      cancelPending({ restoreFocus: false });
     }
   });
   function dispose() {
     if (disposed) return;
     disposed = true;
+    focusClearance.destroy();
+    discardPictureReviews();
     presentation.dispose();
     pendingStatus = null;
     ++generation;
