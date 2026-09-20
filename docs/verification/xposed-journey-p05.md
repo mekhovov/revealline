@@ -108,7 +108,22 @@ The engine-owned capture overlay still marks only field keepers as retention
 anchors. Six overlay/renderer checks pass in2.705seconds on Node20.19.5, including
 the exact three-part tracked shape. No game collision or movement changed.
 
-Remaining: optional-goal alternatives, broader historical route pins, native Studio/game
+Native correction check at pinned30f3ea39: Studio opens, inspect-only Rover import
+leaves the existing draft unchanged until explicit Apply, and local checkpoint1
+contains all seven maps. Each mission selector exposes the matching foundation,
+terrain, enemy and frozen-retention diagnostics. Screenshots of Wake the yard,
+Between the rows and Open frequency show the distinct tracked-square, triangle,
+circle and perimeter markers. No roamer appears as a field-retention anchor.
+
+Real Solo Practice opened Stepped return through the shared preview launcher.
+The native host exposed its one-second warning caption and then the active
+reclaimed-ground threat caption. A fresh Down input closed the initial line:
+0.3% earned coverage,70score, all three lives, then stop-on-capture. The run was
+paused at0:18. This is one native first-return observation, not a full clear,
+timing benchmark, physical-controller or human comprehension result. The preview
+uses the existing greybox presentation, not promised final Rover artwork.
+
+Remaining: optional-goal alternatives, broader historical route pins, broader native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
 Team mission, human balance/comprehension, final-source hosted gates and reviewed
 release/Pages. This foundation alone does not complete P05.
