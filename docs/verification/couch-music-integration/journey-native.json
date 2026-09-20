@@ -32,12 +32,31 @@
     "Audible listening or album quality",
     "Custom MP3 import and offline playback on this composed source",
     "Physical controller or touch hardware",
-    "Complete Team native journey",
-    "Final full-source release qualification and deployed acceptance"
+    "Final full-source release qualification and deployed acceptance",
+    "Complete Team win/rescue/Support and media/native input matrix"
   ],
   "relatedFailure": {
     "run": 35503593811,
     "scope": "Later P02 integrated source9fe6276",
     "finding": "Production audio recipe ledger stale after published-audio.mjs gained cues option. P02 owns source-stage and scoped-reviewed successors; this evidence is not recipe approval."
+  },
+  "teamBrowser": {
+    "url": "http://127.0.0.1:18787/game/couch/relay-rescue.html?journey=opening",
+    "input": "Native browser keyboard through CUA",
+    "source": "014449ed4f9fe98fd7303ee793083edd191790fb",
+    "arena": "First Connection, Standard, Full teamwork",
+    "observations": [
+      "Settings \u2192 Audio showed inherited master mute and Signal Afterglow paused. Explicit Pause music was selected before first Start.",
+      "Music library opened with Close focus. Escape restored Music library; a second Escape restored Settings opener.",
+      "Keyboard Start together and immediate Escape produced Both players paused, 0.0%, three reserves, 0:00, Resume together focused.",
+      "Settings \u2192 Audio retained explicit music Pause after first Start.",
+      "Retry same arena opened a discard dialog with Stay focused. Deliberate Discard and retry followed by Escape returned both players paused at fresh 0.0%, three reserves, 0:00.",
+      "Audio retained Signal Afterglow paused and master muted after Retry."
+    ],
+    "limitations": [
+      "No Team win/rescue/Support/native physical-device claim",
+      "No audible listening, MP3 import or offline playback claim",
+      "Screenshots inline only"
+    ]
   }
 }
