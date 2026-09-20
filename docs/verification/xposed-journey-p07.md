@@ -171,6 +171,23 @@ zero-delay opening: A return in reserve at0.25/0.5/1s; Pressure ladder at1/2s;
 Two ways home and Crossed bands at5s. These are retained failures, not ignored
 test cases. Alternative route checks are in progress before timing acceptance.
 
+The35 sampled delayed-start routes now all complete without loss and match
+public replays. Seven alternative routes reposition before departing rather
+than requiring immediate input. The rejected openings are also replay-pinned:
+three carrier impacts, three frontier trail hits, and one frontier body hit.
+Idle itself remains loss-free in each case. The first negative assertion used
+the wrong event name `enemy-body`; actual body contact is `enemy-player`.
+The corrected test checks exact cause and actor, not a relaxed failure predicate.
+This verifies these sampled Standard/immediate routes, not every departure time
+or human reaction tolerance.
+
+Native inspection also exposed ambiguous inherited ready-card wording: “Line
+hit?” suggested every threat gave the carrier's travelling-spark grace. The v2
+brief now explicitly says only bolts send sparks and other trail hits are
+instant. All seven cards remain below240 characters; historical v1/absent-impact
+wording is unchanged. Eleven briefing regressions pass on Node20.19.5. Native
+verification of this later wording still requires a newly pinned preview.
+
 ## Additional native interaction and screenshot limitation
 
 In tab33 at the same exact4342e0ff source, Two ways home reached real readiness.
