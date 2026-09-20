@@ -101,13 +101,21 @@ already allocated as 0.66.0). Preserve the user's dirty original checkout. P00 u
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | In progress |
-| P01 | 0.68.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Pending |
-| P02 | 0.69.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
-| P03 | 0.70.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
-| P04–P12 | 0.71.0–0.79.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
-| P13 | 0.80.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
-| P14 | 0.81.0 | Complete 12 Team missions and two-player balance | Pending |
-| P15 | 0.82.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Pending |
+| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
+| P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
+| P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
+| P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
+| P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Pending |
+| P15 | 0.83.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |
+
+September 20 release coordination: the parallel discovery feature PR170 initially
+also selected 0.67.0. Its owner and Journey agreed to preserve the earlier P00
+allocation and sequence 0.66.0 Team/Studio → 0.67.0 Journey P00 → 0.68.0 discovery.
+P01–P15 therefore shift one further minor, as above; these later allocations remain
+provisional. Preserve both features through reviewed integration and new exact-source
+gates. Journey must not race the current publication owner or replace its selector.
+Independent source correction, tests and content preparation continue during that wait.
 
 Each phase: reviewed PR, version bump, automated gates, immutable release and Pages
 test deployment; continue automatically after green gates, repair red gates before
@@ -146,6 +154,10 @@ The audit still covers all 110 missions, including those editions.
 - `docs/research/journey-current-level-audit.json`: compiled static inspection of
   all 110 maps, not human playtesting. Player speeds are 8/10/12/15; 87 missions
   have countdowns. These old settings are preserved until replacement editions exist.
+- `docs/research/reference-layout-review-pack1-pack2.md` and its pack3–pack4 companion:
+  direct visual reinspection of all 48 numbered stills, specific original route
+  proposals and merge/cut review pairs. These do not establish screenshot-only
+  AI/terrain behavior or final playable dispositions. Final greybox evidence is pending.
 
 Verification so far: focused catalog/profile/capture tests, ten-mission Solo host
 flow, Skip/return, automatic Solo reset, and failed cross-pack download/retry.

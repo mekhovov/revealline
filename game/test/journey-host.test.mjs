@@ -76,6 +76,15 @@ test('Journey Skip is two activations, grants no clear, and the global chooser c
   p.frame(0);
   assert.equal(p.rendered.run.levelId, 'cut-1');
   assert.equal(p.$('journey-skip').textContent, 'Confirm skip');
+  assert.equal(p.doc.activeElement.id, 'journey-skip', 'confirmation keeps the activation target');
+  p.key('Escape');
+  p.key('Escape', false);
+  p.frame(0);
+  assert.equal(p.doc.body.dataset.flightState, 'running');
+  assert.equal(p.$('journey-skip').textContent, 'Skip mission', 'resuming cancels confirmation');
+  p.$('journey-skip').click();
+  assert.equal(p.rendered.run.levelId, 'cut-1', 'a cancelled skip needs two fresh activations');
+  assert.equal(p.$('journey-skip').textContent, 'Confirm skip');
   p.$('journey-skip').click();
   await running(p, 'cut-2');
   await settle(() => p.$('journey-skip').textContent === 'Skip mission');
