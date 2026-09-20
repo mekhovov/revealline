@@ -7419,6 +7419,7 @@ try {
   });
   if (journeyEnabled) {
     document.body.classList.add('journey-preview');
+    show('journey-artwork-availability', !!candidateHost);
     $('shell-title-edition').textContent = candidateHost
       ? 'OPENING JOURNEY / UNVALIDATED TEST BUILD'
       : 'JOURNEY / TECHNICAL TEST PREVIEW';

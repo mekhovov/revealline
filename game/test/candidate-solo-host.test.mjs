@@ -131,6 +131,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.rendered.run.rules.moveSpeed, 10);
     assert.equal(p.rendered.run.lives, { gentle: 5, standard: 3, expert: 2 }[difficulty]);
     assert.match(p.$('shell-title-edition').textContent, /UNVALIDATED/);
+    assert.equal(p.$('journey-artwork-availability').hidden, false);
     p.$('shell-featured').click();
     await running(p, 'first-return');
     assert.equal(p.doc.body.dataset.pictureState, 'ready');
