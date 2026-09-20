@@ -1,0 +1,886 @@
+{
+  "format": "PhaseTimingFeasibilityRoutesV1",
+  "seed": 1,
+  "difficulty": "standard",
+  "turnPolicy": "immediate",
+  "sets": [
+    {
+      "delaySeconds": 0.25,
+      "rows": [
+        [
+          "return-in-reserve",
+          "90823207b609df6c",
+          "8480a2b081144bf3",
+          [
+            [null, 30],
+            ["left", 84],
+            ["down", 414],
+            ["up", 198],
+            ["left", 330]
+          ]
+        ],
+        [
+          "two-ways-home",
+          "7dcf50d06adc38f7",
+          "67e8a803269eb107",
+          [
+            [null, 30],
+            ["up", 90],
+            ["down", 6],
+            ["up", 12],
+            ["right", 36],
+            ["down", 84],
+            ["up", 12],
+            ["left", 450],
+            ["right", 354],
+            ["down", 234],
+            ["up", 6],
+            ["down", 12],
+            ["right", 324],
+            ["up", 414],
+            ["down", 54],
+            ["left", 678],
+            ["right", 6],
+            ["left", 12],
+            ["down", 120],
+            ["right", 360],
+            ["down", 240],
+            ["right", 84],
+            ["up", 198]
+          ]
+        ],
+        [
+          "dogleg-transfer",
+          "118e1a1fcd68ea95",
+          "92fc0590ce1d3e83",
+          [
+            [null, 30],
+            ["up", 102],
+            ["down", 6],
+            ["up", 12],
+            ["right", 420],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["left", 120],
+            ["up", 222],
+            ["down", 6],
+            ["up", 204],
+            ["right", 336],
+            ["down", 210]
+          ]
+        ],
+        [
+          "crossed-bands",
+          "be5f7eb52e0c9614",
+          "c0c6657c754a90b2",
+          [
+            [null, 30],
+            ["up", 198],
+            ["down", 222],
+            ["left", 450],
+            ["right", 414],
+            ["down", 186],
+            ["up", 6],
+            ["down", 12],
+            ["right", 324],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["left", 180],
+            ["down", 714]
+          ]
+        ],
+        [
+          "pressure-ladder",
+          "a2a430035788ac56",
+          "da19987295c4437f",
+          [
+            [null, 30],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["right", 432],
+            ["down", 420],
+            ["left", 408],
+            ["up", 222],
+            ["down", 6],
+            ["up", 36],
+            ["left", 24],
+            ["up", 60],
+            ["right", 426],
+            ["left", 6],
+            ["right", 12],
+            ["down", 312],
+            ["left", 36],
+            ["up", 306]
+          ]
+        ],
+        [
+          "signal-channels",
+          "8aa5f14148e251bf",
+          "ad9a0ee97b33ee82",
+          [
+            [null, 30],
+            ["up", 198],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 624],
+            ["up", 156],
+            ["left", 678],
+            ["right", 6],
+            ["left", 12],
+            ["up", 132],
+            ["right", 276],
+            ["left", 192],
+            ["down", 132],
+            ["right", 456],
+            ["up", 258],
+            ["down", 258],
+            ["left", 192],
+            ["up", 258]
+          ]
+        ],
+        [
+          "phase-remix",
+          "15f2849bc7c5d19c",
+          "2986ee6593ef4c15",
+          [
+            [null, 30],
+            ["up", 102],
+            ["down", 6],
+            ["up", 12],
+            ["right", 36],
+            ["down", 84],
+            ["left", 72],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["left", 144],
+            ["down", 420],
+            ["right", 168],
+            ["up", 174]
+          ]
+        ]
+      ]
+    },
+    {
+      "delaySeconds": 0.5,
+      "rows": [
+        [
+          "return-in-reserve",
+          "90823207b609df6c",
+          "340ad7d16987ba40",
+          [
+            [null, 60],
+            ["left", 108],
+            ["down", 414],
+            ["up", 210],
+            ["left", 306]
+          ]
+        ],
+        [
+          "two-ways-home",
+          "7dcf50d06adc38f7",
+          "847c640560dc0f4d",
+          [
+            [null, 60],
+            ["up", 90],
+            ["down", 6],
+            ["up", 12],
+            ["right", 36],
+            ["down", 84],
+            ["up", 12],
+            ["left", 450],
+            ["right", 354],
+            ["down", 240],
+            ["right", 168],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["left", 420],
+            ["down", 174]
+          ]
+        ],
+        [
+          "dogleg-transfer",
+          "118e1a1fcd68ea95",
+          "0420205fe3ca3f47",
+          [
+            [null, 60],
+            ["up", 102],
+            ["down", 6],
+            ["up", 12],
+            ["right", 420],
+            ["down", 414],
+            ["up", 150],
+            ["left", 438],
+            ["right", 174],
+            ["down", 156],
+            ["up", 240],
+            ["right", 588],
+            ["up", 174]
+          ]
+        ],
+        [
+          "crossed-bands",
+          "be5f7eb52e0c9614",
+          "2f56002853fdfbbc",
+          [
+            [null, 60],
+            ["up", 198],
+            ["down", 222],
+            ["left", 450],
+            ["right", 414],
+            ["down", 186],
+            ["up", 6],
+            ["down", 12],
+            ["right", 324],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["left", 180],
+            ["down", 714]
+          ]
+        ],
+        [
+          "pressure-ladder",
+          "a2a430035788ac56",
+          "c4f7ae79de2b32ab",
+          [
+            [null, 60],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["right", 432],
+            ["down", 420],
+            ["left", 408],
+            ["up", 222],
+            ["down", 6],
+            ["up", 36],
+            ["left", 24],
+            ["up", 168],
+            ["right", 360],
+            ["down", 414]
+          ]
+        ],
+        [
+          "signal-channels",
+          "8aa5f14148e251bf",
+          "0ab06f1ba7d5dbe3",
+          [
+            [null, 60],
+            ["up", 198],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 624],
+            ["up", 156],
+            ["left", 678],
+            ["right", 6],
+            ["left", 12],
+            ["up", 132],
+            ["right", 276],
+            ["left", 192],
+            ["down", 132],
+            ["right", 456],
+            ["up", 258],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 258]
+          ]
+        ],
+        [
+          "phase-remix",
+          "15f2849bc7c5d19c",
+          "acc3921ec0adb9be",
+          [
+            [null, 60],
+            ["up", 102],
+            ["down", 78],
+            ["left", 36],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["left", 384],
+            ["down", 420],
+            ["right", 396],
+            ["up", 174],
+            ["down", 6],
+            ["up", 252],
+            ["left", 324],
+            ["down", 414]
+          ]
+        ]
+      ]
+    },
+    {
+      "delaySeconds": 1,
+      "rows": [
+        [
+          "return-in-reserve",
+          "90823207b609df6c",
+          "4ce15b8220ebbb5f",
+          [
+            [null, 120],
+            ["left", 108],
+            ["down", 414],
+            ["up", 174],
+            ["left", 306]
+          ]
+        ],
+        [
+          "two-ways-home",
+          "7dcf50d06adc38f7",
+          "0155a608d720e2cc",
+          [
+            [null, 120],
+            ["up", 90],
+            ["down", 6],
+            ["up", 12],
+            ["right", 36],
+            ["down", 78],
+            ["up", 6],
+            ["left", 450],
+            ["right", 294],
+            ["down", 234],
+            ["up", 6],
+            ["down", 12],
+            ["right", 252],
+            ["up", 414],
+            ["down", 414],
+            ["left", 60],
+            ["up", 198],
+            ["down", 6],
+            ["up", 36],
+            ["left", 36],
+            ["up", 12],
+            ["left", 456],
+            ["up", 180],
+            ["right", 240],
+            ["down", 174]
+          ]
+        ],
+        [
+          "dogleg-transfer",
+          "118e1a1fcd68ea95",
+          "99ec3cfb318a2d48",
+          [
+            [null, 120],
+            ["up", 102],
+            ["down", 102],
+            ["right", 312],
+            ["down", 72],
+            ["right", 144],
+            ["up", 174],
+            ["down", 6],
+            ["right", 48],
+            ["down", 402],
+            ["up", 162],
+            ["left", 522],
+            ["right", 6],
+            ["up", 144],
+            ["right", 132],
+            ["up", 102],
+            ["down", 6],
+            ["right", 144],
+            ["down", 402]
+          ]
+        ],
+        [
+          "crossed-bands",
+          "be5f7eb52e0c9614",
+          "b285bd967a7f62e4",
+          [
+            [null, 120],
+            ["up", 198],
+            ["down", 222],
+            ["left", 450],
+            ["right", 438],
+            ["down", 186],
+            ["up", 6],
+            ["down", 12],
+            ["right", 288],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["left", 180],
+            ["down", 414]
+          ]
+        ],
+        [
+          "pressure-ladder",
+          "a2a430035788ac56",
+          "bd66c01bc9a6fc0a",
+          [
+            [null, 120],
+            ["left", 414],
+            ["right", 294],
+            ["down", 234],
+            ["up", 6],
+            ["down", 12],
+            ["right", 228],
+            ["up", 414],
+            ["down", 42],
+            ["left", 522],
+            ["right", 102],
+            ["down", 132],
+            ["right", 192],
+            ["down", 240],
+            ["right", 120],
+            ["up", 342]
+          ]
+        ],
+        [
+          "signal-channels",
+          "8aa5f14148e251bf",
+          "16539501a32d8b26",
+          [
+            [null, 120],
+            ["up", 198],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 624],
+            ["up", 156],
+            ["left", 678],
+            ["right", 6],
+            ["left", 12],
+            ["up", 132],
+            ["right", 276],
+            ["up", 132],
+            ["right", 264],
+            ["down", 258],
+            ["up", 6],
+            ["down", 12],
+            ["left", 60],
+            ["up", 258]
+          ]
+        ],
+        [
+          "phase-remix",
+          "15f2849bc7c5d19c",
+          "a92bdb94db73c81c",
+          [
+            [null, 120],
+            ["up", 102],
+            ["down", 78],
+            ["right", 48],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["left", 240],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 96],
+            ["up", 486]
+          ]
+        ]
+      ]
+    },
+    {
+      "delaySeconds": 2,
+      "rows": [
+        [
+          "return-in-reserve",
+          "90823207b609df6c",
+          "caa8192143221301",
+          [
+            [null, 240],
+            ["down", 168],
+            ["up", 168],
+            ["left", 420],
+            ["down", 108],
+            ["right", 414]
+          ]
+        ],
+        [
+          "two-ways-home",
+          "7dcf50d06adc38f7",
+          "285222f346b911a9",
+          [
+            [null, 240],
+            ["up", 90],
+            ["down", 78],
+            ["right", 48],
+            ["up", 186],
+            ["down", 186],
+            ["right", 36],
+            ["down", 228],
+            ["left", 336],
+            ["up", 414],
+            ["down", 90],
+            ["right", 336],
+            ["down", 240],
+            ["left", 330]
+          ]
+        ],
+        [
+          "dogleg-transfer",
+          "118e1a1fcd68ea95",
+          "ccd331a93b31c023",
+          [
+            [null, 240],
+            ["up", 102],
+            ["down", 102],
+            ["right", 312],
+            ["down", 72],
+            ["right", 36],
+            ["down", 234],
+            ["up", 408],
+            ["down", 6],
+            ["up", 12],
+            ["left", 96],
+            ["down", 108],
+            ["right", 60],
+            ["down", 72],
+            ["right", 288],
+            ["down", 234]
+          ]
+        ],
+        [
+          "crossed-bands",
+          "be5f7eb52e0c9614",
+          "04f0b23755a19688",
+          [
+            [null, 240],
+            ["up", 198],
+            ["down", 6],
+            ["up", 12],
+            ["right", 120],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["left", 156],
+            ["up", 162]
+          ]
+        ],
+        [
+          "pressure-ladder",
+          "a2a430035788ac56",
+          "78c896cab0d3294c",
+          [
+            [null, 240],
+            ["left", 414],
+            ["right", 294],
+            ["down", 234],
+            ["up", 6],
+            ["down", 12],
+            ["right", 396],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 420],
+            ["up", 120],
+            ["right", 72],
+            ["up", 120],
+            ["left", 276],
+            ["up", 174]
+          ]
+        ],
+        [
+          "signal-channels",
+          "8aa5f14148e251bf",
+          "5cbba4c2fa922ec8",
+          [
+            [null, 240],
+            ["up", 198],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 624],
+            ["up", 156],
+            ["left", 678],
+            ["right", 6],
+            ["left", 12],
+            ["up", 132],
+            ["right", 276],
+            ["left", 192],
+            ["down", 132],
+            ["right", 384],
+            ["up", 258]
+          ]
+        ],
+        [
+          "phase-remix",
+          "15f2849bc7c5d19c",
+          "3567fa1b1121e5d5",
+          [
+            [null, 240],
+            ["up", 102],
+            ["down", 78],
+            ["right", 48],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["left", 468],
+            ["down", 420],
+            ["right", 228],
+            ["up", 414],
+            ["down", 6],
+            ["up", 12],
+            ["left", 108],
+            ["down", 414]
+          ]
+        ]
+      ]
+    },
+    {
+      "delaySeconds": 5,
+      "rows": [
+        [
+          "return-in-reserve",
+          "90823207b609df6c",
+          "ec834ed467e3dc07",
+          [
+            [null, 600],
+            ["down", 168],
+            ["up", 168],
+            ["left", 420],
+            ["down", 156],
+            ["right", 414]
+          ]
+        ],
+        [
+          "two-ways-home",
+          "7dcf50d06adc38f7",
+          "b7e23f5c88eb7543",
+          [
+            [null, 600],
+            ["left", 414],
+            ["right", 6],
+            ["left", 12],
+            ["down", 216],
+            ["right", 552],
+            ["up", 414],
+            ["down", 318],
+            ["left", 546],
+            ["right", 6],
+            ["left", 12],
+            ["up", 120],
+            ["right", 288],
+            ["up", 198],
+            ["down", 198],
+            ["left", 24],
+            ["down", 114]
+          ]
+        ],
+        [
+          "dogleg-transfer",
+          "118e1a1fcd68ea95",
+          "976506dce90d4894",
+          [
+            [null, 600],
+            ["up", 102],
+            ["down", 6],
+            ["up", 12],
+            ["right", 420],
+            ["down", 180],
+            ["right", 108],
+            ["down", 234],
+            ["up", 54],
+            ["left", 546],
+            ["right", 6],
+            ["left", 12],
+            ["up", 360],
+            ["right", 48],
+            ["down", 120],
+            ["left", 48],
+            ["down", 144],
+            ["right", 546]
+          ]
+        ],
+        [
+          "crossed-bands",
+          "be5f7eb52e0c9614",
+          "bd7d1fea600a3356",
+          [
+            [null, 600],
+            ["down", 12],
+            ["left", 450],
+            ["right", 354],
+            ["up", 48],
+            ["right", 12],
+            ["up", 162],
+            ["down", 6],
+            ["up", 12],
+            ["right", 132],
+            ["down", 420],
+            ["up", 72],
+            ["right", 378],
+            ["left", 6],
+            ["right", 12],
+            ["up", 348],
+            ["left", 132],
+            ["down", 342]
+          ]
+        ],
+        [
+          "pressure-ladder",
+          "a2a430035788ac56",
+          "d545cb0ff82534dc",
+          [
+            [null, 600],
+            ["up", 174],
+            ["down", 6],
+            ["up", 12],
+            ["right", 108],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["left", 60],
+            ["up", 222]
+          ]
+        ],
+        [
+          "signal-channels",
+          "8aa5f14148e251bf",
+          "6c17decfbba4d266",
+          [
+            [null, 600],
+            ["up", 198],
+            ["down", 6],
+            ["up", 12],
+            ["left", 192],
+            ["down", 414],
+            ["up", 6],
+            ["down", 12],
+            ["right", 624],
+            ["up", 156],
+            ["left", 678],
+            ["right", 426],
+            ["up", 258],
+            ["down", 6],
+            ["up", 12],
+            ["left", 288],
+            ["down", 258]
+          ]
+        ],
+        [
+          "phase-remix",
+          "15f2849bc7c5d19c",
+          "aba150df045e64f3",
+          [
+            [null, 600],
+            ["up", 102],
+            ["down", 78],
+            ["right", 48],
+            ["up", 174],
+            ["down", 234],
+            ["left", 24],
+            ["down", 174],
+            ["up", 354],
+            ["right", 24],
+            ["up", 60],
+            ["left", 240],
+            ["down", 420],
+            ["left", 96],
+            ["up", 414]
+          ]
+        ]
+      ]
+    }
+  ],
+  "rejectedOpenings": [
+    {
+      "missionId": "return-in-reserve",
+      "delaySeconds": 0.25,
+      "simulationIdentity": "90823207b609df6c",
+      "checkpoint": "4b5e16cf442a3174",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 30],
+        ["down", 133]
+      ]
+    },
+    {
+      "missionId": "return-in-reserve",
+      "delaySeconds": 0.5,
+      "simulationIdentity": "90823207b609df6c",
+      "checkpoint": "3f1e7b805c8078b5",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 60],
+        ["down", 82]
+      ]
+    },
+    {
+      "missionId": "return-in-reserve",
+      "delaySeconds": 1,
+      "simulationIdentity": "90823207b609df6c",
+      "checkpoint": "038da15e8d9107c4",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 120],
+        ["down", 7]
+      ]
+    },
+    {
+      "missionId": "pressure-ladder",
+      "delaySeconds": 1,
+      "simulationIdentity": "a2a430035788ac56",
+      "checkpoint": "335f592452422b1c",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 120],
+        ["up", 164]
+      ]
+    },
+    {
+      "missionId": "pressure-ladder",
+      "delaySeconds": 2,
+      "simulationIdentity": "a2a430035788ac56",
+      "checkpoint": "0c4dfaf20b0958e3",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 240],
+        ["up", 44]
+      ]
+    },
+    {
+      "missionId": "two-ways-home",
+      "delaySeconds": 5,
+      "simulationIdentity": "7dcf50d06adc38f7",
+      "checkpoint": "19022375e32907c1",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 600],
+        ["up", 19]
+      ]
+    },
+    {
+      "missionId": "crossed-bands",
+      "delaySeconds": 5,
+      "simulationIdentity": "be5f7eb52e0c9614",
+      "checkpoint": "7db8b82d02aebfcd",
+      "status": "respawning",
+      "lives": 2,
+      "segments": [
+        [null, 600],
+        ["up", 41]
+      ]
+    }
+  ]
+}

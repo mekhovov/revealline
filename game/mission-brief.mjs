@@ -74,7 +74,9 @@ export function missionBriefing(
       ? 'Closing a cut stops your craft. Tap a fresh direction to fly again.'
       : '';
   const impactHint = level.classic?.lineImpact
-    ? 'Line hit? Close your cut before the travelling spark reaches you.'
+    ? level.classic.lineImpact.version === 'line-impact.v2'
+      ? 'Only bolts send sparks. Close before one reaches you; other trail hits are instant.'
+      : 'Line hit? Close your cut before the travelling spark reaches you.'
     : '';
   const facts = [goal, encounterGoal, limits, recommendation].filter(Boolean).join('\n');
   return Object.freeze({

@@ -12,7 +12,8 @@ import {
 
 const source = createPhaseCandidates();
 const project = compileContentProject(source);
-const makeRun = () => createRun(resolveMission(project, 'phase-remix').level, { seed: 1 });
+const makeRun = (missionId = 'phase-remix') =>
+  createRun(resolveMission(project, missionId).level, { seed: 1 });
 
 test('mastery evidence requires a real closure and capture-cleared pre-existing playerward front', () => {
   for (const reason of ['ended', 'recovery', 'capture'])
@@ -71,7 +72,7 @@ test('active-roamer and impact conditions must coincide in one closure for the R
 });
 
 test('a running mission or any lost life cannot satisfy optional mastery', () => {
-  const run = makeRun(),
+  const run = makeRun('return-in-reserve'),
     evidence = createPhaseGoalEvidence(run);
   evidence.impactClosure = true;
   const foundations = source.maps[0].foundations;
