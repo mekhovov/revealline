@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.70.0",
-  "catalogSha256": "245526d8df3616fd3893b6f9fb9186021406bb21519ba07ef5f31417ed8608c4",
-  "allocationSha256": "8597d918fd30b04c0aff5a0270b822107655ca5562e841e6d7d3a18abd752054",
+  "currentVersion": "v0.76.0",
+  "catalogSha256": "d0262fef966feaa325309ffc2d0c79bdd20034a61dacdb19c407ae0dc51bcc67",
+  "allocationSha256": "65ef791e4abca31fd93d35674fbcbe8da508d964ca2441624b22fc6bd040de6b",
   "admissions": [
     {
       "id": "archive-01",
@@ -5394,12 +5394,54 @@
           "kind": "reference"
         }
       ]
+    },
+    {
+      "id": "archive-39",
+      "infrastructureCommit": "05f813bd73c31bf1baa1fe62002f9c71617e3e96",
+      "deploymentId": 6556980004,
+      "evidence": [
+        {
+          "path": "evidence/archive-39/http-report.json",
+          "sha256": "62195d4a34c7038b90197c87cc06a558d7e6bcda12d77740d58ea50ab8f6b4f3",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-39/expected-inventory.json",
+          "sha256": "9c8b75099a0ef2720b8bb427f93f65debd0fd6fa15dac3a7dd6e994c4742c0d5",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-39/native-observation.json",
+          "sha256": "11ecdf8f51024aa24f212b251007acef686af1c8cc53fd9d6bcb8d9bf2a2f1dc",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-39/run.json",
+          "sha256": "aa21e1a9e5f611a433e84e8f594595ae23b2b3c20f5e6e97918678e146b18bb5",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-39/deployments.json",
+          "sha256": "b8131a0d1d7096e516017336553118a6046d4793ed8b619b54fbc97ac170d147",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-39/deployment-statuses.json",
+          "sha256": "94ddd83215517767054905067867422039fbcd34cb3ebc6eccb20c3abed01717",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-39/browser-admission.json",
+          "sha256": "663a2d76dd33546a692d0a9b225f225554d97f2bb069ac90dc7439ea7a61e40f",
+          "kind": "browser"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v0700/source-qualification.json",
-    "sha256": "5b661b3deb4cb344ee51b611e86c2b7ec7a2345d7b7103bc33ed602b12e018f7"
+    "path": "evidence/current-v0760/source-qualification.json",
+    "sha256": "7230cdecc95df5ad134af4d024dd4a2a47034e674cac8dde1fab9e354ca239e7"
   },
   "retainedReleasesPerMajor": "all",
   "testingRoutes": {}
