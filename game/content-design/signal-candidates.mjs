@@ -152,7 +152,7 @@ const rows = [
       'A successful enclosure turns the dangerous center into a new traversable return surface.',
     moment:
       'The crossed warning disappears from earned ground without changing the underlying map rule.',
-    mastery: 'Neutralize the whole central bed before visiting the far landing.',
+    mastery: 'Neutralize the whole central bed without visiting the far landing first.',
   },
   {
     id: 'garden-refuges',
@@ -188,7 +188,7 @@ const rows = [
       'Capturing one row opens route choices without requiring the second row to be crossed.',
     moment:
       'A long protected spine offers several departures into the same changing hazard problem.',
-    mastery: 'Connect both refuges after neutralizing at least one marked row.',
+    mastery: 'Neutralize at least one marked row and connect both refuges without losing a life.',
   },
   {
     id: 'neutral-ground',

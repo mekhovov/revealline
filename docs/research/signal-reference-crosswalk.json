@@ -114,6 +114,8 @@
   "evidence": {
     "clearRoutes": "game/test/fixtures/signal-clear-routes.json",
     "delayedRoutes": "game/test/fixtures/signal-timing-routes.json",
+    "masteryRoutes": "game/test/fixtures/signal-mastery-routes.json",
+    "masteryScope": "Seven legal Standard/immediate/seed1 goal-predicate routes; not implemented awards, all-preset or human qualification.",
     "verification": "docs/verification/xposed-journey-p03.md",
     "routeCount": 119,
     "seedReplayCount": 420,
