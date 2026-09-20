@@ -32,13 +32,13 @@ for (const [difficulty, reserves] of [
       f.$('coop-preview-caption').textContent,
       /Preview scenery is not authored mission artwork/,
     );
-    assert.match(f.$('coop-enemy-help').textContent, /Field keepers/);
-    assert.doesNotMatch(f.$('coop-enemy-help').textContent, /Hunter/);
+    assert.match(f.$('coop-threat-help').textContent, /Drifters patrol continuously/);
+    assert.doesNotMatch(f.$('coop-threat-help').textContent, /Hunter/);
     assert.match(f.$('coop-picture-status').textContent, /Start remains a separate action/);
     f.$('coop-start').click();
     f.tick();
     assert.equal(f.$('coop-menu').hidden, true);
-    assert.match(f.$('coop-message').textContent, /field keepers/);
+    assert.match(f.$('coop-message').textContent, /patrolling Drifters/);
     assert.equal(
       f.$('coop-reserves').textContent,
       `${reserves} reserve${reserves === 1 ? '' : 's'}`,

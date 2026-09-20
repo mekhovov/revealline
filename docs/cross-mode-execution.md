@@ -1,5 +1,134 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.68.1 publicly verified
+
+**Public default: [v0.68.1](https://mekhovov.github.io/revealline/releases/v0.68.1/site/game/).** Publisher PR180 merged as `5d54b938`; deployment `6550183682` passed all 3,635 public files / 645,730,399 bytes with zero failures/retries. Native keyboard verification covers Settings Close/tabs at 844×390 and 390×844 with Plain/Large text, visible fallback focus, saved Continue → correct paused caption and About → Team Start/Pause. [Original evidence and scope](verification/player-menus-v0681/public/README.md). This closes the named menu-correction scope, not the complete navigation/presentation phases.
+
+v0.68.0's same-chapter More worlds issue persists in v0.68.1. Stay preserves the run; v0.68.2 corrects the unnecessary replacement. P03/P06 remain partial.
+
+**v0.68.1 is published and source-qualified.** PR178 merged as `49cef024`; its tree equals immutable source `276cbba3` / tree `3fa643a6`. Both final full hosted families passed 6,752 tests / 518 files on Node 20.19.6. Release 392336219 retains nine verified assets. Its corrections keep Settings Close/tabs reachable, restore visible focus, accurately describe Pause/Resume and provide accessible About mode entry. The local 171-test/ten-file cohort and keyboard/responsive observations remain distinct from full suites and the separate public verification above.
+
+**Historical retention:** Archive35 PR1 deployed original v0.68.0 at `b603b1d1`, deployment `6550067348`; all 729 files / 313,820,502 bytes passed public checks. Keyboard root → saved Continue → Pause passed. Stale pause text and the known same-chapter issue remain explicit limitations in the immutable archive.
+
+**Next, in order:**
+
+1. v0.68.1 scoped public gate is complete. Preserve its immutable assets, previous release routes and remaining limitations.
+2. Complete v0.68.2 qualification (PR179), fixing same-chapter selection without replacing or rewriting the paused run. First full runs for `45ed925e` failed an obsolete offline test expectation; correction `dfdd2687` passes its complete 15-test file on Node 20/22. Fresh exact-source full qualification and public acceptance remain pending.
+3. Review Journey Solo/Versus cards and Team registry/Studio foundations, then integrate the sealed cross-mode custom-music work. Candidates do not establish public acceptance.
+4. Continue presentation/actor parity, readable action feedback, fair challenge, rewards, authoring/content and complete browser qualification. Physical controllers/touch, listening, actual offline recovery and human difficulty assessment remain separate gates.
+
+The authoritative phase table below retains its stable IDs and partial statuses. Each scoped release has a source PR, immutable version, publisher PR and actual public verification. Native stores and online multiplayer remain later.
+
+<details>
+<summary>Previous v0.68/v0.68.1 preparation cutoff — retained history</summary>
+
+## v0.68.1 menu correction — local verification, release pending
+
+The separate v0.68.1 correction backports persistent Solo Settings Close/tabs, visible focus fallback after responsive changes, accurate Pause/Resume captions and About’s Team mode entry. It preserves the qualified v0.68 simulation and campaign identities. The v0.69 Journey foundation remains a separate candidate.
+
+The integrated correction passed **171 focused tests in ten files on Node 20.19.5**, changed-source lint/format checks and native keyboard observations: Plain/Large settings at 390×844 and 844×390, visible Game menu fallback after a hidden opener, saved-flight caption changes, and About → Team. These are local checks, not full source qualification or public acceptance. [Scope, observations and remaining gates](player-menu-v0681.md).
+
+Next: complete v0.68 publisher PR177 and its actual public verification, then qualify this exact correction source and publish its own immutable release. Parent navigation/presentation phases and physical input, listening, offline and human-playtest gates remain open.
+
+## v0.68 release delivery — source accepted, public gate pending
+
+Source PR170 merged as `47169c9f`; the merge tree equals qualified source `5598d562` / tree `4cca352f`. Both final hosted families passed **6,738 tests across 518 files on Node 20.19.6**, with source/production gates, ordinary build and frozen inspection. The source combines chapter discovery with Journey, safe current-flight replacement, concealed Team previews, level-specific guidance and Studio audio lifecycle. This is a named P06/P03 integration delivery, not completion of those parent phases.
+
+The publication selector below is prepared for v0.68.0. Actual Pages deployment, complete public inventory and affected native journeys remain required before this becomes the accepted public baseline. Preserve the accepted v0.67 report below. Its original release is additionally retained by archive-34 append commit `fc3377b2`, deployment `6549129296`: all **1,436 files / 627,342,489 bytes** matched, including every old immutable release path.
+
+Next scoped corrections are committed separately in Journey P01 PR172: persistent Settings Close/tabs on short screens, visible focus fallback after responsive layout changes, and an accurate paused flight cue. Foundation media/preparation, backup and difficulty work remain candidates. The later shared MP3/playlist, actor motion, encounters, campaign production and final hardware/listening/offline/human gates retain their order. No passed automated suite closes a physical or human gate.
+
+## Current delivery — 20 September 2026, v0.67 verified publication
+
+**Latest scoped public release: [v0.67.0 Journey technical preview](https://mekhovov.github.io/revealline/releases/v0.67.0/site/game/?journey=1).** PR169 supplies frozen source `6a42faca`; PR174 merged publisher `555f0979`. Pages run `35487668271` and deployment `6548787815` passed. The complete actual public audit verified **3,573 files / 645,190,134 bytes**, zero failures/retries. All 105 release records and 34 archive admissions remain. [Acceptance and original evidence](../publishing/pages-controller/delivery/evidence/journey-p00/v0670-public/README.md) distinguish public bytes from native input and outstanding gates.
+
+Keyboard Start/clear/Next, two-step Skip and cancellation, search/cross-campaign selection, reload/Continue and retained v0.66 entry passed. First Signal recorded 52.2%, 8,160 points and three lives. Portrait cards/Back were readable; short-landscape geometry passed, but its compositor screenshot was not accepted as a visual baseline. **Journey P00 and the full programme remain incomplete.** Physical devices, audible listening, offline/lifecycle, performance and human playtesting are still required. The default entry retains the legacy interface; `?journey=1` selects the preview.
+
+### Prioritized continuation
+
+1. **v0.68 discovery/navigation delivery:** candidate `4690fedd` passed both full source families, each 6,738 tests / 518 files on Node 20.19.6, ordinary build and exact frozen inspection. Finish integration against the new publisher cutoff, final attachment-consumer checks, source PR170/release publication and actual public journeys. Prior failed sources stay failed; frozen inspection alone is not release acceptance.
+2. **Journey foundations and early Border encounters:** P01 candidate PR172 and stacked P02 draft PR175 remain separately scoped. Registry/Studio restore and seven greybox encounters have focused evidence; artwork, full routes, authoring integration, balance and human gates remain. Keep provisional v0.69/v0.70 distinct from the accepted v0.67 preview.
+3. **Shared music and supporting navigation:** integrate the reviewed Couch music host with its 592-test focused Node 20/22 cohort, then actual transfer/listening/offline qualification. The five-path About candidate adds Team and removes stale counts; 33 focused tests per Node 20/22 and local keyboard/responsive checks passed. Neither candidate is publicly shipped.
+4. **Presentation and campaign completion:** continue actor parity/action feedback, fair challenge and rewards, then media/content production and full qualification in the approved Journey plan. The inactive motion-format candidate does not count as delivered animation. Bulk art remains gated by capacity and the gameplay benchmark.
+5. **Release maintenance:** upgrade obsolete action runtimes using reviewed immutable pins, preserving the explicit game runtime and frozen tags. [Primary-source research](../publishing/pages-controller/delivery/evidence/journey-p00/v0670-public/release-maintenance-research.md) records current action compatibility and caching changes. Do not alter ongoing/frozen qualification.
+
+The [Journey plan](xposed-journey-plan.md) owns the new campaign allocation and P00–P15 sequence. Historical cross-mode IDs retain their meanings: P00/P01/P02-A accepted; P02-B/P03–P09/P16–P18 partial; complete Team encounters and production campaigns remain pending. Native stores and online multiplayer stay separate. Each completed delivery receives its own reviewed commit/version, immutable release, Pages deployment and actual acceptance.
+
+### v0.68 publication integration cutoff
+
+The v0.68 candidate now incorporates publisher `555f0979` and the reviewed v0.67 public evidence from PR176 (`465918ad`). Only this execution register conflicted; both prior reports are retained below. Runtime, tests, campaign/asset identities and package/build versions remain byte-identical to `4690fedd`. Its passing 6,738-test families and frozen inspection remain precursor evidence for that exact source. The combined commit requires new complete qualification and its own freeze before release; no original artifact or published tag is replaced. PR176 must pass and merge before this source PR.
+
+<details>
+<summary>Previous v0.68 source register cutoff — retained verbatim</summary>
+
+## Current delivery — 20 September 2026
+
+**Accepted public baseline: [v0.66.0 Team and Studio update](https://mekhovov.github.io/revealline/releases/v0.66.0/site/game/).** Its scoped public acceptance covers exact Team artwork through Start/win/picture/Next/Retry, both-seat rescue presentation previews, full Solo/Versus/Team Studio previews, and saved asset-history Bind/Undo/Redo/Reset. The accepted publisher is `7b898a7b`, frozen game source `dae39ba7` and release `392248530`. Pages run `35480159218` passed; the public audit verified **3,533 files / 644,953,790 bytes with zero failures or retries**. [PR173](https://github.com/mekhovov/revealline/pull/173) preserves the acceptance evidence without changing the deployed source. These named features are complete; their larger P03/P04/P05/P07/P08/P18 phases remain open.
+
+**Journey v0.67.0 source is qualified and merged, but not yet publicly accepted at this cutoff.** [PR169](https://github.com/mekhovov/revealline/pull/169) merged as `0c38826f`, preserving frozen source `6a42faca` / tree `ca86b288`. Both complete hosted families passed **6,568 tests across 505 files on Node 20.19.6**, plus source/production/build and frozen verification. The preview remains opt-in through `?journey=1`. Its immutable release, Pages deployment and public journey acceptance must finish before it replaces the accepted baseline.
+
+### Delivery order
+
+1. **Publish and accept Journey v0.67.0.** Verify the actual deployed Start, direct Next, two-step Skip, mission search and stable Continue, preserving the separately qualified historical simulation. Local exact-source checks do not substitute for public acceptance.
+2. **Qualify and publish Discovery v0.68.0.** Compose Solo/Versus/Team chapter discovery, registered Training return, visible busy Cancel, native Escape, concealed Team previews, content-specific Team guidance and Studio master-audio lifecycle with the accepted Journey source. The first `e8a588da` full suites failed; keep their evidence and qualify this new integrated source afresh. Runtime composition preserves exact source-pack artwork, both cancellation owners and Practice containment. Broader P06 installation/recovery remains partial.
+3. **Finish shared music and actor presentation.** Couch music-library/playlist/session adapters and compiled actor motion are tested candidates, not shipped completion. Finish real host integration, original MP3 transfer and offline playback, listening, motion readability, historical asset compatibility and actual browser journeys before separate versioned releases.
+4. **Continue navigation, challenge, rewards and authoring.** Complete remaining P03/P05 player journeys, P08 readable action feedback, P09 fair encounters and P07 rewards, then supporting P04/P06 tools and P10 Team encounters. Qualify each named delivery independently; do not wait for bulk content to fix a demonstrated player issue.
+5. **Expand campaigns only through the approved Journey programme.** The [Xposed-led Journey plan](xposed-journey-plan.md) owns its P00–P15 sequence and twelve-campaign allocation. The earlier four-FPV/four-DroneAid and 132-mission targets are historical. Candidate counts are not a minimum shipping quota or accepted content.
+6. **Complete browser qualification before store/network expansion.** Finish supporting workflows, reproducible authoring, device/performance/accessibility, real audio/offline recovery, physical touch/controllers and human gameplay review. Native stores and online multiplayer retain separate gates.
+
+### Cross-mode phase status
+
+Journey P00–P15 and the established cross-mode phase IDs below are distinct workstreams. Complete means accepted in the named scope; a candidate, passing subset or merged source is not public acceptance.
+
+| Phase | Status | Remaining work |
+|---|---|---|
+| P00 — Integration baseline | Complete, v0.55 | Preserve historical execution and media identities. |
+| P01 — Loading feedback | Complete, v0.57.4 | Apply the accepted contract to every new screen. |
+| P02 — Sound and music | A complete, v0.58.1; B partial | Publish Studio follow-up; finish cross-mode custom MP3s, playlists, original-byte backup/offline use and album listening. |
+| P03 — Native navigation | In progress | Finish all keyboard/controller/touch journeys and exact Back/focus ownership. |
+| P04 — Creation framework | Partial | v0.66 previews/history accepted; finish full edit/export/import/play and original recovery. |
+| P05 — Readable presentation | In progress | Complete EN/UA, all modes, zoom, reduced effects and device readability. |
+| P06 — Discovery/install | In progress | Qualify v0.68 scope; finish capacity, replacement/removal and interrupted installation. |
+| P07 — Rewards/continuation | Partial | Imported-Team continuation accepted; finish other Next/Retry, stories and Collection replay. |
+| P08 — Art and feedback | A/B partial | Finish motion/role/scale readability and trail, loss, pickup and live Support/rescue feedback. |
+| P09 — Challenge/intelligence | Partial | Fair pressure, encounter warnings/counters, deterministic replay and playtest tuning. |
+| P10 — Team encounters | Queued | First Connection/Relay Yard variants and the complete two-player encounter matrix. |
+| P11–P15 — Earlier campaign allocations | Superseded for new production | Follow the approved Journey campaign plan; retain historical releases and compatibility. |
+| P16 — Supporting workflows | Partial | Collection, scores, replay, learning, restoration and legacy workflows. |
+| P17 — Reproducible authoring | Partial | Fresh-workspace create/install/play/export/recover example, guides, skills and CLI. |
+| P18 — Browser qualification | Partial evidence | Full regression, ordinary-device performance, physical inputs, audible media/offline/lifecycle and human playtests. |
+| Native stores / online multiplayer | Deferred | Independent packaging, platform lifecycle, hardware and network gates. |
+
+Every completed feature still requires related hunk-reviewed commits, a new immutable version, source PR, qualified frozen assets, publication-selector PR, Pages deployment and affected public journeys. Retain previous releases and rollback. v0.66 source-original download completion, live held rescue, physical hardware, actual 200% zoom, audible listening, offline runtime and encounter difficulty are not established by its scoped native observations.
+
+</details>
+
+<details>
+<summary>Previous v0.67 publication proposal — retained verbatim</summary>
+
+## Current delivery — 20 September 2026, v0.67 publication
+
+**Accepted public baseline: [v0.66.0](https://mekhovov.github.io/revealline/releases/v0.66.0/site/game/).** Its Team artwork ownership, actor-state previews and cross-mode Studio/history scope passed; all 3,533 public files / 644,953,790 bytes were verified. Full phases and hardware/audio/offline acceptance remain open.
+
+**v0.67.0 Journey technical preview:** source `6a42faca` / tree `ca86b288` passed both full hosted families, each 6,568 tests / 505 files on Node 20.19.6. PR169 merged; the immutable tag and stable release 392287575 retain all nine verified assets. Corrected hosted upload 35484727077 passed after a retained evidence-ZIP layout failure. The Pages selector in this change proposes v0.67.0; actual deployment, full public-byte audit and native Journey acceptance remain pending. Do not mark the parent Journey phase complete from this proposal.
+
+**v0.66.0 preservation:** Archive34 source `68d29403`, deployment `6548389224`, retains all 716 public files / 313,634,855 bytes with zero failed requests. Keyboard verification covers Solo first win, Next, Pause, saved mode leave, Team start and pause. The other 33 archives remain unchanged.
+
+### Prioritized continuation
+
+1. Finish v0.67 Pages deployment, verify every public byte and the actual Journey Start/clear/Next/Skip/Continue flow; update acceptance only afterward.
+2. Finish exact-source v0.68 qualification of `4690fedd` (PR170): combined Journey/discovery owner resolution, Practice containment, concealed previews, Team guidance and Studio audio corrections. Both final suites are running; earlier failed candidates stay failed.
+3. Review and integrate the sealed shared Couch music host after v0.68. The focused 592-test Node 20/22 matrix and native menu/import/Save/focus evidence are candidate checks, not release or listening acceptance.
+4. Continue the approved Journey plan’s registry/Studio foundations, then benchmark gameplay, actor parity/action feedback, fair challenge, rewards, optional media/content and full qualification in that plan’s order. Bulk art remains gated by capacity and the gameplay benchmark.
+
+The [Journey plan](xposed-journey-plan.md) owns new campaign counts and its P00–P15 sequence. Historical cross-mode IDs below retain their original meanings: P00/P01/P02-A accepted; P02-B/P03–P09/P16–P18 partial; Team encounters and bulk campaigns still require their complete gates. Native-store certification and online multiplayer remain separate. Each independently completed delivery needs a scoped commit/version, original release, Pages deployment and acceptance.
+
+</details>
+
+<details>
+<summary>Previous register cutoff — retained history, not current acceptance</summary>
+
+
 ## Journey redesign authority — 20 September 2026
 
 The approved [Xposed-led Journey plan](xposed-journey-plan.md) now owns the new
@@ -843,3 +972,7 @@ The nineteen deduplicated core test files passed151 reported checks, and the com
 Native Replay testing found three corrections: Jump to playback did not transfer keyboard focus, completing playback disabled the focused Play/Step action without handing focus to Restart, and shared CSS overrode the intended readout size. All three are integrated; predecessor failures remain retained. Completed Play's amber disabled styling remains a separate component-state follow-up. Static review also found and corrected Studio textarea whitespace, preserving multiline prompts and evidence. Those corrections completed final-source qualification and the scoped v0.60.0 public-byte/browser gate linked in the [current progress report](../publishing/pages-controller/delivery/evidence/cross-mode-p05/public-v0600/planning/progress-and-next.md). The reported native scope does not qualify physical input, disconnected operation or all supporting screens. Future corrections require their own exact-source and public gates.
 
 The broader P03 device/lifecycle matrix stays open. P04 picture-context repairs, cold Back filter/selection coherence and focus after successful mutation commands disable their trigger remain separate. Other supporting-screen adapters, full art parity and physical qualification remain in their approved phases.
+
+</details>
+
+</details>

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachCouchInput } from '../couch/couch-input.mjs';
 import {
   attachControllerPracticeExit,
   requestControllerPracticeExit,
@@ -504,6 +505,108 @@ test('modal root traps navigation and delegates protected Back without closing o
   assert.equal(h.calls.menu, 1);
   assert.equal(modal.open, true);
   assert.equal(backgroundClicks, 0);
+});
+
+test('native modal Escape and controller Back keep their host lifecycle with couch flight input attached', (t) => {
+  const win = new Events();
+  let busy = false,
+    pauses = 0,
+    cancels = 0,
+    backs = 0;
+  const h = setup(t, {
+    keyboard: true,
+    onBack: () => {
+      backs++;
+      if (!busy) close();
+    },
+  });
+  h.document.parentNode = win;
+  const opener = h.control('button'),
+    modal = h.control('dialog', { open: true }),
+    back = h.control('button', {}, modal);
+  function close() {
+    modal.open = false;
+    h.setScope('menu:lobby', h.document);
+    opener.focus();
+  }
+  function open() {
+    modal.open = true;
+    h.setScope('modal:chapters', modal);
+    h.setDefault(back);
+    back.focus();
+  }
+  const input = attachCouchInput({
+    window: win,
+    document: h.document,
+    arena: opener,
+    active: () => false,
+    getGamepads: () => [],
+    onPause: () => pauses++,
+  });
+  t.after(() => input.destroy());
+  modal.addEventListener('cancel', (event) => {
+    cancels++;
+    if (busy) event.preventDefault();
+  });
+  const escape = () => {
+    const key = back.emit('keydown', { key: 'Escape', code: 'Escape' });
+    assert.equal(key.defaultPrevented, false, 'Both adapters must leave native cancel available.');
+    // Model the browser default only after the complete bubbling key event.
+    // Actual browser closure/focus is qualified separately by the native journey.
+    const cancel = modal.emit('cancel', { bubbles: false });
+    if (!cancel.defaultPrevented) close();
+  };
+  open();
+  busy = true;
+  escape();
+  assert.equal(modal.open, true, 'The host can veto closing while work is unsettled.');
+  assert.equal(h.document.activeElement, back);
+  busy = false;
+  escape();
+  assert.equal(modal.open, false);
+  assert.equal(h.document.activeElement, opener);
+  assert.equal(cancels, 2);
+  assert.equal(pauses, 0, 'Native Back cannot mutate flight pause state.');
+
+  open();
+  const pad = {
+    index: 0,
+    id: 'Standard pad',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false })),
+  };
+  const router = createControllerRouter({ readPads: () => [pad], eventTarget: null });
+  t.after(() => router.destroy());
+  let time = 0;
+  const sample = () => {
+    const frame = router.sample({ scope: 'modal:chapters', timeMs: (time += 16) });
+    h.api.handle(frame.ui);
+    assert.deepEqual(frame.flight, neutralControllerFlight());
+  };
+  sample();
+  pad.buttons[0].pressed = true;
+  sample();
+  pad.buttons[0].pressed = false;
+  sample();
+  busy = true;
+  pad.buttons[1].pressed = true;
+  sample();
+  assert.equal(backs, 1);
+  assert.equal(modal.open, true);
+  sample();
+  assert.equal(backs, 1, 'Held controller Back cannot replay the host action.');
+  pad.buttons[1].pressed = false;
+  sample();
+  busy = false;
+  pad.buttons[1].pressed = true;
+  sample();
+  assert.equal(backs, 2);
+  assert.equal(modal.open, false);
+  assert.equal(h.document.activeElement, opener);
+  assert.equal(cancels, 2, 'Controller Back uses its host operation, not a synthetic Escape.');
+  assert.equal(pauses, 0);
 });
 
 test('linear navigation skips hidden, disabled, inert, closed disclosure and host-rejected controls', (t) => {

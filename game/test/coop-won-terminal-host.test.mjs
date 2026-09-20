@@ -88,7 +88,7 @@ async function win(t, { level = 'first-connection', ...options } = {}) {
   assert.equal(f.$('coop-resume').hidden, true);
   assert.equal(
     f.doc.activeElement.id,
-    level === 'first-connection' ? 'coop-next' : 'coop-lobby',
+    level === 'first-connection' ? 'coop-next' : 'coop-discovery-paused',
     'Victory recommends the next arena, or choosing an arena at the end of the pack',
   );
   assert.equal(f.$('coop-discard-dialog').open, false);
@@ -211,6 +211,17 @@ test('earned Team victory → keyboard Return to Solo retains exact one-use retu
 for (const level of ['first-connection', 'relay-yard'])
   test(`${level}: keyboard View picture and Back preserve the earned original and frozen result`, async (t) => {
     const { f, terminal } = await win(t, { level });
+    if (level === 'relay-yard') {
+      assert.equal(f.$('coop-next').hidden, true, 'The last arena has no invented Next.');
+      assert.equal(f.doc.activeElement.textContent, 'Browse Team arenas');
+      f.tap('Enter');
+      assert.equal(f.$('coop-discovery-dialog').open, true);
+      tabTo(f, 'coop-discovery-back');
+      f.tap('Enter');
+      assert.equal(f.$('coop-discovery-dialog').open, false);
+      assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
+      assert.deepEqual({ hud: hud(f), paint: f.lastPaint }, terminal);
+    }
     const earned = image(f),
       copy = f.$('coop-overlay-copy').textContent,
       resources = {

@@ -282,14 +282,14 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
 // Models only image decode completion; browser/pixel evidence is separate.
 class Picture {
   constructor() {
-    this.naturalWidth = this.naturalHeight = 1;
+    this.width = this.height = this.naturalWidth = this.naturalHeight = 1;
   }
   set src(value) {
     this.url = value;
     if (value?.startsWith('data:')) {
       const header = inspectImageDataUrl(value);
-      this.naturalWidth = header.width;
-      this.naturalHeight = header.height;
+      this.width = this.naturalWidth = header.width;
+      this.height = this.naturalHeight = header.height;
     }
     if (value) queueMicrotask(() => this.onload?.());
   }

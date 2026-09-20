@@ -6,7 +6,7 @@ import { compileAssetRevision } from './assets.mjs';
 import { inspectMissionTopology } from './diagnostics.mjs';
 import { resolveTeamMission } from './team-runtime.mjs';
 import {
-  JOURNEY_POLICY,
+  journeyPolicy,
   ACTOR_CATALOG,
   DIFFICULTY_CATALOG,
   compileActor,
@@ -128,9 +128,9 @@ export function compileContentProject(source) {
     'packs',
     'assets',
   ]);
+  const policy = journeyPolicy(project.policyId);
   required(
-    project.policyId === JOURNEY_POLICY.id &&
-      project.actorCatalogId === ACTOR_CATALOG.id &&
+    project.actorCatalogId === ACTOR_CATALOG.id &&
       project.difficultyCatalogId === DIFFICULTY_CATALOG.id,
     'Project must pin registered policy and catalogs.',
   );
@@ -221,7 +221,7 @@ export function compileContentProject(source) {
     missions: project.missions,
     campaigns: project.campaigns,
     packs: project.packs,
-    policy: JOURNEY_POLICY,
+    policy,
     actors: ACTOR_CATALOG,
     difficulty: DIFFICULTY_CATALOG,
     assets,
@@ -244,6 +244,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const mission = project.missions.find((candidate) => candidate.id === id);
   required(mission && mission.modes.includes(mode), 'Mission does not support this mode.');
   const preset = journeyPreset(difficulty);
+  const policy = project.policy;
   const map = project.maps.find(
     (candidate) =>
       candidate.source.id === mission.map.id && candidate.source.revision === mission.map.revision,
@@ -267,12 +268,13 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       version: 'classic.v1',
       terrain: map.source.terrain ?? [],
       powerups: mission.bonuses,
+      ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
     },
     enemies: mission.actors.map((actor) => compileActor(actor, difficulty)),
     objectives: mission.objectives,
     supplies: [],
     rules: {
-      ...JOURNEY_POLICY.rules,
+      ...policy.rules,
       lives: preset.lives,
       timeLimitSeconds: preset.failingDeadline ? mission.timeLimitSeconds : 0,
     },
@@ -280,7 +282,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const { name: _name, id: _id, revision: _revision, ...simulation } = level;
   const topology = inspectMissionTopology(level, map.geometry);
   const simulationIdentity = dataIdentity({
-    policy: JOURNEY_POLICY.id,
+    policy: policy.id,
     difficulty,
     rosterHash: rosterHash(CLASSES),
     level: simulation,
@@ -290,7 +292,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     missionId: mission.id,
     mode,
     difficulty,
-    policyId: JOURNEY_POLICY.id,
+    policyId: policy.id,
     simulationIdentity,
     level,
     presentation: mission.presentation,

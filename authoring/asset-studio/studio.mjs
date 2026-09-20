@@ -32,8 +32,10 @@ import { createStudioOperations } from './operation.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
+import { attachPreferenceRestoration } from '../../game/ui/preference-restoration.mjs';
 import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
+import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 const $ = (id) => document.getElementById(id);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
@@ -104,13 +106,28 @@ const audioPreferences = createAudioPreferences({
     $('studio-audio-status').textContent = message;
   },
 });
-const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+const renderMasterPreferences = ({ muted, volume }) => {
   $('studio-audio-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
   $('studio-master-volume').value = volume;
+};
+const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
+const audioRestoration = attachPreferenceRestoration({
+  window,
+  getSnapshot: () => audioMaster.snapshot(),
+  render: renderMasterPreferences,
 });
 $('studio-audio-mute').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
 $('studio-master-volume').onchange = () =>
   audioPreferences.setVolume(Number($('studio-master-volume').value));
+const auditionLifecycle = attachStudioAuditionLifecycle({
+  document,
+  isAudition: () => currentSlot()?.group === 'audio',
+  stop: () => {
+    previewGeneration++;
+    for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
+  },
+  restore: () => void refreshPreviews(),
+});
 const operation = (label, fn) => operations.run(label, fn);
 window.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && operations.cancel()) event.preventDefault();
@@ -1237,9 +1254,11 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();
     stopMasterView();
+    audioRestoration.dispose();
     audioPreferences.dispose();
     audioMaster.dispose();
   }

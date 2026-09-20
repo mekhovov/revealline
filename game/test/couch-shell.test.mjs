@@ -105,6 +105,8 @@ test('lobby, setup and children use reachable native controls and Back restores 
   press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab');
+  assert.equal(f.doc.activeElement.id, 'race-chapters');
+  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-focus');
   f.doc.activeElement.click();
   assert.equal(f.doc.activeElement.id, 'race-level');
@@ -340,7 +342,10 @@ test('markup keeps touch crosses outside both arenas and uses separate screen ro
   assert.match(css, /object-fit: contain/);
   assert.match(css, /grid-template-rows: auto minmax\(48px, 1fr\)/);
   assert.match(css, /\.race-pad button\.pressed/);
-  assert.doesNotMatch(css, /100dvh\s*-/);
+  // A modal may reserve a viewport gutter. The actual boards must still derive
+  // their space from the layout rather than subtracting a guessed HUD height.
+  const boardLayout = css.replace(/\.race-chapter-replace\s*\{[^{}]*\}/g, '');
+  assert.doesNotMatch(boardLayout, /100dvh\s*-/);
   assert.doesNotMatch(css, /visibility: hidden/);
   // Actual host tests above assert mounted ancestry and lifecycle; pixel fit needs a browser.
 });

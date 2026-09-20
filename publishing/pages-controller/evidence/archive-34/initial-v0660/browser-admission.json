@@ -1,0 +1,33 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-34",
+  "infrastructureCommit": "68d29403b1932bf86db538a8c81e0273ebb99f40",
+  "deploymentId": 6548389224,
+  "versions": [
+    "v0.66.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-34/initial-v0660/native-observation.json",
+      "sha256": "acc419745a03dad5de7c4c43e17e4432d8fcdee64d28cd77c9fa09b16ed67080"
+    },
+    {
+      "path": "evidence/archive-34/initial-v0660/root-acceptance.json",
+      "sha256": "aaf9397f209034b334fb9667f92b142e8b0ba84a648f691be1e20161734d01db"
+    },
+    {
+      "path": "evidence/archive-34/initial-v0660/run.json",
+      "sha256": "59779cbdb59e95f52927084f8d2ec609665a70cc86a42793eda338a0aaae6d09"
+    },
+    {
+      "path": "evidence/archive-34/initial-v0660/deployments.json",
+      "sha256": "6c4fc4015fcfc79597afe03c44adad5b7cfae3ea68de5b1b8435b43ca188e8ff"
+    },
+    {
+      "path": "evidence/archive-34/initial-v0660/deployment-statuses.json",
+      "sha256": "c9b5eaa3fc071f57fe673d66b64f6780edd5ead28c5d95144854d2302d039baf"
+    }
+  ],
+  "scope": "Historical original-byte preservation and keyboard Solo win/Next/Pause/mode leave/Team start/pause; not a new parent-phase or hardware acceptance."
+}

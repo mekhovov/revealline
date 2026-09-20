@@ -1,0 +1,22 @@
+[
+  {
+    "path": "expected-inventory.json",
+    "bytes": 295191,
+    "sha256": "23fc4e0f63049e4e93aebe24bfabd4036aed72e67ab1fe0e11f73506abe162d5"
+  },
+  {
+    "path": "receipt.json",
+    "bytes": 1753,
+    "sha256": "9bc89c6b7f0577b9c0569345ed5fab05b7f26e0cdf1444002fbd0fb16947f598"
+  },
+  {
+    "path": "zip-receipt-v0.66.0.json",
+    "bytes": 407,
+    "sha256": "6dd8cc29415db372d02b076c53404a21067312cc9d5a37265fda6213bcb36b08"
+  },
+  {
+    "path": "zip-receipt-v0.67.0.json",
+    "bytes": 407,
+    "sha256": "cb550d8398af4e43fa719ca65236728d3ebd0e26243a4bc95f5fbb528c164c81"
+  }
+]

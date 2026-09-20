@@ -50,6 +50,219 @@
   outline: 3px solid var(--sky);
   outline-offset: 3px;
 }
+.field-kit dialog.team-discovery {
+  width: min(860px, calc(100% - 24px));
+  max-height: calc(100svh - 24px);
+  overflow: auto;
+  color: var(--fk-text);
+  background: var(--fk-panel);
+  padding: 20px;
+  overscroll-behavior: contain;
+}
+.team-discovery::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+.team-discovery-heading,
+.team-discovery-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.team-discovery-heading h2 {
+  margin: 0;
+}
+.team-discovery-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-block: 16px;
+}
+.field-kit .team-discovery .team-discovery-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+  overflow-wrap: anywhere;
+}
+.team-discovery-card h3,
+.team-discovery-card p {
+  margin: 0;
+}
+.team-discovery-card button {
+  width: 100%;
+  margin-top: auto;
+  white-space: normal;
+}
+.field-kit .team-discovery .team-discovery-play {
+  margin-top: auto;
+}
+.field-kit .team-discovery .team-discovery-preview-button {
+  margin-top: 0;
+}
+.field-kit .team-discovery button,
+#coop-discovery-open,
+#coop-discovery-paused {
+  min-height: 44px;
+  min-width: 44px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.field-kit .team-discovery .team-discovery-teaser {
+  margin: 0;
+  min-width: 0;
+  color: var(--fk-text, #f3f0db);
+  background: var(--fk-bg, #070b12);
+  border: var(--fk-border-width, 2px) solid var(--fk-line, #425563);
+}
+.field-kit .team-discovery .team-discovery-teaser canvas {
+  display: block;
+  width: 100%;
+  max-width: 288px;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  margin-inline: auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.field-kit .team-discovery .team-discovery-teaser-message {
+  margin: 0;
+  padding: 12px;
+  color: var(--fk-text, #f3f0db);
+  font-size: var(--fk-text-secondary, 14px);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.field-kit .team-discovery .team-discovery-full-picture {
+  margin: 16px 0;
+  min-width: 0;
+  color: var(--fk-text, #f3f0db);
+}
+.field-kit #coop-discovery-preview-title {
+  overflow-wrap: anywhere;
+}
+.field-kit #coop-discovery-preview-canvas {
+  display: block;
+  width: min(100%, 1152px, 120svh);
+  max-width: 100%;
+  height: auto;
+  max-height: 60svh;
+  aspect-ratio: 2 / 1;
+  margin-inline: auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+  background: var(--fk-bg, #070b12);
+}
+.field-kit .team-discovery .team-discovery-full-picture figcaption {
+  margin-top: 12px;
+  color: var(--fk-muted, #a5b2bb);
+  font-size: var(--fk-text-secondary, 14px);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+/* Full previews reserve space for navigation and text before fitting the artwork.
+   The gallery keeps its scrolling layout; only the picture view owns a viewport. */
+.field-kit dialog.team-discovery[open]:has(#coop-discovery-preview:not([hidden])) {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  height: min(720px, calc(100svh - 24px));
+  box-sizing: border-box;
+  padding: 12px;
+  overflow: auto;
+}
+.field-kit
+  .team-discovery:has(#coop-discovery-preview:not([hidden]))
+  :is(#coop-discovery-description, .team-discovery-footer, .team-discovery-heading h2) {
+  display: none;
+}
+.field-kit .team-discovery:has(#coop-discovery-preview:not([hidden])) .team-discovery-heading {
+  justify-content: flex-end;
+}
+.field-kit #coop-discovery-preview:not([hidden]) {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+}
+.field-kit #coop-discovery-preview-title {
+  margin: 0;
+  font-size: var(--fk-text-body, 18px);
+  line-height: 1.3;
+}
+.field-kit #coop-discovery-preview .team-discovery-full-picture {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin: 0;
+  min-height: 0;
+}
+.field-kit #coop-discovery-preview #coop-discovery-preview-canvas {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+.field-kit #coop-discovery-preview .team-discovery-full-picture figcaption,
+.field-kit #coop-discovery-preview-status {
+  margin: 0;
+}
+/* Keep successful loading announcements available to assistive technology
+   without repeating the visible caption. Errors and procedural notes stay visible. */
+.field-kit
+  #coop-discovery-preview:has(#coop-discovery-preview-canvas:not([hidden]))
+  #coop-discovery-preview-status[data-state='ready'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* Tall portrait screens can show the picture at its natural 2:1 size without
+   reserving an entire viewport of empty letterbox space. */
+@media (orientation: portrait) {
+  .field-kit dialog.team-discovery[open]:has(#coop-discovery-preview:not([hidden])) {
+    height: fit-content;
+    grid-template-rows: auto auto;
+    align-content: start;
+  }
+  .field-kit #coop-discovery-preview:not([hidden]) {
+    grid-template-rows: auto auto auto auto;
+  }
+  .field-kit #coop-discovery-preview .team-discovery-full-picture {
+    grid-template-rows: auto auto;
+  }
+  .field-kit #coop-discovery-preview #coop-discovery-preview-canvas {
+    height: auto;
+    max-height: none;
+    aspect-ratio: 2 / 1;
+  }
+}
+/* Author display/grid rules must not expose hidden preview or gallery content. */
+.field-kit .team-discovery [hidden],
+.field-kit .team-discovery canvas[hidden],
+.field-kit #coop-discovery-preview-canvas[hidden] {
+  display: none;
+}
+.team-discovery-footer p {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .field-kit dialog.team-discovery {
+    padding: 12px;
+  }
+  .team-discovery-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .playing .masthead {
   min-height: 56px;
 }

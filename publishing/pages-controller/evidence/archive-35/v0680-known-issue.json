@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-09-20T06:19:23.424185+00:00",
+  "source": "5598d56248ee4a03d0460ff8a3560eb550a4cc71",
+  "publisher": "f59ff6f9685e7925f12552b8d36554e6ec681161",
+  "finding": "Current Pressure Pictures chapter Play offers Replace this flight despite same authored chapter. Stay retains pause and exact Play opener.",
+  "reproduction": [
+    "Download & play Pressure Pictures; observe installed Orchard Crossing",
+    "Retry; pause with0%,3lives,0score,2:46remaining",
+    "Main menu > Missions > More chapters > same Pressure Pictures Play",
+    "Replacement dialog: Orchard Crossing \u2192 Pressure Pictures; saved and verified message",
+    "Keyboard Stay returns same Play button and paused-flight message"
+  ],
+  "sourceCause": "resolveMissionRequest(world-play) returns same:false unconditionally; library-installed selection already distinguishes same chapter.",
+  "candidate": ".cache/worktrees/current-chapter-preservation",
+  "status": "Public finding retained; candidate under local actual-host verification, not deployed",
+  "limits": [
+    "Current no-progress flight; test does not establish active-cut checkpoint equality",
+    "No automatic replacement observed; explicit confirmation still protects attempt"
+  ]
+}

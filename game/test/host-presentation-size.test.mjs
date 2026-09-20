@@ -18,6 +18,9 @@ function renderingHarness(displayCSSWidth) {
       naturalHeight = 1280;
       width = 1280;
       height = 1280;
+      async decode() {
+        assert.ok(this.source && this.width > 0 && this.height > 0);
+      }
       set src(value) {
         this.source = value;
         if (value.startsWith('data:')) {

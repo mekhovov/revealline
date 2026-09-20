@@ -9,6 +9,8 @@ import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
@@ -188,7 +190,9 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     }
   }
   const preferenceWrites = [];
-  const sharedPreferences = new Map();
+  const sharedPreferences = new Map([
+    [AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: true, volume: 0.13 })],
+  ]);
   const systemMotion = new Events();
   systemMotion.matches = false;
   const matchMedia = (query) =>
@@ -201,12 +205,28 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     getItem: (key) => sharedPreferences.get(key) ?? null,
     setItem(key, value) {
       preferenceWrites.push([key, value]);
-      assert.equal(key, DISPLAY_PREFERENCES_KEY, 'Interface choices never write Solo progress.');
+      assert.ok(
+        [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY].includes(key),
+        'Interface choices never write Solo progress.',
+      );
       if (denyPreferenceSave) throw new Error('Preference storage is unavailable.');
       sharedPreferences.set(key, value);
     },
   };
+  const auditionContexts = [];
+  let delayAudition = false;
   const globals = {
+    AudioContext: function () {
+      const harness = audioHarness(),
+        gate = deferred();
+      if (delayAudition)
+        harness.context.resume = () =>
+          gate.promise.then(() => {
+            if (harness.context.state !== 'closed') harness.context.state = 'running';
+          });
+      auditionContexts.push({ ...harness, gate });
+      return harness.context;
+    },
     localStorage,
     document: doc,
     window,
@@ -368,6 +388,52 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   startupGate.resolve();
   await until(() => $('cancel-studio-operation').hidden);
   assert.match(message(), /Current release assets loaded/);
+  // Model native form restoration separately from the authoritative audio record.
+  // Pageshow can restore controls after listeners have run; neither phase is an edit.
+  const masterField = $('studio-master-volume'),
+    audioOpener = doc.activeElement,
+    audioWritesBeforeReturn = preferenceWrites.length;
+  for (const persisted of [false, true]) {
+    masterField.value = '0.88';
+    window.emit('pageshow', { persisted });
+    assert.equal(
+      Number(masterField.value),
+      0.13,
+      'Audio controls repaint current intent on return.',
+    );
+    masterField.value = '0.91';
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    assert.equal(
+      Number(masterField.value),
+      0.13,
+      'Deferred repaint repairs late native restoration.',
+    );
+    assert.equal($('studio-audio-mute').textContent, 'Unmute sound');
+    assert.equal(
+      doc.activeElement === audioOpener,
+      true,
+      'Audio restoration never moves editor focus.',
+    );
+  }
+  assert.equal(preferenceWrites.length, audioWritesBeforeReturn, 'Audio restoration never saves.');
+  denyPreferenceSave = true;
+  masterField.value = '0.27';
+  masterField.onchange();
+  assert.match($('studio-audio-status').textContent, /could not be saved/);
+  sharedPreferences.set(AUDIO_PREFERENCES_KEY, JSON.stringify({ muted: false, volume: 0.95 }));
+  masterField.value = '0.95';
+  window.emit('pageshow', { persisted: true });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(
+    Number(masterField.value),
+    0.27,
+    'Unsaved session intent wins over restored controls.',
+  );
+  assert.equal($('studio-audio-mute').textContent, 'Unmute sound');
+  denyPreferenceSave = false;
+  masterField.value = '0.13';
+  masterField.onchange();
+
   // The approved fixture remains available throughout all later inspection
   // journeys, including the separate cross-mode preview test composition.
   $('filter-quality').value = '';
@@ -379,6 +445,71 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
       .querySelectorAll('button')
       .find((button) => button.querySelector('small')?.textContent.startsWith(`${slotId} ·`));
   const originalSlot = $('slot-id').textContent;
+  // Actual host wiring: a visible focus change is not a hidden document.
+  inventoryButton('audio.capture').click();
+  await flush();
+  const currentAudio = $('current-preview'),
+    draftAudio = $('draft-preview');
+  await currentAudio.querySelectorAll('button')[0].onclick();
+  assert.match(currentAudio.textContent, /master sound is muted/);
+  $('studio-audio-mute').click();
+  assert.doesNotMatch(
+    currentAudio.textContent,
+    /master sound is muted/,
+    'Actual master Unmute repaints the active saved audition.',
+  );
+  assert.match(currentAudio.textContent, /Playing the registered/);
+  assert.equal(auditionContexts[0].context.state, 'running');
+  assert.ok(auditionContexts[0].sources.length > 0);
+  const visibleMarker = currentAudio.previewMarker;
+  window.emit('blur');
+  assert.equal(
+    currentAudio.previewMarker,
+    visibleMarker,
+    'A file-picker focus change keeps the visible preview.',
+  );
+  assert.equal(auditionContexts[0].context.state, 'running');
+  delayAudition = true;
+  const pendingAudition = draftAudio.querySelectorAll('button')[0].onclick();
+  assert.equal(auditionContexts.length, 2);
+  doc.hidden = true;
+  doc.emit('visibilitychange');
+  assert.equal(
+    auditionContexts[0].context.state,
+    'closed',
+    'Hiding retires the active authoring audition.',
+  );
+  assert.equal(
+    auditionContexts[1].context.state,
+    'closed',
+    'Hiding retires a pending authoring audition.',
+  );
+  auditionContexts[1].gate.resolve();
+  await pendingAudition;
+  assert.equal(
+    auditionContexts[1].sources.length,
+    0,
+    'Late readiness cannot schedule a hidden cue.',
+  );
+  assert.equal(currentAudio.previewMarker, null);
+  assert.equal(draftAudio.previewMarker, null);
+  doc.hidden = false;
+  doc.emit('visibilitychange');
+  await flush();
+  assert.equal(
+    auditionContexts.length,
+    2,
+    'A visible return creates controls, not playback contexts.',
+  );
+  assert.ok(currentAudio.previewMarker);
+  assert.ok(draftAudio.previewMarker);
+  delayAudition = false;
+  await currentAudio.querySelectorAll('button')[0].onclick();
+  assert.equal(auditionContexts.length, 3, 'A fresh explicit audition starts after return.');
+  $('studio-audio-mute').click();
+  inventoryButton(originalSlot).click();
+  await flush();
+
   const preferenceWritesBeforeInspection = preferenceWrites.length;
   $('preview-mode').value = 'context';
   $('preview-mode').emit('change');
@@ -854,7 +985,16 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   $('studio-interface-size').value = 'standard';
   $('studio-interface-size').emit('change');
   assert.equal(doc.body.dataset.textSize, 'standard');
-  assert.equal(preferenceWrites.length, 3, 'Only the three explicit interface choices persist.');
+  assert.equal(
+    preferenceWrites.filter(([key]) => key === DISPLAY_PREFERENCES_KEY).length,
+    3,
+    'Only the three explicit display choices persist.',
+  );
+  assert.equal(
+    preferenceWrites.filter(([key]) => key === AUDIO_PREFERENCES_KEY).length,
+    4,
+    'Only the four explicit audio edits attempt a save.',
+  );
   await $('save-workspace').onclick();
   assert.match(
     message(),
@@ -879,7 +1019,11 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   const saveWarning = $('studio-interface-status').textContent,
     writesAfterDenial = preferenceWrites.length;
   assert.match(saveWarning, /could not be saved/);
-  assert.equal(writesAfterDenial, 4, 'The rejected preference save is recorded as an attempt.');
+  assert.equal(
+    preferenceWrites.filter(([key]) => key === DISPLAY_PREFERENCES_KEY).length,
+    4,
+    'The rejected display preference save is recorded as an attempt.',
+  );
   window.emit('pagehide', { persisted: true });
   const remotePreferences = JSON.stringify({
     textFace: 'pixel',
@@ -938,8 +1082,10 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
   await $('save-workspace').onclick();
   assert.match(message(), /Prepare the edited sprite/);
   assert.ok(
-    preferenceWrites.every(([key]) => key === DISPLAY_PREFERENCES_KEY),
-    'All attempted preference writes target only the separate shared display record.',
+    preferenceWrites.every(([key]) =>
+      [DISPLAY_PREFERENCES_KEY, AUDIO_PREFERENCES_KEY].includes(key),
+    ),
+    'All attempted preference writes target only the separate shared display and audio records.',
   );
   window.emit('pagehide', { persisted: false });
   assert.equal(guideClose.hidden, true, 'Terminal disposal removes the enhanced Close control.');

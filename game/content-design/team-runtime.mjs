@@ -1,7 +1,7 @@
 import { exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
 import { validateCoopLevel, createCoop } from '../coop/core.mjs';
 import { COOP_FOUNDATION_LEVEL_VERSION, COOP_FOUNDATION_RULESET } from '../coop/foundations.mjs';
-import { JOURNEY_POLICY, compileActor, freezeDesign } from './catalogs.mjs';
+import { compileActor, freezeDesign } from './catalogs.mjs';
 import { inspectRuntimeTopology } from './diagnostics.mjs';
 
 /** Explicit Team qualification, not an automatic Solo-to-Team conversion.
@@ -54,7 +54,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
       return { ...actor, type: 'drifter', radius: 0.25 };
     }),
     goal: { coverage: mission.coverage },
-    rules: { moveSpeed: JOURNEY_POLICY.rules.moveSpeed, boostMultiplier: 1 },
+    rules: { moveSpeed: project.policy.rules.moveSpeed, boostMultiplier: 1 },
   };
   const result = validateCoopLevel(level);
   required(result.valid, result.errors.join(' '));
@@ -70,10 +70,10 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     missionId: mission.id,
     mode: 'team',
     difficulty,
-    policyId: JOURNEY_POLICY.id,
+    policyId: project.policy.id,
     simulationIdentity: dataIdentity({
       ruleset: COOP_FOUNDATION_RULESET,
-      policy: JOURNEY_POLICY.id,
+      policy: project.policy.id,
       difficulty,
       level: simulation,
     }),

@@ -183,6 +183,11 @@ test('native summary and chapter cards use the existing controller adapter; curr
   t.after(() => nav.destroy());
   let changes = 0;
   h.$('pack-select').addEventListener('change', () => changes++);
+  // The finite host starts on the paused field. Enter Missions through its
+  // actual header action before asking the adapter to activate chapter cards.
+  assert.equal(h.$('shell-missions').open, false);
+  h.$('shell-packs').click();
+  assert.equal(h.$('shell-missions').open, true);
   assert.equal(picker.focusSelectedChapter(), true);
   nav.engage();
   nav.handle({ confirm: true });

@@ -1,0 +1,18 @@
+{
+  "observer": "root native CUA in-app browser tab71",
+  "at": "2026-09-20T04:48:32.945092+00:00",
+  "passed": [
+    "Archive root lists v66/v67 and separately labelled Journey preview",
+    "Keyboard third link opens v67 Journey; title version v0.67.0 and Continue Night Shift/Midnight Channel",
+    "Explicit Continue adopts 2:13,0%,3lives,score0; Escape later pauses2:06 with no score/life/coverage changes",
+    "Concurrent tab ownership is visibly session-only and does not overwrite the original saved flight",
+    "Back to archive\u2192keyboard v66 opens exactv0.66 title",
+    "Back to archive\u2192keyboard standard v67 opens exactv0.67 title without Journey preview label"
+  ],
+  "consoleWarningsErrors": [],
+  "screenshot": "No exported screenshot; native AX/DOM observations retained in tool conversation",
+  "limitations": [
+    "No archive offline, audible listening, physical controller/touch or complete campaign qualification",
+    "Preserves v67 known stale resumed caption while paused and long-settings close-button scroll defect; correction candidates do not change archived bytes"
+  ]
+}

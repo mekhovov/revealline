@@ -75,3 +75,19 @@ Browser history can retain a page in memory. This app suspends a flight before r
 Text entry, date entry and native file pickers still use keyboard or touch. Some browsers require a trusted keyboard or pointer action before audio, sharing or other protected APIs are available. Polling a controller does not create that activation; menu navigation and silent play remain usable. See the primary API/accessibility sources in the [controller plan](round-15-controller-plan.md).
 
 This increment covers the solo interface and its practice preview. The v0.13 working source adds [optional solo Boost Toggle](controller-boost.md), defaulting to Hold; it is separate from binding drafts and resets on pause, Stop and recovery. Couch players retain their existing separate Hold controls; Replay Theater menu navigation was delivered in v0.30; the complete couch/menu/device matrix remains open. Controller toggle steering, physical-button capture, haptics and arbitrary nonstandard mappings are not provided. Touch tap steering/Boost remains a separate existing option. Physical controller/browser/native-device sessions must be reported separately from simulated input and DOM tests. No hardware certification or universal controller-only OS interaction is implied.
+
+## About: choose a local mode
+
+About → Ways to play offers Solo campaign, Couch Versus and Couch Team, with a separate First Flight Coach entry. Versus uses two rival boards; Team uses one shared arena with Support and partner rescue. These links stay inside the selected software build, including frozen and archived releases, and remain available while the optional pack and release catalogues load. Online play remains explicitly deferred and has no playable action.
+
+Use Tab and Enter for ordinary links, or join a controller with a neutral input followed by Confirm, then use the D-pad and a fresh Confirm. Back or Escape selects Return to game without automatically navigating. Late catalogue readiness must preserve the focused mode link. Mode choices do not write progress. The page uses stable descriptions instead of hardcoded inventory totals; changing campaign content must not leave misleading mission, class or pack counts in its summary or metadata.
+
+Maintainer prompt: update the real About markup and shared navigation together. Keep all three local modes reachable in document order and within the current build; preserve deferred online wording. Exercise pending and completed catalogues, exact frozen/archive link resolution, controller Back, keyboard activation and native responsive target sizes. Distinguish modeled controller tests from physical-device evidence. Do not treat a passing link test as proof of a complete gameplay journey.
+
+## Responsive Settings and accurate pause status
+
+Solo Settings keeps its Close action and category tabs outside the scrolling panel. On a short landscape screen, keyboard focus must scroll the active panel without pushing Close out of view. If a viewport change hides the original toolbar opener, closing Settings restores the visible Game menu action; it must not resume the saved flight. A newer deliberate focus choice or another open dialog retains ownership.
+
+A resumed saved flight displays “Flight resumed.” only while running. Pausing replaces that caption with explicit Resume guidance and preserves the unfinished cut; important interruption warnings retain priority. Test both Immediate and Grid + buffer with unchanged checkpoints and verified saved replays.
+
+Maintainer prompt: exercise title and paused-flight Settings with Plain/Large text at phone portrait and short landscape, including a resize that hides the opener. Verify visible Close, panel-local scrolling, logical focus return and explicit Resume. Keep native keyboard observations separate from modeled controllers, physical hardware and public-release acceptance.

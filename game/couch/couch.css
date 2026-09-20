@@ -501,3 +501,29 @@ body.candidate-journey .race-shell {
   margin-block: var(--fk-space-2);
   color: var(--fk-text);
 }
+
+/* The replacement decision preserves both boards behind the shared browser. */
+.race-chapter-replace {
+  width: min(34rem, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  box-sizing: border-box;
+  overflow: auto;
+  border: var(--fk-border-width) solid var(--fk-line);
+  border-radius: var(--fk-corner);
+  background: var(--fk-panel);
+  color: var(--fk-text);
+  padding: var(--fk-space-6);
+}
+.race-chapter-replace::backdrop {
+  background: rgb(4 10 18 / 85%);
+}
+.race-chapter-replace .race-menu-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-3);
+}
+.race-chapter-replace button {
+  flex: 1 1 10rem;
+  min-height: var(--fk-target-size);
+  min-width: var(--fk-target-size);
+}

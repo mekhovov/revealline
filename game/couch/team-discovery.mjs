@@ -1,0 +1,289 @@
+import { createOperationStatus } from '../ui/operation-status.mjs';
+import { attachTeamDiscoveryPictures } from './team-discovery-pictures.mjs';
+
+/** Same-page discovery UI. The host owns content validation, staged attempts and
+ * exact artwork; opening a card never changes a pack or awards a picture here.
+ */
+export function attachTeamDiscovery({
+  document,
+  dialog,
+  list,
+  status,
+  back,
+  cancel,
+  getEntries,
+  canOpen = () => true,
+  activate,
+  preparePreview,
+  preview,
+  onViewChange = () => {},
+  onOpen = () => {},
+  onClose = () => {},
+}) {
+  let visit = null,
+    visitSequence = 0,
+    operation = null,
+    selected = null,
+    disposed = false;
+  const feedback = createOperationStatus(status, { isCurrent: () => !disposed && Boolean(visit) });
+  const foreground = () => !document.hidden && document.hasFocus?.() !== false;
+  const unclaimed = (element) =>
+    !element || element === document.body || element === document.documentElement;
+  const visible = (element) =>
+    element?.isConnected && !element.disabled && !element.closest('[hidden],[inert]');
+  const owns = (owner) => !disposed && visit === owner;
+  const live = (owner) => owns(owner) && dialog.open;
+  const available = () => visit?.cards.find(({ row }) => row.key === selected) ?? visit?.cards[0];
+  const pictures =
+    preview && preparePreview
+      ? attachTeamDiscoveryPictures({
+          document,
+          dialog,
+          list,
+          back,
+          preview,
+          prepare: preparePreview,
+          select: (key) => {
+            selected = key;
+          },
+          onViewChange,
+        })
+      : null;
+  const primary = () => pictures?.primary() ?? (operation ? cancel : (available()?.button ?? back));
+  function describe(owner, message, state = 'ready') {
+    if (!owns(owner)) return;
+    const display = feedback.begin({ message, stage: 'preparing', isCurrent: () => owns(owner) });
+    if (state !== 'preparing' && owns(owner)) display.finish({ message, state });
+  }
+  function controls(owner, busy) {
+    if (!owns(owner)) return;
+    for (const { button } of owner.cards) {
+      if (!owns(owner)) return;
+      button.disabled = busy;
+    }
+    if (!owns(owner)) return;
+    cancel.hidden = !busy;
+    if (owns(owner)) list.setAttribute('aria-busy', String(busy));
+    if (owns(owner)) pictures?.setBusy(busy);
+  }
+  function restoreCard(owner, button) {
+    if (!live(owner) || operation || !foreground() || !visible(button)) return;
+    const active = document.activeElement;
+    if (unclaimed(active) || active === dialog || active === cancel || active === button)
+      button.focus({ preventScroll: true });
+  }
+  function cancelPending({ restore = false, announce = true } = {}) {
+    const pending = operation;
+    if (!pending) return false;
+    operation = null;
+    pending.controller.abort();
+    if (!live(pending.owner) || operation) return true;
+    controls(pending.owner, false);
+    if (announce && live(pending.owner) && !operation)
+      describe(pending.owner, 'Preparation cancelled. Your current attempt is unchanged.');
+    if (restore) restoreCard(pending.owner, pending.button);
+    return true;
+  }
+  async function play(owner, row, button) {
+    if (!live(owner) || operation || !foreground() || button.disabled) return;
+    selected = row.key;
+    const pending = { owner, row, button, controller: new AbortController() };
+    operation = pending;
+    const current = () =>
+      live(owner) && operation === pending && !pending.controller.signal.aborted;
+    try {
+      controls(owner, true);
+      if (!current()) return;
+      describe(owner, `Preparing ${row.title}… Your current attempt stays available.`, 'preparing');
+      if (!current()) return;
+      cancel.focus({ preventScroll: true });
+      if (!current()) return;
+      if (document.activeElement !== cancel) {
+        // A newer focus choice made while admitting Play belongs to the player.
+        // The host's preparation listeners have not been installed yet.
+        cancelPending();
+        return;
+      }
+      const started = await activate(row, {
+        signal: pending.controller.signal,
+        isCurrent: current,
+        opener: button,
+        onStatus: (message) => {
+          if (current() && typeof message === 'string') describe(owner, message, 'preparing');
+        },
+      });
+      if (!current()) return;
+      operation = null;
+      if (started) {
+        // The host has accepted the prepared attempt. Closing must not abort its
+        // successful preparation signal or restore the old lobby/result opener.
+        close({ restore: false });
+      } else {
+        controls(owner, false);
+        describe(owner, 'Your current attempt is unchanged. Choose an arena when ready.');
+        restoreCard(owner, button);
+      }
+    } catch (error) {
+      if (!current()) return;
+      operation = null;
+      controls(owner, false);
+      describe(
+        owner,
+        error?.name === 'AbortError'
+          ? 'Preparation cancelled. Your current attempt is unchanged.'
+          : `Could not prepare ${row.title}. Your current attempt is unchanged. Try Play again.`,
+        error?.name === 'AbortError' ? 'ready' : 'error',
+      );
+      restoreCard(owner, button);
+    }
+  }
+  function populate(owner) {
+    const rows = getEntries();
+    if (!Array.isArray(rows)) throw new TypeError('Team arenas are unavailable.');
+    const keys = new Set();
+    const cards = rows.map((row) => {
+      if (!row || typeof row.key !== 'string' || keys.has(row.key))
+        throw new TypeError('Team arena identities are unavailable.');
+      keys.add(row.key);
+      const card = document.createElement('article');
+      card.className = 'team-discovery-card field-kit-panel';
+      const pack = document.createElement('p');
+      pack.className = 'eyebrow';
+      pack.textContent = `${row.packName} · ${row.sourceLabel}`;
+      const title = document.createElement('h3');
+      title.textContent = row.title;
+      const goal = document.createElement('p');
+      goal.textContent = row.goal;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = `Play ${row.title}`;
+      button.setAttribute('aria-label', `Play ${row.title} · ${row.packName} · ${row.sourceLabel}`);
+      button.className = 'field-kit-primary team-discovery-play';
+      button.onclick = () => play(owner, row, button);
+      card.append(pack, title, goal, button);
+      return { row, button, card };
+    });
+    if (!owns(owner)) return;
+    owner.cards = cards;
+    list.replaceChildren(...cards.map(({ card }) => card));
+    if (!owns(owner)) return;
+    pictures?.populate(cards);
+    if (!owns(owner)) return;
+    describe(
+      owner,
+      cards.length
+        ? 'Choose an arena. Your current attempt stays available until the new arena is ready.'
+        : 'No compatible Team arenas are available. Back keeps your current setup.',
+    );
+    controls(owner, false);
+  }
+  function open(opener = document.activeElement) {
+    if (disposed || dialog.open || visit || !foreground() || !canOpen()) return false;
+    const owner = { opener, cards: [], restore: true, sequence: ++visitSequence };
+    visit = owner;
+    try {
+      onOpen();
+      if (!owns(owner)) return false;
+      try {
+        populate(owner);
+      } catch {
+        if (!owns(owner)) return false;
+        list.replaceChildren();
+        describe(owner, 'Team arenas are unavailable. Back keeps your current attempt.', 'error');
+        controls(owner, false);
+      }
+      if (!owns(owner)) return false;
+      dialog.showModal();
+      if (!live(owner)) return false;
+      const active = document.activeElement;
+      if (unclaimed(active) || active === opener || active === dialog || active === back)
+        primary().focus({ preventScroll: true });
+      if (live(owner)) pictures?.start();
+      return live(owner);
+    } catch {
+      if (owns(owner)) {
+        if (dialog.open) close();
+        else {
+          visit = null;
+          onClose();
+        }
+      }
+      return false;
+    }
+  }
+  function closed() {
+    if (dialog.open || !visit) return;
+    const owner = visit;
+    visit = null;
+    // Retire this visit before abort/onClose or native focus callbacks reenter.
+    const pending = operation;
+    operation = null;
+    pending?.controller.abort();
+    if (visit || visitSequence !== owner.sequence) return;
+    pictures?.close();
+    if (visit || visitSequence !== owner.sequence) return;
+    onClose();
+    if (
+      disposed ||
+      visit ||
+      dialog.open ||
+      !owner.restore ||
+      !foreground() ||
+      !visible(owner.opener)
+    )
+      return;
+    const active = document.activeElement;
+    if (unclaimed(active) || active === dialog || dialog.contains(active))
+      owner.opener.focus({ preventScroll: true });
+  }
+  function close({ restore = true } = {}) {
+    if (!visit) return;
+    const owner = visit;
+    owner.restore = restore;
+    pictures?.close();
+    if (visit !== owner) return;
+    if (dialog.open) dialog.close();
+    else closed();
+  }
+  const cancelled = (event) => {
+    event.preventDefault();
+    goBack();
+  };
+  const keydown = (event) => {
+    if (event.key === 'Escape') event.stopPropagation();
+  };
+  function goBack() {
+    if (!pictures?.back()) close();
+  }
+  back.onclick = goBack;
+  cancel.onclick = () => cancelPending({ restore: true });
+  dialog.addEventListener('close', closed);
+  dialog.addEventListener('cancel', cancelled);
+  dialog.addEventListener('keydown', keydown);
+  return {
+    open,
+    close,
+    back: goBack,
+    cancel: () => {
+      cancelPending();
+      pictures?.cancel();
+    },
+    primary,
+    isOpen: () => !disposed && dialog.open,
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      visit = null;
+      const pending = operation;
+      operation = null;
+      pending?.controller.abort();
+      pictures?.dispose();
+      back.onclick = cancel.onclick = null;
+      dialog.removeEventListener('close', closed);
+      dialog.removeEventListener('cancel', cancelled);
+      dialog.removeEventListener('keydown', keydown);
+      feedback.dispose();
+      if (dialog.open) dialog.close();
+    },
+  };
+}

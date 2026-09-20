@@ -30,7 +30,7 @@ function inventoryDiagnostic(p, phase) {
     rows: allEditions.map((e) => ({
       id: e.descriptor.id,
       state: p.$(id(e, 'state'))?.textContent,
-      chooseDisabled: p.$(id(e, 'choose'))?.disabled,
+      playDisabled: playControl(p, e)?.disabled,
     })),
     errors: p.errors.map((error) => String(error?.stack ?? error)),
   });
@@ -204,6 +204,7 @@ async function page(t, f = {}, release = false) {
   return Object.assign(p, { fixture: f, requests });
 }
 const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
+const playControl = (p, e) => p.$(id(e, 'download')) ?? p.$(id(e, 'choose'));
 async function open(p) {
   p.$('shell-menu').click();
   p.$('shell-play').click();
@@ -224,10 +225,12 @@ function showCard(p, e) {
   }
   assert.equal(card.hidden, false, 'the exact owner is visibly reachable');
 }
-async function choose(p, e, { replaceFlight = false } = {}) {
+async function play(p, e, { replaceFlight = false } = {}) {
   showCard(p, e);
-  const phase = `Choose and authenticate exact ${e.descriptor.id}`,
-    opener = p.$(id(e, 'choose'));
+  const phase = `Play and authenticate exact ${e.descriptor.id}`,
+    opener = playControl(p, e),
+    previousRun = p.rendered.run,
+    previousCheckpoint = authoritativeCheckpoint(previousRun);
   opener.focus();
   if (replaceFlight) {
     const run = p.rendered.run,
@@ -266,10 +269,17 @@ async function choose(p, e, { replaceFlight = false } = {}) {
       timeoutMs: 90000,
     });
   await settle(
-    () => !p.$('optional-worlds-dialog').open && p.doc.body.dataset.pictureState === 'ready',
+    () =>
+      !p.$('optional-worlds-dialog').open &&
+      p.doc.body.dataset.pictureState === 'ready' &&
+      p.doc.body.dataset.flightState === 'running',
   );
   p.frame(0);
   assert.equal(p.$('pack-select').value, e.descriptor.id);
+  assert.equal(p.rendered.paused, false);
+  assert.equal(p.rendered.run.tick, 0);
+  assert.notEqual(p.rendered.run, previousRun);
+  assert.deepEqual(authoritativeCheckpoint(previousRun), previousCheckpoint);
 }
 function direction(p, d) {
   const k = 'Arrow' + d[0].toUpperCase() + d.slice(1);
@@ -280,7 +290,7 @@ function ticks(p, n) {
   for (let i = 0; i < n; i++) p.frame();
 }
 
-test('three Sentinel theme downloads preserve an unrelated cut, require Choose and retain distinct earned owners through backup/restart', async (t) => {
+test('three Sentinel Download & play choices preserve an unrelated cut through Stay and retain distinct earned owners through backup/restart', async (t) => {
   const f = {};
   let receipts,
     stories,
@@ -306,15 +316,24 @@ test('three Sentinel theme downloads preserve an unrelated cut, require Choose a
           SOURCE_EXTERNAL_CHAPTERS.find((d) => d.id === e.descriptor.id),
           e.descriptor,
         );
-        await waitInventory(p, `Download and authenticate exact ${e.descriptor.id}`, {
-          operation: clickOperation(p, id(e, 'download')),
-          ready: () => !p.$('optional-worlds-reload').disabled && !p.$(id(e, 'choose')).disabled,
+        showCard(p, e);
+        const opener = playControl(p, e);
+        assert.match(opener.textContent, /Download & play/i);
+        opener.focus();
+        await waitInventory(p, `Download, authenticate and review exact ${e.descriptor.id}`, {
+          operation: clickOperation(p, opener.id),
+          ready: () =>
+            !p.$('optional-worlds-reload').disabled &&
+            p.$('mission-replace-dialog').open &&
+            !p.$('mission-replace-confirm').disabled,
         });
-        assert.equal(
-          p.$(id(e, 'choose')).disabled,
-          false,
-          p.$('optional-worlds-status').textContent,
-        );
+        assert.match(p.$('mission-replace-status').textContent, /saved and verified/);
+        const saved = new Map(p.fixture.storage.map);
+        p.$('mission-replace-stay').click();
+        assert.equal(playControl(p, e).disabled, false, p.$('optional-worlds-status').textContent);
+        assert.match(playControl(p, e).textContent, /^Play/);
+        assert.equal(p.doc.activeElement, opener);
+        assert.deepEqual(p.fixture.storage.map, saved);
         p.frame(0);
         assert.equal(p.rendered.run, run);
         assert.deepEqual(authoritativeCheckpoint(run), before);
@@ -332,10 +351,9 @@ test('three Sentinel theme downloads preserve an unrelated cut, require Choose a
       const route = proof.routes.find((r) => r.id === 'fpv/standard/immediate/court-upper');
       for (const e of allEditions) {
         if (!p.$('optional-worlds-dialog').open) await open(p);
-        await choose(p, e, { replaceFlight: e === allEditions[0] });
+        await play(p, e, { replaceFlight: e === allEditions[0] });
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
         assert.equal(p.rendered.backdrop.pin.sha256, e.descriptor.originals[0].sha256);
-        p.$('start-button').click();
         for (const step of route.segments) {
           if (step.input.direction) direction(p, step.input.direction);
           if (step.input.action) p.key('KeyE');
@@ -383,11 +401,11 @@ test('three Sentinel theme downloads preserve an unrelated cut, require Choose a
     async (t) => {
       const p = await page(t, f, true);
       await open(p);
-      for (const e of allEditions) assert.equal(p.$(id(e, 'choose')).disabled, false);
+      for (const e of allEditions) assert.equal(playControl(p, e).disabled, false);
       const library = loadLibrary(f.storage, 'revealline.library.release-0.36.0.v1').library;
       assert.deepEqual(library.pictureReceipts, receipts);
       assert.deepEqual(library.storyReceipts, stories);
-      await choose(p, allEditions[0]);
+      await play(p, allEditions[0]);
       assert.equal(
         p.rendered.backdrop.pin.identity.baseCampaignKey,
         allEditions[0].descriptor.campaignKey,
