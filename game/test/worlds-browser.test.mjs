@@ -37,6 +37,7 @@ test('all 36 choices traverse exactly once in deterministic 4/2 card pages and e
 function fixture(t, changes = {}) {
   const doc = new Document();
   doc.createElement = (tag) => new SoloElement(doc, tag);
+  Object.assign(doc.defaultView, changes.view);
   let resized;
   const media = {
     matches: false,
@@ -109,6 +110,57 @@ function fixture(t, changes = {}) {
     },
   };
 }
+test('world action stays inside a resized scrollport without changing focus or activating a choice', async (t) => {
+  const frames = [],
+    listeners = new Map();
+  const f = fixture(t, {
+    view: {
+      requestAnimationFrame: (callback) => frames.push(callback),
+      addEventListener: (name, callback) => {
+        if (!listeners.has(name)) listeners.set(name, new Set());
+        listeners.get(name).add(callback);
+      },
+      removeEventListener: (name, callback) => listeners.get(name)?.delete(callback),
+    },
+  });
+  await f.panel.open();
+  const dialog = f.$('dialog'),
+    action = f.$('source-world-0-download');
+  let height = 844;
+  dialog.scrollTop = 0;
+  dialog.clientTop = 2;
+  Object.defineProperty(dialog, 'clientHeight', { get: () => height - 28 });
+  dialog.getBoundingClientRect = () => ({ top: 12, bottom: height - 12 });
+  dialog.querySelector('.optional-worlds-top').getBoundingClientRect = () => ({
+    top: 14,
+    bottom: 100,
+  });
+  action.getBoundingClientRect = () => ({
+    top: 550 - dialog.scrollTop,
+    bottom: 598 - dialog.scrollTop,
+  });
+  action.focus();
+  const flush = () => {
+    for (const callback of frames.splice(0)) callback();
+  };
+  flush();
+  assert.equal(dialog.scrollTop, 0);
+  height = 390;
+  for (const callback of listeners.get('resize')) callback();
+  flush();
+  assert(action.getBoundingClientRect().top >= 108);
+  assert(action.getBoundingClientRect().bottom <= 368);
+  assert.equal(f.doc.activeElement, action);
+  assert.deepEqual(f.calls, []);
+  const settled = dialog.scrollTop;
+  for (const callback of listeners.get('resize')) callback();
+  f.panel.close();
+  flush();
+  assert.equal(dialog.scrollTop, settled, 'A queued resize cannot scroll the closed dialog.');
+  f.panel.dispose();
+  assert.equal(listeners.get('resize').size, 0);
+});
+
 test('actual panel traverses every card, filters without work and resizes with reachable focus', async (t) => {
   const f = fixture(t);
   await f.panel.open();

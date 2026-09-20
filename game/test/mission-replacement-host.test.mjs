@@ -94,6 +94,36 @@ async function requestLevel(h, id = second) {
   assert.equal(h.$('mission-replace-dialog').open, true);
   assert.equal(h.$('mission-replace-confirm').disabled, false);
 }
+test('replacement Stay focus is revealed inside a short dialog without changing the unfinished flight', async (t) => {
+  const h = await setup(t);
+  await flight(h);
+  const run = h.rendered.run,
+    before = checkpoint(h),
+    frames = [];
+  // Supply measured layout and RAF at the finite DOM boundary. The real app
+  // listener still owns scheduling; this does not claim native raster proof.
+  h.doc.defaultView.requestAnimationFrame = (callback) => frames.push(callback);
+  const dialog = h.$('mission-replace-dialog'),
+    stay = h.$('mission-replace-stay');
+  dialog.scrollTop = 0;
+  dialog.clientTop = 2;
+  dialog.clientHeight = 362;
+  dialog.getBoundingClientRect = () => ({ top: 12, bottom: 378 });
+  stay.getBoundingClientRect = () => ({
+    top: 420 - dialog.scrollTop,
+    bottom: 468 - dialog.scrollTop,
+  });
+  await requestLevel(h);
+  for (const callback of frames.splice(0)) callback();
+  assert.equal(h.doc.activeElement, stay);
+  assert(stay.getBoundingClientRect().top >= 22);
+  assert(stay.getBoundingClientRect().bottom <= 368);
+  preserved(h, run, before);
+  stay.click();
+  assert.equal(dialog.open, false);
+  preserved(h, run, before);
+});
+
 for (const entry of ['level', 'card', 'campaign', 'pack'])
   test(`actual ${entry} selection asks once; Stay keeps the queued flight, Replace prepares without Resume`, async (t) => {
     const h = await setup(t);

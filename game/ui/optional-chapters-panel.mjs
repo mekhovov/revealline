@@ -7,6 +7,7 @@ import { PACK_LIMITS } from '../packs.mjs';
 import { EXTERNAL_CHAPTER_LIMITS } from '../external-chapter.mjs';
 import { required } from '../data-json.mjs';
 import { createOperationStatus } from './operation-status.mjs';
+import { attachFocusClearance } from './focus-clearance.mjs';
 import {
   browseWorlds,
   installedWorldMode,
@@ -171,6 +172,11 @@ export function attachOptionalChaptersPanel({
     actions,
   );
   doc.body.append(dialog);
+  const focusClearance = attachFocusClearance({
+    container: dialog,
+    heading: top,
+    document: doc,
+  });
   const pageEvents =
     typeof doc.defaultView?.addEventListener === 'function'
       ? doc.defaultView
@@ -970,6 +976,7 @@ export function attachOptionalChaptersPanel({
   function dispose() {
     if (disposed) return;
     disposed = true;
+    focusClearance.destroy();
     presentation.dispose();
     pendingStatus = null;
     ++generation;
