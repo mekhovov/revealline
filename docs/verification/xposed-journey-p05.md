@@ -102,6 +102,12 @@ start disabled. A deferred-session fixture reproduces the actual lifecycle.
 Actor/catalogue/preview files pass20/20 in11.681seconds, zero failures/skips,
 Node20.19.5. Native re-verification remains required after the correction.
 
+The Studio map renderer now uses a tracked-square roamer silhouette instead of
+falling through to the frontier triangle; its text legend identifies the role.
+The engine-owned capture overlay still marks only field keepers as retention
+anchors. Six overlay/renderer checks pass in2.705seconds on Node20.19.5, including
+the exact three-part tracked shape. No game collision or movement changed.
+
 Remaining: optional-goal alternatives, broader historical route pins, native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
 Team mission, human balance/comprehension, final-source hosted gates and reviewed
