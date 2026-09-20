@@ -68,9 +68,31 @@ checks pass on both Node20 and Node22 (8/8 seed/lifecycle cases on Node22).
 Optional goals have a read-only test observer and five negative-boundary tests:
 landing visits must be connected both when visited and at completion, every
 lethal cell must be reclaimed, and a connector visit must follow opening and
-precede victory. Fabricated unit arrangements are not route evidence. Full
-mastery and delayed-start qualification remain in progress. Optimized clear
-durations are feasibility evidence, not human pacing or enjoyment measurements.
+precede victory. Fabricated unit arrangements are not route evidence.
+`apex-mastery-routes.json` now supplies all30 legal-input optional-goal clears,
+without life loss or pickup collection, with exact public replay. Its seven
+test cases pass on both Node20 and Node22.
+
+The 25 Standard/immediate delayed alternatives cover 0.5, 1, 2, 3 and5 seconds
+of initial observation. Returning light's immediate departure after5 seconds is
+specifically rejected: the keeper strikes the unfinished trail at tick867 before
+its first closure. The accepted alternative waits another1.5 seconds, then
+finishes without loss or pickups. Both failure and alternative remain explicit
+tests; the failure is not counted as a successful delayed run. The final combined
+candidate/route/goal/seed/lifecycle/delay/cue/readiness cohort passes **66/66 on
+both Node20.19.5 and22.22.2**. Logs: `.cache/p12-final-node20-r1.tap` and
+`.cache/p12-final-node22-r1.tap`. Formatting, scoped lint and diff checks pass.
+
+### Pacing limitation
+
+Standard/immediate feasible ordinary route durations are66.34,41.05,31.95,21.65
+and23.38 seconds in authored order. Optional-goal routes can be faster than the
+ordinary sample: Home signal18.55 seconds and Dawn circuit20.08 seconds. These
+are omniscient route-search results, not human duration estimates or optimum
+proofs. They specifically prevent claiming that the declared band12 curve is
+already validated. Observe real route choice, hazard recognition and voluntary
+retry before retaining these layouts unchanged. Do not disable legal large
+captures, hide core isolation or add compulsory waiting just to inflate time.
 
 ## Scoped native inspection
 
@@ -88,7 +110,11 @@ This inspection exposed an ordinary emitter warning incorrectly using the themed
 name “Sentinel”. A shared read-only caption now names it “Lane emitter” for
 foundation-era editions, preserving historical theme labels. Unit tests cover all
 four authored rulesets, unknown/wrong actor events and checkpoint immutability.
-The native source above predates this correction; native recheck remains due.
+At exact correction source `a6998886`, local read-only port8801 repeated the
+explicit Studio import and Returning light Start → Right closure. At 17 seconds,
+the native caption read “Lane emitter: the marked lane will activate shortly.”
+Coverage remained 1.2%, score 250 and lives three; Close returned focus to Play.
+The 69-test shell/brief/information/preview regression cohort passes both Nodes.
 No full native clear, controller/touch or independent human qualification is claimed.
 
 ## Publication and artwork capacity
@@ -108,7 +134,7 @@ bulk builds and broad hydration remain on hold under release coordination.
 
 ## Remaining gates
 
-All-preset mastery routes; delayed starts; pacing review; original visual/audio identity;
+Pacing review; original visual/audio identity;
 native/accessibility and human evidence; distinct Team mission qualification;
 phase PR/review/version/immutable release/Pages verification. No whole-phase
 completion is asserted by first-return or compiler tests.

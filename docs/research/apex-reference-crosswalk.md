@@ -38,6 +38,8 @@ The official Qix rerelease page timed out during this recheck. No new exact rule
 or quotation is attributed to that failed response. Previous approved research
 remains separately cited in the canonical plan.
 
-All backgrounds are deliberately unbound greyboxes. Full routes, bonus-independent
-completion, optional goals, pacing, visual/native checks, separate Team designs,
+All backgrounds are deliberately unbound greyboxes. Full ordinary and optional-goal
+routes now establish bonus-independent completion across all presets and steering
+options; see the P12 verification record for exact limits and rejected routes.
+Pacing, original presentation, broader native checks, separate Team designs,
 human tests and publication remain required before any final retention decision.
