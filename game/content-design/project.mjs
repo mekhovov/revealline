@@ -3,6 +3,7 @@ import { normalizedLevel } from '../core/level.mjs';
 import { CLASSES, rosterHash } from '../core/registry.mjs';
 import { compileMapDesign } from './map.mjs';
 import { compileAssetRevision } from './assets.mjs';
+import { inspectMissionTopology } from './diagnostics.mjs';
 import {
   JOURNEY_POLICY,
   ACTOR_CATALOG,
@@ -259,6 +260,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     },
   });
   const { name: _name, id: _id, revision: _revision, ...simulation } = level;
+  const topology = inspectMissionTopology(level, map.geometry);
   const simulationIdentity = dataIdentity({
     policy: JOURNEY_POLICY.id,
     difficulty,
@@ -279,8 +281,10 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     design: mission.design,
     officialProgressEligible: false,
     validation: 'compiled-candidate-not-playtested',
+    topology,
     diagnostics: [
       ...map.geometry.diagnostics,
+      ...topology.diagnostics,
       ...(mission.presentation.backgroundAssetId === null
         ? [{ severity: 'warning', code: 'greybox-background' }]
         : [{ severity: 'warning', code: 'candidate-art-not-visually-qualified' }]),

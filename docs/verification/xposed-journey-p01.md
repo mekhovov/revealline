@@ -228,3 +228,13 @@ inspection restores the unsplit view and empty input while checkpoint 3 remains
 unchanged. A CSS display rule initially overrode the legend's hidden attribute;
 the scoped correction was reloaded and verified in the browser. This evidence
 does not claim complete small-screen, assistive-technology or human validation.
+
+The shared resolver now also reports wall-isolated occupied chambers, unreachable
+required/optional objectives, an optimistic coverage ceiling, and remote empty
+chambers/objectives that would fill automatically. These diagnostics use engine
+initial retention and static wall connectivity; they do not promise legal cuts,
+terrain clearance, timing or enjoyable cleanup. Impossible quotas and required
+objectives are errors in candidate diagnostics, not silent geometry corrections.
+All ten opening candidates avoid these known topology errors and unintended
+initial empty regions. Diagnostics + Studio/CLI + full-route cohort: **15/15**
+passed with no skips/failures after the resolver addition.
