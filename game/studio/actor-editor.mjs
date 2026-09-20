@@ -27,10 +27,9 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
         return option;
       }),
     );
-  options(
-    $('role'),
-    Object.entries(names).filter(([role]) => Object.hasOwn(catalog().roles, role)),
-  );
+  // Studio creates editors before opening its draft session. Resolve the exact
+  // project catalogue only when the owner calls sync after session adoption.
+  $('tools').disabled = true;
   function cancelRemoval() {
     removal = null;
     $('remove').textContent = 'Remove selected actor';

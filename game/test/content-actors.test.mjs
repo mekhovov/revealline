@@ -125,7 +125,7 @@ test('Team actor commands use the same compiler and do not change seats or lives
   }
 });
 
-function editorFixture() {
+function editorFixture({ deferredSource = false } = {}) {
   const nodes = new Map();
   function element() {
     let value = '';
@@ -155,10 +155,14 @@ function editorFixture() {
   let source = createStarterProject(),
     selected = 'nearby-shore',
     difficulty = 'standard',
-    cancelled = false;
+    cancelled = false,
+    ready = !deferredSource;
   const editor = createActorEditor({
     document,
-    getSource: () => source,
+    getSource: () => {
+      assert(ready, 'Studio has not adopted its draft session yet.');
+      return source;
+    },
     getMission: () => source.missions.find((mission) => mission.id === selected),
     getDifficulty: () => difficulty,
     apply: (next) => {
@@ -168,11 +172,15 @@ function editorFixture() {
       return true;
     },
   });
-  editor.sync();
+  if (!deferredSource) editor.sync();
   return {
     editor,
     node: (id) => document.getElementById(`actor-${id}`),
     source: () => source,
+    adopt: () => {
+      ready = true;
+      editor.sync();
+    },
     preset: (next) => {
       difficulty = next;
       editor.sync();
@@ -191,6 +199,18 @@ function editorFixture() {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio may create actor controls before its asynchronous draft session is adopted', () => {
+  const f = editorFixture({ deferredSource: true });
+  assert.equal(f.node('tools').disabled, true);
+  assert.equal(f.node('role').children, undefined);
+  f.adopt();
+  assert.equal(f.node('tools').disabled, false);
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper', 'perimeter-patrol', 'frontier-patrol'],
+  );
+  assert.equal(f.node('role').value, 'field-keeper');
+});
 test('Studio exposes roamer fields only for the exact v2 Solo catalogue and rejects stale upgrade fields', () => {
   const f = editorFixture();
   assert(!f.node('role').children.some((row) => row.value === 'reclaimed-roamer'));

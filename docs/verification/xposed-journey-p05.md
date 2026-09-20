@@ -94,6 +94,14 @@ The three greybox/preview/route files pass22/22, zero failures/cancellations/ski
 33.513seconds on Node20.19.5. Changed-source ESLint, Prettier and diff checks pass.
 This is an independent source candidate, not a hosted gate or released campaign.
 
+Native initialization follow-up: the pinned abe8dc81 Studio remained on its
+opening message because actor-role population read the session during editor
+construction. This is a real P05 startup defect missed by immediate-source unit
+fixtures. Role population now waits for the owner's post-adoption sync; controls
+start disabled. A deferred-session fixture reproduces the actual lifecycle.
+Actor/catalogue/preview files pass20/20 in11.681seconds, zero failures/skips,
+Node20.19.5. Native re-verification remains required after the correction.
+
 Remaining: optional-goal alternatives, broader historical route pins, native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
 Team mission, human balance/comprehension, final-source hosted gates and reviewed
