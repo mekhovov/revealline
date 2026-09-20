@@ -6,6 +6,7 @@ export function setBoardAvailability(document, available) {
     'mission',
     'difficulty',
     'geometry-tools',
+    'tuning-tools',
     'show-capture',
     'trail',
     'inspect',
@@ -23,6 +24,18 @@ export function setBoardAvailability(document, available) {
     $(id).textContent = '';
   $('diagnostics').replaceChildren();
   $('trail').value = '';
+  $('target-coverage').value = '';
+  $('countdown-seconds').value = '';
+  for (const facet of [
+    'band',
+    'planning',
+    'execution',
+    'threatDensity',
+    'timePressure',
+    'mechanicLoad',
+    'coordination',
+  ])
+    $(`rating-${facet}`).value = '';
   $('capture-legend').hidden = true;
   $('play').disabled = true;
   $('play').title = 'Create a mission before starting a preview.';

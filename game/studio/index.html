@@ -59,6 +59,101 @@
           <p id="lesson"></p>
           <p id="rules" class="note"></p>
           <details>
+            <summary>Tune mission challenge</summary>
+            <p class="note">
+              Ratings describe the intended challenge; they do not change enemy speed. Lives and
+              handling come from the shared policy. Gentle never has a failing countdown. Apply
+              these fields before switching missions or editing other parts of the draft.
+            </p>
+            <form id="tuning-form">
+              <fieldset id="tuning-tools">
+                <legend>Mission settings</legend>
+                <label
+                  >Target territory %<input
+                    id="target-coverage"
+                    type="number"
+                    min="1"
+                    max="100"
+                    step="any"
+                    required
+                /></label>
+                <label
+                  >Countdown seconds · 0 means none<input
+                    id="countdown-seconds"
+                    type="number"
+                    min="0"
+                    max="600"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Challenge band<input
+                    id="rating-band"
+                    type="number"
+                    min="1"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Planning<input
+                    id="rating-planning"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Execution<input
+                    id="rating-execution"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Threat density<input
+                    id="rating-threatDensity"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Time pressure<input
+                    id="rating-timePressure"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Mechanic load<input
+                    id="rating-mechanicLoad"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Coordination<input
+                    id="rating-coordination"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <button type="submit">Validate & apply challenge</button>
+              </fieldset>
+            </form>
+          </details>
+          <details>
             <summary>Effective rules and identity</summary>
             <pre id="effective"></pre>
           </details>
