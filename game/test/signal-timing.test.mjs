@@ -4,9 +4,19 @@ import { readFile } from 'node:fs/promises';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../replay.mjs';
 
 const fixture = JSON.parse(
   await readFile(new URL('./fixtures/signal-clear-routes.json', import.meta.url)),
+);
+const timing = JSON.parse(
+  await readFile(new URL('./fixtures/signal-timing-routes.json', import.meta.url)),
 );
 const projects = new Map(
   [true, false].map((bonuses) => {
@@ -46,4 +56,49 @@ test('all84 Signal routes remain legal no-loss clears across five explicit seeds
       }
     }
   assert.equal(count, 420);
+});
+
+test('every Signal greybox has a legal no-loss clear after each sampled initial decision delay', () => {
+  assert.equal(timing.format, 'SignalTimingFeasibilityRoutesV1');
+  assert.equal(timing.seed, 1);
+  assert.equal(timing.difficulty, 'standard');
+  assert.equal(timing.turnPolicy, 'immediate');
+  assert.deepEqual(
+    timing.sets.map((set) => set.delaySeconds),
+    [0.25, 0.5, 1, 2, 5],
+  );
+  const ids = projects.get(true).missions.map((mission) => mission.id);
+  for (const { delaySeconds, rows } of timing.sets) {
+    assert.deepEqual(
+      rows.map((row) => row[0]),
+      ids,
+    );
+    for (const [id, identity, checkpoint, segments] of rows) {
+      const manifest = resolveMission(projects.get(true), id);
+      assert.equal(manifest.simulationIdentity, identity, id);
+      assert.deepEqual(segments[0], [null, Math.round(delaySeconds / FIXED_DT)]);
+      const options = { seed: timing.seed, classId: 'scout', turnPolicy: timing.turnPolicy };
+      const run = createRun(manifest.level, options);
+      const recorder = createRecorder(
+        manifest.level,
+        options,
+        'timing-feasibility-not-human-validation',
+      );
+      for (const [direction, ticks] of segments) {
+        assert(Number.isSafeInteger(ticks) && ticks > 0 && ticks <= 1000);
+        for (let tick = 0; tick < ticks; tick++) {
+          assert.equal(run.status, 'running', id);
+          recordInput(recorder, { direction });
+          stepRun(run, { direction }, FIXED_DT);
+          assert.equal(run.lives, 3, `${id}/${delaySeconds}: includes initial idle period`);
+        }
+      }
+      assert.equal(run.status, 'won', id);
+      assert.equal(run.classic.livesLost, 0, id);
+      assert.equal(authoritativeCheckpoint(run).hash, checkpoint, id);
+      const replay = verifyReplay(exportReplay(recorder, run));
+      assert.equal(replay.match, true, id);
+      assert.equal(replay.state.status, 'won', id);
+    }
+  }
 });
