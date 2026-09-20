@@ -1,5 +1,15 @@
 # Reveal Line cross-mode execution register
 
+## Journey redesign authority — 20 September 2026
+
+The approved [Xposed-led Journey plan](xposed-journey-plan.md) now owns the new
+campaign redesign, its twelve-campaign allocation and P00–P15 delivery sequence.
+The four FPV/four DroneAid and 132-mission allocations below are historical, not
+instructions for new Journey production. Existing release identities, evidence,
+unrelated in-flight deliveries and compatibility obligations remain intact.
+Journey P00 is an isolated 0.67.0 technical preview; it is not yet released or
+fully validated. This does not relabel the historical cross-mode phases below.
+
 ## Current delivery — 20 September 2026
 
 **Play the accepted [v0.65.0 imported-Team continuation update](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Ordinary import, the first win, earned-picture viewing with exact focus return, Next, the final win and same-arena Retry passed on the actual public release. The [scoped acceptance record](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) combines that keyboard journey with all **3,500 deployed files / 644,685,649 bytes**, zero failures and zero retries. **P07-TEAM-IMPORTED-CONTINUATION is Complete; P03/P07/P08/P18 remain open.** The owned enemy-free fixture proves navigation, not encounter difficulty or live rescue.

@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { readFlightInformation } from '../ui/flight-information-host.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import {
   pngBytes,
   provenance,
@@ -41,7 +42,7 @@ const catalog = createExecutionCatalog([{ campaign, themes }]);
 const ticks = (p, n) => {
   for (let i = 0; i < n; i++) p.frame();
 };
-async function setup(t) {
+async function setup(t, { journey = false } = {}) {
   const diagnostics = [];
   let diagnosticAction = null;
   t.mock.method(console, 'warn', (...args) => {
@@ -114,6 +115,9 @@ async function setup(t) {
   }
   const p = await soloPage(t, {
     campaign,
+    ...(journey
+      ? { search: '?journey=1', titleScreen: true, journeyIndexedDB: managedIndexedDB().indexedDB }
+      : {}),
     soundtrackIndexedDB: memory.indexedDB,
     pictures: { Image: Picture },
   });
@@ -154,6 +158,49 @@ async function running(p, id) {
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === id;
   });
 }
+
+test('Journey chooser can supersede a held result picture without waiting for its stale decode', async (t) => {
+  const { p, deferDecode } = await setup(t, { journey: true });
+  p.$('shell-featured').click();
+  await running(p, 'first-cut');
+  p.key('ArrowDown');
+  for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+  assert.equal(
+    p.rendered.run.status,
+    'won',
+    JSON.stringify({
+      tick: p.rendered.run.tick,
+      player: p.rendered.run.player,
+      coverage: p.rendered.run.coverage,
+      lives: p.rendered.run.lives,
+      message: p.$('run-message').textContent,
+    }),
+  );
+  p.key('ArrowDown', false);
+  await settle(() =>
+    [...p.$('missions').children].every((button) => button.dataset.pictureState !== 'loading'),
+  );
+  const held = deferred();
+  let began = false;
+  deferDecode(() => {
+    began = true;
+    return held.promise;
+  });
+  p.$('next-button').click();
+  await settle(() => began);
+  p.$('shell-packs').click();
+  p.$('journey-search').value = 'first-cut';
+  p.$('journey-search').emit('input');
+  p.$('journey-cards').children[0].click();
+  await running(p, 'first-cut');
+  const accepted = p.rendered.run;
+  held.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  p.frame(0);
+  assert.equal(p.rendered.run, accepted);
+  assert.equal(p.doc.body.dataset.flightState, 'running');
+  assert.deepEqual(p.errors, []);
+});
 function snapshot(p) {
   p.frame(0);
   return {

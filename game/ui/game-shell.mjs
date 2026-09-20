@@ -20,6 +20,7 @@ export function attachGameShell({
   onModeDeparture,
   titleDestination,
   onWorlds,
+  onMissions,
   getTopDialog,
   focusMissions,
   focusBriefing,
@@ -151,6 +152,14 @@ export function attachGameShell({
   };
   const openMissions = ({ opener = null } = {}) => {
     if (destroyed) return;
+    if (onMissions) {
+      pause(true);
+      if (destroyed) return;
+      closeHome();
+      if (destroyed) return;
+      onMissions(opener);
+      return;
+    }
     beginMissionsVisit(opener);
     const visit = missionsVisit;
     pause(true);

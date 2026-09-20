@@ -1,4 +1,8 @@
 import { createCharacterPresentations } from './character-presentations.mjs';
+import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
+import { createJourneyAuthority } from './journey/authority.mjs';
+import { createJourneyProfileStore } from './journey/profile.mjs';
+import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
   createReleasePictureDefaults,
@@ -33,6 +37,7 @@ import {
 } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
+import { inspectCaptureSnapshot } from './core/capture-regions.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { classicView } from './ui/classic-view.mjs';
@@ -107,7 +112,7 @@ import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from 
 import { createMasteryAwards } from './mastery-awards.mjs';
 import { createMasteryCatalog } from './mastery-catalog.mjs';
 import { normalizedLevel } from './core/level.mjs';
-import { canonicalJSON } from './data-json.mjs';
+import { canonicalJSON, dataIdentity } from './data-json.mjs';
 import {
   emptyLibrary,
   loadLibrary,
@@ -302,6 +307,32 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  // P00 technical preview. Historical editions keep their original navigation.
+  const journeyEnabled = params.get('journey') === '1' && !practiceSession;
+  const journeyAuthority = journeyEnabled
+    ? createJourneyAuthority({
+        baseCampaign,
+        pins: await getJSON('content/journey-campaign-pins.json'),
+      })
+    : null;
+  const journeyCatalog = journeyFromPackCatalog(
+    baseCampaign,
+    preparePackCatalog(packCatalogSource),
+  );
+  const journeyProfile = journeyEnabled
+    ? createJourneyProfileStore({
+        onStatus({ ready, durable, error }) {
+          show('journey-save-status', ready && !durable && !!error);
+          $('journey-save-message').textContent = error
+            ? `Journey progress is session-only. Keep playing, retry saving, or export before closing. ${error}`
+            : '';
+        },
+      })
+    : null;
+  if (journeyProfile) await journeyProfile.load();
+  let journeyChooser = null,
+    journeySkipArmed = null,
+    journeyLaunch = null;
   $('creator-tools').hidden = practiceSession;
   let packLaunchRequest = null,
     packLaunchError = '';
@@ -851,7 +882,7 @@ try {
     if (!operation) return;
     const restoreFocus = document.activeElement === $('flight-preparation-cancel');
     if (operation.result) {
-      cancelResultAttempt({ restoreFocus });
+      operation.cancel({ restoreFocus });
       return;
     }
     operation.cancel();
@@ -1051,7 +1082,10 @@ try {
     preserveRecovery = false,
     preserveResult = false,
   } = {}) {
-    if (!preserveResult) cancelResultAttempt();
+    if (!preserveResult) {
+      cancelResultAttempt();
+      journeyLaunch?.cancel?.();
+    }
     // Opening a secondary dialog must not dismiss a settled recovery path.
     // A retry, new context or page retirement still cancels it unconditionally.
     const keepRecovery =
@@ -1654,6 +1688,11 @@ try {
     if (courseBlocked()) return;
     if (resultAttempt) {
       cancelResultAttempt({ restoreFocus: true });
+      return;
+    }
+    if (journeyLaunch && preparationOperation?.result) {
+      $('flight-preparation-cancel').click();
+      controllerFocus()?.focus({ preventScroll: true });
       return;
     }
     if (pictureResume !== null && preparationOperation?.cancel === cancelPictureStart) {
@@ -3096,6 +3135,7 @@ try {
     return difficultyNavigation.selection(activeEntry, library.campaigns, progress, options);
   }
   function missionAvailable(index, entry = activeEntry) {
+    if (journeyEnabled && journeyMission(entry, index)) return true;
     const selected =
       executionCatalog.select(
         entry.baseCampaignKey || campaignKey(entry.campaign),
@@ -3317,11 +3357,128 @@ try {
     }
   }
   function rememberSelection() {
+    const mission = journeyEnabled && journeyMission();
+    if (mission && !practice && !scenario)
+      journeyProfile.record({ type: 'select', mode: 'solo', missionId: mission.id });
     return selectionBookmark.remember({
       campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
       levelId: campaign.levels[levelIndex].id,
       themeId: theme.id,
     });
+  }
+  function journeyMission(entry = activeEntry, index = levelIndex) {
+    if (!journeyAuthority?.matches(entry)) return null;
+    const authored = entry.baseCampaign || entry.campaign;
+    const level = authored.levels[index];
+    if (!level) return null;
+    return journeyCatalog.find(
+      journeyMissionId({
+        packId: entry.sourcePackId ?? null,
+        campaignId: authored.id,
+        levelId: level.id,
+      }),
+    );
+  }
+  function journeyDestination() {
+    const state = journeyProfile?.snapshot();
+    const current = state && journeyCatalog.find(state.cursors.solo);
+    return current && Object.hasOwn(state.clears.solo, current.id)
+      ? journeyCatalog.next(current.id) || current
+      : current;
+  }
+  async function launchJourneyMission(mission, { kind = 'choose', skipped = null } = {}) {
+    if (
+      !journeyEnabled ||
+      !mission ||
+      journeyLaunch ||
+      courseBlocked() ||
+      backupBusy ||
+      sessionBusy
+    )
+      return false;
+    pause(true);
+    clearInput();
+    const owner = { run, runId, mission, feedback: null, cancel: null };
+    journeyLaunch = owner;
+    const operation = packLaunchGuard.begin(packs);
+    packCommits.markIntent();
+    contentSwitchBusy = true;
+    refreshContentSelectors();
+    try {
+      owner.cancel = ({ restoreFocus = false } = {}) => {
+        if (journeyLaunch !== owner) return;
+        journeyLaunch = null;
+        invalidateContentSwitch();
+        owner.feedback?.finish('Preparation cancelled. Your current flight is kept.', 'cancelled');
+        if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
+      };
+      owner.feedback = beginPreparation(
+        `Preparing ${mission.name}… Your current flight is kept.`,
+        owner.cancel,
+        'preparing',
+        true,
+      );
+      if (mission.packId)
+        await ensureBundledPack(mission.packId, operation, { preserveCurrentRun: true });
+      packLaunchGuard.assert(operation, packs);
+      if (
+        journeyLaunch !== owner ||
+        run !== owner.run ||
+        runId !== owner.runId ||
+        document.hidden ||
+        dialogOpen()
+      )
+        return false;
+      const authored = installedEntries.find(
+        (entry) =>
+          entry.sourcePackId === mission.packId && entry.campaign.id === mission.campaignId,
+      );
+      if (!authored) throw new Error('This mission is unavailable in the current edition.');
+      if (!journeyAuthority.matches(authored))
+        throw new Error(
+          'The installed campaign differs from this Journey edition. Your imported content is kept. Manage it in Library or choose another mission.',
+        );
+      const entry =
+        executionCatalog.select(
+          campaignKey(authored.campaign),
+          library.preferences.campaignDifficulty,
+        ) || authored;
+      const index = entry.campaign.levels.findIndex((level) => level.id === mission.levelId);
+      if (index < 0) throw new Error('This mission is unavailable in the current edition.');
+      contentSwitchBusy = false;
+      refreshContentSelectors();
+      owner.feedback.finish();
+      // The exact picture/result ticket now owns cancellation. Later pause,
+      // navigation or lifecycle work must not revive the preceding pack owner.
+      owner.cancel = null;
+      if (journeyLaunch === owner) journeyLaunch = null;
+      const adopted = await prepareResultAttempt(kind, index, entry);
+      if (adopted && skipped)
+        journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
+      return adopted;
+    } catch (error) {
+      if (
+        journeyLaunch === owner &&
+        packLaunchGuard.current(operation, packs) &&
+        run === owner.run &&
+        runId === owner.runId
+      ) {
+        owner.feedback?.finish(
+          `Could not prepare ${mission.name}. Try again; your current flight is kept.`,
+          'error',
+        );
+        warning(`Could not open the next mission. Your current flight is kept. ${error.message}`);
+      }
+      return false;
+    } finally {
+      owner.feedback?.finish();
+      if (journeyLaunch === owner) journeyLaunch = null;
+      if (packLaunchGuard.current(operation, packs)) {
+        contentSwitchBusy = false;
+        refreshContentSelectors();
+        await packCommits.reconcile();
+      }
+    }
   }
   function selectEntry(
     entry,
@@ -5140,9 +5297,13 @@ try {
       );
       $('next-button').textContent = practice
         ? 'Try it yourself →'
-        : currentSelection().complete
-          ? 'Campaign complete →'
-          : 'Next uncleared mission →';
+        : journeyEnabled && journeyMission()
+          ? journeyCatalog.next(journeyMission().id)
+            ? 'Next mission →'
+            : 'Journey complete · replay or exit'
+          : currentSelection().complete
+            ? 'Campaign complete →'
+            : 'Next uncleared mission →';
       $('overlay-footnote').textContent = practice
         ? 'Demonstrations and imported maps do not grant unlocks.'
         : run.medal === 'gold'
@@ -5269,7 +5430,11 @@ try {
         restoreFocus,
       );
   }
-  async function prepareResultAttempt(kind, destinationIndex = levelIndex) {
+  async function prepareResultAttempt(
+    kind,
+    destinationIndex = levelIndex,
+    destinationEntry = null,
+  ) {
     if (resultAttempt?.kind === kind) return;
     const previousEpoch = resultAttemptEpoch,
       previous = resultAttempt;
@@ -5284,7 +5449,8 @@ try {
       dialogOpen() ||
       document.hidden ||
       !document.hasFocus() ||
-      !['won', 'lost'].includes(run?.status) ||
+      (kind !== 'choose' && !['won', 'lost'].includes(run?.status)) ||
+      (kind === 'choose' && (!journeyEnabled || !run || !paused)) ||
       (kind === 'next' && run.status !== 'won')
     )
       return;
@@ -5330,17 +5496,22 @@ try {
       if (!resultAttemptCurrent(ticket))
         throw new DOMException('Preparation cancelled.', 'AbortError');
       const entry =
+          destinationEntry ||
           executionCatalog.select(
             activeEntry.baseCampaignKey || campaignKey(campaign),
             library.preferences.campaignDifficulty,
-          ) || activeEntry,
+          ) ||
+          activeEntry,
         level = entry.campaign.levels[destinationIndex],
-        nextTheme = themeOverride
-          ? theme
-          : themesFile.themes.find(
-              (item) => item.id === (level.themeId || entry.campaign.themeId),
-            ) || themesFile.themes[0],
-        options = { seed, turnPolicy, classId, classRecipes: entry.classRecipes };
+        nextTheme =
+          themeOverride && entry.themes.some((item) => item.id === theme.id)
+            ? theme
+            : entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
+              entry.themes[0],
+        nextClassId = entry.classRecipes.some((item) => item.id === classId)
+          ? classId
+          : entry.classRecipes[0].id,
+        options = { seed, turnPolicy, classId: nextClassId, classRecipes: entry.classRecipes };
       const ownedFocus = document.activeElement === ticket.button;
       ticket.feedback.update({
         status: 'preparing',
@@ -5389,6 +5560,7 @@ try {
           entry,
           levelIndex: destinationIndex,
           theme: nextTheme,
+          classId: nextClassId,
           run: nextRun,
           runId: nextRunId,
           recorder: nextRecorder,
@@ -5409,7 +5581,7 @@ try {
         theme === nextTheme &&
         seed === ticket.seed &&
         turnPolicy === ticket.turnPolicy &&
-        classId === ticket.classId &&
+        classId === nextClassId &&
         themeOverride === ticket.themeOverride &&
         libraryGeneration === ticket.libraryGeneration &&
         library.preferences.campaignDifficulty === ticket.difficulty &&
@@ -5428,8 +5600,10 @@ try {
         !document.hidden &&
         document.hasFocus() &&
         !dialogOpen()
-      )
+      ) {
         resume();
+        return started && !paused;
+      }
     } catch (error) {
       if (resultAttempt === ticket) {
         const cancelled = error?.name === 'AbortError';
@@ -5509,6 +5683,10 @@ try {
       activeEntry = preparedAttempt.entry;
       campaign = activeEntry.campaign;
       classRegistry = activeEntry.classRecipes;
+      classId = preparedAttempt.classId;
+      themesFile.themes = activeEntry.themes;
+      $('theme-select').replaceChildren(...activeEntry.themes.map((t) => new Option(t.name, t.id)));
+      $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
       progress = progressFor(library, campaign);
       levelIndex = preparedAttempt.levelIndex;
       campaignOverview = false;
@@ -5521,6 +5699,8 @@ try {
     completionWarning = '';
     appearanceRewardIds = [];
     celebrationActive = false;
+    journeySkipArmed = null;
+    $('journey-skip').textContent = 'Skip mission';
     defeatActive = false;
     defeatPaused = false;
     defeatRemaining = 0;
@@ -5678,6 +5858,11 @@ try {
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    if (journeySkipArmed !== null) {
+      journeySkipArmed = null;
+      $('journey-skip').textContent = 'Skip mission';
+      warning('Skip cancelled. Continue this mission.');
+    }
     attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
     else invalidateContentSwitch({ announce: true });
@@ -5786,6 +5971,8 @@ try {
     show('skip-celebration', false);
     overlay('lost');
     warning('Flight ended. Read the details or try again.');
+    if (journeyEnabled && journeyMission() && !practice && !scenario)
+      void prepareResultAttempt('retry');
   }
   function defeatEffectsRunning() {
     return (
@@ -5952,6 +6139,14 @@ try {
   }
   function eventFeedback(events) {
     const ticket = flightInformation.begin(run, events);
+    // capture.stopped follows cells.claimed in the same accepted closure. Keep
+    // the rule explanation when adding the fresh-steering cue; do not replace it.
+    const teachingCapture = journeyEnabled && !practice && levelIndex < 2;
+    const captureTeaching = () => {
+      const occupied = inspectCaptureSnapshot(run).components.filter((region) => region.retained);
+      const anchors = occupied.flatMap((region) => region.enemyIds);
+      return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
+    };
     try {
       for (const [index, event] of events.entries()) {
         flightInformation.observeEvent(ticket, index, () => {
@@ -5963,11 +6158,14 @@ try {
           }
           if (event.type === 'class.rejected')
             warning(`Cannot switch craft: ${event.reason}. Return to safe hangar ground.`);
-          if (event.type === 'cells.claimed')
-            warning(
-              `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
-              'secured',
-            );
+          if (event.type === 'cells.claimed') {
+            if (teachingCapture) warning(captureTeaching(), 'secured');
+            else
+              warning(
+                `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+                'secured',
+              );
+          }
           if (
             event.type === 'cut.started' &&
             ['failure', 'secured', 'secured-stopped'].includes(runMessageCue) &&
@@ -6014,7 +6212,7 @@ try {
             warning('Supplies ready. Choose your next opportunity.');
           if (event.type === 'capture.stopped')
             warning(
-              `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+              `${teachingCapture ? captureTeaching() : `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed.`} Tap a direction to fly again.`,
               'secured-stopped',
             );
           if (event.type === 'powerup.collected')
@@ -6291,6 +6489,20 @@ try {
         clearInput();
         refreshCourse();
         if (run.status === 'won' && !practice) {
+          const mission = journeyEnabled && !scenario && journeyMission();
+          if (mission)
+            journeyProfile.record({
+              type: 'complete',
+              mode: 'solo',
+              missionId: mission.id,
+              runId,
+              gameplayId: dataIdentity({
+                ruleset: run.ruleset,
+                level: run.level,
+                classes: run.classRecipes,
+              }),
+              difficulty: activeEntry.difficulty || 'standard',
+            });
           const previousBodies = availableBodies();
           try {
             library = recordLibraryCompletion(library, {
@@ -6350,6 +6562,11 @@ try {
           show('skip-celebration', true);
           show('show-result', false);
           warning('Picture unlocked. A whole world, from one brave line.', null, 'host.won');
+          if (journeyEnabled && journeyMission() && !practice) {
+            celebrationActive = false;
+            show('skip-celebration', false);
+            overlay('won');
+          }
         } else {
           defeatActive = true;
           defeatPaused = false;
@@ -6630,6 +6847,12 @@ try {
     if (courseBlocked()) return;
     if (courseSession) {
       nextCourseLesson();
+      return;
+    }
+    if (journeyEnabled && !practice && !scenario && run?.status === 'won' && journeyMission()) {
+      const next = journeyCatalog.next(journeyMission().id);
+      if (next) void launchJourneyMission(next, { kind: 'next' });
+      else journeyChooser.open($('next-button'));
       return;
     }
     if (campaignOverview && !practice) {
@@ -6993,6 +7216,58 @@ try {
   missionPicker = attachMissionPicker({
     archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
   });
+  if (journeyEnabled) {
+    document.body.classList.add('journey-preview');
+    $('shell-title-edition').textContent = 'JOURNEY / TECHNICAL TEST PREVIEW';
+    journeyChooser = attachJourneyChooser({
+      catalog: journeyCatalog,
+      profile: journeyProfile,
+      onChoose: (mission) => launchJourneyMission(mission),
+      onPause: () => {
+        pause(true);
+        clearInput();
+        journeySkipArmed = null;
+        $('journey-skip').textContent = 'Skip mission';
+      },
+      onReturn: (opener) => {
+        clearInput();
+        (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({ preventScroll: true });
+      },
+    });
+    $('journey-skip').hidden = false;
+    $('journey-skip').onclick = () => {
+      const mission = !practice && !scenario && journeyMission();
+      const next = mission && journeyCatalog.next(mission.id);
+      if (!next) {
+        journeyChooser.open($('journey-skip'));
+        return;
+      }
+      if (journeySkipArmed !== runId) {
+        pause(true);
+        clearInput();
+        journeySkipArmed = runId;
+        $('journey-skip').textContent = 'Confirm skip';
+        warning(
+          `Skip to ${next.name}? No clear is awarded. You can return at any time. Activate Confirm skip to continue.`,
+        );
+        $('journey-skip').focus({ preventScroll: true });
+        return;
+      }
+      journeySkipArmed = null;
+      $('journey-skip').textContent = 'Skip mission';
+      void launchJourneyMission(next, { skipped: mission });
+    };
+    $('journey-save-retry').onclick = () => void journeyProfile.flush();
+    $('journey-save-export').onclick = async () => {
+      try {
+        await downloadJSON(JSON.parse(journeyProfile.export()), 'revealline-journey-progress.json');
+      } catch (error) {
+        $('journey-save-message').textContent =
+          `Export failed: ${error.message}. Your session progress is still here.`;
+      }
+    };
+    window.addEventListener('online', () => void journeyProfile.flush());
+  }
   optionalWorlds = attachOptionalChaptersPanel({
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
@@ -7115,15 +7390,39 @@ try {
     pause,
     getTopDialog: controllerDialog,
     canContinue: () =>
-      (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
+      (started && !['won', 'lost'].includes(run?.status)) ||
+      !$('continue-saved').hidden ||
+      !!journeyDestination(),
     initial: !practice && !courseSession && !packLaunchRequest,
     initialFocus: false, // The boot guard still hides the title until ready().
-    titleDestination: () => `Start · ${campaign.levels[levelIndex].name}`,
-    onTitleStart: (options) => launchTitleFlight('start', options),
-    onTitleContinue: (options) => launchTitleFlight('continue', options),
+    titleDestination: () =>
+      `Start · ${journeyDestination()?.name || campaign.levels[levelIndex].name}`,
+    onTitleStart: (options) => {
+      const destination = journeyDestination();
+      if (destination && !started && $('continue-saved').hidden) {
+        if (!options.isCurrent()) return;
+        options.leave();
+        return launchJourneyMission(destination);
+      }
+      return launchTitleFlight('start', options);
+    },
+    onTitleContinue: (options) => {
+      const destination = journeyDestination();
+      if (
+        destination &&
+        (!started || ['won', 'lost'].includes(run?.status)) &&
+        $('continue-saved').hidden
+      ) {
+        if (!options.isCurrent()) return;
+        options.leave();
+        return launchJourneyMission(destination);
+      }
+      return launchTitleFlight('continue', options);
+    },
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
     onWorlds: () => optionalWorlds.open(),
+    onMissions: journeyEnabled ? (opener) => journeyChooser.open(opener) : undefined,
   });
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
