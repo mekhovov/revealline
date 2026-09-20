@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { HORIZON_ART_CANDIDATES } from './horizon-art.mjs';
 
 // Original greyboxes, not shipped missions. One rule per learning arc; artwork,
 // route timing, human comprehension and Solo/Versus qualification remain pending.
@@ -34,7 +35,7 @@ const candidates = [
     id: 'first-return',
     name: 'First return',
     spawn: [24, 0],
-    coverage: 0.35,
+    coverage: 0.3,
     band: 1,
     foundations: [],
     actors: [keeper('keeper', 58.5, 23.5, [1, -1])],
@@ -243,10 +244,11 @@ const candidates = [
   },
 ];
 
-export function createOpeningCandidates() {
+export function createOpeningCandidates({ artwork = false } = {}) {
   const project = createStarterProject('horizon-greybox-candidates');
   project.name = 'Prologue + Horizon · greybox candidates';
   project.maps = [];
+  if (artwork) project.assets = structuredClone(HORIZON_ART_CANDIDATES);
   project.missions = candidates.map((candidate) => {
     const template = createStarterProject().missions[0];
     const map = {
@@ -270,6 +272,11 @@ export function createOpeningCandidates() {
       map: { id: map.id, revision: map.revision },
       actors: structuredClone(candidate.actors),
       coverage: candidate.coverage,
+      presentation: {
+        ...template.presentation,
+        backgroundAssetId:
+          artwork && candidate.id === 'first-return' ? 'horizon-first-return' : null,
+      },
       design: {
         ...template.design,
         routeDecision: candidate.decision,

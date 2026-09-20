@@ -2,6 +2,7 @@ import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../dat
 import { normalizedLevel } from '../core/level.mjs';
 import { CLASSES, rosterHash } from '../core/registry.mjs';
 import { compileMapDesign } from './map.mjs';
+import { compileAssetRevision } from './assets.mjs';
 import {
   JOURNEY_POLICY,
   ACTOR_CATALOG,
@@ -117,6 +118,7 @@ export function compileContentProject(source) {
     'missions',
     'campaigns',
     'packs',
+    'assets',
   ]);
   required(
     project.policyId === JOURNEY_POLICY.id &&
@@ -133,6 +135,8 @@ export function compileContentProject(source) {
   const missionIds = unique(project.missions, 'missions', 256);
   const campaignIds = unique(project.campaigns, 'campaigns', 32);
   unique(project.packs, 'packs', 32);
+  unique(project.assets ?? [], 'assets', 512);
+  const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
     identity(mission, 'MissionDesignV1', [
@@ -173,8 +177,8 @@ export function compileContentProject(source) {
     required(stableId(mission.presentation.themeId), 'Mission needs a presentation theme.');
     required(
       mission.presentation.backgroundAssetId === null ||
-        stableId(mission.presentation.backgroundAssetId),
-      'Invalid background asset reference.',
+        assets.some((asset) => asset.id === mission.presentation.backgroundAssetId),
+      'Missing pinned background asset revision.',
     );
   }
   for (const campaign of project.campaigns) {
@@ -203,6 +207,7 @@ export function compileContentProject(source) {
     policy: JOURNEY_POLICY,
     actors: ACTOR_CATALOG,
     difficulty: DIFFICULTY_CATALOG,
+    assets,
   });
   compiledProjects.add(resolved);
   try {
@@ -269,6 +274,8 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     simulationIdentity,
     level,
     presentation: mission.presentation,
+    background:
+      project.assets.find((asset) => asset.id === mission.presentation.backgroundAssetId) ?? null,
     design: mission.design,
     officialProgressEligible: false,
     validation: 'compiled-candidate-not-playtested',
@@ -276,7 +283,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       ...map.geometry.diagnostics,
       ...(mission.presentation.backgroundAssetId === null
         ? [{ severity: 'warning', code: 'greybox-background' }]
-        : []),
+        : [{ severity: 'warning', code: 'candidate-art-not-visually-qualified' }]),
     ],
   });
 }

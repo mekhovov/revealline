@@ -121,3 +121,48 @@ A command naming a nonexistent Classic replay test did not run; corrected to
 the actual Classic transport/cohort files above. The unavailable `npx` mise shim
 was bypassed using the already installed Prettier entry with the existing Node
 20.19.5 runtime; no global environment configuration was changed.
+
+## Complete-route feasibility and first reveal artwork
+
+- All ten Standard/seed-1/immediate-turn candidates now have complete legal
+  clear routes. The retained command segments are replayed from a fresh run and
+  verified again through replay.v7 against exact simulation identities and final
+  authoritative checkpoints. All keep three lives. Search-derived routes use
+  privileged offline lookahead: their roughly 7–44 second initial clear times are
+  **not** human pacing/balance evidence or proof that the intended lesson occurs.
+- Native First return exposed a concrete cleanup problem: its natural downward
+  cut earned 816/2380 cells (34.3%), just short of the original 35% quota. The
+  candidate target is now 30%, so that first closure completes the opening lesson.
+  The direct first route replaces the earlier search route and clears in 414
+  ticks. A regression checks all three presets and both turn policies, keeping
+  actual earned coverage at 816/2380 rather than changing it for victory.
+- The built-in imagegen skill produced one original 2:1 coastal-observatory
+  picture, copied unchanged into `game/content-design/assets/horizon-r1/`.
+  `PROMPTS.md` retains the exact prompt, source filename and hash/size/dimensions.
+  It is an art candidate, not a finished visual acceptance. The other nine
+  opening pictures, campaign actor styling and audio remain outstanding.
+- Optional `AssetRevisionV1` entries pin original bytes, dimensions and local
+  versioned PNG paths inside a project. Missing asset references fail compilation.
+  Studio requires a verified loaded revision, refuses changed bytes/dimensions,
+  external paths and redirects, and bounds stalled fetches/streams. Art leaves
+  the simulation identity unchanged and confers no official progress authority.
+- Native Practice loaded the exact pinned picture; a legal closure revealed
+  only the left reclaimed region, showed 34.3% and 8160 points, and retained three
+  lives. The functional grid and unreclaimed field remained separate. This was
+  before the quota correction, not a complete visual/accessibility acceptance.
+- After explicitly applying the quota correction, native Start → Down completed
+  the mission: the result displayed the full original picture, 34.3% earned,
+  8,160 points, three remaining lives and 0:03. This confirms the cleanup fix and
+  earned-percentage preservation in the real host; it is not enjoyment evidence.
+- Expanded framework/Classic/Wide cohort passed **173/173**, zero skips/failures,
+  before the quota correction. The subsequent eight asset/curriculum tests pass,
+  including the new six-combination cleanup regression. The initial replay test
+  asserted the wrong result field (`valid`); corrected to the existing `match`
+  API, with reconstructed terminal status independently required to be `won`.
+- Full lint/format and source validation passed at the asset slice (686 files,
+  unchanged four navigation warnings). Exact final-source hosted gates remain due.
+
+Local free space declined below 500 MiB during concurrent workspace activity. No
+large artifact download/build, bulk art generation or user-data deletion was
+performed. Small source changes and the one 2.3 MiB original image remain safe to
+retain; further bulk work must respect the existing storage reserve.

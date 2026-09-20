@@ -3,6 +3,7 @@ import { createOpeningCandidates } from '../content-design/horizon-candidates.mj
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
+import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
 import { createContentDraftSession } from '../content-design/session.mjs';
 import {
@@ -273,7 +274,7 @@ $('new').onclick = guarded(() => {
 });
 $('opening').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createOpeningCandidates(), null, 2);
+  $('source').value = JSON.stringify(createOpeningCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
@@ -379,9 +380,13 @@ $('play').onclick = guarded(async () => {
   $('preview-status').textContent = 'Preparing the exact candidate…';
   let result;
   try {
-    const theme = await loadPreviewTheme({ signal: controller.signal });
+    const pin = prepareContentPreview(source, missionId, { difficulty }).manifest.background;
+    const [theme, artwork] = await Promise.all([
+      loadPreviewTheme({ signal: controller.signal }),
+      pin ? loadPreviewArtwork(pin, { signal: controller.signal }) : null,
+    ]);
     if (ticket !== previewRevision) return;
-    result = prepareContentPreview(source, missionId, { difficulty, theme });
+    result = prepareContentPreview(source, missionId, { difficulty, theme, artwork });
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
   } catch (error) {
     if (ticket === previewRevision && error.name !== 'AbortError')
