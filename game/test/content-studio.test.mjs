@@ -62,6 +62,19 @@ test('CLI rejects contradictory or duplicate options and never claims release qu
   assert.equal(JSON.parse(check.stdout).readyForRelease, false);
 });
 
+test('Versus-only geometry can be inspected without silently launching a Solo practice game', () => {
+  const source = createStarterProject();
+  source.missions[0].modes = ['versus'];
+  const preview = prepareContentPreview(source, 'nearby-shore', { mode: 'versus' });
+  assert.equal(preview.manifest.mode, 'versus');
+  assert.equal(preview.scenario, null);
+  assert.throws(() => prepareContentPreview(source, 'nearby-shore'), /mode/);
+  assert.throws(
+    () => prepareContentPreview(source, 'nearby-shore', { mode: 'versus', theme: {} }),
+    /Only Solo/,
+  );
+});
+
 test('autosave coalesces edits during an in-flight checkpoint without falsely marking them saved', async () => {
   let release;
   const gate = new Promise((resolve) => {

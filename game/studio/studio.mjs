@@ -1,8 +1,15 @@
 import { createStarterProject } from '../content-design/starter.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
+import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
 import { createContentDraftSession } from '../content-design/session.mjs';
+import {
+  inspectDraftCheckpoint,
+  createInspectionRequests,
+  projectIdFromURL,
+} from '../content-design/recovery.mjs';
 import { exportJSONFile } from '../platform.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -14,6 +21,14 @@ let session,
   previewTimer,
   previewRevision = 0,
   previewController = null;
+const inspections = createInspectionRequests(() =>
+  JSON.stringify([
+    session?.export(),
+    $('source').value,
+    $('project-id').value,
+    $('checkpoint').value,
+  ]),
+);
 function status(text, error = false) {
   $('status').textContent = text;
   $('status').dataset.error = String(error);
@@ -45,7 +60,20 @@ function showStorage(state) {
   $('redo').disabled = !session?.canRedo();
 }
 function setSession(project, revision = null) {
-  session = createContentDraftSession(project, { backend, revision, onStatus: showStorage });
+  inspections.invalidate();
+  const owner = createContentDraftSession(project, {
+    backend,
+    revision,
+    onStatus: (state) => {
+      if (session === owner) showStorage(state);
+    },
+  });
+  session = owner;
+  $('mission').value = '';
+  $('checkpoint').value = '';
+  const address = new URL(location.href);
+  address.searchParams.set('project', project.id);
+  history.replaceState(null, '', address);
   showStorage(session.status());
 }
 function queueSave() {
@@ -99,13 +127,8 @@ function inspectBoard(trailCells = []) {
     $('play').disabled = true;
     return;
   }
-  if (!mission.modes.includes('solo')) {
-    $('play').disabled = true;
-    throw new Error(
-      'This candidate has no Solo adapter. Choose a Solo mission to preview; Versus is not silently substituted.',
-    );
-  }
   const preview = prepareContentPreview(session.current(), mission.id, {
+    mode: mission.modes.includes('solo') ? 'solo' : mission.modes[0],
     difficulty: $('difficulty').value,
     trailCells,
   });
@@ -150,9 +173,13 @@ function inspectBoard(trailCells = []) {
       return li;
     }),
   );
-  $('play').disabled = false;
+  $('play').disabled = !mission.modes.includes('solo');
+  $('play').title = mission.modes.includes('solo')
+    ? ''
+    : 'This candidate has no Solo adapter. Paired-race preview remains separate.';
 }
 function render() {
+  inspections.invalidate();
   const project = session.current(),
     selected = $('mission').value;
   $('project-id').value = project.id;
@@ -176,7 +203,8 @@ function render() {
   $('redo').disabled = !session.canRedo();
   inspectBoard();
 }
-function inspectSource({ revision, loaded = false } = {}) {
+function inspectSource({ head, selectedRevision } = {}) {
+  inspections.invalidate();
   inspected = null;
   $('apply').disabled = true;
   const text = $('source').value,
@@ -185,12 +213,13 @@ function inspectSource({ revision, loaded = false } = {}) {
     throw new Error(
       'This workbench needs at least one mission. Keep the empty draft in your backup until a mission is authored.',
     );
-  inspected = { text, project, revision, loaded };
+  inspected = { text, project, head };
   $('validation').textContent =
-    `${project.name}: ${project.maps.length} map revisions, ${project.missions.length} missions compile. Human playtesting and publication remain pending. Apply to replace the workbench draft.`;
+    `${project.name}: ${project.maps.length} map revisions, ${project.missions.length} missions compile. ${head ? `Inspected checkpoint ${selectedRevision} (latest ${head.revision}). Older versions restore as a new checkpoint. ` : ''}Human playtesting and publication remain pending. Apply to replace the workbench draft.`;
   $('apply').disabled = false;
 }
 $('source').addEventListener('input', () => {
+  inspections.invalidate();
   sourceChanged = true;
   inspected = null;
   $('apply').disabled = true;
@@ -205,20 +234,33 @@ $('apply').onclick = guarded(async () => {
   if (session.status().saving)
     throw new Error('Wait for the current checkpoint save before replacing the project.');
   clearTimeout(saveTimer);
-  if (pending.loaded || pending.project.id !== session.current().id)
-    setSession(pending.project, pending.revision ?? null);
+  if (pending.head) {
+    setSession(pending.head.project, pending.head.revision);
+    if (JSON.stringify(pending.project) !== JSON.stringify(pending.head.project))
+      session.replace(pending.project);
+  } else if (pending.project.id !== session.current().id) setSession(pending.project);
   else session.replace(pending.project);
   render();
   queueSave();
 });
 $('load').onclick = guarded(async () => {
   if (!discardSource()) return;
-  const loaded = await backend.read($('project-id').value.trim());
-  if (!loaded)
-    throw new Error('No checkpoint found for that project ID. The current draft is unchanged.');
-  $('source').value = JSON.stringify(loaded.project, null, 2);
+  const current = inspections.begin();
+  let loaded;
+  try {
+    loaded = await inspectDraftCheckpoint(
+      backend,
+      $('project-id').value.trim(),
+      $('checkpoint').value === '' ? null : Number($('checkpoint').value),
+    );
+  } catch (error) {
+    if (current()) throw error;
+    return;
+  }
+  if (!current()) return;
+  $('source').value = JSON.stringify(loaded.selected.project, null, 2);
   sourceChanged = true;
-  inspectSource({ revision: loaded.revision, loaded: true });
+  inspectSource({ head: loaded.head, selectedRevision: loaded.selected.revision });
 });
 $('new').onclick = guarded(() => {
   if (!discardSource()) return;
@@ -227,13 +269,28 @@ $('new').onclick = guarded(() => {
     throw new Error('Choose a new project ID; this action does not reset an existing project.');
   $('source').value = JSON.stringify(createStarterProject(id), null, 2);
   sourceChanged = true;
-  inspectSource({ revision: null, loaded: true });
+  inspectSource();
+});
+$('opening').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createOpeningCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
 });
 $('import').onchange = guarded(async () => {
   const file = $('import').files[0];
   if (!file || !discardSource()) return;
   if (file.size > 4 * 1024 * 1024) throw new Error('Project JSON must be no larger than 4 MiB.');
-  $('source').value = await file.text();
+  const current = inspections.begin();
+  let text;
+  try {
+    text = await file.text();
+  } catch (error) {
+    if (current()) throw error;
+    return;
+  }
+  if (!current()) return;
+  $('source').value = text;
   sourceChanged = true;
   inspectSource();
   $('import').value = '';
@@ -316,15 +373,22 @@ $('play').onclick = guarded(async () => {
   const controller = new AbortController();
   previewController = controller;
   const ticket = ++previewRevision;
+  clearInterval(previewTimer);
+  $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
   $('preview-status').textContent = 'Preparing the exact candidate…';
-  const response = await fetch('../content/themes.json', { signal: controller.signal });
-  if (!response.ok) throw new Error('Preview theme failed to load. Your draft remains unchanged.');
-  const theme = (await response.json()).themes.find((candidate) => candidate.id === 'retro');
-  if (ticket !== previewRevision) return;
-  if (!theme) throw new Error('Preview theme is unavailable.');
-  const result = prepareContentPreview(source, missionId, { difficulty, theme });
-  sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
+  let result;
+  try {
+    const theme = await loadPreviewTheme({ signal: controller.signal });
+    if (ticket !== previewRevision) return;
+    result = prepareContentPreview(source, missionId, { difficulty, theme });
+    sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
+  } catch (error) {
+    if (ticket === previewRevision && error.name !== 'AbortError')
+      $('preview-status').textContent =
+        `${error.message} Close preview and retry. Your draft is intact.`;
+    return;
+  }
   const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
   let documentLoaded = false;
   $('preview').onload = () => {
@@ -337,6 +401,7 @@ $('play').onclick = guarded(async () => {
   clearInterval(previewTimer);
   const deadline = Date.now() + 20000;
   previewTimer = setInterval(() => {
+    if (ticket !== previewRevision) return;
     const state = documentLoaded
       ? $('preview').contentDocument?.documentElement.dataset.bootState
       : null;
@@ -372,11 +437,17 @@ async function boot() {
   let saved = null,
     storageError = null;
   try {
-    saved = await backend.read('my-journey');
+    saved = await backend.read(projectIdFromURL(location.href));
   } catch (error) {
     storageError = error;
   }
-  setSession(saved?.project ?? createStarterProject(), saved?.revision ?? null);
+  let projectId = 'my-journey';
+  try {
+    projectId = projectIdFromURL(location.href);
+  } catch {
+    /* Truthful warning below. */
+  }
+  setSession(saved?.project ?? createStarterProject(projectId), saved?.revision ?? null);
   render();
   if (storageError)
     status(
