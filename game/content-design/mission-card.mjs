@@ -1,5 +1,6 @@
 import { createRun, CELL } from '../core/index.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { paintMaterialMarker } from './material-markers.mjs';
 const cards = new WeakMap();
 
 /** Read-only initial-state diagram. Uses the engine's actual topology and actor
@@ -46,10 +47,11 @@ export function paintMissionThumbnail(ctx, card, width = 288) {
     const x = (i % card.width) * unit,
       y = Math.floor(i / card.width) * unit;
     ctx.fillRect(x, y, unit, unit);
-    if (cell === CELL.WALL || (cell === CELL.FIELD && terrain)) {
+    if (cell === CELL.WALL) {
       ctx.fillStyle = '#102720';
       ctx.fillRect(x + unit * 0.3, y + unit * 0.3, unit * 0.4, unit * 0.4);
     }
+    if (cell === CELL.FIELD) paintMaterialMarker(ctx, terrain, x, y, unit);
   }
   ctx.fillStyle = '#ffad88';
   for (const actor of card.actors) {
