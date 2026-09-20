@@ -234,6 +234,10 @@ overrides remain unavailable. Every supported mode/preset compiles before adopti
 Team retains its field-keeper-only qualification boundary. Native add/invalid edit/
 direction change/Undo/reload and automated confirmation/failure tests are recorded
 in the P02 evidence; edited content is still unqualified until separately tested.
+Existing foundation/wall/terrain rectangles can also be reshaped or removed with
+exact-map-bound commands and copy-on-write revisions, without JSON editing.
+Compiler checks protect spawns and enemy domains; Undo/Redo, native reload and
+shared-map isolation are verified in the P02 evidence. No published map is changed.
 
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema

@@ -223,6 +223,40 @@
               <button type="submit">Validate & apply geometry</button>
             </fieldset>
           </form>
+          <details id="geometry-edit-panel">
+            <summary>Reshape existing geometry</summary>
+            <form id="geometry-edit-form">
+              <fieldset id="geometry-edit-tools">
+                <legend>Copy-on-write rectangle edit</legend>
+                <label>Existing rectangle<select id="geometry-edit-select"></select></label>
+                <div class="coordinates">
+                  <label
+                    >X<input id="geometry-edit-x" type="number" min="1" max="70" required
+                  /></label>
+                  <label
+                    >Y<input id="geometry-edit-y" type="number" min="1" max="34" required
+                  /></label>
+                  <label
+                    >Width<input id="geometry-edit-w" type="number" min="1" max="70" required
+                  /></label>
+                  <label
+                    >Height<input id="geometry-edit-h" type="number" min="1" max="34" required
+                  /></label>
+                </div>
+                <label id="geometry-edit-kind-row"
+                  >Terrain material<select id="geometry-edit-kind">
+                    <option value="slow">Slow field</option>
+                    <option value="lethal">Lethal field</option>
+                  </select></label
+                >
+                <button id="geometry-edit-submit" type="submit">
+                  Validate & replace rectangle
+                </button>
+                <button id="geometry-edit-remove" type="button">Remove selected rectangle</button>
+                <p id="geometry-edit-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
           <details id="actor-panel">
             <summary>Place enemies</summary>
             <p class="note">

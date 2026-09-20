@@ -13,6 +13,8 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   const $ = (id) => document.getElementById(`actor-${id}`);
   let revision = null,
     removal = null;
+  const context = () =>
+    JSON.stringify([getSource().id, getSource().revision, getMission(), getDifficulty()]);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -71,7 +73,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   function sync() {
     const mission = getMission();
     $('tools').disabled = !mission;
-    const key = JSON.stringify([getSource().revision, mission, getDifficulty()]);
+    const key = context();
     if (key === revision) return;
     revision = key;
     options(
@@ -90,6 +92,8 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   }
   function commit(command) {
     try {
+      if (revision !== context())
+        throw new Error('The draft context changed. Refresh the actor selection before applying.');
       const mission = getMission();
       if (!mission) throw new Error('Choose a mission.');
       const candidate = editContentActor(getSource(), mission.id, command);

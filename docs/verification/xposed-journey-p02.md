@@ -294,3 +294,27 @@ confirmed removal and cancellation have modeled-controller coverage.
 The frontend-design skill guided reuse of the existing field-kit typography,
 colors and explicit controls, and relocation out of the cramped sidebar. This is
 candidate authoring, not approval of newly edited levels or a publication action.
+
+## Existing-map reshaping
+
+The map workbench can now replace or remove individual authored foundation, wall
+and terrain rectangles without editing JSON. Terrain replacement keeps its stable
+ID and can change slow/lethal material. The permanent outer border is not an
+editable rectangle. Every command binds to the exact current map identity before
+resolving its index, forks only the selected mission and compiles all supported
+modes/presets. Invalidated spawns, enemy-domain conflicts, stale pins and malformed
+rectangles leave the draft unchanged. Removal needs two activations; edits/context
+changes cancel confirmation. Undo, Redo and checkpoints preserve recovery.
+
+The expanded authoring cohort passes **45/45** (4.2 seconds), including map sharing,
+terrain-ID preservation, Team spawn protection, stale source rejection, two-action
+removal and empty projects. Actor controls also reject stale project or same-revision
+source replacements before adoption. Full lint passes.
+
+Native current-source check resized only the copied Behind the patrol foundation
+from 7×5 to 9×5, changing 35→45 non-scoring foundation cells. Moving it over the east
+keeper was rejected with a movement-domain explanation. The original mission
+remained at35 cells. Undo restored the copy to35; Redo restored45. Checkpoint11 and
+reload retained the 9×5 copy and its separate added keeper. No browser console
+errors were reported. Native removal and a full device matrix are not claimed;
+they remain separate from the automated deletion/confirmation checks.
