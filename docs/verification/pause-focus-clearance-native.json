@@ -86,5 +86,37 @@
     "Inline screenshots only",
     "First portrait resize screenshot transient; subsequent settled geometry and screenshot were inspected",
     "Final source qualification and deployed verification required"
-  ]
+  ],
+  "hudFollowup": {
+    "base": "9a09afd4",
+    "override": {
+      "path": "game/ui/device-controls.css",
+      "sha256": "b95c2d255829e9b0d31c162208cb24c9f3834c9efd31e717227c3aadb92ad000"
+    },
+    "viewport": [
+      568,
+      320
+    ],
+    "preferences": [
+      "Plain",
+      "Large"
+    ],
+    "before": {
+      "documentWidth": 615,
+      "arenaWidth": 153.328125
+    },
+    "after": {
+      "documentWidth": 568,
+      "arenaWidth": 544,
+      "scoreRight": 556,
+      "scoreFontPixels": 30
+    },
+    "runningBeforeAndAfter": {
+      "documentWidth": 568,
+      "arenaWidth": 568,
+      "hudWidth": 376
+    },
+    "keyboard": "Tab from Resume through all four remaining commands reveals the complete Main menu focus outline; reverse Tab and explicit Resume restore running state; Escape returns to paused state.",
+    "scope": "Browser viewport and keyboard only; not a physical touch or controller certification."
+  }
 }
