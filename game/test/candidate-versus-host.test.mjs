@@ -40,6 +40,12 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[0].lives, { gentle: 5, standard: 3, expert: 2 }[difficulty]);
     assert.deepEqual(p.renders[0], p.renders[1]);
     assert.equal(p.renders[0].classId, 'scout');
+    assert.equal(p.renders[0].level.rules.timeLimitSeconds, 0);
+    assert.equal(p.$('race-time-field').hidden, true);
+    assert.equal(p.$('race-clock').textContent, 'No countdown');
+    assert.match(p.$('race-summary').textContent, /No race countdown/);
+    assert.match(p.$('race-format-help').textContent, /No race countdown/);
+    assert.doesNotMatch(p.$('race-format-help').textContent, /At the time limit/);
     assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
     assert.equal(p.drawOptions[0].backdrop.kind, 'candidate-picture');
     assert.equal(p.drawOptions[0].backdrop.assetRevision.id, 'horizon-first-return');
@@ -185,7 +191,7 @@ test('controller can open and leave the flat chooser without starting or clearin
   assert.equal(p.renders[1].tick, 0);
 });
 
-test('a timed race decision does not mint a mission clear and Next remains deliberate', async (t) => {
+test('authored races ignore the Legacy timer and do not mint an idle clear after ninety seconds', async (t) => {
   const p = await setup(t);
   p.$('race-start').click();
   await waitFor(() => {
@@ -193,8 +199,10 @@ test('a timed race decision does not mint a mission clear and Next remains delib
     return !p.$('race-pause').disabled;
   });
   p.frames(451, 200);
-  assert.match(p.$('race-message').textContent, /Time/);
-  assert.equal(p.$('race-journey-next').hidden, false);
+  assert(p.renders.every((run) => run.status === 'running' && run.time > 90));
+  assert.equal(p.$('race-clock').textContent, 'No countdown');
+  assert.doesNotMatch(p.$('race-message').textContent, /Time/);
+  assert.equal(p.$('race-journey-next').hidden, true);
   p.$('race-journey-find').click();
   assert.doesNotMatch(p.$('journey-cards').children[0].textContent, /Cleared/);
   assert.equal(p.renders[0].levelId, 'first-return');

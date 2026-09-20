@@ -2,6 +2,7 @@ import { createRun, stepRun, releaseInputs, FIXED_DT, RULESET } from './core/ind
 import { resolveVersions } from './core/versions.mjs';
 
 export const DUEL_PROTOCOL = 'xonix-duel.v1';
+export const UNTIMED_DUEL_PROTOCOL = 'xonix-duel.untimed.v1';
 export const neutralCommand = () => ({
   direction: null,
   boost: false,
@@ -10,16 +11,20 @@ export const neutralCommand = () => ({
 });
 const terminal = (run) => ['won', 'lost'].includes(run.status);
 
-export function createDuel(level, options = {}, { seconds = 90 } = {}) {
-  if (!Number.isInteger(seconds) || seconds < 10 || seconds > 600)
+export function createDuel(level, options = {}, { seconds = 90, protocol = DUEL_PROTOCOL } = {}) {
+  const untimed = protocol === UNTIMED_DUEL_PROTOCOL;
+  if (protocol !== DUEL_PROTOCOL && !untimed) throw new TypeError('Unknown race protocol.');
+  if (untimed && seconds !== 0)
+    throw new TypeError('Untimed races require an explicit zero duration.');
+  if (!untimed && (!Number.isInteger(seconds) || seconds < 10 || seconds > 600))
     throw new TypeError('Round duration must be 10–600 seconds.');
   const runs = [createRun(level, options), createRun(level, options)];
   return {
-    protocol: DUEL_PROTOCOL,
+    protocol,
     ruleset: runs[0].ruleset,
     runs,
     tick: 0,
-    limitTicks: seconds * 120,
+    limitTicks: untimed ? null : seconds * 120,
     status: 'ready',
     winner: null,
     reason: '',
@@ -70,13 +75,14 @@ export function stepDuel(match, commands) {
     if (!terminal(match.runs[i])) stepRun(match.runs[i], validated[i], FIXED_DT);
   match.tick++;
   const winners = match.runs.map((r, i) => (r.status === 'won' ? i : -1)).filter((i) => i >= 0);
-  if (winners.length || match.runs.every(terminal) || match.tick >= match.limitTicks) {
+  const expired = match.protocol === DUEL_PROTOCOL && match.tick >= match.limitTicks;
+  if (winners.length || match.runs.every(terminal) || expired) {
     match.status = 'finished';
     match.winner =
       winners.length === 1 ? winners[0] : winners.length === 2 ? null : rankedWinner(match.runs);
     match.reason = winners.length
       ? 'First clear'
-      : match.tick >= match.limitTicks
+      : expired
         ? 'Time — coverage, then lives, then score'
         : 'Both flights ended';
     releaseDuel(match);
@@ -85,10 +91,14 @@ export function stepDuel(match, commands) {
 }
 
 /** Transport-independent future input envelope. It never accepts state or rewards.
- * Supply the selected match.ruleset; omitted context retains the legacy core2 gate.
+ * Supply the selected match.ruleset and match.protocol; omitted context retains
+ * the legacy core2/timed-v1 gate.
  * This validator does not create a transport or authorize another match's input.
  */
-export function validateDuelPacket(packet, { nextTick, player, matchId, ruleset = RULESET }) {
+export function validateDuelPacket(
+  packet,
+  { nextTick, player, matchId, ruleset = RULESET, protocol = DUEL_PROTOCOL },
+) {
   try {
     resolveVersions({ ruleset });
   } catch {
@@ -100,7 +110,8 @@ export function validateDuelPacket(packet, { nextTick, player, matchId, ruleset 
     Object.keys(packet).some(
       (k) => !['protocol', 'ruleset', 'matchId', 'tick', 'player', 'input'].includes(k),
     ) ||
-    packet.protocol !== DUEL_PROTOCOL ||
+    ![DUEL_PROTOCOL, UNTIMED_DUEL_PROTOCOL].includes(protocol) ||
+    packet.protocol !== protocol ||
     packet.ruleset !== ruleset ||
     packet.matchId !== matchId ||
     packet.tick !== nextTick ||

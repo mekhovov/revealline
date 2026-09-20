@@ -902,3 +902,18 @@ then run `node scripts/qualify-journey-arcade-routes.mjs` to compare all sixty h
 opening outcomes. Changing policy requires new simulation/campaign identities, never
 rewriting old checkpoints. Restore a saved candidate after changing the next-attempt
 preset; resolve it through candidate ownership, not an installed Legacy pack lookup.”
+
+### Explicit Journey race timing and old-edition recovery
+
+Untimed authored Versus uses `xonix-duel.untimed.v1` with explicit zero seconds and
+a null match deadline. Never silently reinterpret legacy timed-v1 or infer protocol
+from a missing duration. Hide the legacy timer option for these authored races;
+summary, HUD and Help must agree. Both-ended ranking and first-clear adjudication
+remain deterministic. Unavailable old candidate saves must keep exact original
+bytes and offer export/original-edition guidance, never a false pack-install fix.
+
+Prompt: “Run an idle authored race beyond 90 seconds without awarding a clear,
+then verify first clear, simultaneous clears, Pause/Resume and both-ended ranking.
+Reject mismatched protocol packets; keep legacy timed replay outcomes. Load an old
+v1 saved flight and verify unchanged bytes plus truthful recovery copy. Preserve the
+old reference crosswalk and prove its identities before renewing new-policy pins.”
