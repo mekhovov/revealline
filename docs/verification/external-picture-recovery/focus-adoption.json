@@ -1,0 +1,22 @@
+{
+  "donor": "cb7a14b58e9f3b4a19fc64e3cd045f04df6632e1",
+  "paths": [
+    "game/app.mjs",
+    "game/ui/optional-chapters-panel.mjs",
+    "game/test/mission-replacement-host.test.mjs",
+    "game/test/worlds-browser.test.mjs"
+  ],
+  "changes": "Reuse sharedfocus-clearance for Moreworlds andreplaceflightdialog; preserve focus andneveractivatecontrol; release listeners ondispose.",
+  "adoption": "Firstatomic3waypatchrefused; no changesapplied. Threepathsappliedusingexactpatchcontexts; optionalpanelimport/attach/destroyhunks addedagainstretainedpictureworkflow.",
+  "focusedTests": {
+    "node": "20.19.5",
+    "tests": 48,
+    "pass": 48,
+    "fail": 0,
+    "skipped": 0
+  },
+  "lint": "pass",
+  "format": "pass",
+  "native": "Finalintegratednativecheckpending; donornativeevidence isnot rootacceptance",
+  "fullSourceQualification": "pending"
+}

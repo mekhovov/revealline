@@ -917,3 +917,43 @@ then verify first clear, simultaneous clears, Pause/Resume and both-ended rankin
 Reject mismatched protocol packets; keep legacy timed replay outcomes. Load an old
 v1 saved flight and verify unchanged bytes plus truthful recovery copy. Preserve the
 old reference crosswalk and prove its identities before renewing new-policy pins.”
+
+### Responsive recovery dialogs
+
+Use the shared focus-clearance owner for scrollable player dialogs. Supply a sticky heading only when the dialog actually has one, dispose listeners with the owning screen, and retain the selected action through reflow without activating it. Verify portrait to short-landscape resizing with keyboard focus on Cancel/Stay/Play, including pending and completed media operations. A passing layout-model test does not replace observing the final integrated browser view. Preserve original failed observations and sparse-input failures separately from product regressions.
+
+### Independent presentation observer ownership
+
+When adding a resize observer to a menu, audit lifecycle fixtures that select the
+last observer by creation order. Identify the board observer through its actual
+arena targets before disconnection, require unique ownership, and retain cached-
+page disconnect, stale-callback, no-background-simulation and zero-RAF assertions.
+Also verify terminal disposal of independent menu observers and that queued focus
+reflow cannot scroll or activate a hidden page. Restore missing sparse inputs from
+the exact selected Git revision; keep setup failures distinct from product failures.
+
+### Replay artwork status
+
+When changing Replay Theater artwork feedback, keep `#asset-status` mounted as a polite, atomic live region, including while empty. Collapse empty spacing without removing it from the accessibility tree. Check failed-image and successful-theme updates without changing focus, transport intent or recorded checkpoints. Distinguish inspected browser semantics from an actual screen-reader listening check. See `docs/replay-theater.md` for the verification prompt.
+
+### Consumed story-restore controls
+
+When a one-use reviewed action becomes disabled, keep its initiating focus owner
+through every adapter wrapper and restore only to a logical enabled successor
+after the parent operation re-enables controls. Reuse `captureOperationFocus`;
+never blindly focus from an async completion. Cover cancellation, notification
+failure, explicit focus movement and native disabled-button blur. Example:
+"Restore an owned story backup with keyboard-only input, verify Review chosen
+story backup receives focus after success, and prove late completion cannot
+reclaim focus after Back or another action."
+
+### Pending replacement focus
+
+When a confirmation disables its focused button while awaiting a picture or chapter, move focus to the still-enabled Stay/Cancel action before disabling the opener. Do so only when that opener still owns focus in a visible, focused document. Preserve any newer user focus. Model native disabled-button blur in host regressions; retaining focus on a disabled fake button is not browser evidence. Keep delayed pending-state observation separate from a cancellation input that arrives after completion.
+
+Example: “Verify Replace & play with a bounded local download delay. Keep Stay focused during preparation, retain the current flight on cancellation, and prove background/hidden or moved-focus cases do not reclaim focus. Preserve failed observations and distinguish local preview from deployed acceptance.”
+
+
+### Compact Pause acceptance
+
+Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.

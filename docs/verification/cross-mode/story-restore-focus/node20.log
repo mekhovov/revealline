@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+ok 1 - no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+  ---
+  duration_ms: 165.400916
+  ...
+# Subtest: Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+ok 2 - Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+  ---
+  duration_ms: 1637.544875
+  ...
+# Subtest: historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+ok 3 - historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+  ---
+  duration_ms: 2410.459709
+  ...
+# Subtest: unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+ok 4 - unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+  ---
+  duration_ms: 1118.075292
+  ...
+# Subtest: stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+ok 5 - stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+  ---
+  duration_ms: 4346.912542
+  ...
+# Subtest: native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+ok 6 - native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+  ---
+  duration_ms: 2546.100542
+  ...
+# Subtest: story restore success retains only the initiating operation's focus ownership
+ok 7 - story restore success retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 974.960833
+  ...
+# Subtest: story restore observer-failure retains only the initiating operation's focus ownership
+ok 8 - story restore observer-failure retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 2832.084
+  ...
+# Subtest: story restore moved-focus retains only the initiating operation's focus ownership
+ok 9 - story restore moved-focus retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 1643.298208
+  ...
+# Subtest: story restore cancelled retains only the initiating operation's focus ownership
+ok 10 - story restore cancelled retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 1126.294625
+  ...
+# Subtest: fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+ok 11 - fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+  ---
+  duration_ms: 1234.833083
+  ...
+# Subtest: Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+ok 12 - Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+  ---
+  duration_ms: 432.2325
+  ...
+# Subtest: the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+ok 13 - the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+  ---
+  duration_ms: 681.946084
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21727.607083

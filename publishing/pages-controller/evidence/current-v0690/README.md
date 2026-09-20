@@ -1,0 +1,1 @@
+v0.69.0 Journey foundation: exact source5178c434, PR184 merge01c1fbb5, original release392405261. Both complete Node20.19.6 hosted families passed6983tests/560files. Nine original release assets were verified. Actual public deployment, complete byte audit and affected native player journeys remain pending. No full programme or physical-device acceptance is claimed.

@@ -1,0 +1,29 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-37",
+  "infrastructureCommit": "1bd293f7de06bf02b6c25706b7651f9634bbfc2e",
+  "deploymentId": 6554089168,
+  "versions": [
+    "v0.69.1"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-37/native-observation.json",
+      "sha256": "cfed9d38cbeda92c948f71a138354a1556464924f799244945e5b3eef397a364"
+    },
+    {
+      "path": "evidence/archive-37/run.json",
+      "sha256": "a4d466124f45c947310ffa76bf6b3abc033ab7af259438c8514228270267467f"
+    },
+    {
+      "path": "evidence/archive-37/deployments.json",
+      "sha256": "a053fd1b048754780c2cde18bd7cba76295924d0e165a38d8204f5861a663c81"
+    },
+    {
+      "path": "evidence/archive-37/deployment-statuses.json",
+      "sha256": "967a965d56d121a7bd8428c1962b1b28423f0830cb105e7febf25c68997f8fe2"
+    }
+  ],
+  "scope": "Exact original bytes and scoped native desktop keyboard index, Continue, Pause and Main menu. Session-only owner warning; no save-write/reload, full phase, physical hardware, offline or listening acceptance."
+}

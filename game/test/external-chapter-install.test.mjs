@@ -3,7 +3,11 @@ import assert from 'node:assert/strict';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createExternalChapterPointerStore } from '../external-chapter-pointer.mjs';
-import { createExternalChapterInstaller } from '../external-chapter-install.mjs';
+import {
+  createExternalChapterInstaller,
+  isRetainedPictureReview,
+  RETAINED_PICTURE_JOURNAL_FORMAT,
+} from '../external-chapter-install.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { emptyPackLibrary, exportPackLibrary, installPack } from '../packs.mjs';
@@ -466,3 +470,131 @@ test('pointer channels preserve the existing bounded release-v spelling and refu
     );
   }
 });
+
+async function retainDifferentPicture(h, revision = 2) {
+  const current = await h.store.read();
+  const library = current.generation
+    ? structuredClone(current.document.library)
+    : structuredClone(pilot.prepared.imported.document.library);
+  library.presentations.push({
+    ...library.presentations[0],
+    revision,
+    description: `Retained ${revision}`,
+  });
+  library.assignments[0].revision = revision;
+  await h.store.commit(
+    await h.store.prepare(library, pilot.prepared.imported.assets, {
+      ...(current.generation ? { previous: current.document } : {}),
+      executionCatalog: pilot.prepared.executionCatalog,
+    }),
+    { expectedGeneration: current.generation },
+  );
+}
+async function pictureConflict(h) {
+  let refusal;
+  try {
+    await h.installer.install(pilot.prepared);
+  } catch (error) {
+    refusal = error;
+  }
+  assert.equal(isRetainedPictureReview(refusal), true);
+  assert.equal(refusal.conflicts.length, 1);
+  assert.equal(refusal.conflicts[0].levelName, 'Orchard Crossing');
+  assert.equal(refusal.conflicts[0].original.revision, 1);
+  assert.equal(refusal.conflicts[0].retained.revision, 2);
+  return refusal;
+}
+test('explicit fresh picture review installs exact originals without replacing retained assignments', async (t) => {
+  const h = await setup(t);
+  await retainDifferentPicture(h);
+  const before = await h.store.read(),
+    review = await pictureConflict(h);
+  assert.deepEqual(await h.store.read(), before);
+  assert.deepEqual(await h.pointer.snapshot(), { packs: null, journal: null, index: null });
+  assert.equal(
+    (await h.installer.install(pilot.prepared, { pictureReview: review })).status,
+    'installed',
+  );
+  assert.equal(isRetainedPictureReview(review), false);
+  const after = await h.store.read();
+  assert.equal(after.generation, before.generation + 1);
+  assert.deepEqual(after.document, before.document);
+  assert.deepEqual(await h.pointer.snapshot().then((x) => x.index.chapters), [pilot.descriptor]);
+  for (const asset of after.assets) {
+    const original = pilot.prepared.imported.assets.find((x) => x.sha256 === asset.sha256);
+    assert.deepEqual(await asset.blob.arrayBuffer(), await original.blob.arrayBuffer());
+  }
+});
+test('picture confirmation refuses forged, foreign and changed-generation reviews without writes', async (t) => {
+  const h = await setup(t),
+    other = await setup(t);
+  await retainDifferentPicture(h);
+  await retainDifferentPicture(other);
+  const review = await pictureConflict(h),
+    foreign = await pictureConflict(other);
+  const before = await h.store.read();
+  for (const pictureReview of [{ ...review }, foreign])
+    await assert.rejects(h.installer.install(pilot.prepared, { pictureReview }), /review expired/);
+  assert.deepEqual(await h.store.read(), before);
+  await retainDifferentPicture(h, 3);
+  const newer = await h.store.read();
+  await assert.rejects(
+    h.installer.install(pilot.prepared, { pictureReview: review }),
+    /review expired/,
+  );
+  assert.deepEqual(await h.store.read(), newer);
+  assert.deepEqual(await h.pointer.snapshot(), { packs: null, journal: null, index: null });
+});
+for (const phase of ['prepared', 'media-committed', 'published', null]) {
+  test(`confirmed retained-picture install recovers crash after ${phase ?? 'journal clear'} without replacing assignments`, async (t) => {
+    const h = await setup(t);
+    await retainDifferentPicture(h);
+    const review = await pictureConflict(h),
+      before = await h.store.read();
+    let once = true;
+    h.hook = (when, _before, next) => {
+      if (when === 'after' && (next.journal?.phase ?? null) === phase && once) {
+        once = false;
+        if (next.journal) assert.equal(next.journal.format, RETAINED_PICTURE_JOURNAL_FORMAT);
+        throw new Error('Retained-picture crash');
+      }
+    };
+    await assert.rejects(
+      h.installer.install(pilot.prepared, { pictureReview: review }),
+      /Retained-picture crash/,
+    );
+    h.hook = null;
+    h.restart();
+    if (phase !== null)
+      assert.equal((await h.installer.recover(pilot.prepared)).status, 'installed');
+    else assert.equal((await h.pointer.snapshot()).journal, null);
+    const after = await h.store.read();
+    assert.equal(after.generation, before.generation + 1);
+    assert.deepEqual(after.document, before.document);
+    assert.deepEqual((await h.pointer.snapshot()).index.chapters, [pilot.descriptor]);
+  });
+}
+
+for (const corrupt of ['unsupported-policy', 'legacy-with-extra-policy']) {
+  test(`retained-picture journal rejects ${corrupt} without committing media`, async (t) => {
+    const h = await setup(t);
+    await retainDifferentPicture(h);
+    const review = await pictureConflict(h),
+      before = await h.store.read();
+    h.hook = (when, _before, next) => {
+      if (when === 'before' && next.journal?.phase === 'prepared') {
+        if (corrupt === 'unsupported-policy') next.journal.assignmentPolicy = 'replace';
+        else next.journal.format = 'revealline-external-chapter-install.v1';
+      }
+    };
+    await assert.rejects(
+      h.installer.install(pilot.prepared, { pictureReview: review }),
+      /journal|Unsupported|unknown/i,
+    );
+    assert.deepEqual(await h.store.read(), before);
+    assert.equal((await h.pointer.snapshot()).packs, null);
+    h.hook = null;
+    await assert.rejects(h.installer.recover(pilot.prepared), /journal|Unsupported|unknown/i);
+    assert.deepEqual(await h.store.read(), before);
+  });
+}
