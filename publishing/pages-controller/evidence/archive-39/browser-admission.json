@@ -1,0 +1,29 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-39",
+  "infrastructureCommit": "05f813bd73c31bf1baa1fe62002f9c71617e3e96",
+  "deploymentId": 6556980004,
+  "versions": [
+    "v0.70.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-39/native-observation.json",
+      "sha256": "11ecdf8f51024aa24f212b251007acef686af1c8cc53fd9d6bcb8d9bf2a2f1dc"
+    },
+    {
+      "path": "evidence/archive-39/run.json",
+      "sha256": "aa21e1a9e5f611a433e84e8f594595ae23b2b3c20f5e6e97918678e146b18bb5"
+    },
+    {
+      "path": "evidence/archive-39/deployments.json",
+      "sha256": "b8131a0d1d7096e516017336553118a6046d4793ed8b619b54fbc97ac170d147"
+    },
+    {
+      "path": "evidence/archive-39/deployment-statuses.json",
+      "sha256": "94ddd83215517767054905067867422039fbcd34cb3ebc6eccb20c3abed01717"
+    }
+  ],
+  "scope": "Exact original bytes and scoped native Chrome root/game route loading. No whole-game interaction, browser-offline, audible-listening, physical controller/touch or screen-reader acceptance. The organization-root favicon request is a known peripheral 404 outside the 822-path archive inventory."
+}
