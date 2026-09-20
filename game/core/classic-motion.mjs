@@ -11,6 +11,7 @@ import {
 import { classicEffectActive } from './classic-state.mjs';
 import { fitsClassicDomain } from './classic-topology.mjs';
 import { pressureWaypoint } from './enemy-pressure.mjs';
+import { directionalSpeedFactor } from './directional-fields.mjs';
 import {
   classicContourGraph,
   orientedContourEdge,
@@ -48,7 +49,8 @@ export function planClassicPlayer(state, input, duration) {
         (state.signal?.speedFactor ?? 1) *
         (input.boost && !state.signal?.boostBlocked ? state.rules.boostMultiplier : 1) *
         (classicEffectActive(state, 'player-speed') ? 1.25 : 1) *
-        terrain,
+        terrain *
+        directionalSpeedFactor(state, index, direction),
     );
     const view = {
       ...state,

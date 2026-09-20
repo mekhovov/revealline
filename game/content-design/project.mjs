@@ -150,22 +150,27 @@ export function compileContentProject(source) {
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
-    const relays = mission.format === 'MissionDesignV2';
-    identity(mission, relays ? 'MissionDesignV2' : 'MissionDesignV1', [
-      'map',
-      'spawnId',
-      'modes',
-      'actors',
-      'objectives',
-      'bonuses',
-      'coverage',
-      'timeLimitSeconds',
-      'design',
-      'presentation',
-      'archived',
-      'team',
-      ...(relays ? ['relayLinks'] : []),
-    ]);
+    const directional = mission.format === 'MissionDesignV3';
+    const relays = mission.format === 'MissionDesignV2' || directional;
+    identity(
+      mission,
+      directional ? 'MissionDesignV3' : relays ? 'MissionDesignV2' : 'MissionDesignV1',
+      [
+        'map',
+        'spawnId',
+        'modes',
+        'actors',
+        'objectives',
+        'bonuses',
+        'coverage',
+        'timeLimitSeconds',
+        'design',
+        'presentation',
+        'archived',
+        'team',
+        ...(relays ? ['relayLinks'] : []),
+      ],
+    );
     archiveFlag(mission);
     exactKeys(mission.map, ['id', 'revision'], 'mission map');
     required(
@@ -176,7 +181,7 @@ export function compileContentProject(source) {
       (map) => map.source.id === mission.map.id && map.source.revision === mission.map.revision,
     );
     required(
-      map.source.format === (relays ? 'MapDesignV2' : 'MapDesignV1'),
+      map.source.format === (directional ? 'MapDesignV3' : relays ? 'MapDesignV2' : 'MapDesignV1'),
       'Mission and map geometry editions must match.',
     );
     required(stableId(mission.spawnId), 'Mission needs a named spawn.');
@@ -289,9 +294,10 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
-  const relays = mission.format === 'MissionDesignV2';
+  const directional = mission.format === 'MissionDesignV3';
+  const relays = mission.format === 'MissionDesignV2' || directional;
   const level = normalizedLevel({
-    version: relays ? 'xonix-level.v6' : 'xonix-level.v5',
+    version: directional ? 'xonix-level.v7' : relays ? 'xonix-level.v6' : 'xonix-level.v5',
     id: mission.id,
     revision: mission.revision,
     name: mission.name,
@@ -312,6 +318,9 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
         }
       : {}),
     goal: { coverage: mission.coverage },
+    ...(directional
+      ? { directionalFields: { version: 'directional-fields.v1', zones: map.source.speedZones } }
+      : {}),
     encounter: null,
     classic: {
       version: 'classic.v1',
@@ -346,7 +355,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     level: simulation,
   });
   return freezeDesign({
-    format: relays ? 'ResolvedMissionV2' : 'ResolvedMissionV1',
+    format: directional ? 'ResolvedMissionV3' : relays ? 'ResolvedMissionV2' : 'ResolvedMissionV1',
     missionId: mission.id,
     mode,
     difficulty,
