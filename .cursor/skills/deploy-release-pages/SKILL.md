@@ -232,3 +232,7 @@ frozen game bytes, or repeat an ambiguous payload upload without fresh asset che
 ## Verify the actual merge parents
 
 A PR's cached `base.sha` can name an earlier main commit even when GitHub has already computed a clean merge against current main. Preserve that mismatch and the refused first check. Before merging, fetch the proposed merge commit itself: require its parents to equal the freshly read main and exact qualified PR head, and its tree to equal the qualified source tree. Recheck main immediately before the merge and verify the returned merge parents/tree afterward. Never substitute a stale base or re-label older qualification. If the proposed tree differs, integrate and qualify the new source instead.
+
+## Single-cohort archive fixtures
+
+When preparing a new archive from an append template, update only the explicit release-specific fixture expectations and derive the qualification path from the selected release record. Preserve generic corruption, source-identity and missing-gate tests. Include the canonical base in the expected inventory and re-pin its exact bytes before staging. Keep a stale-fixture first failure beside the corrected complete cohort; unchanged production helpers and passing fixtures still require hosted extraction, public-byte and scoped native checks.
