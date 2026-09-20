@@ -169,8 +169,9 @@ export function attachJourneyChooser({
           .find((card) => card.dataset.missionId === missionId)
           ?.focus({ preventScroll: true });
     },
-    open(origin = doc.activeElement) {
+    open(origin = doc.activeElement, { returnLabel = 'Back to game' } = {}) {
       opener = origin;
+      back.textContent = returnLabel;
       onPause?.();
       render();
       dialog.showModal();
