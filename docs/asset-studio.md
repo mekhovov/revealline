@@ -110,3 +110,29 @@ The generated effective contract replaces the legacy generic pixel-art brief for
 Recipe-only rotor, trail and effect slots request a reviewable change to registered source code or supported theme tokens and related body anchors. They do not accept PNG uploads or executable content in `.rltheme` bundles. Recipe metadata stores only a registered ID; new behavior or a new recipe requires implementation and review. Keep prior source/revisions and validate the actual runtime, pause and reduced-motion behavior. All three copy actions retain the current custom production brief.
 
 Offline previews keep their dependencies local where possible. Player and rotor specimens use core presets plus the selected asset. Complete picture-owner metadata creates that exact inspection run directly. Generic fixture metadata is separate from downloadable picture originals; an unavailable exact owner is reported rather than replaced by another mission.
+
+## Returning to Workshop
+
+Use **Return to Workshop** in the Studio header to reopen the same edition's Solo
+Workshop with its Asset Studio link focused. Closing Workshop returns focus to the
+Workshop button on Home. **Return to game** remains a separate footer action that
+opens Home. Both links preserve a single bounded Journey route hint when present. A small
+independent entry module prepares their complete destinations before enabling
+them, without waiting for the editor registry. Escape consumes only Workshop,
+including when boot opened both dialogs together.
+They never launch a mission, restore an attempt, adopt a campaign selection or
+change player saves. Existing saved-flight continuation remains an explicit action.
+
+The fixed `workshop=asset-studio` hint is handled after boot, only for ordinary
+Solo entry with no competing launch/return request or newer focus/dialog owner.
+Successful return removes that UI hint from the current URL while preserving the
+Journey route and browser history state. History failure does not block navigation.
+Practice and course entry retain their existing return owners. This does not add
+Workshop entry to Couch or retain an unsaved Couch attempt across page navigation.
+
+Maintenance prompt: “From ordinary and authored-Journey Solo, enter Workshop and
+Asset Studio using Tab/Enter. Activate Return to Workshop, confirm the exact route
+and Studio opener, then Back to Home. Separately exercise Return to game. Prove no
+run advancement or player-save writes, and verify hidden/blurred, disposed, newer
+focus/dialog, duplicate-hint and history-unavailable cases. Preserve each tool's
+unsaved-edit safeguards. Record native checks separately from modeled host tests.”

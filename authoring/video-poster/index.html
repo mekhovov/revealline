@@ -11,14 +11,31 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
-  <body class="field-kit field-kit-support">
+  <body data-workshop-tool="video-poster" class="field-kit field-kit-support">
     <main id="video-poster-main">
-      <nav><a id="video-poster-back" href="../../game/">Back to this edition’s game</a></nav>
+      <nav>
+        <a
+          id="video-poster-back"
+          href="../../game/?workshop=video-poster"
+          data-workshop-return="workshop"
+          inert
+          aria-disabled="true"
+          >Return to Workshop</a
+        >
+        <a data-workshop-return="game" inert aria-disabled="true" href="../../game/"
+          >Return to game</a
+        >
+      </nav>
       <p>
         After downloading a PNG, import it in this edition’s
-        <a id="video-poster-still" href="../still-media/">Picture workshop</a> to assign it to a map
-        and world. Keep the original video separately; this preview does not store it.
+        <a id="video-poster-still" href="../still-media/" data-workshop-tool="still-media"
+          >Picture workshop</a
+        >
+        to assign it to a map and world. Keep the original video separately; this preview does not
+        store it.
       </p>
       <h1 class="field-kit-display">VIDEO POSTER WORKSHOP</h1>
       <p
@@ -81,7 +98,7 @@
       <p id="video-poster-hint">
         Tab/arrows and Enter navigate. Use the time slider with controller South, then D-pad; South
         confirms and East cancels. File picking/text entry use browser or OS controls. Escape
-        cancels work or returns to the game.
+        cancels work or returns to Workshop.
       </p>
       <details>
         <summary>What the timestamps mean</summary>

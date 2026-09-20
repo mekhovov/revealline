@@ -1,3 +1,4 @@
+import { mountToolReturnLinks } from '../ui/workshop-return.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, mkdir, mkdtemp, symlink, stat, rm } from 'node:fs/promises';
@@ -52,11 +53,12 @@ async function setup(t, options = {}) {
         },
       }); // Native HTMLAnchorElement href assignment reflects its content attribute.
     for (const [, key, value] of (attrs + rest).matchAll(
-      /(type|value|min|max|step|href)="([^"]*)"/g,
+      /(type|value|min|max|step|href|data-workshop-return)="([^"]*)"/g,
     )) {
       el[key] = value;
       el.setAttribute(key, value);
     }
+    el.inert = /\binert\b/.test(rest);
     el.hidden = /\bhidden\b/.test(rest);
     el.disabled = /\bdisabled\b/.test(rest);
     el.setAttribute('aria-label', id);
@@ -65,6 +67,11 @@ async function setup(t, options = {}) {
   for (const id of ['image', 'download', 'evidence', 'preview-title'])
     map.get('video-poster-preview').append(map.get(`video-poster-${id}`));
   map.get('video-poster-controls').disabled = false; // Successful classic launcher default.
+  mountToolReturnLinks({
+    document: doc,
+    href: 'https://example.test/authoring/video-poster/?journey=opening',
+    id: 'video-poster',
+  });
   const win = new Events(),
     frames = new Map(),
     urls = new Map(),

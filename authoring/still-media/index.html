@@ -12,15 +12,28 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
     <script type="module" src="../../game/ui/tool-display-entry.mjs"></script>
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
   </head>
-  <body class="still-media-host field-kit field-kit-support">
+  <body data-workshop-tool="still-media" class="still-media-host field-kit field-kit-support">
     <main>
       <h1 class="field-kit-display">Still picture workshop</h1>
       <p id="still-host-status" role="status" class="operation-status" data-state="busy">
         <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>Loading the picture workshop… No local media has been opened.</span>
       </p>
-      <nav class="still-host-navigation"><a href="../../game/">Back to this edition’s game</a></nav>
+      <nav class="still-host-navigation">
+        <a
+          href="../../game/?workshop=still-media"
+          data-workshop-return="workshop"
+          inert
+          aria-disabled="true"
+          >Return to Workshop</a
+        >
+        <a data-workshop-return="game" inert aria-disabled="true" href="../../game/"
+          >Return to game</a
+        >
+      </nav>
       <p>
         Upload an original, choose an exact map and world, then save and preview its assignment.
       </p>

@@ -1,0 +1,169 @@
+{
+  "base": "8a9f37f3635f972d3482823aff22536b3e4e1d39",
+  "patchSHA256": "de21a3c19d98b1ef87e1a08cb1eaa14bc9d5dcbdd1e09c9e2de15b4386e6703d",
+  "files": {
+    "authoring/asset-studio/index.html": {
+      "before": "7789e257a11ed74bb69d61fb25d374243f90413b6d26832806f94245dbf514a9",
+      "after": "69b153f818ae800a57e7ce59a41b113e034c03b03ec105ad297077f4941336f5",
+      "bytes": 34957
+    },
+    "authoring/design-atlas/index.html": {
+      "before": "3ed4c0332eb2fdaf90b3a69a2bd4abf1c3bd0a9616aa1c48962be9277efd25e6",
+      "after": "67e852a6a204e15c72ecc8ef07fd7fccdbf3eea3fd112befe69c5fcff1136b5c",
+      "bytes": 25458
+    },
+    "authoring/enemy-catalog/index.html": {
+      "before": "bad9b572099658506952017b2fa3285af417a7e0d008f599a3fe5e99a2085c4a",
+      "after": "4db57fb6d55fc8c8300b18ba5f93d516b48ab96be4606ef396caccb1dc42e5e1",
+      "bytes": 2941
+    },
+    "authoring/motion-lab/index.html": {
+      "before": "9940a5d9265a52097a2101f07f2248323b44c3060964579da07d4785fa1f1d0d",
+      "after": "675269afae767dd1ae39c5984f4d2d7a3f2d74e854bd92377150d75db6f72133",
+      "bytes": 22011
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "before": "feb6435204e0545cdf724ba399d237b83031539ca56410c858a597458497c9da",
+      "after": "133be24ff2f98afbcc4abcd0ff33c8ccd73cc264c4035b7a0cd22799a71b7641",
+      "bytes": 279492
+    },
+    "authoring/still-media/index.html": {
+      "before": "2255ee23405e7d5bb49dcd1b064dbdcc00483aed74e158d241efa9831f3b4888",
+      "after": "920b505dfa1c704e842b0e9339ca6dcbb411a24878df31d4f3e4c297ff67ff11",
+      "bytes": 5890
+    },
+    "authoring/video-poster/index.html": {
+      "before": "88c15c14163a7ab839085d12df19dd5c84734eb294f67ae8b3076191339b8ec6",
+      "after": "91d916516622196a9da1150e7d43267fa9b1ad2d1c8536c8fdae43a339c5108e",
+      "bytes": 5004
+    },
+    "docs/asset-studio.md": {
+      "before": "0f5e3226b1723480e50dd11b7523b69678fbad1325dd0590e230e92fb6bd623b",
+      "after": "5c2701e86c80b57d63e631d5d3867eb81cf7ed6d3935e97706745d703dacf1a6",
+      "bytes": 24488
+    },
+    "docs/field-kit-surfaces.md": {
+      "before": "8a6f1bc8fb1bda87224cb77a68f46f2419176b697998fa3e5b5c4cd7c13eec75",
+      "after": "1509fa534d48c573e310c024c1c8fe3c60977e9fc89b2e3d9b7a040f9c6c4246",
+      "bytes": 15268
+    },
+    "game/app.mjs": {
+      "before": "f5dc4232f9765573da552089dfdb4f09b1b4871a1be3ea3240d0318df211852b",
+      "after": "59d792ce8e7f10a676cca7db6baff2330bdc476be829254186f4740b87d19fd9",
+      "bytes": 330322
+    },
+    "game/controller-lab/index.html": {
+      "before": "73b555a8130d8e2c7197e1c41f517beeae786c9af692ac31bfae1a1d0bf4caf6",
+      "after": "0ce35104f22fb242f40dddd30aeaef15aee322aa6bc10ee846b8e9f2dbad54f4",
+      "bytes": 13215
+    },
+    "game/couch/couch.mjs": {
+      "before": "5c32d2fca8b7c75ba67852e64538e4a77a554dedf006e8b63bba6de4bdbc27cc",
+      "after": "3812451bbff09749ae34f53e1e2f09941c5a1e0abfb895ec8b7937c977803cae",
+      "bytes": 81844
+    },
+    "game/couch/relay-rescue.mjs": {
+      "before": "82f147234135a8cc56435acdd94a634b770ab8a0c3f0f9a6f18fa5e30d5c1a50",
+      "after": "120376081195078cf75cd9c6a9ae5e1e8e5723039d8c3d45de33fb3906d29d10",
+      "bytes": 120700
+    },
+    "game/index.html": {
+      "before": "5bae03c86f997d620e3d244fe057699057993f926de14e79e5069d7033cb7b67",
+      "after": "9acba7f40c650c19d308a441f3c27602b83a52f6576819cd094663afb524e1a1",
+      "bytes": 75460
+    },
+    "game/playground/index.html": {
+      "before": "83b49c10ad85c8d349a1de99efc39be6b92865da1748527fced2338f1ba241f4",
+      "after": "8c62b22dcab603da4c9e2af6495ab6e5381fd65be2ee85874893d496ce307977",
+      "bytes": 28430
+    },
+    "game/replay-theater/index.html": {
+      "before": "675664919e08f410e54bcf9f4fbeff4526c2c5597e4d7b58681bba3994e3f5f0",
+      "after": "b4037a0c98ca27666654b938c5b3f7db4220719775ecb83c1fc2be95cec705f0",
+      "bytes": 9510
+    },
+    "game/replay-theater/navigation.mjs": {
+      "before": "546a6853a8a557f2c1efea317bdb667e51d14a20b53eddaa3b8dbd1459478832",
+      "after": "90a03d10592addf8b1916a78e704643c6b6043d5019eea6462faeb6675d69c46",
+      "bytes": 6022
+    },
+    "game/test/asset-studio-return.test.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "1f87e1fa8e391854ca4d6a6d264203fe3985a5419d24607b40f4a783340342c6",
+      "bytes": 7758,
+      "new": true
+    },
+    "game/test/controller-navigation.test.mjs": {
+      "before": "1f59b962173f766a3bb02ca911538870a98b22376b755f2075c911fc0e9c0c27",
+      "after": "908581383af7de732ab5ae39d084dd0539e0d336022f767de6167ded56465e49",
+      "bytes": 92672
+    },
+    "game/test/enemy-workshop-host.test.mjs": {
+      "before": "52b99bf4de62896d456c1dbeca522df49a22e0f2d08ea2a99f1b0377f3cd28f8",
+      "after": "341ed573754c806569a82559af1ea33f01adb4c6beea881e5c11b6a56533a899",
+      "bytes": 20642
+    },
+    "game/test/playground-tab-boundary.test.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "216f2b7fda647eaaf4fc78031115f9d850891eeee502541f0283b99dea735422",
+      "bytes": 5604,
+      "new": true
+    },
+    "game/test/replay-theater-navigation.test.mjs": {
+      "before": "4bb6dbbb5a9ebdacb4d58ce2be47eb3f2e56e7c6295956cc25dac65af251f0ca",
+      "after": "ac58c463487531cfcf89233c5097b1b376653e1f32464b15e9cf94456b9d8572",
+      "bytes": 26038
+    },
+    "game/test/video-poster-workshop.test.mjs": {
+      "before": "442af2e3c178539b0c689a45796fc29fd5ac7a943ab46f5f5bebdcfbca7775d5",
+      "after": "feb03b4e85d499af6f2752639a0a2e866eeee81662e57a5ac608e4227af3911c",
+      "bytes": 17975
+    },
+    "game/test/workshop-return.test.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "962788610b169b57a225c60f295795ada651fee2301550262834605bbc51ff43",
+      "bytes": 7394,
+      "new": true
+    },
+    "game/ui/asset-studio-return.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "95e3fb0198d7fc0f3c4d5b5506c21bc43df2f71cd96e0f4f8b9ce3972817afd0",
+      "bytes": 2007,
+      "new": true
+    },
+    "game/ui/controller-navigation.mjs": {
+      "before": "12ec4fb9ad675d4e25c34692d6fc0f1a030e91654656d0e06373cd7eba4059a4",
+      "after": "af656f735895e76a746c96813fc7f7ea24b3b5af397a6386bf70bbd695ac1c89",
+      "bytes": 29364
+    },
+    "game/ui/game-shell.mjs": {
+      "before": "31b01f579b54e18ecfb3ec8caf02f8f99948f3063b9657758b0acfda9a61f184",
+      "after": "b722d62a26f94a95520ae613fe59ed6aaa2905aeb9094091a924d76ebc8c82a4",
+      "bytes": 27603
+    },
+    "game/ui/playground-tab-boundary.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "f7c6ec0fcb1052cfb86a31c56edc0dd00f3b6cf025e3deb605cd85044de73897",
+      "bytes": 1614,
+      "new": true
+    },
+    "game/ui/workshop-return-entry.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e4bf1baa2b48ac69dca2ba1032e08e7ffcaccc19e5cb1901be9be4066624ce59",
+      "bytes": 174,
+      "new": true
+    },
+    "game/ui/workshop-return.css": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "72a76227930ef8577a3625ca8fce5d79d6064058c46843ab81cecc234a3ef2d2",
+      "bytes": 276,
+      "new": true
+    },
+    "game/ui/workshop-return.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "352ca0e7124bb8a6a6c9f8afb88dcc4156e5be17ef5c0e828f4c38c02d2641fa",
+      "bytes": 3552,
+      "new": true
+    }
+  }
+}

@@ -64,6 +64,11 @@ import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import {
+  mountWorkshopLinks,
+  readWorkshopReturn,
+  clearWorkshopReturn,
+} from './ui/workshop-return.mjs';
 import { attachFocusClearance } from './ui/focus-clearance.mjs';
 import { createOperationStatus } from './ui/operation-status.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
@@ -84,6 +89,7 @@ import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { requestControllerPracticeExit } from './ui/controller-practice-exit.mjs';
+import { playgroundTabBoundary } from './ui/playground-tab-boundary.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
 import { attachEnemyGuide } from './ui/enemy-guide.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
@@ -1853,7 +1859,10 @@ try {
       );
     },
     onTabBoundary: ({ backward }) => {
-      if (!controllerPreview || window.name !== 'revealline-controller-practice') return false;
+      if (!controllerPreview || window.name !== 'revealline-controller-practice')
+        return !controllerPreviewRequested
+          ? playgroundTabBoundary({ window, suspend: suspendInteraction })
+          : false;
       requestControllerPracticeExit({
         window,
         session: params.get('controller-session'),
@@ -8174,6 +8183,7 @@ try {
     onWorlds: () => optionalWorlds.open(),
     onMissions: journeyEnabled ? (opener) => journeyChooser.open(opener) : undefined,
   });
+  mountWorkshopLinks({ document, href: location.href });
   attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)
@@ -8217,6 +8227,19 @@ try {
     const returnFocus = $(returnContext.focus === 'versus' ? 'shell-versus' : 'shell-team');
     if (availableFocusTarget(returnFocus)) returnFocus.focus({ preventScroll: true });
   }
+  const workshopReturn = readWorkshopReturn(location.search);
+  if (
+    !practice &&
+    !courseSession &&
+    !packLaunchRequest &&
+    !exactReturn &&
+    workshopReturn &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (document.activeElement === document.body || !availableFocusTarget(document.activeElement)) &&
+    gameShell?.openWorkshop({ tool: workshopReturn.id })
+  )
+    clearWorkshopReturn(window);
   controllerReading?.refresh();
   // Boot removes the visibility guard synchronously. Do not refocus a hidden
   // placeholder or replace a deliberate choice made during that handoff.
