@@ -59,7 +59,7 @@ export function resolveTeamMission(project, mission, map, difficulty) {
     walls: map.source.walls ?? [],
     safeRects: map.source.foundations ?? [],
     enemies: mission.actors.map((source) => {
-      const actor = compileActor(source, difficulty);
+      const actor = compileActor(source, difficulty, project.actors.id);
       return { ...actor, type: 'drifter', radius: 0.25 };
     }),
     goal: { coverage: mission.coverage },

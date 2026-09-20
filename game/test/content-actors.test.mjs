@@ -191,6 +191,42 @@ function editorFixture() {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio exposes roamer fields only for the exact v2 Solo catalogue and rejects stale upgrade fields', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'reclaimed-roamer'));
+  f.node('select').value = 'keeper';
+  f.node('select').onchange();
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v2';
+  f.update(next, false);
+  submit(f);
+  assert.match(f.node('result').textContent, /context changed/);
+  f.editor.sync();
+  assert(f.node('role').children.some((row) => row.value === 'reclaimed-roamer'));
+  f.node('select').value = '';
+  f.node('select').onchange();
+  f.node('id').value = 'roamer';
+  f.node('role').value = 'reclaimed-roamer';
+  f.node('role').onchange();
+  assert.equal(f.node('heading-row').hidden, false);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  assert.match(f.node('position-help').textContent, /120 actor ticks/);
+  f.node('x').value = '4.5';
+  f.node('y').value = '10.5';
+  f.node('heading').value = '1,0';
+  submit(f);
+  assert.match(f.node('result').textContent, /applied/);
+  assert.deepEqual(f.source().missions[0].actors.at(-1).heading, [1, 0]);
+  const team = createTeamOpeningCandidates();
+  team.actorCatalogId = 'journey-actors-v2';
+  f.update(team);
+  f.mission('twin-landings');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper'],
+  );
+});
+
 test('a same-revision map replacement rejects stale actor coordinates', () => {
   const f = editorFixture();
   f.node('select').value = 'keeper';
