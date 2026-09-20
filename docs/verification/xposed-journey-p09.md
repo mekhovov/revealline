@@ -236,5 +236,43 @@ or departure-directed impacts, and unfinished/life-loss clears. The observer nev
 changes gameplay state or awards mastery. Full optional routes remain in progress;
 ordinary clears and bounded search timeouts do not certify or disprove those goals.
 
-Alternate-order/simultaneous/impact optional goals, all-background artwork,
-broader native/devices, Team and human validation remain incomplete.
+### Spiral Stores optional-goal redesign
+
+The initial proposal was “capture both relays in the same closure.” A four-connected
+shortest-path inspection of the initial unclaimed field puts the two triggers 129
+steps / 130 cells apart around the linked store foundations. This is not an
+impossibility proof: later capture topology and indirect fill can change the problem.
+It does show that the obvious direct approach asks for a long winding trail, against
+this mission's stated lesson of using shortcuts instead of tracing every bend.
+Bounded straight-cut searches did not qualify the original proposal.
+
+The candidate now asks for both shortcuts within two consecutive captures and a
+no-loss clear. This rewards deliberate relay ordering without an unrelated cleanup
+capture between them; a genuine same-closure capture also qualifies. The observer
+counts distinct linked objective IDs, never several gates from one trigger, and
+negative tests reject intervening captures. Geometry, actor tuning, runtime identity
+and ordinary clear fixtures remain unchanged. The candidate/ordinary-route/evidence
+cohort still passes 29/29 on both Node versions. Human quality remains a hypothesis.
+
+### Complete optional-goal feasibility matrix
+
+All 42 mission × preset × steering optional goals now have no-loss full-clear
+fixtures in `relay-mastery-routes.json`. The mastery/evidence cohort passes 13/13
+on Node20.19.5 and22.22.2. Every fixture checks exact simulation identity and final
+checkpoint, public replay, fixed denominator, real connector traversal, all relay
+openings before victory and no quota-first required-objective cleanup. A distinct
+evidence observer verifies the authored goal rather than trusting the route label.
+The ordinary 42 clear routes remain separate and unchanged.
+
+The Remix's first-return impact prefixes wait 15.95–20.9 seconds on reclaimed
+ground for the carrier's approach, then make a real vulnerable cut and close while
+a player-directed impact is active. All six routes subsequently traverse both
+connectors; full times including that wait are 56.6–72.2 seconds. This establishes
+an available interaction, not desirable human pacing. Ordinary completion never
+requires that wait or the optional impact. Review whether a human can recognize
+and use the same window during productive play before accepting this mastery goal.
+Earlier greedy routes that opened their last shortcut only at victory were rejected.
+
+Original background artwork, broader native/devices, Team, human validation,
+integration, phase version/PR and release/Pages gates remain incomplete. P09 remains
+local-only and excluded from the coordinator's frozen v0.76 candidate.

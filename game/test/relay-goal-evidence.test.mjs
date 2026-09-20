@@ -80,7 +80,7 @@ test('landing goals require post-opening visits, not merely initial platform occ
   assert.equal(inspect('first-link', run, evidence).achieved, false);
 });
 
-test('simultaneous goal requires two different triggers in the same closure', () => {
+test('consecutive-capture goal requires different triggers without an intervening capture', () => {
   const gate = (objectiveId) => ({ type: 'relay.opened', objectiveId });
   for (const [events, expected] of [
     [[gate('a'), gate('b')], false],
@@ -98,6 +98,16 @@ test('simultaneous goal requires two different triggers in the same closure', ()
     observeRelayGoal(run, evidence, relayBeforeStep(run));
   }
   assert.equal(evidence.simultaneous, false);
+  assert.equal(inspect('spiral-stores', snapshot(), evidence).achieved, true);
+  for (const gap of [1, 2, 3]) {
+    const separated = createRelayGoalEvidence();
+    const steps = [[gate('a')], ...Array.from({ length: gap }, () => []), [gate('b')]];
+    for (const events of steps) {
+      const run = snapshot({ events: [{ type: 'cut.closed' }, ...events] });
+      observeRelayGoal(run, separated, relayBeforeStep(run));
+    }
+    assert.equal(inspect('spiral-stores', snapshot(), separated).achieved, false);
+  }
 });
 
 test('impact goal requires capture clearing the same previously active player-directed front', () => {
