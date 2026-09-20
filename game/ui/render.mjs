@@ -13,6 +13,7 @@ import {
   drawEnemyPressure,
 } from './classic-view.mjs';
 import { foundationCompatibleView as classicView } from './foundation-view.mjs';
+import { drawRelayGates, relayView } from './relay-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { playerBodyOffset } from './player-body-layout.mjs';
@@ -532,6 +533,7 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
+    if (!fullReveal) drawRelayGates(ctx, relayView(state), p, CELL);
     if (this.style === 'props' && !fullReveal && !images.wall)
       for (const w of state.level.walls || []) {
         const x = w.x * CELL,
@@ -876,7 +878,7 @@ export class BoardPainter {
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
-      if (state.ruleset === 'xonix-core.v6')
+      if (['xonix-core.v6', 'xonix-core.v7'].includes(state.ruleset))
         drawPlayerLocator(ctx, {
           x: (state.player.x + bodyOffset.x) * CELL,
           y: (state.player.y + bodyOffset.y) * CELL,

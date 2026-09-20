@@ -44,10 +44,13 @@ export function missionBriefing(
   const encounterGoal = encounter
     ? `Capture the shield relay. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
     : '';
-  const classicHint = ['xonix-level.v4', 'xonix-level.v5'].includes(level.version)
+  const foundations = ['xonix-level.v5', 'xonix-level.v6'].includes(level.version);
+  const classicHint = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(level.version)
     ? [
-        level.version === 'xonix-level.v5' &&
-        level.enemies?.some((enemy) => enemy.type === 'lane-boss')
+        level.relayGates?.gates?.length
+          ? 'Capture linked relays to open permanent return routes. Closed gates block cuts.'
+          : '',
+        foundations && level.enemies?.some((enemy) => enemy.type === 'lane-boss')
           ? 'Lanes lock, warn, then fire. Leave the lane and secure exposed trail.'
           : '',
         level.classic?.enemyPressure?.actors?.length
@@ -73,8 +76,7 @@ export function missionBriefing(
         .slice(
           0,
           level.classic?.lineImpact ||
-            (level.version === 'xonix-level.v5' &&
-              level.enemies?.some((enemy) => enemy.type === 'lane-boss'))
+            (foundations && level.enemies?.some((enemy) => enemy.type === 'lane-boss'))
             ? 1
             : 2,
         )

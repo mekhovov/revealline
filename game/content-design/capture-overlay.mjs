@@ -23,6 +23,10 @@ export function captureOverlay(preview) {
       `Frozen snapshot: ${retained} retained regions, ${capture.components.length - retained} would-fill regions, ` +
       `${capture.filledCells.length} would-fill cells and ${capture.securedTrail.length} hypothetical trail cells. ` +
       `Field anchors: ${[...anchors].join(', ') || 'none'}. ` +
-      `Affected objectives: ${[...affected].join(', ') || 'none'}. ${capture.assumption}`,
+      `Affected objectives: ${[...affected].join(', ') || 'none'}. ` +
+      (capture.affectedGateIds
+        ? `Would-open gates: ${capture.affectedGateIds.join(', ') || 'none'}. ${capture.reservedGateCells.length} reserved gate cells never count toward earned coverage. `
+        : '') +
+      capture.assumption,
   };
 }

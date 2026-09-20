@@ -2,6 +2,7 @@ import { CELL } from '../core/registry.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
 import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
+import { drawRelayGates } from '../ui/relay-view.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -54,6 +55,13 @@ export function paintContentMap(
       ctx.strokeRect(x + 2, y + 2, size - 5, size - 5);
     }
   }
+  if (preview.markers.gates)
+    drawRelayGates(
+      ctx,
+      { gates: preview.markers.gates },
+      { safe: '#ccebbc', accent: '#ffe8a5' },
+      size,
+    );
   // Framed glyphs distinguish pickup effects without relying on color. These
   // are placement markers, never a claim that enclosing them collects them.
   const bonusGlyphs = {

@@ -3,6 +3,7 @@ import { boardPaintSizeForLevel } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
 import { drawClassicTerrain, drawClassicPickups, drawClassicEnemy } from '../ui/classic-view.mjs';
 import { foundationCompatibleView as classicView } from '../ui/foundation-view.mjs';
+import { drawRelayGates, relayView } from '../ui/relay-view.mjs';
 
 export function paintEditorMap(canvas, current) {
   const { width, height } = boardPaintSizeForLevel(current.level);
@@ -10,11 +11,10 @@ export function paintEditorMap(canvas, current) {
   if (canvas.height !== height) canvas.height = height;
   const c = canvas.getContext('2d'),
     s = 16;
-  const classic = ['xonix-level.v4', 'xonix-level.v5'].includes(current.level.version)
-    ? classicView(
-        createRun(current.level, { ...current.settings, classRecipes: current.classRecipes }),
-      )
+  const run = ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(current.level.version)
+    ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
+  const classic = run ? classicView(run) : null;
   c.fillStyle = current.theme.palette.field;
   c.fillRect(0, 0, width, height);
   c.fillStyle = current.theme.palette.safe;
@@ -64,6 +64,9 @@ export function paintEditorMap(canvas, current) {
   }
   c.fillStyle = '#849496';
   for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);
+  for (const gate of current.level.relayGates?.gates ?? [])
+    c.fillRect(gate.x * s, gate.y * s, gate.w * s, gate.h * s);
+  if (run) drawRelayGates(c, relayView(run), current.theme.palette, s);
   drawClassicTerrain(c, classic, current.theme.palette);
   drawClassicPickups(c, classic, current.theme.palette);
   for (const e of current.level.enemies) {
