@@ -1,17 +1,19 @@
 # Reveal Line cross-mode execution register
 
-## Current delivery — v0.68.1 frozen, Pages proposal
+## Current delivery — v0.68.1 publicly verified
 
-**Public default remains v0.68.0 until this publisher succeeds.** Its complete public audit passed: 3,610 files / 645,572,699 bytes. Keyboard Team entry and checked replacement, Versus filtering, practice return and Pressure Pictures installation were observed. Its same-chapter More worlds Play still offers replacement; Stay preserves the run. Do not mark P03/P06 complete.
+**Public default: [v0.68.1](https://mekhovov.github.io/revealline/releases/v0.68.1/site/game/).** Publisher PR180 merged as `5d54b938`; deployment `6550183682` passed all 3,635 public files / 645,730,399 bytes with zero failures/retries. Native keyboard verification covers Settings Close/tabs at 844×390 and 390×844 with Plain/Large text, visible fallback focus, saved Continue → correct paused caption and About → Team Start/Pause. [Original evidence and scope](verification/player-menus-v0681/public/README.md). This closes the named menu-correction scope, not the complete navigation/presentation phases.
 
-**v0.68.1 is published and source-qualified.** PR178 merged as `49cef024`; its tree equals immutable source `276cbba3` / tree `3fa643a6`. Both final full hosted families passed 6,752 tests / 518 files on Node 20.19.6. Release 392336219 retains nine verified assets. Its corrections keep Settings Close/tabs reachable, restore visible focus, accurately describe Pause/Resume and provide accessible About mode entry. The local 171-test/ten-file cohort and keyboard/responsive observations remain distinct from full suites and pending public verification.
+v0.68.0's same-chapter More worlds issue persists in v0.68.1. Stay preserves the run; v0.68.2 corrects the unnecessary replacement. P03/P06 remain partial.
+
+**v0.68.1 is published and source-qualified.** PR178 merged as `49cef024`; its tree equals immutable source `276cbba3` / tree `3fa643a6`. Both final full hosted families passed 6,752 tests / 518 files on Node 20.19.6. Release 392336219 retains nine verified assets. Its corrections keep Settings Close/tabs reachable, restore visible focus, accurately describe Pause/Resume and provide accessible About mode entry. The local 171-test/ten-file cohort and keyboard/responsive observations remain distinct from full suites and the separate public verification above.
 
 **Historical retention:** Archive35 PR1 deployed original v0.68.0 at `b603b1d1`, deployment `6550067348`; all 729 files / 313,820,502 bytes passed public checks. Keyboard root → saved Continue → Pause passed. Stale pause text and the known same-chapter issue remain explicit limitations in the immutable archive.
 
 **Next, in order:**
 
-1. Deploy this v0.68.1 selector; verify all public bytes and affected keyboard menu, Settings and About journeys before scoped acceptance.
-2. Complete v0.68.2 source `45ed925e` qualification (PR179), fixing same-chapter selection without replacing or rewriting the paused run. Focused checks pass on Node 20/22; actual keyboard candidate preservation passed. Public acceptance remains pending.
+1. v0.68.1 scoped public gate is complete. Preserve its immutable assets, previous release routes and remaining limitations.
+2. Complete v0.68.2 qualification (PR179), fixing same-chapter selection without replacing or rewriting the paused run. First full runs for `45ed925e` failed an obsolete offline test expectation; correction `dfdd2687` passes its complete 15-test file on Node 20/22. Fresh exact-source full qualification and public acceptance remain pending.
 3. Review Journey Solo/Versus cards and Team registry/Studio foundations, then integrate the sealed cross-mode custom-music work. Candidates do not establish public acceptance.
 4. Continue presentation/actor parity, readable action feedback, fair challenge, rewards, authoring/content and complete browser qualification. Physical controllers/touch, listening, actual offline recovery and human difficulty assessment remain separate gates.
 
