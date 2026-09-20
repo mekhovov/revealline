@@ -76,7 +76,14 @@ to evaluate route choices, then replayed the selected inputs from a fresh run.
 The separate Signal timing cohort replays all84 routes at seeds0,1,42,2026 and
 0xffffffff: **420/420** no-loss clears,24.3seconds. This verifies seed robustness
 for these authored starts/headings, not random layouts or broader human skill.
-Delayed decisions and genuinely different route choices remain separate gates.
+The separate delayed-start fixture supplies35 fresh legal no-loss clears: all7
+greyboxes after0.25,0.5,1,2or5seconds of initial idle, Standard/immediate/seed1.
+The two-test timing cohort passes in26.1seconds and verifies every delayed route's
+exact checkpoint and exported replay. Idle time itself must preserve lives; routes
+are recomputed for each sampled threat phase, not asserted identical to instant
+starts. These five samples do not establish arbitrary-delay safety, other delayed
+preset/steering combinations, human reaction tolerance or optional mastery.
+Genuinely different strategic route choices remain a separate acceptance gate.
 
 Omniscient active-play durations are18.65–21.95s(Soft crossing),20.45–28.95s(Dry
 spine),27.85–28.05s(Wide approach),18.85–30.25s(Cool the crossing),45.05–57.65s
