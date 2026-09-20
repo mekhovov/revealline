@@ -105,9 +105,37 @@ ground without harming the stopped craft. Closing the preview returned focus to
 Play. This checks a real closure and presentation, not a native full clear,
 two-player/controller run, phone layout or human comprehension/enjoyment.
 
+## Candidate increment
+
+Four original core greyboxes form one shield-relay learning arc, with a separate
+optional Remix. Three reference adaptations retain observed spatial motifs,
+not copied coordinates, artwork or unverified rules. The explicit Studio
+"Inspect Sentinel greyboxes" action imports candidates into a local draft; it
+does not enroll them in the public Journey. See the Sentinel reference crosswalk.
+
+All five maps start with one genuinely retained field component. Shared validation
+rejects auto-fill, shield/gate overlap and wall/foundation overlap. All thirty
+preset/steering first-return cases survive, retain the coverage denominator and
+reproduce through public replay. The candidate/readiness cohort passes **17/17 on
+Node 20.19.5 and 22.22.2**, including exact CLI/Studio manifests for all presets.
+Outputs: `.cache/p11-candidates-node20-r3.tap` and
+`.cache/p11-candidates-node22-r3.tap`.
+
+The initial three very short straight-cut layouts were revised. A bounded legal
+turning-cut search now clears First relay in 25.35 seconds with five closures and
+no life loss, verified from fresh input. However, Twin receivers and Relay
+perimeter still admit efficient 9.96/12.15-second solutions. In Twin receivers,
+one tight enclosure captures both shields and isolates the core; the documented
+release opening then completes the encounter. This is legal capture behavior,
+not a reason to change the fill contract or impose mandatory delay. These
+observations are **feasibility evidence, not accepted pacing or difficulty**.
+The two candidates remain under review for distinct alternate/mastery routes,
+human route comprehension and possible redesign or removal. Their proposed
+60–150-second durations are not measured player results.
+
 ## Remaining gates
 
-Reference-led greyboxes and optional Remix; all-preset routes,
+Candidate balance decisions; all-preset full routes,
 paired race parity, mastery and lifecycle coverage; final original artwork;
 Team qualification; native/accessibility checks; human capture comprehension,
 failure explanation and voluntary retry; phase PR/review/version/release/Pages.
