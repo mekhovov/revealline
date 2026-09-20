@@ -111,7 +111,7 @@ const rows = [
     consequence:
       'A useful connection can shorten the next cut without making every cell in that connection permanent.',
     moment: 'One return link breaks while the island itself remains available.',
-    mastery: 'Join all three foundations and repair a reopened link without losing a life.',
+    mastery: 'Join all three foundations and repair eroded ground without losing a life.',
     duration: [90, 150],
   },
   {
