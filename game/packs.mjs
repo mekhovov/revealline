@@ -3,6 +3,7 @@ import {
   ENCOUNTER_VERSIONS,
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
+  FOUNDATION_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import {
@@ -17,6 +18,7 @@ import {
   ENCOUNTER_SCENARIO_VERSION,
   WIDE_SCENARIO_VERSION,
   CLASSIC_SCENARIO_VERSION,
+  FOUNDATION_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { boundedJSON, plainObject, stableId, exactKeys, required } from './data-json.mjs';
@@ -28,6 +30,7 @@ export const MASTERY_PACK_VERSION = 'xonix-pack.v2';
 export const ENCOUNTER_PACK_VERSION = 'xonix-pack.v3';
 export const WIDE_PACK_VERSION = 'xonix-pack.v4';
 export const CLASSIC_PACK_VERSION = 'xonix-pack.v5';
+export const FOUNDATION_PACK_VERSION = 'xonix-pack.v6';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
 export const PACK_LIMITS = Object.freeze({
   maxBytes: 24 * 1024 * 1024,
@@ -104,17 +107,20 @@ const levelKeys = [
 ];
 function packChecks(candidate) {
   const pack = boundedPack(candidate);
-  const classic = pack.format === CLASSIC_PACK_VERSION;
+  const foundations = pack.format === FOUNDATION_PACK_VERSION;
+  const classic = pack.format === CLASSIC_PACK_VERSION || foundations;
   const wide = pack.format === WIDE_PACK_VERSION;
   const encounter = pack.format === ENCOUNTER_PACK_VERSION;
   const authoredMasteries = pack.format === MASTERY_PACK_VERSION || encounter || wide || classic;
-  const versions = classic
-    ? CLASSIC_VERSIONS
-    : wide
-      ? WIDE_VERSIONS
-      : encounter
-        ? ENCOUNTER_VERSIONS
-        : LEGACY_VERSIONS;
+  const versions = foundations
+    ? FOUNDATION_VERSIONS
+    : classic
+      ? CLASSIC_VERSIONS
+      : wide
+        ? WIDE_VERSIONS
+        : encounter
+          ? ENCOUNTER_VERSIONS
+          : LEGACY_VERSIONS;
   exactKeys(
     pack,
     [
@@ -143,6 +149,7 @@ function packChecks(candidate) {
       ENCOUNTER_PACK_VERSION,
       WIDE_PACK_VERSION,
       CLASSIC_PACK_VERSION,
+      FOUNDATION_PACK_VERSION,
     ].includes(pack.format) &&
       stableId(pack.id) &&
       semver(pack.version),
@@ -284,11 +291,13 @@ function packChecks(candidate) {
     for (const level of campaign.levels) {
       exactKeys(
         level,
-        classic
-          ? [...levelKeys, 'encounter', 'classic']
-          : encounter || wide
-            ? [...levelKeys, 'encounter']
-            : levelKeys,
+        foundations
+          ? [...levelKeys, 'encounter', 'classic', 'foundations']
+          : classic
+            ? [...levelKeys, 'encounter', 'classic']
+            : encounter || wide
+              ? [...levelKeys, 'encounter']
+              : levelKeys,
         'level',
       );
       required(stableId(level.id), 'Level identity is reserved or invalid.');
@@ -303,13 +312,15 @@ function packChecks(candidate) {
         'Level refers to unknown music.',
       );
       const scenario = {
-        format: classic
-          ? CLASSIC_SCENARIO_VERSION
-          : wide
-            ? WIDE_SCENARIO_VERSION
-            : encounter
-              ? ENCOUNTER_SCENARIO_VERSION
-              : SCENARIO_VERSION,
+        format: foundations
+          ? FOUNDATION_SCENARIO_VERSION
+          : classic
+            ? CLASSIC_SCENARIO_VERSION
+            : wide
+              ? WIDE_SCENARIO_VERSION
+              : encounter
+                ? ENCOUNTER_SCENARIO_VERSION
+                : SCENARIO_VERSION,
         level,
         theme: themes.get(level.themeId ?? campaign.themeId) ?? pack.themes[0],
         settings: {
@@ -391,7 +402,8 @@ function packChecks(candidate) {
     for (const [role, descriptor] of Object.entries(scope.visualOverrides)) {
       required(
         VISUAL_ROLES.includes(role) ||
-          (pack.format === CLASSIC_PACK_VERSION && CLASSIC_VISUAL_ROLES.includes(role)),
+          ([CLASSIC_PACK_VERSION, FOUNDATION_PACK_VERSION].includes(pack.format) &&
+            CLASSIC_VISUAL_ROLES.includes(role)),
         'Unknown visual role.',
       );
       const header = inspectImageDataUrl(descriptor.dataUrl);
@@ -582,15 +594,17 @@ export function scenarioFromPack(
   };
   const scenario = {
     format:
-      pack.format === CLASSIC_PACK_VERSION
-        ? CLASSIC_SCENARIO_VERSION
-        : pack.format === WIDE_PACK_VERSION
-          ? WIDE_SCENARIO_VERSION
-          : pack.format === ENCOUNTER_PACK_VERSION
-            ? ENCOUNTER_SCENARIO_VERSION
-            : pack.format === MASTERY_PACK_VERSION
-              ? MASTERY_SCENARIO_VERSION
-              : SCENARIO_VERSION,
+      pack.format === FOUNDATION_PACK_VERSION
+        ? FOUNDATION_SCENARIO_VERSION
+        : pack.format === CLASSIC_PACK_VERSION
+          ? CLASSIC_SCENARIO_VERSION
+          : pack.format === WIDE_PACK_VERSION
+            ? WIDE_SCENARIO_VERSION
+            : pack.format === ENCOUNTER_PACK_VERSION
+              ? ENCOUNTER_SCENARIO_VERSION
+              : pack.format === MASTERY_PACK_VERSION
+                ? MASTERY_SCENARIO_VERSION
+                : SCENARIO_VERSION,
     level,
     theme,
     classRecipes: resolved.classRecipes,

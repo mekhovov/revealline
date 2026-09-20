@@ -6,7 +6,7 @@ import {
   loadoutHash,
   rosterHash,
 } from './core/registry.mjs';
-import { versionsForCampaign } from './core/versions.mjs';
+import { versionsForCampaign, isClassicRuleset } from './core/versions.mjs';
 import { EPS } from './core/geometry.mjs';
 import { dataIdentity, stableId } from './data-json.mjs';
 
@@ -178,7 +178,7 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
   )
     return progress;
   const rules = { ...DEFAULT_RULES, ...level.rules };
-  const classic = result.ruleset === 'xonix-core.v5';
+  const classic = isClassicRuleset(result.ruleset);
   if (
     !Number.isInteger(result.lives) ||
     result.lives < 1 ||

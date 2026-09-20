@@ -313,6 +313,16 @@ export class Element extends Events {
   scrollIntoView() {
     this.scrolled = (this.scrolled ?? 0) + 1;
   }
+  showModal() {
+    this.open = true;
+    this.setAttribute('open', '');
+  }
+  close() {
+    if (!this.open) return;
+    this.open = false;
+    this.removeAttribute('open');
+    this.emit('close');
+  }
   click() {
     if (this.disabled) return;
     if (this.tagName === 'INPUT' && this.type === 'checkbox') this.checked = !this.checked;
