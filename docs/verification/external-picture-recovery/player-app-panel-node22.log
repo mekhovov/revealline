@@ -1,0 +1,223 @@
+TAP version 13
+# Subtest: fresh native source installation assigns release pictures after durable install and retains every authored original
+ok 1 - fresh native source installation assigns release pictures after durable install and retains every authored original
+  ---
+  duration_ms: 13799.00175
+  type: 'test'
+  ...
+# Subtest: source registry is exact compiled authority; public catalog remains five unchanged embedded entries
+ok 2 - source registry is exact compiled authority; public catalog remains five unchanged embedded entries
+  ---
+  duration_ms: 0.536875
+  type: 'test'
+  ...
+# Subtest: native pair install preserves an unfinished unrelated flight, then explicit Play and legal route earn the exact original once
+ok 3 - native pair install preserves an unfinished unrelated flight, then explicit Play and legal route earn the exact original once
+  ---
+  duration_ms: 25016.635041
+  type: 'test'
+  ...
+# Subtest: stored external run reloads with exact saved pin and remains paused until explicit Resume
+    # Subtest: native install, play and pause
+    ok 1 - native install, play and pause
+      ---
+      duration_ms: 14601.298833
+      type: 'test'
+      ...
+    # Subtest: fresh app import restores the saved flight
+    ok 2 - fresh app import restores the saved flight
+      ---
+      duration_ms: 3591.279542
+      type: 'test'
+      ...
+    1..2
+ok 4 - stored external run reloads with exact saved pin and remains paused until explicit Resume
+  ---
+  duration_ms: 18192.991542
+  type: 'test'
+  ...
+# Subtest: startup preserves and refuses external-chapter-journal.v1 before any backup recovery
+ok 5 - startup preserves and refuses external-chapter-journal.v1 before any backup recovery
+  ---
+  duration_ms: 362.406
+  type: 'test'
+  ...
+# Subtest: startup preserves and refuses external-chapter-journal.v1 + backup-journal before any backup recovery
+ok 6 - startup preserves and refuses external-chapter-journal.v1 + backup-journal before any backup recovery
+  ---
+  duration_ms: 350.414417
+  type: 'test'
+  ...
+# Subtest: cleared assignment still selects descriptor original; missing original refuses both new flight and Original artwork without generic fallback
+ok 7 - cleared assignment still selects descriptor original; missing original refuses both new flight and Original artwork without generic fallback
+  ---
+  duration_ms: 17467.336917
+  type: 'test'
+  ...
+# Subtest: ordinary native removal and pack-only export refuse indexed content without dropping pointer or index
+ok 8 - ordinary native removal and pack-only export refuse indexed content without dropping pointer or index
+  ---
+  duration_ms: 7772.838875
+  type: 'test'
+  ...
+# Subtest: Workshop authenticates the same pointer/index and holds both locks; stale index and pending journal cannot publish assignments
+ok 9 - Workshop authenticates the same pointer/index and holds both locks; stale index and pending journal cannot publish assignments
+  ---
+  duration_ms: 3467.224041
+  type: 'test'
+  ...
+# Subtest: guarded metadata work uses one backup lock, refuses a stale branded snapshot and remains lazy for ordinary packs
+ok 10 - guarded metadata work uses one backup lock, refuses a stale branded snapshot and remains lazy for ordinary packs
+  ---
+  duration_ms: 0.476333
+  type: 'test'
+  ...
+# Subtest: source install and unrelated chapter win preserve an earlier exact first-earned story A after binding B
+ok 11 - source install and unrelated chapter win preserve an earlier exact first-earned story A after binding B
+  ---
+  duration_ms: 30995.935042
+  type: 'test'
+  ...
+# Subtest: Back during exact media hashing cancels native pair install and late digest cannot publish or change the flight
+ok 12 - Back during exact media hashing cancels native pair install and late digest cannot publish or change the flight
+  ---
+  duration_ms: 393.422584
+  type: 'test'
+  ...
+# Subtest: native exact-pair recovery completes a retained published journal once; reload is required before adopting its preserved profile
+    # Subtest: explicit native recovery leaves existing generation and asks for reload
+    ok 1 - explicit native recovery leaves existing generation and asks for reload
+      ---
+      duration_ms: 4944.247542
+      type: 'test'
+      ...
+    # Subtest: new host coherently adopts recovered index and permits explicit Play
+    ok 2 - new host coherently adopts recovered index and permits explicit Play
+      ---
+      duration_ms: 9072.988542
+      type: 'test'
+      ...
+    1..2
+ok 13 - native exact-pair recovery completes a retained published journal once; reload is required before adopting its preserved profile
+  ---
+  duration_ms: 16670.386791
+  type: 'test'
+  ...
+# Subtest: published external pictures survive saved Continue and confirmed Restart with overlapping preparation
+    # Subtest: install, play, pause and retain new release original
+    ok 1 - install, play, pause and retain new release original
+      ---
+      duration_ms: 14475.404084
+      type: 'test'
+      ...
+    # Subtest: restored attempt resumes and the confirmed replacement attempt becomes ready
+    ok 2 - restored attempt resumes and the confirmed replacement attempt becomes ready
+      ---
+      duration_ms: 5665.616208
+      type: 'test'
+      ...
+    1..2
+ok 14 - published external pictures survive saved Continue and confirmed Restart with overlapping preparation
+  ---
+  duration_ms: 20141.501167
+  type: 'test'
+  ...
+# Subtest: explicit retained-picture review installs originals without fresh defaults or changing the paused flight
+ok 15 - explicit retained-picture review installs originals without fresh defaults or changing the paused flight
+  ---
+  duration_ms: 15365.621458
+  type: 'test'
+  ...
+# Subtest: only the chosen card supplies native files and shared busy blocks every other card until explicit Choose
+ok 16 - only the chosen card supplies native files and shared busy blocks every other card until explicit Choose
+  ---
+  duration_ms: 4.107833
+  type: 'test'
+  ...
+# Subtest: Back cancels old download; reopening then completing another card never publishes stale first-card readiness
+ok 17 - Back cancels old download; reopening then completing another card never publishes stale first-card readiness
+  ---
+  duration_ms: 0.839458
+  type: 'test'
+  ...
+# Subtest: late inspection from an old multi-card open cannot clear the new card readiness or busy owner
+ok 18 - late inspection from an old multi-card open cannot clear the new card readiness or busy owner
+  ---
+  duration_ms: 13.645458
+  type: 'test'
+  ...
+# Subtest: sixteen real choices stay reachable offline and an active Countercurrent owner survives filtering and retry
+ok 19 - sixteen real choices stay reachable offline and an active Countercurrent owner survives filtering and retry
+  ---
+  duration_ms: 12.061625
+  type: 'test'
+  ...
+# Subtest: picture conflict download-play requires explicit review and never auto-launches
+ok 20 - picture conflict download-play requires explicit review and never auto-launches
+  ---
+  duration_ms: 1.6555
+  type: 'test'
+  ...
+# Subtest: picture conflict download-install requires explicit review and never auto-launches
+ok 21 - picture conflict download-install requires explicit review and never auto-launches
+  ---
+  duration_ms: 0.645167
+  type: 'test'
+  ...
+# Subtest: picture conflict upload requires explicit review and never auto-launches
+ok 22 - picture conflict upload requires explicit review and never auto-launches
+  ---
+  duration_ms: 0.619333
+  type: 'test'
+  ...
+# Subtest: picture review discarded after cancel; hidden confirm cannot install
+ok 23 - picture review discarded after cancel; hidden confirm cannot install
+  ---
+  duration_ms: 0.54275
+  type: 'test'
+  ...
+# Subtest: picture review discarded after close; hidden confirm cannot install
+ok 24 - picture review discarded after close; hidden confirm cannot install
+  ---
+  duration_ms: 0.995417
+  type: 'test'
+  ...
+# Subtest: picture review discarded after files; hidden confirm cannot install
+ok 25 - picture review discarded after files; hidden confirm cannot install
+  ---
+  duration_ms: 0.552625
+  type: 'test'
+  ...
+# Subtest: picture review discarded after refresh; hidden confirm cannot install
+ok 26 - picture review discarded after refresh; hidden confirm cannot install
+  ---
+  duration_ms: 0.421583
+  type: 'test'
+  ...
+# Subtest: late conflict after Back never reopens review or steals focus
+ok 27 - late conflict after Back never reopens review or steals focus
+  ---
+  duration_ms: 0.271375
+  type: 'test'
+  ...
+# Subtest: confirmed installation reports committed originals when later inspection fails
+ok 28 - confirmed installation reports committed originals when later inspection fails
+  ---
+  duration_ms: 0.495209
+  type: 'test'
+  ...
+# Subtest: late inspection after confirmed install and Back cannot overwrite new readiness
+ok 29 - late inspection after confirmed install and Back cannot overwrite new readiness
+  ---
+  duration_ms: 6.444875
+  type: 'test'
+  ...
+1..29
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 176684.402291

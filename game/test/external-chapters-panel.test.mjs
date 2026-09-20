@@ -199,3 +199,171 @@ test('sixteen real choices stay reachable offline and an active Countercurrent o
   assert.equal(selected, 1);
   assert.equal(f.$('dialog').open, false);
 });
+
+function pictureConflict() {
+  const error = new Error('A retained picture binding conflicts with the external chapter.');
+  error.name = 'RetainedPictureAssignmentConflict';
+  error.conflicts = [
+    {
+      identity: { levelId: 'orchard' },
+      retained: { presentationId: 'custom.orchard', revision: 2 },
+    },
+  ];
+  return error;
+}
+for (const pathway of ['download-play', 'download-install', 'upload']) {
+  test(`picture conflict ${pathway} requires explicit review and never auto-launches`, async (t) => {
+    const error = pictureConflict();
+    let ready = false,
+      played = 0;
+    const calls = [];
+    const f = fixture(t, [
+      chapter('a', {
+        ...(pathway === 'download-play'
+          ? {
+              play: async () => {
+                played++;
+              },
+            }
+          : {}),
+        inspect: async () => ({ status: ready ? 'installed' : 'absent' }),
+        download: async (options) => {
+          calls.push(options);
+          if (!options.pictureReview) throw error;
+          assert.equal(options.pictureReview, error);
+          ready = true;
+        },
+        install: async (files, options) => {
+          calls.push({ ...options, files });
+          if (!options.pictureReview) throw error;
+          assert.equal(options.pictureReview, error);
+          assert.equal(files.pack, pack);
+          assert.equal(files.media, media);
+          ready = true;
+        },
+      }),
+    ]);
+    const pack = new Blob(['pack']),
+      media = new Blob(['media']);
+    await f.panel.open();
+    f.$('source-a-pack').files = [pack];
+    f.$('source-a-media').files = [media];
+    const opener = f.$(pathway === 'upload' ? 'source-a-install' : 'source-a-download');
+    opener.focus();
+    await opener.onclick();
+    assert.equal(calls.length, 1);
+    assert.equal(f.$('source-a-picture-review').hidden, false);
+    assert.match(f.$('source-a-picture-review-text').textContent, /Orchard: your selected picture/);
+    assert.equal(
+      f.$('source-a-picture-cancel').ownerDocument.activeElement,
+      f.$('source-a-picture-cancel'),
+    );
+    assert.equal(played, 0);
+    f.$('source-a-picture-confirm').focus();
+    await f.$('source-a-picture-confirm').onclick();
+    assert.equal(calls.length, 2);
+    assert.equal(played, 0);
+    assert.equal(f.$('dialog').open, true);
+    assert.equal(f.$('source-a-picture-review').hidden, true);
+    const choose = f.$(pathway === 'download-play' ? 'source-a-download' : 'source-a-choose');
+    assert.equal(choose.disabled, false);
+    assert.equal(choose.ownerDocument.activeElement, choose);
+    assert.match(f.$('status').textContent, /paused flight.*kept/);
+  });
+}
+for (const exit of ['cancel', 'close', 'files', 'refresh']) {
+  test(`picture review discarded after ${exit}; hidden confirm cannot install`, async (t) => {
+    let calls = 0;
+    const f = fixture(t, [
+      chapter('a', {
+        download: async () => {
+          calls++;
+          throw pictureConflict();
+        },
+      }),
+    ]);
+    await f.panel.open();
+    const opener = f.$('source-a-download');
+    opener.focus();
+    await opener.onclick();
+    assert.equal(f.$('source-a-picture-review').hidden, false);
+    if (exit === 'cancel') f.$('source-a-picture-cancel').onclick();
+    else if (exit === 'close') {
+      f.panel.close();
+      await f.panel.open();
+    } else if (exit === 'files') f.$('source-a-pack').onchange();
+    else await f.$('reload').onclick();
+    assert.equal(f.$('source-a-picture-review').hidden, true);
+    await f.$('source-a-picture-confirm').onclick();
+    assert.equal(calls, 1);
+  });
+}
+test('late conflict after Back never reopens review or steals focus', async (t) => {
+  let reject;
+  const f = fixture(t, [
+    chapter('a', {
+      download: () =>
+        new Promise((_, fail) => {
+          reject = fail;
+        }),
+    }),
+  ]);
+  await f.panel.open();
+  const pending = f.$('source-a-download').onclick();
+  f.panel.close();
+  reject(pictureConflict());
+  await pending;
+  assert.equal(f.$('source-a-picture-review').hidden, true);
+  assert.equal(f.$('dialog').open, false);
+});
+
+test('confirmed installation reports committed originals when later inspection fails', async (t) => {
+  let installed = false;
+  const f = fixture(t, [
+    chapter('a', {
+      download: async ({ pictureReview }) => {
+        if (!pictureReview) throw pictureConflict();
+        installed = true;
+      },
+      inspect: async () => {
+        if (installed) throw new Error('Read temporarily unavailable');
+        return { status: 'absent' };
+      },
+    }),
+  ]);
+  await f.panel.open();
+  await f.$('source-a-download').onclick();
+  await f.$('source-a-picture-confirm').onclick();
+  assert.match(f.$('status').textContent, /originals were installed.*choices kept.*Refresh/);
+  assert.equal(f.$('dialog').open, true);
+});
+test('late inspection after confirmed install and Back cannot overwrite new readiness', async (t) => {
+  let installed = false,
+    finish;
+  const f = fixture(t, [
+    chapter('a', {
+      download: async ({ pictureReview }) => {
+        if (!pictureReview) throw pictureConflict();
+        installed = true;
+      },
+      inspect: async () =>
+        installed
+          ? new Promise((resolve) => {
+              finish = resolve;
+            })
+          : { status: 'absent' },
+    }),
+  ]);
+  await f.panel.open();
+  await f.$('source-a-download').onclick();
+  const pending = f.$('source-a-picture-confirm').onclick();
+  await waitFor(() => finish);
+  f.panel.close();
+  installed = false;
+  await f.panel.open();
+  const before = f.$('source-a-state').textContent;
+  finish({ status: 'installed' });
+  await pending;
+  assert.equal(f.$('source-a-state').textContent, before);
+  assert.equal(f.$('source-a-choose').disabled, true);
+});

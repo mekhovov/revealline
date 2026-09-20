@@ -4075,7 +4075,7 @@ try {
   async function installSourceChapter(
     chapterId,
     files,
-    { signal, download = false, onStatus } = {},
+    { signal, download = false, onStatus, pictureReview } = {},
   ) {
     const notify = flightInformation.captureWarning('host.chapter', { allowTerminal: true });
     const descriptor = sourceExternalChapter(chapterId);
@@ -4121,7 +4121,7 @@ try {
       report('Saving the verified chapter and originals…', 'saving');
       const installed = await externalChapters[
         snapshot.reason === 'external-recovery' ? 'recover' : 'install'
-      ](prepared, { signal });
+      ](prepared, { signal, pictureReview });
       committed = true;
       report('Verifying the saved chapter is ready to play…', 'verifying');
       const next = await checkedChapters({ signal });
@@ -4130,7 +4130,7 @@ try {
       adoptContentCatalog(contentFromChapters(next));
       packLaunchGuard.advance(operation, before, packs);
       packCommits.acceptCurrent();
-      if (snapshot.reason !== 'external-recovery') {
+      if (snapshot.reason !== 'external-recovery' && !pictureReview) {
         try {
           await releasePictures.assignFreshChapter({
             descriptor: installed.descriptor,
