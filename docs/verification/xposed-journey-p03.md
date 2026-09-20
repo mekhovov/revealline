@@ -423,6 +423,25 @@ fixture failures from omitted sparse `fpv-arcade-r5.json`; restoring the exact
 11,708,176-byte tracked blob37108db6fc98f1c4e3eeed4381b1b5d19e24ef16 resolved
 those without assertion changes. Release owner notified for independent review.
 
+### Planned-library capacity, not added playable content
+
+The former256-mission/32-campaign/32-pack project limits could not hold the
+approved242 Solo candidates plus12 Remixes and12 separate Team missions in one
+project. Bounded item capacities now allow384 missions and64 campaigns/packs.
+Compiler and draft storage share the unchanged4MiB/100000-node/depth20/512-array
+JSON envelope; map/asset limits remain512. This is not an unbounded import or a
+minimum shipped count.
+
+A synthetic266-mission/36-campaign/36-pack registry compiles with254 Solo/Versus
+entries and12 explicitly authored Team entries. It exercises the last campaign
+in all presets, copy-on-write shared maps, undo/redo/export, immutable checkpoint1
+and latest-checkpoint recovery, source immutability and refusal above each item
+limit. Repeated synthetic templates are test data only and never enter the game
+library. The three complete compiler/draft/capacity files pass11/11, zero skips,
+4.359seconds on Node20.19.5; lint/format pass. The capacity test itself takes4.230s,
+including compilation and storage/history operations. This is not a browser
+interaction-latency guarantee; large-library responsiveness still needs measurement.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
