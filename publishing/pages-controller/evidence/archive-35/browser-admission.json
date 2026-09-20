@@ -1,0 +1,37 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-35",
+  "infrastructureCommit": "b603b1d1aa75c5352155d97876033ca37a883888",
+  "deploymentId": 6550067348,
+  "versions": [
+    "v0.68.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-35/native-observation.json",
+      "sha256": "ffdb44e8459e9d1c740d513022a87bc201e86c34089e64bdc2286d62680f3402"
+    },
+    {
+      "path": "evidence/archive-35/root-acceptance.json",
+      "sha256": "68835a01024e4f34ee88703c917b06ea1e911979354d8a2e9c79ba914c208850"
+    },
+    {
+      "path": "evidence/archive-35/run.json",
+      "sha256": "374942f243c6b2f7f71215eab35a5b7a0693f7d36f153268442720a88405f1e6"
+    },
+    {
+      "path": "evidence/archive-35/deployments.json",
+      "sha256": "754fbccd92c2dc8ed5d246d6725a3f7eb0964b4dd43cd423b50010b19fe58ff5"
+    },
+    {
+      "path": "evidence/archive-35/deployment-statuses.json",
+      "sha256": "e04f79e3165c5008c43c6db0fb86277f85be0d733c0cbf5c3d2be130e577fc07"
+    },
+    {
+      "path": "evidence/archive-35/v0680-known-issue.json",
+      "sha256": "6a4be406398b1b6d5c56dfdfad62130b33ea9e4895fa4df4e8b5b80fb3e86e72"
+    }
+  ],
+  "scope": "Original bytes and scoped keyboard saved Continue/Pause. Known same-chapter replacement and stale paused caption remain; no full phase/hardware/offline/listening acceptance."
+}

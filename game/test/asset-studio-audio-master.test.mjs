@@ -7,6 +7,7 @@ import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { drawAssetPreview } from '../../authoring/asset-studio/preview.mjs';
+import { attachStudioAuditionLifecycle } from '../../authoring/asset-studio/audition-lifecycle.mjs';
 import { audioRecipePreview } from '../../authoring/asset-studio/scene-preview.mjs';
 
 // Real preview ownership, media binding and Soundscape execute. DOM metadata and
@@ -48,7 +49,8 @@ function boundary(t) {
   let sequence = 0;
   doc.createElement = (tag) => new PreviewElement(doc, tag);
   const replace = (key, value) => {
-    savedGlobals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+    if (!savedGlobals.has(key))
+      savedGlobals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
   };
   replace('document', doc);
@@ -241,6 +243,11 @@ for (const id of ['audio.music', 'audio.capture']) {
     master.setMuted(false);
     assert.equal(recipe.gains[0].gain.value, 0.175, '35% audition × 50% master');
     assert.equal(recipe.sources.length, voices, 'Unmute does not schedule a new audition');
+    assert.doesNotMatch(
+      recipe.surface.textContent,
+      /master sound is muted/,
+      'Unmute repaints the active audition caption.',
+    );
     recipe.stop.onclick();
     master.setVolume(1);
     assert.equal(recipe.gains[0].gain.value, 0);
@@ -264,3 +271,225 @@ for (const id of ['audio.music', 'audio.capture']) {
     assert.doesNotMatch(recipe.surface.textContent, /Playing the registered/);
   });
 }
+
+test('hidden Studio native auditions retire both previews and return requires explicit Play', async (t) => {
+  const h = boundary(t),
+    master = createAudioMaster({ muted: false, volume: 0.5 }),
+    previews = [
+      mediaPreview(h, master, 'Saved lifecycle'),
+      mediaPreview(h, master, 'Draft lifecycle'),
+    ];
+  let draws = [];
+  const lifecycle = attachStudioAuditionLifecycle({
+    document: h.doc,
+    isAudition: () => true,
+    stop: () => previews.forEach(({ surface }) => surface.previewCleanup()),
+    restore: () => {
+      draws = previews.map((preview) => preview.draw());
+    },
+  });
+  h.own(() => lifecycle.dispose());
+  const a = await previews[0].ready(previews[0].draw()),
+    b = await previews[1].ready(previews[1].draw());
+  for (const [index, volume] of [0.4, 0.8].entries()) {
+    const fader = previews[index].surface.querySelector('input');
+    fader.value = String(volume);
+    fader.oninput();
+  }
+  await a.play();
+  await b.play();
+  assert.deepEqual([a.volume, b.volume], [0.2, 0.4]);
+  h.doc.hidden = true;
+  h.doc.emit('visibilitychange');
+  assert.deepEqual([a.paused, b.paused, a.muted, b.muted], [true, true, true, true]);
+  assert.deepEqual([a.src, b.src], ['', '']);
+  assert.equal(h.urls.size, 0);
+  assert.equal(h.revoked.length, 2);
+  master.setMuted(true);
+  master.setVolume(0.9);
+  master.setMuted(false);
+  assert.equal(a.muted && b.muted, true, 'Authority changes cannot reopen disposed auditions.');
+  assert.equal(a.plays + b.plays, 2);
+  h.doc.hidden = false;
+  h.doc.emit('visibilitychange');
+  const c = await previews[0].ready(draws[0]),
+    d = await previews[1].ready(draws[1]);
+  assert.deepEqual([c.plays, d.plays, c.volume, d.volume], [0, 0, 0.9, 0.9]);
+  assert.equal(h.urls.size, 2);
+  await c.play();
+  assert.equal(c.plays, 1);
+  assert.equal(d.plays, 0, 'The other preview retains independent playback intent.');
+});
+
+test('hidden interruption settles pending metadata and fences its late callback', async (t) => {
+  const h = boundary(t),
+    master = createAudioMaster({ muted: false, volume: 0.5 }),
+    preview = mediaPreview(h, master, 'Pending hidden lifecycle'),
+    pending = preview.draw(),
+    media = preview.surface.querySelector('audio'),
+    lateReady = [...media.listeners.get('loadedmetadata')][0];
+  let restored = 0;
+  const lifecycle = attachStudioAuditionLifecycle({
+    document: h.doc,
+    isAudition: () => true,
+    stop: () => preview.surface.previewCleanup(),
+    restore: () => restored++,
+  });
+  h.own(() => lifecycle.dispose());
+  h.doc.hidden = true;
+  h.doc.emit('visibilitychange');
+  await pending;
+  master.setMuted(false);
+  lateReady();
+  assert.deepEqual([media.plays, media.paused, media.muted, media.src], [0, true, true, '']);
+  assert.equal(h.urls.size, 0);
+  assert.equal(preview.surface.previewMarker, null);
+  lifecycle.dispose();
+  h.doc.hidden = false;
+  h.doc.emit('visibilitychange');
+  assert.equal(restored, 0, 'Terminal disposal suppresses deferred restoration.');
+});
+
+test('audition lifecycle ignores focus, non-audio slots and duplicate events, and retires its listener', () => {
+  const doc = new Document();
+  let audio = false,
+    stopped = 0,
+    restored = 0;
+  const lifecycle = attachStudioAuditionLifecycle({
+    document: doc,
+    isAudition: () => audio,
+    stop: () => stopped++,
+    restore: () => restored++,
+  });
+  doc.hidden = true;
+  doc.emit('visibilitychange');
+  doc.hidden = false;
+  doc.emit('visibilitychange');
+  assert.deepEqual([stopped, restored], [0, 0]);
+  audio = true;
+  doc.emit('blur');
+  assert.equal(stopped, 0, 'File-picker focus loss does not interrupt a visible audition.');
+  doc.hidden = true;
+  doc.emit('visibilitychange');
+  doc.emit('visibilitychange');
+  assert.equal(stopped, 1);
+  audio = false;
+  doc.hidden = false;
+  doc.emit('visibilitychange');
+  assert.equal(restored, 0, 'A new non-audio selection owns its own preview.');
+  audio = true;
+  doc.hidden = true;
+  doc.emit('visibilitychange');
+  doc.hidden = false;
+  doc.emit('visibilitychange');
+  doc.emit('visibilitychange');
+  assert.deepEqual([stopped, restored], [2, 1]);
+  lifecycle.dispose();
+  lifecycle.dispose();
+  doc.hidden = true;
+  doc.emit('visibilitychange');
+  assert.deepEqual([stopped, restored], [2, 1]);
+  assert.equal(doc.listeners.get('visibilitychange')?.size || 0, 0);
+});
+
+for (const id of ['audio.music', 'audio.capture']) {
+  test(`${id} caption tracks only accepted playback and cannot replace idle/loading/Stop/error feedback`, async (t) => {
+    const h = boundary(t),
+      master = createAudioMaster({ muted: true, volume: 0.13 });
+    const recipe = recipePreview(h, master, id);
+    const caption = () => recipe.surface.querySelector('.operation-status-label').textContent;
+    const changeOutput = () => {
+      master.setMuted(!master.snapshot().muted);
+      master.setVolume(0.5);
+    };
+    const idle = caption();
+    changeOutput();
+    assert.equal(caption(), idle);
+    const pending = recipe.play.onclick();
+    const loading = caption();
+    assert.match(loading, /Preparing/);
+    changeOutput();
+    assert.equal(caption(), loading, 'Master changes do not turn pending playback into success.');
+    recipe.stop.onclick();
+    const stopped = caption();
+    changeOutput();
+    assert.equal(caption(), stopped);
+    recipe.pending.resolve();
+    await pending;
+    assert.equal(caption(), stopped, 'Late Play cannot replace Stop.');
+    recipe.context.resume = async () => {
+      throw new Error('Denied fixture');
+    };
+    await recipe.play.onclick();
+    const error = caption();
+    assert.equal(error, 'Audio is unavailable.');
+    changeOutput();
+    assert.equal(caption(), error, 'Master changes preserve failure and explicit retry.');
+    recipe.context.resume = async () => {
+      recipe.context.state = 'running';
+    };
+    master.setMuted(true);
+    await recipe.play.onclick();
+    assert.match(caption(), /master sound is muted/);
+    const sources = recipe.sources.length;
+    master.setMuted(false);
+    assert.equal(caption(), 'Playing the registered Soundscape recipe.');
+    master.setVolume(0);
+    assert.match(caption(), /volume is zero/);
+    master.setVolume(0.13);
+    assert.equal(caption(), 'Playing the registered Soundscape recipe.');
+    assert.equal(recipe.sources.length, sources, 'Repainting never schedules another sound.');
+    recipe.cleanup();
+    const disposed = caption();
+    changeOutput();
+    assert.equal(caption(), disposed, 'Retired captions unsubscribe from the authority.');
+  });
+}
+
+test('saved and draft recipe captions have independent playback ownership under one master', async (t) => {
+  const h = boundary(t),
+    master = createAudioMaster({ muted: true, volume: 0.13 });
+  const saved = recipePreview(h, master, 'audio.capture');
+  const startingSaved = saved.play.onclick();
+  saved.pending.resolve();
+  await startingSaved;
+  const draft = recipePreview(h, master, 'audio.music');
+  const startingDraft = draft.play.onclick();
+  master.setMuted(false);
+  assert.match(saved.surface.textContent, /Playing the registered/);
+  assert.match(draft.surface.textContent, /Preparing/);
+  draft.pending.resolve();
+  await startingDraft;
+  master.setMuted(true);
+  assert.match(saved.surface.textContent, /master sound is muted/);
+  assert.match(draft.surface.textContent, /master sound is muted/);
+  saved.stop.onclick();
+  master.setMuted(false);
+  assert.match(saved.surface.textContent, /Audition stopped/);
+  assert.doesNotMatch(saved.surface.textContent, /Playing the registered/);
+  assert.match(draft.surface.textContent, /Playing the registered/);
+});
+
+test('native preview metadata statuses do not adopt procedural playback captions on master edits', async (t) => {
+  const h = boundary(t),
+    master = createAudioMaster({ muted: true, volume: 0.13 });
+  const saved = mediaPreview(h, master, 'Native status saved'),
+    draft = mediaPreview(h, master, 'Native status draft');
+  const a = await saved.ready(saved.draw()),
+    waiting = draft.draw();
+  const pendingStatus = draft.status.textContent;
+  await a.play();
+  master.setMuted(false);
+  assert.match(saved.status.textContent, /ready/);
+  assert.equal(draft.status.textContent, pendingStatus);
+  assert.equal(a.plays, 1);
+  draft.surface.querySelector('audio').emit('error');
+  await waiting;
+  const failure = draft.status.textContent;
+  assert.match(failure, /metadata could not be decoded/);
+  master.setMuted(true);
+  master.setVolume(0.5);
+  assert.equal(draft.status.textContent, failure);
+  assert.match(saved.status.textContent, /ready/);
+  assert.equal(a.plays, 1, 'Native transport remains governed by its own controls.');
+});

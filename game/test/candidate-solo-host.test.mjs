@@ -391,7 +391,11 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   p.$('library-button').click();
   p.$('save-json').value = savedRaw;
   p.$('import-save').click();
-  await settle(() => !p.$('library-dialog').open);
+  await settle(() => !p.$('library-dialog').open).catch((error) => {
+    throw new Error(
+      `${error.message} ${p.$('flight-preparation-status').textContent} ${p.$('save-status').textContent} ${JSON.stringify(p.errors)}`,
+    );
+  });
   p.frame(0);
   assert.equal(p.doc.body.dataset.flightState, 'paused');
   assert.equal(p.rendered.run.levelId, 'first-return');

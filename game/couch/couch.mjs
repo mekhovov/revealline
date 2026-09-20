@@ -4,6 +4,7 @@ import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
+import { attachCouchCatalogue } from './couch-catalogue.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
@@ -163,6 +164,7 @@ let featured,
   publishedAudio,
   publishedPlayer,
   boardFootprints,
+  catalogue,
   candidateJourney,
   journeyPreferences;
 const releaseArtwork = (event) => {
@@ -181,6 +183,7 @@ const releaseArtwork = (event) => {
   presentationPage.close();
   presentationFeedback.dispose();
   featured?.dispose();
+  catalogue?.dispose();
   installed?.dispose();
   staticPictures?.dispose();
   journeyPreferences?.dispose();
@@ -319,13 +322,15 @@ try {
         presentationPage,
       });
   let installedStatus = candidateJourney
-    ? `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
-    : 'Installed chapters have not been checked.';
+      ? `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
+      : 'Installed chapters have not been checked.',
+    contentChannel = null;
   if (!candidateJourney)
     try {
       const channel = document.querySelector('meta[name="revealline-offline"]')
         ? `release-${(await json('../build-info.json')).version}`
         : 'dev';
+      contentChannel = channel;
       installed = createCouchInstalledChapters({
         channel,
         registeredEntries: [baseEntry],
@@ -342,7 +347,7 @@ try {
       maps.push(...rows);
       installedStatus = rows.length
         ? `${rows.length} installed maps available. Choose a map to check its original.`
-        : 'No installed chapters in this profile. Install chapters in solo More worlds, then refresh.';
+        : 'Open Chapters to download and play compatible campaigns here.';
     } catch (error) {
       installedStatus = `Installed chapters unavailable: ${error.message}`;
     }
@@ -1148,7 +1153,7 @@ try {
       $('race-level').value = oldKey;
       installedStatus = rows.length
         ? `${rows.length} installed maps available.`
-        : 'No installed chapters. Install them in solo More worlds, then refresh.';
+        : 'Open Chapters to download and play compatible campaigns here.';
       const ready = prepare();
       focusController = contentController;
       await ready;
@@ -1332,6 +1337,8 @@ try {
     getSoloReturnToken: () =>
       readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage }),
     onTransition: ({ to, back = false } = {}) => {
+      catalogue?.close();
+      catalogue?.cancel();
       clear();
       if (back || to !== contentScope) cancelContent();
     },
@@ -1342,12 +1349,225 @@ try {
       contentScope = 'setup';
     },
   });
+
+  function catalogueAttempt() {
+    return {
+      match,
+      generation,
+      recipe: roundRecipe,
+      backdrop,
+      won,
+      scope: shell.scope(),
+      startEpoch: startIntentEpoch,
+    };
+  }
+  function catalogueAttemptCurrent(attempt) {
+    return (
+      !disposed &&
+      !document.hidden &&
+      document.hasFocus() &&
+      match === attempt.match &&
+      generation === attempt.generation &&
+      roundRecipe === attempt.recipe &&
+      backdrop === attempt.backdrop &&
+      won === attempt.won &&
+      shell.scope() === attempt.scope &&
+      startIntentEpoch === attempt.startEpoch &&
+      match.status !== 'running'
+    );
+  }
+  async function stageCataloguePack(pack, { signal, onStatus, attempt, isCurrent }) {
+    const candidateReader = createCouchInstalledChapters({
+      channel: contentChannel,
+      registeredEntries: [baseEntry],
+      presentationPage,
+    });
+    let lease = null,
+      nextStatic = null,
+      adopted = false;
+    const check = () => {
+      if (!isCurrent() || signal.aborted)
+        throw new DOMException(
+          'Chapter preparation cancelled; the current race is kept.',
+          'AbortError',
+        );
+    };
+    const cleanup = () => {
+      if (adopted) return;
+      lease?.cancel();
+      candidateReader.dispose();
+      nextStatic?.dispose();
+    };
+    try {
+      check();
+      const rows = await candidateReader.refresh({ signal, onStatus, expectedPack: pack });
+      check();
+      const entry = rows.find((row) => row.sourcePackId === pack.id);
+      if (!entry) throw new Error('This chapter has no compatible Versus missions.');
+      const classId = entry.classes.some((item) => item.id === attempt.recipe.classId)
+        ? attempt.recipe.classId
+        : entry.classes[0].id;
+      const nextTheme =
+        entry.themes.find((item) => item.id === entry.defaultThemeId) || entry.themes[0];
+      const recipe = {
+        entry,
+        theme: nextTheme,
+        classId,
+        turnPolicy: attempt.recipe.turnPolicy,
+        seconds: attempt.recipe.seconds,
+        format: attempt.recipe.format,
+      };
+      const nextMatch = createRound(recipe),
+        raceId = ++raceSequence;
+      lease = await candidateReader.stage(entry, {
+        themeId: nextTheme.id,
+        raceId,
+        signal,
+        onStatus,
+      });
+      check();
+      nextStatic = createCouchStaticPictures({
+        entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
+        presentationPage,
+      });
+      check();
+      return {
+        async confirm() {
+          check();
+          await lease.confirm({ onStatus });
+          check();
+        },
+        adopt(ownsActivation) {
+          check();
+          if (!ownsActivation()) return null;
+          const retire = lease.commit();
+          check();
+          const previousReader = installed,
+            previousStatic = staticPictures,
+            previousController = contentController;
+          // Publish the entire accepted attempt before any DOM or retirement callback.
+          installed = candidateReader;
+          staticPictures = nextStatic;
+          match = nextMatch;
+          generation = raceId;
+          roundRecipe = recipe;
+          selectedMapKey = entry.key;
+          theme = nextTheme;
+          backdrop = lease.picture;
+          won = [0, 0];
+          finished = false;
+          nextAttempt = null;
+          preparedFocusMatch = match;
+          contentController = new AbortController();
+          contentReady = true;
+          contentBusy = false;
+          contentError = null;
+          contentScope = 'main';
+          maps.splice(0, maps.length, ...shippedMaps, ...rows);
+          adopted = true;
+          const acceptedController = contentController;
+          const accepted = () =>
+            !disposed &&
+            !document.hidden &&
+            document.hasFocus() &&
+            match === nextMatch &&
+            generation === raceId &&
+            roundRecipe === recipe &&
+            backdrop === lease.picture &&
+            installed === candidateReader &&
+            contentController === acceptedController &&
+            !acceptedController.signal.aborted &&
+            startIntentEpoch === attempt.startEpoch &&
+            match.status === 'ready' &&
+            shell.scope() === attempt.scope;
+          previousController?.abort();
+          retire();
+          previousReader?.dispose();
+          previousStatic?.dispose();
+          if (accepted()) {
+            showMaps();
+            $('race-level').value = entry.key;
+            $('race-class').replaceChildren(
+              ...entry.classes.map((item) => new Option(item.label, item.id)),
+            );
+            $('race-class').value = classId;
+            $('race-theme').replaceChildren(
+              ...entry.themes.map((item) => new Option(item.name, item.id)),
+            );
+            $('race-theme').value = nextTheme.id;
+            paintRound(recipe);
+            $('race-start').textContent =
+              recipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
+            $('race-message').textContent =
+              entry.chapter +
+              ': ' +
+              entry.level.name +
+              '. The same picture is prepared for both boards.';
+            installedStatus = rows.length + ' installed maps available.';
+            updateMenu();
+          }
+          return {
+            current: accepted,
+            start() {
+              if (!accepted() || catalogue.root()) return false;
+              clear({ resetDirection: true });
+              if (!accepted()) return false;
+              resumeDuel(nextMatch, { preserveContinuation: true });
+              neutralResumeTick = true;
+              if (publishedPlayer)
+                (publishedPlayer.snapshot().track
+                  ? publishedPlayer.resume()
+                  : publishedPlayer.play()
+                ).catch(() => {});
+              else sound.enable().catch(() => {});
+              $('race-message').textContent = 'Make your line count. First clear wins.';
+              updateMenu();
+              input.focus();
+              return match === nextMatch && match.status === 'running';
+            },
+          };
+        },
+        dispose: cleanup,
+      };
+    } catch (error) {
+      cleanup();
+      throw error;
+    }
+  }
+  if (contentChannel) {
+    try {
+      catalogue = attachCouchCatalogue({
+        button: $('race-chapters'),
+        channel: contentChannel,
+        registeredEntries: [baseEntry],
+        getAttempt: catalogueAttempt,
+        isAttemptCurrent: catalogueAttemptCurrent,
+        stage: stageCataloguePack,
+        onOpen: () => {
+          clear();
+        },
+        onClose: () => {
+          clear();
+        },
+        onRead: (request) => navigation.beginReading(request),
+      });
+    } catch (error) {
+      // Storage access itself may be denied before a catalogue can be created.
+      // Keep the existing shipped-map fallback playable in that environment.
+      installedStatus = `Chapters unavailable: ${error.message || error}. You can still play shipped maps.`;
+    }
+  }
+  $('race-chapters').onclick = () => {
+    if (disposed || contentBusy || match.status === 'running' || !catalogue) return;
+    return catalogue.open();
+  };
+
   function couchScope() {
     const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
     if (modal) return `couch:${modal.id}`;
     return match?.status === 'running'
       ? 'flight'
-      : `couch:${match?.status || 'loading'}:${generation}:${shell?.scope() || 'main'}`;
+      : `couch:${match?.status || 'loading'}:${generation}:${catalogue?.root()?.id || shell?.scope() || 'main'}`;
   }
   function readCachedPads() {
     if (frameReadError) throw frameReadError;
@@ -1451,6 +1671,7 @@ try {
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
     $('race-start').disabled = running || contentBusy || !contentReady;
+    $('race-chapters').disabled = running || contentBusy || !catalogue;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
     $('race-picture-cancel').hidden = !contentBusy;
@@ -1487,6 +1708,7 @@ try {
   const menuIds = new Set([
     'race-coop',
     'race-start',
+    'race-chapters',
     'race-journey-next',
     'race-journey-skip',
     'race-journey-find',
@@ -1543,34 +1765,43 @@ try {
   navigation = attachControllerNavigation({
     getScope: couchScope,
     getRoot: () =>
-      [...document.querySelectorAll('dialog[open]')].at(-1) ??
+      catalogue?.root() ||
+      [...document.querySelectorAll('dialog[open]')].at(-1) ||
       (candidateJourney && shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
-      $('journey-backup')?.open
-        ? $('journey-backup-export')
-        : $('journey-chooser')?.open
-          ? $('journey-search')
-          : shell.primary(),
+      catalogue?.root()
+        ? catalogue.primary()
+        : $('journey-backup')?.open
+          ? $('journey-backup-export')
+          : $('journey-chooser')?.open
+            ? $('journey-search')
+            : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
-      menuIds.has(element.id) || !!element.closest('#journey-chooser, #journey-backup'),
+      catalogue?.root()?.contains(element) ||
+      menuIds.has(element.id) ||
+      !!element.closest('#journey-chooser, #journey-backup'),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () =>
-      $('journey-backup')?.open
-        ? $('journey-backup-back').click()
-        : $('journey-chooser')?.open
-          ? journeyChooser.close()
-          : shell.back(),
+      catalogue?.root()
+        ? catalogue.back()
+        : $('journey-backup')?.open
+          ? $('journey-backup-back').click()
+          : $('journey-chooser')?.open
+            ? journeyChooser.close()
+            : shell.back(),
     onMenu: () =>
-      $('journey-backup')?.open
-        ? $('journey-backup-back').click()
-        : $('journey-chooser')?.open
-          ? journeyChooser.close()
-          : shell.back(),
+      catalogue?.root()
+        ? catalogue.back()
+        : $('journey-backup')?.open
+          ? $('journey-backup-back').click()
+          : $('journey-chooser')?.open
+            ? journeyChooser.close()
+            : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -1651,6 +1882,7 @@ try {
     updateMenu();
   }
   function suspend() {
+    catalogue?.cancel();
     if (disposed) return;
     shell?.cancelDeparture();
     pause();

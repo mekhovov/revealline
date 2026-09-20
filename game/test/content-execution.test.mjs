@@ -18,7 +18,7 @@ test('host-facing executions use exact shared presets, never a second Legacy dif
     assert.equal(catalog.find(entry.sourcePackId, entry.campaignId, entry.executionKey), entry);
     assert.equal(entry.baseCampaignKey, campaignKey(entry.baseCampaign));
     assert.equal(entry.executionKey, campaignKey(entry.campaign));
-    assert.equal(entry.policyVersion, 'journey-v1');
+    assert.equal(entry.policyVersion, 'journey-arcade-v2');
     assert.equal(entry.officialProgressEligible, false);
     assert(Object.isFrozen(entry.campaign.levels[0].rules));
     for (const level of entry.campaign.levels) {

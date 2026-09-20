@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import { DEFAULT_RULES, FIXED_DT } from '../core/registry.mjs';
+import { ARCADE_ACTIONS_VERSION } from '../core/arcade-actions.mjs';
 
 export const freezeDesign = (value) => {
   if (value && typeof value === 'object' && !Object.isFrozen(value)) {
@@ -9,7 +10,7 @@ export const freezeDesign = (value) => {
   return value;
 };
 
-export const JOURNEY_POLICY = freezeDesign({
+export const LEGACY_JOURNEY_POLICY = freezeDesign({
   format: 'JourneyGameplayPolicyV1',
   id: 'journey-v1',
   fixedTimestep: FIXED_DT,
@@ -28,6 +29,17 @@ export const JOURNEY_POLICY = freezeDesign({
     stopOnCapture: true,
   },
 });
+// New projects select contact bonuses explicitly; old imported projects retain their rules.
+export const JOURNEY_POLICY = freezeDesign({
+  ...LEGACY_JOURNEY_POLICY,
+  id: 'journey-arcade-v2',
+  arcadeActions: { version: ARCADE_ACTIONS_VERSION },
+});
+export function journeyPolicy(id) {
+  if (id === LEGACY_JOURNEY_POLICY.id) return LEGACY_JOURNEY_POLICY;
+  if (id === JOURNEY_POLICY.id) return JOURNEY_POLICY;
+  throw new Error('Project must pin a registered Journey policy.');
+}
 export const DIFFICULTY_CATALOG = freezeDesign({
   format: 'DifficultyCatalogV1',
   id: 'journey-difficulty-v1',

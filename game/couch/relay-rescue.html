@@ -96,6 +96,7 @@
           <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
             Preparing arena…
           </button>
+          <button id="coop-discovery-open" type="button" disabled>Browse Team arenas</button>
           <details class="pack-picker">
             <summary>Play a created co-op pack</summary>
             <label for="coop-pack-file">Open a Team pack or artwork bundle</label>
@@ -126,22 +127,16 @@
               </span>
             </li>
             <li>
-              <strong>Watch the red shapes.</strong>
-              <span id="coop-enemy-help"
-                >Enemies can hit your craft and unfinished line. Hunters mark a route before
-                charging. Wait for recovery or use Support to protect the crossing. Both approaches
-                face the same enemy tools.</span
-              >
+              <strong id="coop-threat-title">Watch the threats.</strong>
+              <span id="coop-threat-help">Preparing the selected arena’s threat guidance.</span>
             </li>
             <li>
-              <strong>Cover each other.</strong> Tap Support to slow nearby enemies and intercept
-              sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed
-              partner for one second to rescue them for free.
+              <strong>Cover each other.</strong>
+              <span id="coop-support-help">Preparing Support and rescue guidance.</span>
             </li>
             <li id="coop-stronghold-help" hidden>
-              <strong>Open both approaches.</strong> Capture anchors A and B to expose the core.
-              Then make a new cut that captures the core itself. The shield blocks entry. Bait the
-              Hunter’s warning and cut during recovery; banking its cell clears it.
+              <strong id="coop-stronghold-title">Secure the relay cores.</strong>
+              <span id="coop-stronghold-copy">Preparing relay objective guidance.</span>
             </li>
           </ol>
           <p class="objective">
@@ -195,6 +190,7 @@
                   </button>
                   <button id="coop-view-picture" type="button" hidden>View picture</button>
                   <button id="coop-retry" type="button">Retry same arena</button>
+                  <button id="coop-discovery-paused" type="button">Browse Team arenas</button>
                   <button id="coop-lobby" type="button">Change setup</button>
                 </div>
                 <div id="coop-pause-modes"></div>
@@ -274,6 +270,51 @@
         </article>
       </section>
       <dialog
+        id="coop-discovery-dialog"
+        class="team-discovery field-kit-panel"
+        aria-labelledby="coop-discovery-title"
+        aria-describedby="coop-discovery-description"
+      >
+        <header class="team-discovery-heading">
+          <h2 id="coop-discovery-title">Team arenas</h2>
+          <button id="coop-discovery-back" type="button">Back</button>
+        </header>
+        <p id="coop-discovery-description">
+          Included arenas and Team packs you open appear here. Play uses your current challenge and
+          teamwork settings.
+        </p>
+        <div id="coop-discovery-list" class="team-discovery-list" aria-busy="false"></div>
+        <section id="coop-discovery-preview" aria-labelledby="coop-discovery-preview-title" hidden>
+          <h3 id="coop-discovery-preview-title">Locked picture preview</h3>
+          <figure class="team-discovery-full-picture">
+            <canvas
+              id="coop-discovery-preview-canvas"
+              width="1152"
+              height="576"
+              aria-hidden="true"
+              hidden
+            ></canvas>
+            <figcaption>Locked preview · Win to reveal the full picture.</figcaption>
+          </figure>
+          <p
+            id="coop-discovery-preview-status"
+            class="operation-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <button id="coop-discovery-preview-retry" type="button" hidden>Retry preview</button>
+        </section>
+        <footer class="team-discovery-footer">
+          <p
+            id="coop-discovery-status"
+            class="operation-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <button id="coop-discovery-cancel" type="button" hidden>Cancel preparation</button>
+        </footer>
+      </dialog>
+      <dialog
         id="coop-discard-dialog"
         class="coop-confirm-dialog"
         role="alertdialog"
@@ -333,11 +374,7 @@
                 Controllers: stick or D-pad steers, right shoulder holds Boost, South uses Support,
                 and Menu pauses. Each player keeps their controller assignment.
               </p>
-              <p>
-                Tap Support to slow nearby enemies and intercept sparks. Hold it beside a downed
-                partner on safe ground for one second to rescue them. A new direction cancels a
-                rescue. A downed player can crawl along safe ground to meet their partner.
-              </p>
+              <p id="coop-help-support">Preparing Support and rescue guidance.</p>
               <p id="coop-support-0" class="support-status">Sunflower: Support ready</p>
               <p id="coop-support-1" class="support-status">Skyline: Support ready</p>
             </div>

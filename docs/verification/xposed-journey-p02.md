@@ -358,3 +358,53 @@ Native Studio rejected Border Bloom band1 (existing band3 members), accepted the
 optional Remix campaign's compatible3→2 band change, and Undo restored3 with no
 console errors. These were local draft operations, not curriculum changes or
 release approval.
+
+## Accepted-baseline composition and explicit Arcade policy
+
+Integrated release-owner source `f009474a2f9769b8d5e04fb53eb7dd501d7039e9`
+(PR184, parents accepted `aadd855e` and P01 `3556e257`) into the P02 candidate.
+The two conflicts preserve the combined Horizon/Border route label, installed
+chapter channel authority, current Team threat help, and separate Start guard.
+The shared compiler now defaults new candidates to registered `journey-arcade-v2`:
+contact bonuses remain available; manual ability, pickup and boost are disabled
+by the simulation and reflected in host controls. Imported `journey-v1` projects
+retain their old rules. This is an explicit identity change, not replay reinterpretation.
+
+Preserved the original 84 clear-route and 35 delayed-route fixtures under
+`legacy-border-*.json`. `scripts/qualify-border-arcade-routes.mjs` verifies every
+old simulation identity and checkpoint, executes identical legal inputs under both
+policies with no life loss, verifies both exported replay generations, and compares
+every authoritative section. The full classic projection must also be identical
+after removing only the new `definition.arcadeActions` field. All119 passed before
+the script renewed any candidate identity/checkpoint. A regression test repeats
+this comparison without rewriting fixtures. Routes, difficulty and enemy speeds
+were not changed to make the comparison pass.
+
+The integrated Border routes/timing/art/candidates and legacy-policy suite passes
+34/34. The actual Solo/Versus/Team host, policy, authoring and Team discovery cohort
+passes; full source lint and changed-source formatting pass. These remain scoped
+local checks; full exact-source hosted qualification is still required.
+
+Native paired-board Behind the patrol now identifies itself as Arcade, starts two
+equal0% /three-life boards with movement-only control prompts, and pauses both
+boards without console errors. This is not a complete native clear. It also exposes
+a remaining plan gap: the paired-board host still imposes its historical90-second
+race limit. Untimed authored races require explicit protocol/export compatibility
+work, not merely hiding the clock. Keep that acceptance item open.
+
+Native Continue on a pre-policy authored save correctly rejects the unavailable
+edition but initially gave misleading install-pack advice. Candidate-specific
+guidance now explains the original test edition requirement and recommends saved
+attempt export before choosing another mission. A real-host regression constructs
+an actual v1 replay/save and verifies the exact bytes remain unchanged, Continue
+remains usable, and no installed-pack advice is shown. It passes1/1. The initial
+test lacked the candidate image boundary; adding the same modeled image/load
+boundary as other host tests fixed the harness, not production behavior. Native
+retest shows the corrected message. Old attempts are never silently migrated.
+
+Earlier checkpoint `9e376a1c6b30aaa4772d963776ae9b443d848d51` completed hosted
+qualification/freeze run35499363901 successfully: artifact10602770700,
+1,645,636,814bytes, digest
+`sha256:dabf9886bb4dcc0087edd1111ce0152cf5e2d6f2b118819939b5e773110b9e25`.
+This does not qualify the later Studio additions or this integrated source and is
+not a Pages deployment. P02, human acceptance and whole-plan completion remain open.

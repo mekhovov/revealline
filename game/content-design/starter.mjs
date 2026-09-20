@@ -1,3 +1,4 @@
+import { JOURNEY_POLICY } from './catalogs.mjs';
 /** An original greybox, not a released or playtest-qualified Journey mission. */
 export function createStarterProject(id = 'my-journey') {
   return {
@@ -5,7 +6,7 @@ export function createStarterProject(id = 'my-journey') {
     id,
     revision: 'draft-1',
     name: 'My Journey',
-    policyId: 'journey-v1',
+    policyId: JOURNEY_POLICY.id,
     actorCatalogId: 'journey-actors-v1',
     difficultyCatalogId: 'journey-difficulty-v1',
     maps: [

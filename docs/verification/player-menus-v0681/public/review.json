@@ -1,0 +1,24 @@
+{
+  "status": "ACCEPTED_SCOPED_PUBLIC_MENU_CORRECTION",
+  "version": "v0.68.1",
+  "source": "276cbba302b4638b60bcc9aec7ac7f7eb5b61ca1",
+  "sourcePR": 178,
+  "publisherPR": 180,
+  "controllerCommit": "5d54b938aed5bc2753a2403fcde2ea4bc4d3a1c6",
+  "deployment": 6550183682,
+  "run": 35496122277,
+  "files": 3635,
+  "verifiedBytes": 645730399,
+  "failedFiles": 0,
+  "retries": 0,
+  "observations": [
+    "observations.json",
+    "continuation.json"
+  ],
+  "fullPhasesAccepted": false,
+  "knownRemaining": [
+    "Same-chapter selection fix in v0.68.2 candidate",
+    "Cross-mode presentation/music and complete input journeys",
+    "Actual listening/offline/humanplay/physicalhardware qualification"
+  ]
+}
