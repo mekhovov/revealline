@@ -1,0 +1,40 @@
+{
+  "source": "508a638f556b80817f4c872b9950d7de7b207b17",
+  "files": [
+    {
+      "path": "after-rejections.rlsound",
+      "bytes": 66840,
+      "sha256": "8f8a4d17171344024744cc8f0016f98c9e3281353cae5996bf8da415f1281637"
+    },
+    {
+      "path": "damaged-payload.rlsound",
+      "bytes": 66840,
+      "sha256": "ee055e0d74c5f0ede3cf9a62ddc66b7e6d351383d027d1f8abdac9081d1fd704"
+    },
+    {
+      "path": "fixtures.json",
+      "bytes": 534,
+      "sha256": "9772c712d7b41e1995858adab40a1625882db2f21e9ac1509c40028e0dbd8a8b"
+    },
+    {
+      "path": "native-observations.json",
+      "bytes": 1950,
+      "sha256": "99c37072aef38642a25b8dad6d3fd76dcf6129c1af25fd190ef7305930b3c4a6"
+    },
+    {
+      "path": "requests.log",
+      "bytes": 40955,
+      "sha256": "2116b6a33cea525392d4f2fa84f15b3df4f1eb3848e840d6c64c4e400b0c9302"
+    },
+    {
+      "path": "served-source-review.json",
+      "bytes": 46332,
+      "sha256": "72640d61137fcb15fb1d041011f1d79f276c65efe2e8d6ea863c4e79da9b6e8c"
+    },
+    {
+      "path": "truncated-backup.rlsound",
+      "bytes": 100,
+      "sha256": "236dc5cdfd802bdc561262494913f041187ba4ea1e420748d14227a7a9e5a5ba"
+    }
+  ]
+}
