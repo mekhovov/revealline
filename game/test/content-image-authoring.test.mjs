@@ -152,7 +152,8 @@ function workbenchFixture(
 ) {
   let source = createStarterProject(),
     applied = 0,
-    played = null;
+    played = null,
+    difficulty = 'expert';
   const elements = new Map();
   const context = new Proxy(
     {},
@@ -183,11 +184,12 @@ function workbenchFixture(
     document: { getElementById: $ },
     getSource: () => source,
     getMission: () => source.missions[0],
-    getDifficulty: () => 'expert',
+    getDifficulty: () => difficulty,
     redraw: () => {},
     apply: (candidate) => {
       applied++;
       source = candidate;
+      api.sync();
       return true;
     },
     play: (candidate, missionId, difficulty) => {
@@ -201,6 +203,14 @@ function workbenchFixture(
     getSource: () => source,
     mutate: () => {
       source.name = 'Changed after inspection';
+    },
+    replace: (next) => {
+      source = structuredClone(next);
+      api.sync();
+    },
+    difficulty: (next) => {
+      difficulty = next;
+      api.sync();
     },
     applied: () => applied,
     played: () => played,
@@ -288,4 +298,51 @@ test('newer uploads win, failed replacements preserve the old reference, and mis
   await late;
   assert.equal(afterSwitch.disposed, true);
   assert.equal(api.underlay(), null);
+});
+
+test('Undo retires the Applied message even after the accepted tracing queue is empty', async () => {
+  const fixture = workbenchFixture(),
+    { $, api } = fixture,
+    original = structuredClone(fixture.getSource());
+  $('reference-file').files = [file()];
+  await $('reference-file').onchange();
+  $('surface').value = 'foundations';
+  for (const [id, value] of Object.entries({ x: 12, y: 12, w: 4, h: 3 })) $(id).value = value;
+  await $('reference-queue-add').onclick();
+  await $('reference-inspect').onclick();
+  await $('reference-apply').onclick();
+  assert.match($('reference-status').textContent, /Applied as a private map revision/);
+  api.sync();
+  assert.match($('reference-status').textContent, /Applied as a private map revision/);
+  fixture.replace(original);
+  assert.doesNotMatch($('reference-status').textContent, /Applied as/);
+  assert.match($('reference-status').textContent, /No geometry is queued/);
+  assert.equal($('reference-apply').disabled, true);
+  assert.equal(api.hasPending(), false);
+  assert.deepEqual(fixture.getSource(), original);
+  api.dispose();
+});
+
+test('changing difficulty retires the frozen inspected preview but preserves the queued proposal', async () => {
+  const fixture = workbenchFixture(),
+    { $, api } = fixture;
+  $('reference-file').files = [file()];
+  await $('reference-file').onchange();
+  $('surface').value = 'foundations';
+  for (const [id, value] of Object.entries({ x: 12, y: 12, w: 4, h: 3 })) $(id).value = value;
+  await $('reference-queue-add').onclick();
+  await $('reference-inspect').onclick();
+  assert.equal($('reference-preview').hidden, false);
+  fixture.difficulty('gentle');
+  assert.equal($('reference-preview').hidden, true);
+  assert.equal($('reference-apply').disabled, true);
+  assert.equal($('reference-play').disabled, true);
+  assert.equal(api.hasPending(), true);
+  await $('reference-play').onclick();
+  assert.equal(fixture.played(), null);
+  await $('reference-inspect').onclick();
+  await $('reference-play').onclick();
+  assert.equal(fixture.played().difficulty, 'gentle');
+  assert.equal(fixture.applied(), 0);
+  api.dispose();
 });

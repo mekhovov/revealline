@@ -52,3 +52,36 @@ remain follow-up work, not claimed as implemented.
 
 No human playtesting, physical-device acceptance, public Pages availability,
 immutable release qualification or automatic image interpretation is implied.
+
+## Integrated workbench follow-up
+
+P02 now merges the current P01 candidate through `3556e257` (merge `fe137d77`).
+This carries the shared Team compiler/Studio template/export, Solo/Versus hosts,
+original Horizon art and recovery changes; it is not accepted-baseline or release
+approval. The import conflict was resolved by preserving both image-workbench and
+Team/preset imports. The initial integrated compiler/Studio/Team cohort passed25/25.
+
+Native inspection in the retained older P02 tab found that Undo restored geometry
+but left an obsolete Applied message. A second regression proved that changing
+difficulty left the old frozen inspection visible. Both tests failed before the
+fix and pass now: source/preset changes retire the status/inspection without
+discarding queued rectangles; Apply still requires an exact new inspection.
+
+The integrated image/Studio/Team/Border cohort passes **52/52**, including all84
+complete Solo routes with replays and84 paired-board repetitions. This is scoped
+feasibility, not human pacing or full hosted qualification.
+
+Fresh native current-source check at port8779, project `image-workflow-current-check`:
+uploaded the existing original first-return PNG; manually queued a5×4 foundation
+at(40,20); inspection showed45foundation/2335earnable cells while the draft kept25.
+Switching Standard→Gentle hid the old inspected canvas, disabled Apply/Play and
+retained the queue. Reinspect→Apply showed45foundation cells and a private revision.
+Undo restored25foundation cells and truthful No geometry is queued status. No
+console errors. The separate retained port8778 P02 observation also exercised
+crop(200,100,1200,600), actual Practice first closure0.6%/150points/3lives and
+Apply→Undo35→55→35cells; it is not an exact integrated-source runtime claim.
+
+Source worktrees remain isolated; the P01 server and user/paused tabs are unchanged.
+Historical evidence is sparse locally to preserve disk capacity, so full historical
+admission/build checks must use a complete hosted checkout. Durable tracing sessions,
+assisted tracing, public deployment and human/device qualification remain open.
