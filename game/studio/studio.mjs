@@ -242,6 +242,9 @@ function inspectBoard(trailCells = []) {
     `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorDescription(manifest.level, actor)} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
+  if (mission.relayLinks)
+    $('geometry').textContent +=
+      ` Relay gates: ${mission.relayLinks.map((link) => `${link.gateId} opens permanently after capturing ${link.objectiveId}`).join('; ') || 'none'}. Closed gates block movement; opened connectors do not earn coverage.`;
   $('geometry').textContent +=
     ` Authored terrain: ${authoredTerrain.map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
   $('effective').textContent = JSON.stringify(

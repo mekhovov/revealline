@@ -6742,7 +6742,7 @@ try {
                   ? run.player.speed === 0
                     ? 'LINE EXPOSED / CHOOSE A TURN'
                     : 'LIVE LINE / EXPOSED'
-                  : run.ruleset === 'xonix-core.v6'
+                  : ['xonix-core.v6', 'xonix-core.v7'].includes(run.ruleset)
                     ? 'Reclaimed ground'
                     : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
@@ -6802,9 +6802,15 @@ try {
       const anchors = occupied.flatMap((region) => region.enemyIds);
       return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
     };
-    const captureTerrain = events
-      .filter((event) => event.type === 'cells.claimed')
-      .map((event) => terrainTransitionCaption(run, event))
+    const openedGates = events.filter((event) => event.type === 'relay.opened').length;
+    const captureTerrain = [
+      ...events
+        .filter((event) => event.type === 'cells.claimed')
+        .map((event) => terrainTransitionCaption(run, event)),
+      openedGates
+        ? `${openedGates} relay connector${openedGates === 1 ? '' : 's'} opened permanently. Reclaimed ground, not earned coverage.`
+        : '',
+    ]
       .filter(Boolean)
       .join(' ');
     try {
@@ -6839,7 +6845,7 @@ try {
             run.player.cutting
           )
             warning(
-              `Live line exposed. Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground to secure it.`,
+              `Live line exposed. Reach ${['xonix-core.v6', 'xonix-core.v7'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground to secure it.`,
             );
           if (event.type === 'player.failed')
             warning(
@@ -6854,7 +6860,7 @@ try {
             );
           if (event.type === 'lineImpact.seeded')
             warning(
-              `Line struck! Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
+              `Line struck! Reach ${['xonix-core.v6', 'xonix-core.v7'].includes(run.ruleset) ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
             );
           if (event.type === 'lineImpact.arrived')
             warning('The travelling impact reached your craft. One life lost.');

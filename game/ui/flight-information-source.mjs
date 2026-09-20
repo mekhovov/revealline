@@ -10,6 +10,7 @@ const ordinaryEvents = new Set([
   'cells.claimed',
   'cut.closed',
   'objective.captured',
+  'relay.opened',
   'ability.rejected',
   'ability.used',
   'craft.redeployed',
@@ -51,6 +52,7 @@ const rulesets = new Set([
   'xonix-core.v4',
   'xonix-core.v5',
   'xonix-core.v6',
+  'xonix-core.v7',
 ]);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;

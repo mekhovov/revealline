@@ -307,22 +307,25 @@ function sync() {
     'xonix-playground.v4',
     'xonix-playground.v5',
     'xonix-playground.v6',
+    'xonix-playground.v7',
   ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   $('mastery-readout').textContent =
-    current.format === 'xonix-playground.v6'
-      ? 'Foundation edition. Reclaimed islands and lanes are permanent return ground, excluded from earned coverage. Edit validated geometry in map JSON; optional equipment goals are unavailable.'
-      : current.format === 'xonix-playground.v5'
-        ? 'Classic edition. Terrain, contact pickups and enemy roles stay in the map JSON. Optional equipment goals are unavailable.'
-        : current.format === 'xonix-playground.v4'
-          ? 'Wide edition. Optional equipment goals are unavailable; the map retains its explicit encounter or no-encounter choice.'
-          : current.format === 'xonix-playground.v3'
-            ? 'Staged encounter. This ruleset has no optional equipment goals; its two-stage requirements are part of the map.'
-            : current.format === 'xonix-playground.v2'
-              ? definition
-                ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
-                : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
-              : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
+    current.format === 'xonix-playground.v7'
+      ? 'Relay edition. Capture each linked objective to open permanent reclaimed connectors. Closed gates block movement and cannot close cuts; reserved cells never earn coverage. Edit validated links and geometry in map JSON.'
+      : current.format === 'xonix-playground.v6'
+        ? 'Foundation edition. Reclaimed islands and lanes are permanent return ground, excluded from earned coverage. Edit validated geometry in map JSON; optional equipment goals are unavailable.'
+        : current.format === 'xonix-playground.v5'
+          ? 'Classic edition. Terrain, contact pickups and enemy roles stay in the map JSON. Optional equipment goals are unavailable.'
+          : current.format === 'xonix-playground.v4'
+            ? 'Wide edition. Optional equipment goals are unavailable; the map retains its explicit encounter or no-encounter choice.'
+            : current.format === 'xonix-playground.v3'
+              ? 'Staged encounter. This ruleset has no optional equipment goals; its two-stage requirements are part of the map.'
+              : current.format === 'xonix-playground.v2'
+                ? definition
+                  ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
+                  : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
+                : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
   $('use-campaign-goal').disabled = noMasteries || !entryMastery(selectedEntry(), current.level.id);
   $('apply-mastery').disabled = noMasteries;
   $('clear-goal').disabled = noMasteries;
@@ -428,7 +431,9 @@ const visualRoleLabels = {
 function drawAssets() {
   const select = $('asset-role'),
     prior = select.value;
-  const roles = ['xonix-playground.v5', 'xonix-playground.v6'].includes(current.format)
+  const roles = ['xonix-playground.v5', 'xonix-playground.v6', 'xonix-playground.v7'].includes(
+    current.format,
+  )
     ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
     : VISUAL_ROLES;
   select.replaceChildren(...roles.map((role) => new Option(visualRoleLabels[role], role)));
@@ -694,14 +699,18 @@ try {
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
   current = {
     format:
-      campaign.levels[0].version === 'xonix-level.v5'
-        ? 'xonix-playground.v6'
-        : campaign.levels[0].version === 'xonix-level.v4'
-          ? 'xonix-playground.v5'
-          : campaign.levels[0].version === 'xonix-level.v3'
-            ? 'xonix-playground.v4'
-            : 'xonix-playground.v1',
-    ...(['xonix-level.v3', 'xonix-level.v4', 'xonix-level.v5'].includes(campaign.levels[0].version)
+      campaign.levels[0].version === 'xonix-level.v6'
+        ? 'xonix-playground.v7'
+        : campaign.levels[0].version === 'xonix-level.v5'
+          ? 'xonix-playground.v6'
+          : campaign.levels[0].version === 'xonix-level.v4'
+            ? 'xonix-playground.v5'
+            : campaign.levels[0].version === 'xonix-level.v3'
+              ? 'xonix-playground.v4'
+              : 'xonix-playground.v1',
+    ...(['xonix-level.v3', 'xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6'].includes(
+      campaign.levels[0].version,
+    )
       ? { masteryDefinition: null }
       : {}),
     level: clone(campaign.levels[0]),
@@ -998,6 +1007,7 @@ try {
           'xonix-playground.v4',
           'xonix-playground.v5',
           'xonix-playground.v6',
+          'xonix-playground.v7',
         ].includes(current.format)
           ? {
               format: 'xonix-playground.v2',

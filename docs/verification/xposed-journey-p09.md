@@ -68,9 +68,30 @@ or a human difficulty benchmark.
 
 ## Remaining gates
 
-Playable scenario/pack transport, safe renderer projection and visible gate cues;
-Studio gate/objective CRUD, copy-on-write and dependency-aware deletion; preview
-and import/export round trips; new native observations; Relay Labyrinth greybox
+Studio gate/objective CRUD, copy-on-write and dependency-aware deletion; new
+native observations; Relay Labyrinth greybox
 decisions and route qualifications; preset/steering/seed/race/mastery checks;
 original art and contrast; Team successor; human pacing; reviewed integration,
 version allocation, immutable release and Pages acceptance all remain open.
+
+## Transport and presentation increment
+
+Explicit `xonix-playground.v7` / `xonix-pack.v7` transport now preserves relay
+definitions through Studio preview, prepared import, loose-map editing, scenario
+selection and expansion export. Version mismatches fail closed; old outputs do
+not acquire relay fields. Legacy equipment mastery remains unavailable for this
+Classic-family edition. Deleting a linked objective is rejected before adoption.
+
+A bounded detached relay display projection rejects malformed state and getters.
+Gameplay, Studio and the map editor share closed crossbar/open corner patterns
+inside the exact gate bounds. Open connectors have no opaque overlay. Terrain,
+actor/contact cues and the foundation craft locator retain their compatibility
+adapters without changing authority. Briefs, capture captions and Studio inspection
+explain permanent return ground and the unchanged coverage denominator. These
+are automated rendering checks, not native contrast or small-screen acceptance.
+
+The nine-file transport/presentation cohort passes 92/92 on Node20 and Node22
+(`relay-transport`, `foundation-transport`, `content`, `packs`, `playground-model`,
+`mission-brief`, `content-capture-overlay`, `presentation-renderer`,
+`renderer-readability`). Preview/Team/mastery/import/host regression coverage is
+recorded separately; no physical controller or human clear is inferred.
