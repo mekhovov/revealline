@@ -53,7 +53,11 @@ function png(mark) {
   ]);
 }
 const defaultPictures = [png(12), png(210)];
-const defaultTheme = { id: 'fpv', revision: 32, collection: null };
+const defaultTheme = {
+  id: COOP_PICTURE_BINDINGS[0].themeId,
+  revision: COOP_PICTURE_BINDINGS[0].themeRevision,
+  collection: null,
+};
 async function localSource(
   t,
   {
@@ -345,9 +349,9 @@ test('registered exact content can use local art without requiring the generic p
 });
 
 for (const [name, theme] of [
-  ['theme ID', { id: 'retro', revision: 32, collection: null }],
-  ['theme revision', { id: 'fpv', revision: 33, collection: null }],
-  ['collection', { id: 'fpv', revision: 32, collection: { id: 'ornamental', revision: 1 } }],
+  ['theme ID', { ...defaultTheme, id: 'retro' }],
+  ['theme revision', { ...defaultTheme, revision: defaultTheme.revision - 1 }],
+  ['collection', { ...defaultTheme, collection: { id: 'ornamental', revision: 1 } }],
 ]) {
   test(`local receipt must match the prepared ${name}`, async (t) => {
     const owner = await localSource(t),
@@ -360,7 +364,7 @@ for (const [name, theme] of [
 }
 
 test('matching local and page metadata do not qualify an unregistered collection', async (t) => {
-  const theme = { id: 'fpv', revision: 32, collection: { id: 'unqualified', revision: 1 } };
+  const theme = { ...defaultTheme, collection: { id: 'unqualified', revision: 1 } };
   const owner = await localSource(t, { theme }),
     f = context(t, owner, { theme }),
     lease = f.create();
@@ -370,7 +374,7 @@ test('matching local and page metadata do not qualify an unregistered collection
 });
 
 test('an exact registered theme/collection association permits the corresponding local receipt', async (t) => {
-  const theme = { id: 'fpv', revision: 32, collection: { id: 'qualified-fixture', revision: 1 } };
+  const theme = { ...defaultTheme, collection: { id: 'qualified-fixture', revision: 1 } };
   const owner = await localSource(t, { theme }),
     f = context(t, owner, { theme });
   const rows = COOP_PICTURE_BINDINGS.map((row) => ({
@@ -381,6 +385,18 @@ test('an exact registered theme/collection association permits the corresponding
   const chosen = await lease.select(f.request);
   assert.deepEqual(chosen.choice.presentationReceipt.theme, theme);
   assert.equal(f.compiledReads, 0);
+});
+
+test('matching old fpv32 owner and page still cannot bypass the current exact picture authority', async (t) => {
+  const theme = { id: 'fpv', revision: 32, collection: null };
+  for (const pack of [COOP_STARTER_PACK, localPack()]) {
+    const owner = await localSource(t, { pack, theme }),
+      f = context(t, owner, { theme }),
+      lease = f.create();
+    await assert.rejects(lease.select(f.request), /not supported by this approved theme/);
+    assert.equal(f.decodes.length, 0);
+    assert.equal(f.compiledReads, 0);
+  }
 });
 
 test('typed legacy revisions and 100-character level IDs remain exact local picture identities', async (t) => {
