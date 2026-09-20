@@ -7,10 +7,10 @@ import { inspectCaptureSnapshot } from '../core/capture-regions.mjs';
 export function prepareContentPreview(
   source,
   missionId,
-  { difficulty = 'standard', theme, trailCells = [] } = {},
+  { difficulty = 'standard', mode = 'solo', theme, trailCells = [] } = {},
 ) {
   const project = compileContentProject(source);
-  const manifest = resolveMission(project, missionId, { difficulty });
+  const manifest = resolveMission(project, missionId, { difficulty, mode });
   const mission = project.missions.find((candidate) => candidate.id === missionId);
   const map = project.maps.find(
     (candidate) =>
@@ -20,6 +20,10 @@ export function prepareContentPreview(
   const capture = inspectCaptureSnapshot(run, { trailCells });
   let scenario = null;
   if (theme) {
+    if (mode !== 'solo')
+      throw new Error(
+        'Only Solo has a Studio gameplay preview; paired-race launch is not substituted.',
+      );
     scenario = {
       format: FOUNDATION_SCENARIO_VERSION,
       masteryDefinition: null,

@@ -80,3 +80,44 @@ new visual acceptance; the pre-commit source identity still names P00.
 Run full exact-source CI, reviewed phase PR, integrated-baseline qualification,
 immutable release and GitHub Pages public-byte/native acceptance. Human validation
 remains pending. Do not infer any publication from local version numbers.
+
+## Opening greyboxes and Studio recovery follow-up
+
+The first framework source `a423221f` is draft PR172. Its hosted preflight and
+ordinary build passed; the four full test shards were still running at this
+follow-up. That result does not qualify the newer work below.
+
+- Ten original candidates: three Prologue missions, six Horizon School missions
+  in two learning arcs, and a separately grouped optional Remix. Each records its
+  route choice, capture consequence, lesson, mastery and intended duration.
+  All share the measured keeper speed; threat counts and bands do not drop at
+  the opening campaign boundary. All starting field chambers have retainers.
+- Each has a deterministic, legal first return using the actual engine without
+  losing a life. This is **not** a complete clear, measured human duration,
+  difficulty validation, final artwork, reference disposition or release claim.
+- Studio exposes the ten candidates through Inspect → explicit Apply, without
+  replacing the existing project during inspection. Versus-only geometry can be
+  inspected but cannot silently launch a Solo game.
+- Recovery inspects any earlier checkpoint and restores by appending a new head.
+  It retains intervening history and refuses a stale cross-tab restore. The
+  project URL preserves the selected project across reload without another
+  persistent storage dependency. Late reads/imports lose authority after edits;
+  a previous session's delayed save cannot label the new session saved.
+- Preview loading and JSON decoding have a finite deadline and cancellation even
+  when a transport ignores abort. Failure remains in the preview panel and cannot
+  overwrite a newer preview's status. Closing/replacing unloads the old iframe.
+- New focused cohort: **16/16** passed; expanded framework, Classic and Wide
+  regression cohort: **168/168** passed, zero failures/skips/cancellations/todos.
+  Full lint and formatting passed; source validation reports 682 files, valid
+  literal references, version 0.69.0 and the same four navigation warnings.
+- Native browser: inspected checkpoint 2 while checkpoint 3 remained applied;
+  Apply restored its 50 foundation cells as checkpoint 4; Undo restored 25 cells
+  as checkpoint 5. The original project survived separately when the ten-mission
+  project was explicitly applied and saved as its own checkpoint 1. Reload
+  reopened that custom project. Courtyard/Expert inspection showed two lives,
+  unchanged 10 cells/s movement and 140 denominator-excluded foundation cells.
+
+A command naming a nonexistent Classic replay test did not run; corrected to
+the actual Classic transport/cohort files above. The unavailable `npx` mise shim
+was bypassed using the already installed Prettier entry with the existing Node
+20.19.5 runtime; no global environment configuration was changed.

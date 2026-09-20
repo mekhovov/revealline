@@ -27,6 +27,7 @@
         <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button
         ><button id="save">Save checkpoint / retry</button
         ><button id="export">Export backup</button>
+        <button id="opening">Inspect opening greyboxes</button>
         <label class="file-button"
           >Inspect import<input id="import" type="file" accept="application/json,.json"
         /></label>
@@ -35,9 +36,16 @@
         <aside aria-label="Project and missions">
           <p class="eyebrow">PROJECT</p>
           <label>Local project ID<input id="project-id" value="my-journey" maxlength="80" /></label>
+          <label
+            >Checkpoint<input id="checkpoint" type="number" min="1" step="1" placeholder="Latest"
+          /></label>
           <div class="pair">
             <button id="load">Inspect saved</button><button id="new">New project</button>
           </div>
+          <p class="note">
+            Inspect any saved checkpoint before applying it. Restoring creates a new checkpoint;
+            newer history stays available.
+          </p>
           <p id="project-name"></p>
           <label>Mission<select id="mission"></select></label>
           <p id="structure" class="note"></p>
