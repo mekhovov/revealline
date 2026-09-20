@@ -87,7 +87,8 @@ export function editContentStructure(source, input) {
   required(command.band === undefined || kind === 'campaign', 'Only campaigns have a band.');
   required(
     command.template === undefined ||
-      (kind === 'mission' && ['solo-island', 'team-islands'].includes(command.template)),
+      (kind === 'mission' &&
+        ['solo-island', 'team-islands', 'team-materials'].includes(command.template)),
     'Choose a supported mission template.',
   );
   required(command.parentId === undefined || kind !== 'pack', 'Packs belong to the project.');
@@ -154,12 +155,14 @@ export function editContentStructure(source, input) {
       };
       copyItem(kind, command.sourceId, true);
     } else if (kind === 'mission') {
-      const starter =
-          command.template === 'team-islands'
-            ? createTeamOpeningCandidates()
-            : createStarterProject(),
+      const starter = ['team-islands', 'team-materials'].includes(command.template)
+          ? createTeamOpeningCandidates()
+          : createStarterProject(),
         mission = starter.missions[0],
         map = starter.maps[0];
+      // Opt-in only. Creating a material-ready draft never migrates existing
+      // foundation editions or treats this authoring template as playtested.
+      if (command.template === 'team-materials') mission.team.format = 'TeamMissionV2';
       required(
         !project.maps.some((entry) => entry.id === id),
         'The starter map ID is already used; choose a new ID.',

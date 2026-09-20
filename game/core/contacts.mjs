@@ -24,7 +24,7 @@ export function enemyContact(
   enemyPlans,
   trace,
   horizon,
-  { ignoreTrail = false } = {},
+  { ignoreTrail = false, ignoreTrailActorIds = [] } = {},
 ) {
   if (state.player.graceUntil > state.time + EPS) return null;
   if (classicEffectActive(state, 'enemy-freeze')) return null;
@@ -32,6 +32,7 @@ export function enemyContact(
   for (let n = 0; n < state.enemies.length; n++) {
     const enemy = state.enemies[n],
       plan = enemyPlans[n];
+    const skipTrail = ignoreTrail || ignoreTrailActorIds.includes(enemy.id);
     if (enemy.type === 'relay-sentinel' && state.encounter?.defeated) continue;
     if (state.classic && enemy.type === 'claimed-rover' && enemy.classic.mode !== 'active')
       continue;
@@ -40,7 +41,7 @@ export function enemyContact(
       const endTime = Math.min(path.t1, horizon),
         start = a(path),
         end = pathPoint(path, endTime);
-      for (const trail of ignoreTrail ? [] : state.trail) {
+      for (const trail of skipTrail ? [] : state.trail) {
         const t = boxTime(start, end, {
           x: trail.x - enemy.radius,
           y: trail.y - enemy.radius,
@@ -56,7 +57,7 @@ export function enemyContact(
             !!state.classic,
           );
       }
-      for (const trail of ignoreTrail ? [] : trace.cells) {
+      for (const trail of skipTrail ? [] : trace.cells) {
         const lo = Math.max(path.t0, trail.time),
           hi = endTime;
         if (lo <= hi + EPS) {
@@ -111,9 +112,9 @@ export function enemyContact(
         cell.x + 1 >= box.x &&
         cell.y <= box.y + box.h &&
         cell.y + 1 >= box.y;
-      for (const trail of ignoreTrail ? [] : state.trail)
+      for (const trail of skipTrail ? [] : state.trail)
         if (overlaps(trail)) best = remember(best, 0, 'boss-lane', enemy.id, !!state.classic);
-      for (const trail of ignoreTrail ? [] : trace.cells) {
+      for (const trail of skipTrail ? [] : trace.cells) {
         if (trail.time > horizon + EPS) continue;
         if (overlaps({ x: trail.index % state.width, y: Math.floor(trail.index / state.width) }))
           best = remember(best, trail.time, 'boss-lane', enemy.id, !!state.classic);

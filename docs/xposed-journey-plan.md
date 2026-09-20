@@ -102,10 +102,15 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | PR172: candidate 3556e257 passed full hosted source qualification/freeze; accepted-baseline integration and public phase acceptance remain |
-| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates with original art, complete-route fixtures and recoverable manual image workflow; not published |
-| P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
-| P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Accepted composition PR184 and publisher PR189 merged; immutable release published, public byte audit3789files/698351359bytes passed with zero issues; scoped native Next passed, human phase acceptance remains |
+| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | PR175 exact bbbbf87b: all7189 hosted tests and frozen snapshot passed; independent release-owner inspection/promotion and public acceptance pending |
+| P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Seven Solo greyboxes; 119 clear/delay fixtures, 420 seed checks, all42 preset/steering optional-goal combinations replay-verified, reference crosswalk, terrain captions, explicit Team terrain edition/template, Shared detour Team greybox, bounded tracing benchmark and shared advisory progression inspector; broader route quality/pacing, final art, human and release gates pending |
+| P04 | 0.72.0 | Neon Contours and Remix | Draft PR190: seven original greyboxes,42 no-loss Solo routes and42 equal paired races, all42 optional-goal combinations,315 seed checks and35 delayed-start routes; Inside out bypass revised; shared Studio/CLI preview and native map inspection verified. Original assets, human and release gates remain |
+| P05 | 0.73.0 | Rover Yard and Remix | Draft PR192 exact8a970b07 passed7373 hosted tests; seven original backgrounds,42 replay-verified Solo clears and42 equal paired races, all42 optional-goal combinations,320 seed checks and35 delayed-start alternatives. Shared Studio/CLI and six reference adaptations. Broader native/human, integrated release and Pages gates remain |
+| P06 | 0.74.0 | Fractured Grid and Remix | Draft PR198: explicit v3 eroder catalogue, seven original greyboxes,42 no-loss Solo/public-replay clears and42 equal paired races, all42 optional-goal combinations,210 seed checks and35 delayed-start alternatives; rejected quota-cleanup and unsafe departure evidence retained. Five-reference crosswalk, shared Studio/CLI and scoped native teaching verified. Original art, broader native/human and integrated release/Pages gates remain |
+| P07 | 0.75.0 | Phaseworks and Remix | Draft PR200: selective line-impact.v2 and v4 carrier catalogue, seven original greyboxes,42 no-loss Solo/public-replay clears and42 equal paired races, all42 optional-goal combinations with20 supplemental routes,210 seed checks and35 sampled delayed-start alternatives. Seven unsafe opening repetitions retained. Four-reference crosswalk, shared Studio/CLI and scoped native first returns. Original art, broader visual/native/human, production recipe review and integrated release/Pages remain |
+| P08 | 0.76.0 | Livewire Foundry and Remix | Draft PR203: v5 lane-emitter authoring, seven greyboxes and cell-aligned warning cues. All42 Solo/equal-race/mastery cases,210 seed runs and35 delayed clears verified. Exact Team picture revision regression corrected and independently native-rechecked. Original art, remaining native/human, Team mission, combined-tree review and release/Pages gates remain |
+| P09–P12 | 0.77.0–0.80.0 | Campaigns 9–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
 | P14 | 0.82.0 | Complete 12 Team missions and two-player balance | Pending |
 | P15 | 0.83.0 | Human validation, accessibility/performance, Legacy/rollback | Pending |
@@ -265,6 +270,23 @@ keyboard/touch/controller, muted/reduced-effects/contrast and small screens.
 
 ## P00 implementation notes
 
+September20 continuation: frozen P04 source6b5d8528 passed7,320/7,320 hosted
+tests on Node20.19.6 (run35514969394, freeze=false). This is not release or human
+acceptance. Its Signal artwork was adopted into the unfrozen P05 successor.
+Seven original Neon picture candidates now have immutable revisions and an
+explicit Studio inspect/apply path, with historical greybox defaults preserved.
+The shared registry has35originals and packaging uses the existing512-asset
+content-library ceiling without raising image, offline or Pages byte budgets.
+Native readability and campaign presentation remain open; see
+`verification/xposed-neon-art.md` for the exact evidence and limits.
+
+Rover Yard also now has seven original repair-yard picture candidates, attached
+only through explicit artwork opt-in and Studio inspection. Historical greybox
+defaults and all42 clear-route checkpoints remain unchanged. The shared registry
+now contains42originals totaling107,594,416bytes; no offline or Pages byte guard
+is raised. See `verification/xposed-rover-art.md`. These assets do not complete
+Rover's campaign theme, Team mission, native contrast or human acceptance gates.
+
 P01 packaging follow-up: opening originals are explicit optional artwork in web
 offline preparation, with exact authored pins and unchanged full-distribution
 bytes. The title and offline status explain the online requirement. Bounded
@@ -323,6 +345,25 @@ uses a native modal with an explicit return path, guided by the
 [W3C dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
 
 ## Research sources
+
+### Continuing source checkpoints (not phase completion)
+
+P03 frozen source9ee58177 passed all7280 hosted tests on Node20.19.6 in run35511526470;
+freeze=false deliberately produced no release snapshot. Integration, publication
+and human acceptance remain with the release owner. P04 separately prepares seven
+original Signal pixel backgrounds plus Shared detour's own composition; three
+illustrated alternatives remain distinct. Exact-pinned assets/packaging and unchanged
+routes pass36/36 focused tests. Native line-only partial reveal is scoped evidence,
+with craft contrast and whole-set visual review still open. See
+`verification/xposed-signal-art.md`. Neither this artwork nor the frozen greyboxes
+silently replaces the currently published authored Journey.
+
+The P05 source-preparation branch has an explicit v2 actor catalogue for the
+existing reclaimed-ground roamer, without rewriting v1. Prior Horizon/Border
+Solo and paired routes pass48/48 regression tests. Authored Rover layouts and
+all later campaign, Team, accessibility, human and deployment gates remain.
+
+### Primary references
 
 - https://store.playstation.com/en-us/concept/10002881/
 - https://store.playstation.com/en-ca/product/UP2538-CUSA05619_00-XPOSEDPS4USGAME1

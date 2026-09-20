@@ -39,6 +39,13 @@
         ><button id="export">Export backup</button>
         <button id="opening">Inspect opening candidates</button>
         <button id="border">Inspect Border Bloom candidates</button>
+        <button id="signal">Inspect Signal Gardens greyboxes</button>
+        <button id="neon">Inspect Neon Contours picture candidates</button>
+        <button id="rover">Inspect Rover Yard picture candidates</button>
+        <button id="fracture">Inspect Fractured Grid greyboxes</button>
+        <button id="phase">Inspect Phaseworks greyboxes</button>
+        <button id="livewire">Inspect Livewire Foundry greyboxes</button>
+        <button id="team-signal">Inspect Team Signal greybox</button>
         <label class="file-button"
           >Inspect import<input id="import" type="file" accept="application/json,.json"
         /></label>
@@ -191,7 +198,10 @@
           </div>
           <p id="board-legend" class="legend">
             <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
-            ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
+            ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span
+            ><span>Tracked square: reclaimed-ground roamer</span
+            ><span>Toothed blade: territory eroder</span><span>Bolt: trail-impact carrier</span
+            ><span>Twin posts: stationary lane emitter</span><span>✚ Spawn</span>
             <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
             <span>Capture markers: ! Required · o Optional · ? Hidden</span>
             <span>Slow field: paired dashes · Lethal field: framed ×</span>
@@ -277,7 +287,10 @@
                 <label>Actor<select id="actor-select"></select></label>
                 <label>Stable actor ID<input id="actor-id" maxlength="80" required /></label>
                 <label>Role<select id="actor-role"></select></label>
-                <label>Speed tier · selected difficulty<select id="actor-tier"></select></label>
+                <label
+                  ><span id="actor-tier-label">Speed tier · selected difficulty</span
+                  ><select id="actor-tier"></select
+                ></label>
                 <p id="actor-description" class="note"></p>
                 <div class="pair">
                   <label
@@ -310,6 +323,12 @@
                 >
                 <label id="actor-clockwise-row"
                   ><input id="actor-clockwise" type="checkbox" checked /> Clockwise patrol</label
+                >
+                <label id="actor-axis-row" hidden
+                  >Locked lane axis<select id="actor-axis">
+                    <option value="horizontal">Horizontal row</option>
+                    <option value="vertical">Vertical column</option>
+                  </select></label
                 >
                 <button id="actor-submit" type="submit">Validate & add actor</button>
                 <button id="actor-remove" type="button" disabled>Remove selected actor</button>
@@ -510,6 +529,36 @@
           </p>
         </section>
         <section class="source-panel" aria-label="Project source and validation">
+          <details id="pacing-panel">
+            <summary>Review campaign progression</summary>
+            <p class="note">
+              Inspect the applied draft in gameplay order. Ratings and duration estimates are
+              authored hypotheses, not measured difficulty. Findings never change a map or block
+              publication. Exclude optional finales explicitly when reviewing core-content countdown
+              frequency.
+            </p>
+            <label
+              >Review mode<select id="pacing-mode">
+                <option value="solo">Solo</option>
+                <option value="versus">Versus</option>
+                <option value="team">Team</option>
+              </select></label
+            >
+            <label
+              >Exclude optional campaigns (leave unselected for all)<select
+                id="pacing-exclude"
+                multiple
+                size="4"
+              ></select
+            ></label>
+            <button id="pacing-inspect" type="button">Inspect applied sequence</button>
+            <p id="pacing-summary" class="note" role="status"></p>
+            <ul id="pacing-warnings" aria-label="Advisory progression findings"></ul>
+            <details>
+              <summary>Ordered challenge ratings</summary>
+              <ol id="pacing-sequence"></ol>
+            </details>
+          </details>
           <details id="structure-editor">
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">
@@ -555,6 +604,7 @@
                 >Mission template<select id="item-template">
                   <option value="solo-island">Solo / Versus · island</option>
                   <option value="team-islands">Team · twin islands (greybox)</option>
+                  <option value="team-materials">Team · material-ready islands (greybox)</option>
                 </select></label
               >
               <label id="item-band-row"

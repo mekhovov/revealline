@@ -22,11 +22,12 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
 const sources = {
-  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs',
+  ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs',
   screens:
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
-  effects: 'game/ui/classic-view.mjs; game/ui/event-feedback.mjs',
+  effects:
+    'game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs',
   audio:
     'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs',
 };
@@ -45,11 +46,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   ui: {
-    sha256: 'c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766',
+    sha256: 'fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6',
     evidence: [
-      'Scoped P05 source review: docs/native-file-controls.md; UI recipe inputs sha256:c4bf0ef9888d0985666b936e8cc1fa4055fac9959ea0a4c356d3db4efdd99766. The only UI-input change from fpv27 adds paired colours, inherited font, a 44px target and enabled/disabled states to the native file-selector button in game/ui/field-kit-components.css. Native input behavior, status/focus ownership, artwork and the other recipe groups are unchanged. Earlier approvals remain in immutable history.',
-      'The source-pinned R3 browser observations match component CSS sha256:ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497. Desktop Motion and Theme/Large portrait and short-landscape checks retain readable native chooser labels and actual PNG upload; Studio keeps its transparent native input and visible label. The earlier R2 eight-cell reading matrix is distinct and was not repeated completely on R3. The guide retains exact observation hashes and boundaries.',
-      'This approval covers the scoped native-control recipe correction, not full P05 or release acceptance. OS chooser Cancel, exhaustive interaction states, forced colours, zoom, additional engines and physical input remain separate checks. Still Media sizing and preview-focus corrections are reviewed independently outside this recipe input list. Final integrated-source and public verification remain required.',
+      'Scoped v0.76 UI source review: docs/verification/xposed-journey-v076-integration.md; UI recipe inputs sha256:fc427562ffe290787d78cf22cb0760dee8c9898a6bdfab8cd5c66a3a8f0b23c6. Shared DOM ownership, exact manifest pins and operation-status ownership were reviewed on the composed source; component CSS bytes remain unchanged.',
+      'Independent Node20/Node22 cohorts cover equal-value layers, both release orders, stale external overrides, partial rollback, cancellation, decoded-resource lifetime, CSS/attribute cleanup and generation fences. Earlier UI approvals and all immutable production history remain preserved.',
+      'Functional source approval only. Complete native/forced-colour/screen-reader/device, art, offline, human and public acceptance remain separate. Any UI recipe input change reopens this group.',
     ],
   },
   audio: {
@@ -69,11 +70,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   effects: {
-    sha256: 'e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4',
+    sha256: '7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13',
     evidence: [
-      'Scoped v0.54 source review: game/ui/classic-view.mjs and game/ui/event-feedback.mjs sha256:e564793d7dd8db06474ed13f6cc773267f733d4361b9d648d84135484f5501b4. The correction supplies the selected body geometry to the existing presented-enemy renderer without changing feedback recipes.',
-      'game/test/classic-presentation.test.mjs, game/test/presentation-renderer.test.mjs and game/test/renderer-readability.test.mjs cover the corrected classic renderer call, geometry, contact marker and feedback presentation.',
-      'Prior gameplay context: docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png and docs/verification/fpv-redesign/phase5/flight-line-recovery.png; the source fingerprint above, not those screenshots alone, defines this approval.',
+      'Scoped v0.76 effects source review: docs/verification/xposed-journey-v076-integration.md; effects recipe inputs sha256:7f91a47de464c4c54195ad39b5945085954d3293afe59e28c24af2f1d43cdf13. The renderer stays cosmetic while lane cues cover the complete inclusive trail-contact envelope.',
+      'Independent Node20/Node22 cohorts compare both axes, edge/interior lanes and widths 1, 1.2 and 2 against immediate contact and travelling-impact predicates. Warning/active states remain dashed/solid in two inks; emitter/carrier silhouettes, uploaded-body layering and restored contact rings remain bounded.',
+      'Functional source approval only. Complete visual/art, native/device, human pacing/fairness, audio/offline and public acceptance remain separate. Any effects recipe input change reopens this group.',
     ],
   },
 };
@@ -88,18 +89,23 @@ function recipeQuality(group, source) {
   };
 }
 
+/** Explicit dependency fingerprints; a helper change must reopen its review group. */
+export async function fieldKitRecipeSources(read) {
+  return Object.fromEntries(
+    await Promise.all(
+      Object.entries(sources).map(async ([group, paths]) => [
+        group,
+        `${paths} sha256:${hash(Buffer.concat(await Promise.all(paths.split('; ').map((file) => read(file)))))}`,
+      ]),
+    ),
+  );
+}
+
 export async function createFieldKitProduction({ projectRoot = root } = {}) {
   const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
   const json = async (relative) => JSON.parse(await read(relative));
   const baseline = createDefaultThemeBundle();
-  const recipeSources = Object.fromEntries(
-    await Promise.all(
-      Object.entries(sources).map(async ([group, paths]) => [
-        group,
-        `${paths} sha256:${hash(Buffer.concat(await Promise.all(paths.split('; ').map(read))))}`,
-      ]),
-    ),
-  );
+  const recipeSources = await fieldKitRecipeSources(read);
   const assets = [],
     bindings = {},
     bytes = new Map();

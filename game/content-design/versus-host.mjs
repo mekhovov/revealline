@@ -36,6 +36,7 @@ export function createCandidateVersusHost(
     })),
   );
   const sequence = createCandidateSequence(catalog, corePackIds);
+  const rawEntries = new WeakMap();
   const rows = executions.entries.flatMap((entry) =>
     entry.manifests.map((manifest, index) => {
       const mission = catalog.missions.find(
@@ -49,7 +50,7 @@ export function createCandidateVersusHost(
         theme && manifest.background,
         'Candidate needs its exact authored theme and original.',
       );
-      return freezeDesign({
+      const row = freezeDesign({
         key: `${mission.id}/${entry.difficulty}`,
         chapter: mission.campaignTitle,
         mission,
@@ -64,6 +65,8 @@ export function createCandidateVersusHost(
         executionKey: entry.executionKey,
         musicCampaignKey: entry.baseCampaignKey,
       });
+      rawEntries.set(row, entry);
+      return row;
     }),
   );
   const owned = new Set(rows);
@@ -71,6 +74,10 @@ export function createCandidateVersusHost(
     catalog,
     rows: Object.freeze(rows),
     owns: (row) => owned.has(row),
+    visualThemeSelection(row, level) {
+      if (!owned.has(row) || row.level !== level) return null;
+      return Object.freeze({ entry: rawEntries.get(row), level });
+    },
     card(mission, difficulty = 'standard') {
       if (catalog.find(mission?.id) !== mission) return null;
       const manifest = executions

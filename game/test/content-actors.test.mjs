@@ -125,7 +125,7 @@ test('Team actor commands use the same compiler and do not change seats or lives
   }
 });
 
-function editorFixture() {
+function editorFixture({ deferredSource = false } = {}) {
   const nodes = new Map();
   function element() {
     let value = '';
@@ -155,10 +155,14 @@ function editorFixture() {
   let source = createStarterProject(),
     selected = 'nearby-shore',
     difficulty = 'standard',
-    cancelled = false;
+    cancelled = false,
+    ready = !deferredSource;
   const editor = createActorEditor({
     document,
-    getSource: () => source,
+    getSource: () => {
+      assert(ready, 'Studio has not adopted its draft session yet.');
+      return source;
+    },
     getMission: () => source.missions.find((mission) => mission.id === selected),
     getDifficulty: () => difficulty,
     apply: (next) => {
@@ -168,11 +172,15 @@ function editorFixture() {
       return true;
     },
   });
-  editor.sync();
+  if (!deferredSource) editor.sync();
   return {
     editor,
     node: (id) => document.getElementById(`actor-${id}`),
     source: () => source,
+    adopt: () => {
+      ready = true;
+      editor.sync();
+    },
     preset: (next) => {
       difficulty = next;
       editor.sync();
@@ -191,6 +199,94 @@ function editorFixture() {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('Studio emitter controls use shared cadence and an explicit axis without motion overrides', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'lane-emitter'));
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v5';
+  f.update(next);
+  f.node('role').value = 'lane-emitter';
+  f.node('role').onchange();
+  assert.match(f.node('tier-label').textContent, /Cadence/);
+  assert(f.node('tier').children.every((row) => /1.5s warning/.test(row.textContent)));
+  assert.equal(f.node('axis-row').hidden, false);
+  assert.equal(f.node('heading-row').hidden, true);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  f.node('id').value = 'emitter';
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('axis').value = 'vertical';
+  submit(f);
+  const actor = f.source().missions[0].actors.find((row) => row.id === 'emitter');
+  assert.deepEqual(actor, {
+    id: 'emitter',
+    role: 'lane-emitter',
+    tier: 'measured',
+    x: 45.5,
+    y: 15.5,
+    axis: 'vertical',
+  });
+  assert.match(f.node('result').textContent, /Actor applied/);
+  const labels = f.node('tier').children.map((row) => row.textContent);
+  f.preset('expert');
+  assert.deepEqual(
+    f.node('tier').children.map((row) => row.textContent),
+    labels,
+  );
+  assert.equal(f.node('axis').value, 'vertical');
+  f.node('role').value = 'field-keeper';
+  f.node('role').onchange();
+  assert.equal(f.node('axis-row').hidden, true);
+  assert.match(f.node('tier-label').textContent, /Speed/);
+});
+test('Studio may create actor controls before its asynchronous draft session is adopted', () => {
+  const f = editorFixture({ deferredSource: true });
+  assert.equal(f.node('tools').disabled, true);
+  assert.equal(f.node('role').children, undefined);
+  f.adopt();
+  assert.equal(f.node('tools').disabled, false);
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper', 'perimeter-patrol', 'frontier-patrol'],
+  );
+  assert.equal(f.node('role').value, 'field-keeper');
+});
+test('Studio exposes roamer fields only for the exact v2 Solo catalogue and rejects stale upgrade fields', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'reclaimed-roamer'));
+  f.node('select').value = 'keeper';
+  f.node('select').onchange();
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v2';
+  f.update(next, false);
+  submit(f);
+  assert.match(f.node('result').textContent, /context changed/);
+  f.editor.sync();
+  assert(f.node('role').children.some((row) => row.value === 'reclaimed-roamer'));
+  f.node('select').value = '';
+  f.node('select').onchange();
+  f.node('id').value = 'roamer';
+  f.node('role').value = 'reclaimed-roamer';
+  f.node('role').onchange();
+  assert.equal(f.node('heading-row').hidden, false);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  assert.match(f.node('position-help').textContent, /120 actor ticks/);
+  f.node('x').value = '4.5';
+  f.node('y').value = '10.5';
+  f.node('heading').value = '1,0';
+  submit(f);
+  assert.match(f.node('result').textContent, /applied/);
+  assert.deepEqual(f.source().missions[0].actors.at(-1).heading, [1, 0]);
+  const team = createTeamOpeningCandidates();
+  team.actorCatalogId = 'journey-actors-v2';
+  f.update(team);
+  f.mission('twin-landings');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper'],
+  );
+});
+
 test('a same-revision map replacement rejects stale actor coordinates', () => {
   const f = editorFixture();
   f.node('select').value = 'keeper';
@@ -253,6 +349,75 @@ test('stale actor fields cannot apply after a project or same-revision source re
   f.update({ ...f.source(), id: 'different-project' });
   f.node('remove').onclick();
   assert.equal(f.source().missions[0].actors.length, 1, 'New context disarms removal.');
+});
+
+test('Studio exposes the eroder only in v3, with shared warning rules and validated heading fields', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'territory-eroder'));
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v3';
+  f.update(next);
+  assert(f.node('role').children.some((row) => row.value === 'territory-eroder'));
+  f.node('id').value = 'eroder';
+  f.node('role').value = 'territory-eroder';
+  f.node('role').onchange();
+  assert.equal(f.node('heading-row').hidden, false);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  assert.match(f.node('position-help').textContent, /60 actor ticks/);
+  assert.match(f.node('description').textContent, /Retains its field region/);
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('heading').value = '-1,0';
+  submit(f);
+  assert.match(f.node('result').textContent, /applied/);
+  assert.equal(f.source().missions[0].actors.at(-1).role, 'territory-eroder');
+  f.node('x').value = '32.5';
+  f.node('y').value = '17.5';
+  submit(f);
+  assert.match(f.node('result').textContent, /Not applied/);
+  assert.equal(f.source().missions[0].actors.at(-1).x, 45.5);
+  const team = createTeamOpeningCandidates();
+  team.actorCatalogId = 'journey-actors-v3';
+  f.update(team);
+  f.mission('twin-landings');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper'],
+  );
+});
+
+test('Studio carrier controls are catalogue-gated and compile selected IDs without affecting keepers', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'impact-carrier'));
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v4';
+  f.update(next);
+  assert(f.node('role').children.some((row) => row.value === 'impact-carrier'));
+  f.node('id').value = 'carrier';
+  f.node('role').value = 'impact-carrier';
+  f.node('role').onchange();
+  assert.equal(f.node('heading-row').hidden, false);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  assert.match(f.node('position-help').textContent, /24 cells\/s in every preset/);
+  assert.match(f.node('description').textContent, /Ordinary field keepers/);
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('heading').value = '-1,0';
+  submit(f);
+  assert.match(f.node('result').textContent, /applied/);
+  assert.deepEqual(
+    resolveMission(compileContentProject(f.source()), 'nearby-shore').level.classic.lineImpact
+      .actorIds,
+    ['carrier'],
+  );
+  const team = createTeamOpeningCandidates();
+  team.actorCatalogId = 'journey-actors-v4';
+  f.update(team);
+  f.mission('twin-landings');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper'],
+  );
 });
 
 test('role controls explain domains, refresh preset tiers, clear absent missions and honor rejected adoption', () => {

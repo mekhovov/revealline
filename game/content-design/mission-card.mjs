@@ -1,6 +1,7 @@
 import { createRun, CELL } from '../core/index.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
+import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
 const cards = new WeakMap();
 
 /** Read-only initial-state diagram. Uses the engine's actual topology and actor
@@ -18,7 +19,11 @@ export function createMissionCard(manifest) {
     cells: [...run.cells],
     terrain: [...run.classic.terrain],
     spawn: { x: run.player.x, y: run.player.y },
-    actors: run.enemies.map(({ type, x, y }) => ({ type, x, y })),
+    actors: run.enemies.map((actor) => ({
+      type: contentActorMarkerType(manifest.level, actor),
+      x: actor.x,
+      y: actor.y,
+    })),
     objectives: run.objectives
       .filter((objective) => objective.revealed)
       .map(({ x, y }) => ({ x, y })),
@@ -59,19 +64,7 @@ export function paintMissionThumbnail(ctx, card, width = 288) {
       y = actor.y * unit,
       r = Math.max(3, unit);
     ctx.beginPath();
-    if (actor.type === 'bouncer') ctx.arc(x, y, r, 0, Math.PI * 2);
-    else if (actor.type === 'border-patrol') {
-      ctx.moveTo(x, y - r);
-      ctx.lineTo(x + r, y);
-      ctx.lineTo(x, y + r);
-      ctx.lineTo(x - r, y);
-      ctx.closePath();
-    } else {
-      ctx.moveTo(x, y - r);
-      ctx.lineTo(x + r, y + r);
-      ctx.lineTo(x - r, y + r);
-      ctx.closePath();
-    }
+    traceContentActor(ctx, actor.type, x, y, r);
     ctx.fill();
   }
   ctx.strokeStyle = '#fff0ad';

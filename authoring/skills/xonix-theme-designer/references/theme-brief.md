@@ -26,3 +26,20 @@ Keep exact data fields in the contract; this companion brief can express propose
 - Record picture owner/arena compatibility, frame, pivot, rotors, cancelled/stale decode behavior and resource cleanup. Keep native layout, physical input, sound, gameplay and public release checks separate.
 
 Copyable inspection prompt: “Inspect ASSET_ID at REVISION in Solo, both Versus boards and each compatible Team arena. Compare Saved/Draft at compact and detailed widths, then inspect relevant warning, capture, downed, rescue and recovery states. Explain unavailable bindings; do not substitute an unrelated mission or fabricate simulation states. Cancel a delayed preview and resize while paused. Preserve authored levels, theme history, player saves and earned originals. Report the exact evidence and remaining release checks.”
+
+## Exact theme successor checklist
+
+- Record the source SHA, compiled theme/collection revision, changed recipe inputs and retained original-file hashes. Include imported helper modules in the affected recipe fingerprints.
+- Revalidate code-owned artwork associations when a theme revision changes, even if no image bytes changed. Team starter bindings and the historical-import policy must match the generated snapshot exactly; preserve approved picture descriptors, closed namespaces and historical revisions.
+- Keep regenerated recipes at their evidence-supported stage. A passing compiler or source test does not independently review all visual states.
+- Run real-byte binding and historical-import lease tests, retaining wrong-revision rejection; verify both starter arenas prepare and start through the native host. Distinguish the tested source from a later composed release.
+
+Copyable maintenance prompt: “Prepare an exact theme successor from SOURCE_SHA. Record the compiled theme/collection identities and recipe dependency fingerprints, retaining original artwork and immutable history. If the selected theme revision advances, inspect every exact artwork consumer, including Team starter bindings and the historical-import policy. Qualify explicit matching successor tuples with unchanged approved picture descriptors where appropriate; never use name-only, wildcard or runtime-latest matching. Preserve failure/cancellation behavior and older/newer snapshot rejection. Run the complete real-byte binding and import lease tests, then inspect both Team arenas through preparation, Start and Retry. Record source, native, physical-device and public evidence separately. Do not promote source-stage recipes or declare a complete visual collection without the required independent review.”
+
+### Crop preparation acceptance
+
+A replacement must use a derivative prepared from the currently entered crop. After changing crop coordinates or dimensions, prepare again before applying geometry or staging. A failed crop or a field edit during encoding must not commit earlier pixels.
+
+Qualification prompt: “Upload a small transparent sprite, prepare it, enter an out-of-bounds crop and confirm both preparation and staging leave the accepted workspace unchanged. Enter a different valid crop and confirm staging requires preparation. Change the crop during a delayed encode and confirm that result also cannot stage until prepared again. Then prepare the current crop, stage, save and verify original/derivative bytes survive export and import. Keep these checks separate from production artwork approval.”
+
+Metadata revision prompt: “Change a reviewed raster’s supported pivot, motor anchors or nine-slice, stage and save it. Confirm the new record is produced with empty review evidence, retains the original bytes and names the prior revision as its provenance parent. Verify the old reviewed record and its evidence remain unchanged and can be restored. Do not carry visual approval onto changed placement geometry.”

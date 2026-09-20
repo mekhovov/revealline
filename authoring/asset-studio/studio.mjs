@@ -741,7 +741,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   asset.file = await fileMetadata(blob, canvas, task);
   asset.geometry = imageGeometry(canvas, slot);
   asset.provenance.parent = ref(preparation.original);
-  return { candidate: asset, candidateBlob: blob };
+  return { candidate: asset, candidateBlob: blob, preparedCrop: { ...crop } };
 }
 async function prepareCrop(task) {
   if (!pending?.bitmap) throw new Error('Choose an image first.');
@@ -785,6 +785,13 @@ function editedGeometry() {
 }
 async function validatePending(geometryOnly = false, task) {
   if (!pending?.candidate) throw new Error('Prepare an image crop or choose media first.');
+  if (pending.bitmap) {
+    const crop = getCrop();
+    if (Object.keys(crop).some((key) => crop[key] !== pending.preparedCrop?.[key]))
+      throw new Error(
+        'The crop has changed. Prepare derivative before applying geometry or staging.',
+      );
+  }
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
   if (!geometryOnly) {
@@ -881,6 +888,7 @@ editGeometry.onclick = () =>
       ...structuredClone(asset),
       ...nextAssetRevision(working.document, selected),
       provenance: { ...structuredClone(asset.provenance), parent: ref(asset) },
+      quality: { stage: 'produced', evidence: [] },
     };
     pending = {
       candidate,

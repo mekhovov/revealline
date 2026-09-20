@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { exactKeys, required } from '../game/data-json.mjs';
 import { compileAssetRevision } from '../game/content-design/assets.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS } from '../game/content-design/limits.mjs';
 
 export function validateOptionalArtworkConfig(value) {
   exactKeys(value, ['format', 'catalog'], 'Optional artwork config');
@@ -62,8 +63,8 @@ export async function readOptionalArtwork(root, option, included) {
       ? registry.HORIZON_ART_CANDIDATES
       : registry.JOURNEY_ART_CANDIDATES;
   required(
-    Array.isArray(raw) && raw.length > 0 && raw.length <= 32,
-    'Optional artwork requires between one and 32 authored revisions.',
+    Array.isArray(raw) && raw.length > 0 && raw.length <= CONTENT_PROJECT_ITEM_LIMITS.assets,
+    `Optional artwork requires between one and ${CONTENT_PROJECT_ITEM_LIMITS.assets} authored revisions.`,
   );
   const assets = raw.map(compileAssetRevision),
     files = [],

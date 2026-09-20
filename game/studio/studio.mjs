@@ -1,9 +1,17 @@
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
+import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
+import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
+import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
+import { createFractureCandidates } from '../content-design/fracture-candidates.mjs';
+import { createPhaseCandidates } from '../content-design/phase-candidates.mjs';
+import { createLivewireCandidates } from '../content-design/livewire-candidates.mjs';
+import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
+import { contentActorDescription } from '../content-design/actor-marker.mjs';
 import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
@@ -25,10 +33,12 @@ import { createActorEditor } from './actor-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
+import { createPacingInspector } from './pacing-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
+const pacingInspector = createPacingInspector({ document, getSource: () => session.current() });
 let session,
   inspected = null,
   sourceChanged = false,
@@ -215,7 +225,7 @@ function inspectBoard(trailCells = []) {
   inspectedTrail = [...trailCells];
   $('trail').value = inspectedTrail.join(', ');
   draw(preview);
-  const { geometry, manifest, capture } = preview;
+  const { geometry, manifest, capture, authoredTerrain } = preview;
   const tuningKey = JSON.stringify([mission.id, mission.revision]);
   if (tuningRevision !== tuningKey) {
     $('target-coverage').value = Number((mission.coverage * 100).toFixed(8));
@@ -229,11 +239,11 @@ function inspectBoard(trailCells = []) {
   $('rules').textContent =
     `${manifest.level.rules.lives ?? journeyPreset(manifest.difficulty).lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
   $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
+    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${contentActorDescription(manifest.level, actor)} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
     ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
   $('geometry').textContent +=
-    ` Authored terrain: ${(manifest.level.classic?.terrain ?? []).map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
+    ` Authored terrain: ${authoredTerrain.map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -241,7 +251,7 @@ function inspectBoard(trailCells = []) {
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
       objectives: mission.objectives,
-      terrain: manifest.level.classic?.terrain ?? [],
+      terrain: authoredTerrain,
     },
     null,
     2,
@@ -278,6 +288,7 @@ function inspectBoard(trailCells = []) {
 }
 function render(selected = $('mission').value) {
   inspections.invalidate();
+  pacingInspector.sync();
   tuningRevision = null;
   const project = session.current();
   $('project-id').value = project.id;
@@ -508,6 +519,48 @@ $('opening').onclick = guarded(() => {
 $('border').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createBorderCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('signal').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createSignalCandidates({ campaignTheme: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('neon').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createNeonCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('rover').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createRoverCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('fracture').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createFractureCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('phase').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createPhaseCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('livewire').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createLivewireCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('team-signal').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createTeamSignalCandidates({ campaignTheme: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

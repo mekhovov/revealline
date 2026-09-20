@@ -83,7 +83,11 @@ test('the versioned historical policy names only the exact reviewed FPV wide sce
     'revealline-team-historical-import-picture.v1',
   );
   assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeId, 'fpv');
-  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision, 34);
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision, 38);
+  assert.equal(
+    COOP_HISTORICAL_IMPORT_PICTURE_POLICY.themeRevision,
+    compiled.resolved.theme.revision,
+  );
   assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICY.collection, null);
   assert.deepEqual(approved, COOP_PICTURE_BINDINGS[0].picture);
   assert.ok(Object.isFrozen(COOP_HISTORICAL_IMPORT_PICTURE_POLICY));
@@ -112,7 +116,7 @@ test('valid coverage and multi-core imports bind their complete content to the a
       levelRevision: level.revision,
       levelSha256: sha(canonicalJSON(level)),
       themeId: 'fpv',
-      themeRevision: 34,
+      themeRevision: 38,
       collection: null,
       picture: approved,
       kind: 'image',

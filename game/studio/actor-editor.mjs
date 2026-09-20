@@ -1,4 +1,4 @@
-import { ACTOR_CATALOG, journeyPreset } from '../content-design/catalogs.mjs';
+import { journeyActors, journeyPreset } from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
@@ -6,6 +6,10 @@ const names = {
   'field-keeper': 'Field keeper',
   'perimeter-patrol': 'Outer-perimeter patrol',
   'frontier-patrol': 'Moving-frontier patrol',
+  'reclaimed-roamer': 'Reclaimed-ground roamer',
+  'territory-eroder': 'Territory eroder',
+  'impact-carrier': 'Trail-impact carrier',
+  'lane-emitter': 'Lane emitter',
 };
 
 /** Catalog-only controls. Unsaved fields are local; only an explicit validated
@@ -15,6 +19,9 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   let revision = null,
     removal = null;
   const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
+  const catalog = () => journeyActors(getSource().actorCatalogId);
+  const hasHeading = (role) =>
+    ['field-keeper', 'reclaimed-roamer', 'territory-eroder', 'impact-carrier'].includes(role);
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
@@ -24,30 +31,48 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
         return option;
       }),
     );
-  options($('role'), Object.entries(names));
+  // Studio creates editors before opening its draft session. Resolve the exact
+  // project catalogue only when the owner calls sync after session adoption.
+  $('tools').disabled = true;
   function cancelRemoval() {
     removal = null;
     $('remove').textContent = 'Remove selected actor';
   }
   function describe() {
     cancelRemoval();
-    const role = ACTOR_CATALOG.roles[$('role').value];
+    const role = catalog().roles[$('role').value];
     const tier = $('tier').value;
+    const emitter = role.type === 'lane-boss';
+    const tiers = emitter ? role.timings : role.speeds;
+    $('tier-label').textContent = emitter
+      ? 'Cadence tier · fixed warning in every difficulty'
+      : 'Speed tier · selected difficulty';
     options(
       $('tier'),
-      Object.entries(role.speeds).map(([id, speed]) => [
+      Object.entries(tiers).map(([id, value]) => [
         id,
-        `${id} · ${Number((speed * journeyPreset(getDifficulty()).enemySpeedFactor).toFixed(3))} cells/s`,
+        emitter
+          ? `${id} · ${value.warningSeconds}s warning / ${value.activeSeconds}s active / ${value.period}s cycle`
+          : `${id} · ${Number((value * journeyPreset(getDifficulty()).enemySpeedFactor).toFixed(3))} cells/s`,
       ]),
     );
-    if (Object.hasOwn(role.speeds, tier)) $('tier').value = tier;
+    if (Object.hasOwn(tiers, tier)) $('tier').value = tier;
     const frontier = $('role').value === 'frontier-patrol';
     $('position-help').textContent = frontier
       ? 'Integer field cell beside reclaimed ground; choose its side facing that ground.'
-      : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
-    $('heading-row').hidden = $('role').value !== 'field-keeper';
+      : $('role').value === 'reclaimed-roamer'
+        ? 'Use cell centres ending in .5. Dormant in field; after its body is reclaimed it warns for 120 actor ticks, then roams reclaimed ground.'
+        : $('role').value === 'territory-eroder'
+          ? 'Start in unclaimed field. Eligible frontier contact marks one cell for 60 actor ticks before reopening it, followed by a 120 actor-tick cooldown. Foundations are permanent.'
+          : $('role').value === 'impact-carrier'
+            ? `Start in unclaimed field. Trail impacts travel at the shared ${role.impactSpeed} cells/s in every preset. Only this marked role creates fronts; body contact is still dangerous.`
+            : emitter
+              ? `Stationary in unclaimed field. First warning starts after 2 actor seconds, then locks a row or column. The ${role.laneWidth}-cell lane does not damage reclaimed ground; this emitter still retains field.`
+              : 'Board coordinates in cells. Cell centres use .5; outer patrols must start on the perimeter.';
+    $('heading-row').hidden = !hasHeading($('role').value);
     $('edge-row').hidden = !frontier;
-    $('clockwise-row').hidden = $('role').value === 'field-keeper';
+    $('clockwise-row').hidden = hasHeading($('role').value) || emitter;
+    $('axis-row').hidden = !emitter;
     for (const axis of ['x', 'y']) $(axis).step = frontier ? '1' : '0.5';
     $('description').textContent =
       `${role.domain} · hits ${role.damageTarget} · ${role.retainsField ? 'Retains its field region.' : 'Does not retain field regions.'} ${role.counterplay}`;
@@ -65,6 +90,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     $('heading').value = (actor?.heading ?? [1, 1]).join(',');
     $('edge').value = actor?.edge?.side ?? 'east';
     $('clockwise').checked = actor?.clockwise ?? true;
+    $('axis').value = actor?.axis ?? 'horizontal';
     $('submit').textContent = actor ? 'Validate & replace actor' : 'Validate & add actor';
     $('remove').disabled = !actor;
     $('result').textContent =
@@ -79,7 +105,9 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     options(
       $('role'),
       Object.entries(names).filter(
-        ([role]) => !mission?.modes.includes('team') || role === 'field-keeper',
+        ([role]) =>
+          Object.hasOwn(catalog().roles, role) &&
+          (!mission?.modes.includes('team') || role === 'field-keeper'),
       ),
     );
     const selected = $('select').value;
@@ -125,7 +153,8 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
     }
     if (role === 'frontier-patrol') actor.edge = { x, y, side: $('edge').value };
     else Object.assign(actor, { x, y });
-    if (role === 'field-keeper') actor.heading = $('heading').value.split(',').map(Number);
+    if (hasHeading(role)) actor.heading = $('heading').value.split(',').map(Number);
+    else if (role === 'lane-emitter') actor.axis = $('axis').value;
     else actor.clockwise = $('clockwise').checked;
     commit({ action: $('select').value ? 'replace' : 'add', id, actor });
   };

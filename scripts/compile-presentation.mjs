@@ -13,6 +13,7 @@ import {
   presentationFontDescriptors,
 } from '../game/presentation/runtime.mjs';
 import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
+import { inspectPresentationDependencies } from '../game/presentation/dependencies.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { validatePack } from '../game/packs.mjs';
 
@@ -106,7 +107,13 @@ export async function compilePresentation(
       }) + '\n',
     ),
   );
-  return Object.freeze({ files, resolved, imagesDecoded: typeof decodeImage === 'function' });
+  const dependencies = await inspectPresentationDependencies(files.get('runtime.json'));
+  return Object.freeze({
+    files,
+    resolved,
+    dependencies,
+    imagesDecoded: typeof decodeImage === 'function',
+  });
 }
 
 /** Preserve the production v1 record and return its validated read-only view.
