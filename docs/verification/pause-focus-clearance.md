@@ -30,3 +30,11 @@ References: [MDN safe alignment](https://developer.mozilla.org/en-US/docs/Web/CS
 ## Stacked correction preparation
 
 The isolated `codex/pause-clearance-v0692` branch adopts the exact CSS/test correction on top of the v0.69.1 recovery candidate and subsequent card-contract fix. The two complete structural tests pass independently on Node20.19.5; changed CSS/test formatting passes. They do not prove rendered layout. Version0.69.2 is reserved for this correction; no existing tag was found when reserved. The branch still requires native integrated review, final source qualification after v0.69.1 integration, original immutable publication and public acceptance.
+
+## Narrow-landscape HUD follow-up
+
+At 568×320 with Large/Plain text, pausing compressed the arena panel to 153px, causing the score to extend beyond the viewport. The pause-only responsive rule now lets the underlying panel use the available page width. Running board geometry and selected font sizes stay unchanged. The native evidence records 568px document width after correction and the same 568px arena / 376px HUD widths during active flight.
+
+Maintainer prompt: “Check Pause and explicit Resume at 568×320 with Large/Plain text. Measure the document, score and arena after layout settles; Tab to both ends of the pause commands. Do not conceal overflow or shrink the selected font to make the measurement pass. Record native browser evidence separately from structural tests and physical-device acceptance.”
+
+Reference: [W3C focus-not-obscured guidance](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html).
