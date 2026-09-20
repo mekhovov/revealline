@@ -146,6 +146,13 @@ test('world action stays inside a resized scrollport without changing focus or a
   flush();
   assert.equal(dialog.scrollTop, 0);
   height = 390;
+  f.doc.hidden = true;
+  for (const callback of listeners.get('resize')) callback();
+  flush();
+  assert.equal(dialog.scrollTop, 0, 'Queued focus reflow cannot change a hidden page.');
+  assert.equal(f.doc.activeElement, action);
+  assert.deepEqual(f.calls, []);
+  f.doc.hidden = false;
   for (const callback of listeners.get('resize')) callback();
   flush();
   assert(action.getBoundingClientRect().top >= 108);
