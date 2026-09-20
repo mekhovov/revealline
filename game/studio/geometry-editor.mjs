@@ -1,5 +1,6 @@
 import { dataIdentity } from '../data-json.mjs';
 import { editContentGeometry } from '../content-design/geometry-edit.mjs';
+import { missionEditContext } from './edit-context.mjs';
 
 export function createGeometryEditor({ document, getSource, getMission, apply }) {
   const $ = (id) => document.getElementById(`geometry-edit-${id}`);
@@ -13,8 +14,7 @@ export function createGeometryEditor({ document, getSource, getMission, apply })
       (map) => map.id === mission?.map.id && map.revision === mission?.map.revision,
     );
   };
-  const context = () =>
-    JSON.stringify([getSource().id, getSource().revision, getMission(), mapFor()]);
+  const context = () => missionEditContext(getSource(), getMission());
   function disarm() {
     armed = false;
     $('remove').textContent = 'Remove selected rectangle';

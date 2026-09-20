@@ -174,6 +174,18 @@ function fixture() {
   };
 }
 const submit = (f) => f.node('form').onsubmit({ preventDefault() {} });
+test('a same-revision map replacement rejects stale bonus coordinates', () => {
+  const f = fixture(),
+    next = structuredClone(f.source());
+  f.node('id').value = 'stale';
+  f.node('x').value = '20.5';
+  f.node('y').value = '0.5';
+  next.maps[0].foundations[0].w = 6;
+  f.update(next, false);
+  submit(f);
+  assert.match(f.node('result').textContent, /context changed/);
+  assert.equal(f.source().missions[0].bonuses.length, 0);
+});
 test('bonus UI validates add/update and requires a fresh two-action removal', () => {
   const f = fixture();
   f.node('id').value = 'detour';

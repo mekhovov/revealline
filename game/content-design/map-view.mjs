@@ -105,6 +105,20 @@ export function paintContentMap(
       ctx.fillRect(x - size * 0.2, y - size * 0.2, size * 0.4, size * 0.4);
     }
   }
+  // Author view exposes even hidden markers; it never claims gameplay visibility.
+  for (const objective of manifest.level.objectives ?? []) {
+    const x = objective.x * size,
+      y = objective.y * size;
+    ctx.fillStyle = '#102720';
+    ctx.fillRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.strokeStyle = '#fff0ad';
+    ctx.strokeRect(x - size * 0.6, y - size * 0.6, size * 1.2, size * 1.2);
+    ctx.fillStyle = '#fff0ad';
+    ctx.font = `bold ${Math.max(10, size)}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(objective.hidden ? '?' : objective.required ? '!' : 'o', x, y);
+  }
   ctx.fillStyle = '#f5ffba';
   for (const [seat, { x, y }] of (preview.markers.spawns ?? [manifest.level.spawn]).entries()) {
     ctx.fillRect(x * size - 8, y * size - 2, 16, 4);

@@ -1,8 +1,8 @@
-import { BONUS_CHOICES, editContentBonus } from '../content-design/bonuses.mjs';
+import { editContentObjective } from '../content-design/objectives.mjs';
 import { missionEditContext } from './edit-context.mjs';
 
-export function createBonusEditor({ document, getSource, getMission, apply }) {
-  const $ = (id) => document.getElementById(`bonus-${id}`);
+export function createObjectiveEditor({ document, getSource, getMission, apply }) {
+  const $ = (id) => document.getElementById(`objective-${id}`);
   let key = null,
     armed = false;
   const context = () => missionEditContext(getSource(), getMission());
@@ -16,68 +16,72 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
       }),
     );
   }
-  options($('kind'), BONUS_CHOICES);
   function disarm() {
     armed = false;
-    $('remove').textContent = 'Remove selected bonus';
+    $('remove').textContent = 'Remove selected objective';
   }
   function select() {
     disarm();
-    const bonus = getMission()?.bonuses.find((entry) => entry.id === $('select').value);
-    $('id').value = bonus?.id ?? '';
-    $('id').disabled = !!bonus;
-    $('kind').value = bonus?.kind ?? 'extra-life';
-    $('x').value = bonus?.x ?? '';
-    $('y').value = bonus?.y ?? '';
-    $('remove').disabled = !bonus;
-    $('submit').textContent = bonus ? 'Validate & replace bonus' : 'Validate & add bonus';
+    const objective = getMission()?.objectives.find((entry) => entry.id === $('select').value);
+    $('id').value = objective?.id ?? '';
+    $('id').disabled = !!objective;
+    $('required').checked = objective?.required ?? false;
+    $('hidden').checked = objective?.hidden ?? false;
+    $('x').value = objective?.x ?? '';
+    $('y').value = objective?.y ?? '';
+    $('remove').disabled = !objective;
+    $('submit').textContent = objective
+      ? 'Validate & replace objective'
+      : 'Validate & add objective';
     $('result').textContent =
-      'Contact collection only; enclosing a pickup does not collect it. Keep required routes completable without bonuses.';
+      'Capturing the marker cell earns the objective. Required markers and territory quota both gate completion; avoid low-risk cleanup.';
   }
   function sync() {
     const mission = getMission();
     $('tools').disabled = !mission || mission.modes.includes('team');
     $('qualification').textContent = mission?.modes.includes('team')
-      ? 'Authored Team bonus behavior is not yet qualified. These controls remain unavailable.'
-      : 'Optional contact bonuses use shared engine effects and expiry. Speed should be an intentional detour, not forced before precision turns.';
+      ? 'Authored Team objective behavior is not yet qualified. These controls remain unavailable.'
+      : 'Capture objectives use the shared engine. Preview retained chambers and required markers before testing a route.';
     const next = context();
     if (next === key) return;
     key = next;
     const selected = $('select').value;
     options($('select'), [
-      ['', '+ New bonus'],
-      ...(mission?.bonuses ?? []).map((bonus) => [
-        bonus.id,
-        `${BONUS_CHOICES.find(([kind]) => kind === bonus.kind)?.[1] ?? bonus.kind} · ${bonus.id}`,
+      ['', '+ New objective'],
+      ...(mission?.objectives ?? []).map((objective) => [
+        objective.id,
+        `${objective.required ? 'Required' : 'Optional'} · ${objective.id}`,
       ]),
     ]);
-    if (mission?.bonuses.some((bonus) => bonus.id === selected)) $('select').value = selected;
+    if (mission?.objectives.some((objective) => objective.id === selected))
+      $('select').value = selected;
     select();
   }
   function commit(action) {
     try {
       if (key !== context())
-        throw new Error('The draft context changed. Refresh the bonus selection.');
+        throw new Error('The draft context changed. Refresh the objective selection.');
       const id = $('id').value.trim(),
         command = { action, id };
       if (action !== 'remove') {
         if (!$('x').value.trim() || !$('y').value.trim())
           throw new Error('Enter both cell-centre coordinates.');
-        command.bonus = {
+        command.objective = {
           id,
-          kind: $('kind').value,
+          required: $('required').checked,
+          hidden: $('hidden').checked,
           x: Number($('x').value),
           y: Number($('y').value),
         };
       }
-      const candidate = editContentBonus(getSource(), getMission()?.id, command);
+      const candidate = editContentObjective(getSource(), getMission()?.id, command);
       if (apply(candidate) === false) return;
       key = null;
       sync();
       $('select').value = action === 'remove' ? '' : id;
       select();
       $('result').textContent =
-        'Applied to the local draft. All supported presets and modes compiled. Undo is available; test the optional detour.';
+        'Applied to the local draft. All supported presets and modes compiled. Undo is available; test completion and quota cleanup.';
     } catch (error) {
       $('result').textContent = `Not applied: ${error.message}`;
     }
@@ -93,7 +97,7 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
     if (!$('select').value) return;
     if (!armed) {
       armed = true;
-      $('remove').textContent = 'Confirm remove bonus';
+      $('remove').textContent = 'Confirm remove objective';
       $('result').textContent = 'Activate Remove again. Undo remains available.';
       return;
     }

@@ -1,5 +1,6 @@
 import { ACTOR_CATALOG, journeyPreset } from '../content-design/catalogs.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
+import { missionEditContext } from './edit-context.mjs';
 
 const names = {
   'field-keeper': 'Field keeper',
@@ -13,8 +14,7 @@ export function createActorEditor({ document, getSource, getMission, getDifficul
   const $ = (id) => document.getElementById(`actor-${id}`);
   let revision = null,
     removal = null;
-  const context = () =>
-    JSON.stringify([getSource().id, getSource().revision, getMission(), getDifficulty()]);
+  const context = () => missionEditContext(getSource(), getMission(), getDifficulty());
   const options = (element, rows) =>
     element.replaceChildren(
       ...rows.map(([value, label]) => {
