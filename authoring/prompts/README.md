@@ -16,6 +16,8 @@ The [eight First Flight prompts](round-26-first-flight.md) cover the working v0.
 
 For production intake, use the [register and replacement requests](production-intake.md) to select an exact missing slot, preserve source identity and run the existing CLI. These prose requests add no prompt catalog IDs and do not imply generated or approved work.
 
+For community editions, use the [creation, branding and recovery prompts](community-creation.md) with the [tested authoring guide](../community/README.md). These are prose workflows, not new CLI catalog IDs or evidence of produced assets.
+
 ## Choose the right workflow
 
 | Need                                                                                  | Recommended skill                                     | Start with                                                                                                                        |
