@@ -922,7 +922,6 @@ old reference crosswalk and prove its identities before renewing new-policy pins
 
 Use the shared focus-clearance owner for scrollable player dialogs. Supply a sticky heading only when the dialog actually has one, dispose listeners with the owning screen, and retain the selected action through reflow without activating it. Verify portrait to short-landscape resizing with keyboard focus on Cancel/Stay/Play, including pending and completed media operations. A passing layout-model test does not replace observing the final integrated browser view. Preserve original failed observations and sparse-input failures separately from product regressions.
 
-
 ### Independent presentation observer ownership
 
 When adding a resize observer to a menu, audit lifecycle fixtures that select the
@@ -936,3 +935,14 @@ the exact selected Git revision; keep setup failures distinct from product failu
 ### Replay artwork status
 
 When changing Replay Theater artwork feedback, keep `#asset-status` mounted as a polite, atomic live region, including while empty. Collapse empty spacing without removing it from the accessibility tree. Check failed-image and successful-theme updates without changing focus, transport intent or recorded checkpoints. Distinguish inspected browser semantics from an actual screen-reader listening check. See `docs/replay-theater.md` for the verification prompt.
+
+### Consumed story-restore controls
+
+When a one-use reviewed action becomes disabled, keep its initiating focus owner
+through every adapter wrapper and restore only to a logical enabled successor
+after the parent operation re-enables controls. Reuse `captureOperationFocus`;
+never blindly focus from an async completion. Cover cancellation, notification
+failure, explicit focus movement and native disabled-button blur. Example:
+"Restore an owned story backup with keyboard-only input, verify Review chosen
+story backup receives focus after success, and prove late completion cannot
+reclaim focus after Back or another action."
