@@ -368,7 +368,21 @@ for (const stage of ['download', 'save', 'cancel-download'])
     assert.equal(h.$('mission-replace-dialog').open, true);
     assert.match(h.$('mission-replace-status').textContent, /saved and verified/);
     assert.deepEqual(JSON.parse(saved).replay.checkpoint, before);
-    const pending = action(h.$('mission-replace-confirm'));
+    const confirm = h.$('mission-replace-confirm');
+    let disabled = confirm.disabled;
+    Object.defineProperty(confirm, 'disabled', {
+      get: () => disabled,
+      set(value) {
+        disabled = value;
+        // Native buttons lose focus when disabled. Model that boundary so
+        // this check cannot pass by retaining an impossible focused control.
+        if (value && h.doc.activeElement === confirm) h.doc.activeElement = h.doc.body;
+      },
+    });
+    confirm.focus();
+    const pending = action(confirm);
+    assert.equal(h.doc.activeElement?.id, 'mission-replace-stay');
+    assert.equal(h.$('mission-replace-stay').disabled, false);
     if (stage === 'cancel-download') {
       await settle(() => !!release);
       h.$('mission-replace-stay').click();
@@ -384,6 +398,30 @@ for (const stage of ['download', 'save', 'cancel-download'])
     assert.equal(h.storage.getItem(slot), saved);
     h.win.emit('pagehide', { persisted: false });
     assert.equal(h.storage.getItem(slot), saved);
+  });
+
+for (const context of ['another control', 'background', 'hidden'])
+  test(`pending replacement does not reclaim ${context} focus`, async (t) => {
+    const h = await setup(t);
+    await flight(h);
+    await requestLevel(h);
+    const confirm = h.$('mission-replace-confirm'),
+      stay = h.$('mission-replace-stay');
+    let disabled = confirm.disabled;
+    Object.defineProperty(confirm, 'disabled', {
+      get: () => disabled,
+      set(value) {
+        disabled = value;
+        if (value && h.doc.activeElement === confirm) h.doc.activeElement = h.doc.body;
+      },
+    });
+    confirm.focus();
+    if (context === 'another control') stay.focus();
+    if (context === 'background') h.doc.focused = false;
+    if (context === 'hidden') h.doc.hidden = true;
+    const pending = action(confirm);
+    assert.equal(h.doc.activeElement, context === 'another control' ? stay : h.doc.body);
+    await pending;
   });
 
 test('successful different-pack install adopts a fresh paused run and leaves the previous run unchanged', async (t) => {
