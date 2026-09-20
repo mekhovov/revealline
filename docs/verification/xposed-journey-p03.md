@@ -527,6 +527,54 @@ zero skips/failures on Node20.19.5. This broader feasibility still does not prov
 reaction tolerance, meaningful human choice, pacing, mastery awards or enjoyment.
 No runtime, geometry, enemy, speed, coverage or difficulty value was changed.
 
+### Shared advisory campaign pacing inspection
+
+`inspectContentPacing` uses the existing compiler and gameplay Journey projection,
+including pack/campaign order, archive state and explicit Solo/Versus/Team filtering.
+Repeated memberships remain identified occurrences, not silently deduplicated.
+It reports authored challenge-band regressions/jumps, facet increases of three or
+more, and countdown frequency at or above15% of the selected sequence. Optional
+campaigns are excluded only by explicit IDs, never guessed from their names.
+Warnings are review prompts: they neither reject a deliberate respite nor retune
+any level, grant an award or qualify a release. Gentle countdowns remain non-failing.
+
+Studio now has an optional Review campaign progression panel. Inspection is
+explicit and read-only, avoiding a new whole-project compile on every keystroke.
+Draft/selection changes clear stale reports; unsupported modes leave an honest
+empty result. The frontend-design skill kept the existing restrained workbench
+identity and a collapsed ordered-ratings view; no new player navigation or effects.
+CLI uses exactly the same inspector:
+
+```sh
+node scripts/compile-content-project.mjs project.json --pacing --mode solo --exclude-campaigns signal-remixes
+```
+
+The four complete pacing/inspector/Studio/empty-project files pass13/13, zero
+skips/failures,3.910seconds on Node20.19.5; changed-source lint/format pass.
+Tests cover CLI/UI/direct parity, source immutability, mode/archive/reorder behavior,
+strictly-below15% countdown guidance, advisory band changes and stale/error cleanup.
+An initial assertion expected a different rejection-message spelling; it was
+corrected to the existing exact `not supported` contract, with no runtime change.
+
+Native tab21 uses separate saved `pacing-native-signal`, checkpoint1. It showed
+seven missions, then six after explicitly excluding Signal Remix; switching to
+Team cleared all rows and explained the missing qualified missions. Returning to
+Solo and reinspection restored the correct six. Saved draft recovery after reload
+was verified. At390×844, mode/exclusion controls, inspection button and summary
+fit visibly with a readable focused button. No console errors observed. The
+viewport is restored after inspection. Existing saved drafts and paused attempts
+were not reloaded or replaced. Large-library browser latency, assistive technology
+and physical touch/controller qualification remain open.
+
+A wider Journey/execution/structure/tuning run initially passed24/25: the old
+container-duplication test expected overflow at256 missions, below the newly
+shared384-mission capacity. It now fills the exact shared limit, verifies that
+full project compiles, then requires the precise mission-budget rejection and
+unchanged source when duplication would exceed it. No runtime budget was raised
+again. The complete five-file cohort including capacity now passes27/27, zero
+skips/failures,10.893seconds. Run35509283083 predates this test-only correction;
+retain any resulting original failure and requalify the corrected final source.
+
 Meaningful alternative-route quality, anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
