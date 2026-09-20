@@ -219,5 +219,22 @@ campaign missions retain their local links, and later edits fork only the copy.
 Both Node versions pass. The shared renderer now projects relay display state
 once per frame; no visual cache is allowed to become simulation authority.
 
-Delayed starts, alternate-order/simultaneous/impact optional goals, all-background
-artwork, broader native/devices, Team and human validation remain incomplete.
+## Delayed starts and optional-goal evidence boundaries
+
+All 35 Standard/immediate routes after 0.5, 1, 2, 3 and 5 seconds of initial idle
+now pass fresh-input/public-replay verification on both Node versions. These are
+independently adapted legal routes, not a claim that the same commands survive
+every delay. Each clears without a life loss, opens all relays before victory,
+traverses an opened connector, keeps the denominator fixed and captures required
+objectives before the coverage quota. The six-test delayed-route cohort is backed
+by `relay-delay-routes.json`; it does not qualify arbitrary waits or other presets.
+
+The test-only optional-goal observer now has six negative/positive invariant tests
+on both Node versions. They reject tied/reversed order, pre-opening landing visits,
+two openings on separate closures, several gates sharing only one trigger, unrelated
+or departure-directed impacts, and unfinished/life-loss clears. The observer never
+changes gameplay state or awards mastery. Full optional routes remain in progress;
+ordinary clears and bounded search timeouts do not certify or disprove those goals.
+
+Alternate-order/simultaneous/impact optional goals, all-background artwork,
+broader native/devices, Team and human validation remain incomplete.
