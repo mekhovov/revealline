@@ -917,3 +917,7 @@ then verify first clear, simultaneous clears, Pause/Resume and both-ended rankin
 Reject mismatched protocol packets; keep legacy timed replay outcomes. Load an old
 v1 saved flight and verify unchanged bytes plus truthful recovery copy. Preserve the
 old reference crosswalk and prove its identities before renewing new-policy pins.”
+
+### Complete visual-theme identity boundary
+
+Use `game/presentation/visual-theme-catalogue.mjs` only for declared compatibility and exact compiler/theme/collection identities. Supply accepted authored owners and canonical level hashes before difficulty transforms; keep numeric and legacy string revisions exact. A compatible declaration is not art approval or byte validation. Compare loader-verified declarations against authoritative required slots, preserve historical catalogue entries, and keep unsupported content distinct from unavailable revisions. Do not expose Settings choices or change retained picture/story pins until the complete two-collection benchmark and staged-host integration pass. Follow the prompt in `docs/visual-theme-catalogue.md`.
