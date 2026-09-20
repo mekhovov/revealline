@@ -7,6 +7,8 @@ import { createOpeningCandidates } from '../content-design/horizon-candidates.mj
 import { createMissionCard, paintMissionThumbnail } from '../content-design/mission-card.mjs';
 import { createRun } from '../core/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { createStarterProject } from '../content-design/starter.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 const themes = JSON.parse(
   await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -14,6 +16,22 @@ const themes = JSON.parse(
 const source = createOpeningCandidates({ artwork: true });
 const solo = createCandidateSoloHost(source, { themes, buildVersion: '0.69.0' });
 const versus = createCandidateVersusHost(source, { themes });
+
+test('player mission thumbnails do not reveal objectives hidden in the initial runtime state', () => {
+  const source = createStarterProject();
+  source.missions[0].objectives = [
+    { id: 'visible', x: 20.5, y: 10.5, required: true, hidden: false },
+    { id: 'secret', x: 50.5, y: 10.5, required: false, hidden: true },
+  ];
+  const manifest = resolveMission(compileContentProject(source), 'nearby-shore');
+  const card = createMissionCard(manifest);
+  assert.deepEqual(card.objectives, [{ x: 20.5, y: 10.5 }]);
+  assert.equal(
+    manifest.level.objectives.length,
+    2,
+    'Player thumbnail filtering must not alter runtime objectives.',
+  );
+});
 
 test('all opening mission diagrams use exact engine initial cells, terrain, spawn and actors', () => {
   const signatures = new Set();

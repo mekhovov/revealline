@@ -18,7 +18,9 @@ export function createMissionCard(manifest) {
     terrain: [...run.classic.terrain],
     spawn: { x: run.player.x, y: run.player.y },
     actors: run.enemies.map(({ type, x, y }) => ({ type, x, y })),
-    objectives: run.objectives.map(({ x, y }) => ({ x, y })),
+    objectives: run.objectives
+      .filter((objective) => objective.revealed)
+      .map(({ x, y }) => ({ x, y })),
   });
   cards.set(manifest, card);
   return card;
