@@ -36,6 +36,11 @@ test('Neon deepens known spatial rules in two arcs without a speed reset or auto
     assert.deepEqual(mission.modes, ['solo', 'versus']);
     assert.equal(mission.timeLimitSeconds, 0);
     assert.equal(mission.presentation.backgroundAssetId, null);
+    assert.equal(
+      mission.design.combines.includes('perimeter-patrol'),
+      mission.actors.some((actor) => actor.role === 'perimeter-patrol'),
+      `${mission.id}: authored combinations match actual perimeter threats`,
+    );
     assert(
       mission.actors.every(
         (actor) => actor.tier === 'measured' && Object.hasOwn(ACTOR_CATALOG.roles, actor.role),
