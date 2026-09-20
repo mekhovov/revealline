@@ -196,3 +196,45 @@ both browser error logs were empty. Native Next-after-clear, full consecutive
 playthrough, physical controllers, phone layout and target timing remain separate
 acceptance work. Inter-mode departure still uses the existing guarded boundary;
 no automatic Solo-flight-to-Team conversion is implied.
+
+## Whole-library duplication and native presentation follow-up
+
+Studio now duplicates missions, campaigns and whole packs. A copied container gets
+independent child IDs, preserving child order and shared membership only inside
+the copied subtree. Maps and assets stay immutable shared pins; later geometry
+edits use the existing copy-on-write path. Archived descendants remain archived,
+while the explicitly duplicated root becomes active. Generated IDs are bounded
+and deterministic; collisions and content-budget overflow reject the whole edit.
+Undo/redo and existing checkpoints retain both versions. Duplicate mission names
+are disambiguated with stable IDs in the Studio selector.
+
+The structure/Studio/image-authoring/tracing cohort passes **44/44** (7.2 seconds),
+including independent child edits, internal shared membership, byte-pin preservation,
+archive semantics, atomic collision/budget rejection and undo/redo. Full lint,
+formatting and whitespace checks pass. Native Studio duplicated Border's six-core
+pack: **2 packs / 2 campaigns / 7 missions → 3 / 3 / 13**. Adding a 3×3 foundation
+to its copied first mission changed **35→44** cells while the original stayed at
+35. Undo twice returned to 2/2/7; Redo restored 3/3/13. Checkpoint 5 survived reload,
+with original/copy stable IDs visibly distinguished. No published source changed.
+
+Native original-picture inspection now covers all seven Border boards, through
+normal keyboard input and the real host, with no simulated state mutation:
+
+| Mission | Observed earned territory / points / remaining lives |
+|---|---|
+| Behind the patrol | 12.2% / 2,850 / 3 after Down then Left |
+| Second landing | 0.5% / 110 / 3 after Down |
+| Long rail | 0.4% / 90 / 3 after Down |
+| New frontier | 1.1% / 260 / 3 after two separate Down returns |
+| Turn the corner | 0.8% / 170 / 3 after Left |
+| Return pocket | 0% / 0 / 2: delayed Right attempt was caught; failure caption shown |
+| Living border | 0.4% / 90 / 3 after Up |
+
+Each original rendered through its foundations and border; successful cuts added
+earned reveal. Return pocket's observation is a failed route, not a successful
+opening check. Field diamonds, fixed-perimeter vehicles, cyan contour vehicles,
+craft brackets and framed contact bonuses remained distinguishable in these
+1280×720 observations. New frontier visibly moved its contour patrol onto a newly
+connected return. No browser console errors were reported during this route check.
+The final Remix was left paused. Review delays changed enemy timing; these are not
+benchmarks, multi-seed/human playtests, exhaustive contrast or whole-level validation.

@@ -218,11 +218,14 @@ function render(selected = $('mission').value) {
   const project = session.current();
   $('project-id').value = project.id;
   $('project-name').textContent = project.name;
+  const nameCounts = new Map();
+  for (const mission of project.missions)
+    nameCounts.set(mission.name, (nameCounts.get(mission.name) ?? 0) + 1);
   $('mission').replaceChildren(
     ...project.missions.map((m) => {
       const option = document.createElement('option');
       option.value = m.id;
-      option.textContent = `${m.name}${m.archived ? ' · Archived' : ''}`;
+      option.textContent = `${m.name}${nameCounts.get(m.name) > 1 ? ` · ${m.id}` : ''}${m.archived ? ' · Archived' : ''}`;
       return option;
     }),
   );
@@ -316,7 +319,6 @@ function syncStructure() {
     )
     .join('\n');
   $('item-apply').disabled =
-    (action === 'duplicate' && kind !== 'mission') ||
     (['place', 'detach'].includes(action) && kind === 'pack') ||
     (action === 'delete' && !removal?.deletable);
 }

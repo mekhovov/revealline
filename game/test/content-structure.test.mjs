@@ -4,6 +4,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { editContentStructure as edit } from '../content-design/structure.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { forkMissionMap, createDraftHistory } from '../content-design/drafts.mjs';
+import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 
 test('create packs, campaigns and starter missions with explicit valid membership', () => {
   const original = createStarterProject(),
@@ -110,6 +111,189 @@ test('duplicate shares an immutable map revision until editing only the copy', (
   assert.equal(changed.maps[0].foundations.length, 1);
   assert.equal(changed.maps[1].foundations.length, 0);
   assert.deepEqual(duplicate.missions[1].map, original.missions[0].map);
+});
+
+test('duplicate campaign copies its ordered missions, shares immutable maps and isolates later edits', () => {
+  const source = createStarterProject(),
+    before = structuredClone(source);
+  const draft = edit(source, {
+    action: 'duplicate',
+    kind: 'campaign',
+    id: 'second-school',
+    name: 'Second school',
+    sourceId: 'horizon-school',
+    parentId: 'opening',
+  });
+  const copied = draft.campaigns.at(-1),
+    copyId = copied.missionIds[0];
+  assert.deepEqual(source, before);
+  assert.deepEqual(draft.packs[0].campaignIds, ['horizon-school', 'second-school']);
+  assert.notEqual(copyId, 'nearby-shore');
+  assert.equal(copied.band, source.campaigns[0].band);
+  assert.equal(draft.maps.length, source.maps.length);
+  const renamed = edit(draft, {
+    action: 'rename',
+    kind: 'mission',
+    id: copyId,
+    name: 'Independent name',
+  });
+  assert.equal(renamed.missions[0].name, 'Nearby shore');
+  const geometry = forkMissionMap(renamed, copyId, { foundations: [] });
+  assert.deepEqual(geometry.missions[0], source.missions[0]);
+  assert.notDeepEqual(geometry.missions.find((m) => m.id === copyId).map, source.missions[0].map);
+  assert.deepEqual(
+    draft,
+    edit(source, {
+      action: 'duplicate',
+      kind: 'campaign',
+      id: 'second-school',
+      name: 'Second school',
+      sourceId: 'horizon-school',
+      parentId: 'opening',
+    }),
+    'Generated identities are deterministic.',
+  );
+});
+
+test('duplicate pack preserves order and shared membership inside an independent copied hierarchy', () => {
+  let source = edit(createStarterProject(), {
+    action: 'create',
+    kind: 'campaign',
+    id: 'practice',
+    name: 'Practice',
+    band: 1,
+    parentId: 'opening',
+  });
+  source = edit(source, {
+    action: 'place',
+    kind: 'mission',
+    id: 'nearby-shore',
+    parentId: 'practice',
+  });
+  const before = structuredClone(source);
+  const draft = edit(source, {
+    action: 'duplicate',
+    kind: 'pack',
+    id: 'new-world',
+    name: 'New world',
+    sourceId: 'opening',
+  });
+  const pack = draft.packs.at(-1),
+    campaigns = pack.campaignIds.map((id) => draft.campaigns.find((c) => c.id === id));
+  assert.deepEqual(
+    campaigns.map((c) => c.name),
+    ['Horizon School', 'Practice'],
+  );
+  assert.deepEqual(campaigns[0].missionIds, campaigns[1].missionIds);
+  assert.notEqual(campaigns[0].missionIds[0], 'nearby-shore');
+  assert.equal(draft.missions.length, 2, 'Shared source mission is copied once.');
+  assert.equal(draft.campaigns.length, 4);
+  assert.equal(draft.maps.length, 1);
+  assert.deepEqual(draft.packs[0], source.packs[0]);
+  assert.deepEqual(draft.campaigns.slice(0, 2), source.campaigns);
+  assert.deepEqual(source, before);
+  const history = createDraftHistory(source);
+  history.replace(draft);
+  assert.deepEqual(history.undo(), source);
+  assert.deepEqual(history.redo(), draft);
+});
+
+test('container duplication retains archived descendants, resets only the root and keeps original asset pins', () => {
+  const source = createStarterProject();
+  source.packs[0].archived = true;
+  source.campaigns[0].archived = true;
+  source.missions[0].archived = true;
+  const draft = edit(source, {
+    action: 'duplicate',
+    kind: 'pack',
+    id: 'copy',
+    name: 'Copy',
+    sourceId: 'opening',
+  });
+  assert.equal(draft.packs.at(-1).archived, undefined);
+  assert.equal(draft.campaigns.at(-1).archived, true);
+  assert.equal(draft.missions.at(-1).archived, true);
+  assert.deepEqual(draft.missions.at(-1).presentation, source.missions[0].presentation);
+  assert.deepEqual(draft.maps, source.maps);
+  assert.deepEqual(draft.assets, source.assets);
+  const empty = structuredClone(source);
+  empty.packs[0].campaignIds = [];
+  const result = edit(empty, {
+    action: 'duplicate',
+    kind: 'pack',
+    id: 'blank',
+    name: 'Blank',
+    sourceId: 'opening',
+  });
+  assert.deepEqual(result.packs.at(-1).campaignIds, []);
+  assert.equal(result.missions.length, 1);
+});
+
+test('whole-pack duplication shares original asset pins without copying bytes or granting qualification', () => {
+  const source = createOpeningCandidates({ artwork: true });
+  const draft = edit(source, {
+    action: 'duplicate',
+    kind: 'pack',
+    id: 'new-horizon',
+    name: 'New Horizon',
+    sourceId: 'journey-opening',
+  });
+  assert.deepEqual(draft.assets, source.assets);
+  assert.deepEqual(draft.maps, source.maps);
+  assert.equal(draft.missions.length, source.missions.length + 9);
+  const compiled = compileContentProject(draft);
+  for (const mission of draft.missions.slice(source.missions.length)) {
+    const original = source.missions.find((m) => m.name === mission.name);
+    assert.deepEqual(mission.presentation, original.presentation);
+    const manifest = resolveMission(compiled, mission.id);
+    assert.equal(manifest.officialProgressEligible, false);
+    assert(manifest.diagnostics.some((row) => row.code === 'candidate-art-not-visually-qualified'));
+  }
+});
+
+test('container duplicate IDs remain bounded and generated collisions or budgets fail atomically', () => {
+  const source = createStarterProject(),
+    id = 'x'.repeat(80);
+  const draft = edit(source, {
+    action: 'duplicate',
+    kind: 'pack',
+    id,
+    name: 'Long ID',
+    sourceId: 'opening',
+  });
+  for (const item of [...draft.missions, ...draft.campaigns, ...draft.packs])
+    assert(item.id.length <= 80);
+  const collision = structuredClone(source);
+  collision.missions.push(structuredClone(draft.missions.at(-1)));
+  const before = structuredClone(collision);
+  assert.throws(
+    () =>
+      edit(collision, {
+        action: 'duplicate',
+        kind: 'pack',
+        id,
+        name: 'Collision',
+        sourceId: 'opening',
+      }),
+    /already exists/,
+  );
+  assert.deepEqual(collision, before);
+  const full = createStarterProject();
+  for (let i = 1; i < 256; i++)
+    full.missions.push({ ...structuredClone(full.missions[0]), id: `mission-${i}` });
+  const fullBefore = structuredClone(full);
+  assert.throws(
+    () =>
+      edit(full, {
+        action: 'duplicate',
+        kind: 'pack',
+        id: 'overflow',
+        name: 'Overflow',
+        sourceId: 'opening',
+      }),
+    /missions/,
+  );
+  assert.deepEqual(full, fullBefore);
 });
 
 test('order edits affect the selected parent without silently detaching shared membership', () => {
