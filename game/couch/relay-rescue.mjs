@@ -1004,10 +1004,14 @@ export function bootCoop() {
       binding = selection?.state === 'ready' ? selection.binding : null,
       canvas = $('coop-preview-canvas'),
       message = $('coop-preview-message'),
-      name = selection?.pack.levels.find((level) => level.id === selection.levelId)?.name;
-    $('coop-preview-caption').textContent = name
-      ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
-      : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
+      level = selection?.pack.levels.find((level) => level.id === selection.levelId),
+      name = level?.name;
+    $('coop-preview-caption').textContent =
+      level?.journeyDifficulty && !selection.artworkSource
+        ? `${name} geometry test. Preview scenery is not authored mission artwork. Win to reveal the full picture; scenery does not mark obstacles.`
+        : name
+          ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
+          : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
@@ -1573,7 +1577,9 @@ export function bootCoop() {
     $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
     message(
       run.config.jointCuts
-        ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
+        ? level.enemies.some((enemy) => enemy.type === 'hunter')
+          ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
+          : 'Watch the field keepers. Build return routes together, or meet both moving heads to join a cut.'
         : 'Comparison: head meetings do not join lines. Find a route back to safe ground.',
     );
     overlay();
@@ -2056,6 +2062,9 @@ export function bootCoop() {
     // cannot re-project their actors/lives through the historical Team rules.
     $('coop-difficulty').disabled = Boolean(level.journeyDifficulty);
     if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
+    $('coop-enemy-help').textContent = level.enemies.some((enemy) => enemy.type === 'hunter')
+      ? 'Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.'
+      : 'Field keepers threaten your craft and unfinished line. Watch their motion before crossing. Reclaimed islands close cuts; regions containing a keeper remain unclaimed.';
     const stronghold = Boolean(level.goal.cores);
     $('coop-intro').textContent = experiment.jointCuts
       ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'

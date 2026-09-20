@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
-import { resolveContentJourney } from '../content-design/journey.mjs';
+import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
 
 function pack(difficulty) {
@@ -11,7 +11,7 @@ function pack(difficulty) {
   source.missions[0].modes = ['team'];
   source.missions[0].team = { format: 'TeamMissionV1', spawnIds: ['home', 'island'] };
   source.missions[0].design.difficulty.coordination = 1;
-  return resolveContentJourney(source, { mode: 'team', difficulty }).campaigns[0].runtime;
+  return createTeamTestPack(source, 'nearby-shore', difficulty);
 }
 
 for (const [difficulty, reserves] of [
@@ -28,9 +28,16 @@ for (const [difficulty, reserves] of [
     assert.equal(f.$('coop-level').value, 'nearby-shore');
     assert.equal(f.$('coop-difficulty').value, difficulty);
     assert.equal(f.$('coop-difficulty').disabled, true);
+    assert.match(
+      f.$('coop-preview-caption').textContent,
+      /Preview scenery is not authored mission artwork/,
+    );
+    assert.match(f.$('coop-enemy-help').textContent, /Field keepers/);
+    assert.doesNotMatch(f.$('coop-enemy-help').textContent, /Hunter/);
     f.$('coop-start').click();
     f.tick();
     assert.equal(f.$('coop-menu').hidden, true);
+    assert.match(f.$('coop-message').textContent, /field keepers/);
     assert.equal(
       f.$('coop-reserves').textContent,
       `${reserves} reserve${reserves === 1 ? '' : 's'}`,
