@@ -67,10 +67,33 @@ both Node20.19.5 and22.22.2. The117-test Border/Signal/Neon/Rover/Fracture/Phase
 Livewire route cohort also passes both versions, preserving pinned simulation
 identities and public-replay checkpoints. Scoped lint, formatting and diff checks pass.
 
+Studio preview now compiles one owned edition before asynchronous media loading
+and reuses that edition when constructing the exact scenario. A source edit during
+the media wait cannot mix two revisions, and the complete library is no longer
+compiled twice per launch. The24-test preview/Studio/assets/readiness cohort passes
+on both Node versions, including immutable-edition and launch-wiring regressions.
+
+## Native Studio inspection
+
+The read-only server pinned to `0f7e1a39` on port8802 was inspected in a dedicated
+browser tab; the user's port8778 was not changed. Inspect kept the previous
+one-mission project active until explicit Apply. Apply produced83 maps/missions,
+24 packs and25 campaigns, and saved checkpoint1. Excluding the twelve optional
+Remix campaigns, the progression inspector reported71 missions, zero countdowns
+and zero advisory band findings in both Solo and Versus. Changing the mode
+invalidated the previous report before inspection.
+
+Home signal's exact preview loaded with three shield relays, its core-release
+rule,85% quota and three lives. Closing restored focus to Play. Reload restored
+the83-mission draft and checkpoint; mission selection returned to First return.
+This check predates the single-compilation preview adjustment above. It does not
+establish full native clears, controller/touch support, browser timing targets,
+real-host continuation or human pacing.
+
 ## Remaining gates
 
-Exact combined-tree regression and native Studio inspection; complete real-host
-flow and large-library device checks; human pacing and content-cut decisions;
+Exact final combined-tree regression; complete real-host flow and large-library
+device checks; human pacing and content-cut decisions;
 all twelve Remix retention decisions; original assets and offline aggregate budget;
 separate Team qualification; versioned PR/review/release and Pages verification.
 No previously open P01–P12 art, human, Team or publication gate is waived.
