@@ -4,7 +4,14 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { BORDER_ART_CANDIDATES } from '../content-design/border-art.mjs';
+import { NEON_ART_CANDIDATES } from '../content-design/neon-art.mjs';
+import { ROVER_ART_CANDIDATES } from '../content-design/rover-art.mjs';
 import { JOURNEY_ART_CANDIDATES } from '../content-design/journey-art.mjs';
+import {
+  SIGNAL_ILLUSTRATED_ART_CANDIDATES,
+  SIGNAL_PIXEL_ART_CANDIDATES,
+  SIGNAL_TEAM_ART_CANDIDATES,
+} from '../content-design/signal-art.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -21,8 +28,15 @@ test('all seven Border compositions are unique original pinned bytes, paired wit
   ).themes.find((row) => row.id === 'border-bloom');
   assert.deepEqual(validateTheme(theme).errors, []);
   assert.equal(BORDER_ART_CANDIDATES.length, 7);
-  assert.equal(JOURNEY_ART_CANDIDATES.length, 17);
-  assert.equal(new Set(JOURNEY_ART_CANDIDATES.map((row) => row.sha256)).size, 17);
+  const expectedCount =
+    17 +
+    SIGNAL_ILLUSTRATED_ART_CANDIDATES.length +
+    SIGNAL_PIXEL_ART_CANDIDATES.length +
+    SIGNAL_TEAM_ART_CANDIDATES.length +
+    NEON_ART_CANDIDATES.length +
+    ROVER_ART_CANDIDATES.length;
+  assert.equal(JOURNEY_ART_CANDIDATES.length, expectedCount);
+  assert.equal(new Set(JOURNEY_ART_CANDIDATES.map((row) => row.sha256)).size, expectedCount);
   for (const asset of BORDER_ART_CANDIDATES) {
     const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
     assert.equal(bytes.length, asset.bytes);

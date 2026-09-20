@@ -5,6 +5,8 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { JOURNEY_ART_CANDIDATES } from '../game/content-design/journey-art.mjs';
+import { CONTENT_PROJECT_ITEM_LIMITS } from '../game/content-design/limits.mjs';
 import { buildProject, collectBuildFiles, readBuildConfig } from './game-cli.mjs';
 import {
   readOptionalArtwork,
@@ -124,7 +126,6 @@ test('invalid pins, missing inputs, bytes, dimensions and duplicate declarations
   const files = await collectBuildFiles(root);
   for (const bad of [
     [],
-    Array(33).fill(pin),
     [pin, pin],
     [{ ...pin, width: 2 }],
     [{ ...pin, bytes: image.length + 1 }],
@@ -164,6 +165,23 @@ test('symlinked source is refused before registry evaluation', async (t) => {
   await assert.rejects(readOptionalArtwork(root, option, files), /symbolic links/);
 });
 
+test('optional artwork uses the shared bounded campaign-library capacity before reading images', async (t) => {
+  const { root } = await fixture(t);
+  const limit = CONTENT_PROJECT_ITEM_LIMITS.assets;
+  for (const count of [33, limit, limit + 1]) {
+    await writeFile(
+      path.join(root, option.catalog),
+      `export const HORIZON_ART_CANDIDATES = Array.from({length:${count}}, (_, index) => ({...${JSON.stringify(pin)}, id:'picture-'+index, path:'content-design/assets/fixture-r1/picture-'+index+'.png'}));`,
+    );
+    // Valid capacity reaches the required-original check; over-capacity fails
+    // before touching any image. Byte, digest and offline budgets are unchanged.
+    await assert.rejects(
+      readOptionalArtwork(root, option, [option.catalog]),
+      count <= limit ? /original must be shipped/ : /authored revisions/,
+    );
+  }
+});
+
 test('last packaging boundary rejects missing, duplicate or changed originals', () => {
   const artwork = { files: [{ path: imagePath, bytes: image.length, sha256: sha(image) }] },
     entry = { name: imagePath, bytes: image };
@@ -173,13 +191,16 @@ test('last packaging boundary rejects missing, duplicate or changed originals', 
   }
 });
 
-test('selected real source authenticates all seventeen originals without producing a bulk distribution', async () => {
+test('selected real source authenticates every registered original without producing a bulk distribution', async () => {
   const config = await readBuildConfig(source),
     files = await collectBuildFiles(source, { ...config, include: ['game'] });
   const artwork = await readOptionalArtwork(source, config.optionalArtwork, files);
-  assert.equal(artwork.count, 17);
-  assert.equal(artwork.bytes, 45282783);
-  assert.equal(new Set(artwork.files.map((file) => file.path)).size, 17);
+  assert.equal(artwork.count, JOURNEY_ART_CANDIDATES.length);
+  assert.equal(
+    artwork.bytes,
+    JOURNEY_ART_CANDIDATES.reduce((sum, asset) => sum + asset.bytes, 0),
+  );
+  assert.equal(new Set(artwork.files.map((file) => file.path)).size, JOURNEY_ART_CANDIDATES.length);
 });
 
 test('combined Journey opt-in preserves original bytes and historical single-campaign compatibility', async (t) => {

@@ -1,0 +1,11 @@
+# Theme adoption corrections
+
+Follow-up to the two reproduced blockers in `p04-theme-chain-review-fe45-r1`, based on P04 `fe45d384` plus the sealed theme dependency chain. This adds no UI choice, inventory abstraction or release behavior.
+
+DOM applications now retain ownership layers for each style property and marked attribute. Equal values still have separate owners. Releasing an older application removes only its layer; the current application survives. Releasing the current application reveals a still-live prior layer, or the original pre-theme value after prior owners retire. External style/attribute changes invalidate the old stack for that key and are preserved. Repeated observer updates do not steal a newer owner's values. Failed token or control application rolls back completed changes and keeps the prior host's image resources alive.
+
+`createCandidateSoloHost` and `createCandidateVersusHost` now expose `visualThemeSelection(selection, level)`. They require their own actual entry/row and the exact owned level, then return a frozen descriptor of the immutable raw compiler entry. Foreign copies, other host instances and wrong row levels return null. The adapter's `prepareHostSelection` first checks `host.owns`, then delegates that descriptor through its unchanged strict raw equality checks. Source-pack membership remains explicit even when two packs share a campaign. No mutable execution registry or new save/progress authority is exposed.
+
+Tests instantiate real Solo/Versus hosts and actual presentation hosts. They cover raw-owner mapping, foreign/stale selections, shared campaign membership, equal and different CSS values, shared action-icon attributes, both release orders, external overrides, repeated observer ownership, partial application failures and rollback. Existing catalogue/identity/pin/loader tests run with these corrections over exact P04 source. Modeled DOM/image checks remain distinct from browser focus, controller/touch and public-release evidence.
+
+After coordinator review, adopt this follow-up with the linked packets into the unfrozen P04 source, qualify exact source and browser journeys, then complete the normal version/commit/deploy gates. Prior sealed packets remain unchanged.

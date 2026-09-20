@@ -2,6 +2,7 @@ import { canvasTextFonts } from '../text-face.mjs';
 import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
 import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 import { drawCoopActiveTrail, drawCoopWall, prepareCoopWall } from './coop-terrain-trail.mjs';
+import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
@@ -170,6 +171,13 @@ export function createCoopPainter(canvas) {
             }
             ctx.fillStyle = palette?.grid ?? '#23414b';
             ctx.fillRect(x + 0.46, y + 0.46, 0.08, 0.08);
+            const material = run.terrain?.[y * run.width + x];
+            if (material === 1 || material === 2) {
+              ctx.save();
+              ctx.scale(1 / 16, 1 / 16);
+              paintMaterialMarker(ctx, material, x * 16, y * 16, 16);
+              ctx.restore();
+            }
           }
         }
       }

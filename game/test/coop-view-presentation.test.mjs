@@ -5,6 +5,8 @@ import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
+import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 // Canvas command observation exercises the real Team painter; it does not
 // qualify pixel contrast, browser image decode, or physical display readability.
@@ -138,6 +140,38 @@ test('an explicit procedural binding uses the selected palette without pretendin
     false,
   );
   assert.ok(view.calls.some((call) => call.state.fillStyle === presentation.canvas.palette.land));
+});
+
+test('Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects', () => {
+  const project = createTeamOpeningCandidates();
+  project.missions[0].team.format = 'TeamMissionV2';
+  project.maps[0].terrain = [
+    { id: 'slow', kind: 'slow', x: 30, y: 20, w: 1, h: 1 },
+    { id: 'lethal', kind: 'lethal', x: 31, y: 20, w: 1, h: 1 },
+    { id: 'foundation', kind: 'lethal', x: 20, y: 17, w: 1, h: 1 },
+  ];
+  const run = createCoop(
+      resolveMission(compileContentProject(project), 'twin-landings', { mode: 'team' }).level,
+    ),
+    view = canvasRecorder(),
+    painter = createCoopPainter(view.canvas),
+    before = structuredClone(run);
+  const symbolAt = (x, y) =>
+    view.calls.some(({ name, args }) => name === 'moveTo' && args[0] === x && args[1] === y);
+  painter.paint(run, { reduced: true });
+  assert(symbolAt(30 * 16 + 2, 20 * 16 + 5), 'Slow field retains its paired-dash marker.');
+  assert(symbolAt(31 * 16 + 5, 20 * 16 + 5), 'Lethal field retains its cross marker.');
+  assert(!symbolAt(20 * 16 + 5, 17 * 16 + 5), 'Foundation neutralizes its underlying material.');
+  assert.deepEqual(run, before, 'Painting cannot change terrain or gameplay.');
+  run.cells[20 * 72 + 30] = 1;
+  run.cells[20 * 72 + 31] = 1;
+  view.reset();
+  painter.paint(run, { reduced: true });
+  assert(!symbolAt(30 * 16 + 2, 20 * 16 + 5));
+  assert(!symbolAt(31 * 16 + 5, 20 * 16 + 5));
+  assert.equal(run.terrain[20 * 72 + 30], 1);
+  assert.equal(run.terrain[20 * 72 + 31], 2);
+  assert.equal(view.stack.length, 0);
 });
 
 test('wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing', () => {

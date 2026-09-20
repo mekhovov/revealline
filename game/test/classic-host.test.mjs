@@ -50,7 +50,14 @@ test('Journey capture stop preserves occupied-region teaching and fresh-directio
     ...structuredClone(pack.campaigns[0].levels[0]),
     spawn: { x: 35.5, y: 0.5 },
     goal: { coverage: 0.6 },
-    classic: { version: 'classic.v1', terrain: [], powerups: [] },
+    classic: {
+      version: 'classic.v1',
+      terrain: [
+        { id: 'slow-crossing', kind: 'slow', x: 35, y: 10, w: 1, h: 2 },
+        { id: 'occupied-lethal', kind: 'lethal', x: 10, y: 10, w: 2, h: 2 },
+      ],
+      powerups: [],
+    },
     enemies: [
       { id: 'west', type: 'bouncer', x: 15.5, y: 23.5, vx: -1.7, vy: 1.7 },
       { id: 'east', type: 'bouncer', x: 58.5, y: 12.5, vx: 1.7, vy: 1.7 },
@@ -81,6 +88,8 @@ test('Journey capture stop preserves occupied-region teaching and fresh-directio
     /Empty regions fill; field enemies retain their regions/,
   );
   assert.match(page.$('run-message').textContent, /Tap a direction to fly again/);
+  assert.match(page.$('run-message').textContent, /2 slow-field cells neutralized/);
+  assert.doesNotMatch(page.$('run-message').textContent, /lethal-field cells neutralized/);
   page.frame(0);
   assert.match(page.$('run-message').textContent, /2 occupied regions remain/);
   assert.deepEqual(page.errors, []);

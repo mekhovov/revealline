@@ -5,6 +5,24 @@ import { createOpeningCandidates } from '../content-design/horizon-candidates.mj
 import { resolveMission, compileContentProject } from '../content-design/project.mjs';
 import { createRun } from '../core/index.mjs';
 import { campaignKey } from '../library.mjs';
+import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
+
+test('owned compiled input produces the same complete preset executions without granting import authority', () => {
+  for (const [source, mode] of [
+    [createOpeningCandidates(), 'solo'],
+    [createOpeningCandidates(), 'versus'],
+    [createTeamSignalCandidates(), 'team'],
+  ]) {
+    const project = compileContentProject(source);
+    const fromSource = createContentExecutionCatalog(source, { mode });
+    const fromOwned = createContentExecutionCatalog(project, { mode });
+    assert.deepEqual(fromOwned.entries, fromSource.entries);
+    for (const difficulty of ['gentle', 'standard', 'expert'])
+      assert.deepEqual(fromOwned.journey(difficulty), fromSource.journey(difficulty));
+    assert.equal(fromOwned.officialProgressEligible, false);
+    assert.throws(() => createContentExecutionCatalog(structuredClone(project), { mode }));
+  }
+});
 
 test('host-facing executions use exact shared presets, never a second Legacy difficulty pass', () => {
   const source = createOpeningCandidates(),

@@ -5,6 +5,18 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const relays = Boolean(level.strongholds?.length);
   const requiredCores = level.goal.cores?.length ?? 0;
   const threats = [];
+  const slow = level.terrain?.some((area) => area.kind === 'slow'),
+    lethal = level.terrain?.some((area) => area.kind === 'lethal');
+  if (slow)
+    threats.push(
+      'Paired dashes slow only your craft on unclaimed field; enemies keep their speed.',
+    );
+  if (lethal)
+    threats.push(
+      'Framed crosses harm your craft on unclaimed field. Enclose them before crossing.',
+    );
+  if (slow || lethal)
+    threats.push('Capturing field neutralizes its terrain for both craft. Walls never close cuts.');
   if (hunters)
     threats.push(
       'Hunters mark a route before charging. Cross during recovery, or use Support to slow them.',
