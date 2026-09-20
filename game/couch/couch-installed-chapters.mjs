@@ -1,3 +1,4 @@
+import { campaignKey } from '../library.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS, SOURCE_EXTERNAL_EDITIONS } from '../external-chapter-source.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
@@ -457,6 +458,7 @@ export function createCouchInstalledChapters({
             const row = Object.freeze({
               key: `installed/${entry.executionKey}/${level.id}`,
               sourcePackId: entry.sourcePackId,
+              musicCampaignKey: entry.baseCampaignKey || campaignKey(entry.campaign),
               chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
               level,
               classes: entry.classRecipes,
