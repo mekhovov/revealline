@@ -218,6 +218,20 @@ without the capture overlay. Expert export retains pack.v3/ruleset.v5/level.v3,
 two foundations, both materials and its exact preset; geometry-only/placeholder-art
 labels remain explicit. This is not a qualified campaign map or contrast benchmark.
 
+The native Expert export `material-native-expert-team-test.json` (SHA256
+`3afe388924ea909c9a8be14ce7fb166d30df78a6350aa6b2e7b536a2a333bfd1`)
+was selected through Team's actual file chooser at localhost8780. The lobby showed
+the imported arena, disabled Expert selector, both material explanations and an
+explicit separate Start. Starting retained one reserve. Two deliberate second-seat
+Left approaches hit the lethal bed: the first consumed the reserve on recovery,
+the next left Skyline down with free rescue available; Sunflower stayed active
+on its foundation and coverage stayed0%. The observed caption named unclaimed
+lethal field, not an enemy collision. Both material symbols were visible over the
+concealed field in active play. Resume required fresh directions; the attempt is
+left paused at0:19, including inspection/idle time, with no browser errors.
+No complete native clear, human timing, physical controller or artwork approval
+is implied. This draft is separate from the preserved Signal greybox checkpoint.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
