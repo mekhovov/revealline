@@ -4,6 +4,8 @@ export function createRelayGoalEvidence() {
     used: new Set(),
     landingVisits: new Map(),
     simultaneous: false,
+    closures: 0,
+    relayClosures: new Map(),
     impactRelayClosure: false,
   };
 }
@@ -17,6 +19,10 @@ export function relayBeforeStep(run) {
 export function observeRelayGoal(run, evidence, before) {
   const opened = run.events.filter((event) => event.type === 'relay.opened');
   if (run.events.some((event) => event.type === 'cut.closed')) {
+    evidence.closures++;
+    for (const event of opened)
+      if (!evidence.relayClosures.has(event.objectiveId))
+        evidence.relayClosures.set(event.objectiveId, evidence.closures);
     evidence.simultaneous ||= new Set(opened.map((event) => event.objectiveId)).size >= 2;
     const cleared = run.events
       .filter((event) => event.type === 'lineImpact.cleared' && event.reason === 'capture')
@@ -43,11 +49,14 @@ export function inspectRelayGoal({ missionId, run, evidence }) {
     tick(first) !== null && tick(second) !== null && tick(first) < tick(second);
   const visitedAfter = (index, gate) =>
     tick(gate) !== null && (evidence.landingVisits.get(index) ?? -1) > tick(gate);
+  const consecutiveRelays = [...evidence.relayClosures.values()];
   const conditions = {
     'first-link': evidence.used.has('south-bridge') && visitedAfter(1, 'south-bridge'),
     'second-approach': before('east-bridge', 'west-bridge'),
     'three-compounds': visitedAfter(1, 'west-link') && visitedAfter(2, 'east-link'),
-    'spiral-stores': evidence.simultaneous,
+    'spiral-stores':
+      consecutiveRelays.length === 2 &&
+      Math.max(...consecutiveRelays) - Math.min(...consecutiveRelays) <= 1,
     'nested-relays': before('lower-link', 'inner-link'),
     'watchpost-exchange': evidence.used.has('west-junction') && evidence.used.has('east-junction'),
     'relay-remix': evidence.impactRelayClosure,
@@ -59,6 +68,7 @@ export function inspectRelayGoal({ missionId, run, evidence }) {
     used: [...evidence.used],
     landingVisits: [...evidence.landingVisits],
     simultaneous: evidence.simultaneous,
+    relayClosures: [...evidence.relayClosures],
     impactRelayClosure: evidence.impactRelayClosure,
   };
 }

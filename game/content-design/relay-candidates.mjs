@@ -158,7 +158,7 @@ const rows = [
       'Capturing a relay joins its store to the spine and gives a shorter later departure without mandatory corridor cleanup.',
     moment:
       'An apparently winding route becomes a direct permanent connection after one deliberate enclosure.',
-    mastery: 'Capture both relays in the same closure and clear without a life loss.',
+    mastery: 'Open both shortcuts within two consecutive captures and clear without a life loss.',
   },
   {
     id: 'nested-relays',
