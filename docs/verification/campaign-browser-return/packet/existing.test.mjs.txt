@@ -1,0 +1,4 @@
+import './candidate/game/test/optional-chapters-host.test.mjs';
+import './candidate/game/test/modal-navigation.test.mjs';
+import './candidate/game/test/asset-studio-return.test.mjs';
+import './candidate/game/test/optional-chapters-host-copy.test.mjs';

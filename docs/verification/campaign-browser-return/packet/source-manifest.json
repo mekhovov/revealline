@@ -1,0 +1,38 @@
+{
+  "base": "41d0b908e4c7c5f1cfbbd24994f2e96381332b28",
+  "files": {
+    "game/app.mjs": {
+      "before": "7fc2c90a2a377614138b35a04c4a8678d2b2d1672e673ca5dfb440d6bb5809a6",
+      "after": "f5a383dded283a8c98103f582e9f6be7bbaaa4eb9d2258d562d9d661d2f18dc8",
+      "bytes": 331766
+    },
+    "game/ui/game-shell.mjs": {
+      "before": "666d01ffd24121bc8a030fa846545c052e134b95ec7bee0297f23c3bafaded97",
+      "after": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c",
+      "bytes": 29449
+    },
+    "game/test/worlds-return-host.test.mjs": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "fb7e7324d91dc36626cff7b18058bc94cc5f0b5ab289262072c8cc727f52b763",
+      "bytes": 5529,
+      "new": true
+    },
+    "game/test/optional-chapters-host.test.mjs": {
+      "before": "0f1686d1839783d1e793543ae02e398030c3fd6e086b0493a222594aa02d49dd",
+      "after": "07ace514f3fb53960105b3dfec69b213f5fb0dfac11de89a7165a3113305fe5c",
+      "bytes": 33018
+    },
+    "docs/campaign-browser-return.md": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "1fbddec0682104b73c4fd3b93890ff33a60d5094117eaeb1c328325b3e53abee",
+      "bytes": 2128,
+      "new": true
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "before": "556bf6539467ea28a866e485285cc5e85739106a014b65671cded6c566b564b0",
+      "after": "dd0c47719f0f82adf7a287d678562377a16f19b56208e9d3d948cf8a55c06ca4",
+      "bytes": 284633
+    }
+  },
+  "patchSHA256": "905f6389355913cf10a6634f46b75ea98780451028820164d710abde501a5899"
+}

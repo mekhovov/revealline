@@ -1,0 +1,93 @@
+{
+  "status": "ready-for-later-release-owner-integration-not-public-acceptance",
+  "phase": "P03/P06 catalogue return",
+  "base": "41d0b908e4c7c5f1cfbbd24994f2e96381332b28",
+  "patchSHA256": "905f6389355913cf10a6634f46b75ea98780451028820164d710abde501a5899",
+  "files": 6,
+  "scope": "More chapters Back restores Missions/More chapters focus and retains original Home or paused-field return; normal Play stays direct.",
+  "verification": {
+    "baselineRegression": "2/2 expected failures before implementation",
+    "newHostCases": "10/10 Node20.19.5;10/10 Node22.22.2",
+    "existingCohort": "99/100 initial complete run; one hidden-control fixture corrected to real Missions route; focused rerun1PASS/99filtered.100distinct cases pass across runs, not a clean full rerun.",
+    "exactReconstruction": "Six postimages/syntax and10/10 new cases Node20",
+    "gitApply": "Actual isolated application verifies all6 postimage hashes",
+    "lintFormat": "PASS for affected runtime/tests/doc; historical skill text retained",
+    "native": "1280x720 keyboard Home and paused-field returns; 0:02 HUD retained; actual Download & play and explicit Replace & play enter Orchard Crossing; correct labels; exact2 runtime pins served"
+  },
+  "limits": [
+    "Separate later proposal; current release cutoff untouched",
+    "No version reserved, commit, complete source gates, freeze, deployment or public acceptance",
+    "No physical-controller/touch-only/mobile/zoom/offline acceptance",
+    "Source-host assertions prove checkpoints and saves; native observed HUD evidence remains separately scoped"
+  ],
+  "receipts": {
+    "README.md": {
+      "bytes": 2191,
+      "sha256": "448136be79137da0299b44c4feaede2b457e7c1ddfbf556e7f6cb4361157687b"
+    },
+    "existing.test.mjs": {
+      "bytes": 252,
+      "sha256": "b1219a467ff5457ecdbe13add1bf70010cc8b771dc1fd24d0476158fb0028daa"
+    },
+    "fixture-fs-sync.mjs": {
+      "bytes": 714,
+      "sha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91"
+    },
+    "fixture-fs.mjs": {
+      "bytes": 735,
+      "sha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa"
+    },
+    "git-apply-check.log": {
+      "bytes": 1376,
+      "sha256": "55f83dc37d170e15e068c8269f2a7c61d15298c178b25f38eac5af2ab71e5771"
+    },
+    "loader.mjs": {
+      "bytes": 1098,
+      "sha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168"
+    },
+    "native-evidence.json": {
+      "bytes": 1602,
+      "sha256": "f9bdc765090c541bb37aae522ca8fb6cf95dc6e8dd86126c1f9f6632ca535b66"
+    },
+    "native-pins.json": {
+      "bytes": 266,
+      "sha256": "7fab7231c93513e1c9b152bd7017cc880ffd0f763b78aaa88ef01cbd72b7d687"
+    },
+    "native-served.jsonl.xz": {
+      "bytes": 24408,
+      "sha256": "a38ddc2f6308c726fe98fa38f96bb596d07e9210061b0c59f4c2119bcbbea683"
+    },
+    "patch-source.mjs": {
+      "bytes": 2284,
+      "sha256": "09ac530f430e8657b7c2feaf5ff897b1a722234a1c741c0120bdcb3869ea042d"
+    },
+    "qualification-logs.json.xz": {
+      "bytes": 5984,
+      "sha256": "bb21e9e31752189d84a5391c79a2132495bf3eb3b439b567db1f91cf242f2b0a"
+    },
+    "reconstructed-node20.log": {
+      "bytes": 2293,
+      "sha256": "576ef94ed53465308384fd0ed543f8d6e8b3fc582d1bba9c5ed5d0cc8dba7ce6"
+    },
+    "reconstruction.log": {
+      "bytes": 535,
+      "sha256": "f914c935c85c2f456c9e972a50709f74759a599f13726ad91149d5db4ddfadbd"
+    },
+    "source-manifest.json": {
+      "bytes": 1620,
+      "sha256": "3f1374a9ee30cbab42c4ac89e21be89ff70ccf5cec91587e7ec62c83a0e0ec38"
+    },
+    "source.patch.gz": {
+      "bytes": 5046,
+      "sha256": "08209c62a5c2ac47ade0a9ba456e0d4efdec80c6cd15bec42797eb98e411be64"
+    },
+    "suite.test.mjs": {
+      "bytes": 60,
+      "sha256": "3d8fd8ed1b14ef40d347f1d61c21ec519b7d30a3d63b0fb0a3f3d94858a1f5eb"
+    },
+    "verify-source.mjs": {
+      "bytes": 999,
+      "sha256": "347a76e4ea04e5420f23079e2d8aeefd512db58fdc0735451d8f901c9ef0430f"
+    }
+  }
+}

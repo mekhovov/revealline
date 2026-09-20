@@ -544,7 +544,9 @@ test('Back reentry while retiring the old accepted drawable keeps the new attemp
   assert.equal(p.rendered.paused, true);
   assert.equal(before.image.releases, 1);
   assert.equal(p.$('optional-worlds-dialog').open, false);
-  assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.$('shell-home').open, false);
+  assert.equal(p.$('shell-missions').open, true);
+  assert.equal(p.doc.activeElement.id, 'shell-worlds');
   assert.equal(p.doc.activeElement, returnFocus);
   assert.equal(p.storage.getItem(profileKey), before.profile);
   assert.deepEqual(p.errors, []);

@@ -1,0 +1,10 @@
+{
+  "game/app.mjs": {
+    "bytes": 331766,
+    "sha256": "f5a383dded283a8c98103f582e9f6be7bbaaa4eb9d2258d562d9d661d2f18dc8"
+  },
+  "game/ui/game-shell.mjs": {
+    "bytes": 29449,
+    "sha256": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c"
+  }
+}

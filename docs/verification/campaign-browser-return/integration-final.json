@@ -1,0 +1,43 @@
+{
+  "base": "509eec38cbf1fd4d05319eada1654cb9a1cd69a5",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 331894,
+      "sha256": "28c3e3138f14094315c02347ea39cf57d247a227f8815719484feefa06ec3396"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 29449,
+      "sha256": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c"
+    },
+    {
+      "path": "game/test/worlds-return-host.test.mjs",
+      "bytes": 5529,
+      "sha256": "fb7e7324d91dc36626cff7b18058bc94cc5f0b5ab289262072c8cc727f52b763"
+    },
+    {
+      "path": "game/test/optional-chapters-host.test.mjs",
+      "bytes": 33018,
+      "sha256": "07ace514f3fb53960105b3dfec69b213f5fb0dfac11de89a7165a3113305fe5c"
+    },
+    {
+      "path": "game/test/optional-world-play-host.test.mjs",
+      "bytes": 26980,
+      "sha256": "e471d2c75db0565594ca5d58a0b250a8b6383c7aa074aefd4a37ffde940a7497"
+    },
+    {
+      "path": "docs/campaign-browser-return.md",
+      "bytes": 2400,
+      "sha256": "b8483f79e977586cb623e09871cd36396ca983dbc1a043739e5a6c05f7837478"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 286483,
+      "sha256": "da76e8cf478f14f893345e49eeab5ca0b5d8977f349f9f4b6b63bba92718f898"
+    }
+  ],
+  "test": "126/126 complete six-file cohort on Node20.19.5; no failed/skipped/cancelled;343.298863 seconds",
+  "initialFailure": "125/126: accepted drawable retirement Back asserted old Home; changed only destination/focus assertion to Missions/More chapters. All identity/save/pause/zero-tick guarantees retained.",
+  "release": "Separate follow-up branch; no accepted version, full source gates or publication."
+}

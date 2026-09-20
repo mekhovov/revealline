@@ -8016,7 +8016,9 @@ try {
       }
     };
   }
+  let returnFromWorlds = null;
   optionalWorlds = attachOptionalChaptersPanel({
+    backLabel: 'Back to Missions',
     onPlayActivation: captureWorldPlay,
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
@@ -8134,7 +8136,10 @@ try {
     },
     onClose: () => {
       clearInput();
-      gameShell?.openHome();
+      const onReturn = returnFromWorlds;
+      returnFromWorlds = null;
+      if (onReturn) onReturn();
+      else gameShell?.openHome();
     },
     onChosen: () => {
       clearInput();
@@ -8195,7 +8200,10 @@ try {
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
     separateTeam: !!authoredRoute,
-    onWorlds: () => optionalWorlds.open(),
+    onWorlds: ({ onReturn } = {}) => {
+      returnFromWorlds = onReturn;
+      return optionalWorlds.open();
+    },
     onMissions: journeyEnabled
       ? (opener) =>
           journeyChooser.open(opener, {

@@ -1,0 +1,44 @@
+{
+  "base": "509eec38cbf1fd4d05319eada1654cb9a1cd69a5",
+  "packetBase": "41d0b908e4c7c5f1cfbbd24994f2e96381332b28",
+  "patchSha256": "905f6389355913cf10a6634f46b75ea98780451028820164d710abde501a5899",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 331894,
+      "sha256": "28c3e3138f14094315c02347ea39cf57d247a227f8815719484feefa06ec3396",
+      "exactPacket": false
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 29449,
+      "sha256": "bf9f4e2fd4aa4a498c460e3f854d7ac7f144742c2f860a3646c8deed5755fc9c",
+      "exactPacket": true
+    },
+    {
+      "path": "game/test/worlds-return-host.test.mjs",
+      "bytes": 5529,
+      "sha256": "fb7e7324d91dc36626cff7b18058bc94cc5f0b5ab289262072c8cc727f52b763",
+      "exactPacket": true
+    },
+    {
+      "path": "game/test/optional-chapters-host.test.mjs",
+      "bytes": 33018,
+      "sha256": "07ace514f3fb53960105b3dfec69b213f5fb0dfac11de89a7165a3113305fe5c",
+      "exactPacket": true
+    },
+    {
+      "path": "docs/campaign-browser-return.md",
+      "bytes": 2128,
+      "sha256": "1fbddec0682104b73c4fd3b93890ff33a60d5094117eaeb1c328325b3e53abee",
+      "exactPacket": true
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 285993,
+      "sha256": "748658bf1b95016326dbcf39579f142a3611565bea8a9bd26ed319e20554e47b",
+      "exactPacket": false
+    }
+  ],
+  "scope": "Separate follow-up composition; v070 source remains4bb553d0. Preserve caption correction and test-DOM optimization. Full scoped cohort/native pending."
+}

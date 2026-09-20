@@ -1,0 +1,284 @@
+{
+  "files": [
+    {
+      "path": "root/integration.json",
+      "bytes": 1557,
+      "sha256": "c0adceb70e95e29a0835e74b600fbb9a36953cf78c9b8e03135035ed7ec1eea1",
+      "original": ".cache/v070-followup-worlds-return-r1/integration.json",
+      "originalBytes": 1557,
+      "originalSha256": "c0adceb70e95e29a0835e74b600fbb9a36953cf78c9b8e03135035ed7ec1eea1"
+    },
+    {
+      "path": "root/node20.log.gz",
+      "bytes": 5606,
+      "sha256": "981e435567552a7a416f42607d22336ccb9d95646963318968b7a59575de0415",
+      "original": ".cache/v070-followup-worlds-return-r1/node20.log",
+      "originalBytes": 29332,
+      "originalSha256": "25ca9c6c21f885181ac272f02530ad9aaa8d7d9557932d0fd7b39b5b7907a4f7"
+    },
+    {
+      "path": "root/node20-r2.log.gz",
+      "bytes": 5497,
+      "sha256": "1b7b083f4a886c291bd86b2cd809b6031cfc38abb04085a85b56b148a4e6ce80",
+      "original": ".cache/v070-followup-worlds-return-r1/node20-r2.log",
+      "originalBytes": 29006,
+      "originalSha256": "4355aec91b1f7fb0093253dda127a990460cf695d96924e8d21c08a141436ef4"
+    },
+    {
+      "path": "root/lint.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "original": ".cache/v070-followup-worlds-return-r1/lint.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "root/format.log.gz",
+      "bytes": 82,
+      "sha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5",
+      "original": ".cache/v070-followup-worlds-return-r1/format.log",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "root/lint-r2.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "original": ".cache/v070-followup-worlds-return-r1/lint-r2.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "root/format-r2.log.gz",
+      "bytes": 82,
+      "sha256": "6cd316ae8e81df0ff79776205007450fac3d62e1ba8e884e169e326d7955ebe5",
+      "original": ".cache/v070-followup-worlds-return-r1/format-r2.log",
+      "originalBytes": 66,
+      "originalSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "root/source.patch.gz",
+      "bytes": 5046,
+      "sha256": "08209c62a5c2ac47ade0a9ba456e0d4efdec80c6cd15bec42797eb98e411be64",
+      "original": ".cache/v070-followup-worlds-return-r1/source.patch",
+      "originalBytes": 16638,
+      "originalSha256": "905f6389355913cf10a6634f46b75ea98780451028820164d710abde501a5899"
+    },
+    {
+      "path": "root/loader.mjs.txt",
+      "bytes": 1098,
+      "sha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168",
+      "original": ".cache/v070-followup-worlds-return-r1/loader.mjs",
+      "originalBytes": 1098,
+      "originalSha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168"
+    },
+    {
+      "path": "root/patch-source.mjs.txt",
+      "bytes": 1099,
+      "sha256": "11113de80abe598ad7d0d13ade52b6072f59866a0485f91c5505d0cf58e76725",
+      "original": ".cache/v070-followup-worlds-return-r1/patch-source.mjs",
+      "originalBytes": 1099,
+      "originalSha256": "11113de80abe598ad7d0d13ade52b6072f59866a0485f91c5505d0cf58e76725"
+    },
+    {
+      "path": "root/fixture-fs.mjs.txt",
+      "bytes": 735,
+      "sha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa",
+      "original": ".cache/v070-followup-worlds-return-r1/fixture-fs.mjs",
+      "originalBytes": 735,
+      "originalSha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa"
+    },
+    {
+      "path": "root/fixture-fs-sync.mjs.txt",
+      "bytes": 714,
+      "sha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91",
+      "original": ".cache/v070-followup-worlds-return-r1/fixture-fs-sync.mjs",
+      "originalBytes": 714,
+      "originalSha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91"
+    },
+    {
+      "path": "root/suite.test.mjs.txt",
+      "bytes": 378,
+      "sha256": "7ff8de9c749c10393631eca324187ee3a8d4cae29fda6fd138eb82158c26246e",
+      "original": ".cache/v070-followup-worlds-return-r1/suite.test.mjs",
+      "originalBytes": 378,
+      "originalSha256": "7ff8de9c749c10393631eca324187ee3a8d4cae29fda6fd138eb82158c26246e"
+    },
+    {
+      "path": "native/native-observations.json",
+      "bytes": 1493,
+      "sha256": "b1d66936439946cf1d55476116bcf4d9c899a9c6faa4619b6e380175ee2d1c0a",
+      "original": ".cache/v070-followup-worlds-native-r1/native-observations.json",
+      "originalBytes": 1493,
+      "originalSha256": "b1d66936439946cf1d55476116bcf4d9c899a9c6faa4619b6e380175ee2d1c0a"
+    },
+    {
+      "path": "native/source.json",
+      "bytes": 359,
+      "sha256": "b4e74e263a0b762bf2097ee0cd3bc98745c03dd9e26133195fbd0aa0e2b7e845",
+      "original": ".cache/v070-followup-worlds-native-r1/source.json",
+      "originalBytes": 359,
+      "originalSha256": "b4e74e263a0b762bf2097ee0cd3bc98745c03dd9e26133195fbd0aa0e2b7e845"
+    },
+    {
+      "path": "native/requests.log.gz",
+      "bytes": 19446,
+      "sha256": "ed8ed521bdb04e1d1c8f6b6805dac1c4f11305db1457f39970073629c9a0d11a",
+      "original": ".cache/v070-followup-worlds-native-r1/requests.log",
+      "originalBytes": 61463,
+      "originalSha256": "64ea8d139e05f273a19af7446687b2433650009f9c258851171617e903c2c066"
+    },
+    {
+      "path": "native/serve-preview.py.txt",
+      "bytes": 2224,
+      "sha256": "95e836e7de87bf05f28264b7dc110f81e6412956fe94a748205f4ebb5857d1e4",
+      "original": ".cache/v070-followup-worlds-native-r1/serve-preview.py",
+      "originalBytes": 2224,
+      "originalSha256": "95e836e7de87bf05f28264b7dc110f81e6412956fe94a748205f4ebb5857d1e4"
+    },
+    {
+      "path": "packet/README.md",
+      "bytes": 2191,
+      "sha256": "448136be79137da0299b44c4feaede2b457e7c1ddfbf556e7f6cb4361157687b",
+      "original": ".cache/p03-worlds-return-41d-r2/README.md",
+      "originalBytes": 2191,
+      "originalSha256": "448136be79137da0299b44c4feaede2b457e7c1ddfbf556e7f6cb4361157687b"
+    },
+    {
+      "path": "packet/existing.test.mjs.txt",
+      "bytes": 252,
+      "sha256": "b1219a467ff5457ecdbe13add1bf70010cc8b771dc1fd24d0476158fb0028daa",
+      "original": ".cache/p03-worlds-return-41d-r2/existing.test.mjs",
+      "originalBytes": 252,
+      "originalSha256": "b1219a467ff5457ecdbe13add1bf70010cc8b771dc1fd24d0476158fb0028daa"
+    },
+    {
+      "path": "packet/fixture-fs-sync.mjs.txt",
+      "bytes": 714,
+      "sha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91",
+      "original": ".cache/p03-worlds-return-41d-r2/fixture-fs-sync.mjs",
+      "originalBytes": 714,
+      "originalSha256": "239a58cb11c10305389f12e1ce6e58bc3c6cd7ed6e606c4ec6884c4294375d91"
+    },
+    {
+      "path": "packet/fixture-fs.mjs.txt",
+      "bytes": 735,
+      "sha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa",
+      "original": ".cache/p03-worlds-return-41d-r2/fixture-fs.mjs",
+      "originalBytes": 735,
+      "originalSha256": "fc0aaceb48e230c1f072f6fb04a91057b1cd2a3730b390e79c4e8b4106af4daa"
+    },
+    {
+      "path": "packet/git-apply-check.log.gz",
+      "bytes": 286,
+      "sha256": "fba63bb71bf0f33e399ee287026062f819b6b07466406e1f6c0243186dc89bdd",
+      "original": ".cache/p03-worlds-return-41d-r2/git-apply-check.log",
+      "originalBytes": 1376,
+      "originalSha256": "55f83dc37d170e15e068c8269f2a7c61d15298c178b25f38eac5af2ab71e5771"
+    },
+    {
+      "path": "packet/loader.mjs.txt",
+      "bytes": 1098,
+      "sha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168",
+      "original": ".cache/p03-worlds-return-41d-r2/loader.mjs",
+      "originalBytes": 1098,
+      "originalSha256": "b7bf6134c4418ea4b609a5183421b8aba8e510ffe4a9903429f9482da1d14168"
+    },
+    {
+      "path": "packet/native-evidence.json",
+      "bytes": 1602,
+      "sha256": "f9bdc765090c541bb37aae522ca8fb6cf95dc6e8dd86126c1f9f6632ca535b66",
+      "original": ".cache/p03-worlds-return-41d-r2/native-evidence.json",
+      "originalBytes": 1602,
+      "originalSha256": "f9bdc765090c541bb37aae522ca8fb6cf95dc6e8dd86126c1f9f6632ca535b66"
+    },
+    {
+      "path": "packet/native-pins.json",
+      "bytes": 266,
+      "sha256": "7fab7231c93513e1c9b152bd7017cc880ffd0f763b78aaa88ef01cbd72b7d687",
+      "original": ".cache/p03-worlds-return-41d-r2/native-pins.json",
+      "originalBytes": 266,
+      "originalSha256": "7fab7231c93513e1c9b152bd7017cc880ffd0f763b78aaa88ef01cbd72b7d687"
+    },
+    {
+      "path": "packet/native-served.jsonl.xz",
+      "bytes": 24408,
+      "sha256": "a38ddc2f6308c726fe98fa38f96bb596d07e9210061b0c59f4c2119bcbbea683",
+      "original": ".cache/p03-worlds-return-41d-r2/native-served.jsonl.xz",
+      "originalBytes": 24408,
+      "originalSha256": "a38ddc2f6308c726fe98fa38f96bb596d07e9210061b0c59f4c2119bcbbea683"
+    },
+    {
+      "path": "packet/patch-source.mjs.txt",
+      "bytes": 2284,
+      "sha256": "09ac530f430e8657b7c2feaf5ff897b1a722234a1c741c0120bdcb3869ea042d",
+      "original": ".cache/p03-worlds-return-41d-r2/patch-source.mjs",
+      "originalBytes": 2284,
+      "originalSha256": "09ac530f430e8657b7c2feaf5ff897b1a722234a1c741c0120bdcb3869ea042d"
+    },
+    {
+      "path": "packet/qualification-logs.json.xz",
+      "bytes": 5984,
+      "sha256": "bb21e9e31752189d84a5391c79a2132495bf3eb3b439b567db1f91cf242f2b0a",
+      "original": ".cache/p03-worlds-return-41d-r2/qualification-logs.json.xz",
+      "originalBytes": 5984,
+      "originalSha256": "bb21e9e31752189d84a5391c79a2132495bf3eb3b439b567db1f91cf242f2b0a"
+    },
+    {
+      "path": "packet/reconstructed-node20.log.gz",
+      "bytes": 690,
+      "sha256": "931f911bf06583dc27cc53274a8ca0328405fea041b34ed37017a3bcb46611b0",
+      "original": ".cache/p03-worlds-return-41d-r2/reconstructed-node20.log",
+      "originalBytes": 2293,
+      "originalSha256": "576ef94ed53465308384fd0ed543f8d6e8b3fc582d1bba9c5ed5d0cc8dba7ce6"
+    },
+    {
+      "path": "packet/reconstruction.log.gz",
+      "bytes": 194,
+      "sha256": "033d1a96150f736b368321ca54bfc78fba6046d1dc53ce726c909dc01c0fafbf",
+      "original": ".cache/p03-worlds-return-41d-r2/reconstruction.log",
+      "originalBytes": 535,
+      "originalSha256": "f914c935c85c2f456c9e972a50709f74759a599f13726ad91149d5db4ddfadbd"
+    },
+    {
+      "path": "packet/source-manifest.json",
+      "bytes": 1620,
+      "sha256": "3f1374a9ee30cbab42c4ac89e21be89ff70ccf5cec91587e7ec62c83a0e0ec38",
+      "original": ".cache/p03-worlds-return-41d-r2/source-manifest.json",
+      "originalBytes": 1620,
+      "originalSha256": "3f1374a9ee30cbab42c4ac89e21be89ff70ccf5cec91587e7ec62c83a0e0ec38"
+    },
+    {
+      "path": "packet/source.patch.gz",
+      "bytes": 5046,
+      "sha256": "08209c62a5c2ac47ade0a9ba456e0d4efdec80c6cd15bec42797eb98e411be64",
+      "original": ".cache/p03-worlds-return-41d-r2/source.patch.gz",
+      "originalBytes": 5046,
+      "originalSha256": "08209c62a5c2ac47ade0a9ba456e0d4efdec80c6cd15bec42797eb98e411be64"
+    },
+    {
+      "path": "packet/suite.test.mjs.txt",
+      "bytes": 60,
+      "sha256": "3d8fd8ed1b14ef40d347f1d61c21ec519b7d30a3d63b0fb0a3f3d94858a1f5eb",
+      "original": ".cache/p03-worlds-return-41d-r2/suite.test.mjs",
+      "originalBytes": 60,
+      "originalSha256": "3d8fd8ed1b14ef40d347f1d61c21ec519b7d30a3d63b0fb0a3f3d94858a1f5eb"
+    },
+    {
+      "path": "packet/verify-source.mjs.txt",
+      "bytes": 999,
+      "sha256": "347a76e4ea04e5420f23079e2d8aeefd512db58fdc0735451d8f901c9ef0430f",
+      "original": ".cache/p03-worlds-return-41d-r2/verify-source.mjs",
+      "originalBytes": 999,
+      "originalSha256": "347a76e4ea04e5420f23079e2d8aeefd512db58fdc0735451d8f901c9ef0430f"
+    },
+    {
+      "path": "packet/ready.json",
+      "bytes": 3964,
+      "sha256": "4dd8f03085d8fd2158e2bc88358c131ae40af3fe62928cf9924d76f7fd7f72f5",
+      "original": ".cache/p03-worlds-return-41d-r2/ready.json",
+      "originalBytes": 3964,
+      "originalSha256": "4dd8f03085d8fd2158e2bc88358c131ae40af3fe62928cf9924d76f7fd7f72f5"
+    }
+  ]
+}

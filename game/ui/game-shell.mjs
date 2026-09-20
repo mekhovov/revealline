@@ -365,10 +365,50 @@ export function attachGameShell({
   if (worlds) {
     worlds.hidden = isolated || !onWorlds;
     worlds.onclick = () => {
+      if (!availableReturn(worlds, missions)) return;
+      const visit = missionsVisit;
       pause(true);
+      if (destroyed || !missions.open || missionsVisit !== visit || topDialog() !== missions)
+        return;
       closeHome();
-      if (missions.open) missions.close();
-      onWorlds?.();
+      if (destroyed || missionsVisit !== visit || topDialog() !== missions) return;
+      missions.close();
+      const revision = missionsRevision;
+      const nativeReturnFocus = doc.activeElement;
+      let returned = false;
+      onWorlds?.({
+        onReturn() {
+          if (returned) return false;
+          returned = true;
+          // A newer dialog, mission visit or background page keeps ownership.
+          if (
+            destroyed ||
+            missionsRevision !== revision ||
+            topDialog() ||
+            doc.hidden ||
+            doc.hasFocus?.() === false ||
+            (doc.activeElement !== nativeReturnFocus &&
+              doc.activeElement !== doc.body &&
+              availableReturn(doc.activeElement, null))
+          )
+            return false;
+          openMissions();
+          if (
+            destroyed ||
+            !missions.open ||
+            missionsRevision !== revision + 1 ||
+            topDialog() !== missions ||
+            doc.hidden ||
+            doc.hasFocus?.() === false
+          )
+            return false;
+          // Reopening must retain the original Home/field return, not make
+          // the retired catalogue control the parent of this mission visit.
+          if (visit) Object.assign(missionsVisit, visit);
+          if (availableReturn(worlds, missions)) worlds.focus({ preventScroll: true });
+          return true;
+        },
+      });
     };
   }
   const overlayBrief = $('overlay-brief');
