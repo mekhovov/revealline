@@ -38,7 +38,7 @@ The owned, getter-free view and actual flight-information snapshot distinguish
 carriers; accessible Details explains closure races and immediate endpoint/body
 danger. This source drawing is a greybox role treatment, not final character art.
 
-Teaching layouts, native role inspection and all-preset mission qualification
+Native role inspection and all-preset full-mission qualification
 are still required before campaign exposure. Raw runtime speeds remain bounded
 4–60 for schema transport. Team remains separately qualified. No new campaign
 is selectable yet. `classic-view.mjs` is a production recipe input; its changed
@@ -77,3 +77,32 @@ No environment import failure is represented as product acceptance.
 P06 repair PR201 at e5ff21b3 now passes the actual hosted production CLI
 reproduction check in35524398709. Its separate readiness gate rejects24 new
 source-stage UI recipes, as intended; no full-source shards or freeze ran.
+
+## Original greybox learning arcs
+
+Seven source candidates now provide six core missions and an optional Remix.
+The four assigned reference motifs were directly re-inspected and hash-checked;
+see `../research/phase-reference-crosswalk.md`. All use fixed shared movement,
+no countdown or arbitrary speed knob, and at most three established threat roles.
+Initial capture components are retained by real field actors, including both
+Dogleg transfer chambers. Ordinary patrols and dormant roamers do not retain.
+Studio explicitly inspects these candidates before applying to a local draft.
+
+The initial development search found seven no-loss Standard/immediate clears,
+but did not prove that the introductory role was actually demonstrated. The
+opening was therefore revised: the carrier crosses the existing trail near its
+start, while a farther permanent landing lets the craft finish the return.
+Legal-input tests require an active front before closure in all six preset/control
+pairs, then the actual `lineImpact.cleared` event with reason `capture`, unchanged
+coverage denominator, no life loss and matching public replay. The minimum
+front-on-screen simulation window is29ticks (~0.242s); this is not human perception
+evidence. An intermediate carrier placement at38.5,5.5 failed Expert at tick133
+and was rejected. The final candidate uses38.5,1.5 and a landing beginning at y14.
+A test initially used the nonexistent reason `closure`; checking the engine's
+existing `capture` reason corrected the assertion without changing the engine.
+
+The complete candidate test covers42 first returns and42 independent five-second
+idle checks, all-preset shared previews and equal Solo/Versus definitions. These
+are not full mission clears, delayed-departure qualification, mastery proof,
+native checks, finished artwork or human difficulty/enjoyment evidence. No
+phase-complete or publication claim is made.
