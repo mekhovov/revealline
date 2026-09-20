@@ -95,7 +95,7 @@ export async function fieldKitRecipeSources(read) {
     await Promise.all(
       Object.entries(sources).map(async ([group, paths]) => [
         group,
-        `${paths} sha256:${hash(Buffer.concat(await Promise.all(paths.split('; ').map(read))))}`,
+        `${paths} sha256:${hash(Buffer.concat(await Promise.all(paths.split('; ').map((file) => read(file)))))}`,
       ]),
     ),
   );

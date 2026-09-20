@@ -128,3 +128,58 @@ hashes; no image decoder or native-readiness proof is inferred from these tests.
 An initial run passed all23 starter tests but could not load the sparse historical
 fixture; adding its exact read-only hash-pinned input restored the full34-test run.
 Native successor recheck remains required before release.
+
+## Mastery, timing and independent Team correction evidence
+
+All42 optional mission/preset/control goals now have no-loss legal-input public
+replays. Seven ordinary clears correctly fail their optional goal; seven separate
+routes satisfy it without changing the mission or awarding progress. Evidence
+requires prior warning-lane trail overlap and a real closure; the Remix requires
+a pre-existing playerward impact cleared by capture while a roamer was already
+active in that same closure. Running/life-losing attempts and same-tick new
+warnings do not qualify. The test helper explicitly supports missions without
+travelling impacts; an initial reused Phaseworks helper did not, and failed before
+classification rather than silently granting evidence.
+
+All seven missions clear after each of0.25/0.5/1/2/5seconds of initial decision
+time:35 full no-loss public replays, with later deliberate waits permitted and
+recorded. This samples feasibility, not arbitrary-time invulnerability or human
+enjoyment. Mastery/timing/predicate/fingerprint cohort9/9PASS on both Node20.19.5
+and22.22.2. Full clear, paired-race and seed evidence remains separate above.
+
+Independent native recheck at exacteab879cf corrected both Team starters: picture
+ready, keyboard Start, First Connection Retry and Relay Yard Pause. Both original
+picture hashes were served. An attempted cut was caught by a Hunter; no successful
+capture or complete Team playthrough is claimed. Packet
+`.cache/p08-native-team-binding-eab8-r1/evidence.json` SHA-256
+`94608a26891401c9fb34666344d4bcce2bfe1328b1ca158d91cdbf4e4aaba2f8`
+remains in the primary workspace; the earlier e5ff failure is retained. Its124
+compiled URL entries are distinct from the127 portable-ledger payloads.
+
+At earlier35327b62, native Cross the afterglow preview closed the westward cut,
+then paused at26seconds with0.6%/140score/3lives and returned focus to Studio Play.
+Full Studio screenshots of Switchyard and Split junction distinguish staggered
+rails versus the central island and paired corner hazards, using shared terrain
+symbols. These are not native full clears or final-source visual approval.
+
+The production history tests now reconstruct exact qualified P05 fpv34 using an
+independent Git-derived oracle, rather than requiring today's ledger to remain34.
+They still verify every historical group/payload hash and byte-exact bundle,
+retained reviews, new source-stage fingerprints and factory idempotence. The
+12-test history cohort passed both runtimes before the lane-envelope correction;
+its final successor requires a fresh check. An initial sparse fixture read failed
+and was restored read-only; no original artwork was hydrated or rewritten.
+
+Independent release review found a lane cue smaller than its affected trail-cell
+envelope. The renderer now covers every interior cell with inclusive overlap,
+including exact-boundary touching cells, clipped to the board. Warning dashes,
+active solid edges and frozen treatment remain. Actual contact and travelling-
+impact functions agree with the shown envelope across both axes, edge/interior
+lanes and three widths. No collision/simulation code changes. Updated presentation,
+42 full clears/paired races and42 mastery replay cohort24/24PASS Node20; final
+dual-runtime confirmation and a source-stage metadata successor follow.
+
+Final combined-tree review and hosted qualification belong to the release
+coordinator. Keep every affected recipe source-stage here. Human/device/pacing,
+remaining native states, original art, Team mission, Journey enrollment and public
+deployment remain open; this is a source checkpoint, not completed P08 acceptance.
