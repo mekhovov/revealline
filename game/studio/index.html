@@ -223,6 +223,58 @@
               <button type="submit">Validate & apply geometry</button>
             </fieldset>
           </form>
+          <details id="actor-panel">
+            <summary>Place enemies</summary>
+            <p class="note">
+              Shared catalog roles and speed tiers keep rules consistent. Positions are checked in
+              every supported mode and preset before applying.
+            </p>
+            <form id="actor-form">
+              <fieldset id="actor-tools">
+                <legend>Mission actors</legend>
+                <label>Actor<select id="actor-select"></select></label>
+                <label>Stable actor ID<input id="actor-id" maxlength="80" required /></label>
+                <label>Role<select id="actor-role"></select></label>
+                <label>Speed tier · selected difficulty<select id="actor-tier"></select></label>
+                <p id="actor-description" class="note"></p>
+                <div class="pair">
+                  <label
+                    >X<input id="actor-x" type="number" min="0" max="71.5" step="0.5" required
+                  /></label>
+                  <label
+                    >Y<input id="actor-y" type="number" min="0" max="35.5" step="0.5" required
+                  /></label>
+                </div>
+                <p id="actor-position-help" class="note"></p>
+                <label id="actor-heading-row"
+                  >Starting direction<select id="actor-heading">
+                    <option value="0,-1">Up</option>
+                    <option value="1,-1">Up-right</option>
+                    <option value="1,0">Right</option>
+                    <option value="1,1">Down-right</option>
+                    <option value="0,1">Down</option>
+                    <option value="-1,1">Down-left</option>
+                    <option value="-1,0">Left</option>
+                    <option value="-1,-1">Up-left</option>
+                  </select></label
+                >
+                <label id="actor-edge-row"
+                  >Side facing reclaimed ground<select id="actor-edge">
+                    <option value="north">North</option>
+                    <option value="east">East</option>
+                    <option value="south">South</option>
+                    <option value="west">West</option>
+                  </select></label
+                >
+                <label id="actor-clockwise-row"
+                  ><input id="actor-clockwise" type="checkbox" checked /> Clockwise patrol</label
+                >
+                <button id="actor-submit" type="submit">Validate & add actor</button>
+                <button id="actor-remove" type="button" disabled>Remove selected actor</button>
+                <p id="actor-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
           <details id="image-authoring">
             <summary>Build from a reference picture</summary>
             <p class="note">

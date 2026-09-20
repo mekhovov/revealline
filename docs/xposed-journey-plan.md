@@ -228,6 +228,13 @@ Studio's actual tracing export/file-chooser import/explicit Restore loop preserv
 original picture bytes and crop without changing the map or granting Apply authority.
 See the P02 and Studio-image evidence files for exact bounds and remaining gates.
 
+Studio now exposes catalog-based enemy CRUD alongside geometry. Authors select
+roles, preset-resolved speed tiers and legal domain placements; arbitrary physics
+overrides remain unavailable. Every supported mode/preset compiles before adoption.
+Team retains its field-keeper-only qualification boundary. Native add/invalid edit/
+direction change/Undo/reload and automated confirmation/failure tests are recorded
+in the P02 evidence; edited content is still unqualified until separately tested.
+
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema
 stays readable by previous releases. It does not replace a running attempt or award

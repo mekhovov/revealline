@@ -21,6 +21,7 @@ import { createImageWorkbench } from './image-workbench.mjs';
 import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { createActorEditor } from './actor-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -62,6 +63,19 @@ const traceRecovery = createTraceRecovery({
   workbench: imageWorkbench,
   getSource: () => session.current(),
   getMission: () => currentMission(),
+});
+const actorEditor = createActorEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  getDifficulty: () => $('difficulty').value,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
 });
 function status(text, error = false) {
   $('status').textContent = text;
@@ -139,6 +153,7 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  actorEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
