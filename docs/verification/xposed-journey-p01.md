@@ -185,3 +185,16 @@ The first test setup left Journey's chooser open by invoking the legacy briefing
 helper; using the actual title-screen/library entry fixed that fixture, without
 relaxing gameplay or official-content authority. Changed-file lint and diff
 whitespace checks passed.
+
+## Complete-route preset/control matrix
+
+All ten candidates now have pinned legal complete routes for Gentle, Standard
+and Expert under both Immediate and Grid + Buffer: **60 combinations**, all
+finishing without losing a life. The additional 50 routes are independently
+searched for their enemy timing and steering policy; the Standard/Immediate
+route is not assumed to transfer unchanged. Every route is replayed from fresh
+state and verified through replay.v7 against its simulation identity and final
+checkpoint. The complete five-test curriculum cohort passed with no skips or
+failures. These privileged offline search routes prove feasibility only, not
+human reaction windows, comparative difficulty, intended route learning,
+accessibility, device handling, ordinary clear duration or enjoyment.

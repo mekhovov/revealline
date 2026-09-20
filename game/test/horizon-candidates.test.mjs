@@ -114,6 +114,57 @@ test('each greybox has a deterministic legal first return; this is not a full-cl
   }
 });
 
+test('the five remaining preset/control combinations have independent complete replay-verified routes', async () => {
+  const fixture = JSON.parse(
+    await readFile(new URL('./fixtures/horizon-preset-routes.json', import.meta.url)),
+  );
+  const project = compileContentProject(createOpeningCandidates());
+  const expected = [
+    'gentle/immediate',
+    'gentle/grid-center',
+    'standard/grid-center',
+    'expert/immediate',
+    'expert/grid-center',
+  ];
+  assert.deepEqual(
+    fixture.sets.map((set) => `${set.difficulty}/${set.turnPolicy}`),
+    expected,
+  );
+  for (const { difficulty, turnPolicy, rows } of fixture.sets) {
+    assert.deepEqual(
+      rows.map((row) => row[0]),
+      project.missions.map((mission) => mission.id),
+    );
+    for (const [id, identity, checkpoint, segments] of rows) {
+      const label = `${difficulty}/${turnPolicy}/${id}`;
+      const manifest = resolveMission(project, id, { difficulty });
+      assert.equal(manifest.simulationIdentity, identity, `${label}: renew route evidence`);
+      const options = { seed: 1, classId: 'scout', turnPolicy };
+      const run = createRun(manifest.level, options);
+      const recorder = createRecorder(
+        manifest.level,
+        options,
+        'greybox-feasibility-not-human-validation',
+      );
+      for (const [direction, ticks] of segments) {
+        assert(Number.isSafeInteger(ticks) && ticks > 0 && ticks <= 1000);
+        for (let tick = 0; tick < ticks; tick++) {
+          assert.equal(run.status, 'running', `${label}: route outlived the run`);
+          recordInput(recorder, { direction });
+          stepRun(run, { direction }, FIXED_DT);
+          assert.equal(run.lives, manifest.level.rules.lives, `${label}: lost a life`);
+        }
+      }
+      assert.equal(run.status, 'won', label);
+      assert(run.coverage >= manifest.level.goal.coverage, label);
+      assert.equal(authoritativeCheckpoint(run).hash, checkpoint, label);
+      const verified = verifyReplay(exportReplay(recorder, run));
+      assert.equal(verified.match, true, `${label}: replay mismatched`);
+      assert.equal(verified.state.status, 'won', label);
+    }
+  }
+});
+
 test('the first natural enclosure completes the lesson without fractional quota cleanup in every preset and control policy', () => {
   const project = compileContentProject(createOpeningCandidates());
   for (const difficulty of ['gentle', 'standard', 'expert'])
