@@ -4,6 +4,8 @@ import {
   ENCOUNTER_VERSIONS,
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
+  FOUNDATION_VERSIONS,
+  isClassicRuleset,
   resolveVersions,
   versionsForLevel,
 } from './core/versions.mjs';
@@ -45,11 +47,13 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  versions.ruleset === CLASSIC_VERSIONS.ruleset
-    ? [...SECTIONS, 'encounter', 'classic']
-    : versions.ruleset !== LEGACY_VERSIONS.ruleset
-      ? [...SECTIONS, 'encounter']
-      : SECTIONS;
+  versions.ruleset === FOUNDATION_VERSIONS.ruleset
+    ? [...SECTIONS, 'encounter', 'classic', 'foundations']
+    : versions.ruleset === CLASSIC_VERSIONS.ruleset
+      ? [...SECTIONS, 'encounter', 'classic']
+      : versions.ruleset !== LEGACY_VERSIONS.ruleset
+        ? [...SECTIONS, 'encounter']
+        : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -335,8 +339,15 @@ function authoritativeSections(state, versions) {
     continuation: pick(state, ['_accumulator', '_input', '_abilitySerial', '_terminalEmitted']),
     result: state.result,
     ...(versions.ruleset !== LEGACY_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
-    ...(versions.ruleset === CLASSIC_VERSIONS.ruleset
-      ? { classic: projectClassicState(state) }
+    ...(isClassicRuleset(versions.ruleset) ? { classic: projectClassicState(state) } : {}),
+    ...(versions.ruleset === FOUNDATION_VERSIONS.ruleset
+      ? {
+          foundations: {
+            definition: structuredClone(state.level.foundations),
+            version: state.foundation.version,
+            permanent: Array.from(state.foundation.permanent),
+          },
+        }
       : {}),
   };
 }

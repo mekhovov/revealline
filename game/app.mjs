@@ -40,7 +40,7 @@ import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.
 import { inspectCaptureSnapshot } from './core/capture-regions.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
-import { classicView } from './ui/classic-view.mjs';
+import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
