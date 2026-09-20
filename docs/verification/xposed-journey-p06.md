@@ -123,3 +123,16 @@ on closure. At pause0:55 the history showed line-secured/both-sides-occupied,
 marked-cell warning and ground-reopened/no-repeat-points captions. Closing preview
 returned focus to Play without changing the draft. No full native clear, measured
 load-time acceptance, final-art assessment, physical-device or human claim.
+
+## Delayed decision routes
+
+All seven candidates now have pinned no-loss public replays after0.25,0.5,1,2
+and5seconds of initial decision time:35 alternatives. Two districts' original
+left departure becomes unsafe after2or5seconds: the moving frontier patrol hits
+the exposed trail. Both exact failures remain public-replay regression evidence;
+the idle interval itself loses no life. Qualified alternatives first reposition
+on the permanent center lane and then choose a different departure. No timing
+rule, actor speed or damage immunity was changed to make the fixtures pass.
+
+Node20.19.5 and22.22.2 timing2/2 tests pass, with scoped lint. These samples demonstrate available alternatives,
+not a promise that one route is universally safe or that every timing is solved.
