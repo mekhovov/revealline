@@ -6105,7 +6105,9 @@ try {
                   ? run.player.speed === 0
                     ? 'LINE EXPOSED / CHOOSE A TURN'
                     : 'LIVE LINE / EXPOSED'
-                  : 'Safe ground';
+                  : run.ruleset === 'xonix-core.v6'
+                    ? 'Reclaimed ground'
+                    : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
     $('ability-state').textContent =
@@ -6185,7 +6187,9 @@ try {
             run.status === 'running' &&
             run.player.cutting
           )
-            warning('Live line exposed. Reach safe ground to secure it.');
+            warning(
+              `Live line exposed. Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground to secure it.`,
+            );
           if (event.type === 'player.failed')
             warning(
               {
@@ -6198,7 +6202,9 @@ try {
               'failure',
             );
           if (event.type === 'lineImpact.seeded')
-            warning('Line struck! Reach safe ground before the travelling spark catches you.');
+            warning(
+              `Line struck! Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
+            );
           if (event.type === 'lineImpact.arrived')
             warning('The travelling impact reached your craft. One life lost.');
           if (event.type === 'shield.absorbed')
