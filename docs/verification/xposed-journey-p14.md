@@ -251,7 +251,7 @@ Undo restores x23.5 and enables Redo. This checks the native form/transaction,
 not new layout playability or canvas contrast. No pixel screenshot or native
 Team gameplay claim is made.
 
-### Cross-campaign navigation contract (not yet host enrollment)
+### Cross-campaign navigation contract
 
 The new Team candidate adapter uses the existing compiler/execution catalog,
 stable Journey mission IDs and shared explicit-core sequencing. It resolves all
@@ -267,5 +267,32 @@ both numbered seats, exact foundations/materials and actual actor roles. Solo
 card shape and route behavior remain unchanged. The42 navigation/card/prior
 route/material/catalog tests pass on both Node versions;31 additional role-
 rejection catalog tests also pass after updating their expected diagnostic text.
-The adapter is not yet connected to Team launch/Next/progress storage: complete
-real-host cross-campaign flow and failure/rollback tests remain required.
+The explicit local `game/couch/relay-rescue.html?journey=team-greybox` entry now
+connects this adapter to the real Team host. This is a labelled geometry review
+route, not default/public Journey enrollment. It reads the shared Journey
+difficulty without rewriting legacy arena preferences; denied preference reads
+are visibly session-only. An arena selector claimed during loading retains its
+native options/choice. Unknown or duplicate entry parameters retain legacy Team.
+
+Twelve consecutive Standard clears, including all four campaign boundaries,
+pass on Node20 and22 using keyboard events and ordinary frame callbacks: one
+Next per successor, no lobby/discard/mode navigation, no lost reserves, and
+accepted difficulty/cooperation settings retained despite hidden setup edits.
+Last rendezvous offers replay/chooser/exit rather than automatically restarting.
+Two new opening command recordings also pass continuous-steering validation,
+both joint settings, swapped seats, seeds1/17 and exact repeated state/event
+hashes. They establish legal ordinary clears, not Shared detour mastery.
+
+The optional chooser exposes all twelve missions, and a direct Expert selection
+into Changing common ground clears and advances with its preset intact. Loading,
+first-paint and post-adoption setup failures restore the earned result, picture,
+old pack/options and exact mission; a fresh Next succeeds. Cancellation rejects
+a late decoder completion. An imported pack with identical mission IDs remains
+independent and cannot acquire cross-campaign authority. These12 host cases and
+two opening-route cases pass on both Node versions (scoped cohorts). Existing
+legacy Next/reentry checks also pass27/27 on Node20.
+
+No native gameplay timing, human coordination, enjoyment or visual-contrast claim
+follows from modeled DOM/Canvas tests. Progress storage, Continue restoration,
+explicit skip bookkeeping, candidate difficulty controls, original backgrounds,
+broader real-device qualification and deployment remain open.
