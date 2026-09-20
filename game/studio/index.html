@@ -342,10 +342,13 @@
             <summary>Organize missions, campaigns & packs</summary>
             <p class="note">
               Choose an untested Solo / Versus island or a two-seat Team island template. Duplicate
-              shares an immutable map; editing its geometry creates a private revision. Add to
-              parent keeps existing memberships. Remove from parent detaches only that membership.
-              Delete refuses referenced or nonempty items and never removes shared maps or assets.
-              Archived items stay editable here but are omitted from candidate Journey lists.
+              copies missions and whole campaign/pack contents with independent IDs; maps and
+              artwork remain shared immutable pins. Editing geometry creates a private revision.
+              Shared child membership is preserved within a copied pack. Archived children remain
+              archived. Add to parent keeps existing memberships. Remove from parent detaches only
+              that membership. Delete refuses referenced or nonempty items and never removes shared
+              maps or assets. Archived items stay editable here but are omitted from candidate
+              Journey lists.
             </p>
             <form id="structure-form">
               <label
@@ -358,7 +361,7 @@
               <label
                 >Action<select id="item-action">
                   <option value="create">Create</option>
-                  <option value="duplicate">Duplicate mission</option>
+                  <option value="duplicate">Duplicate item & contents</option>
                   <option value="rename">Rename</option>
                   <option value="place">Add to parent</option>
                   <option value="detach">Remove from parent</option>
