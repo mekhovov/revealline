@@ -5,6 +5,7 @@ import {
   ENCOUNTER_VERSIONS,
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
+  FOUNDATION_VERSIONS,
   versionsForCampaign,
 } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
@@ -277,6 +278,7 @@ export function createMasteryCatalog(source) {
         'xonix-pack.v3',
         'xonix-pack.v4',
         'xonix-pack.v5',
+        'xonix-pack.v6',
       ].includes(format),
       'Unsupported mastery source pack format.',
     );
@@ -284,7 +286,8 @@ export function createMasteryCatalog(source) {
       !Object.hasOwn(entry, 'sourcePackFormat') || entry.sourcePackFormat === format,
       'A source format must be explicit text or omitted.',
     );
-    const classic = format === 'xonix-pack.v5';
+    const foundations = format === 'xonix-pack.v6';
+    const classic = format === 'xonix-pack.v5' || foundations;
     const wide = format === 'xonix-pack.v4';
     const encounter = format === 'xonix-pack.v3';
     const authored = format === 'xonix-pack.v2' || encounter || wide || classic;
@@ -299,13 +302,15 @@ export function createMasteryCatalog(source) {
       definitionIds = new Set();
     requireValue(
       context.versions.ruleset ===
-        (classic
-          ? CLASSIC_VERSIONS.ruleset
-          : wide
-            ? WIDE_VERSIONS.ruleset
-            : encounter
-              ? ENCOUNTER_VERSIONS.ruleset
-              : LEGACY_VERSIONS.ruleset),
+        (foundations
+          ? FOUNDATION_VERSIONS.ruleset
+          : classic
+            ? CLASSIC_VERSIONS.ruleset
+            : wide
+              ? WIDE_VERSIONS.ruleset
+              : encounter
+                ? ENCOUNTER_VERSIONS.ruleset
+                : LEGACY_VERSIONS.ruleset),
       'Pack format and campaign simulation versions differ.',
     );
     requireValue(

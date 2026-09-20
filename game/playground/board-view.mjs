@@ -1,12 +1,8 @@
 import { geometryForLevel } from '../core/geometry.mjs';
 import { boardPaintSizeForLevel } from '../ui/render.mjs';
 import { createRun } from '../core/index.mjs';
-import {
-  classicView,
-  drawClassicTerrain,
-  drawClassicPickups,
-  drawClassicEnemy,
-} from '../ui/classic-view.mjs';
+import { drawClassicTerrain, drawClassicPickups, drawClassicEnemy } from '../ui/classic-view.mjs';
+import { foundationCompatibleView as classicView } from '../ui/foundation-view.mjs';
 
 export function paintEditorMap(canvas, current) {
   const { width, height } = boardPaintSizeForLevel(current.level);
@@ -14,12 +10,11 @@ export function paintEditorMap(canvas, current) {
   if (canvas.height !== height) canvas.height = height;
   const c = canvas.getContext('2d'),
     s = 16;
-  const classic =
-    current.level.version === 'xonix-level.v4'
-      ? classicView(
-          createRun(current.level, { ...current.settings, classRecipes: current.classRecipes }),
-        )
-      : null;
+  const classic = ['xonix-level.v4', 'xonix-level.v5'].includes(current.level.version)
+    ? classicView(
+        createRun(current.level, { ...current.settings, classRecipes: current.classRecipes }),
+      )
+    : null;
   c.fillStyle = current.theme.palette.field;
   c.fillRect(0, 0, width, height);
   c.fillStyle = current.theme.palette.safe;
@@ -27,6 +22,8 @@ export function paintEditorMap(canvas, current) {
   c.fillRect(0, height - s, width, s);
   c.fillRect(0, 0, s, height);
   c.fillRect(width - s, 0, s, height);
+  for (const foundation of current.level.foundations ?? [])
+    c.fillRect(foundation.x * s, foundation.y * s, foundation.w * s, foundation.h * s);
   c.strokeStyle = current.theme.palette.grid;
   c.lineWidth = 0.6;
   for (let x = 0; x <= width; x += s) {

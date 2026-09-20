@@ -2,6 +2,7 @@ import { DEFAULT_RULES } from './registry.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { resolveEncounterDescriptor } from './encounter.mjs';
 import { resolveClassicDefinition } from './classic-definition.mjs';
+import { foundationGeometry, validateFoundationOccupants } from './foundations.mjs';
 
 const number = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
 const integer = (v, lo, hi) => Number.isInteger(v) && v >= lo && v <= hi;
@@ -9,7 +10,13 @@ const id = (v) => typeof v === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.t
 const object = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /** Validate data without mutating it. Unknown presentation metadata is ignored. */
-function validateShape(level, encounterBranch = false, wideBranch = false, classicBranch = false) {
+function validateShape(
+  level,
+  encounterBranch = false,
+  wideBranch = false,
+  classicBranch = false,
+  foundations = null,
+) {
   const width = wideBranch ? 72 : 48,
     height = 36;
   const errors = [];
@@ -43,7 +50,7 @@ function validateShape(level, encounterBranch = false, wideBranch = false, class
     y(p.y) &&
     (p.x === 0.5 || p.x === width - 0.5 || p.y === 0.5 || p.y === height - 0.5);
   check(
-    onBorder(level.spawn) &&
+    (foundations !== null || onBorder(level.spawn)) &&
       Number.isInteger(level.spawn.x - 0.5) &&
       Number.isInteger(level.spawn.y - 0.5),
     'spawn must be an outer safe cell center',
@@ -260,7 +267,8 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
-    const classic = version?.value === 'xonix-level.v4';
+    const foundations = version?.value === 'xonix-level.v5';
+    const classic = version?.value === 'xonix-level.v4' || foundations;
     const wide = version?.value === 'xonix-level.v3' || classic;
     if (version?.value !== 'xonix-level.v2' && !wide) {
       if (level && Object.hasOwn(level, 'encounter'))
@@ -296,11 +304,13 @@ export function validateLevel(level) {
         'musicId',
         'encounter',
         ...(classic ? ['classic'] : []),
+        ...(foundations ? ['foundations'] : []),
       ],
       'level',
     );
     if (wide && !Object.hasOwn(owned, 'encounter'))
       return { valid: false, errors: ['wide levels require an explicit nullable encounter'] };
+    const geometry = foundations ? foundationGeometry(owned) : null;
     const shape = classic
       ? {
           ...owned,
@@ -318,7 +328,7 @@ export function validateLevel(level) {
             ),
         }
       : owned;
-    const result = validateShape(shape, !wide || owned.encounter !== null, wide, classic);
+    const result = validateShape(shape, !wide || owned.encounter !== null, wide, classic, geometry);
     if (!result.valid) return result;
     if (classic) {
       if ((owned.enemies ?? []).length > 24) throw new TypeError('at most 24 enemies');
@@ -334,9 +344,11 @@ export function validateLevel(level) {
         false,
         true,
         true,
+        geometry,
       );
       if (!actors.valid) return actors;
-      resolveClassicDefinition(owned);
+      resolveClassicDefinition(owned, geometry);
+      if (foundations) validateFoundationOccupants(owned, geometry);
     }
     if (!wide || owned.encounter !== null) resolveEncounterDescriptor(owned.encounter, shape);
     return result;
@@ -346,7 +358,11 @@ export function validateLevel(level) {
 }
 
 export function normalizedLevel(level) {
-  if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === 'xonix-level.v4')
+  if (
+    ['xonix-level.v4', 'xonix-level.v5'].includes(
+      Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value,
+    )
+  )
     level = boundedJSON(level, {
       maxBytes: 128 * 1024,
       maxNodes: 10000,
@@ -360,7 +376,7 @@ export function normalizedLevel(level) {
       (level[key] ?? []).map((p) => p.id),
     ),
   );
-  if (level.version === 'xonix-level.v4')
+  if (['xonix-level.v4', 'xonix-level.v5'].includes(level.version))
     for (const item of [...level.classic.terrain, ...level.classic.powerups]) ids.add(item.id);
   let homeId = 'home-hangar';
   for (let n = 1; ids.has(homeId); n++) homeId = `home-hangar-${n}`;

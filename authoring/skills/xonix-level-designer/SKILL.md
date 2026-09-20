@@ -130,3 +130,35 @@ Put concise actual rules/counterplay in the existing authored description and ve
 Use the [Playground reading guide](../../../docs/practice-playground-readability.md) when authoring these existing features. Dashed signal zones and diamond-framed hangars correlate with text beside the map; cosmetic marker size never changes collision or activation geometry. Coordinates are zero-based from the top left. Read each optional signal restriction independently; speed is shown as a rounded whole percentage, while exact data remains in Level JSON. Omitted hangars use the spawn default, an empty list disables switching and an omitted individual radius defaults to two cells. Existing switching requires proximity, safe player ground, no active cut and the actual cooldown; do not assume that ground beneath the hangar centre must be captured.
 
 Use the coordinate/editor controls for real changes, then Undo and compare the restored configuration with its diagnostic rows. Reading preferences do not make an edit. Last Undo may move its own retiring focus to the selected brush; it must not launch or update the running child. Use explicit Play configuration to test the new map. An empty control-measurement set or readable diagnostic list is not proof of touch usability, fairness or a full accessibility pass. Keep current live measurements distinct from an explicitly captured historical snapshot.
+
+## Journey action policy and historical route checks
+
+New Solo/Versus Journey projects pin `journey-arcade-v2`. The shared compiler emits
+`classic.arcadeActions` so the fixed-tick simulation, imported replay commands and
+visible controls agree: bonuses activate on contact, while manual ability, Supply
+and Boost commands are unavailable. Do not fix this by hiding buttons alone.
+Imported `journey-v1` projects keep their exact previous levels and identities.
+Team uses its separate registered rules; do not infer Solo capabilities from a label.
+
+Prompt: “Create a Journey Arcade map through the shared compiler. Check both turning
+modes and all existing classes against attempted manual commands; collect the four
+authored bonuses through movement and verify the replay. Preserve v1 route fixtures,
+then run `node scripts/qualify-journey-arcade-routes.mjs` to compare all sixty historical
+opening outcomes. Changing policy requires new simulation/campaign identities, never
+rewriting old checkpoints. Restore a saved candidate after changing the next-attempt
+preset; resolve it through candidate ownership, not an installed Legacy pack lookup.”
+
+### Explicit Journey race timing and old-edition recovery
+
+Untimed authored Versus uses `xonix-duel.untimed.v1` with explicit zero seconds and
+a null match deadline. Never silently reinterpret legacy timed-v1 or infer protocol
+from a missing duration. Hide the legacy timer option for these authored races;
+summary, HUD and Help must agree. Both-ended ranking and first-clear adjudication
+remain deterministic. Unavailable old candidate saves must keep exact original
+bytes and offer export/original-edition guidance, never a false pack-install fix.
+
+Prompt: “Run an idle authored race beyond 90 seconds without awarding a clear,
+then verify first clear, simultaneous clears, Pause/Resume and both-ended ranking.
+Reject mismatched protocol packets; keep legacy timed replay outcomes. Load an old
+v1 saved flight and verify unchanged bytes plus truthful recovery copy. Preserve the
+old reference crosswalk and prove its identities before renewing new-policy pins.”

@@ -2,6 +2,11 @@ import { createCharacterPresentations } from './character-presentations.mjs';
 import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs';
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
+import { createJourneyPreferences } from './journey/preferences.mjs';
+import { createOpeningCandidates } from './content-design/horizon-candidates.mjs';
+import { createCandidateSoloHost } from './content-design/solo-host.mjs';
+import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
+import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
 import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
@@ -40,7 +45,7 @@ import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.
 import { inspectCaptureSnapshot } from './core/capture-regions.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
-import { classicView } from './ui/classic-view.mjs';
+import { foundationCompatibleView as classicView } from './ui/foundation-view.mjs';
 import { attachFlightInformation } from './ui/flight-information-host.mjs';
 import { attachFlightDetails } from './ui/flight-information-details.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
@@ -156,7 +161,7 @@ import { resolveCampaignDifficulty } from './campaign-difficulty.mjs';
 import {
   createDifficultyNavigation,
   difficultyCue,
-  difficultyLabel,
+  difficultyLabel as legacyDifficultyLabel,
   difficultyRuleComparison,
 } from './difficulty-navigation.mjs';
 import { missionBriefing } from './mission-brief.mjs';
@@ -309,17 +314,30 @@ try {
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
   // P00 technical preview. Historical editions keep their original navigation.
-  const journeyEnabled = params.get('journey') === '1' && !practiceSession;
-  const journeyAuthority = journeyEnabled
-    ? createJourneyAuthority({
-        baseCampaign,
-        pins: await getJSON('content/journey-campaign-pins.json'),
+  const authoredJourney = params.get('journey') === 'opening' && !practiceSession;
+  const candidateHost = authoredJourney
+    ? createCandidateSoloHost(createOpeningCandidates({ artwork: true }), {
+        themes: (await getJSON('content-design/themes.json')).themes,
+        buildVersion,
       })
     : null;
-  const journeyCatalog = journeyFromPackCatalog(
-    baseCampaign,
-    preparePackCatalog(packCatalogSource),
-  );
+  const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
+  function difficultyLabel(entry) {
+    return candidateHost?.owns(entry)
+      ? entry.difficulty[0].toUpperCase() + entry.difficulty.slice(1)
+      : legacyDifficultyLabel(entry);
+  }
+  const journeyEnabled = (params.get('journey') === '1' || authoredJourney) && !practiceSession;
+  const journeyAuthority =
+    journeyEnabled && !authoredJourney
+      ? createJourneyAuthority({
+          baseCampaign,
+          pins: await getJSON('content/journey-campaign-pins.json'),
+        })
+      : null;
+  const journeyCatalog =
+    candidateHost?.catalog ??
+    journeyFromPackCatalog(baseCampaign, preparePackCatalog(packCatalogSource));
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         onStatus({ ready, durable, error }) {
@@ -337,7 +355,7 @@ try {
   $('creator-tools').hidden = practiceSession;
   let packLaunchRequest = null,
     packLaunchError = '';
-  if (!practiceSession)
+  if (!practiceSession && !authoredJourney)
     try {
       packLaunchRequest = resolvePackLaunch(params, packCatalog);
     } catch (error) {
@@ -367,7 +385,10 @@ try {
   const channel = isRelease ? `release-${buildVersion}` : 'dev';
   const libraryKey = `revealline.library.${channel}.v1`;
   const packsKey = `revealline.packs.${channel}.v1`;
-  const sessionKey = `revealline.suspended.${channel}.v1`;
+  // Candidate saves are revision-pinned and independent of Legacy/release slots.
+  const sessionKey = authoredJourney
+    ? 'revealline.suspended.journey-opening.v1'
+    : `revealline.suspended.${channel}.v1`;
   const packCommits = createPackCommitCoordinator({
     read: () => checkedChapters(),
     write: (value) => writeCheckedPacks(value),
@@ -458,6 +479,10 @@ try {
     return externalChapters.commitMutation(review);
   }
   async function assertExternalBackupSupported(options) {
+    if (candidateHost)
+      throw new Error(
+        'Use the ordinary game for Legacy game-data backups. Opening test progress and attempts have separate exports.',
+      );
     if (externalBackup) return externalBackup.assertSupported(options);
     const snapshot = await checkedChapters();
     if (snapshot.index?.chapters.length)
@@ -491,7 +516,7 @@ try {
         : writeAssetStore(key, value),
     profileKey: libraryKey,
     packsKey,
-    sessionKey,
+    sessionKey: authoredJourney ? `revealline.suspended.${channel}.v1` : sessionKey,
     journalKey,
     commitProfile: (next, options) => {
       // The import lock is held here. Startup may have stopped at unreadable packs
@@ -630,6 +655,11 @@ try {
       library.preferences.campaignDifficulty,
     );
     if (rememberedSelection) activeEntry = rememberedSelection.entry;
+    if (candidateHost)
+      activeEntry = candidateHost.select(
+        journeyCatalog.missions[0],
+        journeyPreferences.snapshot().difficulty,
+      );
     campaign = activeEntry.campaign;
     classRegistry = activeEntry.classRecipes;
     themesFile.themes = activeEntry.themes;
@@ -639,12 +669,11 @@ try {
     $('save-warning').textContent = [loaded.warning, packWarning].filter(Boolean).join(' ');
     show('save-warning', true);
   }
-  const initialSelection = difficultyNavigation.selection(
-    activeEntry,
-    library.campaigns,
-    progress,
-    { levelId: rememberedSelection?.levelId },
-  );
+  const initialSelection = candidateHost
+    ? { levelIndex: 0, overview: false }
+    : difficultyNavigation.selection(activeEntry, library.campaigns, progress, {
+        levelId: rememberedSelection?.levelId,
+      });
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -743,6 +772,10 @@ try {
     : classRegistry[0].id;
   turnPolicy = library.preferences.turnPolicy;
   bodyId = library.preferences.bodyId;
+  if (candidateHost) {
+    classId = 'scout';
+    bodyId = theme.player;
+  }
   if (courseRequest && !courseRequest.turnPolicy)
     scenario = createLessonScenario(courseRequest.lessonId, {
       turnPolicy: library.preferences.turnPolicy,
@@ -1000,7 +1033,22 @@ try {
     pins,
     legacy = practice || entry.activity === 'challenge',
     explicitLegacy = false,
+    candidatePicture = null,
   } = {}) {
+    if (candidateHost?.owns(entry)) {
+      const manifest = entry.manifests.find((item) => item.level.id === nextRun.levelId);
+      return createCandidateFlightPictures({
+        context: {
+          runId: nextRunId,
+          executionKey: campaignKey(entry.campaign),
+          levelId: nextRun.levelId,
+          levelRevision: nextRun.level.revision,
+          themeId: manifest.presentation.themeId,
+        },
+        asset: manifest.background,
+        picture: candidatePicture,
+      });
+    }
     const authoredBackground =
       entry.levelVisuals?.find((item) => item.levelId === nextRun.level.id)?.visualOverrides
         ?.background ??
@@ -1145,7 +1193,7 @@ try {
     if (pictureResume === null && !preparationOperation && !pictureThemePending)
       preparationFeedback.begin({ message }).finish({ message, state: 'error' });
     for (const button of pictureRecoveryButtons) button.hidden = !needsWriter;
-    legacyPictureButton.hidden = needsWriter || started || practice;
+    legacyPictureButton.hidden = !!candidateHost || needsWriter || started || practice;
     if (!started)
       $('start-button').textContent = needsWriter ? 'Check picture →' : 'Retry picture →';
   }
@@ -1983,6 +2031,8 @@ try {
       audioMaster.dispose();
       soundtrackStore?.close();
       flightPictures?.dispose();
+      candidateHost?.preparer.dispose();
+      journeyPreferences?.dispose();
       missionThumbnails.close();
       pictureStore?.close();
       storyStore?.close();
@@ -2445,6 +2495,12 @@ try {
       return;
     event.preventDefault();
     if (!Object.hasOwn(modeDestinations, kind)) return;
+    if (candidateHost) {
+      warning(
+        'This opening test route currently qualifies Solo only. Open the ordinary game for couch modes; this flight stays here.',
+      );
+      return;
+    }
     if (
       !['solo-title', 'solo-missions'].includes(origin) ||
       (origin === 'solo-title' && (typeof isCurrent !== 'function' || !isCurrent()))
@@ -3246,6 +3302,14 @@ try {
     if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
   }
   async function requestMissionReplacement(request, opener, launch = null) {
+    if (candidateHost && request.kind !== 'steering') {
+      contentStatus(
+        'Use Find missions for the opening test route. Its authored Scout and theme stay consistent; Legacy content remains in the ordinary game.',
+        true,
+      );
+      refreshContentSelectors();
+      return false;
+    }
     // Only explicit player launch/selection adapters call this gate. Restore,
     // internal adoption and authored Hangar actions keep their contracts.
     const setup = isSetupRequest(request);
@@ -3530,6 +3594,7 @@ try {
   function executionEntries() {
     // Removed packs keep archived records but cannot resolve a saved flight.
     return [
+      ...(candidateHost?.entries ?? []),
       ...executionCatalog.entries,
       ...catalog().filter(
         (entry) =>
@@ -3540,6 +3605,20 @@ try {
     ];
   }
   function currentSelection(options = {}) {
+    if (candidateHost?.owns(activeEntry)) {
+      const clears = journeyProfile.snapshot().clears.solo;
+      const completed = campaign.levels.filter(
+        (_, index) => clears[journeyMission(activeEntry, index)?.id],
+      ).length;
+      const index = campaign.levels.findIndex((level) => level.id === options.levelId);
+      return {
+        levelIndex: index < 0 ? 0 : index,
+        overview: false,
+        complete: completed === campaign.levels.length,
+        completed,
+        total: campaign.levels.length,
+      };
+    }
     return difficultyNavigation.selection(activeEntry, library.campaigns, progress, options);
   }
   function missionAvailable(index, entry = activeEntry) {
@@ -3559,6 +3638,8 @@ try {
     );
   }
   function availableBodies() {
+    if (candidateHost?.owns(activeEntry))
+      return new Set(activeEntry.themes.map((item) => item.player));
     return characterPresentations.availableBodies(
       difficultyNavigation.bodies(activeEntry, library.campaigns, progress),
     );
@@ -3567,6 +3648,10 @@ try {
     return difficultyNavigation.milestones(activeEntry, library.campaigns, progress);
   }
   function executionForEntry(entry, mode) {
+    // Candidate editions are owned by their shared compiler, not the installed
+    // Legacy pack catalog. Preserve that authority when restoring a saved preset.
+    if (candidateHost?.owns(entry))
+      return candidateHost.select(candidateHost.mission(entry, 0), mode);
     const baseKey = entry.baseCampaignKey || campaignKey(entry.campaign);
     if (!entry.sourcePackId) return executionCatalog.select(baseKey, mode) || entry;
     const authored = installedEntries.find(
@@ -3584,6 +3669,17 @@ try {
   }
   function applyNextDifficulty(mode = library.preferences.campaignDifficulty) {
     if (scenario || practice || courseSession) return;
+    if (candidateHost?.owns(activeEntry)) {
+      activeEntry = candidateHost.select(
+        journeyMission(),
+        journeyPreferences.snapshot().difficulty,
+      );
+      campaign = activeEntry.campaign;
+      classRegistry = activeEntry.classRecipes;
+      classId = 'scout';
+      progress = progressFor(library, campaign);
+      return;
+    }
     const selected = executionForEntry(activeEntry, mode);
     if (!selected) return;
     activeEntry = selected;
@@ -3592,6 +3688,23 @@ try {
     progress = progressFor(library, campaign);
   }
   function refreshDifficulty() {
+    if (candidateHost?.owns(activeEntry)) {
+      const next = journeyPreferences.snapshot();
+      $('difficulty-select').replaceChildren(
+        ...Object.keys(DIFFICULTY_CATALOG.presets).map(
+          (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
+        ),
+      );
+      $('difficulty-select').value = next.difficulty;
+      $('difficulty-select').disabled = contentSwitchBusy || backupBusy || sessionBusy;
+      $('difficulty-note').textContent =
+        `This flight: ${activeEntry.difficulty}. Next fresh attempt: ${next.difficulty}. ${journeyPreset(next.difficulty).description} Resume and Load preserve this flight. ${next.error}`;
+      show('difficulty-details', false);
+      $('overlay-difficulty').textContent =
+        `Journey ${activeEntry.difficulty}. ${journeyPreset(activeEntry.difficulty).description}`;
+      show('overlay-difficulty', true);
+      return;
+    }
     const cue = difficultyCue({
       entry: activeEntry,
       nextMode: library.preferences.campaignDifficulty,
@@ -3781,6 +3894,7 @@ try {
     const mission = journeyEnabled && journeyMission();
     if (mission && !practice && !scenario)
       journeyProfile.record({ type: 'select', mode: 'solo', missionId: mission.id });
+    if (candidateHost?.owns(activeEntry)) return;
     return selectionBookmark.remember({
       campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
       levelId: campaign.levels[levelIndex].id,
@@ -3788,6 +3902,7 @@ try {
     });
   }
   function journeyMission(entry = activeEntry, index = levelIndex) {
+    if (candidateHost) return candidateHost.mission(entry, index);
     if (!journeyAuthority?.matches(entry)) return null;
     const authored = entry.baseCampaign || entry.campaign;
     const level = authored.levels[index];
@@ -3804,8 +3919,11 @@ try {
     const state = journeyProfile?.snapshot();
     const current = state && journeyCatalog.find(state.cursors.solo);
     return current && Object.hasOwn(state.clears.solo, current.id)
-      ? journeyCatalog.next(current.id) || current
-      : current;
+      ? nextJourneyMission(current.id) || current
+      : current || (candidateHost ? journeyCatalog.missions[0] : null);
+  }
+  function nextJourneyMission(id) {
+    return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
   }
   async function launchJourneyMission(mission, { kind = 'choose', skipped = null } = {}) {
     if (
@@ -3819,6 +3937,14 @@ try {
       return false;
     pause(true);
     clearInput();
+    if (candidateHost) {
+      const entry = candidateHost.select(mission, journeyPreferences.snapshot().difficulty);
+      if (!entry) return false;
+      const adopted = await prepareResultAttempt(kind, mission.levelIndex, entry);
+      if (adopted && skipped)
+        journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
+      return adopted;
+    }
     const owner = { run, runId, mission, feedback: null, cancel: null };
     journeyLaunch = owner;
     const operation = packLaunchGuard.begin(packs);
@@ -3911,7 +4037,8 @@ try {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before selecting a campaign.');
     if (!entry) throw new Error('This campaign is not installed.');
-    if (difficulty !== undefined) resolveCampaignDifficulty(difficulty);
+    if (difficulty !== undefined)
+      (candidateHost?.owns(entry) ? journeyPreset : resolveCampaignDifficulty)(difficulty);
     if (selectedSeed !== undefined) {
       if (!Number.isInteger(selectedSeed) || selectedSeed < 0 || selectedSeed > 0xffffffff)
         throw new Error('Picture seed is invalid.');
@@ -4361,6 +4488,10 @@ try {
     });
   }
   function currentBackupSession(savedAt) {
+    if (candidateHost)
+      throw new Error(
+        'Opening test flights use separate storage. Export this attempt or Journey progress; Legacy game-data backups do not include candidate flights.',
+      );
     return started && recorder && !practice && !['won', 'lost'].includes(run.status)
       ? snapshotAttempt(savedAt)
       : savedAttempt();
@@ -4435,7 +4566,16 @@ try {
     if (sessionBusy) throw new Error('A flight is already being verified.');
     if (signal?.aborted) throw new DOMException('Title launch cancelled.', 'AbortError');
     const entry = findCampaignEntry(candidate?.campaignKey);
-    if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
+    if (!entry)
+      throw new Error(
+        candidateHost
+          ? 'This authored flight needs its original test edition. Its saved bytes are unchanged. Export the saved attempt from Library & saves before choosing a current mission.'
+          : 'Install the matching campaign pack before loading this flight.',
+      );
+    if (candidateHost && !candidateHost.owns(entry))
+      throw new Error(
+        'Open this Legacy flight in the ordinary game. This route restores only exact opening editions.',
+      );
     invalidateContentSwitch();
     sessionBusy = true;
     refreshSavedFlight();
@@ -5071,6 +5211,14 @@ try {
     );
   $('difficulty-select').onchange = () => {
     if ($('difficulty-select').disabled) return;
+    if (candidateHost?.owns(activeEntry)) {
+      journeyPreferences.choose($('difficulty-select').value);
+      cancelResultAttempt();
+      clearInput();
+      if (!started && !sessionBusy) prepare();
+      else refreshDifficulty();
+      return;
+    }
     const mode = resolveCampaignDifficulty($('difficulty-select').value);
     clearInput();
     preferences({ campaignDifficulty: mode });
@@ -5714,14 +5862,14 @@ try {
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
-        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
+        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Opening test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
       $('next-button').textContent = practice
         ? 'Try it yourself →'
         : journeyEnabled && journeyMission()
-          ? journeyCatalog.next(journeyMission().id)
+          ? nextJourneyMission(journeyMission().id)
             ? 'Next mission →'
             : 'Journey complete · replay or exit'
           : currentSelection().complete
@@ -5815,6 +5963,7 @@ try {
       classId === ticket.classId &&
       themeOverride === ticket.themeOverride &&
       library.preferences.campaignDifficulty === ticket.difficulty &&
+      journeyPreferences?.snapshot().revision === ticket.journeyRevision &&
       (ticket.kind !== 'next' || run.status === 'won') &&
       libraryGeneration === ticket.libraryGeneration &&
       packs === ticket.packs &&
@@ -5894,6 +6043,7 @@ try {
       classId,
       themeOverride,
       difficulty: library.preferences.campaignDifficulty,
+      journeyRevision: journeyPreferences?.snapshot().revision,
       libraryGeneration,
       packs,
       writable: writer.writable,
@@ -5920,6 +6070,9 @@ try {
         throw new DOMException('Preparation cancelled.', 'AbortError');
       const entry =
           destinationEntry ||
+          (candidateHost?.owns(activeEntry)
+            ? candidateHost.select(journeyMission(), journeyPreferences.snapshot().difficulty)
+            : null) ||
           executionForEntry(activeEntry, library.preferences.campaignDifficulty),
         level = entry.campaign.levels[destinationIndex],
         nextTheme =
@@ -5927,9 +6080,11 @@ try {
             ? theme
             : entry.themes.find((item) => item.id === (level.themeId || entry.campaign.themeId)) ||
               entry.themes[0],
-        nextClassId = entry.classRecipes.some((item) => item.id === classId)
-          ? classId
-          : entry.classRecipes[0].id,
+        nextClassId = candidateHost?.owns(entry)
+          ? 'scout'
+          : entry.classRecipes.some((item) => item.id === classId)
+            ? classId
+            : entry.classRecipes[0].id,
         options = { seed, turnPolicy, classId: nextClassId, classRecipes: entry.classRecipes };
       const ownedFocus = document.activeElement === ticket.button;
       ticket.feedback.update({
@@ -5941,11 +6096,30 @@ try {
       if (ownedFocus) $('flight-preparation-cancel').focus({ preventScroll: true });
       if (!resultAttemptCurrent(ticket))
         throw new DOMException('Preparation cancelled.', 'AbortError');
-      const nextRun = createRun(level, options),
+      let candidateAttempt = null;
+      if (candidateHost?.owns(entry)) {
+        candidateAttempt = await candidateHost.preparer.prepare(
+          {
+            missionId: candidateHost.mission(entry, destinationIndex).id,
+            difficulty: entry.difficulty,
+            seed,
+            turnPolicy,
+          },
+          { signal: ticket.controller.signal, onStatus: ticket.feedback.update },
+        );
+        if (!resultAttemptCurrent(ticket)) {
+          if (candidateHost.preparer.current(candidateAttempt)) candidateHost.preparer.cancel();
+          throw new DOMException('Preparation cancelled.', 'AbortError');
+        }
+        candidateHost.preparer.take(candidateAttempt);
+        ticket.candidatePicture = candidateAttempt.picture;
+      }
+      const nextRun = candidateAttempt?.run ?? createRun(level, options),
         nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
-        nextRecorder = createRecorder(nextRun.level, options, buildVersion);
+        nextRecorder =
+          candidateAttempt?.recorder ?? createRecorder(nextRun.level, options, buildVersion);
       const pins =
-        kind === 'retry' && !ticket.owner.legacy
+        kind === 'retry' && !candidateAttempt && !ticket.owner.legacy
           ? retryFlightPresentationPins(ticket.owner.pins(), {
               identityCatalog: pictureIdentity(),
               campaignKey: campaignKey(entry.campaign),
@@ -5958,6 +6132,7 @@ try {
         nextRunId,
         entry,
         nextThemeId: nextTheme.id,
+        candidatePicture: candidateAttempt?.picture ?? null,
         ...(pins ? { pins } : {}),
         legacy: kind === 'retry' ? ticket.owner.legacy : undefined,
       });
@@ -6004,6 +6179,7 @@ try {
         themeOverride === ticket.themeOverride &&
         libraryGeneration === ticket.libraryGeneration &&
         library.preferences.campaignDifficulty === ticket.difficulty &&
+        journeyPreferences?.snapshot().revision === ticket.journeyRevision &&
         packs === ticket.packs &&
         writer.writable === ticket.writable &&
         persistenceReady === ticket.persistenceReady &&
@@ -6049,6 +6225,7 @@ try {
     } finally {
       if (resultAttempt === ticket) cancelResultAttempt();
       ticket.pictures?.dispose();
+      if (!ticket.adoptionEpoch) ticket.candidatePicture?.release();
     }
   }
   function prepare({
@@ -6556,7 +6733,9 @@ try {
                   ? run.player.speed === 0
                     ? 'LINE EXPOSED / CHOOSE A TURN'
                     : 'LIVE LINE / EXPOSED'
-                  : 'Safe ground';
+                  : run.ruleset === 'xonix-core.v6'
+                    ? 'Reclaimed ground'
+                    : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
     $('ability-state').textContent =
@@ -6605,7 +6784,10 @@ try {
     const ticket = flightInformation.begin(run, events);
     // capture.stopped follows cells.claimed in the same accepted closure. Keep
     // the rule explanation when adding the fresh-steering cue; do not replace it.
-    const teachingCapture = journeyEnabled && !practice && levelIndex < 2;
+    const teachingCapture =
+      journeyEnabled &&
+      !practice &&
+      (candidateHost ? activeEntry.campaignId === 'prologue' : levelIndex < 2);
     const captureTeaching = () => {
       const occupied = inspectCaptureSnapshot(run).components.filter((region) => region.retained);
       const anchors = occupied.flatMap((region) => region.enemyIds);
@@ -6636,7 +6818,9 @@ try {
             run.status === 'running' &&
             run.player.cutting
           )
-            warning('Live line exposed. Reach safe ground to secure it.');
+            warning(
+              `Live line exposed. Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground to secure it.`,
+            );
           if (event.type === 'player.failed')
             warning(
               {
@@ -6649,7 +6833,9 @@ try {
               'failure',
             );
           if (event.type === 'lineImpact.seeded')
-            warning('Line struck! Reach safe ground before the travelling spark catches you.');
+            warning(
+              `Line struck! Reach ${run.ruleset === 'xonix-core.v6' ? 'reclaimed' : 'safe'} ground before the travelling spark catches you.`,
+            );
           if (event.type === 'lineImpact.arrived')
             warning('The travelling impact reached your craft. One life lost.');
           if (event.type === 'shield.absorbed')
@@ -6967,53 +7153,64 @@ try {
               }),
               difficulty: activeEntry.difficulty || 'standard',
             });
-          const previousBodies = availableBodies();
-          try {
-            library = recordLibraryCompletion(library, {
-              campaign,
-              result: getSummary(run),
-              runId,
-              themeId: theme.id,
-              bodyId,
-              sourcePackId: activeEntry.sourcePackId,
-              presentationPins: flightPictures?.pins(),
-              mediaIdentityCatalog: flightPictures?.identityCatalog,
-            });
-          } catch (error) {
-            completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? 'Export this replay and your library' : 'The replay recording has ended; export your library'} before continuing.`;
-            $('save-warning').textContent = `${completionWarning} ${error.message}`;
-            show('save-warning', true);
-          }
-          progress = progressFor(library, campaign);
-          appearanceRewardIds = [...availableBodies()].filter((id) => !previousBodies.has(id));
-          persistProfile();
-          updateBodies();
-          paintMissions();
-          if (masteryDefinition && recorder && !completionWarning)
+          if (!candidateHost?.owns(activeEntry)) {
+            const previousBodies = availableBodies();
             try {
-              void masteryAwards.submit(
-                {
-                  replay: exportReplay(recorder, run),
-                  campaign,
-                  definition: masteryDefinition,
-                  runId,
-                  earnedAt: new Date().toISOString(),
-                },
-                { eligible: !practice },
-              );
+              library = recordLibraryCompletion(library, {
+                campaign,
+                result: getSummary(run),
+                runId,
+                themeId: theme.id,
+                bodyId,
+                sourcePackId: activeEntry.sourcePackId,
+                presentationPins: flightPictures?.pins(),
+                mediaIdentityCatalog: flightPictures?.identityCatalog,
+              });
             } catch (error) {
-              masteryAward = {
-                status: 'unavailable',
-                message: `Your picture is collected; the seal could not be checked. ${error.message}`,
-              };
+              completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? 'Export this replay and your library' : 'The replay recording has ended; export your library'} before continuing.`;
+              $('save-warning').textContent = `${completionWarning} ${error.message}`;
+              show('save-warning', true);
             }
-          try {
-            const old = JSON.parse(localStorage.getItem(sessionKey));
-            if (!completionWarning && saveSucceeded && old?.runId === runId) {
-              assertWriter();
-              localStorage.removeItem(sessionKey);
-            }
-          } catch {}
+            progress = progressFor(library, campaign);
+            appearanceRewardIds = [...availableBodies()].filter((id) => !previousBodies.has(id));
+            persistProfile();
+            updateBodies();
+            paintMissions();
+            if (masteryDefinition && recorder && !completionWarning)
+              try {
+                void masteryAwards.submit(
+                  {
+                    replay: exportReplay(recorder, run),
+                    campaign,
+                    definition: masteryDefinition,
+                    runId,
+                    earnedAt: new Date().toISOString(),
+                  },
+                  { eligible: !practice },
+                );
+              } catch (error) {
+                masteryAward = {
+                  status: 'unavailable',
+                  message: `Your picture is collected; the seal could not be checked. ${error.message}`,
+                };
+              }
+            try {
+              const old = JSON.parse(localStorage.getItem(sessionKey));
+              if (!completionWarning && saveSucceeded && old?.runId === runId) {
+                assertWriter();
+                localStorage.removeItem(sessionKey);
+              }
+            } catch {}
+          } else {
+            paintMissions();
+            try {
+              const old = JSON.parse(localStorage.getItem(sessionKey));
+              if (old?.runId === runId) {
+                assertWriter();
+                localStorage.removeItem(sessionKey);
+              }
+            } catch {}
+          }
         }
         if (run.status === 'won') {
           painter.startCelebration?.({
@@ -7314,7 +7511,7 @@ try {
       return;
     }
     if (journeyEnabled && !practice && !scenario && run?.status === 'won' && journeyMission()) {
-      const next = journeyCatalog.next(journeyMission().id);
+      const next = nextJourneyMission(journeyMission().id);
       if (next) void launchJourneyMission(next, { kind: 'next' });
       else journeyChooser.open($('next-button'));
       return;
@@ -7682,11 +7879,17 @@ try {
   });
   if (journeyEnabled) {
     document.body.classList.add('journey-preview');
-    $('shell-title-edition').textContent = 'JOURNEY / TECHNICAL TEST PREVIEW';
+    show('journey-artwork-availability', !!candidateHost);
+    $('shell-title-edition').textContent = candidateHost
+      ? 'OPENING JOURNEY / UNVALIDATED TEST BUILD'
+      : 'JOURNEY / TECHNICAL TEST PREVIEW';
     journeyChooser = attachJourneyChooser({
       catalog: journeyCatalog,
       profile: journeyProfile,
       onChoose: (mission) => launchJourneyMission(mission),
+      getCard: candidateHost
+        ? (mission) => candidateHost.card(mission, journeyPreferences.snapshot().difficulty)
+        : undefined,
       onPause: () => {
         pause(true);
         clearInput();
@@ -7701,7 +7904,7 @@ try {
     $('journey-skip').hidden = false;
     $('journey-skip').onclick = () => {
       const mission = !practice && !scenario && journeyMission();
-      const next = mission && journeyCatalog.next(mission.id);
+      const next = mission && nextJourneyMission(mission.id);
       if (!next) {
         journeyChooser.open($('journey-skip'));
         return;
@@ -7731,6 +7934,45 @@ try {
       }
     };
     window.addEventListener('online', () => void journeyProfile.flush());
+  }
+  if (journeyPreferences) {
+    let preferenceRevision = journeyPreferences.snapshot().revision,
+      exportSequence = 0;
+    journeyPreferences.subscribe((snapshot) => {
+      // Cross-tab intent updates the next attempt only. An old in-flight
+      // preparation cannot adopt a now-stale preset after its pixels resolve.
+      if (preferenceRevision !== snapshot.revision) {
+        preferenceRevision = snapshot.revision;
+        cancelResultAttempt();
+      }
+      exportSequence++;
+      show('journey-preferences-recovery', !snapshot.durable);
+      $('journey-preferences-message').textContent = snapshot.error;
+      refreshDifficulty();
+      journeyChooser?.refresh();
+    });
+    $('journey-preferences-retry').onclick = () => {
+      const restoreFocus = document.activeElement === $('journey-preferences-retry');
+      const snapshot = journeyPreferences.retry();
+      if (snapshot.durable && restoreFocus && availableFocusTarget($('difficulty-select')))
+        $('difficulty-select').focus({ preventScroll: true });
+    };
+    $('journey-preferences-export').onclick = async () => {
+      const ticket = ++exportSequence;
+      try {
+        const result = await downloadJSON(
+          JSON.parse(journeyPreferences.export()),
+          'revealline-journey-difficulty.json',
+        );
+        if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
+          $('journey-preferences-message').textContent =
+            `${journeyPreferences.snapshot().error} ${result.message}`;
+      } catch (error) {
+        if (ticket === exportSequence && !$('journey-preferences-recovery').hidden)
+          $('journey-preferences-message').textContent =
+            `Export failed: ${error.message}. Your session difficulty choice is still here.`;
+      }
+    };
   }
   optionalWorlds = attachOptionalChaptersPanel({
     onPlayActivation: captureWorldPlay,
