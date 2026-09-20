@@ -6,6 +6,60 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { forkMissionMap, createDraftHistory } from '../content-design/drafts.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 
+test('campaign band changes validate every existing member without retuning or moving missions', () => {
+  const source = createStarterProject();
+  source.missions[0].design.difficulty.band = 2;
+  const before = structuredClone(source);
+  const identity = resolveMission(compileContentProject(source), 'nearby-shore').simulationIdentity;
+  const next = edit(source, {
+    action: 'set-band',
+    kind: 'campaign',
+    id: 'horizon-school',
+    band: 2,
+  });
+  assert.deepEqual(source, before);
+  assert.equal(next.campaigns[0].band, 2);
+  assert.deepEqual(next.campaigns[0].missionIds, source.campaigns[0].missionIds);
+  assert.deepEqual(next.missions, source.missions);
+  assert.deepEqual(next.maps, source.maps);
+  assert.equal(
+    resolveMission(compileContentProject(next), 'nearby-shore').simulationIdentity,
+    identity,
+  );
+  const history = createDraftHistory(source);
+  history.replace(next);
+  assert.deepEqual(history.undo(), source);
+  assert.deepEqual(history.redo(), next);
+  for (const band of [0, 3, 13, 1.5])
+    assert.throws(() =>
+      edit(source, { action: 'set-band', kind: 'campaign', id: 'horizon-school', band }),
+    );
+  assert.throws(
+    () =>
+      edit(createStarterProject(), {
+        action: 'set-band',
+        kind: 'campaign',
+        id: 'horizon-school',
+        band: 2,
+      }),
+    /band/,
+  );
+  assert.throws(
+    () => edit(source, { action: 'set-band', kind: 'mission', id: 'nearby-shore', band: 2 }),
+    /campaign/,
+  );
+  assert.throws(() =>
+    edit(source, {
+      action: 'set-band',
+      kind: 'campaign',
+      id: 'horizon-school',
+      band: 2,
+      parentId: 'opening',
+    }),
+  );
+  assert.deepEqual(source, before);
+});
+
 test('create packs, campaigns and starter missions with explicit valid membership', () => {
   const original = createStarterProject(),
     before = structuredClone(original);

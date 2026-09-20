@@ -316,17 +316,20 @@ function syncStructure() {
     ['item-id-row', creating],
     ['item-name-row', creating || action === 'rename'],
     ['item-template-row', kind === 'mission' && action === 'create'],
-    ['item-band-row', kind === 'campaign' && action === 'create'],
+    ['item-band-row', kind === 'campaign' && ['create', 'set-band'].includes(action)],
     [
       'item-parent-row',
-      kind !== 'pack' && !['rename', 'delete', 'archive', 'restore'].includes(action),
+      kind !== 'pack' && !['rename', 'set-band', 'delete', 'archive', 'restore'].includes(action),
     ],
     ['item-confirm-row', action === 'delete'],
   ])
     $(id).hidden = !visible;
   $('item-id').required = creating;
   $('item-name').required = creating || action === 'rename';
-  $('item-band').required = kind === 'campaign' && action === 'create';
+  $('item-band').required = kind === 'campaign' && ['create', 'set-band'].includes(action);
+  if (kind === 'campaign' && action === 'set-band')
+    $('item-band').value =
+      project.campaigns.find((entry) => entry.id === $('item-target').value)?.band ?? 1;
   $('item-target').required = action !== 'create';
   $('item-parent').required =
     kind !== 'pack' && ['place', 'detach', 'earlier', 'later'].includes(action);
@@ -348,7 +351,7 @@ function syncStructure() {
           pack.campaignIds
             .map((id) => {
               const campaign = project.campaigns.find((entry) => entry.id === id);
-              return `${campaign.name}${campaign.archived ? ' [Archived]' : ''} [${
+              return `${campaign.name} · band ${campaign.band}${campaign.archived ? ' [Archived]' : ''} [${
                 campaign.missionIds
                   .map((missionId) => {
                     const mission = project.missions.find((entry) => entry.id === missionId);
@@ -362,6 +365,7 @@ function syncStructure() {
     )
     .join('\n');
   $('item-apply').disabled =
+    (action === 'set-band' && kind !== 'campaign') ||
     (['place', 'detach'].includes(action) && kind === 'pack') ||
     (action === 'delete' && !removal?.deletable);
 }
@@ -390,9 +394,11 @@ $('structure-form').onsubmit = guarded((event) => {
     ...(creating || action === 'rename' ? { name: $('item-name').value.trim() } : {}),
     ...(action === 'duplicate' ? { sourceId: $('item-target').value } : {}),
     ...(kind === 'mission' && action === 'create' ? { template: $('item-template').value } : {}),
-    ...(kind === 'campaign' && action === 'create' ? { band: Number($('item-band').value) } : {}),
+    ...(kind === 'campaign' && ['create', 'set-band'].includes(action)
+      ? { band: Number($('item-band').value) }
+      : {}),
     ...(kind !== 'pack' &&
-    !['rename', 'delete', 'archive', 'restore'].includes(action) &&
+    !['rename', 'set-band', 'delete', 'archive', 'restore'].includes(action) &&
     $('item-parent').value
       ? { parentId: $('item-parent').value }
       : {}),

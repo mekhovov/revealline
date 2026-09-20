@@ -74,6 +74,7 @@ export function editContentStructure(source, input) {
     create: ['name', 'parentId', 'band', 'template'],
     duplicate: ['name', 'sourceId', 'parentId'],
     rename: ['name'],
+    'set-band': ['band'],
     place: ['parentId'],
     reorder: ['parentId', 'offset'],
     detach: ['parentId'],
@@ -185,6 +186,10 @@ export function editContentStructure(source, input) {
       required(named(name), 'Give the item a name (1–160 characters).');
       existing.name = name;
       existing.revision = `draft-${dataIdentity({ id, name, previous: existing.revision })}`;
+    } else if (action === 'set-band') {
+      required(kind === 'campaign', 'Only campaigns have a challenge band.');
+      existing.band = command.band;
+      existing.revision = `draft-${dataIdentity(existing)}`;
     } else if (action === 'place') {
       required(kind !== 'pack', 'Packs already belong to this project.');
       required(command.parentId !== undefined, 'Choose the destination parent.');

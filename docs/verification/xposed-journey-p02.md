@@ -349,3 +349,12 @@ onto the enlarged landing for0.6% /150points /three lives; the flight was paused
 closed back to the intact draft. This was not a native pickup collection, full
 clear or human validation. No gameplay policy/compiler changes are included here;
 the release owner separately owns the new Journey action-policy correction.
+
+Campaign management also exposes an explicit Change campaign band command. It
+does not retune missions or move memberships: the existing compiler rejects any
+member outside the new band/window. Valid edits preserve mission/map identities
+and remain undoable. The structure cohort passes12/12; full lint/format checks pass.
+Native Studio rejected Border Bloom band1 (existing band3 members), accepted the
+optional Remix campaign's compatible3→2 band change, and Undo restored3 with no
+console errors. These were local draft operations, not curriculum changes or
+release approval.
