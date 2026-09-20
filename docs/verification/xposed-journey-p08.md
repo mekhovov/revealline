@@ -197,3 +197,30 @@ All34 affected recipes remain source; no previous approval was copied.
 Both starter picture tuples and the historical import policy advance explicitly
 to37 with identical original descriptors. The eab native recheck is historical,
 not a claim of final fpv37 or post-composition native acceptance.
+
+## Final bounded source checkpoint
+
+Exact fff2882888d578ec3b25cb8ef8ffaa331d1ce36b (tree
+be09cd6c94d2b0f7101fa967a5ffbba19f4d9d1f) passes174/174 tests on both
+Node20.19.5 and22.22.2, with zero failures, skipped or cancelled tests. The19-file
+cohort covers the compiler/catalogues, editor controls, ready text, actor/lane
+presentation, complete clear/race/mastery/seed/timing evidence, exact Team37
+picture leases, immutable production history and dependency invalidation. Missing
+sparse input bytes came from bounded read-only exact Git blobs, not invented
+fixtures. This is not the full hosted source suite or the actual CLI reproduction
+command. Scoped ESLint, Prettier and diff checks pass.
+
+Native exact fff28828 on isolated localhost8793/tab35: inspected and explicitly
+applied the candidate, started Read the lock, and made its taught Down return.
+At9seconds the screenshot shows the corrected three-cell-wide solid active row
+across the connector, distinct emitter cue and stopped craft on reclaimed ground.
+At15seconds Pause retains1.2%/270score/3lives. Closing preview restores Studio Play
+focus and checkpoint2. No state injection, visibility override or new artwork.
+This closes a scoped live active-lane observation, not the whole responsive,
+warning, reduced-effects, muted, physical-device or seven-level native matrix.
+
+P06 0e04d970 and P07 96dd5cdd are already ancestors of this stack; PR201 e5ff21b3
+is composed once through4dedbe90. No extra merge or history rewriting is required.
+The release coordinator will compose with post-v0.70 main, independently review
+the final tree, retain these source revisions, qualify its exact picture successor,
+and run hosted release/public gates. No phase is labelled fully validated here.
