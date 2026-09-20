@@ -232,6 +232,46 @@ left paused at0:19, including inspection/idle time, with no browser errors.
 No complete native clear, human timing, physical controller or artwork approval
 is implied. This draft is separate from the preserved Signal greybox checkpoint.
 
+### Purpose-built Team Signal candidate: Shared detour
+
+`createTeamSignalCandidates()` authors an asymmetric west spine/east refuge,
+135 permanent foundation cells, a135-cell slow approach and an80-cell lethal
+crossing. The shared denominator is2245 cells. Both seats have distinct outer
+bypasses and can neutralize material for their partner. This is explicit
+TeamMissionV2, not an automatic Solo conversion or a published mission.
+
+Eighteen full legal-input mastery routes cover three presets, joint cuts on/off,
+and starting delays0/0.25/0.5seconds. Each replays identically, clears without a
+knockdown, gives both seats a closure, neutralizes both material beds and leaves
+source unchanged. Six additional5-second departures clear without a knockdown;
+Standard/Expert retain some material and do **not** satisfy optional mastery.
+Two delayed Expert blind scripts remain running below quota after a knockdown,
+and the regression explicitly confirms no false clear. Enemy behavior was not
+changed to rescue those routes. Fixed authored headings mean repeating random
+seeds alone does not demonstrate a different encounter here.
+
+An exploratory36-case universal-mastery assertion failed10cases: Gentle2-second
+departures took a knockdown, Expert1/2-second departures did not clear, and
+Standard/Expert5-second departures cleared without full terrain mastery. These
+are retained evidence limits, not silently relabelled successful mastery. Reversing
+all vertical directions also failed several presets; meaningful alternative-route
+quality and human timing remain open. The65–145second design duration is a
+hypothesis; the initial Standard scripted clear at28.36seconds is feasibility,
+not pacing validation. No coverage target or actor speed was relaxed.
+
+Studio's **Inspect Team Signal greybox** uses the existing Inspect → explicit
+Apply boundary. Native localhost8780 confirmed the prior saved material draft
+remained active during inspection, then Apply opened a separate
+`journey-team-signal` draft. Checkpoint1 saved successfully. The board and accessible
+summary show both spawns, foundations and slow/lethal areas; Solo preview stays
+disabled and exact Team export remains explicit. No native complete clear or
+original artwork is implied. The earlier `team-material-native` checkpoint remains
+available under its original ID.
+
+The complete five-file candidate/Studio/structure/material cohort passes49/49,
+zero skips/failures,4.853seconds onNode20.19.5. Changed-source lint, formatting and
+whitespace checks pass. This is not the full hosted P03 gate or human acceptance.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
