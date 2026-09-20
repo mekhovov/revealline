@@ -192,6 +192,11 @@ Unapplied tracing/reference state is honestly session-only; durable tracing reco
 assisted tracing and full native upload qualification remain open. The expanded
 content/foundation/opening/Border cohort passes 135/135. The P02 branch must integrate
 the eventual accepted P01 baseline before promotion; no phase ordering is bypassed.
+Its preparation now includes candidate P01 through3556e257, preserving the shared
+Team authoring and real Solo/Versus hosts. Native image upload/crop/manual geometry,
+inspection, explicit Apply and Undo have been exercised. Two reproduced stale
+inspection/status issues are fixed with regression coverage; durable tracing and
+full accepted-source qualification are still required.
 
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema

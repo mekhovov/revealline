@@ -24,8 +24,10 @@ export function createImageWorkbench({
     rows = [],
     inspected = null,
     loading = 0;
-  let owner = null;
-  const identity = () => JSON.stringify([getSource(), getMission()?.id, rows, crop]);
+  let owner = null,
+    observedDraft = null;
+  const draftIdentity = () => JSON.stringify([getSource(), getMission()?.id, getDifficulty()]);
+  const identity = () => JSON.stringify([draftIdentity(), rows, crop]);
   const message = (text) => {
     $('reference-status').textContent = text;
   };
@@ -205,11 +207,17 @@ export function createImageWorkbench({
     underlay: () => (reference && crop && $('reference-show').checked ? underlay : null),
     sync() {
       const nextOwner = JSON.stringify([getSource().id, getMission()?.id]);
+      const nextDraft = draftIdentity();
       if (nextOwner !== owner) {
         dispose();
         owner = nextOwner;
-      } else if (inspected && inspected.before !== identity())
-        invalidate('Draft changed. Reinspect the queued geometry before applying.');
+      } else if (nextDraft !== observedDraft)
+        invalidate(
+          rows.length
+            ? 'Draft or difficulty changed. Reinspect the queued geometry before applying.'
+            : 'Draft or difficulty changed. No geometry is queued; the reference remains session-only.',
+        );
+      observedDraft = nextDraft;
       $('reference-file').disabled = !getMission();
     },
     hasPending: () => rows.length > 0,
