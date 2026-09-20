@@ -1,0 +1,94 @@
+import { exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
+import { validateCoopLevel, createCoop } from '../coop/core.mjs';
+import { COOP_FOUNDATION_LEVEL_VERSION, COOP_FOUNDATION_RULESET } from '../coop/foundations.mjs';
+import { compileActor, freezeDesign } from './catalogs.mjs';
+import { inspectRuntimeTopology } from './diagnostics.mjs';
+
+/** Explicit Team qualification, not an automatic Solo-to-Team conversion.
+ * Unsupported mechanics fail closed until their Team semantics are implemented. */
+export function resolveTeamMission(project, mission, map, difficulty) {
+  exactKeys(mission.team, ['format', 'spawnIds'], 'Team mission');
+  required(
+    mission.team.format === 'TeamMissionV1' &&
+      Array.isArray(mission.team.spawnIds) &&
+      mission.team.spawnIds.length === 2 &&
+      new Set(mission.team.spawnIds).size === 2 &&
+      mission.team.spawnIds.every(stableId),
+    'Team missions require two explicit named spawns.',
+  );
+  required(mission.spawnId === mission.team.spawnIds[0], 'Primary spawn must match Team seat one.');
+  required(
+    mission.design.difficulty.coordination > 0,
+    'Team missions require a coordination rating.',
+  );
+  required(
+    mission.actors.every((actor) => actor.role === 'field-keeper') &&
+      mission.objectives.length === 0 &&
+      mission.bonuses.length === 0 &&
+      mission.timeLimitSeconds === 0 &&
+      (map.source.terrain ?? []).length === 0,
+    'Team foundation candidates currently support field keepers and coverage, not unqualified terrain, bonuses, objectives or timers.',
+  );
+  const spawns = mission.team.spawnIds.map((id) => {
+    const spawn = map.geometry.spawns.find((item) => item.id === id);
+    required(spawn, 'Team spawn is missing from its map revision.');
+    return { x: spawn.x, y: spawn.y };
+  });
+  required(
+    Math.hypot(spawns[0].x - spawns[1].x, spawns[0].y - spawns[1].y) >= 1,
+    'Team spawn bodies must have independent clearance.',
+  );
+  const level = {
+    version: COOP_FOUNDATION_LEVEL_VERSION,
+    id: mission.id,
+    revision: mission.revision,
+    name: mission.name,
+    width: map.geometry.width,
+    height: map.geometry.height,
+    journeyDifficulty: difficulty,
+    spawns,
+    walls: map.source.walls ?? [],
+    safeRects: map.source.foundations ?? [],
+    enemies: mission.actors.map((source) => {
+      const actor = compileActor(source, difficulty);
+      return { ...actor, type: 'drifter', radius: 0.25 };
+    }),
+    goal: { coverage: mission.coverage },
+    rules: { moveSpeed: project.policy.rules.moveSpeed, boostMultiplier: 1 },
+  };
+  const result = validateCoopLevel(level);
+  required(result.valid, result.errors.join(' '));
+  const topology = inspectRuntimeTopology(
+    createCoop(level, { seed: 1 }),
+    level,
+    map.geometry,
+    spawns,
+  );
+  const { id: _id, name: _name, revision: _revision, ...simulation } = level;
+  return freezeDesign({
+    format: 'ResolvedTeamMissionV1',
+    missionId: mission.id,
+    mode: 'team',
+    difficulty,
+    policyId: project.policy.id,
+    simulationIdentity: dataIdentity({
+      ruleset: COOP_FOUNDATION_RULESET,
+      policy: project.policy.id,
+      difficulty,
+      level: simulation,
+    }),
+    level,
+    presentation: mission.presentation,
+    background:
+      project.assets.find((asset) => asset.id === mission.presentation.backgroundAssetId) ?? null,
+    design: mission.design,
+    officialProgressEligible: false,
+    validation: 'compiled-candidate-not-playtested',
+    topology,
+    diagnostics: [
+      ...map.geometry.diagnostics,
+      ...topology.diagnostics,
+      { severity: 'warning', code: 'team-candidate-not-playtested' },
+    ],
+  });
+}

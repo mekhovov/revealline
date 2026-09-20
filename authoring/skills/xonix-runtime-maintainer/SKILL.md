@@ -885,3 +885,20 @@ Journey stays opt-in. Resolve a selected mission through its exact authored pack
 Prompt: “Compose Journey direct Next with optional chapter discovery. Test a cold campaign boundary, unavailable download followed by Retry, cancellation before and after picture decoding, a newer mission choice, exact pack/artwork identity and Practice briefing return. Decode the authentic embedded picture header in finite Image doubles, modeling both width/height and naturalWidth/naturalHeight; never weaken production image validation to satisfy a fixture. Run complete affected host and practice files on Node 20 and 22, preserve initial failures, then qualify the actual merged/versioned source and public player journeys separately.”
 
 Keep Solo Settings Close and tabs outside the active panel scroll region. Restore only a visible, enabled opener; if responsive layout hides the toolbar opener, use the host-provided Game menu fallback without resuming flight. Preserve newer focus and nested-dialog ownership, including reentrant fallback callbacks. Replace a stale resumed caption on Pause while retaining interruption warnings. Follow the [responsive Settings contract](../../../docs/controller-navigation.md#responsive-settings-and-accurate-pause-status); verify short landscape, portrait, Plain/Large text, saved-cut checkpoints and exact public-source behavior separately.
+
+## Journey action policy and historical route checks
+
+New Solo/Versus Journey projects pin `journey-arcade-v2`. The shared compiler emits
+`classic.arcadeActions` so the fixed-tick simulation, imported replay commands and
+visible controls agree: bonuses activate on contact, while manual ability, Supply
+and Boost commands are unavailable. Do not fix this by hiding buttons alone.
+Imported `journey-v1` projects keep their exact previous levels and identities.
+Team uses its separate registered rules; do not infer Solo capabilities from a label.
+
+Prompt: “Create a Journey Arcade map through the shared compiler. Check both turning
+modes and all existing classes against attempted manual commands; collect the four
+authored bonuses through movement and verify the replay. Preserve v1 route fixtures,
+then run `node scripts/qualify-journey-arcade-routes.mjs` to compare all sixty historical
+opening outcomes. Changing policy requires new simulation/campaign identities, never
+rewriting old checkpoints. Restore a saved candidate after changing the next-attempt
+preset; resolve it through candidate ownership, not an installed Legacy pack lookup.”

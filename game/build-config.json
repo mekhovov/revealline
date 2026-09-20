@@ -1,5 +1,5 @@
 {
-  "version": "0.68.2",
+  "version": "0.69.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -90,5 +90,9 @@
   "externalChapters": {
     "format": "revealline-external-distribution.v1",
     "catalog": "game/content/external-worlds.json"
+  },
+  "optionalArtwork": {
+    "format": "revealline-optional-artwork.v1",
+    "catalog": "game/content-design/horizon-art.mjs"
   }
 }

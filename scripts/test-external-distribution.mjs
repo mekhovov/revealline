@@ -104,6 +104,23 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   }
   assert.equal(bodySizes.length, 32);
   assert.equal(bodies.size, 16);
+  // Opening originals remain exact release bodies but do not make preparation
+  // promise that the online-only authored preview works without a connection.
+  if (offline.optionalArtwork) {
+    assert.equal(offline.optionalArtwork.availability, 'online-only');
+    assert.equal(offline.optionalArtwork.count, 10);
+    assert.equal(offline.optionalArtwork.bytes, 25862573);
+    for (const pin of offline.optionalArtwork.files) {
+      assert.deepEqual(
+        manifest.files.find((file) => file.path === pin.path),
+        pin,
+      );
+      assert(!offline.files.some((file) => file.path === pin.path));
+      assert.deepEqual(sha(await readFile(path.join(out, pin.path))), pin.sha256);
+    }
+    assert(offline.files.length <= 2000);
+    assert(offline.files.reduce((total, file) => total + file.bytes, 0) <= 64 * 1024 * 1024);
+  }
   // Preserve the exact historical cohorts formerly recompiled by each chapter test.
   // These are actual loose bytes already authenticated above, in catalog order.
   for (const [start, end, expected] of [

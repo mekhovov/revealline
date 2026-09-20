@@ -38,6 +38,7 @@ export const MASTERY_SCENARIO_VERSION = 'xonix-playground.v2';
 export const ENCOUNTER_SCENARIO_VERSION = 'xonix-playground.v3';
 export const WIDE_SCENARIO_VERSION = 'xonix-playground.v4';
 export const CLASSIC_SCENARIO_VERSION = 'xonix-playground.v5';
+export const FOUNDATION_SCENARIO_VERSION = 'xonix-playground.v6';
 
 /** A preview uses the authored definition's campaign ID and this single map.
  * It is deliberately separate from any installed campaign or award authority.
@@ -457,12 +458,14 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       ENCOUNTER_SCENARIO_VERSION,
       WIDE_SCENARIO_VERSION,
       CLASSIC_SCENARIO_VERSION,
+      FOUNDATION_SCENARIO_VERSION,
     ].includes(value.format)
   )
-    return result(['Expected a supported xonix-playground.v1..v5 format'], {
+    return result(['Expected a supported xonix-playground.v1..v6 format'], {
       warnings,
     });
-  const classic = value.format === CLASSIC_SCENARIO_VERSION;
+  const foundations = value.format === FOUNDATION_SCENARIO_VERSION;
+  const classic = value.format === CLASSIC_SCENARIO_VERSION || foundations;
   const wide = value.format === WIDE_SCENARIO_VERSION;
   const hasEncounter = value.format === ENCOUNTER_SCENARIO_VERSION;
   const hasMastery = value.format === MASTERY_SCENARIO_VERSION || hasEncounter || wide || classic;
@@ -487,13 +490,15 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (
     plain(value.level) &&
     value.level.version !==
-      (classic
-        ? 'xonix-level.v4'
-        : wide
-          ? 'xonix-level.v3'
-          : hasEncounter
-            ? 'xonix-level.v2'
-            : 'xonix-level.v1')
+      (foundations
+        ? 'xonix-level.v5'
+        : classic
+          ? 'xonix-level.v4'
+          : wide
+            ? 'xonix-level.v3'
+            : hasEncounter
+              ? 'xonix-level.v2'
+              : 'xonix-level.v1')
   )
     errors.push('Scenario and level simulation versions must match');
   themeChecks(value.theme, errors);
@@ -576,10 +581,7 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   else {
     let totalPixels = 0;
     for (const [role, item] of Object.entries(value.visualOverrides)) {
-      if (
-        !VISUAL_ROLES.includes(role) &&
-        !(value.format === CLASSIC_SCENARIO_VERSION && CLASSIC_VISUAL_ROLES.includes(role))
-      ) {
+      if (!VISUAL_ROLES.includes(role) && !(classic && CLASSIC_VISUAL_ROLES.includes(role))) {
         errors.push(`Unknown visual role ${role}`);
         continue;
       }

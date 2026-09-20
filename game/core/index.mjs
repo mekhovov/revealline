@@ -34,6 +34,7 @@ import { updateAbilities, useAbilities } from './abilities.mjs';
 import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
 import { createClassicState } from './classic-state.mjs';
 import { initializeClassicActors, stepClassic } from './classic-step.mjs';
+import { foundationGeometry } from './foundations.mjs';
 export {
   validateLevel,
   validateClassRecipes,
@@ -53,7 +54,7 @@ export {
 /**
  * Owns one mutable deterministic run. Rendering may READ public fields; mutation
  * outside this module invalidates replay guarantees. No DOM, art or clock reads.
- * @param {object} source validated xonix-level.v1, v2, v3 or v4
+ * @param {object} source validated xonix-level.v1, v2, v3, v4 or v5
  * @param {{seed?:number,turnPolicy?:'immediate'|'grid-center',classId?:string,classRecipes?:object[]}} options
  */
 export function createRun(
@@ -79,6 +80,8 @@ export function createRun(
   for (const w of level.walls)
     for (let y = w.y; y < w.y + w.h; y++)
       for (let x = w.x; x < w.x + w.w; x++) cells[y * width + x] = CELL.WALL;
+  const foundations = level.version === 'xonix-level.v5' ? foundationGeometry(level) : null;
+  if (foundations) cells.set(foundations.cells);
   const totalClaimable = cells.filter((c) => c === CELL.FIELD).length;
   const state = {
     ruleset: versionsForLevel(level).ruleset,
@@ -160,9 +163,16 @@ export function createRun(
     _abilitySerial: 0,
     _terminalEmitted: false,
   };
-  if (['xonix-level.v2', 'xonix-level.v3', 'xonix-level.v4'].includes(level.version))
+  if (
+    ['xonix-level.v2', 'xonix-level.v3', 'xonix-level.v4', 'xonix-level.v5'].includes(level.version)
+  )
     state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
-  if (level.version === 'xonix-level.v4') {
+  if (foundations)
+    state.foundation = {
+      version: 'foundation-state.v1',
+      permanent: Uint8Array.from(foundations.permanent),
+    };
+  if (['xonix-level.v4', 'xonix-level.v5'].includes(level.version)) {
     state.classic = createClassicState(level, cells);
     initializeClassicActors(state);
   }
