@@ -888,6 +888,7 @@ editGeometry.onclick = () =>
       ...structuredClone(asset),
       ...nextAssetRevision(working.document, selected),
       provenance: { ...structuredClone(asset.provenance), parent: ref(asset) },
+      quality: { stage: 'produced', evidence: [] },
     };
     pending = {
       candidate,
