@@ -503,3 +503,9 @@ All84 current clear routes and35 delayed routes are bound to exact preset/bonus
 conditions; source hashes and finalDisposition=false are checked. Combined Horizon
 and Border crosswalk tests pass5/5. No underlying observation was overwritten and
 none of the48 numbered references receives a fabricated final acceptance.
+
+Objective follow-up: a regression test demonstrated that player mission thumbnails
+exposed the positions of initially hidden capture markers. Cards now filter by the
+real initial runtime `revealed` flag; Studio intentionally keeps its author-only
+hidden-marker inspection. Runtime objectives and scoring remain untouched. This
+is not a claim of native custom-mission chooser qualification.
