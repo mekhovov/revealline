@@ -12,7 +12,7 @@ const fixture = JSON.parse(
 );
 // Finite deterministic samples, not a statistical claim or proof for every seed.
 for (const { difficulty, turnPolicy, rows } of fixture.sets)
-  test(`Sentinel Array five additional seed samples: ${difficulty}/${turnPolicy}`, () => {
+  test(`Sentinel Crown five additional seed samples: ${difficulty}/${turnPolicy}`, () => {
     for (const [id, identity, , segments] of rows) {
       const manifest = resolveMission(project, id, { difficulty });
       assert.equal(manifest.simulationIdentity, identity);

@@ -158,7 +158,41 @@ version**. Outputs: `.cache/p11-routes-cues-node20-r2.tap` and
 `.cache/p11-routes-cues-node22-r2.tap`. Read-only mastery observers reject joint
 captures for separate-cut goals, late/closed/unclaimed connector visits, duplicate
 or stale opening events, undersized release cuts, unfinished attempts and life
-loss. Complete optional-goal route qualification is still in progress.
+loss. Complete optional-goal route qualification is recorded below.
+
+## Optional goals, delayed starts and restoration
+
+All **30 optional-goal/preset/steering combinations** now clear without life loss
+and reproduce through public replay. The routes prove different decisions, not
+just a second ordinary clear: first exposed opening; east shield before west in
+separate captures; both opened corner segments traversed before the last shield;
+four shields in four distinct closures; and the Remix dock traversed before a
+17–22-fresh-cell release. The Remix search initially left too little useful
+cutting room. Keeping a larger retained region and checking longer turning cuts
+found legal alternatives; neither the 16-cell goal nor the engine was weakened.
+These route goals remain optional and do not award runtime equipment or mastery.
+
+All **25 Standard/Immediate delayed-start cases** clear without life loss and
+reproduce through public replay: five candidates after 0.5, 1, 2, 3 and 5 seconds
+of initial idle. The three-second immediate First relay departure was rejected:
+the warned lane becomes active at tick481 before that cut closes. A dedicated
+counterfactual regression retains this real failure, no capture and no score.
+The accepted alternative reads the warning, waits another two seconds on the
+starting return ground, then takes a legal route. This proves a safe response
+exists, not that every departure time or input sequence is safe.
+
+Thirty candidate session snapshots (five missions × two steering options ×
+live trail/shield transition/exposed warning) restore exact authoritative and
+visual state, continue to their pinned no-loss final checkpoints and verify
+public replay. Editing the saved encounter cadence is rejected. Fresh attempts
+restore the original shield stage, objectives, gate state and earned coverage.
+Partial progress after life loss is separately covered by the engine fixtures.
+
+The final candidate cohort passes **50/50 on both Node versions** across
+candidate/CLI parity, ordinary and paired routes, seed samples, strict goal
+observers, mastery routes, delayed starts and session lifecycle. Outputs:
+`.cache/p11-candidates-final-node20-r1.tap` and
+`.cache/p11-candidates-final-node22-r1.tap`.
 
 ## Native candidate inspection
 
@@ -185,7 +219,7 @@ coverage; the exact-d4 native check predates them.
 
 ## Remaining gates
 
-Candidate balance decisions; complete mastery, delayed-start and lifecycle coverage; final original artwork;
+Candidate balance decisions; final original artwork and campaign presentation;
 Team qualification; native/accessibility checks; human capture comprehension,
 failure explanation and voluntary retry; phase PR/review/version/release/Pages.
 No completed phase or whole-plan claim is warranted yet.
