@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { SIGNAL_ILLUSTRATED_ART_CANDIDATES, SIGNAL_PIXEL_ART_CANDIDATES } from './signal-art.mjs';
 
 // Original P03 hypotheses. These are not released, human-validated or Team maps.
 // "Interference" is represented by the established slow material, not a hidden
@@ -268,11 +269,24 @@ export const SIGNAL_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((row) => [row.id, row.departure])),
 );
 
-export function createSignalCandidates({ campaignTheme = false } = {}) {
+export function createSignalCandidates({
+  artwork = false,
+  illustratedArtwork = false,
+  campaignTheme = artwork || illustratedArtwork,
+} = {}) {
+  if (artwork && illustratedArtwork)
+    throw new Error('Choose pixel artwork or illustrated variants, not both.');
+  const art = artwork
+    ? SIGNAL_PIXEL_ART_CANDIDATES
+    : illustratedArtwork
+      ? SIGNAL_ILLUSTRATED_ART_CANDIDATES
+      : [];
+  const artPrefix = artwork ? 'signal-pixel' : 'signal';
   const project = createStarterProject('signal-greybox-candidates');
   project.name = 'Signal Gardens · greybox candidates';
   project.revision = campaignTheme ? 'greybox-2' : 'greybox-1';
   project.maps = [];
+  if (art.length) project.assets = structuredClone(art);
   project.missions = rows.map((row, index) => {
     const template = createStarterProject().missions[0];
     const map = {
@@ -297,10 +311,12 @@ export function createSignalCandidates({ campaignTheme = false } = {}) {
       actors: structuredClone(row.actors),
       bonuses: structuredClone(row.bonuses),
       coverage: row.coverage,
-      // Campaign palette only; original reveal artwork is still pending.
+      // A missing candidate remains a greybox; never invent an asset pin.
       presentation: {
         themeId: campaignTheme ? 'signal-gardens' : 'horizon',
-        backgroundAssetId: null,
+        backgroundAssetId: art.some((asset) => asset.id === `${artPrefix}-${row.id}`)
+          ? `${artPrefix}-${row.id}`
+          : null,
       },
       design: {
         ...template.design,
