@@ -1025,3 +1025,10 @@ as visible rectangles. Preserve input nodes, bindings, pause ownership and
 2:1 arena geometry. Qualify 568×320 and 1280×800 separately: short-phone overlap
 and handheld overflow are different failures. Record native, modeled and
 physical-device evidence separately; do not hide warnings or shrink Large text.
+
+For Team portrait, give status copy the full row before timer/Pause and reserve
+the actual controls before fitting the arena. Compact Boost/Support may use the
+registered glyphs only with their accessible names and help intact. Verify a
+real downed/rescue warning, not only short Resume copy, at 320×568. Keep full
+warning meaning and ordinary recovery behavior; bounds checks alone do not
+qualify physical two-player reach or icon recognition.
