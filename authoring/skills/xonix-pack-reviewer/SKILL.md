@@ -99,3 +99,14 @@ keeps custom pictures. Preserve the paused run and exact opener; never auto-conf
 on retry. Test source-pair uploads and downloads, changed media during review,
 interruption before/after each commit, both journal versions and immutable original
 corruption. Core tests alone do not qualify the player-facing recovery workflow.”
+
+
+The More worlds review must be inline and fully focusable. Put Cancel first in
+focus after a refusal; confirmation installs only and returns to the chapter's
+Play/Choose action. Keep the same opaque error across upload or download callbacks,
+never synthesize acceptance from error text. Discard it on Cancel, close, changed
+files or a newer operation. Recheck operation ownership after awaited inspection
+before adopting readiness. Skip fresh release-picture defaults only on the checked
+preserve path; describe a committed install truthfully when later inspection fails.
+Exercise all three entry paths and keep browser input checks separate from modeled
+host tests. Never describe the review itself as replacing artwork or a flight.

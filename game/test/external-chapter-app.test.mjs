@@ -938,3 +938,64 @@ test('published external pictures survive saved Continue and confirmed Restart w
     },
   );
 });
+
+test('explicit retained-picture review installs originals without fresh defaults or changing the paused flight', async (t) => {
+  const f = { media: managedIndexedDB() };
+  const manager = createManagedMediaStore({ indexedDB: f.media.indexedDB, storyMedia: true });
+  const still = createStillMediaStore({
+    managedStore: manager,
+    decodeImage: async () => ({ naturalWidth: 1774, naturalHeight: 887 }),
+  });
+  t.after(() => {
+    still.close();
+    manager.close();
+  });
+  const library = structuredClone(pilot.prepared.imported.document.library);
+  library.presentations.push({
+    ...library.presentations[0],
+    revision: 2,
+    description: 'Retained player picture choice',
+  });
+  library.assignments[0].revision = 2;
+  await still.commit(
+    await still.prepare(library, pilot.prepared.imported.assets, {
+      executionCatalog: pilot.prepared.executionCatalog,
+    }),
+    { expectedGeneration: 0 },
+  );
+  const before = await still.read();
+  const p = await page(t, f);
+  const run = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+  await worlds(p);
+  p.$('optional-worlds-source-pack').files = [pilot.payloads.pack];
+  p.$('optional-worlds-source-media').files = [pilot.payloads.media];
+  p.$('optional-worlds-source-install').focus();
+  await clickOperation(p, 'optional-worlds-source-install');
+  assert.equal(
+    p.$('optional-worlds-source-picture-review').hidden,
+    false,
+    p.$('optional-worlds-status').textContent,
+  );
+  assert.equal((await still.read()).generation, before.generation);
+  p.$('optional-worlds-source-picture-confirm').focus();
+  await clickOperation(p, 'optional-worlds-source-picture-confirm');
+  assert.equal(
+    p.$('optional-worlds-source-choose').disabled,
+    false,
+    p.$('optional-worlds-status').textContent,
+  );
+  assert.equal(p.$('optional-worlds-dialog').open, true);
+  assert.equal(p.doc.activeElement, p.$('optional-worlds-source-choose'));
+  p.frame(0);
+  assert.equal(p.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(p.rendered.paused, true);
+  const after = await still.read();
+  assert.deepEqual(after.document.library.assignments, before.document.library.assignments);
+  assert.deepEqual(after.document.library.presentations, before.document.library.presentations);
+  assert.match(
+    p.$('optional-worlds-status').textContent,
+    /picture choices and paused flight are kept/,
+  );
+});

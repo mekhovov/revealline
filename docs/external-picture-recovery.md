@@ -1,6 +1,6 @@
 # Retained-picture chapter recovery
 
-Candidate core and host adapter only. No player-facing recovery or public acceptance.
+Candidate core, host and player integration. Not yet an accepted public release.
 The v0.68.2 public check found External Pressure Pictures refusing a retained
 picture assignment. Existing media and the paused flight remained unchanged.
 
@@ -42,24 +42,45 @@ cases, passed 48/48 on Node 22.22.2 (221,607.675 ms; no failures or skips). Spar
 lacked script imports and owned MP3/video fixtures; exact tracked inputs were
 restored without altering production guards.
 
-## Required player integration before release
+## Player integration and remaining release checks
 
-1. Add an inline, focusable conflict review in More worlds with Cancel and explicit
+1. Implemented: an inline, focusable conflict review in More worlds with Cancel and explicit
    “Install originals; keep my pictures.” Show which choices are retained.
-2. Pass only its actual review through the source-upload or download callback into
+2. Implemented: pass only its actual review through the source-upload or download callback into
    the app and host. Ordinary Play/Retry must never reuse it automatically.
-3. Cancel, dialog close, changed files and superseded work discard pending review.
+3. Implemented: Cancel, dialog close, changed files and superseded work discard pending review.
    Changed media requires a new review; stale completion cannot move focus.
-4. A confirmed install does not auto-play. Keep the paused run and restore focus to
+4. Implemented: a confirmed install does not auto-play. Keep the paused run and restore focus to
    the chapter's Play action when ready. Report completed installation truthfully
    even if later catalog refresh fails.
-5. Skip fresh Field Kit assignment replacement on this path; retained choices remain
+5. Implemented: skip fresh Field Kit assignment replacement on this path; retained choices remain
    deliberate. Do not falsely report that custom pictures became the chapter's
    authored originals or that their prior saved/earned pins changed.
-6. Verify keyboard/controller/touch navigation, current flight preservation, actual
+6. Remaining: verify keyboard/controller/touch navigation, current flight preservation, actual
    browser originals and cancellation, then final-source gates and immutable release.
 
 The two stores still use their existing journal/CAS protocol rather than implying
 a single transaction spans databases. [MDN transaction lifecycle guidance](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction)
 informs the boundary: do not keep an IndexedDB transaction open across a player
 dialog or unrelated asynchronous work. The review precedes the later checked commit.
+
+
+The focused player-panel cohort passes 14/14 on Node 22.22.2. It exercises upload,
+download/install and download/play entry points, explicit confirmation without
+launch, Cancel/close/file-change/Refresh invalidation, late refusals, late readiness
+and truthful committed-install feedback. The actual Solo host's focused retained-
+picture test passes, retaining the exact paused checkpoint and complete prior
+assignment/presentation arrays. The complete affected app/panel regression passed 35/35 on Node 22.22.2
+(176,684.402291 ms; no failures/skips). Final player-readable map labels then passed
+the overlapping complete 14-test panel file. [Original logs and scope](verification/external-picture-recovery/qualification-scope.json)
+remain distinct from full-source and browser/controller/touch acceptance.
+
+The first panel run hit missing sparse helper imports; the first app run lacked the
+tracked motion preset JSON. Exact originals were restored. One new assertion used
+a Choose ID for the existing shared Download/Play action; its selector was corrected
+without changing behavior assertions. Retain these setup/assertion failures apart
+from product results.
+
+The inline review uses a visible Cancel action, restores focus to its opener on
+cancellation and to Play/Choose after success, and does not steal focus after newer
+navigation. These decisions follow the [W3C dialog focus guidance](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
