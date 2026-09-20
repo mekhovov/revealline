@@ -2,6 +2,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
+import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -514,6 +515,12 @@ $('border').onclick = guarded(() => {
 $('signal').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createSignalCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('team-signal').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createTeamSignalCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
