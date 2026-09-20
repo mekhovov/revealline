@@ -17,7 +17,7 @@ No countdown or arbitrary per-level movement/enemy-speed override is authored.
 | Second landing | Wait on a long landing or bridge to the far, shorter one; optional life detour. |
 | Long rail | Direct central return or optional acceleration along a broad straight rail. |
 | New frontier | Close ahead of an island patrol or reshape its approach on the opposite edge. |
-| Turn the corner | Extend the short foundation arm or reach around the long one; two patrol domains respond differently. |
+| Turn the corner | Practice frontier shaping from the short or long arm before adding the outer patrol. |
 | Return pocket | Close the mouth first or reach outward around a changing contour; optional freeze detour. |
 | Living border | Link the nearby spine or approach the far island before its frontier patrol arrives. |
 
@@ -57,8 +57,7 @@ change the choice; geometry and a higher quota alone are insufficient.
 
 ## Still required
 
-Full legal clear routes and replay verification for every preset/control/mode,
-bonus-free completion, meaningful alternative routes, mastery feasibility,
+Meaningful alternative routes, mastery feasibility,
 capture/contour transitions, real timing/comprehension/enjoyment, original art and
 campaign presentation, actual Journey entry/continuation, Team qualification,
 native image-workflow qualification and durable tracing recovery, final exact-source qualification, reviewed phase
@@ -74,3 +73,49 @@ The manual image-reference / crop / queued-geometry / inspect / exact Practice /
 explicit Apply implementation is tracked separately in
 `xposed-journey-studio-images.md`. It does not automatically trace pixels, embed
 reference pictures into runtime assets or publish candidate maps.
+
+## Complete-route feasibility continuation
+
+`game/test/fixtures/border-clear-routes.json` pins **84 complete Solo routes**:
+seven candidates × three presets × two steering policies × authored bonuses /
+every bonus removed. Each begins from a fresh seed-1 run, uses only legal input,
+loses no lives, reaches the coverage goal and matches an authoritative checkpoint.
+All exported replays verify. Repeating all 84 routes on both paired boards produces
+equal, isolated state and simultaneous-clear draws. The route cohort passes
+**28/28 tests**, including the existing candidate/opening checks.
+The expanded content/foundation/Horizon/Border cohort passes **135/135**, with
+zero failures, skips, cancellations or todos. Full lint, format, whitespace and
+source validation pass; version 0.70.0 still reports the same four navigation
+warnings. These local checks include preserved pending P01 art. Hosted
+qualification 35488065655 checks preceding image-workflow commit `773511d9`, not
+this later route/teaching correction; a successor exact-source gate is required.
+
+The exploratory solver uses omniscient branch selection; it is not a player model,
+human pacing evidence, multi-seed robustness, native full-playthrough or Team
+qualification. Selected inputs are replayed from scratch without manipulating
+the run. No optional bonus is necessary for completion in these fixtures.
+
+Review found the frontier arc combined patrol domains after only one exposure.
+Greybox revision 2 removes the outer patrol from Turn the corner, giving an
+introduction and focused practice before Return pocket combines both domains.
+Lesson/practice metadata and a regression assertion enforce that sequence. All
+twelve affected route variants were searched again and all 84 fixtures were
+replayed against the revised project before pinning.
+
+The solver's active-play time ranges are deliberately recorded as a pacing risk,
+not the authored human-duration estimate:
+
+| Candidate | Omniscient route seconds, all twelve variants |
+|---|---|
+| Behind the patrol | 19.3–25.4 |
+| Second landing | 14.9–15.7 |
+| Long rail | 13.2–20.4 |
+| New frontier | 20.1–33.0 |
+| Turn the corner | 21.1–28.8 |
+| Return pocket | 20.8–29.4 |
+| Living border | 29.1–52.3 |
+
+Most are below the ordinary 45–150 second human target. Human route planning and
+failure/retry time are absent here; do not inflate quotas or add waiting solely
+to reach that target. Prioritize Second landing and Long rail for comparison,
+redesign or removal if their decisions prove trivial during playtesting.
