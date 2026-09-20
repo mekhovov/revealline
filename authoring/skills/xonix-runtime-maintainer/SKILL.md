@@ -957,3 +957,27 @@ Example: “Verify Replace & play with a bounded local download delay. Keep Stay
 ### Compact Pause acceptance
 
 Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.
+
+For Asset Studio navigation, preserve the fixed same-edition Workshop return and
+bounded Journey route in `game/ui/asset-studio-return.mjs`. The UI hint opens a
+menu only; do not broaden historical mode-return readers or turn it into save or
+selection adoption. Restore after boot only while the existing host owns focus,
+and keep pause callbacks from covering newer dialogs/focus. Return to game remains
+separate. Follow the native and modeled maintenance prompt in
+[Studio return navigation](../../../docs/asset-studio.md#returning-to-workshop),
+including unchanged checkpoints/save bytes and explicit Back to the Workshop
+opener. This Solo tool route does not certify Couch departure or restore behavior.
+
+For the shared standalone Workshop return, use the finite tool map in
+`game/ui/workshop-return.mjs` and the maintenance journey in
+[Standalone Workshop navigation](../../../docs/field-kit-surfaces.md#standalone-workshop-return-navigation).
+Keep the existing practice token/session protocols, Replay explicit departure and
+Video Poster cancel-first Back unchanged. No route hint may adopt saves or implicit
+mission selection. Include early loading, all exact tool openers and native nested
+Escape in the next release's evidence; partial Studio coverage is not nine-tool acceptance.
+
+For Playground keyboard exits, use the named same-origin frame's nonmodal native
+Tab boundary and the current host's input suspension. Do not repurpose controller
+session or enemy draft-return transport. Test exit/re-entry in both directions,
+explicit Resume, frame retirement, modal containment and in-frame mode links;
+see `docs/field-kit-surfaces.md` for the maintenance prompt and evidence limits.

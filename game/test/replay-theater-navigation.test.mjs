@@ -1,3 +1,4 @@
+import { mountToolReturnLinks } from '../ui/workshop-return.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -81,6 +82,11 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
   const doc = new Document(),
     win = new Events();
   mount(doc);
+  mountToolReturnLinks({
+    document: doc,
+    href: 'https://example.test/releases/v0.29.2/site/game/replay-theater/?journey=opening',
+    id: 'replay-theater',
+  });
   const $ = (id) => doc.getElementById(id),
     snapshots = [];
   let frame,
@@ -502,6 +508,7 @@ for (const policy of ['immediate', 'grid-center'])
     key($('board'), 'Escape');
     assert.equal($('playback-phase').textContent, 'paused');
     assert.equal(doc.activeElement, $('return-game'));
+    assert.match($('navigation-status').textContent, /Return to Workshop is focused/);
     assert.deepEqual(tick(100).checkpoint, running.checkpoint);
     key($('play-pause'), 'ArrowDown');
     assert.equal(doc.activeElement, $('restart'));

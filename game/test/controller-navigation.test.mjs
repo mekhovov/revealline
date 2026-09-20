@@ -2513,3 +2513,36 @@ test('reader modifier: native-input callback may retire the reader without re-en
   assert.equal(f.document.activeElement, f.region);
   assert.equal(f.changes.length, 2);
 });
+
+test('registered native frame exit leaves sequential focus to the browser without wrapping', (t) => {
+  const calls = [],
+    h = setup(t, {
+      keyboard: true,
+      onTabBoundary: ({ backward }) => {
+        calls.push(backward);
+        return 'native';
+      },
+    });
+  h.setScope('ready:embedded', h.document.body);
+  const first = h.control('button'),
+    middle = h.control('button'),
+    last = h.control('button');
+  first.focus();
+  assert.equal(first.emit('keydown', { key: 'Tab', shiftKey: true }).defaultPrevented, false);
+  assert.equal(h.document.activeElement, first);
+  last.focus();
+  assert.equal(last.emit('keydown', { key: 'Tab' }).defaultPrevented, false);
+  assert.equal(h.document.activeElement, last);
+  middle.focus();
+  assert.equal(middle.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
+  assert.equal(h.document.activeElement, last);
+  assert.deepEqual(calls, [true, false]);
+  const dialog = h.control('dialog', { open: true });
+  const close = h.control('button', {}, dialog),
+    apply = h.control('button', {}, dialog);
+  h.setScope('modal:embedded', dialog);
+  apply.focus();
+  assert.equal(apply.emit('keydown', { key: 'Tab' }).defaultPrevented, true);
+  assert.equal(h.document.activeElement, close);
+  assert.deepEqual(calls, [true, false], 'Native modal containment is unchanged.');
+});
