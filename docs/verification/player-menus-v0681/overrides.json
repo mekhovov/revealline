@@ -1,0 +1,54 @@
+{
+  "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+    "bytes": 270819,
+    "sha256": "108abf4eac3d16185aaca232400fbb096d8f08d2c955145a1a1e5d9f7f5aead2"
+  },
+  "docs/controller-navigation.md": {
+    "bytes": 15765,
+    "sha256": "74eb1f2ee8dc8c4310be018a9cdba6016c8f110bc485fed3901b938cdadc18ba"
+  },
+  "game/app.mjs": {
+    "bytes": 316973,
+    "sha256": "03943e02a73c921de9bed109c672e98e6dee501469f05ed6cb9ec0cecf753af3"
+  },
+  "game/build-config.json": {
+    "bytes": 5474,
+    "sha256": "9f0a1ccaa6b71a43357b2fb33ef2f7a89e920ff70f7d3a124a77f54eee48ea5c"
+  },
+  "game/test/about-navigation-host.test.mjs": {
+    "bytes": 25811,
+    "sha256": "07880ef5108ff41bf57cbe887408e1481285592c7a90b40b9227d3fc1f97067e"
+  },
+  "game/test/continuous-host.test.mjs": {
+    "bytes": 14005,
+    "sha256": "9faf5f163fee0bfdde307e26ada312c7d6ace70af555ca5e954a2e542a315015"
+  },
+  "game/test/modal-navigation.test.mjs": {
+    "bytes": 51752,
+    "sha256": "c61e34ba252767e22c0cf0d3b0fd2d1594396428e51f5f75ea5e30101f1c6898"
+  },
+  "game/ui/modal-navigation.mjs": {
+    "bytes": 5065,
+    "sha256": "165b0b7e1adbb45b46a16e3a25c7958a92c5a796682f989a697435313c028780"
+  },
+  "game/ui/settings.css": {
+    "bytes": 3863,
+    "sha256": "ce96c1b6388044ae33a98926a5e857f02118df2f303e2d97b3d8fc78e6f20764"
+  },
+  "package-lock.json": {
+    "bytes": 36138,
+    "sha256": "f54dd78b42d31b18f3d9919a7d7267626060321788ea2257ed2516e32b2abcdd"
+  },
+  "package.json": {
+    "bytes": 1819,
+    "sha256": "066cb47feb564caa7e9cf20dde79443c417cf8ac4845e0ef9727b258e2c1a724"
+  },
+  "site/about.html": {
+    "bytes": 27999,
+    "sha256": "80283d71db3793db95eab0b6ed7d29d37f9e602e81461baced97b071f4d142a1"
+  },
+  "site/landing.css": {
+    "bytes": 35178,
+    "sha256": "8bbce8765ef84249f66d2ff29a9e505fe8cc100e4293a6c9d67c36c60abef273"
+  }
+}

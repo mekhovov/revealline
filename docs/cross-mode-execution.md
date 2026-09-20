@@ -1,5 +1,13 @@
 # Reveal Line cross-mode execution register
 
+## v0.68.1 menu correction — local verification, release pending
+
+The separate v0.68.1 correction backports persistent Solo Settings Close/tabs, visible focus fallback after responsive changes, accurate Pause/Resume captions and About’s Team mode entry. It preserves the qualified v0.68 simulation and campaign identities. The v0.69 Journey foundation remains a separate candidate.
+
+The integrated correction passed **171 focused tests in ten files on Node 20.19.5**, changed-source lint/format checks and native keyboard observations: Plain/Large settings at 390×844 and 844×390, visible Game menu fallback after a hidden opener, saved-flight caption changes, and About → Team. These are local checks, not full source qualification or public acceptance. [Scope, observations and remaining gates](player-menu-v0681.md).
+
+Next: complete v0.68 publisher PR177 and its actual public verification, then qualify this exact correction source and publish its own immutable release. Parent navigation/presentation phases and physical input, listening, offline and human-playtest gates remain open.
+
 ## v0.68 release delivery — source accepted, public gate pending
 
 Source PR170 merged as `47169c9f`; the merge tree equals qualified source `5598d562` / tree `4cca352f`. Both final hosted families passed **6,738 tests across 518 files on Node 20.19.6**, with source/production gates, ordinary build and frozen inspection. The source combines chapter discovery with Journey, safe current-flight replacement, concealed Team previews, level-specific guidance and Studio audio lifecycle. This is a named P06/P03 integration delivery, not completion of those parent phases.

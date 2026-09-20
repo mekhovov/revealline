@@ -1,0 +1,21 @@
+{
+  "reason": "Initial regression omitted binary fixture dependencies; no product failure or test change. First hydration locator contained ./ and was rejected before writes; normalized exact Git paths below.",
+  "source": "5dc68fea",
+  "files": [
+    {
+      "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+      "bytes": 52720,
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850"
+    },
+    {
+      "path": "game/presentation/compiled/assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png",
+      "bytes": 38090,
+      "sha256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d"
+    },
+    {
+      "path": "game/test/fixtures/audio/silence-mpeg1-layer3.mp3",
+      "bytes": 4170,
+      "sha256": "54a1cbf7f98d7b263dae389576f50dc8507e3b3b40aec9c5793dc4480b14d913"
+    }
+  ]
+}
