@@ -89,6 +89,11 @@ class Element {
     this.children = [];
     this.append(...children);
   }
+  contains(node) {
+    for (let current = node; current; current = current.parentNode)
+      if (current === this) return true;
+    return false;
+  }
   get lastElementChild() {
     return this.children.at(-1);
   }
@@ -1418,3 +1423,335 @@ for (const settlement of ['resolve', 'reject'])
         assert.equal(app.node('audition-volume').value, '0.4');
       }
     });
+
+test('a host adoption hook owns metadata installation before panel notification', async (t) => {
+  const events = [];
+  const app = await setup(t, {
+    callbacks: {
+      adoptLibrary: (value) => events.push(['adopt', value.generation]),
+      onLibrary: (_, value) => events.push(['notify', value.generation]),
+    },
+  });
+  assert.deepEqual(events, [
+    ['adopt', 0],
+    ['notify', 0],
+  ]);
+  assert.equal(app.calls.filter(([kind]) => kind === 'library').length, 0);
+  await app.click('clone-playlist');
+  await app.click('save');
+  assert.deepEqual(events.slice(-2), [
+    ['adopt', 1],
+    ['notify', 1],
+  ]);
+  assert.equal(app.calls.filter(([kind]) => kind === 'library').length, 0);
+});
+
+test('failed reload adoption retains the existing unsaved draft and player state', async (t) => {
+  let fail = false;
+  const app = await setup(t, {
+    callbacks: {
+      adoptLibrary() {
+        if (fail) throw new Error('Newer library already accepted');
+      },
+    },
+  });
+  await app.click('clone-playlist');
+  const before = app.node('playlists').value;
+  const calls = app.calls.length;
+  fail = true;
+  await app.click('reload');
+  assert.match(app.node('status').textContent, /Newer library already accepted/);
+  assert.match(app.node('draft-state').textContent, /Unsaved draft/);
+  assert.equal(app.node('playlists').value, before);
+  assert.equal(app.calls.length, calls);
+});
+
+test('post-commit adoption failure records the durable save and blocks Save & use follow-on selection', async (t) => {
+  let fail = false;
+  const app = await setup(t, {
+    callbacks: {
+      adoptLibrary() {
+        if (fail) throw new Error('Cannot adopt current bytes');
+      },
+    },
+  });
+  await app.click('clone-playlist');
+  app.choose('selection', app.node('playlists').value);
+  fail = true;
+  const before = app.calls.length;
+  await app.click('use-selection');
+  assert.equal((await app.store.read()).generation, 1);
+  assert.match(app.node('status').textContent, /Library is saved, but the game refresh failed/);
+  assert.match(app.node('draft-state').textContent, /^Saved/);
+  assert.equal(
+    app.calls.slice(before).some(([kind]) => ['library', 'select', 'play'].includes(kind)),
+    false,
+  );
+  fail = false;
+  await app.click('reload');
+  assert.match(app.node('status').textContent, /Saved library loaded/);
+});
+
+test('explicit panel Play/Pause route through the session while audition holds stay temporary', async (t) => {
+  const sessionCalls = [];
+  const initial = await fixture();
+  const app = await setup(t, {
+    initial,
+    callbacks: {
+      musicSession: {
+        play() {
+          sessionCalls.push('play');
+        },
+        pause() {
+          sessionCalls.push('pause');
+        },
+      },
+    },
+  });
+  await app.click('pause');
+  await app.click('play');
+  assert.deepEqual(sessionCalls, ['pause', 'play']);
+  app.choose('tracks', initial.track.id);
+  await app.click('audition-track');
+  assert.deepEqual(sessionCalls, ['pause', 'play']);
+  assert.ok(app.calls.some(([kind]) => kind === 'pause'));
+});
+
+test('a disposed panel does not adopt a committed library or call the host afterward', async (t) => {
+  let panel,
+    adopts = 0;
+  const app = await setup(t, {
+    callbacks: {
+      adoptLibrary() {
+        adopts++;
+      },
+    },
+  });
+  panel = app.panel;
+  await app.click('clone-playlist');
+  app.db.afterCommit = () => panel.dispose();
+  const before = adopts;
+  await app.click('save');
+  assert.equal((await app.store.read()).generation, 1);
+  assert.equal(adopts, before);
+});
+
+test('the supported panel handle exposes its exact modal and lifetime for host input ownership', async (t) => {
+  const app = await setup(t);
+  assert.ok(
+    app.panel.element === app.node('dialog'),
+    'The handle returns the exact modal element.',
+  );
+  assert.equal(app.panel.isOpen(), true);
+  await app.panel.close();
+  assert.equal(app.panel.isOpen(), false);
+  await app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  app.panel.dispose();
+  assert.equal(app.panel.isOpen(), false);
+});
+
+test('an asynchronous adoption rejection is awaited and cannot report a successful refresh', async (t) => {
+  let reject = false;
+  const app = await setup(t, {
+    callbacks: {
+      adoptLibrary: async () => {
+        if (reject) throw new Error('Deferred adoption refused');
+      },
+    },
+  });
+  await app.click('clone-playlist');
+  reject = true;
+  await app.click('save');
+  assert.equal((await app.store.read()).generation, 1);
+  assert.match(
+    app.node('status').textContent,
+    /Library is saved, but the game refresh failed: Deferred adoption refused/,
+  );
+});
+
+test('the real Couch owner/session compose with panel save, audition and explicit Pause', async (t) => {
+  const { createManagedMediaStore } = await import('../managed-media-store.mjs');
+  const { createCouchMusicLibrary } = await import('../couch/couch-music-library.mjs');
+  const { createCouchMusicSession } = await import('../couch/couch-music-session.mjs');
+  const { createSoundtrackPlayer } = await import('../ui/soundtrack-player.mjs');
+  const { audioHarness } = await import('./helpers/soundtrack-audio.mjs');
+  const memory = memoryIndexedDB(),
+    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
+  const store = createSoundtrackStore({ managedStore: manager }),
+    audio = audioHarness();
+  let owner;
+  const player = createSoundtrackPlayer({
+    soundscape: audio.soundscape,
+    audioElement: audio.media,
+    URLImpl: audio.URLImpl,
+    readAsset: (hash) => owner.readAsset(hash),
+    fadeMs: 0,
+  });
+  owner = createCouchMusicLibrary({ managedStore: manager, player });
+  const session = createCouchMusicSession({ player, library: owner, soundscape: audio.soundscape });
+  const initial = await fixture();
+  const app = await setup(t, {
+    initial,
+    store,
+    callbacks: {
+      player,
+      musicSession: session,
+      adoptLibrary: (value) => owner.adoptVerifiedSnapshot(value),
+      onLibrary: () => player.prepare(),
+    },
+  });
+  t.after(() => {
+    session.dispose();
+    player.dispose();
+    owner.close();
+    manager.close();
+    audio.soundscape.dispose();
+  });
+  assert.equal(owner.snapshot().generation, 1);
+  await app.click('play');
+  assert.equal(session.snapshot().transportChoice, 'play');
+  assert.equal(player.snapshot().playing, true);
+  app.choose('tracks', initial.track.id);
+  await app.click('audition-track');
+  assert.equal(session.snapshot().transportChoice, 'play');
+  assert.equal(player.snapshot().desired, false);
+  await app.click('stop-audition');
+  assert.equal(player.snapshot().desired, true);
+  await app.click('pause');
+  assert.equal(session.snapshot().transportChoice, 'pause');
+  app.choose('selection', 'qa.mix');
+  await app.click('use-selection');
+  assert.equal(owner.snapshot().generation, 2);
+  assert.equal(player.snapshot().desired, false);
+  assert.equal(await session.start(), false);
+  assert.equal(owner.readAsset(initial.track.asset.sha256).size, initial.blob.size);
+});
+
+test('closing to a connected opener still notifies the host exactly once', async (t) => {
+  let closed = 0;
+  const app = await setup(t, {
+    open: false,
+    callbacks: {
+      onClose: () => {
+        closed++;
+      },
+    },
+  });
+  const opener = app.doc.createElement('button');
+  app.doc.body.append(opener);
+  opener.focus();
+  await app.panel.open();
+  assert.equal(app.panel.close(), true);
+  assert.ok(app.doc.activeElement === opener, 'Close restores the actual opener.');
+  assert.equal(closed, 1);
+  const calls = app.calls.length;
+  assert.equal(app.panel.close(), false);
+  assert.equal(closed, 1);
+  assert.equal(app.calls.length, calls);
+});
+
+test('repeated Open retains its original opener and does not create another modal visit', async (t) => {
+  let opened = 0;
+  const app = await setup(t, {
+    open: false,
+    callbacks: {
+      onOpen: () => {
+        opened++;
+      },
+    },
+  });
+  const opener = app.doc.createElement('button');
+  app.doc.body.append(opener);
+  opener.focus();
+  await app.panel.open();
+  await app.panel.open();
+  app.panel.close();
+  assert.equal(opened, 1);
+  assert.ok(
+    app.doc.activeElement === opener,
+    'Repeated Open must not retain a control inside the dialog.',
+  );
+});
+
+test('host focus ownership and hidden-page checks prevent stale opener restoration', async (t) => {
+  let current = true,
+    closed = 0;
+  const app = await setup(t, {
+    open: false,
+    callbacks: {
+      canRestoreFocus: () => current,
+      onClose: () => {
+        closed++;
+      },
+    },
+  });
+  const opener = app.doc.createElement('button');
+  app.doc.body.append(opener);
+  opener.focus();
+  await app.panel.open();
+  current = false;
+  app.panel.close();
+  assert.ok(app.doc.activeElement !== opener, 'An obsolete host visit cannot regain focus.');
+  current = true;
+  opener.focus();
+  await app.panel.open();
+  app.doc.hidden = true;
+  app.panel.close();
+  assert.ok(app.doc.activeElement !== opener, 'Hidden pages cannot restore focus.');
+  assert.equal(closed, 2);
+});
+
+test('explicit terminal close retires auditions without restoring music or opener focus', async (t) => {
+  const initial = await fixture();
+  let closed = 0;
+  const app = await setup(t, {
+    initial,
+    open: false,
+    callbacks: {
+      onClose: () => {
+        closed++;
+      },
+    },
+  });
+  const opener = app.doc.createElement('button');
+  app.doc.body.append(opener);
+  opener.focus();
+  await app.panel.open();
+  app.choose('tracks', initial.track.id);
+  await app.click('audition-track');
+  const plays = app.calls.filter(([kind]) => kind === 'play').length;
+  assert.equal(app.panel.close({ restoreFocus: false, restoreMusic: false }), true);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(app.calls.filter(([kind]) => kind === 'play').length, plays);
+  assert.ok(app.doc.activeElement !== opener, 'Silent terminal close leaves focus to its owner.');
+  assert.equal(closed, 1);
+  assert.equal(app.node('audition').paused, true);
+});
+
+for (const ending of ['saved', 'reload', 'newer focus', 'hidden']) {
+  test(`library task retains a keyboard owner after disabling its action (${ending})`, async (t) => {
+    const app = await setup(t);
+    await app.click('clone-playlist');
+    const opener = app.node(ending === 'reload' ? 'reload' : 'save');
+    opener.focus();
+    const pending = app.click(ending === 'reload' ? 'reload' : 'save');
+    assert.equal(
+      app.doc.activeElement,
+      app.node('cancel'),
+      'A disabled action transfers focus to its cancellable operation.',
+    );
+    if (ending === 'newer focus') app.node('play').focus();
+    if (ending === 'hidden') app.doc.hidden = true;
+    await pending;
+    if (ending === 'saved')
+      assert.equal(
+        app.doc.activeElement,
+        app.node('close'),
+        'Saved action is disabled; Close remains an available keyboard destination.',
+      );
+    if (ending === 'reload') assert.equal(app.doc.activeElement, opener);
+    if (ending === 'newer focus') assert.equal(app.doc.activeElement, app.node('play'));
+    if (ending === 'hidden') assert.notEqual(app.doc.activeElement, app.node('close'));
+  });
+}

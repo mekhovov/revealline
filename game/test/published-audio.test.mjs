@@ -232,3 +232,48 @@ test('release audio is fetched only on demand and rejects bad bytes and cancella
   finish(new Response(bytes));
   await assert.rejects(late, { name: 'AbortError' });
 });
+
+test('music-only Team binding leaves cue ownership untouched while retaining verified music', async () => {
+  const document = new Events(),
+    calls = [],
+    tracks = [];
+  const snapshot = {
+    resolved: {
+      assets: {
+        'audio.music': { kind: 'audio', file: { sha256: hash }, description: 'Team soundtrack' },
+      },
+    },
+  };
+  const owner = attachPublishedAudio({
+    sound: {
+      setPublishedAudio: (value) => calls.push(value),
+      publishedCue: (value) => calls.push(value),
+    },
+    document,
+    ready: Promise.resolve(snapshot),
+    cues: false,
+    getHost: () => ({
+      readAudio: async (slot, options) => {
+        assert.equal(slot, 'audio.music');
+        assert.equal(options.snapshot, snapshot);
+        return { blob };
+      },
+    }),
+  });
+  owner.setPlayer({ setPublishedTrack: (value) => tracks.push(value) });
+  await owner.ready;
+  assert.equal(await tracks.at(-1).readBlob(), blob);
+  const target = {
+    closest() {
+      return this;
+    },
+    getAttribute() {
+      return null;
+    },
+  };
+  document.emit('focusin', { target });
+  document.emit('click', { target });
+  owner.close();
+  assert.equal(tracks.at(-1), null);
+  assert.deepEqual(calls, []);
+});
