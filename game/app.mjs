@@ -7923,7 +7923,12 @@ try {
     journeyChooser = attachJourneyChooser({
       catalog: journeyCatalog,
       profile: journeyProfile,
-      onChoose: (mission) => launchJourneyMission(mission),
+      onChoose: (mission) => {
+        // Browsing retains Home for Back. Only deliberate mission selection
+        // leaves it before the staged preparation owns the next attempt.
+        if ($('shell-home').open) $('shell-home').close();
+        return launchJourneyMission(mission);
+      },
       getCard: candidateHost
         ? (mission) => candidateHost.card(mission, journeyPreferences.snapshot().difficulty)
         : undefined,
@@ -8163,6 +8168,8 @@ try {
     initialFocus: false, // The boot guard still hides the title until ready().
     titleDestination: () =>
       `Start · ${journeyDestination()?.name || campaign.levels[levelIndex].name}`,
+    titleContinueDestination: () =>
+      !started || ['won', 'lost'].includes(run?.status) ? journeyDestination()?.name : undefined,
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {
@@ -8189,7 +8196,12 @@ try {
     onModeDeparture: requestModeDeparture,
     separateTeam: !!authoredRoute,
     onWorlds: () => optionalWorlds.open(),
-    onMissions: journeyEnabled ? (opener) => journeyChooser.open(opener) : undefined,
+    onMissions: journeyEnabled
+      ? (opener) =>
+          journeyChooser.open(opener, {
+            returnLabel: $('shell-home').open ? 'Back to menu' : 'Back to game',
+          })
+      : undefined,
   });
   mountWorkshopLinks({ document, href: location.href });
   attachFullscreen($('shell-fullscreen'));

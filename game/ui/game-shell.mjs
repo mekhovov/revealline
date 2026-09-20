@@ -22,6 +22,7 @@ export function attachGameShell({
   onModeDeparture,
   separateTeam = false,
   titleDestination,
+  titleContinueDestination,
   onWorlds,
   onMissions,
   getTopDialog,
@@ -166,7 +167,10 @@ export function attachGameShell({
     if (onMissions) {
       pause(true);
       if (destroyed) return;
-      closeHome();
+      // The host chooser is a child of its actual entry screen. Keep Home
+      // mounted for Back; an explicit mission selection retires that parent.
+      titleModeIntent = null;
+      cancelTitle();
       if (destroyed) return;
       onMissions(opener);
       return;
@@ -211,7 +215,7 @@ export function attachGameShell({
           ? copy('title.continueDestination', {
               destination: !$('continue-saved').hidden
                 ? $('continue-saved').title
-                : $('mission-brief-title').textContent,
+                : titleContinueDestination?.() || $('mission-brief-title').textContent,
             })
           : titleDestination?.() || copy('title.deployDestination');
     if (!home.open) {
