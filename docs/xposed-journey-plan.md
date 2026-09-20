@@ -102,8 +102,8 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | PR172: candidate 3556e257 passed full hosted source qualification/freeze; accepted-baseline integration and public phase acceptance remain |
-| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates with original art, complete-route fixtures and recoverable manual image workflow; not published |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | Accepted composition PR184 merged and immutable release published; publisher PR189 and public Pages acceptance still pending at this checkpoint; human phase acceptance remains |
+| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | PR175 exact bbbbf87b: all7189 hosted tests and frozen snapshot passed; independent release-owner inspection/promotion and public acceptance pending |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Seven Solo greyboxes; 119 clear/delay fixtures, 420 seed checks, seven mastery routes, reference crosswalk, terrain captions, explicit Team terrain edition/template, Shared detour Team greybox and bounded tracing benchmark; broader alternative routes/mastery/pacing, final art, human and release gates pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |

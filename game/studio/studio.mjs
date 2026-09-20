@@ -514,13 +514,13 @@ $('border').onclick = guarded(() => {
 });
 $('signal').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createSignalCandidates(), null, 2);
+  $('source').value = JSON.stringify(createSignalCandidates({ campaignTheme: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
 $('team-signal').onclick = guarded(() => {
   if (!discardSource()) return;
-  $('source').value = JSON.stringify(createTeamSignalCandidates(), null, 2);
+  $('source').value = JSON.stringify(createTeamSignalCandidates({ campaignTheme: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });

@@ -268,10 +268,10 @@ export const SIGNAL_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(rows.map((row) => [row.id, row.departure])),
 );
 
-export function createSignalCandidates() {
+export function createSignalCandidates({ campaignTheme = false } = {}) {
   const project = createStarterProject('signal-greybox-candidates');
   project.name = 'Signal Gardens · greybox candidates';
-  project.revision = 'greybox-1';
+  project.revision = campaignTheme ? 'greybox-2' : 'greybox-1';
   project.maps = [];
   project.missions = rows.map((row, index) => {
     const template = createStarterProject().missions[0];
@@ -292,13 +292,16 @@ export function createSignalCandidates() {
       ...template,
       id: row.id,
       name: row.name,
-      revision: 'greybox-1',
+      revision: campaignTheme ? 'greybox-2' : 'greybox-1',
       map: { id: map.id, revision: map.revision },
       actors: structuredClone(row.actors),
       bonuses: structuredClone(row.bonuses),
       coverage: row.coverage,
-      // Explicit temporary greybox presentation; original campaign artwork follows route qualification.
-      presentation: { themeId: 'horizon', backgroundAssetId: null },
+      // Campaign palette only; original reveal artwork is still pending.
+      presentation: {
+        themeId: campaignTheme ? 'signal-gardens' : 'horizon',
+        backgroundAssetId: null,
+      },
       design: {
         ...template.design,
         routeDecision: row.decision,
