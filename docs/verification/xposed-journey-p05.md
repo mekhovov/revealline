@@ -44,6 +44,15 @@ reclaimed-domain reflection, unchanged denominator/territory and public replay
 verification. Existing v1 roles and representative compiled outputs stay exact.
 Changed-source lint passes. These are technical checks, not human play evidence.
 
+Historical route regression follow-up: the four-file Rover/Horizon/Border cohort
+passes48/48, zero failures/cancellations/skips,34.986seconds on Node20.19.5.
+This includes60 opening Solo routes,60 equal paired-board routes,84 Border Solo
+routes and84 equal paired races, with their existing identities/checkpoints and
+real-host foundation closures. Initial local runs reported missing tracked
+fixtures and presentation/motion modules in the sparse checkout, not gameplay
+assertion regressions. Exact HEAD files and their sparse patterns were restored;
+no production logic or route expectations changed to make the cohort pass.
+
 Remaining: authored Rover learning arcs/Remix, reference adaptations, full legal
 routes and alternatives, broader historical route pins, native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
