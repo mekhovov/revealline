@@ -94,3 +94,26 @@ and follow the in-frame mode links. Start, pause, leave and re-enter: require
 explicit Resume and unchanged checkpoints. Keep real modals contained and the
 Controller practice/enemy return protocols unchanged. Retire or replace a child
 during suspension; it must not wrap or steal the newer focus.”
+
+### Native Workshop checks and the Motion Lab exit
+
+The [nine-tool keyboard record](verification/workshop-native-v070/README.md) checks
+exact v0.70 source in the local browser with the authored Journey route. Each tool
+returns to its own Workshop card, then Escape returns to the Workshop opener on
+Home. It includes the Playground/Controller practice iframe boundaries and Replay
+pause-before-return. It does not qualify physical controllers, touch, public Pages,
+forced loading failures or saved-flight continuity.
+
+Motion Lab now also has a visible Return to Workshop link before the study header.
+It uses the existing return-link initializer, route validation and 44-pixel target
+styling. The footer exit stays available after the controls. The native comparison
+reduced initial sequential access from 47 Tab presses to one; Enter restored the
+Motion Lab card and Escape restored Home. [Correction evidence](verification/motion-return-top/README.md)
+binds the preview to the frozen source plus only this markup insertion.
+
+Maintenance prompt: “Enter Motion Lab from Home/Workshop. The first native Tab
+must reach the visible Return to Workshop link before the settings, retaining the
+current Journey and release. Return must restore Motion Lab’s card; Escape then
+returns to Home without launching a flight. Keep the footer exit and early loading
+return usable. Inspect desktop, portrait and short landscape, report actual CSS
+viewport sizes, and do not infer keyboard order by counting unchecked radio inputs.”

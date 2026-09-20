@@ -953,7 +953,6 @@ When a confirmation disables its focused button while awaiting a picture or chap
 
 Example: “Verify Replace & play with a bounded local download delay. Keep Stay focused during preparation, retain the current flight on cancellation, and prove background/hidden or moved-focus cases do not reclaim focus. Preserve failed observations and distinguish local preview from deployed acceptance.”
 
-
 ### Compact Pause acceptance
 
 Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.
@@ -982,7 +981,6 @@ session or enemy draft-return transport. Test exit/re-entry in both directions,
 explicit Resume, frame retirement, modal containment and in-frame mode links;
 see `docs/field-kit-surfaces.md` for the maintenance prompt and evidence limits.
 
-
 ### Content Studio preview and return
 
 Content Studio is a descendant of Playground, not a second registry entry for its
@@ -1010,7 +1008,6 @@ When an optional chapter Play operation adopts its prepared flight, replace the 
 
 Prompt: “Download and play an optional chapter after selecting another mission, reopen Missions and compare the completed-operation message, selected card, deploy bar and actual paused run. Repeat installed Play without a download, cancelled/failed preparation and same-chapter Play. Preserve exact checkpoints, artwork, score authority and explicit Resume. Record actual public observation separately from modeled host tests.”
 
-
 ### Host-test DOM lookup
 
 Optimize first-match traversal without changing the supported selector grammar,
@@ -1019,7 +1016,6 @@ overrides, tree mutation, duplicate IDs and child querySelector isolation. Use
 `docs/test-dom-first-match.md` for the maintenance prompt and required cohorts.
 Report synthetic, host-test and native-browser performance separately; a faster
 fixture is not a faster game or a completed release gate.
-
 
 ### Campaign browser return
 
@@ -1054,3 +1050,12 @@ Compare the same imported mixed playlist, explicit pause and a deliberate master
 setting in Solo, Versus and Team; verify an actual downloaded backup remains exact.
 Do not turn muted transport or full-page navigation into audible, autoplay-denial,
 continuous-position, offline, physical-input or public-release acceptance.
+
+For standalone tool navigation, follow the [Motion Lab exit and nine-tool native
+check](../../../docs/field-kit-surfaces.md#native-workshop-checks-and-the-motion-lab-exit).
+Keep an early visible return before long tool controls as well as the footer exit.
+Use native Tab and verify the focused label/href before Enter: counting DOM inputs
+miscounts native radio-group stops. Record exact opener, nested Back, actual CSS
+viewport dimensions and independent Return to game. Preserve frozen candidate
+bytes; compose only the intended patch when previewing an older follow-up branch
+against newer source. Keyboard-only local evidence is not device or public acceptance.
