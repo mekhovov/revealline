@@ -4,7 +4,7 @@ All 24 registered runtime MP3s fully decoded with Apple CoreAudio. All byte coun
 
 Decoding ran sequentially through one temporary floating-point WAV, removed after each measurement. The largest temporary file was 86,017,024 bytes; no PCM files remain. The 13 prior Holizna decoded durations and seven registered 3xBlast derivative durations matched exactly.
 
-Fifteen recordings reach sample full scale in this decoder. Whole-file RMS ranges from −17.82 to −8.50 dBFS, a 9.32 dB spread. These values warrant listening for transitions and comparative volume; they do not establish source clipping, perceptual loudness, or music quality. No LUFS or oversampled true-peak measurement was made because a suitable installed analysis tool was not available. No full listening, native-device, offline, loop-seam, mix, or Ukrainian-cultural acceptance is claimed.
+Fifteen recordings reach sample full scale in this decoder. Whole-file RMS ranges from −17.82 to −8.50 dBFS, a 9.32 dB spread. These values warrant listening for transitions and comparative volume; they do not establish source clipping, perceptual loudness, or music quality. This initial decode-only pass did not measure LUFS or oversampled true peak. The [subsequent loudness analysis](loudness-analysis.md) now provides integrated LUFS and a documented 8× true-peak estimate for all 24 recordings. No full listening, native-device, offline, loop-seam, mix, or Ukrainian-cultural acceptance is claimed.
 
 See [the full decode receipt](decode-receipt.json) for every runtime hash and measurement. The reproducible local script is `.cache/soundtrack-implementation/license-verification/verify.mjs`.
 

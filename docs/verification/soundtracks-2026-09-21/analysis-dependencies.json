@@ -1,0 +1,23 @@
+{
+  "format": "revealline-audio-analysis-dependencies.v1",
+  "python": "3.12.14",
+  "bundledNumpy": "2.3.5",
+  "packages": [
+    {
+      "name": "pyloudnorm",
+      "version": "0.2.0",
+      "wheelURL": "https://files.pythonhosted.org/packages/aa/b6/65a49a05614b2548edbba3aab118f2ebe7441dfd778accdcdce9f6567f20/pyloudnorm-0.2.0-py3-none-any.whl",
+      "hashes": {
+        "sha256": "9bb69afb904f59d007a7f9ba3d75d16fb8aeef35c44d6df822a9f192d69cf13f"
+      }
+    },
+    {
+      "name": "scipy",
+      "version": "1.18.0",
+      "wheelURL": "https://files.pythonhosted.org/packages/9b/2d/11dd93d21e147a73ba22bd75c0b9208d3a2e0ec76d53170ce7d9029b1015/scipy-1.18.0-cp312-cp312-macosx_14_0_arm64.whl",
+      "hashes": {
+        "sha256": "9ab7b758be6940954a713ee466e2043e9f6e2ed965c1fce5c91039f4be3d90a9"
+      }
+    }
+  ]
+}
