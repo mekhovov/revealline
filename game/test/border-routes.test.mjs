@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
-import { createDuel, resumeDuel, stepDuel } from '../multiplayer.mjs';
+import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 import {
   authoritativeCheckpoint,
   createRecorder,
@@ -81,7 +81,11 @@ for (const { bonuses, difficulty, turnPolicy, rows } of fixture.sets) {
     for (const [id, identity, , segments] of rows) {
       const manifest = resolveMission(projects.get(bonuses), id, { mode: 'versus', difficulty });
       assert.equal(manifest.simulationIdentity, identity, id);
-      const match = createDuel(manifest.level, { seed: 1, classId: 'scout', turnPolicy });
+      const match = createDuel(
+        manifest.level,
+        { seed: 1, classId: 'scout', turnPolicy },
+        { protocol: UNTIMED_DUEL_PROTOCOL, seconds: 0 },
+      );
       assert.notEqual(match.runs[0].cells, match.runs[1].cells);
       assert.notEqual(match.runs[0].foundation.permanent, match.runs[1].foundation.permanent);
       resumeDuel(match);
