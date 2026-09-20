@@ -1,5 +1,24 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — 20 September 2026, v0.67 verified publication
+
+**Latest scoped public release: [v0.67.0 Journey technical preview](https://mekhovov.github.io/revealline/releases/v0.67.0/site/game/?journey=1).** PR169 supplies frozen source `6a42faca`; PR174 merged publisher `555f0979`. Pages run `35487668271` and deployment `6548787815` passed. The complete actual public audit verified **3,573 files / 645,190,134 bytes**, zero failures/retries. All 105 release records and 34 archive admissions remain. [Acceptance and original evidence](../publishing/pages-controller/delivery/evidence/journey-p00/v0670-public/README.md) distinguish public bytes from native input and outstanding gates.
+
+Keyboard Start/clear/Next, two-step Skip and cancellation, search/cross-campaign selection, reload/Continue and retained v0.66 entry passed. First Signal recorded 52.2%, 8,160 points and three lives. Portrait cards/Back were readable; short-landscape geometry passed, but its compositor screenshot was not accepted as a visual baseline. **Journey P00 and the full programme remain incomplete.** Physical devices, audible listening, offline/lifecycle, performance and human playtesting are still required. The default entry retains the legacy interface; `?journey=1` selects the preview.
+
+### Prioritized continuation
+
+1. **v0.68 discovery/navigation delivery:** candidate `4690fedd` passed both full source families, each 6,738 tests / 518 files on Node 20.19.6, ordinary build and exact frozen inspection. Finish integration against the new publisher cutoff, final attachment-consumer checks, source PR170/release publication and actual public journeys. Prior failed sources stay failed; frozen inspection alone is not release acceptance.
+2. **Journey foundations and early Border encounters:** P01 candidate PR172 and stacked P02 draft PR175 remain separately scoped. Registry/Studio restore and seven greybox encounters have focused evidence; artwork, full routes, authoring integration, balance and human gates remain. Keep provisional v0.69/v0.70 distinct from the accepted v0.67 preview.
+3. **Shared music and supporting navigation:** integrate the reviewed Couch music host with its 592-test focused Node 20/22 cohort, then actual transfer/listening/offline qualification. The five-path About candidate adds Team and removes stale counts; 33 focused tests per Node 20/22 and local keyboard/responsive checks passed. Neither candidate is publicly shipped.
+4. **Presentation and campaign completion:** continue actor parity/action feedback, fair challenge and rewards, then media/content production and full qualification in the approved Journey plan. The inactive motion-format candidate does not count as delivered animation. Bulk art remains gated by capacity and the gameplay benchmark.
+5. **Release maintenance:** upgrade obsolete action runtimes using reviewed immutable pins, preserving the explicit game runtime and frozen tags. [Primary-source research](../publishing/pages-controller/delivery/evidence/journey-p00/v0670-public/release-maintenance-research.md) records current action compatibility and caching changes. Do not alter ongoing/frozen qualification.
+
+The [Journey plan](xposed-journey-plan.md) owns the new campaign allocation and P00–P15 sequence. Historical cross-mode IDs retain their meanings: P00/P01/P02-A accepted; P02-B/P03–P09/P16–P18 partial; complete Team encounters and production campaigns remain pending. Native stores and online multiplayer stay separate. Each completed delivery receives its own reviewed commit/version, immutable release, Pages deployment and actual acceptance.
+
+<details>
+<summary>Previous v0.67 publication proposal — retained verbatim</summary>
+
 ## Current delivery — 20 September 2026, v0.67 publication
 
 **Accepted public baseline: [v0.66.0](https://mekhovov.github.io/revealline/releases/v0.66.0/site/game/).** Its Team artwork ownership, actor-state previews and cross-mode Studio/history scope passed; all 3,533 public files / 644,953,790 bytes were verified. Full phases and hardware/audio/offline acceptance remain open.
@@ -16,6 +35,8 @@
 4. Continue the approved Journey plan’s registry/Studio foundations, then benchmark gameplay, actor parity/action feedback, fair challenge, rewards, optional media/content and full qualification in that plan’s order. Bulk art remains gated by capacity and the gameplay benchmark.
 
 The [Journey plan](xposed-journey-plan.md) owns new campaign counts and its P00–P15 sequence. Historical cross-mode IDs below retain their original meanings: P00/P01/P02-A accepted; P02-B/P03–P09/P16–P18 partial; Team encounters and bulk campaigns still require their complete gates. Native-store certification and online multiplayer remain separate. Each independently completed delivery needs a scoped commit/version, original release, Pages deployment and acceptance.
+
+</details>
 
 <details>
 <summary>Previous register cutoff — retained history, not current acceptance</summary>
