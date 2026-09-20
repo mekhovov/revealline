@@ -3,11 +3,17 @@ import { captureOverlay } from './capture-overlay.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
-export function paintContentMap(ctx, preview, { width = 1008, showCapture = true } = {}) {
+export function paintContentMap(
+  ctx,
+  preview,
+  { width = 1008, showCapture = true, underlay = null } = {},
+) {
   const { geometry, manifest } = preview;
   const overlay = captureOverlay(preview);
   const size = width / geometry.width;
   ctx.save();
+  ctx.clearRect(0, 0, width, geometry.height * size);
+  if (underlay) underlay(ctx, width, geometry.height * size);
   ctx.lineWidth = Math.max(1, size / 10);
   for (let i = 0; i < geometry.cells.length; i++) {
     const x = (i % geometry.width) * size,
@@ -22,7 +28,9 @@ export function paintContentMap(ctx, preview, { width = 1008, showCapture = true
             : geometry.terrain[i] === 1
               ? '#665333'
               : '#102720';
+    ctx.globalAlpha = underlay && geometry.cells[i] === CELL.FIELD ? 0.58 : 1;
     ctx.fillRect(x, y, size - 1, size - 1);
+    ctx.globalAlpha = 1;
     if (!showCapture) continue;
     const state = overlay.cells[i];
     if (state === 'retained') {

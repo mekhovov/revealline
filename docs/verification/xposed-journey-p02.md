@@ -61,7 +61,7 @@ Full legal clear routes and replay verification for every preset/control/mode,
 bonus-free completion, meaningful alternative routes, mastery feasibility,
 capture/contour transitions, real timing/comprehension/enjoyment, original art and
 campaign presentation, actual Journey entry/continuation, Team qualification,
-remaining Studio image workflow, final exact-source qualification, reviewed phase
+native image-workflow qualification and durable tracing recovery, final exact-source qualification, reviewed phase
 PR, immutable release, Pages/native public acceptance and rollback proof.
 
 Greybox presentation uses the existing preview theme, not final Border artwork.
@@ -69,3 +69,8 @@ The optional Remix remains in a separate candidate pack. No official progress,
 copied reference artwork or screenshot-inferred actor behavior is introduced.
 Human validation is pending. P01's pending original artwork remains uncommitted
 and is not part of this phase's committed source.
+
+The manual image-reference / crop / queued-geometry / inspect / exact Practice /
+explicit Apply implementation is tracked separately in
+`xposed-journey-studio-images.md`. It does not automatically trace pixels, embed
+reference pictures into runtime assets or publish candidate maps.

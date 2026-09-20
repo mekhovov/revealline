@@ -17,6 +17,7 @@ import {
 import { exportJSONFile } from '../platform.mjs';
 import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
+import { createImageWorkbench } from './image-workbench.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -37,6 +38,21 @@ const inspections = createInspectionRequests(() =>
     $('checkpoint').value,
   ]),
 );
+const imageWorkbench = createImageWorkbench({
+  document,
+  getSource: () => session.current(),
+  getMission: () => currentMission(),
+  getDifficulty: () => $('difficulty').value,
+  redraw: () => inspectBoard(inspectedTrail),
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+  play: (source, missionId, difficulty) => launchPreview(source, missionId, difficulty),
+});
 function status(text, error = false) {
   $('status').textContent = text;
   $('status').dataset.error = String(error);
@@ -105,6 +121,7 @@ function draw(preview) {
   const summary = paintContentMap(canvas.getContext('2d'), preview, {
     width: canvas.width,
     showCapture: $('show-capture').checked,
+    underlay: imageWorkbench.underlay(),
   });
   $('capture-legend').hidden = !$('show-capture').checked;
   $('capture-summary').textContent = summary;
@@ -112,6 +129,7 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  imageWorkbench.sync();
   setBoardAvailability(document, !!mission);
   if (!mission) {
     inspectedTrail = [];
@@ -514,10 +532,10 @@ $('inspect').onclick = guarded(() => {
   if (cells.length > 2592) throw new Error('Too many trail cells.');
   inspectBoard(cells);
 });
-$('play').onclick = guarded(async () => {
-  const source = session.current(),
-    missionId = $('mission').value,
-    difficulty = $('difficulty').value;
+$('play').onclick = guarded(() =>
+  launchPreview(session.current(), $('mission').value, $('difficulty').value),
+);
+async function launchPreview(source, missionId, difficulty) {
   previewController?.abort();
   const controller = new AbortController();
   previewController = controller;
@@ -566,7 +584,7 @@ $('play').onclick = guarded(async () => {
           : 'Preview has not reported ready. Check its recovery controls, or close and retry. Your draft is intact.';
     }
   }, 250);
-});
+}
 $('close-preview').onclick = () => {
   previewRevision++;
   previewController?.abort();
@@ -576,12 +594,13 @@ $('close-preview').onclick = () => {
   $('play').focus();
 };
 window.addEventListener('beforeunload', (event) => {
-  if (sourceChanged || session?.status().dirty) {
+  if (sourceChanged || session?.status().dirty || imageWorkbench.hasPending()) {
     event.preventDefault();
     event.returnValue = '';
   }
 });
 window.addEventListener('pagehide', () => {
+  imageWorkbench.dispose();
   previewController?.abort();
   clearTimeout(saveTimer);
   clearInterval(previewTimer);
