@@ -108,3 +108,11 @@ check remains required before closing this correction.
 The recovery workflow is integrated with the qualified v0.69.0 Journey source. All 84 recovery tests pass on Node 20.19.5 after restoring missing sparse-checkout inputs. Earlier 3eb native recovery evidence remains scoped to that source.
 
 The responsive follow-up reuses the shared focus-clearance helper for More worlds and Replace flight. Resizing keeps the current action visible; it does not move selection or activate an action. Forty-eight focus, world-browser and actual replacement tests pass. The first run lacked two exact pack fixtures; the failure and corrected run remain retained. Final integrated native checks and full source/public qualification remain required.
+
+
+The integrated `95da6188` native pass now verifies Cancel → retry → explicit install,
+retained selected artwork/original records, unchanged paused HUD, and Play → Stay.
+Cancel, Play and Stay remain visible at 390×844, 844×390 and 844×256; Tab reveals
+the alternative Replace action without activating it. [Scoped native record](verification/external-picture-recovery/native-integrated-observation.json)
+resolves the earlier responsive observation for this candidate. Physical inputs,
+full final-source gates and deployed acceptance remain separate and open.
