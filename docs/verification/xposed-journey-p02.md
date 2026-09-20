@@ -59,16 +59,18 @@ change the choice; geometry and a higher quota alone are insufficient.
 ## Still required
 
 Meaningful alternative routes, mastery feasibility,
-capture/contour transitions, real timing/comprehension/enjoyment, original art and
-campaign presentation, actual Journey entry/continuation, Team qualification,
+capture/contour transitions, real timing/comprehension/enjoyment, final art acceptance
+and campaign presentation, actual Journey entry/continuation, Team qualification,
 full image-workflow device qualification, final exact-source qualification, reviewed phase
 PR, immutable release, Pages/native public acceptance and rollback proof.
 
-Greybox presentation uses the existing preview theme, not final Border artwork.
+Border presentation now has seven original raster candidates and its own botanical
+palette, retaining the shared functional actor silhouettes. These are not final
+human-accepted artwork or newly qualified character/audio designs.
 The optional Remix remains in a separate candidate pack. No official progress,
 copied reference artwork or screenshot-inferred actor behavior is introduced.
-Human validation is pending. P01's committed original Horizon artwork is now
-inherited through the candidate integration; Border still needs its own artwork.
+Human validation is pending. P01's committed original Horizon artwork is
+inherited through the candidate integration.
 
 The manual image-reference / crop / queued-geometry / inspect / exact Practice /
 explicit Apply implementation is tracked separately in
@@ -130,6 +132,33 @@ attempt still announced "Start remains a separate action" after Start and Pause.
 P02 retires that lobby-only copy when the exact picture is accepted for an attempt,
 without changing picture identity, preparation, controls or simulation. All three
 pinned presets assert the pre-Start and paused status boundaries. The combined
-Team-import/automatic-retry/Next/picture/recovery-copy host cohort passes57/57
+Team-import/automatic-retry/Next/picture/recovery-copy host cohort passes 57/57
 (35.1 seconds). This is modeled-host regression evidence; native recheck and full
 hosted qualification remain separate gates.
+
+## Original Border artwork continuation
+
+Seven original 1774×887 PNG compositions are stored unchanged in
+`game/content-design/assets/border-r1/`. `PROMPTS.md` records every generation
+prompt and original output filename. The immutable candidate registry pins each
+file's SHA-256, byte length, dimensions and description; every mission has exactly
+one distinct composition. No supplied Xposed screenshot or third-party artwork
+was an image-generation input. Candidate status remains explicit in diagnostics.
+
+The originals total **19,420,210 bytes**. Shared optional-artwork packaging now
+contains Horizon plus Border: **17 originals / 45,282,783 bytes**. Full distributions
+retain original bytes; these images are excluded only from mandatory core offline
+preparation. The existing core-size guard is unchanged. Local registry and tiny
+build-fixture checks do not replace complete hosted distribution qualification.
+
+All 84 complete Border routes retain exact physics identities and checkpoints
+with the images attached. The combined artwork, candidates, Studio, image-authoring,
+tracing-recovery and optional-packaging cohort passes **50/50** (7.7 seconds), with
+full lint, formatting and whitespace checks passing. Native Standard Practice for Behind the patrol loaded
+the botanical theme and exact original; Down to the island followed by Left to
+the perimeter produced **12.2% / 2,850 points / three lives**. The paused screenshot
+showed the image through the earned left region, starting island and border, with
+visible craft brackets and separate field/perimeter enemies. The preview was then
+closed back to the preserved Studio draft. The elapsed clock included idle review
+time and is not a pacing measurement. This is one partial native reveal, not a
+full clear, whole-set contrast/accessibility acceptance or human enjoyment evidence.

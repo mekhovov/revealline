@@ -102,8 +102,8 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 | Phase | Version | Scope | State |
 |---|---|---|---|
 | P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
-| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | PR172: actual Solo and paired-board opening hosts, Studio and original art; qualification incomplete, not published |
-| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates, complete-route fixtures and manual image workflow; not published |
+| P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | PR172: candidate 3556e257 passed full hosted source qualification/freeze; accepted-baseline integration and public phase acceptance remain |
+| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates with original art, complete-route fixtures and recoverable manual image workflow; not published |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
@@ -192,7 +192,7 @@ Unapplied tracing/reference state now has separate local recovery and portable b
 assisted tracing and full native upload qualification remain open. The expanded
 content/foundation/opening/Border cohort passes 135/135. The P02 branch must integrate
 the eventual accepted P01 baseline before promotion; no phase ordering is bypassed.
-Its preparation now includes candidate P01 through3556e257, preserving the shared
+Its preparation now includes candidate P01 through 3556e257, preserving the shared
 Team authoring and real Solo/Versus hosts. Native image upload/crop/manual geometry,
 inspection, explicit Apply and Undo have been exercised. Two reproduced stale
 inspection/status issues are fixed with regression coverage. Local tracing persists
@@ -201,6 +201,14 @@ exact map identity, compare-and-swap conflict checks, retry and separate export/
 Restore never grants geometry Apply permission or publishes artwork. Native reload,
 restore, inspection and Apply have been verified; full accepted-source qualification,
 browser/device matrix and review remain required.
+
+All seven Border candidates now have original botanical reveal compositions,
+immutable byte/hash pins and a coherent palette with unchanged gameplay symbols.
+Their 84 complete route checkpoints remain exact with artwork attached. The
+17-image Horizon/Border registry is shared by optional-offline packaging; full
+distributions preserve originals. Initial native Border partial-reveal evidence
+does not complete whole-set contrast, human acceptance or campaign presentation.
+See `docs/verification/xposed-journey-p02.md` and the Border assets' `PROMPTS.md`.
 
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema

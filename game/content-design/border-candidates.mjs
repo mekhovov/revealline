@@ -1,5 +1,6 @@
 import { createStarterProject } from './starter.mjs';
 import { freezeDesign } from './catalogs.mjs';
+import { BORDER_ART_CANDIDATES } from './border-art.mjs';
 
 // Original P02 greyboxes, not released missions. Placement, pacing, artwork and
 // complete routes need qualification; no reference screenshot proves actor AI.
@@ -228,10 +229,11 @@ export const BORDER_FIRST_RETURNS = freezeDesign(
   Object.fromEntries(candidates.map((row) => [row.id, row.departure])),
 );
 
-export function createBorderCandidates() {
+export function createBorderCandidates({ artwork = false } = {}) {
   const project = createStarterProject('border-greybox-candidates');
   project.name = 'Border Bloom · greybox candidates';
   project.revision = 'greybox-2';
+  if (artwork) project.assets = structuredClone(BORDER_ART_CANDIDATES);
   project.maps = [];
   project.missions = candidates.map((candidate, index) => {
     const template = createStarterProject().missions[0];
@@ -257,6 +259,10 @@ export function createBorderCandidates() {
       actors: structuredClone(candidate.actors),
       bonuses: structuredClone(candidate.bonuses),
       coverage: candidate.coverage,
+      presentation: {
+        themeId: 'border-bloom',
+        backgroundAssetId: artwork ? `border-${candidate.id}` : null,
+      },
       design: {
         ...template.design,
         routeDecision: candidate.decision,
