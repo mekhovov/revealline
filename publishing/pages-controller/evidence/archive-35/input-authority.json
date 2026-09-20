@@ -1,0 +1,15 @@
+{
+  "version": "v0.68.0",
+  "releaseId": 392318000,
+  "source": "5598d56248ee4a03d0460ff8a3560eb550a4cc71",
+  "tree": "4cca352f61dc84688fbe41a0d725538aa6a7316f",
+  "tagObject": "c22adc04d41e227ce17c0dedc6b420f5cedc6653",
+  "donorCommit": "8029e2b7a82f62fc14f7e93e929e63f0f0135034",
+  "donorTree": "e1c4da68bfa388efc3a4a6a7d04fac056f0bee52",
+  "priorAcceptedPaths": 0,
+  "publicReview": {
+    "path": ".cache/v0680-public-native-r1/public-review.json",
+    "sha256": "1b05ce4f631cd4851405dbbaa7217104bdcc1bc16a31c71e8c374a38b2559daf"
+  },
+  "archivePublicAcceptance": false
+}

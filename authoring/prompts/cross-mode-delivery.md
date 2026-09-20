@@ -298,3 +298,7 @@ separately from hosted upload success.”
 ### Exact merge and publisher continuation
 
 “Finish the qualified source release without replacing any frozen payload. If PR metadata has a stale base SHA, retain it and inspect the actual proposed merge parents and tree against fresh main and the exact qualified head. Require tree equality before and after merge. Run the actual small-assets consumer before draft upload. Keep source acceptance, original payload publication, Pages selector deployment and complete public/native acceptance separate. For short-screen Settings, preserve the Close action and tabs while the panel scrolls, and return focus to a visible logical control without resuming gameplay.”
+
+### Retain an edition while publishing a menu correction
+
+“Prepare the archive from exact original ZIP/metadata. A new archive has zero previously accepted paths. Update only template-specific fixture identities; keep all corruption guards, inventory-base binding and budget limits. Preserve first failures, run complete fixtures, and verify hosted extraction plus every public body. Carry known historical UX issues into scoped native admission. Publish the separately qualified correction only after retention is admitted, then verify the affected public menu journey before marking its scope accepted.”
