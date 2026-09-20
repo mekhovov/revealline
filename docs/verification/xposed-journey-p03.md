@@ -336,6 +336,38 @@ lengthening them automatically would add friction without evidence of fun. No
 speed/quota change is justified solely by this table. Ordinary clears and optional
 mastery intentionally differ; remaining material does not invalidate a clear.
 
+### Signal palette, separately versioned
+
+The new `signal-gardens` palette uses slate-blue field/grid and pale ceramic
+surfaces, preserving the established accent/reclaimed/danger colors, craft and
+enemy silhouettes, role labels and terrain markers. The frontend-design skill
+informed this restrained campaign identity; it adds no decorative motion or
+mandatory UI. This is not original reveal artwork or complete visual acceptance.
+
+Studio's explicit Signal inspections now select `campaignTheme: true`, creating
+project/mission `greybox-2`. Default builders retain the exact `greybox-1` Horizon
+presentation for existing replay fixtures. An initial 25-test run exposed one
+historical checkpoint mismatch when the original revision was replaced; preserving
+the old edition and selecting the new one explicitly fixed it without rewriting
+any route/checkpoint fixture. New tests compare every resolved simulation identity
+and level field except the deliberate revision for all presets and supported
+Solo/Versus/Team modes. Team test export remains geometry-only, not a themed
+runtime promise. Shared maps are unchanged.
+
+The four-file presentation/candidate/mastery/Team-route cohort passes27/27,
+zero skips/failures,3.453seconds on Node20.19.5. Changed-source lint and formatting
+pass. Native tab20 uses separate local draft `signal-palette-native`, checkpoint2;
+existing saved greyboxes were not replaced. Exact Solo Practice loaded the new
+theme and closed Soft crossing's first cut with0.6% earned,150points,three lives.
+The caption correctly identified five neutralized slow cells. A live screenshot
+shows distinct craft, field keepers, slow dashes and the reclaimed island/link.
+The attempt is paused at0:13. No complete native clear, full-picture, whole-set
+contrast, physical-device or human enjoyment claim follows from this observation.
+
+The separate full-route/delay/reference/pacing cohort passes30/30, zero skips,
+41.127seconds. All84 historical routes, paired-board equality,420 sampled-seed
+runs,35 delayed clears and their exact pins remain unchanged.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive

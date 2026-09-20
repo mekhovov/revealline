@@ -2,11 +2,11 @@ import { createTeamOpeningCandidates } from './team-candidates.mjs';
 
 /** Purpose-built cooperative greybox, not an automatic Solo adaptation.
  * No original artwork, human validation or release eligibility is implied. */
-export function createTeamSignalCandidates() {
+export function createTeamSignalCandidates({ campaignTheme = false } = {}) {
   const source = createTeamOpeningCandidates();
   source.id = 'journey-team-signal';
   source.name = 'Signal partners · greybox';
-  source.revision = 'greybox-1';
+  source.revision = campaignTheme ? 'greybox-2' : 'greybox-1';
   const map = source.maps[0];
   Object.assign(map, {
     id: 'shared-detour-map',
@@ -28,8 +28,12 @@ export function createTeamSignalCandidates() {
   const mission = source.missions[0];
   Object.assign(mission, {
     id: 'shared-detour',
-    revision: 'greybox-1',
+    revision: campaignTheme ? 'greybox-2' : 'greybox-1',
     name: 'Shared detour',
+    presentation: {
+      themeId: campaignTheme ? 'signal-gardens' : 'horizon',
+      backgroundAssetId: null,
+    },
     map: { id: map.id, revision: map.revision },
     team: { format: 'TeamMissionV2', spawnIds: ['west', 'east'] },
     coverage: 0.7,
