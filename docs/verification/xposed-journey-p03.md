@@ -309,6 +309,33 @@ reset. This is native mouse/keyboard reflow evidence, not physical-device,
 screen-reader, large-text or whole-library accessibility acceptance. Sparse
 development artwork fallbacks were visible and are unrelated to this layout fix.
 
+### Reproducible pacing review, not automatic balancing
+
+`node scripts/audit-signal-pacing.mjs` emits a read-only report for all fourteen
+existing Standard/immediate/seed-1 clear and mastery fixtures. It checks each
+simulation identity, final checkpoint, no-loss result and input length, and pins
+the input files by SHA-256. It reports closure counts, exposed ticks, sampled trail
+length and the point at which all material becomes reclaimed. It neither changes
+levels nor labels a material-free tail low-risk: enemies and frontier pressure
+can remain meaningful. A regression verifies the report and those evidence limits.
+
+| Candidate | Ordinary scripted clear | Mastery scripted clear | Mastery closures | Time after all material is reclaimed |
+|---|---:|---:|---:|---:|
+| Soft crossing | 21.35 s | 27.85 s | 5 | 8.60 s / one further closure |
+| Dry spine | 20.45 s | 20.45 s | 4 | 0 s |
+| Wide approach | 27.85 s | 27.85 s | 3 | Not all material reclaimed |
+| Cool the crossing | 29.85 s | 29.85 s | 5 | 0 s |
+| Garden refuges | 57.65 s | 47.60 s | 7 | 0 s |
+| Neutral ground | 26.65 s | 31.55 s | 7 | 0 s |
+| Winding channels | 63.45 s | 63.45 s | 14 | 0 s |
+
+The next pacing review should specifically inspect Soft crossing's final closure,
+Garden refuges → Neutral ground's change in tension, and the Remix's fourteen
+closures. All these omniscient routes beat the authored duration hypotheses;
+lengthening them automatically would add friction without evidence of fun. No
+speed/quota change is justified solely by this table. Ordinary clears and optional
+mastery intentionally differ; remaining material does not invalidate a clear.
+
 Meaningful alternative-route quality and mastery across other presets; anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
