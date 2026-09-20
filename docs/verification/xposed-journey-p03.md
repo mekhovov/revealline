@@ -575,6 +575,28 @@ again. The complete five-file cohort including capacity now passes27/27, zero
 skips/failures,10.893seconds. Run35509283083 predates this test-only correction;
 retain any resulting original failure and requalify the corrected final source.
 
+### Short-screen pause focus clearance
+
+The v0.69.0 public reviewer reported a clipped Main menu outline with Large/Plain
+text at844×390. Reproduced locally: button bottom389px in390px viewport; the
+generic short-screen reader's `height:100%` kept the pause card at320px while
+wrapped actions overflowed it. Pause now owns its intrinsic height, cannot shrink,
+uses safe centering and a scrollport with12px focus padding. Font sizes, button
+targets, input handlers, gameplay and persistence are unchanged.
+
+Native fresh-origin tab23 loaded the changed stylesheet (the older8780 tab retained
+cached CSS even after ordinary reload). At844×390, keyboard-focused Main menu
+bottom363px leaves27px clearance. At568×320, reverse traversal reaches Resume
+top77px below overlay top48px; forward traversal reaches Main menu bottom263px
+inside overlay bottom290px. At390×844, Main menu bottom594px is visible and
+document width390px confirms no horizontal overflow. Large/Plain retained during
+all three checks; existing saved sessions were not overwritten. These are desktop
+browser viewport checks, not physical touch or assistive-technology validation.
+
+Four complete pause-layout/text-size/controller-practice/controller-reading files
+pass71/71, zero failures/skips,9.417seconds on Node20.19.5. The two new CSS checks
+are explicitly structural guardrails, not simulated browser-layout evidence.
+
 Meaningful alternative-route quality, anti-cleanup/
 pacing review; broader delayed decisions; whole-Journey host continuation; purpose-built
 Team terrain qualification; original campaign art/actors/music and reactive
