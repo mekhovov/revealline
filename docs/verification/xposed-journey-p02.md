@@ -60,7 +60,7 @@ change the choice; geometry and a higher quota alone are insufficient.
 
 Meaningful alternative routes, mastery feasibility,
 capture/contour transitions, real timing/comprehension/enjoyment, final art acceptance
-and campaign presentation, actual Journey entry/continuation, Team qualification,
+and campaign presentation, broader Journey lifecycle/device acceptance, Team qualification,
 full image-workflow device qualification, final exact-source qualification, reviewed phase
 PR, immutable release, Pages/native public acceptance and rollback proof.
 
@@ -162,3 +162,37 @@ visible craft brackets and separate field/perimeter enemies. The preview was the
 closed back to the preserved Studio draft. The elapsed clock included idle review
 time and is not a pacing measurement. This is one partial native reveal, not a
 full clear, whole-set contrast/accessibility acceptance or human enjoyment evidence.
+
+## Shared cross-pack Journey continuation
+
+The explicit `game/?journey=authored` and `game/couch/?journey=authored` test routes
+compose Prologue, Horizon School and Border Bloom through the same compiler and
+navigation policy: **15 core missions**, then **two optional Remixes** in one flat
+17-card chooser. The real Solo and paired-board Versus hosts use this sequence;
+neither forces a Remix after a campaign. Studio links identify the bundled test
+routes separately from unpublished draft previews.
+
+Existing `?journey=opening` content/order and its suspended-flight key stay intact.
+The combined route has a separate suspended-flight slot, but stable mission IDs
+and version-independent completion receipts are shared. Tests verify unchanged
+execution identities and manifests for every prior mission, mode and preset.
+No Legacy collection award or edited/imported-content authority is added.
+
+The route/real-host regression cohort passes **24/24** (125.6 seconds), including
+**15 consecutive complete missions in each actual host implementation**, a deliberate
+Next after each clear, exact Solo route checkpoints, equal separate Versus boards,
+durable mode-separated receipts and voluntary final chooser/Rematch. Existing
+nine-mission opening flows also pass. An additional focused failure test passes:
+refusing the first Border picture retains the exact paused Horizon flight and
+picture, retry succeeds, Skip records no clear, and the chooser returns to Horizon.
+Full lint, formatting and whitespace checks pass. These tests use a modeled DOM,
+real engine/host and deterministic inputs; they are not native timing or human evidence.
+
+Native browser checks in both modes showed 17 cards/five campaign filters, selected
+Long way home, confirmed the explicit Skip to Behind the patrol, and entered the
+Border board(s) directly without menus. Both modes retained three lives; both
+Versus boards started at zero coverage/score. Flights were paused afterward and
+both browser error logs were empty. Native Next-after-clear, full consecutive
+playthrough, physical controllers, phone layout and target timing remain separate
+acceptance work. Inter-mode departure still uses the existing guarded boundary;
+no automatic Solo-flight-to-Team conversion is implied.

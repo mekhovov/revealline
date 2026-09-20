@@ -3,7 +3,7 @@ import { journeyFromPackCatalog, journeyMissionId } from './journey/catalog.mjs'
 import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
-import { createOpeningCandidates } from './content-design/horizon-candidates.mjs';
+import { createAuthoredJourneyRoute } from './content-design/route.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { DIFFICULTY_CATALOG, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
@@ -313,11 +313,13 @@ try {
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
   // P00 technical preview. Historical editions keep their original navigation.
-  const authoredJourney = params.get('journey') === 'opening' && !practiceSession;
+  const authoredRoute = !practiceSession && createAuthoredJourneyRoute(params.get('journey'));
+  const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
-    ? createCandidateSoloHost(createOpeningCandidates({ artwork: true }), {
+    ? createCandidateSoloHost(authoredRoute.source, {
         themes: (await getJSON('content-design/themes.json')).themes,
         buildVersion,
+        corePackIds: authoredRoute.corePackIds,
       })
     : null;
   const journeyPreferences = authoredJourney ? createJourneyPreferences({ window }) : null;
@@ -386,7 +388,7 @@ try {
   const packsKey = `revealline.packs.${channel}.v1`;
   // Candidate saves are revision-pinned and independent of Legacy/release slots.
   const sessionKey = authoredJourney
-    ? 'revealline.suspended.journey-opening.v1'
+    ? authoredRoute.sessionKey
     : `revealline.suspended.${channel}.v1`;
   const packCommits = createPackCommitCoordinator({
     read: () => checkedChapters(),
@@ -480,7 +482,7 @@ try {
   async function assertExternalBackupSupported(options) {
     if (candidateHost)
       throw new Error(
-        'Use the ordinary game for Legacy game-data backups. Opening test progress and attempts have separate exports.',
+        'Use the ordinary game for Legacy game-data backups. Authored test progress and attempts have separate exports.',
       );
     if (externalBackup) return externalBackup.assertSupported(options);
     const snapshot = await checkedChapters();
@@ -2476,7 +2478,7 @@ try {
     if (!Object.hasOwn(modeDestinations, kind)) return;
     if (candidateHost) {
       warning(
-        'This opening test route currently qualifies Solo only. Open the ordinary game for couch modes; this flight stays here.',
+        'This flight stays in Solo. Open the separate authored Versus test route for paired-board play; Team uses its separate test imports.',
       );
       return;
     }
@@ -2908,7 +2910,7 @@ try {
   async function requestMissionReplacement(request, opener, launch = null) {
     if (candidateHost && request.kind !== 'steering') {
       contentStatus(
-        'Use Find missions for the opening test route. Its authored Scout and theme stay consistent; Legacy content remains in the ordinary game.',
+        'Use Find missions for this authored test route. Its Scout and mission theme stay consistent; Legacy content remains in the ordinary game.',
         true,
       );
       refreshContentSelectors();
@@ -4073,7 +4075,7 @@ try {
   function currentBackupSession(savedAt) {
     if (candidateHost)
       throw new Error(
-        'Opening test flights use separate storage. Export this attempt or Journey progress; Legacy game-data backups do not include candidate flights.',
+        'Authored test flights use separate storage. Export this attempt or Journey progress; Legacy game-data backups do not include candidate flights.',
       );
     return started && recorder && !practice && !['won', 'lost'].includes(run.status)
       ? snapshotAttempt(savedAt)
@@ -4152,7 +4154,7 @@ try {
     if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
     if (candidateHost && !candidateHost.owns(entry))
       throw new Error(
-        'Open this Legacy flight in the ordinary game. This route restores only exact opening editions.',
+        'Open this Legacy flight in the ordinary game. This route restores only its exact authored editions.',
       );
     invalidateContentSwitch();
     sessionBusy = true;
@@ -5433,7 +5435,7 @@ try {
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
       $('overlay-copy').textContent =
-        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Opening test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
+        `${(run.coverage * 100).toFixed(1)}% captured · ${run.score.toLocaleString()} points · ${timeLabel(run.time)}. ${practice ? 'Practice complete.' : candidateHost?.owns(activeEntry) ? 'Authored test clear recorded in Journey progress. No Legacy collection awards.' : completionWarning || (saveSucceeded ? 'Full picture added to your collection.' : 'Picture collected for this session. Export your library to keep it.')}`;
       $('result-medals').textContent = '★'.repeat(
         run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
       );
@@ -7421,7 +7423,7 @@ try {
     document.body.classList.add('journey-preview');
     show('journey-artwork-availability', !!candidateHost);
     $('shell-title-edition').textContent = candidateHost
-      ? 'OPENING JOURNEY / UNVALIDATED TEST BUILD'
+      ? `${authoredRoute.label.toUpperCase()} / UNVALIDATED TEST BUILD`
       : 'JOURNEY / TECHNICAL TEST PREVIEW';
     journeyChooser = attachJourneyChooser({
       catalog: journeyCatalog,

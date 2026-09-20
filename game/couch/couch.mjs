@@ -7,7 +7,7 @@ import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
-import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
@@ -214,18 +214,24 @@ try {
     music: [],
     sourcePackId: null,
   };
-  const authoredJourney = new URL(location.href).searchParams.get('journey') === 'opening';
+  const authoredRoute = createAuthoredJourneyRoute(
+    new URL(location.href).searchParams.get('journey'),
+  );
+  const authoredJourney = !!authoredRoute;
   let journeyProfile = null,
     journeyChooser = null,
     journeySkipArmed = null;
   const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
-    candidateJourney = createCandidateVersusHost(createOpeningCandidates({ artwork: true }), {
+    candidateJourney = createCandidateVersusHost(authoredRoute.source, {
       themes: (await json('../content-design/themes.json')).themes,
+      corePackIds: authoredRoute.corePackIds,
     });
     journeyPreferences = createJourneyPreferences({ window });
     $('race-journey-note').hidden = false;
+    $('race-journey-note').textContent =
+      `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
       ...Object.keys(DIFFICULTY_CATALOG.presets).map(
@@ -313,7 +319,7 @@ try {
         presentationPage,
       });
   let installedStatus = candidateJourney
-    ? 'Authored opening test route; Legacy chapters stay in the ordinary race.'
+    ? `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
     : 'Installed chapters have not been checked.';
   if (!candidateJourney)
     try {
@@ -1776,11 +1782,11 @@ try {
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
       if (
         candidateJourney &&
-        roundRecipe.entry.mission.packId === 'journey-opening' &&
+        candidateJourney.isCore(roundRecipe.entry.mission.id) &&
         !candidateJourney.next(roundRecipe.entry.mission.id)
       )
         $('race-message').textContent +=
-          ' End of the opening route. Choose Find missions for the optional Remix, Rematch, or leave whenever you like.';
+          ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
