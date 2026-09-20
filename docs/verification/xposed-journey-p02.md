@@ -475,3 +475,31 @@ required/visible. Text and map marker agreed; no console errors. Checkpoint19 an
 reload retained the marker on the copy and left the original with no objectives.
 Native Remove was not invoked; modeled controls cover confirmation/cancellation.
 This is draft-editor evidence, not whole-level completion or human pacing acceptance.
+
+## Reference reconciliation
+
+Directly re-viewed supplied pack1levels1–4 full frames on20September; the tool
+displayed6144×2560sources at2048×853. Independently rehashed all four originals
+and matched the inherited ledger pins. This is spatial review, not native-sprite,
+animation, collision or reference-gameplay qualification. In particular, level4's
+9/80 HUD does not prove which revealed platforms were authored versus earned.
+
+The existing Horizon crosswalk test exposed stalev1 simulation pins after the
+explicit Arcadev2 policy integration. It failed before correction. The original
+document is preserved byte-for-byte as legacy-horizon-reference-crosswalk.json,
+with a SHA256 migration pin. Every old mission identity was verified against the
+registeredv1 compiler before renewing current identities against the already
+qualifiedv2 route fixtures. Reference pins, interpretations, human/release evidence
+and remaining gates are unchanged. Three crosswalk tests plus the60-route legacy
+compatibility test pass4/4; this bounded correction was sent to the P01 owner.
+
+border-reference-crosswalk.json now accounts for all seven P02 missions, their
+standard simulation identities, original asset revisions and relevant platform,
+island or divider motifs. It is explicitly a retrospective comparison, not an
+invented historical provenance claim. Return pocket is labelled an original
+curriculum extension. The P01 platform interpretation and P02 patrol-rich platform
+choice remain distinct candidates for later merge/cut review, not duplicate quotas.
+All84 current clear routes and35 delayed routes are bound to exact preset/bonus
+conditions; source hashes and finalDisposition=false are checked. Combined Horizon
+and Border crosswalk tests pass5/5. No underlying observation was overwritten and
+none of the48 numbered references receives a fabricated final acceptance.
