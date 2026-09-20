@@ -24,7 +24,7 @@ async function main() {
   const [path, ...args] = process.argv.slice(2);
   if (!path)
     throw new Error(
-      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey [--pack ID]] [--mode solo|versus --difficulty gentle|standard|expert]',
+      'Usage: compile-content-project.mjs <project.json|-> [--check | --mission ID | --journey [--pack ID]] [--mode solo|versus|team --difficulty gentle|standard|expert]',
     );
   const options = {},
     seen = new Set();

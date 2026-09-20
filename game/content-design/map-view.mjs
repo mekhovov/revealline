@@ -45,7 +45,7 @@ export function paintContentMap(ctx, preview, { width = 1008, showCapture = true
       radius = size * 0.45;
     ctx.fillStyle = '#ffae8e';
     ctx.beginPath();
-    if (actor.type === 'bouncer') ctx.arc(x, y, radius, 0, Math.PI * 2);
+    if (['bouncer', 'drifter'].includes(actor.type)) ctx.arc(x, y, radius, 0, Math.PI * 2);
     else if (actor.type === 'border-patrol') {
       ctx.moveTo(x, y - radius);
       ctx.lineTo(x + radius, y);
@@ -77,9 +77,15 @@ export function paintContentMap(ctx, preview, { width = 1008, showCapture = true
     }
   }
   ctx.fillStyle = '#f5ffba';
-  const { x, y } = manifest.level.spawn;
-  ctx.fillRect(x * size - 8, y * size - 2, 16, 4);
-  ctx.fillRect(x * size - 2, y * size - 8, 4, 16);
+  for (const [seat, { x, y }] of (preview.markers.spawns ?? [manifest.level.spawn]).entries()) {
+    ctx.fillRect(x * size - 8, y * size - 2, 16, 4);
+    ctx.fillRect(x * size - 2, y * size - 8, 4, 16);
+    // The second seat adds a square so the distinction is not color-dependent.
+    if (seat > 0) {
+      ctx.strokeStyle = '#f5ffba';
+      ctx.strokeRect(x * size - 10, y * size - 10, 20, 20);
+    }
+  }
   ctx.restore();
   return overlay.summary;
 }

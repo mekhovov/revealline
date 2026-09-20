@@ -37,4 +37,15 @@ flight through the existing host contract; it does not silently substitute art.
 The existing full-source hosted distribution test also checks the optional
 artwork manifest, all original hashes and final core budget. It has not been
 rerun locally: free disk is close to the 256 MiB source reserve. Native layout,
-fresh exact-source hosted qualification and public deployment remain pending.
+and public deployment remain separately pending.
+
+## Exact-source hosted result
+
+Source `53b886351dfc5551672b81c844738d0a05895c68` passed the full hosted
+qualification and frozen-snapshot workflow, run `35492774589`: preflight,
+all four test shards and freeze succeeded. GitHub reports immutable artifact
+`10599852802` (`qualified-release-snapshot`), 1,606,268,431 bytes, digest
+`sha256:09b6f0254c10f998439f84108ca4ead4ea3920f096397ae0c16cf22f1883e134`.
+Only metadata was read locally; the large artifact was not downloaded.
+This result applies to that exact source, not later host/framework commits,
+Pages deployment, human enjoyment or complete P01 acceptance.
