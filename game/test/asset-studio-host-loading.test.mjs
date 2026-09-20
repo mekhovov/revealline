@@ -967,6 +967,32 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
     saved.document,
   );
   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
+  // Reusing approved raster bytes does not approve changed placement metadata.
+  await bindButton(approved.id, 2).onclick();
+  await $('edit-geometry').onclick();
+  assert.equal($('nine-slice').disabled, false);
+  $('nine-slice').value = JSON.stringify({ ...approved.geometry.nineSlice, left: 7 });
+  await $('stage-asset').onclick();
+  assert.match(message(), /validated and staged/);
+  await $('save-workspace').onclick();
+  assert.match(message(), /saved atomically/);
+  const metadataSaved = await createStudioStore({ indexedDB: db.indexedDB }).load();
+  const metadataAsset = resolvePresentation(metadataSaved.document).assets[originalSlot];
+  assert.equal(metadataAsset.geometry.nineSlice.left, 7);
+  assert.equal(metadataAsset.file.sha256, approved.file.sha256);
+  assert.deepEqual(metadataAsset.quality, { stage: 'produced', evidence: [] });
+  assert.deepEqual(metadataAsset.provenance.parent, { id: approved.id, revision: 2 });
+  assert.deepEqual(
+    metadataSaved.document.assets.find((asset) => asset.id === approved.id && asset.revision === 2),
+    approved,
+    'The reviewed original and its evidence remain immutable.',
+  );
+  assert.deepEqual(
+    Buffer.from(await metadataSaved.assets.get(publishedHash).arrayBuffer()),
+    Buffer.from(publishedBytes),
+    'A metadata edit preserves the original encoded image.',
+  );
+  assert.ok(bindButton(approved.id, 2), 'The approved original can still be rebound explicitly.');
   $('new-sprite').onclick();
   const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
   $('sprite-canvas').emit('keydown', { code: 'Space' });

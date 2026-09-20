@@ -63,7 +63,7 @@ A successful foreground inventory selection retains the replacement selected but
 5. **Validate and stage replacement** checks the schema, geometry, dimensions, alpha requirement, byte budget, file headers, content hashes, and complete byte table. An empty transparent sprite is rejected. Font files also pass the browser font decoder. A failed check leaves the candidate editable and the prior workspace intact.
 6. Inspect the comparison, then save locally or export. Candidates enter the **produced** stage; successful technical validation alone does not establish a reviewed release. After performing real review, enter concrete evidence in revision history and use **Record reviewed revision**. This appends an immutable reviewed revision without overwriting the candidate.
 
-Crops retain their source as a separate immutable asset and link the derivative through provenance. Historical originals and derivatives remain in subsequent exports. A metadata-only revision retains the previous record as its provenance parent. Font/audio originals remain the immutable source bytes of their file asset.
+Crops retain their source as a separate immutable asset and link the derivative through provenance. Historical originals and derivatives remain in subsequent exports. A metadata-only revision retains the previous record as its provenance parent. It starts as **produced**, with no inherited review evidence: unchanged image bytes do not approve a changed pivot, rotor layout or nine-slice. The previously reviewed record stays intact and can be rebound from history. Font/audio originals remain the immutable source bytes of their file asset.
 
 ## Pixel editor
 
