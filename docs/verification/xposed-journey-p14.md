@@ -242,4 +242,30 @@ and reclaimed roamers, while V1/V2 retain their exact restricted role sets.
 An admin can select and replace the roamer using catalog speed tiers without
 editing raw JSON or changing shared maps. Unsupported/stale edits still fail
 before adoption. The28-test editor/contract/composition cohort passes on both
-Node versions. Native inspection of the repaired picker follows separately.
+Node versions. On the exact repaired `624511c5` source (port8805), native Studio
+exposes precisely the keeper and roamer roles for Twin depots. Selecting roamer-1
+shows measured1.6cell/s, nonretaining behavior, 120actor-tick warning and its
+authored position. Changing x23.5→24.5 through Validate & replace creates
+checkpoint3 with unchanged foundation/eligible counts and both keeper anchors.
+Undo restores x23.5 and enables Redo. This checks the native form/transaction,
+not new layout playability or canvas contrast. No pixel screenshot or native
+Team gameplay claim is made.
+
+### Cross-campaign navigation contract (not yet host enrollment)
+
+The new Team candidate adapter uses the existing compiler/execution catalog,
+stable Journey mission IDs and shared explicit-core sequencing. It resolves all
+12 missions at each preset across four campaign boundaries, retaining each
+homogeneous pack and its original level version instead of flattening or
+upgrading content. Destinations preserve the current preset, reject unowned or
+cloned rows, and stop deliberately after Last rendezvous. Archived/reordered
+membership is compiled, not duplicated in a second map list. Skip/profile tests
+preserve stable IDs without manufacturing clears.
+
+Shared mission cards now use the actual Team engine for Team manifests, showing
+both numbered seats, exact foundations/materials and actual actor roles. Solo
+card shape and route behavior remain unchanged. The42 navigation/card/prior
+route/material/catalog tests pass on both Node versions;31 additional role-
+rejection catalog tests also pass after updating their expected diagnostic text.
+The adapter is not yet connected to Team launch/Next/progress storage: complete
+real-host cross-campaign flow and failure/rollback tests remain required.
