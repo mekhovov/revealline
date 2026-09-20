@@ -97,6 +97,58 @@
   margin-top: 1rem;
   min-height: 44px;
 }
+.journey-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: end;
+}
+.journey-footer button {
+  min-height: 44px;
+}
+#journey-backup {
+  width: min(36rem, calc(100vw - 2rem));
+  height: min(34rem, calc(100dvh - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow: hidden;
+  padding: 1rem;
+  color: var(--ink, #e5eddd);
+  background: var(--panel, #15251f);
+}
+#journey-backup[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+}
+#journey-backup h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.journey-backup-content {
+  overflow: auto;
+  padding: 4px;
+}
+.journey-backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+#journey-backup::backdrop {
+  background: #09140de6;
+}
+.journey-backup label {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+.journey-backup input {
+  max-width: 100%;
+  min-height: 44px;
+}
+.journey-backup button {
+  min-height: 44px;
+  margin-block: 0.25rem;
+}
 .journey-status {
   margin: 0.5rem 0;
   padding: 0.65rem;

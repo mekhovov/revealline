@@ -1,3 +1,5 @@
+import { attachJourneyBackup } from './journey-backup.mjs';
+
 /** One optional surface: global search and campaign filters, never a chapter drill-down. */
 export function attachJourneyChooser({
   document: doc = globalThis.document,
@@ -60,8 +62,18 @@ export function attachJourneyChooser({
   back.id = 'journey-back';
   back.className = 'button secondary';
   back.textContent = 'Back to game';
-  dialog.append(heading, copy, filters, status, list, back);
+  const footer = doc.createElement('div');
+  footer.className = 'journey-footer';
+  const backupButton = doc.createElement('button');
+  backupButton.id = 'journey-backup-open';
+  backupButton.type = 'button';
+  backupButton.className = 'button secondary';
+  backupButton.textContent = 'Progress backup';
+  footer.append(back, backupButton);
+  dialog.append(heading, copy, filters, status, list, footer);
   doc.body.append(dialog);
+  const backup = attachJourneyBackup({ document: doc, profile, onRestore: render });
+  backupButton.onclick = () => backup.open(backupButton);
   let opener = null;
   function render() {
     const state = profile.snapshot();

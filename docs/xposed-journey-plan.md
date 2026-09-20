@@ -101,9 +101,9 @@ original checkout. P00 uses 0.67.0 rather than reusing the allocated 0.66.0.
 
 | Phase | Version | Scope | State |
 |---|---|---|---|
-| P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | In progress |
+| P00 | 0.67.0 | Audit ledger, direct flow, stable progress, capture teaching, three-mode fixtures | Scoped technical preview published and verified; remaining phase acceptance open |
 | P01 | 0.69.0 | Foundations, Prologue/Horizon School, Remix, minimal Studio | In progress on PR172; not published |
-| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Pending |
+| P02 | 0.70.0 | Border Bloom, bonuses/frontiers, Studio CRUD/manual image workflow | Draft PR175: seven candidates, complete-route fixtures and manual image workflow; not published |
 | P03 | 0.71.0 | Signal Gardens, terrain/catalogs, reactive presentation, trace benchmark | Pending |
 | P04–P12 | 0.72.0–0.80.0 | Campaigns 4–12, each with Remix/assets/mode qualification | Pending |
 | P13 | 0.81.0 | Whole-Journey Solo/Versus, 12 Remixes, cuts/navigation/compatibility | Pending |
@@ -131,10 +131,35 @@ foundation compiler/runtime, minimal map-first Studio with recoverable checkpoin
 capture overlays and topology diagnostics. Sixty mission/preset/steering combinations
 have deterministic Solo and paired-board clear-route fixtures; these are feasibility
 evidence, not pacing or human enjoyment. Direct structure controls create, duplicate,
-rename and organize candidates without JSON editing. Archive/removal and image
-authoring remain pending. One original reveal background is pinned; nine backgrounds,
-Team qualification, Journey adoption and release gates remain. None of that branch's
+rename and organize candidates without JSON editing. Dependency-aware removal and
+archive/restore are implemented. One original reveal background is committed;
+four more are pinned in preserved local changes, with five further background
+integrations pending. Team qualification, Journey adoption and release gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
+
+P02 preparation is isolated on `codex/xposed-journey-p02`, draft PR175 stacked on
+P01 `e7aa131f`. Six Border Bloom core candidates and one optional Remix progress
+from outer-perimeter timing to changing-frontier shaping, with optional contact
+bonuses. Source `2e6b21b8` now has 84 complete no-life-loss Solo routes covering
+all presets/steering policies with authored bonuses and with every bonus removed;
+exported replays verify and 84 paired-board repetitions finish equally. The second
+frontier lesson now practices before combining patrol domains. These are omniscient
+seed-1 feasibility checks, not human pacing or enjoyment. Native Practice has one
+Expert first-closure observation, not a complete native playthrough.
+
+P02's manual image workflow accepts bounded static local reference pictures,
+crop/overlay, queued manual rectangles, shared validation, exact Solo Practice and
+explicit copy-on-write Apply. It never infers collision or publishes artwork.
+Unapplied tracing/reference state is honestly session-only; durable tracing recovery,
+assisted tracing and full native upload qualification remain open. The expanded
+content/foundation/opening/Border cohort passes 135/135. The P02 branch must integrate
+the eventual accepted P01 baseline before promotion; no phase ordering is bypassed.
+
+P01 follow-up adds optional Journey backup inspection and non-destructive restore:
+missing records merge, current receipts/cursors win, and the v1 persisted schema
+stays readable by previous releases. It does not replace a running attempt or award
+scores. Its actual-host and persistence evidence is recorded separately in
+`docs/verification/xposed-journey-backup-restore.md`; this is not a v0.67 feature.
 
 Each phase: reviewed PR, version bump, automated gates, immutable release and Pages
 test deployment; continue automatically after green gates, repair red gates before
@@ -164,7 +189,8 @@ The audit still covers all 110 missions, including those editions.
   preserved; this local identity check is not authentication or anti-cheat.
 - `game/journey/profile.mjs`: version-independent, transactional IndexedDB event
   merging, session-only fallback, retry and progress export. Frozen save formats
-  are not migrated or overwritten. Full backup restoration remains to be integrated.
+  are not migrated or overwritten. Non-destructive backup restoration is implemented
+  in the P01 candidate, not retroactively inserted into frozen P00.
 - `game/core/capture-regions.mjs`: engine-owned retention calculation and a
   read-only, frozen-time component inspector for Studio and capture explanations.
 - `docs/research/xposed-journey-ledger.json`: all 64 inherited observations and
@@ -182,8 +208,16 @@ Verification so far: focused catalog/profile/capture tests, ten-mission Solo hos
 flow, Skip/return, automatic Solo reset, and failed cross-pack download/retry.
 Existing Solo continuation, paired-race equality and Team core fixtures were run.
 Native browser checks are scoped to local preview, not published acceptance.
-Remaining P00 gates include complete source qualification, expanded lifecycle and
-mode-flow checks, immutable release and actual Pages verification. Human enjoyment,
+P00 source `6a42faca` passed exact-source qualification and is released as v0.67.0.
+Publisher `555f0979`, Pages run 35487668271 / deployment 6548787815, verified all
+3,573 public files (645,190,134 bytes, zero failures/retries), plus scoped native
+keyboard Continue/Next/Skip/search/reload. The publication owner's receipt
+`.cache/v0670-public-acceptance-r1/root-acceptance.json` is SHA-256
+`37b5e83d29e6f9b81a8151351de7cad6cb789a3756d20904856340f965d2c1de`.
+This is [the frozen opt-in technical preview](https://mekhovov.github.io/revealline/releases/v0.67.0/site/game/?journey=1),
+not complete P00 or a replacement for the ordinary legacy entry.
+Remaining P00 gates include expanded lifecycle/mode flow, offline/rollback and
+performance acceptance. Human enjoyment,
 physical controllers, phone hardware and all P01–P15 content remain unvalidated.
 
 The September 20 primary-source recheck confirmed the previously recorded Switched
