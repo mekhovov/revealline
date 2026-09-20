@@ -20,6 +20,7 @@ export function attachGameShell({
   onTitleContinue,
   onTitleCancel,
   onModeDeparture,
+  separateTeam = false,
   titleDestination,
   onWorlds,
   onMissions,
@@ -497,6 +498,7 @@ export function attachGameShell({
     mountModeChoices({
       root: titleModes,
       current: 'solo',
+      separateTeam,
       actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
     });
     titleModes.hidden = isolated || !onModeDeparture;

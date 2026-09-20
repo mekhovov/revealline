@@ -1,4 +1,5 @@
 import { mountModeChoices } from '../ui/mode-choice.mjs';
+import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
 
@@ -42,6 +43,7 @@ export function createCouchShell({
   getDepartureState = () => null,
   onLeaveRequest = () => {},
   getSoloReturnToken = () => null,
+  authoredRoute = null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
@@ -51,9 +53,15 @@ export function createCouchShell({
     shown = [false, false],
     removers = [],
     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
+  const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
+  if (authoredDestinations) {
+    $('race-solo-return').setAttribute('href', authoredDestinations.solo);
+    $('race-coop').setAttribute('href', authoredDestinations.team);
+  }
   mountModeChoices({
     root: $('race-mode-choices'),
     current: 'versus',
+    separateTeam: !!authoredDestinations,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
   });
   let screen = 'main',
@@ -237,7 +245,8 @@ export function createCouchShell({
     }
   }
   const destinationHref = (kind, token) =>
-    kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind];
+    authoredDestinations?.[kind] ??
+    (kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind]);
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -267,7 +276,7 @@ export function createCouchShell({
     )
       return;
     // Fixed routes are owned here; no target is accepted from a URL or control.
-    const returnToken = kind === 'solo' ? soloReturnToken() : null;
+    const returnToken = kind === 'solo' && !authoredDestinations ? soloReturnToken() : null;
     element.setAttribute('href', destinationHref(kind, returnToken));
     const before = getDepartureState();
     if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
@@ -298,7 +307,12 @@ export function createCouchShell({
     setText('race-leave-title', kind === 'team' ? 'Go to Couch Team?' : 'Return to Solo?');
     setText(
       'race-leave-copy',
-      'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.',
+      'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.' +
+        (authoredDestinations
+          ? kind === 'team'
+            ? ' Team opens its separate arenas.'
+            : ' Solo opens its own Journey progress; Continue remains explicit.'
+          : ''),
     );
     setText(
       'race-leave',
