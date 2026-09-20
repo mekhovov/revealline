@@ -18,6 +18,27 @@ const fixture = JSON.parse(
   await readFile(new URL('./fixtures/neon-clear-routes.json', import.meta.url)),
 );
 
+test('Inside out keeps the lower approach occupied instead of repeating the rejected two-cut clear', async () => {
+  const rejected = JSON.parse(
+    await readFile(new URL('./fixtures/neon-rejected-bypass.json', import.meta.url)),
+  );
+  assert.equal(rejected.sets.length, 6);
+  assert.equal(project.missions.find((m) => m.id === 'inside-out').revision, 'greybox-2');
+  for (const { difficulty, turnPolicy, segments } of rejected.sets) {
+    const manifest = resolveMission(project, 'inside-out', { difficulty });
+    const run = createRun(manifest.level, { seed: 1, classId: 'scout', turnPolicy });
+    for (const [direction, ticks] of segments)
+      for (let tick = 0; tick < ticks; tick++) stepRun(run, { direction }, FIXED_DT);
+    assert.equal(run.status, 'running', `${difficulty}/${turnPolicy}`);
+    assert.equal(
+      run.classic.livesLost,
+      0,
+      'The old route is still legal, just no longer a trivial clear.',
+    );
+    assert(run.coverage < manifest.level.goal.coverage);
+  }
+});
+
 test('Neon complete-route fixtures cover every mission, preset and steering policy exactly once', () => {
   assert.equal(fixture.format, 'NeonFeasibilityRoutesV1');
   const expected = ['gentle', 'standard', 'expert'].flatMap((difficulty) =>

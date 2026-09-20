@@ -80,6 +80,7 @@ const rows = [
   {
     id: 'inside-out',
     name: 'Inside out',
+    revision: 'greybox-2',
     reference: 'xposed-pack-1-level-11',
     band: 4,
     spawn: [32, 9],
@@ -90,6 +91,9 @@ const rows = [
     actors: [
       keeper('inside', 34.5, 15.5, [0, 1]),
       keeper('outside', 60.5, 28.5, [-1, -1]),
+      // Keep the lower approach occupied while the upper keeper travels toward
+      // the ring. The original two-keeper edition exposed a two-cut 10.75s clear.
+      keeper('lower-approach', 12.5, 28.5, [1, 0]),
       frontier('frontier', 26, 15),
     ],
     decision:
@@ -97,7 +101,7 @@ const rows = [
     lesson:
       'Closing a ring does not fill an occupied center. The keeper, not the visible loop, determines retained field.',
     counterplay:
-      'Use the broad ring as a return and inspect both the inner keeper and the outer contour before crossing.',
+      'Use the broad ring as a return; compare the inner keeper, lower approach keeper and outer contour before crossing.',
     consequence:
       'A mouth closure may secure only the connecting line; an outside enclosure can instead move patrol pressure.',
     moment:
@@ -294,7 +298,7 @@ export function createNeonCandidates() {
       ...template,
       id: row.id,
       name: row.name,
-      revision: 'greybox-1',
+      revision: row.revision ?? 'greybox-1',
       map: { id: map.id, revision: map.revision },
       actors: structuredClone(row.actors),
       bonuses: [],

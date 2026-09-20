@@ -56,7 +56,27 @@ hypotheses; no human-duration success is inferred. Inside out requires spatial
 revision before advancing; preserve this original evidence instead of calling it
 balanced or increasing shared movement speed to manufacture difficulty.
 
-Next gates: revise the fast two-cut bypass; meaningful alternative routes; optional
+### Inside out revision2: occupied lower approach
+
+The mission now adds one horizontal lower-approach field keeper at the same measured
+tier. This retains two established threat roles (field keeper/frontier patrol),
+unchanged player/actor speeds, geometry and coverage quota. Threat-density metadata
+reflects the extra actor. Mission revision is `greybox-2`; the unchanged shared map
+remains `greybox-1`. The six original bypass paths are retained in a dedicated
+regression fixture: each remains legal and no-loss but no longer clears the field.
+The first-revision source and full clear evidence remain in commit80b1271b.
+
+Six replacement no-loss routes take four or five closures; the exact six replay
+exports and equal-input paired races pass. This proves the diagnosed bypass is
+removed, not a global shortest-route bound or human balance. All42 current mission/
+preset/steering clears pass; complete candidate/route files18/18, zero failures/
+skips,9.503seconds on Node20.19.5. Initial updated tests exposed a wrong compiled
+mission accessor and six checkpoints generated before the explicit revision bump.
+The accessor now reads the actual mission revision; checkpoints were independently
+recomputed from identical legal inputs at revision2 (the authoritative checkpoint
+includes revision), with all clear/no-loss/predicate/replay checks retained.
+
+Next gates: meaningful alternative routes; optional
 goal predicates and pacing/cleanup; native frontier reshaping; separate authored Team
 content; original campaign assets; full final-source CI/review/release/Pages; genuine
 human difficulty/comprehension/enjoyment. Source-only preparation uses a16MiB sparse
