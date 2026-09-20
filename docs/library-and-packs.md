@@ -92,7 +92,20 @@ For maintainers, [attempt-export.mjs](../game/attempt-export.mjs) owns and verif
 
 ## Expansion contract
 
-`game/packs.mjs` accepts unchanged `xonix-pack.v1` and opt-in `xonix-pack.v2`. V2 adds required top-level `masteries` using the finite optional-goal [contract](pack-mastery-contract.md); empty means none. Maps, campaign identities and old v1 files remain unchanged. A complete v1 pack contains:
+`game/packs.mjs` accepts six explicit pack generations. Choose the generation that implements the required mechanics; changing a version label does not migrate a level. Each campaign must contain the matching level generation.
+
+| Pack            | Engine          | Level            | Exported playground   | Scope                                          |
+| --------------- | --------------- | ---------------- | --------------------- | ---------------------------------------------- |
+| `xonix-pack.v1` | `xonix-core.v2` | `xonix-level.v1` | `xonix-playground.v1` | Original packs; no `masteries` field           |
+| `xonix-pack.v2` | `xonix-core.v2` | `xonix-level.v1` | `xonix-playground.v2` | Finite optional goals; required `masteries`    |
+| `xonix-pack.v3` | `xonix-core.v3` | `xonix-level.v2` | `xonix-playground.v3` | Staged encounters; `masteries: []`             |
+| `xonix-pack.v4` | `xonix-core.v4` | `xonix-level.v3` | `xonix-playground.v4` | Wide boards; `masteries: []`                   |
+| `xonix-pack.v5` | `xonix-core.v5` | `xonix-level.v4` | `xonix-playground.v5` | Classic terrain and pickups; `masteries: []`   |
+| `xonix-pack.v6` | `xonix-core.v6` | `xonix-level.v5` | `xonix-playground.v6` | Authored starting foundations; `masteries: []` |
+
+See the [runnable foundation example](../authoring/examples/foundation-pack.md) for generation, validation, a portable library round trip and legal-input routes in both turning modes. Its procedural artwork is intentional; it does not qualify uploaded-image decoding, custom music, campaign difficulty or production readiness. MP3 libraries and presentation bundles retain their separate binary transfer formats.
+
+V2 adds required top-level `masteries` using the finite optional-goal [contract](pack-mastery-contract.md); empty means none. Preserve old formats and campaign identities when editing presentation outside level data. The following remains a complete **historical v1 shape**, not the latest foundation template:
 
 ```js
 {
