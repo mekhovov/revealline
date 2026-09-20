@@ -2,6 +2,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
+import { createNeonCandidates } from '../content-design/neon-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -518,6 +519,12 @@ $('border').onclick = guarded(() => {
 $('signal').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createSignalCandidates({ campaignTheme: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('neon').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createNeonCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });

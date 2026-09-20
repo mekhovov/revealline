@@ -76,6 +76,52 @@ The accessor now reads the actual mission revision; checkpoints were independent
 recomputed from identical legal inputs at revision2 (the authoritative checkpoint
 includes revision), with all clear/no-loss/predicate/replay checks retained.
 
+## Studio entry, shared preview and native inspection
+
+Neon now uses the existing guarded Inspect → Apply flow. Native tab24 on the
+isolated8782 origin confirmed inspection left the applied Nearby shore draft
+unchanged; explicit Apply loaded seven Neon missions and saved a separate candidate
+checkpoint. The selected Inside out source reads `greybox-2`; its map lists all
+three field-retaining anchors and the frontier patrol. All seven greybox layouts
+were visually inspected in the real workbench, with distinct foundations, spawn,
+patrol/keeper symbols and marked slow/lethal patches. No game preview or finished
+art/palette claim follows from the workbench screenshots.
+
+Every21 mission/preset preview matches the direct shared compiler and leaves source
+unchanged; CLI matches both the revised Expert mission and explicitly filtered
+core pacing. Three full test files pass20/20, zero failures/skips,10.577seconds.
+The frontend-design skill kept the restrained existing workbench: one clearly
+labelled greybox inspection entry, no new player menu or automatic publication.
+
+Read-only four-campaign composition (Horizon, Border, Signal, Neon), explicitly
+excluding `horizon-remixes`, `border-remixes`, `signal-remixes`, `neon-remixes`,
+contains27core missions,0countdowns and0authored rating warnings. It is not an
+integrated live Journey or a measured human difficulty result.
+
+Research refresh: the [GDC2017 designer roundtable](https://www.gamedeveloper.com/design/gdc-2017-level-design-workshop)
+describes repeated level/area/game pacing review and observing what players intend,
+not just asking whether play was fun. Application: retain efficient alternative
+routes unless they erase the intended decision; ask players why they chose a cut
+before revising. The [Xposed Switched publisher listing](https://www.nintendo.com/us/store/products/xposed-switched-switch/)
+still supports variety from a compact vocabulary (three terrains, four powerups,
+eight enemy types,48levels); these are Switched counts, not Reloaded measurements.
+Neither source establishes a formula for popularity or compulsive retention.
+
+An exploratory read-only optional-goal audit found current ordinary routes meet
+the candidate predicates for Four quarters, Staggered circuit and Remix in all six
+preset/steering combinations, and Side-door bays only with immediate steering.
+Inside out mouth-first closure and Dogleg terrain-neutralization paths remain
+unproven; Folded corner's two-end connection needs a precise independent-path
+predicate. This exploratory result is not yet a pinned mastery fixture or award.
+
+Storage: media/full-build512MiB and source-materialization256MiB guards remain.
+After space dropped below256MiB, only read-only work continued until the publisher
+defined a separate tiny text correction transaction: patch/new-source packet at
+most64KiB, fresh free space at least136MiB including8MiB transient allowance; no
+assets, dependency installation, full checkout, lazy fetch or automatic Git GC.
+This small Studio/test/evidence packet uses that class, not the bulk-build path.
+User was asked nonblocking to free5GB or provide another writable volume.
+
 Next gates: meaningful alternative routes; optional
 goal predicates and pacing/cleanup; native frontier reshaping; separate authored Team
 content; original campaign assets; full final-source CI/review/release/Pages; genuine
