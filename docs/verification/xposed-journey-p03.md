@@ -5,6 +5,10 @@ This is candidate preparation while earlier release gates run, not an accepted
 baseline, released campaign or completed phase. Merge the accepted P02 composition
 and requalify exact source before promotion. Original/user worktrees are untouched.
 
+Automatic merge `0234e8ba` subsequently incorporates P02 `9fe6276f`, including the
+release owner's `014449ed` Journey/Couch music composition. The42-test focused
+cohort passes again after this merge. Source composition is not phase acceptance.
+
 ## Scope and design
 
 Seven original 72×36 maps form two three-mission learning arcs and one optional
