@@ -2,6 +2,7 @@ import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
+import { paintContentMap } from '../content-design/map-view.mjs';
 import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
@@ -20,6 +21,7 @@ let session,
   sourceChanged = false,
   saveTimer,
   previewTimer,
+  inspectedTrail = [],
   previewRevision = 0,
   previewController = null;
 const inspections = createInspectionRequests(() =>
@@ -94,33 +96,14 @@ function currentMission() {
   return session.current().missions.find((m) => m.id === $('mission').value);
 }
 function draw(preview) {
-  const canvas = $('board'),
-    ctx = canvas.getContext('2d'),
-    { geometry, manifest } = preview;
-  const size = canvas.width / geometry.width;
-  for (let i = 0; i < geometry.cells.length; i++) {
-    ctx.fillStyle =
-      geometry.cells[i] === 1
-        ? '#81b5a0'
-        : geometry.cells[i] === 2
-          ? '#74786b'
-          : geometry.terrain[i] === 2
-            ? '#8c4036'
-            : geometry.terrain[i] === 1
-              ? '#665333'
-              : '#102720';
-    ctx.fillRect((i % 72) * size, Math.floor(i / 72) * size, size - 1, size - 1);
-  }
-  for (const actor of manifest.level.enemies) {
-    ctx.fillStyle = '#ffae8e';
-    ctx.beginPath();
-    ctx.arc(actor.x * size, actor.y * size, size * 0.45, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.fillStyle = '#f5ffba';
-  const { x, y } = manifest.level.spawn;
-  ctx.fillRect(x * size - 8, y * size - 2, 16, 4);
-  ctx.fillRect(x * size - 2, y * size - 8, 4, 16);
+  const canvas = $('board');
+  const summary = paintContentMap(canvas.getContext('2d'), preview, {
+    width: canvas.width,
+    showCapture: $('show-capture').checked,
+  });
+  $('capture-legend').hidden = !$('show-capture').checked;
+  $('capture-summary').textContent = summary;
+  canvas.setAttribute('aria-describedby', 'geometry capture-summary');
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
@@ -133,6 +116,8 @@ function inspectBoard(trailCells = []) {
     difficulty: $('difficulty').value,
     trailCells,
   });
+  inspectedTrail = [...trailCells];
+  $('trail').value = inspectedTrail.join(', ');
   draw(preview);
   const { geometry, manifest, capture } = preview;
   $('map-name').textContent = mission.name;
@@ -140,7 +125,7 @@ function inspectBoard(trailCells = []) {
   $('rules').textContent =
     `${manifest.level.rules.lives} lives · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
   $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. Spawn (${manifest.level.spawn.x}, ${manifest.level.spawn.y}). ${manifest.level.enemies.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}`;
+    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. Spawn (${manifest.level.spawn.x}, ${manifest.level.spawn.y}). ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
@@ -309,6 +294,8 @@ for (const action of ['undo', 'redo'])
     queueSave();
   });
 for (const id of ['mission', 'difficulty']) $(id).onchange = guarded(() => inspectBoard());
+$('show-capture').onchange = guarded(() => inspectBoard(inspectedTrail));
+$('clear-inspection').onclick = guarded(() => inspectBoard());
 $('geometry-form').onsubmit = guarded((event) => {
   event.preventDefault();
   if (!discardSource()) return;
