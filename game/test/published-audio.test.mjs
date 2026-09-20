@@ -277,3 +277,50 @@ test('music-only Team binding leaves cue ownership untouched while retaining ver
   assert.equal(tracks.at(-1), null);
   assert.deepEqual(calls, []);
 });
+
+test('music-only disposal cannot replace an existing cue owner or attach after late readiness', async () => {
+  for (const rejectReady of [false, true]) {
+    const document = new Events(),
+      calls = [],
+      tracks = [];
+    let resolve, reject;
+    const ready = new Promise((yes, no) => {
+      resolve = yes;
+      reject = no;
+    });
+    const owner = attachPublishedAudio({
+      sound: {
+        setPublishedAudio: (value) => calls.push(value),
+        publishedCue: (value) => calls.push(value),
+      },
+      document,
+      ready,
+      cues: false,
+      getHost: () => {
+        throw new Error('Disposed adapter must not read a host.');
+      },
+    });
+    owner.setPlayer({ setPublishedTrack: (value) => tracks.push(value) });
+    assert.equal(document.listeners.size, 0, 'Music-only adapter installs no cue listeners.');
+    owner.close();
+    owner.close();
+    if (rejectReady) reject(new Error('Unavailable presentation'));
+    else
+      resolve({
+        resolved: {
+          assets: {
+            'audio.music': { kind: 'audio', file: { sha256: hash }, description: 'Late music' },
+          },
+        },
+      });
+    await owner.ready;
+    document.emit('focusin');
+    document.emit('click');
+    assert.deepEqual(calls, [], 'No attachment or null cleanup can replace another cue owner.');
+    assert.ok(tracks.length > 0);
+    assert.ok(
+      tracks.every((track) => track === null),
+      'Late readiness cannot restore music.',
+    );
+  }
+});
