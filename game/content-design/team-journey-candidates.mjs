@@ -1,5 +1,6 @@
 import { createTeamOpeningCandidates } from './team-candidates.mjs';
 import { createTeamSignalCandidates } from './team-signal-candidates.mjs';
+import { createTeamMaterialPracticeCandidates } from './team-material-candidates.mjs';
 import { freezeDesign } from './catalogs.mjs';
 
 // Separate cooperative decisions, not mirrored Solo maps. No new runtime rule
@@ -113,6 +114,16 @@ export const TEAM_FOUNDATION_FIRST_RETURNS = freezeDesign({
   'divided-workshop': ['down', 'up'],
   'switchback-partners': ['up', 'down'],
 });
+export const TEAM_JOURNEY_LEARNING_ARCS = freezeDesign([
+  {
+    id: 'shared-return-network',
+    missionIds: ['twin-landings', 'stepping-exchange', 'divided-workshop', 'switchback-partners'],
+  },
+  {
+    id: 'shared-material-work',
+    missionIds: ['shared-detour', 'crossed-gardens', 'split-orchards', 'weaver-crossing'],
+  },
+]);
 
 export function createTeamFoundationPracticeCandidates() {
   const source = createTeamOpeningCandidates();
@@ -198,11 +209,12 @@ export function createTeamJourneyCandidates() {
     createTeamOpeningCandidates(),
     createTeamFoundationPracticeCandidates(),
     createTeamSignalCandidates(),
+    createTeamMaterialPracticeCandidates(),
   ];
   const source = {
     ...chapters[0],
     id: 'team-journey-greybox-review',
-    revision: 'greybox-1',
+    revision: 'greybox-2',
     name: 'Team Journey · unvalidated greybox review',
   };
   for (const key of ['maps', 'missions', 'campaigns', 'packs', 'assets'])

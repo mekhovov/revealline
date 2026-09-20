@@ -11,7 +11,13 @@ import {
 export function playTeamFoundationRoute(
   level,
   segments,
-  { jointCuts = true, seed = 1, swapped = false, delayTicks = 0 } = {},
+  {
+    jointCuts = true,
+    seed = 1,
+    swapped = false,
+    delayTicks = 0,
+    inspectGoal = inspectTeamFoundationGoal,
+  } = {},
 ) {
   const owned = structuredClone(level);
   if (swapped) owned.spawns.reverse();
@@ -44,7 +50,7 @@ export function playTeamFoundationRoute(
     events,
     evidence,
     simultaneousTicks,
-    mastery: inspectTeamFoundationGoal(run, evidence),
+    mastery: inspectGoal(run, evidence),
     checkpoint: createHash('sha256').update(JSON.stringify({ run, events })).digest('hex'),
   };
 }
