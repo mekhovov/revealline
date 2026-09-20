@@ -318,3 +318,34 @@ remained at35 cells. Undo restored the copy to35; Redo restored45. Checkpoint11 
 reload retained the 9×5 copy and its separate added keeper. No browser console
 errors were reported. Native removal and a full device matrix are not claimed;
 they remain separate from the automated deletion/confirmation checks.
+
+## Optional bonus authoring and visible placement
+
+Studio now adds, replaces and removes the four existing contact pickup types with
+stable IDs and explicit cell-centre positions. Effect strengths, expiry and life
+caps remain engine-owned; the editor exposes no overrides or random drops. Each
+candidate compiles across all supported modes and presets. Team controls remain
+disabled until those effects have their own qualification. Duplicate/blocked
+positions, identity conflicts, unsupported effects and stale source contexts fail
+without changing the draft. Two-action removal and Undo/checkpoints are retained.
+
+The map painter previously omitted pickups; it now draws distinct framed + / > /
+v / * glyphs for life / speed / slow / freeze, even when capture overlays are hidden.
+The legend and geometry text identify effects and positions without relying on
+color. These are placement markers, not a guarantee of contact collection or route
+quality. The UI reminds authors not to force speed before precision turns and to
+keep required completion independent of bonuses.
+
+The final authoring/overlay/Team cohort passes, with full lint and changed-file
+format checks. Focused bonus/overlay/Team checks pass16/16, including all four
+effects across Solo/Versus and three presets, malformed/duplicate positions,
+stale adoption, confirmation cancellation and the unchanged Team boundary.
+
+Native Studio added `native-detour` extra life at(22.5,17.5) on the copied landing,
+replaced its effect with freeze, and used Undo to restore extra life. The actual
+map showed its framed + marker, and its text listed the exact position. Checkpoint14
+retained the bonus. Exact Practice loaded the edited map and normal Down closed
+onto the enlarged landing for0.6% /150points /three lives; the flight was paused and
+closed back to the intact draft. This was not a native pickup collection, full
+clear or human validation. No gameplay policy/compiler changes are included here;
+the release owner separately owns the new Journey action-policy correction.

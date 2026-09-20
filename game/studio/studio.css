@@ -91,25 +91,31 @@ h2 {
   grid-template-columns: minmax(180px, 0.7fr) minmax(440px, 2.2fr) minmax(260px, 1fr);
   border-block: 1px solid var(--line);
 }
-#actor-tools {
+#actor-tools,
+#bonus-tools {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 16px;
 }
-#actor-tools > .note {
+#actor-tools > .note,
+#bonus-tools > .note {
   grid-column: 1 / -1;
 }
-#actor-tools label {
+#actor-tools label,
+#bonus-tools label {
   min-width: 0;
 }
-#actor-tools > .pair {
+#actor-tools > .pair,
+#bonus-tools > .pair {
   align-items: start;
 }
-#actor-tools > .pair > label {
+#actor-tools > .pair > label,
+#bonus-tools > .pair > label {
   flex: 1;
 }
 @media (max-width: 560px) {
-  #actor-tools {
+  #actor-tools,
+  #bonus-tools {
     grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -188,6 +188,7 @@
           <p id="board-legend" class="legend">
             <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
             ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
+            <span>Framed pickups: + Life · &gt; Speed · v Slow · * Freeze</span>
           </p>
           <p id="geometry" class="note"></p>
           <label class="toggle"
@@ -306,6 +307,41 @@
                 <button id="actor-submit" type="submit">Validate & add actor</button>
                 <button id="actor-remove" type="button" disabled>Remove selected actor</button>
                 <p id="actor-result" class="note" role="status"></p>
+              </fieldset>
+            </form>
+          </details>
+          <details id="bonus-panel">
+            <summary>Place optional bonuses</summary>
+            <p id="bonus-qualification" class="note"></p>
+            <form id="bonus-form">
+              <fieldset id="bonus-tools">
+                <legend>Contact pickups · shared effects</legend>
+                <label>Bonus<select id="bonus-select"></select></label>
+                <label>Stable bonus ID<input id="bonus-id" maxlength="80" required /></label>
+                <label>Effect<select id="bonus-kind"></select></label>
+                <div class="pair">
+                  <label
+                    >X · cell centre<input
+                      id="bonus-x"
+                      type="number"
+                      min="0.5"
+                      max="71.5"
+                      step="1"
+                      required
+                  /></label>
+                  <label
+                    >Y · cell centre<input
+                      id="bonus-y"
+                      type="number"
+                      min="0.5"
+                      max="35.5"
+                      step="1"
+                      required
+                  /></label>
+                </div>
+                <button id="bonus-submit" type="submit">Validate & add bonus</button>
+                <button id="bonus-remove" type="button" disabled>Remove selected bonus</button>
+                <p id="bonus-result" class="note" role="status"></p>
               </fieldset>
             </form>
           </details>

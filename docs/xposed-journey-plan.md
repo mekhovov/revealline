@@ -238,6 +238,10 @@ Existing foundation/wall/terrain rectangles can also be reshaped or removed with
 exact-map-bound commands and copy-on-write revisions, without JSON editing.
 Compiler checks protect spawns and enemy domains; Undo/Redo, native reload and
 shared-map isolation are verified in the P02 evidence. No published map is changed.
+Optional contact pickup CRUD now uses the same compiler, without effect-strength or
+duration overrides. Studio exposes framed effect glyphs plus text positions; Team
+remains explicitly unqualified for bonuses. Scoped tests and native copy-only
+editing/Undo/Practice observations are recorded in the P02 evidence.
 
 P01 follow-up adds optional Journey backup inspection and non-destructive restore:
 missing records merge, current receipts/cursors win, and the v1 persisted schema
