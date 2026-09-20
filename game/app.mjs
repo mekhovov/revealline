@@ -65,6 +65,8 @@ import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
+import { upgradeSoundtrackLibrary, setCatalogueTracks } from './soundtrack.mjs';
+import { createSoundtrackSource, fetchSoundtrackCatalogue } from './soundtrack-source.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
 import { createStillMediaStore } from './media-store.mjs';
 import { createStoryMediaStore } from './story-media-store.mjs';
@@ -324,7 +326,7 @@ try {
     : await claimProfileWriter(navigator.locks, `${libraryKey}.writer`);
   let pictureManager = null;
   const getPictureManager = () =>
-    (pictureManager ??= createManagedMediaStore({ storyMedia: true }));
+    (pictureManager ??= createManagedMediaStore({ storyMedia: true, soundtrackCatalogue: true }));
   const externalChapters = navigator.locks?.request
     ? createExternalChapterHost({
         profileKey: libraryKey,
@@ -613,7 +615,11 @@ try {
     soundtrackPanel = null,
     soundtrackStore = null;
   let soundtrackAssets = new Map(),
-    soundtrackSuspended = false;
+    soundtrackSuspended = false,
+    soundtrackLibrary = null,
+    soundtrackMenuGesture = false,
+    soundtrackLastScene = null,
+    soundtrackScene = 'menu';
   let authoredMusic = null,
     soundtrackGeneration = -1,
     soundtrackDisposed = false;
@@ -818,7 +824,14 @@ try {
   function soundtrackContext() {
     const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
     const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
+    if (
+      $('shell-home').open ||
+      ($('shell-missions').open && $('shell-missions').dataset.view !== 'brief')
+    )
+      soundtrackScene = 'menu';
+    else if (started && !paused) soundtrackScene = 'gameplay';
     return {
+      scene: soundtrackScene,
       themeId: theme.id,
       campaignKey: edition,
       mapKey: JSON.stringify([edition, level.id, level.revision, theme.id]),
@@ -863,6 +876,22 @@ try {
   }
   async function initializeSoundtrack() {
     try {
+      let catalogue;
+      try {
+        catalogue = await fetchSoundtrackCatalogue({ signal: soundtrackLoad.signal });
+      } catch {
+        catalogue = {
+          format: 'revealline-soundtrack-catalogue.v1',
+          edition: 'originals-1',
+          tracks: [],
+        };
+      }
+      if (soundtrackDisposed) return;
+      const source = createSoundtrackSource({
+        catalogue,
+        readLocal: (hash) => soundtrackAssets.get(hash),
+        installedOnly: () => soundtrackLibrary?.listening?.installedOnly ?? false,
+      });
       const audioElement = document.createElement('audio');
       if (typeof audioElement.play !== 'function')
         throw new Error(
@@ -872,12 +901,7 @@ try {
       soundtrackPlayer = createSoundtrackPlayer({
         soundscape: sound,
         audioElement,
-        readAsset: async (hash) => {
-          const blob = soundtrackAssets.get(hash);
-          if (!blob)
-            throw new Error('This song is missing locally. Restore its soundtrack backup.');
-          return blob;
-        },
+        readAsset: source.readAsset,
         onChange: (state) => {
           soundtrackPanel?.update(state);
           soundtrackStatus(
@@ -896,10 +920,13 @@ try {
         document,
         store: soundtrackStore,
         player: soundtrackPlayer,
+        catalogue,
+        readAsset: source.readAsset,
         getContext: soundtrackContext,
         onLibrary: (_library, snapshot) => {
           if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
           soundtrackGeneration = snapshot.generation;
+          soundtrackLibrary = _library;
           soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
         },
         onError: (error) => soundtrackStatus(error.message || String(error)),
@@ -919,6 +946,9 @@ try {
           preferences({ musicVolume: value });
         },
         onAudioEnabled: () => preferences({ musicEnabled: true }),
+        onPlayback: () => {
+          soundtrackMenuGesture = true;
+        },
         beforeAudio: () => {
           if (soundtrackSuspended) {
             soundtrackSuspended = false;
@@ -937,7 +967,11 @@ try {
         if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
           soundtrackGeneration = snapshot.generation;
           soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
-          soundtrackPlayer.setLibrary(snapshot.library);
+          soundtrackLibrary = setCatalogueTracks(
+            upgradeSoundtrackLibrary(snapshot.library),
+            catalogue.tracks,
+          );
+          soundtrackPlayer.setLibrary(soundtrackLibrary);
           // This does not play audio. It only makes a selected local MP3 ready
           // before the player taps Start or Play, which iOS requires.
           void soundtrackPlayer.prepare();
@@ -960,6 +994,40 @@ try {
       if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
     }
   }
+  function startRememberedMenuMusic(event) {
+    if (
+      !event.isTrusted ||
+      soundtrackMenuGesture ||
+      !soundtrackPlayer ||
+      document.hidden ||
+      !library.preferences.musicEnabled ||
+      guideMusicWasPlaying ||
+      soundtrackContext().scene !== 'menu'
+    )
+      return;
+    if (
+      event.target?.closest?.(
+        '#soundtrack-dialog, #sound-button, #music-preview, #soundtrack-open, #shell-music',
+      )
+    )
+      return;
+    if (
+      event.type === 'keydown' &&
+      !['Enter', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)
+    )
+      return;
+    soundtrackMenuGesture = true;
+    void activateAudio({ explicit: true }).then(
+      (ok) => {
+        if (!ok) soundtrackMenuGesture = false;
+      },
+      () => {
+        soundtrackMenuGesture = false;
+      },
+    );
+  }
+  document.addEventListener('pointerdown', startRememberedMenuMusic);
+  document.addEventListener('keydown', startRememberedMenuMusic);
   const painter = new BoardPainter(presets, {
     onAsset: (message) => {
       const rig = visuals()?.player
@@ -1308,6 +1376,8 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      document.removeEventListener('pointerdown', startRememberedMenuMusic);
+      document.removeEventListener('keydown', startRememberedMenuMusic);
       soundtrackDisposed = true;
       soundtrackLoad.abort();
       enemyGuide.dispose();
@@ -4139,8 +4209,14 @@ try {
       overlay('won');
     }
     storyDialog.syncSettings();
-    if (soundtrackPlayer) soundtrackPlayer.update(!paused && started, theme, run);
-    else sound.update(!paused && started, theme, run);
+    if (soundtrackPlayer) {
+      const context = soundtrackContext();
+      if (context.scene !== soundtrackLastScene) {
+        soundtrackLastScene = context.scene;
+        soundtrackPlayer.setContext(context);
+      }
+      soundtrackPlayer.update(!paused && started, theme, run);
+    } else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       $('music-preview').textContent = 'Preview music ♫';
     $('sound-button').setAttribute('aria-pressed', String(sound.enabled));
@@ -4475,7 +4551,7 @@ try {
     soundtrackSuspended = false;
     void soundtrackPlayer.resume();
   }
-  const restoreAudioOnGesture = () => {
+  const restoreAudioOnGesture = (event) => {
     if (
       document.hidden ||
       soundtrackDisposed ||
@@ -4483,7 +4559,11 @@ try {
       !library.preferences.musicEnabled
     )
       return;
-    if (soundtrackPlayer && soundtrackSuspended) void activateAudio();
+    const listening = soundtrackPlayer?.snapshot();
+    const blockedListening =
+      event.isTrusted && listening?.desired && listening.status === 'blocked';
+    if (soundtrackPlayer && (soundtrackSuspended || blockedListening))
+      void activateAudio({ explicit: blockedListening });
     else if (!soundtrackPlayer && sound.enabled && sound.context?.state !== 'running')
       void sound.resume();
   };

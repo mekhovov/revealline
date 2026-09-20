@@ -1,5 +1,7 @@
 # Soundtrack library foundation
 
+Current expansion source adds opt-in soundtrack-library/bundle v2 and an explicit shared DB5 boundary. It preserves v1 imports and original bytes, adds genre/scene catalogue selection and offline-copy ownership, and keeps uploaded capacity independent of catalogue size. See [soundtrack expansion](soundtrack-expansion.md) for the current contract and unfinished original-production prerequisite. The foundation details below describe the original v1 milestone.
+
 This source increment provides versioned music metadata, preserved MP3 import, separate transactional storage, complete binary soundtrack transfers, and a separately integrated session player. The game now attaches the transport through Settings → Music library & playlists; see `docs/soundtrack-studio.md`. Finished original albums and platform/offline qualification remain distinct milestones. The existing five original synthesized recipes remain unchanged.
 
 ## Records and selection

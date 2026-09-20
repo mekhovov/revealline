@@ -6,6 +6,9 @@ import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { createExternalChapterPointerStore } from '../external-chapter-pointer.mjs';
 import { createManagedMediaStore, MANAGED_MEDIA_DATABASE } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
+import { upgradeSoundtrackLibrary } from '../soundtrack.mjs';
+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import { fixture as soundtrackFixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { installPack } from '../packs.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
@@ -108,7 +111,11 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
     packsKey: 'revealline.packs.dev.v1',
   });
   const writer = await claimProfileWriter(locks, pointer.keys.writerKey);
-  const manager = createManagedMediaStore({ indexedDB: media.indexedDB, storyMedia: true });
+  const manager = createManagedMediaStore({
+    indexedDB: media.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
   const still = createStillMediaStore({ managedStore: manager, decodeImage });
   const installer = createExternalChapterHost({
     indexedDB: assets.indexedDB,
@@ -179,6 +186,7 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
   return {
     assets,
     media,
+    manager,
     locks,
     values,
     storage,
@@ -340,9 +348,10 @@ test('pending journals, missing descriptors and absent original bytes refuse ins
   assert.deepEqual(f.writes(), before);
   await f.put(f.pointer.keys.indexKey, raw.index);
   const rows = await f.reader.refresh();
-  const db = await new Promise((resolve) => {
-    const r = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 4);
+  const db = await new Promise((resolve, reject) => {
+    const r = f.media.indexedDB.open(MANAGED_MEDIA_DATABASE, 5);
     r.onsuccess = () => resolve(r.result);
+    r.onerror = () => reject(r.error);
   });
   await new Promise((resolve, reject) => {
     const tx = db.transaction('mediaBlobs', 'readwrite');
@@ -685,3 +694,24 @@ for (const [name, build] of [
     assert.equal(f.model.urls.size, 0);
     assert.deepEqual(f.writes(), before);
   });
+
+test('current Couch reads installed art after solo saves catalogue-aware music without changing audio or originals', async (t) => {
+  const f = await fixture(t),
+    audio = await soundtrackFixture('couch-catalogue');
+  await f.manager.commitDomain(
+    'audio',
+    await prepareSoundtrackLibrary(upgradeSoundtrackLibrary(audio.library), audio.assets, {
+      probeMedia: structuralProbe,
+    }),
+    { expectedGeneration: 0 },
+  );
+  const prior = await f.manager.readDomain('audio'),
+    before = f.writes();
+  const rows = await f.reader.refresh();
+  assert.equal(rows.length, 3);
+  const binding = await f.reader.select(rows[0], { raceId: 1 });
+  assert.equal(binding.pin.identity.levelId, rows[0].level.id);
+  assert.deepEqual(f.writes(), before);
+  assert.deepEqual(await f.manager.readDomain('audio'), prior);
+  assert.deepEqual(await prior.assets[0].blob.arrayBuffer(), await audio.blob.arrayBuffer());
+});

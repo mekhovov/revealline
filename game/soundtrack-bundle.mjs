@@ -1,5 +1,11 @@
 import { boundedJSON, canonicalJSON, exactKeys, plainObject, required } from './data-json.mjs';
-import { SOUNDTRACK_LIMITS, resolveSoundtrackLibrary } from './soundtrack.mjs';
+import {
+  SOUNDTRACK_LIMITS,
+  SOUNDTRACK_FORMAT_V2,
+  soundtrackStoredTracks,
+  soundtrackReferencedTracks,
+  resolveSoundtrackLibrary,
+} from './soundtrack.mjs';
 import {
   inspectMP3,
   ownSoundtrackBlob,
@@ -9,14 +15,18 @@ import {
 } from './mp3.mjs';
 
 export const SOUNDTRACK_BUNDLE_FORMAT = 'revealline-soundtrack-bundle.v1';
+export const SOUNDTRACK_BUNDLE_FORMAT_V2 = 'revealline-soundtrack-bundle.v2';
 const MAGIC = new TextEncoder().encode('RLSTB1\r\n');
+const MAGIC_V2 = new TextEncoder().encode('RLSTB2\r\n');
 const MANIFEST_BYTES = SOUNDTRACK_LIMITS.metadataBytes + 32768;
 const preparedLibraries = new WeakSet();
 const hashValid = (value) => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
 /** Snapshot the finite Blob table without reading accessors or copying payload bytes. */
 export function ownSoundtrackAssets(value) {
   required(
-    Array.isArray(value) && Object.getPrototypeOf(value) === Array.prototype && value.length <= 128,
+    Array.isArray(value) &&
+      Object.getPrototypeOf(value) === Array.prototype &&
+      value.length <= SOUNDTRACK_LIMITS.assets,
     'Invalid soundtrack asset table.',
   );
   const descriptors = Object.getOwnPropertyDescriptors(value);
@@ -45,8 +55,9 @@ export function ownSoundtrackAssets(value) {
   }
   return Object.freeze(result);
 }
-function referencedAssets(library, assets) {
-  const wanted = new Map(library.tracks.map((t) => [t.asset.sha256, t.asset]));
+function referencedAssets(library, assets, complete = false) {
+  const tracks = complete ? soundtrackReferencedTracks(library) : soundtrackStoredTracks(library);
+  const wanted = new Map(tracks.map((t) => [t.asset.sha256, t.asset]));
   required(
     wanted.size === assets.length && assets.every((a) => wanted.has(a.sha256)),
     'Complete soundtrack transfer requires every referenced asset and no extras.',
@@ -65,8 +76,8 @@ function referencedAssets(library, assets) {
   );
   return wanted;
 }
-async function verifyAssets(library, assets, { signal, probeMedia } = {}) {
-  const wanted = referencedAssets(library, assets);
+async function verifyAssets(library, assets, { signal, probeMedia, complete = false } = {}) {
+  const wanted = referencedAssets(library, assets, complete);
   for (const { sha256, blob } of assets) {
     throwIfSoundtrackAborted(signal);
     const actual = await inspectMP3(blob, { signal });
@@ -99,11 +110,15 @@ export async function exportSoundtrackBundle(value, sourceAssets, { signal } = {
     assets = [...ownSoundtrackAssets(sourceAssets)].sort((a, b) =>
       a.sha256.localeCompare(b.sha256),
     );
-  await verifyAssets(library, assets, { signal });
+  await verifyAssets(library, assets, { signal, complete: true });
+  const v2 = library.format === SOUNDTRACK_FORMAT_V2;
+  const portableLibrary = v2
+    ? { ...library, installedTrackIds: library.catalogTracks.map((track) => track.id) }
+    : library;
   const manifest = new TextEncoder().encode(
     canonicalJSON({
-      format: SOUNDTRACK_BUNDLE_FORMAT,
-      library,
+      format: v2 ? SOUNDTRACK_BUNDLE_FORMAT_V2 : SOUNDTRACK_BUNDLE_FORMAT,
+      library: portableLibrary,
       assets: assets.map((a) => ({ sha256: a.sha256, bytes: a.blob.size })),
     }),
   );
@@ -111,7 +126,7 @@ export async function exportSoundtrackBundle(value, sourceAssets, { signal } = {
   const size = 12 + manifest.length + assets.reduce((n, a) => n + a.blob.size, 0);
   required(size <= SOUNDTRACK_LIMITS.bundleBytes, 'Complete soundtrack bundle exceeds 256 MiB.');
   const header = new Uint8Array(12);
-  header.set(MAGIC);
+  header.set(v2 ? MAGIC_V2 : MAGIC);
   new DataView(header.buffer).setUint32(8, manifest.length, false);
   return new Blob([header, manifest, ...assets.map((a) => a.blob)], {
     type: 'application/vnd.revealline.soundtrack',
@@ -123,10 +138,8 @@ export async function importSoundtrackBundle(source, { signal, probeMedia = prob
   required(blob.size >= 12, 'Truncated soundtrack bundle.');
   const header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
   throwIfSoundtrackAborted(signal);
-  required(
-    MAGIC.every((b, i) => b === header[i]),
-    'Unsupported soundtrack bundle.',
-  );
+  const v2 = MAGIC_V2.every((b, i) => b === header[i]);
+  required(v2 || MAGIC.every((b, i) => b === header[i]), 'Unsupported soundtrack bundle.');
   const size = new DataView(header.buffer).getUint32(8, false);
   required(
     size > 0 && size <= MANIFEST_BYTES && 12 + size <= blob.size,
@@ -144,10 +157,21 @@ export async function importSoundtrackBundle(source, { signal, probeMedia = prob
     maxString: 1024,
   });
   exactKeys(manifest, ['format', 'library', 'assets'], 'soundtrack bundle');
-  required(manifest.format === SOUNDTRACK_BUNDLE_FORMAT, 'Unsupported soundtrack bundle format.');
+  required(
+    manifest.format === (v2 ? SOUNDTRACK_BUNDLE_FORMAT_V2 : SOUNDTRACK_BUNDLE_FORMAT),
+    'Unsupported soundtrack bundle format.',
+  );
   const library = resolveSoundtrackLibrary(manifest.library);
   required(
-    Array.isArray(manifest.assets) && manifest.assets.length <= 128,
+    (library.format === SOUNDTRACK_FORMAT_V2) === v2,
+    'Soundtrack bundle/library versions differ.',
+  );
+  required(
+    !v2 || library.installedTrackIds.length === library.catalogTracks.length,
+    'Complete soundtrack backup must install every catalogue original.',
+  );
+  required(
+    Array.isArray(manifest.assets) && manifest.assets.length <= SOUNDTRACK_LIMITS.assets,
     'Invalid bundle asset table.',
   );
   let offset = 12 + size,

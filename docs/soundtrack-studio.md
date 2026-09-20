@@ -1,5 +1,7 @@
 # Soundtrack Studio
 
+The current expansion adds family selection (90s Synth, Metal, Ukrainian and Fusion), My Mix checkboxes, track tags, original-album offline downloads and additive creator shares. See [soundtrack expansion](soundtrack-expansion.md) for v2/DB5 compatibility, the 24 optional licensed recordings and the 36 originals still awaiting hosted production and listening review. Existing backup replacement and explicit prepared-download behavior remain as documented below.
+
 The local Sound / Studio dialog edits the versioned soundtrack library and uses the persistent music player. It is an admin tool inside the dark game shell. It does not publish files to a server or change the simulation, scores or earned pictures.
 
 ## Player controls
