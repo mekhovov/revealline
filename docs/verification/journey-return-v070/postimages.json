@@ -1,0 +1,101 @@
+[
+  {
+    "packet": "p03-journey-menu-return-b25-r3",
+    "path": "game/app.mjs",
+    "before": "a171d720ed70581a23d7cd6f50636168aa973b2f2a4a859e2a04e6584ca12a4e",
+    "sealed": "950f03de3bd9baf7539c9a7034afb27ef06199820d354f0b72c104cf161077a6",
+    "after": "63930ba5d3ba937590444c1b71872b304fcd62ebdbd6c13af4c596856be68a50",
+    "bytes": 331383,
+    "merge": "reviewed exact hunks on composed source"
+  },
+  {
+    "packet": "p03-journey-menu-return-b25-r3",
+    "path": "game/ui/game-shell.mjs",
+    "before": "f7527061ed19fc08700be6959058cc18b81fee00d24ff5d9f018fd979faf6684",
+    "sealed": "f98e9cad79aec5d3233548d18e251d336e58697f1c0ccf58fd9fdc032befc7bf",
+    "after": "e2291cec9dfe492d0a6ed039e39e9b470d1aaf1cc4b6e823bd9c96aa1b9c7871",
+    "bytes": 27832,
+    "merge": "reviewed exact hunks on composed source"
+  },
+  {
+    "packet": "p03-journey-menu-return-b25-r3",
+    "path": "game/ui/journey-chooser.mjs",
+    "before": "528427dcb4b3cd6d9f65d20a657d2f7110a7a4fb34c1ab5f8e47aca8ffaf6db8",
+    "sealed": "71471e3b4477f122f297e7a0b32263db8034ef671e1fe41306ff3fc9aa256c03",
+    "after": "71471e3b4477f122f297e7a0b32263db8034ef671e1fe41306ff3fc9aa256c03",
+    "bytes": 7131,
+    "merge": "exact sealed postimage"
+  },
+  {
+    "packet": "p03-journey-menu-return-b25-r3",
+    "path": "game/test/journey-menu-return-host.test.mjs",
+    "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sealed": "8a96fa78627110d6941897d894344096c3ecacce970f35182ff454c661d3b547",
+    "after": "8a96fa78627110d6941897d894344096c3ecacce970f35182ff454c661d3b547",
+    "bytes": 5318,
+    "merge": "exact sealed postimage"
+  },
+  {
+    "packet": "p03-journey-menu-return-b25-r3",
+    "path": "docs/journey-menu-return.md",
+    "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sealed": "cbe8741322512fde8449f95393e77c35d8afd16eaa09f834d38a5cd0e029bd95",
+    "after": "cbe8741322512fde8449f95393e77c35d8afd16eaa09f834d38a5cd0e029bd95",
+    "bytes": 1925,
+    "merge": "exact sealed postimage"
+  },
+  {
+    "packet": "p03-journey-menu-return-b25-r3",
+    "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "before": "ad802fa44f56ec29e4f155559849f2e484c1fd2777556776c2b957747862c5e9",
+    "sealed": "534dc9554f0f51b0f46c682d09828b2a8f5256af94a62db3e4e1ac298cd5363f",
+    "after": "85882b9fb2f51a55a0a61e383151daa77ffd4c29aefe2e1def2e04f19ee1875c",
+    "bytes": 283558,
+    "merge": "preserve all independent skill appends"
+  },
+  {
+    "packet": "p03-journey-continue-caption-b25-r2",
+    "path": "game/app.mjs",
+    "before": "63930ba5d3ba937590444c1b71872b304fcd62ebdbd6c13af4c596856be68a50",
+    "sealed": "b3af4b6e7488c88fee38436fc784319e3540a622acfb76a5c0fe8ee386b2e52e",
+    "after": "7fc2c90a2a377614138b35a04c4a8678d2b2d1672e673ca5dfb440d6bb5809a6",
+    "bytes": 331517,
+    "merge": "reviewed exact hunks on composed source"
+  },
+  {
+    "packet": "p03-journey-continue-caption-b25-r2",
+    "path": "game/ui/game-shell.mjs",
+    "before": "e2291cec9dfe492d0a6ed039e39e9b470d1aaf1cc4b6e823bd9c96aa1b9c7871",
+    "sealed": "5a1f3546d131688b303f916cfb8b6680b6261fe686d8b91bf5fffcde59667e77",
+    "after": "666d01ffd24121bc8a030fa846545c052e134b95ec7bee0297f23c3bafaded97",
+    "bytes": 27892,
+    "merge": "reviewed exact hunks on composed source"
+  },
+  {
+    "packet": "p03-journey-continue-caption-b25-r2",
+    "path": "game/test/journey-continue-caption-host.test.mjs",
+    "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sealed": "a2aa70ceb6a9b40ec8b83398ee81ad13fb3707845f78450d5f367c1dc5521d94",
+    "after": "a2aa70ceb6a9b40ec8b83398ee81ad13fb3707845f78450d5f367c1dc5521d94",
+    "bytes": 4118,
+    "merge": "exact sealed postimage"
+  },
+  {
+    "packet": "p03-journey-continue-caption-b25-r2",
+    "path": "docs/journey-continue-caption.md",
+    "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sealed": "507674e39211b69cdeb7c2f347d23a0f87051ded4f9efe038c48508de9dfc0f2",
+    "after": "507674e39211b69cdeb7c2f347d23a0f87051ded4f9efe038c48508de9dfc0f2",
+    "bytes": 1343,
+    "merge": "exact sealed postimage"
+  },
+  {
+    "packet": "p03-journey-continue-caption-b25-r2",
+    "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    "before": "85882b9fb2f51a55a0a61e383151daa77ffd4c29aefe2e1def2e04f19ee1875c",
+    "sealed": "0867c159730efe41140223299bd670143e4abdb547aabf5691d3df12fc054932",
+    "after": "556bf6539467ea28a866e485285cc5e85739106a014b65671cded6c566b564b0",
+    "bytes": 284144,
+    "merge": "preserve all independent skill appends"
+  }
+]
