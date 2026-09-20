@@ -38,8 +38,8 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const rescue =
     'Hold Support on safe ground beside a downed partner for one second to rescue them without spending a reserve. Avoid steering while rescuing.';
   const route = jointCuts
-    ? 'Start with a small loop, then meet your partner to join a larger cut.'
-    : 'Bring each cut back to safe ground. Meeting your partner does not join the lines.';
+    ? 'Bank small loops; meet to join cuts.'
+    : 'Bank on safe ground; cuts stay separate.';
   return {
     threatTitle: threats.length ? 'Watch the threats.' : 'Practice your routes.',
     threatText: threats.length
@@ -61,7 +61,7 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
       ? 'Plan routes to the anchors, then claim the exposed cores with later cuts.'
       : 'Create safe routes together. Use the revealed ground to launch your next cut.',
     startMessage: hunters
-      ? `Watch the Hunter warnings and cross during recovery. ${route}`
+      ? `Watch Hunter warnings; cross during recovery. ${route}`
       : drifters
         ? `Keep cuts short near patrolling Drifters. ${route}`
         : relays
