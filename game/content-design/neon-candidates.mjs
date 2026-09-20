@@ -319,7 +319,10 @@ export function createNeonCandidates() {
           'foundations',
           'frontier-patrol',
           ...(row.terrain.length ? ['slow-field'] : []),
-          ...(row.id === 'neon-remix' ? ['lethal-field', 'perimeter-patrol'] : []),
+          ...(row.id === 'neon-remix' ? ['lethal-field'] : []),
+          ...(row.actors.some((actor) => actor.role === 'perimeter-patrol')
+            ? ['perimeter-patrol']
+            : []),
         ],
         durationSeconds: row.duration,
         difficulty: {

@@ -139,6 +139,27 @@ four-file Neon cohort passes22/22, zero failures/skips,13.870seconds, Node20.19.
 changed-source lint and formatting pass. Alternative routes are now feasible, but
 choice quality, timing tolerance, capture explanation and human enjoyment remain.
 
+### Varied seeds, delayed decisions and authored-role correction
+
+All63 ordinary/supplemental paths remain legal no-loss clears across explicit seeds
+0,1,42,2026 and4294967295 (315 runs). This establishes bounded deterministic route
+feasibility, not all possible seeds or human mastery success. Thirty-five additional
+Standard/immediate routes cover every mission after0.25,0.5,1,2 and5seconds idle,
+including no loss during the wait, pinned checkpoints and public replay verification.
+
+Retained negative finding: Four quarters' default upward cut loses a life31ticks
+after a5second wait. Idle itself is safe. The alternative first moves24ticks upward
+within the cross and360ticks right, then departs from the upper-right approach.
+The unchanged board has a no-loss clear; this is an explicit route change, not a
+promise that the same opening stays safe. Both outcomes have regression fixtures.
+The five complete Neon files pass25/25, zero failures/cancellations/skips,
+29.330seconds on Node20.19.5; changed-source lint and formatting pass.
+
+Independent review also found Dogleg return and Staggered circuit's authored
+combination labels omitted their actual outer patrol. Perimeter-patrol metadata
+is now derived from each mission's actor roles, with a regression assertion.
+No actor, movement rule, map, replay identity or duration hypothesis was retuned.
+
 Storage: media/full-build512MiB and source-materialization256MiB guards remain.
 After space dropped below256MiB, only read-only work continued until the publisher
 defined a separate tiny text correction transaction: patch/new-source packet at
@@ -147,8 +168,7 @@ assets, dependency installation, full checkout, lazy fetch or automatic Git GC.
 This small Studio/test/evidence packet uses that class, not the bulk-build path.
 User was asked nonblocking to free5GB or provide another writable volume.
 
-Next gates: meaningful alternative routes; optional
-goal predicates and pacing/cleanup; native frontier reshaping; separate authored Team
+Next gates: human route-choice/pacing/cleanup review; native frontier reshaping; separate authored Team
 content; original campaign assets; full final-source CI/review/release/Pages; genuine
 human difficulty/comprehension/enjoyment. Source-only preparation uses a16MiB sparse
 worktree and shared immutable dependency symlink to preserve local disk reserves.
