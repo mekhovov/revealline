@@ -24,6 +24,21 @@ dialog.shared-settings {
   border: 2px solid var(--fk-line);
   border-radius: 0;
 }
+/* Keep Solo navigation outside the long settings panel's scroll region. */
+#settings-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#settings-dialog > :is(.eyebrow, h2, .field-kit-settings-tabs) {
+  flex-shrink: 0;
+}
+#settings-dialog > .field-kit-settings-panel {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: auto;
+  padding-inline: 4px;
+}
 .shared-settings .field-kit-settings-tabs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -112,5 +127,29 @@ dialog.shared-settings {
   }
   dialog.shared-settings {
     padding: 20px;
+  }
+}
+
+@media (max-height: 500px) {
+  .field-kit.game-shell #settings-dialog.shared-settings {
+    padding: 12px 16px;
+  }
+  #settings-dialog > .eyebrow {
+    display: none;
+  }
+  #settings-dialog > h2 {
+    display: flex;
+    align-items: center;
+    min-block-size: 44px;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    margin: 0 52px 8px 0;
+  }
+  #settings-dialog .field-kit-settings-tabs {
+    margin-block: 4px 8px;
+    padding-block: 4px;
+  }
+  #settings-dialog .field-kit-settings-tabs > button {
+    padding: 4px 6px;
   }
 }

@@ -1514,7 +1514,10 @@ try {
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
       ? 'touch'
       : 'keyboard';
-  const modalNavigation = attachModalNavigation();
+  const modalNavigation = attachModalNavigation({
+    getFallbackFocus: ({ dialog, top }) =>
+      dialog.id === 'settings-dialog' && !top ? $('shell-menu') : null,
+  });
   const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
     const b = controllerLabels.menu;
