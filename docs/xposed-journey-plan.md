@@ -137,6 +137,11 @@ original raster reveal candidates, pinned to exact bytes, hashes and dimensions.
 Whole-set native partial-reveal/contrast and human qualification remain open.
 The separate three-preset next-attempt preference store is tested but is not yet
 wired into player hosts; Legacy and v1 Journey progress schemas stay unchanged.
+The shared candidate attempt preparer now exercises all sixty opening full-clear
+routes with exact compiler, preset, roster and replay identities, cancellation and
+verified artwork. It prepares but does not adopt into Journey or award progress.
+Studio now uses the actual authored Horizon theme, fixing its previous silent
+Retro substitution. See `docs/verification/xposed-journey-attempt-boundary.md`.
 Team qualification, Journey adoption and release gates remain. None of that branch's
 implementation is implied to ship in the P00 technical preview.
 

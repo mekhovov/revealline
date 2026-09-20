@@ -521,9 +521,10 @@ $('play').onclick = guarded(async () => {
   $('preview-status').textContent = 'Preparing the exact candidate…';
   let result;
   try {
-    const pin = prepareContentPreview(source, missionId, { difficulty }).manifest.background;
+    const manifest = prepareContentPreview(source, missionId, { difficulty }).manifest;
+    const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
-      loadPreviewTheme({ signal: controller.signal }),
+      loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
       pin ? loadPreviewArtwork(pin, { signal: controller.signal }) : null,
     ]);
     if (ticket !== previewRevision) return;

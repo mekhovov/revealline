@@ -1,10 +1,13 @@
 /** Fetch is bounded even when a host ignores cancellation. No storage or draft
  * mutations occur here; the caller must still check its request identity. */
 export async function loadPreviewTheme({
-  fetchTheme = (signal) => fetch('../content/themes.json', { signal }),
+  themeId = 'horizon',
+  fetchTheme = (signal) => fetch(new URL('./themes.json', import.meta.url), { signal }),
   signal,
   timeoutMs = 20000,
 } = {}) {
+  if (typeof themeId !== 'string' || !/^[a-z0-9][a-z0-9._-]{0,79}$/.test(themeId))
+    throw new Error('Invalid preview theme ID.');
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > 20000)
     throw new Error('Invalid preview timeout.');
   const controller = new AbortController();
@@ -32,7 +35,7 @@ export async function loadPreviewTheme({
         if (!response.ok)
           throw new Error('Preview theme failed to load. Your draft remains unchanged.');
         const body = await response.json();
-        const theme = body?.themes?.find((candidate) => candidate.id === 'retro');
+        const theme = body?.themes?.find((candidate) => candidate.id === themeId);
         if (!theme) throw new Error('Preview theme is unavailable.');
         return theme;
       }),

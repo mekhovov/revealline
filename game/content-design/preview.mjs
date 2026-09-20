@@ -25,6 +25,8 @@ export function prepareContentPreview(
       throw new Error(
         'Only Solo has a Studio gameplay preview; paired-race launch is not substituted.',
       );
+    if (theme.id !== manifest.presentation.themeId)
+      throw new Error('Preview theme must match the authored mission presentation.');
     scenario = {
       format: FOUNDATION_SCENARIO_VERSION,
       masteryDefinition: null,
