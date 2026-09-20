@@ -7,7 +7,7 @@ import { loadPreviewTheme } from '../content-design/preview-loader.mjs';
 import { loadPreviewArtwork } from '../content-design/assets.mjs';
 import { createContentDraftBackend, forkMissionMap } from '../content-design/drafts.mjs';
 import { createContentDraftSession } from '../content-design/session.mjs';
-import { editContentStructure } from '../content-design/structure.mjs';
+import { editContentStructure, inspectContentRemoval } from '../content-design/structure.mjs';
 import {
   inspectDraftCheckpoint,
   createInspectionRequests,
@@ -236,14 +236,27 @@ function syncStructure() {
     ['item-id-row', creating],
     ['item-name-row', creating || action === 'rename'],
     ['item-band-row', kind === 'campaign' && action === 'create'],
-    ['item-parent-row', kind !== 'pack' && action !== 'rename'],
+    ['item-parent-row', kind !== 'pack' && !['rename', 'delete'].includes(action)],
+    ['item-confirm-row', action === 'delete'],
   ])
     $(id).hidden = !visible;
   $('item-id').required = creating;
   $('item-name').required = creating || action === 'rename';
   $('item-band').required = kind === 'campaign' && action === 'create';
   $('item-target').required = action !== 'create';
-  $('item-parent').required = kind !== 'pack' && ['place', 'earlier', 'later'].includes(action);
+  $('item-parent').required =
+    kind !== 'pack' && ['place', 'detach', 'earlier', 'later'].includes(action);
+  $('item-confirm').required = action === 'delete';
+  const removal =
+    action === 'delete' && $('item-target').value
+      ? inspectContentRemoval(project, kind, $('item-target').value)
+      : null;
+  $('item-dependencies').hidden = action !== 'delete';
+  $('item-dependencies').textContent = removal
+    ? removal.deletable
+      ? `Delete ${removal.name} (${removal.id}) from this draft only. Maps, assets and saved checkpoints stay intact. Type the exact ID to confirm; Undo restores the item.`
+      : `Cannot delete ${removal.name}. Remove memberships first: ${removal.dependencies.map((entry) => `${entry.kind} ${entry.id} (${entry.relation})`).join(', ')}. No automatic cascade.`
+    : 'Choose an item to inspect its dependencies.';
   $('structure-order').textContent = project.packs
     .map(
       (pack, index) =>
@@ -258,9 +271,15 @@ function syncStructure() {
     )
     .join('\n');
   $('item-apply').disabled =
-    (action === 'duplicate' && kind !== 'mission') || (action === 'place' && kind === 'pack');
+    (action === 'duplicate' && kind !== 'mission') ||
+    (['place', 'detach'].includes(action) && kind === 'pack') ||
+    (action === 'delete' && !removal?.deletable);
 }
-for (const id of ['item-kind', 'item-action']) $(id).onchange = syncStructure;
+for (const id of ['item-kind', 'item-action', 'item-target'])
+  $(id).onchange = () => {
+    $('item-confirm').value = '';
+    syncStructure();
+  };
 $('create-first-mission').onclick = () => {
   $('structure-editor').open = true;
   $('item-kind').value = 'mission';
@@ -281,13 +300,15 @@ $('structure-form').onsubmit = guarded((event) => {
     ...(creating || action === 'rename' ? { name: $('item-name').value.trim() } : {}),
     ...(action === 'duplicate' ? { sourceId: $('item-target').value } : {}),
     ...(kind === 'campaign' && action === 'create' ? { band: Number($('item-band').value) } : {}),
-    ...(kind !== 'pack' && action !== 'rename' && $('item-parent').value
+    ...(kind !== 'pack' && !['rename', 'delete'].includes(action) && $('item-parent').value
       ? { parentId: $('item-parent').value }
       : {}),
     ...(['earlier', 'later'].includes(action) ? { offset: action === 'earlier' ? -1 : 1 } : {}),
+    ...(action === 'delete' ? { confirmationId: $('item-confirm').value.trim() } : {}),
   };
   const candidate = editContentStructure(session.current(), command);
   session.replace(candidate);
+  $('item-confirm').value = '';
   render(kind === 'mission' ? command.id : $('mission').value);
   $('item-target').value = command.id;
   $('structure-result').textContent =
