@@ -53,6 +53,16 @@ fixtures and presentation/motion modules in the sparse checkout, not gameplay
 assertion regressions. Exact HEAD files and their sparse patterns were restored;
 no production logic or route expectations changed to make the cohort pass.
 
+Independent review found that a missing project actorCatalogId could accidentally
+use the standalone helper's legacy default. The project boundary now requires an
+explicit registered ID before lookup. Missing/null/empty/unknown/prototype-like
+values fail closed for Solo, Team and v2 roamer drafts; intentional standalone
+legacy calls and owned compiled-project reuse remain unchanged. The initial
+regression assertion mismatched catalog/catalogue spelling; only that test matcher
+was corrected. Three authoring files pass23/23 in1.664seconds. The post-fix
+Rover/Horizon/Border route cohort passes49/49 in47.399seconds, with zero failures,
+cancellations or skips, Node20.19.5. Lint, formatting and diff checks pass.
+
 Remaining: authored Rover learning arcs/Remix, reference adaptations, full legal
 routes and alternatives, broader historical route pins, native Studio/game
 inspection, spawn/timing/escape-corridor tuning, original pixel artwork, purposeful
