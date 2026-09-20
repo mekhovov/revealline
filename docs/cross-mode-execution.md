@@ -1,5 +1,29 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.68.2 scoped public verification complete
+
+**Public default: [v0.68.2](https://mekhovov.github.io/revealline/releases/v0.68.2/site/game/).**
+Publisher PR183 merged `67b86e00`; Pages35501817965/deployment6551163081 passed the
+full3,660-file/645,883,268-byte audit with zero failures/retries. Native keyboard
+checks passed same-current-chapter preservation, deliberate different-chapter
+Replace and Stay with visible state/focus retained. [Evidence and limits](verification/current-chapter-v0682/public/README.md).
+This accepts that named correction only; P03/P06 remain partial.
+
+**Open P06 finding:** external Pressure Pictures installation refused a retained
+picture-binding conflict and preserved existing media/flight. Diagnose and offer
+a recoverable explicit resolution; do not overwrite or relax identity guards.
+
+**Next:** qualify Journey candidate `041f1a71` (PR184, unpublished0.69.0), including
+Arcade action authority, saved-edition recovery, explicit untimed Versus and legacy
+reference identities; then qualify shared custom music composition. Forty-seven
+focused correction tests pass on Node20.19.5 and22.22.2. Full source gates and public
+acceptance remain required. The music composition is a candidate, not a shipped
+feature. Continue actor/presentation parity, action feedback, fair challenge, rewards
+and authoring according to the stable phase tables below.
+
+<details>
+<summary>Previous v0.68.2 publication cutoff — retained history</summary>
+
 ## Current delivery — v0.68.2 qualified; Pages verification pending
 
 **Accepted public baseline remains [v0.68.1](https://mekhovov.github.io/revealline/releases/v0.68.1/site/game/) until the new selector deployment passes its public checks.** The v0.68.2 original release is published as release 392361562, tag object `222c5f1e`, source `aadd855e` / tree `02080a77`. Source PR179 merged as `8114a4da` with the identical tree. Both complete hosted families passed **6,753 tests across 518 files on Node 20.19.6**, and the original source/distribution/offline bindings passed hosted inspection. The actual upload consumer verified all seven metadata assets and the two original payloads. No physical-device, listening or full-phase claim follows from those checks.
@@ -961,6 +985,8 @@ The nineteen deduplicated core test files passed151 reported checks, and the com
 Native Replay testing found three corrections: Jump to playback did not transfer keyboard focus, completing playback disabled the focused Play/Step action without handing focus to Restart, and shared CSS overrode the intended readout size. All three are integrated; predecessor failures remain retained. Completed Play's amber disabled styling remains a separate component-state follow-up. Static review also found and corrected Studio textarea whitespace, preserving multiline prompts and evidence. Those corrections completed final-source qualification and the scoped v0.60.0 public-byte/browser gate linked in the [current progress report](../publishing/pages-controller/delivery/evidence/cross-mode-p05/public-v0600/planning/progress-and-next.md). The reported native scope does not qualify physical input, disconnected operation or all supporting screens. Future corrections require their own exact-source and public gates.
 
 The broader P03 device/lifecycle matrix stays open. P04 picture-context repairs, cold Back filter/selection coherence and focus after successful mutation commands disable their trigger remain separate. Other supporting-screen adapters, full art parity and physical qualification remain in their approved phases.
+
+</details>
 
 </details>
 
