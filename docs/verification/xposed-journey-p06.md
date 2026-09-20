@@ -77,3 +77,19 @@ Revision2 moves the two anchors onto the upper/lower expansion routes. A new
 legal route captures them before its final coverage closure; both originals and
 the correction remain evidence, not a claim of human pacing. Full all-preset
 clear/replay/race and optional-goal qualification continues before final artwork.
+
+## Full-clear technical qualification
+
+All42 mission/preset/steering tuples now have pinned legal-input no-loss clears.
+Each runs through the public replay exporter/verifier, preserving its exact
+simulation identity, final checkpoint and fixed coverage denominator. Each also
+completes an independent, equal untimed paired-board race. Required anchors are
+captured no later than the first coverage-goal crossing on every qualified route.
+The three introductory missions actually experience erosion, rather than finishing
+before their lesson occurs. All clears require multiple closures.
+
+Node20.19.5:13/13 route tests pass. Node22.22.2:20/20 combined candidate,
+preview and route tests pass; scoped lint passes. These42 routes establish
+feasibility, not a measured human duration, difficulty curve or enjoyment claim.
+Optional mastery, variable timing/seeds, original artwork and human acceptance
+remain separate gates. No source release or Pages promotion is implied.
