@@ -408,3 +408,39 @@ qualification/freeze run35499363901 successfully: artifact10602770700,
 `sha256:dabf9886bb4dcc0087edd1111ce0152cf5e2d6f2b118819939b5e773110b9e25`.
 This does not qualify the later Studio additions or this integrated source and is
 not a Pages deployment. P02, human acceptance and whole-plan completion remain open.
+
+## Untimed authored paired-board races
+
+The90-second consistency gap above is now addressed in candidate source. Ordinary
+authored races explicitly choose `xonix-duel.untimed.v1` with zero duration and a
+null match deadline. The existing `xonix-duel.v1` protocol still defaults to90seconds,
+rejects zero, and retains its exact object shape and timed adjudication. No old
+edition or timed match is reinterpreted. Future input packets must match the
+selected protocol as well as ruleset, match, seat and tick; omitted context keeps
+the historical timed protocol. There is no whole-match replay format in the
+current host. Existing per-board replay formats remain unchanged and verify.
+
+First clear still wins; simultaneous clears draw. If both flights end, coverage,
+then lives, then score decide. Pause and fresh-direction recovery are unchanged.
+Authored level-specific deadlines remain properties of the shared compiled level;
+this removes only the unrelated universal race timer. Ordinary Legacy races keep
+their30/90/180-second setup options.
+
+The authored host ignores the Legacy duration selector and removes that field
+from its setup. Summary, HUD and help say no race countdown. Native Behind the
+patrol started two equal0% /three-life boards, showed No countdown, and paused
+both boards. Help accurately described untimed adjudication; return did not start
+a round, the duration field was hidden, and console errors were empty. This is
+not a native full clear or physical-controller qualification.
+
+Core tests cover explicit protocol admission, invalid durations, idle play beyond
+90seconds, pause, equal timed/untimed clear checkpoints, both per-board replay
+verifications, single-player victory, terminal freezing, both-ended ranking and
+cross-protocol packet rejection. The former host test expecting an automatic
+90-second result correctly failed; it now verifies both boards remain running
+past90seconds, no clear is awarded, and Next is not offered for idle play. The
+targeted regression passes. All84 Border paired-board route repetitions now use
+the actual untimed protocol and pass with unchanged authoritative outcomes.
+The corrected combined core/host/shell/layout cohort passes66/66; full lint,
+changed-source formatting and diff checks pass. A new exact-source hosted gate
+must finish before promotion. Human pacing and final phase acceptance remain pending.
