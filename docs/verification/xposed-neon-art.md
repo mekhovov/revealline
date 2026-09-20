@@ -41,6 +41,46 @@ ordinary/mastery/seed/delay and paired-board regressions, exact original preview
 verification for Border/Signal/Neon and bounded packaging. Changed-source lint,
 formatting and diff checks also pass.
 
-Remaining: native partial/full reveals for all seven, threat/trail contrast,
+## Native first-return observations
+
+Exact source96aa719aa27d046a32082071ed73392ff11613ab was served read-only from
+Git atlocalhost8785, with no source or image overrides. Fresh Studio tab27
+inspected the picture project without adopting it, then explicit Apply saved
+checkpoint1. All seven missions launched through real Solo Practice with their
+correct original picture. Normal keyboard first-return observations, Standard:
+
+| Mission | Earned reveal | Score | Lives retained |
+|---|---:|---:|---:|
+| Folded corner | 0.5% | 100 | 3 |
+| Inside out | 0.3% | 70 | 3 |
+| Four quarters | 2.2% | 420 | 3 |
+| Side-door bays | 0.3% | 70 | 3 |
+| Dogleg return | 6.0% | 1260 | 3 |
+| Staggered circuit | 0.4% | 70 | 3 |
+| Three open circuits | 0.3% | 60 | 3 |
+
+Screenshots showed different original imagery in foundations and earned trails,
+retained black field, differentiated pink field threats/cyan frontier patrols,
+and separate slow/lethal markings. Dogleg's capture explicitly neutralized eight
+slow cells. These desktop first returns are not full-clear, all-region contrast,
+physical-device, human comprehension or enjoyment evidence. The existing global
+presentation still supplies sprites/HUD; a finished campaign actor treatment is
+not claimed. The final practice is paused at0:16 with0.3%,60score,3lives.
+
+Staggered circuit exposed an additional lifecycle issue: a slow boot crossed
+Studio's20-second timeout and became playable, but its parent status remained
+"Preview has not reported ready." The timeout stopped polling permanently.
+This observation is retained as a follow-up defect, not hidden by the other
+successful launches; the draft remained saved and the actual first return worked.
+
+The follow-up now treats20seconds as a one-time slow warning while continuing
+to observe only the owned exact-URL document. Ready/failed settles the monitor;
+replacement, Close and pagehide cancel it. Readiness no longer depends on the
+iframe load event, which may lag behind application readiness. Seven deterministic
+monitor regressions plus the existing Studio/preview-loader cohort pass18/18,
+zero failures/cancellations/skips,7.608seconds on Node20.19.5. Native controlled
+slow-boot verification is still pending at this source checkpoint.
+
+Remaining: native full reveals for all seven, whole-board threat/trail contrast,
 small-screen/reduced-effects review, actual campaign theme adoption, human
 comprehension/enjoyment, exact-source hosted qualification and release/Pages.
