@@ -166,3 +166,22 @@ Local free space declined below 500 MiB during concurrent workspace activity. No
 large artifact download/build, bulk art generation or user-data deletion was
 performed. Small source changes and the one 2.3 MiB original image remain safe to
 retain; further bulk work must respect the existing storage reserve.
+
+## Capture-teaching continuation fix
+
+The accepted closure emits `cells.claimed` followed by `capture.stopped`.
+The latter used to replace the Journey explanation with a generic percentage.
+It now preserves occupied-region/enemy teaching and appends the fresh-direction
+instruction. Legacy/non-Journey feedback is unchanged; no simulation or replay
+semantics changed. This correction must be integrated into final P00 source and
+qualified there; frozen `34e3f742` receipts do not cover it.
+
+The real-host regression installs a two-keeper Classic fixture through the
+visible library, closes a legal cut, and requires both occupied regions and
+their actors to remain explained after stopping and another frame. Full Classic
+and Journey host cohort: **15/15 passed**, no failures, skips or cancellations,
+including ten consecutive clears and campaign-boundary load failure/retry.
+The first test setup left Journey's chooser open by invoking the legacy briefing
+helper; using the actual title-screen/library entry fixed that fixture, without
+relaxing gameplay or official-content authority. Changed-file lint and diff
+whitespace checks passed.
