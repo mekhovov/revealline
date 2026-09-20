@@ -123,10 +123,29 @@ victory, unchanged coverage denominator, immediate marked-cell neutralization,
 genuine initial field anchors, optional-Remix exclusion and exact CLI/Studio parity.
 Initial full-clear solver probes exposed an overly empty exterior in Outer loop;
 one measured exterior keeper was added without changing the shared speed recipe.
-These probes are not yet the full committed route qualification matrix and do not
-prove the proposed human-duration or mastery targets. All artwork is explicitly
+The committed qualification matrix now contains42 exact prepared Solo clears and
+42 equal paired-board races, covering all seven candidates, three presets and both
+steering policies. All are no-life-loss seed1 routes, use marked field during actual
+movement, require multiple closures, preserve the denominator and reproduce exact
+simulation identities/checkpoints through public replays. The Remix opens its
+relay before victory and traverses the connector; no route reaches quota before
+required objectives. The13 route tests pass on both Node versions. Six additional
+tests replay all42 routes across seeds2,7,19,41,99:210 further no-life-loss clears
+pass on both. These finite samples do not establish all-seed safety or human pacing.
+The optional Remix remains excluded from automatic core continuation.
+
+Native exact-source `f0c36216168059ce56129511bdd8791fc67c674d` verification at a
+separate read-only local server confirmed explicit Inspect/Apply, seven mission
+choices and the added static arrow legend. Compass array's six directional zones
+were distinct in the actual Practice renderer. A native upward input closed the
+north neck, stopped on its broad landing, preserved three lives and showed0.3% /
+70points. Only the captured center strip lost its arrows. Preview close returned
+to the selected draft. This is scoped keyboard/layout evidence, not a native
+full clear or device-matrix acceptance.
+
+The probes do not prove the proposed human-duration or mastery targets. All artwork is explicitly
 greybox/null; the Horizon palette is a candidate fallback, not Crosswind's final art.
 
-Original assets, full preset/route/mastery/seed/delay matrices, Team and human acceptance remain
+Original assets, mastery/delayed-start matrices, Team and human acceptance remain
 open. Team rejects successor editions rather than silently dropping their rules.
 No public Journey selects this work; hosted qualification and release remain open.
