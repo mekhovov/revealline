@@ -1,0 +1,51 @@
+[
+  {
+    "path": "result.json",
+    "bytes": 190,
+    "sha256": "d236925f69b5b95293bc3e514d4304f464a6b7c6f45e65edb6105712d93686ed",
+    "originalSHA256": "d236925f69b5b95293bc3e514d4304f464a6b7c6f45e65edb6105712d93686ed"
+  },
+  {
+    "path": "node20.log.gz",
+    "bytes": 1589,
+    "sha256": "8e20b4f31ba289bcb660fc7fb85cedd5acf2d97481478ecc1ba067f84716d645",
+    "originalSHA256": "d0c34fbb2aeb8d16e29cdaee0be1541aca2ab779dd1dd37f433b3f05a601966a"
+  },
+  {
+    "path": "postimages.json",
+    "bytes": 7415,
+    "sha256": "c48e50df97ddc882e7b61483fc48c950668e6a411c8c10b11cc4f14b2f6fcc20",
+    "originalSHA256": "c48e50df97ddc882e7b61483fc48c950668e6a411c8c10b11cc4f14b2f6fcc20"
+  },
+  {
+    "path": "main-cutoff.json",
+    "bytes": 335,
+    "sha256": "0c80021a46fd752e0e642c14bf2f21b1c27416b8c95c5d5ccfbcf5abe2ab8331",
+    "originalSHA256": "0c80021a46fd752e0e642c14bf2f21b1c27416b8c95c5d5ccfbcf5abe2ab8331"
+  },
+  {
+    "path": "patch-source.mjs.txt",
+    "bytes": 656,
+    "sha256": "05e1b8ce67f5cccad87fb8a18d4b4a7814190be30ec3d163fcf602fb92a36c8c"
+  },
+  {
+    "path": "fixture-fs.mjs.txt",
+    "bytes": 653,
+    "sha256": "bd9a6a8eaa17e7fef658080fb931d426140cabfa9e00d8f79365741fcc41f251"
+  },
+  {
+    "path": "fixture-fs-sync.mjs.txt",
+    "bytes": 637,
+    "sha256": "6b5fdfad16ea2f1dfc92c55b5daf39dd082b27afaf95b5d4abd5e1eb4ad31cc4"
+  },
+  {
+    "path": "loader.mjs.txt",
+    "bytes": 1023,
+    "sha256": "886c829cc8aed057a54f18c94e9342376c457c274597c22a9e76fcad0a27ac6d"
+  },
+  {
+    "path": "suite.test.mjs.txt",
+    "bytes": 197,
+    "sha256": "2e749eea5306d80837151ee66e33c679cad434d79310b5dedc7575720b901fee"
+  }
+]

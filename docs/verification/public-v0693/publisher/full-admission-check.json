@@ -1,0 +1,14 @@
+{
+  "status": "PASS_FULL_CATALOG_AND_ALL_ARCHIVE_ADMISSIONS",
+  "currentVersion": "v0.69.3",
+  "catalogRows": 112,
+  "archives": 37,
+  "historicalRoutes": 111,
+  "oldCatalogRowsUnchanged": 111,
+  "otherAdmissionsUnchanged": 36,
+  "virtualReads": 984,
+  "virtualBytes": 82273981,
+  "network": false,
+  "writes": false,
+  "publicAcceptance": false
+}
