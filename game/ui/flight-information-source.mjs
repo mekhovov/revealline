@@ -54,6 +54,7 @@ const rulesets = new Set([
   'xonix-core.v6',
   'xonix-core.v7',
   'xonix-core.v8',
+  'xonix-core.v9',
 ]);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;

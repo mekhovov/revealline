@@ -34,7 +34,7 @@ export function editContentDirectional(source, missionId, input) {
   let speedZones;
   if (command.action === 'enable') {
     required(
-      mission.format !== 'MissionDesignV3',
+      !['MissionDesignV3', 'MissionDesignV4'].includes(mission.format),
       'This mission already uses the directional edition.',
     );
     mission.format = 'MissionDesignV3';
@@ -42,7 +42,7 @@ export function editContentDirectional(source, missionId, input) {
     speedZones = [];
   } else {
     required(
-      mission.format === 'MissionDesignV3',
+      ['MissionDesignV3', 'MissionDesignV4'].includes(mission.format),
       'Explicitly enable the directional edition first.',
     );
     required(stableId(command.id), 'Give the field a stable ID.');

@@ -44,7 +44,9 @@ export function createRelayEditor({ document, getSource, getMission, apply }) {
     const mission = getMission(),
       map = mapFor(),
       qualified = !!mission && !mission.modes.includes('team');
-    const enabled = ['MissionDesignV2', 'MissionDesignV3'].includes(mission?.format);
+    const enabled = ['MissionDesignV2', 'MissionDesignV3', 'MissionDesignV4'].includes(
+      mission?.format,
+    );
     $('enable').disabled = !qualified || enabled;
     $('tools').disabled = !qualified || !enabled;
     $('submit').disabled = !mission?.objectives.length;

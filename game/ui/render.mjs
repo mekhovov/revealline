@@ -882,7 +882,9 @@ export class BoardPainter {
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
-      if (['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8'].includes(state.ruleset))
+      if (
+        ['xonix-core.v6', 'xonix-core.v7', 'xonix-core.v8', 'xonix-core.v9'].includes(state.ruleset)
+      )
         drawPlayerLocator(ctx, {
           x: (state.player.x + bodyOffset.x) * CELL,
           y: (state.player.y + bodyOffset.y) * CELL,

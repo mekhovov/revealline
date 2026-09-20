@@ -33,7 +33,7 @@ export function createDirectionalEditor({ document, getSource, getMission, apply
     const mission = getMission(),
       map = mapFor(),
       qualified = !!mission && !mission.modes.includes('team'),
-      enabled = mission?.format === 'MissionDesignV3';
+      enabled = ['MissionDesignV3', 'MissionDesignV4'].includes(mission?.format);
     $('enable').disabled = !qualified || enabled;
     $('tools').disabled = !qualified || !enabled;
     $('qualification').textContent = !qualified

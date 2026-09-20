@@ -2,7 +2,17 @@
  * Adds a path only; the caller owns ink, fill and frozen capture overlays.
  */
 export function traceContentActor(ctx, type, x, y, radius) {
-  if (type === 'impact-carrier') {
+  if (type === 'relay-sentinel') {
+    // A three-point crown remains distinct from emitter posts and patrol arrows.
+    ctx.moveTo(x - radius, y - radius);
+    ctx.lineTo(x - radius * 0.35, y);
+    ctx.lineTo(x, y - radius);
+    ctx.lineTo(x + radius * 0.35, y);
+    ctx.lineTo(x + radius, y - radius);
+    ctx.lineTo(x + radius * 0.7, y + radius);
+    ctx.lineTo(x - radius * 0.7, y + radius);
+    ctx.closePath();
+  } else if (type === 'impact-carrier') {
     // A split lightning bolt is readable without motion or color cues.
     ctx.moveTo(x + radius * 0.2, y - radius);
     ctx.lineTo(x - radius, y + radius * 0.15);
@@ -53,6 +63,10 @@ export function contentActorMarkerType(level, actor) {
 
 /** Initial authoring facts come from the resolved descriptor, not map-marker guesses. */
 export function contentActorDescription(level, actor) {
+  if (actor.type === 'relay-sentinel' && level.encounter?.version === 'xonix-encounter.v2') {
+    const recipe = level.encounter;
+    return `stationary Sentinel, ${recipe.shieldObjectiveIds.length} shield relays; ${recipe.shielded.warningTicks / 120}s lane warning; close ${recipe.minReleaseCutCells} new trail cells during CORE OPEN or isolate the core`;
+  }
   if (actor.type === 'lane-boss') {
     const recipe = level.enemies.find((entry) => entry.id === actor.id);
     return `stationary lane emitter, ${recipe.axis} lane, ${recipe.warningSeconds}s warning / ${recipe.activeSeconds}s active / ${recipe.period}s cycle`;

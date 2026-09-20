@@ -11,6 +11,7 @@ import {
   journeyActors,
   DIFFICULTY_CATALOG,
   compileActor,
+  compileJourneyEncounter,
   journeyPreset,
   freezeDesign,
 } from './catalogs.mjs';
@@ -150,11 +151,18 @@ export function compileContentProject(source) {
   const assets = (project.assets ?? []).map(compileAssetRevision);
   const maps = project.maps.map(compileMapDesign);
   for (const mission of project.missions) {
-    const directional = mission.format === 'MissionDesignV3';
+    const sentinel = mission.format === 'MissionDesignV4';
+    const directional = mission.format === 'MissionDesignV3' || sentinel;
     const relays = mission.format === 'MissionDesignV2' || directional;
     identity(
       mission,
-      directional ? 'MissionDesignV3' : relays ? 'MissionDesignV2' : 'MissionDesignV1',
+      sentinel
+        ? 'MissionDesignV4'
+        : directional
+          ? 'MissionDesignV3'
+          : relays
+            ? 'MissionDesignV2'
+            : 'MissionDesignV1',
       [
         'map',
         'spawnId',
@@ -169,9 +177,15 @@ export function compileContentProject(source) {
         'archived',
         'team',
         ...(relays ? ['relayLinks'] : []),
+        ...(sentinel ? ['encounter'] : []),
       ],
     );
     archiveFlag(mission);
+    if (sentinel)
+      required(
+        Object.hasOwn(mission, 'encounter'),
+        'Sentinel missions require an explicit nullable encounter.',
+      );
     exactKeys(mission.map, ['id', 'revision'], 'mission map');
     required(
       mapIds.has(JSON.stringify([mission.map.id, mission.map.revision])),
@@ -294,10 +308,17 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
   const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
-  const directional = mission.format === 'MissionDesignV3';
+  const sentinel = mission.format === 'MissionDesignV4';
+  const directional = mission.format === 'MissionDesignV3' || sentinel;
   const relays = mission.format === 'MissionDesignV2' || directional;
   const level = normalizedLevel({
-    version: directional ? 'xonix-level.v7' : relays ? 'xonix-level.v6' : 'xonix-level.v5',
+    version: sentinel
+      ? 'xonix-level.v8'
+      : directional
+        ? 'xonix-level.v7'
+        : relays
+          ? 'xonix-level.v6'
+          : 'xonix-level.v5',
     id: mission.id,
     revision: mission.revision,
     name: mission.name,
@@ -321,7 +342,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     ...(directional
       ? { directionalFields: { version: 'directional-fields.v1', zones: map.source.speedZones } }
       : {}),
-    encounter: null,
+    encounter: sentinel ? compileJourneyEncounter(mission.encounter, project.actors.id) : null,
     classic: {
       version: 'classic.v1',
       terrain: map.source.terrain ?? [],
@@ -355,7 +376,13 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
     level: simulation,
   });
   return freezeDesign({
-    format: directional ? 'ResolvedMissionV3' : relays ? 'ResolvedMissionV2' : 'ResolvedMissionV1',
+    format: sentinel
+      ? 'ResolvedMissionV4'
+      : directional
+        ? 'ResolvedMissionV3'
+        : relays
+          ? 'ResolvedMissionV2'
+          : 'ResolvedMissionV1',
     missionId: mission.id,
     mode,
     difficulty,

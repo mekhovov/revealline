@@ -42,16 +42,20 @@ export function missionBriefing(
     : '';
   const encounter = level.encounter;
   const encounterGoal = encounter
-    ? `Capture the shield relay. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
+    ? `Capture ${encounter.version === 'xonix-encounter.v2' ? `all ${encounter.shieldObjectiveIds.length} shield relays` : 'the shield relay'}. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
     : '';
-  const foundations = ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(
-    level.version,
-  );
+  const foundations = [
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+    'xonix-level.v8',
+  ].includes(level.version);
   const classicHint = [
     'xonix-level.v4',
     'xonix-level.v5',
     'xonix-level.v6',
     'xonix-level.v7',
+    'xonix-level.v8',
   ].includes(level.version)
     ? [
         level.directionalFields?.zones?.length

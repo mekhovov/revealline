@@ -37,6 +37,7 @@ import { createBonusEditor } from './bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
 import { createRelayEditor } from './relay-editor.mjs';
 import { createDirectionalEditor } from './directional-editor.mjs';
+import { createEncounterEditor } from './encounter-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
 import { observePreviewReadiness } from './preview-readiness.mjs';
 
@@ -155,6 +156,18 @@ const directionalEditor = createDirectionalEditor({
     return true;
   },
 });
+const encounterEditor = createEncounterEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
 function status(text, error = false) {
   $('status').textContent = text;
   $('status').dataset.error = String(error);
@@ -237,6 +250,7 @@ function inspectBoard(trailCells = []) {
   objectiveEditor.sync();
   relayEditor.sync();
   directionalEditor.sync();
+  encounterEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);

@@ -21,9 +21,31 @@ live trail closed during the advertised opening, or the existing isolated-core
 fallback. A field-retaining Sentinel is not removed by ordinary enclosure.
 New release-cut bounds exclude permanent foundations and gate connectors.
 
-The runtime descriptor still describes exact timings for deterministic transport.
-Journey authoring will select a shared catalog recipe, not per-level timing or
-speed overrides. This core increment alone does not expose Studio authoring.
+The runtime descriptor describes exact timings for deterministic transport.
+Journey authoring selects the frozen `shield-relays-v1` recipe from actor catalog
+`journey-actors-v6`, not per-level timing or speed overrides. Existing roles
+retain their exact recipes. MissionDesignV4 / ResolvedMissionV4 use MapDesignV3
+geometry, with an explicit nullable encounter. The new stationary role retains
+its field until the explicit release; presets never shorten its warning.
+
+Scenario/pack v9 transport preserves that runtime edition through Studio preview,
+import, editor model, expansion export and installed-pack resolution. Old formats
+reject the new descriptor. Foundations, gates, marked fields and flight
+information recognize the successor. The legacy one-relay timing form is disabled
+for the multi-relay edition; it cannot silently downgrade the encounter.
+
+Studio adds an atomic encounter form: select a core and one to four visible
+required shields; place the Sentinel on the core cell, optionally replacing the
+explicitly selected field keeper. Other field anchors are not silently removed.
+The shared compiler validates every supported preset/mode before adoption.
+Older geometry is copied on write; unrelated missions keep their exact manifests.
+Replacement preserves geometry. Two-action removal deletes the boss and encounter
+links, but retains objectives and map geometry, warns about newly empty-region
+fill, and remains undoable. Stale fields and cancelled adoption do not apply.
+
+The functional visual language gains a static three-point crown silhouette,
+shield counts and remaining-link cues, plus reclaimed-ground wording. These are
+read-only projections. Native visual/layout qualification is still pending.
 
 ## Verification
 
@@ -49,10 +71,20 @@ weakened. These are engine fixtures, not campaign balance or enjoyment evidence.
 Local outputs: `.cache/p11-core-node20-r1.tap` and
 `.cache/p11-core-node22-r1.tap`.
 
+The combined core/compiler/transport/Studio regression cohort now passes
+**122/122 on each Node version**. This includes seven atomic-authoring/control
+tests, four compiler/catalog tests and three transport/cue tests, alongside the
+eight new core tests and earlier encounter/directional/editor regressions.
+Outputs: `.cache/p11-core-authoring-node20-r1.tap` and
+`.cache/p11-core-authoring-node22-r1.tap`.
+The transport probe found a separate mastery-catalog source-format allowlist;
+it now recognizes the new pack only with its matching core and an empty optional
+equipment-mastery array. A canvas test initially passed a context instead of the
+documented canvas argument; its fixture was corrected without changing rendering.
+
 ## Remaining gates
 
-Shared actor/encounter catalog and compiler; transport and Studio controls;
-multi-shield cues; reference-led greyboxes and optional Remix; all-preset routes,
+Reference-led greyboxes and optional Remix; all-preset routes,
 paired race parity, mastery and lifecycle coverage; final original artwork;
 Team qualification; native/accessibility checks; human capture comprehension,
 failure explanation and voluntary retry; phase PR/review/version/release/Pages.

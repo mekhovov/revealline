@@ -1,4 +1,5 @@
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import { isRelayRuleset } from '../core/versions.mjs';
 
 const own = (value, key) => {
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
@@ -9,7 +10,7 @@ const own = (value, key) => {
 /** Bounded, detached presentation only. Never call getters or rewrite a run. */
 export function relayView(run) {
   try {
-    if (!['xonix-core.v7', 'xonix-core.v8'].includes(own(run, 'ruleset'))) return null;
+    if (!isRelayRuleset(own(run, 'ruleset'))) return null;
     const definition = boundedJSON(own(own(run, 'level'), 'relayGates'), {
       maxBytes: 16384,
       maxNodes: 512,

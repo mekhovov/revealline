@@ -202,6 +202,63 @@ export const LIVEWIRE_ACTOR_CATALOG = freezeDesign({
   },
 });
 
+// One shared two-stage cadence. Authored missions choose relay placement/order,
+// not shorter warnings, faster physics or an unmarked per-level boss recipe.
+export const SENTINEL_RECIPE = freezeDesign({
+  id: 'shield-relays-v1',
+  definition: {
+    version: 'xonix-encounter.v2',
+    kind: 'relay-sentinel',
+    minReleaseCutCells: 8,
+    initialDelayTicks: 240,
+    transitionTicks: 180,
+    shielded: { warningTicks: 240, activeTicks: 84, restTicks: 396 },
+    exposed: { warningTicks: 240, activeTicks: 84, openTicks: 480 },
+    laneWidth: 1.2,
+  },
+});
+export const SENTINEL_ACTOR_CATALOG = freezeDesign({
+  format: 'ActorCatalogV1',
+  id: 'journey-actors-v6',
+  roles: {
+    ...LIVEWIRE_ACTOR_CATALOG.roles,
+    'relay-sentinel': {
+      type: 'relay-sentinel',
+      domain: 'stationary-unclaimed-field',
+      damageTarget: 'body-contact-and-exposed-body-or-trail-in-active-lane',
+      retainsField: true,
+      captureResponse: 'all-shield-relays-open-explicit-core-release-stage',
+      warning: 'locked-horizontal-then-vertical-lanes; 240-actor-tick-warning',
+      action: 'shielded-warning-attack-rest; exposed-warning-attack-open',
+      recovery: '180-actor-tick-transition; freeze-pauses-clock; captures-persist-after-life-loss',
+      counterplay:
+        'Capture every marked shield relay in a chosen order. Watch the locked lane and shelter on reclaimed ground. After the vertical attack, close a fresh eight-cell cut during CORE OPEN, or isolate the core and wait on reclaimed ground with no live trail.',
+      recipeId: SENTINEL_RECIPE.id,
+    },
+  },
+});
+
+export function compileJourneyEncounter(source, catalogId) {
+  if (source === null) return null;
+  const value = boundedJSON(source, { maxBytes: 2048, maxNodes: 16, maxDepth: 3, maxArray: 4 });
+  exactKeys(
+    value,
+    ['recipeId', 'enemyId', 'shieldObjectiveIds', 'coreObjectiveId'],
+    'Journey encounter',
+  );
+  required(
+    value.recipeId === SENTINEL_RECIPE.id &&
+      journeyActors(catalogId).roles['relay-sentinel']?.recipeId === value.recipeId,
+    'Journey encounter needs its registered Sentinel recipe and actor catalog.',
+  );
+  return {
+    ...structuredClone(SENTINEL_RECIPE.definition),
+    enemyId: value.enemyId,
+    shieldObjectiveIds: value.shieldObjectiveIds,
+    coreObjectiveId: value.coreObjectiveId,
+  };
+}
+
 export function journeyActors(id = ACTOR_CATALOG.id) {
   const catalogs = {
     [ACTOR_CATALOG.id]: ACTOR_CATALOG,
@@ -209,6 +266,7 @@ export function journeyActors(id = ACTOR_CATALOG.id) {
     [FRACTURE_ACTOR_CATALOG.id]: FRACTURE_ACTOR_CATALOG,
     [PHASE_ACTOR_CATALOG.id]: PHASE_ACTOR_CATALOG,
     [LIVEWIRE_ACTOR_CATALOG.id]: LIVEWIRE_ACTOR_CATALOG,
+    [SENTINEL_ACTOR_CATALOG.id]: SENTINEL_ACTOR_CATALOG,
   };
   required(Object.hasOwn(catalogs, id), 'Project must pin a registered actor catalog.');
   return catalogs[id];
@@ -225,6 +283,11 @@ export function compileActor(source, difficulty = 'standard', catalogId = ACTOR_
   const role = catalog.roles[actor.role];
   required(Object.hasOwn(catalog.roles, actor.role), 'Unsupported actor role.');
   const preset = journeyPreset(difficulty);
+  if (role.type === 'relay-sentinel') {
+    exactKeys(actor, ['id', 'role', 'tier', 'x', 'y'], 'actor');
+    required(actor.tier === 'measured', 'Sentinel uses the shared measured cadence.');
+    return { id: actor.id, type: role.type, x: actor.x, y: actor.y };
+  }
   if (role.type === 'lane-boss') {
     exactKeys(actor, ['id', 'role', 'tier', 'x', 'y', 'axis'], 'actor');
     required(Object.hasOwn(role.timings, actor.tier), 'Unsupported actor cadence tier.');
