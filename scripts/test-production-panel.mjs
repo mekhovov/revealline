@@ -336,7 +336,7 @@ test('bounded reader rejects redirect/oversized stream and cancellation before d
   await settle();
   assert.equal(released, 1);
 });
-test('shared project workflow reaches all thirteen skills without duplicating or executing intake templates', async () => {
+test('shared project workflow reaches all fourteen skills without duplicating or executing intake templates', async () => {
   const { readdir } = await import('node:fs/promises');
   const names = await readdir(new URL('../authoring/skills/', import.meta.url));
   let count = 0;
@@ -349,7 +349,7 @@ test('shared project workflow reaches all thirteen skills without duplicating or
     assert(skill.includes('../../../docs/feature-delivery-workflow.md'));
     count++;
   }
-  assert.equal(count, 13);
+  assert.equal(count, 14);
   const workflow = await readFile(
     new URL('../docs/feature-delivery-workflow.md', import.meta.url),
     'utf8',

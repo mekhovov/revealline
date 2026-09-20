@@ -1,5 +1,6 @@
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { createBorderCandidates } from '../content-design/border-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
@@ -16,8 +17,15 @@ import {
 import { exportJSONFile } from '../platform.mjs';
 import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
+import { createImageWorkbench } from './image-workbench.mjs';
+import { createTraceRecovery } from './trace-recovery.mjs';
 import { journeyPreset } from '../content-design/catalogs.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { createActorEditor } from './actor-editor.mjs';
+import { createGeometryEditor } from './geometry-editor.mjs';
+import { createBonusEditor } from './bonus-editor.mjs';
+import { createObjectiveEditor } from './objective-editor.mjs';
+import { observePreviewReadiness } from './preview-readiness.mjs';
 
 const $ = (id) => document.getElementById(id);
 const backend = createContentDraftBackend();
@@ -25,7 +33,7 @@ let session,
   inspected = null,
   sourceChanged = false,
   saveTimer,
-  previewTimer,
+  stopPreviewReadiness = () => {},
   inspectedTrail = [],
   tuningRevision = null,
   previewRevision = 0,
@@ -38,6 +46,77 @@ const inspections = createInspectionRequests(() =>
     $('checkpoint').value,
   ]),
 );
+const imageWorkbench = createImageWorkbench({
+  document,
+  getSource: () => session.current(),
+  getMission: () => currentMission(),
+  getDifficulty: () => $('difficulty').value,
+  redraw: () => inspectBoard(inspectedTrail),
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+  play: (source, missionId, difficulty) => launchPreview(source, missionId, difficulty),
+  onChange: () => traceRecovery.changed(),
+});
+const traceRecovery = createTraceRecovery({
+  document,
+  workbench: imageWorkbench,
+  getSource: () => session.current(),
+  getMission: () => currentMission(),
+});
+const actorEditor = createActorEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  getDifficulty: () => $('difficulty').value,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const geometryEditor = createGeometryEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const bonusEditor = createBonusEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const objectiveEditor = createObjectiveEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate) => {
+    if (!discardSource()) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
 function status(text, error = false) {
   $('status').textContent = text;
   $('status').dataset.error = String(error);
@@ -106,6 +185,7 @@ function draw(preview) {
   const summary = paintContentMap(canvas.getContext('2d'), preview, {
     width: canvas.width,
     showCapture: $('show-capture').checked,
+    underlay: imageWorkbench.underlay(),
   });
   $('capture-legend').hidden = !$('show-capture').checked;
   $('capture-summary').textContent = summary;
@@ -113,6 +193,12 @@ function draw(preview) {
 }
 function inspectBoard(trailCells = []) {
   const mission = currentMission();
+  actorEditor.sync();
+  geometryEditor.sync();
+  bonusEditor.sync();
+  objectiveEditor.sync();
+  imageWorkbench.sync();
+  traceRecovery.sync();
   setBoardAvailability(document, !!mission);
   if (!mission) {
     $('export-team').hidden = true;
@@ -143,13 +229,19 @@ function inspectBoard(trailCells = []) {
   $('rules').textContent =
     `${manifest.level.rules.lives ?? journeyPreset(manifest.difficulty).lives} ${manifest.mode === 'team' ? 'shared team lives' : 'lives'} · ${manifest.level.rules.moveSpeed} cells/s · ${Math.round(mission.coverage * 100)}% earned coverage · ${mission.timeLimitSeconds ? 'Authored countdown (non-failing on Gentle)' : 'No countdown'}`;
   $('geometry').textContent =
-    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}`;
+    `${geometry.foundationCount} interior foundation cells excluded from score and coverage. ${geometry.eligibleCount} earnable cells; ${geometry.safeComponents.length} reclaimed components. ${(preview.markers.spawns ?? [manifest.level.spawn]).map((spawn, index) => `Spawn ${index + 1} (${spawn.x}, ${spawn.y})`).join('; ')}. ${preview.markers.actors.map((actor) => `${actor.id}: ${actor.type} at (${actor.x}, ${actor.y})`).join('; ')}. Contact bonuses: ${mission.bonuses.map((bonus) => `${bonus.id}: ${bonus.kind} at (${bonus.x}, ${bonus.y})`).join('; ') || 'none'}.`;
+  $('geometry').textContent +=
+    ` Capture objectives: ${mission.objectives.map((objective) => `${objective.id}: ${objective.required ? 'required' : 'optional'}, ${objective.hidden ? 'hidden initially' : 'visible'}, at (${objective.x}, ${objective.y})`).join('; ') || 'none'}.`;
+  $('geometry').textContent +=
+    ` Authored terrain: ${(manifest.level.classic?.terrain ?? []).map((area) => `${area.kind} at (${area.x}, ${area.y}), ${area.w} × ${area.h}`).join('; ') || 'none'}. Terrain is active only on unclaimed field.`;
   $('effective').textContent = JSON.stringify(
     {
       policy: manifest.policyId,
       simulationIdentity: manifest.simulationIdentity,
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
+      objectives: mission.objectives,
+      terrain: manifest.level.classic?.terrain ?? [],
     },
     null,
     2,
@@ -190,11 +282,14 @@ function render(selected = $('mission').value) {
   const project = session.current();
   $('project-id').value = project.id;
   $('project-name').textContent = project.name;
+  const nameCounts = new Map();
+  for (const mission of project.missions)
+    nameCounts.set(mission.name, (nameCounts.get(mission.name) ?? 0) + 1);
   $('mission').replaceChildren(
     ...project.missions.map((m) => {
       const option = document.createElement('option');
       option.value = m.id;
-      option.textContent = `${m.name}${m.archived ? ' · Archived' : ''}`;
+      option.textContent = `${m.name}${nameCounts.get(m.name) > 1 ? ` · ${m.id}` : ''}${m.archived ? ' · Archived' : ''}`;
       return option;
     }),
   );
@@ -242,17 +337,20 @@ function syncStructure() {
     ['item-id-row', creating],
     ['item-name-row', creating || action === 'rename'],
     ['item-template-row', kind === 'mission' && action === 'create'],
-    ['item-band-row', kind === 'campaign' && action === 'create'],
+    ['item-band-row', kind === 'campaign' && ['create', 'set-band'].includes(action)],
     [
       'item-parent-row',
-      kind !== 'pack' && !['rename', 'delete', 'archive', 'restore'].includes(action),
+      kind !== 'pack' && !['rename', 'set-band', 'delete', 'archive', 'restore'].includes(action),
     ],
     ['item-confirm-row', action === 'delete'],
   ])
     $(id).hidden = !visible;
   $('item-id').required = creating;
   $('item-name').required = creating || action === 'rename';
-  $('item-band').required = kind === 'campaign' && action === 'create';
+  $('item-band').required = kind === 'campaign' && ['create', 'set-band'].includes(action);
+  if (kind === 'campaign' && action === 'set-band')
+    $('item-band').value =
+      project.campaigns.find((entry) => entry.id === $('item-target').value)?.band ?? 1;
   $('item-target').required = action !== 'create';
   $('item-parent').required =
     kind !== 'pack' && ['place', 'detach', 'earlier', 'later'].includes(action);
@@ -274,7 +372,7 @@ function syncStructure() {
           pack.campaignIds
             .map((id) => {
               const campaign = project.campaigns.find((entry) => entry.id === id);
-              return `${campaign.name}${campaign.archived ? ' [Archived]' : ''} [${
+              return `${campaign.name} · band ${campaign.band}${campaign.archived ? ' [Archived]' : ''} [${
                 campaign.missionIds
                   .map((missionId) => {
                     const mission = project.missions.find((entry) => entry.id === missionId);
@@ -288,7 +386,7 @@ function syncStructure() {
     )
     .join('\n');
   $('item-apply').disabled =
-    (action === 'duplicate' && kind !== 'mission') ||
+    (action === 'set-band' && kind !== 'campaign') ||
     (['place', 'detach'].includes(action) && kind === 'pack') ||
     (action === 'delete' && !removal?.deletable);
 }
@@ -317,9 +415,11 @@ $('structure-form').onsubmit = guarded((event) => {
     ...(creating || action === 'rename' ? { name: $('item-name').value.trim() } : {}),
     ...(action === 'duplicate' ? { sourceId: $('item-target').value } : {}),
     ...(kind === 'mission' && action === 'create' ? { template: $('item-template').value } : {}),
-    ...(kind === 'campaign' && action === 'create' ? { band: Number($('item-band').value) } : {}),
+    ...(kind === 'campaign' && ['create', 'set-band'].includes(action)
+      ? { band: Number($('item-band').value) }
+      : {}),
     ...(kind !== 'pack' &&
-    !['rename', 'delete', 'archive', 'restore'].includes(action) &&
+    !['rename', 'set-band', 'delete', 'archive', 'restore'].includes(action) &&
     $('item-parent').value
       ? { parentId: $('item-parent').value }
       : {}),
@@ -402,6 +502,12 @@ $('new').onclick = guarded(() => {
 $('opening').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createOpeningCandidates({ artwork: true }), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('border').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createBorderCandidates({ artwork: true }), null, 2);
   sourceChanged = true;
   inspectSource();
 });
@@ -527,15 +633,15 @@ $('inspect').onclick = guarded(() => {
   if (cells.length > 2592) throw new Error('Too many trail cells.');
   inspectBoard(cells);
 });
-$('play').onclick = guarded(async () => {
-  const source = session.current(),
-    missionId = $('mission').value,
-    difficulty = $('difficulty').value;
+$('play').onclick = guarded(() =>
+  launchPreview(session.current(), $('mission').value, $('difficulty').value),
+);
+async function launchPreview(source, missionId, difficulty) {
   previewController?.abort();
   const controller = new AbortController();
   previewController = controller;
   const ticket = ++previewRevision;
-  clearInterval(previewTimer);
+  stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
   $('preview-status').textContent = 'Preparing the exact candidate…';
@@ -557,48 +663,45 @@ $('play').onclick = guarded(async () => {
     return;
   }
   const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
-  let documentLoaded = false;
-  $('preview').onload = () => {
-    documentLoaded = ticket === previewRevision && $('preview').contentDocument?.URL === url;
-  };
   $('preview').src = url;
   $('preview-status').textContent =
     `Loading ${result.manifest.level.name} · ${difficulty}. Frozen candidate; later edits do not change this run.`;
   $('preview-panel').scrollIntoView({ block: 'start' });
-  clearInterval(previewTimer);
-  const deadline = Date.now() + 20000;
-  previewTimer = setInterval(() => {
-    if (ticket !== previewRevision) return;
-    const state = documentLoaded
-      ? $('preview').contentDocument?.documentElement.dataset.bootState
-      : null;
-    if (state === 'ready' || state === 'failed' || Date.now() > deadline) {
-      clearInterval(previewTimer);
+  stopPreviewReadiness = observePreviewReadiness({
+    expectedURL: url,
+    readDocument: () => $('preview').contentDocument,
+    isCurrent: () => ticket === previewRevision,
+    notify: (state) => {
       $('preview-status').textContent =
         state === 'ready'
           ? 'Engine ready. Practice only; no campaign awards. Close preview to return to your draft.'
-          : 'Preview has not reported ready. Check its recovery controls, or close and retry. Your draft is intact.';
-    }
-  }, 250);
-});
-$('close-preview').onclick = () => {
+          : state === 'failed'
+            ? 'Preview could not start. Check its recovery controls, or close and retry. Your draft is intact.'
+            : 'Preview is taking longer than expected. Still checking; you can close and retry. Your draft is intact.';
+    },
+  });
+}
+function closePreview() {
   previewRevision++;
   previewController?.abort();
-  clearInterval(previewTimer);
+  stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = true;
   $('play').focus();
-};
+}
+$('close-preview').onclick = closePreview;
+$('preview-return').onclick = closePreview;
 window.addEventListener('beforeunload', (event) => {
-  if (sourceChanged || session?.status().dirty) {
+  if (sourceChanged || session?.status().dirty || traceRecovery.hasUnsaved()) {
     event.preventDefault();
     event.returnValue = '';
   }
 });
 window.addEventListener('pagehide', () => {
+  imageWorkbench.dispose();
   previewController?.abort();
   clearTimeout(saveTimer);
-  clearInterval(previewTimer);
+  stopPreviewReadiness();
 });
 async function boot() {
   let saved = null,

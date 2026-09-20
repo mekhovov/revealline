@@ -1,0 +1,163 @@
+{
+  "manual": [
+    {
+      "job": 106117003497,
+      "name": "qualify",
+      "conclusion": "success",
+      "counts": {},
+      "failures": []
+    },
+    {
+      "job": 106117253046,
+      "name": "test (1)",
+      "conclusion": "failure",
+      "counts": {
+        "tests": 1915,
+        "pass": 1913,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": [
+        "802 - ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load",
+        "960 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight"
+      ]
+    },
+    {
+      "job": 106117253047,
+      "name": "test (4)",
+      "conclusion": "success",
+      "counts": {
+        "tests": 1801,
+        "pass": 1801,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": []
+    },
+    {
+      "job": 106117253053,
+      "name": "test (3)",
+      "conclusion": "failure",
+      "counts": {
+        "tests": 1838,
+        "pass": 1829,
+        "fail": 9,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": [
+        "1096 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer",
+        "1098 - Motion validation failure after actual delivery provides retry without taking current focus",
+        "1099 - Motion terminal departure ignores a late failed preset read without exposing retry",
+        "1102 - Motion actual Reload retirement preserves navigation focus acquired before attachment",
+        "1103 - Motion actual Reload retirement preserves navigation focus acquired during attachment",
+        "1592 - built workshop 0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel",
+        "1593 - built workshop v0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel",
+        "1594 - Pages automatically gives the shipped workshop an immutable same-edition HTML route, preserving query and fragment",
+        "1595 - built poster/still links and teaching requests retain their edition and work from a prepared cache without a network"
+      ]
+    },
+    {
+      "job": 106117253081,
+      "name": "test (2)",
+      "conclusion": "success",
+      "counts": {
+        "tests": 1759,
+        "pass": 1759,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": []
+    }
+  ],
+  "pr-source": [
+    {
+      "job": 106116987475,
+      "name": "preflight",
+      "conclusion": "success",
+      "counts": {
+        "tests": 70,
+        "pass": 70,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": []
+    },
+    {
+      "job": 106117274647,
+      "name": "build",
+      "conclusion": "success",
+      "counts": {},
+      "failures": []
+    },
+    {
+      "job": 106117274665,
+      "name": "test (3)",
+      "conclusion": "failure",
+      "counts": {
+        "tests": 1838,
+        "pass": 1829,
+        "fail": 9,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": [
+        "1096 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer",
+        "1098 - Motion validation failure after actual delivery provides retry without taking current focus",
+        "1099 - Motion terminal departure ignores a late failed preset read without exposing retry",
+        "1102 - Motion actual Reload retirement preserves navigation focus acquired before attachment",
+        "1103 - Motion actual Reload retirement preserves navigation focus acquired during attachment",
+        "1592 - built workshop 0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel",
+        "1593 - built workshop v0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel",
+        "1594 - Pages automatically gives the shipped workshop an immutable same-edition HTML route, preserving query and fragment",
+        "1595 - built poster/still links and teaching requests retain their edition and work from a prepared cache without a network"
+      ]
+    },
+    {
+      "job": 106117274699,
+      "name": "test (2)",
+      "conclusion": "success",
+      "counts": {
+        "tests": 1759,
+        "pass": 1759,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": []
+    },
+    {
+      "job": 106117274704,
+      "name": "test (4)",
+      "conclusion": "success",
+      "counts": {
+        "tests": 1801,
+        "pass": 1801,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": []
+    },
+    {
+      "job": 106117274708,
+      "name": "test (1)",
+      "conclusion": "failure",
+      "counts": {
+        "tests": 1915,
+        "pass": 1913,
+        "fail": 2,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "failures": [
+        "802 - ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load",
+        "960 - title keeps five game destinations and quick sound; About lives in Workshop and Back preserves an unstarted flight"
+      ]
+    }
+  ]
+}

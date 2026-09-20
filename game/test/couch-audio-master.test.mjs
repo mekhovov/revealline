@@ -1,3 +1,7 @@
+import { memoryStorage } from './helpers/solo-dom.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
@@ -7,11 +11,14 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
-import { Document, Events } from './helpers/couch-dom.mjs';
+import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
+import { memoryIndexedDB, fixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
+import { createManagedMediaStore } from '../managed-media-store.mjs';
+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 let sequence = 0;
@@ -48,6 +55,10 @@ function key(page, value) {
   let rangeChanged = false;
   if (!event.defaultPrevented) {
     const dialog = target.closest('dialog[open]');
+    if (value === 'Escape' && dialog) {
+      const cancel = dialog.emit('cancel', { bubbles: false, cancelable: true });
+      if (!cancel.defaultPrevented) dialog.close();
+    }
     if (value === 'Tab' && dialog) {
       const choices = [...dialog.querySelectorAll('button,a,input,select,textarea,summary')].filter(
         (node) =>
@@ -113,9 +124,13 @@ function audio(t) {
   });
   return {
     ...h,
-    createElement() {
-      elements++;
-      return h.media;
+    createElement(doc) {
+      const media = elements++ === 0 ? h.media : audioHarness().media;
+      const element = new Element(doc, 'audio');
+      for (const [key, value] of Object.entries(element))
+        if (!Object.hasOwn(media, key)) media[key] = value;
+      Object.setPrototypeOf(media, Object.getPrototypeOf(element));
+      return media;
     },
     Context: class {
       constructor() {
@@ -129,7 +144,7 @@ function audio(t) {
   };
 }
 
-async function teamPage(t, store) {
+async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {}) {
   const doc = new Document(),
     win = new Events();
   doc.parentNode = win;
@@ -141,7 +156,7 @@ async function teamPage(t, store) {
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => {
     if (tag === 'audio' || tag === 'video') mediaElements++;
-    return create(tag);
+    return tag === 'audio' && audio ? audio.createElement(doc) : create(tag);
   };
   $('coop-canvas').width = 1152;
   $('coop-canvas').height = 576;
@@ -154,15 +169,18 @@ async function teamPage(t, store) {
     document: doc,
     window: win,
     localStorage: store,
-    navigator: { getGamepads: () => [] },
+    navigator: { getGamepads: () => pads },
     location: { href: 'http://localhost/game/couch/relay-rescue.html' },
     matchMedia: () => ({ matches: false }),
-    AudioContext: class {
-      constructor() {
-        contexts++;
-        throw new Error('Team has no audio output.');
-      }
-    },
+    indexedDB: assetDatabase,
+    AudioContext:
+      audio?.Context ||
+      class {
+        constructor() {
+          contexts++;
+          throw new Error('This finite Team fixture has no media adapter.');
+        }
+      },
     requestAnimationFrame(fn) {
       frames.set(++next, fn);
       return next;
@@ -238,7 +256,7 @@ test('Versus keyboard master controls persist only the shared record; Team and a
     assert.equal(saved.writes.length, before);
     assert.equal(page.$('coop-menu').hidden, false);
     assert.equal(page.contexts(), 0);
-    assert.equal(page.mediaElements(), 0);
+    assert.equal(page.mediaElements(), 1);
   });
   await t.test('fresh Versus restores without context creation or playing', async (t) => {
     const before = saved.writes.length,
@@ -355,7 +373,7 @@ test('Team keyboard master edits remain accessible while paused and preserve its
     before,
   );
   assert.equal(page.contexts(), 0);
-  assert.equal(page.mediaElements(), 0);
+  assert.equal(page.mediaElements(), 1);
   assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
 });
 
@@ -381,9 +399,7 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
   function expectExplanation() {
     const explanation = options
       .querySelectorAll('p')
-      .find((node) =>
-        node.textContent.includes('This Team chapter currently uses visual feedback.'),
-      );
+      .find((node) => /Team gameplay cues\s+remain visual\./.test(node.textContent));
     assert.ok(explanation, 'Changing sound settings must retain the Team sound explanation.');
     for (let node = explanation; node && node !== page.doc; node = node.parentNode) {
       assert.equal(node.hidden, false);
@@ -396,7 +412,7 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
       before,
     );
     assert.equal(page.contexts(), 0);
-    assert.equal(page.mediaElements(), 0);
+    assert.equal(page.mediaElements(), 1);
     assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
   }
   expectExplanation();
@@ -479,7 +495,7 @@ for (const mode of ['Versus', 'Team'])
       explanation = team ? control('audio-note').textContent : null;
     if (team) {
       assert.match(warning, /could not be saved/);
-      assert.match(explanation, /This Team chapter currently uses visual feedback/);
+      assert.match(explanation, /Team gameplay cues\s+remain visual/);
       assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
     } else assert.equal(warning, '');
 
@@ -528,7 +544,7 @@ for (const mode of ['Versus', 'Team'])
       assert.equal(control('audio-note').textContent, explanation);
       assert.equal(control('audio-note').hidden, false);
       assert.equal(page.contexts(), 0);
-      assert.equal(page.mediaElements(), 0);
+      assert.equal(page.mediaElements(), 1);
       refuse = false;
       reaches(page, 'coop-master-volume');
       key(page, 'ArrowRight');
@@ -547,3 +563,299 @@ for (const mode of ['Versus', 'Team'])
       assert.equal(a.media.plays, plays);
     }
   });
+
+for (const mode of ['Team', 'Versus']) {
+  test(`${mode}: actual music library returns through Audio Settings and Pause survives first Start`, async (t) => {
+    const saved = storage({ muted: true, volume: 0.13 }),
+      a = audio(t),
+      db = memoryIndexedDB();
+    const page =
+      mode === 'Team'
+        ? await teamPage(t, saved, { audio: a, assetDatabase: db.indexedDB })
+        : await couchPage(t, { storage: saved, audio: a, assetDatabase: db.indexedDB });
+    const prefix = mode === 'Team' ? 'coop' : 'race';
+    const settings = mode === 'Team' ? 'coop-settings-open' : 'race-options';
+    const closeSettings = mode === 'Team' ? 'coop-settings-close' : 'race-options-back';
+    await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
+    enter(page, settings);
+    enter(page, `${prefix}-settings-tab-audio`);
+    enter(page, `${prefix}-music-pause`);
+    enter(page, `${prefix}-music-library`);
+    await settleUntil(
+      () => page.$('soundtrack-dialog')?.open && !page.$('soundtrack-close').disabled,
+    );
+    assert.equal(page.doc.activeElement.id, 'soundtrack-close');
+    key(page, 'Escape');
+    assert.equal(page.$('soundtrack-dialog').open, false);
+    assert.equal(page.doc.activeElement.id, `${prefix}-music-library`);
+    enter(page, closeSettings);
+    assert.equal(page.doc.activeElement.id, settings);
+    enter(page, `${prefix}-start`);
+    await new Promise((resolve) => setImmediate(resolve));
+    if (mode === 'Versus') await settleUntil(() => a.output()?.enabled);
+    assert.equal(
+      a.contexts(),
+      mode === 'Team' ? 0 : 1,
+      'Versus effects stay available independently of paused music.',
+    );
+    if (mode === 'Versus') assert.equal(a.output().musicTransportPaused, true);
+    assert.equal(a.media.plays, 0);
+    assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
+    assert.deepEqual(record(saved), { muted: true, volume: 0.13 });
+  });
+
+  test(`${mode}: actual Music Play stays muted and session volume does not rewrite master or Solo profile`, async (t) => {
+    const saved = storage({ muted: true, volume: 0.13 }),
+      a = audio(t),
+      db = memoryIndexedDB();
+    const page =
+      mode === 'Team'
+        ? await teamPage(t, saved, { audio: a, assetDatabase: db.indexedDB })
+        : await couchPage(t, { storage: saved, audio: a, assetDatabase: db.indexedDB });
+    const prefix = mode === 'Team' ? 'coop' : 'race';
+    await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
+    enter(page, mode === 'Team' ? 'coop-settings-open' : 'race-options');
+    enter(page, `${prefix}-settings-tab-audio`);
+    enter(page, `${prefix}-music-play`);
+    await settleUntil(() => a.output()?.enabled && !a.output().musicTransportPaused);
+    assert.equal(a.output().master.gain.value, 0);
+    const before = saved.writes.length;
+    page.$(`${prefix}-music-volume`).value = '0.31';
+    page.$(`${prefix}-music-volume`).emit('input');
+    assert.equal(a.output().getSettings().music, 0.31);
+    assert.equal(saved.writes.length, before);
+    assert.deepEqual(record(saved), { muted: true, volume: 0.13 });
+    assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
+    enter(page, `${prefix}-music-pause`);
+    assert.equal(a.output().musicTransportPaused, true);
+  });
+}
+
+for (const mode of ['Team', 'Versus']) {
+  test(`${mode}: saved shared MP3 loads silently and foreground restoration retains explicit Pause`, async (t) => {
+    const saved = storage({ muted: true, volume: 0.13 }),
+      a = audio(t),
+      db = memoryIndexedDB();
+    const imported = await fixture();
+    const library = structuredClone(imported.library);
+    library.playlists[0].trackIds = [imported.track.id];
+    library.assignments = [{ scope: 'global', key: null, playlistId: library.playlists[0].id }];
+    const prepared = await prepareSoundtrackLibrary(library, imported.assets, {
+      probeMedia: structuralProbe,
+    });
+    const solo = createManagedMediaStore({ indexedDB: db.indexedDB, storyMedia: true });
+    await solo.commitDomain('audio', prepared, { expectedGeneration: 0 });
+    solo.close();
+    db.allPuts.length = 0;
+    const page =
+      mode === 'Team'
+        ? await teamPage(t, saved, { audio: a, assetDatabase: db.indexedDB })
+        : await couchPage(t, { storage: saved, audio: a, assetDatabase: db.indexedDB });
+    const prefix = mode === 'Team' ? 'coop' : 'race';
+    await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
+    assert.match(page.$(`${prefix}-music-status`).textContent, /Synthetic coded silence/);
+    assert.equal(a.media.plays, 0);
+    assert.equal(a.contexts(), 0);
+    page.$(mode === 'Team' ? 'coop-settings-open' : 'race-options').click();
+    page.$(`${prefix}-settings-tab-audio`).click();
+    page.$(`${prefix}-music-play`).click();
+    await settleUntil(() => a.media.plays === 1 && !a.media.paused);
+    assert.equal(a.media.muted, true);
+    const hide = () => {
+      page.doc.hidden = true;
+      page.doc.emit('visibilitychange');
+    };
+    const show = () => {
+      page.doc.hidden = false;
+      page.doc.emit('visibilitychange');
+      if (mode === 'Versus') page.frame();
+    };
+    hide();
+    assert.equal(a.media.paused, true);
+    show();
+    await settleUntil(() => a.media.plays === 2 && !a.media.paused);
+    page.$(`${prefix}-music-pause`).click();
+    hide();
+    show();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(a.media.plays, 2);
+    assert.equal(a.media.paused, true);
+    assert.deepEqual(
+      db.allPuts,
+      [],
+      'Couch loading and transport never rewrite the shared library.',
+    );
+    assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
+    page.win.emit('pagehide', { persisted: false });
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(
+      a.context.state,
+      'closed',
+      'Terminal page departure closes the owned audio engine.',
+    );
+  });
+
+  test(`${mode}: modeled controller owns the nested music library and Back returns to its opener`, async (t) => {
+    const saved = storage(),
+      a = audio(t),
+      db = memoryIndexedDB();
+    const pad = {
+      index: 0,
+      id: 'Music menu controller',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    const page =
+      mode === 'Team'
+        ? await teamPage(t, saved, { audio: a, assetDatabase: db.indexedDB, pads: [pad] })
+        : await couchPage(t, {
+            storage: saved,
+            audio: a,
+            assetDatabase: db.indexedDB,
+            pads: [pad],
+          });
+    const prefix = mode === 'Team' ? 'coop' : 'race';
+    const frame = () => (mode === 'Team' ? page.tick() : page.frame());
+    const button = (index) => {
+      pad.buttons[index] = { pressed: true, value: 1 };
+      frame();
+      pad.buttons[index] = { pressed: false, value: 0 };
+      frame();
+      frame();
+    };
+    const reach = (id) => {
+      for (let n = 0; n < 45 && page.doc.activeElement.id !== id; n++) button(13);
+      assert.equal(page.doc.activeElement.id, id);
+    };
+    await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
+    frame();
+    frame();
+    button(0);
+    reach(mode === 'Team' ? 'coop-settings-open' : 'race-options');
+    button(0);
+    reach(`${prefix}-settings-tab-audio`);
+    button(0);
+    reach(`${prefix}-music-library`);
+    button(0);
+    await settleUntil(
+      () => page.$('soundtrack-dialog')?.open && !page.$('soundtrack-close').disabled,
+    );
+    frame();
+    assert.equal(page.$('soundtrack-dialog').contains(page.doc.activeElement), true);
+    button(1);
+    assert.equal(page.$('soundtrack-dialog').open, false);
+    assert.equal(page.doc.activeElement.id, `${prefix}-music-library`);
+    assert.equal(a.contexts(), 0);
+    assert.equal(a.media.plays, 0);
+  });
+}
+
+test('Versus: Pause music before Start preserves actual cut sound effects without starting music', async (t) => {
+  const saved = storage({ muted: false, volume: 0.65 }),
+    a = audio(t),
+    db = memoryIndexedDB();
+  const page = await couchPage(t, { storage: saved, audio: a, assetDatabase: db.indexedDB });
+  await settleUntil(() => page.$('race-music-status')?.dataset.state === 'ready');
+  enter(page, 'race-options');
+  enter(page, 'race-settings-tab-audio');
+  enter(page, 'race-music-pause');
+  enter(page, 'race-options-back');
+  enter(page, 'race-start');
+  await settleUntil(() => a.output()?.enabled);
+  const run = page.renders[0],
+    { spawn, width, height } = run.level;
+  const direction =
+    spawn.y < 1 ? 'KeyS' : spawn.y > height - 1 ? 'KeyW' : spawn.x < width / 2 ? 'KeyD' : 'KeyA';
+  page.key(direction);
+  page.frames(40);
+  page.key(direction, false);
+  assert.equal(a.output().musicTransportPaused, true);
+  assert.equal(a.media.plays, 0);
+  assert.ok(
+    a.sources.length > 0,
+    'A real cut through the host produces effects while music is paused.',
+  );
+  assert.equal(a.output().master.gain.value, 0.65);
+  assert.equal(saved.getItem('existing-player-profile'), 'unchanged-earned-progress');
+});
+
+test('a failed music assignment replaces pending status with its actionable error', async (t) => {
+  const doc = new Document(),
+    a = audio(t),
+    db = memoryIndexedDB();
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: db.indexedDB });
+  const create = doc.createElement.bind(doc);
+  doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
+  const host = attachCouchMusicHost({
+    document: doc,
+    root: doc.body,
+    prefix: 'test',
+    soundscape: a.soundscape,
+  });
+  t.after(async () => {
+    host.dispose();
+    await a.soundscape.dispose();
+    if (original) Object.defineProperty(globalThis, 'indexedDB', original);
+    else delete globalThis.indexedDB;
+  });
+  const status = doc.getElementById('test-music-status');
+  await settleUntil(() => status.dataset.state === 'ready');
+  host.contextPending('fpv');
+  assert.match(status.textContent, /Preparing exact mission/);
+  const message =
+    'Mission music assignment is unavailable until this content identity is resolved.';
+  host.report(new Error(message));
+  assert.equal(status.textContent, message);
+  assert.equal(status.dataset.state, 'error');
+  assert.equal(a.media.plays, 0);
+  assert.equal(a.contexts(), 0);
+});
+
+test('Journey music library keeps keyboard Back, paused boards and chooser ownership', async (t) => {
+  const a = audio(t),
+    database = managedIndexedDB();
+  const p = await couchPage(t, {
+    href: 'http://localhost/game/couch/?journey=opening',
+    initialLevel: null,
+    nativeKeyboard: true,
+    audio: a,
+    assetDatabase: database.indexedDB,
+    storage: memoryStorage(),
+    fetchResponse: async (url) => {
+      if (String(url).includes('/content-design/assets/')) return new Response(await readFile(url));
+    },
+  });
+  await settleUntil(() => p.$('race-music-status').dataset.state === 'ready');
+  const before = p.renders.map(authoritativeCheckpoint);
+  const enter = (id) => {
+    const target = p.$(id);
+    target.focus();
+    p.key('Enter', true, target);
+    p.key('Enter', false, target);
+    p.frame(0);
+  };
+  enter('race-options');
+  enter('race-settings-tab-audio');
+  enter('race-music-library');
+  await settleUntil(() => p.$('soundtrack-dialog')?.open && !p.$('soundtrack-close').disabled);
+  assert.equal(p.doc.activeElement.id, 'soundtrack-close');
+  p.key('Escape', true, p.doc.activeElement);
+  p.key('Escape', false, p.doc.activeElement);
+  assert.equal(p.$('soundtrack-dialog').open, false);
+  assert.equal(p.doc.activeElement.id, 'race-music-library');
+  enter('race-options-back');
+  assert.equal(p.doc.activeElement.id, 'race-options');
+  enter('race-journey-find');
+  assert.equal(p.$('journey-chooser').open, true);
+  p.key('Escape', true, p.doc.activeElement);
+  p.key('Escape', false, p.doc.activeElement);
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.doc.activeElement.id, 'race-journey-find');
+  assert.deepEqual(p.renders.map(authoritativeCheckpoint), before);
+  assert.doesNotMatch(p.$('race-music-status').textContent, /assignment is unavailable/);
+  assert.equal(a.media.plays, 0);
+  assert.equal(a.contexts(), 0);
+});

@@ -96,7 +96,9 @@ export function attachReplayNavigation({
     } else {
       pause();
       focus($('return-game'));
-      hint('Playback paused. Back to the game is focused; activate it to leave.');
+      hint(
+        `Playback paused. ${$('return-game').textContent.trim() || 'Return'} is focused; activate it to leave.`,
+      );
     }
     router.clear();
   }

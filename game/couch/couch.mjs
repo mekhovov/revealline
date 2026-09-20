@@ -8,7 +8,7 @@ import { attachCouchCatalogue } from './couch-catalogue.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
-import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import { DIFFICULTY_CATALOG } from '../content-design/catalogs.mjs';
 import { createJourneyProfileStore } from '../journey/profile.mjs';
@@ -29,6 +29,7 @@ import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
@@ -42,7 +43,9 @@ import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
-import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
+import { attachCouchMusicHost } from './couch-music-host.mjs';
+import { soloCompatibleMusicContext } from './couch-music-context.mjs';
+import { campaignKey } from '../library.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
@@ -170,6 +173,8 @@ let featured,
   staticPictures,
   publishedAudio,
   publishedPlayer,
+  pageSound,
+  music,
   boardFootprints,
   catalogue,
   candidateJourney,
@@ -185,7 +190,9 @@ const releaseArtwork = (event) => {
   audioPreferences.dispose();
   artworkLifetime.abort();
   publishedAudio?.close();
-  publishedPlayer?.dispose();
+  music?.dispose();
+  if (!music) publishedPlayer?.dispose();
+  void pageSound?.dispose();
   audioMaster.dispose();
   presentationPage.close();
   presentationFeedback.dispose();
@@ -224,18 +231,24 @@ try {
     music: [],
     sourcePackId: null,
   };
-  const authoredJourney = new URL(location.href).searchParams.get('journey') === 'opening';
+  const authoredRoute = createAuthoredJourneyRoute(
+    new URL(location.href).searchParams.get('journey'),
+  );
+  const authoredJourney = !!authoredRoute;
   let journeyProfile = null,
     journeyChooser = null,
     journeySkipArmed = null;
   const journeySessionId = authoredJourney ? crypto.randomUUID() : null;
   if (authoredJourney) {
     document.body.classList.add('candidate-journey');
-    candidateJourney = createCandidateVersusHost(createOpeningCandidates({ artwork: true }), {
+    candidateJourney = createCandidateVersusHost(authoredRoute.source, {
       themes: (await json('../content-design/themes.json')).themes,
+      corePackIds: authoredRoute.corePackIds,
     });
     journeyPreferences = createJourneyPreferences({ window });
     $('race-journey-note').hidden = false;
+    $('race-journey-note').textContent =
+      `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
       ...Object.keys(DIFFICULTY_CATALOG.presets).map(
@@ -266,6 +279,7 @@ try {
         defaultThemeId: level.themeId || campaign.themeId,
         track: null,
         pictureEntry: baseEntry,
+        musicCampaignKey: campaignKey(campaign),
         authoredBackground: null,
       }));
   let featuredSource,
@@ -307,6 +321,7 @@ try {
         ),
         backdrop: featured.backdrop(level.id),
         pictureEntry: featured.resolved,
+        musicCampaignKey: featured.resolved.baseCampaignKey || campaignKey(featuredCampaign),
         authoredBackground:
           featured.resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides
             ?.background ||
@@ -323,7 +338,7 @@ try {
         presentationPage,
       });
   let installedStatus = candidateJourney
-      ? 'Authored opening test route; Legacy chapters stay in the ordinary race.'
+      ? `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
       : 'Installed chapters have not been checked.',
     contentChannel = null;
   if (!candidateJourney)
@@ -377,19 +392,29 @@ try {
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
   for (const painter of painters) presentationPage.bindPainter(painter);
-  const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  const sound = (pageSound = new Soundscape({ persistentMusic: true, audioMaster }));
   sound.configure({ master: 1 });
-  const musicElement = document.createElement('audio');
-  if (typeof musicElement.play === 'function') {
-    publishedPlayer = createSoundtrackPlayer({
-      audioMaster,
-      soundscape: sound,
-      audioElement: musicElement,
-      readAsset: async () => {
-        throw new Error('Couch does not read custom music storage.');
-      },
-    });
-  }
+  music = attachCouchMusicHost({
+    document,
+    root: $('race-settings-panel-audio'),
+    prefix: 'race',
+    audioMaster,
+    audioPreferences,
+    soundscape: sound,
+    canOpen: () =>
+      !disposed &&
+      !inactive &&
+      !document.hidden &&
+      document.hasFocus() &&
+      shell?.scope() === 'options',
+    getOwner: () => `${generation}:${shell?.scope()}`,
+    onOpen: () => clear(),
+    onClose: () => {
+      clear();
+      updateMenu();
+    },
+  });
+  publishedPlayer = music?.player ?? null;
   publishedAudio = attachPublishedAudio({
     sound,
     ready: presentationPage.ready,
@@ -664,7 +689,24 @@ try {
     sound.reset();
     sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
     publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
-    publishedPlayer?.setContext({ themeId: theme.id });
+    if (music) {
+      const key =
+        entry.musicCampaignKey ||
+        (entry.pictureEntry &&
+          (entry.pictureEntry.baseCampaignKey || campaignKey(entry.pictureEntry.campaign)));
+      if (key)
+        music.setContext(
+          soloCompatibleMusicContext({ campaignKey: key, level, themeId: theme.id }),
+        );
+      else {
+        music.contextPending(theme.id);
+        music.report(
+          new Error(
+            'Mission music assignment is unavailable until this content identity is resolved.',
+          ),
+        );
+      }
+    }
     painters.forEach((p) => {
       p.setLook(theme, bodyFor(theme, classId), entry.visualOverrides);
       p.setLevel?.(level, { seed: recipe.seed });
@@ -1078,12 +1120,9 @@ try {
       if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
       resumeDuel(match, { preserveContinuation: true });
       neutralResumeTick = true;
-      if (publishedPlayer) {
-        (publishedPlayer.snapshot().track
-          ? publishedPlayer.resume()
-          : publishedPlayer.play()
-        ).catch(() => {});
-      } else sound.enable().catch(() => {});
+      // Race effects are independent of the music transport and its readiness.
+      void sound.enable();
+      if (music) void music.start();
       $('race-message').textContent = 'Make your line count. First clear wins.';
       updateMenu();
       input.focus();
@@ -1335,6 +1374,7 @@ try {
     /* The fixed Solo title route remains available. */
   }
   shell = createCouchShell({
+    authoredRoute: authoredRoute?.id,
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
     onLeaveRequest: pause,
@@ -1518,12 +1558,8 @@ try {
               if (!accepted()) return false;
               resumeDuel(nextMatch, { preserveContinuation: true });
               neutralResumeTick = true;
-              if (publishedPlayer)
-                (publishedPlayer.snapshot().track
-                  ? publishedPlayer.resume()
-                  : publishedPlayer.play()
-                ).catch(() => {});
-              else sound.enable().catch(() => {});
+              void sound.enable();
+              if (music) void music.start();
               $('race-message').textContent = 'Make your line count. First clear wins.';
               updateMenu();
               input.focus();
@@ -1567,6 +1603,7 @@ try {
   };
 
   function couchScope() {
+    if (music?.root()) return 'couch-music-library';
     const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
     if (modal) return `couch:${modal.id}`;
     return match?.status === 'running'
@@ -1768,23 +1805,29 @@ try {
     'race-leave',
   ]);
   navigation = attachControllerNavigation({
+    onTabBoundary: () => playgroundTabBoundary({ window, suspend }),
     getScope: couchScope,
     getRoot: () =>
+      music?.root() ||
       catalogue?.root() ||
       [...document.querySelectorAll('dialog[open]')].at(-1) ||
       (candidateJourney && shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
-      catalogue?.root()
-        ? catalogue.primary()
-        : $('journey-backup')?.open
-          ? $('journey-backup-export')
-          : $('journey-chooser')?.open
-            ? $('journey-search')
-            : shell.primary(),
+      music?.root()
+        ? music.primary()
+        : catalogue?.root()
+          ? catalogue.primary()
+          : $('journey-backup')?.open
+            ? $('journey-backup-export')
+            : $('journey-chooser')?.open
+              ? $('journey-search')
+              : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
-    ownsKeyboardEvent: (event) => settingsTabOwnsKey(event, $('race-options-panel')),
+    ownsKeyboardEvent: (event) =>
+      !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
+      music?.contains(element) ||
       catalogue?.root()?.contains(element) ||
       menuIds.has(element.id) ||
       !!element.closest('#journey-chooser, #journey-backup'),
@@ -1792,21 +1835,25 @@ try {
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
     onBack: () =>
-      catalogue?.root()
-        ? catalogue.back()
-        : $('journey-backup')?.open
-          ? $('journey-backup-back').click()
-          : $('journey-chooser')?.open
-            ? journeyChooser.close()
-            : shell.back(),
+      music?.root()
+        ? music.back()
+        : catalogue?.root()
+          ? catalogue.back()
+          : $('journey-backup')?.open
+            ? $('journey-backup-back').click()
+            : $('journey-chooser')?.open
+              ? journeyChooser.close()
+              : shell.back(),
     onMenu: () =>
-      catalogue?.root()
-        ? catalogue.back()
-        : $('journey-backup')?.open
-          ? $('journey-backup-back').click()
-          : $('journey-chooser')?.open
-            ? journeyChooser.close()
-            : shell.back(),
+      music?.root()
+        ? music.back()
+        : catalogue?.root()
+          ? catalogue.back()
+          : $('journey-backup')?.open
+            ? $('journey-backup-back').click()
+            : $('journey-chooser')?.open
+              ? journeyChooser.close()
+              : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -1891,8 +1938,8 @@ try {
     if (disposed) return;
     shell?.cancelDeparture();
     pause();
-    sound.suspend();
-    publishedPlayer?.suspend();
+    if (music) music.suspend();
+    else sound.suspend();
     clear();
     framePads = [];
     frameReadError = null;
@@ -1950,6 +1997,7 @@ try {
     if (available && inactive) {
       inactive = false;
       last = 0;
+      if (music) void music.resume();
     }
     const dt = last ? Math.max(0, (now - last) / 1000) : 0;
     last = now;
@@ -2019,11 +2067,11 @@ try {
         `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
       if (
         candidateJourney &&
-        roundRecipe.entry.mission.packId === 'journey-opening' &&
+        candidateJourney.isCore(roundRecipe.entry.mission.id) &&
         !candidateJourney.next(roundRecipe.entry.mission.id)
       )
         $('race-message').textContent +=
-          ' End of the opening route. Choose Find missions for the optional Remix, Rematch, or leave whenever you like.';
+          ' End of this test route. Choose Find missions for optional Remixes, Rematch, or leave whenever you like.';
       $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
@@ -2092,7 +2140,7 @@ try {
         backdrop,
       });
     }
-    (publishedPlayer || sound).update(
+    (music || sound).update(
       match.status === 'running',
       theme,
       match.runs.find((r) => !['won', 'lost'].includes(r.status)) || match.runs[0],

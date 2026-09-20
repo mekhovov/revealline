@@ -726,14 +726,15 @@ export function attachControllerNavigation({
       // Interior traversal, native modal containment and ordinary games retain
       // their existing behavior. A reader exits through its own path above.
       const boundary = event.shiftKey ? 0 : tabStops.length - 1;
-      if (
-        !leavingReader &&
-        currentTab === boundary &&
-        onTabBoundary({ backward: !!event.shiftKey }) === true
-      ) {
-        event.preventDefault();
-        relinquish();
-        return true;
+      if (!leavingReader && currentTab === boundary) {
+        const exit = onTabBoundary({ backward: !!event.shiftKey });
+        if (exit === true || exit === 'native') {
+          if (exit === true) event.preventDefault();
+          relinquish();
+          // A registered Playground frame uses browser sequential traversal.
+          // Controller practice retains its synchronous, consumed handoff.
+          return exit === true;
+        }
       }
       event.preventDefault();
       relinquish();

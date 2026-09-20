@@ -10,7 +10,9 @@ export function validateOptionalArtworkConfig(value) {
   exactKeys(value, ['format', 'catalog'], 'Optional artwork config');
   required(
     value.format === 'revealline-optional-artwork.v1' &&
-      value.catalog === 'game/content-design/horizon-art.mjs',
+      ['game/content-design/horizon-art.mjs', 'game/content-design/journey-art.mjs'].includes(
+        value.catalog,
+      ),
     'Unsupported optional artwork distribution opt-in.',
   );
   return value;
@@ -54,7 +56,11 @@ export async function readOptionalArtwork(root, option, included) {
   required(source.length <= 65536, 'Optional artwork registry exceeds its byte budget.');
   const moduleURL = pathToFileURL(path.join(root, option.catalog));
   moduleURL.searchParams.set('source', sha256(source));
-  const { HORIZON_ART_CANDIDATES: raw } = await import(moduleURL.href);
+  const registry = await import(moduleURL.href);
+  const raw =
+    option.catalog === 'game/content-design/horizon-art.mjs'
+      ? registry.HORIZON_ART_CANDIDATES
+      : registry.JOURNEY_ART_CANDIDATES;
   required(
     Array.isArray(raw) && raw.length > 0 && raw.length <= 32,
     'Optional artwork requires between one and 32 authored revisions.',
@@ -86,7 +92,10 @@ export async function readOptionalArtwork(root, option, included) {
     files.push({ path: name, bytes: asset.bytes, sha256: asset.sha256 });
   }
   return {
-    name: 'Opening Journey artwork',
+    name:
+      option.catalog === 'game/content-design/horizon-art.mjs'
+        ? 'Opening Journey artwork'
+        : 'Journey candidate artwork',
     availability: 'online-only',
     count: files.length,
     bytes: files.reduce((total, file) => total + file.bytes, 0),

@@ -1,0 +1,21 @@
+{
+  "version": "v0.69.3",
+  "source": "406637f36c039f991e83d241cb49d4568a871109",
+  "publisher": "efa5fe91efd28f9a28955c8a03fbb2de560b65b5",
+  "deployment": 6555180412,
+  "input": "CUA keyboard plus native file chooser and select/click for story review",
+  "observed": [
+    "Public title version v0.69.3; keyboard Enter starts First Signal",
+    "Escape pauses at 0:05,0%,3 lives,00000; keyboard Main menu returns focused Continue",
+    "Collection to Flight records to Saves; nested Escape restores Flight records then Collection opener",
+    "Workshop keyboard opens Pictures and Stories",
+    "Owned picture restored with keep-current policy; reload shows12records and DawnSignal selected",
+    "Initial Tab/Down sequence prepared story backup instead of reviewing; no file downloaded; corrected via explicit visible policy selection and Review button",
+    "Review completed, incoming bindings selected, Restore focused; Enter began restore"
+  ],
+  "pending": [
+    "Story restore success focus",
+    "public replacement dialog"
+  ],
+  "publicAcceptance": false
+}

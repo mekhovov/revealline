@@ -24,10 +24,24 @@
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
+    <link rel="stylesheet" href="../ui/workshop-return.css" />
   </head>
-  <body class="field-kit field-kit-support" data-field-kit-page="replay">
+  <body
+    data-workshop-tool="replay-theater"
+    class="field-kit field-kit-support"
+    data-field-kit-page="replay"
+  >
     <header class="page-head">
-      <a id="return-game" href="../">← Back to the game</a>
+      <a
+        id="return-game"
+        href="../?workshop=replay-theater"
+        data-workshop-return="workshop"
+        inert
+        aria-disabled="true"
+        >Return to Workshop</a
+      >
+      <a id="replay-game-home" data-workshop-return="game" href="../">Game home</a>
       <span class="eyebrow">Reveal Line / Replay Theater</span>
       <h1 class="field-kit-display">Watch the route unfold.</h1>
       <p>Pause at a turning point. Follow the cable. See what each craft changes.</p>
@@ -133,7 +147,7 @@
         </p>
         <p id="asset-status" class="quiet" role="status" aria-live="polite" aria-atomic="true"></p>
         <p id="navigation-status" class="quiet" role="status" aria-live="polite">
-          Arrow keys move focus · Enter activates · Escape pauses and focuses Back to the game.
+          Arrow keys move focus · Enter activates · Escape pauses and focuses Return to Workshop.
           Controller: release controls, then press a face button to join.
         </p>
         <details>

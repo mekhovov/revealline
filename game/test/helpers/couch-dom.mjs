@@ -313,16 +313,6 @@ export class Element extends Events {
   scrollIntoView() {
     this.scrolled = (this.scrolled ?? 0) + 1;
   }
-  showModal() {
-    this.open = true;
-    this.setAttribute('open', '');
-  }
-  close() {
-    if (!this.open) return;
-    this.open = false;
-    this.removeAttribute('open');
-    this.emit('close');
-  }
   click() {
     if (this.disabled) return;
     if (this.tagName === 'INPUT' && this.type === 'checkbox') this.checked = !this.checked;
@@ -341,6 +331,8 @@ export class Document extends Events {
     this.documentElement = new Element(this, 'html');
     this.documentElement.parentNode = this;
     this.children.push(this.documentElement);
+    this.head = new Element(this, 'head');
+    this.documentElement.append(this.head);
     this.body = new Element(this, 'body');
     this.documentElement.append(this.body);
     this.activeElement = this.body;

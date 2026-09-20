@@ -4,6 +4,7 @@ import { fieldKitCopy } from './field-kit-copy.mjs';
 import { attachFocusClearance } from './focus-clearance.mjs';
 import { prepareChapterFocus } from './chapter-focus-clearance.mjs';
 import { mountModeChoices } from './mode-choice.mjs';
+import { WORKSHOP_TOOLS } from './workshop-return.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -19,7 +20,9 @@ export function attachGameShell({
   onTitleContinue,
   onTitleCancel,
   onModeDeparture,
+  separateTeam = false,
   titleDestination,
+  titleContinueDestination,
   onWorlds,
   onMissions,
   getTopDialog,
@@ -164,7 +167,10 @@ export function attachGameShell({
     if (onMissions) {
       pause(true);
       if (destroyed) return;
-      closeHome();
+      // The host chooser is a child of its actual entry screen. Keep Home
+      // mounted for Back; an explicit mission selection retires that parent.
+      titleModeIntent = null;
+      cancelTitle();
       if (destroyed) return;
       onMissions(opener);
       return;
@@ -209,7 +215,7 @@ export function attachGameShell({
           ? copy('title.continueDestination', {
               destination: !$('continue-saved').hidden
                 ? $('continue-saved').title
-                : $('mission-brief-title').textContent,
+                : titleContinueDestination?.() || $('mission-brief-title').textContent,
             })
           : titleDestination?.() || copy('title.deployDestination');
     if (!home.open) {
@@ -237,12 +243,44 @@ export function attachGameShell({
     };
   };
   $('shell-menu').onclick = openHome;
-  if ($('shell-workshop'))
-    $('shell-workshop').onclick = () => {
-      pause(true);
-      workshop?.showModal();
-      workshop?.querySelector('button,a')?.focus();
-    };
+  const openWorkshop = ({
+    assetStudio = false,
+    tool = assetStudio ? 'asset-studio' : null,
+  } = {}) => {
+    if (destroyed || isolated || !workshop) return false;
+    const entry = tool ? WORKSHOP_TOOLS.find((item) => item.id === tool) : null;
+    if (tool && (!entry || !$(entry.opener)?.isConnected)) return false;
+    const previousFocus = doc.activeElement;
+    pause(true);
+    // A pause callback or boot handoff may have established a newer screen.
+    if (
+      destroyed ||
+      !home.open ||
+      topDialog() !== home ||
+      doc.activeElement !== previousFocus ||
+      doc.hidden ||
+      doc.hasFocus?.() === false
+    )
+      return false;
+    $('shell-workshop').focus();
+    workshop.showModal();
+    if (destroyed || !workshop.open || topDialog() !== workshop) return false;
+    const target =
+      entry && availableReturn($(entry.opener), workshop)
+        ? $(entry.opener)
+        : workshop.querySelector('button,a');
+    target?.focus();
+    return true;
+  };
+  if ($('shell-workshop')) $('shell-workshop').onclick = () => openWorkshop();
+  const cancelWorkshop = (event) => {
+    if (destroyed || !workshop.open || topDialog() !== workshop) return;
+    // Boot can open Home and Workshop in one native close-watcher group.
+    // Consume Back here so a single Escape cannot also close its parent.
+    event.preventDefault();
+    workshop.close();
+  };
+  workshop?.addEventListener('cancel', cancelWorkshop);
   const backFromMissions = () => {
     if (destroyed || !missions.open) return;
     const visit = missionsVisit,
@@ -464,6 +502,7 @@ export function attachGameShell({
     mountModeChoices({
       root: titleModes,
       current: 'solo',
+      separateTeam,
       actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
     });
     titleModes.hidden = isolated || !onModeDeparture;
@@ -634,6 +673,12 @@ export function attachGameShell({
   // actions move focus; Enter/Space and Tab remain browser-standard activation.
   const keydown = (event) => {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key === 'Escape' && workshop?.open && topDialog() === workshop) {
+      // A boot-opened dialog may have a non-cancellable native close watcher.
+      // Claim the key before that default action reaches the parent group.
+      cancelWorkshop(event);
+      return;
+    }
     if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
     const dialog = topDialog();
     if (!dialog || !event.target?.closest?.('button,a')) return;
@@ -655,6 +700,7 @@ export function attachGameShell({
   return {
     openHome,
     openMissions,
+    openWorkshop,
     destroy() {
       destroyed = true;
       retireMissionsVisit();
@@ -676,6 +722,7 @@ export function attachGameShell({
       if (overlayMenu) overlayMenu.onclick = null;
       if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);
+      workshop?.removeEventListener('cancel', cancelWorkshop);
       home.removeEventListener('click', leaveFeatured, true);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
