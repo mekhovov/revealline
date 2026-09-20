@@ -11,6 +11,7 @@ import { createRelayCandidates } from '../content-design/relay-candidates.mjs';
 import { createCrosswindCandidates } from '../content-design/crosswind-candidates.mjs';
 import { createSentinelCandidates } from '../content-design/sentinel-candidates.mjs';
 import { createApexCandidates } from '../content-design/apex-candidates.mjs';
+import { createWholeJourneyCandidates } from '../content-design/whole-journey-candidates.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
@@ -640,6 +641,12 @@ $('sentinel').onclick = guarded(() => {
 $('apex').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createApexCandidates(), null, 2);
+  sourceChanged = true;
+  inspectSource();
+});
+$('whole-journey').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(createWholeJourneyCandidates(), null, 2);
   sourceChanged = true;
   inspectSource();
 });
