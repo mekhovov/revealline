@@ -47,6 +47,7 @@
         <button id="apex">Inspect Apex Aurora greyboxes</button>
         <button id="whole-journey">Inspect whole Journey greyboxes</button>
         <button id="team-signal">Inspect Team Signal greybox</button>
+        <button id="team-journey">Inspect Team Journey greyboxes</button>
         <label class="file-button"
           >Inspect import<input id="import" type="file" accept="application/json,.json"
         /></label>
@@ -678,6 +679,15 @@
             <button id="play" class="primary">Play exact Solo preview ↗</button
             ><span>Practice only · no awards · candidate presentation</span>
             <button id="export-team" hidden>Export exact Team test mission</button>
+            <fieldset id="team-sequence-tools" hidden>
+              <legend>Team sequence test</legend>
+              <label>Team campaign<select id="team-test-campaign"></select></label>
+              <button id="export-team-campaign">Export exact Team test campaign</button>
+              <p class="note">
+                Preserves the authored order for Next in the Team host. Geometry and rules only; no
+                original artwork or official progress.
+              </p>
+            </fieldset>
           </div>
           <p id="team-test-help" class="note" hidden>
             Geometry and rules only. Import this file in the
