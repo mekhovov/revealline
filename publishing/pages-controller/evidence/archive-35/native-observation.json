@@ -1,0 +1,19 @@
+{
+  "status": "PASS_SCOPED_ARCHIVE_NAVIGATION",
+  "at": "2026-09-20T07:00:26.604022+00:00",
+  "url": "https://mekhovov.github.io/revealline-archive-35/releases/v0.68.0/site/game/",
+  "observer": "root CUA native keyboard/AX and inline screenshot",
+  "viewport": "1280x720 desktop",
+  "actions": [
+    "Archive root Tab/Enter opens original v0.68.0 title",
+    "Continue explicitly opens existing Pressure Pictures / Orchard Crossing saved flight; preparation status and Cancel visible",
+    "Loaded original picture; explicit flight resumed; concurrent saving owner detected and session-only notice shown",
+    "Escape pauses at 2:15, 0%, 3 lives, 0 score; Resume focused"
+  ],
+  "limits": [
+    "Archived stale Flight resumed caption while Paused remains; v0.68.1 correction is separate",
+    "Known same-chapter replacement issue retained from main v0.68.0 public evidence; not retested or fixed in archive",
+    "No physical hardware, offline or audible listening qualification",
+    "Screenshot inline only; no exported image/hash asserted"
+  ]
+}
