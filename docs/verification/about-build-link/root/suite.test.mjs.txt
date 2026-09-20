@@ -1,0 +1,3 @@
+import './candidate/game/test/about-navigation-host.test.mjs';
+import './candidate/game/test/landing-release-history-host.test.mjs';
+import './candidate/game/test/site-release-links.test.mjs';

@@ -51,6 +51,21 @@ export function attachAboutNavigation({
     target.addEventListener(type, handler, capture);
     listeners.push(() => target.removeEventListener(type, handler, capture));
   };
+  const revealRequestedBuildInfo = () => {
+    if (disposed) return;
+    let hash;
+    try {
+      hash = new URL(win.location?.href ?? globalThis.location?.href).hash;
+    } catch {
+      return;
+    }
+    // A deliberate Build information route opens its disclosure immediately.
+    // Do not focus, wait for catalogues, or override a restored manual closure.
+    const details = doc.getElementById('versions');
+    if (hash === '#versions' && details) details.open = true;
+  };
+  listen(win, 'hashchange', revealRequestedBuildInfo);
+  revealRequestedBuildInfo();
   const clear = () => {
     router.clear();
     navigation.clear();

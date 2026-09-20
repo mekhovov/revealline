@@ -1,0 +1,14 @@
+import {readFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {gunzipSync} from 'node:zlib';
+import {sourceFor} from './patch-source.mjs';
+const m=JSON.parse(readFileSync(new URL('./source-manifest.json',import.meta.url)));
+if(createHash('sha256').update(gunzipSync(readFileSync(new URL('./source.patch.gz',import.meta.url)))).digest('hex')!==m.patchSHA256)throw Error('Patch identity mismatch');
+const config=JSON.parse(sourceFor('game/build-config.json'));
+for(const name of Object.keys(m.files)){
+ const bytes=sourceFor(name);
+ if(/\.(?:mjs|js)$/.test(name)){const r=spawnSync(process.execPath,['--input-type=module','--check'],{input:bytes,encoding:'utf8'});if(r.status)throw Error(r.stderr);}
+ if((name.startsWith('game/')||name.startsWith('site/'))&&!name.includes('/test/')&&!config.include.some(p=>name===p||name.startsWith(p+'/')))throw Error('Build excludes '+name);
+ console.log(name+' exact postimage, applicable syntax/build inclusion PASS');
+}

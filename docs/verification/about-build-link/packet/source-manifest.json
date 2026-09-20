@@ -1,0 +1,27 @@
+{
+  "base": "4bb553d06d62f7a8cce301c77b245573838bfdcb",
+  "files": {
+    "site/about-navigation.mjs": {
+      "before": "e1bdf3d5e106ec750890c35ae66959f7ca225e474bbd5c4996416c24a2819f3b",
+      "after": "6fb1fb1723b627f69e77c3b654d00516b917e129ffa38a087e7148d8b1f954da",
+      "bytes": 5439
+    },
+    "game/test/about-navigation-host.test.mjs": {
+      "before": "07880ef5108ff41bf57cbe887408e1481285592c7a90b40b9227d3fc1f97067e",
+      "after": "4abaf67d1f3da7fee6f9847dd2c2af6485868e57a08684d9d5301486c6d6bd6b",
+      "bytes": 27810
+    },
+    "docs/about-build-information-link.md": {
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e0e4a17d24af8834df2f255c131df96768bbb7659e6de3e66fdcd7100f922048",
+      "bytes": 1910,
+      "new": true
+    },
+    "authoring/skills/xonix-runtime-maintainer/SKILL.md": {
+      "before": "556bf6539467ea28a866e485285cc5e85739106a014b65671cded6c566b564b0",
+      "after": "e297a5d8e80152f6c5d2925b5a523292296cc97ea2bb854b773a578dbebf1266",
+      "bytes": 285127
+    }
+  },
+  "patchSHA256": "dabccca1397e72db1d571d1ad2438d715e3e1d0a5d99fcd22f5e90848ab44626"
+}

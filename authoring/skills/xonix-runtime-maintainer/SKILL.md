@@ -1031,3 +1031,9 @@ visible focus, mission visit or background page keeps ownership. Follow
 and distinct native/modelled/public evidence boundaries.
 
 When changing the catalogue Back destination, include the full optional-world Play host cohort. A Back callback can reenter while the accepted previous drawable is retired. Assert the accepted new attempt stays paused at tick zero, the old picture is released once, saved profile bytes remain unchanged, and focus returns to Missions / More chapters. Preserve the original failing old-Home expectation; change only the obsolete navigation expectation, never the launch or save guarantees.
+
+### About Build information deep links
+
+Keep `site/about.html#versions` usable as a direct game-menu destination. Open the Build information disclosure synchronously on initial load and explicit hash visits, before optional catalogue requests settle. Do not move focus, navigate away, write progress, or reopen a manually closed disclosure on cached-page restoration. Remove the hash listener with the About owner. Ordinary About, Ways to play and Packs routes remain compact. Verify real browser Tab/Escape separately from modeled controller and lifecycle cases.
+
+Example verification prompt: “Follow the game’s Build information link. Confirm the requested section is already open while the release catalogue is pending or unavailable; Tab reaches its controls and Escape selects Return to game. Visit ordinary About, then close and restore the disclosure, checking that the page respects your explicit choice. Report source, public and physical-input evidence separately.”
