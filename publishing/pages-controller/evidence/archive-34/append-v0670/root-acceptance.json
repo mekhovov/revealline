@@ -1,0 +1,100 @@
+{
+  "status": "ACCEPTED_SCOPED_ARCHIVE_RETENTION",
+  "at": "2026-09-20T04:48:32.947337+00:00",
+  "repository": "mekhovov/revealline-archive-34",
+  "commit": "fc3377b2da502c7dd521111407f3fa2863767af7",
+  "tree": "e1c4da68bfa388efc3a4a6a7d04fac056f0bee52",
+  "pr": 2,
+  "run": 35489879365,
+  "deployment": 6549129296,
+  "base": "https://mekhovov.github.io/revealline-archive-34/",
+  "files": 1436,
+  "bytes": 627342489,
+  "failedFiles": 0,
+  "omissions": 0,
+  "retryAttempts": 0,
+  "expectedInventorySha256": "23fc4e0f63049e4e93aebe24bfabd4036aed72e67ab1fe0e11f73506abe162d5",
+  "priorPaths": 716,
+  "unchangedPriorPaths": 715,
+  "mutablePriorExceptions": [
+    "index.html"
+  ],
+  "allPriorReleasePathsUnchanged": true,
+  "versions": [
+    "v0.66.0",
+    "v0.67.0"
+  ],
+  "originalsRebuilt": false,
+  "evidence": [
+    {
+      "path": "terminal-run.json",
+      "bytes": 13177,
+      "sha256": "bb4312d2419e02c46b90c0b1edad074300b0ea1f193c2fab307e69b577167cb6"
+    },
+    {
+      "path": "terminal-jobs.json",
+      "bytes": 4836,
+      "sha256": "047c10a3e1f54fed683b7e52bfa60b8e25d9ac301ec417702a162daa07196fdc"
+    },
+    {
+      "path": "terminal-artifacts.json",
+      "bytes": 1454,
+      "sha256": "58591da3d465aa84d3cc9aad39af2cd4b7cb9990ec21cfa52efeac6b9eacbaa1"
+    },
+    {
+      "path": "deployments.json",
+      "bytes": 3858,
+      "sha256": "d2b5904215eaf5c95e11911b55f47a548a6c470a746574e1bca0f798fcf64648"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 6817,
+      "sha256": "01fdd10c72155b3dceb593edcc2fe9b97bfb2b83d82389182e6c0571c40c733a"
+    },
+    {
+      "path": "hosted-receipts-original.zip",
+      "bytes": 75499,
+      "sha256": "9520bb39e83c9f27bbfea3043f8ecee3d9d924060bc4da76e38d7a869ae29ec8"
+    },
+    {
+      "path": "hosted-receipt-members.json",
+      "bytes": 586,
+      "sha256": "b42ea89b31598dd803ea836bbdae48d2f5f4508ffa558bc5d7e45c0a869372db"
+    },
+    {
+      "path": "public-audit/http-r1/inventory.json",
+      "bytes": 295191,
+      "sha256": "23fc4e0f63049e4e93aebe24bfabd4036aed72e67ab1fe0e11f73506abe162d5"
+    },
+    {
+      "path": "public-audit/http-r1/report.json",
+      "bytes": 628,
+      "sha256": "e3cc9474db131e90fdff02c975696b8335a3e94841e1073c8ddb4646e40e8a54"
+    },
+    {
+      "path": "public-audit/http-r1/results.jsonl",
+      "bytes": 993453,
+      "sha256": "40703af7975cd1435baeb09ab66d657a4259a6ecb13d31d882aee467fc4279c6"
+    },
+    {
+      "path": "public-audit/http-r1/attempts.jsonl",
+      "bytes": 993453,
+      "sha256": "40703af7975cd1435baeb09ab66d657a4259a6ecb13d31d882aee467fc4279c6"
+    },
+    {
+      "path": "public-audit/native-observation.json",
+      "bytes": 1110,
+      "sha256": "f792c9044c660d11a32fd622d260489b155bdbc2881146af3669ad93c9133119"
+    },
+    {
+      "path": "merge/result.json",
+      "bytes": 323,
+      "sha256": "2ed36181f8fcd3c7abf7dde587709db2f5125b33a4b4097645d3181bd8cad660"
+    }
+  ],
+  "next": "Update next main publication archive admission using these actual infrastructure/deployment and full byte/native records. Current main selector is unchanged.",
+  "limits": [
+    "No archive offline, audible listening, physical controller/touch or complete campaign qualification",
+    "Preserves v67 known stale resumed caption while paused and long-settings close-button scroll defect; correction candidates do not change archived bytes"
+  ]
+}
