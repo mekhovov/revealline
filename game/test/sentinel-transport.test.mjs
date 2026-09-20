@@ -99,6 +99,8 @@ test('all inherited surfaces remain visible and the shield count is a detached r
   assert(Object.isFrozen(view.shields.remainingIds));
   assert.match(view.instruction, /Shield relays 0 \/ 2/);
   assert.match(missionBriefing(run.level).copy, /all 2 shield relays/);
+  assert.equal(missionBriefing(run.level).goal, 'Reveal 60% · 2 shield relays + core.');
+  assert.match(missionBriefing(run.level).status, /all 2 shield relays first/);
   assert.deepEqual(authoritativeCheckpoint(run), before);
   run.objectives.find((o) => o.id === 'west').captured = true;
   assert.deepEqual(encounterView(run).shields, { total: 2, captured: 1, remainingIds: ['east'] });
@@ -128,6 +130,22 @@ test('all inherited surfaces remain visible and the shield count is a detached r
   assert.doesNotThrow(() =>
     paintEditorMap({ width: 1152, height: 576, getContext: () => ctx }, scenario),
   );
+});
+
+test('one shield is not described as two relays and other required objectives remain explicit', () => {
+  const { scenario } = fixture(),
+    level = structuredClone(scenario.level);
+  level.encounter.shieldObjectiveIds = ['west'];
+  const run = createRun(level),
+    before = authoritativeCheckpoint(run);
+  const brief = missionBriefing(level);
+  assert.equal(brief.goal, 'Reveal 60% · 1 shield relay + core · 1 other required objective.');
+  assert.match(brief.copy, /Capture the shield relay\./);
+  assert.doesNotMatch(brief.copy, /all 1|1 shield relays/);
+  assert.match(encounterView(run).title, /SHIELD RELAY ·/);
+  assert.match(encounterView(run).instruction, /Shield relay 0 \/ 1\. Capture the remaining relay/);
+  assert.match(contentActorDescription(level, { type: 'relay-sentinel' }), /1 shield relay;/);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
 });
 
 test('geometry commands preserve the encounter edition and bindings; invalid dependency edits fail closed', () => {

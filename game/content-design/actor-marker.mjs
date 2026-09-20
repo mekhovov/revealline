@@ -65,7 +65,7 @@ export function contentActorMarkerType(level, actor) {
 export function contentActorDescription(level, actor) {
   if (actor.type === 'relay-sentinel' && level.encounter?.version === 'xonix-encounter.v2') {
     const recipe = level.encounter;
-    return `stationary Sentinel, ${recipe.shieldObjectiveIds.length} shield relays; ${recipe.shielded.warningTicks / 120}s lane warning; close ${recipe.minReleaseCutCells} new trail cells during CORE OPEN or isolate the core`;
+    return `stationary Sentinel, ${recipe.shieldObjectiveIds.length} shield relay${recipe.shieldObjectiveIds.length === 1 ? '' : 's'}; ${recipe.shielded.warningTicks / 120}s lane warning; close ${recipe.minReleaseCutCells} new trail cells during CORE OPEN or isolate the core`;
   }
   if (actor.type === 'lane-boss') {
     const recipe = level.enemies.find((entry) => entry.id === actor.id);

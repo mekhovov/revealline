@@ -16,9 +16,16 @@ export function missionBriefing(
   const title = compact(fullTitle, 44);
   const coverage = Number((level.goal.coverage * 100).toFixed(6));
   const required = (level.objectives || []).filter((item) => item.required).length;
+  const encounter = level.encounter;
+  const multiShield = encounter?.version === 'xonix-encounter.v2';
+  const shieldCount = multiShield ? encounter.shieldObjectiveIds.length : 1;
+  const shieldLabel = `${shieldCount} shield relay${shieldCount === 1 ? '' : 's'}`;
+  const otherRequired = multiShield ? Math.max(0, required - shieldCount - 1) : 0;
   const label = compact(objectiveLabel, 24).toLowerCase() || 'objective';
   const plural = /[^aeiou]y$/.test(label) ? `${label.slice(0, -1)}ies` : `${label}s`;
-  const goal = `Reveal ${coverage}%${required ? ` · ${required} required ${required === 1 ? label : plural}` : ''}.`;
+  const goal = multiShield
+    ? `Reveal ${coverage}% · ${shieldLabel} + core${otherRequired ? ` · ${otherRequired} other required ${otherRequired === 1 ? label : plural}` : ''}.`
+    : `Reveal ${coverage}%${required ? ` · ${required} required ${required === 1 ? label : plural}` : ''}.`;
   const rules = level.rules || {};
   const limits = [
     rules.timeLimitSeconds > 0 ? `Deadline ${rules.timeLimitSeconds}s` : '',
@@ -40,9 +47,8 @@ export function missionBriefing(
   const recommendation = recommendations.length
     ? `Recommended: ${compact(recommendations.join(' / '), 68)}.`
     : '';
-  const encounter = level.encounter;
   const encounterGoal = encounter
-    ? `Capture ${encounter.version === 'xonix-encounter.v2' ? `all ${encounter.shieldObjectiveIds.length} shield relays` : 'the shield relay'}. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
+    ? `Capture ${multiShield && shieldCount > 1 ? `all ${shieldLabel}` : 'the shield relay'}. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
     : '';
   const foundations = [
     'xonix-level.v5',
@@ -118,7 +124,7 @@ export function missionBriefing(
       authored ||
       'Return to safe ground to secure each line. Regions without a field enemy are revealed.',
     status: encounter
-      ? 'Capture the shield relay first. Watch the patterned lane before each attack.'
+      ? `Capture ${multiShield && shieldCount > 1 ? `all ${shieldLabel}` : 'the shield relay'} first. Watch the patterned lane before each attack.`
       : intro
         ? 'Your first route: fly down from the marked start to the opposite border.'
         : level.classic?.enemyPressure?.actors?.length
