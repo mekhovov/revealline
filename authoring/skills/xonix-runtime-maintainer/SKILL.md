@@ -932,3 +932,7 @@ page disconnect, stale-callback, no-background-simulation and zero-RAF assertion
 Also verify terminal disposal of independent menu observers and that queued focus
 reflow cannot scroll or activate a hidden page. Restore missing sparse inputs from
 the exact selected Git revision; keep setup failures distinct from product failures.
+
+### Replay artwork status
+
+When changing Replay Theater artwork feedback, keep `#asset-status` mounted as a polite, atomic live region, including while empty. Collapse empty spacing without removing it from the accessibility tree. Check failed-image and successful-theme updates without changing focus, transport intent or recorded checkpoints. Distinguish inspected browser semantics from an actual screen-reader listening check. See `docs/replay-theater.md` for the verification prompt.

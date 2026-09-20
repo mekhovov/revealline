@@ -241,8 +241,9 @@ progress {
   font-size: 0.8125rem;
   margin-top: 10px;
 }
+/* Keep the empty live region mounted for later artwork warnings. */
 #asset-status:empty {
-  display: none;
+  margin-block: 0;
 }
 aside {
   display: grid;
