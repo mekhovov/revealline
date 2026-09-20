@@ -50,7 +50,32 @@ function context(value) {
   );
   required(['solo', 'versus', 'team'].includes(value.mode), 'Unsupported visual theme mode.');
   const owner = value.owner;
-  if (value.mode === 'team') {
+  if (owner.kind === 'journey') {
+    fields(
+      owner,
+      [
+        'kind',
+        'projectId',
+        'projectRevision',
+        'projectSha256',
+        'packId',
+        'campaignId',
+        'baseCampaignKey',
+        'policyId',
+      ],
+      'Journey content owner',
+    );
+    required(
+      stableId(owner.projectId) &&
+        authoredRevision(owner.projectRevision) &&
+        hash(owner.projectSha256) &&
+        stableId(owner.packId) &&
+        stableId(owner.campaignId) &&
+        authoredText(owner.baseCampaignKey, 512) &&
+        stableId(owner.policyId),
+      'Invalid exact Journey owner.',
+    );
+  } else if (value.mode === 'team') {
     fields(owner, ['kind', 'id', 'revision', 'sha256'], 'Team content owner');
     required(
       owner.kind === 'team-pack' &&
@@ -66,7 +91,19 @@ function context(value) {
       'Use the accepted authored campaign key.',
     );
   }
-  fields(value.level, ['id', 'revision', 'sha256'], 'visual theme level');
+  fields(
+    value.level,
+    owner.kind === 'journey'
+      ? ['id', 'revision', 'sha256', 'simulationIdentity']
+      : ['id', 'revision', 'sha256'],
+    'visual theme level',
+  );
+  if (owner.kind === 'journey')
+    required(
+      typeof value.level.simulationIdentity === 'string' &&
+        /^[a-f0-9]{16}$/.test(value.level.simulationIdentity),
+      'Use the existing Journey simulation identity.',
+    );
   required(
     stableId(value.level.id) && authoredRevision(value.level.revision) && hash(value.level.sha256),
     'Invalid exact visual theme level.',

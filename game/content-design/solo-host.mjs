@@ -27,6 +27,9 @@ export function createCandidateSoloHost(
     }),
   );
   const owned = new Set(entries);
+  const rawEntries = new Map(
+    entries.map((entry, index) => [entry, preparer.catalog.entries[index]]),
+  );
   const catalog = createJourneyCatalog(
     preparer.catalog.journey().campaigns.map(({ packId, runtime, manifests }) => ({
       source: 'candidate',
@@ -47,6 +50,10 @@ export function createCandidateSoloHost(
     catalog,
     preparer,
     owns: (entry) => owned.has(entry),
+    visualThemeSelection(entry, level) {
+      if (!owned.has(entry) || !entry.campaign.levels.includes(level)) return null;
+      return Object.freeze({ entry: rawEntries.get(entry), level });
+    },
     card(mission, difficulty = 'standard') {
       if (catalog.find(mission?.id) !== mission) return null;
       const manifest = entries
