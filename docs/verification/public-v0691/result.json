@@ -1,0 +1,38 @@
+{
+  "version": "v0.69.1",
+  "source": "540968774b9aed8bafe4446ee22378b9021b3df9",
+  "publisher": "648271c96505b73cf855ef67cf3883ebe397e89a",
+  "sourcePR": 188,
+  "publisherPR": 194,
+  "deployment": 6553644915,
+  "publicBytes": {
+    "files": 3815,
+    "verifiedBytes": 698529682,
+    "failedFiles": 0,
+    "retries": 1,
+    "uninspectedFiles": 0
+  },
+  "rootObservation": {
+    "initial": "Prior v0.69.0 immediately after deployment; preserved in initial-route-observation.json",
+    "later": "Same /game/ URL naturally resolved to /releases/v0.69.1/site/game/index.html with visible V0.69.1 after full public audit. No cache or storage clearing.",
+    "cause": "Initial propagation/cache cause not established"
+  },
+  "keyboard": {
+    "start": "First Signal 0%/3 lives/0 score/0:00",
+    "pause": "Escape focuses Resume; at0:08 timer stopped",
+    "mainMenu": "Four Tabs + Enter returns Continue focused",
+    "continue": "Explicit Continue resumed same in-memory flight at0:08",
+    "secondPause": "0%/3 lives/0score/0:15; seven seconds actual continued gameplay, not paused-state mutation",
+    "moreWorlds": "Visible list settled21chapters; keyboard selected Pressure Pictures",
+    "safeRefusal": "Session-only ownership prevents chapter play before any install or flight replacement; exact download opener restored. No retained-media-conflict result claimed.",
+    "exit": "Escape returned Continue focused; subsequent navigation intentionally discarded only session-only test attempt"
+  },
+  "menusIndependent": ".cache/v0691-public-menu-20260920/evidence.json",
+  "remaining": [
+    "Native public delayed Continue cancellation and retained-media install recovery are not accepted: existing historical tab owns profile writer; stale tab80 does not attach through documented APIs. No takeover or storage clearing.",
+    "Short landscape pause layout correction is v0.69.2 candidate",
+    "Story restore focus correction is v0.69.3 candidate",
+    "Physical controller/touch, audible tracks and real offline remain separate"
+  ],
+  "status": "Public byte verification and scoped keyboard runtime/navigation passed; full recovery acceptance remains open."
+}

@@ -3464,6 +3464,14 @@ try {
         }
       }
       ticket.pending = true;
+      // Keep the live escape action focused before disabling its opener.
+      // Do not reclaim focus after a pointer choice or browser focus change.
+      if (
+        !document.hidden &&
+        document.hasFocus() &&
+        document.activeElement === $('mission-replace-confirm')
+      )
+        $('mission-replace-stay').focus({ preventScroll: true });
       $('mission-replace-confirm').disabled = true;
       $('mission-replace-status').textContent = isSetupRequest(ticket.request)
         ? 'Preparing the requested fresh attempt without starting it.'

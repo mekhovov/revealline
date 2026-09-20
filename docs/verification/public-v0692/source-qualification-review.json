@@ -1,0 +1,15 @@
+{
+  "source": "e1b58ad673f30bddda15ff66b76c03d149e155e1",
+  "tree": "7a3f98eadca83439d307318661f05d0bad277b43",
+  "completeTestsPerFamily": 7011,
+  "testFiles": 561,
+  "runtime": "Node20.19.6 in both complete families",
+  "manualRun": 35515530629,
+  "prRun": 35516061424,
+  "status": "PASS_EXACT_SOURCE_GATES_AND_ORDINARY_BUILD",
+  "limits": [
+    "Frozen artifact byte inspection pending",
+    "No public v0.69.2 acceptance yet",
+    "No physical hardware, audible listening or whole-phase claim"
+  ]
+}
