@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Content Studio · Reveal Line</title>
+    <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="studio.css" />
+    <script type="module" src="studio.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="../">◩ REVEAL / LINE</a><span>CONTENT STUDIO / LOCAL DRAFTS</span
+      ><a href="../playground/">Legacy Playground ↗</a>
+    </header>
+    <main>
+      <div class="title-row">
+        <div>
+          <p class="eyebrow">01 / AUTHORING WORKBENCH</p>
+          <h1>Shape the next challenge.</h1>
+        </div>
+        <p class="edition">FOUNDATIONS PREVIEW<br />Not a publishing tool</p>
+      </div>
+      <p id="status" role="status">Opening your local workbench…</p>
+      <noscript>This editor needs JavaScript. No project has been changed.</noscript>
+      <div class="toolbar" aria-label="Draft actions">
+        <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button
+        ><button id="save">Save checkpoint / retry</button
+        ><button id="export">Export backup</button>
+        <button id="opening">Inspect opening candidates</button>
+        <label class="file-button"
+          >Inspect import<input id="import" type="file" accept="application/json,.json"
+        /></label>
+      </div>
+      <div class="workspace">
+        <aside aria-label="Project and missions">
+          <p class="eyebrow">PROJECT</p>
+          <label>Local project ID<input id="project-id" value="my-journey" maxlength="80" /></label>
+          <label
+            >Checkpoint<input id="checkpoint" type="number" min="1" step="1" placeholder="Latest"
+          /></label>
+          <div class="pair">
+            <button id="load">Inspect saved</button><button id="new">New project</button>
+          </div>
+          <p class="note">
+            Inspect any saved checkpoint before applying it. Restoring creates a new checkpoint;
+            newer history stays available.
+          </p>
+          <p id="project-name"></p>
+          <label>Mission<select id="mission"></select></label>
+          <p id="structure" class="note"></p>
+          <label
+            >Difficulty<select id="difficulty">
+              <option value="gentle">Gentle · 5 lives</option>
+              <option value="standard" selected>Standard · 3 lives</option>
+              <option value="expert">Expert · 2 lives</option>
+            </select></label
+          >
+          <p id="lesson"></p>
+          <p id="rules" class="note"></p>
+          <details>
+            <summary>Tune mission challenge</summary>
+            <p class="note">
+              Ratings describe the intended challenge; they do not change enemy speed. Lives and
+              handling come from the shared policy. Gentle never has a failing countdown. Apply
+              these fields before switching missions or editing other parts of the draft.
+            </p>
+            <form id="tuning-form">
+              <fieldset id="tuning-tools">
+                <legend>Mission settings</legend>
+                <label
+                  >Target territory %<input
+                    id="target-coverage"
+                    type="number"
+                    min="1"
+                    max="100"
+                    step="any"
+                    required
+                /></label>
+                <label
+                  >Countdown seconds · 0 means none<input
+                    id="countdown-seconds"
+                    type="number"
+                    min="0"
+                    max="600"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Challenge band<input
+                    id="rating-band"
+                    type="number"
+                    min="1"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Planning<input
+                    id="rating-planning"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Execution<input
+                    id="rating-execution"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Threat density<input
+                    id="rating-threatDensity"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Time pressure<input
+                    id="rating-timePressure"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Mechanic load<input
+                    id="rating-mechanicLoad"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <label
+                  >Coordination<input
+                    id="rating-coordination"
+                    type="number"
+                    min="0"
+                    max="12"
+                    step="1"
+                    required
+                /></label>
+                <button type="submit">Validate & apply challenge</button>
+              </fieldset>
+            </form>
+          </details>
+          <details>
+            <summary>Effective rules and identity</summary>
+            <pre id="effective"></pre>
+          </details>
+        </aside>
+        <section class="board-panel" aria-label="Map workbench">
+          <div class="section-heading">
+            <h2 id="map-name">Map</h2>
+            <span>72 × 36</span>
+          </div>
+          <canvas
+            id="board"
+            width="1008"
+            height="504"
+            role="img"
+            aria-label="Map geometry; the same information is listed below. Click to choose edit coordinates."
+          ></canvas>
+          <div id="empty-board" hidden>
+            <p class="eyebrow">A BLANK START / YOUR NEXT CHALLENGE</p>
+            <p>
+              Your project is ready. Create a mission now, or organize empty campaigns and packs
+              first. No map or gameplay rules are applied until a mission exists.
+            </p>
+            <button id="create-first-mission" class="primary">Create first mission</button>
+          </div>
+          <p id="board-legend" class="legend">
+            <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
+            ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
+          </p>
+          <p id="geometry" class="note"></p>
+          <label class="toggle"
+            ><input id="show-capture" type="checkbox" checked />Show frozen capture overlay</label
+          >
+          <p id="capture-legend" class="legend">
+            <span>· Retained field</span><span>╱ Would fill</span><span>□ Hypothetical trail</span
+            ><span>◎ Field anchor</span><span>▣ Affected objective</span>
+          </p>
+          <p id="capture-summary" class="note" role="status"></p>
+          <form id="geometry-form">
+            <fieldset id="geometry-tools">
+              <legend>Add geometry · makes a new map revision</legend>
+              <label
+                >Surface<select id="surface">
+                  <option value="foundations">Foundation</option>
+                  <option value="walls">Wall</option>
+                  <option value="slow">Slow field</option>
+                  <option value="lethal">Lethal field</option>
+                  <option value="spawn">Move mission spawn / Team seat 1</option>
+                  <option value="spawn-team-two">Move Team seat 2</option>
+                </select></label
+              >
+              <div class="coordinates">
+                <label>X<input id="x" type="number" min="0" max="71" value="20" required /></label
+                ><label>Y<input id="y" type="number" min="0" max="35" value="12" required /></label
+                ><label
+                  >Width<input id="w" type="number" min="1" max="70" value="5" required /></label
+                ><label
+                  >Height<input id="h" type="number" min="1" max="34" value="5" required
+                /></label>
+              </div>
+              <button type="submit">Validate & apply geometry</button>
+            </fieldset>
+          </form>
+          <details>
+            <summary>Frozen capture inspection</summary>
+            <p class="note">
+              Hypothetical secured cells, not a legal-route validator. Enemies are frozen at spawn;
+              moving enemies can change the outcome.
+            </p>
+            <label
+              >Cell indexes, separated by commas<input
+                id="trail"
+                placeholder="32, 104, 176…" /></label
+            ><button id="inspect">Inspect components</button
+            ><button id="clear-inspection">Clear hypothetical trail</button>
+            <pre id="capture"></pre>
+          </details>
+          <div class="preview-actions">
+            <button id="play" class="primary">Play exact Solo preview ↗</button
+            ><span>Practice only · no awards · candidate presentation</span>
+            <button id="export-team" hidden>Export exact Team test mission</button>
+          </div>
+          <p id="team-test-help" class="note" hidden>
+            Geometry and rules only. Import this file in the
+            <a href="../couch/relay-rescue.html" target="_blank" rel="noopener"
+              >Team test player ↗</a
+            >. Its preview scenery is not this mission's authored picture. No Journey awards or
+            publication.
+          </p>
+        </section>
+        <section class="source-panel" aria-label="Project source and validation">
+          <details id="structure-editor">
+            <summary>Organize missions, campaigns & packs</summary>
+            <p class="note">
+              Choose an untested Solo / Versus island or a two-seat Team island template. Duplicate
+              shares an immutable map; editing its geometry creates a private revision. Add to
+              parent keeps existing memberships. Remove from parent detaches only that membership.
+              Delete refuses referenced or nonempty items and never removes shared maps or assets.
+              Archived items stay editable here but are omitted from candidate Journey lists.
+            </p>
+            <form id="structure-form">
+              <label
+                >Item type<select id="item-kind">
+                  <option value="mission">Mission</option>
+                  <option value="campaign">Campaign</option>
+                  <option value="pack">Pack</option>
+                </select></label
+              >
+              <label
+                >Action<select id="item-action">
+                  <option value="create">Create</option>
+                  <option value="duplicate">Duplicate mission</option>
+                  <option value="rename">Rename</option>
+                  <option value="place">Add to parent</option>
+                  <option value="detach">Remove from parent</option>
+                  <option value="earlier">Move earlier in parent</option>
+                  <option value="later">Move later in parent</option>
+                  <option value="delete">Delete unreferenced item</option>
+                  <option value="archive">Archive item</option>
+                  <option value="restore">Restore archived item</option>
+                </select></label
+              >
+              <label id="item-target-row">Existing item<select id="item-target"></select></label>
+              <label id="item-id-row"
+                >New stable ID<input id="item-id" maxlength="80" placeholder="my-new-mission"
+              /></label>
+              <label id="item-name-row">Display name<input id="item-name" maxlength="160" /></label>
+              <label id="item-template-row"
+                >Mission template<select id="item-template">
+                  <option value="solo-island">Solo / Versus · island</option>
+                  <option value="team-islands">Team · twin islands (greybox)</option>
+                </select></label
+              >
+              <label id="item-band-row"
+                >Campaign band<input
+                  id="item-band"
+                  type="number"
+                  min="1"
+                  max="12"
+                  step="1"
+                  value="1"
+              /></label>
+              <label id="item-parent-row"
+                >Parent for membership / order<select id="item-parent"></select
+              ></label>
+              <p id="item-dependencies" class="note" role="status" hidden></p>
+              <label id="item-confirm-row" hidden
+                >Type the exact item ID to delete<input
+                  id="item-confirm"
+                  maxlength="80"
+                  autocomplete="off"
+                  spellcheck="false"
+              /></label>
+              <button id="item-apply" type="submit">Validate & apply structure</button>
+            </form>
+            <p id="structure-result" class="note" role="status">
+              All edits are local candidates. No publication or player progress changes.
+            </p>
+            <pre id="structure-order" aria-label="Pack, campaign and mission order"></pre>
+          </details>
+          <p class="eyebrow">SOURCE / ALL MAPS & CAMPAIGNS</p>
+          <p class="note">
+            Edit names, order, actors and design notes here. Inspect first; applying is explicit.
+            Published editions are never overwritten.
+          </p>
+          <label for="source">Project JSON</label
+          ><textarea id="source" spellcheck="false" rows="22"></textarea>
+          <div class="pair">
+            <button id="validate">Inspect source</button
+            ><button id="apply" disabled>Apply inspected source</button>
+          </div>
+          <p id="validation" role="status">No source changes inspected.</p>
+          <ul id="diagnostics"></ul>
+        </section>
+      </div>
+      <section id="preview-panel" hidden>
+        <div class="section-heading">
+          <h2>Engine preview</h2>
+          <button id="close-preview">Close preview</button>
+        </div>
+        <p id="preview-status" role="status"></p>
+        <iframe id="preview" title="Exact candidate Solo practice preview" allow="gamepad"></iframe>
+      </section>
+      <footer>
+        Local-first drafts · immutable checkpoints · shared compiler · human playtesting still
+        required
+      </footer>
+    </main>
+  </body>
+</html>

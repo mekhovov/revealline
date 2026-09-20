@@ -1,4 +1,5 @@
 import { CELL } from './registry.mjs';
+import { isClassicRuleset } from './versions.mjs';
 
 export const CLASSIC_MATERIAL = Object.freeze({ normal: 0, slow: 1, lethal: 2 });
 export const CLASSIC_EFFECTS = Object.freeze({
@@ -50,7 +51,7 @@ export function classicEffectActive(state, kind) {
 
 /** Complete new-branch authority. Derived graph caches are rebuilt from these fields. */
 export function projectClassicState(state) {
-  if (state.ruleset !== 'xonix-core.v5' || !state.classic)
+  if (!isClassicRuleset(state.ruleset) || !state.classic)
     throw new TypeError('Classic projection requires a classic run');
   const { terrain, eligible, everClaimed, ...data } = state.classic;
   return {

@@ -18,7 +18,12 @@ Arcade action authority, saved-edition recovery, explicit untimed Versus and leg
 reference identities; then qualify shared custom music composition. Forty-seven
 focused correction tests pass on Node20.19.5 and22.22.2. Full source gates and public
 acceptance remain required. The music composition is a candidate, not a shipped
-feature. Continue actor/presentation parity, action feedback, fair challenge, rewards
+feature. The final Journey source now incorporates the v0.68.2 publisher and
+acceptance record `1a1ec94c`; runtime, tests, authorship inputs and package versions
+remain byte-identical to `041f1a71`. Its earlier full runs remain precursor evidence;
+the integrated commit requires its own complete qualification.
+[Final-runtime native continuation observation](verification/journey-current-integration-native.json)
+retains the actual observed source separately from this documentation merge. Continue actor/presentation parity, action feedback, fair challenge, rewards
 and authoring according to the stable phase tables below.
 
 <details>
@@ -180,6 +185,30 @@ fully validated. This does not relabel the historical cross-mode phases below.
 
 ## Current delivery — 20 September 2026
 
+**The scoped [v0.66.0 Team/Studio release is publicly accepted](https://mekhovov.github.io/revealline/releases/v0.66.0/site/game/).**
+Its [acceptance record](../publishing/pages-controller/delivery/evidence/cross-mode-p04/v0660-public/root-acceptance.json)
+binds frozen source `dae39ba7`, actual publisher `7b898a7b`, Pages run `35480159218`
+and deployment `6547558688`. All 3,533 public files / 644,953,790 bytes matched,
+without failures or retries. Scoped original-byte Team import, earned picture,
+Next/Retry and Studio preview/history journeys passed. Original-download completion,
+physical input, live held rescue, audio listening, offline behavior, balance and
+whole parent-phase validation are explicitly not claimed. v0.65.0 remains preserved
+through Archive33; its earlier scoped acceptance is retained below.
+
+Acceptance-only PR173 merged as `cc049190` with tree `761b9210`, identical to its
+reviewed evidence head `5ddddd87`. This evidence merge did not redeploy Pages;
+the actual accepted public deployment remains bound to `7b898a7b`.
+
+Journey P00 PR169, source `6a42faca`, is undergoing fresh exact-source verification
+for 0.67.0 after its capture-caption correction and accepted-publication integration.
+Discovery PR170 follows as 0.68.0; P01 foundations/Studio PR172 is provisionally
+0.69.0 and is not released. Parent cross-mode P03/P04/P05/P06/P07/P08/P18 and all
+remaining Journey obligations stay open. No earlier green source receipts qualify
+later edits, and automated feasibility does not prove enjoyment.
+
+<details>
+<summary>Historical v0.66.0 prepared-delivery cutoff — retained verbatim</summary>
+
 **Play the accepted [v0.65.0 imported-Team continuation update](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Ordinary import, the first win, earned-picture viewing with exact focus return, Next, the final win and same-arena Retry passed on the actual public release. The [scoped acceptance record](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) combines that keyboard journey with all **3,500 deployed files / 644,685,649 bytes**, zero failures and zero retries. **P07-TEAM-IMPORTED-CONTINUATION is Complete; P03/P07/P08/P18 remain open.** The owned enemy-free fixture proves navigation, not encounter difficulty or live rescue.
 
 The accepted publisher is `e6e269ea` / tree `7e96a3c4`, selecting frozen source `57fdc39a` / tree `b71a23d6` and release `392203520`. Pages run `35474519516`, deployment `6546633515` and the final release/tag/nine-asset readbacks agree. [Archive33 v0.64.3 preservation](../publishing/pages-controller/evidence/archive-33/initial-v0643/root-acceptance.json) is already accepted; its [additive v0.65.0 preservation](../publishing/pages-controller/evidence/archive-33/append-v0650/root-acceptance.json) is now accepted for all 1,421 files / 627,143,902 bytes, with unchanged earlier release bytes and scoped keyboard continuation. This does not establish offline, hardware or encounter-balance acceptance. Existing archive routes and originals stay retained.
@@ -219,6 +248,8 @@ Complete means accepted within the named release scope. Partial/In progress mean
 **Execution order after these deliveries:** P03/P05 → P08-A/P08-B → P09/P07 → P02-B → P04/P06 → P10 → P11–P15 → P16/P17 → P18. Independently complete supporting fixes may ship earlier. The 132 new campaign missions remain a backlog target; bulk production follows the three-level gameplay and presentation benchmark.
 
 The accepted imported-Team journey is desktop keyboard/visible-controls scope; its owned enemy-free fixture proves flow. Physical controllers/touch, phone/short-landscape/200% zoom, audible listening, offline acceptance, Team two-core encounters and held rescue remain open. Every independently completed feature still needs its own related commit, versioned release, Pages deployment and scoped public acceptance.
+
+</details>
 
 <details>
 <summary>Historical v0.65.0 selector current-summary cutoff — retained verbatim</summary>

@@ -1,6 +1,7 @@
 import { EPS } from '../core/geometry.mjs';
+import { isClassicRuleset } from '../core/versions.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
-import { classicView } from './classic-view.mjs';
+import { foundationCompatibleView as classicView } from './foundation-view.mjs';
 import { encounterView } from './encounter-view.mjs';
 
 const ordinaryEvents = new Set([
@@ -44,7 +45,13 @@ const criticalEvents = new Set([
   'pressure.committed',
 ]);
 const statuses = new Set(['running', 'respawning', 'won', 'lost']);
-const rulesets = new Set(['xonix-core.v2', 'xonix-core.v3', 'xonix-core.v4', 'xonix-core.v5']);
+const rulesets = new Set([
+  'xonix-core.v2',
+  'xonix-core.v3',
+  'xonix-core.v4',
+  'xonix-core.v5',
+  'xonix-core.v6',
+]);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;
 const check = (condition, message) => {
@@ -72,7 +79,7 @@ export function flightInformationSnapshot(run, { started, paused }) {
   check(run && typeof run === 'object', 'An accepted run is required.');
   check(typeof started === 'boolean' && typeof paused === 'boolean', 'Host state is required.');
   const issues = [];
-  const classicExpected = run.ruleset === 'xonix-core.v5';
+  const classicExpected = isClassicRuleset(run.ruleset);
   const encounterExpected = Boolean(run.level?.encounter);
   const classic = classicView(run);
   let encounter = null;

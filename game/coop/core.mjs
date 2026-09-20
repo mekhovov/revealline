@@ -1,4 +1,10 @@
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
+import { JOURNEY_POLICY, journeyPreset } from '../content-design/catalogs.mjs';
+import {
+  compileCoopFoundationGeometry,
+  COOP_FOUNDATION_LEVEL_VERSION,
+  COOP_FOUNDATION_RULESET,
+} from './foundations.mjs';
 import {
   cellAt,
   positionAt,
@@ -54,6 +60,8 @@ const dataArray = (value) =>
 const identifier = (value) => typeof value === 'string' && value.length > 0 && value.length <= 100;
 
 function buildGrid(level) {
+  if (level.version === COOP_FOUNDATION_LEVEL_VERSION)
+    return Uint8Array.from(compileCoopFoundationGeometry(level).cells);
   const cells = new Uint8Array(level.width * level.height);
   for (let y = 0; y < level.height; y++)
     for (let x = 0; x < level.width; x++)
@@ -92,13 +100,24 @@ export function validateCoopLevel(level) {
       'rules',
       'strongholds',
       'encounter',
+      'journeyDifficulty',
     ])
   )
     return {
       valid: false,
       errors: ['Co-op level must be a plain data object with supported fields.'],
     };
-  check(level.version === COOP_LEVEL_VERSION, 'Unsupported co-op level version.');
+  check(
+    [COOP_LEVEL_VERSION, COOP_FOUNDATION_LEVEL_VERSION].includes(level.version),
+    'Unsupported co-op level version.',
+  );
+  check(
+    level.version === COOP_FOUNDATION_LEVEL_VERSION
+      ? typeof level.journeyDifficulty === 'string' &&
+          Object.hasOwn(DIFFICULTIES, level.journeyDifficulty)
+      : level.journeyDifficulty === undefined,
+    'Only the new Team edition pins an explicit Journey difficulty.',
+  );
   check(level.width === 72 && level.height === 36, 'Co-op boards must be 72 × 36.');
   check(
     identifier(level.id) && identifier(level.name),
@@ -229,7 +248,13 @@ export function validateCoopLevel(level) {
     'Encounter settings must use supported, bounded timing and attack values.',
   );
   if (errors.length) return { valid: false, errors };
-  const board = { width: 72, height: 36, cells: buildGrid(level) };
+  let cells;
+  try {
+    cells = buildGrid(level);
+  } catch (error) {
+    return { valid: false, errors: [`Invalid shared Team foundations: ${error.message}`] };
+  }
+  const board = { width: 72, height: 36, cells };
   check(
     board.cells.some((cell) => cell === FIELD),
     'The board needs claimable field.',
@@ -253,10 +278,11 @@ export function validateCoopLevel(level) {
         seen.add(next);
         queue.push(next);
       }
-  check(
-    seen.size === board.cells.filter((cell) => cell === SAFE).length,
-    'Initial safe ground must be connected.',
-  );
+  if (level.version === COOP_LEVEL_VERSION)
+    check(
+      seen.size === board.cells.filter((cell) => cell === SAFE).length,
+      'Initial safe ground must be connected.',
+    );
   return { valid: !errors.length, errors };
 }
 
@@ -275,7 +301,7 @@ export function createCoop(
   level,
   {
     seed = 17,
-    difficulty = 'standard',
+    difficulty,
     jointCuts = true,
     assistCaptures = true,
     advancedCooperation = true,
@@ -283,6 +309,9 @@ export function createCoop(
 ) {
   const validation = validateCoopLevel(level);
   if (!validation.valid) throw new TypeError(validation.errors.join(' '));
+  if (difficulty === undefined)
+    difficulty =
+      level.version === COOP_FOUNDATION_LEVEL_VERSION ? level.journeyDifficulty : 'standard';
   if (
     !Number.isInteger(seed) ||
     seed < 0 ||
@@ -293,10 +322,13 @@ export function createCoop(
     typeof advancedCooperation !== 'boolean'
   )
     throw new TypeError('Invalid co-op options.');
+  if (level.version === COOP_FOUNDATION_LEVEL_VERSION && difficulty !== level.journeyDifficulty)
+    throw new TypeError('Team difficulty must match its compiled Journey edition.');
   const owned = structuredClone(level);
   const cells = buildGrid(owned);
   const run = {
-    ruleset: COOP_RULESET,
+    ruleset:
+      owned.version === COOP_FOUNDATION_LEVEL_VERSION ? COOP_FOUNDATION_RULESET : COOP_RULESET,
     level: owned,
     width: owned.width,
     height: owned.height,
@@ -341,7 +373,12 @@ export function createCoop(
     claimedCount: 0,
     coverage: 0,
     team: {
-      reserves: DIFFICULTIES[difficulty],
+      // A Journey team starts with one active team life; the rest are shared
+      // reserve recoveries. Historical Team reserve counts remain untouched.
+      reserves:
+        owned.version === COOP_FOUNDATION_LEVEL_VERSION
+          ? journeyPreset(difficulty).lives - 1
+          : DIFFICULTIES[difficulty],
       recoveryAt: null,
       captureCredits: 0,
       interceptions: 0,
@@ -447,7 +484,11 @@ function movement(run, commands, stopped) {
 function knockDown(run, player, cause, commands, enemy = null) {
   if (player.status !== 'active') return;
   player.status = 'downed';
-  player.downedUntil = run.time + COOP_TIMING[run.difficulty].recovery;
+  player.downedUntil =
+    run.time +
+    (run.ruleset === COOP_FOUNDATION_RULESET
+      ? JOURNEY_POLICY.rules.respawnSeconds
+      : COOP_TIMING[run.difficulty].recovery);
   player.downedClaimedAt = run.claimedCount;
   if (player.rescue)
     emit(run, 'rescue.cancelled', {

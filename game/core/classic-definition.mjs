@@ -24,7 +24,7 @@ const has = (value, keys, label) => {
 };
 
 /** The caller supplies already-owned bounded JSON; no code or inferred actor roles. */
-export function resolveClassicDefinition(level) {
+export function resolveClassicDefinition(level, foundationGeometry = null) {
   const { width, height } = level;
   exactKeys(
     level.classic,
@@ -131,9 +131,12 @@ export function resolveClassicDefinition(level) {
       const dx = side === 'east' ? 1 : side === 'west' ? -1 : 0;
       const dy = side === 'south' ? 1 : side === 'north' ? -1 : 0;
       required(
-        !walls[y * width + x] &&
-          (x + dx === 0 || x + dx === width - 1 || y + dy === 0 || y + dy === height - 1),
-        'initial contour edge must separate safe border and field',
+        foundationGeometry
+          ? foundationGeometry.cells[y * width + x] === 0 &&
+              foundationGeometry.cells[(y + dy) * width + x + dx] === 1
+          : !walls[y * width + x] &&
+              (x + dx === 0 || x + dx === width - 1 || y + dy === 0 || y + dy === height - 1),
+        'initial contour edge must separate permanent reclaimed ground and field',
       );
       required(
         enemy.radius === undefined || number(enemy.radius, 0.05, 0.45),
