@@ -267,7 +267,8 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
-    const directional = version?.value === 'xonix-level.v7';
+    const sentinel = version?.value === 'xonix-level.v8';
+    const directional = version?.value === 'xonix-level.v7' || sentinel;
     const relays = version?.value === 'xonix-level.v6' || directional;
     const foundations = version?.value === 'xonix-level.v5' || relays;
     const classic = version?.value === 'xonix-level.v4' || foundations;
@@ -314,6 +315,11 @@ export function validateLevel(level) {
     );
     if (wide && !Object.hasOwn(owned, 'encounter'))
       return { valid: false, errors: ['wide levels require an explicit nullable encounter'] };
+    if (
+      owned.encounter !== null &&
+      owned.encounter?.version !== (sentinel ? 'xonix-encounter.v2' : 'xonix-encounter.v1')
+    )
+      return { valid: false, errors: ['Encounter and level editions must match.'] };
     const geometry = foundations ? foundationGeometry(owned) : null;
     const shape = classic
       ? {
@@ -354,7 +360,8 @@ export function validateLevel(level) {
       resolveClassicDefinition(owned, geometry);
       if (foundations) validateFoundationOccupants(owned, geometry);
     }
-    if (!wide || owned.encounter !== null) resolveEncounterDescriptor(owned.encounter, shape);
+    if (!wide || owned.encounter !== null)
+      resolveEncounterDescriptor(owned.encounter, shape, geometry);
     return result;
   } catch (error) {
     return { valid: false, errors: [error.message] };
@@ -363,9 +370,13 @@ export function validateLevel(level) {
 
 export function normalizedLevel(level) {
   if (
-    ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(
-      Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value,
-    )
+    [
+      'xonix-level.v4',
+      'xonix-level.v5',
+      'xonix-level.v6',
+      'xonix-level.v7',
+      'xonix-level.v8',
+    ].includes(Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value)
   )
     level = boundedJSON(level, {
       maxBytes: 128 * 1024,
@@ -381,7 +392,13 @@ export function normalizedLevel(level) {
     ),
   );
   if (
-    ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(level.version)
+    [
+      'xonix-level.v4',
+      'xonix-level.v5',
+      'xonix-level.v6',
+      'xonix-level.v7',
+      'xonix-level.v8',
+    ].includes(level.version)
   )
     for (const item of [...level.classic.terrain, ...level.classic.powerups]) ids.add(item.id);
   let homeId = 'home-hangar';

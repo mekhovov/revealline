@@ -11,7 +11,7 @@ import { directionalGeometryDefinition } from './directional-fields.mjs';
 /** Shared geometry boundary for new editions only. Legacy maps retain their compiler. */
 export function foundationGeometry(level) {
   required(Array.isArray(level.foundations), 'Foundation editions require explicit foundations.');
-  const directional = level.version === 'xonix-level.v7';
+  const directional = ['xonix-level.v7', 'xonix-level.v8'].includes(level.version);
   const relays = level.version === 'xonix-level.v6' || directional;
   return (
     directional
@@ -32,7 +32,7 @@ export function foundationGeometry(level) {
 }
 
 export function validateFoundationOccupants(level, geometry) {
-  if (['xonix-level.v6', 'xonix-level.v7'].includes(level.version))
+  if (['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(level.version))
     for (const item of [
       ...(level.classic?.powerups ?? []),
       ...(level.supplies ?? []),

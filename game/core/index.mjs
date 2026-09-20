@@ -81,7 +81,12 @@ export function createRun(
   for (const w of level.walls)
     for (let y = w.y; y < w.y + w.h; y++)
       for (let x = w.x; x < w.x + w.w; x++) cells[y * width + x] = CELL.WALL;
-  const foundations = ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(level.version)
+  const foundations = [
+    'xonix-level.v5',
+    'xonix-level.v6',
+    'xonix-level.v7',
+    'xonix-level.v8',
+  ].includes(level.version)
     ? foundationGeometry(level)
     : null;
   if (foundations) cells.set(foundations.cells);
@@ -174,6 +179,7 @@ export function createRun(
       'xonix-level.v5',
       'xonix-level.v6',
       'xonix-level.v7',
+      'xonix-level.v8',
     ].includes(level.version)
   )
     state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
@@ -182,10 +188,16 @@ export function createRun(
       version: 'foundation-state.v1',
       permanent: Uint8Array.from(foundations.permanent),
     };
-  if (['xonix-level.v6', 'xonix-level.v7'].includes(level.version))
+  if (['xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(level.version))
     state.relay = createRelayState(level, foundations);
   if (
-    ['xonix-level.v4', 'xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7'].includes(level.version)
+    [
+      'xonix-level.v4',
+      'xonix-level.v5',
+      'xonix-level.v6',
+      'xonix-level.v7',
+      'xonix-level.v8',
+    ].includes(level.version)
   ) {
     state.classic = createClassicState(level, cells);
     initializeClassicActors(state);

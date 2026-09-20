@@ -44,19 +44,33 @@ export const DIRECTIONAL_VERSIONS = Object.freeze({
   replayVersion: 'xonix-replay.v9',
   checkpointAlgorithm: 'fnv1a64-state-v8',
 });
+export const SENTINEL_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v8',
+  ruleset: 'xonix-core.v9',
+  replayVersion: 'xonix-replay.v10',
+  checkpointAlgorithm: 'fnv1a64-state-v9',
+});
 export const isClassicRuleset = (ruleset) =>
   [
     CLASSIC_VERSIONS.ruleset,
     FOUNDATION_VERSIONS.ruleset,
     RELAY_VERSIONS.ruleset,
     DIRECTIONAL_VERSIONS.ruleset,
+    SENTINEL_VERSIONS.ruleset,
   ].includes(ruleset);
 export const isFoundationRuleset = (ruleset) =>
-  [FOUNDATION_VERSIONS.ruleset, RELAY_VERSIONS.ruleset, DIRECTIONAL_VERSIONS.ruleset].includes(
+  [
+    FOUNDATION_VERSIONS.ruleset,
+    RELAY_VERSIONS.ruleset,
+    DIRECTIONAL_VERSIONS.ruleset,
+    SENTINEL_VERSIONS.ruleset,
+  ].includes(ruleset);
+export const isRelayRuleset = (ruleset) =>
+  [RELAY_VERSIONS.ruleset, DIRECTIONAL_VERSIONS.ruleset, SENTINEL_VERSIONS.ruleset].includes(
     ruleset,
   );
-export const isRelayRuleset = (ruleset) =>
-  [RELAY_VERSIONS.ruleset, DIRECTIONAL_VERSIONS.ruleset].includes(ruleset);
+export const isDirectionalRuleset = (ruleset) =>
+  [DIRECTIONAL_VERSIONS.ruleset, SENTINEL_VERSIONS.ruleset].includes(ruleset);
 
 /** An omitted pair remains legacy. Explicit fields must select exactly one supported pair. */
 export function resolveVersions(value = {}) {
@@ -74,6 +88,7 @@ export function resolveVersions(value = {}) {
     FOUNDATION_VERSIONS,
     RELAY_VERSIONS,
     DIRECTIONAL_VERSIONS,
+    SENTINEL_VERSIONS,
   ].find((pair) => keys.every((key) => request[key] === pair[key]));
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };

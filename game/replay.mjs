@@ -5,7 +5,7 @@ import {
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
   FOUNDATION_VERSIONS,
-  DIRECTIONAL_VERSIONS,
+  isDirectionalRuleset,
   isRelayRuleset,
   isFoundationRuleset,
   isClassicRuleset,
@@ -57,7 +57,7 @@ const sectionNames = (versions) =>
         'classic',
         'foundations',
         'relays',
-        ...(versions.ruleset === DIRECTIONAL_VERSIONS.ruleset ? ['directionalFields'] : []),
+        ...(isDirectionalRuleset(versions.ruleset) ? ['directionalFields'] : []),
       ]
     : versions.ruleset === FOUNDATION_VERSIONS.ruleset
       ? [...SECTIONS, 'encounter', 'classic', 'foundations']
@@ -369,7 +369,7 @@ function authoritativeSections(state, versions) {
           },
         }
       : {}),
-    ...(versions.ruleset === DIRECTIONAL_VERSIONS.ruleset
+    ...(isDirectionalRuleset(versions.ruleset)
       ? { directionalFields: structuredClone(state.level.directionalFields) }
       : {}),
   };
