@@ -371,6 +371,12 @@ summary {
   min-height: 44px;
   padding-block: 12px;
 }
+.community-guide-copy {
+  max-width: 72ch;
+}
+.community-guide-copy h2 {
+  margin-top: 24px;
+}
 pre,
 textarea {
   font:
