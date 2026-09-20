@@ -6,6 +6,8 @@ import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { Events } from './helpers/couch-dom.mjs';
+import { attachEnemyWorkshopReturnHost } from '../ui/enemy-workshop-return.mjs';
 
 const source = JSON.parse(
   await readFile(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),
@@ -58,7 +60,11 @@ function reach(page, id) {
 function frames(page, n) {
   for (let i = 0; i < n; i++) page.frame();
 }
-async function practice(t, turnPolicy, { arcade = false } = {}) {
+async function practice(
+  t,
+  turnPolicy,
+  { arcade = false, parentWindow, search = '?practice=1&revision=2' } = {},
+) {
   nativeDialogs(t);
   const raw = structuredClone(source);
   raw.level.metadata.description = lesson;
@@ -69,7 +75,7 @@ async function practice(t, turnPolicy, { arcade = false } = {}) {
   const previewStorage = memoryStorage({
     'revealline.playground.current': JSON.stringify(scenario),
   });
-  const page = await soloPage(t, { storage, previewStorage, search: '?practice=1&revision=2' });
+  const page = await soloPage(t, { storage, previewStorage, search, parentWindow });
   const region = page.$('mission-brief-reading');
   region.clientHeight = 100;
   region.scrollHeight = 500;
@@ -384,3 +390,94 @@ test('only an ordinary validated Arcade action policy receives the Arcade label'
   );
   assert.equal(page.rendered.run.level.classic.arcadeActions.version, 'arcade-actions.v1');
 });
+
+for (const returnTo of ['enemy-guide', 'workshop']) {
+  for (const entry of ['ready-keyboard', 'paused-controller', 'header']) {
+    test(`${returnTo}: registered ${entry} practice returns to its owner without campaign Home or Missions`, async (t) => {
+      const host = new Events();
+      host.location = { href: 'http://localhost/game/' };
+      host.crypto = globalThis.crypto;
+      const frame = { contentWindow: null, hidden: false, src: '' };
+      let returned = 0;
+      const owner = attachEnemyWorkshopReturnHost({
+        window: host,
+        frame,
+        returnTo,
+        onReturn: () => returned++,
+        gameURL: 'http://localhost/game/',
+      });
+      t.after(() => owner.dispose());
+      const search = new URL(owner.launchURL()).search;
+      const page = await practice(t, 'grid-center', { search, parentWindow: host });
+      frame.contentWindow = page.win;
+      host.postMessage = (data, origin) => {
+        assert.equal(origin, 'http://localhost');
+        queueMicrotask(() => host.emit('message', { data, origin, source: page.win }));
+      };
+      const label = returnTo === 'enemy-guide' ? 'Return to field guide' : 'Return to workshop';
+      assert.equal(page.$('enemy-workshop-return').textContent, label);
+      assert.equal(
+        page.$('overlay-menu').hidden,
+        true,
+        'one explicit owner return, no duplicate Main menu',
+      );
+      assert.equal(page.$('shell-menu').getAttribute('aria-label'), label);
+      const saved = [...page.storage.map];
+      reach(page, 'overlay-brief');
+      key(page, 'Enter');
+      assert.equal(page.$('shell-missions').dataset.view, 'brief');
+      assert.equal(page.$('shell-worlds').hidden, true);
+      key(page, 'Escape');
+      assert.equal(page.doc.activeElement.id, 'overlay-brief');
+      page.$('shell-packs').focus();
+      page.$('shell-packs').click();
+      assert.equal(
+        page.$('shell-missions').dataset.view,
+        'brief',
+        'Missions opens the authored lesson only',
+      );
+      assert.equal(page.$('shell-mission-content').hidden, true);
+      assert.equal(page.$('shell-worlds').hidden, true);
+      assert.equal(page.$('shell-mode-choice').hidden, true);
+      key(page, 'Escape');
+      assert.equal(
+        page.doc.activeElement.id,
+        'shell-packs',
+        'brief Back retains the header opener',
+      );
+      if (entry === 'paused-controller') {
+        page.$('start-button').click();
+        page.key('ArrowDown');
+        page.key('ArrowDown', false);
+        frames(page, 8);
+        page.$('pause-button').click();
+      }
+      const checkpoint = authoritativeCheckpoint(page.rendered.run);
+      if (entry === 'header') page.$('shell-menu').click();
+      else if (entry === 'paused-controller') {
+        const controller = pad(page, t);
+        controller.find('enemy-workshop-return');
+        controller.pulse(0);
+      } else {
+        reach(page, 'enemy-workshop-return');
+        key(page, 'Enter');
+      }
+      await settle(() => returned === 1);
+      assert.equal(returned, 1);
+      assert.equal(frame.hidden, true);
+      assert.equal(frame.src, 'about:blank');
+      assert.equal(page.$('shell-home').open, false);
+      assert.equal(page.$('shell-missions').open, false);
+      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+      assert.deepEqual([...page.storage.map], saved);
+      assert.equal(page.storage.writes.length, 0, 'practice has no campaign writes');
+      page.$('shell-menu').click();
+      page.$('shell-packs').click();
+      await Promise.resolve();
+      assert.equal(returned, 1, 'a retired return cannot reopen or leave practice again');
+      assert.equal(page.$('shell-home').open, false);
+      assert.equal(page.$('shell-missions').open, false);
+      assert.deepEqual(page.errors, []);
+    });
+  }
+}

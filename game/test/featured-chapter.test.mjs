@@ -59,10 +59,16 @@ test('explicit chapter selection installs exact pressure chapter and keeps R4, R
     }),
   );
   const oldImage = globalThis.Image;
+  let decoded = 0;
   globalThis.Image = class {
+    async decode() {
+      assert.ok(this.width > 0 && this.height > 0);
+      decoded++;
+    }
     set src(value) {
       const size = originals.get(value);
       assert.ok(size, 'Only the three exact First Light originals may decode');
+      [this.width, this.height] = size;
       [this.naturalWidth, this.naturalHeight] = size;
       queueMicrotask(() => this.onload());
     }
@@ -89,6 +95,7 @@ test('explicit chapter selection installs exact pressure chapter and keeps R4, R
       page.doc.body.dataset.pictureState === 'ready',
     'Pressure Lines chapter install and exact picture must become ready',
   );
+  assert.ok(decoded > 0, 'The exact authored original completed decoding before readiness.');
   assert.equal(page.$('pack-select').value, pack.id, page.$('run-message').textContent);
   assert.equal(page.$('campaign-select').value, keyFor(pack));
   assert.equal(page.$('shell-home').open, false);
@@ -137,11 +144,16 @@ for (const [id, ruleset, coverage] of [
         ),
       });
     const oldImage = globalThis.Image;
+    let decoded = 0;
     globalThis.Image = class {
+      async decode() {
+        assert.ok(this.width > 0 && this.height > 0);
+        decoded++;
+      }
       set src(value) {
         const bytes = Buffer.from(value.split(',')[1], 'base64');
-        this.naturalWidth = bytes.readUInt32BE(16);
-        this.naturalHeight = bytes.readUInt32BE(20);
+        this.width = this.naturalWidth = bytes.readUInt32BE(16);
+        this.height = this.naturalHeight = bytes.readUInt32BE(20);
         queueMicrotask(() => this.onload());
       }
     };
@@ -166,6 +178,7 @@ for (const [id, ruleset, coverage] of [
         earlier.doc.body.dataset.pictureState === 'ready',
       'Pressure Lines chapter install and exact picture must become ready',
     );
+    assert.ok(decoded > 0, 'The pressure original completed decoding before readiness.');
     assert.equal(earlier.$('pack-select').value, pack.id);
     earlier.$('shell-prepare').click();
     assert.equal(earlier.$('mission-picker-setup').open, true);
@@ -176,9 +189,11 @@ for (const [id, ruleset, coverage] of [
       () =>
         earlier.$('pack-select').value === edition.id &&
         !earlier.$('pack-select').disabled &&
-        earlier.$('campaign-select').value === archivedCampaign,
+        earlier.$('campaign-select').value === archivedCampaign &&
+        earlier.doc.body.dataset.pictureState === 'ready',
       `${edition.id} selection settled`,
     );
+    assert.ok(decoded > 1, 'The archived original also completed decoding before readiness.');
     earlier.frame(0);
     assert.deepEqual(earlier.rendered.run.level, normalizedLevel(edition.campaigns[0].levels[0]));
     assert.equal(earlier.rendered.run.ruleset, ruleset);

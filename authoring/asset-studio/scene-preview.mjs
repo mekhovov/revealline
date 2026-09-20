@@ -381,9 +381,24 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
     .finish({ message: 'Sound starts only from this button. Local audition volume: 35%.' });
   let audition = 0;
   let frame,
-    alive = true;
+    alive = true,
+    playbackLease = null;
+  const playbackCaption = () => {
+    const master = audioMaster?.snapshot();
+    return master?.muted
+      ? 'Audition playing · master sound is muted.'
+      : master?.volume === 0
+        ? 'Audition playing · master sound volume is zero.'
+        : 'Playing the registered Soundscape recipe.';
+  };
+  // Rendering master output never starts a preview or replaces pending/error/Stop feedback.
+  const stopMasterView = audioMaster?.subscribe(() => {
+    if (alive && playbackLease) playbackLease.update({ message: playbackCaption() });
+  });
   own(() => {
     alive = false;
+    playbackLease = null;
+    stopMasterView?.();
     cancelAnimationFrame(frame);
     player.dispose();
     audition++;
@@ -395,6 +410,7 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
     if (player.previewActive) frame = requestAnimationFrame(tick);
   };
   play.onclick = async () => {
+    playbackLease = null;
     const request = ++audition;
     const lease = auditionStatus.begin({ message: 'Preparing the sound audition…' });
     try {
@@ -420,16 +436,14 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
         }[cue];
         player.event({ type: event, won: true, tick: performance.now() });
       }
-      lease.finish({
-        message: audioMaster?.snapshot().muted
-          ? 'Audition playing · master sound is muted.'
-          : 'Playing the registered Soundscape recipe.',
-      });
+      playbackLease = lease;
+      lease.finish({ message: playbackCaption() });
     } catch (error) {
       if (alive && request === audition) lease.finish({ message: error.message, state: 'error' });
     }
   };
   stop.onclick = () => {
+    playbackLease = null;
     audition++;
     player.disable();
     cancelAnimationFrame(frame);

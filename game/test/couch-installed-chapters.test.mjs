@@ -570,6 +570,53 @@ test('installed couch reader authenticates the same three originals without acqu
   );
 });
 
+test('selected pack refresh requires exact validated content and reports its source owner without store or Solo writes', async (t) => {
+  const f = await fixture(t),
+    before = f.writes(),
+    stored = await f.pointer.snapshot(),
+    expectedPack = (await preparePack(structuredClone(pilot.prepared.pack), { decodeImage })).pack;
+  assert.notEqual(
+    expectedPack,
+    pilot.prepared.pack,
+    'Identity is content-based, not object equality.',
+  );
+  const rows = await f.reader.refresh({ expectedPack });
+  assert.equal(rows.length, expectedPack.campaigns[0].levels.length);
+  assert.ok(rows.every((row) => row.sourcePackId === expectedPack.id));
+  assert.deepEqual(
+    rows.map((row) => row.level.id),
+    expectedPack.campaigns[0].levels.map((level) => level.id),
+  );
+  assert.deepEqual(f.writes(), before);
+
+  for (const difference of ['metadata', 'gameplay body', 'absent pack']) {
+    const candidate = structuredClone(expectedPack);
+    if (difference === 'metadata') candidate.description += ' Different reviewed description.';
+    else if (difference === 'gameplay body') candidate.campaigns[0].levels[0].goal.coverage -= 0.01;
+    else candidate.id = 'uninstalled-expected-pack';
+    const selected = (await preparePack(candidate, { decodeImage })).pack;
+    if (difference !== 'absent pack') {
+      assert.equal(selected.id, expectedPack.id);
+      assert.equal(selected.version, expectedPack.version);
+      assert.equal(selected.campaigns[0].id, expectedPack.campaigns[0].id);
+    }
+    await assert.rejects(
+      f.reader.refresh({ expectedPack: selected }),
+      /The selected chapter changed\. Refresh Chapters before playing\./,
+      `${difference} cannot refresh as the previously selected exact pack`,
+    );
+    assert.deepEqual(f.writes(), before, `${difference} rejection must remain read-only`);
+    assert.deepEqual(await f.pointer.snapshot(), stored);
+  }
+
+  const recovered = await f.reader.refresh({ expectedPack });
+  assert.equal(recovered.length, rows.length);
+  assert.ok(recovered.every((row) => row.sourcePackId === expectedPack.id));
+  assert.deepEqual(f.writes(), before);
+  assert.deepEqual(await f.pointer.snapshot(), stored);
+  assert.equal(f.locks.held.size, 0);
+});
+
 test('publication rejects a changed original generation after actual decode and a changed pointer before Start', async (t) => {
   const f = await fixture(t),
     rows = await f.reader.refresh();

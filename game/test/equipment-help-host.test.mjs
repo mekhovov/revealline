@@ -56,10 +56,16 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         return [data, [bytes.readUInt32BE(16), bytes.readUInt32BE(20)]];
       }),
     );
+    let decoded = 0;
     class PackImage {
+      async decode() {
+        assert.ok(this.width > 0 && this.height > 0);
+        decoded++;
+      }
       set src(data) {
         const size = imageSizes.get(data);
         assert.ok(size, 'The browser boundary accepts only the exact R5 original headers');
+        [this.width, this.height] = size;
         [this.naturalWidth, this.naturalHeight] = size;
         queueMicrotask(() => this.onload());
       }
@@ -97,6 +103,8 @@ for (const mode of ['tactical', 'tactical-no-hangar', 'r5', 'one-craft-hangar', 
         () =>
           page.$('pack-select').value === pack.id && page.doc.body.dataset.pictureState === 'ready',
       );
+      if (mode === 'r5')
+        assert.ok(decoded > 0, 'The installed authored original completed decoding.');
       page.frame(0);
     }
     assert.equal(page.$('hangar-button').hidden, !available);

@@ -12,7 +12,8 @@ import { preparePack } from '../packs.mjs';
 import { decodePilotImage } from '../../authoring/library/external-chapter-pilot/build.mjs';
 
 function fixture(t, overrides = {}, legacy = {}) {
-  const doc = new Document();
+  const doc = new Document(),
+    nativeBlurred = [];
   doc.createElement = (tag) => {
     const element = new SoloElement(doc, tag);
     let disabled = element.disabled;
@@ -21,7 +22,10 @@ function fixture(t, overrides = {}, legacy = {}) {
       set(value) {
         disabled = !!value;
         // Native8957 displaced focus to BODY when a focused action was disabled.
-        if (disabled && doc.activeElement === element) doc.activeElement = doc.body;
+        if (disabled && doc.activeElement === element) {
+          nativeBlurred.push(element);
+          doc.activeElement = doc.body;
+        }
       },
     });
     const rectangles = element.getClientRects.bind(element);
@@ -81,7 +85,7 @@ function fixture(t, overrides = {}, legacy = {}) {
     target.emit('keyup', { key });
     return event;
   }
-  return { doc, panel, $, nav, key };
+  return { doc, panel, $, nav, key, nativeBlurred };
 }
 
 test('public cards lead with playable context and actions; native recovery controls stay inside one closed disclosure', async (t) => {
@@ -200,11 +204,18 @@ for (const kind of ['download', 'install'])
       const origin = f.$(`source-a-${kind}`);
       origin.focus();
       const pending = origin.onclick();
+      assert.ok(
+        f.nativeBlurred.includes(origin),
+        'The finite native boundary first displaces the disabled action to BODY.',
+      );
       assert.equal(
         f.doc.activeElement,
-        f.doc.body,
-        'Native disabling is modeled, not silently retained focus',
+        f.$('cancel'),
+        'The actual panel transfers that displaced focus to visible Cancel while busy.',
       );
+      assert.equal(f.$('cancel').hidden, false);
+      assert.equal(f.$('cancel').disabled, false);
+      assert.ok(f.$('cancel').getClientRects().length);
       if (succeeds) finish();
       else fail(new Error('Exact pair refused'));
       await pending;
