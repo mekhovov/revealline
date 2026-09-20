@@ -77,9 +77,17 @@
           ></canvas>
           <p class="legend">
             <span>■ Reclaimed foundation</span><span>▧ Wall</span><span>● Field keeper</span
-            ><span>✚ Spawn</span>
+            ><span>◇ Perimeter patrol</span><span>▲ Frontier patrol</span><span>✚ Spawn</span>
           </p>
           <p id="geometry" class="note"></p>
+          <label class="toggle"
+            ><input id="show-capture" type="checkbox" checked />Show frozen capture overlay</label
+          >
+          <p id="capture-legend" class="legend">
+            <span>· Retained field</span><span>╱ Would fill</span><span>□ Hypothetical trail</span
+            ><span>◎ Field anchor</span><span>▣ Affected objective</span>
+          </p>
+          <p id="capture-summary" class="note" role="status"></p>
           <form id="geometry-form">
             <fieldset>
               <legend>Add geometry · makes a new map revision</legend>
@@ -114,7 +122,8 @@
               >Cell indexes, separated by commas<input
                 id="trail"
                 placeholder="32, 104, 176…" /></label
-            ><button id="inspect">Inspect components</button>
+            ><button id="inspect">Inspect components</button
+            ><button id="clear-inspection">Clear hypothetical trail</button>
             <pre id="capture"></pre>
           </details>
           <div class="preview-actions">

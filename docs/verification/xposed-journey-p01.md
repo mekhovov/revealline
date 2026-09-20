@@ -198,3 +198,33 @@ checkpoint. The complete five-test curriculum cohort passed with no skips or
 failures. These privileged offline search routes prove feasibility only, not
 human reaction windows, comparative difficulty, intended route learning,
 accessibility, device handling, ordinary clear duration or enjoyment.
+
+## Frozen capture visualization
+
+Studio now projects the engine's existing frozen component result directly onto
+the map: dots for retained field, hatching for would-fill regions, outlined
+hypothetical trail cells, rings around field-retaining actors and a filled center
+for affected objectives. The same facts have an accessible text summary. A
+visibility toggle and clear-inspection action alter neither geometry nor saved
+checkpoints; changing mission/preset discards the old hypothetical trail.
+
+Patrol markers use engine-resolved initial positions rather than trying to draw
+authored contour-edge recipes as coordinates. Field keepers, outer patrols and
+frontier patrols have circle, diamond and triangle markers respectively. The
+overlay is explicitly a snapshot, never a legal-route guarantee or live forecast.
+
+Five focused regressions pass: occupied/empty regions and objectives, two-sided
+line-only retention, remote empty chamber auto-fill, nonmutating patterned
+rendering/toggle, and finite non-retaining patrol markers. Before this UI slice,
+the expanded compiler/foundation/Classic/Wide/Journey non-host cohort passed
+**164/164**, no skips/failures. Full lint and source validation pass with 688
+files and the same four navigation warnings.
+
+Native Studio verification: First return's hypothetical vertical cut reports
+782 would-fill cells + 34 trail cells and visibly hatches only the empty region;
+Two keepers reports two retained regions, both named anchors, zero would-fill
+cells and 34 trail cells. Hiding the overlay removes its legend; clearing the
+inspection restores the unsplit view and empty input while checkpoint 3 remains
+unchanged. A CSS display rule initially overrode the legend's hidden attribute;
+the scoped correction was reloaded and verified in the browser. This evidence
+does not claim complete small-screen, assistive-technology or human validation.

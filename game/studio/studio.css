@@ -193,6 +193,21 @@ canvas {
     monospace;
   color: var(--accent);
 }
+.legend[hidden] {
+  display: none;
+}
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+.toggle input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
+}
 .note,
 .preview-actions span,
 footer {

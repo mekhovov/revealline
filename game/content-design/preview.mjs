@@ -44,5 +44,12 @@ export function prepareContentPreview(
     const result = validateScenario(scenario);
     if (!result.valid) throw new Error(result.errors.join(' '));
   }
-  return { manifest, geometry: map.geometry, capture, scenario };
+  // Actor recipes such as contour patrols contain route edges, not positions.
+  // Use the engine's resolved initial state for the authoring view, never invent
+  // an alternate placement or expose the mutable run to Studio.
+  const markers = {
+    actors: run.enemies.map(({ id, type, x, y }) => ({ id, type, x, y })),
+    objectives: run.objectives.map(({ id, x, y }) => ({ id, x, y })),
+  };
+  return { manifest, geometry: map.geometry, capture, markers, scenario };
 }
