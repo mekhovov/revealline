@@ -346,6 +346,40 @@ test('Studio exposes the eroder only in v3, with shared warning rules and valida
   );
 });
 
+test('Studio carrier controls are catalogue-gated and compile selected IDs without affecting keepers', () => {
+  const f = editorFixture();
+  assert(!f.node('role').children.some((row) => row.value === 'impact-carrier'));
+  const next = structuredClone(f.source());
+  next.actorCatalogId = 'journey-actors-v4';
+  f.update(next);
+  assert(f.node('role').children.some((row) => row.value === 'impact-carrier'));
+  f.node('id').value = 'carrier';
+  f.node('role').value = 'impact-carrier';
+  f.node('role').onchange();
+  assert.equal(f.node('heading-row').hidden, false);
+  assert.equal(f.node('clockwise-row').hidden, true);
+  assert.match(f.node('position-help').textContent, /24 cells\/s in every preset/);
+  assert.match(f.node('description').textContent, /Ordinary field keepers/);
+  f.node('x').value = '45.5';
+  f.node('y').value = '15.5';
+  f.node('heading').value = '-1,0';
+  submit(f);
+  assert.match(f.node('result').textContent, /applied/);
+  assert.deepEqual(
+    resolveMission(compileContentProject(f.source()), 'nearby-shore').level.classic.lineImpact
+      .actorIds,
+    ['carrier'],
+  );
+  const team = createTeamOpeningCandidates();
+  team.actorCatalogId = 'journey-actors-v4';
+  f.update(team);
+  f.mission('twin-landings');
+  assert.deepEqual(
+    f.node('role').children.map((row) => row.value),
+    ['field-keeper'],
+  );
+});
+
 test('role controls explain domains, refresh preset tiers, clear absent missions and honor rejected adoption', () => {
   const f = editorFixture();
   f.node('select').value = 'keeper';

@@ -1,7 +1,7 @@
 import { createRun, CELL } from '../core/index.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { paintMaterialMarker } from './material-markers.mjs';
-import { traceContentActor } from './actor-marker.mjs';
+import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
 const cards = new WeakMap();
 
 /** Read-only initial-state diagram. Uses the engine's actual topology and actor
@@ -19,7 +19,11 @@ export function createMissionCard(manifest) {
     cells: [...run.cells],
     terrain: [...run.classic.terrain],
     spawn: { x: run.player.x, y: run.player.y },
-    actors: run.enemies.map(({ type, x, y }) => ({ type, x, y })),
+    actors: run.enemies.map((actor) => ({
+      type: contentActorMarkerType(manifest.level, actor),
+      x: actor.x,
+      y: actor.y,
+    })),
     objectives: run.objectives
       .filter((objective) => objective.revealed)
       .map(({ x, y }) => ({ x, y })),

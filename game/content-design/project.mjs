@@ -255,6 +255,7 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
   if (mode === 'team') return resolveTeamMission(project, mission, map, difficulty);
   const spawn = map.geometry.spawns.find((candidate) => candidate.id === mission.spawnId);
   required(spawn, 'Mission spawn is missing from its map revision.');
+  const carriers = mission.actors.filter((actor) => actor.role === 'impact-carrier');
   const level = normalizedLevel({
     version: 'xonix-level.v5',
     id: mission.id,
@@ -272,6 +273,15 @@ export function resolveMission(project, id, { mode = 'solo', difficulty = 'stand
       terrain: map.source.terrain ?? [],
       powerups: mission.bonuses,
       ...(policy.arcadeActions ? { arcadeActions: policy.arcadeActions } : {}),
+      ...(carriers.length
+        ? {
+            lineImpact: {
+              version: 'line-impact.v2',
+              speed: project.actors.roles['impact-carrier'].impactSpeed,
+              actorIds: carriers.map((actor) => actor.id).sort(),
+            },
+          }
+        : {}),
     },
     enemies: mission.actors.map((actor) => compileActor(actor, difficulty, project.actors.id)),
     objectives: mission.objectives,

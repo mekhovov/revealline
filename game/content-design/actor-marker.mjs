@@ -2,7 +2,16 @@
  * Adds a path only; the caller owns ink, fill and frozen capture overlays.
  */
 export function traceContentActor(ctx, type, x, y, radius) {
-  if (['bouncer', 'drifter'].includes(type)) ctx.arc(x, y, radius, 0, Math.PI * 2);
+  if (type === 'impact-carrier') {
+    // A split lightning bolt is readable without motion or color cues.
+    ctx.moveTo(x + radius * 0.2, y - radius);
+    ctx.lineTo(x - radius, y + radius * 0.15);
+    ctx.lineTo(x - radius * 0.15, y + radius * 0.15);
+    ctx.lineTo(x - radius * 0.2, y + radius);
+    ctx.lineTo(x + radius, y - radius * 0.15);
+    ctx.lineTo(x + radius * 0.15, y - radius * 0.15);
+    ctx.closePath();
+  } else if (['bouncer', 'drifter'].includes(type)) ctx.arc(x, y, radius, 0, Math.PI * 2);
   else if (type === 'border-patrol') {
     ctx.moveTo(x, y - radius);
     ctx.lineTo(x + radius, y);
@@ -25,4 +34,14 @@ export function traceContentActor(ctx, type, x, y, radius) {
     ctx.lineTo(x - radius, y + radius);
     ctx.closePath();
   }
+}
+
+/** The validated manifest owns role selection; historical global v1 is unchanged. */
+export function contentActorMarkerType(level, actor) {
+  const impact = level.classic?.lineImpact;
+  return actor.type === 'bouncer' &&
+    impact?.version === 'line-impact.v2' &&
+    impact.actorIds.includes(actor.id)
+    ? 'impact-carrier'
+    : actor.type;
 }
