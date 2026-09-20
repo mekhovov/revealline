@@ -483,7 +483,7 @@ export function createExternalChapterHost({
     await current(snapshot, signal);
     return { ...proof, metadata, store };
   }
-  async function installOrRecover(prepared, signal, recover) {
+  async function installOrRecover(prepared, signal, recover, pictureReview) {
     required(isPreparedExternalChapter(prepared), 'Prepare exact descriptor and payloads first.');
     const expected = known.get(prepared.descriptor.id);
     required(
@@ -521,6 +521,7 @@ export function createExternalChapterHost({
         try {
           return await installer[recover ? 'recover' : 'install'](prepared, {
             signal: activeSignal,
+            ...(recover ? {} : { pictureReview }),
           });
         } finally {
           installer.close();
@@ -613,7 +614,8 @@ export function createExternalChapterHost({
         });
       });
     },
-    install: (prepared, { signal } = {}) => installOrRecover(prepared, signal, false),
+    install: (prepared, { signal, pictureReview } = {}) =>
+      installOrRecover(prepared, signal, false, pictureReview),
     recover: (prepared, { signal } = {}) => installOrRecover(prepared, signal, true),
     close() {
       if (closed) return;

@@ -1,0 +1,298 @@
+TAP version 13
+# Subtest: ordinary empty/read/write path stays lazy and native CAS preserves old embedded contract
+ok 1 - ordinary empty/read/write path stays lazy and native CAS preserves old embedded contract
+  ---
+  duration_ms: 24.687208
+  type: 'test'
+  ...
+# Subtest: shared DB4 install, exact authored defaults, Gentle mapping and separate readiness preserve audio and story domain
+ok 2 - shared DB4 install, exact authored defaults, Gentle mapping and separate readiness preserve audio and story domain
+  ---
+  duration_ms: 11967.567458
+  type: 'test'
+  ...
+# Subtest: cleared assignment and valid newer B do not erase the exact authored A; saved pin shapes are not requests
+ok 3 - cleared assignment and valid newer B do not erase the exact authored A; saved pin shapes are not requests
+  ---
+  duration_ms: 12157.9635
+  type: 'test'
+  ...
+# Subtest: known compact pack alone is refused without opening shared media; no ID-suffix heuristics
+ok 4 - known compact pack alone is refused without opening shared media; no ID-suffix heuristics
+  ---
+  duration_ms: 26.224875
+  type: 'test'
+  ...
+# Subtest: coherent pending journal snapshot reports backup-recovery and preserves rows
+ok 5 - coherent pending journal snapshot reports backup-recovery and preserves rows
+  ---
+  duration_ms: 0.62525
+  type: 'test'
+  ...
+# Subtest: coherent pending journal snapshot reports external-recovery and preserves rows
+ok 6 - coherent pending journal snapshot reports external-recovery and preserves rows
+  ---
+  duration_ms: 0.872417
+  type: 'test'
+  ...
+# Subtest: coherent pending journal snapshot reports mixed-journals and preserves rows
+ok 7 - coherent pending journal snapshot reports mixed-journals and preserves rows
+  ---
+  duration_ms: 0.39475
+  type: 'test'
+  ...
+# Subtest: interrupted native publication is withheld across restart and explicit recovery avoids nested-lock deadlock
+ok 8 - interrupted native publication is withheld across restart and explicit recovery avoids nested-lock deadlock
+  ---
+  duration_ms: 4913.388833
+  type: 'test'
+  ...
+# Subtest: ordinary mutation preserves external index; external removal and changed same-ID gameplay refuse before writes
+ok 9 - ordinary mutation preserves external index; external removal and changed same-ID gameplay refuse before writes
+  ---
+  duration_ms: 5006.088541
+  type: 'test'
+  ...
+# Subtest: changed pointer, index or backup marker invalidates single-use reviewed write; fake reviews refuse
+ok 10 - changed pointer, index or backup marker invalidates single-use reviewed write; fake reviews refuse
+  ---
+  duration_ms: 16.963208
+  type: 'test'
+  ...
+# Subtest: actual selected Blob corruption refuses readiness even with intact validated metadata
+ok 11 - actual selected Blob corruption refuses readiness even with intact validated metadata
+  ---
+  duration_ms: 4921.405375
+  type: 'test'
+  ...
+# Subtest: lost writer/occupied backup lock/closed host refuse mutations without affecting borrowed manager
+ok 12 - lost writer/occupied backup lock/closed host refuse mutations without affecting borrowed manager
+  ---
+  duration_ms: 1.599167
+  type: 'test'
+  ...
+# Subtest: abort during lazy manager return allocates no borrowed store or late snapshot
+ok 13 - abort during lazy manager return allocates no borrowed store or late snapshot
+  ---
+  duration_ms: 4838.418834
+  type: 'test'
+  ...
+# Subtest: mutating caller next pack during preparation cannot change reviewed native publication
+ok 14 - mutating caller next pack during preparation cannot change reviewed native publication
+  ---
+  duration_ms: 17.872958
+  type: 'test'
+  ...
+# Subtest: manager timeout and close reject deferred acquisition without closing the borrowed owner
+ok 15 - manager timeout and close reject deferred acquisition without closing the borrowed owner
+  ---
+  duration_ms: 4947.565917
+  type: 'test'
+  ...
+# Subtest: failed native ordinary CAS is atomic and consumed review cannot be retried blindly
+ok 16 - failed native ordinary CAS is atomic and consumed review cannot be retried blindly
+  ---
+  duration_ms: 5067.552541
+  type: 'test'
+  ...
+# Subtest: missing native Blob retains exact authored metadata but refuses both readiness and authored selection
+ok 17 - missing native Blob retains exact authored metadata but refuses both readiness and authored selection
+  ---
+  duration_ms: 5048.1085
+  type: 'test'
+  ...
+# Subtest: quota refusal leaves a recoverable journal and no published gameplay or evicted originals
+ok 18 - quota refusal leaves a recoverable journal and no published gameplay or evicted originals
+  ---
+  duration_ms: 6569.906875
+  type: 'test'
+  ...
+# Subtest: trusted descriptor inputs are snapshotted and conflicting index cannot masquerade as that edition
+ok 19 - trusted descriptor inputs are snapshotted and conflicting index cannot masquerade as that edition
+  ---
+  duration_ms: 4693.545167
+  type: 'test'
+  ...
+# Subtest: an unregistered prepared descriptor cannot opt itself into the host
+ok 20 - an unregistered prepared descriptor cannot opt itself into the host
+  ---
+  duration_ms: 0.919458
+  type: 'test'
+  ...
+# Subtest: pack changes while actual selected-original decoding is deferred cannot publish stale readiness
+ok 21 - pack changes while actual selected-original decoding is deferred cannot publish stale readiness
+  ---
+  duration_ms: 6201.968792
+  type: 'test'
+  ...
+# Subtest: registered owner inputs are owned before later mutation without opening media
+ok 22 - registered owner inputs are owned before later mutation without opening media
+  ---
+  duration_ms: 6.182583
+  type: 'test'
+  ...
+# Subtest: native absent index is uncharged; a persisted index contributes its exact bytes
+ok 23 - native absent index is uncharged; a persisted index contributes its exact bytes
+  ---
+  duration_ms: 29.06425
+  type: 'test'
+  ...
+# Subtest: explicit retained-picture review crosses temporary installer ownership and keeps authored defaults separate
+ok 24 - explicit retained-picture review crosses temporary installer ownership and keeps authored defaults separate
+  ---
+  duration_ms: 16682.653375
+  type: 'test'
+  ...
+# Subtest: real two-store install commits originals before one atomic pointer publication, with exact bytes and no profile/session writes
+ok 25 - real two-store install commits originals before one atomic pointer publication, with exact bytes and no profile/session writes
+  ---
+  duration_ms: 7856.477792
+  type: 'test'
+  ...
+# Subtest: crash after prepared preserves recovery and completes without recommitting originals
+ok 26 - crash after prepared preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 7117.039458
+  type: 'test'
+  ...
+# Subtest: crash before media-committed preserves recovery and completes without recommitting originals
+ok 27 - crash before media-committed preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 7029.73325
+  type: 'test'
+  ...
+# Subtest: crash before published preserves recovery and completes without recommitting originals
+ok 28 - crash before published preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 7918.458
+  type: 'test'
+  ...
+# Subtest: crash after published preserves recovery and completes without recommitting originals
+ok 29 - crash after published preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 5324.874375
+  type: 'test'
+  ...
+# Subtest: crash before final journal clear preserves recovery and completes without recommitting originals
+ok 30 - crash before final journal clear preserves recovery and completes without recommitting originals
+  ---
+  duration_ms: 6184.901917
+  type: 'test'
+  ...
+# Subtest: failed pointer second put rolls back publication and journal phase together
+ok 31 - failed pointer second put rolls back publication and journal phase together
+  ---
+  duration_ms: 7947.669916
+  type: 'test'
+  ...
+# Subtest: abort after originals commit and before pointer publication leaves old pointer and recoverable originals
+ok 32 - abort after originals commit and before pointer publication leaves old pointer and recoverable originals
+  ---
+  duration_ms: 7933.209
+  type: 'test'
+  ...
+# Subtest: reported quota refusal leaves media and pointer unchanged; same journal can resume after space is available
+ok 33 - reported quota refusal leaves media and pointer unchanged; same journal can resume after space is available
+  ---
+  duration_ms: 7105.509625
+  type: 'test'
+  ...
+# Subtest: foreign pack pointer, foreign generation and post-publication media change never clear the journal or roll back originals
+ok 34 - foreign pack pointer, foreign generation and post-publication media change never clear the journal or roll back originals
+  ---
+  duration_ms: 20445.373834
+  type: 'test'
+  ...
+# Subtest: pre-existing historical binding cannot be silently replaced even when its pack is absent
+ok 35 - pre-existing historical binding cannot be silently replaced even when its pack is absent
+  ---
+  duration_ms: 5341.118625
+  type: 'test'
+  ...
+# Subtest: writer, lock, backup marker, cancellation and forged prepared capability refuse before any journal write
+ok 36 - writer, lock, backup marker, cancellation and forged prepared capability refuse before any journal write
+  ---
+  duration_ms: 1.570708
+  type: 'test'
+  ...
+# Subtest: side-by-side pilot retains the exact embedded edition and actual old suspended attempt; it does not perform migration
+ok 37 - side-by-side pilot retains the exact embedded edition and actual old suspended attempt; it does not perform migration
+  ---
+  duration_ms: 10215.045166
+  type: 'test'
+  ...
+# Subtest: corrupt committed original blocks recovery without changing pointer, index, metadata or deleting history
+ok 38 - corrupt committed original blocks recovery without changing pointer, index, metadata or deleting history
+  ---
+  duration_ms: 3065.467584
+  type: 'test'
+  ...
+# Subtest: native pointer guard rejects old backup journal, mismatched channel, cancelled write and foreign index CAS
+ok 39 - native pointer guard rejects old backup journal, mismatched channel, cancelled write and foreign index CAS
+  ---
+  duration_ms: 1.680417
+  type: 'test'
+  ...
+# Subtest: pointer channels preserve the existing bounded release-v spelling and refuse mismatched variants
+ok 40 - pointer channels preserve the existing bounded release-v spelling and refuse mismatched variants
+  ---
+  duration_ms: 0.843042
+  type: 'test'
+  ...
+# Subtest: explicit fresh picture review installs exact originals without replacing retained assignments
+ok 41 - explicit fresh picture review installs exact originals without replacing retained assignments
+  ---
+  duration_ms: 13701.526334
+  type: 'test'
+  ...
+# Subtest: picture confirmation refuses forged, foreign and changed-generation reviews without writes
+ok 42 - picture confirmation refuses forged, foreign and changed-generation reviews without writes
+  ---
+  duration_ms: 21135.534958
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after prepared without replacing assignments
+ok 43 - confirmed retained-picture install recovers crash after prepared without replacing assignments
+  ---
+  duration_ms: 16442.367666
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after media-committed without replacing assignments
+ok 44 - confirmed retained-picture install recovers crash after media-committed without replacing assignments
+  ---
+  duration_ms: 14375.988167
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after published without replacing assignments
+ok 45 - confirmed retained-picture install recovers crash after published without replacing assignments
+  ---
+  duration_ms: 12839.634959
+  type: 'test'
+  ...
+# Subtest: confirmed retained-picture install recovers crash after journal clear without replacing assignments
+ok 46 - confirmed retained-picture install recovers crash after journal clear without replacing assignments
+  ---
+  duration_ms: 12718.838917
+  type: 'test'
+  ...
+# Subtest: retained-picture journal rejects unsupported-policy without committing media
+ok 47 - retained-picture journal rejects unsupported-policy without committing media
+  ---
+  duration_ms: 9974.265292
+  type: 'test'
+  ...
+# Subtest: retained-picture journal rejects legacy-with-extra-policy without committing media
+ok 48 - retained-picture journal rejects legacy-with-extra-policy without committing media
+  ---
+  duration_ms: 9962.538125
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 221607.675

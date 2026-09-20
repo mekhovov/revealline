@@ -1,5 +1,18 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.69.0 deployed; native corrections under verification
+
+**Public default is [v0.69.0](https://mekhovov.github.io/revealline/releases/v0.69.0/site/game/). Scoped accepted baseline remains v0.68.2 while the newly found continuation issue is corrected.** Publisher PR189 merged as `cb55248a`; Pages run35509763892/deployment6552582851 succeeded. Full public HTTP verification matched **3,789 files / 698,351,359 bytes**, zero failures/retries. Frozen game source remains `5178c434` / tree `8e1becb4`, with both complete 6,983-test/560-file hosted families on Node20.19.6. No immutable release has been overwritten.
+
+Native keyboard First return win → full picture → results → Next passed. Reload identified Choose your share, and explicit Load restored its 0% / three lives / zero score / 3:43 paused state. Immediate Escape after title Continue exposed stale field preparation feedback; this is retained as a failed observation. At 844×390 with Large/Plain text, the pause Main menu focus border is slightly clipped; keyboard activation works. These gaps prevent full native-phase acceptance despite the successful file audit. [Observations and correction evidence](verification/title-restore-cancellation/README.md).
+
+**v0.69.1 remains an unpublished candidate in PR188.** It preserves retained picture assignments during original-media recovery, adds responsive recovery focus handling, and now settles title-abort feedback and retains Continue focus. Recovery passed84 focused tests; title cancellation passed50 tests in two complete files on Node20.19.5. Final exact-source hosted gates, immutable release publication and public retesting remain required. Earlier candidate runs retain their own source identities and cannot qualify these latest changes.
+
+**Next in order:** finish and publish the recovery/cancellation patch; close the separate paused-overlay clearance issue; integrate and qualify shared custom music; continue native navigation and consistent presentation, actor/picture parity, action feedback, fair challenge, rewards and authoring. Campaign expansion follows those quality gates. Shared music and P03 encounter/authoring candidates are not accepted production content. Archive36 append PR2 is prepared but not deployed; existing original v0.68.2 archive evidence remains unchanged. Full offline/media recovery, physical device/controller, audible listening and human challenge/enjoyment gates remain open. Stable programme phase statuses below remain partial/queued; no parent phase is marked complete by this scoped correction.
+
+<details>
+<summary>Previous v0.69.0 publication cutoff — retained history</summary>
+
 ## Current delivery — v0.69.0 qualified and published; Pages verification pending
 
 **Accepted public baseline remains [v0.68.2](https://mekhovov.github.io/revealline/releases/v0.68.2/site/game/) until the v0.69.0 selector deployment and public journeys pass.** The Journey foundation is source-qualified at `5178c434` / tree `8e1becb4`, source PR184 merged as `01c1fbb5` with the exact qualified tree. Both complete hosted families passed **6,983 tests across 560 files on Node 20.19.6**. Frozen original source/distribution and offline bindings passed inspection; release392405261 has nine verified assets and the GitHub Latest pointer. These are source/release gates, not full-phase or physical-device acceptance.
@@ -9,6 +22,8 @@ Journey adds versioned direction-only Arcade, authored candidates and Studio exp
 **Archive36 is verified:** original v0.68.2, archive PR1 / `a0f67a3f`, deployment6552182155; all **729 files / 313,829,048 bytes** matched with zero failures. This is a new archive with zero prior accepted paths. Native keyboard entry, saved Continue and explicit Pause passed. The existing retained-picture conflict remains an explicit limitation. [Evidence](../publishing/pages-controller/evidence/archive-36/README.md).
 
 **Next, in order:** finish actual v0.69.0 Pages verification; qualify the separate retained-picture recovery correction (PR188, candidate0.69.1) and responsive focus correction; finish shared custom music qualification; continue native navigation, actor/picture parity, feedback, fair challenge, rewards and creation tools before bulk campaigns. The recovery candidate passed 84 focused tests and an actual Cancel → retry → keep pictures keyboard journey, but is not included in v0.69.0. Music and new Team terrain remain independently tested candidates. Full browser/device, listening, production-content and human-playtest gates remain open.
+
+</details>
 
 <details>
 <summary>Previous v0.68.2 acceptance cutoff — retained history</summary>

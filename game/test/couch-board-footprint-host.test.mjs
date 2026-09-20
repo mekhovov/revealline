@@ -337,18 +337,28 @@ test('actual Versus zero/hidden bounds recover and stale observer callbacks cann
     assert.equal(page.$(`race-canvas-${seat}`).style.height, '0px');
   }
 
+  const boardObserver = () => {
+    const owners = rendering.observers.filter((observer) =>
+      arenas.every((arena) => observer.targets.has(arena)),
+    );
+    assert.equal(owners.length, 1, 'Exactly one live observer owns both board arenas.');
+    return owners[0];
+  };
+  // Other UI (for example modal focus clearance) also owns resize observers.
+  // Capture the board owner before pagehide disconnects and clears its targets.
+  const previous = boardObserver();
   page.doc.hidden = true;
   page.doc.emit('visibilitychange');
   page.win.emit('pagehide', { persisted: true });
-  const previous = rendering.observers.at(-1),
-    writes = rendering.styleWrites.length,
+  const writes = rendering.styleWrites.length,
     checkpoint = page.checkpoint();
   assert.ok(previous.disconnected, 'A cached page retires its observer ownership.');
   previous.callback([{ target: arenas[0], contentRect: { width: 999, height: 999 } }]);
   assert.equal(rendering.styleWrites.length, writes);
   page.doc.hidden = false;
   page.win.emit('pageshow', { persisted: true });
-  assert.notEqual(rendering.observers.at(-1), previous);
+  const current = boardObserver();
+  assert.notEqual(current, previous);
   await action(page, 'race-start');
   rendering.notify(arenas[0], 300, 400);
   rendering.notify(arenas[1], 600, 180);
@@ -364,10 +374,13 @@ test('actual Versus zero/hidden bounds recover and stale observer callbacks cann
     'Restoring the view does not simulate elapsed background time.',
   );
 
-  const current = rendering.observers.at(-1);
   page.win.emit('pagehide', { persisted: false });
   assert.equal(page.pendingFrames(), 0, 'Terminal departure cancels the actual host RAF.');
   assert.ok(current.disconnected);
+  assert.ok(
+    rendering.observers.every((observer) => observer.disconnected),
+    'Terminal departure also disposes the independent modal focus observers.',
+  );
   const finalWrites = rendering.styleWrites.length,
     finalDraws = rendering.drawCount();
   for (const observer of [previous, current])

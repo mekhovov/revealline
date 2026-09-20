@@ -1,0 +1,63 @@
+{
+  "source": "127e05c4728552d93823963487bbf85e3b498f56",
+  "adoptedFrom": "40ed4f579d29d2fcd9967c3526fd932953f171d0",
+  "reviewedAt": "2026-09-20T11:53:05.661502+00:00",
+  "finding": "The footprint host test selected the last created ResizeObserver. Adding an independent modal observer invalidated that assumption. Identify the unique observer by both actual board targets before pagehide.",
+  "preservedAssertions": [
+    "board disconnect on cached departure",
+    "new board observer on pageshow",
+    "stale callbacks cannot write sizes",
+    "restoration does not simulate elapsed background time",
+    "terminal departure cancels RAF",
+    "no resumed rendering after terminal disposal"
+  ],
+  "addedAssertions": [
+    "all board and modal observers disconnect on terminal departure",
+    "hidden-page queued focus reflow is inert",
+    "foreground resize preserves selected action and does not activate it"
+  ],
+  "productChanges": "none",
+  "localResult": {
+    "runtime": "Node20.19.5",
+    "tests": 16,
+    "files": 2,
+    "pass": 16,
+    "fail": 0,
+    "skip": 0,
+    "durationMs": 9948.491875
+  },
+  "setupFailures": "r1/r2 absent sparse test files; r3 missing tracked incoming runtime imports; r4 missing Couch HTML; r5 missing sentinel-relay fixture. Restored exact selected Git bytes. No product assertions or timeout limits relaxed.",
+  "logs": [
+    {
+      "path": "observer-ownership-node20-r1.log",
+      "bytes": 155,
+      "sha256": "deabe18ba104fcbed8331c0ddac7e5e2198994dbca83e845a959cb9602335e1f"
+    },
+    {
+      "path": "observer-ownership-node20-r2.log",
+      "bytes": 143,
+      "sha256": "9e87c16002ad75395f9732b764d16a45a58792af1122b7b34331ed9410e64c4a"
+    },
+    {
+      "path": "observer-ownership-node20-r3.log",
+      "bytes": 3627,
+      "sha256": "5eaab2d4055c7605b1275123026669401fa39c96a178a1a16a114e7158c57f41"
+    },
+    {
+      "path": "observer-ownership-node20-r4.log",
+      "bytes": 4050,
+      "sha256": "6b5506b29e97f0219738ca55570910404fd6eabb86736c13905fdbea4bd302d4"
+    },
+    {
+      "path": "observer-ownership-node20-r5.log",
+      "bytes": 4980,
+      "sha256": "5a77505acebf9a8fffaa3224361a51c05df14a4007406d9d5a2ea50409affc0a"
+    },
+    {
+      "path": "observer-ownership-node20-r6.log",
+      "bytes": 4142,
+      "sha256": "ebe80e4c28eae65a66162717a182de378be65e380abfd74df0dda77dd8fcd164"
+    }
+  ],
+  "fullQualification": "Earlier7fe run35508682387 remains original evidence, not qualification of this correction. New final-source run required."
+}

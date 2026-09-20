@@ -95,11 +95,22 @@ test('public cards lead with playable context and actions; native recovery contr
     details = f.$('source-a-recovery');
   assert.deepEqual(
     card.children.map((n) => n.tagName),
-    ['H3', 'P', 'P', 'BUTTON', 'BUTTON', 'P', 'DETAILS'],
+    ['H3', 'P', 'P', 'BUTTON', 'BUTTON', 'DIV', 'P', 'DETAILS'],
   );
   assert.equal(card.children[1].textContent, 'Tactical · 3 original pictures');
   assert.equal(card.children[3], f.$('source-a-download'));
   assert.equal(card.children[4], f.$('source-a-choose'));
+  const review = f.$('source-a-picture-review');
+  assert.equal(card.children[5], review);
+  assert.equal(
+    review.hidden,
+    true,
+    'Retained-picture choices appear only after an actual conflict',
+  );
+  assert.equal(review.getAttribute('role'), 'group');
+  assert.equal(review.getAttribute('aria-label'), 'Keep existing picture choices');
+  assert(review.contains(f.$('source-a-picture-confirm')));
+  assert(review.contains(f.$('source-a-picture-cancel')));
   assert.equal(details.open, false);
   assert.equal(details.querySelector('summary').textContent, 'Restore from files');
   for (const name of ['pack', 'media', 'install', 'recovery-note'])
