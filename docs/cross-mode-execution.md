@@ -1,5 +1,20 @@
 # Reveal Line cross-mode execution register
 
+## Current delivery — v0.69.2 publicly verified; v0.69.3 integrating
+
+**Public default and scoped correction baseline: [v0.69.2](https://mekhovov.github.io/revealline/releases/v0.69.2/site/game/).** Source PR191 and publisher PR195 are merged. Pages run35519111558 / deployment6554333402 passed. All **3,841 files / 698,693,223 bytes** matched with zero failures/retries. Both complete source families passed **7,011 tests / 561 files on Node20.19.6**; this is not a two-runtime matrix.
+
+Actual public Pause keyboard checks passed at568×320,844×390 and390×844 with Plain/Large text. Focused Resume/Main menu actions remain fully visible without horizontal overflow. Explicit Resume/Pause and title→Workshop→Replay Theater→Back passed. Replay picture status remains mounted and polite/atomic when empty; audible screen-reader and missing-picture announcement checks are not claimed. [Evidence and limitations](verification/public-v0692/README.md).
+
+**Next candidate:** v0.69.3 / PR193 preserves focus after story restore and moves focus to Stay before disabling a pending Replace confirmation. It now integrates this accepted publisher cutoff; the final integrated source needs its own full gates and immutable/public release. Earlier source-only passes do not qualify it. The nine-tool Workshop return and embedded Playground keyboard-boundary corrections remain a separate follow-on candidate.
+
+**Following priority:** shared custom music and Border content; complete native navigation/readability, actor/picture parity, action feedback, fair challenge, rewards, creation tools and production campaigns. Journey Signal/Neon/Rover and their pictures remain candidate content. Archive37 now retains original v0.69.1 with its scoped session-only native limitation; all historical routes remain preserved.
+
+No parent programme phase is complete because of these patches. Full input/mode journeys, physical controllers/touch, offline/custom-media recovery, listening, finished content and human challenge/enjoyment gates remain open. Stable phase IDs below keep their own acceptance criteria; Journey chapter IDs do not replace them.
+
+<details>
+<summary>Previous v0.69.1 accepted cutoff — retained history</summary>
+
 ## Current delivery — v0.69.1 publicly verified; scoped fixes continue
 
 **Public default and scoped recovery baseline: [v0.69.1](https://mekhovov.github.io/revealline/releases/v0.69.1/site/game/).** Source PR188 merged with the qualified tree; publisher PR194 merged as `648271c9`. Pages run35515392949 / deployment6553644915 passed. The complete public inventory matched **3,815 files / 698,529,682 bytes** with zero final failures and one retained HTTP503 retry. Both complete source families passed **7,009 tests across 560 files on Node20.19.6**; this is not a two-runtime matrix.
@@ -11,6 +26,9 @@ Actual keyboard recovery passed: retained-picture conflict → Cancel → exact 
 **Next in order:** release v0.69.2, then v0.69.3; promote shared custom music and Border candidates; continue navigation/presentation and actor parity, action feedback, fair challenge, rewards and creation tools. Journey Signal/Neon/Rover candidates and their art remain unaccepted production content. Archive36 now retains original v0.68.2 and v0.69.0; archive37 is being prepared for original v0.69.1. All historical routes and their scoped limitations remain authoritative.
 
 No parent programme phase is marked complete by these patches. Full mode/input journeys, physical controllers and touch, browser offline/custom-media recovery, listening, finished content and human challenge/enjoyment gates remain open. The stable phase tables below retain their own acceptance criteria; Journey chapter IDs do not replace them.
+
+
+</details>
 
 <details>
 <summary>Previous v0.69.0 deployed cutoff — retained history</summary>
