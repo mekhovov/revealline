@@ -2756,13 +2756,22 @@ try {
       onStatus,
     };
     const selected = await requestMissionReplacement(request, launch.opener, launch);
-    if (!selected && launch.isCurrent() && missionReplacement?.launch === launch)
-      preparationStatus(
-        onStatus,
-        'Review Replace & play. Stay keeps your current flight paused.',
-        'ready',
-        launch.isCurrent,
-      );
+    if (!selected && launch.isCurrent()) {
+      if (resolveMissionRequest(request).same)
+        preparationStatus(
+          onStatus,
+          'This chapter is already active. Your current flight is kept paused. Return to the main menu and choose Continue.',
+          'ready',
+          launch.isCurrent,
+        );
+      else if (missionReplacement?.launch === launch)
+        preparationStatus(
+          onStatus,
+          'Review Replace & play. Stay keeps your current flight paused.',
+          'ready',
+          launch.isCurrent,
+        );
+    }
     return selected;
   }
   function cancelWorldAttempt() {
@@ -3048,7 +3057,10 @@ try {
         .find((entry) => campaignKey(entry.campaign) === request.id);
       if (!authored) throw new Error('That exact chapter is no longer available.');
       return {
-        same: false,
+        same:
+          unfinishedFlight() &&
+          activeEntry.sourcePackId === request.sourcePackId &&
+          modeSelection().campaignKey === campaignKey(authored.campaign),
         title: authored.campaign.title || authored.campaign.name || authored.campaign.id,
         entry: authored,
         identity: {
