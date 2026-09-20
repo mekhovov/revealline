@@ -22,11 +22,17 @@ export function resolveContentJourney(source, options = {}) {
     'Choose unique existing pack IDs.',
   );
   const campaigns = [];
-  for (const pack of project.packs.filter((candidate) => packIds.includes(candidate.id))) {
+  for (const pack of project.packs.filter(
+    (candidate) => packIds.includes(candidate.id) && !candidate.archived,
+  )) {
     for (const id of pack.campaignIds) {
       const design = project.campaigns.find((candidate) => candidate.id === id);
+      if (design.archived) continue;
       const missionIds = design.missionIds.filter((missionId) =>
-        project.missions.find((mission) => mission.id === missionId).modes.includes(mode),
+        project.missions.some(
+          (mission) =>
+            mission.id === missionId && !mission.archived && mission.modes.includes(mode),
+        ),
       );
       if (!missionIds.length) continue;
       const manifests = missionIds.map((missionId) =>

@@ -66,6 +66,8 @@ export function editContentStructure(source, input) {
     reorder: ['parentId', 'offset'],
     detach: ['parentId'],
     delete: ['confirmationId'],
+    archive: [],
+    restore: [],
   };
   required(Object.hasOwn(actionKeys, action), 'Unsupported structure action.');
   exactKeys(command, ['action', 'kind', 'id', ...actionKeys[action]], 'structure action');
@@ -106,7 +108,9 @@ export function editContentStructure(source, input) {
       );
       const original = entries.find((entry) => entry.id === command.sourceId);
       required(original, 'Choose an existing mission to duplicate.');
-      entries.push({ ...structuredClone(original), id, name, revision: 'draft-1' });
+      const copy = { ...structuredClone(original), id, name, revision: 'draft-1' };
+      delete copy.archived;
+      entries.push(copy);
     } else if (kind === 'mission') {
       const starter = createStarterProject(),
         mission = starter.missions[0],
@@ -166,6 +170,14 @@ export function editContentStructure(source, input) {
         `Remove memberships before deleting: ${dependencies.map((entry) => `${entry.kind} ${entry.id} (${entry.relation})`).join(', ')}.`,
       );
       entries.splice(entries.indexOf(existing), 1);
+    } else if (action === 'archive' || action === 'restore') {
+      required(
+        (existing.archived === true) !== (action === 'archive'),
+        action === 'archive' ? 'This item is already archived.' : 'This item is not archived.',
+      );
+      if (action === 'archive') existing.archived = true;
+      else delete existing.archived;
+      existing.revision = `draft-${dataIdentity(existing)}`;
     } else throw new TypeError('Unsupported structure action.');
   }
   for (const parent of changedParents) parent.revision = `draft-${dataIdentity(parent)}`;

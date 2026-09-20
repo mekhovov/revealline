@@ -37,6 +37,12 @@ function unique(values, label, max = 512) {
   }
   return ids;
 }
+function archiveFlag(value) {
+  required(
+    value.archived === undefined || typeof value.archived === 'boolean',
+    'Archive state must be an explicit boolean.',
+  );
+}
 function refs(values, available, label) {
   required(
     Array.isArray(values) &&
@@ -151,7 +157,9 @@ export function compileContentProject(source) {
       'timeLimitSeconds',
       'design',
       'presentation',
+      'archived',
     ]);
+    archiveFlag(mission);
     exactKeys(mission.map, ['id', 'revision'], 'mission map');
     required(
       mapIds.has(JSON.stringify([mission.map.id, mission.map.revision])),
@@ -183,7 +191,8 @@ export function compileContentProject(source) {
     );
   }
   for (const campaign of project.campaigns) {
-    identity(campaign, 'CampaignDesignV1', ['band', 'missionIds']);
+    identity(campaign, 'CampaignDesignV1', ['band', 'missionIds', 'archived']);
+    archiveFlag(campaign);
     required(integer(campaign.band, 1, 12), 'Campaign needs a challenge band.');
     refs(campaign.missionIds, missionIds, 'Campaign missions');
     for (const id of campaign.missionIds) {
@@ -195,7 +204,8 @@ export function compileContentProject(source) {
     }
   }
   for (const pack of project.packs) {
-    identity(pack, 'PackDesignV1', ['campaignIds']);
+    identity(pack, 'PackDesignV1', ['campaignIds', 'archived']);
+    archiveFlag(pack);
     refs(pack.campaignIds, campaignIds, 'Pack campaigns');
   }
   const resolved = freezeDesign({
